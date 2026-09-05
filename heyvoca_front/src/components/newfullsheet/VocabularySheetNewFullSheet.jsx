@@ -4,7 +4,10 @@ import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
 // import TestSetup from '../class/TestSetup';
 import { PencilSimple, Trash, CaretLeft, EggCrack, Leaf, Plant, Carrot } from '@phosphor-icons/react';
 import { motion } from 'framer-motion';
-import { MIN_TEST_VOCABULARY_COUNT, MAX_TEST_VOCABULARY_COUNT } from '../../utils/common';
+import {
+  MIN_TEST_VOCABULARY_COUNT, MAX_TEST_VOCABULARY_COUNT,
+  STABILITY_LEAF_DAYS, STABILITY_CARROT_DAYS,
+} from '../../utils/common';
 import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 import { TestSetupNewBottomSheet } from '../newBottomSheet/TestSetupNewBottomSheet';
 import { StudySetupNewBottomSheet } from '../newBottomSheet/StudySetupNewBottomSheet';
@@ -58,10 +61,10 @@ const VocabularySheetNewFullSheet = ({ testType }) => {
         return;
       }
 
-      // 암기 상태 판단
-      if (stability < 10) {
+      // 암기 상태 판단 — 경계는 common.jsx 단일 소스
+      if (stability < STABILITY_LEAF_DAYS) {
         stats.shortTerm++;
-      } else if (stability < 60) {
+      } else if (stability < STABILITY_CARROT_DAYS) {
         stats.mediumTerm++;
       } else {
         stats.longTerm++;
@@ -363,7 +366,7 @@ const VocabularySheetNewFullSheet = ({ testType }) => {
           disabled={!isConfirmActive}
           onClick={handleConfirm}
           className={`
-            w-full h-[52px] rounded-[12px] text-[16px] font-[700] text-layout-white dark:text-layout-black
+            w-full h-[52px] rounded-[12px] text-[16px] font-[700] tracking-[-0.03em] text-layout-white dark:text-layout-black
             transition-colors
             ${isConfirmActive ? 'bg-primary-main-600' : 'bg-layout-gray-200'}
           `}

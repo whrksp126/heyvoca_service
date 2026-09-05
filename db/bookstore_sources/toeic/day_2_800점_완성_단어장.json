@@ -1,0 +1,838 @@
+[
+    {
+        "origin": "against the law",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "법에 위배되는"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "by all means",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "반드시, 무슨 일이 있어도, 물론이지"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "by mistake",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "실수로"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "come to an end",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "끝나다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "company regulations",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "회사 규정"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "give directions",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "길을 지시하다, 방향을 알려주다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "hold up",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "견디다, 떠받치다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "if I'm not mistaken",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "제 기억이 옳다면"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "in progress",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "진행 중인"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "keep in mind",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "명심하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "legal counsel",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "법률 상담"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "self-defense",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "자기방어, 정당방위"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "suspect",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "용의자"
+            },
+            {
+                "pos": "v",
+                "text": "의심하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "take one's advice",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~의 충고를 따르다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "to one's advantage",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~에게 유리하게"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "under control",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "관리하에 있는"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "under the supervision of",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~의 감독하에"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "abuse",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "남용"
+            },
+            {
+                "pos": "v",
+                "text": "남용하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "alert",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "경고하다"
+            },
+            {
+                "pos": "adj",
+                "text": "주의하는"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "assessment",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "평가"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "at all times",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "항상, 언제나"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "authorization",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "권한 부여, 위임"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "concerning",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "prep",
+                "text": "~에 관하여"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "consideration",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "고려, 숙고"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "defensive",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "방어적인"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "depiction",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "묘사, 서술"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "disobedient",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "반항하는, 거역하는"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "endure",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "견디다, 참다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "exemplary",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "모범적인, 대표적인"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "ignore",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "무시하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "illegal",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "불법의"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "in accordance with",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~에 따라서, ~과 일치하여"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "indecisive",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "결말이 안 난, 우유부단한"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "justly",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "정당하게, 당연히"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "obey",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "복종하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "observance",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "준수"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "on-site",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "현장의, 현지의"
+            },
+            {
+                "pos": "adv",
+                "text": "현장에서, 현지에서"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "penalty",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "벌금"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "pointed",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "(말·표현 등이) 예리한, 날카로운, 적절한"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "precious",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "귀중한"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "principle",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "원리, 원칙"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "punishment",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "형벌, 처벌"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "regulate",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "규제하다, 조절하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "restricted area",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "제한 구역"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "restriction",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "제한, 한정"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "safety inspection",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "안전 점검"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "suppress",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "억누르다, 금지하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "tensely",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "긴장하여, 딱딱하게"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "unauthorized",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "인가받지 않은"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "with respect to",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~에 관해서"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "accuse",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "비난하다, 고소하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "assess",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "평가하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "attorney",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "변호사"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "be absent from",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~에 결석하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "be allowed to do",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "하도록 허락받다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "by way of",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "의 방법으로, ~에 의해서"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "distrust",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "의심하다"
+            },
+            {
+                "pos": "n",
+                "text": "불신"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "from this day onward",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "오늘부터"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "have permission to do",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "할 허가를 받다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "in a strict way (= strictly)",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "엄격하게"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "make clear",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "분명히 하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "ministry",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "(정부의) 부서"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "newly established",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "신설된"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "put into effect",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~을 시행하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "registration confirmation",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "등록 확인"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "stand over",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "옆에서 지켜보다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "warn",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "경고하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "without respect to",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~을 고려하지 않고, ~을 무시하고"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    }
+]

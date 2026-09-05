@@ -36,9 +36,9 @@ import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
 import { vibrate, checkNotificationPermissionGranted, isAppVersionAtLeast } from '../../utils/osFunction';
 import { useStats } from '../../context/StatsContext';
 import { prefetchLabSettings } from '../../api/lab';
+import { useQuickReview } from '../../hooks/useQuickReview';
 
 import StoreNewFullSheet from '../newfullsheet/StoreNewFullSheet';
-import StudyNewFullSheet from '../newfullsheet/StudyNewFullSheet';
 import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 import { NotifPermissionNewBottomSheet } from '../newBottomSheet/NotifPermissionNewBottomSheet';
 
@@ -143,6 +143,7 @@ const Main = () => {
 
   // Actions만 구독하므로 state 변경 시 리렌더링 안 됨
   const { pushNewFullSheet } = useNewFullSheetActions();
+  const { startQuickReview } = useQuickReview();
   const { pushNewBottomSheet } = useNewBottomSheetActions();
 
   // 홈 화면 진입 시 출석 체크 호출 + (실험실 지원 앱 버전에서만) 실험실 설정 프리로드
@@ -181,20 +182,25 @@ const Main = () => {
     });
   };
 
+  /*
+    홈에서 학습으로 들어가는 모든 자리(주 버튼 · 물주기/심으러 가기 · 스트립)는
+    **종류를 묻지 않고 바로 AI 추천 학습을 연다.**
+    무엇을 할지 정해 주는 것이 이 화면의 일이라, 화면 전체가 이미 오늘 무엇이 급한지를
+    말해 놓고 버튼에서 다시 종류를 묻는 건 방금 한 말을 무르는 셈이었다.
+    종류를 고르는 자리는 단어장 상세 시트로 옮겼다(useQuickReview 주석).
+  */
   const handleTodayStudyButtonClick = () => {
-    pushNewFullSheet(StudyNewFullSheet, {}, {
-      smFull: true,
-      closeOnBackdropClick: true
-    });
+    startQuickReview();
   };
 
   // §12 — 버튼 모습은 다섯 상태 모두 같고 글자만 바뀐다. 가는 곳만 상태를 따른다.
   const handleCtaClick = () => {
-    vibrate({ duration: 5 });
     if (homeState === HOME_STATES.EMPTY) {
+      vibrate({ duration: 5 });
       navigate('/book-store');
       return;
     }
+    // 학습 진입의 햅틱은 startQuickReview 가 준다 — 여기서 또 주면 두 번 울린다
     handleTodayStudyButtonClick();
   };
 

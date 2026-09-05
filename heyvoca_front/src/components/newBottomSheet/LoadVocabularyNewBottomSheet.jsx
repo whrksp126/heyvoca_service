@@ -183,10 +183,10 @@ export const LoadVocabularyNewBottomSheet = () => {
               key={item.id}
               className="
                                 flex items-center justify-center gap-[8px]
-                                w-full h-[45px]
+                                w-full h-[52px]
                                 bg-layout-white dark:bg-layout-gray-dark
                                 border border-primary-main-600 border-solid
-                                rounded-[8px]
+                                rounded-[12px]
                                 text-primary-main-600 font-bold text-[16px] tracking-[-0.32px]
                             "
               onClick={item.onClick}

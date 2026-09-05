@@ -1,0 +1,358 @@
+[
+    {
+        "origin": "briefcase",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "서류 가방"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "business trip",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "출장"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "come over",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "방문하다, 오다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "counter",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "계산대"
+            },
+            {
+                "pos": "adj",
+                "text": "반대의"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "e-mail",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "이메일"
+            },
+            {
+                "pos": "v",
+                "text": "이메일을 보내다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "filing cabinet",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "서류 정리 캐비닛"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "folder",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "서류철"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "headache",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "두통"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "internship",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "인턴 신분, 인턴 기간"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "redo",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "다시 하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "routine",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "판에 박힌 일"
+            },
+            {
+                "pos": "adj",
+                "text": "정기적인"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "table lamp",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "탁상 전기스탠드"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "thanks to",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~ 덕택에"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "timetable",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "시간표"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "window display",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "쇼윈도의 상품 진열"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "chief",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "주된, (직급상) 최고위자인"
+            },
+            {
+                "pos": "n",
+                "text": "(단체의) 최고위자"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "conceal",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "감추다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "correct",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "맞는"
+            },
+            {
+                "pos": "v",
+                "text": "정정하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "economic",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "경제의"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "embrace",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "받아들이다, 포용하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "expected",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "예상되는"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "forum",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "토론회"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "instead of",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~ 대신에"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "mission",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "임무"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "programming",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "방송 편성"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "remaining",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "남아 있는"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "rush",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "서두르다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "unfortunately",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "불행하게도, 유감스럽게도"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    }
+]

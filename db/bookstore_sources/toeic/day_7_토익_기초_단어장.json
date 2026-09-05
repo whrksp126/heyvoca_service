@@ -1,0 +1,342 @@
+[
+    {
+        "origin": "after all",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "결국"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "answer the phone",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "전화를 받다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "as it is",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "있는 그대로"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "be based on",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~에 근거하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "be familiar with",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~을 잘 알고 있다, ~에 익숙하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "concrete",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "구체적인"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "conflict with",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~과 상충되다, 충돌하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "on display",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "전시된, 진열된"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "shadow",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "그림자, 그늘"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "around the world",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "전 세계에"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "array",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "진열, 배열"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "attempt",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "시도하다"
+            },
+            {
+                "pos": "n",
+                "text": "시도"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "audiovisual",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "시청각의"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "avoid",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "방지하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "based",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "~에 기반을 둔"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "cinema",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "영화관, 극장"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "competitive",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "경쟁을 하는, 경쟁력 있는"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "conclude",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "결론을 내리다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "energy drink",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "에너지 음료"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "find out",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "찾아내다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "informal",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "격식에 얽매이지 않는, 편안한"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "marketplace",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "시장"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "pattern",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "무늬; 경향; 모범"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "public relations (PR) department",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "홍보부"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "sales",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "판매의"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "strict",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "엄격한"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "tool",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "도구"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "typical",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "전형적인, 대표적인"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    }
+]

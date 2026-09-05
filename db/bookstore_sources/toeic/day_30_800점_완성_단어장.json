@@ -1,0 +1,866 @@
+[
+    {
+        "origin": "aging",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "나이 들어가는"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "ankle sprain",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "발목 접질림"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "back injury",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "허리 부상"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "be on a special diet",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "특수 식이 요법 중이다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "blood pressure",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "혈압"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "blood supply",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "혈액 공급"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "buzzing",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "윙윙 소리를 내는, 와글거리는"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "doctor's appointment",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "진료 예약"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "emergency room",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "응급실"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "get some exercise",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "운동하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "heart ailment",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "심장병"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "heart attack",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "심장 마비"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "heart disease",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "심장 질환"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "injection",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "주사"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "insomnia",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "불면증"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "lean back",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "뒤로 기대다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "lose weight",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "살이 빠지다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "maternity ward",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "산부인과 병동"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "patient's record",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "환자의 의료 기록"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "physical examination",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "신체검사"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "physical therapy",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "물리 치료"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "resist",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "참다, 견디다, 저항하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "sneeze",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "재채기하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "surgical instrument",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "수술 도구"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "tablet",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "알약"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "take effect",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "효과가 나타나다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "take medication",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "약을 복용하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "take some medicine",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "약을 먹다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "terminal",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "말기의, 불치의"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "vaccination",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "백신, 예방 접종"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "watch over",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "보호하다, 지키다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "consequently",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "그 결과, 따라서"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "harmful",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "해로운, 유해한"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "physically fit",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "신체적으로 건강한"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "prescribed medication",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "처방된 약"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "preventative measure",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "예방 조치"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "regular checkup",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "정기 검진"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "rehabilitation center",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "재활 센터"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "run a fever",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "열이 나다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "side effect",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "부작용"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "sports injury",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "운동 부상"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "take a break",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "휴식을 취하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "vital signs",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "활력 징후"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "well-balanced diet",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "균형 잡힌 식단"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "amount to",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "합계가 ~에 이르다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "be aware of",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "~을 알고 있다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "be capable of",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "~할 능력이 있다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "be in charge of",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "~을 담당하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "be likely to",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "~할 가능성이 있다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "be responsible for",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "~에 책임이 있다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "be subject to",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "~하기 쉽다, ~의 대상이다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "carry out",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "수행하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "come up with",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "생각해내다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "deal with",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "다루다, 처리하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "depend on",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "의존하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "focus on",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "~에 집중하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "give up",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "포기하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "go through",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "겪다, 거치다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "keep in mind",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "명심하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "lead to",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "~로 이어지다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "look for",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "찾다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "look into",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "조사하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "make sure",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "확인하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "pay attention to",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "~에 주의를 기울이다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "put off",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "연기하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "rely on",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "의존하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "set up",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "설치하다, 세우다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "take advantage of",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "~을 이용하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "take care of",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "~을 돌보다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "take over",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "인계받다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "turn out to be",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "~로 밝혀지다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "waiting room",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "대기실"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    }
+]

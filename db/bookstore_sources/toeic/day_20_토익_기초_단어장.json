@@ -1,0 +1,338 @@
+[
+    {
+        "origin": "abroad",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "해외로, 외국에"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "airline",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "항공사"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "amount",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "양, 액수"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "calculate",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "계산하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "cash",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "현금"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "charge",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "청구하다; n. 요금"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "cost",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "비용; v. 비용이 들다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "coupon",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "쿠폰, 할인권"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "currency",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "통화, 화폐"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "daily",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "매일의; adv. 매일"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "debt",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "빚, 부채"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "decrease",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "감소하다; n. 감소"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "due",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "만기된; ~하기로 되어 있는"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "earn",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "벌다, 얻다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "expense",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "비용, 지출"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "fee",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "수수료, 요금"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "figure",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "수치; 인물"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "finance",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "재정, 재무"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "foreign",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "외국의"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "income",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "수입, 소득"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "lack",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "부족; v. ~이 부족하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "lose",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "잃다, 지다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "manage",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "관리하다, 경영하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "save",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "기록하다; 절약하다, 구하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "salary",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "급여, 월급"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "tax",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "세금"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "tip",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "칩, 봉사료; 조언"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "treat",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "대우하다, 치료하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    }
+]

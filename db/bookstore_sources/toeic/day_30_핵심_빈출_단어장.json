@@ -1,0 +1,846 @@
+[
+    {
+        "origin": "fatigue",
+        "pronunciations": {
+            "us": "fətíːɡ",
+            "uk": "fətíːɡ"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "피로"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "Too much stress can lead to <strong class=\"target-word\">fatigue</strong>.",
+                "meaning": "과도한 스트레스는 피로로 이어질 수 있다."
+            }
+        ]
+    },
+    {
+        "origin": "checkup",
+        "pronunciations": {
+            "us": "tʃékʌ̀p",
+            "uk": "tʃékʌ̀p"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "건강 진단"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "Yearly medical <strong class=\"target-word\">checkups</strong> are required for public school students.",
+                "meaning": "공립 학교 학생들에게는 매년 건강 진단이 요구된다."
+            }
+        ]
+    },
+    {
+        "origin": "symptom",
+        "pronunciations": {
+            "us": "símptəm",
+            "uk": "símptəm"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "증상"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "The lawyer exhibited <strong class=\"target-word\">symptoms</strong> of a stress disorder.",
+                "meaning": "그 변호사는 스트레스 장애 증상을 보였다."
+            }
+        ]
+    },
+    {
+        "origin": "physician",
+        "pronunciations": {
+            "us": "fizíʃən",
+            "uk": "fizíʃən"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "내과 의사"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "Mr. Bentley consulted a <strong class=\"target-word\">physician</strong> about his high blood pressure.",
+                "meaning": "Mr. Bentley는 고혈압으로 의사에게 진찰을 받았다."
+            }
+        ]
+    },
+    {
+        "origin": "diagnosis",
+        "pronunciations": {
+            "us": "dàiəɡnóusis",
+            "uk": "dàiəɡnóusis"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "진단"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "The doctor's <strong class=\"target-word\">diagnosis</strong> turned out to be wrong.",
+                "meaning": "그 의사의 진단은 잘못된 것으로 판명되었다."
+            }
+        ]
+    },
+    {
+        "origin": "prescribe",
+        "pronunciations": {
+            "us": "priskráib",
+            "uk": "priskráib"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "(약을) 처방하다"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "The doctor <strong class=\"target-word\">prescribed</strong> a remedy for Elaine's cold.",
+                "meaning": "의사가 Elaine의 감기를 위한 치료약을 처방했다."
+            }
+        ]
+    },
+    {
+        "origin": "recovery",
+        "pronunciations": {
+            "us": "rikʌ́vəri",
+            "uk": "rikʌ́vəri"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "회복, 쾌유"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "Time is needed to make a complete <strong class=\"target-word\">recovery</strong>.",
+                "meaning": "완전히 회복하려면 시간이 필요하다."
+            }
+        ]
+    },
+    {
+        "origin": "recognize",
+        "pronunciations": {
+            "us": "rékəɡnàiz",
+            "uk": "rékəɡnàiz"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "인정하다, 알아보다"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "Many alternative medicines are not <strong class=\"target-word\">recognized</strong> as valid treatments.",
+                "meaning": "많은 대체 의학들은 유효한 치료법으로 인정되지 않는다."
+            }
+        ]
+    },
+    {
+        "origin": "join",
+        "pronunciations": {
+            "us": "dʒɔin",
+            "uk": "dʒɔin"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "~에 가입하다"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "Employees are encouraged to <strong class=\"target-word\">join</strong> the health club.",
+                "meaning": "직원들은 헬스클럽에 가입하도록 권장된다."
+            }
+        ]
+    },
+    {
+        "origin": "comprehensive",
+        "pronunciations": {
+            "us": "kɑ̀mprihénsiv",
+            "uk": "kɔ̀mprihénsiv"
+        },
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "종합적인, 포괄적인"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "Executives are required to undergo a <strong class=\"target-word\">comprehensive</strong> physical examination once a year.",
+                "meaning": "경영진은 1년에 한 번 종합 신체검사를 받도록 요구된다."
+            }
+        ]
+    },
+    {
+        "origin": "participate",
+        "pronunciations": {
+            "us": "pɑːrtísəpèit",
+            "uk": "pɑːtísipeit"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "참여하다, 참가하다"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "Over 100 people <strong class=\"target-word\">participated</strong> in the medical study.",
+                "meaning": "100명이 넘는 사람들이 의학 연구에 참여했다."
+            }
+        ]
+    },
+    {
+        "origin": "recommend",
+        "pronunciations": {
+            "us": "rèkəménd",
+            "uk": "rèkəménd"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "권고하다, 추천하다"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "The doctor <strong class=\"target-word\">recommended</strong> that Phillip get enough rest.",
+                "meaning": "의사는 Phillip에게 충분한 휴식을 취하라고 권고했다."
+            }
+        ]
+    },
+    {
+        "origin": "necessary",
+        "pronunciations": {
+            "us": "nésəsèri",
+            "uk": "nésəsèri"
+        },
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "필요한"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "Surgery may be <strong class=\"target-word\">necessary</strong> to remove the patient's tumor.",
+                "meaning": "환자의 종양을 제거하기 위해 수술이 필요할 수도 있다."
+            }
+        ]
+    },
+    {
+        "origin": "ability",
+        "pronunciations": {
+            "us": "əbíləti",
+            "uk": "əbíliti"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "능력"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "Some diseases weaken the body's <strong class=\"target-word\">ability</strong> to defend itself.",
+                "meaning": "몇몇 질병은 스스로를 방어하는 신체 능력을 약화시킨다."
+            }
+        ]
+    },
+    {
+        "origin": "operation",
+        "pronunciations": {
+            "us": "ɑ̀pəréiʃən",
+            "uk": "ɔ̀pəréiʃən"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "수술"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "Mr. Stanley underwent a four-hour <strong class=\"target-word\">operation</strong> on his heart.",
+                "meaning": "Mr. Stanley는 4시간에 걸친 심장 수술을 받았다."
+            }
+        ]
+    },
+    {
+        "origin": "cleanliness",
+        "pronunciations": {
+            "us": "klénlinis",
+            "uk": "klénlinəs"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "청결"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "Maintaining <strong class=\"target-word\">cleanliness</strong> can help prevent the spread of bacteria.",
+                "meaning": "청결을 유지하는 것은 세균의 확산을 막는 데 도움이 될 수 있다."
+            }
+        ]
+    },
+    {
+        "origin": "duration",
+        "pronunciations": {
+            "us": "djuréiʃən",
+            "uk": "djuəréiʃən"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "지속 기간, 지속"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "The <strong class=\"target-word\">duration</strong> of the illness may vary from one person to the next.",
+                "meaning": "병의 지속 기간은 개인에 따라 다를 수 있다."
+            }
+        ]
+    },
+    {
+        "origin": "examination",
+        "pronunciations": {
+            "us": "iɡzæ̀mənéiʃən",
+            "uk": "iɡzæ̀minéiʃən"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "진찰, 검사"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "Dr. Knowles began the patient's <strong class=\"target-word\">examination</strong> by asking a series of questions.",
+                "meaning": "Dr. Knowles는 일련의 질문을 함으로써 환자의 진찰을 시작했다."
+            }
+        ]
+    },
+    {
+        "origin": "eliminate",
+        "pronunciations": {
+            "us": "ilímənèit",
+            "uk": "ilímineit"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "제거하다"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "The kidneys <strong class=\"target-word\">eliminate</strong> wastes from the body.",
+                "meaning": "신장은 신체 노폐물을 제거한다."
+            }
+        ]
+    },
+    {
+        "origin": "easily",
+        "pronunciations": {
+            "us": "íːzili",
+            "uk": "íːzili"
+        },
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "쉽게"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "Doctors <strong class=\"target-word\">easily</strong> removed the patient's appendix using advanced equipment.",
+                "meaning": "의사들은 첨단 장비를 사용해 환자의 맹장을 쉽게 제거했다."
+            }
+        ]
+    },
+    {
+        "origin": "dental",
+        "pronunciations": {
+            "us": "déntl",
+            "uk": "déntl"
+        },
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "치과의"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "It is important to receive <strong class=\"target-word\">dental</strong> checkups regularly.",
+                "meaning": "정기적으로 치과 검진을 받는 것은 중요하다."
+            }
+        ]
+    },
+    {
+        "origin": "dietary",
+        "pronunciations": {
+            "us": "dàiətèri",
+            "uk": "dáiətəri"
+        },
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "식이 요법의, 규정식의",
+                "pos_2": "n",
+                "text_2": "규정식, (식사의) 규정량"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "The Bureau of Health has issued a set of <strong class=\"target-word\">dietary</strong> guidelines for optimal nutrition.",
+                "meaning": "보건국은 최적의 영양을 위한 식단 지침을 발표했다."
+            }
+        ]
+    },
+    {
+        "origin": "related",
+        "pronunciations": {
+            "us": "riléitid",
+            "uk": "riléitid"
+        },
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "관련된"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "Illnesses with <strong class=\"target-word\">related</strong> symptoms can be a challenge to diagnose properly.",
+                "meaning": "관련 증상을 수반하는 질환들은 제대로 진단하는 것이 어려울 수 있다."
+            }
+        ]
+    },
+    {
+        "origin": "transmit",
+        "pronunciations": {
+            "us": "trænzmít",
+            "uk": "trænzmít"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "전염시키다"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "The flu virus is <strong class=\"target-word\">transmitted</strong> through the air.",
+                "meaning": "독감 바이러스는 공기를 통해 전염된다."
+            }
+        ]
+    },
+    {
+        "origin": "periodically",
+        "pronunciations": {
+            "us": "pìəriɑ́dikəli",
+            "uk": "pìəriɔ́dikəli"
+        },
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "주기적으로"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "Free health checkups for all staff members are offered <strong class=\"target-word\">periodically</strong>.",
+                "meaning": "모든 직원들을 위한 무료 건강 진단이 주기적으로 제공된다."
+            }
+        ]
+    },
+    {
+        "origin": "reaction",
+        "pronunciations": {
+            "us": "riǽkʃən",
+            "uk": "riǽkʃən"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "반응"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "Some foods can cause allergic <strong class=\"target-word\">reactions</strong> in children.",
+                "meaning": "일부 음식은 아이들에게 알레르기 반응을 유발할 수 있다."
+            }
+        ]
+    },
+    {
+        "origin": "simple",
+        "pronunciations": {
+            "us": "símpl",
+            "uk": "símpl"
+        },
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "단순한"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "A number of <strong class=\"target-word\">simple</strong> remedies are available for insomnia.",
+                "meaning": "불면증에는 많은 단순한 치료법들이 이용 가능하다."
+            }
+        ]
+    },
+    {
+        "origin": "coverage",
+        "pronunciations": {
+            "us": "kʌ́vəridʒ",
+            "uk": "kʌ́vəridʒ"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "(보험의) 보상 범위; (신문 등의) 보도, 취재 범위"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "Employees may extend their insurance <strong class=\"target-word\">coverage</strong> to spouses.",
+                "meaning": "직원들은 보험 보상 범위를 배우자까지 넓힐 수 있다."
+            }
+        ]
+    },
+    {
+        "origin": "exposure",
+        "pronunciations": {
+            "us": "ikspóuʒər",
+            "uk": "ikspóuʒə"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "노출"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "Prolonged <strong class=\"target-word\">exposure</strong> to sunlight can cause skin cancer.",
+                "meaning": "햇빛에 대한 장기적인 노출은 피부암을 유발할 수 있다."
+            }
+        ]
+    },
+    {
+        "origin": "pharmaceutical",
+        "pronunciations": {
+            "us": "fɑ̀ːrməsúːtikəl",
+            "uk": "fɑ̀ːməsúːtikəl"
+        },
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "제약의, 약학의"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "The <strong class=\"target-word\">pharmaceutical</strong> company markets children's dietary supplements.",
+                "meaning": "그 제약 회사는 아동용 보조 식품을 판매한다."
+            }
+        ]
+    },
+    {
+        "origin": "premium",
+        "pronunciations": {
+            "us": "príːmiəm",
+            "uk": "príːmiəm"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "보험료",
+                "pos_2": "adj",
+                "text_2": "상급의, 고급의"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "Monthly medical insurance <strong class=\"target-word\">premiums</strong> will rise next year.",
+                "meaning": "내년에 월 의료 보험료가 상승할 것이다."
+            }
+        ]
+    },
+    {
+        "origin": "relieve",
+        "pronunciations": {
+            "us": "rilíːv",
+            "uk": "rilíːv"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "완화시키다"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "AlphaCough effectively <strong class=\"target-word\">relieves</strong> the symptoms of winter colds.",
+                "meaning": "AlphaCough는 겨울철 감기 증상을 효과적으로 완화해 준다."
+            }
+        ]
+    },
+    {
+        "origin": "combination",
+        "pronunciations": {
+            "us": "kɑ̀mbənéiʃən",
+            "uk": "kɔ̀mbinéiʃən"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "결합, 연합"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "Vitamin supplements are used in <strong class=\"target-word\">combination</strong> with other preventative measures.",
+                "meaning": "비타민 보충제는 다른 예방책들과 결합하여 사용된다."
+            }
+        ]
+    },
+    {
+        "origin": "conscious",
+        "pronunciations": {
+            "us": "kɑ́nʃəs",
+            "uk": "kɔ́nʃəs"
+        },
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "알고 있는, 자각하고 있는"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "People taking medication need to be <strong class=\"target-word\">conscious</strong> of the risks.",
+                "meaning": "약을 복용하는 사람들은 위험성에 대해 알고 있을 필요가 있다."
+            }
+        ]
+    },
+    {
+        "origin": "deprivation",
+        "pronunciations": {
+            "us": "dèprivéiʃən",
+            "uk": "dèprivéiʃən"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "박탈, 상실"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "Sleep <strong class=\"target-word\">deprivation</strong> weakens the immune system.",
+                "meaning": "수면 박탈은 면역 체계를 약화시킨다."
+            }
+        ]
+    },
+    {
+        "origin": "health",
+        "pronunciations": {
+            "us": "helθ",
+            "uk": "helθ"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "건강; (사회·기관의) 번영, 안녕"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "It is difficult to forecast the future <strong class=\"target-word\">health</strong> of the medical industry.",
+                "meaning": "의료 산업의 향후 번영을 예측하기는 어렵다."
+            }
+        ]
+    },
+    {
+        "origin": "induce",
+        "pronunciations": {
+            "us": "indjúːs",
+            "uk": "indjúːs"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "유발하다"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "Users were warned that the medication may <strong class=\"target-word\">induce</strong> drowsiness.",
+                "meaning": "소비자들은 약품이 졸음을 유발할 수 있다는 것에 대해 주의를 받았다."
+            }
+        ]
+    },
+    {
+        "origin": "insurance",
+        "pronunciations": {
+            "us": "inʃúərəns",
+            "uk": "inʃúərəns"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "보험"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "Employees are eligible for dental <strong class=\"target-word\">insurance</strong> coverage.",
+                "meaning": "직원들은 치과 보험 적용을 받을 수 있다."
+            }
+        ]
+    },
+    {
+        "origin": "nutrition",
+        "pronunciations": {
+            "us": "njuːtríʃən",
+            "uk": "njuːtríʃən"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "영양"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "Balanced <strong class=\"target-word\">nutrition</strong> is essential for growing children.",
+                "meaning": "균형 잡힌 영양은 성장기의 아이들에게 필수적이다."
+            }
+        ]
+    },
+    {
+        "origin": "prevention",
+        "pronunciations": {
+            "us": "privénʃən",
+            "uk": "privénʃən"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "예방"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "Proper diet is necessary for the <strong class=\"target-word\">prevention</strong> of illness.",
+                "meaning": "질병 예방을 위해 제대로 된 식습관이 필요하다."
+            }
+        ]
+    },
+    {
+        "origin": "susceptible",
+        "pronunciations": {
+            "us": "səséptəbl",
+            "uk": "səséptəbl"
+        },
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "~에 감염되기 쉬운, 영향 받기 쉬운"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "A weakened immune system makes one <strong class=\"target-word\">susceptible</strong> to colds.",
+                "meaning": "약화된 면역 체계는 감기에 걸리기 쉽게 만든다."
+            }
+        ]
+    },
+    {
+        "origin": "uncomfortably",
+        "pronunciations": {
+            "us": "ʌnkʌ́mfərtəbli",
+            "uk": "ʌnkʌ́mfərtəbli"
+        },
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "불쾌하게, 불편하게"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "The meeting ran <strong class=\"target-word\">uncomfortably</strong> long, delaying other scheduled appointments.",
+                "meaning": "회의가 불쾌할 정도로 길어져 다른 예정된 약속들이 지연되었습니다."
+            }
+        ]
+    }
+]

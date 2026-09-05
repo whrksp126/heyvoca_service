@@ -1,0 +1,388 @@
+[
+    {
+        "origin": "automotive repair shop",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "자동차 수리점"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "awning",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "(창·문 등의) 차양, 덮개"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "cash register",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "금전 등록기, 계산대"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "cooking utensil (= cookware)",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "조리 기구"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "display case",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "진열 상자, 진열함"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "garment",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "의류"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "look different",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "다르게 보이다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "tailor",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "재단사",
+                "v": "맞춤 제작하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "wind a watch",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "시계태엽을 감다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "collectable",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "모을 수 있는"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "conversely",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "거꾸로, 반대로"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "dilute",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "희석하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "exposition",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "박람회, 전시회"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "generic",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "회사 이름이 붙지 않은, 일반적인"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "high-end",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "최고급의"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "merchant",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "상인",
+                "adj": "상업(용)의, 무역의"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "observably",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "눈에 띄게"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "predictably",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "예상대로"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "secondhand",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "중고의, 간접의"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "stylishly",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "현대식으로, 유행에 따르게"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "at a substantial discount",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "엄청난 할인가에"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "bargain over prices",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "가격을 흥정하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "embellish",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "장식하다, 꾸미다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "embroider",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "수놓다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "equivalent",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "~에 상당하는, 맞먹는"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "exhilarating",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "아주 신나는"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "exorbitant price",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "터무니없이 비싼 가격"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "exquisite",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "정교한, 우아한"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "extravagance",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "사치품, 낭비"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "lavish",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "사치스러운"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "redeem",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "바꾸다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "undercharge",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "너무 낮은 가격에 팔다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    }
+]

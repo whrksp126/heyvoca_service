@@ -1,0 +1,822 @@
+[
+    {
+        "origin": "assembly",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "조립, 집회"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "fasten the strap",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "끈을 조이다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "give a hand",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "돕다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "go out of production",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "생산을 중단하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "in a moment",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "순식간에, 곧"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "maintenance cost",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "유지비"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "makeup",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "조립, 구성"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "much to one's surprise",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "매우 놀랍게도"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "not only A but also B",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "A뿐만 아니라 B도"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "pack away",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "모아두다, 저장하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "remarkably",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "두드러지게"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "scale model (= miniature)",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "축소 모형"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "squeaking sound",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "끼익거리는 소리"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "wearable",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "착용할 수 있는"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "workbench",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "작업대"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "adapted",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "적당한, 알맞은, 개조된"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "automatically",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "자동적으로"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "carelessly",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "부주의하게"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "combustible",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "타기 쉬운, 흥분하기 쉬운"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "fitted",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "꼭 맞게 만들어진, 갖추어진"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "priced",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "값이 붙은"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "reform",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "개혁"
+            },
+            {
+                "pos": "v",
+                "text": "개혁하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "representation",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "묘사, 표현"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "technically",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "기술적으로, 엄밀히 말하면"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "technician",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "기술자, 기사"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "utterly",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "완전히, 철저히"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "adversely",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "불리하게"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "agricultural",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "농업의"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "artificial",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "인공적인"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "be irrelevant to",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~과 무관하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "crude",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "천연 그대로의, 미숙한"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "crude oil",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "원유"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "custom-made",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "주문 제작한"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "downsize",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "(인력·규모를) 줄이다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "gadget",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "간단한 도구"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "gem",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "보석"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "generator",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "발전기"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "grease",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "윤활유"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "identically",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "똑같이"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "in the event of",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~의 경우에는"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "in the process of",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~이 진행 중인"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "individually tailored",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "개인 맞춤의"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "integration",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "통합"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "line worker",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "작업 라인 노동자"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "made-to-order",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "맞춤 제작된"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "make an arrangement",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "준비하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "make an exception",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "예외로 하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "make public",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "발표하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "market awareness",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "시장 인지도"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "neatly",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "깔끔하게, 단정하게"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "on call",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "언제든지 사용할 수 있는, 대기하고 있는"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "on the edge of",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "막 ~하려는 찰나에"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "on the spot",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "현장에, 즉시"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "outlast",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "~보다 오래가다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "output",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "생산량"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "put in place",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "제자리에 두다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "query",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "질문"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "ready-made",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "기성품의"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "reassemble",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "재조립하다, 다시 모이다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "refine",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "정제하다, 개선하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "reproduction",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "모조품, 재생"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "sector",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "부문, 구역"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "settle on",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~을 결정하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "sort out",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~을 정리하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "synthetic",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "합성의"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "tailor-made",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "맞춤의"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "upon -ing",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "하자마자"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "wear and tear",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "마모, 손상"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    }
+]

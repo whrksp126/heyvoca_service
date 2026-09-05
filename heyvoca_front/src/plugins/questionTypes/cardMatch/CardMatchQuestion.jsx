@@ -276,19 +276,7 @@ const CardMatchQuestion = ({ question, testType, onComplete, onCardMatched, farm
             >
               {/* 상단 중앙 - 암기 상태 배지 (채점 후)
                   농장 상태 바가 뜨면 같은 말을 두 번 하는 것이라 배지는 숨긴다 */}
-              {!!wordResolvedStates[word.id] && !farmByWordId?.[word.id] && (() => {
-                const resolved = wordResolvedStates[word.id];
-                return (
-                  <div className="absolute top-[8px] left-0 right-0 flex justify-center z-[2]">
-                    <MemoryStateChangeBadge
-                      toKey={resolved.newKey}
-                      dir={resolved.dir}
-                      changed={resolved.changed}
-                      size="small"
-                    />
-                  </div>
-                );
-              })()}
+              
 
               <FitText
                 text={word.origin}
@@ -326,33 +314,7 @@ const CardMatchQuestion = ({ question, testType, onComplete, onCardMatched, farm
 
               {/* 하단 중앙 - 복습 예정일 (채점 후)
                   농장 상태 바가 같은 자리에서 다음 복습일까지 말하므로 그때는 숨긴다 */}
-              {!!wordResolvedStates[word.id] && !farmByWordId?.[word.id] && (() => {
-                // 낙관 추정값(wordResolvedStates) 우선 — word.fsrs.next_review는 학습 직전 값이라 과거.
-                const nextReview = wordResolvedStates[word.id].nextReview ?? word.fsrs?.next_review;
-                if (!nextReview) return null;
-                const parts = nextReview.includes('T') ? null : nextReview.split('-');
-                const date = parts
-                  ? new Date(parts[0], parts[1] - 1, parts[2])
-                  : new Date(nextReview);
-                const today = new Date();
-                today.setHours(0, 0, 0, 0);
-                date.setHours(0, 0, 0, 0);
-                const daysDiff = Math.round((date - today) / (1000 * 60 * 60 * 24));
-                if (daysDiff < 1) return null;
-                const text = `${daysDiff}일 후 복습 예정`;
-                return (
-                  <div className="absolute bottom-[8px] left-0 right-0 flex justify-center z-[2]">
-                    <motion.div
-                      initial={{ opacity: 0, y: 8 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.25, ease: [0.4, 0, 0.2, 1] }}
-                      className="flex items-center justify-center h-[18px] px-[6px] rounded-[3px] bg-primary-main-200 dark:bg-primary-main-dark text-[10px] font-[600] text-primary-main-600 whitespace-nowrap"
-                    >
-                      {text}
-                    </motion.div>
-                  </div>
-                );
-              })()}
+              
             </motion.button>
           );
         })}

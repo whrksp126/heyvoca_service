@@ -1,0 +1,805 @@
+[
+    {
+        "origin": "investment",
+        "pronunciations": {
+            "us": "invéstmənt",
+            "uk": "invéstmənt"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "투자, 투자금"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "Development of a new laptop will require a minimum <strong class=\"target-word\">investment</strong> of $250,000.",
+                "meaning": "새로운 노트북 컴퓨터의 개발은 25만 달러의 최소 투자금을 필요로 한다."
+            }
+        ]
+    },
+    {
+        "origin": "lucrative",
+        "pronunciations": {
+            "us": "lúːkrətiv",
+            "uk": "lúːkrətiv"
+        },
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "수익성 있는, 돈벌이가 되는"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "The company scanned the market for <strong class=\"target-word\">lucrative</strong> investment opportunities.",
+                "meaning": "그 회사는 수익성 있는 투자 기회를 찾기 위해 시장을 탐색했다."
+            }
+        ]
+    },
+    {
+        "origin": "inherently",
+        "pronunciations": {
+            "us": "inhíərəntli",
+            "uk": "inhíərəntli"
+        },
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "본질적으로"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "Stock market investment is considered <strong class=\"target-word\">inherently</strong> risky.",
+                "meaning": "주직 시장 투자는 본질적으로 위험하다고 여겨진다."
+            }
+        ]
+    },
+    {
+        "origin": "secure",
+        "pronunciations": {
+            "us": "미 sikjúər",
+            "uk": "영 sikjúə"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "확보하다, 얻어 내다; 안전하게 지키다; 고정시키다"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "The company <strong class=\"target-word\">secured</strong> a loan from the bank to expand its operations.",
+                "meaning": "그 회사는 사업 확장을 위해 은행으로부터 대출을 확보했다."
+            }
+        ]
+    },
+    {
+        "origin": "foreseeable",
+        "pronunciations": {
+            "us": "fɔːrsíːəbl",
+            "uk": "fɔːrsíːəbl"
+        },
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "예견할 수 있는"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "Oil companies have no expansion plans in the <strong class=\"target-word\">foreseeable</strong> future.",
+                "meaning": "석유 회사들은 당분간 확장 계획을 가지고 있지 않다."
+            }
+        ]
+    },
+    {
+        "origin": "innate",
+        "pronunciations": {
+            "us": "inéit",
+            "uk": "inéit"
+        },
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "타고난"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "Mr. Rogers has an <strong class=\"target-word\">innate</strong> ability to predict market fluctuations.",
+                "meaning": "Mr. Rogers는 시장 변동을 예측하는 데 타고난 능력을 갖고 있다."
+            }
+        ]
+    },
+    {
+        "origin": "property",
+        "pronunciations": {
+            "us": "prɑ́ːpərti",
+            "uk": "prɔ́ːpəti"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "재산"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "All real estate transactions are liable for <strong class=\"target-word\">property</strong> tax.",
+                "meaning": "모든 부동산 거래들은 재산세를 납입할 의무가 있다."
+            }
+        ]
+    },
+    {
+        "origin": "on behalf of",
+        "pronunciations": {
+            "us": "phr",
+            "uk": "phr"
+        },
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~을 대신해서"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "The broker received authorization to sell shares <strong class=\"target-word\">on behalf of</strong> his client.",
+                "meaning": "그 중개인은 고객을 대신해 주식을 매각할 수 있는 권한을 받았다."
+            }
+        ]
+    },
+    {
+        "origin": "lease",
+        "pronunciations": {
+            "us": "liːs",
+            "uk": "liːs"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "임대차 (계약)",
+                "pos_2": "v",
+                "text_2": "임대하다, 임차하다"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "Investors agreed to a 25-year <strong class=\"target-word\">lease</strong> on the office building.",
+                "meaning": "투자자들은 사무실 건물에 대한 25년 임대차 계약에 동의했다."
+            }
+        ]
+    },
+    {
+        "origin": "sponsor",
+        "pronunciations": {
+            "us": "spɑ́ːnsər",
+            "uk": "spɔ́ːnsə"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "후원하다",
+                "pos_2": "n",
+                "text_2": "후원자"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "Reed Bank <strong class=\"target-word\">sponsored</strong> a series of financial seminars.",
+                "meaning": "Reed 은행은 일련의 재무 세미나를 후원했다."
+            }
+        ]
+    },
+    {
+        "origin": "propose",
+        "pronunciations": {
+            "us": "prəpóuz",
+            "uk": "prəpóuz"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "제안하다"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "Gould Capital <strong class=\"target-word\">proposed</strong> to fund Ms. Locke's venture.",
+                "meaning": "Gould Capital사는 Ms. Locke의 벤처 사업에 자금을 대는 것을 제안했다."
+            }
+        ]
+    },
+    {
+        "origin": "support",
+        "pronunciations": {
+            "us": "səpɔ́ːrt",
+            "uk": "səpɔ́ːt"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "후원, 원조, 지지",
+                "pos_2": "v",
+                "text_2": "지원하다, 후원하다; 살게 하다, (생명·기력 등을) 유지하다"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "The museum is <strong class=\"target-word\">supported</strong> financially by several local companies.",
+                "meaning": "그 박물관은 몇몇 지역 사업체들로부터 재정적으로 지원받는다."
+            }
+        ]
+    },
+    {
+        "origin": "distribution",
+        "pronunciations": {
+            "us": "dìstrəbjúːʃən",
+            "uk": "dìstribjúːʃən"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "분배, 배급"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "The <strong class=\"target-word\">distribution</strong> of profits will be announced to shareholders next week.",
+                "meaning": "수익 분배는 다음 주에 주주들에게 공표될 것이다."
+            }
+        ]
+    },
+    {
+        "origin": "consider",
+        "pronunciations": {
+            "us": "kənsídər",
+            "uk": "kənsídə"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "고려하다"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "Before buying a property, it's important to <strong class=\"target-word\">consider</strong> the hidden expenses involved.",
+                "meaning": "부동산을 매입하기 전에 관련된 잠재 비용을 고려하는 것이 중요하다."
+            }
+        ]
+    },
+    {
+        "origin": "nearly",
+        "pronunciations": {
+            "us": "níərli",
+            "uk": "níəli"
+        },
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "거의, 대략"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "The firm was operated so well that investors <strong class=\"target-word\">nearly</strong> doubled their money.",
+                "meaning": "회사가 매우 잘 운영되어서 투자자들은 투자금을 거의 두 배로 만들었다."
+            }
+        ]
+    },
+    {
+        "origin": "consent",
+        "pronunciations": {
+            "us": "kənsént",
+            "uk": "kənsént"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "동의, 허락",
+                "pos_2": "v",
+                "text_2": "동의하다"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "A sale of the business will require the <strong class=\"target-word\">consent</strong> of shareholders.",
+                "meaning": "사업체의 매각은 주주들의 동의를 필요로 한다."
+            }
+        ]
+    },
+    {
+        "origin": "gratitude",
+        "pronunciations": {
+            "us": "grǽtətjùːd",
+            "uk": "grǽtitjùːd"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "고마움, 감사"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "The CEO showed his <strong class=\"target-word\">gratitude</strong> to those who have stayed with the company from the beginning.",
+                "meaning": "최고 경영자는 초창기부터 회사에 있었던 사람들에게 그의 고마움을 표했다."
+            }
+        ]
+    },
+    {
+        "origin": "consult",
+        "pronunciations": {
+            "us": "kənsʌ́lt",
+            "uk": "kənsʌ́lt"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "상의하다, 상담하다"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "Unsure about whether to invest, Jacob <strong class=\"target-word\">consulted</strong> with his financial advisor.",
+                "meaning": "투자할지 확실하지 않았기 때문에, Jacob은 자신의 재정 고문과 상의했다."
+            }
+        ]
+    },
+    {
+        "origin": "advice",
+        "pronunciations": {
+            "us": "ədváis",
+            "uk": "ədváis"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "조언, 충고"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "The bank provides its clients with <strong class=\"target-word\">advice</strong> on how to save more money.",
+                "meaning": "그 은행은 고객들에게 더 많은 돈을 저축할 수 있는 방법에 대한 조언을 제공한다."
+            }
+        ]
+    },
+    {
+        "origin": "partially",
+        "pronunciations": {
+            "us": "pɑ́ːrʃəli",
+            "uk": "pɑ́ːʃəli"
+        },
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "부분적으로, 일부분은"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "Indigo Inc. will be <strong class=\"target-word\">partially</strong> funded by the sale of bonds.",
+                "meaning": "Indigo사는 채권의 매각을 통해 부분적으로 자금이 제공될 것이다."
+            }
+        ]
+    },
+    {
+        "origin": "evident",
+        "pronunciations": {
+            "us": "évədənt",
+            "uk": "évidənt"
+        },
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "분명한, 명백한"
+            }
+        ],
+        "notes": "The executives of Panta Ltd. are pleased at the evident interest shown in their public offering. (Panta사의 임원들은 회사 주식 공모에 보여진 분명한 관심에 기뻐했다.)",
+        "examples": []
+    },
+    {
+        "origin": "reliability",
+        "pronunciations": {
+            "us": "rilàiəbíləti",
+            "uk": "rilàiəbíliti"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "신뢰도, 믿음직함"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "KTR's success is dependent on the <strong class=\"target-word\">reliability</strong> of its financial research analysis.",
+                "meaning": "KTR사의 성공은 회사의 재무 연구 분석에 대한 신뢰도에 달려 있다."
+            }
+        ]
+    },
+    {
+        "origin": "cautious",
+        "pronunciations": {
+            "us": "kɔ́ːʃəs",
+            "uk": "kɔ́ːʃəs"
+        },
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "조심하는, 신중한"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "Analysts are <strong class=\"target-word\">cautious</strong> about recommending the troubled company's stocks.",
+                "meaning": "분석가들은 문제가 많은 회사의 주식을 추천하는 것에 대해 조심한다."
+            }
+        ]
+    },
+    {
+        "origin": "insight",
+        "pronunciations": {
+            "us": "ínsàit",
+            "uk": "ínsàit"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "식견, 통찰력"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "The feature article on Dunbar offered valuable <strong class=\"target-word\">insight</strong> into the company's operations.",
+                "meaning": "Dunbar사에 대한 특집 기사는 그 회사 경영에 대한 귀중한 식견을 제공했다."
+            }
+        ]
+    },
+    {
+        "origin": "portfolio",
+        "pronunciations": {
+            "us": "pɔːrtfóuliòu",
+            "uk": "pɔːtfóuliòu"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "포트폴리오, 투자 자산 구성"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "The advisor suggested that his client diversify her <strong class=\"target-word\">portfolio</strong>.",
+                "meaning": "그 고문은 그의 고객에게 포트폴리오를 다양화해야 한다고 제안했다."
+            }
+        ]
+    },
+    {
+        "origin": "possible",
+        "pronunciations": {
+            "us": "pɑ́ːsəbl",
+            "uk": "pɔ́ːsəbl"
+        },
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "가능한, 있음 직한"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "Cautious investors take every <strong class=\"target-word\">possible</strong> measure to prevent losses.",
+                "meaning": "신중한 투자자들은 손실을 막기 위해 모든 가능한 조치를 취한다."
+            }
+        ]
+    },
+    {
+        "origin": "speculation",
+        "pronunciations": {
+            "us": "spèkjuléiʃən",
+            "uk": "spèkjuléiʃən"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "추측"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "Company shares fell amid growing <strong class=\"target-word\">speculation</strong> of bankruptcy.",
+                "meaning": "파산에 대한 추측이 증가하는 가운데 회사 주식이 하락했다."
+            }
+        ]
+    },
+    {
+        "origin": "solely",
+        "pronunciations": {
+            "us": "sóulli",
+            "uk": "sóulli"
+        },
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "전적으로"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "Their interest was <strong class=\"target-word\">solely</strong> in foreign investment.",
+                "meaning": "그들의 관심은 전적으로 해외 투자에만 있었다."
+            }
+        ]
+    },
+    {
+        "origin": "entrepreneur",
+        "pronunciations": {
+            "us": "ɑ̀ːntrəprənə́ːr",
+            "uk": "ɔ̀ːntrəprənə́ː"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "사업가"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "Rosedale Investments offers venture capital to young <strong class=\"target-word\">entrepreneurs</strong>.",
+                "meaning": "Rosedale Investments사는 젊은 사업가들에게 벤처 자금을 제공한다."
+            }
+        ]
+    },
+    {
+        "origin": "eventually",
+        "pronunciations": {
+            "us": "ivéntʃuəli",
+            "uk": "ivéntʃuəli"
+        },
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "결국, 마침내"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "Stocks are expected to stabilize <strong class=\"target-word\">eventually</strong>.",
+                "meaning": "주식이 결국에는 안정될 것으로 예측된다."
+            }
+        ]
+    },
+    {
+        "origin": "shareholder",
+        "pronunciations": {
+            "us": "ʃɛ́ərhòuldər",
+            "uk": "ʃɛ́əhòuldə"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "주주"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "<strong class=\"target-word\">Shareholders</strong> can now gain access to updated financial reports on the company's Web site.",
+                "meaning": "주주들은 이제 회사 웹사이트에서 갱신된 재정 보고서를 볼 수 있다."
+            }
+        ]
+    },
+    {
+        "origin": "outlook",
+        "pronunciations": {
+            "us": "áutlùk",
+            "uk": "áutlùk"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "전망"
+            }
+        ],
+        "notes": "The outlook for financial markets is positive. (금융 시장의 전망은 밝다.)",
+        "examples": [
+            {
+                "origin": "prospect",
+                "text": "전망"
+            }
+        ]
+    },
+    {
+        "origin": "stability",
+        "pronunciations": {
+            "us": "stəbíləti",
+            "uk": "stəbíliti"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "안정, 안정성"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "Sound economic policies are essential for long-term <strong class=\"target-word\">stability</strong>.",
+                "meaning": "견고한 경제 정책들이 장기적인 안정을 위해 꼭 필요하다."
+            }
+        ]
+    },
+    {
+        "origin": "bond",
+        "pronunciations": {
+            "us": "bɑnd",
+            "uk": "bɔnd"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "채권"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "The government issued public <strong class=\"target-word\">bonds</strong> to raise money for infrastructure projects.",
+                "meaning": "정부는 기반 시설 사업 자금을 모으기 위해 공모 채권을 발행했다."
+            }
+        ]
+    },
+    {
+        "origin": "depreciation",
+        "pronunciations": {
+            "us": "diprìːʃiéiʃən",
+            "uk": "diprìːʃiéiʃən"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "가치 하락, 화폐의 구매력 저하"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "Due to the currency <strong class=\"target-word\">depreciation</strong>, many investors experienced a loss.",
+                "meaning": "화폐 가치 하락으로 인해 많은 투자자들이 손해를 입었다."
+            }
+        ]
+    },
+    {
+        "origin": "increasing",
+        "pronunciations": {
+            "us": "inkríːsiŋ",
+            "uk": "inkríːsiŋ"
+        },
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "증가하는"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "<strong class=\"target-word\">Increasing</strong> market pressure led banks to decrease lending rates.",
+                "meaning": "증가하는 시장 압박은 은행들이 대출 금리를 인하하도록 만들었다."
+            }
+        ]
+    },
+    {
+        "origin": "prevalent",
+        "pronunciations": {
+            "us": "prévələnt",
+            "uk": "prévələnt"
+        },
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "유행하고 있는, 널리 퍼진"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "Analysts watch the most <strong class=\"target-word\">prevalent</strong> trends in the market.",
+                "meaning": "분석가들은 시장에서 가장 유행하고 있는 경향을 주시한다."
+            }
+        ]
+    },
+    {
+        "origin": "rapid",
+        "pronunciations": {
+            "us": "rǽpid",
+            "uk": "rǽpid"
+        },
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "빠른, 신속한"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "Utility companies have been growing at a <strong class=\"target-word\">rapid</strong> rate in suburban areas.",
+                "meaning": "공익 기업들이 교외 지역에서 빠른 속도로 성장하고 있다."
+            }
+        ]
+    },
+    {
+        "origin": "unprecedented",
+        "pronunciations": {
+            "us": "ʌnprésədèntid",
+            "uk": "ʌnprésidèntid"
+        },
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "전례 없는"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "Housing prices in the region rose an <strong class=\"target-word\">unprecedented</strong> 50 percent in just six months.",
+                "meaning": "그 지역의 주택 가격이 6개월 만에 50퍼센트라는 전례 없는 상승을 보였다."
+            }
+        ]
+    },
+    {
+        "origin": "yield",
+        "pronunciations": {
+            "us": "jiːld",
+            "uk": "jiːld"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "(이윤을) 가져오다, 산출하다"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "Our investments for the past fiscal year <strong class=\"target-word\">yielded</strong> returns exceeding 100 percent.",
+                "meaning": "지난 회계 연도 동안의 우리의 투자는 100퍼센트를 넘는 이윤을 가져왔다."
+            }
+        ]
+    }
+]

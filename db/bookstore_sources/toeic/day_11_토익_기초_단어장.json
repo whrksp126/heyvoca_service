@@ -1,0 +1,345 @@
+[
+    {
+        "origin": "brand new",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "최신의"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "break down",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "고장 나다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "developer",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "개발자"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "handmade",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "수공의"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "in a row",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "한 줄로, 연이어"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "late",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "늦은",
+                "adv": "늦게"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "lid",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "뚜껑"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "shape",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "(어떤) 모양으로 만들다",
+                "n": "형체"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "sketch",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "스케치하다",
+                "n": "스케치"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "switch off",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "스위치를 끄다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "turn off (↔ turn on)",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "끄다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "be known for",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~으로 알려져 있다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "be made of",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~으로 만들어지다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "catalog",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "목록, 카탈로그"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "chemist",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "화학자"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "close down",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "폐쇄하다, 폐업하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "control",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "관리하다, 통제하다",
+                "n": "관리, 통제"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "design",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "설계하다",
+                "n": "디자인"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "discovery",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "발견"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "historic",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "역사적으로 중요한"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "invention",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "발명, 발명품"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "original",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "최초의, 독창적인",
+                "n": "원형"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "pure",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "순수한, 불순물이 없는"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "repeat",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "반복하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "request form",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "요청 양식"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "sensor",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "감지 장치"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "technique",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "기술"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "test",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "검사",
+                "v": "시험하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    }
+]

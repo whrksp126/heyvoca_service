@@ -23,6 +23,7 @@ import { stageToCrop, cropLabel, FARM_ITEMS, FARM_ITEM_LABEL } from '../../utils
 
 // 아이템 이름은 utils/crop.js 의 FARM_ITEM_LABEL 하나로 통일돼 있다(시안 §1⑤ "새심기 삽").
 import { getSessionFarmSummaryApi } from '../../api/farm';
+import { getAchievementCriteriaApi } from '../../api/study';
 
 // 업적 이미지 import
 import InviteKing from '../../assets/images/HeyCharacter/InviteKing.png';
@@ -103,6 +104,17 @@ const getAchievementTextStyle = (level) => {
 // 보상/성장 슬라이드는 기존 규격(100px 그림 + 16px/700 한 줄)을 그대로 쓴다.
 // ─────────────────────────────────────────────────────────────
 
+/*
+  목록이 붙는 슬라이드 — 여기서는 그림이 **보상이 아니라 요약**이다.
+
+  보상 슬라이드(보석·콤보·업적·황금 당근)는 그림 하나가 주인공이라 화면 한가운데에 세우고
+  뒤에 오로라를 깔아 돋보이게 한다. 목록 슬라이드는 그림 아래로 단어가 줄줄이 이어지는
+  **읽는 화면**이라, 그림만 가운데 띄우면 위아래가 텅 비고 오로라만 커 보인다.
+  그래서 이 셋은 가운데 정렬도 배경 효과도 쓰지 않고 위 여백만 넉넉히 준다.
+*/
+const LIST_SLIDE_TYPES = new Set(['farmPlanted', 'farmGrown', 'farmRescued']);
+const LIST_SLIDE_TOP_PAD = 40;   // 컨테이너 위 패딩(28) 위에 더 얹는 값
+
 // 100px 히어로 그림 — 기존 newWords 슬라이드와 같은 등장 연출
 const FarmArt = ({ src, alt }) => (
   <motion.img
@@ -151,7 +163,11 @@ const CropStep = ({ from, to }) => (
 );
 
 // 목록형 슬라이드 — 보상 슬라이드와 같은 형식(그림 + 한 줄 + 목록). 전부 가운데 정렬.
-// 목록이 길어져도 화면 밖으로 밀지 않도록 목록 안쪽만 스크롤한다.
+//
+// **목록만 따로 스크롤하지 않는다.** 예전에는 목록에 `max-h-[34dvh] overflow-y-auto` 를 걸어
+// 그림과 문구는 붙박이로 두고 목록만 안에서 굴렀다. 그러면 화면 절반이 빈 채로 목록만
+// 좁은 창에서 움직여, 스크롤하는 것이 목록인지 화면인지 알 수 없었다.
+// 지금은 바깥 영역이 통째로 스크롤되고 그림·문구·목록이 같이 움직인다(글로우도 따라온다).
 const FarmListSlide = ({ art, line, rows }) => (
   <div className='relative flex flex-col items-center justify-center gap-[15px] w-full'>
     {art}
@@ -164,7 +180,7 @@ const FarmListSlide = ({ art, line, rows }) => (
       {line}
     </motion.p>
     <motion.div
-      className='flex flex-col gap-[8px] w-full max-h-[34dvh] overflow-y-auto scrollbar-hide'
+      className='flex flex-col gap-[8px] w-full'
       initial={{ y: 20, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ delay: 0.5, duration: 0.4 }}
@@ -197,6 +213,100 @@ const FarmAwardSlide = ({ art, line, why }) => (
         {why}
       </motion.p>
     ) : null}
+  </div>
+);
+
+/*
+  ─────────────────────────────────────────────────────────────
+  게스트(온보딩 첫 학습) 결과 — 가입하면 계정에 그대로 들어올 것을 미리 계산한다.
+  ─────────────────────────────────────────────────────────────
+
+  로그인 사용자는 POST /mainpage/user_study_history 가 출석·미션·업적·보석을 한 번에
+  처리해서 그 응답으로 슬라이드를 만든다. 게스트는 계정이 없어 그 호출을 못 하는데,
+  예전에는 그 자리를 `{ gem: 0 → 5 }` 한 줄로 때웠다. 그래서 첫 학습을 마친 사람이
+  **보석 한 장만 보고** 넘어갔다 — 정작 가장 많이 받는 회차인데도.
+
+  가입 직후 실제로 벌어지는 일(pages/Index.jsx: migrate → updateUserHistory)은 이렇다.
+    · 온보딩 가입 보상 보석          (onboarding.py SIGNUP_REWARD_GEM)
+    · 오늘 첫 학습 → 출석 + 보석      (mainpage.py 출석 처리)
+    · 출석왕 1레벨 (출석 1일)         → 보석
+    · 노력왕 1레벨 (학습 1회)         → 보석
+    · 데일리 미션 완료 + 보석         (온보딩 당일은 첫날 계획 완수로 판정 — mainpage.py)
+    · 끈기왕 1레벨 (연속 학습 1일)    → 보석
+  전부 조건이 '첫 학습'이라 예외 없이 달성된다. 그래서 예측이 아니라 사실상 확정이고,
+  여기서 그대로 그린다. 업적 보상 개수만 서버 기준표(/mainpage/achievement_criteria,
+  비인증)에서 읽어 온다 — 운영에서 보상을 바꿔도 화면 숫자가 따라가도록.
+
+  암기왕은 콤보 기준이라 today 유형(온보딩)에서는 쌓이지 않고,
+  독서왕은 '서점 단어장 구매'라 무료로 받는 온보딩 단어장은 해당하지 않는다.
+*/
+const GUEST_SIGNUP_GEM = 5;        // heyvoca_back/app/routes/onboarding.py SIGNUP_REWARD_GEM
+const GUEST_ATTEND_GEM = 1;        // mainpage.py 출석 보석
+const GUEST_MISSION_GEM = 1;       // mainpage.py 데일리 미션 완료 보석
+const GUEST_FIRST_DAY_GOALS = ['출석왕', '노력왕', '끈기왕'];
+const GUEST_GOAL_REWARD_FALLBACK = 2;   // 기준표 조회 실패 시 (goals 1레벨 reward_count)
+
+const buildGuestSignupResult = async () => {
+  const rewardByType = {};
+  try {
+    const res = await getAchievementCriteriaApi();
+    if (res?.code === 200 && res.data) {
+      GUEST_FIRST_DAY_GOALS.forEach((type) => {
+        const lv1 = (res.data[type] || []).find((g) => g.level === 1);
+        if (lv1?.reward != null) rewardByType[type] = lv1.reward;
+      });
+    }
+  } catch (e) { /* 기준표 조회 실패 — 기본값으로 그린다 */ }
+
+  const goalGem = GUEST_FIRST_DAY_GOALS
+    .reduce((sum, type) => sum + (rewardByType[type] ?? GUEST_GOAL_REWARD_FALLBACK), 0);
+
+  return {
+    gem: { before: 0, after: GUEST_SIGNUP_GEM + GUEST_ATTEND_GEM + GUEST_MISSION_GEM + goalGem },
+    attend: true,
+    today_study_complete: true,
+    daily_mission_complete: true,
+    // 업적 슬라이드는 type 과 level 만 읽는다(배지 그림은 ACHIEVEMENT_IMAGES 가 이름으로 찾는다)
+    goals: GUEST_FIRST_DAY_GOALS.map((type) => ({ name: type, type, level: 1 })),
+  };
+};
+
+/*
+  하단 버튼 — **온보딩 하단 CTA와 같은 규격**(pages/Onboarding.jsx `Cta`).
+    52px / radius 12 / 16px·700 / tracking -0.03em / whileTap 0.97
+  결과 화면은 온보딩 첫 학습에서 그대로 이어지는 화면이라, 같은 자리의 버튼이 45px·radius 8 로
+  달라 보이면 화면이 바뀐 게 아니라 앱이 바뀐 것처럼 읽힌다.
+
+  `secondary` 는 온보딩 선택지(OptionRow)의 미선택 형 — 2px 테두리에 빈 면. 예전의
+  회색 채운 버튼은 분홍 버튼과 무게가 비슷해 어느 쪽이 주된 행동인지 흐렸다.
+*/
+const ResultCta = ({ label, onClick, secondary = false, className = '' }) => (
+  <motion.button
+    type="button"
+    onClick={onClick}
+    whileTap={{ scale: 0.97 }}
+    transition={{ type: 'spring', stiffness: 500, damping: 15 }}
+    className={`
+      h-[52px] rounded-[12px] text-[16px] font-[700] tracking-[-0.03em]
+      ${secondary
+        ? 'border-[2px] border-layout-gray-100 dark:border-layout-gray-dark bg-layout-white dark:bg-layout-black text-layout-gray-300 dark:text-layout-gray-100'
+        : 'bg-primary-main-600 text-layout-white dark:text-layout-black'}
+      ${className}
+    `}
+  >
+    {label}
+  </motion.button>
+);
+
+/*
+  하단 버튼 자리 — 온보딩과 같은 여백(px 24 / pt 18 / pb 26).
+  면은 토큰 배경 한 겹이다. 예전에는 흰색→흰색 그라데이션을 인라인 style 로 깔았는데,
+  라이트 모드 문자열의 괄호가 닫히지 않아(`... 100%'`) 값 자체가 무효였다 —
+  결국 아무것도 안 깔린 채 목록이 버튼 뒤로 비쳤다.
+*/
+const ResultCtaBar = ({ children, className = '' }) => (
+  <div className={`flex items-center gap-[12px] px-[24px] pt-[18px] pb-[26px] bg-layout-white dark:bg-layout-black ${className}`}>
+    {children}
   </div>
 );
 
@@ -238,12 +348,16 @@ const StreakWeek = ({ current }) => (
 const StudyResult = () => {
   "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
 
-  // 결과 화면 배경이 프라이머리 계열이라 statusbar 텍스트는 흰색 강제 (페이지 떠나면 자동 복귀)
-  useStatusBarStyle('light-content');
-
   const { isDark } = useTheme();
+  /*
+    결과 화면 statusbar 글자색.
+    예전에는 무조건 'light-content'(흰 글자)를 강제했는데, 이 화면 배경은 라이트에서
+    **흰색 + 연분홍 오로라**다 — 흰 글자가 흰 배경에 얹혀 시계도 배터리도 안 보였다.
+    (다크에서는 배경이 #111111 이라 흰 글자가 맞다.) 배경을 따라가게 한다.
+  */
+  useStatusBarStyle(isDark ? 'light-content' : 'dark-content');
   const { showExamples } = useExampleSettings();
-  const { recentStudy, updateRecentStudy, isRecentStudyLoading, fetchVocabularySheets, setLastSessionResult, getWord, fetchRecommendedBooks } = useVocabulary();
+  const { recentStudy, updateRecentStudy, isRecentStudyLoading, fetchVocabularySheets, setLastSessionResult, getWord } = useVocabulary();
   const { updateUserHistory } = useUser();
   const { pushNewBottomSheet } = useNewBottomSheetActions();
 
@@ -339,8 +453,8 @@ const StudyResult = () => {
     try {
       let result;
       if (isGuest) {
-        // 게스트: 서버 저장 없이 합성 결과 — 가입 시 지급될 보석 +5을 동일 보석 슬라이드로 연출
-        result = { gem: { before: 0, after: 5 }, goals: [], today_study_complete: false };
+        // 게스트: 서버 저장 없이 합성 결과 — 가입하면 계정에 들어올 것을 그대로 그린다
+        result = await buildGuestSignupResult();
       } else {
         result = await updateUserHistory({
           'correct_cnt': correctCnt,
@@ -351,8 +465,6 @@ const StudyResult = () => {
 
         // 학습으로 SM2 nextReview가 갱신됐으니 단어장 다시 불러와 memoryStats(메인 멘트의 dueToday) 갱신
         fetchVocabularySheets();
-        // 학습 완료 시 백엔드 추천 캐시가 무효화되므로(레벨 프로필 변화) 추천 단어장도 갱신
-        if (typeof fetchRecommendedBooks === 'function') fetchRecommendedBooks();
       }
 
       setResultData(result);
@@ -659,7 +771,8 @@ const StudyResult = () => {
             </div>
           </div>
 
-          <div className='flex flex-col flex-1 overflow-y-auto scrollbar-hide pb-[100px]'>
+          {/* 아래 여백은 떠 있는 버튼 자리(52+18+26=96)보다 조금 넉넉하게 — 마지막 줄이 가리지 않도록 */}
+          <div className='flex flex-col flex-1 overflow-y-auto scrollbar-hide pb-[110px]'>
             {/* 프로그레스 서클 영역 — 시안 `.circwrap` padding 34px 0 30px */}
             <div className='flex flex-col items-center justify-center pt-[34px] pb-[30px]'>
               <div className='relative w-[238px] h-[238px] flex items-center justify-center'>
@@ -736,8 +849,9 @@ const StudyResult = () => {
                   const fsrsReps = item.fsrs?.reps ?? 0;
                   const fsrsStability = Math.round(item.fsrs?.stability ?? 0);
                   const fsrsNextReview = item.fsrs?.next_review ?? null;
-                  // [작물][단어·뜻][정답/오답] — 단어장 목록·성장 목록과 같은 순서다.
-                  // 작물 단계를 모르는 경우(농장 요약 미수신)에만 기존 암기 상태 배지로 되돌린다.
+                  // [정답/오답][단어·뜻][상태] 순서.
+                  // 이 목록에서 먼저 찾는 것은 "무엇을 틀렸나"라 채점 표시가 맨 앞에 온다.
+                  // 상태(작물 그림, 없으면 암기 상태 배지)는 부가 정보라 끝에 붙는다.
                   const crop = cropOfWord(item);
                   return (
                     <motion.div
@@ -754,34 +868,7 @@ const StudyResult = () => {
                       `}
                     >
                       <div className='flex items-center gap-[11px]'>
-                        {crop && (
-                          <CropImage stage={crop} size={52} className='flex-shrink-0' />
-                        )}
-                        <div className='flex flex-col flex-1 gap-[2px] min-w-0'>
-                          <div className="flex items-center gap-[6px] min-w-0">
-                            <h3 className="text-[15px] font-[700] text-layout-black dark:text-layout-white truncate">
-                              {item.origin}
-                            </h3>
-                            <SpeakerButton text={item.origin} lang="en" size={15} label="단어 발음 듣기" />
-                            {!crop && (
-                              <span className='ml-auto flex-shrink-0'>
-                                <MemorizationStatus
-                                  repetition={fsrsReps}
-                                  interval={fsrsStability}
-                                  ef={2.5}
-                                  nextReview={fsrsNextReview}
-                                  wordId={item.id}
-                                  useRandomMessages={false}
-                                  forceText={item.priorityBucket === 'new' ? 'NEW' : null}
-                                />
-                              </span>
-                            )}
-                          </div>
-                          <p className="text-[11.5px] font-[400] text-layout-gray-400 dark:text-layout-gray-50 truncate">
-                            {meaningsArr.join(', ')}
-                          </p>
-                          {showExamples && <ExampleList examples={item.examples} className="mt-[2px]" />}
-                        </div>
+                        {/* ① 채점 결과 */}
                         <span className='flex items-center justify-center flex-shrink-0 w-[22px] h-[22px]'>
                           {item.isCorrect ? (
                             <Circle size={20} weight="bold" className='text-status-success-500' />
@@ -789,6 +876,37 @@ const StudyResult = () => {
                             <X size={20} weight="bold" className='text-status-error-500' />
                           )}
                         </span>
+
+                        {/* ② 단어·뜻 */}
+                        <div className='flex flex-col flex-1 gap-[2px] min-w-0'>
+                          <div className="flex items-center gap-[6px] min-w-0">
+                            <h3 className="text-[15px] font-[700] text-layout-black dark:text-layout-white truncate">
+                              {item.origin}
+                            </h3>
+                            <SpeakerButton text={item.origin} lang="en" size={15} label="단어 발음 듣기" />
+                          </div>
+                          <p className="text-[11.5px] font-[400] text-layout-gray-400 dark:text-layout-gray-50 truncate">
+                            {meaningsArr.join(', ')}
+                          </p>
+                          {showExamples && <ExampleList examples={item.examples} className="mt-[2px]" />}
+                        </div>
+
+                        {/* ③ 상태 — 작물 그림. 농장 요약을 못 받았을 때만 암기 상태 배지로 되돌린다 */}
+                        {crop ? (
+                          <CropImage stage={crop} size={52} className='flex-shrink-0' />
+                        ) : (
+                          <span className='flex-shrink-0'>
+                            <MemorizationStatus
+                              repetition={fsrsReps}
+                              interval={fsrsStability}
+                              ef={2.5}
+                              nextReview={fsrsNextReview}
+                              wordId={item.id}
+                              useRandomMessages={false}
+                              forceText={item.priorityBucket === 'new' ? 'NEW' : null}
+                            />
+                          </span>
+                        )}
                       </div>
                     </motion.div>
                   );
@@ -796,63 +914,29 @@ const StudyResult = () => {
               })()}
             </div>
           </div>
-          <div
-            className="
-              absolute bottom-0 left-0 right-0
-              flex items-center justify-between gap-[15px] 
-              p-[16px] py-[20px]
-            "
-            style={{
-              background: `${isDark ? 'var(--layout-black)' : 'linear-gradient(0deg, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 1) 25%, var(--layout-white) 100%)'}`
-            }}
-          >
+          <ResultCtaBar className="absolute bottom-0 left-0 right-0">
             {testType !== 'quick' && !isGuest && (
-              <motion.button
-                className="
-                    flex-1
-                    h-[45px]
-                    rounded-[8px]
-                    bg-layout-gray-200
-                    text-layout-white dark:text-layout-black text-[16px] font-[700]
-                  "
-                onClick={() => {
-                  vibrate({ duration: 5 });
-                  onClickTestAgain();
-                }}
-                whileTap={{ scale: 0.95 }}
-                transition={{
-                  type: "spring",
-                  stiffness: 500,
-                  damping: 15
-                }}
-              >테스트 다시 하기</motion.button>
+              <ResultCta
+                secondary
+                className="flex-1"
+                label="테스트 다시 하기"
+                onClick={() => { vibrate({ duration: 5 }); onClickTestAgain(); }}
+              />
             )}
-            <motion.button
-              className="
-                  flex-1
-                  h-[45px]
-                  rounded-[8px]
-                  bg-primary-main-600
-                  text-layout-white dark:text-layout-black text-[16px] font-[700]
-                "
-              onClick={() => {
-                vibrate({ duration: 5 });
-                onClickEndStudy();
-              }}
-              whileTap={{ scale: 0.95 }}
-              transition={{
-                type: "spring",
-                stiffness: 500,
-                damping: 15
-              }}
-            >{isGuest ? '계속하기' : '학습 종료'}</motion.button>
-          </div>
+            <ResultCta
+              className="flex-1"
+              label={isGuest ? '계속하기' : '학습 종료'}
+              onClick={() => { vibrate({ duration: 5 }); onClickEndStudy(); }}
+            />
+          </ResultCtaBar>
         </motion.div>
       );
     }
 
 
     // 나머지 화면들 — 시안 §1 규격(그림 100px + 한 줄 + 확인 버튼)을 공유한다
+    // 목록 슬라이드는 가운데 정렬도 배경 오로라도 쓰지 않는다(LIST_SLIDE_TYPES 주석 참고)
+    const isListSlide = LIST_SLIDE_TYPES.has(currentScreen.type);
     let content = null;
 
     if (currentScreen.type === 'farmPlanted') {
@@ -860,12 +944,15 @@ const StudyResult = () => {
       const items = currentScreen.data.items ?? [];
       content = (
         <FarmListSlide
-          art={<FarmArt src={getCropAsset('seed', 'FRESH')} alt="새로 심은 씨앗" />}
+          /* 봉투(unplanted)가 아니라 낱알(PLANTED_SEED)이다 — 방금 심은 씨앗이므로.
+             crop 키 'seed' 를 넘기면 두 상태가 합쳐진 값이라 봉투가 나온다(CropImage 주석). */
+          art={<FarmArt src={getCropAsset('PLANTED_SEED', 'FRESH')} alt="새로 심은 씨앗" />}
           line={<>처음 배운 <strong className='text-primary-main-600'>{items.length}개</strong>를 씨앗으로 심었어요!</>}
           rows={items.map((row) => (
             <FarmGrowRow
               key={row.user_voca_id}
-              crop="seed"
+              /* 왼쪽 그림은 **지금 상태**다. 심었으니 낱알. */
+              crop="PLANTED_SEED"
               word={row.word}
               meaning={row.meaning}
               right="새로 심었어요"
@@ -1166,6 +1253,18 @@ const StudyResult = () => {
           >
             <strong className='text-primary-main-600'>보석 {currentScreen.data.gemCount}개</strong>를 획득했어요!
           </motion.p>
+          {/* 게스트는 아직 계정이 없어 보석이 들어갈 곳이 없다 — 어디로 들어오는지 한 줄 덧붙인다.
+              이 줄이 없으면 가입 화면에서 보석이 사라진 것처럼 보인다. */}
+          {isGuest ? (
+            <motion.p
+              className='-mt-[7px] text-[12px] font-[500] text-center text-layout-gray-300'
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.45, duration: 0.5 }}
+            >
+              가입하면 계정으로 바로 들어와요
+            </motion.p>
+          ) : null}
         </div>
       );
     }
@@ -1208,17 +1307,27 @@ const StudyResult = () => {
             }}
             className='relative flex flex-col flex-1 pt-[55px] overflow-hidden'
           >
-            {/* 컨텐츠 영역 */}
-            <div className='
-              relative transform -translate-y-[55px]
-              flex flex-col items-center justify-center flex-1
-              px-[20px] py-[40px]
-            '>
+            {/*
+              컨텐츠 영역 — **여기가 스크롤한다.**
+              그림·문구·목록이 한 덩어리로 움직이고, 아이콘 뒤 글로우도 같은 블록 안에 있어
+              따라 움직인다. 짧은 슬라이드는 min-h-full + justify-center 로 가운데에 선다.
+              (예전에는 -translate-y-[55px] 로 헤더 높이만큼 끌어올려 가운데를 맞췄는데,
+               스크롤이 생기면 그만큼 아래가 잘리므로 패딩으로 자리를 잡는다.)
+            */}
+            <div className='relative flex-1 overflow-y-auto scrollbar-hide px-[20px] py-[28px]'>
+              <div className={`relative w-full ${isListSlide ? '' : 'min-h-full flex flex-col justify-center'}`}>
+              {/*
+                글로우 기준 블록 — **콘텐츠 높이에 딱 맞는다.**
+                보상 슬라이드는 바깥이 min-h-full 이라 글로우를 거기에 붙이면
+                `top-50px` 이 화면 위쪽 50px 이 되어, 세로 중앙에 선 아이콘과 어긋난다.
+                콘텐츠와 같은 높이의 블록을 한 겹 두고 그 안에서 재면 항상 아이콘 중심이다.
+              */}
+              <div className='relative w-full' style={isListSlide ? { paddingTop: LIST_SLIDE_TOP_PAD } : undefined}>
               {/* 배경 — 시안 ⑨ 황금 당근만 금색 글로우로 통째로 바꾼다("배경부터 다르게 둔다").
                   나머지 슬라이드는 지금 형식(핑크 오로라) 그대로다. */}
-              {currentScreen.gold ? (
+              {isListSlide ? null : currentScreen.gold ? (
                 <div
-                  className='pointer-events-none absolute top-[50%] left-[50%] z-0 translate-x-[-50%] translate-y-[-50%] w-[300px] h-[300px] rounded-full'
+                  className='pointer-events-none absolute top-[50px] left-[50%] z-0 translate-x-[-50%] translate-y-[-50%] w-[300px] h-[300px] rounded-full'
                   style={{
                     background: 'radial-gradient(circle, rgba(242,183,19,.34) 0%, rgba(242,183,19,.12) 45%, rgba(242,183,19,0) 70%)',
                   }}
@@ -1226,7 +1335,7 @@ const StudyResult = () => {
               ) : (
               <>
               {/* ResultItemBackground01: 크기 변화 + 회전 + 섬광 효과 */}
-              <div className='absolute top-[50%] left-[50%] z-10 translate-x-[-50%] translate-y-[-50%] w-[230px] h-[230px]'>
+              <div className='pointer-events-none absolute top-[50px] left-[50%] z-0 translate-x-[-50%] translate-y-[-50%] w-[230px] h-[230px]'>
                 <motion.img
                   src={ResultItemBackground01}
                   alt="결과 아이템 배경"
@@ -1244,7 +1353,7 @@ const StudyResult = () => {
                 />
               </div>
               {/* ResultItemBackground02: 투명도 + 확대/축소 */}
-              <div className='absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] w-[757px] h-[600px]'>
+              <div className='pointer-events-none absolute top-[50px] left-[50%] z-0 translate-x-[-50%] translate-y-[-50%] w-[757px] h-[600px]'>
                 <motion.img
                   src={ResultItemBackground02}
                   alt="결과 아이템 배경"
@@ -1264,42 +1373,20 @@ const StudyResult = () => {
 
               {/* 콘텐츠 */}
 
-              <div className='relative z-10 w-full flex flex-col items-center justify-center'>
+              <div className='relative z-10 w-full flex flex-col items-center'>
                 {content}
+              </div>
+              </div>
               </div>
             </div>
             {/* 확인 버튼 */}
-            <div
-              className="
-                relative
-                flex items-center justify-center
-                p-[16px] py-[20px]
-                z-10
-              "
-              style={{
-                background: `${isDark ? 'var(--layout-black)' : 'linear-gradient(0deg, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 1) 25%, var(--layout-white) 100%'}`
-              }}
-            >
-              <motion.button
-                className="
-                  w-full
-                  h-[45px]
-                  rounded-[8px]
-                  bg-primary-main-600
-                  text-layout-white dark:text-layout-black text-[16px] font-[700]
-                "
-                onClick={() => {
-                  vibrate({ duration: 5 });
-                  handleNextScreen();
-                }}
-                whileTap={{ scale: 0.95 }}
-                transition={{
-                  type: "spring",
-                  stiffness: 500,
-                  damping: 15
-                }}
-              >확인</motion.button>
-            </div>
+            <ResultCtaBar className="relative z-10">
+              <ResultCta
+                className="w-full"
+                label="확인"
+                onClick={() => { vibrate({ duration: 5 }); handleNextScreen(); }}
+              />
+            </ResultCtaBar>
           </motion.div>
         </AnimatePresence>
       </div>

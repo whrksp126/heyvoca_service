@@ -1,0 +1,866 @@
+[
+    {
+        "origin": "a small surplus",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "약간의 흑자"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "absence from work",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "결근"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "account balance",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "통장 잔고"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "actual costs",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "실제 비용"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "administrative assistant",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "행정 보조원"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "annual budget",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "연간 예산"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "approved budget",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "승인된 예산"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "bank statement",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "은행 거래 명세서"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "be aware of the policy",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "정책을 알고 있다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "be on vacation",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "휴가 중이다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "budget shortage",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "예산 부족"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "business day",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "영업일"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "business travel",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "출장"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "cash flow",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "현금 흐름"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "company expenses",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "회사 경비"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "complete a form",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "양식을 작성하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "confirm receipts",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "영수증을 확인하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "cost reduction",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "비용 절감"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "current assets",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "유동 자산"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "daily operations",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "일상 업무"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "disclose information",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "정보를 공개하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "domestic flights",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "국내선 항공편"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "draft a proposal",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "제안서 초안을 작성하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "emergency funds",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "비상금"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "estimated time",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "예상 시간"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "excess baggage",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "초과 수하물"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "expense report",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "지출 보고서"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "file for bankruptcy",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "파산 신청을 하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "final approval",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "최종 승인"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "financial aid",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "재정 지원"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "financial records",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "재무 기록"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "fixed costs",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "고정 비용"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "flexible hours",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "유연 근무제"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "for the third quarter",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "3분기 동안"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "funding request",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "자금 요청"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "gain access to",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~에의 접근 권한을 얻다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "handle with care",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "조심스럽게 다루다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "hidden costs",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "숨겨진 비용"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "increase efficiency",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "효율성을 높이다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "internal use",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "내부용"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "itemized receipt",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "품목별 영수증"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "keep a record of",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~을 기록하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "limited funding",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "한정된 자금"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "local currency",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "현지 통화"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "make a calculation",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "계산하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "meeting agenda",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "회의 의제"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "net profit",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "순이익"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "obtain approval",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "승인을 받다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "on business",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "업무차"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "operating budget",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "운영 예산"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "out of the office",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "외출 중인, 부재중인"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "overall budget",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "전체 예산"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "overhead costs",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "경상비, 간접비"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "overseas assignment",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "해외 근무"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "pay by check",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "수표로 지불하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "petty cash",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "소액 현금"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "precisely at noon",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "정확히 정오에"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "previous experience",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "이전 경험"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "quarterly report",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "분기별 보고서"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "reimburse expenses",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "경비를 환급하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "request for funding",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "자금 요청"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "review a proposal",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "제안서를 검토하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "save money",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "돈을 아끼다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "shift work",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "교대 근무"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "submit a claim",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "청구서를 제출하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "total amount",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "총액"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "travel allowance",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "여비, 출장비"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "unforeseen expenses",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "예기치 못한 비용"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "updated information",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "업데이트된 정보"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "within the budget",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "예산 범위 내에서"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "working days",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "근무일"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "yearly bonus",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "연간 보너스"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    }
+]

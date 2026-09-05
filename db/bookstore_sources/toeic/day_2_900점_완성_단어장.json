@@ -1,0 +1,390 @@
+[
+    {
+        "origin": "commonplace",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "평범한 일, 흔한 일"
+            },
+            {
+                "pos": "adj",
+                "text": "평범한, 흔한"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "protective smock",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "보호 작업복"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "testimony",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "증언"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "accordance",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "일치, 조화"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "crucial",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "중요한"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "deviation",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "일탈, 탈선"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "effortlessly",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "힘들지 않게"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "in observance of",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~을 기념하여"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "inadvertently",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "무심코, 우연히"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "judicial",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "사법의, 재판의"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "justification",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "정당한 이유"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "keenly",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "날카롭게, 예민하게"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "lawsuit",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "소송, 고소"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "mundane",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "일상적인, 재미없는"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "off-limits",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "출입 금지의"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "ordinance",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "법령, 명령"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "pulled",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "철회된, 철수한"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "reprimand",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "비난하다, 질책하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "resolution",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "결의(안), 결정, 해상도"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "stiff",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "뻣뻣한, 경직된"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "substantiate",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "입증하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "trespass",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "(남의 토지에) 침입하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "violate",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "위반하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "at the discretion of",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~의 재량으로"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "bound",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "의무가 있는, 꼭 ~하게 되어 있는"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "circumscribe",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "~을 제한하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "enactment",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "입법, 법령"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "impeccable",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "결점 없는"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "infringement",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "침해"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "legitimate",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "합법적인, 적법한"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "petition",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "진정서, 탄원서"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "when it comes to",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~에 관해서는"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    }
+]

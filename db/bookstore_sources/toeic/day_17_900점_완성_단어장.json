@@ -1,0 +1,386 @@
+[
+    {
+        "origin": "discrepancy",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "불일치, 차이"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "improperly",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "부적절하게"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "on behalf of",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~을 대신하여"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "prepaid",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "선불의"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "recipient",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "수령인"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "stamped",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "우표를 붙인; 도장이 찍힌"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "tariff",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "관세"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "unattended",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "지켜보는 사람이 없는"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "vessel",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "선박, 배"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "waybill",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "운송장"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "as per",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~에 따라"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "customs clearance",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "통관"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "dispatch",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "발송하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "expedite",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "신속히 처리하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "freight forwarder",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "소화물 운송 업자"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "import duties",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "수입 관세"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "in good condition",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "양호한 상태로"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "inbound",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "도착하는, 귀항하는"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "outbound",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "떠나는, 외국행의"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "pack away",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "치우다, 보관하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "per hour",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "시간당"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "place a call",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "전화하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "provide a quote",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "견적을 내다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "refer a friend",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "친구를 추천하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "regular maintenance",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "정기 점검"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "run out",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "품절되다, 다 쓰다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "safety goggles",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "보안경"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "short-handed",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "일손이 부족한"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "signature",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "서명"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "take part",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "참여하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "up to code",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "규정에 맞는"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "weight limit",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "중량 제한"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    }
+]

@@ -1,0 +1,941 @@
+[
+    {
+        "origin": "research",
+        "pronunciations": {
+            "us": "ríːsəːrtʃ",
+            "uk": "risə́ːrtʃ"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "연구, 조사"
+            }
+        ],
+        "notes": "v. 연구하다, 조사하다<br>[파] <strong class=\"target-word\">researcher</strong> n. 연구자<br>[동] <strong class=\"target-word\">study</strong> 연구<br><strong class=\"target-word\">토익 이렇게 나온다</strong><br><strong class=\"target-word\">research on</strong> ~에 대한 연구<br>research와 함께 쓰이는 전치사 on을 묶어서 외워 두자.",
+        "examples": [
+            {
+                "origin": "The company started a <strong class=\"target-word\">research</strong> program into developing GPS technology.",
+                "translation": "그 회사는 위치 파악 시스템(GPS) 기술을 개발하는 연구 프로그램을 시작했다."
+            }
+        ]
+    },
+    {
+        "origin": "devise",
+        "pronunciations": {
+            "us": "diváiz"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "고안하다, 발명하다"
+            }
+        ],
+        "notes": "[파] <strong class=\"target-word\">device</strong> n. 장치<br>[동] <strong class=\"target-word\">contrive</strong> 고안하다 <strong class=\"target-word\">invent</strong> 발명하다",
+        "examples": [
+            {
+                "origin": "The firm <strong class=\"target-word\">devised</strong> a more efficient network system.",
+                "translation": "그 회사는 보다 효율적인 네트워크 시스템을 고안했다."
+            }
+        ]
+    },
+    {
+        "origin": "revolutionary",
+        "pronunciations": {
+            "us": "rèvəlúːʃənèri",
+            "uk": "rèvəlúːʃənəri"
+        },
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "혁명적인"
+            }
+        ],
+        "notes": "[파] <strong class=\"target-word\">revolution</strong> n. 혁명<br><strong class=\"target-word\">토익 이렇게 나온다</strong><br><strong class=\"target-word\">revolutionary</strong>(adj. 혁명적인)와 <strong class=\"target-word\">revolution</strong>(n. 혁명)의 품사 구별하기.",
+        "examples": [
+            {
+                "origin": "The car's <strong class=\"target-word\">revolutionary</strong> new engine surpasses those of the competition.",
+                "translation": "그 차의 혁명적인 새 엔진은 경쟁사의 것들을 능가한다."
+            }
+        ]
+    },
+    {
+        "origin": "innovative",
+        "pronunciations": {
+            "us": "ínəvèitiv",
+            "uk": "ínəvətiv"
+        },
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "혁신적인"
+            }
+        ],
+        "notes": "[파] <strong class=\"target-word\">innovate</strong> v. 혁신하다 <strong class=\"target-word\">innovation</strong> n. 혁신",
+        "examples": [
+            {
+                "origin": "Simpson & Associates provides clients with <strong class=\"target-word\">innovative</strong> solutions to their needs.",
+                "translation": "Simpson & Associates사는 고객들의 필요에 맞는 혁신적인 해결책을 제공한다."
+            }
+        ]
+    },
+    {
+        "origin": "feature",
+        "pronunciations": {
+            "us": "fíːtʃər",
+            "uk": "fíːtʃə"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "특징, 특색"
+            },
+            {
+                "pos": "v",
+                "text": "특징으로 삼다, 특별히 포함하다"
+            }
+        ],
+        "notes": "[동] <strong class=\"target-word\">characteristic</strong> 특징",
+        "examples": [
+            {
+                "origin": "The latest dryer has several new <strong class=\"target-word\">features</strong>.",
+                "translation": "최신 건조기는 몇 가지 새로운 특징을 갖고 있다."
+            },
+            {
+                "origin": "This refrigerator model <strong class=\"target-word\">features</strong> high energy efficiency.",
+                "translation": "이 냉장고 모델은 높은 에너지 효율성을 특징으로 삼는다."
+            }
+        ]
+    },
+    {
+        "origin": "inspiration",
+        "pronunciations": {
+            "us": "ìnspəréiʃən",
+            "uk": "ìnspiréiʃən"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "영감"
+            }
+        ],
+        "notes": "[파] <strong class=\"target-word\">inspire</strong> v. 영감을 주다 <strong class=\"target-word\">inspirational</strong> adj. 영감을 주는",
+        "examples": [
+            {
+                "origin": "The new fashion designer draws her <strong class=\"target-word\">inspiration</strong> from traditional attire.",
+                "translation": "새 패션 디자이너는 전통 의상에서 영감을 얻는다."
+            }
+        ]
+    },
+    {
+        "origin": "sufficiently",
+        "pronunciations": {
+            "us": "səfíʃəntli"
+        },
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "충분히"
+            }
+        ],
+        "notes": "[파] <strong class=\"target-word\">sufficient</strong> adj. 충분한 <strong class=\"target-word\">sufficiency</strong> n. 충분<br>[반] <strong class=\"target-word\">deficiently</strong> 불충분하게, 불완전하게",
+        "examples": [
+            {
+                "origin": "The containers are <strong class=\"target-word\">sufficiently</strong> strong to resist breakage.",
+                "translation": "그 그릇들은 파손을 견딜 만큼 충분히 강하다."
+            }
+        ]
+    },
+    {
+        "origin": "patent",
+        "pronunciations": {
+            "us": "péitnt"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "특허, 특허권, 특허품"
+            }
+        ],
+        "notes": "v. ~의 특허를 얻다",
+        "examples": [
+            {
+                "origin": "The lawyers submitted the paperwork for a <strong class=\"target-word\">patent</strong> application.",
+                "translation": "변호사들이 특허 신청을 위한 서류를 제출했다."
+            }
+        ]
+    },
+    {
+        "origin": "envision",
+        "pronunciations": {
+            "us": "invíʒən"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "(장래의 일 등을) 계획하다, 상상하다"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "Management <strong class=\"target-word\">envisions</strong> its latest product being sold in stores across the country.",
+                "translation": "경영진은 자사의 최신 제품이 전국에 있는 상점에서 판매되는 것을 계획한다."
+            }
+        ]
+    },
+    {
+        "origin": "extend",
+        "pronunciations": {
+            "us": "iksténd"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "연장하다; (기간을) 늘리다; (감사의 뜻을) 말하다, 베풀다"
+            }
+        ],
+        "notes": "[파] <strong class=\"target-word\">extent</strong> n. 범위, 한도 (= scope) <strong class=\"target-word\">extension</strong> n. 연장; 확대 <strong class=\"target-word\">extensive</strong> adj. 광범위한, 폭넓은<br>[동] <strong class=\"target-word\">lengthen</strong> 길게 하다 <strong class=\"target-word\">offer</strong> (감사·존경 등을) 표현하다<br><strong class=\"target-word\">토익 이렇게 나온다</strong><br><strong class=\"target-word\">extend</strong>는 길이를 연장하다라는 문맥에서는 <strong class=\"target-word\">lengthen</strong>으로, 환영, 감사, 동정심 등의 마음을 누군가에게 전달하다라는 문맥일 때는 <strong class=\"target-word\">offer</strong>로 바꾸어 쓸 수 있다.",
+        "examples": [
+            {
+                "origin": "A switch for adjusting brightness <strong class=\"target-word\">extends</strong> from the back of the lamp.",
+                "translation": "밝기를 조절하는 스위치는 램프 뒷면으로부터 연장된다."
+            },
+            {
+                "origin": "The manager <strong class=\"target-word\">extended</strong> the design deadline for a month.",
+                "translation": "관리자는 디자인 마감일을 한 달 늘렸다."
+            },
+            {
+                "origin": "The CEO <strong class=\"target-word\">extended</strong> his thanks to the research team for their great work.",
+                "translation": "최고 경영자는 연구팀의 뛰어난 작업에 대해 고마움을 나타냈다."
+            }
+        ]
+    },
+    {
+        "origin": "following",
+        "pronunciations": {
+            "us": "fɑ́louiŋ",
+            "uk": "fɔ́louiŋ"
+        },
+        "meanings": [
+            {
+                "pos": "prep",
+                "text": "~ 후에"
+            },
+            {
+                "pos": "adj",
+                "text": "다음의, 다음에 오는"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "The software was launched <strong class=\"target-word\">following</strong> months of research.",
+                "translation": "그 소프트웨어는 몇 달간의 연구 후에 출시되었다."
+            },
+            {
+                "origin": "Product brochures are available in the <strong class=\"target-word\">following</strong> languages.",
+                "translation": "제품 안내서는 다음의 언어들로 제공됩니다."
+            }
+        ]
+    },
+    {
+        "origin": "intend",
+        "pronunciations": {
+            "us": "inténd"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "~할 작정이다; 의도하다"
+            }
+        ],
+        "notes": "[파] <strong class=\"target-word\">intention</strong> n. 의도; 의사 <strong class=\"target-word\">intent</strong> n. 의도; 의향",
+        "examples": [
+            {
+                "origin": "Beauford Incorporated <strong class=\"target-word\">intends</strong> to release its new appliances this fall.",
+                "translation": "Beauford사는 올 가을에 새로운 가전제품을 출시할 작정이다."
+            },
+            {
+                "origin": "The inventor <strong class=\"target-word\">intended</strong> that her mixer be used for bread-making.",
+                "translation": "그 발명가는 그녀의 믹서기가 제빵에 사용되는 것을 의도했다."
+            }
+        ]
+    },
+    {
+        "origin": "grant",
+        "pronunciations": {
+            "us": "grænt",
+            "uk": "grɑːnt"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "(인정하여 정식으로) 수여하다, 주다"
+            },
+            {
+                "pos": "n",
+                "text": "(연구비·장학금 등의) 보조금"
+            }
+        ],
+        "notes": "[동] <strong class=\"target-word\">allowance</strong> 보조금<br><strong class=\"target-word\">토익 이렇게 나온다</strong><br><strong class=\"target-word\">take ~ for granted</strong> ~을 당연하게 여기다<br>어떤 사실을 생각해 보지 않고 당연하게 받아들이거나, 소유물 등을 당연한 것으로 여겨 돌보지 않는 경우에 사용한다.",
+        "examples": [
+            {
+                "origin": "The patent for the handheld computer was <strong class=\"target-word\">granted</strong> on April 27.",
+                "translation": "휴대용 컴퓨터에 대한 특허는 4월 27일에 수여되었다."
+            },
+            {
+                "origin": "The research team will receive a government <strong class=\"target-word\">grant</strong> of up to $4,000.",
+                "translation": "그 연구팀은 최고 4천 달러 상당의 정부 보조금을 받을 것이다."
+            }
+        ]
+    },
+    {
+        "origin": "allow",
+        "pronunciations": {
+            "us": "əláu"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "~하게 하다, ~을 허락하다"
+            }
+        ],
+        "notes": "[파] <strong class=\"target-word\">allowable</strong> adj. 허락할 수 있는, 허용되는 <strong class=\"target-word\">allowed</strong> adj. 허가받은, 허용된 <strong class=\"target-word\">allowance</strong> n. 허용치, 수당; 용돈",
+        "examples": [
+            {
+                "origin": "The program's new feature <strong class=\"target-word\">allows</strong> users to conduct advanced searches.",
+                "translation": "그 프로그램의 새로운 기능은 사용자들이 고급 검색을 할 수 있게 한다."
+            }
+        ]
+    },
+    {
+        "origin": "inspect",
+        "pronunciations": {
+            "us": "inspékt"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "~을 검사하다, 조사하다"
+            }
+        ],
+        "notes": "[파] <strong class=\"target-word\">inspection</strong> n. 조사, 검사 <strong class=\"target-word\">inspector</strong> n. 검사자, 검사관",
+        "examples": [
+            {
+                "origin": "The head researcher <strong class=\"target-word\">inspects</strong> all equipment and chemicals in the laboratory daily to ensure safety.",
+                "translation": "수석 연구원은 안전을 보장하기 위해 연구실의 모든 장비와 화학 약품을 매일 검사한다."
+            }
+        ]
+    },
+    {
+        "origin": "improve",
+        "pronunciations": {
+            "us": "imprúːv"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "향상시키다, 개선하다"
+            }
+        ],
+        "notes": "[파] <strong class=\"target-word\">improvement</strong> n. 향상, 개선<br>[동] <strong class=\"target-word\">upgrade</strong> 업그레이드하다, 개선하다",
+        "examples": [
+            {
+                "origin": "A variety of incentives can <strong class=\"target-word\">improve</strong> staff productivity.",
+                "translation": "다양한 장려금은 직원 생산성을 향상시킬 수 있다."
+            }
+        ]
+    },
+    {
+        "origin": "increasingly",
+        "pronunciations": {
+            "us": "inkríːsiŋli"
+        },
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "점점, 더욱더"
+            }
+        ],
+        "notes": "[파] <strong class=\"target-word\">increase</strong> v. 증가하다 <strong class=\"target-word\">increasing</strong> adj. 증가하는",
+        "examples": [
+            {
+                "origin": "Technology is becoming an <strong class=\"target-word\">increasingly</strong> important factor in the nation's economy.",
+                "translation": "과학 기술은 국가 경제에서 점점 중요한 요소가 되고 있다."
+            }
+        ]
+    },
+    {
+        "origin": "invest",
+        "pronunciations": {
+            "us": "invést"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "투자하다, 운용하다"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "Lamont Manufacturing <strong class=\"target-word\">invested</strong> millions of dollars in improving its assembly line.",
+                "translation": "Lamont Manufacturing사는 조립 라인을 개선하는 데 수백만 달러를 투자했다."
+            }
+        ]
+    },
+    {
+        "origin": "various",
+        "pronunciations": {
+            "us": "vέəriəs",
+            "uk": "vέəriəs"
+        },
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "여러 가지의, 가지각색의"
+            }
+        ],
+        "notes": "[파] <strong class=\"target-word\">vary</strong> v. 다양하다; 다르다 <strong class=\"target-word\">variety</strong> n. 여러 가지; 다양",
+        "examples": [
+            {
+                "origin": "This car has <strong class=\"target-word\">various</strong> features not included in older models.",
+                "translation": "이 자동차는 구형 모델에 포함되지 않았던 여러 가지 기능을 가지고 있다."
+            }
+        ]
+    },
+    {
+        "origin": "upgrade",
+        "pronunciations": {
+            "us": "n. ʌ́pgrèid",
+            "uk": "v. ʌpgréid"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "업그레이드, 개량형"
+            },
+            {
+                "pos": "v",
+                "text": "업그레이드하다, 개선하다"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "Special customers are eligible for one free computer <strong class=\"target-word\">upgrade</strong>.",
+                "translation": "특별 고객들은 한 번의 컴퓨터 무료 업그레이드를 받을 자격이 있다."
+            },
+            {
+                "origin": "Gina just <strong class=\"target-word\">upgraded</strong> her cell phone software.",
+                "translation": "Gina는 그녀의 휴대 전화 소프트웨어를 이제 막 업그레이드했다."
+            }
+        ]
+    },
+    {
+        "origin": "manual",
+        "pronunciations": {
+            "us": "mǽnjuəl"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "설명서, 안내서"
+            }
+        ],
+        "notes": "adj. 수동의, 손으로 하는",
+        "examples": [
+            {
+                "origin": "Rachel is writing the product <strong class=\"target-word\">manual</strong> for the new air conditioner.",
+                "translation": "Rachel은 새로운 에어컨에 대한 제품 설명서를 작성하고 있다."
+            }
+        ]
+    },
+    {
+        "origin": "explore",
+        "pronunciations": {
+            "us": "iksplɔ́ːr",
+            "uk": "iksplɔ́ː"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "조사하다, 탐구하다"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "Clients seeking company information can <strong class=\"target-word\">explore</strong> our Web site.",
+                "translation": "회사 정보를 찾고자 하는 고객들은 우리 웹사이트를 조사할 수 있다."
+            }
+        ]
+    },
+    {
+        "origin": "response",
+        "pronunciations": {
+            "us": "rispɑ́ns",
+            "uk": "rispɔ́ns"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "응답, 대답"
+            }
+        ],
+        "notes": "[파] <strong class=\"target-word\">respond</strong> v. 대답하다, 반응하다<br><strong class=\"target-word\">토익 이렇게 나온다</strong><br><strong class=\"target-word\">in response to</strong> ~에 응하여<br>response는 어떤 일이나 현상에 대한 반응이나 대응을 의미하며 in response to 형태로 자주 출제됨을 알아 두자.",
+        "examples": [
+            {
+                "origin": "Those testing the new microwave are asked to submit written <strong class=\"target-word\">responses</strong> to some questions.",
+                "translation": "새 전자레인지를 시험하는 사람들은 몇 가지 질문에 대해 서면으로 된 응답을 제출하라고 요청받는다."
+            }
+        ]
+    },
+    {
+        "origin": "appearance",
+        "pronunciations": {
+            "us": "əpíərəns"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "외관, 외모"
+            }
+        ],
+        "notes": "[파] <strong class=\"target-word\">appear</strong> v. 나타나다 <strong class=\"target-word\">apparently</strong> adv. 보기에, 외관상으로는<br>[동] <strong class=\"target-word\">outlook</strong> 외관",
+        "examples": [
+            {
+                "origin": "The design team completely modernized the product's <strong class=\"target-word\">appearance</strong>.",
+                "translation": "디자인팀은 그 제품의 외관을 완전히 현대화했다."
+            }
+        ]
+    },
+    {
+        "origin": "successful",
+        "pronunciations": {
+            "us": "səksésfəl"
+        },
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "성공적인, 성공한"
+            }
+        ],
+        "notes": "[파] <strong class=\"target-word\">succeed</strong> v. 성공하다 <strong class=\"target-word\">success</strong> n. 성공 <strong class=\"target-word\">successfully</strong> adv. 성공적으로",
+        "examples": [
+            {
+                "origin": "The floor lamps are the company's most <strong class=\"target-word\">successful</strong> product.",
+                "translation": "전기스탠드는 그 회사의 가장 성공적인 제품이다."
+            }
+        ]
+    },
+    {
+        "origin": "hold",
+        "pronunciations": {
+            "us": "hould",
+            "uk": "həuld"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "~을 수용하다, ~을 담다; (회의 등을) 개최하다, 열다"
+            }
+        ],
+        "notes": "[동] <strong class=\"target-word\">contain</strong> 담다 <strong class=\"target-word\">conduct</strong> (특정한 활동을) 하다, 이끌다<br><strong class=\"target-word\">토익 이렇게 나온다</strong><br>회의 등을 개최하거나 여는 것을 의미할 때 <strong class=\"target-word\">hold</strong>는 <strong class=\"target-word\">conduct</strong>로 바꾸어 쓸 수 있다.",
+        "examples": [
+            {
+                "origin": "The washing machine <strong class=\"target-word\">holds</strong> up to three kilograms of laundry.",
+                "translation": "그 세탁기는 최대 3킬로그램의 세탁물을 수용한다."
+            }
+        ]
+    },
+    {
+        "origin": "advance",
+        "pronunciations": {
+            "us": "ædvǽns",
+            "uk": "ədvɑ́ːns"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "진보, 전진"
+            }
+        ],
+        "notes": "[파] <strong class=\"target-word\">advancement</strong> n. 진보 <strong class=\"target-word\">advanced</strong> adj. 진보한<br>[반] <strong class=\"target-word\">setback</strong> 퇴보, 실패<br><strong class=\"target-word\">토익 이렇게 나온다</strong><br><strong class=\"target-word\">in advance</strong> 미리<br><strong class=\"target-word\">in advance of</strong> ~ 이전에<br><strong class=\"target-word\">advance in</strong> ~의 진보, 발전<br>advance는 전치사 in과 함께 사용된다. in의 위치에 따라 숙어의 뜻이 변하는 것에 유의하며 외워두자.",
+        "examples": [
+            {
+                "origin": "The product development team researches <strong class=\"target-word\">advances</strong> in computer technology.",
+                "translation": "제품 개발팀은 컴퓨터 기술의 진보에 대해 조사한다."
+            }
+        ]
+    },
+    {
+        "origin": "reliable",
+        "pronunciations": {
+            "us": "riláiəbl"
+        },
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "믿을 만한, 신뢰할 수 있는"
+            }
+        ],
+        "notes": "[파] <strong class=\"target-word\">rely</strong> v. 의지하다, 신뢰하다 <strong class=\"target-word\">reliability</strong> n. 신뢰성<br>[동] <strong class=\"target-word\">trustworthy, dependable</strong> 신뢰할 수 있는<br><strong class=\"target-word\">토익 이렇게 나온다</strong><br><strong class=\"target-word\">reliable</strong> 믿을 만한, 신뢰할 수 있는<br><strong class=\"target-word\">reliant</strong> 의존하는, 의지하는<br>어근이 같지만 뜻이 다른 두 단어를 구별하는 문제로 출제된다.",
+        "examples": [
+            {
+                "origin": "Tests indicate that Branco's products are <strong class=\"target-word\">reliable</strong> and efficient.",
+                "translation": "실험은 Branco사의 제품이 믿을 만하고 효율적임을 보여 준다."
+            },
+            {
+                "origin": "The firm's management system is not <strong class=\"target-word\">reliant</strong> on any single person.",
+                "translation": "그 회사의 경영 시스템은 어느 한 사람에게만 의존하지 않는다."
+            }
+        ]
+    },
+    {
+        "origin": "quality",
+        "pronunciations": {
+            "us": "kwɑ́ləti",
+            "uk": "kwɔ́liti"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "품질, 질"
+            }
+        ],
+        "notes": "adj. 고급의, 우수한<br>[파] <strong class=\"target-word\">qualify</strong> v. 자격을 얻다",
+        "examples": [
+            {
+                "origin": "The <strong class=\"target-word\">quality</strong> control division inspects samples of all items.",
+                "translation": "품질 관리 부서는 모든 물품의 견본을 검사한다."
+            }
+        ]
+    },
+    {
+        "origin": "domestic",
+        "pronunciations": {
+            "us": "dəméstik"
+        },
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "국내의, 국산의"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "Slow sales in the <strong class=\"target-word\">domestic</strong> market forced companies to expand overseas.",
+                "translation": "국내 시장에서의 부진한 매출은 기업들이 해외로 확장하게 했다."
+            }
+        ]
+    },
+    {
+        "origin": "development",
+        "pronunciations": {
+            "us": "divéləpmənt"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "개발; 발전"
+            }
+        ],
+        "notes": "[파] <strong class=\"target-word\">develop</strong> v. ~을 발달시키다 <strong class=\"target-word\">developer</strong> n. 개발자 <strong class=\"target-word\">developed</strong> adj. 선진의, 발달한 <strong class=\"target-word\">developing</strong> adj. 개발 도상의<br><strong class=\"target-word\">토익 이렇게 나온다</strong><br><strong class=\"target-word\">be under development</strong> 개발 중이다<br><strong class=\"target-word\">development in</strong> ~의 발전<br>development와 쓰이는 전치사 under, in을 함께 묶어서 외워 투자.",
+        "examples": [
+            {
+                "origin": "The project is in the final stage of <strong class=\"target-word\">development</strong>.",
+                "translation": "그 프로젝트는 개발 마지막 단계에 있다."
+            },
+            {
+                "origin": "<strong class=\"target-word\">Developments</strong> in wireless technology allow for high-powered smart phones.",
+                "translation": "무선 기술의 발전은 고성능 스마트폰을 가능하게 했다."
+            }
+        ]
+    },
+    {
+        "origin": "availability",
+        "pronunciations": {
+            "us": "əvèiləbíləti",
+            "uk": "əvèiləbíləti"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "(입수) 가능성, 유효성, 유용성"
+            }
+        ],
+        "notes": "[파] <strong class=\"target-word\">available</strong> adj. 이용할 수 있는",
+        "examples": [
+            {
+                "origin": "<strong class=\"target-word\">Availability</strong> of product depends on market demand and supply.",
+                "translation": "제품의 입수 가능성은 시장의 수요와 공급에 달려 있다."
+            }
+        ]
+    },
+    {
+        "origin": "update",
+        "pronunciations": {
+            "us": "n. ʌ́pdeit",
+            "uk": "v. ʌpdeit"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "갱신, 개정"
+            },
+            {
+                "pos": "v",
+                "text": "갱신하다, 최신의 것으로 하다"
+            }
+        ],
+        "notes": "[파] <strong class=\"target-word\">updated</strong> adj. 최신의",
+        "examples": [
+            {
+                "origin": "The Web site <strong class=\"target-word\">update</strong> includes information on the latest hair styling appliances.",
+                "translation": "웹사이트 갱신은 최신 미용 기기에 대한 정보를 포함한다."
+            },
+            {
+                "origin": "The factory <strong class=\"target-word\">updated</strong> the software of its equipment to speed up the production rate.",
+                "translation": "그 공장은 생산율을 높이기 위해 장비의 소프트웨어를 갱신했다."
+            }
+        ]
+    },
+    {
+        "origin": "accurate",
+        "pronunciations": {
+            "us": "ǽkjurət"
+        },
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "정확한"
+            }
+        ],
+        "notes": "[파] <strong class=\"target-word\">accuracy</strong> n. 정확성 <strong class=\"target-word\">accurately</strong> adv. 정확하게<br>[반] <strong class=\"target-word\">inaccurate</strong> 부정확한",
+        "examples": [
+            {
+                "origin": "The new accounting software is <strong class=\"target-word\">accurate</strong> and precise.",
+                "translation": "새로운 회계 소프트웨어는 정확하고 정밀하다."
+            }
+        ]
+    },
+    {
+        "origin": "complicated",
+        "pronunciations": {
+            "us": "kɑ́mpləkèitid",
+            "uk": "kɔ́mplikeitid"
+        },
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "복잡한"
+            }
+        ],
+        "notes": "[파] <strong class=\"target-word\">complicate</strong> v. 복잡하게 하다",
+        "examples": [
+            {
+                "origin": "Project delays often create a <strong class=\"target-word\">complicated</strong> situation for the public relations department.",
+                "translation": "프로젝트의 지연은 종종 홍보부에 복잡한 상황을 불러일으킨다."
+            }
+        ]
+    },
+    {
+        "origin": "accomplished",
+        "pronunciations": {
+            "us": "əkɑ́mpliʃt",
+            "uk": "əkʌ́mpliʃt"
+        },
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "숙련된, 노련한"
+            }
+        ],
+        "notes": "[파] <strong class=\"target-word\">accomplish</strong> v. 성취하다, 완수하다 <strong class=\"target-word\">accomplishment</strong> n. 성취, 업적",
+        "examples": [
+            {
+                "origin": "The <strong class=\"target-word\">accomplished</strong> chemist has been hired to develop a flexible battery.",
+                "translation": "숙련된 화학자가 잘 구부러지는 건전지를 개발하도록 고용되었다."
+            }
+        ]
+    },
+    {
+        "origin": "inquiry",
+        "pronunciations": {
+            "us": "ínkwəri",
+            "uk": "inkwáiəri"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "문의, 질문"
+            }
+        ],
+        "notes": "[파] <strong class=\"target-word\">inquire</strong> v. 묻다, 알아보다",
+        "examples": [
+            {
+                "origin": "Please call our customer representatives for service <strong class=\"target-word\">inquiries</strong>.",
+                "translation": "서비스 문의를 하시려면 저희 고객 상담원에게 전화하십시오."
+            }
+        ]
+    },
+    {
+        "origin": "indication",
+        "pronunciations": {
+            "us": "ìndikéiʃən"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "징후, 조짐"
+            }
+        ],
+        "notes": "[파] <strong class=\"target-word\">indicate</strong> v. 나타내다 <strong class=\"target-word\">indicative</strong> adj. 나타내는<br><strong class=\"target-word\">토익 이렇게 나온다</strong><br><strong class=\"target-word\">indication : show</strong><br>'표시'를 의미하는 단어들의 용례 차이를 구별하는 문제로 출제된다.<br>- <strong class=\"target-word\">indication</strong> 징후<br>사건, 상태, 행동 등의 조짐을 의미한다.<br>- <strong class=\"target-word\">show</strong> 표시, 표현<br>감정이나 의사를 표현할 때 사용한다.",
+        "examples": [
+            {
+                "origin": "Uneven printing is an <strong class=\"target-word\">indication</strong> of a technical fault.",
+                "translation": "고르지 못한 인쇄는 기술적 결함의 징후이다."
+            }
+        ]
+    },
+    {
+        "origin": "manufacturer",
+        "pronunciations": {
+            "us": "mæ̀njufǽktʃərər",
+            "uk": "mæ̀njufǽktʃərə"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "제조 회사, 제조업자"
+            }
+        ],
+        "notes": "[파] <strong class=\"target-word\">manufacture</strong> n. 제조 v. 제조하다",
+        "examples": [
+            {
+                "origin": "The <strong class=\"target-word\">manufacturer</strong> guarantees all its products for up to one year.",
+                "translation": "그 제조 회사는 최대 1년 동안 모든 자사 제품에 대해 품질 보증을 해 준다."
+            }
+        ]
+    },
+    {
+        "origin": "compatible",
+        "pronunciations": {
+            "us": "kəmpǽtəbl",
+            "uk": "kəmpǽtəbl"
+        },
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "호환되는, 양립할 수 있는"
+            }
+        ],
+        "notes": "[파] <strong class=\"target-word\">compatibility</strong> n. 호환성<br><strong class=\"target-word\">토익 이렇게 나온다</strong><br><strong class=\"target-word\">be compatible with</strong> ~과 호환되다, ~과 양립할 수 있다<br>compatible과 함께 쓰이는 전치사 with를 묶어서 외워 투자.",
+        "examples": [
+            {
+                "origin": "The remote control is <strong class=\"target-word\">compatible</strong> with all models.",
+                "translation": "그 리모컨은 모든 모델과 호환된다."
+            }
+        ]
+    },
+    {
+        "origin": "superior",
+        "pronunciations": {
+            "us": "supíəriər",
+            "uk": "suːpíəriə"
+        },
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "우수한, 상급의"
+            }
+        ],
+        "notes": "[파] <strong class=\"target-word\">superiority</strong> n. 우월, 우위<br>[동] <strong class=\"target-word\">excellent</strong> 우수한<br>[반] <strong class=\"target-word\">inferior</strong> 열등한<br><strong class=\"target-word\">토익 이렇게 나온다</strong><br><strong class=\"target-word\">be superior to</strong> ~보다 우수하다<br>superior와 함께 쓰이는 전치사 to를 묶어서 기억해 투자. '~보다 우수하다'라는 의미 때문에 to 대신 than을 선택하지 않도록 유의해야 한다.<br><strong class=\"target-word\">superior : incomparable</strong><br>'뛰어난'을 뜻하는 단어들의 용례 차이를 구별해 두자.<br>- <strong class=\"target-word\">superior</strong> 우수한<br>사람이나 사물의 능력, 가치가 우수하다는 의미이다.<br>- <strong class=\"target-word\">incomparable</strong> 비할 데 없는<br>다른 대상과 비교가 안 될 정도로 우수할 때 사용한다.<br>기능이나 능력이 뛰어나다라는 의미로 사용될 때 <strong class=\"target-word\">superior</strong>는 <strong class=\"target-word\">excellent</strong>로 바꾸어 쓸 수 있다.",
+        "examples": [
+            {
+                "origin": "The company's latest television is <strong class=\"target-word\">superior</strong> to those on the market today.",
+                "translation": "그 회사의 최신 텔레비전은 현재 시중에 나와 있는 제품들보다 우수하다."
+            }
+        ]
+    },
+    {
+        "origin": "absolute",
+        "pronunciations": {
+            "us": "ǽbsəlùːt"
+        },
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "완전한, 완전무결한"
+            }
+        ],
+        "notes": "[파] <strong class=\"target-word\">absolutely</strong> adv. 완전히<br>[동] <strong class=\"target-word\">complete, utter</strong> 완전한<br><strong class=\"target-word\">토익 이렇게 나온다</strong><br><strong class=\"target-word\">to an absolute minimum</strong> 완전 최소로<br>주로 비용이나 소음 등을 완전 최소로 유지해 준다는 의미로 사용된다.",
+        "examples": [
+            {
+                "origin": "The latest technology keeps production costs to an <strong class=\"target-word\">absolute</strong> minimum.",
+                "translation": "최신 과학 기술은 생산비를 완전 최소로 유지해 준다."
+            }
+        ]
+    },
+    {
+        "origin": "broaden",
+        "pronunciations": {
+            "us": "brɔ́ːdn"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "넓히다"
+            }
+        ],
+        "notes": "[파] <strong class=\"target-word\">broad</strong> adj. 폭이 넓은 <strong class=\"target-word\">breadth</strong> n. 폭, 넓이<br>[동] <strong class=\"target-word\">widen, expand</strong> 넓히다<br><strong class=\"target-word\">토익 이렇게 나온다</strong><br><strong class=\"target-word\">broaden : multiply</strong><br>'넓히다', '증가시키다'를 의미하는 단어들의 용례 차이를 구별하는 문제로 출제된다.<br>- <strong class=\"target-word\">broaden</strong> 넓히다<br>연구 분야나 경험 등 추상적인 영역을 '넓히다'라는 의미로 사용한다.<br>- <strong class=\"target-word\">multiply</strong> 증가시키다<br>수나 양을 증가시킬 때 사용한다.<br>범위, 한계 등을 넓히다라는 문맥에서 <strong class=\"target-word\">broaden</strong>은 <strong class=\"target-word\">widen</strong> 또는 <strong class=\"target-word\">expand</strong>로 바꾸어 쓸 수 있다.",
+        "examples": [
+            {
+                "origin": "The new CEO is <strong class=\"target-word\">broadening</strong> the scope of the company's research.",
+                "translation": "신임 최고 경영자는 회사의 연구 범위를 넓히고 있다."
+            }
+        ]
+    },
+    {
+        "origin": "corrosion",
+        "pronunciations": {
+            "us": "kəróuʒən",
+            "uk": "kəróuʒən"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "부식"
+            }
+        ],
+        "notes": "[파] <strong class=\"target-word\">corrode</strong> v. 부식하다<br><strong class=\"target-word\">토익 이렇게 나온다</strong><br><strong class=\"target-word\">corrosion : erosion</strong><br>'부식', '침식'을 의미하는 단어들의 용례 차이를 구별해 투자.<br>- <strong class=\"target-word\">corrosion</strong> 부식<br>금속 물질에 녹이 스는 현상을 뜻한다.<br>- <strong class=\"target-word\">erosion</strong> 침식<br>자연 현상에 의해 돌이나 흙이 깎여 나가는 것을 의미한다.",
+        "examples": [
+            {
+                "origin": "This steel roof is designed to be resistant to <strong class=\"target-word\">corrosion</strong> from the weather.",
+                "translation": "이 강철 지붕은 날씨로 인한 부식에 저항력이 있도록 만들어졌다."
+            }
+        ]
+    },
+    {
+        "origin": "remotely",
+        "pronunciations": {
+            "us": "rimóutli",
+            "uk": "rimə́utli"
+        },
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "원격으로, 멀리서"
+            }
+        ],
+        "notes": "[파] <strong class=\"target-word\">remote</strong> adj. 원격의, 외진, 외딴",
+        "examples": [
+            {
+                "origin": "Researchers are allowed to work <strong class=\"target-word\">remotely</strong> for up to two days per week.",
+                "translation": "연구원들은 일주일에 최대 이틀까지 원격으로 근무하는 것이 허용된다."
+            }
+        ]
+    }
+]

@@ -1,0 +1,822 @@
+[
+    {
+        "origin": "arm in arm",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "팔짱을 끼고, 제휴하여"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "experienced employee",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "경력이 있는 직원"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "face away from",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "~으로부터 고개를 돌리다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "fill in for",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "~를 대신하다, ~의 일을 대신 봐주다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "get a promotion",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "승진하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "give A an advance",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "A에게 가불해 주다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "kneel",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "무릎을 꿇다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "language acquisition",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "언어 습득"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "move over one seat",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "자리를 한 칸 옮기다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "move up",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "승진하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "newly arrived",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "새로 부임한"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "obviously qualified",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "명백히 자격을 갖춘"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "pavilion",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "전시관"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "personnel management",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "인사 관리"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "rear",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "뒤"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "regional director",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "지사장"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "reposition",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "~의 위치를 바꾸다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "retiree",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "퇴직자"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "retirement",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "은퇴, 퇴직"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "senior executive",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "고위 간부"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "spare key",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "여분의 열쇠"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "take early retirement",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "조기 퇴직하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "take note",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "주목하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "take one's place",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "~의 자리를 차지하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "take over",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "인수하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "achiever",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "크게 성공한 사람"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "admired",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "존경받는"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "as a result of",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "~의 결과로서"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "elect",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "선출하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "incompetent",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "무능한"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "knowledgeable",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "아는 것이 많은"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "namely",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "즉, 다시 말해"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "nearby",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "인근의"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "nominate",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "지명하다, 추천하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "promotion",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "승진"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "put in for",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "~을 신청하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "recommendable",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "추천할 수 있는"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "specially",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "특별히"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "stand in for",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "~의 대리를 맡다, ~를 대신하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "state",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "상태"
+            },
+            {
+                "pos": "v",
+                "text": "진술하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "tech-savvy",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "최신 기술을 잘 아는"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "undoubtedly",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "의심할 여지 없이, 틀림없이"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "aspire to",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "~을 갈망하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "dismissal",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "해고"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "empower",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "~에게 권한을 부여하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "go forward",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "앞으로 나아가다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "heighten",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "높이다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "immigrant",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "이주자"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "initiative",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "계획, 진취성"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "inter-department",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "부서 간의"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "job cutback",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "인력 감축"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "lay off",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "해고하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "named representative",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "지명된 대표자"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "new appointment",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "새로운 임명함, 신임"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "official title",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "공식 직함"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "on the recommendation of",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "~의 추천으로"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "pass up",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "(기회 등을) 거절하다, 포기하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "preach",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "설교하다, 충고하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "predecessor",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "전임자"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "provincial",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "지방의"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "push back",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "연기하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "ritual",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "(정규) 행사, 반드시 지키는 일"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "run for",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "~에 입후보하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "speck",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "작은 얼룩"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "supervisory",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "감독의, 관리의"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "turn away",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "내쫓다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "underestimate",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "과소평가하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "understaffed",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "인원 부족의"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    }
+]

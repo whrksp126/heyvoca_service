@@ -1,0 +1,866 @@
+[
+    {
+        "origin": "advance reservation",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "사전 예약"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "amenity",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "편의 시설"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "assigned seat",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "지정석"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "attendant",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "안내원, 종업원"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "buffet style",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "뷔페식"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "concierge",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "안내원(호텔)"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "condiment",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "조미료, 양념"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "confirm a booking",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "예약을 확인하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "conveniently located",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "편리한 곳에 위치한"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "dining experience",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "식사 경험"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "entrance fee",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "입장료"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "excursion",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "짧은 여행, 소풍"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "fully booked",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "예약이 꽉 찬"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "guest speaker",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "초청 강사"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "head chef",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "수석 주방장"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "hospitality",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "환대, 친절"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "last-minute",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "막판의, 막바지의"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "main course",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "식사의 주 요리"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "make a reservation",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "예약하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "on-site",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "현장의, 부지 내의"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "online booking",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "온라인 예약"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "outdoor seating",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "야외 좌석"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "overnight stay",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "1박 체류"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "peak season",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "성수기"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "ready to order",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "주문할 준비가 된"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "reasonable price",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "적당한 가격"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "room service",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "룸 서비스"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "signature dish",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "대표 요리"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "take an order",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "주문을 받다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "tourist attraction",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "관광 명소"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "accommodate",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "수용하다; 숙박시키다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "atmosphere",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "분위기"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "available",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "이용 가능한; 시간이 있는"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "beverage",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "음료"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "bill",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "청구서"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "book",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "예약하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "cafeteria",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "구내식당"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "cater",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "음식을 공급하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "check-in",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "탑승[투숙] 수속"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "chef",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "주방장"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "complimentary",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "무료의"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "confirm",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "확인하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "container",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "그릇, 용기"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "cuisine",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "요리"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "deluxe",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "호화로운"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "dessert",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "후식"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "dish",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "요리; 접시"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "flavor",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "맛, 풍미"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "ingredient",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "재료"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "itinerary",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "여정"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "menu",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "메뉴"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "occupancy",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "사용, 점유"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "order",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "주문하다; n. 주문"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "rate",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "요금"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "reception",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "접수처; 환영회"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "recipe",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "조리법"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "refreshment",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "다과"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "reservation",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "예약"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "scenic",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "경치가 좋은"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "serve",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "(음식을) 제공하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "sightseeing",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "관광"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "souvenir",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "기념품"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "spectacular",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "장관인"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "tasty",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "맛있는"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "transportation",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "운송"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "utensil",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "기구, 도구"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "waiter",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "웨이터"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "amenity",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "편의 시설"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "belongings",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "소지품"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "complication",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "복잡한 문제"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "entirely",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "완전히"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "freshness",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "신선함"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    }
+]

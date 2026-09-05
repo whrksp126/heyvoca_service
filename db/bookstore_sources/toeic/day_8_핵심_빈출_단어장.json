@@ -1,0 +1,851 @@
+[
+    {
+        "origin": "advertisement",
+        "pronunciations": {
+            "us": "ˌædvərtaɪzmənt",
+            "uk": "ədvɜːtɪsmənt"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "광고"
+            }
+        ],
+        "notes": "Sales have been propelled by the new <strong class=\"target-word\">advertisement</strong>. 판매가 새 광고에 의해 촉진되었다.",
+        "examples": [
+            {
+                "origin": "Sales have been propelled by the new <span class=\"target-word\">advertisement</span>.",
+                "translation": "판매가 새 광고에 의해 촉진되었다."
+            }
+        ]
+    },
+    {
+        "origin": "marginal",
+        "pronunciations": {
+            "us": "mɑːrdʒɪnl",
+            "uk": "mɑːdʒɪnl"
+        },
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "약간의; 주변의"
+            }
+        ],
+        "notes": "Customers showed only <strong class=\"target-word\">marginal</strong> interest in the new tablet computer. 소비자들은 신상 태블릿 컴퓨터에 약간의 관심만을 보였을 뿐이다.<br>The maintenance department decorated the <strong class=\"target-word\">marginal</strong> area of the company premises. 관리 부서는 회사 부지의 주변 지역을 장식했다.",
+        "examples": [
+            {
+                "origin": "Customers showed only <span class=\"target-word\">marginal</span> interest in the new tablet computer.",
+                "translation": "소비자들은 신상 태블릿 컴퓨터에 약간의 관심만을 보였을 뿐이다."
+            },
+            {
+                "origin": "The maintenance department decorated the <span class=\"target-word\">marginal</span> area of the company premises.",
+                "translation": "관리 부서는 회사 부지의 주변 지역을 장식했다."
+            }
+        ]
+    },
+    {
+        "origin": "customer",
+        "pronunciations": {
+            "us": "kʌstəmər",
+            "uk": "kʌstəmə"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "고객"
+            }
+        ],
+        "notes": "Telephone representatives should make the needs of <strong class=\"target-word\">customers</strong> their priority. 전화 상담원들은 고객의 요구를 그들의 우선 사항으로 삼아야 한다.",
+        "examples": [
+            {
+                "origin": "Telephone representatives should make the needs of <span class=\"target-word\">customers</span> their priority.",
+                "translation": "전화 상담원들은 고객의 요구를 그들의 우선 사항으로 삼아야 한다."
+            }
+        ]
+    },
+    {
+        "origin": "influence",
+        "pronunciations": {
+            "us": "ɪnfluəns"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "~에 영향을 주다"
+            },
+            {
+                "pos": "n",
+                "text": "영향"
+            }
+        ],
+        "notes": "Demand for housing directly <strong class=\"target-word\">influences</strong> the cost of homes. 주택에 대한 수요는 주택 가격에 직접적으로 영향을 준다.<br>Product reviews have a profound <strong class=\"target-word\">influence</strong> on sales. 상품평은 매출에 큰 영향을 끼친다.",
+        "examples": [
+            {
+                "origin": "Demand for housing directly <span class=\"target-word\">influences</span> the cost of homes.",
+                "translation": "주택에 대한 수요는 주택 가격에 직접적으로 영향을 준다."
+            },
+            {
+                "origin": "Product reviews have a profound <span class=\"target-word\">influence</span> on sales.",
+                "translation": "상품평은 매출에 큰 영향을 끼친다."
+            }
+        ]
+    },
+    {
+        "origin": "instantly",
+        "pronunciations": {
+            "us": "ɪnstəntli"
+        },
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "즉각적으로, 즉시"
+            }
+        ],
+        "notes": "The brand logo should be <strong class=\"target-word\">instantly</strong> recognizable. 브랜드 로고는 즉각적으로 알아볼 수 있어야 한다.",
+        "examples": [
+            {
+                "origin": "The brand logo should be <span class=\"target-word\">instantly</span> recognizable.",
+                "translation": "브랜드 로고는 즉각적으로 알아볼 수 있어야 한다."
+            }
+        ]
+    },
+    {
+        "origin": "creative",
+        "pronunciations": {
+            "us": "krieɪtɪv"
+        },
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "창조적인, 독창적인"
+            }
+        ],
+        "notes": "Mr. Beaumont came up with a <strong class=\"target-word\">creative</strong> idea. Mr. Beaumont는 창조적인 아이디어를 생각했다.",
+        "examples": [
+            {
+                "origin": "Mr. Beaumont came up with a <span class=\"target-word\">creative</span> idea.",
+                "translation": "Mr. Beaumont는 창조적인 아이디어를 생각했다."
+            }
+        ]
+    },
+    {
+        "origin": "aggressively",
+        "pronunciations": {
+            "us": "əɡresɪvli"
+        },
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "적극적으로"
+            }
+        ],
+        "notes": "The best sales representatives <strong class=\"target-word\">aggressively</strong> seek out potential clients. 최고의 영업 사원들은 적극적으로 잠재 고객을 찾아 나선다.",
+        "examples": [
+            {
+                "origin": "The best sales representatives <span class=\"target-word\">aggressively</span> seek out potential clients.",
+                "translation": "최고의 영업 사원들은 적극적으로 잠재 고객을 찾아 나선다."
+            }
+        ]
+    },
+    {
+        "origin": "aim",
+        "pronunciations": {
+            "us": "eɪm"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "~을 겨누다"
+            },
+            {
+                "pos": "n",
+                "text": "목표, 목적"
+            }
+        ],
+        "notes": "Sport Apparel developed athletic gear <strong class=\"target-word\">aimed</strong> at teenagers. Sport Apparel사는 10대를 겨냥한 운동 기구를 개발했다.<br>The division head will outline the <strong class=\"target-word\">aims</strong> of the marketing strategy. 부서장이 마케팅 전략의 목표를 약술할 것이다.",
+        "examples": [
+            {
+                "origin": "Sport Apparel developed athletic gear <span class=\"target-word\">aimed</span> at teenagers.",
+                "translation": "Sport Apparel사는 10대를 겨냥한 운동 기구를 개발했다."
+            },
+            {
+                "origin": "The division head will outline the <span class=\"target-word\">aims</span> of the marketing strategy.",
+                "translation": "부서장이 마케팅 전략의 목표를 약술할 것이다."
+            }
+        ]
+    },
+    {
+        "origin": "strategy",
+        "pronunciations": {
+            "us": "strætədʒi"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "전략"
+            }
+        ],
+        "notes": "Management's <strong class=\"target-word\">strategy</strong> for expansion has been successful. 경영진의 확장 전략은 성공적이었다.",
+        "examples": [
+            {
+                "origin": "Management's <span class=\"target-word\">strategy</span> for expansion has been successful.",
+                "translation": "경영진의 확장 전략은 성공적이었다."
+            }
+        ]
+    },
+    {
+        "origin": "indicate",
+        "pronunciations": {
+            "us": "ɪndɪkeɪt"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "보여주다, 나타내다"
+            }
+        ],
+        "notes": "Studies <strong class=\"target-word\">indicate</strong> that consumers prefer attractively packaged products. 그 연구는 소비자들이 보기 좋게 포장된 상품을 선호한다는 것을 보여 준다.",
+        "examples": [
+            {
+                "origin": "Studies <span class=\"target-word\">indicate</span> that consumers prefer attractively packaged products.",
+                "translation": "그 연구는 소비자들이 보기 좋게 포장된 상품을 선호한다는 것을 보여 준다."
+            }
+        ]
+    },
+    {
+        "origin": "attract",
+        "pronunciations": {
+            "us": "ətrækt"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "끌다, 유인하다"
+            }
+        ],
+        "notes": "The automaker is making an effort to <strong class=\"target-word\">attract</strong> younger buyers. 그 자동차 회사는 더 젊은 구매자들을 끌기 위해 노력하고 있다.",
+        "examples": [
+            {
+                "origin": "The automaker is making an effort to <span class=\"target-word\">attract</span> younger buyers.",
+                "translation": "그 자동차 회사는 더 젊은 구매자들을 끌기 위해 노력하고 있다."
+            }
+        ]
+    },
+    {
+        "origin": "experience",
+        "pronunciations": {
+            "us": "ɪkspɪriəns"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "경험, 체험"
+            },
+            {
+                "pos": "v",
+                "text": "체험하다, 경험하다"
+            }
+        ],
+        "notes": "All of the invited guests had a pleasant <strong class=\"target-word\">experience</strong> at the store opening. 초대된 손님들 모두가 그 가게의 개장식에서 즐거운 경험을 했다.<br>Customers can <strong class=\"target-word\">experience</strong> the new service free for a limited time. 고객들은 새로운 서비스를 제한된 시간 동안 무료로 체험할 수 있다.",
+        "examples": [
+            {
+                "origin": "All of the invited guests had a pleasant <span class=\"target-word\">experience</span> at the store opening.",
+                "translation": "초대된 손님들 모두가 그 가게의 개장식에서 즐거운 경험을 했다."
+            },
+            {
+                "origin": "Customers can <span class=\"target-word\">experience</span> the new service free for a limited time.",
+                "translation": "고객들은 새로운 서비스를 제한된 시간 동안 무료로 체험할 수 있다."
+            }
+        ]
+    },
+    {
+        "origin": "analyze",
+        "pronunciations": {
+            "us": "ænəlaɪz"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "분석하다, 분석적으로 검토하다"
+            }
+        ],
+        "notes": "Researchers were asked to <strong class=\"target-word\">analyze</strong> the survey data. 연구원들은 설문 조사 자료를 분석하라고 요청받았다.",
+        "examples": [
+            {
+                "origin": "Researchers were asked to <span class=\"target-word\">analyze</span> the survey data.",
+                "translation": "연구원들은 설문 조사 자료를 분석하라고 요청받았다."
+            }
+        ]
+    },
+    {
+        "origin": "introduce",
+        "pronunciations": {
+            "us": "ˌɪntrəduːs",
+            "uk": "ˌɪntrədjuːs"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "(신제품을) 발표하다, 소개하다"
+            }
+        ],
+        "notes": "ElectroLife <strong class=\"target-word\">introduced</strong> a new line of vacuum cleaners. ElectroLife사는 새로운 진공청소기 제품을 발표했다.",
+        "examples": [
+            {
+                "origin": "ElectroLife <span class=\"target-word\">introduced</span> a new line of vacuum cleaners.",
+                "translation": "ElectroLife사는 새로운 진공청소기 제품을 발표했다."
+            }
+        ]
+    },
+    {
+        "origin": "advise",
+        "pronunciations": {
+            "us": "ədvaɪz"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "조언해 주다, 충고하다"
+            }
+        ],
+        "notes": "Coburn Law Firm <strong class=\"target-word\">advises</strong> clients on intellectual property matters. Coburn 법률 회사는 고객들에게 지적 재산권 문제에 대해 조언해 준다.",
+        "examples": [
+            {
+                "origin": "Coburn Law Firm <span class=\"target-word\">advises</span> clients on intellectual property matters.",
+                "translation": "Coburn 법률 회사는 고객들에게 지적 재산권 문제에 대해 조언해 준다."
+            }
+        ]
+    },
+    {
+        "origin": "subscribe",
+        "pronunciations": {
+            "us": "səbskraɪb"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "구독하다"
+            }
+        ],
+        "notes": "<strong class=\"target-word\">Subscribing</strong> to the monthly fashion magazine costs only $40 a year. 그 월간 패션 잡지를 구독하는 것은 일 년에 단 40달러밖에 들지 않는다.",
+        "examples": [
+            {
+                "origin": "<span class=\"target-word\">Subscribing</span> to the monthly fashion magazine costs only $40 a year.",
+                "translation": "그 월간 패션 잡지를 구독하는 것은 일 년에 단 40달러밖에 들지 않는다."
+            }
+        ]
+    },
+    {
+        "origin": "absence",
+        "pronunciations": {
+            "us": "æbsəns"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "부재; 결근, 결석"
+            }
+        ],
+        "notes": "The <strong class=\"target-word\">absence</strong> of competition will help product sales. 경쟁의 부재는 제품 판매에 도움이 될 것이다.<br>Staff members must strictly observe the new policy on <strong class=\"target-word\">absences</strong>. 직원들은 결근에 대한 새로운 방침을 엄격하게 준수해야 한다.",
+        "examples": [
+            {
+                "origin": "The <span class=\"target-word\">absence</span> of competition will help product sales.",
+                "translation": "경쟁의 부재는 제품 판매에 도움이 될 것이다."
+            },
+            {
+                "origin": "Staff members must strictly observe the new policy on <span class=\"target-word\">absences</span>.",
+                "translation": "직원들은 결근에 대한 새로운 방침을 엄격하게 준수해야 한다."
+            }
+        ]
+    },
+    {
+        "origin": "means",
+        "pronunciations": {
+            "us": "miːnz"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "방법, 수단"
+            }
+        ],
+        "notes": "Direct surveys are one <strong class=\"target-word\">means</strong> of gathering consumer feedback. 직접 조사는 소비자 의견을 모으는 한 가지 방법이다.",
+        "examples": [
+            {
+                "origin": "Direct surveys are one <span class=\"target-word\">means</span> of gathering consumer feedback.",
+                "translation": "직접 조사는 소비자 의견을 모으는 한 가지 방법이다."
+            }
+        ]
+    },
+    {
+        "origin": "prefer",
+        "pronunciations": {
+            "us": "prɪfɜːr",
+            "uk": "prɪfɜː"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "(다른 것보다) ~을 더 좋아하다, 선호하다"
+            }
+        ],
+        "notes": "Customers <strong class=\"target-word\">prefer</strong> Luster Shampoo to any other competing brand. 고객들은 다른 어떤 경쟁 상표보다 Luster 샴푸를 더 좋아한다.",
+        "examples": [
+            {
+                "origin": "Customers <span class=\"target-word\">prefer</span> Luster Shampoo to any other competing brand.",
+                "translation": "고객들은 다른 어떤 경쟁 상표보다 Luster 샴푸를 더 좋아한다."
+            }
+        ]
+    },
+    {
+        "origin": "advantage",
+        "pronunciations": {
+            "us": "ədvæntɪdʒ",
+            "uk": "ədvɑːntɪdʒ"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "이점, 강점"
+            }
+        ],
+        "notes": "One <strong class=\"target-word\">advantage</strong> of consumer testing is the development of marketing insight. 소비자 테스트의 한 가지 이점은 마케팅 식견을 기를 수 있다는 점이다.",
+        "examples": [
+            {
+                "origin": "One <span class=\"target-word\">advantage</span> of consumer testing is the development of marketing insight.",
+                "translation": "소비자 테스트의 한 가지 이점은 마케팅 식견을 기를 수 있다는 점이다."
+            }
+        ]
+    },
+    {
+        "origin": "forward",
+        "pronunciations": {
+            "us": "fɔːrwərd",
+            "uk": "fɔːwəd"
+        },
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "앞으로"
+            },
+            {
+                "pos": "v",
+                "text": "(물건·정보를) 보내다"
+            }
+        ],
+        "notes": "Our company's research program has moved <strong class=\"target-word\">forward</strong> substantially. 우리 회사의 연구 프로그램이 상당히 진척되었다.<br>Please <strong class=\"target-word\">forward</strong> your e-mail to the accounting manager. 귀하의 이메일을 회계부장에게 보내십시오.",
+        "examples": [
+            {
+                "origin": "Our company's research program has moved <span class=\"target-word\">forward</span> substantially.",
+                "translation": "우리 회사의 연구 프로그램이 상당히 진척되었다."
+            },
+            {
+                "origin": "Please <span class=\"target-word\">forward</span> your e-mail to the accounting manager.",
+                "translation": "귀하의 이메일을 회계부장에게 보내십시오."
+            }
+        ]
+    },
+    {
+        "origin": "contemporary",
+        "pronunciations": {
+            "us": "kəntempəreri",
+            "uk": "kəntempərəri"
+        },
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "동시대의; 현대의, 당대의"
+            }
+        ],
+        "notes": "Advertising messages change over time to reflect <strong class=\"target-word\">contemporary</strong> attitudes. 광고 메시지는 동시대의 사고방식을 반영하기 위해 시간이 지남에 따라 변화한다.<br>The fashion brand's <strong class=\"target-word\">contemporary</strong> look appeals to young consumers. 그 패션 브랜드의 현대적인 스타일은 젊은 소비자들의 관심을 끈다.",
+        "examples": [
+            {
+                "origin": "Advertising messages change over time to reflect <span class=\"target-word\">contemporary</span> attitudes.",
+                "translation": "광고 메시지는 동시대의 사고방식을 반영하기 위해 시간이 지남에 따라 변화한다."
+            },
+            {
+                "origin": "The fashion brand's <span class=\"target-word\">contemporary</span> look appeals to young consumers.",
+                "translation": "그 패션 브랜드의 현대적인 스타일은 젊은 소비자들의 관심을 끈다."
+            }
+        ]
+    },
+    {
+        "origin": "discussion",
+        "pronunciations": {
+            "us": "dɪskʌʃn"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "토론, 토의"
+            }
+        ],
+        "notes": "A <strong class=\"target-word\">discussion</strong> was held to decide how to promote the product. 그 제품을 어떻게 홍보할지 결정하기 위해 토론이 열렸다.",
+        "examples": [
+            {
+                "origin": "A <span class=\"target-word\">discussion</span> was held to decide how to promote the product.",
+                "translation": "그 제품을 어떻게 홍보할지 결정하기 위해 토론이 열렸다."
+            }
+        ]
+    },
+    {
+        "origin": "initial",
+        "pronunciations": {
+            "us": "ɪnɪʃl"
+        },
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "처음의, 최초의"
+            }
+        ],
+        "notes": "<strong class=\"target-word\">Initial</strong> findings show that customers are satisfied with the service. 처음의 조사 결과는 고객들이 그 서비스에 만족한다는 것을 보여 준다.",
+        "examples": [
+            {
+                "origin": "<span class=\"target-word\">Initial</span> findings show that customers are satisfied with the service.",
+                "translation": "처음의 조사 결과는 고객들이 그 서비스에 만족한다는 것을 보여 준다."
+            }
+        ]
+    },
+    {
+        "origin": "steadily",
+        "pronunciations": {
+            "us": "stedɪli"
+        },
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "착실하게; 꾸준히"
+            }
+        ],
+        "notes": "Ron <strong class=\"target-word\">steadily</strong> answered investors' questions about his business idea. Ron은 그의 사업 계획에 대한 투자자들의 질문에 착실하게 대답했다.<br>Product sales <strong class=\"target-word\">steadily</strong> increased as time passed. 제품의 판매는 시간이 흐름에 따라 꾸준히 증가했다.",
+        "examples": [
+            {
+                "origin": "Ron <span class=\"target-word\">steadily</span> answered investors' questions about his business idea.",
+                "translation": "Ron은 그의 사업 계획에 대한 투자자들의 질문에 착실하게 대답했다."
+            },
+            {
+                "origin": "Product sales <span class=\"target-word\">steadily</span> increased as time passed.",
+                "translation": "제품의 판매는 시간이 흐름에 따라 꾸준히 증가했다."
+            }
+        ]
+    },
+    {
+        "origin": "necessarily",
+        "pronunciations": {
+            "us": "ˌnesəserəli",
+            "uk": "ˌnesəsərɪli"
+        },
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "반드시"
+            }
+        ],
+        "notes": "Increased production does not <strong class=\"target-word\">necessarily</strong> lead to greater revenues. 생산 증가가 반드시 수입 증가로 이어지는 것은 아니다.",
+        "examples": [
+            {
+                "origin": "Increased production does not <span class=\"target-word\">necessarily</span> lead to greater revenues.",
+                "translation": "생산 증가가 반드시 수입 증가로 이어지는 것은 아니다."
+            }
+        ]
+    },
+    {
+        "origin": "resolve",
+        "pronunciations": {
+            "us": "rɪzɑːlv",
+            "uk": "rɪzɒlv"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "(문제 등을) 해결하다"
+            }
+        ],
+        "notes": "The new facial cream promises to <strong class=\"target-word\">resolve</strong> 90 percent of common skin problems. 새로운 얼굴 마사지 크림은 흔한 피부 문제들의 90퍼센트를 해결하는 것을 보증한다.",
+        "examples": [
+            {
+                "origin": "The new facial cream promises to <span class=\"target-word\">resolve</span> 90 percent of common skin problems.",
+                "translation": "새로운 얼굴 마사지 크림은 흔한 피부 문제들의 90퍼센트를 해결하는 것을 보증한다."
+            }
+        ]
+    },
+    {
+        "origin": "detect",
+        "pronunciations": {
+            "us": "dɪtekt"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "간파하다, 탐지하다"
+            }
+        ],
+        "notes": "Only a few people <strong class=\"target-word\">detected</strong> any actual differences between the two models. 오직 몇몇 사람들만이 두 모델 간의 실질적인 차이점 모두를 간파했다.",
+        "examples": [
+            {
+                "origin": "Only a few people <span class=\"target-word\">detected</span> any actual differences between the two models.",
+                "translation": "오직 몇몇 사람들만이 두 모델 간의 실질적인 차이점 모두를 간파했다."
+            }
+        ]
+    },
+    {
+        "origin": "intensify",
+        "pronunciations": {
+            "us": "ɪntensɪfaɪ"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "강화하다, 중대하다, 강렬하게 만들다"
+            }
+        ],
+        "notes": "The movie studio <strong class=\"target-word\">intensified</strong> its promotional activities to draw in a wider audience. 그 영화 제작사는 더 폭넓은 관중을 끌기 위해 홍보 활동을 강화했다.",
+        "examples": [
+            {
+                "origin": "The movie studio <span class=\"target-word\">intensified</span> its promotional activities to draw in a wider audience.",
+                "translation": "그 영화 제작사는 더 폭넓은 관중을 끌기 위해 홍보 활동을 강화했다."
+            }
+        ]
+    },
+    {
+        "origin": "favorably",
+        "pronunciations": {
+            "us": "feɪvərəbli"
+        },
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "호의적으로; 순조롭게"
+            }
+        ],
+        "notes": "The product demonstration was <strong class=\"target-word\">favorably</strong> received by consumers. 제품 시연이 소비자들에게 호의적으로 받아들여졌다.<br>Earnings continue to develop <strong class=\"target-word\">favorably</strong>. 소득이 계속 순조롭게 증가하고 있다.",
+        "examples": [
+            {
+                "origin": "The product demonstration was <span class=\"target-word\">favorably</span> received by consumers.",
+                "translation": "제품 시연이 소비자들에게 호의적으로 받아들여졌다."
+            },
+            {
+                "origin": "Earnings continue to develop <span class=\"target-word\">favorably</span>.",
+                "translation": "소득이 계속 순조롭게 증가하고 있다."
+            }
+        ]
+    },
+    {
+        "origin": "cover",
+        "pronunciations": {
+            "us": "kʌvər",
+            "uk": "kʌvə"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "포함하다; 지불하다; 덮다"
+            }
+        ],
+        "notes": "The rental deposit <strong class=\"target-word\">covers</strong> the cost of repairing damage to the equipment. 대여 보증금은 장비 손상을 수리하는 것에 대한 비용을 포함한다.<br>The firm's budget is large enough to <strong class=\"target-word\">cover</strong> marketing expenses for a year. 그 회사의 예산은 일 년 동안의 마케팅 비용을 지불할 만큼 충분히 많다.<br>The car was <strong class=\"target-word\">covered</strong> by a sheet before being unveiled at the launch. 그 자동차는 출시 행사에서 공개되기 전에 천으로 덮여 있었다.",
+        "examples": [
+            {
+                "origin": "The rental deposit <span class=\"target-word\">covers</span> the cost of repairing damage to the equipment.",
+                "translation": "대여 보증금은 장비 손상을 수리하는 것에 대한 비용을 포함한다."
+            },
+            {
+                "origin": "The firm's budget is large enough to <span class=\"target-word\">cover</span> marketing expenses for a year.",
+                "translation": "그 회사의 예산은 일 년 동안의 마케팅 비용을 지불할 만큼 충분히 많다."
+            },
+            {
+                "origin": "The car was <span class=\"target-word\">covered</span> by a sheet before being unveiled at the launch.",
+                "translation": "그 자동차는 출시 행사에서 공개되기 전에 천으로 덮여 있었다."
+            }
+        ]
+    },
+    {
+        "origin": "less",
+        "pronunciations": {
+            "us": "les"
+        },
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "보다 적은, 덜한"
+            }
+        ],
+        "notes": "<strong class=\"target-word\">Less</strong> competition among insurance companies led to higher premiums. 보험사 간의 보다 적은 경쟁이 보험료 증가로 이어졌다.",
+        "examples": [
+            {
+                "origin": "<span class=\"target-word\">Less</span> competition among insurance companies led to higher premiums.",
+                "translation": "보험사 간의 보다 적은 경쟁이 보험료 증가로 이어졌다."
+            }
+        ]
+    },
+    {
+        "origin": "majority",
+        "pronunciations": {
+            "us": "mədʒɔːrəti",
+            "uk": "mədʒɒrəti"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "대부분, 대다수"
+            }
+        ],
+        "notes": "The <strong class=\"target-word\">majority</strong> of registered clients pay their dues regularly. 등록된 고객의 대부분이 정기적으로 요금을 지불한다.",
+        "examples": [
+            {
+                "origin": "The <span class=\"target-word\">majority</span> of registered clients pay their dues regularly.",
+                "translation": "등록된 고객의 대부분이 정기적으로 요금을 지불한다."
+            }
+        ]
+    },
+    {
+        "origin": "adopt",
+        "pronunciations": {
+            "us": "ədɑːpt",
+            "uk": "ədɒpt"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "채택하다"
+            }
+        ],
+        "notes": "Plenty of research must be done before <strong class=\"target-word\">adopting</strong> a particular marketing strategy. 특정 마케팅 전략을 채택하기 전에 많은 조사가 이루어져야 한다.",
+        "examples": [
+            {
+                "origin": "Plenty of research must be done before <span class=\"target-word\">adopting</span> a particular marketing strategy.",
+                "translation": "특정 마케팅 전략을 채택하기 전에 많은 조사가 이루어져야 한다."
+            }
+        ]
+    },
+    {
+        "origin": "largely",
+        "pronunciations": {
+            "us": "lɑːrdʒli",
+            "uk": "lɑːdʒli"
+        },
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "주로, 대부분"
+            }
+        ],
+        "notes": "Public reaction to the charity foundation was <strong class=\"target-word\">largely</strong> positive. 자선 재단에 대한 대중의 반응은 주로 긍정적이었다.",
+        "examples": [
+            {
+                "origin": "Public reaction to the charity foundation was <span class=\"target-word\">largely</span> positive.",
+                "translation": "자선 재단에 대한 대중의 반응은 주로 긍정적이었다."
+            }
+        ]
+    },
+    {
+        "origin": "disregard",
+        "pronunciations": {
+            "us": "ˌdɪsrɪɡɑːrd",
+            "uk": "ˌdɪsrɪɡɑːd"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "소홀히 하다, 무시하다"
+            }
+        ],
+        "notes": "The company should not <strong class=\"target-word\">disregard</strong> customers' opinions if it wants to improve the service quality. 회사는 서비스 질을 향상시키고 싶다면 고객들의 의견을 소홀히 하지 말아야 한다.",
+        "examples": [
+            {
+                "origin": "The company should not <span class=\"target-word\">disregard</span> customers' opinions if it wants to improve the service quality.",
+                "translation": "회사는 서비스 질을 향상시키고 싶다면 고객들의 의견을 소홀히 하지 말아야 한다."
+            }
+        ]
+    },
+    {
+        "origin": "effort",
+        "pronunciations": {
+            "us": "efərt",
+            "uk": "efət"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "노력"
+            }
+        ],
+        "notes": "TV commercials were run in an <strong class=\"target-word\">effort</strong> to broaden consumer awareness of new brands. 새 브랜드에 대한 소비자 인지도를 넓히려는 노력으로 텔레비전 광고가 방송되었다.",
+        "examples": [
+            {
+                "origin": "TV commercials were run in an <span class=\"target-word\">effort</span> to broaden consumer awareness of new brands.",
+                "translation": "새 브랜드에 대한 소비자 인지도를 넓히려는 노력으로 텔레비전 광고가 방송되었다."
+            }
+        ]
+    },
+    {
+        "origin": "incentive",
+        "pronunciations": {
+            "us": "ɪnsentɪv"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "혜택, 장려금"
+            }
+        ],
+        "notes": "Financial <strong class=\"target-word\">incentives</strong> such as coupons may encourage purchases. 쿠폰 같은 금전적 혜택이 구매를 촉진시킬 수 있다.",
+        "examples": [
+            {
+                "origin": "Financial <span class=\"target-word\">incentives</span> such as coupons may encourage purchases.",
+                "translation": "쿠폰 같은 금전적 혜택이 구매를 촉진시킬 수 있다."
+            }
+        ]
+    },
+    {
+        "origin": "need",
+        "pronunciations": {
+            "us": "niːd"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "필요; 요구, 욕구"
+            },
+            {
+                "pos": "v",
+                "text": "~할 필요가 있다"
+            }
+        ],
+        "notes": "The company is in <strong class=\"target-word\">need</strong> of an untapped market. 그 회사는 미개척 시장을 필요로 하고 있다.<br>The vehicle was designed to meet the <strong class=\"target-word\">needs</strong> of daily commuters. 그 차는 매일 통근하는 사람들의 요구에 부합하도록 고안되었다.<br>We <strong class=\"target-word\">need</strong> to scrutinize each transaction for potential errors. 우리는 잠재적인 오류가 있는지 각 거래를 철저히 조사할 필요가 있다.",
+        "examples": [
+            {
+                "origin": "The company is in <span class=\"target-word\">need</span> of an untapped market.",
+                "translation": "그 회사는 미개척 시장을 필요로 하고 있다."
+            },
+            {
+                "origin": "The vehicle was designed to meet the <span class=\"target-word\">needs</span> of daily commuters.",
+                "translation": "그 차는 매일 통근하는 사람들의 요구에 부합하도록 고안되었다."
+            },
+            {
+                "origin": "We <span class=\"target-word\">need</span> to scrutinize each transaction for potential errors.",
+                "translation": "우리는 잠재적인 오류가 있는지 각 거래를 철저히 조사할 필요가 있다."
+            }
+        ]
+    },
+    {
+        "origin": "mastermind",
+        "pronunciations": {
+            "us": "mæstərmaɪnd",
+            "uk": "mɑːstərmaɪnd"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "(계획 등의) 입안자, 지도자"
+            }
+        ],
+        "notes": "Mr. Dane is the <strong class=\"target-word\">mastermind</strong> behind the innovative design. Mr. Dane은 그 혁신적인 디자인의 입안자이다.",
+        "examples": [
+            {
+                "origin": "Mr. Dane is the <span class=\"target-word\">mastermind</span> behind the innovative design.",
+                "translation": "Mr. Dane은 그 혁신적인 디자인의 입안자이다."
+            }
+        ]
+    }
+]

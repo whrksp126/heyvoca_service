@@ -1,0 +1,832 @@
+[
+    {
+        "origin": "résumé",
+        "pronunciations": {
+            "us": "rézumèi",
+            "uk": "rézju:mei"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "이력서"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "Fax your <strong class=\"target-word\">résumé</strong> and cover letter to the above number.",
+                "meaning": "위 번호로 이력서와 자기소개서를 팩스로 보내주세요."
+            }
+        ]
+    },
+    {
+        "origin": "opening",
+        "pronunciations": {
+            "us": "oupəniŋ",
+            "uk": "oupəniŋ"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "공석, 결원; 개장, 개시"
+            }
+        ],
+        "notes": "<strong>토익 이렇게 나온다</strong><br>an <strong>opening</strong> 공석 (가산 명사)<br>opening은 '공석', '결원'의 의미일 때 가산 명사로 취급되므로 반드시 부정관사 an을 쓰거나 복수인 openings로 사용해야 한다.<br>결원이 생긴 일자리를 의미할 때 opening은 <strong>vacancy</strong>로 바꾸어 쓸 수 있다.",
+        "examples": [
+            {
+                "origin": "There are several job <strong class=\"target-word\">openings</strong> at the restaurant right now.",
+                "meaning": "현재 그 식당에는 일자리가 몇 개 있다."
+            },
+            {
+                "origin": "JX Finances officially announced the <strong class=\"target-word\">opening</strong> of its first international branch.",
+                "meaning": "JX Finances사는 첫 번째 해외 지점 개장을 공식적으로 발표했다."
+            }
+        ],
+        "media": [
+            {
+                "type": "image",
+                "src": ""
+            }
+        ]
+    },
+    {
+        "origin": "applicant",
+        "pronunciations": {
+            "us": "æplikənt"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "지원자, 신청자"
+            }
+        ],
+        "notes": "<strong class=\"target-word\">토익 이렇게 나온다</strong><br>complete/submit/receive + an <strong class=\"target-word\">application</strong> 지원서를 작성하다/제출하다/받다<br>application은 complete, submit, receive 등 작성, 제출과 관련된 동사와 주로 같이 사용된다.<br>applicant 지원자 / application 신청, 지원서, 적용<br>사람 명사인 applicant와 추상 명사인 application을 구별해야 한다. 어근은 같지만 의미가 전혀 다른 appliance(전기 제품)와도 혼동하지 않도록 유의하자.",
+        "examples": [
+            {
+                "origin": "<strong class=\"target-word\">Applicants</strong> are required to submit a résumé.",
+                "meaning": "지원자들은 이력서를 제출해야 한다."
+            }
+        ]
+    },
+    {
+        "origin": "requirement",
+        "pronunciations": {
+            "us": "rikwáiərmənt",
+            "uk": "rikwáiəmənt"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "필요조건, 요건"
+            }
+        ],
+        "notes": "<strong class=\"target-word\">토익 이렇게 나온다</strong><br>a <strong class=\"target-word\">requirement</strong> + of/for ~의 필요조건<br>requirement는 전치사 of나 for와 어울려 자주 쓰인다.",
+        "examples": [
+            {
+                "origin": "A driver's license is a <strong class=\"target-word\">requirement</strong> of this job.",
+                "meaning": "운전 면허증은 이 작업의 필요조건이다."
+            }
+        ]
+    },
+    {
+        "origin": "meet",
+        "pronunciations": {
+            "us": "mi:t"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "(필요·요구 등을) 만족시키다"
+            }
+        ],
+        "notes": "<strong class=\"target-word\">토익 이렇게 나온다</strong><br><strong class=\"target-word\">meet</strong> one's needs ~의 욕구를 만족시키다<br><strong class=\"target-word\">meet requirements</strong> 필요조건을 만족시키다<br><strong class=\"target-word\">meet customer demand</strong> 소비자의 요구를 만족시키다<br><strong class=\"target-word\">meet expectations</strong> 기대를 충족시키다<br>meet는 흔히 알고 있는 '만나다'라는 의미 이외에 '만족시키다'라는 뜻으로 토익에 자주 출제된다.",
+        "examples": [
+            {
+                "origin": "Applicants must <strong class=\"target-word\">meet</strong> all the requirements for the job.",
+                "meaning": "지원자들은 그 직책의 모든 필요조건을 만족시켜야 한다."
+            }
+        ]
+    },
+    {
+        "origin": "qualified",
+        "pronunciations": {
+            "us": "kwɑ́ləfàid",
+            "uk": "kwɔ́lifàid"
+        },
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "자격 있는, 적격의"
+            }
+        ],
+        "notes": "<strong class=\"target-word\">토익 이렇게 나온다</strong><br>be <strong class=\"target-word\">qualified</strong> for ~에 자격이 있다<br>qualifications for ~에 대한 자격<br>qualified와 명사 qualification은 전치사 for와 어울려 자주 쓰인다.",
+        "examples": [
+            {
+                "origin": "People with master's degrees are <strong class=\"target-word\">qualified</strong> for the research position.",
+                "meaning": "석사 학위를 갖춘 사람들은 연구직에 자격이 있다."
+            }
+        ]
+    },
+    {
+        "origin": "candidate",
+        "pronunciations": {
+            "us": "kændidèit",
+            "uk": "kændidət"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "후보자, 지원자"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "Five <strong class=\"target-word\">candidates</strong> will be selected for final interviews.",
+                "meaning": "5명의 후보자가 최종 면접을 위해 선발될 것이다."
+            }
+        ]
+    },
+    {
+        "origin": "confidence",
+        "pronunciations": {
+            "us": "kɑ́nfədəns",
+            "uk": "kɔnfidəns"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "확신, 자신; 신임"
+            }
+        ],
+        "notes": "<strong class=\"target-word\">토익 이렇게 나온다</strong><br>1. show/express + <strong class=\"target-word\">confidence</strong> in ~에 대한 신임을 보이다<br>confidence는 show, express 등 감정의 표현과 관련된 동사 및 전치사 in과 짝을 이루어 출제된다.<br>2. <strong class=\"target-word\">confidence</strong> in ~에 대한 확신, 신임 / in confidence 비밀로<br>confidence와 함께 쓰이는 전치사 in을 묻는 문제가 출제된다. 전치사 in의 위치에 따라 의미가 완전히 달라지므로 유의하면서 외워야 한다.",
+        "examples": [
+            {
+                "origin": "We have <strong class=\"target-word\">confidence</strong> that she can handle the position.",
+                "meaning": "우리는 그녀가 그 직책을 수행할 수 있다고 확신한다."
+            },
+            {
+                "origin": "The recommendations showed <strong class=\"target-word\">confidence</strong> in his abilities.",
+                "meaning": "그 추천서들은 그의 능력에 대한 신임을 보여 주었다."
+            }
+        ]
+    },
+    {
+        "origin": "highly",
+        "pronunciations": {
+            "us": "háili"
+        },
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "매우, 대단히"
+            }
+        ],
+        "notes": "<strong class=\"target-word\">토익 이렇게 나온다</strong><br><strong class=\"target-word\">highly</strong> + competent/recommended/qualified/competitive/profitable<br>매우 경쟁력 있는/권장되는/자격이 있는/경쟁이 심한/수익성 있는<br>highly는 very나 most와 같은 강조 부사로써 주로 형용사나 과거분사를 수식하는 형태로 시험에 나온다.",
+        "examples": [
+            {
+                "origin": "Mr. Monroe's experience makes him <strong class=\"target-word\">highly</strong> qualified for the job.",
+                "meaning": "Mr. Monroe의 경험이 그를 그 작업에 매우 자격이 있게 한다."
+            }
+        ]
+    },
+    {
+        "origin": "professional",
+        "pronunciations": {
+            "us": "prəféʃənl"
+        },
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "전문적인, 직업의"
+            },
+            {
+                "pos": "n",
+                "text": "전문가"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "Jeff is known as a <strong class=\"target-word\">professional</strong> photographer.",
+                "meaning": "Jeff는 전문 사진가로 알려져 있다."
+            },
+            {
+                "origin": "Merseyside Hospital is looking for a certified health <strong class=\"target-word\">professional</strong>.",
+                "meaning": "Merseyside 병원은 자격증이 있는 의료 전문가를 찾고 있습니다."
+            }
+        ]
+    },
+    {
+        "origin": "interview",
+        "pronunciations": {
+            "us": "íntərvjù:",
+            "uk": "intəvju:"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "면접"
+            },
+            {
+                "pos": "v",
+                "text": "면접을 보다"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "The <strong class=\"target-word\">interviews</strong> are being held in meeting room three.",
+                "meaning": "면접은 3번 회의실에서 이루어지고 있다."
+            },
+            {
+                "origin": "The manager <strong class=\"target-word\">interviewed</strong> almost 100 applicants.",
+                "meaning": "그 부장은 거의 100명의 지원자의 면접을 보았다."
+            }
+        ]
+    },
+    {
+        "origin": "hire",
+        "pronunciations": {
+            "us": "haiər",
+            "uk": "haiə"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "고용하다"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "The company expects to <strong class=\"target-word\">hire</strong> several new employees next month.",
+                "meaning": "회사는 다음 달에 신입사원 몇 명을 고용할 계획이다."
+            }
+        ]
+    },
+    {
+        "origin": "training",
+        "pronunciations": {
+            "us": "tréiniŋ"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "교육, 훈련"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "This company offers on-the-job <strong class=\"target-word\">training</strong> for new staff.",
+                "meaning": "이 회사는 신입 사원들을 위한 현장 교육을 제공한다."
+            }
+        ]
+    },
+    {
+        "origin": "reference",
+        "pronunciations": {
+            "us": "réfərəns"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "추천서; 참고"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "Philip asked his previous employer to write a <strong class=\"target-word\">reference</strong> letter for him.",
+                "meaning": "Philip은 그의 이전 상사에게 추천서를 써 달라고 부탁했다."
+            },
+            {
+                "origin": "The database contains <strong class=\"target-word\">reference</strong> material on all aspects of labor law.",
+                "meaning": "그 데이터베이스는 노동법 전반에 대한 참고 자료를 포함하고 있다."
+            }
+        ]
+    },
+    {
+        "origin": "position",
+        "pronunciations": {
+            "us": "pəzíʃən"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "일자리, 직책"
+            },
+            {
+                "pos": "v",
+                "text": "두다"
+            }
+        ],
+        "notes": "<strong class=\"target-word\">토익 이렇게 나온다</strong><br>accept a <strong class=\"target-word\">position</strong> 일자리를 수락하다<br>apply for a <strong class=\"target-word\">position</strong> 일자리에 지원하다<br>position은 지원, 수락과 관련된 동사와 함께 사용된다.",
+        "examples": [
+            {
+                "origin": "The advertised <strong class=\"target-word\">position</strong> provides health care and other benefits.",
+                "meaning": "광고된 일자리는 의료 서비스와 다른 혜택들을 제공한다."
+            },
+            {
+                "origin": "The secretary <strong class=\"target-word\">positioned</strong> the chairs around the table before the meeting began.",
+                "meaning": "비서는 회의가 시작되기 전에 탁자 주변에 의자를 두었다."
+            }
+        ]
+    },
+    {
+        "origin": "achievement",
+        "pronunciations": {
+            "us": "ətʃí:vmənt"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "성취, 달성"
+            }
+        ],
+        "notes": "<strong class=\"target-word\">토익 이렇게 나온다</strong><br><strong class=\"target-word\">achievement</strong> 성취, 달성<br><strong class=\"target-word\">achiever</strong> 크게 성공한 사람<br>추상 명사인 achievement와 사람 명사인 achiever를 구별하는 문제로 주로 출제된다.",
+        "examples": [
+            {
+                "origin": "List all of your <strong class=\"target-word\">achievements</strong> from previous jobs on your résumé.",
+                "meaning": "이전 직장에서 이룬 모든 성취 사항들을 이력서에 기록하시오."
+            }
+        ]
+    },
+    {
+        "origin": "impressed",
+        "pronunciations": {
+            "us": "imprést"
+        },
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "인상 깊게 생각하는, 감명을 받은"
+            }
+        ],
+        "notes": "<strong class=\"target-word\">토익 이렇게 나온다</strong><br><strong class=\"target-word\">impressed</strong> 인상 깊게 생각하는<br><strong class=\"target-word\">impressive</strong> 인상적인<br>형태가 비슷한 두 단어를 혼동하지 말아야 한다. impressed는 사람의 감정을 설명할 때 사용하고, impressive는 감정을 일으키는 대상을 설명할 때 사용한다.",
+        "examples": [
+            {
+                "origin": "The CEO was <strong class=\"target-word\">impressed</strong> by his assistant's organizing skills.",
+                "meaning": "그 최고 경영자는 비서의 정리 능력을 인상 깊게 생각했다."
+            }
+        ]
+    },
+    {
+        "origin": "excellent",
+        "pronunciations": {
+            "us": "éksələnt"
+        },
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "훌륭한, 탁월한"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "Because of her <strong class=\"target-word\">excellent</strong> managerial skills, Erin was hired for the job.",
+                "meaning": "그녀의 훌륭한 관리 능력 때문에, Erin은 그 일자리에 채용되었다."
+            }
+        ]
+    },
+    {
+        "origin": "eligible",
+        "pronunciations": {
+            "us": "élidʒəbl"
+        },
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "자격이 있는, 적격의"
+            }
+        ],
+        "notes": "<strong class=\"target-word\">토익 이렇게 나온다</strong><br>be <strong class=\"target-word\">eligible</strong> for + membership/compensation/position<br>회원이 될/보상을 받을/직위에 오를 자격이 있다<br>be <strong class=\"target-word\">eligible</strong> to do ~할 자격이 있다<br>eligible은 주로 전치사 for나 to 부정사와 함께 사용된다. 전치사 for 다음에는 membership, compensation, position 등과 같은 혜택이나 직위를 의미하는 명사가 온다.<br><strong class=\"target-word\">eligible : allowed</strong><br>'허용되는'을 의미하는 단어들의 용례 차이를 구별해 두자.<br><strong class=\"target-word\">eligible</strong> ~할 자격이 있는<br>사람이 특정 요건을 만족하여 자격을 갖출 때 쓰인다.<br><strong class=\"target-word\">allowed</strong> 허용된, 허가받은<br>특정 행위가 허용될 때 쓰인다.",
+        "examples": [
+            {
+                "origin": "The part-time workers are also <strong class=\"target-word\">eligible</strong> for paid holidays.",
+                "meaning": "시간제 근로자들도 유급 휴가를 받을 자격이 있다."
+            },
+            {
+                "origin": "Business dinners are included as <strong class=\"target-word\">allowed</strong> expenses.",
+                "meaning": "사업상 갖는 저녁 식사는 허용된 경비에 포함된다."
+            }
+        ]
+    },
+    {
+        "origin": "identify",
+        "pronunciations": {
+            "us": "aidéntəfài",
+            "uk": "aidéntifài"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "알아보다, 확인하다"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "Staff members wear uniforms so that they are easy for customers to <strong class=\"target-word\">identify</strong>.",
+                "meaning": "직원들은 손님들이 쉽게 알아볼 수 있도록 제복을 입는다."
+            }
+        ]
+    },
+    {
+        "origin": "associate",
+        "pronunciations": {
+            "us": "əsóusièit",
+            "uk": "əsóusiit"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "관련시키다"
+            }
+        ],
+        "notes": "<strong class=\"target-word\">토익 이렇게 나온다</strong><br>be <strong class=\"target-word\">associated</strong> with ~와 관련되다<br>in <strong class=\"target-word\">association</strong> with ~와 제휴하여<br>수동형인 be associated와 명사 association이 시험에 많이 나오며 주로 전치사 with와 함께 사용된다.",
+        "examples": [
+            {
+                "origin": "Two of the applicants were <strong class=\"target-word\">associated</strong> with a competitor.",
+                "meaning": "지원자 중 두 명은 경쟁사와 관련되어 있었다."
+            }
+        ]
+    },
+    {
+        "origin": "condition",
+        "pronunciations": {
+            "us": "kəndíʃən"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "조건"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "The <strong class=\"target-word\">conditions</strong> of employment are listed in the job opening notice.",
+                "meaning": "고용 조건들은 채용 공고문에 열거되어 있다."
+            }
+        ]
+    },
+    {
+        "origin": "employment",
+        "pronunciations": {
+            "us": "implɔ́imənt"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "고용"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "The company announced <strong class=\"target-word\">employment</strong> opportunities in personnel department.",
+                "meaning": "회사는 인사 부서에 고용 기회가 있음을 발표했다."
+            }
+        ]
+    },
+    {
+        "origin": "lack",
+        "pronunciations": {
+            "us": "læk"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "~이 없다"
+            },
+            {
+                "pos": "n",
+                "text": "부족"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "Carl <strong class=\"target-word\">lacked</strong> the ability to get along well with his coworkers.",
+                "meaning": "Carl은 동료들과 잘 지내는 능력이 없었다."
+            },
+            {
+                "origin": "Due to a <strong class=\"target-word\">lack</strong> of funds, the project has been temporarily halted.",
+                "meaning": "자금 부족 때문에, 그 프로젝트는 일시적으로 중단되었다."
+            }
+        ]
+    },
+    {
+        "origin": "managerial",
+        "pronunciations": {
+            "us": "mæ̀nidʒíəriəl",
+            "uk": "mæ̀nədʒíəriəl"
+        },
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "관리의"
+            }
+        ],
+        "notes": "<strong class=\"target-word\">토익 이렇게 나온다</strong><br><strong class=\"target-word\">managerial</strong> + staff/experience 관리 직원, 경영진 / 관리직 경력<br>managerial은 직원이나 경험을 나타내는 명사와 주로 같이 출제된다.",
+        "examples": [
+            {
+                "origin": "Mike is seeking a <strong class=\"target-word\">managerial</strong> position in the accounting field.",
+                "meaning": "Mike는 회계 분야에서 관리직 자리를 찾고 있다."
+            }
+        ]
+    },
+    {
+        "origin": "diligent",
+        "pronunciations": {
+            "us": "dílədʒənt",
+            "uk": "dílidʒənt"
+        },
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "성실한"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "Carmen is one of the most <strong class=\"target-word\">diligent</strong> workers in the company.",
+                "meaning": "Carmen은 회사에서 가장 성실한 직원들 중 한 명이다."
+            }
+        ]
+    },
+    {
+        "origin": "familiar",
+        "pronunciations": {
+            "us": "fəmíljər",
+            "uk": "fəmíljə"
+        },
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "익숙한, 친숙한"
+            }
+        ],
+        "notes": "<strong class=\"target-word\">토익 이렇게 나온다</strong><br>be <strong class=\"target-word\">familiar</strong> with ~에 익숙하다<br>familiar는 전치사 with와 짝을 이루어 자주 출제된다.",
+        "examples": [
+            {
+                "origin": "Staff must review the handbook to become <strong class=\"target-word\">familiar</strong> with it.",
+                "meaning": "직원들은 익숙해지도록 안내서를 복습해야 한다."
+            }
+        ]
+    },
+    {
+        "origin": "proficiency",
+        "pronunciations": {
+            "us": "prəfíʃənsi"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "숙달, 능숙"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "Overseas workers need proof of <strong class=\"target-word\">proficiency</strong> in a second language.",
+                "meaning": "해외 근로자들은 외국어 숙달에 관한 증거 자료가 필요하다."
+            }
+        ]
+    },
+    {
+        "origin": "prospective",
+        "pronunciations": {
+            "us": "prəspéktiv"
+        },
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "장래의, 미래의"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "<strong class=\"target-word\">Prospective</strong> employees were asked to come in for a second interview.",
+                "meaning": "장래의 직원들은 2차 면접을 보러 오라고 요청받았다."
+            }
+        ]
+    },
+    {
+        "origin": "appeal",
+        "pronunciations": {
+            "us": "əpí:l"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "관심을 끌다, 매력적이다"
+            }
+        ],
+        "notes": "<strong class=\"target-word\">토익 이렇게 나온다</strong><br><strong class=\"target-word\">appeal</strong> to + 명사 ~의 흥미를 끌다, ~에게 호소하다<br>appeal이 자동사여서 전치사 to와 함께 쓰인다.<br>누군가의 흥미나 관심을 끌다라는 의미일 때 appeal to는 <strong class=\"target-word\">attract</strong>로 바꾸어 쓸 수 있다.",
+        "examples": [
+            {
+                "origin": "The 10 percent pay increase <strong class=\"target-word\">appealed</strong> to the staff.",
+                "meaning": "10퍼센트 임금 인상은 직원들의 관심을 끌었다."
+            }
+        ]
+    },
+    {
+        "origin": "specialize",
+        "pronunciations": {
+            "us": "spéʃəlàiz"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "~을 전공하다, 전문적으로 다루다"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "Most of the programmers <strong class=\"target-word\">specialized</strong> in software design in college.",
+                "meaning": "대부분의 프로그래머는 대학에서 소프트웨어 디자인을 전공했다."
+            }
+        ]
+    },
+    {
+        "origin": "apprehensive",
+        "pronunciations": {
+            "us": "æ̀prihénsiv"
+        },
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "걱정하는, 염려하는"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "Many people feel <strong class=\"target-word\">apprehensive</strong> before an important job interview.",
+                "meaning": "많은 사람들은 중요한 면접 전에 걱정한다."
+            }
+        ]
+    },
+    {
+        "origin": "consultant",
+        "pronunciations": {
+            "us": "kənsʌ́ltənt"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "고문, 컨설턴트"
+            }
+        ],
+        "notes": "<strong class=\"target-word\">토익 이렇게 나온다</strong><br>consult + 전문가 ~와 상담하다<br>consult with + 대등한 상대 ~와 상의하다, 의논하다<br>consult + 서적/자료 ~을 찾아보다, ~을 참고하다<br>consult는 doctor 등 전문가와 상담할 때는 전치사 없이 사용하지만, friend와 같이 대등한 상대와 상의할 때는 전치사 with를 동반한다. '서적, 자료를 찾아보다'라고 쓰일 때는 전치사가 없어야 한다는 것도 꼭 기억해 두자.<br><strong class=\"target-word\">consultant : consultation</strong><br>사람 명사인 consultant와 추상 명사인 consultation을 구별하는 문제로 주로 출제된다.",
+        "examples": [
+            {
+                "origin": "Emma currently works in London as an interior design <strong class=\"target-word\">consultant</strong>.",
+                "meaning": "Emma는 현재 런던에서 인테리어 디자인 고문으로 일하고 있다."
+            }
+        ]
+    },
+    {
+        "origin": "entitle",
+        "pronunciations": {
+            "us": "intáitl"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "자격에서 주다"
+            }
+        ],
+        "notes": "<strong class=\"target-word\">토익 이렇게 나온다</strong><br>be <strong class=\"target-word\">entitled</strong> to + 명사 ~에 대한 자격이 주어지다<br>be <strong class=\"target-word\">entitled</strong> to do ~할 자격이 주어지다<br>entitle은 전치사 to나 to 부정사와 함께 사용되며 주로 수동태형으로 출제된다.",
+        "examples": [
+            {
+                "origin": "Executives are <strong class=\"target-word\">entitled</strong> to additional benefits.",
+                "meaning": "임원들에게는 추가 혜택에 대한 자격이 주어진다."
+            }
+        ]
+    },
+    {
+        "origin": "degree",
+        "pronunciations": {
+            "us": "digrí:"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "학위"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "A bachelor's <strong class=\"target-word\">degree</strong> in engineering is a requirement for this position.",
+                "meaning": "공학 학사 학위는 이 직책의 필요조건이다."
+            }
+        ]
+    },
+    {
+        "origin": "payroll",
+        "pronunciations": {
+            "us": "péiròul",
+            "uk": "péirəul"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "임금 대장, 급료 명부"
+            }
+        ],
+        "notes": "<strong class=\"target-word\">토익 이렇게 나온다</strong><br>on the <strong class=\"target-word\">payroll</strong> 고용되어<br>'임금 대장에 이름이 올라 있다'라는 의미에서 유래된 표현이다.<br>Sullivan Printing currently has 22 staff members on the <strong class=\"target-word\">payroll</strong>. Sullivan Printing사는 현재 22명의 직원들이 고용되어 있다.",
+        "examples": [
+            {
+                "origin": "Fifteen new employees were added to the <strong class=\"target-word\">payroll</strong> last month.",
+                "meaning": "15명의 신입 사원이 지난달 임금 대장에 추가되었다."
+            }
+        ]
+    },
+    {
+        "origin": "recruit",
+        "pronunciations": {
+            "us": "rikrú:t"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "(신입 사원 등을) 모집하다"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "The firm <strong class=\"target-word\">recruits</strong> promising graduates on a yearly basis.",
+                "meaning": "그 회사는 장래가 촉망되는 졸업자들을 매년 모집한다."
+            }
+        ]
+    },
+    {
+        "origin": "certification",
+        "pronunciations": {
+            "us": "sə̀rtəfikéiʃən",
+            "uk": "sə̀rtifikéiʃən"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "증명서, 증명"
+            }
+        ],
+        "notes": "<strong class=\"target-word\">토익 이렇게 나온다</strong><br>professional <strong class=\"target-word\">certification</strong> 전문 자격증<br>a birth certificate 출생 증명서<br>뜻이 같은 certification과 certificate의 차이를 구별해 두자. certification은 주로 전문 능력에 대한 자격을 증명하는 경우에 쓰이지만, certificate(증명서)은 자격 증명뿐 아니라 birth certificate와 같은 일반적인 증명서에도 사용된다.",
+        "examples": [
+            {
+                "origin": "Obtaining accounting <strong class=\"target-word\">certification</strong> takes approximately a year.",
+                "meaning": "회계 자격증을 취득하는 데는 대략 1년이 걸린다."
+            }
+        ]
+    },
+    {
+        "origin": "occupation",
+        "pronunciations": {
+            "us": "àkjupéiʃən",
+            "uk": "ɔ̀kjupéiʃən"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "직업"
+            }
+        ],
+        "notes": "<strong class=\"target-word\">토익 이렇게 나온다</strong><br><strong class=\"target-word\">occupation</strong> 직업<br><strong class=\"target-word\">occupant</strong> (주택의) 임차인, (토지의) 점유자<br>추상 명사인 occupation과 사람 명사인 occupant의 뜻을 구별하는 문제로 출제된다.",
+        "examples": [
+            {
+                "origin": "Journalism is an interesting and challenging <strong class=\"target-word\">occupation</strong>.",
+                "meaning": "보도직은 흥미로우면서도 도전적인 직업이다."
+            }
+        ]
+    },
+    {
+        "origin": "wage",
+        "pronunciations": {
+            "us": "weidʒ"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "임금, 급료"
+            }
+        ],
+        "notes": "<strong class=\"target-word\">토익 이렇게 나온다</strong><br><strong class=\"target-word\">wage : salary : compensation</strong><br>'급료'를 뜻하는 단어들의 용례를 비교해 두자.<br><strong class=\"target-word\">wage</strong> 임금<br>블루칼라 직업의 봉급에 주로 쓰이며 시간급이나 월급의 뉘앙스가 강하다.<br><strong class=\"target-word\">salary</strong> 봉급<br>화이트칼라 직업의 봉급에 주로 쓰이며 연봉의 뉘앙스가 강하다.<br><strong class=\"target-word\">compensation</strong> 보상, 보수<br>salary나 wage는 주로 업무 자체에 대한 보수를 의미하지만, compensation은 그 이외의 보상에도 사용할 수 있다. (ex. injury compensation 상해 보상)",
+        "examples": [
+            {
+                "origin": "Workers with formal education may earn higher <strong class=\"target-word\">wages</strong> than those without.",
+                "meaning": "정식 교육을 받은 근로자들은 그렇지 않은 사람들보다 더 높은 임금을 받을 수 있다."
+            }
+        ]
+    }
+]

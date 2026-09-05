@@ -1,0 +1,358 @@
+[
+    {
+        "origin": "actually",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "실제로, 정말로"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "area",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "지역, 구역"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "assign",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "할당하다, 배정하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "be different from",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~와 다르다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "be satisfied with",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~에 만족해하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "briefly",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "잠시, 간단히"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "capable",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "~을 할 수 있는, 유능한"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "careful",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "조심스러운, 주의 깊은"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "come over",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "들르다, (메시지 등이) 전달되다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "directly",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "직접적으로, 똑바로"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "expect",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "예상하다, 기대하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "experiment",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "실험"
+            },
+            {
+                "pos": "v",
+                "text": "실험하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "fail",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "실패하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "improve",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "향상시키다, 개선하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "instead of",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~ 대신에"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "lead",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "이끌다, 유발하다"
+            },
+            {
+                "pos": "n",
+                "text": "선두"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "least",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "가장 적은"
+            },
+            {
+                "pos": "adv",
+                "text": "최소로"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "look like",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~처럼 보이다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "mostly",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "주로, 대개"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "on the other hand",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "반면에"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "physical",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "신체의, 육체의, 물리적인"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "plus",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "prep",
+                "text": "~외에, ~을 더하여"
+            },
+            {
+                "pos": "adj",
+                "text": "더하기의"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "project",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "프로젝트, 계획"
+            },
+            {
+                "pos": "v",
+                "text": "계획하다; 발사하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "resource",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "자원, 재원"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "sample",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "샘플, 견본"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "suggestion",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "제안, 암시"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "technical",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "기술적인"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "unhelpful",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "도움이 되지 않는"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    }
+]

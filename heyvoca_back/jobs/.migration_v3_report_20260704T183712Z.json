@@ -1,0 +1,11 @@
+{
+  "timestamp": "20260704T183712Z",
+  "dry_run": false,
+  "total_processed": 896,
+  "v1_to_v3": 2,
+  "v2_to_v3": 0,
+  "skipped": 724,
+  "null": 170,
+  "errors": 0,
+  "error_ids": []
+}

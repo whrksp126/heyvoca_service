@@ -1,0 +1,354 @@
+[
+    {
+        "origin": "challenge",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "도전"
+            },
+            {
+                "pos": "v",
+                "text": "도전하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "comfort",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "위로하다"
+            },
+            {
+                "pos": "n",
+                "text": "위로"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "compact",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "소형의"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "data",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "자료"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "distance",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "거리"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "elementary",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "기본이 되는, 초보의"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "extra",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "추가의"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "fake",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "위조의"
+            },
+            {
+                "pos": "n",
+                "text": "모조품"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "joint",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "공동의"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "listen to",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~을 듣다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "mentor",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "조언자"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "network",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "망"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "relaxing",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "긴장을 풀어 주는"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "rental car",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "임대 자동차"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "single",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "단 하나의"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "soon",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "곧"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "accuracy",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "정확도"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "biased",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "편향된"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "goal",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "목표"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "lose",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "분실하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "owner",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "주인, 소유주"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "risky",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "위험한"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "somewhat",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "다소, 얼마간"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "tight",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "단단한, 꽉 조여 있는"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "truly",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "정말로, 진심으로"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "usual",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "흔히 있는, 보통의"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "wait",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "기다리다"
+            },
+            {
+                "pos": "n",
+                "text": "기다림"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "worry",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "걱정하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    }
+]

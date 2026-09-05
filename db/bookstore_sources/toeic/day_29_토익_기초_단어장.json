@@ -1,0 +1,382 @@
+[
+    {
+        "origin": "avoid",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "피하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "chemical",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "화학 물질"
+            },
+            {
+                "pos": "adj",
+                "text": "화학의"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "clean",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "깨끗한"
+            },
+            {
+                "pos": "v",
+                "text": "청소하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "cold",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "추운, 차가운"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "container",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "그릇, 용기"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "dark",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "어두운"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "dirty",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "더러운"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "drop",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "떨어뜨리다"
+            },
+            {
+                "pos": "n",
+                "text": "방울"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "flat",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "평평한"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "fresh",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "신선한"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "glass",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "유리"
+            },
+            {
+                "pos": "",
+                "text": "유리 잔"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "light",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "빛"
+            },
+            {
+                "pos": "adj",
+                "text": "가벼운"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "pick up",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "집어 들다"
+            },
+            {
+                "pos": "",
+                "text": "(사람을) 태워 주다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "pile",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "더미"
+            },
+            {
+                "pos": "v",
+                "text": "쌓다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "plastic",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "플라스틱"
+            },
+            {
+                "pos": "adj",
+                "text": "플라스틱제의"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "polite",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "예의 바른"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "pure",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "순수한, 깨끗한"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "quiet",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "조용한"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "reduce",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "줄이다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "recycle",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "재활용하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "save",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "절약하다"
+            },
+            {
+                "pos": "",
+                "text": "구하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "shout",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "소리치다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "smell",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "냄새"
+            },
+            {
+                "pos": "v",
+                "text": "냄새를 맡다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "smoke",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "연기"
+            },
+            {
+                "pos": "v",
+                "text": "담배를 피우다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "stay",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "머무르다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "throw away",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "버리다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "wash",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "씻다, 세탁하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "wet",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "젖은"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    }
+]

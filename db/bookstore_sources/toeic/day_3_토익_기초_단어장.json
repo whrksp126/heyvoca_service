@@ -1,0 +1,350 @@
+[
+    {
+        "origin": "a sheet of",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~ 한 장"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "business card",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "명함"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "cartridge",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "(프린터 등의) 잉크 카트리지"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "daily",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "매일의"
+            },
+            {
+                "pos": "adv",
+                "text": "날마다, 매일"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "edit",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "편집하다, 수정하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "hand",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "손"
+            },
+            {
+                "pos": "v",
+                "text": "건네주다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "in order to do",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~하기 위해서"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "laptop",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "휴대용 컴퓨터"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "name tag",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "명찰, 명패"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "on vacation",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "휴가 중인"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "paper jam",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "(복사기에서의) 종이 걸림"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "paperwork",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "문서 작업"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "partition",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "칸막이, 분할"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "rush hour",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "(출퇴근 시의) 교통 혼잡 시간"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "section",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "부분, 구역"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "sheet",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "시트, 종이"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "tabletop",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "테이블 윗면"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "telephone call",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "전화 통화"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "trash bin",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "쓰레기통"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "upstairs",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "위층의"
+            },
+            {
+                "pos": "adv",
+                "text": "위층으로, 위층에"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "as if",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "마치 ~인 듯이"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "as well as",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~에 더하여, 게다가"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "be aware of",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~을 알고 있다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "be known as",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~으로 알려져 있다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "be likely to",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~할 가능성이 있다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "detail",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "세부 사항"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "offering",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "제공된 것"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "on one's own",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "혼자서, 혼자 힘으로"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    }
+]

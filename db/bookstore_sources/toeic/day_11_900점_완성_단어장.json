@@ -1,0 +1,386 @@
+[
+    {
+        "origin": "be stacked on top of each other",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "차곡차곡 쌓이다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "hectic",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "몹시 바쁜"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "intently",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "주의 깊게"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "ornamental",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "장식적인, 장식의"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "reassign",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "(임무 등을) 다시 맡기다, 새로 발령내다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "specimen",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "견본"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "achievable",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "성취할 수 있는, 달성할 수 있는"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "apparatus",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "장치, 기구"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "concession",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "양보, (당국의) 면허"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "concurrently",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "동시에"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "configuration",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "배치"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "detectable",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "발견할 수 있는"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "distill",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "증류하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "dysfunction",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "기능 장애, 역기능"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "embedded",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "삽입된, 포함된"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "evolve",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "서서히 발달하다, 진화하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "flammable",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "타기 쉬운"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "implant",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "이식하다, (사상을) 심어 주다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "patronize",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "~을 단골로 삼다, 거래하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "staple",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "기본 식료품"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "steer",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "조종하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "sturdily",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "튼튼하게, 완강하게"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "transparent",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "투명한"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "be geared to",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~에 맞춰져 있다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "bewildering",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "당혹게 하는"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "bring out",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "(제품을) 출시하다, (능력을) 끌어내다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "cutting-edge",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "최첨단의"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "obsolete",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "쓸모없게 된, 안 쓰이는"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "quality control standards",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "품질 관리 기준"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "state-of-the-art",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "최신식의"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "streamline",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "(일 등을) 능률적으로 하다, 합리화하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "top-of-the-line",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "최고급의"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    }
+]

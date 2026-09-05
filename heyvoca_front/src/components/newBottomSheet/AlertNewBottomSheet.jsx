@@ -31,10 +31,10 @@ export const AlertNewBottomSheet = ({ title, btns }) => {
         <motion.button
           className="
             w-full
-            h-[45px]
-            rounded-[8px]
+            h-[52px]
+            rounded-[12px]
             bg-primary-main-600
-            text-layout-white text-[16px] font-[700]
+            text-layout-white text-[16px] font-[700] tracking-[-0.03em]
           "
           onClick={handleConfirm}
           whileTap={{ scale: 0.95 }}

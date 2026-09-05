@@ -1,0 +1,866 @@
+[
+    {
+        "origin": "at a reasonable price",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "저렴한 가격에"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "be aware of",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~을 알고 있다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "bulk order",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "대량 주문"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "business relationship",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "사업 관계"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "commercial products",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "상업 제품"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "confirm an order",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "주문을 확인하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "contact list",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "연락처 명단"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "costly",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "비용이 많이 드는"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "customer service",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "고객 서비스"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "delivery charges",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "배송비"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "discount coupon",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "할인 쿠폰"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "distribute flyers",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "전단지를 돌리다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "finalize a plan",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "계획을 마무리 짓다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "in stock",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "재고가 있는"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "invoice number",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "송장 번호"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "itemized list",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "항목별 목록"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "limited supply",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "한정된 공급"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "make a move",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "조치를 취하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "market research",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "시장 조사"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "office supplies",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "사무용품"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "order cancellation",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "주문 취소"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "out of stock",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "품절된"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "payment terms",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "지불 조건"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "price quote",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "가격 견적"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "provide information",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "정보를 제공하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "reasonable price",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "합리적인 가격"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "retail sales",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "소매 매출"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "safety measures",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "안전 조치"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "stock level",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "재고 수준"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "strategic move",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "전략적 조치"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "acquisition",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "인수"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "bargain",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "특가품; 흥정"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "clientele",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "모든 의뢰인, 고객들"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "commodity",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "상품"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "completely",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "완전히"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "confirmation",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "확인"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "contact",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "연락하다; n. 인맥"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "deal",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "거래하다; n. 거래"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "dealer",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "상인, 판매업자"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "discount",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "할인"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "distribute",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "배포하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "encompass",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "포함하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "finalize",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "마무리하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "invoice",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "송장"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "market",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "시장"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "measure",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "조치; v. 측정하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "order",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "주문하다; n. 주문"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "payment",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "지불"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "provide",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "공급하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "quote",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "견적(액)"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "acclaim",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "호평, 찬사"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "affordability",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "감당할 수 있는 비용"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "assure",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "보장하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "bulk",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "대량의"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "commercial",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "상업적인"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "consignment",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "위탁 판매"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "cost",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "비용; v. 비용이 들다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "inventory",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "재고"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "move",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "조치; v. 옮기다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "rating",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "등급"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "refuse",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "거절하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "represent",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "대표하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "retail",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "소매"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "satisfactory",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "만족스러운"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "seek",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "찾다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "selection",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "정선품, 선택"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "short",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "부족한"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "stock",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "재고; 주식"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "subject",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "~을 받기 쉬운"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "supply",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "공급하다; n. 비품"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "temporarily",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "일시적으로"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "unable",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "~할 수 없는"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    }
+]

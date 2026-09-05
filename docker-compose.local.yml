@@ -36,6 +36,8 @@ services:
       # 사전 DB 동기화: dict_sync.py와 dict_pointer.json을 백엔드 컨테이너에 노출
       - ./scripts:/app/scripts:ro
       - ./db/dict:/app/db/dict
+      # 관리자 수동 내려받기 전 기존 DB dump(사용자 기기에 보존)
+      - ./db/local-dict-archives:/app/db/local-dict-archives
     networks:
       - heyvoca_local
     depends_on:
@@ -43,7 +45,7 @@ services:
       - redis
     restart: always
     healthcheck:
-      test: ["CMD-SHELL", "python -c \"import urllib.request; urllib.request.urlopen('http://localhost:5000/health')\" || exit 1"]
+      test: ["CMD-SHELL", "python3 -c \"import urllib.request; urllib.request.urlopen('http://localhost:5000/health')\" || exit 1"]
       interval: 30s
       timeout: 10s
       retries: 3

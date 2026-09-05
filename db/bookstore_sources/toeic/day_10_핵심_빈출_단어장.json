@@ -1,0 +1,856 @@
+[
+    {
+        "origin": "purchase",
+        "pronunciations": {
+            "us": "pə́ːrtʃəs",
+            "uk": "pə́ːtʃəs"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "구매하다"
+            },
+            {
+                "pos": "n",
+                "text": "구매"
+            }
+        ],
+        "notes": "[동] <strong class=\"target-word\">buy</strong> 구매하다, 사다<br><strong class=\"target-word\">토익 이렇게 나온다</strong><br><strong class=\"target-word\">within ~ days of purchase</strong> 구입일로부터 ~일 이내에<br>전치사 within을 선택하는 문제로 출제된다.",
+        "examples": [
+            {
+                "origin": "The customer <strong class=\"target-word\">purchased</strong> a laptop computer.",
+                "translation": "그 고객은 노트북 컴퓨터를 구매했다."
+            },
+            {
+                "origin": "For every <strong class=\"target-word\">purchase</strong> of $100 or more, customers will receive a raffle ticket.",
+                "translation": "100달러 이상의 모든 구매에 대해 고객들은 추첨권을 한 장 받게 될 것이다."
+            }
+        ]
+    },
+    {
+        "origin": "price",
+        "pronunciations": {
+            "us": "prais"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "가격"
+            }
+        ],
+        "notes": "v. ~에 값을 매기다<br><strong class=\"target-word\">토익 이렇게 나온다</strong><br><strong class=\"target-word\">a reduced price</strong> 할인가<br><strong class=\"target-word\">a retail price</strong> 소매가 (↔ a wholesale price)<br>price는 가산 명사이므로 단수로 쓰일 때 부정관사 a가 꼭 필요하다는 것에 유의하자.",
+        "examples": [
+            {
+                "origin": "The new color printer has a retail <strong class=\"target-word\">price</strong> of only $150.99.",
+                "translation": "새 컬러 프린터는 소매가로 겨우 150.99달러밖에 안 된다."
+            }
+        ]
+    },
+    {
+        "origin": "affordable",
+        "pronunciations": {
+            "us": "əfɔ́ːrdəbl",
+            "uk": "əfɔ́ːdəbl"
+        },
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "(가격이) 알맞은, 감당할 수 있는"
+            }
+        ],
+        "notes": "[파] <strong class=\"target-word\">afford</strong> v. ~할 여유가 있다<br><strong class=\"target-word\">affordability</strong> n. 감당할 수 있는 비용<br><strong class=\"target-word\">affordably</strong> adv. 알맞게, 감당할 수 있게<br>[동] <strong class=\"target-word\">reasonable</strong> (가격이) 비싸지 않은, 적당한<br>[반] <strong class=\"target-word\">expensive</strong> 값비싼<br><strong class=\"target-word\">토익 이렇게 나온다</strong><br><strong class=\"target-word\">at an affordable + rate/price</strong> 적당한 가격에<br>affordable은 rate, price 등 가격을 뜻하는 명사와 주로 어울려 출제된다.",
+        "examples": [
+            {
+                "origin": "Toyama launched an <strong class=\"target-word\">affordable</strong> mid-range sedan.",
+                "translation": "Toyama사가 알맞은 가격의 중형 세단을 출시했다."
+            }
+        ]
+    },
+    {
+        "origin": "exactly",
+        "pronunciations": {
+            "us": "igzǽktli"
+        },
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "정확히"
+            }
+        ],
+        "notes": "[파] <strong class=\"target-word\">exact</strong> adj. 정확한<br>[동] <strong class=\"target-word\">precisely</strong> 정확히, 엄밀하게",
+        "examples": [
+            {
+                "origin": "The sales representatives help customers decide <strong class=\"target-word\">exactly</strong> what style fits them best.",
+                "translation": "영업 사원들은 고객들이 어떤 스타일이 자신에게 가장 잘 맞는지 결정하는 데 도움을 준다."
+            }
+        ]
+    },
+    {
+        "origin": "installment",
+        "pronunciations": {
+            "us": "instɔ́ːlmənt"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "할부"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "The shop allows buyers to pay for furniture in monthly <strong class=\"target-word\">installments</strong>.",
+                "translation": "그 상점은 구매자가 가구 값을 매달 할부로 지불하는 것을 허용한다."
+            }
+        ]
+    },
+    {
+        "origin": "notice",
+        "pronunciations": {
+            "us": "nóutis",
+            "uk": "nə́utis"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "통지, 공고"
+            }
+        ],
+        "notes": "v. 주의하다, 알아채다<br>[파] <strong class=\"target-word\">notify</strong> v. 통지하다, 통보하다<br><strong class=\"target-word\">notification</strong> n. 통지, 통지서<br><strong class=\"target-word\">noticeable</strong> adj. 눈에 띄는<br><strong class=\"target-word\">토익 이렇게 나온다</strong><br><strong class=\"target-word\">until further notice</strong> 추후 통지가 있을 때까지<br><strong class=\"target-word\">give two weeks' notice</strong> 2주 전에 통보하다<br>notice는 관용 표현으로 주로 출제되므로 꼭 기억해 두자.",
+        "examples": [
+            {
+                "origin": "The prices listed in the catalog are effective until further <strong class=\"target-word\">notice</strong>.",
+                "translation": "카탈로그에 명시된 가격은 추후 통지가 있을 때까지 유효합니다."
+            }
+        ]
+    },
+    {
+        "origin": "charge",
+        "pronunciations": {
+            "us": "tʃɑːrdʒ",
+            "uk": "tʃɑːdʒ"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "요금, 청구 금액; 책임, 의무"
+            },
+            {
+                "pos": "v",
+                "text": "~을 청구하다; (외상으로) 달아놓다"
+            }
+        ],
+        "notes": "[동] <strong class=\"target-word\">expense</strong> 비용, 경비<br><strong class=\"target-word\">토익 이렇게 나온다</strong><br>1. <strong class=\"target-word\">free of charge</strong> 무료로<br>관용 표현에 charge를 채워 넣는 문제로 출제된다. '요금'과 관련된 rate, price, fare는 이 표현에 사용할 수 없다는 것에 유의하도록 한다.<br>2. <strong class=\"target-word\">in charge of</strong> ~을 맡고 있는, 담당의<br>charge는 in charge of 형태로 자주 출제되므로 꼭 기억해 투자.<br>3. <strong class=\"target-word\">additional charge</strong> 추가 요금<br>4. <strong class=\"target-word\">charge A to B</strong> A를 B 앞으로 달아 놓다<br>charge와 함께 쓰이는 전치사 to를 묻는 문제로 출제된다.",
+        "examples": [
+            {
+                "origin": "The price includes shipping and handling <strong class=\"target-word\">charges</strong>.",
+                "translation": "그 가격은 운송 및 취급 요금을 포함한다."
+            },
+            {
+                "origin": "Ms. Long is in <strong class=\"target-word\">charge</strong> of product returns.",
+                "translation": "Ms. Long은 반품 처리를 맡고 있다."
+            },
+            {
+                "origin": "The phone company <strong class=\"target-word\">charges</strong> high fees for installations.",
+                "translation": "그 통신 회사는 높은 설치 수수료를 청구한다."
+            },
+            {
+                "origin": "She <strong class=\"target-word\">charged</strong> the fee to her credit card.",
+                "translation": "그녀는 그 요금을 자신의 신용 카드 앞으로 달아 놓았다."
+            }
+        ]
+    },
+    {
+        "origin": "experienced",
+        "pronunciations": {
+            "us": "ikspíəriənst"
+        },
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "경험이 있는, 노련한, 능숙한"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "Bill is the most <strong class=\"target-word\">experienced</strong> salesperson in the store.",
+                "translation": "Bill은 그 상점에서 가장 경험이 많은 판매원이다."
+            }
+        ]
+    },
+    {
+        "origin": "instruction",
+        "pronunciations": {
+            "us": "instrʌ́kʃən"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "설명, 지시"
+            }
+        ],
+        "notes": "[파] <strong class=\"target-word\">instructional</strong> adj. 교육용의",
+        "examples": [
+            {
+                "origin": "The receipt gives <strong class=\"target-word\">instructions</strong> for returning or exchanging items.",
+                "translation": "영수증은 제품의 반품이나 교환에 대한 설명을 제시한다."
+            }
+        ]
+    },
+    {
+        "origin": "expert",
+        "pronunciations": {
+            "us": "ékspərt",
+            "uk": "ékspəːt"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "전문가"
+            },
+            {
+                "pos": "adj",
+                "text": "전문가의, 전문적인"
+            }
+        ],
+        "notes": "[파] <strong class=\"target-word\">expertly</strong> adv. 훌륭하게, 전문적으로",
+        "examples": [
+            {
+                "origin": "A personal shopper is an <strong class=\"target-word\">expert</strong> at finding bargains for customers.",
+                "translation": "물품 구매 상담원은 고객들을 위해 싼 물건을 찾는 데 있어 전문가이다."
+            },
+            {
+                "origin": "An <strong class=\"target-word\">expert</strong> designer created the layout of the store.",
+                "translation": "전문 디자이너가 가게 배치도를 만들었다."
+            }
+        ]
+    },
+    {
+        "origin": "warranty",
+        "pronunciations": {
+            "us": "wɔ́ːrənti",
+            "uk": "wɔ́rənti"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "(품질 등의) 보증, 보증서"
+            }
+        ],
+        "notes": "<strong class=\"target-word\">토익 이렇게 나온다</strong><br><strong class=\"target-word\">under warranty</strong> (상품이) 보증 기간 중인<br>warranty와 어울려 쓰이는 전치사 under를 묶어서 외워 두자.",
+        "examples": [
+            {
+                "origin": "The computer is under <strong class=\"target-word\">warranty</strong> for two years.",
+                "translation": "그 컴퓨터는 보증 기간이 2년입니다."
+            }
+        ]
+    },
+    {
+        "origin": "refund",
+        "pronunciations": {
+            "us": "ríːfʌnd"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "환불, 환불금"
+            }
+        ],
+        "notes": "v. 환불하다 [파] <strong class=\"target-word\">refundable</strong> adj. 환불 가능한<br><strong class=\"target-word\">토익 이렇게 나온다</strong><br><strong class=\"target-word\">a full refund</strong> 전액 환불<br><strong class=\"target-word\">provide a refund</strong> 환불해 주다<br>refund는 가산 명사이므로 단수로 쓰일 때 부정관사 a가 꼭 필요하다는 것에 유의하자.",
+        "examples": [
+            {
+                "origin": "Buyers can get a full <strong class=\"target-word\">refund</strong> for a defective product.",
+                "translation": "구매자들은 결함이 있는 제품에 대해 전액 환불을 받을 수 있습니다."
+            }
+        ]
+    },
+    {
+        "origin": "subscriber",
+        "pronunciations": {
+            "us": "səbskráibər",
+            "uk": "səbskráibə"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "가입자, 구독자"
+            }
+        ],
+        "notes": "[파] <strong class=\"target-word\">subscription</strong> n. (정기) 구독",
+        "examples": [
+            {
+                "origin": "The Web site now has millions of <strong class=\"target-word\">subscribers</strong>.",
+                "translation": "그 웹사이트는 이제 수백만 명의 가입자가 있다."
+            }
+        ]
+    },
+    {
+        "origin": "delivery",
+        "pronunciations": {
+            "us": "dilívəri"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "배달"
+            }
+        ],
+        "notes": "[파] <strong class=\"target-word\">deliver</strong> v. 배달하다",
+        "examples": [
+            {
+                "origin": "We guarantee <strong class=\"target-word\">delivery</strong> within three days.",
+                "translation": "저희는 3일 이내 배달을 보장합니다."
+            }
+        ]
+    },
+    {
+        "origin": "receipt",
+        "pronunciations": {
+            "us": "risíːt"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "영수증"
+            }
+        ],
+        "notes": "[파] <strong class=\"target-word\">receive</strong> v. 받다, 수취하다<br><strong class=\"target-word\">토익 이렇게 나온다</strong><br><strong class=\"target-word\">original/valid + receipt</strong> 원본/유효한 영수증<br><strong class=\"target-word\">upon receipt of</strong> ~을 수령/접수하는 즉시<br>receipt의 토익 출제 표현을 외워 두자.",
+        "examples": [
+            {
+                "origin": "The original <strong class=\"target-word\">receipt</strong> is required for all refunds.",
+                "translation": "원본 영수증은 모든 환불에 요구된다."
+            }
+        ]
+    },
+    {
+        "origin": "carefully",
+        "pronunciations": {
+            "us": "kέərfəli",
+            "uk": "kέəfəli"
+        },
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "주의 깊게, 신중히"
+            }
+        ],
+        "notes": "[파] <strong class=\"target-word\">care</strong> n. 주의, 걱정 v. 걱정하다<br><strong class=\"target-word\">careful</strong> adj. 주의 깊은<br>[반] <strong class=\"target-word\">carelessly</strong> 부주의하게<br><strong class=\"target-word\">토익 이렇게 나온다</strong><br><strong class=\"target-word\">carefully</strong>(adv. 주의 깊게)와 <strong class=\"target-word\">careful</strong>(adj. 주의 깊은)의 품사 구별하기.",
+        "examples": [
+            {
+                "origin": "Please follow the installation directions <strong class=\"target-word\">carefully</strong>.",
+                "translation": "설치 설명서를 주의 깊게 따라 하십시오."
+            }
+        ]
+    },
+    {
+        "origin": "offer",
+        "pronunciations": {
+            "us": "ɔ́ːfər",
+            "uk": "ɔ́fə"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "제공하다"
+            },
+            {
+                "pos": "n",
+                "text": "제공, 오퍼"
+            }
+        ],
+        "notes": "[동] <strong class=\"target-word\">provide</strong> 제공하다<br><strong class=\"target-word\">토익 이렇게 나온다</strong><br><strong class=\"target-word\">promotional offers</strong> 판촉 상품<br><strong class=\"target-word\">job offer</strong> 일자리 제의<br>명사 offer의 토익 출제 표현을 외워 투자.<br><strong class=\"target-word\">offer A B = offer B to A</strong> A에게 B를 제공하다<br>offer는 4형식 동사이며 offer A B 형태로 많이 사용된다. offer B to A처럼 3형식으로 쓰이기도 한다.",
+        "examples": [
+            {
+                "origin": "Z-Mart <strong class=\"target-word\">offers</strong> $25 gift cards to customers signing up for membership.",
+                "translation": "Z-Mart는 회원 등록을 하는 고객들에게 25달러 상품권을 제공한다."
+            },
+            {
+                "origin": "The supermarket entices customers with promotional <strong class=\"target-word\">offers</strong>.",
+                "translation": "그 슈퍼마켓은 판촉 상품으로 고객들을 끌어들인다."
+            }
+        ]
+    },
+    {
+        "origin": "benefit",
+        "pronunciations": {
+            "us": "bénəfit",
+            "uk": "bénifit"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "혜택, 이익"
+            },
+            {
+                "pos": "v",
+                "text": "혜택을 보다, 이익을 얻다"
+            }
+        ],
+        "notes": "[파] <strong class=\"target-word\">beneficial</strong> adj. 유익한, 이로운<br><strong class=\"target-word\">beneficiary</strong> n. 수익자, 수혜자<br>[반] <strong class=\"target-word\">disadvantage</strong> 불이익",
+        "examples": [
+            {
+                "origin": "The Shoppers' Club offers many <strong class=\"target-word\">benefits</strong> to its members.",
+                "translation": "Shoppers' Club은 회원들에게 많은 혜택을 제공한다."
+            },
+            {
+                "origin": "NBC Mart shoppers <strong class=\"target-word\">benefit</strong> from various coupons and free delivery service.",
+                "translation": "NBC Mart의 쇼핑객들은 다양한 쿠폰과 무료 배송 서비스로 혜택을 본다."
+            }
+        ]
+    },
+    {
+        "origin": "exclusively",
+        "pronunciations": {
+            "us": "iksklúːsivli"
+        },
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "오로지, 독점적으로"
+            }
+        ],
+        "notes": "[파] <strong class=\"target-word\">exclusive</strong> adj. 독점적인<br><strong class=\"target-word\">exclude</strong> v. 배제하다<br>[동] <strong class=\"target-word\">solely</strong> 단독으로, 오직<br><strong class=\"target-word\">토익 이렇게 나온다</strong><br><strong class=\"target-word\">available exclusively online</strong> 온라인으로만 이용 가능한<br><strong class=\"target-word\">sell exclusively</strong> 독점으로 판매하다<br><strong class=\"target-word\">exclusively supply</strong> 독점으로 제공하다<br>exclusively의 토익 출제 표현을 알아 두자.<br>'오로지', '단독으로'라는 뜻으로 쓰일 때 <strong class=\"target-word\">exclusively</strong>는 <strong class=\"target-word\">solely</strong>로 바꾸어 쓸 수 있다.",
+        "examples": [
+            {
+                "origin": "A 10 percent discount is available <strong class=\"target-word\">exclusively</strong> to Premium Club members.",
+                "translation": "10퍼센트 할인은 오로지 Premium Club 회원들만 이용할 수 있다."
+            }
+        ]
+    },
+    {
+        "origin": "description",
+        "pronunciations": {
+            "us": "diskripʃən"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "(제품 등의) 설명, 해설"
+            }
+        ],
+        "notes": "[파] <strong class=\"target-word\">describe</strong> v. 설명하다<br>[동] <strong class=\"target-word\">account</strong> 설명, 이야기<br><strong class=\"target-word\">토익 이렇게 나온다</strong><br><strong class=\"target-word\">job description</strong> 직무 내용<br>직무(job)에 대한 설명(description)을 의미하며 주로 구인 광고에서 많이 볼 수 있는 표현이다.<br><strong class=\"target-word\">description : information : specification</strong><br>'설명'을 의미하는 단어들의 용례 차이를 구별하는 문제로 출제된다.<br>- <strong class=\"target-word\">description</strong> (제품 등의) 설명, 해설<br>'서면상으로 제공되는 설명'이라는 뜻일 때 가산 명사로 사용된다.<br>- <strong class=\"target-word\">information</strong> 정보<br>불가산 명사이므로 부정관사 an을 쓸 수 없다.<br>- <strong class=\"target-word\">specification</strong> (자세한) 설명서, 사양<br>제품의 구성 요소나 제조 방법을 나열한 것을 의미하며 주로 복수형으로 사용된다.",
+        "examples": [
+            {
+                "origin": "Call customer service for a more extensive <strong class=\"target-word\">description</strong> of any of the equipment.",
+                "translation": "어떤 종류의 장비에 관해서든 더 많은 설명을 원하시면 고객 서비스 센터로 전화하세요."
+            }
+        ]
+    },
+    {
+        "origin": "relatively",
+        "pronunciations": {
+            "us": "rélətivli"
+        },
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "상대적으로"
+            }
+        ],
+        "notes": "[파] <strong class=\"target-word\">relative</strong> adj. 상대적인<br><strong class=\"target-word\">relate</strong> v. 관련시키다, 결부시키다, (말·글로) 들려주다<br><strong class=\"target-word\">토익 이렇게 나온다</strong><br><strong class=\"target-word\">relatively + lenient/low</strong> 상대적으로 관대한/낮은<br>relatively는 형용사 lenient, low 등과 어울려 출제된다.",
+        "examples": [
+            {
+                "origin": "McCoy's has a <strong class=\"target-word\">relatively</strong> lenient return policy compared to similar stores.",
+                "translation": "McCoy's사는 유사한 가게들에 비해 상대적으로 관대한 반품 규정을 갖고 있다."
+            }
+        ]
+    },
+    {
+        "origin": "preparation",
+        "pronunciations": {
+            "us": "prèpəréiʃən"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "준비, 대비"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "<strong class=\"target-word\">Preparations</strong> are under way for the department store's grand opening.",
+                "translation": "백화점 대개장을 위한 준비가 진행 중이다."
+            }
+        ]
+    },
+    {
+        "origin": "spare",
+        "pronunciations": {
+            "us": "spεər",
+            "uk": "spεə"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "아끼다, 할애하다"
+            },
+            {
+                "pos": "adj",
+                "text": "예비의, 여분의"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "The shopping mall <strong class=\"target-word\">spared</strong> no expense on the 10th anniversary promotion.",
+                "translation": "그 쇼핑몰은 10주년 홍보에 비용을 아끼지 않았다."
+            },
+            {
+                "origin": "Customers may order <strong class=\"target-word\">spare</strong> parts at the service counter.",
+                "translation": "고객 여러분께서는 예비 부품을 서비스 카운터에서 주문하실 수 있습니다."
+            }
+        ]
+    },
+    {
+        "origin": "area",
+        "pronunciations": {
+            "us": "έəriə",
+            "uk": "έəriə"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "지역, 구역"
+            }
+        ],
+        "notes": "<strong class=\"target-word\">토익 이렇게 나온다</strong><br><strong class=\"target-word\">area : site</strong><br>'장소'를 의미하는 단어들의 용례 차이를 구별하는 문제로 출제된다.<br>- <strong class=\"target-word\">area</strong> 지역<br>도시, 나라 등에서의 일부 지역을 의미한다.<br>- <strong class=\"target-word\">site</strong> (건축용) 부지, 대지<br>특정 목적을 위해 사용되는 땅을 뜻한다.",
+        "examples": [
+            {
+                "origin": "There are excellent retail stores in this <strong class=\"target-word\">area</strong>.",
+                "translation": "이 지역에는 훌륭한 소매점들이 있다."
+            }
+        ]
+    },
+    {
+        "origin": "clearance",
+        "pronunciations": {
+            "us": "klíərəns"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "정리, 없애기; 허가"
+            }
+        ],
+        "notes": "[동] <strong class=\"target-word\">authorization</strong> 허가, 권한 부여<br><strong class=\"target-word\">토익 이렇게 나온다</strong><br><strong class=\"target-word\">clearance sale</strong> 재고 정리 할인 판매<br>재고를 정리(clearance)하는 할인 판매(sale)를 의미하며 주로 상점 광고에서 많이 볼 수 있는 표현이다.",
+        "examples": [
+            {
+                "origin": "There is usually a <strong class=\"target-word\">clearance</strong> sale for winter clothes in March.",
+                "translation": "겨울옷 재고 정리 할인 판매는 보통 3월에 있다."
+            },
+            {
+                "origin": "The clerk got special <strong class=\"target-word\">clearance</strong> to discount the shoes.",
+                "translation": "그 점원은 신발을 할인하도록 특별 허가를 받았다."
+            }
+        ]
+    },
+    {
+        "origin": "alter",
+        "pronunciations": {
+            "us": "ɔ́ːltər",
+            "uk": "ɔ́ːltə"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "(성질·형상을) 고치다, 바꾸다"
+            }
+        ],
+        "notes": "[파] <strong class=\"target-word\">alteration</strong> n. 변경, 개조<br>[동] <strong class=\"target-word\">change, modify</strong> 바꾸다",
+        "examples": [
+            {
+                "origin": "The customer asked that the length of his pants be <strong class=\"target-word\">altered</strong>.",
+                "translation": "그 고객은 바지 기장을 고쳐 달라고 요청했다."
+            }
+        ]
+    },
+    {
+        "origin": "apply",
+        "pronunciations": {
+            "us": "əplái"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "적용하다; 지원하다"
+            }
+        ],
+        "notes": "[파] <strong class=\"target-word\">application</strong> n. 적용, 신청<br><strong class=\"target-word\">applicant</strong> n. 지원자<br><strong class=\"target-word\">applicable</strong> adj. 적용할 수 있는, 해당하는<br>[동] <strong class=\"target-word\">put into effect</strong> 실행하다<br><strong class=\"target-word\">put to use</strong> 사용하다",
+        "examples": [
+            {
+                "origin": "The cashier <strong class=\"target-word\">applied</strong> the discount to all the items.",
+                "translation": "그 계산원은 모든 품목에 할인을 적용했다."
+            },
+            {
+                "origin": "Those wishing to <strong class=\"target-word\">apply</strong> for the position must be familiar with our merchandise.",
+                "translation": "그 직책에 지원하고자 하는 사람들은 우리 제품에 대해 잘 알아야 한다."
+            }
+        ]
+    },
+    {
+        "origin": "mutually",
+        "pronunciations": {
+            "us": "mjúːtʃuəli"
+        },
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "서로, 상호 간에"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "The couple and dealer reached a <strong class=\"target-word\">mutually</strong> agreeable price for the car.",
+                "translation": "그 부부와 판매원은 서로 동의할 수 있는 차 가격에 도달했다."
+            }
+        ]
+    },
+    {
+        "origin": "method",
+        "pronunciations": {
+            "us": "méθəd"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "방식, 방법"
+            }
+        ],
+        "notes": "[동] <strong class=\"target-word\">approach</strong> 처리 방법, 접근법<br><strong class=\"target-word\">토익 이렇게 나온다</strong><br><strong class=\"target-word\">a method of payment</strong> 지불 방식<br>영미권에서는 신용 카드(credit card), 직불카드(debit card), 현금(cash) 외에도 수표(check), 우편환(money order) 등의 지불 방식이 사용된다.<br>방식, 방법을 의미할 때 <strong class=\"target-word\">method</strong>는 <strong class=\"target-word\">approach</strong>로 바꾸어 쓸 수 있다.",
+        "examples": [
+            {
+                "origin": "In recent years, debit cards have become a popular <strong class=\"target-word\">method</strong> of payment.",
+                "translation": "최근 몇 년 사이에, 직불카드는 인기 있는 지불 방식이 되었다."
+            }
+        ]
+    },
+    {
+        "origin": "acceptable",
+        "pronunciations": {
+            "us": "ækséptəbl",
+            "uk": "əkséptəbl"
+        },
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "용인되는, 받아들일 수 있는; 훌륭한, 만족스러운"
+            }
+        ],
+        "notes": "[동] <strong class=\"target-word\">fine</strong> (제안·결정 등이) 괜찮은, 만족할 만한",
+        "examples": [
+            {
+                "origin": "Jenson Fashions sells clothes that are <strong class=\"target-word\">acceptable</strong> as business attire.",
+                "translation": "Jenson Fashions사는 비즈니스 정장으로 용인되는 옷을 판매한다."
+            }
+        ]
+    },
+    {
+        "origin": "desire",
+        "pronunciations": {
+            "us": "dizáiər",
+            "uk": "dizáiə"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "욕구, 갈망"
+            },
+            {
+                "pos": "v",
+                "text": "원하다, 바라다"
+            }
+        ],
+        "notes": "[파] <strong class=\"target-word\">desirable</strong> adj. 바람직한, 호감 가는<br><strong class=\"target-word\">undesirable</strong> adj. 원하지 않는, 바람직하지 않은",
+        "examples": [
+            {
+                "origin": "Effective advertising can create a <strong class=\"target-word\">desire</strong> in consumers to buy goods they do not need.",
+                "translation": "효과적인 광고는 소비자들에게 그들이 필요로 하지 않는 상품을 사려는 욕구를 불러일으킬 수 있다."
+            },
+            {
+                "origin": "Many people <strong class=\"target-word\">desire</strong> the latest electronic devices.",
+                "translation": "많은 사람들이 최신 전자 기기를 원한다."
+            }
+        ]
+    },
+    {
+        "origin": "redeemable",
+        "pronunciations": {
+            "us": "ridíːməbl"
+        },
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "(현금·상품과) 교환할 수 있는, 환급할 수 있는"
+            }
+        ],
+        "notes": "[파] <strong class=\"target-word\">redeem</strong> v. 되찾다, (상품권을) 상품으로 바꾸다",
+        "examples": [
+            {
+                "origin": "Store gift vouchers are <strong class=\"target-word\">redeemable</strong> at any branch.",
+                "translation": "상점 상품권은 어느 지점에서나 교환할 수 있습니다."
+            }
+        ]
+    },
+    {
+        "origin": "officially",
+        "pronunciations": {
+            "us": "əfíʃəli"
+        },
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "공식적으로"
+            }
+        ],
+        "notes": "[파] <strong class=\"target-word\">official</strong> adj. 공식의<br>[동] <strong class=\"target-word\">formally</strong> 공식적으로, 정식으로<br><strong class=\"target-word\">토익 이렇게 나온다</strong><br><strong class=\"target-word\">officially open</strong> 공식적으로 개점하다<br>officially는 '개점하다'라는 뜻의 open과 어울려 시험에 출제된다.",
+        "examples": [
+            {
+                "origin": "The online store will <strong class=\"target-word\">officially</strong> open next month.",
+                "translation": "온라인 상점은 다음 달에 공식적으로 개점할 것이다."
+            }
+        ]
+    },
+    {
+        "origin": "consumption",
+        "pronunciations": {
+            "us": "kənsʌ́mpʃən"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "소비(량), 소모"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "<strong class=\"target-word\">Consumption</strong> of high-end products like home theaters has increased recently.",
+                "translation": "홈시어터와 같은 고급 제품의 소비가 최근 증가했다."
+            }
+        ]
+    },
+    {
+        "origin": "qualify",
+        "pronunciations": {
+            "us": "kwɔ́ləfài",
+            "uk": "kwɔ́lifài"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "~의 자격을 얻다"
+            }
+        ],
+        "notes": "[파] <strong class=\"target-word\">qualification</strong> n. 자격, 면허<br><strong class=\"target-word\">qualified</strong> adj. 자격 있는, 적격의<br><strong class=\"target-word\">토익 이렇게 나온다</strong><br><strong class=\"target-word\">qualify for A</strong> A의 자격을 얻다<br>qualify와 어울리는 전치사 for를 한데 묶어서 외워 투자.",
+        "examples": [
+            {
+                "origin": "Clients need a regular income to <strong class=\"target-word\">qualify</strong> for credit cards.",
+                "translation": "고객들이 신용 카드를 발급받을 자격을 얻으려면 정기적인 수입이 필요하다."
+            }
+        ]
+    },
+    {
+        "origin": "fabric",
+        "pronunciations": {
+            "us": "fǽbrik"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "섬유, 천"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "The manufacturer's garments are made of natural <strong class=\"target-word\">fabric</strong> only.",
+                "translation": "그 제조업체의 의류는 오직 천연 섬유로만 만들어진다."
+            }
+        ]
+    },
+    {
+        "origin": "auction",
+        "pronunciations": {
+            "us": "ɔ́ːkʃən"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "경매"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "A number of antique pieces will be sold at the <strong class=\"target-word\">auction</strong>.",
+                "translation": "많은 골동품들이 경매에서 판매될 것이다."
+            }
+        ]
+    },
+    {
+        "origin": "authentic",
+        "pronunciations": {
+            "us": "ɔːθéntik",
+            "uk": "ɔːθéntik"
+        },
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "진정한, 진짜의, 진품의"
+            }
+        ],
+        "notes": "[동] <strong class=\"target-word\">genuine</strong> 진짜의, 진품의<br>[반] <strong class=\"target-word\">fake</strong> 가짜의",
+        "examples": [
+            {
+                "origin": "The new restaurant downtown serves <strong class=\"target-word\">authentic</strong> Spanish cuisine.",
+                "translation": "시내에 새로 생긴 식당은 진정한 스페인 요리를 제공한다."
+            }
+        ]
+    },
+    {
+        "origin": "valid",
+        "pronunciations": {
+            "us": "vǽlid"
+        },
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "유효한"
+            }
+        ],
+        "notes": "[동] <strong class=\"target-word\">effective</strong> 유효한, 효력이 있는<br><strong class=\"target-word\">good</strong> 유효한<br>[반] <strong class=\"target-word\">invalid</strong> 무효한<br><strong class=\"target-word\">토익 이렇게 나온다</strong><br><strong class=\"target-word\">be valid for + 기간</strong> ~ 동안 유효하다<br><strong class=\"target-word\">valid receipts</strong> 유효한 영수증<br>valid의 토익 출제 표현을 기억해 투자.",
+        "examples": [
+            {
+                "origin": "A <strong class=\"target-word\">valid</strong> receipt must be presented.",
+                "translation": "유효한 영수증을 제시해야 합니다."
+            }
+        ]
+    },
+    {
+        "origin": "vendor",
+        "pronunciations": {
+            "us": "véndər",
+            "uk": "véndə"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "노점상, 가판대; 판매업체"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "The street is filled with <strong class=\"target-word\">vendors</strong> during the weekly market.",
+                "translation": "그 거리는 매주 시장이 서는 동안 노점상으로 가득 찬다."
+            },
+            {
+                "origin": "Software <strong class=\"target-word\">vendors</strong> have been instructed to sell the product at a specific retail price.",
+                "translation": "소프트웨어 판매업체들은 특정 소매가에 그 제품을 판매하라는 지시를 받았다."
+            }
+        ]
+    }
+]

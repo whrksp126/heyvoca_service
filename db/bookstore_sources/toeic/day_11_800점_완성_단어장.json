@@ -1,0 +1,819 @@
+[
+    {
+        "origin": "a series of",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "일련의"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "check the manual",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "사용 설명서를 참조하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "come up with",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "생각해 내다, 떠올리다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "enter a contest",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "대회에 참가하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "give a demonstration of",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~을 보여주다, ~을 실연해 보이다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "go straight to",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~으로 직행하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "laboratory",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "실험실"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "latest work",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "최신 작품"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "lightweight",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "가벼운, 경량의"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "out-of-date",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "시대에 뒤떨어진, 구식의"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "product designer",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "제품 설계자"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "product display",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "제품 진열"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "redesign",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "재설계, 새 디자인"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "trial period",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "시범 사용 기간"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "try out",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "시험해 보다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "unplug the equipment",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "장비의 플러그를 뽑다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "up-to-date",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "최신의"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "user's guide",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "사용자 설명서"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "waterproof",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "방수의"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "well-prepared",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "잘 준비된"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "with the lights on",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "불을 켠 채로"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "advancement",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "진보, 전진, 승진"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "appliance",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "전기 제품"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "aside from",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~을 제외하고, ~에 더하여"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "certified",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "공인된, 면허를 받은"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "complementary",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "보완적인"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "composition",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "구성"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "consist of",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~으로 이루어져 있다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "cooperative",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "협력적인, 협동의"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "delighted",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "기뻐하는, 즐거워하는"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "designed",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "계획적인, 고의의"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "durable",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "내구성 있는, 튼튼한"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "electronics",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "전자 공학, 전자 기술"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "except for",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~을 제외하고"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "exploration",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "탐사, 탐구"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "imaginable",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "상상할 수 있는"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "innovate",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "혁신하다, 쇄신하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "interpretation",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "해석, 설명"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "licensed",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "인가된, 자격증을 소지한"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "mechanical",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "기계상의, 기계로 움직이는"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "prediction",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "예측"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "prototype",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "모델, 본보기"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "quantity",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "수량"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "remnant",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "나머지"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "screen",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "스크린",
+                "v": "심사하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "suspend",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "중지하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "technical",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "기술적인"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "unfavorable",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "불리한, 호의적이지 않은"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "vulnerable to",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~에 취약한"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "be carried out",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "수행되다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "be designed to do",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~하도록 고안되다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "breakthrough",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "(과학 등의) 비약적 발전"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "by the time",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "그때까지"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "collaboration",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "공동 작업(연구)"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "copyright",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "저작권"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "custom-built",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "주문 제작된"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "customize",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "주문에 응하여 만들다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "disruption",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "중단, 혼란"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "energy efficiency",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "에너지 효율"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "energy source",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "에너지원"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "expand into",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~으로 확장하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "fuel consumption",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "연료 소비"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "guidance",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "안내, 지도"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "keep one's eye on",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~에서 눈을 떼지 않다, ~을 감시하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "limited edition",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "한정판"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "long-lasting",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "오래 지속되는"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "plenty of",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "많은"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "smoke detector",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "화재 탐지기"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    }
+]

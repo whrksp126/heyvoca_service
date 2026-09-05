@@ -1,0 +1,820 @@
+[
+    {
+        "origin": "at the moment",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "지금"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "celebrate",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "축하하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "decorative item",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "장식품"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "discounted coupon",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "할인권"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "for sale",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "팔려고 내놓은"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "half price",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "반값"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "have A strapped to one's shoulder",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~의 어깨에 A를 메고 있다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "instead",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "대신에"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "make a purchase",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "구입하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "make no difference",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "상관없다, 중요하지 않다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "make payment",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "지불하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "Not that I'm aware of.",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "내가 아는 한 아니다."
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "out of town",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "시내에 없는, 다른 곳으로 떠난"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "overcoat",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "외투"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "pay in cash",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "현찰로 지불하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "put out for display",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~을 전시해 놓다, 진열해 놓다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "shoelace",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "신발 끈"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "shopkeeper",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "가게 주인"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "showroom",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "진열실, 전시실"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "sleeve",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "(옷) 소매"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "souvenir",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "기념품"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "stack",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "더미",
+                "v": "쌓아 올리다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "stand in line",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "줄을 서다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "storefront",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "가게 앞 공간"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "stylish",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "패션 감각이 있는, 멋진"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "tag",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "(물건에 붙어 있는) 꼬리표"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "take the order",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "주문을 받다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "try on",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "(옷 따위를) 입어 보다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "underline",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "밑줄을 긋다, 강조하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "watch band",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "(손목시계의) 시곗줄"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "window-shopping",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "아이쇼핑"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "afford to do",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~할 수 있다, ~할 여유가 있다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "apparel",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "의복, 의류"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "dairy products",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "유제픔"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "elsewhere",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "다른 장소에서는, 다른 경우에"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "gift certificate",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "상품권"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "glassware",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "유리 제품"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "inexpensive",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "비싸지 않은"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "lately",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "최근에"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "latest",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "최신의"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "luxury",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "사치, 사치품",
+                "adj": "값비싼"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "outerwear",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "겉옷, 외투"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "outlet",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "판매 대리점, 소매점, 콘센트"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "portable",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "휴대용의"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "readership",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "독자의 수"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "readily",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "즉시, 손쉽게"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "refundable",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "환불 가능한, 변제 가능한"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "value",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "가치, 가격"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "a selection of",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~의 모음"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "a variety of (= various)",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "다양한"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "at a discounted price",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "할인가로"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "by check",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "수표로"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "by credit card",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "신용카드로"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "by no means",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "결코 ~이 아닌"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "extra charge",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "추가 비용"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "get in line",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "줄에 들어가 서다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "give a discount",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "할인하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "in cash",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "현금으로"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "merchandise",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "상품, 제품"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "no later than",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "늦어도 ~까지"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "showcase",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "유리 진열장, 공개 행사"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "textile",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "직물, 섬유"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "thrifty",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "검소한, 검약하는"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "under warranty",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "보증 기간 중인"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "valid for",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~에 유효한, ~ 동안 유효한"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "voucher",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "(현금 대용의) 상품권"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "wholesale",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "도매의, 다량의"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "wrap a present",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "선물을 포장하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    }
+]

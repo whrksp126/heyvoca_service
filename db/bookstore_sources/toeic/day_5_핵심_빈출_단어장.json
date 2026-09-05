@@ -1,0 +1,833 @@
+[
+    {
+        "origin": "sophisticated",
+        "pronunciations": {
+            "us": "səfɪstɪkeɪtɪd",
+            "uk": "səfɪstɪkeɪtɪd"
+        },
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "(기계가) 정교한, 복잡한; 세련된"
+            }
+        ],
+        "notes": "A <strong class=\"target-word\">sophisticated</strong> surveillance system was installed. 정교한 보안 시스템이 설치되었다.<br>The decorator exhibited a <strong class=\"target-word\">sophisticated</strong> taste in art. 그 실내 장식가는 예술에 대한 세련된 취향을 보였다.",
+        "examples": [
+            {
+                "origin": "A <span class=\"target-word\">sophisticated</span> surveillance system was installed.",
+                "translation": "정교한 보안 시스템이 설치되었다."
+            },
+            {
+                "origin": "The decorator exhibited a <span class=\"target-word\">sophisticated</span> taste in art.",
+                "translation": "그 실내 장식가는 예술에 대한 세련된 취향을 보였다."
+            }
+        ]
+    },
+    {
+        "origin": "timely",
+        "pronunciations": {
+            "us": "taɪmli"
+        },
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "시기적절한, 때를 맞춘"
+            }
+        ],
+        "notes": "The report was completed in a <strong class=\"target-word\">timely</strong> manner. 그 보고서는 때맞춰 완성되었다.",
+        "examples": [
+            {
+                "origin": "The report was completed in a <span class=\"target-word\">timely</span> manner.",
+                "translation": "그 보고서는 때맞춰 완성되었다."
+            }
+        ]
+    },
+    {
+        "origin": "realistically",
+        "pronunciations": {
+            "us": "ˌriːəlɪstɪkəli",
+            "uk": "ˌrɪəlɪstɪkəli"
+        },
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "현실적으로"
+            }
+        ],
+        "notes": "We cannot <strong class=\"target-word\">realistically</strong> expect to have the presentation ready on time. 현실적으로 발표가 제때 준비되는 것을 기대하기 어렵다.",
+        "examples": [
+            {
+                "origin": "We cannot <span class=\"target-word\">realistically</span> expect to have the presentation ready on time.",
+                "translation": "현실적으로 발표가 제때 준비되는 것을 기대하기 어렵다."
+            }
+        ]
+    },
+    {
+        "origin": "promptly",
+        "pronunciations": {
+            "us": "prɑːmptli",
+            "uk": "prɒmptli"
+        },
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "즉시; 정각에"
+            }
+        ],
+        "notes": "It is company policy to respond <strong class=\"target-word\">promptly</strong> to all inquiries. 모든 문의에 즉시 답변하는 것이 회사의 방침이다.<br>The train will leave <strong class=\"target-word\">promptly</strong> at 4 P.M. 기차는 오후 4시 정각에 출발할 것이다.",
+        "examples": [
+            {
+                "origin": "It is company policy to respond <span class=\"target-word\">promptly</span> to all inquiries.",
+                "translation": "모든 문의에 즉시 답변하는 것이 회사의 방침이다."
+            },
+            {
+                "origin": "The train will leave <span class=\"target-word\">promptly</span> at 4 P.M.",
+                "translation": "기차는 오후 4시 정각에 출발할 것이다."
+            }
+        ]
+    },
+    {
+        "origin": "accessible",
+        "pronunciations": {
+            "us": "əksesəbl"
+        },
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "출입할 수 있는; 이용할 수 있는"
+            }
+        ],
+        "notes": "The 18th floor is only <strong class=\"target-word\">accessible</strong> to executive staff. 18층은 오직 경영진만 출입할 수 있습니다.<br>Please make the manual <strong class=\"target-word\">accessible</strong> to all employees. 모든 직원들이 매뉴얼을 이용할 수 있게 하세요.",
+        "examples": [
+            {
+                "origin": "The 18th floor is only <span class=\"target-word\">accessible</span> to executive staff.",
+                "translation": "18층은 오직 경영진만 출입할 수 있습니다."
+            },
+            {
+                "origin": "Please make the manual <span class=\"target-word\">accessible</span> to all employees.",
+                "translation": "모든 직원들이 매뉴얼을 이용할 수 있게 하세요."
+            }
+        ]
+    },
+    {
+        "origin": "implement",
+        "pronunciations": {
+            "us": "ɪmplɪment"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "실시하다, 실행하다"
+            }
+        ],
+        "notes": "Board members voted to <strong class=\"target-word\">implement</strong> an innovative marketing campaign. 이사회 위원들은 혁신적인 마케팅 캠페인을 실시하기로 표결했다.",
+        "examples": [
+            {
+                "origin": "Board members voted to <span class=\"target-word\">implement</span> an innovative marketing campaign.",
+                "translation": "이사회 위원들은 혁신적인 마케팅 캠페인을 실시하기로 표결했다."
+            }
+        ]
+    },
+    {
+        "origin": "feedback",
+        "pronunciations": {
+            "us": "fiːdbæk"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "의견, 반응"
+            }
+        ],
+        "notes": "<strong class=\"target-word\">Feedback</strong> from colleagues can be of great assistance. 동료들의 의견은 큰 도움이 될 수 있다.",
+        "examples": [
+            {
+                "origin": "<span class=\"target-word\">Feedback</span> from colleagues can be of great assistance.",
+                "translation": "동료들의 의견은 큰 도움이 될 수 있다."
+            }
+        ]
+    },
+    {
+        "origin": "outstanding",
+        "pronunciations": {
+            "us": "aʊtstændɪŋ"
+        },
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "우수한; (부채 등이) 미지불된"
+            }
+        ],
+        "notes": "The director presented an <strong class=\"target-word\">outstanding</strong> business plan. 그 이사는 우수한 사업 계획을 발표했다.<br>By clearing its <strong class=\"target-word\">outstanding</strong> debt, Cottonvale was able to finance new product development. 미지불 채무를 청산함으로써, Cottonvale사는 신제품 개발 자금을 조달할 수 있었다.",
+        "examples": [
+            {
+                "origin": "The director presented an <span class=\"target-word\">outstanding</span> business plan.",
+                "translation": "그 이사는 우수한 사업 계획을 발표했다."
+            },
+            {
+                "origin": "By clearing its <span class=\"target-word\">outstanding</span> debt, Cottonvale was able to finance new product development.",
+                "translation": "미지불 채무를 청산함으로써, Cottonvale사는 신제품 개발 자금을 조달할 수 있었다."
+            }
+        ]
+    },
+    {
+        "origin": "inform",
+        "pronunciations": {
+            "us": "ɪnfɔːrm",
+            "uk": "ɪnfɔːm"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "~에게 알리다"
+            }
+        ],
+        "notes": "Please <strong class=\"target-word\">inform</strong> the director that the meeting has been canceled. 이사님께 회의가 취소되었다고 알려 주세요.",
+        "examples": [
+            {
+                "origin": "Please <span class=\"target-word\">inform</span> the director that the meeting has been canceled.",
+                "translation": "이사님께 회의가 취소되었다고 알려 주세요."
+            }
+        ]
+    },
+    {
+        "origin": "replacement",
+        "pronunciations": {
+            "us": "rɪpleɪsmənt"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "교체; 후임자"
+            }
+        ],
+        "notes": "We need a <strong class=\"target-word\">replacement</strong> for this broken laptop. 이 고장 난 노트북 컴퓨터의 교체가 필요하다.<br>Human resources is looking for a <strong class=\"target-word\">replacement</strong> for Mr. Winters. 인사부는 Mr. Winters의 후임자를 찾고 있다.",
+        "examples": [
+            {
+                "origin": "We need a <span class=\"target-word\">replacement</span> for this broken laptop.",
+                "translation": "이 고장 난 노트북 컴퓨터의 교체가 필요하다."
+            },
+            {
+                "origin": "Human resources is looking for a <span class=\"target-word\">replacement</span> for Mr. Winters.",
+                "translation": "인사부는 Mr. Winters의 후임자를 찾고 있다."
+            }
+        ]
+    },
+    {
+        "origin": "announcement",
+        "pronunciations": {
+            "us": "ənaʊnsmənt"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "공고, 발표"
+            }
+        ],
+        "notes": "Mr. Dane posted an <strong class=\"target-word\">announcement</strong> about the general meeting. Mr. Dane은 총회에 대한 공고를 게시했다.",
+        "examples": [
+            {
+                "origin": "Mr. Dane posted an <span class=\"target-word\">announcement</span> about the general meeting.",
+                "translation": "Mr. Dane은 총회에 대한 공고를 게시했다."
+            }
+        ]
+    },
+    {
+        "origin": "department",
+        "pronunciations": {
+            "us": "dɪpɑːrtmənt",
+            "uk": "dɪpɑːtmənt"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "(조직·기구의) 부서"
+            }
+        ],
+        "notes": "Report payroll problems to the finance <strong class=\"target-word\">department</strong>. 급여 문제는 재무 부서에 신고하십시오.",
+        "examples": [
+            {
+                "origin": "Report payroll problems to the finance <span class=\"target-word\">department</span>.",
+                "translation": "급여 문제는 재무 부서에 신고하십시오."
+            }
+        ]
+    },
+    {
+        "origin": "permanently",
+        "pronunciations": {
+            "us": "pɜːrmənəntli",
+            "uk": "pɜːmənəntli"
+        },
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "영구적으로, 불변으로"
+            }
+        ],
+        "notes": "The computer files have been <strong class=\"target-word\">permanently</strong> deleted and cannot be retrieved. 그 컴퓨터 파일들은 영구적으로 삭제되었고 복구될 수 없다.",
+        "examples": [
+            {
+                "origin": "The computer files have been <span class=\"target-word\">permanently</span> deleted and cannot be retrieved.",
+                "translation": "그 컴퓨터 파일들은 영구적으로 삭제되었고 복구될 수 없다."
+            }
+        ]
+    },
+    {
+        "origin": "fulfill",
+        "pronunciations": {
+            "us": "fʊlfɪl"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "(조건을) 만족시키다, (약속·의무 등을) 지키다, 이행하다"
+            }
+        ],
+        "notes": "The final product design <strong class=\"target-word\">fulfilled</strong> the terms of the contract. 최종 제품 디자인은 계약 조건들을 만족시켰다.",
+        "examples": [
+            {
+                "origin": "The final product design <span class=\"target-word\">fulfilled</span> the terms of the contract.",
+                "translation": "최종 제품 디자인은 계약 조건들을 만족시켰다."
+            }
+        ]
+    },
+    {
+        "origin": "outline",
+        "pronunciations": {
+            "us": "aʊtlaɪn"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "개요"
+            },
+            {
+                "pos": "v",
+                "text": "설명하다, 약술하다"
+            }
+        ],
+        "notes": "Begin making the report by arranging the main ideas in an <strong class=\"target-word\">outline</strong>. 주요 방안들을 개요로 정리함으로써 보고서 작성을 시작하십시오.<br>The salesman <strong class=\"target-word\">outlined</strong> the features of the vacuum cleaner. 그 판매원은 진공청소기의 특징들을 설명했다.",
+        "examples": [
+            {
+                "origin": "Begin making the report by arranging the main ideas in an <span class=\"target-word\">outline</span>.",
+                "translation": "주요 방안들을 개요로 정리함으로써 보고서 작성을 시작하십시오."
+            },
+            {
+                "origin": "The salesman <span class=\"target-word\">outlined</span> the features of the vacuum cleaner.",
+                "translation": "그 판매원은 진공청소기의 특징들을 설명했다."
+            }
+        ]
+    },
+    {
+        "origin": "explain",
+        "pronunciations": {
+            "us": "ɪkspleɪn"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "설명하다"
+            }
+        ],
+        "notes": "The manager <strong class=\"target-word\">explained</strong> the new regulations to everyone in the department. 그 부장은 부서의 모든 사람들에게 새로운 규정을 설명했다.",
+        "examples": [
+            {
+                "origin": "The manager <span class=\"target-word\">explained</span> the new regulations to everyone in the department.",
+                "translation": "그 부장은 부서의 모든 사람들에게 새로운 규정을 설명했다."
+            }
+        ]
+    },
+    {
+        "origin": "contain",
+        "pronunciations": {
+            "us": "kənteɪn"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "포함하다"
+            }
+        ],
+        "notes": "The filing cabinet <strong class=\"target-word\">contains</strong> copies of all our invoices. 그 서류 정리 캐비닛은 모든 송장의 사본을 포함한다.",
+        "examples": [
+            {
+                "origin": "The filing cabinet <span class=\"target-word\">contains</span> copies of all our invoices.",
+                "translation": "그 서류 정리 캐비닛은 모든 송장의 사본을 포함한다."
+            }
+        ]
+    },
+    {
+        "origin": "compile",
+        "pronunciations": {
+            "us": "kəmpaɪl"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "(자료 등을) 편집하다; 모으다"
+            }
+        ],
+        "notes": "The assistant <strong class=\"target-word\">compiled</strong> a list of tablet computer manufacturers. 그 비서는 태블릿 컴퓨터 제조사 목록을 편집했다.<br>Ms. Atkins will <strong class=\"target-word\">compile</strong> all year-end reports and submit them to Ms. Woo. Ms. Atkins가 모든 연말 보고서를 모아서 Ms. Woo에게 제출할 것이다.",
+        "examples": [
+            {
+                "origin": "The assistant <span class=\"target-word\">compiled</span> a list of tablet computer manufacturers.",
+                "translation": "그 비서는 태블릿 컴퓨터 제조사 목록을 편집했다."
+            },
+            {
+                "origin": "Ms. Atkins will <span class=\"target-word\">compile</span> all year-end reports and submit them to Ms. Woo.",
+                "translation": "Ms. Atkins가 모든 연말 보고서를 모아서 Ms. Woo에게 제출할 것이다."
+            }
+        ]
+    },
+    {
+        "origin": "subsequent",
+        "pronunciations": {
+            "us": "sʌbsɪkwənt"
+        },
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "차후의, 그 다음의"
+            }
+        ],
+        "notes": "Some employees received separation pay <strong class=\"target-word\">subsequent</strong> to the company's closing. 몇몇 직원들은 회사의 폐업 이후에 퇴직 수당을 받았다.",
+        "examples": [
+            {
+                "origin": "Some employees received separation pay <span class=\"target-word\">subsequent</span> to the company's closing.",
+                "translation": "몇몇 직원들은 회사의 폐업 이후에 퇴직 수당을 받았다."
+            }
+        ]
+    },
+    {
+        "origin": "overview",
+        "pronunciations": {
+            "us": "oʊvərvjuː",
+            "uk": "əʊvərvjuː"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "개요, 개관"
+            }
+        ],
+        "notes": "Scott gave an <strong class=\"target-word\">overview</strong> of the topic before the presentation. Scott은 발표 전에 주제의 개요를 설명했다.",
+        "examples": [
+            {
+                "origin": "Scott gave an <span class=\"target-word\">overview</span> of the topic before the presentation.",
+                "translation": "Scott은 발표 전에 주제의 개요를 설명했다."
+            }
+        ]
+    },
+    {
+        "origin": "provider",
+        "pronunciations": {
+            "us": "prəvaɪdər",
+            "uk": "prəvaɪdə"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "공급자, 제공자"
+            }
+        ],
+        "notes": "There are numerous Internet and cable <strong class=\"target-word\">providers</strong> in the city. 도시에는 수많은 인터넷과 케이블 방송 공급업체가 있다.",
+        "examples": [
+            {
+                "origin": "There are numerous Internet and cable <span class=\"target-word\">providers</span> in the city.",
+                "translation": "도시에는 수많은 인터넷과 케이블 방송 공급업체가 있다."
+            }
+        ]
+    },
+    {
+        "origin": "matter",
+        "pronunciations": {
+            "us": "mætər",
+            "uk": "mætə"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "문제, 일"
+            }
+        ],
+        "notes": "Please deal with personal <strong class=\"target-word\">matters</strong> outside the office. 개인적인 문제는 사무실 밖에서 처리하시기 바랍니다.",
+        "examples": [
+            {
+                "origin": "Please deal with personal <span class=\"target-word\">matters</span> outside the office.",
+                "translation": "개인적인 문제는 사무실 밖에서 처리하시기 바랍니다."
+            }
+        ]
+    },
+    {
+        "origin": "expertise",
+        "pronunciations": {
+            "us": "ˌekspɜːrtiːz",
+            "uk": "ˌekspɜːtiːz"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "전문 지식, 전문 기술"
+            }
+        ],
+        "notes": "This kind of project falls outside the firm's area of <strong class=\"target-word\">expertise</strong>. 이런 종류의 프로젝트는 회사의 전문 분야 밖에 해당한다.",
+        "examples": [
+            {
+                "origin": "This kind of project falls outside the firm's area of <span class=\"target-word\">expertise</span>.",
+                "translation": "이런 종류의 프로젝트는 회사의 전문 분야 밖에 해당한다."
+            }
+        ]
+    },
+    {
+        "origin": "demonstrate",
+        "pronunciations": {
+            "us": "demənstreɪt"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "증명하다; (모형·실험 등으로) 설명하다"
+            }
+        ],
+        "notes": "Sales figures <strong class=\"target-word\">demonstrate</strong> that the advertising campaign was successful. 매출 수치는 광고 캠페인이 성공적이었음을 증명한다.<br>Our representative will <strong class=\"target-word\">demonstrate</strong> how to use the instrument. 우리 직원이 기계 사용법을 설명할 것입니다.",
+        "examples": [
+            {
+                "origin": "Sales figures <span class=\"target-word\">demonstrate</span> that the advertising campaign was successful.",
+                "translation": "매출 수치는 광고 캠페인이 성공적이었음을 증명한다."
+            },
+            {
+                "origin": "Our representative will <span class=\"target-word\">demonstrate</span> how to use the instrument.",
+                "translation": "우리 직원이 기계 사용법을 설명할 것입니다."
+            }
+        ]
+    },
+    {
+        "origin": "remainder",
+        "pronunciations": {
+            "us": "rɪmeɪndər",
+            "uk": "rɪmeɪndə"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "나머지"
+            }
+        ],
+        "notes": "Audits will continue throughout the <strong class=\"target-word\">remainder</strong> of the month. 이달의 나머지 기간 내내 감사가 계속될 것이다.",
+        "examples": [
+            {
+                "origin": "Audits will continue throughout the <span class=\"target-word\">remainder</span> of the month.",
+                "translation": "이달의 나머지 기간 내내 감사가 계속될 것이다."
+            }
+        ]
+    },
+    {
+        "origin": "essential",
+        "pronunciations": {
+            "us": "ɪsenʃəl"
+        },
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "필수적인, 극히 중요한, 본질적인"
+            }
+        ],
+        "notes": "Perseverance is <strong class=\"target-word\">essential</strong> to success in business. 인내느 사업의 성공에 있어 필수적이다.",
+        "examples": [
+            {
+                "origin": "Perseverance is <span class=\"target-word\">essential</span> to success in business.",
+                "translation": "인내느 사업의 성공에 있어 필수적이다."
+            }
+        ]
+    },
+    {
+        "origin": "divide",
+        "pronunciations": {
+            "us": "dɪvaɪd"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "분배하다, 나누다"
+            }
+        ],
+        "notes": "Required overtime will be <strong class=\"target-word\">divided</strong> equally among employees. 필요한 초과 근무 시간은 직원들 간에 공평하게 분배될 것이다.",
+        "examples": [
+            {
+                "origin": "Required overtime will be <span class=\"target-word\">divided</span> equally among employees.",
+                "translation": "필요한 초과 근무 시간은 직원들 간에 공평하게 분배될 것이다."
+            }
+        ]
+    },
+    {
+        "origin": "major",
+        "pronunciations": {
+            "us": "meɪdʒər",
+            "uk": "meɪdʒə"
+        },
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "주요한, 중대한"
+            }
+        ],
+        "notes": "A <strong class=\"target-word\">major</strong> figure in publishing, Ms. Yarrow is highly influential. 출판업계의 주요 인사인 Ms. Yarrow는 매우 영향력이 크다.<br>The new manager has had a <strong class=\"target-word\">major</strong> impact on productivity. 새로운 관리자는 생산성에 중대한 영향을 끼쳐 왔다.",
+        "examples": [
+            {
+                "origin": "A <span class=\"target-word\">major</span> figure in publishing, Ms. Yarrow is highly influential.",
+                "translation": "출판업계의 주요 인사인 Ms. Yarrow는 매우 영향력이 크다."
+            },
+            {
+                "origin": "The new manager has had a <span class=\"target-word\">major</span> impact on productivity.",
+                "translation": "새로운 관리자는 생산성에 중대한 영향을 끼쳐 왔다."
+            }
+        ]
+    },
+    {
+        "origin": "compliance",
+        "pronunciations": {
+            "us": "kəmplaɪəns"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "(명령·법규에의) 준수"
+            }
+        ],
+        "notes": "Government officials will inspect the plant's <strong class=\"target-word\">compliance</strong> with safety guidelines. 정부 관리들이 공장의 안전 규정 준수 여부를 검사할 것이다.",
+        "examples": [
+            {
+                "origin": "Government officials will inspect the plant's <span class=\"target-word\">compliance</span> with safety guidelines.",
+                "translation": "정부 관리들이 공장의 안전 규정 준수 여부를 검사할 것이다."
+            }
+        ]
+    },
+    {
+        "origin": "clarify",
+        "pronunciations": {
+            "us": "klærəfaɪ"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "명확하게 하다"
+            }
+        ],
+        "notes": "The notice <strong class=\"target-word\">clarified</strong> some details of the vacation policy modifications. 그 공고는 휴가 정책 변경의 일부 세부 사항을 명확하게 했다.",
+        "examples": [
+            {
+                "origin": "The notice <span class=\"target-word\">clarified</span> some details of the vacation policy modifications.",
+                "translation": "그 공고는 휴가 정책 변경의 일부 세부 사항을 명확하게 했다."
+            }
+        ]
+    },
+    {
+        "origin": "face",
+        "pronunciations": {
+            "us": "feɪs"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "(문제 등에) 직면하다; 향하다, 마주보다"
+            }
+        ],
+        "notes": "Businesses are <strong class=\"target-word\">faced</strong> with the challenge of foreign competition. 기업들은 외국 경쟁사들의 도전에 직면해 있다.<br>The elevator <strong class=\"target-word\">faces</strong> the lobby of the building. 그 엘리베이터는 빌딩 로비를 향하고 있다.",
+        "examples": [
+            {
+                "origin": "Businesses are <span class=\"target-word\">faced</span> with the challenge of foreign competition.",
+                "translation": "기업들은 외국 경쟁사들의 도전에 직면해 있다."
+            },
+            {
+                "origin": "The elevator <span class=\"target-word\">faces</span> the lobby of the building.",
+                "translation": "그 엘리베이터는 빌딩 로비를 향하고 있다."
+            }
+        ]
+    },
+    {
+        "origin": "follow",
+        "pronunciations": {
+            "us": "fɑːloʊ",
+            "uk": "fɒləʊ"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "~을 따라가다; 주시하다; (분명히) 이해하다"
+            }
+        ],
+        "notes": "The guests <strong class=\"target-word\">followed</strong> the guide into the exhibition hall. 방문객들은 안내원을 따라 전시회장으로 들어갔다.<br>Bill <strong class=\"target-word\">followed</strong> the conversations at the meeting closely. Bill은 회의에서의 대화를 유심히 주시했다.<br>The manager realized the staff was not <strong class=\"target-word\">following</strong> his talk. 그 팀장은 직원들이 그의 말을 이해하지 못했음을 깨달았다.",
+        "examples": [
+            {
+                "origin": "The guests <span class=\"target-word\">followed</span> the guide into the exhibition hall.",
+                "translation": "방문객들은 안내원을 따라 전시회장으로 들어갔다."
+            },
+            {
+                "origin": "Bill <span class=\"target-word\">followed</span> the conversations at the meeting closely.",
+                "translation": "Bill은 회의에서의 대화를 유심히 주시했다."
+            },
+            {
+                "origin": "The manager realized the staff was not <span class=\"target-word\">following</span> his talk.",
+                "translation": "그 팀장은 직원들이 그의 말을 이해하지 못했음을 깨달았다."
+            }
+        ]
+    },
+    {
+        "origin": "aspect",
+        "pronunciations": {
+            "us": "æspekt"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "관점, 국면"
+            }
+        ],
+        "notes": "Every <strong class=\"target-word\">aspect</strong> of the problem must be taken into consideration. 그 문제의 모든 관점이 고려되어야 한다.",
+        "examples": [
+            {
+                "origin": "Every <span class=\"target-word\">aspect</span> of the problem must be taken into consideration.",
+                "translation": "그 문제의 모든 관점이 고려되어야 한다."
+            }
+        ]
+    },
+    {
+        "origin": "apparently",
+        "pronunciations": {
+            "us": "əpærəntli"
+        },
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "보기에 ~한 듯한, 외관상으로는"
+            }
+        ],
+        "notes": "<strong class=\"target-word\">Apparently</strong>, Mr. Jones was not invited to this meeting. 보기에 Mr. Jones는 이 회의에 초대받지 못한 듯하다.",
+        "examples": [
+            {
+                "origin": "<span class=\"target-word\">Apparently</span>, Mr. Jones was not invited to this meeting.",
+                "translation": "보기에 Mr. Jones는 이 회의에 초대받지 못한 듯하다."
+            }
+        ]
+    },
+    {
+        "origin": "aware",
+        "pronunciations": {
+            "us": "əwer",
+            "uk": "əweə"
+        },
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "알고 있는, 인식하고 있는"
+            }
+        ],
+        "notes": "Workers should be made <strong class=\"target-word\">aware</strong> of safety procedures. 근로자들이 안전 절차를 알고 있게 해야 한다.",
+        "examples": [
+            {
+                "origin": "Workers should be made <span class=\"target-word\">aware</span> of safety procedures.",
+                "translation": "근로자들이 안전 절차를 알고 있게 해야 한다."
+            }
+        ]
+    },
+    {
+        "origin": "extended",
+        "pronunciations": {
+            "us": "ɪkstendɪd"
+        },
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "(기간 등을) 연장한, 장기간에 걸친"
+            }
+        ],
+        "notes": "The accounting department works <strong class=\"target-word\">extended</strong> hours on the first week of every month. 회계 부서는 매달 첫 주에 연장 근무한다.",
+        "examples": [
+            {
+                "origin": "The accounting department works <span class=\"target-word\">extended</span> hours on the first week of every month.",
+                "translation": "회계 부서는 매달 첫 주에 연장 근무한다."
+            }
+        ]
+    },
+    {
+        "origin": "accidentally",
+        "pronunciations": {
+            "us": "ˌæksɪdentəli"
+        },
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "뜻하지 않게, 우연히"
+            }
+        ],
+        "notes": "Alison <strong class=\"target-word\">accidentally</strong> made some errors in the financial statements. Alison은 재무제표 작성 시 뜻하지 않게 실수를 범했다.",
+        "examples": [
+            {
+                "origin": "Alison <span class=\"target-word\">accidentally</span> made some errors in the financial statements.",
+                "translation": "Alison은 재무제표 작성 시 뜻하지 않게 실수를 범했다."
+            }
+        ]
+    },
+    {
+        "origin": "advisable",
+        "pronunciations": {
+            "us": "ədvaɪzəbl"
+        },
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "바람직한, 합당한"
+            }
+        ],
+        "notes": "It is <strong class=\"target-word\">advisable</strong> to update computer equipment regularly. 컴퓨터 장비를 정기적으로 업데이트하는 것이 바람직하다.",
+        "examples": [
+            {
+                "origin": "It is <span class=\"target-word\">advisable</span> to update computer equipment regularly.",
+                "translation": "컴퓨터 장비를 정기적으로 업데이트하는 것이 바람직하다."
+            }
+        ]
+    },
+    {
+        "origin": "concerned",
+        "pronunciations": {
+            "us": "kənsɜːrnd",
+            "uk": "kənsɜːnd"
+        },
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "염려하는, 걱정하는; 관련된"
+            }
+        ],
+        "notes": "Management is <strong class=\"target-word\">concerned</strong> about security. 경영진은 보안에 대해 염려하고 있다.<br>The report is mainly <strong class=\"target-word\">concerned</strong> with current investments. 그 보고서는 주로 현재의 투자와 관계가 있다.",
+        "examples": [
+            {
+                "origin": "Management is <span class=\"target-word\">concerned</span> about security.",
+                "translation": "경영진은 보안에 대해 염려하고 있다."
+            },
+            {
+                "origin": "The report is mainly <span class=\"target-word\">concerned</span> with current investments.",
+                "translation": "그 보고서는 주로 현재의 투자와 관계가 있다."
+            }
+        ]
+    },
+    {
+        "origin": "speak",
+        "pronunciations": {
+            "us": "spiːk"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "이야기하다"
+            }
+        ],
+        "notes": "Mr. Brooke <strong class=\"target-word\">spoke</strong> to his clients about a new venture. Mr. Brooke은 자신의 고객들에게 신규 사업에 관해 이야기했다.",
+        "examples": [
+            {
+                "origin": "Mr. Brooke <span class=\"target-word\">spoke</span> to his clients about a new venture.",
+                "translation": "Mr. Brooke은 자신의 고객들에게 신규 사업에 관해 이야기했다."
+            }
+        ]
+    }
+]

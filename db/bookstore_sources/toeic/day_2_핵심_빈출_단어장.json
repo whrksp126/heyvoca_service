@@ -1,0 +1,857 @@
+[
+    {
+        "origin": "attire",
+        "pronunciations": {
+            "us": "ətaɪər",
+            "uk": "ətaɪə"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "복장, 옷차림새"
+            }
+        ],
+        "notes": "Professional business <strong class=\"target-word\">attire</strong> is required of all staff giving presentations. 발표를 하는 모든 직원들은 정장을 입어야 한다.",
+        "examples": [
+            {
+                "origin": "Professional business <strong class=\"target-word\">attire</strong> is required of all staff giving presentations.",
+                "meaning": "발표를 하는 모든 직원들은 정장을 입어야 한다."
+            }
+        ]
+    },
+    {
+        "origin": "code",
+        "pronunciations": {
+            "us": "koud",
+            "uk": "kəud"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "규범, 관례; 암호"
+            }
+        ],
+        "notes": "Employees are expected to follow the dress <strong class=\"target-word\">code</strong>. 직원들은 복장 규범에 따르도록 요구된다.",
+        "examples": [
+            {
+                "origin": "Employees are expected to follow the dress <strong class=\"target-word\">code</strong>.",
+                "meaning": "직원들은 복장 규범에 따르도록 요구된다."
+            }
+        ]
+    },
+    {
+        "origin": "concern",
+        "pronunciations": {
+            "us": "kənsɜːrn",
+            "uk": "kənsɜːn"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "우려, 걱정; 문제, 일"
+            },
+            {
+                "pos": "v",
+                "text": "~을 걱정스럽게 하다; 영향을 미치다, 관련되다"
+            }
+        ],
+        "notes": "The board voiced <strong class=\"target-word\">concerns</strong> about safety at the meeting. 이사회는 회의에서 안전에 대한 우려를 표명했다.<br>Members violating rules have become a <strong class=\"target-word\">concern</strong> for club management. 규칙을 어기는 회원들이 클럽 경영진에게 문제가 되었다.<br>Citizens are <strong class=\"target-word\">concerned</strong> about the new trade protocol. 시민들은 새로운 무역 협약에 대해 걱정스러워 한다.<br>The recent work hour change will not <strong class=\"target-word\">concern</strong> the design department. 최근의 근무 시간 변경은 디자인 부서에는 영향을 미치지 않을 것이다.",
+        "examples": [
+            {
+                "origin": "The board voiced <strong class=\"target-word\">concerns</strong> about safety at the meeting.",
+                "meaning": "이사회는 회의에서 안전에 대한 우려를 표명했다."
+            },
+            {
+                "origin": "Members violating rules have become a <strong class=\"target-word\">concern</strong> for club management.",
+                "meaning": "규칙을 어기는 회원들이 클럽 경영진에게 문제가 되었다."
+            },
+            {
+                "origin": "Citizens are <strong class=\"target-word\">concerned</strong> about the new trade protocol.",
+                "meaning": "시민들은 새로운 무역 협약에 대해 걱정스러워 한다."
+            },
+            {
+                "origin": "The recent work hour change will not <strong class=\"target-word\">concern</strong> the design department.",
+                "meaning": "최근의 근무 시간 변경은 디자인 부서에는 영향을 미치지 않을 것이다."
+            }
+        ]
+    },
+    {
+        "origin": "policy",
+        "pronunciations": {
+            "us": "pɑːləsi",
+            "uk": "pɒləsi"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "규정; 보험 증권"
+            }
+        ],
+        "notes": "The employee benefit <strong class=\"target-word\">policy</strong> will be expanded next year. 직원 복지 규정은 내년에 확대될 것이다.<br>Companies must distribute health insurance <strong class=\"target-word\">policies</strong> to all workers. 기업들은 모든 직원들에게 건강 보험 증권을 배부해야 한다.",
+        "examples": [
+            {
+                "origin": "The employee benefit <strong class=\"target-word\">policy</strong> will be expanded next year.",
+                "meaning": "직원 복지 규정은 내년에 확대될 것이다."
+            },
+            {
+                "origin": "Companies must distribute health insurance <strong class=\"target-word\">policies</strong> to all workers.",
+                "meaning": "기업들은 모든 직원들에게 건강 보험 증권을 배부해야 한다."
+            }
+        ]
+    },
+    {
+        "origin": "comply",
+        "pronunciations": {
+            "us": "kəmplaɪ"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "준수하다, 따르다"
+            }
+        ],
+        "notes": "Employees must <strong class=\"target-word\">comply</strong> with the regulations governing computer use. 직원들은 컴퓨터 사용 관리 규정을 준수해야 한다.",
+        "examples": [
+            {
+                "origin": "Employees must <strong class=\"target-word\">comply</strong> with the regulations governing computer use.",
+                "meaning": "직원들은 컴퓨터 사용 관리 규정을 준수해야 한다."
+            }
+        ]
+    },
+    {
+        "origin": "regulation",
+        "pronunciations": {
+            "us": "ˌreɡjuleɪʃən"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "규정"
+            }
+        ],
+        "notes": "<strong class=\"target-word\">Regulations</strong> regarding lunch breaks were established. 점심시간에 관한 규정이 세워졌다.",
+        "examples": [
+            {
+                "origin": "<strong class=\"target-word\">Regulations</strong> regarding lunch breaks were established.",
+                "meaning": "점심시간에 관한 규정이 세워졌다."
+            }
+        ]
+    },
+    {
+        "origin": "exception",
+        "pronunciations": {
+            "us": "ɪksepʃən"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "예외"
+            }
+        ],
+        "notes": "Management decided not to make any <strong class=\"target-word\">exceptions</strong> to the rules. 경영진은 규칙에 어떤 예외도 두지 않기로 결정했다.",
+        "examples": [
+            {
+                "origin": "Management decided not to make any <strong class=\"target-word\">exceptions</strong> to the rules.",
+                "meaning": "경영진은 규칙에 어떤 예외도 두지 않기로 결정했다."
+            }
+        ]
+    },
+    {
+        "origin": "adhere",
+        "pronunciations": {
+            "us": "ədhɪər",
+            "uk": "ədhɪə"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "지키다, 고수하다"
+            }
+        ],
+        "notes": "All staff should do their best to <strong class=\"target-word\">adhere</strong> to the company's policies. 모든 직원들은 회사 규정을 지키기 위해 최선을 다해야 한다.",
+        "examples": [
+            {
+                "origin": "All staff should do their best to <strong class=\"target-word\">adhere</strong> to the company's policies.",
+                "meaning": "모든 직원들은 회사 규정을 지키기 위해 최선을 다해야 한다."
+            }
+        ]
+    },
+    {
+        "origin": "severely",
+        "pronunciations": {
+            "us": "səvɪərli",
+            "uk": "səvɪəli"
+        },
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "엄격하게, 심하게"
+            }
+        ],
+        "notes": "Those who share company data with outside parties will be <strong class=\"target-word\">severely</strong> punished. 회사 자료를 외부인과 공유하는 사람은 엄격히 처벌될 것이다.",
+        "examples": [
+            {
+                "origin": "Those who share company data with outside parties will be <strong class=\"target-word\">severely</strong> punished.",
+                "meaning": "회사 자료를 외부인과 공유하는 사람은 엄격히 처벌될 것이다."
+            }
+        ]
+    },
+    {
+        "origin": "refrain",
+        "pronunciations": {
+            "us": "rɪfreɪn"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "자제하다, 삼가다"
+            }
+        ],
+        "notes": "Guards should <strong class=\"target-word\">refrain</strong> from making personal calls during a shift. 경비 요원들은 근무 시간 동안 개인적인 전화를 하는 것을 자제해야 한다.",
+        "examples": [
+            {
+                "origin": "Guards should <strong class=\"target-word\">refrain</strong> from making personal calls during a shift.",
+                "meaning": "경비 요원들은 근무 시간 동안 개인적인 전화를 하는 것을 자제해야 한다."
+            }
+        ]
+    },
+    {
+        "origin": "permission",
+        "pronunciations": {
+            "us": "pərmɪʃən",
+            "uk": "pəmɪʃən"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "허락, 허가"
+            }
+        ],
+        "notes": "The CEO gave managers <strong class=\"target-word\">permission</strong> to hold a weekend workshop. 최고 경영자는 관리자들에게 주말 워크숍을 열도록 허락했다.",
+        "examples": [
+            {
+                "origin": "The CEO gave managers <strong class=\"target-word\">permission</strong> to hold a weekend workshop.",
+                "meaning": "최고 경영자는 관리자들에게 주말 워크숍을 열도록 허락했다."
+            }
+        ]
+    },
+    {
+        "origin": "access",
+        "pronunciations": {
+            "us": "ækses"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "이용 권한, 접근; 통로"
+            },
+            {
+                "pos": "v",
+                "text": "~에 접근하다, 도달하다"
+            }
+        ],
+        "notes": "Only authorized personnel may gain <strong class=\"target-word\">access</strong> to client files. 오직 허가된 직원만 고객 파일 이용 권한을 얻을 수 있다.<br>There is direct <strong class=\"target-word\">access</strong> to the subway near our new office. 새 사무실 근처에 지하철로 곧장 이어지는 통로가 있다.<br>Click on the link to <strong class=\"target-word\">access</strong> the detailed job description. 상세한 직무 내용을 보시려면 링크를 클릭하세요.",
+        "examples": [
+            {
+                "origin": "Only authorized personnel may gain <strong class=\"target-word\">access</strong> to client files.",
+                "meaning": "오직 허가된 직원만 고객 파일 이용 권한을 얻을 수 있다."
+            },
+            {
+                "origin": "There is direct <strong class=\"target-word\">access</strong> to the subway near our new office.",
+                "meaning": "새 사무실 근처에 지하철로 곧장 이어지는 통로가 있다."
+            },
+            {
+                "origin": "Click on the link to <strong class=\"target-word\">access</strong> the detailed job description.",
+                "meaning": "상세한 직무 내용을 보시려면 링크를 클릭하세요."
+            }
+        ]
+    },
+    {
+        "origin": "thoroughly",
+        "pronunciations": {
+            "us": "θɜːrouli",
+            "uk": "θʌrəli"
+        },
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "철저하게; 완전히, 대단히"
+            }
+        ],
+        "notes": "Please read the user manual <strong class=\"target-word\">thoroughly</strong> before installing this software. 이 소프트웨어를 설치하기 전에 사용자 설명서를 철저히 읽어 보시기 바랍니다.<br>The staff was <strong class=\"target-word\">thoroughly</strong> impressed with the new health insurance policy. 직원들은 새로운 건강 보험 제도에 완전히 감동했다.",
+        "examples": [
+            {
+                "origin": "Please read the user manual <strong class=\"target-word\">thoroughly</strong> before installing this software.",
+                "meaning": "이 소프트웨어를 설치하기 전에 사용자 설명서를 철저히 읽어 보시기 바랍니다."
+            },
+            {
+                "origin": "The staff was <strong class=\"target-word\">thoroughly</strong> impressed with the new health insurance policy.",
+                "meaning": "직원들은 새로운 건강 보험 제도에 완전히 감동했다."
+            }
+        ]
+    },
+    {
+        "origin": "revise",
+        "pronunciations": {
+            "us": "rɪvaɪz"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "(의견·계획을) 수정하다, 변경하다"
+            }
+        ],
+        "notes": "The office's policies regarding vacations have been <strong class=\"target-word\">revised</strong>. 휴가와 관련된 사무실 규정이 수정되었다.",
+        "examples": [
+            {
+                "origin": "The office's policies regarding vacations have been <strong class=\"target-word\">revised</strong>.",
+                "meaning": "휴가와 관련된 사무실 규정이 수정되었다."
+            }
+        ]
+    },
+    {
+        "origin": "approach",
+        "pronunciations": {
+            "us": "əproutʃ",
+            "uk": "əprəutʃ"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "접근법, 처리 방법"
+            },
+            {
+                "pos": "v",
+                "text": "다가오다, 가까워지다"
+            }
+        ],
+        "notes": "The manager has a strict <strong class=\"target-word\">approach</strong> to enforcing office regulations. 그 관리자는 사무실 규정을 시행하는 엄격한 접근법을 갖고 있다.<br>Police <strong class=\"target-word\">approached</strong> carefully to arrest the suspect. 경찰은 용의자를 체포하기 위해 조심스럽게 다가왔다.",
+        "examples": [
+            {
+                "origin": "The manager has a strict <strong class=\"target-word\">approach</strong> to enforcing office regulations.",
+                "meaning": "그 관리자는 사무실 규정을 시행하는 엄격한 접근법을 갖고 있다."
+            },
+            {
+                "origin": "Police <strong class=\"target-word\">approached</strong> carefully to arrest the suspect.",
+                "meaning": "경찰은 용의자를 체포하기 위해 조심스럽게 다가왔다."
+            }
+        ]
+    },
+    {
+        "origin": "approval",
+        "pronunciations": {
+            "us": "əpruːvəl"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "승인, 인가"
+            }
+        ],
+        "notes": "Please obtain the supervisor's <strong class=\"target-word\">approval</strong> before purchasing supplies. 비품을 구매하기 전에 관리자의 승인을 받으세요.",
+        "examples": [
+            {
+                "origin": "Please obtain the supervisor's <strong class=\"target-word\">approval</strong> before purchasing supplies.",
+                "meaning": "비품을 구매하기 전에 관리자의 승인을 받으세요."
+            }
+        ]
+    },
+    {
+        "origin": "form",
+        "pronunciations": {
+            "us": "fɔːrm",
+            "uk": "fɔːm"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "종류, 유형, 양식"
+            }
+        ],
+        "notes": "Visitors are required to present a <strong class=\"target-word\">form</strong> of identification to security guards. 방문객들은 신분증 한 가지를 경비원에게 제시해야 한다.",
+        "examples": [
+            {
+                "origin": "Visitors are required to present a <strong class=\"target-word\">form</strong> of identification to security guards.",
+                "meaning": "방문객들은 신분증 한 가지를 경비원에게 제시해야 한다."
+            }
+        ]
+    },
+    {
+        "origin": "immediately",
+        "pronunciations": {
+            "us": "ɪmiːdiətli"
+        },
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "즉시, 곧"
+            }
+        ],
+        "notes": "Effective <strong class=\"target-word\">immediately</strong>, taxes will be automatically deducted from each paycheck. 즉시 발효되는 것으로, 세금이 매 급여에서 자동 공제될 것입니다.",
+        "examples": [
+            {
+                "origin": "Effective <strong class=\"target-word\">immediately</strong>, taxes will be automatically deducted from each paycheck.",
+                "meaning": "즉시 발효되는 것으로, 세금이 매 급여에서 자동 공제될 것입니다."
+            }
+        ]
+    },
+    {
+        "origin": "inspection",
+        "pronunciations": {
+            "us": "ɪnspekʃən"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "점검, 검사"
+            }
+        ],
+        "notes": "The facility <strong class=\"target-word\">inspection</strong> should be conducted at least once a month. 시설 점검은 적어도 한 달에 한 번 진행되어야 한다.",
+        "examples": [
+            {
+                "origin": "The facility <strong class=\"target-word\">inspection</strong> should be conducted at least once a month.",
+                "meaning": "시설 점검은 적어도 한 달에 한 번 진행되어야 한다."
+            }
+        ]
+    },
+    {
+        "origin": "arrangement",
+        "pronunciations": {
+            "us": "əreɪndʒmənt"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "준비, 마련, 주선"
+            }
+        ],
+        "notes": "The manager made <strong class=\"target-word\">arrangements</strong> for purchase of new machinery. 그 관리자는 새 장비 구입을 준비했다.",
+        "examples": [
+            {
+                "origin": "The manager made <strong class=\"target-word\">arrangements</strong> for purchase of new machinery.",
+                "meaning": "그 관리자는 새 장비 구입을 준비했다."
+            }
+        ]
+    },
+    {
+        "origin": "procedure",
+        "pronunciations": {
+            "us": "prəsiːdʒər",
+            "uk": "prəsiːdʒə"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "절차"
+            }
+        ],
+        "notes": "The <strong class=\"target-word\">procedure</strong> for patent applications is outlined on the APTO Web site. 특허 신청 절차는 APTO 웹사이트에 요약되어 있다.",
+        "examples": [
+            {
+                "origin": "The <strong class=\"target-word\">procedure</strong> for patent applications is outlined on the APTO Web site.",
+                "meaning": "특허 신청 절차는 APTO 웹사이트에 요약되어 있다."
+            }
+        ]
+    },
+    {
+        "origin": "negative",
+        "pronunciations": {
+            "us": "neɡətɪv"
+        },
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "부정적인, 비관적인"
+            }
+        ],
+        "notes": "The new vacation policy received <strong class=\"target-word\">negative</strong> feedback from the employees. 새로운 휴가 정책은 직원들로부터 부정적인 의견을 받았다.",
+        "examples": [
+            {
+                "origin": "The new vacation policy received <strong class=\"target-word\">negative</strong> feedback from the employees.",
+                "meaning": "새로운 휴가 정책은 직원들로부터 부정적인 의견을 받았다."
+            }
+        ]
+    },
+    {
+        "origin": "mandate",
+        "pronunciations": {
+            "us": "mændeɪt"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "명령하다, 지시하다"
+            },
+            {
+                "pos": "n",
+                "text": "권한, 지시, 명령"
+            }
+        ],
+        "notes": "The board of directors has <strong class=\"target-word\">mandated</strong> an increase for research funding. 이사회는 연구 자금 지원을 늘리라고 명령했다.<br>Congress gave the committee a <strong class=\"target-word\">mandate</strong> to make budget cuts. 의회는 위원회에 예산을 삭감하는 권한을 주었다.",
+        "examples": [
+            {
+                "origin": "The board of directors has <strong class=\"target-word\">mandated</strong> an increase for research funding.",
+                "meaning": "이사회는 연구 자금 지원을 늘리라고 명령했다."
+            },
+            {
+                "origin": "Congress gave the committee a <strong class=\"target-word\">mandate</strong> to make budget cuts.",
+                "meaning": "의회는 위원회에 예산을 삭감하는 권한을 주었다."
+            }
+        ]
+    },
+    {
+        "origin": "effect",
+        "pronunciations": {
+            "us": "ɪfekt"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "(법률 등의) 효력, 효과, 영향"
+            },
+            {
+                "pos": "v",
+                "text": "결과로서 ~을 가져오다"
+            }
+        ],
+        "notes": "The incentive policy will be in <strong class=\"target-word\">effect</strong> starting next week. 상여금 규정은 다음 주부터 효력이 있을 것이다.<br>He <strong class=\"target-word\">effected</strong> a sudden change in the company's expansion plan. 그는 회사의 확장 계획에 갑작스러운 변화를 가져왔다.",
+        "examples": [
+            {
+                "origin": "The incentive policy will be in <strong class=\"target-word\">effect</strong> starting next week.",
+                "meaning": "상여금 규정은 다음 주부터 효력이 있을 것이다."
+            },
+            {
+                "origin": "He <strong class=\"target-word\">effected</strong> a sudden change in the company's expansion plan.",
+                "meaning": "그는 회사의 확장 계획에 갑작스러운 변화를 가져왔다."
+            }
+        ]
+    },
+    {
+        "origin": "drastrically",
+        "pronunciations": {
+            "us": "dræstɪkəli"
+        },
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "심하게, 과감하게, 철저하게"
+            }
+        ],
+        "notes": "Fines for breaking rules have been <strong class=\"target-word\">drastically</strong> increased. 규칙 위반에 대한 벌금이 심하게 인상되었다.",
+        "examples": [
+            {
+                "origin": "Fines for breaking rules have been <strong class=\"target-word\">drastically</strong> increased.",
+                "meaning": "규칙 위반에 대한 벌금이 심하게 인상되었다."
+            }
+        ]
+    },
+    {
+        "origin": "according to",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~에 따라"
+            }
+        ],
+        "notes": "All transactions must be handled <strong class=\"target-word\">according to</strong> the guidelines. 모든 거래는 지침에 따라 처리되어야 한다.",
+        "examples": [
+            {
+                "origin": "All transactions must be handled <strong class=\"target-word\">according to</strong> the guidelines.",
+                "meaning": "모든 거래는 지침에 따라 처리되어야 한다."
+            }
+        ]
+    },
+    {
+        "origin": "enable",
+        "pronunciations": {
+            "us": "ɪneɪbl"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "(무엇을) 가능하게 하다"
+            }
+        ],
+        "notes": "Jenny's promotion <strong class=\"target-word\">enabled</strong> her to participate in the board meeting. Jenny의 승진은 그녀가 이사회 회의에 참석하는 것을 가능하게 했다.",
+        "examples": [
+            {
+                "origin": "Jenny's promotion <strong class=\"target-word\">enabled</strong> her to participate in the board meeting.",
+                "meaning": "Jenny의 승진은 그녀가 이사회 회의에 참석하는 것을 가능하게 했다."
+            }
+        ]
+    },
+    {
+        "origin": "standard",
+        "pronunciations": {
+            "us": "stændərd",
+            "uk": "stændəd"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "기준, 표준"
+            }
+        ],
+        "notes": "The company must make changes to the current safety <strong class=\"target-word\">standards</strong>. 그 회사는 현행 안전 기준을 변경해야 한다.",
+        "examples": [
+            {
+                "origin": "The company must make changes to the current safety <strong class=\"target-word\">standards</strong>.",
+                "meaning": "그 회사는 현행 안전 기준을 변경해야 한다."
+            }
+        ]
+    },
+    {
+        "origin": "constant",
+        "pronunciations": {
+            "us": "kɑːnstənt",
+            "uk": "kɒnstənt"
+        },
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "지속적인, 끊임없이 계속하는"
+            }
+        ],
+        "notes": "The store received <strong class=\"target-word\">constant</strong> inquiries about its new return policy. 그 상점은 새로운 반품 규정에 대해 지속적인 문의를 받았다.",
+        "examples": [
+            {
+                "origin": "The store received <strong class=\"target-word\">constant</strong> inquiries about its new return policy.",
+                "meaning": "그 상점은 새로운 반품 규정에 대해 지속적인 문의를 받았다."
+            }
+        ]
+    },
+    {
+        "origin": "act",
+        "pronunciations": {
+            "us": "ækt"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "법령, 결의서; 행위, 행동"
+            },
+            {
+                "pos": "v",
+                "text": "결정하다, 판결을 내리다; 행동하다"
+            }
+        ],
+        "notes": "The new <strong class=\"target-word\">act</strong> makes it easier to file personal income tax forms online. 새로운 법령은 온라인으로 개인 소득세 신고서를 제출하는 것을 더 쉽게 만든다.<br>The <strong class=\"target-word\">act</strong> of merging with another company is complicated and takes a lot of time. 또 다른 회사와 합병하는 행위는 복잡하고 많은 시간이 걸린다.<br>A lawyer always <strong class=\"target-word\">acts</strong> on behalf of his clients. 변호사는 항상 그 자신의 고객을 위하여 결정을 내린다.",
+        "examples": [
+            {
+                "origin": "The new <strong class=\"target-word\">act</strong> makes it easier to file personal income tax forms online.",
+                "meaning": "새로운 법령은 온라인으로 개인 소득세 신고서를 제출하는 것을 더 쉽게 만든다."
+            },
+            {
+                "origin": "The <strong class=\"target-word\">act</strong> of merging with another company is complicated and takes a lot of time.",
+                "meaning": "또 다른 회사와 합병하는 행위는 복잡하고 많은 시간이 걸린다."
+            },
+            {
+                "origin": "A lawyer always <strong class=\"target-word\">acts</strong> on behalf of his clients.",
+                "meaning": "변호사는 항상 그 자신의 고객을 위하여 결정을 내린다."
+            }
+        ]
+    },
+    {
+        "origin": "compensation",
+        "pronunciations": {
+            "us": "ˌkɑːmpənseɪʃən",
+            "uk": "ˌkɒmpənseɪʃən"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "보상금, 보상"
+            }
+        ],
+        "notes": "Employees will receive <strong class=\"target-word\">compensation</strong> based on their performance and evaluation. 직원들은 그들의 실적과 평가를 바탕으로 보상금을 받을 것이다.",
+        "examples": [
+            {
+                "origin": "Employees will receive <strong class=\"target-word\">compensation</strong> based on their performance and evaluation.",
+                "meaning": "직원들은 그들의 실적과 평가를 바탕으로 보상금을 받을 것이다."
+            }
+        ]
+    },
+    {
+        "origin": "ban",
+        "pronunciations": {
+            "us": "bæn"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "금지"
+            },
+            {
+                "pos": "v",
+                "text": "금지하다"
+            }
+        ],
+        "notes": "The government placed a <strong class=\"target-word\">ban</strong> on carrying a large volume of liquid on board a plane. 정부는 기내에 많은 양의 액체를 반입하는 것을 금지했다.<br>The company <strong class=\"target-word\">banned</strong> the use of the Internet for personal purposes. 회사는 개인적인 목적을 위한 인터넷 사용을 금지했다.",
+        "examples": [
+            {
+                "origin": "The government placed a <strong class=\"target-word\">ban</strong> on carrying a large volume of liquid on board a plane.",
+                "meaning": "정부는 기내에 많은 양의 액체를 반입하는 것을 금지했다."
+            },
+            {
+                "origin": "The company <strong class=\"target-word\">banned</strong> the use of the Internet for personal purposes.",
+                "meaning": "회사는 개인적인 목적을 위한 인터넷 사용을 금지했다."
+            }
+        ]
+    },
+    {
+        "origin": "obligation",
+        "pronunciations": {
+            "us": "ˌɑːblɪɡeɪʃən",
+            "uk": "ˌɒblɪɡeɪʃən"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "의무, 책임"
+            }
+        ],
+        "notes": "All researchers have an <strong class=\"target-word\">obligation</strong> to publish at least one paper every year. 모든 연구원들은 매년 적어도 한 편의 논문을 게재할 의무가 있다.",
+        "examples": [
+            {
+                "origin": "All researchers have an <strong class=\"target-word\">obligation</strong> to publish at least one paper every year.",
+                "meaning": "모든 연구원들은 매년 적어도 한 편의 논문을 게재할 의무가 있다."
+            }
+        ]
+    },
+    {
+        "origin": "authorize",
+        "pronunciations": {
+            "us": "ɔːθəraɪz"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "~을 인가하다, 권한을 부여하다"
+            }
+        ],
+        "notes": "Allocations of funds must be <strong class=\"target-word\">authorized</strong> by management. 자금 할당은 경영진에 의해 인가되어야 한다.",
+        "examples": [
+            {
+                "origin": "Allocations of funds must be <strong class=\"target-word\">authorized</strong> by management.",
+                "meaning": "자금 할당은 경영진에 의해 인가되어야 한다."
+            }
+        ]
+    },
+    {
+        "origin": "prohibit",
+        "pronunciations": {
+            "us": "prouhɪbɪt"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "금지하다"
+            }
+        ],
+        "notes": "The museum <strong class=\"target-word\">prohibits</strong> visitors from taking pictures. 그 박물관은 방문객들의 사진 촬영을 금지한다.",
+        "examples": [
+            {
+                "origin": "The museum <strong class=\"target-word\">prohibits</strong> visitors from taking pictures.",
+                "meaning": "그 박물관은 방문객들의 사진 촬영을 금지한다."
+            }
+        ]
+    },
+    {
+        "origin": "abolish",
+        "pronunciations": {
+            "us": "əbɑːlɪʃ",
+            "uk": "əbɒlɪʃ"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "(제도·법률 등을) 폐지하다"
+            }
+        ],
+        "notes": "Congress decided to <strong class=\"target-word\">abolish</strong> taxes on imported fruit. 의회는 수입 과일에 대한 세금을 폐지하기로 결정했다.",
+        "examples": [
+            {
+                "origin": "Congress decided to <strong class=\"target-word\">abolish</strong> taxes on imported fruit.",
+                "meaning": "의회는 수입 과일에 대한 세금을 폐지하기로 결정했다."
+            }
+        ]
+    },
+    {
+        "origin": "enforce",
+        "pronunciations": {
+            "us": "ɪnfɔːrs",
+            "uk": "ɪnfɔːs"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "(법률을) 시행하다, 집행하다"
+            }
+        ],
+        "notes": "All departments must <strong class=\"target-word\">enforce</strong> the no smoking policy. 모든 부서가 금연 규정을 시행해야 한다.",
+        "examples": [
+            {
+                "origin": "All departments must <strong class=\"target-word\">enforce</strong> the no smoking policy.",
+                "meaning": "모든 부서가 금연 규정을 시행해야 한다."
+            }
+        ]
+    },
+    {
+        "origin": "habit",
+        "pronunciations": {
+            "us": "hæbɪt"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "습관, 버릇"
+            }
+        ],
+        "notes": "Setting goals should be a regular <strong class=\"target-word\">habit</strong>. 목표 설정은 규칙적인 습관이 되어야 한다.",
+        "examples": [
+            {
+                "origin": "Setting goals should be a regular <strong class=\"target-word\">habit</strong>.",
+                "meaning": "목표 설정은 규칙적인 습관이 되어야 한다."
+            }
+        ]
+    },
+    {
+        "origin": "legislation",
+        "pronunciations": {
+            "us": "ˌledʒɪsleɪʃən"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "법률, 법규"
+            }
+        ],
+        "notes": "The committee unanimously voted for the new export limitation <strong class=\"target-word\">legislation</strong>. 위원회는 새로운 수출 제한 법률에 만장일치로 찬성표를 던졌다.",
+        "examples": [
+            {
+                "origin": "The committee unanimously voted for the new export limitation <strong class=\"target-word\">legislation</strong>.",
+                "meaning": "위원회는 새로운 수출 제한 법률에 만장일치로 찬성표를 던졌다."
+            }
+        ]
+    },
+    {
+        "origin": "restrict",
+        "pronunciations": {
+            "us": "rɪstrɪkt"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "한정하다, 제한하다"
+            }
+        ],
+        "notes": "Access is <strong class=\"target-word\">restricted</strong> to authorized personnel. 출입은 허가된 직원에게로 한정됩니다. (관계자 외 출입금지)",
+        "examples": [
+            {
+                "origin": "Access is <strong class=\"target-word\">restricted</strong> to authorized personnel.",
+                "meaning": "출입은 허가된 직원에게로 한정됩니다. (관계자 외 출입금지)"
+            }
+        ]
+    }
+]

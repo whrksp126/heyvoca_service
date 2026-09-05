@@ -1,0 +1,402 @@
+[
+    {
+        "origin": "accelerate",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "가속하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "back up",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "(교통이) 정체되다"
+            },
+            {
+                "pos": "",
+                "text": "후진하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "bottleneck",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "병목 현상"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "carpool",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "차를 같이 타다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "checkup",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "점검, 검정"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "commuter pass",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "정기권"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "conspicuous",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "눈에 잘 띄는"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "curtail",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "삭감하다, 축소하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "deadlock",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "교착 상태"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "deficit",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "적자, 부족액"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "disregard",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "무시하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "efficiency",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "효율성"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "exhaust",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "지치게 하다"
+            },
+            {
+                "pos": "n",
+                "text": "배기가스"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "expedite",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "신속히 처리하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "infrastructure",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "사회 기반 시설"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "insignificant",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "사소한, 중요하지 않은"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "maneuver",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "조종하다"
+            },
+            {
+                "pos": "n",
+                "text": "책략"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "obsolete",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "구식의, 쓸모없게 된"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "pass through",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "통과하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "precisely",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "정확히"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "predominantly",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "대개, 주로"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "proximity",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "근접함"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "ramification",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "파급 효과"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "readily",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "손쉽게, 선뜻"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "reliable",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "믿을 수 있는"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "revenue",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "수익, 수입"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "shortage",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "부족"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "stationery",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "문구류"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "surcharge",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "추가 요금"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "visibility",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "시계, 가시성"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "withdraw",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "인출하다"
+            },
+            {
+                "pos": "",
+                "text": "철수하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "worsen",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "악화되다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    }
+]

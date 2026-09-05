@@ -7,7 +7,7 @@ import { useVocabulary } from '../../context/VocabularyContext';
 import { motion, AnimatePresence } from 'framer-motion';
 import AddWordNewBottomSheet from '../newBottomSheet/AddWordNewBottomSheet';
 import WordDetaileNewBottomSheet from '../newBottomSheet/WordDetaileNewBottomSheet';
-import { TestSetupNewBottomSheet } from '../newBottomSheet/TestSetupNewBottomSheet';
+import { BookStudyTypeNewBottomSheet } from '../newBottomSheet/BookStudyTypeNewBottomSheet';
 import { VocabularyBookMenuNewBottomSheet } from '../newBottomSheet/VocabularyBookMenuNewBottomSheet';
 import { vibrate, showToast } from '../../utils/osFunction';
 import BookFieldHero from '../vocabularySheets/BookFieldHero';
@@ -262,16 +262,22 @@ const VocabularyWordsNewFullSheet = ({ id }) => {
     pushNewBottomSheet(WordDetaileNewBottomSheet, { vocabularyId: vocabularySheet.id, id: wordId });
   };
 
-  // 학습 시작은 이 CTA 하나로 모은다 (시안 §6 — 상세 시트는 읽는 곳이지 시작하는 곳이 아니다)
+  /*
+    학습 시작은 이 CTA 하나로 모은다 (시안 §6 — 상세 시트는 읽는 곳이지 시작하는 곳이 아니다).
+
+    **방식을 고르는 자리가 여기다.** 예전에는 곧바로 자유 설정 테스트(exam)로 들어갔고,
+    방식 선택은 홈 버튼이 열던 시트에 있었다. 지금은 반대로 뒤집혔다 —
+    홈은 무엇을 할지 정해 주는 자리라 바로 AI 추천 학습으로 가고(useQuickReview 주석),
+    대상이 이미 '이 단어장'으로 좁혀진 여기서만 방식이 남은 선택이 된다.
+  */
   const handleStudyClick = () => {
     vibrate({ duration: 5 });
-    pushNewBottomSheet(TestSetupNewBottomSheet, {
+    pushNewBottomSheet(BookStudyTypeNewBottomSheet, {
       vocabularySheetId: id,
       maxVocabularyCount: totalCount,
-      testType: 'exam',
     }, {
-      smFull: true,
-      closeOnBackdropClick: true,
+      isBackdropClickClosable: true,
+      isDragToCloseEnabled: true,
     });
   };
 

@@ -1,0 +1,346 @@
+[
+    {
+        "origin": "bookcase",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "책장, 책꽂이"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "bookshelf",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "책꽂이"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "case",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "(특정한 상황의) 경우"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "central office",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "중앙 사무실"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "copy machine",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "복사기"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "fax",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "팩스"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "file folder",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "서류철"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "greet",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "~에게 인사하다, ~를 환영하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "handwriting",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "(개인의) 글씨, 필체"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "keypad",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "(전화·계산기 등의) 소형 키보드"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "knife",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "칼"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "log on to",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~에 로그인하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "online",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "인터넷에 접속된"
+            },
+            {
+                "pos": "adv",
+                "text": "온라인으로"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "photocopier",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "복사기"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "photocopy",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "복사"
+            },
+            {
+                "pos": "v",
+                "text": "복사하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "print out",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "(프린터로) 출력하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "right away",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "즉시, 당장"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "spell",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "철자를 쓰다, 철자를 말하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "wrap",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "싸다, 감싸다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "fold",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "접다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "least",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "가장 작은, 가장 적은"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "paper",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "서류"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "planning",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "계획, 입안"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "post",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "붙이다, 공고하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "press the button",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "버튼을 누르다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "server",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "서빙하는 사람, (컴퓨터의) 서버"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "store opening",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "개점, 개장"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "task",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "일, 직무"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    }
+]

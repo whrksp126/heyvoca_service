@@ -1,0 +1,338 @@
+[
+    {
+        "origin": "alternative",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "대안; adj. 대안의, 대체 가능한"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "atmosphere",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "대기, 분위기"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "avoid",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "피하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "be aware of",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~을 알고 있다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "carpool",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "카풀하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "cause",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "유발하다; n. 원인"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "cleanliness",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "청결함"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "conserve",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "보존하다, 아껴 쓰다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "contribution",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "기여, 공헌; 기부금"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "cut down on",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "(양을) 줄이다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "disposal",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "처리, 처분"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "ecology",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "생태계, 생태학"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "efficient",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "효율적인"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "fine",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "벌금"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "at a brisk pace",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "빠른 속도로"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "be stuck in",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~에 갇히다, 막히다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "bicycle lane",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "자전거 전용 차로"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "gas station",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "주유소"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "illegal",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "불법의"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "instead of",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~ 대신에"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "natural resource",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "천연자원"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "parking area",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "주차 구역"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "pavement",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "포장도로, 보도"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "pollution",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "오염"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "protective",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "보호하는"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "shortcut",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "지름길"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "solve",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "해결하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "waste",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "낭비하다; n. 낭비, 쓰레기"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    }
+]

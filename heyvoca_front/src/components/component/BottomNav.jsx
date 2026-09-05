@@ -81,16 +81,18 @@ const BottomNav = () => {
                 }`}
               >
                 <span className={`relative flex items-center justify-center ${locked ? 'opacity-45' : ''}`}>
-                  {/* 꺼진 탭은 회색 아이콘을 따로 두지 않고 같은 그림을 탈색해서 쓴다.
-                      투명도만 낮추면 크림색 면이 흰 배경에 녹아 사라지므로 밝기를 함께 떨어뜨린다. */}
+                  {/* 아이콘은 켜짐·꺼짐에 관계없이 **제 색 그대로** 둔다.
+                      예전에는 꺼진 탭을 탈색(grayscale + brightness)했는데, 이 아이콘들은
+                      각자 다른 사물(밭·책·돋보기·상점·토끼)이고 색이 곧 그 사물의 표식이라
+                      색을 빼면 다섯 개가 다 비슷한 회색 덩어리가 되어 무엇이 무엇인지 흐려졌다.
+                      켜짐·꺼짐은 아이콘이 아니라 **뒤에 깔리는 면**(위 div 의 분홍 알약)이 말한다.
+                      잠금(opacity-45)은 다른 뜻이라 그대로 둔다 — 그건 '못 쓴다'는 표시다. */}
                   <img
                     src={item.icon}
                     alt=""
                     aria-hidden="true"
                     draggable={false}
-                    className={`w-[27px] h-[27px] object-contain select-none ${
-                      active ? '' : 'grayscale brightness-[.72] dark:brightness-[.62]'
-                    }`}
+                    className="w-[27px] h-[27px] object-contain select-none"
                   />
                   {locked && (
                     <span className="absolute -top-[3px] -right-[5px] flex items-center justify-center w-[14px] h-[14px] rounded-full bg-layout-gray-300 dark:bg-layout-gray-400">

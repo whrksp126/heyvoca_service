@@ -1,0 +1,342 @@
+[
+    {
+        "origin": "bakery",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "빵집, 제과점"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "best-selling",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "베스트셀러의"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "cashier",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "(은행·상점·호텔 등의) 출납원"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "clothing",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "의류"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "corner",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "모퉁이, 구석"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "costume",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "복장, 의상"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "free",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "자유로이 ~할 수 있는, 마음대로의"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "label",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "라벨, 꼬리표",
+                "v": "~에 라벨을 붙이다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "necklace",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "목걸이"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "photography equipment",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "사진 장비"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "shelf",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "선반"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "shop",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "상점",
+                "v": "물건을 사다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "shopper",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "쇼핑객"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "size",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "크기, 치수"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "sunglasses",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "선글라스"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "supermarket",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "슈퍼마켓"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "unwanted",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "원치 않는, 반갑지 않은"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "basis",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "기초, 근거, 원칙"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "brand",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "상표, 브랜드"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "department store",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "백화점"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "discount store",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "할인 점포"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "display",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "전시하다, 진열하다",
+                "n": "전시, 진열"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "fit",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "(치수가) ~에 꼭 맞다, ~에 적합하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "fully",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "완전히, 충분히"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "grocery",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "식료품점"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "keep",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "보유하다, 계속하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "store",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "가게",
+                "v": "저장하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "tax",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "세금"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    }
+]

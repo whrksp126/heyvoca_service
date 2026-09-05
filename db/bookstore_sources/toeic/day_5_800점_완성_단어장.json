@@ -1,0 +1,818 @@
+[
+    {
+        "origin": "archive",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "기록 보관소"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "be unwilling to do",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~하기를 꺼리다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "be up late",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "늦게까지 깨어 있다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "blackout",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "정전"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "board meeting",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "임원 회의"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "board of directors",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "이사회"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "cross one's arms",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "팔짱 끼다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "depressing",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "우울한"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "drag",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "~을 끌다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "fold in half",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "반으로 접다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "fold up",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "접어 개다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "frighten",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "놀라게 하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "keep going",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "계속 살아가다, 계속 견디다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "long-term",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "장기(長期)의"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "look up to",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~를 존경하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "make a presentation",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "발표하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "make a revision",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "수정하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "make an error",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "실수를 범하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "meet the deadline",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "마감일을 맞추다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "meet the requirements",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "요구 조건을 충족시키다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "mess up",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "(계획을) 망치다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "My schedule doesn't permit it.",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "일정상 불가능하다."
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "obvious",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "명백한, 뻔한"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "office supplies",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "사무용품"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "overlook",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "간과하다, 내려다보다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "overnight",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "밤새, 하룻밤 동안"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "papers",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "서류, 논문"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "proofread",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "교정보다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "rearrange",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "(일정을) 조정하다, 재배열하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "recondition",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "수리하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "rest one's chin on one's hand",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "손으로 턱을 괴다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "stool",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "(등받이가 없는) 의자"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "timecard",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "근무 시간 기록표"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "wipe",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "(문질러) 닦다, 훔쳐내다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "work additional hours",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "추가 근무를 하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "work shift",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "근무 교대"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "burdensome",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "부담스러운, 힘든"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "circulate",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "순환하다, 순환시키다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "commend",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "칭찬하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "company",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "동료, 일행, 손님, 회사"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "discourage",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "~를 낙담시키다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "distraction",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "집중을 방해하는 것, 머리를 식히게 하는 것"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "failure",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "(기계 따위의) 고장, 파손"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "followed by",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "뒤이어, 잇달아"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "interruption",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "중단, 방해"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "make sure",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "확인하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "mislabeled",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "라벨이 잘못 붙여진"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "observant",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "관찰력 있는, 준수하는"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "persuade",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "설득하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "proposed",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "제안된"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "rephrase",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "바꾸어 말하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "scarcely",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "거의 ~하지 않다, 겨우"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "concisely",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "간결하게"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "disapproval",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "반대"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "disapprove",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "반대하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "do A a favor",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "A를 도와주다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "do a good job",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "일을 잘 해내다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "draw a distinction between",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~ 사이에 구별을 짓다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "exposed",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "노출된, 드러난"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "intensive",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "집중적인"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "problematic",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "문제가 있는, 확실치 않은"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "project coordinator",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "프로젝트 책임자"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "project management",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "프로젝트 관리"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "seating capacity",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "좌석 수, 좌석 수용 능력"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "take care of",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~를 돌보다, 책임지다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "take on",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "(역할·일을) 떠맡다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "tremendous",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "거대한"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "under the new management",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "새 경영진 하에서"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    }
+]

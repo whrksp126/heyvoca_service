@@ -1,0 +1,866 @@
+[
+    {
+        "origin": "acid rain",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "산성비"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "alternative energy",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "대체 에너지"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "atmospheric pressure",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "기압"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "be sensitive to",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "~에 민감하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "breathable air",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "호흡할 수 있는 공기"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "carbon footprint",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "탄소 발자국"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "climate change",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "기후 변화"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "coastal region",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "해안 지역"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "colorful",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "다채로운"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "conservationist",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "환경 보호 활동가"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "definitely",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "분명히, 확실히"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "disposable items",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "일회용품"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "ecological system",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "생태계"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "energy consumption",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "에너지 소비"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "environmentally friendly",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "친환경적인"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "exhaust fumes",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "배기가스"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "flood warning",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "홍수 경보"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "global warming",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "지구 온난화"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "greenhouse effect",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "온실 효과"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "hazardous waste",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "유해 폐기물"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "highly effective",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "매우 효과적인"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "in harmony with",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "~과 조화를 이루어"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "industrial waste",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "산업 폐기물"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "landfill site",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "쓰레기 매립지"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "natural resource",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "천연자원"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "nature reserve",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "자연 보호 구역"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "on a large scale",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "대규모로"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "organic farming",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "유기농업"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "ozone layer",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "오존층"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "pollute the ocean",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "바다를 오염시키다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "power plant",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "발전소"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "protect nature",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "자연을 보호하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "rare species",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "희귀종"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "recycling bin",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "재활용 수거함"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "renewable energy",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "재생 가능 에너지"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "save electricity",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "전기를 아끼다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "solar panel",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "태양광 패널"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "sustainable development",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "지속 가능한 개발"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "take action",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "조치를 취하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "threatened with extinction",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "멸종 위기에 처한"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "toxic chemicals",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "독성 화학 물질"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "unpredictable weather",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "예측 불가능한 날씨"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "waste reduction",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "폐기물 감축"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "water purification",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "수질 정화"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "wildlife sanctuary",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "야생 동물 보호 구역"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "wind turbine",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "풍력 터빈"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "zero emissions",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "무배출"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "be ashamed of",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "~을 부끄러워하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "be bored with",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "~에 지루해하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "be crowded with",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "~으로 붐비다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "be filled with",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "~으로 가득 차다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "be proud of",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "~을 자랑스러워하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "be satisfied with",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "~에 만족하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "be worried about",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "~에 대해 걱정하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "bring up a topic",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "화제를 꺼내다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "call off a meeting",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "회의를 취소하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "check out a book",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "책을 대출하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "come across",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "우연히 발견하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "count on",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "의지하다, 믿다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "cut down on",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "~을 줄이다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "do one's best",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "최선을 다하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "fall behind",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "뒤처지다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "fill out a form",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "서식을 작성하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "get along with",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "~와 잘 지내다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "get over a cold",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "감기를 이겨내다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "give up hope",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "희망을 포기하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "go through a process",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "과정을 거치다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "hold on a second",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "잠시만 기다리다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "keep up with",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "~을 따라잡다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "look forward to",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "~을 고대하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "make a decision",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "결정을 내리다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "take part in",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "~에 참가하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    }
+]

@@ -29,6 +29,7 @@ def on_study_answer(
     user_voca_id: Optional[int] = None,
     memory_state_after: Optional[str] = None,
     session_id=None,
+    fsrs_before: Optional[dict] = None,
 ) -> dict:
     """답안 1건을 게임 레이어(콤보 + 농장 + 연속 학습일)에 반영.
 
@@ -37,6 +38,10 @@ def on_study_answer(
 
     `session_id` 는 V2 가 요구한다 — 씨앗 구간의 '독립 정답' 판정(5.1)과
     세션 종료 요약(12.3)이 이벤트 로그의 세션 구분에 기대기 때문이다.
+
+    `fsrs_before` 는 이 답안을 반영하기 **전**의 FSRS 상태다. 호출 시점에는 학습 결과가
+    이미 커밋돼 있어 농장이 스스로 되짚을 수 없다 — 이걸 넘기지 않으면 진행 막대의
+    학습 전/후 값이 같아져 막대가 움직이지 않는다(answer.on_answer 주석 참고).
 
     Returns:
         {'combo': <combo payload|None>, 'farm': <farm payload|None>,
@@ -59,7 +64,7 @@ def on_study_answer(
     try:
         from app.services.game.farm_v2.answer import on_answer
         result['farm'] = on_answer(user_id, user_voca_id, bool(was_correct),
-                                   session_id=session_id)
+                                   session_id=session_id, fsrs_before=fsrs_before)
     except Exception:
         db.session.rollback()
         _log.warning('농장 반영 실패 (학습 저장은 정상)', exc_info=True)

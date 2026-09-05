@@ -538,11 +538,10 @@ export const TestSetupNewBottomSheet = ({ onCancel, onSet, maxVocabularyCount, v
         <motion.button
           className="
             flex-1
-            h-[45px]
-            rounded-[8px]
-            bg-layout-gray-200
-            text-layout-white dark:text-layout-black text-[16px] font-[700]
-          "
+            h-[52px]
+            rounded-[12px]
+            text-[16px] font-[700] tracking-[-0.03em]
+            border-[2px] border-border dark:border-border-dark bg-layout-white dark:bg-layout-black text-layout-gray-400 dark:text-layout-gray-100"
           onClick={() => {
             vibrate({ duration: 5 });
             onCancel || handleClose();
@@ -557,9 +556,9 @@ export const TestSetupNewBottomSheet = ({ onCancel, onSet, maxVocabularyCount, v
         <motion.button
           className={`
             flex-1
-            h-[45px]
-            rounded-[8px]
-            text-layout-white dark:text-layout-black text-[16px] font-[700]
+            h-[52px]
+            rounded-[12px]
+            text-layout-white dark:text-layout-black text-[16px] font-[700] tracking-[-0.03em]
             ${isStartDisabled ? 'bg-layout-gray-200 cursor-not-allowed' : 'bg-primary-main-600'}
           `}
           onClick={() => {

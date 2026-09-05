@@ -1,0 +1,398 @@
+[
+    {
+        "origin": "audit",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "회계 감사"
+            },
+            {
+                "pos": "v",
+                "text": "감사를 실시하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "bankruptcy",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "파산"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "collateral",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "담보"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "curb",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "억제하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "default",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "채무를 불이행하다"
+            },
+            {
+                "pos": "n",
+                "text": "채무 불이행"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "deteriorate",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "악화되다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "discrepancy",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "차이, 불일치"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "dividend",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "배당금"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "embezzlement",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "횡령"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "equity",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "보통주, 자기 자본"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "fiscal",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "회계의, 재무의"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "fluctuate",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "변동하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "foreclose",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "담보권을 행사하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "grossly",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "지독히, 현저하게"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "implicit",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "함축적인, 암시적인"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "insolvent",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "파산한"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "ledger",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "원장, 회계 장부"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "liable",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "법적 책임이 있는"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "lucrative",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "수익성이 좋은"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "monetary",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "통화의, 금전의"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "mortgagee",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "저당권자"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "offset",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "상쇄하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "outperform",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "~보다 실적이 좋다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "reconcile",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "(장부 등을) 일치시키다, 조정하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "remittance",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "송금"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "scrutinize",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "정밀 조사하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "solvent",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "지불 능력이 있는"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "speculate",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "투기하다, 추측하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "surplus",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "잉여금, 흑자"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "tangible",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "형태가 있는, 실질적인"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "unprecedented",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "전례 없는"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "yield",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "(수익 등을) 내다"
+            },
+            {
+                "pos": "n",
+                "text": "이윤, 산출량"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    }
+]

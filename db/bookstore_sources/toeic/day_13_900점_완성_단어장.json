@@ -1,0 +1,386 @@
+[
+    {
+        "origin": "at one's earliest convenience",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "가능한 빨리"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "displeasure",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "불쾌감"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "replacement for",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~의 후임자, ~의 대체물"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "take one's time",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "천천히 하다, 서두르지 않다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "unavailability",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "쓸모 없음, 무효"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "attentive",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "주의를 기울이는"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "courtesy",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "예의"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "defect",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "결함"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "faulty",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "결함이 있는"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "inquiry",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "문의, 질문"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "unsatisfactory",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "불만족스러운"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "aggravate",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "악화시키다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "appallingly",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "형편없이"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "be on the safe side",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "신중을 기하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "complimentary",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "무료의, 칭찬하는"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "condone",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "(죄·잘못을) 용납하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "desist from",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~을 그만두다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "disgruntle",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "기분 상하게 하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "empathetic",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "공감하는"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "flimsy",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "약하고 부서지기 쉬운"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "gratuitous",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "무료의, 불필요한"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "in retrospect",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "되돌아보면, 회상하면"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "inadvertently",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "부주의하게, 본의 아니게"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "leniently",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "관대하게"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "mishap",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "불행한 사건"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "nerve-racking",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "안절부절못하게 하는"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "perfunctory",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "형식적인"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "repulsive",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "불쾌한, 혐오스러운"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "resolute",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "단호한"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "take heed of",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~에 주의를 기울이다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "unbeknownst to",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~가 모르게"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "withstand",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "저항하다, 견디다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    }
+]

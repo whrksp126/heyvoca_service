@@ -4,10 +4,11 @@
 다시 심었을 때만 현재 단계가 `심은 씨앗`으로 돌아가고, 그때도 highest_stage 는 남는다.
 
 FSRS 에서 파생할 수 있는 것과 없는 것:
-    잎·당근  — stability 임계값만 보면 된다. 파생 가능.
-    씨앗·새싹 — `보유 씨앗`과 `심은 씨앗`은 FSRS 로 구분되지 않는다. 둘 다 unlearned/short
-               구간이고, 갈리는 건 "첫 독립 정답을 했는가"다. 그래서 저장한다.
-    황금     — 최근 복습 이력이 필요해 로그를 봐야 한다.
+    새싹·잎·당근 — 다음 복습 간격(= stability) 임계값만 보면 된다. 파생 가능.
+    씨앗        — `보유 씨앗`과 `심은 씨앗`은 FSRS 로 구분되지 않는다. 첫 정답의 간격은
+                 3일 남짓으로 고정이라 어떤 문턱도 두 상태를 가르지 못한다. 갈리는 건
+                 "첫 독립 정답을 했는가"이고, 그래서 저장한다.
+    황금        — 최근 복습 이력이 필요해 로그를 봐야 한다.
 """
 
 import datetime as dt
@@ -47,16 +48,17 @@ def _stability(fsrs_state: dict) -> float:
 
 
 def stage_from_stability(stability: float) -> Optional[str]:
-    """안정성만으로 정해지는 단계. 잎 미만이면 None — 씨앗/새싹은 저장값이 정한다.
+    """다음 복습 간격으로 정해지는 단계. 씨앗 구간이면 None — 심었는지는 저장값이 정한다.
 
-    임계값은 study.py 를 단일 소스로 읽는다. 두 곳에 같은 숫자를 적어 두면
-    한쪽만 조정됐을 때 화면의 단계와 추천 로직이 어긋난다.
+    임계값은 farm_v2/constants 가 단일 소스다. 화면이 `5일 이상`처럼 이 숫자를 그대로
+    적으므로, 값과 문구가 갈리지 않게 한곳에서만 정의한다.
     """
-    from app.routes.study import _STABILITY_SHORT, _STABILITY_MEDIUM
-    if stability >= _STABILITY_MEDIUM:
+    if stability >= C.STAGE_CARROT_DAYS:
         return VisualStage.CARROT
-    if stability >= _STABILITY_SHORT:
+    if stability >= C.STAGE_LEAF_DAYS:
         return VisualStage.LEAF
+    if stability >= C.STAGE_SPROUT_DAYS:
+        return VisualStage.SPROUT
     return None
 
 
@@ -82,30 +84,23 @@ def next_stage(game: UserVocaGame, fsrs_state: dict, now: dt.datetime,
     stability = _stability(fsrs_state)
     by_stability = stage_from_stability(stability)
 
-    # 잎·당근은 안정성만으로 결정된다 — 단, 내려가지 않는다
+    # 새싹·잎·당근은 다음 복습 간격만으로 결정된다 — 단, 내려가지 않는다
     if by_stability is not None:
         if VisualStage.rank(by_stability) > VisualStage.rank(current):
             return by_stability
         return None
 
-    # ── 여기부터는 씨앗 구간 ──
+    # ── 여기부터는 씨앗 구간(간격이 아직 새싹 문턱 아래) ──
     if current == VisualStage.UNPLANTED_SEED:
-        # 첫 독립 정답 = 씨앗 심기 + 첫 물주기 (5.1)
+        # 첫 독립 정답 = 씨앗 심기 + 첫 물주기 (5.1).
+        # 심기만은 간격이 아니라 "처음 맞혔는가"로 정해진다 — 첫 정답의 간격은
+        # 3일 남짓이라 어떤 문턱을 걸어도 심기와 발아를 가르지 못한다.
         return VisualStage.PLANTED_SEED if is_independent else None
 
-    if current == VisualStage.PLANTED_SEED:
-        if not is_independent:
-            return None
-        # 조건 2 — 심은 날보다 늦은 현지 학습일이어야 한다.
-        # 같은 날 여러 번 맞힌 것은 "시간이 지나도 기억함"의 증거가 아니다.
-        if game.planted_study_day is None or local_today <= game.planted_study_day:
-            return None
-        # 조건 3 — 첫 예정 복습 시각 이후여야 한다.
-        # 예정일보다 일찍 자율 학습해 맞힌 것도 증거로 치지 않는다.
-        if game.first_due_at is not None and now < game.first_due_at:
-            return None
-        return VisualStage.SPROUT
-
+    # 심은 씨앗은 간격이 새싹 문턱(C.STAGE_SPROUT_DAYS)을 넘을 때까지 그대로다.
+    # 예전에는 여기서 "심은 다음 학습일 + 첫 예정 복습 이후"라는 행동 조건으로 발아시켰는데,
+    # 화면에 적을 숫자가 없어 온보딩이 없는 기준을 지어내야 했다. 그 조건이 막으려던
+    # "같은 날 여러 번 맞혀 올라가기"는 간격이 이미 막는다 — 경과일이 0 이면 간격도 안 는다.
     return None
 
 

@@ -1,0 +1,866 @@
+[
+    {
+        "origin": "a brief hiatus",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "잠시 중단"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "after careful consideration",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "신중하게 고려한 후에"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "ahead of schedule",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "예정보다 앞서"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "around the world",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "전 세계에"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "assign tasks",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "업무를 할당하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "at all times",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "언제나"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "at your convenience",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "당신이 편할 때"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "award ceremony",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "시상식"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "be assigned to",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~로 배정되다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "be aware of",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~을 알고 있다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "be eligible for",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~할 자격이 있다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "be known for",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~으로 알려져 있다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "be responsible for",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~에 대해 책임이 있다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "beyond expectations",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "기대 이상으로"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "business expansion",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "사업 확장"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "call for proposals",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "제안 공모"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "closely linked",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "밀접하게 연결된"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "come to a decision",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "결정을 내리다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "confirm attendance",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "참석을 확인하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "contingency plan",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "비상 대책"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "corporate strategy",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "기업 전략"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "day-to-day operations",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "일상 업무"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "dedicated service",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "헌신적인 서비스"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "detailed information",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "상세 정보"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "due to a conflict",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "일정이 겹쳐서"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "early entry",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "조기 신청"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "economic impact",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "경제적 영향"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "entry form",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "참가 신청 서식"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "establish a presence",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "입지를 다지다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "expand the business",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "사업을 확장하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "finalists announced",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "결선 진출자 발표"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "following the merger",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "합병 이후에"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "for the first time",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "처음으로"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "highly successful",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "매우 성공적인"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "implement changes",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "변화를 실행하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "in association with",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~와 제휴하여"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "in response to",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~에 대한 대응으로"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "independent agency",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "독립 기관"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "informed decision",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "현명한 결정"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "invitation only",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "초대받은 사람만"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "join forces",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "힘을 합치다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "keep in mind",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~을 명심하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "latest news",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "최신 뉴스"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "local competition",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "지역 내 경쟁"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "make a contribution",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "공헌하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "market share",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "시장 점유율"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "national recognition",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "국가적 인정"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "on a regular basis",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "정기적으로"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "opening speech",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "개회사"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "original idea",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "독창적인 아이디어"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "overall growth",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "전체적인 성장"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "overdue task",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "기한이 넘은 업무"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "partially funded",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "일부가 지원된"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "pressing issue",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "긴급한 사안"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "prospective candidates",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "가망 있는 후보자들"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "provide support",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "지원을 제공하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "reach a goal",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "목표에 도달하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "regain access",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "접근 권한을 되찾다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "representative sample",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "표본 사례"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "run a business",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "사업을 운영하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "seek assistance",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "도움을 구하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "stay informed",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "계속해서 소식을 접하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "strategic partnership",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "전략적 파트너십"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "strictly confidential",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "극비인"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "submit a proposal",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "제안서를 제출하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "take the initiative",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "주도권을 잡다, 솔선수범하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "top priority",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "최우선 순위"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "unforeseen circumstances",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "예기치 못한 상황"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "valuable asset",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "귀중한 자산"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "widely used",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "널리 사용되는"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "within the company",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "회사 내에서"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "yearly competition",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "연간 공모전"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    }
+]

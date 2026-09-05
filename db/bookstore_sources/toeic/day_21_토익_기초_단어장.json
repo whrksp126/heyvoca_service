@@ -1,0 +1,338 @@
+[
+    {
+        "origin": "ability",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "능력"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "arrive",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "도착하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "base",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "기초, 토대"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "build",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "세우다, 짓다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "careful",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "주의 깊은"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "center",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "중심, 중앙"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "chance",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "기회; 우연"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "choose",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "선택하다, 뽑다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "collect",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "수집하다, 모으다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "common",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "공통의; 흔한"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "decide",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "결정하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "early",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "이른; adv. 일찍"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "famous",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "유명한"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "final",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "최종의, 마지막의"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "group",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "그룹, 단체"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "hiring",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "고용, 채용"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "increase",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "증가하다; n. 증가"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "join",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "~에 가입하다, 합류하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "leader",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "지도자, 대표"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "main",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "주요한"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "model",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "모델, 모형"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "open",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "열다; adj. 열린"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "over",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "prep",
+                "text": "~위에; ~을 넘어서"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "part",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "부분, 일부; 부품"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "simple",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "단순한"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "task",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "일, 과업"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "try",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "시도하다, 노력하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "world",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "세계, 세상"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    }
+]

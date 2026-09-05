@@ -81,7 +81,6 @@ def _bookstore_to_dict(bs):
         'color': bs.color,
         'gem': bs.gem,
         'hide': bs.hide,
-        'level': bs.level,
         'level_id': bs.level_id,
         'admin_voca_book_id': bs.admin_voca_book_id,
         'created_at': bs.created_at.isoformat() if bs.created_at else None,
@@ -581,7 +580,7 @@ def delete_word(book_id, map_id):
 # 7. POST /admin/voca-books/<book_id>/bookstore/toggle — 서점 등록 토글
 # ──────────────────────────────────────────────────────────
 
-_BOOKSTORE_REQUIRED_ON_CREATE = ('gem', 'category', 'level_id')
+_BOOKSTORE_REQUIRED_ON_CREATE = ('gem', 'category')
 
 
 @admin_voca_books_bp.route('/<int:book_id>/bookstore/toggle', methods=['POST'])
@@ -590,8 +589,8 @@ def toggle_bookstore(book_id):
     """단어장의 서점 노출 토글.
 
     - Bookstore 레코드가 없으면 신규 생성 (`hide='N'`).
-      body 필수: gem(int), category(str), level_id(int)
-      body 선택: name(기본 book_nm), downloads(기본 0), color, category_id, level
+      body 필수: gem(int), category(str)
+      body 선택: name(기본 book_nm), downloads(기본 0), color, category_id, level_id
     - 있으면 hide만 'N'↔'Y' 토글. (downloads/created_at 보존)
 
     응답: { code, data: {bookstore, action: 'created'|'shown'|'hidden'} }
@@ -615,7 +614,8 @@ def toggle_bookstore(book_id):
 
         try:
             gem = int(payload.get('gem'))
-            level_id = int(payload.get('level_id'))
+            raw_level_id = payload.get('level_id')
+            level_id = int(raw_level_id) if raw_level_id not in ('', None) else None
         except (TypeError, ValueError):
             return jsonify({'code': 400, 'message': 'gem/level_id는 정수여야 합니다.'}), 400
 
@@ -627,7 +627,6 @@ def toggle_bookstore(book_id):
         bs.color = payload.get('color') or None
         bs.gem = gem
         bs.hide = 'N'
-        bs.level = payload.get('level') or None
         bs.level_id = level_id
         bs.book_id = None
         bs.admin_voca_book_id = book_id
@@ -662,7 +661,7 @@ def toggle_bookstore(book_id):
 
 _EDITABLE_BOOKSTORE_FIELDS = {
     'name', 'downloads', 'category', 'category_id', 'color',
-    'gem', 'level', 'level_id',
+    'gem', 'level_id',
 }
 
 

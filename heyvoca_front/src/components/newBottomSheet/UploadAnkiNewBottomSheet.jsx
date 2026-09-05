@@ -517,7 +517,8 @@ export const UploadAnkiNewBottomSheet = () => {
           bg-gradient-to-b from-transparent to-layout-white dark:to-layout-black
         ">
           <motion.button
-            className="w-full h-[45px] rounded-[8px] bg-layout-gray-200 text-layout-white dark:text-layout-black text-[16px] font-[700] disabled:opacity-50"
+            className="w-full h-[52px] rounded-[12px] text-[16px] font-[700] tracking-[-0.03em] disabled:opacity-50
+            border-[2px] border-border dark:border-border-dark bg-layout-white dark:bg-layout-black text-layout-gray-400 dark:text-layout-gray-100"
             onClick={handleCancel}
             disabled={isUploadingPhase}
             whileTap={{ scale: 0.95 }}
@@ -667,14 +668,15 @@ export const UploadAnkiNewBottomSheet = () => {
           bg-gradient-to-b from-transparent to-layout-white dark:to-layout-black
         ">
           <motion.button
-            className="flex-1 h-[45px] rounded-[8px] bg-layout-gray-200 text-layout-white dark:text-layout-black text-[16px] font-[700]"
+            className="flex-1 h-[52px] rounded-[12px] text-[16px] font-[700] tracking-[-0.03em]
+            border-[2px] border-border dark:border-border-dark bg-layout-white dark:bg-layout-black text-layout-gray-400 dark:text-layout-gray-100"
             onClick={handleCancel}
             whileTap={{ scale: 0.95 }}
           >
             취소
           </motion.button>
           <motion.button
-            className="flex-1 h-[45px] rounded-[8px] bg-primary-main-600 text-layout-white dark:text-layout-black text-[16px] font-[700]"
+            className="flex-1 h-[52px] rounded-[12px] bg-primary-main-600 text-layout-white dark:text-layout-black text-[16px] font-[700] tracking-[-0.03em]"
             onClick={() => {
               vibrate({ duration: 5 });
               handleParse();
@@ -788,14 +790,15 @@ export const UploadAnkiNewBottomSheet = () => {
         bg-gradient-to-b from-transparent to-layout-white dark:to-layout-black
       ">
         <motion.button
-          className="flex-1 h-[45px] rounded-[8px] bg-layout-gray-200 text-layout-white dark:text-layout-black text-[16px] font-[700]"
+          className="flex-1 h-[52px] rounded-[12px] text-[16px] font-[700] tracking-[-0.03em]
+            border-[2px] border-border dark:border-border-dark bg-layout-white dark:bg-layout-black text-layout-gray-400 dark:text-layout-gray-100"
           onClick={handleCancel}
           whileTap={{ scale: 0.95 }}
         >
           이전
         </motion.button>
         <motion.button
-          className="flex-1 h-[45px] rounded-[8px] bg-primary-main-600 text-layout-white dark:text-layout-black text-[16px] font-[700]"
+          className="flex-1 h-[52px] rounded-[12px] bg-primary-main-600 text-layout-white dark:text-layout-black text-[16px] font-[700] tracking-[-0.03em]"
           onClick={() => {
             vibrate({ duration: 5 });
             handleUpload();

@@ -142,9 +142,9 @@ export const VocabularyManageNewBottomSheet = () => {
               key={item.id}
               className="
                 flex items-center justify-center gap-[8px]
-                w-full h-[45px] px-[15px]
+                w-full h-[52px] px-[15px]
                 bg-layout-white dark:bg-layout-black
-                border border--primary-main-600 border-solid rounded-[8px]
+                border border--primary-main-600 border-solid rounded-[12px]
                 transition-colors
               "
               onClick={item.onClick}

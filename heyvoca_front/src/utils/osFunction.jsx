@@ -127,43 +127,84 @@ if (typeof window !== 'undefined') {
   window.refreshUserToken = refreshUserToken;
 }
 
-// 웹 토스트 메시지 생성 함수
+/*
+  토스트 — 화면 아래에 잠깐 떴다 사라지는 알림.
+
+  【왜 웹에서 그리는가】 예전에는 앱(Android/iOS)에서 네이티브로 넘겨
+  `react-native-toast-message` 의 기본형(`type:'info'`)을 띄웠다. 그 기본형은 라이브러리가
+  들고 있는 파란 줄 + 흰 카드라 우리 디자인과 무관하고, 무엇보다 **다크 모드를 따르지 않아**
+  검은 화면 한가운데 흰 카드가 튀었다. 앱 쪽 스타일을 고치면 스토어 배포를 기다려야 하지만,
+  여기서 그리면 웹 배포만으로 두 플랫폼에 같이 반영되고 나머지 화면과 같은 토큰을 쓴다.
+
+  【형태】 상태 바(FarmStatusBar)와 같은 '떠 있는 작은 면' 규격이다 —
+  라이트는 흰 면 + 얇은 테두리 + 옅은 그림자, 다크는 #2E2E2E 면에 테두리·그림자 없음.
+  다크 여부는 만들 때 한 번 읽는다. 토스트는 2초짜리라 그 사이 테마가 바뀔 일이 없고,
+  layout 토큰(--layout-white/black)은 다크에서 값이 뒤집히지 않아 var 로는 잴 수 없다.
+*/
+
+const TOAST_ID = 'heyvoca-toast';
+const TOAST_HOLD_MS = 2000;
+const TOAST_IN_MS = 200;
+const TOAST_OUT_MS = 260;
+
 function createWebToast(message) {
-  // 간단한 웹 토스트 구현
+  if (typeof document === 'undefined') return;
+
+  // 이미 떠 있으면 갈아 끼운다 — 두 장이 겹치면 뒤엣것이 앞엣것을 가린다
+  const prev = document.getElementById(TOAST_ID);
+  if (prev) prev.remove();
+
+  const isDark = document.documentElement.classList.contains('dark');
+
   const toast = document.createElement('div');
+  toast.id = TOAST_ID;
+  toast.setAttribute('role', 'status');
+  toast.setAttribute('aria-live', 'polite');
   toast.textContent = message;
   toast.style.cssText = `
     position: fixed;
-    bottom: 20px;
     left: 50%;
-    transform: translateX(-50%);
-    background-color: rgba(0, 0, 0, 0.8);
-    color: white;
-    padding: 12px 24px;
-    border-radius: 8px;
-    z-index: 10000;
+    bottom: calc(var(--safe-area-bottom, 0px) + 88px);
+    max-width: calc(100% - 40px);
+    padding: 13px 18px;
+    border-radius: 14px;
+    background: ${isDark ? '#2E2E2E' : 'var(--layout-white)'};
+    color: ${isDark ? 'var(--layout-white)' : 'var(--layout-black)'};
+    /* border 토큰(#DDDDDD)은 tailwind.config 에 리터럴로만 있어 CSS 변수가 없다 —
+       같은 값인 --layout-gray-100 으로 잰다 */
+    border: ${isDark ? 'none' : '1px solid var(--layout-gray-100)'};
+    box-shadow: ${isDark ? 'none' : '0 6px 20px rgba(0,0,0,0.10)'};
     font-size: 14px;
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    line-height: 1.45;
+    text-align: center;
+    white-space: pre-line;
+    z-index: 10000;
     pointer-events: none;
+    opacity: 0;
+    transform: translate(-50%, 12px);
+    transition: opacity ${TOAST_IN_MS}ms ease-out, transform ${TOAST_IN_MS}ms ease-out;
   `;
   document.body.appendChild(toast);
 
+  // 다음 프레임에 등장시켜야 transition 이 걸린다(같은 프레임에 바꾸면 최종값으로 그냥 그려진다)
+  requestAnimationFrame(() => {
+    toast.style.opacity = '1';
+    toast.style.transform = 'translate(-50%, 0)';
+  });
+
   setTimeout(() => {
+    toast.style.transition = `opacity ${TOAST_OUT_MS}ms ease-in, transform ${TOAST_OUT_MS}ms ease-in`;
     toast.style.opacity = '0';
-    toast.style.transition = 'opacity 0.3s';
-    setTimeout(() => {
-      document.body.removeChild(toast);
-    }, 300);
-  }, 2000);
+    toast.style.transform = 'translate(-50%, 8px)';
+    setTimeout(() => toast.remove(), TOAST_OUT_MS);
+  }, TOAST_HOLD_MS);
 }
 
-// 토스트 메시지 표시 함수
+// 토스트 메시지 표시 함수 — 웹·앱 모두 위 웹 토스트로 그린다(네이티브 위임 없음)
 export async function showToast(message) {
-  if (getDevicePlatform() === 'web') {
-    createWebToast(message);
-  } else {
-    // Android/iOS에서는 WEBVIEW_API_MAP 사용
-    await window.ReactNativeWebView.postMessage(JSON.stringify({ 'type': 'showToast', 'props': { message: message } }));
-  }
+  createWebToast(message);
 }
 
 // 진동 함수

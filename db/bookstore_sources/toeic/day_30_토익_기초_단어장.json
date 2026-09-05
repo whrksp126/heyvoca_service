@@ -1,0 +1,334 @@
+[
+    {
+        "origin": "allergic",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "알레르기가 있는, 알레르기의"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "blind",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "눈이 먼"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "cavity",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "충치"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "cold",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "감기, 추위"
+            },
+            {
+                "pos": "adj",
+                "text": "추운"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "cosmetic",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "미용의, 화장의"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "feel sick",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "몸이 찌뿌드드하다, 메스껍다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "fitness",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "건강 상태"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "gym",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "체육관"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "have an injection",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "주사를 맞다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "medical facility",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "의료 시설"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "raincoat",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "비옷"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "surgery",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "수술"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "toothache",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "치통"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "treat",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "치료하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "vision",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "시력"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "workout",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "운동"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "beat",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "(심장·맥박이) 뛰다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "blink",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "눈을 깜빡이다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "cure",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "치료"
+            },
+            {
+                "pos": "v",
+                "text": "치료하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "disease",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "질병"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "healing",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "치료의"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "internal",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "내부의"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "lung",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "폐, 허파"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "organ",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "(신체) 기관"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "remedy",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "치료법, 의약"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "stomachache",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "복통"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "well-being",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "(건강과) 행복"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    }
+]

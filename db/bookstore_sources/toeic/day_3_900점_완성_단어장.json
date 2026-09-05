@@ -1,0 +1,386 @@
+[
+    {
+        "origin": "arrange items on the shelf",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "선반에 상품을 배열하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "call in sick",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "전화로 병결을 알리다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "cover one's shift",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~ 대신 근무하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "day-to-day operation",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "일상 업무"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "in line with",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~과 일치하여, ~에 따라"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "officiate",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "식을 진행하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "on hold",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "보류 중인, 통화 대기 중인"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "set down to work",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "일에 착수하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "stay awake",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "깨어 있다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "strew",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "흩뿌리다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "take the place of",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~을 대신하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "take turns",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "교대로 하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "behind schedule",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "일정이 늦은"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "condense",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "(표현을) 간추리다, 요약하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "follow up on",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~에 대해 후속 조치하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "in writing",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "서면으로"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "popularize",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "대중화하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "productively",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "생산적으로"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "sincerity",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "성실, 정직"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "utilization",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "이용, 활용"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "administrative",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "관리의, 행정상의"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "be affiliated with",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~과 제휴하고 있다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "conglomerate",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "거대 복합 기업"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "default",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "태만, 불이행"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "impending",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "임박한, 절박한"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "proponent",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "지지자, 옹호자"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "proprietor",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "(상점·토지 등의) 소유자"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "site inspection",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "현지 시찰"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "subordinate",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "부하 직원, 하급자"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "subsidiary",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "자회사"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "take initiative",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "솔선해서 하다, 주도권을 잡다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "telecommute",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "재택근무하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    }
+]

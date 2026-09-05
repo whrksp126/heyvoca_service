@@ -1,0 +1,821 @@
+[
+    {
+        "origin": "completely",
+        "pronunciations": {
+            "us": "kəmplíːtli"
+        },
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "전적으로, 완전히"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "The grand opening of the new department store was <strong class=\"target-word\">completely</strong> successful.",
+                "meaning": "새 백화점의 개업식은 전적으로 성공적이었다."
+            }
+        ]
+    },
+    {
+        "origin": "refuse",
+        "pronunciations": {
+            "us": "rifjúːz"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "거절하다"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "The CEO <strong class=\"target-word\">refused</strong> to comment on the possibility of a merger.",
+                "meaning": "최고 경영자는 합병 가능성에 대한 언급을 거절했다."
+            }
+        ]
+    },
+    {
+        "origin": "temporarily",
+        "pronunciations": {
+            "us": "tèmpərérəli",
+            "uk": "tèmpərərili"
+        },
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "일시적으로"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "The shop is <strong class=\"target-word\">temporarily</strong> closed for renovations.",
+                "meaning": "그 상점은 수리를 위해 일시적으로 문을 닫았다."
+            }
+        ]
+    },
+    {
+        "origin": "dealer",
+        "pronunciations": {
+            "us": "díːlər"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "판매업자, 상인"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "We are the leading <strong class=\"target-word\">dealer</strong> of consumer electronics in the country.",
+                "meaning": "우리는 국내의 주요 전자 제품 판매업체이다."
+            }
+        ]
+    },
+    {
+        "origin": "bulk",
+        "pronunciations": {
+            "us": "bʌlk"
+        },
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "대량의"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "You will get a discount if you buy the goods in <strong class=\"target-word\">bulk</strong>.",
+                "meaning": "대량으로 물건을 구매하면 할인을 받을 것이다."
+            }
+        ]
+    },
+    {
+        "origin": "inventory",
+        "pronunciations": {
+            "us": "ínvəntɔ̀ːri",
+            "uk": "ínvəntri"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "재고품, 재고 목록"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "The manager is doing an <strong class=\"target-word\">inventory</strong> of the current stock.",
+                "meaning": "관리자는 현재의 재고 목록을 작성하고 있다."
+            }
+        ]
+    },
+    {
+        "origin": "short",
+        "pronunciations": {
+            "us": "ʃɔːrt"
+        },
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "부족한"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "The promotion had to be canceled because we were <strong class=\"target-word\">short</strong> of staff.",
+                "meaning": "직원이 부족했기 때문에 판촉 행사는 취소되어야만 했다."
+            }
+        ]
+    },
+    {
+        "origin": "cost",
+        "pronunciations": {
+            "us": "kɔːst"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "비용"
+            },
+            {
+                "pos": "v",
+                "text": "(비용이) 들다"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "What is the total <strong class=\"target-word\">cost</strong> of the advertising campaign?",
+                "meaning": "광고 캠페인의 총 비용은 얼마입니까?"
+            }
+        ]
+    },
+    {
+        "origin": "selection",
+        "pronunciations": {
+            "us": "silékʃən"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "선택된 것, 정선품"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "The shop offers a wide <strong class=\"target-word\">selection</strong> of designer clothing.",
+                "meaning": "그 상점은 다양하게 엄선된 디자이너 의류를 제공한다."
+            }
+        ]
+    },
+    {
+        "origin": "commercial",
+        "pronunciations": {
+            "us": "kəmə́ːrʃəl",
+            "uk": "kəmə́ːʃəl"
+        },
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "상업의, 상업적인"
+            },
+            {
+                "pos": "n",
+                "text": "광고"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "The <strong class=\"target-word\">commercial</strong> will be aired during the evening news.",
+                "meaning": "그 광고는 저녁 뉴스 중에 방송될 것이다."
+            }
+        ]
+    },
+    {
+        "origin": "order",
+        "pronunciations": {
+            "us": "ɔːrdər",
+            "uk": "ɔːdə"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "주문하다"
+            },
+            {
+                "pos": "n",
+                "text": "주문, 주문품"
+            }
+        ],
+        "notes": "The secretary <strong class=\"target-word\">ordered</strong> supplies from the main office.<br>그 비서는 본사로부터 비품을 주문했다.<br>InterCore places regular <strong class=\"target-word\">orders</strong> for microchips from Compucation.<br>InterCore사는 Compucation사에서 마이크로칩을 정기적으로 주문한다.",
+        "examples": []
+    },
+    {
+        "origin": "provide",
+        "pronunciations": {
+            "us": "prəváid"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "공급하다, 제공하다"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "We <strong class=\"target-word\">provide</strong> our customers with high quality products.",
+                "meaning": "우리는 고객에게 고품질의 제품을 제공한다."
+            }
+        ]
+    },
+    {
+        "origin": "contact",
+        "pronunciations": {
+            "us": "kάntækt",
+            "uk": "kɔ́ntækt"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "~와 연락하다"
+            },
+            {
+                "pos": "n",
+                "text": "(상업적 목적으로) 교섭하고 있는 사람"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "The advertisement <strong class=\"target-word\">contacted</strong> thousands of potential customers.",
+                "meaning": "그 광고는 수천 명의 잠재 고객들에게 닿았다."
+            }
+        ]
+    },
+    {
+        "origin": "invoice",
+        "pronunciations": {
+            "us": "ínvɔis"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "송장"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "Please pay the <strong class=\"target-word\">invoice</strong> by the end of the month.",
+                "meaning": "월말까지 송장 금액을 지불해 주세요."
+            }
+        ]
+    },
+    {
+        "origin": "move",
+        "pronunciations": {
+            "us": "muːv"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "옮기다, 움직이다"
+            },
+            {
+                "pos": "n",
+                "text": "조치, 수단; 이동, 이사"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "The <strong class=\"target-word\">move</strong> to a new location was a major step for the company.",
+                "meaning": "새로운 장소로의 이동은 그 회사에 중요한 단계였다."
+            }
+        ]
+    },
+    {
+        "origin": "supply",
+        "pronunciations": {
+            "us": "səplái"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "공급하다"
+            },
+            {
+                "pos": "n",
+                "text": "공급; (-s) 비품, 소모품"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "The <strong class=\"target-word\">supply</strong> of clean water is essential for human health.",
+                "meaning": "깨끗한 물의 공급은 인류 건강에 필수적이다."
+            }
+        ]
+    },
+    {
+        "origin": "discount",
+        "pronunciations": {
+            "us": "dískaut"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "할인"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "We offer a 10% <strong class=\"target-word\">discount</strong> to all members.",
+                "meaning": "우리는 모든 회원에게 10% 할인을 해 드립니다."
+            }
+        ]
+    },
+    {
+        "origin": "distribute",
+        "pronunciations": {
+            "us": "distríbjuːt"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "배포하다, 배급하다"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "The flyers were <strong class=\"target-word\">distributed</strong> to the local neighborhood.",
+                "meaning": "전단지가 인근 지역에 배포되었다."
+            }
+        ]
+    },
+    {
+        "origin": "acquisition",
+        "pronunciations": {
+            "us": "ӕkwizíʃən",
+            "uk": "ӕkwizíʃən"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "인수; 구입한 것"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "The <strong class=\"target-word\">acquisition</strong> of the new company will be finalized next week.",
+                "meaning": "그 새로운 회사의 인수는 다음 주에 마무리될 것이다."
+            }
+        ]
+    },
+    {
+        "origin": "assure",
+        "pronunciations": {
+            "us": "əʃúər"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "~에게 보장하다, ~을 안심시키다, 장담하다"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "I can <strong class=\"target-word\">assure</strong> you that the quality of the product is excellent.",
+                "meaning": "제품의 품질이 아주 우수하다는 것을 당신에게 보장할 수 있다."
+            }
+        ]
+    },
+    {
+        "origin": "subject",
+        "pronunciations": {
+            "us": "səbdʒékt"
+        },
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "~의 영향을 받기 쉬운; (동의 등을) 조건으로 하는"
+            },
+            {
+                "pos": "v",
+                "text": "~에게 (~을) 받게 하다"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "All prices are <strong class=\"target-word\">subject</strong> to change without prior notice.",
+                "meaning": "모든 가격은 사전 통보 없이 변경될 수 있다."
+            }
+        ]
+    },
+    {
+        "origin": "seek",
+        "pronunciations": {
+            "us": "siːk"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "구하다, 찾다"
+            }
+        ],
+        "notes": "Fenway Bank is <strong class=\"target-word\">seeking</strong> a new manager for its Phoenix branch.<br>Fenway 은행은 피닉스 지점의 새로운 지점장을 구하고 있다.",
+        "examples": []
+    },
+    {
+        "origin": "satisfactory",
+        "pronunciations": {
+            "us": "sӕtisfӕktəri"
+        },
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "만족스러운"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "We hope to reach a <strong class=\"target-word\">satisfactory</strong> settlement for both parties.",
+                "meaning": "우리는 양측 모두에게 만족스러운 합의에 도달하기를 바란다."
+            }
+        ]
+    },
+    {
+        "origin": "confirmation",
+        "pronunciations": {
+            "us": "kὰnfərméiʃən",
+            "uk": "kɔ̀nfəméiʃən"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "확인, 확증"
+            }
+        ],
+        "notes": "Please submit written <strong class=\"target-word\">confirmation</strong> of the subscription cancellation.<br>구독 취소에 대한 서면 확인서를 제출해 주세요.",
+        "examples": [
+            {
+                "origin": "confirm v. 확인하다",
+                "meaning": ""
+            },
+            {
+                "origin": "confirmation of",
+                "meaning": "~에 대한 확인"
+            }
+        ]
+    },
+    {
+        "origin": "unable",
+        "pronunciations": {
+            "us": "ʌnéibl"
+        },
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "~할 수 없는"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "The shop was <strong class=\"target-word\">unable</strong> to fulfill the order due to a power outage.",
+                "meaning": "그 상점은 정전 때문에 주문을 처리할 수 없었다."
+            }
+        ]
+    },
+    {
+        "origin": "payment",
+        "pronunciations": {
+            "us": "péimənt"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "지불 (금액), 납입 (금액)"
+            }
+        ],
+        "notes": "Once <strong class=\"target-word\">payment</strong> has been received, the books will be delivered.<br>일단 지불 금액을 받으면, 책들이 배달될 것입니다.",
+        "examples": []
+    },
+    {
+        "origin": "measure",
+        "pronunciations": {
+            "us": "méʒər"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "대책, 조치, 수단"
+            },
+            {
+                "pos": "v",
+                "text": "측정하다"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "New security <strong class=\"target-word\">measures</strong> were introduced at the mall.",
+                "meaning": "쇼핑몰에 새로운 보안 조치가 도입되었다."
+            }
+        ]
+    },
+    {
+        "origin": "bargain",
+        "pronunciations": {
+            "us": "bάːrɡin",
+            "uk": "bάːɡin"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "특가품, 흥정"
+            }
+        ],
+        "notes": "Stores offer many great <strong class=\"target-word\">bargains</strong> at the end of the year.<br>상점들은 연말에 좋은 특가품들을 많이 제공한다.",
+        "examples": [
+            {
+                "origin": "deal",
+                "meaning": "거래"
+            }
+        ]
+    },
+    {
+        "origin": "stock",
+        "pronunciations": {
+            "us": "stάk",
+            "uk": "stɔk"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "재고; 주식"
+            },
+            {
+                "pos": "v",
+                "text": "저장하다"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "The manager decided to <strong class=\"target-word\">stock</strong> a new range of products.",
+                "meaning": "관리자는 새로운 종류의 제품을 갖추어 놓기로 결정했다."
+            }
+        ]
+    },
+    {
+        "origin": "affordability",
+        "pronunciations": {
+            "us": "əfɔ̀ːrdəbíləti",
+            "uk": "əfɔ̀ːdəbíləti"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "감당할 수 있는 비용"
+            }
+        ],
+        "notes": "Consumers are most concerned about the <strong class=\"target-word\">affordability</strong> of groceries.<br>소비자들은 식료품이 감당할 수 있는 비용인지에 대해 가장 걱정한다.",
+        "examples": [
+            {
+                "origin": "affordable adj. (가격이) 알맞은",
+                "meaning": ""
+            }
+        ]
+    },
+    {
+        "origin": "clientele",
+        "pronunciations": {
+            "us": "klàiəntél",
+            "uk": "klìːɔntél"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "(집합적) 고객들, (변호사·건축가 등의) 모든 의뢰인"
+            }
+        ],
+        "notes": "The wealthiest <strong class=\"target-word\">clientele</strong> usually shops in luxury stores.<br>가장 부유한 고객들은 보통 명품 매장에서 쇼핑한다.",
+        "examples": []
+    },
+    {
+        "origin": "acclaim",
+        "pronunciations": {
+            "us": "əkléim"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "호평, 찬사"
+            }
+        ],
+        "notes": "Ms. Song's novel won critical <strong class=\"target-word\">acclaim</strong>, and a studio soon purchased the movie rights.<br>Ms. Song의 소설은 비평가들의 호평을 얻었고, 한 영화사에서 곧 영화 판권을 구입했다.",
+        "examples": [
+            {
+                "origin": "acclaimed adj. 호평을 받은",
+                "meaning": ""
+            },
+            {
+                "origin": "praise",
+                "meaning": "찬사, 찬양"
+            }
+        ]
+    },
+    {
+        "origin": "represent",
+        "pronunciations": {
+            "us": "rèprizént"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "~을 대표하다"
+            }
+        ],
+        "notes": "Rounders Properties is looking for an agent to <strong class=\"target-word\">represent</strong> the firm in Europe.<br>Rounders Properties사는 유럽에서 회사를 대표할 대리인을 찾고 있다.",
+        "examples": [
+            {
+                "origin": "representation n. 대표",
+                "meaning": ""
+            },
+            {
+                "origin": "representative n. 대표자",
+                "meaning": ""
+            },
+            {
+                "origin": "speak for",
+                "meaning": "대변하다"
+            }
+        ]
+    },
+    {
+        "origin": "rating",
+        "pronunciations": {
+            "us": "réitiŋ"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "등급, 평가"
+            }
+        ],
+        "notes": "The Coolmax air conditioner has the highest energy efficiency <strong class=\"target-word\">rating</strong>.<br>Coolmax 에어컨은 가장 높은 에너지 효율 등급을 받았다.",
+        "examples": []
+    },
+    {
+        "origin": "encompass",
+        "pronunciations": {
+            "us": "inkʌ́mpəs"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "포함하다, 둘러싸다"
+            }
+        ],
+        "notes": "Techtronic's product range <strong class=\"target-word\">encompasses</strong> all kinds of electrical goods.<br>Techtronic사의 상품은 모든 종류의 전자 제품을 포함한다.",
+        "examples": []
+    },
+    {
+        "origin": "finalize",
+        "pronunciations": {
+            "us": "fáinəlàiz"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "마무리 짓다, 완결하다"
+            }
+        ],
+        "notes": "Once Bertram Inc. <strong class=\"target-word\">finalizes</strong> the contract, they will begin manufacturing the products.<br>Bertram사가 계약을 마무리 지으면, 제품 생산을 시작할 것이다.",
+        "examples": []
+    },
+    {
+        "origin": "market",
+        "pronunciations": {
+            "us": "mάːrkit",
+            "uk": "mάːkit"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "시장"
+            },
+            {
+                "pos": "v",
+                "text": "(상품을) 시장에 내놓다"
+            }
+        ],
+        "notes": "Joyful-Cleanse is the best dish detergent on the <strong class=\"target-word\">market</strong>.<br>Joyful-Cleanse는 시장에 나와 있는 가장 좋은 설거지 세제이다.",
+        "examples": []
+    },
+    {
+        "origin": "retail",
+        "pronunciations": {
+            "us": "ríːteil"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "소매"
+            }
+        ],
+        "notes": "Online shops are more popular than most <strong class=\"target-word\">retail</strong> stores nowadays.<br>온라인 쇼핑몰들은 요즘 대부분의 소매점들보다 더 인기 있다.",
+        "examples": [
+            {
+                "origin": "retailer n. 소매 상인",
+                "meaning": ""
+            },
+            {
+                "origin": "wholesale",
+                "meaning": "도매"
+            }
+        ]
+    },
+    {
+        "origin": "commodity",
+        "pronunciations": {
+            "us": "kəmάdəti",
+            "uk": "kəmɔ́dəti"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "상품, 산물"
+            }
+        ],
+        "notes": "Export opportunities are opening up in the agricultural <strong class=\"target-word\">commodities</strong> sector.<br>농산물 부문에서의 수출 기회가 열리고 있다.",
+        "examples": []
+    },
+    {
+        "origin": "quote",
+        "pronunciations": {
+            "us": "kwout"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "견적(액)"
+            },
+            {
+                "pos": "v",
+                "text": "견적을 내다; 인용하다, 예시를 들다"
+            }
+        ],
+        "notes": "The customer requested a price <strong class=\"target-word\">quote</strong> on the merchandise.<br>고객은 그 상품에 대한 가격 견적을 요구했다.<br>The landscaper <strong class=\"target-word\">quoted</strong> a much higher price than expected.<br>그 정원사는 예상했던 것보다 훨씬 더 높은 가격으로 견적을 냈다.",
+        "examples": [
+            {
+                "origin": "estimate",
+                "meaning": "견적"
+            },
+            {
+                "origin": "price quote",
+                "meaning": "가격 견적"
+            },
+            {
+                "origin": "custom quote",
+                "meaning": "주문 견적"
+            }
+        ]
+    },
+    {
+        "origin": "consignment",
+        "pronunciations": {
+            "us": "kənsáinmənt"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "위탁 판매"
+            }
+        ],
+        "notes": "The dealer only sells on <strong class=\"target-word\">consignment</strong>.<br>그 판매업자는 위탁 판매만 한다.",
+        "examples": [
+            {
+                "origin": "consign v. 위탁하다",
+                "meaning": ""
+            }
+        ]
+    }
+]

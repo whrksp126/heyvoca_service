@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { EggCrack, Leaf, Plant, Carrot, ArrowUp, ArrowDown } from '@phosphor-icons/react';
+import { STABILITY_LEAF_DAYS, STABILITY_CARROT_DAYS } from '../../utils/common';
 
 // 암기 상태(FSRS 기반) 공용 아이콘/색상/랭크 맵.
 // 사지선다(components/takeTest/Main.jsx)와 카드맞추기(plugins/questionTypes/cardMatch/*)에서 공용으로 사용.
@@ -20,10 +21,11 @@ export const MEMORY_STATE_COLOR_MAP = {
 export const MEMORY_STATE_RANK = { unlearned: 0, leaf: 1, plant: 2, carrot: 3 };
 
 // stability 기반 암기 상태 키(FSRS) — 사지선다/카드맞추기 공용 판정 로직
+// 경계는 common.jsx 가 단일 소스 — 여기에 숫자를 다시 적으면 배지와 밭이 갈린다.
 export const getMemoryStateKeyByStability = (stability, state) => {
   if (!state || state === 'new') return 'unlearned';
-  if (stability < 10) return 'leaf';
-  if (stability < 60) return 'plant';
+  if (stability < STABILITY_LEAF_DAYS) return 'leaf';
+  if (stability < STABILITY_CARROT_DAYS) return 'plant';
   return 'carrot';
 };
 

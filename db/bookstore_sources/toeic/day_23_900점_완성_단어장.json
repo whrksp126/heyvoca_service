@@ -1,0 +1,386 @@
+[
+    {
+        "origin": "get reimbursed for",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~을 환급받다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "hearty",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "마음에서 우러난, (음식의 양이) 풍부한"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "kindhearted",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "친절한"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "knock off",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "업무를 마치다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "maternity leave",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "출산 휴가"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "misuse",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "오용, 악용"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "nursery",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "유아원, 놀이방, 보육"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "nursing",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "간호, 간호학"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "chronological",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "시간순의, 연대순의"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "exhibitor",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "(전시회의) 출품자"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "flatter",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "아첨하다, 듣기 좋은 칭찬을 하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "give in",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "굴복하다, 양보하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "second",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "찬성하다, 지지하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "citation",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "인용구, 인용, 표창장"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "commemorate",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "기념하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "conjunction",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "연합, 공동"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "cut benefits",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "복리 후생을 줄이다, 수당을 줄이다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "discriminate",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "차별하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "distort",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "왜곡하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "flextime",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "자율 근무 시간제"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "fringe benefits",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "부가 급부"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "goodwill",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "호의"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "labor costs",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "인건비"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "labor dispute",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "노동 쟁의, 노사 분규"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "off-peak",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "한산할 때의, 비수기의"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "pique",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "화, 불쾌, 불쾌감"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "sabotage",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "(고의적인) 방해 행위"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "salary review",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "연봉 심사"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "severance pay",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "퇴직금"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "spry",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "기운찬, 활발한"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "straightforward",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "정직한, 간단한"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "yearn",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "열망하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    }
+]

@@ -1,0 +1,390 @@
+[
+    {
+        "origin": "astute",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "기민한"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "bring along",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~를 데리고 가다, ~을 갖고 가다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "compartment",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "구획, 칸막이"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "give way to",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~에게 양보하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "overwork",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "과로"
+            },
+            {
+                "pos": "v",
+                "text": "과로하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "put down",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~을 내려놓다, ~을 적다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "reach the solution",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "해결하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "recharge",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "재충전하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "smock",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "기다란 셔츠, 작업복"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "accessibility",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "접근 가능성"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "coordinator",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "조정자"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "customary",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "통상적인"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "disrupt",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "방해하다, 중단시키다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "elevate",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "승진시키다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "formality",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "형식상의 절차, 형식적인 일"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "restraint",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "억제, 금지"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "sign out",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "서명하여 외출을 기록하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "undeniable",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "부인할 수 없는"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "violation",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "위반, 위배"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "aggravate",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "악화시키다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "contingency",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "불의의 사태, 뜻밖의 일"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "draw the line at",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~에 선을 긋다, ~ 이상은 하지 않다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "draw up",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "(문서를) 작성하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "evacuate",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "(집·장소에서) 대피하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "in commemoration of",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~을 기념하여"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "on probation",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "견습으로"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "overestimate",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "과대평가하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "privilege",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "특권, 특전"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "restructure",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "구조조정을 하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "segregate A from B",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "A를 B로부터 분리하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "trigger",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "야기하다, 유발하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "wary of",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~을 조심하는"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    }
+]

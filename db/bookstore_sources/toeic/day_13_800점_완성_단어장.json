@@ -1,0 +1,886 @@
+[
+    {
+        "origin": "a loaf of",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "한 덩어리의"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "affair",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "일, 사건"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "aisle",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "(좌석 열·진열대 사이의) 통로"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "annoy",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "짜증 나게 하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "at no charge (=at no cost)",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "무료로"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "at no extra charge",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "추가 비용 없이"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "be on another call",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "다른 전화를 받고 있다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "ceremonial",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "의식의, 예식의"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "for your own safety",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "여러분 자신의 안전을 위해"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "follow-up",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "후속의, 추가의"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "get a replacement",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "교환 받다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "handheld",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "휴대용의"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "head toward",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~쪽으로 향하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "hold the line",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "(전화를) 끊지 않고 기다리다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "just to make sure",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "확실히 해두기 위해"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "leftover",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "남은"
+            },
+            {
+                "pos": "n",
+                "text": "남은 음식"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "look through the manual",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "사용 설명서를 읽다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "on delivery",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "배달 시에"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "pharmacist",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "약사"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "potential customer",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "잠재적 고객"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "prepaid",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "선불된, 선납된"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "questionnaire",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "설문지"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "recall",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "(결함 제품을) 회수하다"
+            },
+            {
+                "pos": "n",
+                "text": "회수"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "return a phone call",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "회답 전화를 하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "ridiculously",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "터무니없이"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "take back",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "반품하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "troubleshoot",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "(문제를) 해결하다, (고장난 것을) 검사하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "tune",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "조율하다, 음을 맞추다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "wardrobe",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "옷장"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "water-resistant",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "내수성의, 물이 잘 스며들지 않는"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "adverse",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "불리한"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "argument",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "논의, 토론, 말다툼, 언쟁"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "as requested",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "요청한 대로"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "briefly",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "잠시, 간단히"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "carefully",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "주의 깊게"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "circumstance",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "상황, 정황"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "conflict",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "갈등, 충돌"
+            },
+            {
+                "pos": "v",
+                "text": "대립하다, 충돌하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "enthusiastic",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "열광적인"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "eventually",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "결국"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "frequent",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "빈번한, 잦은"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "guilt",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "유죄, 죄책감"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "instruction",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "설명, 지시"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "neutral",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "중립적인"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "obvious",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "명백한"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "patience",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "인내"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "perfectly",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "완벽하게"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "properly",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "제대로, 적절하게"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "refill",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "다시 채우다"
+            },
+            {
+                "pos": "n",
+                "text": "리필, 다시 채우기"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "regret",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "후회하다"
+            },
+            {
+                "pos": "n",
+                "text": "후회, 유감"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "unpleasant",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "불쾌한"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "all-out",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "전면적인, 총력을 기울인"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "be appreciative of",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~을 고맙게 여기다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "call back",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "다시 전화하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "come by",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~을 얻다, 잠깐 들르다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "cooperate",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "협력하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "credit",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "신용, 외상, 신용도"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "delighted",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "기쁜, 즐거운"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "displeased",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "불쾌한, 화난"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "enraged",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "격분한"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "evidently",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "분명히, 명백히"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "get back to",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~에게 연락하다, ~로 돌아가다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "it appears that",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~로 보인다, ~인 듯하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "mark down",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "가격을 인하하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "over",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "prep",
+                "text": "~보다 많이"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "personalize",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "(이름을 적어 넣는 등) 개인의 것으로 만들다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "point out",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "지적하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "refrain from",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~을 자제하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "regularly",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "정기적으로"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "scent",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "향기"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "take A for granted",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "A를 당연하게 여기다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "trustworthy",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "신뢰할 수 있는"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "waive",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "(권리 따위를) 포기하다, (규칙 등을) 적용하지 않다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    }
+]

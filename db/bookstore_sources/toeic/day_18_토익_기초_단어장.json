@@ -1,0 +1,338 @@
+[
+    {
+        "origin": "area",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "구역, 지역"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "arrival",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "도착"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "away",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "떨어져서"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "bed",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "침대"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "breakfast",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "아침 식사"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "choose",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "선택하다, 고르다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "clean",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "깨끗한; v. 청소하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "culture",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "문화"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "delayed",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "지연된, 연기된"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "dinner",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "저녁 식사"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "double room",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "2인용 방"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "famous",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "유명한"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "finish",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "끝내다, 마치다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "guide",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "안내(원), 가이드; v. 안내하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "history",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "역사"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "hotel",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "호텔"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "including",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "prep",
+                "text": "~을 포함하여"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "inside",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "prep",
+                "text": "~ 안에"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "lunch",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "점심 식사"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "main",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "주요한"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "noisy",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "시끄러운"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "popular",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "인기 있는"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "quiet",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "조용한"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "show",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "보여주다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "stay",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "머무르다, 숙박하다; n. 체류"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "tour",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "여행, 견학; v. 관광하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "travel",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "여행하다; n. 여행"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "wait",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "기다리다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    }
+]

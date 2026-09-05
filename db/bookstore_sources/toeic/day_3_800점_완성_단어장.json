@@ -1,0 +1,826 @@
+[
+    {
+        "origin": "adjust the mirror",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "거울을 똑바로 맞추다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "advance reservation",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "사전 예약"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "arrange an appointment",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "약속을 잡다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "bulletin board",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "게시판"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "call back",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "회신 전화하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "confused",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "혼란스러운, 당황한"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "errand",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "심부름"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "extend an invitation",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "초대하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "get a permit",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "허가를 받다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "hand in",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "제출하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "have a day off",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "하루 쉬다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "have a long day",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "힘든 하루를 보내다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "head up",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "이끌다, 책임지다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "in a hurry",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "서둘러, 급히"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "in alphabetical order",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "알파벳 순으로"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "in luck",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "운이 좋은"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "leave A up to B",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "A를 B에게 맡기다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "leave A with B",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "A를 B에게 맡기다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "listing",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "목록"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "make a call",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "전화를 걸다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "make a correction",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "정정하다, 수정하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "make a final change",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "최종 수정을 하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "make a note of",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~을 적어 두다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "make an impression",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "인상을 주다, 감동시키다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "move ahead with",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~을 순조롭게 진행시키다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "on a business trip",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "출장 중인"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "on a weekly basis",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "주 단위로"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "on business",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "업무차"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "on duty",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "근무 중인"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "pick up the phone",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "전화를 받다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "scrub",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "문질러 씻다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "seal",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "인장, 봉함"
+            },
+            {
+                "pos": "v",
+                "text": "밀봉하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "speak into the microphone",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "마이크에 대고 말하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "speak on the phone",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "통화하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "stand in a line",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "줄을 서 있다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "take a message",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "메시지를 남겨 주다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "take apart",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "분해하다, 해체하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "utility provider",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "공공 설비 공급자"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "acquired",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "획득한"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "adapt",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "적응하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "administer",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "관리하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "clerical",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "사무원의, 서기의"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "conclusive",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "결정적인, 단호한"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "delete",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "삭제하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "editorial",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "편집자의, 사설의"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "endless",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "끝이 없는, 영원히 계속하는"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "furthermore",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "더욱이, 게다가"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "in one's absence",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~의 부재 시에"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "on purpose",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "고의로, 일부러"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "overseas",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "해외의"
+            },
+            {
+                "pos": "adv",
+                "text": "해외로"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "perceive",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "지각하다, 인지하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "reminder",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "생각나게 하는 것"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "roughly",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "대략, 거의"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "strive",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "분투하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "translate",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "번역하다, 통역하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "boardroom",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "회의실"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "in person",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "몸소, 직접"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "including",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "prep",
+                "text": "~을 포함하여"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "on time",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "정각에"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "panic",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "당황, 공황"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "past due",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "연체된, 미납된"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "put forward",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "앞당기다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "regard A as B",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "A를 B로 여기다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "return one's call",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~에게 답신 전화를 하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "secretarial",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "비서의"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "take charge of",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~을 담당하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "take on responsibility",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "책임을 지다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "throw one's effort into",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~에 온 힘을 쏟다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    }
+]

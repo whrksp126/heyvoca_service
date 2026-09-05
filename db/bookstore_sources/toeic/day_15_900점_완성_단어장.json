@@ -1,0 +1,386 @@
+[
+    {
+        "origin": "alternative energy",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "대체 에너지"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "exhaust fumes",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "배기가스"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "hazardous waste",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "유해 폐기물"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "public transportation",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "대중교통"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "atmosphere",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "대기, 분위기"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "congestion",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "혼잡"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "ecology",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "생태계"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "penalty",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "벌금"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "proximity",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "가까움"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "resource",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "자원"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "sustainable",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "지속 가능한"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "urban",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "도시의"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "be aware of",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~을 알고 있다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "be crowded with",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~로 붐비다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "carpool",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "함께 차를 타다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "conservatory",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "온실; 예술 학교"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "dispose of",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~을 처분하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "environmental awareness",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "환경 의식"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "get to work",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "직장에 가다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "heavy traffic",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "심한 교통 정체"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "instead of",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~ 대신에"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "natural habitat",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "천연 서식지"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "on a regular basis",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "정기적으로"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "parking permit",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "주차 허가증"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "rush hour",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "교통 혼잡 시간대"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "shortcut",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "지름길"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "toxic waste",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "유독 폐기물"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "unlimited access",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "무제한 입장"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "vehicle",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "탈것, 차량"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "vital",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "중요한"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "waste disposal",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "쓰레기 처리"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "withstand",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "견디다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    }
+]

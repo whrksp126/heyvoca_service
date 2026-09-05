@@ -1,0 +1,386 @@
+[
+    {
+        "origin": "accordance",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "일치, 부합"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "amalgamate",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "합병하다, 하나로 합치다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "bolster",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "북돋우다, 강화하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "consensus",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "여론, 일치된 의견"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "derive",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "얻다, 이끌어 내다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "diligent",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "근면한, 성실한"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "disclose",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "폭로하다, 공개하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "drastic",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "대폭적인, 과감한"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "elaborate",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "정교한; v. 자세히 설명하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "endeavor",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "노력하다; n. 노력"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "fluctuate",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "변동하다, 오르내리다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "harmonious",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "조화로운"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "inevitable",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "필연적인, 피할 수 없는"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "interim",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "중간의, 임시의"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "looming",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "어렴풋이 나타나는, 곧 닥칠"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "mandate",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "명령하다, 위임하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "meticulous",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "꼼꼼한, 세심한"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "monopoly",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "독점, 전매"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "optimize",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "최적화하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "outstanding",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "뛰어난; 미지불된"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "oversight",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "감독, 감시; 실수"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "peak",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "정점, 최고조"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "persistent",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "끈기 있는, 지속적인"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "preliminary",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "예비의, 서두의"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "prominent",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "유명한, 두드러진"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "resilient",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "탄력 있는, 회복력 있는"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "scrutinize",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "정밀 조사하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "stagnant",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "정체된, 침체된"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "tedious",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "지루한, 따분한"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "tenure",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "재임 기간, 종신 재직"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "unprecedented",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "전례 없는"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "volatile",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "휘발성의, 변덕스러운"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    }
+]

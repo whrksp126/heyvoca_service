@@ -1,0 +1,338 @@
+[
+    {
+        "origin": "check",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "조사하다, 확인하다; n. 점검"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "collect",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "수금하다; 모으다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "damage",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "손상, 손해; v. 손상을 입히다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "door-to-door",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "호별 방문의, 집집마다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "empty",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "비어 있는; v. 비우다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "fail",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "실패하다; (기대가) 어긋나다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "fast",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "빠른; adv. 빠르게"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "finish",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "끝내다, 마치다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "forget",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "잊다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "hand",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "건네주다; n. 손"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "heavy",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "무거운"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "inform",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "알리다, 통지하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "instead of",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "prep",
+                "text": "~ 대신에"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "keep",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "유지하다; 보관하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "letter",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "편지"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "load",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "(짐을) 싣다; n. 짐"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "lost",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "분실된, 길을 잃은"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "mail",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "우편물"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "parcel",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "소포"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "pick up",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "~을 찾아오다; 차에 태우다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "post office",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "우체국"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "reach",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "도착하다; ~에 닿다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "receive",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "받다, 수령하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "route",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "경로, 노선"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "safe",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "안전한"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "send",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "보내다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "ship",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "배송하다; n. 배"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "weigh",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "무게를 달다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    }
+]

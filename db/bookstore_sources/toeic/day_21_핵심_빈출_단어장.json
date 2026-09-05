@@ -1,0 +1,819 @@
+[
+    {
+        "origin": "announce",
+        "pronunciations": {
+            "us": "ənáuns"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "발표하다, 알리다"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "We were able to <strong class=\"target-word\">accomplish</strong> our goals through hard work and dedication.",
+                "meaning": "우리는 노력과 헌신을 통해 우리의 목표를 달성할 수 있었다."
+            }
+        ]
+    },
+    {
+        "origin": "interested",
+        "pronunciations": {
+            "us": "íntərəstid",
+            "uk": "íntrəstid"
+        },
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "관심 있는, 관계가 있는"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "She is <strong class=\"target-word\">accomplished</strong> in several different fields of marketing.",
+                "meaning": "그녀는 마케팅의 몇몇 다른 분야에서 기량이 뛰어나다."
+            }
+        ]
+    },
+    {
+        "origin": "active",
+        "pronunciations": {
+            "us": "ǽktiv"
+        },
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "적극적인, 활발한"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "The manager will <strong class=\"target-word\">adjust</strong> the schedule to accommodate everyone.",
+                "meaning": "관리자는 모든 사람의 편의를 도모하기 위해 일정을 조정할 것이다."
+            }
+        ]
+    },
+    {
+        "origin": "accept",
+        "pronunciations": {
+            "us": "æksépt"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "받아들이다, 수락하다"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "The <strong class=\"target-word\">adjustment</strong> of the budget was necessary due to rising costs.",
+                "meaning": "비용 상승 때문에 예산 조정이 필요했다."
+            }
+        ]
+    },
+    {
+        "origin": "foresee",
+        "pronunciations": {
+            "us": "fɔːrsíː"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "예견하다, 내다보다"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "I <strong class=\"target-word\">agree</strong> with your assessment of the market situation.",
+                "meaning": "시장 상황에 대한 당신의 평가에 동의한다."
+            }
+        ]
+    },
+    {
+        "origin": "expansion",
+        "pronunciations": {
+            "us": "ikspǽnʃən"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "확장, 팽창"
+            }
+        ],
+        "notes": "The company's <strong class=\"target-word\">expansion</strong> into new markets has been successful.<br>그 회사의 새로운 시장 확장은 성공적이었다.",
+        "examples": [
+            {
+                "origin": "expand v. 확장하다",
+                "meaning": ""
+            },
+            {
+                "origin": "expansive adj. 확장적인",
+                "meaning": ""
+            }
+        ]
+    },
+    {
+        "origin": "relocate",
+        "pronunciations": {
+            "us": "rìːlóukeit"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "이전하다, 이동하다"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "The <strong class=\"target-word\">agreement</strong> was signed by both parties after several rounds of negotiation.",
+                "meaning": "몇 차례의 협상 끝에 양측 모두 그 합의서에 서명했다."
+            }
+        ]
+    },
+    {
+        "origin": "competitor",
+        "pronunciations": {
+            "us": "kəmpétitər",
+            "uk": "kəmpétitə"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "경쟁자, 경쟁 업체"
+            }
+        ],
+        "notes": "We must analyze our <strong class=\"target-word\">competitors'</strong> strategies to stay ahead in the market.<br>시장에서 앞서나가기 위해 우리의 경쟁 업체들의 전략을 분석해야 한다.",
+        "examples": [
+            {
+                "origin": "compete v. 경쟁하다",
+                "meaning": ""
+            },
+            {
+                "origin": "competition n. 경쟁",
+                "meaning": ""
+            },
+            {
+                "origin": "competitive adj. 경쟁적인",
+                "meaning": ""
+            },
+            {
+                "origin": "rival",
+                "meaning": "라이벌, 경쟁자"
+            }
+        ]
+    },
+    {
+        "origin": "asset",
+        "pronunciations": {
+            "us": "ǽset"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "자산, 재산"
+            }
+        ],
+        "notes": "Skilled employees are the most valuable <strong class=\"target-word\">assets</strong> of any company.<br>숙련된 직원들은 어떤 회사의 가장 귀중한 자산이다.",
+        "examples": [
+            {
+                "origin": "property, estate",
+                "meaning": "재산"
+            }
+        ]
+    },
+    {
+        "origin": "contribute",
+        "pronunciations": {
+            "us": "kəntríbjuːt"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "기여하다, 공헌하다; 기부하다"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "Please <strong class=\"target-word\">arrange</strong> a meeting with the overseas clients for next Monday.",
+                "meaning": "다음 주 월요일에 해외 고객들과의 미팅을 잡아 주세요."
+            }
+        ]
+    },
+    {
+        "origin": "dedicated",
+        "pronunciations": {
+            "us": "dédikèitid"
+        },
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "전념하는, 헌신적인"
+            }
+        ],
+        "notes": "Our <strong class=\"target-word\">dedicated</strong> team is working hard to meet the deadline.<br>우리의 전념하는 팀은 마감 기한을 맞추기 위해 열심히 일하고 있다.",
+        "examples": [
+            {
+                "origin": "dedicate v. 바치다, 헌신하다",
+                "meaning": ""
+            },
+            {
+                "origin": "dedication n. 헌신",
+                "meaning": ""
+            }
+        ]
+    },
+    {
+        "origin": "attend",
+        "pronunciations": {
+            "us": "əténd"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "참석하다, 출석하다"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "All employees are required to <strong class=\"target-word\">attend</strong> the annual safety training workshop.",
+                "meaning": "모든 직원은 연례 안전 교육 워크숍에 참석해야 한다."
+            }
+        ]
+    },
+    {
+        "origin": "considerable",
+        "pronunciations": {
+            "us": "kənsídərəbl"
+        },
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "상당한"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "The <strong class=\"target-word\">audition</strong> for the new musical will be held at the grand theater tomorrow.",
+                "meaning": "새로운 뮤지컬을 위한 오디션이 내일 대극장에서 열릴 것이다."
+            }
+        ]
+    },
+    {
+        "origin": "award",
+        "pronunciations": {
+            "us": "əwɔ́ːrd"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "수여하다, 주다; n. 상"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "Ms. Gills <strong class=\"target-word\">awarded</strong> the certificate to the most outstanding employee of the year.",
+                "meaning": "Ms. Gills는 올해의 가장 우수한 직원에게 증명서를 수여했다."
+            }
+        ]
+    },
+    {
+        "origin": "backup",
+        "pronunciations": {
+            "us": "bǽkʌ̀p"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "예비, 후원; adj. 예비의"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "Our <strong class=\"target-word\">backup</strong> system is designed to prevent data loss in case of a crash.",
+                "meaning": "우리의 예비 시스템은 충돌 시 데이터 손실을 방지하도록 설계되었다."
+            }
+        ]
+    },
+    {
+        "origin": "prospective",
+        "pronunciations": {
+            "us": "prəspéktiv"
+        },
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "잠재적인, 가망 있는"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "Our <strong class=\"target-word\">backup</strong> system is designed to prevent data loss in case of a crash.",
+                "meaning": "우리의 예비 시스템은 충돌 시 데이터 손실을 방지하도록 설계되었다."
+            }
+        ]
+    },
+    {
+        "origin": "separation",
+        "pronunciations": {
+            "us": "sèpəréiʃən"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "분리, 구분"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "The <strong class=\"target-word\">banquet</strong> to celebrate the company's anniversary was a huge success.",
+                "meaning": "회사 창립 기념일을 축하하기 위한 연회는 큰 성공이었다."
+            }
+        ]
+    },
+    {
+        "origin": "campaign",
+        "pronunciations": {
+            "us": "kæmpéin"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "캠페인, 홍보 활동"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "The new marketing <strong class=\"target-word\">campaign</strong> has significantly increased our online presence.",
+                "meaning": "새로운 마케팅 캠페인이 우리의 온라인 존재감을 상당히 높였다."
+            }
+        ]
+    },
+    {
+        "origin": "commercial",
+        "pronunciations": {
+            "us": "kəmə́ːrʃəl"
+        },
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "상업의, 상업적인; n. 광고"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "The <strong class=\"target-word\">commercial</strong> success of the product exceeded all our expectations.",
+                "meaning": "그 제품의 상업적 성공은 우리의 모든 기대를 뛰어넘었다."
+            }
+        ]
+    },
+    {
+        "origin": "waive",
+        "pronunciations": {
+            "us": "weiv"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "(권리 등을) 포기하다, 적용하지 않다"
+            }
+        ],
+        "notes": "The bank decided to <strong class=\"target-word\">waive</strong> the late payment fee for this month.<br>은행은 이번 달에 연체료를 적용하지 않기로 결정했다.",
+        "examples": []
+    },
+    {
+        "origin": "competition",
+        "pronunciations": {
+            "us": "kɑ̀mpətíʃən"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "경쟁"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "The <strong class=\"target-word\">competition</strong> between the two tech giants is becoming more intense.",
+                "meaning": "두 기술 거물 기업 간의 경쟁이 더욱 치열해지고 있다."
+            }
+        ]
+    },
+    {
+        "origin": "consecutive",
+        "pronunciations": {
+            "us": "kənsékjutiv"
+        },
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "연속적인"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "The company has recorded profits for five <strong class=\"target-word\">consecutive</strong> years.",
+                "meaning": "그 회사는 5년 연속으로 수익을 기록했다."
+            }
+        ]
+    },
+    {
+        "origin": "consist",
+        "pronunciations": {
+            "us": "kənsíst"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "~로 이루어지다, 구성되다"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "The new committee will <strong class=\"target-word\">consist</strong> of representatives from each department.",
+                "meaning": "새로운 위원회는 각 부서의 대표자들로 구성될 것이다."
+            }
+        ]
+    },
+    {
+        "origin": "informed",
+        "pronunciations": {
+            "us": "infɔ́ːrmd",
+            "uk": "infɔ́ːmd"
+        },
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "잘 아는, 유식한"
+            }
+        ],
+        "notes": "It is important to make <strong class=\"target-word\">informed</strong> decisions based on reliable data.<br>신뢰할 수 있는 데이터에 근거하여 잘 알고 내리는 결정이 중요하다.",
+        "examples": [
+            {
+                "origin": "inform v. 알리다",
+                "meaning": ""
+            }
+        ]
+    },
+    {
+        "origin": "representative",
+        "pronunciations": {
+            "us": "rèprizéntətiv"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "대표자, 직원"
+            }
+        ],
+        "notes": "A customer service <strong class=\"target-word\">representative</strong> will be with you shortly.<br>고객 서비스 직원이 곧 당신과 함께할 것입니다.",
+        "examples": [
+            {
+                "origin": "represent v. 대표하다",
+                "meaning": ""
+            },
+            {
+                "origin": "agent",
+                "meaning": "대리인, 직원"
+            }
+        ]
+    },
+    {
+        "origin": "reveal",
+        "pronunciations": {
+            "us": "rivíːl"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "드러내다, 밝히다"
+            }
+        ],
+        "notes": "The company will <strong class=\"target-word\">reveal</strong> the winners of the contest on its website.<br>회사는 웹사이트에 공모전 우승자들을 밝힐 것이다.",
+        "examples": [
+            {
+                "origin": "revelation n. 폭로",
+                "meaning": ""
+            },
+            {
+                "origin": "disclose",
+                "meaning": "공개하다"
+            },
+            {
+                "origin": "conceal",
+                "meaning": "숨기다"
+            }
+        ]
+    },
+    {
+        "origin": "unfavorable",
+        "pronunciations": {
+            "us": "ʌnféivərəbl"
+        },
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "불리한"
+            }
+        ],
+        "notes": "The project was delayed due to <strong class=\"target-word\">unfavorable</strong> weather conditions.<br>프로젝트는 불리한 기상 조건 때문에 지연되었다.",
+        "examples": [
+            {
+                "origin": "adverse",
+                "meaning": "불리한, 적대적인"
+            },
+            {
+                "origin": "favorable 유리한",
+                "meaning": ""
+            }
+        ]
+    },
+    {
+        "origin": "vibrant",
+        "pronunciations": {
+            "us": "váibrənt"
+        },
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "활기찬, 생기 넘치는"
+            }
+        ],
+        "notes": "The downtown area has a <strong class=\"target-word\">vibrant</strong> startup community.<br>시내 지역은 활기찬 스타트업 커뮤니티를 가지고 있다.",
+        "examples": [
+            {
+                "origin": "lively, energetic",
+                "meaning": "활기찬"
+            }
+        ]
+    },
+    {
+        "origin": "yield",
+        "pronunciations": {
+            "us": "jiːld"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "(수익 등을) 내다; 양도하다"
+            }
+        ],
+        "notes": "The investment in real estate began to <strong class=\"target-word\">yield</strong> high returns.<br>부동산 투자는 높은 수익을 내기 시작했다.",
+        "examples": [
+            {
+                "origin": "produce, give",
+                "meaning": "내다, 생산하다"
+            }
+        ]
+    },
+    {
+        "origin": "adversely",
+        "pronunciations": {
+            "us": "ædvə́ːrsli",
+            "uk": "ædvə́ːsli"
+        },
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "불리하게, 반대로"
+            }
+        ],
+        "notes": "The new regulations could <strong class=\"target-word\">adversely</strong> affect small business owners.<br>새로운 규정은 소규모 사업주들에게 불리하게 영향을 미칠 수 있다.",
+        "examples": [
+            {
+                "origin": "adverse adj. 불리한, 반대의",
+                "meaning": ""
+            },
+            {
+                "origin": "negatively",
+                "meaning": "부정적으로"
+            }
+        ]
+    },
+    {
+        "origin": "aggressive",
+        "pronunciations": {
+            "us": "əɡrésiv"
+        },
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "적극적인, 공격적인"
+            }
+        ],
+        "notes": "The company has taken an <strong class=\"target-word\">aggressive</strong> approach to marketing its new products.<br>회사는 신제품 마케팅에 대해 적극적인 접근 방식을 취해 왔다.",
+        "examples": [
+            {
+                "origin": "aggressively adv. 적극적으로",
+                "meaning": ""
+            }
+        ]
+    },
+    {
+        "origin": "assign",
+        "pronunciations": {
+            "us": "əsáin"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "할당하다, 배정하다"
+            }
+        ],
+        "notes": "The manager will <strong class=\"target-word\">assign</strong> a specific task to each team member.<br>관리자는 각 팀 구성원에게 특정 업무를 할당할 것이다.",
+        "examples": [
+            {
+                "origin": "assignment n. 업무, 과제",
+                "meaning": ""
+            },
+            {
+                "origin": "allocate",
+                "meaning": "할당하다"
+            }
+        ]
+    },
+    {
+        "origin": "circumstance",
+        "pronunciations": {
+            "us": "sə́ːrkəmstæ̀ns",
+            "uk": "sə́ːkəmstəns"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "상황, 정황"
+            }
+        ],
+        "notes": "Under no <strong class=\"target-word\">circumstances</strong> should confidential information be shared.<br>어떤 상황에서도 기밀 정보가 공유되어서는 안 된다.",
+        "examples": [
+            {
+                "origin": "situation",
+                "meaning": "상황"
+            }
+        ]
+    },
+    {
+        "origin": "contingency",
+        "pronunciations": {
+            "us": "kəntíndʒənsi"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "불상사, 만일의 사태"
+            }
+        ],
+        "notes": "The company has a <strong class=\"target-word\">contingency</strong> plan in case of a natural disaster.<br>회사는 자연재해 발생 시의 만일의 사태에 대한 계획을 가지고 있다.",
+        "examples": []
+    },
+    {
+        "origin": "contract",
+        "pronunciations": {
+            "us": "kɑ́ntrækt",
+            "uk": "kɔ́ntrækt"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "계약(서); v. 계약하다, 수축하다"
+            }
+        ],
+        "notes": "The <strong class=\"target-word\">contract</strong> needs to be reviewed by the legal department.<br>계약서는 법률 부서에 의해 검토되어야 한다.",
+        "examples": [
+            {
+                "origin": "contractor n. 계약자, 하청업체",
+                "meaning": ""
+            },
+            {
+                "origin": "agreement",
+                "meaning": "합의, 계약"
+            }
+        ]
+    },
+    {
+        "origin": "depend",
+        "pronunciations": {
+            "us": "dipénd"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "~에게 의존하다, ~에 달려 있다"
+            }
+        ],
+        "notes": "The success of the project will <strong class=\"target-word\">depend</strong> on effective collaboration.<br>프로젝트의 성공은 효과적인 협업에 달려 있을 것이다.",
+        "examples": [
+            {
+                "origin": "dependent adj. 의존하는",
+                "meaning": ""
+            },
+            {
+                "origin": "dependence n. 의존",
+                "meaning": ""
+            },
+            {
+                "origin": "rely",
+                "meaning": "의지하다"
+            }
+        ]
+    },
+    {
+        "origin": "diversify",
+        "pronunciations": {
+            "us": "divə́ːrsəfài",
+            "uk": "daivə́ːsifài"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "다각화하다, 다양하게 만들다"
+            }
+        ],
+        "notes": "The company decided to <strong class=\"target-word\">diversify</strong> its product line to attract new customers.<br>회사는 새로운 고객들을 끌어들이기 위해 제품군을 다각화하기로 결정했다.",
+        "examples": [
+            {
+                "origin": "diversification n. 다각화, 다양화",
+                "meaning": ""
+            }
+        ]
+    },
+    {
+        "origin": "impact",
+        "pronunciations": {
+            "us": "ímpækt"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "영향, 충격"
+            }
+        ],
+        "notes": "The new marketing campaign had a positive <strong class=\"target-word\">impact</strong> on sales.<br>새로운 마케팅 캠페인은 매출에 긍정적인 영향을 미쳤다.",
+        "examples": [
+            {
+                "origin": "influence",
+                "meaning": "영향"
+            }
+        ]
+    },
+    {
+        "origin": "implement",
+        "pronunciations": {
+            "us": "ímpləmènt"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "이행하다, 실행하다"
+            }
+        ],
+        "notes": "We plan to <strong class=\"target-word\">implement</strong> the new security policy starting next month.<br>우리는 다음 달부터 새로운 보안 정책을 실행할 계획이다.",
+        "examples": [
+            {
+                "origin": "implementation n. 이행, 실행",
+                "meaning": ""
+            },
+            {
+                "origin": "execute, carry out",
+                "meaning": "실행하다"
+            }
+        ]
+    },
+    {
+        "origin": "outlook",
+        "pronunciations": {
+            "us": "áutlùk"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "전망, 견해"
+            }
+        ],
+        "notes": "The economic <strong class=\"target-word\">outlook</strong> for the coming year is quite positive.<br>내년 경제 전망은 상당히 낙관적이다.",
+        "examples": [
+            {
+                "origin": "prospect, view",
+                "meaning": "전망"
+            }
+        ]
+    }
+]

@@ -1,0 +1,866 @@
+[
+    {
+        "origin": "at a profit",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "이익을 남기고"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "bottom line",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "최종 결과, 순익"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "budget cut",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "예산 삭감"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "budget surplus",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "예산 흑자"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "business transaction",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "거래"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "cost-effective",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "비용 효율적인"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "dividend",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "배당금"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "economic downturn",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "경기 침체"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "financial statement",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "재무제표"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "fiscal year",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "회계 연도"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "gross margin",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "매출 총이익"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "insurance premium",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "보험료"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "interest rate",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "이자율"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "invest in",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~에 투자하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "investment goal",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "투자 목표"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "net profit",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "순이익"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "operating expense",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "운영 비용"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "profit margin",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "수익률"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "quarterly earnings",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "분기별 수익"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "revenue growth",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "수익 성장"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "shareholder",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "주주"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "stagnant economy",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "침체된 경기"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "stock market",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "주식 시장"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "upward trend",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "상승세"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "working capital",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "운영 자본"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "anticipate",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "예상하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "assumption",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "추정, 가정"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "beyond",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "prep",
+                "text": "~을 넘어서"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "decline",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "감소; v. 거절하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "estimate",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "추정하다; n. 추정(치)"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "exceed",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "~을 초과하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "figure",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "수치; 인물"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "growth",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "성장"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "illustrate",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "설명하다, 삽화를 넣다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "impressive",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "인상적인"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "improvement",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "향상"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "inaccurate",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "부정확한"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "increase",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "증가; v. 증가하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "incur",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "(손실 등을) 입다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "markedly",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "현저하게"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "percentage",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "비율"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "production",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "생산"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "profit",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "수익"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "projection",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "예상(치)"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "recent",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "최근의"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "reduce",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "줄이다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "regular",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "정기적인"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "reliant",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "의존하는"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "revenue",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "수입"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "sale",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "판매"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "share",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "공유하다; n. 지분"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "significantly",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "상당히"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "steady",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "꾸준한"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "substantial",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "상당한"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "summarize",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "요약하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "tend",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "~하는 경향이 있다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "typically",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "보통, 일반적으로"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "adequate",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "적절한, 충분한"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "adversely",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "불리하게, 반대로"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "allocation",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "할당, 배당"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "bankrupt",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "파산한"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "deficit",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "적자, 결손"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "depreciate",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "가치가 떨어지다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "discrepancy",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "불일치, 차이"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "fluctuate",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "변동하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "inflation",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "인플레이션"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "marginal",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "약간의, 주변부의"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "precariously",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "위태롭게"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "projection",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "예상, 전망"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "recede",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "물러나다; 감소하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "sluggish",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "부진한, 활발하지 못한"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "surplus",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "흑자, 잉여"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    }
+]

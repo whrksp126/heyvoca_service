@@ -1,0 +1,386 @@
+[
+    {
+        "origin": "credential",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "신임장, 자격 증명서"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "firsthand",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "직접적인"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "hiring committee",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "고용 위원회"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "not to mention",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~은 말할 것도 없고"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "on occasion",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "때때로"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "overqualified",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "필요 이상으로 교육을 받은"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "screening",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "심사, 선발"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "lag",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "뒤처지다, 뒤떨어지다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "on the waiting list",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "대기자 명단에"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "oriented",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "~을 지향하는"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "pertaining to",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~에 관계된"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "questionably",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "의심스럽게"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "regularity",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "정기적임"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "replenish",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "다시 채우다, 보충하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "simplicity",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "간단함"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "stellar",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "뛰어난, 별의"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "versatile",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "다재다능한"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "adept",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "능숙한"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "against all odds",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "모든 역경을 딛고"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "command",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "(언어) 구사력, 명령, 지배력"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "commensurate",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "비례한, 액수가 상응하는"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "computer literate",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "컴퓨터 사용 기술을 가진"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "eagerness",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "열의"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "familiarize oneself with",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~에 정통하다, 익숙하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "increment",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "증가, 인상"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "interpersonal skills",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "대인 관계 능력"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "mindful",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "유념하는"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "preeminent",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "우수한, 탁월한"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "preliminary",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "예비의"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "prerequisite",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "필수 조건; adj 필수적인"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "probationer",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "수습 직원, 견습생"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "sternly",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "엄격하게, 단호하게"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    }
+]

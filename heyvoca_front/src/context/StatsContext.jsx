@@ -28,11 +28,19 @@ export const StatsProvider = ({ children }) => {
   const [reviewLoaded, setReviewLoaded] = useState(false);    // 최초 로드 완료 여부(스피너 제어용)
 
   const inFlightRef = useRef(false);
+  // 조회 중에 들어온 갱신 요청 — 끝나면 한 번 더 돈다(아래 주석)
+  const queuedRef = useRef(false);
 
-  // 네 통계를 한 번에 조회. 이미 조회 중이면 중복 방지. 성공 항목만 갱신(기존 캐시 보존).
+  // 네 통계를 한 번에 조회. 성공 항목만 갱신(기존 캐시 보존).
   // 농장 요약은 .catch 로 개별 격리한다 — 농장 API 가 실패해도 기존 세 통계의 동작이 바뀌면 안 된다.
   const refreshStats = useCallback(async () => {
-    if (inFlightRef.current) return;
+    /*
+      이미 조회 중이면 **버리지 않고 뒤에 한 번 더** 돈다.
+      예전에는 그냥 return 이었는데, 그러면 "조회가 떠 있는 사이에 서버 데이터가 바뀐" 경우
+      갱신 요청이 통째로 사라지고 캐시가 옛날 값으로 굳는다. 실제로 온보딩 가입이 그 경우다 —
+      로그인되는 순간 첫 조회가 뜨고, 그 뒤 온보딩 이전(migrate)이 밭을 채운다.
+    */
+    if (inFlightRef.current) { queuedRef.current = true; return; }
     inFlightRef.current = true;
     try {
       const [summary, schedule, changes, farm, feed] = await Promise.all([
@@ -53,7 +61,16 @@ export const StatsProvider = ({ children }) => {
       setReviewLoaded(true);
       inFlightRef.current = false;
     }
+    if (queuedRef.current) {
+      queuedRef.current = false;
+      await refreshStatsRef.current();
+    }
   }, []);
+
+  // 자기 자신을 다시 부르기 위한 참조 — useCallback 안에서 이름으로 부르면
+  // 정의 시점에는 아직 값이 없다(TDZ).
+  const refreshStatsRef = useRef(refreshStats);
+  refreshStatsRef.current = refreshStats;
 
   // 로그인 시 최초 1회 + 학습 세션 완료(lastSessionResult.completedAt 변경) 시 조용히 갱신.
   // 로그아웃 시 캐시 초기화.

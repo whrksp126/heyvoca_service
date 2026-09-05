@@ -635,22 +635,32 @@ const TakeTest = () => {
       if (recentStudy && recentStudy[state.testType] && recentStudy[state.testType].status === "end") {
         // 게스트 맛보기 종료 → 서버 동기화 없이 답안만 챙겨 온보딩 보상으로
         if (isGuestMode) {
-          const seen = new Set();
-          const answers = [];
-          const pushAns = (id, correct) => {
-            if (id == null || seen.has(id)) return;
-            seen.add(id);
-            answers.push({ voca_id: id, correct: !!correct });
+          /*
+            단어별 **마지막** 정오답을 보낸다.
+
+            예전에는 `if (q.isRetry) return;` 으로 재출제를 통째로 빼고 첫 시도만 보냈다.
+            그러면 틀렸다가 맞힌 단어가 `correct: false` 로 가서 가입 시 심기지 않는데,
+            정작 온보딩은 "맞힐 때까지 뒤에서 다시 물어봐요"라고 약속하고
+            결과 화면은 "14개를 씨앗으로 심었어요"라고 센다 — 셋이 서로 어긋났다.
+            맞힐 때까지 물어보는 화면이라면 맞힌 것으로 보내는 게 맞다.
+
+            (정규 학습의 재출제는 여전히 성장으로 치지 않는다. 그쪽은 서버가 세션 로그로
+             독립 회상 여부를 판정한다 — 기획 5.2. 여기는 로그가 없는 맛보기 구간이다.)
+          */
+          const byId = new Map();
+          const putAns = (id, correct) => {
+            if (id == null || correct == null) return;   // 아직 안 푼 문항은 덮지 않는다
+            byId.set(id, !!correct);
           };
           testQuestions.forEach((q) => {
-            if (q.isRetry) return;
             if (Array.isArray(q.words)) {
               // 카드매치 세트 — 단어별 정오답
-              q.words.forEach((w) => pushAns(w.vocaIndexId ?? w.id, w.isCorrect));
+              q.words.forEach((w) => putAns(w.vocaIndexId ?? w.id, w.isCorrect));
             } else {
-              pushAns(q.vocaIndexId ?? q.id, q.isCorrect);
+              putAns(q.vocaIndexId ?? q.id, q.isCorrect);
             }
           });
+          const answers = [...byId].map(([voca_id, correct]) => ({ voca_id, correct }));
           patchGuest({ answers });   // 가입 후 migrate가 읽음
           clearGuestTrial();
           // 결과는 실제 StudyResult 화면을 그대로 재사용 (재출제 제외, 고유 단어 기준)

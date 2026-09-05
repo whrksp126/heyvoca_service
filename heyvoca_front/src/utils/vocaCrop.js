@@ -11,12 +11,15 @@
 
 import { HEALTH_STATES } from './crop';
 import { fieldDataFromPlants } from './farmField';
+import {
+  STABILITY_SPROUT_DAYS, STABILITY_LEAF_DAYS, STABILITY_CARROT_DAYS,
+} from './common';
 
 /* ── 성장 단계 ─────────────────────────────────────────────
    시안 §2 — "이름만 바뀌고(미학습→씨앗, 단기→새싹, 중기→이파리, 장기→당근) 색은 유지".
-   즉 기존 서비스의 암기 상태 판정(stability 10 / 60일)을 그대로 쓴다. */
-const STABILITY_SPROUT = 10;
-const STABILITY_LEAF = 60;
+   즉 기존 서비스의 암기 상태 판정을 그대로 쓴다 — 경계는 common.jsx 가 단일 소스다.
+   (예전에는 여기에 10 / 60 을 다시 적어 뒀는데, 이름이 SPROUT/LEAF 인데 실제로는
+    이파리·당근 문턱이라 값을 옮길 때 읽는 사람을 반대로 속였다.) */
 
 /** 아직 심지 않은 씨앗인가 — 학습을 한 번도 하지 않은 단어 */
 /**
@@ -58,9 +61,12 @@ export const wordCropStage = (word) => {
   if (f?.crop) return f.crop;
   if (isUnplanted(word)) return 'seed';
   const stability = Number(word?.fsrs?.stability ?? 0);
-  if (stability >= STABILITY_LEAF) return 'carrot';
-  if (stability >= STABILITY_SPROUT) return 'leaf';
-  return 'sprout';
+  if (stability >= STABILITY_CARROT_DAYS) return 'carrot';
+  if (stability >= STABILITY_LEAF_DAYS) return 'leaf';
+  // 새싹 문턱 아래는 아직 '심은 씨앗'이다 — 씨앗 구역으로 돌려보낸다.
+  // (예전에는 무조건 sprout 로 떨어져, 막 심은 단어가 폴백 경로에서만 새싹으로 보였다.)
+  if (stability >= STABILITY_SPROUT_DAYS) return 'sprout';
+  return 'seed';
 };
 
 /* ── 건강 ─────────────────────────────────────────────────

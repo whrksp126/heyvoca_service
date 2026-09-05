@@ -369,6 +369,7 @@ def migrate():
     from app.services.fsrs.core import GOOD, AGAIN
     from app.routes.common import register_gem_log
     from app.models.models import GemReason
+    from app.services.game.hooks import on_study_answer
 
     user_id = UUID(g.user_id)
     body = request.get_json(silent=True) or {}
@@ -430,6 +431,9 @@ def migrate():
 
     studied = 0
     correct_total = 0
+    # 커밋 뒤에 게임 레이어로 넘길 답안. 훅이 학습 로그를 다시 읽어(독립 정답 판정)
+    # 상태를 정하므로, 이 트랜잭션이 닫히기 전에는 부를 수 없다.
+    graded = []
     for w in book['vocaList']:
         vid = w.get('voca_id')
         uv = UserVoca(
@@ -470,6 +474,7 @@ def migrate():
             )
             log.created_at = now
             db.session.add(log)
+            graded.append((uv.id, was_correct))
 
     vbook.total_word_cnt = len(book['vocaList'])
     session.question_count = studied
@@ -482,6 +487,25 @@ def migrate():
         reward = SIGNUP_REWARD_GEM
 
     db.session.commit()
+
+    # ── 게임 레이어 반영 (농장 심기 + 연속 학습일) ──────────────────────────
+    # 정규 학습은 study/log 가 답안마다 이 훅을 부른다. 온보딩은 답안을 여기서 직접
+    # 재생하므로 훅도 여기서 불러야 한다. 빠뜨리면 UserVocaGame 행이 하나도 안 생겨
+    # 온보딩을 마친 사용자의 밭이 통째로 비어 보이고(전부 '보유 씨앗'으로 집계된다),
+    # 연속 학습일도 0 일에서 시작한다 — 첫 학습을 이미 한 사람에게 가장 나쁜 첫 화면이다.
+    #
+    # 학습 저장은 위에서 이미 커밋됐다. 여기서 실패해도 온보딩 자체는 성공으로 응답한다.
+    # 세션 id 는 루프 전에 꺼내 둔다 — 훅이 실패해 rollback 이 돌면 `session` 은 만료된
+    # 상태가 되어 다음 회차에서 속성을 읽는 것만으로 다시 터진다.
+    onboarding_session_id = session.id
+    for uv_id, was_correct in graded:
+        try:
+            on_study_answer(user_id, 'today', was_correct,
+                            user_voca_id=uv_id, session_id=onboarding_session_id)
+        except Exception:
+            db.session.rollback()
+            logging.getLogger(__name__).warning(
+                '온보딩 게임 반영 실패 (user_voca=%s, 학습 저장은 정상)', uv_id, exc_info=True)
 
     if reward > 0:
         register_gem_log(

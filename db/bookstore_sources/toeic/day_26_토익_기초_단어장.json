@@ -1,0 +1,338 @@
+[
+    {
+        "origin": "ATM",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "현금 자동 입출금기"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "back-and-forth",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "왔다 갔다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "bank account",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "은행 계좌"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "bank teller",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "은행 창구 직원"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "bill a client",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "고객에게 청구서를 보내다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "borrow money",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "돈을 빌리다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "cash the check",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "수표를 현금으로 바꾸다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "check account",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "당좌 예금 계좌"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "closing hour",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "영업 종료 시간"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "coin",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "동전"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "credit limit",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "신용 한도"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "currency exchange",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "환전"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "fill out a form",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "양식을 작성하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "interest rate",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "이율, 금리"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "keep a record",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "기록하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "make a deposit",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "예금하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "manage an account",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "계좌를 관리하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "savings account",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "보통 예금 계좌"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "service charge",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "서비스 이용료"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "waiting list",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "대기자 명단"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "bank statement",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "은행 예금 명세서"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "cancel a credit card",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "신용 카드를 취소하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "checking account",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "당좌 예금 계좌"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "identity",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "신원, 정체"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "overdraw",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "(예금보다) 더 많이 찾다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "remittance",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "송금"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "safe-deposit box",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "은행 금고"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "withdrawal form",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "인출 양식"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    }
+]

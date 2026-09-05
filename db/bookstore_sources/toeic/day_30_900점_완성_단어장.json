@@ -1,0 +1,398 @@
+[
+    {
+        "origin": "acute",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "급성의"
+            },
+            {
+                "pos": "",
+                "text": "극심한"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "antibiotics",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "항생제"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "asthma",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "천식"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "benign",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "양성의 (종양 등이 해롭지 않은)"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "cardiovascular",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "심혈관의"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "chronic",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "만성의"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "contagious",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "전염성의"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "dermatology",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "피부과"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "diabetes",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "당뇨병"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "epidemic",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "유행병"
+            },
+            {
+                "pos": "adj",
+                "text": "유행병의"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "genetic",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "유전의, 유전학의"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "hypertension",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "고혈압"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "immune system",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "면역 체계"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "inflammation",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "염증"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "insulation",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "단열, 절연 (의학적으론 격리 등)"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "intravenous",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "정맥 내의"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "malignant",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "악성의 (종양 등이 해로운)"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "metabolism",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "신진대사"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "mortality rate",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "사망률"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "neurology",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "신경과"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "obesity",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "비만"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "oncology",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "종양학, 암센터"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "orthopedics",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "정형외과"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "outpatient",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "외래 환자"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "pandemic",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "전 세계적 유행병"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "pathogen",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "병원균"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "pediatrics",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "소아과"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "post-traumatic",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "외상 후의"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "prognosis",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "예후 (치료 후의 경과 예측)"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "quarantine",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "격리"
+            },
+            {
+                "pos": "v",
+                "text": "격리하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "sedentary",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "주로 앉아서 하는"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "therapeutic",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "치료법의, 치료의"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    }
+]

@@ -1,0 +1,817 @@
+[
+    {
+        "origin": "equipment",
+        "pronunciations": {
+            "us": "ikwípmənt"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "장비, 설비"
+            }
+        ],
+        "notes": "[파] <strong class=\"target-word\">equip</strong> v. ~을 갖추다<br><strong class=\"target-word\">토익 이렇게 나온다</strong><br><strong class=\"target-word\">office equipment</strong> 사무용 비품<br>equipment는 불가산 명사이므로 부정관사 a(n)를 쓸 수 없다.",
+        "examples": [
+            {
+                "origin": "The company uses special <strong class=\"target-word\">equipment</strong> to load large crates onto freight trucks.",
+                "translation": "그 회사는 큰 상자를 화물 트럭에 싣기 위해 특수 장비를 사용한다."
+            }
+        ]
+    },
+    {
+        "origin": "automate",
+        "pronunciations": {
+            "us": "ɔ́ːtəmèit"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "자동화하다"
+            }
+        ],
+        "notes": "[파] <strong class=\"target-word\">automation</strong> n. 자동화 <strong class=\"target-word\">automatic</strong> adj. 자동의",
+        "examples": [
+            {
+                "origin": "The production plant will be fully <strong class=\"target-word\">automated</strong> by next year.",
+                "translation": "그 생산 공장은 내년까지 완전히 자동화될 것이다."
+            }
+        ]
+    },
+    {
+        "origin": "specification",
+        "pronunciations": {
+            "us": "spèsəfikéiʃən",
+            "uk": "spèsifikéiʃən"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "명세서, 설명서, 사양"
+            }
+        ],
+        "notes": "[파] <strong class=\"target-word\">specify</strong> v. ~을 명확히 말하다 <strong class=\"target-word\">specific</strong> adj. 명확한, 구체적인<br>[동] <strong class=\"target-word\">manual</strong> 설명서",
+        "examples": [
+            {
+                "origin": "The quality control team checks if all items meet product <strong class=\"target-word\">specifications</strong>.",
+                "translation": "품질 관리팀은 모든 물품이 제품 명세서와 일치하는지를 확인한다."
+            }
+        ]
+    },
+    {
+        "origin": "properly",
+        "pronunciations": {
+            "us": "prápərli",
+            "uk": "prɔ́pəli"
+        },
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "제대로, 정확하게"
+            }
+        ],
+        "notes": "[파] <strong class=\"target-word\">proper</strong> adj. 적당한, 적절한<br><strong class=\"target-word\">토익 이렇게 나온다</strong><br><strong class=\"target-word\">operate properly</strong> 제대로 작동하다<br>properly는 operate와 같이 작동을 의미하는 동사와 자주 어울려 출제된다.",
+        "examples": [
+            {
+                "origin": "Machinery must be well-maintained to operate <strong class=\"target-word\">properly</strong>.",
+                "translation": "기계가 제대로 작동하려면 잘 관리되어야 한다."
+            }
+        ]
+    },
+    {
+        "origin": "safety",
+        "pronunciations": {
+            "us": "séifti"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "안전"
+            }
+        ],
+        "notes": "[파] <strong class=\"target-word\">safe</strong> adj. 안전한 <strong class=\"target-word\">safely</strong> adv. 안전하게<br><strong class=\"target-word\">토익 이렇게 나온다</strong><br><strong class=\"target-word\">safety + precautions/regulations</strong> 안전 예방 조치/수칙<br>예방 조치나 수칙은 여러 항목으로 이루어지므로 복수 형태인 precautions나 regulations를 사용해야 한다.",
+        "examples": [
+            {
+                "origin": "Factory supervisors prioritize <strong class=\"target-word\">safety</strong> over speed.",
+                "translation": "공장 관리자들은 속도보다 안전을 중시한다."
+            }
+        ]
+    },
+    {
+        "origin": "precaution",
+        "pronunciations": {
+            "us": "prikɔ́ːʃən"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "예방 조치, 예방책"
+            }
+        ],
+        "notes": "[파] <strong class=\"target-word\">precautious</strong> adj. 조심하는<br>[동] <strong class=\"target-word\">safeguard</strong> 예방책",
+        "examples": [
+            {
+                "origin": "After the accident, the company introduced stricter safety <strong class=\"target-word\">precautions</strong>.",
+                "translation": "사고 후, 그 회사는 보다 엄격한 안전 예방 조치를 도입했다."
+            }
+        ]
+    },
+    {
+        "origin": "operate",
+        "pronunciations": {
+            "us": "ápərèit",
+            "uk": "ɔ́pərèit"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "(기계 등이) 작동하다, 움직이다"
+            }
+        ],
+        "notes": "[파] <strong class=\"target-word\">operation</strong> n. 작동, 운전 <strong class=\"target-word\">operational</strong> adj. 작동하는 <strong class=\"target-word\">operable</strong> adj. 사용할 수 있는, 수술 가능한",
+        "examples": [
+            {
+                "origin": "The assembly line <strong class=\"target-word\">operates</strong> round the clock.",
+                "translation": "그 조립 라인은 24시간 내내 작동한다."
+            }
+        ]
+    },
+    {
+        "origin": "processing",
+        "pronunciations": {
+            "us": "prásesiŋ",
+            "uk": "próusesiŋ"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "가공, 처리"
+            }
+        ],
+        "notes": "[파] <strong class=\"target-word\">process</strong> v. 가공 처리하다 n. 절차, 공정<br><strong class=\"target-word\">토익 이렇게 나온다</strong><br><strong class=\"target-word\">processing</strong> 가공, 처리<br><strong class=\"target-word\">process</strong> 공정, 절차<br>처리하는 행위를 의미하는 processing과 따라야 할 절차를 뜻하는 process를 구별하는 문제로 출제된다.<br>The new refining <strong class=\"target-word\">process</strong> will be implemented tomorrow. 새로운 정제 공정이 내일 시행될 것이다.",
+        "examples": [
+            {
+                "origin": "Food <strong class=\"target-word\">processing</strong> requires a clean environment.",
+                "translation": "식품 가공은 청결한 환경을 필요로 한다."
+            }
+        ]
+    },
+    {
+        "origin": "capacity",
+        "pronunciations": {
+            "us": "kəpǽsəti"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "용량, 수용력; 역할"
+            }
+        ],
+        "notes": "[파] <strong class=\"target-word\">capacious</strong> adj. 용량이 큰<br>[동] <strong class=\"target-word\">role</strong> 역할, 임무<br><strong class=\"target-word\">토익 이렇게 나온다</strong><br><strong class=\"target-word\">be filled to capacity</strong> 가득 차 있다<br><strong class=\"target-word\">expand the capacity</strong> 용량을 늘리다<br><strong class=\"target-word\">limited capacity</strong> 용량 제한<br><strong class=\"target-word\">storage capacity</strong> 저장 용량<br>capacity의 토익 출제 표현을 익혀 두자.<br>[보] 사람의 자격, 지위에 따른 역할을 의미할 때 capacity는 role로 바꾸어 쓸 수 있다.",
+        "examples": [
+            {
+                "origin": "The warehouse's <strong class=\"target-word\">capacity</strong> will double after the construction.",
+                "translation": "공사 후 창고의 용량은 두 배로 증가할 것이다."
+            },
+            {
+                "origin": "As Ms. Jones was away, Sam acted in her <strong class=\"target-word\">capacity</strong> as president during the meeting.",
+                "translation": "Ms. Jones가 부재중이어서, Sam이 회의 동안 회장 역할을 했다."
+            }
+        ]
+    },
+    {
+        "origin": "assemble",
+        "pronunciations": {
+            "us": "əsémbl"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "(부품·기계 등을) 조립하다; (사람을) 모으다"
+            }
+        ],
+        "notes": "[파] <strong class=\"target-word\">assembly</strong> n. 조립, 조립품<br>[동] <strong class=\"target-word\">build</strong> (기계 따위를) 조립하다 <strong class=\"target-word\">call together</strong> 소집하다<br>[반] <strong class=\"target-word\">disassemble</strong> 분해하다<br><strong class=\"target-word\">토익 이렇게 나온다</strong><br><strong class=\"target-word\">assembly line</strong> 조립 라인<br><strong class=\"target-word\">assembly plant</strong> 조립 공장<br>명사 assembly는 복합 명사 형태로 주로 출제된다.",
+        "examples": [
+            {
+                "origin": "Components are manufactured abroad and <strong class=\"target-word\">assembled</strong> domestically.",
+                "translation": "부품은 해외에서 제조되어 국내에서 조립된다."
+            },
+            {
+                "origin": "The manager <strong class=\"target-word\">assembled</strong> everyone in the department for a meeting.",
+                "translation": "그 관리자는 회의를 위해 부서의 모든 사람들을 모았다."
+            }
+        ]
+    },
+    {
+        "origin": "utilize",
+        "pronunciations": {
+            "us": "júːtəlàiz",
+            "uk": "júːtilàiz"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "이용하다, 활용하다"
+            }
+        ],
+        "notes": "[파] <strong class=\"target-word\">utilization</strong> n. 이용<br>[동] <strong class=\"target-word\">use</strong> 이용하다",
+        "examples": [
+            {
+                "origin": "The technicians <strong class=\"target-word\">utilized</strong> computer technology to improve processes.",
+                "translation": "기술자들은 공정을 개선하기 위해 컴퓨터 기술을 이용했다."
+            }
+        ]
+    },
+    {
+        "origin": "place",
+        "pronunciations": {
+            "us": "pleis"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "~을 -한 상태에 두다; (지시·주문·신청 등을) 하다"
+            }
+        ],
+        "notes": "[파] <strong class=\"target-word\">placement</strong> n. 배치<br>[동] <strong class=\"target-word\">leave</strong> ~한 상태로 놓아두다 <strong class=\"target-word\">put</strong> (어떤 장소에) 놓다<br><strong class=\"target-word\">토익 이렇게 나온다</strong><br><strong class=\"target-word\">place A on standby</strong> A를 대기 상태로 두다<br>place는 place A on standby 형태로 출제되므로 꼭 암기해 두자.<br>[보] place가 사람이나 사물을 특정 위치, 상태에 두다라는 의미로 사용될 때는 leave 또는 put으로 바꾸어 쓸 수 있다.",
+        "examples": [
+            {
+                "origin": "The factory supervisor has <strong class=\"target-word\">placed</strong> production operations on standby.",
+                "translation": "공장 관리자는 생산 작업을 대기 상태로 두었다."
+            },
+            {
+                "origin": "The office manager has to <strong class=\"target-word\">place</strong> an order for additional materials immediately.",
+                "translation": "사무 관리자는 즉시 추가 자재를 주문해야 한다."
+            }
+        ]
+    },
+    {
+        "origin": "fill",
+        "pronunciations": {
+            "us": "fil"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "~을 채우다; (주문대로) 이행하다"
+            }
+        ],
+        "notes": "[반] <strong class=\"target-word\">empty</strong> ~을 비우다<br><strong class=\"target-word\">토익 이렇게 나온다</strong><br><strong class=\"target-word\">1. fill A with B</strong> A를 B로 채우다<br>fill과 함께 쓰이는 전치사 with를 묶어서 외워 두자.<br><strong class=\"target-word\">2. fill an order</strong> 주문에 응하다<br><strong class=\"target-word\">fill the position</strong> 공석을 채우다<br>fill은 빈 공간을 채운다는 의미뿐 아니라 order, position과 함께 쓰여 '주문에 응하다', '공석을 채우다'라는 표현으로도 사용된다.",
+        "examples": [
+            {
+                "origin": "An attendant <strong class=\"target-word\">filled</strong> the car's tank with gas.",
+                "translation": "한 직원이 자동차 연료 탱크를 휘발유로 채웠다."
+            },
+            {
+                "origin": "It will take a week to <strong class=\"target-word\">fill</strong> the hotel's order for bed sheets.",
+                "translation": "그 호텔의 침대 시트 주문에 응하는 데에는 일주일이 걸릴 것이다."
+            }
+        ]
+    },
+    {
+        "origin": "manufacturing",
+        "pronunciations": {
+            "us": "mæ̀njufǽktʃəriŋ"
+        },
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "제조(업)의"
+            }
+        ],
+        "notes": "n. 제조(업)",
+        "examples": [
+            {
+                "origin": "The <strong class=\"target-word\">manufacturing</strong> process in the automotive industry has changed with computer advances.",
+                "translation": "자동차 업계의 제조 공정은 컴퓨터의 발전과 함께 바뀌어 왔다."
+            }
+        ]
+    },
+    {
+        "origin": "renovate",
+        "pronunciations": {
+            "us": "rénəvèit"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "(낡은 건물·가구 등을) 개조하다, 수리하다, 보수하다"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "The packaging area was <strong class=\"target-word\">renovated</strong> to use the space more effectively.",
+                "translation": "포장 구역은 공간을 더 효과적으로 사용하기 위해 개조되었다."
+            }
+        ]
+    },
+    {
+        "origin": "decision",
+        "pronunciations": {
+            "us": "disíʒən"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "결정, 판단"
+            }
+        ],
+        "notes": "<strong class=\"target-word\">토익 이렇게 나온다</strong><br><strong class=\"target-word\">make a decision about</strong> ~에 대해 결정을 내리다<br>decision의 토익 출제 표현을 알아 두자.",
+        "examples": [
+            {
+                "origin": "The CEO's <strong class=\"target-word\">decision</strong> was to release the computer in February.",
+                "translation": "그 최고 경영자의 결정은 2월에 컴퓨터를 출시하는 것이었다."
+            }
+        ]
+    },
+    {
+        "origin": "material",
+        "pronunciations": {
+            "us": "mətíəriəl"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "재료, 물질"
+            }
+        ],
+        "notes": "[동] <strong class=\"target-word\">substance</strong> 물질<br><strong class=\"target-word\">토익 이렇게 나온다</strong><br><strong class=\"target-word\">material : ingredient</strong><br>'재료'를 뜻하는 단어들의 용례 차이를 구별하는 문제로 출제된다.<br><strong class=\"target-word\">material</strong> 재료, 물질<br>물건을 만드는 데 쓰는 재료를 의미한다.<br><strong class=\"target-word\">ingredient</strong> (요리의) 재료, (혼합물의) 성분<br>주로 음식을 만드는 데 쓰는 재료를 뜻한다.<br>The bakery only uses organic <strong class=\"target-word\">ingredients</strong> in its goods. 그 제과점은 제품에 유기농 재료만 사용한다.",
+        "examples": [
+            {
+                "origin": "The designers selected the <strong class=\"target-word\">material</strong> because of its durability.",
+                "translation": "디자이너들은 내구성 때문에 그 재료를 선택했다."
+            }
+        ]
+    },
+    {
+        "origin": "success",
+        "pronunciations": {
+            "us": "səksés"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "성공, 성과"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "The company owes its <strong class=\"target-word\">success</strong> to strict quality control.",
+                "translation": "그 회사는 엄격한 품질 덕분에 성공한 것이다."
+            }
+        ]
+    },
+    {
+        "origin": "attribute",
+        "pronunciations": {
+            "us": "ətríbjut"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "(원인을) ~의 덕분으로 돌리다"
+            }
+        ],
+        "notes": "[동] <strong class=\"target-word\">ascribe</strong> (원인을) ~에 돌리다<br><strong class=\"target-word\">토익 이렇게 나온다</strong><br><strong class=\"target-word\">attribute A to B</strong> A를 B 덕분으로 돌리다<br><strong class=\"target-word\">A is attributed to B</strong> A는 B 덕분이다<br>attribute와 함께 쓰이는 전치사 to를 묶어서 외워 두자.",
+        "examples": [
+            {
+                "origin": "Management has <strong class=\"target-word\">attributed</strong> last year's gains to increased development.",
+                "translation": "경영진은 작년의 성과를 늘어난 개발 덕분으로 돌렸다."
+            }
+        ]
+    },
+    {
+        "origin": "efficiency",
+        "pronunciations": {
+            "us": "ifíʃənsi"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "효율, 능률"
+            }
+        ],
+        "notes": "[파] <strong class=\"target-word\">efficient</strong> adj. 능률적인 <strong class=\"target-word\">efficiently</strong> adv. 능률적으로<br>[동] <strong class=\"target-word\">effectiveness</strong> 효율성<br>[반] <strong class=\"target-word\">inefficiency</strong> 비능률<br><strong class=\"target-word\">토익 이렇게 나온다</strong><br><strong class=\"target-word\">office efficiency</strong> 사무 효율성<br><strong class=\"target-word\">energy efficiency</strong> 에너지 효율성<br>efficiency는 복합 명사 형태로 자주 출제되므로 묶어서 기억해 두자.<br>[보] <strong class=\"target-word\">efficiency</strong>(n. 효율)와 <strong class=\"target-word\">efficient</strong>(adj. 능률적인)의 품사 구별하기.",
+        "examples": [
+            {
+                "origin": "The consultant suggested measures to improve energy <strong class=\"target-word\">efficiency</strong>.",
+                "translation": "그 고문은 에너지 효율을 개선하는 방안을 제안했다."
+            }
+        ]
+    },
+    {
+        "origin": "limit",
+        "pronunciations": {
+            "us": "límit"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "한계, 제한"
+            }
+        ],
+        "notes": "v. 제한하다<br>[파] <strong class=\"target-word\">limitation</strong> n. 제약 <strong class=\"target-word\">limited</strong> adj. 부족한, 유한한",
+        "examples": [
+            {
+                "origin": "There is a <strong class=\"target-word\">limit</strong> to the amount of merchandise the factory can make in a day.",
+                "translation": "그 공장이 하루에 생산할 수 있는 제품 수량에는 한계가 있다."
+            }
+        ]
+    },
+    {
+        "origin": "tailored",
+        "pronunciations": {
+            "us": "téilərd",
+            "uk": "téiləd"
+        },
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "맞춤의, 주문에 따라 맞춘"
+            }
+        ],
+        "notes": "[파] <strong class=\"target-word\">tailor</strong> v. (옷을) 짓다, (용도·목적에) 맞추다 (= adapt)",
+        "examples": [
+            {
+                "origin": "This equipment can be <strong class=\"target-word\">tailored</strong> to the company's production needs.",
+                "translation": "이 장비는 업체의 생산 수요에 맞출 수 있다."
+            }
+        ]
+    },
+    {
+        "origin": "component",
+        "pronunciations": {
+            "us": "kəmpóunənt",
+            "uk": "kəmpóunənt"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "부품, (구성) 요소"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "The store returned the defective <strong class=\"target-word\">components</strong> to the manufacturer.",
+                "translation": "그 상점은 결함이 있는 부품을 제조업체에 반환했다."
+            }
+        ]
+    },
+    {
+        "origin": "capable",
+        "pronunciations": {
+            "us": "kéipəbl"
+        },
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "~을 할 수 있는, ~할 능력이 있는"
+            }
+        ],
+        "notes": "[파] <strong class=\"target-word\">capability</strong> n. 능력 <strong class=\"target-word\">capably</strong> adv. 유능하게, 훌륭하게<br>[반] <strong class=\"target-word\">incapable</strong> ~을 할 수 없는, 무능한<br><strong class=\"target-word\">토익 이렇게 나온다</strong><br><strong class=\"target-word\">be capable of -ing</strong> ~을 할 수 있다, ~할 능력이 있다<br><strong class=\"target-word\">be able to do</strong> ~을 할 수 있다<br>'~을 할 수 있는'을 뜻하는 capable과 able의 차이를 구별해야 한다. capable은 뒤에 'of + 동명사'가 오지만, able은 to 부정사와 함께 사용된다는 것을 꼭 기억해 두자.",
+        "examples": [
+            {
+                "origin": "Ferrum Corporation is <strong class=\"target-word\">capable</strong> of processing all kinds of metals.",
+                "translation": "Ferrum사는 모든 종류의 금속을 가공할 수 있다."
+            }
+        ]
+    },
+    {
+        "origin": "economize",
+        "pronunciations": {
+            "us": "ikánəmàiz",
+            "uk": "ikɔ́nəmàiz"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "절약하다, 아끼다"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "Hybrid cars are becoming popular because they <strong class=\"target-word\">economize</strong> on fuel.",
+                "translation": "하이브리드 차들은 연료를 절약하기 때문에 인기를 끌고 있다."
+            }
+        ]
+    },
+    {
+        "origin": "flexible",
+        "pronunciations": {
+            "us": "fléksəbl",
+            "uk": "fléksibl"
+        },
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "융통성 있는; 유연한, 잘 구부러지는"
+            }
+        ],
+        "notes": "[파] <strong class=\"target-word\">flexibility</strong> n. 융통성, 유연성",
+        "examples": [
+            {
+                "origin": "Management is more <strong class=\"target-word\">flexible</strong> about granting vacations when business is slow.",
+                "translation": "경영진은 회사가 바쁘지 않을 때 휴가를 승인하는 것에 대해 더 융통성 있다."
+            },
+            {
+                "origin": "Plastic is a <strong class=\"target-word\">flexible</strong> material that has numerous applications.",
+                "translation": "플라스틱은 다양한 용도가 있는 유연한 물질이다."
+            }
+        ]
+    },
+    {
+        "origin": "comparable",
+        "pronunciations": {
+            "us": "kámpərəbl",
+            "uk": "kɔ́mpərəbl"
+        },
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "필적하는, 비교되는"
+            }
+        ],
+        "notes": "[파] <strong class=\"target-word\">compare</strong> v. 비교하다 <strong class=\"target-word\">comparison</strong> n. 비교<br>[반] <strong class=\"target-word\">incomparable</strong> 비할 데가 없는<br><strong class=\"target-word\">토익 이렇게 나온다</strong><br><strong class=\"target-word\">be comparable to</strong> ~에 필적하다, ~에 비길 만하다<br>comparable과 어울리는 전치사 to를 묻는 문제로 출제된다.",
+        "examples": [
+            {
+                "origin": "The car's quality standards are <strong class=\"target-word\">comparable</strong> to the industry average.",
+                "translation": "그 차의 품질 규격은 업계 평균에 필적한다."
+            }
+        ]
+    },
+    {
+        "origin": "produce",
+        "pronunciations": {
+            "us": "prədjúːs"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "생산하다"
+            }
+        ],
+        "notes": "[파] <strong class=\"target-word\">product</strong> n. 제품 <strong class=\"target-word\">production</strong> n. 생산, 생산량 <strong class=\"target-word\">productivity</strong> n. 생산성<br>[동] <strong class=\"target-word\">turn out</strong> 생산하다, 제조하다",
+        "examples": [
+            {
+                "origin": "The new machinery <strong class=\"target-word\">produces</strong> 1,000 units per hour.",
+                "translation": "새 기계는 시간당 천 개의 제품을 생산한다."
+            }
+        ]
+    },
+    {
+        "origin": "respectively",
+        "pronunciations": {
+            "us": "rispéktivli"
+        },
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "각각, 따로"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "The camera and tablet computer cost $225 and $350 <strong class=\"target-word\">respectively</strong>.",
+                "translation": "카메라와 태블릿 컴퓨터는 각각 225달러와 350달러이다."
+            }
+        ]
+    },
+    {
+        "origin": "device",
+        "pronunciations": {
+            "us": "diváis"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "장치"
+            }
+        ],
+        "notes": "[파] <strong class=\"target-word\">devise</strong> v. 고안하다<br>[동] <strong class=\"target-word\">gadget</strong> 장치",
+        "examples": [
+            {
+                "origin": "The new <strong class=\"target-word\">device</strong> was tested for possible defects.",
+                "translation": "새 장치는 결함이 있는지 검사되었다."
+            }
+        ]
+    },
+    {
+        "origin": "trim",
+        "pronunciations": {
+            "us": "trim"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "(깎아) 다듬다, 없애다; 삭감하다"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "This mechanism <strong class=\"target-word\">trims</strong> the plastic packaging to make it smaller.",
+                "translation": "이 기계 장치는 플라스틱 포장지를 다듬어서 더 작게 만든다."
+            },
+            {
+                "origin": "The team <strong class=\"target-word\">trimmed</strong> nearly 20 percent off of current production costs.",
+                "translation": "그 팀은 현 생산비에서 거의 20퍼센트를 삭감했다."
+            }
+        ]
+    },
+    {
+        "origin": "launch",
+        "pronunciations": {
+            "us": "lɔːntʃ"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "(신제품을) 출시하다"
+            }
+        ],
+        "notes": "n. 출시<br>[동] <strong class=\"target-word\">introduce</strong> (신제품을) 소개하다, 발표하다",
+        "examples": [
+            {
+                "origin": "Computer programmers fix technical malfunctions before <strong class=\"target-word\">launching</strong> any software.",
+                "translation": "컴퓨터 프로그래머들은 어떤 소프트웨어든 출시하기 전 기술적 결함을 수리한다."
+            }
+        ]
+    },
+    {
+        "origin": "separately",
+        "pronunciations": {
+            "us": "sépərətli"
+        },
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "개별적으로, 따로따로"
+            }
+        ],
+        "notes": "[파] <strong class=\"target-word\">separate</strong> adj. 분리된, 떨어진 <strong class=\"target-word\">separation</strong> n. 분리<br>[동] <strong class=\"target-word\">individually</strong> 개별적으로<br><strong class=\"target-word\">토익 이렇게 나온다</strong><br><strong class=\"target-word\">be made separately</strong> 개별적으로 제작되다<br><strong class=\"target-word\">be ordered separately</strong> 따로따로 주문되다<br>separately는 make, order 등의 동사와 주로 어울려 출제된다.",
+        "examples": [
+            {
+                "origin": "The cushioning pads are made <strong class=\"target-word\">separately</strong> as each shoe is slightly different.",
+                "translation": "각각의 신발이 약간씩 다르기 때문에 쿠션 깔개는 개별적으로 제작된다."
+            }
+        ]
+    },
+    {
+        "origin": "expiration",
+        "pronunciations": {
+            "us": "èkspəréiʃən"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "(기간·임기 등의) 만료, 만기"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "The <strong class=\"target-word\">expiration</strong> date is printed on the top of the milk carton.",
+                "translation": "유효 기간은 우유 팩 상단에 인쇄되어 있다."
+            }
+        ]
+    },
+    {
+        "origin": "maneuver",
+        "pronunciations": {
+            "us": "mənjúːvər",
+            "uk": "mənjúːvə"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "이동시키다, 움직이다"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "Assembly line workers <strong class=\"target-word\">maneuvered</strong> the machinery into place.",
+                "translation": "조립 라인 노동자들은 기계를 제자리로 이동시켰다."
+            }
+        ]
+    },
+    {
+        "origin": "coming",
+        "pronunciations": {
+            "us": "kʌ́miŋ"
+        },
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "다가오는"
+            }
+        ],
+        "notes": "n. 도착, 도래<br>[동] <strong class=\"target-word\">upcoming</strong> 다가오는",
+        "examples": [
+            {
+                "origin": "Factory output will double in the <strong class=\"target-word\">coming</strong> year.",
+                "translation": "공장 생산량이 다가오는 해에는 두 배가 될 것이다."
+            }
+        ]
+    },
+    {
+        "origin": "damaged",
+        "pronunciations": {
+            "us": "dǽmidʒd"
+        },
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "손상된, 손해를 입은"
+            }
+        ],
+        "notes": "[파] <strong class=\"target-word\">damage</strong> n. 손상 v. 손해를 입히다<br><strong class=\"target-word\">토익 이렇게 나온다</strong><br><strong class=\"target-word\">damaged : impaired : injured</strong><br>'손상된'을 뜻하는 단어들의 용례 차이를 구별하는 문제로 출제된다.<br><strong class=\"target-word\">damaged</strong> 손상된<br>사물이 부서지거나 손상되었을 때 사용한다.<br><strong class=\"target-word\">impaired</strong> (신체적·정신적으로) 장애가 있는<br>사람의 기능이 손상되었을 때 쓰인다.<br>Special safety precautions for the hearing <strong class=\"target-word\">impaired</strong> will be implemented. 청각 장애인들을 위한 특별 안전 조치가 시행될 것이다.<br><strong class=\"target-word\">injured</strong> 부상당한<br>사고 등으로 부상당한 경우에 쓰인다.<br>The company insurance plan will compensate <strong class=\"target-word\">injured</strong> workers. 회사 의료 보험이 부상당한 직원들에게 보상해 줄 것이다.",
+        "examples": [
+            {
+                "origin": "The conveyor belts were <strong class=\"target-word\">damaged</strong> from excessive use.",
+                "translation": "과도한 사용으로 컨베이어 벨트가 손상되었다."
+            }
+        ]
+    },
+    {
+        "origin": "prevent",
+        "pronunciations": {
+            "us": "privént"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "~을 막다, ~을 예방하다"
+            }
+        ],
+        "notes": "[파] <strong class=\"target-word\">prevention</strong> n. 예방 <strong class=\"target-word\">preventive</strong> adj. 예방의 <strong class=\"target-word\">preventively</strong> adv. 예방적으로, 방지하여<br>[동] <strong class=\"target-word\">avoid</strong> 막다, 예방하다<br>[반] <strong class=\"target-word\">allow</strong> ~을 허락하다<br><strong class=\"target-word\">토익 이렇게 나온다</strong><br><strong class=\"target-word\">prevent A from -ing</strong> A가 ~하는 것을 막다<br>prevent는 prevent A from -ing 형태로 자주 사용되므로 꼭 익혀 두자.<br><strong class=\"target-word\">prevent : hinder</strong><br>'방해하다'를 뜻하는 단어들의 용례 차이를 구별해 두자.<br><strong class=\"target-word\">prevent</strong> 막다, 방지하다<br>어떤 일이 발생할 것을 예방 차원에서 막을 때 쓰인다.<br><strong class=\"target-word\">hinder</strong> 저지하다, 방해하다<br>상대방을 곤란하게 만들어 앞으로 일어날 행동을 막을 때 쓰인다.<br>To <strong class=\"target-word\">hinder</strong> unauthorized access to e-mail accounts, users must regularly change passwords. 이메일 계정에 승인되지 않은 접근을 저지하기 위해, 사용자들은 정기적으로 암호를 바꿔야 한다.",
+        "examples": [
+            {
+                "origin": "Employees are expected to observe safety guidelines to <strong class=\"target-word\">prevent</strong> accidents.",
+                "translation": "직원들은 사고를 막기 위해 안전 지침을 따라야 한다."
+            }
+        ]
+    },
+    {
+        "origin": "power",
+        "pronunciations": {
+            "us": "páuər",
+            "uk": "páuə"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "전력, 전기"
+            }
+        ],
+        "notes": "[파] <strong class=\"target-word\">powerful</strong> adj. 강력한 <strong class=\"target-word\">empower</strong> v. ~에게 권한을 부여하다<br>[동] <strong class=\"target-word\">electricity</strong> 전기<br><strong class=\"target-word\">토익 이렇게 나온다</strong><br><strong class=\"target-word\">1. power supply</strong> 전력 공급<br><strong class=\"target-word\">power plant</strong> 발전소<br>power는 '힘'이란 의미로 많이 알고 있지만 토익에는 주로 '전력'이란 뜻으로 출제된다.<br><strong class=\"target-word\">2. a powerful engine</strong> 강력한 엔진<br>형용사인 powerful도 자주 출제되므로 꼭 기억해 두자.",
+        "examples": [
+            {
+                "origin": "The plant was closed for half a business day due to a <strong class=\"target-word\">power</strong> outage.",
+                "translation": "그 공장은 정전으로 인해 반나절 간 휴업했다."
+            }
+        ]
+    },
+    {
+        "origin": "chemical",
+        "pronunciations": {
+            "us": "kémikəl"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "화학 제품"
+            }
+        ],
+        "notes": "adj. 화학의<br>[파] <strong class=\"target-word\">chemist</strong> n. 화학자 <strong class=\"target-word\">chemistry</strong> n. 화학<br><strong class=\"target-word\">토익 이렇게 나온다</strong><br><strong class=\"target-word\">chemical</strong> 화학 제품<br><strong class=\"target-word\">chemist</strong> 화학자<br>물질 명사인 chemical과 사람 명사인 chemist를 구별하는 문제로 출제된다.",
+        "examples": [
+            {
+                "origin": "Protective gear is needed when working with dangerous <strong class=\"target-word\">chemicals</strong>.",
+                "translation": "위험한 화학 제품을 가지고 작업할 때는 보호 장비가 필요하다."
+            }
+        ]
+    },
+    {
+        "origin": "minimize",
+        "pronunciations": {
+            "us": "mínimàiz"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "최소화하다, 축소하다"
+            }
+        ],
+        "notes": "[반] <strong class=\"target-word\">maximize</strong> 극대화하다",
+        "examples": [
+            {
+                "origin": "To <strong class=\"target-word\">minimize</strong> employees' workload, the company upgraded its software.",
+                "translation": "직원들의 업무량을 최소화하기 위해, 그 회사는 소프트웨어를 업그레이드했다."
+            }
+        ]
+    }
+]

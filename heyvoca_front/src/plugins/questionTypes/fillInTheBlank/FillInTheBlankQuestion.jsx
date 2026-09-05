@@ -1,10 +1,11 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Circle, X, Leaf, Plant, Carrot, EggCrack, ArrowUpRight, ArrowDownRight } from '@phosphor-icons/react';
 import FarmStatusBar from '../../../components/farm/FarmStatusBar';
 import { vibrate } from '../../../utils/osFunction';
 import { playSuccessSound, playErrorSound } from '../../../utils/audio';
-import { getAdvanceDelay } from '../../../utils/studyTiming';
+import { getAdvanceDelay, ADVANCE_DELAY_GROW } from '../../../utils/studyTiming';
+import { getMemoryStateKeyByStability } from '../../../components/common/MemoryStateChangeBadge';
 
 const stateIconMap = {
   unlearned: <EggCrack size={10} weight="fill" />,
@@ -64,13 +65,22 @@ const FillInTheBlankQuestion = ({ question, testType, onComplete, onCardMatched,
   const [nextReviewDate, setNextReviewDate] = useState(null);
   const startTimeRef = useRef(Date.now());
 
-  // 채점 전 현재 암기 상태 캡처 (FSRS 기반)
-  const getMemoryStateKeyByStability = (stability, state) => {
-    if (!state || state === 'new') return 'unlearned';
-    if (stability < 10) return 'leaf';
-    if (stability < 60) return 'plant';
-    return 'carrot';
+  const advanceTimerRef = useRef(null);
+  const gradedAtRef = useRef(0);
+  const advanceActionRef = useRef(null);
+
+  const scheduleAdvance = (totalMs) => {
+    if (advanceTimerRef.current) clearTimeout(advanceTimerRef.current);
+    const elapsed = Date.now() - gradedAtRef.current;
+    advanceTimerRef.current = setTimeout(() => {
+      advanceTimerRef.current = null;
+      advanceActionRef.current?.();
+    }, Math.max(0, totalMs - elapsed));
   };
+
+  // 채점 전 현재 암기 상태 캡처 — 판정은 MemoryStateChangeBadge 의 공용 함수를 쓴다.
+  // 예전에는 여기에 같은 함수를 통째로 복사해 두고 10 / 60 을 박아 놨는데,
+  // 경계가 바뀌면 이 문제 유형만 다른 상태를 말한다.
   const prevStateKeyRef = useRef(
     getMemoryStateKeyByStability(question.fsrs?.stability ?? 0, question.fsrs?.state ?? null)
   );
@@ -130,17 +140,35 @@ const FillInTheBlankQuestion = ({ question, testType, onComplete, onCardMatched,
     setIsAnswered(true);
     onCardMatched?.();
 
-    // 오답일 때는 더 천천히 다음 문제로 전환 (정답 1초 / 오답 2.5초)
-    setTimeout(() => {
-      onComplete([{
-        sheetId: question.vocabularySheetId,
-        wordId: question.id,
-        isCorrect: correct,
-        timeTakenMs,
-        updateData: { fsrs: question.fsrs, isCorrect: correct, updatedAt: new Date().toISOString() },
-      }]);
-    }, getAdvanceDelay(correct));
+    // 오답일 때는 더 천천히 다음 문제로 전환 (정답 1초 / 오답 2.5초).
+    // 단계가 오른 정답은 아래 useEffect 가 2.2초로 다시 건다 — 진화 연출이 1초라 여기서 넘기면 잘린다.
+    gradedAtRef.current = Date.now();
+    advanceActionRef.current = () => onComplete([{
+      sheetId: question.vocabularySheetId,
+      wordId: question.id,
+      isCorrect: correct,
+      timeTakenMs,
+      updateData: { fsrs: question.fsrs, isCorrect: correct, updatedAt: new Date().toISOString() },
+    }]);
+    scheduleAdvance(getAdvanceDelay(correct));
   };
+
+  /*
+    전환 타이머 — 단계가 올랐으면 2.2초로 다시 건다.
+    grew 는 /study/log 응답과 함께 `farm` prop 으로 들어오는데, 그때는 이미 1초짜리
+    타이머가 돌고 있다. 채점 시각 기준 절대 시간으로 다시 걸어, 응답이 늦게 왔더라도
+    전체 지연이 2.2초가 되게 한다. 이미 넘어간 문제의 뒤늦은 응답은 대기 타이머가 없어 무시된다.
+  */
+  useEffect(() => {
+    if (!farm?.grew) return;
+    if (!advanceTimerRef.current) return;
+    scheduleAdvance(ADVANCE_DELAY_GROW);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [farm]);
+
+  useEffect(() => () => {
+    if (advanceTimerRef.current) clearTimeout(advanceTimerRef.current);
+  }, []);
 
   const blankClass = isAnswered
     ? isCorrect
@@ -201,45 +229,7 @@ const FillInTheBlankQuestion = ({ question, testType, onComplete, onCardMatched,
 
         {/* 암기 상태 배지 (채점 후, 전체 영역 상단 중앙)
             농장 상태 바가 같은 것을 하단에서 말하므로 payload 가 오면 숨긴다 */}
-        {isAnswered && !farm && (
-          <div className="absolute top-[12px] left-[50%] translate-x-[-50%] flex items-center justify-center z-[2] whitespace-nowrap">
-            {memoryStateChange ? (
-              <motion.div
-                className={`flex items-center gap-[3px] py-[3px] px-[8px] border rounded-[50px] whitespace-nowrap ${
-                  memoryStateChange.dir === 'up'
-                    ? `${stateColorMap[memoryStateChange.toKey]?.border} ${stateColorMap[memoryStateChange.toKey]?.text} ${stateColorMap[memoryStateChange.toKey]?.bg}`
-                    : 'border-layout-gray-200 text-layout-gray-300 bg-layout-gray-50 dark:bg-layout-gray-dark'
-                }`}
-                initial={{ scale: 0.5, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                transition={{ type: 'spring', stiffness: 400, damping: 15 }}
-              >
-                {memoryStateChange.dir === 'up'
-                  ? <ArrowUpRight size={10} weight="bold" />
-                  : <ArrowDownRight size={10} weight="bold" />}
-                <span className="flex-shrink-0">{stateIconMap[memoryStateChange.toKey]}</span>
-              </motion.div>
-            ) : (
-              (() => {
-                const stateKey = getMemoryStateKeyByStability(
-                  question.fsrs?.stability ?? 0,
-                  question.fsrs?.state ?? null
-                );
-                const colors = stateColorMap[stateKey];
-                return (
-                  <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ duration: 0.15 }}
-                    className={`flex items-center justify-center w-[18px] h-[18px] border rounded-[18px] ${colors.border} ${colors.text} ${colors.bg}`}
-                  >
-                    {stateIconMap[stateKey]}
-                  </motion.div>
-                );
-              })()
-            )}
-          </div>
-        )}
+        
         {/* O/X 아이콘 (그레이 카드 중앙, 텍스트 뒤) */}
         <div className="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] z-[1]">
           <AnimatePresence>
@@ -293,18 +283,7 @@ const FillInTheBlankQuestion = ({ question, testType, onComplete, onCardMatched,
 
         {/* 복습 예정일 (그레이 카드 하단 중앙)
             농장 상태 바가 같은 자리에서 다음 복습일까지 말하므로 그때는 숨긴다 */}
-        {reviewText && !farm && (
-          <div className="absolute bottom-[12px] left-[50%] translate-x-[-50%] flex items-center justify-center z-[2]">
-            <motion.div
-              initial={{ opacity: 0, y: 8 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.25, ease: [0.4, 0, 0.2, 1] }}
-              className="flex items-center justify-center h-[18px] px-[6px] rounded-[3px] bg-primary-main-200 dark:bg-primary-main-dark text-[10px] font-[600] text-primary-main-600 whitespace-nowrap"
-            >
-              {reviewText}
-            </motion.div>
-          </div>
-        )}
+        
       </div>
 
       {/* 선택지 4개 */}

@@ -1,0 +1,390 @@
+[
+    {
+        "origin": "amenity",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "생활 편의 시설"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "blueprinting",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "청사진 작성, 설계"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "boundary",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "경계, 한계"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "demolish",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "허물다, 파괴하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "dilapidated",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "황폐한, 낡아 빠진"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "dwelling",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "주거, 주택"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "easement",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "지역권 (타인의 토지를 이용할 수 있는 권리)"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "facade",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "(건물의) 정면, 외관"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "fixtures",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "정착물, 붙박이 가구"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "floorboard",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "마루청"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "foreclosure",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "담보권 행사, 압류"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "habitat",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "서식지, 거주지"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "insulation",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "단열재, 절연"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "landscaping",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "조경"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "mortgagor",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "저당권 설정자, 채무자"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "ordinance",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "법령, 조례"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "partition",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "칸막이"
+            },
+            {
+                "pos": "v",
+                "text": "칸막이를 하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "pathway",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "오솔길, 통로"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "prefabricated",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "조립식의"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "premises",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "부지, 구내"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "realtor",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "부동산 중개업자"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "refurbish",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "재단장하다, 수리하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "retrofitting",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "(기존 건물 등에) 새로운 장비를 장착함"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "scaffolding",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "비계 (공사장 발판)"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "sublet",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "전대하다 (빌린 것을 다시 빌려주다)"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "suburban",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "교외의"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "tenancy",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "차용, 차용 기간"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "topography",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "지형, 지형도"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "urbanization",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "도시화"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "utility pole",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "전신주"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "ventilation",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "통풍, 환기"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "zoning",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "구역 설정, 도시 계획"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    }
+]

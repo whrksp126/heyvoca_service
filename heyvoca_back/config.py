@@ -73,7 +73,8 @@ class Config:
 
     # 사전 자동 갱신 토글
     APP_ENV = os.getenv('APP_ENV', 'local')  # local/dev/stg/prod
-    DICT_AUTO_RESET = os.getenv('DICT_AUTO_RESET', 'true').lower() == 'true'
+    # 사전 교체는 admin 수동 동기화로만 수행한다.
+    DICT_AUTO_RESET = os.getenv('DICT_AUTO_RESET', 'false').lower() == 'true'
     DICT_AUTO_RESET_ALLOW_PROD = os.getenv('DICT_AUTO_RESET_ALLOW_PROD', 'false').lower() == 'true'
 
     # Redis

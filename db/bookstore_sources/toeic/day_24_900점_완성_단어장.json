@@ -1,0 +1,390 @@
+[
+    {
+        "origin": "plunge",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "떨어지다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "salute",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "경례하다, 인사하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "scheme",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "계획"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "cordially",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "진심으로, 성심성의껏"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "delicate",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "민감한, 세심한 주의가 필요한"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "designation",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "지정, 지명"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "intent",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "의지, 목적"
+            },
+            {
+                "pos": "adj",
+                "text": "열심인"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "irreversible",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "되돌릴 수 없는"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "lingering",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "오래 끄는, 오래 가는"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "lose oneself in",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "~에 몰두하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "perpetual",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "끊임없이 계속되는"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "tolerant",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "관대한, 아량 있는"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "degrade",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "(품위·지위 등을) 떨어뜨리다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "demote",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "강등시키다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "deploy",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "배치하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "dignitary",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "고위 인사"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "disorient",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "혼란스럽게 하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "extraordinary feat",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "놀랄 만한 업적"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "forage",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "찾아다니다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "gratis",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "무료로"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "hurdle",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "곤란한 문제, 장애"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "immensity",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "광대함, 엄청난 크기"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "in defiance of",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "~에 반항하여"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "in one's grasp",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "~의 수중에"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "incumbent",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "현직의"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "miscellaneous",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "다양한"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "reinstate",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "복직시키다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "scuff",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "마모시키다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "shred",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "갈기갈기 찢다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "underpass",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "지하도"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "unwind",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "(감긴 것을) 풀다, (긴장을) 풀다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "upbeat",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "낙관적인"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    }
+]

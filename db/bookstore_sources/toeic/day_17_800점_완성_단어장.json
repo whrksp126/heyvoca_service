@@ -1,0 +1,866 @@
+[
+    {
+        "origin": "at no extra charge",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "추가 비용 없이"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "break down",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "고장 나다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "business day",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "영업일"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "cargo space",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "화물실"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "checked baggage",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "위탁 수화물"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "clearance sale",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "창고 정리 세일"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "daily deliveries",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "매일 배송"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "deliver a speech",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "연설하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "delivery truck",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "배달 트럭"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "destination",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "목적지"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "doorstep",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "현관"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "double check",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "재확인하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "expected delivery",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "배송 예정"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "express service",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "급송 서비스"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "fragile contents",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "깨지기 쉬운 내용물"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "freight charges",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "화물 요금"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "handle with care",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "취급 주의"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "in transit",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "운송 중인"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "lost and found",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "분실물 센터"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "mailing address",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "우편 주소"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "on delivery",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "배달 시에"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "order form",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "주문서"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "pack a suitcase",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "짐을 싸다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "package design",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "포장 디자인"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "postal service",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "우편 서비스"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "return to sender",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "반송"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "shipping label",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "배송 라벨"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "tracking number",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "송장 번호"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "weigh the options",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "선택권을 따져보다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "zero tolerance",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "무관용"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "accumulate",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "축적하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "acknowledge",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "인정하다; 받았음을 알리다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "agency",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "대행사"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "article",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "물품; 기사"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "attach",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "첨부하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "baggage",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "수화물"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "careful",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "조심스러운"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "carry",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "휴대하다; 운반하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "confirm",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "확인하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "correspondence",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "통신문"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "courier",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "택배원"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "damage",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "손상시키다; n. 손해"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "deliver",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "배달하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "enclose",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "동봉하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "ensure",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "보장하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "fragile",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "깨지기 쉬운"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "inventory",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "재고 목록"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "invoice",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "송장"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "package",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "꾸러미, 소포; v. 포장하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "payment",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "지불"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "acclaim",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "호평"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "adequately",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "적절히"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "affordability",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "감당할 수 있는 가격"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "bargain",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "특가품"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "carton",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "판지 상자"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "caution",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "주의"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "clientele",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "고객들"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "consignment",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "위탁 판매"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "convenience",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "편의"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "efficient",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "효율적인"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "encompass",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "포함하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "finalize",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "마무리하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "market",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "시장"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "measure",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "조치; v. 측정하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "particularly",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "특히"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "perishable",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "부패하기 쉬운"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "rating",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "등급"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "represent",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "대표하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "shipment",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "수송(물)"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "stock",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "재고"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "unavailable",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "이용 불가능한"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "unable",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "~할 수 없는"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    }
+]

@@ -10,13 +10,26 @@ export const stripHtmlTags = (html) => {
   return (doc.body.textContent || '').replace(/\s+/g, ' ').trim();
 };
 
-// FSRS 기반 학습 상태 정의 (stability 임계값 기준)
+/*
+  기억 구간 경계 — **다음 복습 간격(일)**. 프론트 전체의 단일 소스.
+
+  백엔드 `app/services/fsrs/thresholds.py` 와 같은 값이어야 한다. 예전에는 이 숫자가
+  common.jsx · forgettingPriority.js · vocaCrop.js · 문제 유형 플러그인에 각각 박혀 있어서,
+  한 곳만 고치면 같은 단어가 단어장에서는 중기인데 밭에서는 새싹으로 보였다.
+
+  농장 단계와 이름만 다르고 경계는 같다 — 단기 = 심은 씨앗·새싹, 중기 = 이파리, 장기 = 당근.
+*/
+export const STABILITY_SPROUT_DAYS = 5;    // 새싹 (단기 안에서 갈린다 — 농장 전용)
+export const STABILITY_LEAF_DAYS   = 21;   // 단기/중기 경계 = 이파리 (Anki mature 기준과 같다)
+export const STABILITY_CARROT_DAYS = 60;   // 중기/장기 경계 = 당근
+
+// FSRS 기반 학습 상태 정의 (다음 복습 간격 기준)
 export const MEMORY_STATES = {
   ALL: 'all',                  // 전체 (모든 암기 상태)
   UNLEARNED: 'unlearned',      // 미학습 (repetition: 0, ef: 2.5)
   OVERDUE: 'overdue',          // 복습 지연 (nextReview < 오늘)
-  SHORT_TERM: 'shortTerm',     // 단기 복습 (간격 10일 미만)
-  MEDIUM_TERM: 'mediumTerm',   // 중기 복습 (간격 10일 이상 60일 미만)
+  SHORT_TERM: 'shortTerm',     // 단기 복습 (간격 21일 미만)
+  MEDIUM_TERM: 'mediumTerm',   // 중기 복습 (간격 21일 이상 60일 미만)
   LONG_TERM: 'longTerm'        // 장기 복습 (간격 60일 이상)
 };
 
@@ -44,8 +57,8 @@ export function getWordMemoryState(word) {
   const fsrs = word?.fsrs;
   if (!fsrs || fsrs.state === 'new' || !fsrs.state) return MEMORY_STATES.UNLEARNED;
   const stability = fsrs.stability ?? 0;
-  if (stability < 10) return MEMORY_STATES.SHORT_TERM;
-  if (stability < 60) return MEMORY_STATES.MEDIUM_TERM;
+  if (stability < STABILITY_LEAF_DAYS) return MEMORY_STATES.SHORT_TERM;
+  if (stability < STABILITY_CARROT_DAYS) return MEMORY_STATES.MEDIUM_TERM;
   return MEMORY_STATES.LONG_TERM;
 }
 

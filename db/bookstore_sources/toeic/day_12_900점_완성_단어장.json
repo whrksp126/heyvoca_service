@@ -1,0 +1,390 @@
+[
+    {
+        "origin": "come apart",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "부서지다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "flow chart",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "작업 공정도"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "production quota",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "생산량 할당"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "tie up",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "단단히 묶다, (일을) 마무리 짓다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "void",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "빈 공간"
+            },
+            {
+                "pos": "adj",
+                "text": "텅 빈"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "discontinue",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "중단하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "halt",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "중단, 정지"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "occurrence",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "발생하는 것"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "operating",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "(기계·설비의) 조작상의, 운영상의"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "predicted",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "예상되는"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "welding",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "용접"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "arable",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "(땅이) 경작에 알맞은"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "broadly",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "대략"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "continuity",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "지속성"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "disassemble",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "분해하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "excavation",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "발굴"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "fabricate",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "제작하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "involuntarily",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "본의 아니게"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "liquidity",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "(자산의) 유동성"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "nimble",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "민첩한, 재빠른"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "obfuscate",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "당황하게 하다, 혼란스럽게 만들다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "pertinent",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "관련된"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "perturbed",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "동요하는"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "pragmatic",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "실용적인"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "precede",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "~보다 앞서다, ~보다 중요하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "prevail",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "널리 퍼지다, 이기다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "procurement",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "(필수품의) 조달"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "provoke",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "화나게 하다, 유발하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "recede",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "(가치·품질이) 떨어지다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "tolerance",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "관용"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "unfailingly",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "변함없이, 영락없이"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "unmet",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "(요구 등이) 채워지지 않은"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    }
+]

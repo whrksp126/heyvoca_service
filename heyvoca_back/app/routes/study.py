@@ -15,9 +15,13 @@ study_bp = Blueprint('study', __name__, url_prefix='/study')
 
 _MAX_LIMIT = 500
 
-# memory_state 임계점 (stability 기준)
-_STABILITY_SHORT  = 10.0
-_STABILITY_MEDIUM = 60.0
+# memory_state 임계점 — 값은 fsrs/thresholds.py 가 단일 소스다.
+# 여기에 숫자를 다시 적으면 농장 단계·추천 풀과 조용히 어긋난다(그 파일 주석 참고).
+# 기존 이름을 그대로 재노출한다 — study_insights 등이 이 이름으로 가져다 쓴다.
+from app.services.fsrs.thresholds import (  # noqa: E402
+    STABILITY_SHORT as _STABILITY_SHORT,
+    STABILITY_MEDIUM as _STABILITY_MEDIUM,
+)
 
 
 def _clamp_limit(raw, default=20):
@@ -362,9 +366,7 @@ def post_study_log():
     # 학습 완료 후 recommend pool 캐시 무효화 (stale 방지)
     try:
         from app.services.recommend.pool import invalidate_pool_cache
-        from app.services.bookstore_recommend import invalidate_bookstore_recommend_cache
         invalidate_pool_cache(user_id)
-        invalidate_bookstore_recommend_cache(user_id)
     except Exception:
         pass  # 캐시 무효화 실패는 비치명적
 
@@ -378,6 +380,8 @@ def post_study_log():
             user_id, session_obj.test_type, bool(was_correct),
             user_voca_id=user_voca_id, memory_state_after=memory_state_after,
             session_id=session_uuid,
+            # 진행 막대의 '학습 전' 값 — 여기서 안 넘기면 농장은 이미 커밋된 새 상태밖에 못 본다
+            fsrs_before=fsrs_state_before,
         )
     except Exception:
         db.session.rollback()

@@ -1,0 +1,818 @@
+[
+    {
+        "origin": "a piece of equipment",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "장비 하나"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "all the way",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "내내, 멀리서"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "appealing",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "호소하는, 매력적인"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "at once",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "즉시, 동시에"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "definite",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "분명한, 명확한"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "distinguish",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "구별하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "extraordinary",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "이례적인, 훌륭한"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "good for",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~에 유용한, 좋은"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "in bloom",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "(꽃이) 핀"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "in reference to",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~에 관하여, ~과 관련하여"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "market stall",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "시장 가판대"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "mechanism",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "기계 장치, 메커니즘"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "metropolitan area",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "대도시 지역"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "national holiday",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "국경일"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "on schedule",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "예정대로, 시간표대로"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "over the Internet",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "인터넷을 통해"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "preview",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "예고편, 시사회"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "public display",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "공개 전시"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "run a campaign",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "캠페인을 벌이다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "serve a customer",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "손님을 상대하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "spouse",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "배우자"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "upside down",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "거꾸로, 뒤집혀"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "vending machine",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "자동판매기"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "visible",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "보이는, 알아볼 수 있는"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "as opposed to",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~과는 대조적으로"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "boldly",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "대담하게"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "call on",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~를 방문하다, 부르다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "excluding",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "prep",
+                "text": "~을 제외하고"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "expectancy",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "기대, 예상"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "forgetfully",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "깜빡 잊어서, 소홀하게도"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "noteworthy",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "주목할 만한"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "perception",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "인식, 지각"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "potentially",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "가능성 있게, 잠재적으로"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "randomly",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "임의로, 무작위로"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "suitable",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "적합한, 알맞은"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "a complete line of",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~의 전 제품"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "accept the offer",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "제안을 수락하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "astonishingly",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "놀랍게도"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "be noted for",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~으로 유명하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "claim",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "(사실·소유권의) 주장, 요구, 청구"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "classified ad",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "짧은 신문 광고"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "compilation",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "편집, 편집물"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "comprehensible",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "이해할 수 있는, 알기 쉬운"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "criticize",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "비평하다, 비난하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "dumping",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "덤핑(투매)"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "first priority",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "최우선 사항"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "fixed price",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "정가"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "have control over",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~을 제어하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "have little chance of -ing",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~할 확률이 적다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "in favor of",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~에 찬성하여, ~에 이익이 되도록"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "keep A informed of B",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "A에게 B에 대해 알려주다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "make an assessment",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "평가를 내리다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "mediate",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "중재하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "minimize the risk of",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~의 위험을 최소화하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "modestly",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "겸손하게"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "persistent",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "끊임없는, 계속되는"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "publicity",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "선전, (대중매체의) 관심"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "release date",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "발표 일시"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "stay competitive",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "경쟁력을 유지하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "striking difference",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "두드러지는 차이점"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "take a long time",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "오래 걸리다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "take action",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "조치를 취하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "trademark",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "상표"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "turn to",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~쪽으로 향하다, ~에 의지하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "unacceptable",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "받아들일 수 없는"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "verify",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "증명하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "with the exception of",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~을 제외하고"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "without notice",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "예고 없이"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    }
+]

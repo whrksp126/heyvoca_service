@@ -1,0 +1,1202 @@
+[
+    {
+        "origin": "a large attendance",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "많은 참석자들"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "attend a conference",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "학술 발표회에 참석하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "business attire",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "비즈니스 정장"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "conference call",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "전화 회담"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "convention",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "회의, 집회"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "face to face",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "서로 얼굴을 맞대고"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "film footage",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "자료 화면"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "get an appointment",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "약속을 잡다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "get back in touch",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "다시 연락이 되다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "get in touch with",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~와 연락을 취하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "give a presentation",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "발표를 하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "have a discussion",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "토론하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "keynote address",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "기조연설"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "keynote speaker",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "기조연설자"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "make a speech",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "연설하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "make adjustments",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "조정하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "pass around",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~을 차례로 돌리다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "pass out",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~을 나누어 주다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "put in an offer",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "제안하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "run a meeting",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "회의를 진행하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "schedule an appointment",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "약속을 잡다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "speak up",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "(큰 소리로) 말하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "stare into",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~을 응시하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "take down",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~을 적다, 내리다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "take notes",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "기록하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "take part in",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~에 참가하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "visual aid",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "시각 보조 자료"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "conventional",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "흔히 있는, 전통적인"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "custom",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "관습, 풍습"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "hold back",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "자제하다, 억제하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "intense",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "극심한, 강렬한"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "misprint",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "오식"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "occupied",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "바쁜, 사용 중인"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "professional",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "전문적인; n. 전문가"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "prompt",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "신속한; v. 촉구하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "reach a decision",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "결론을 내리다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "stay alert",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "방심하지 않다, 기민하게 대처하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "strategic maneuver",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "전략적 조치"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "talk over",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~에 대해 상세히 논의하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "technical jargon",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "전문 용어"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "tight schedule",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "빡빡한 일정"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "unanimous consent",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "만장일치 동의"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "voices one's opinion",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "의견을 내다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "wait until regular hours",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "정규 시간까지 기다리다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "well-defined",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "명확히 정의된"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "within minutes",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "몇 분 내에"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "word for word",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "글자 그대로"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "workable solution",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "실행 가능한 해결책"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "participate in",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~에 참가하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "to start with",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "우선, 첫째로"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "arrange a conference",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "회의를 준비하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "be supposed to do",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~하기로 되어 있다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "biweekly",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "격주의; adv. 격주로"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "bring up",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "(문제를) 제기하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "clash",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "(의견의) 충돌, 불일치"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "come to a decision",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "결정을 내리다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "come to an agreement",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "합의에 도달하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "controversial",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "논쟁의 여지가 있는"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "develop into",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~으로 발전하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "get the point",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "요점을 이해하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "in conclusion",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "결론적으로"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "in support of",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~을 지지하여"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "in the middle of",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~ 도중에"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "insist",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "주장하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "insult",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "모욕하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "inviting",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "매력적인, 솔깃한"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "luncheon",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "오찬, 점심"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "make a conclusion",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "결론을 내리다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "make a decision",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "결정하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "offer an apology to A",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "A에게 사과하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "official arrangement",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "공식적인 합의"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "OJT (on-the-job training)",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "사내 교육, 현장 직무 교육"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "opponent",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "반대자, 적수"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "postpone until",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~까지 연기하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "public speaking",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "강연, 연설"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "reach a conclusion",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "결론에 이르다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "reach unanimous agreement",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "만장일치로 합의하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "reassure",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "안심시키다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "recess",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "휴회"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "slot",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "시간, 틈"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "to the point",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "적절한, 핵심을 찌르는"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "turn out",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~으로 판명되다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "without the consent of",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~의 동의 없이"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "brief overview",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "간략한 개요"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "call a meeting",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "회의를 소집하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "come to a consensus",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "의견 일치를 보다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "confirm the date",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "날짜를 확정하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "distribute handouts",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "유인물을 배포하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "give a talk",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "이야기하다, 강연하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "in response to",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~에 대한 대응으로"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "keep everyone informed",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "모두에게 계속해서 소식을 알리다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "on short notice",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "갑작스러운 통보에도 불구하고"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "provide an update",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "최신 상황을 알려주다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "stay on schedule",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "일정을 지키다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "strictly confidential",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "극비인"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "take the initiative",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "주도권을 잡다, 솔선수범하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "unforeseen circumstances",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "예기치 못한 상황"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "voice a concern",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "우려를 표명하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "within the group",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "그룹 내에서"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "write down the minutes",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "회의록을 작성하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    }
+]

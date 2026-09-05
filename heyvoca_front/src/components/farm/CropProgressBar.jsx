@@ -17,7 +17,7 @@ const TONE = {
   primary: { fill: 'var(--primary-main-600)', gain: 'var(--primary-main-300)' },
   // 진화한 순간에만 초록이 된다
   up: { fill: 'var(--status-success-600)', gain: 'var(--status-success-300)' },
-  // 오답 — 늘지도 줄지도 않는다
+  // 오답 — 줄어든다. FSRS 가 안정성을 깎으므로 다음 단계까지의 거리가 실제로 멀어진다
   ng: { fill: '#D9A15C', gain: '#D9A15C' },
 };
 
@@ -31,6 +31,11 @@ const clamp = (n) => Math.max(0, Math.min(100, Number(n) || 0));
  * @param {'primary'|'up'|'ng'} props.tone
  * @param {number|string} props.width  막대 최대 폭 (기본 132px — 시안 `.fb .tk{max-width:132px}`)
  * @param {number} props.height 막대 두께 (기본 5px. 좁은 형 `.fb.sm .tk` 는 4px)
+ * @param {number} props.delay  채우기 시작을 늦추는 초 — 앞선 연출이 끝난 뒤 차오르게 할 때
+ * @param {boolean} props.showGain  오른 구간을 밝게 덧칠할지. 이번에 오른 만큼을 구분해 보여
+ *   주는 장치라, 0 에서 새로 채우는 막대(진화 직후 새 단계)에서는 꺼야 한다 —
+ *   그 경우 막대 전체가 '오른 구간'이 되어 통째로 밝은 색이 되고, 다른 회차의 같은 막대와
+ *   색이 달라진다.
  * @param {string} props.className
  */
 const CropProgressBar = ({
@@ -40,12 +45,17 @@ const CropProgressBar = ({
   tone = 'primary',
   width = 132,
   height = 5,
+  delay = 0,
+  showGain = true,
   className = '',
 }) => {
   const from = clamp(pctFrom);
   const to = clamp(pctTo);
   const color = TONE[tone] || TONE.primary;
-  const gained = !grew && to > from;
+  const gained = showGain && !grew && to > from;
+  // 줄어든 구간 — 사라진 자리를 잠깐 비춰 줘야 '줄었다'가 읽힌다.
+  // 막대만 스르륵 짧아지면 어디까지 있었는지 알 수 없어 그냥 짧은 막대로 보인다.
+  const lost = !grew && to < from;
 
   /*
     진화: 이전 진행률 → 100% → 0% → 새 단계 진행률.
@@ -70,9 +80,9 @@ const CropProgressBar = ({
     : { width: `${to}%` };
   const fillTransition = grew
     ? (resets
-      ? { duration: 0.9, times: [0, 0.42, 0.62, 0.7, 1], ease: ['easeOut', 'linear', 'easeIn', 'easeOut'] }
-      : { duration: 0.5, ease: 'easeOut' })
-    : { duration: 0.45, ease: 'easeOut' };
+      ? { duration: 0.9, delay, times: [0, 0.42, 0.62, 0.7, 1], ease: ['easeOut', 'linear', 'easeIn', 'easeOut'] }
+      : { duration: 0.5, delay, ease: 'easeOut' })
+    : { duration: 0.45, delay, ease: 'easeOut' };
 
   return (
     <span
@@ -95,7 +105,19 @@ const CropProgressBar = ({
           style={{ backgroundColor: color.gain, left: `${from}%` }}
           initial={{ width: 0, opacity: 0 }}
           animate={{ width: `${to - from}%`, opacity: 1 }}
-          transition={{ duration: 0.45, ease: 'easeOut' }}
+          transition={{ duration: 0.45, delay, ease: 'easeOut' }}
+        />
+      )}
+      {lost && (
+        // 줄어든 구간 — 있던 자리에 그대로 서 있다가 사라진다.
+        // 같이 짧아지게 하면 채워진 막대와 붙어서 움직여 경계가 안 보인다.
+        <motion.span
+          key={`lost-${from}-${to}`}
+          className="absolute top-0 bottom-0 rounded-[99px]"
+          style={{ backgroundColor: color.gain, left: `${to}%`, width: `${from - to}%` }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: [0, 0.85, 0.85, 0] }}
+          transition={{ duration: 0.8, times: [0, 0.12, 0.55, 1], ease: 'easeOut' }}
         />
       )}
     </span>

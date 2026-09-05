@@ -1,0 +1,868 @@
+[
+    {
+        "origin": "lax",
+        "pronunciations": {
+            "us": "læks"
+        },
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "(행동 등이) 느슨한, 규율에 못 미치는"
+            }
+        ],
+        "notes": "As of late, the staff has been rather <strong class=\"target-word\">lax</strong> in turning in reports. 최근에 직원들은 보고서를 제출하는 데 다소 느슨했다.",
+        "examples": [
+            {
+                "origin": "As of late, the staff has been rather <span class=\"target-word\">lax</span> in turning in reports.",
+                "translation": "최근에 직원들은 보고서를 제출하는 데 다소 느슨했다."
+            }
+        ]
+    },
+    {
+        "origin": "procrastinate",
+        "pronunciations": {
+            "us": "proʊkræstɪneɪt"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "미루다, 꾸물거리다"
+            }
+        ],
+        "notes": "Mr. Jones <strong class=\"target-word\">procrastinated</strong> with his fund request and missed the deadline. Mr. Jones는 자금 신청을 미루다가 마감일을 지키지 못했다.",
+        "examples": [
+            {
+                "origin": "Mr. Jones <span class=\"target-word\">procrastinated</span> with his fund request and missed the deadline.",
+                "translation": "Mr. Jones는 자금 신청을 미루다가 마감일을 지키지 못했다."
+            }
+        ]
+    },
+    {
+        "origin": "combined",
+        "pronunciations": {
+            "us": "kəmbaɪnd"
+        },
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "결합된, 합동의"
+            }
+        ],
+        "notes": "Retail Specialists employs professionals with a <strong class=\"target-word\">combined</strong> experience of 30 years in sales. Retail Specialists사는 영업 분야에서 종합 30년의 경력을 가진 전문가들을 고용한다.",
+        "examples": [
+            {
+                "origin": "Retail Specialists employs professionals with a <span class=\"target-word\">combined</span> experience of 30 years in sales.",
+                "translation": "Retail Specialists사는 영업 분야에서 종합 30년의 경력을 가진 전문가들을 고용한다."
+            }
+        ]
+    },
+    {
+        "origin": "accomplish",
+        "pronunciations": {
+            "us": "əkɑːmplɪʃ",
+            "uk": "əkʌmplɪʃ"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "성취하다"
+            }
+        ],
+        "notes": "Careful planning is essential for <strong class=\"target-word\">accomplishing</strong> goals. 세심한 계획은 목표를 성취하는 데 필수적이다.",
+        "examples": [
+            {
+                "origin": "Careful planning is essential for <span class=\"target-word\">accomplishing</span> goals.",
+                "translation": "세심한 계획은 목표를 성취하는 데 필수적이다."
+            }
+        ]
+    },
+    {
+        "origin": "voluntarily",
+        "pronunciations": {
+            "us": "vɑːlənterəli",
+            "uk": "vɒləntrəli"
+        },
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "자발적으로"
+            }
+        ],
+        "notes": "He <strong class=\"target-word\">voluntarily</strong> took on the challenging assignment in order to gain experience. 그는 경험을 쌓기 위해 힘든 업무를 자발적으로 맡았다.",
+        "examples": [
+            {
+                "origin": "He <span class=\"target-word\">voluntarily</span> took on the challenging assignment in order to gain experience.",
+                "translation": "그는 경험을 쌓기 위해 힘든 업무를 자발적으로 맡았다."
+            }
+        ]
+    },
+    {
+        "origin": "undertake",
+        "pronunciations": {
+            "us": "ˌʌndərteɪk",
+            "uk": "ˌʌndəteɪk"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "(일을) 떠맡다"
+            }
+        ],
+        "notes": "She had to <strong class=\"target-word\">undertake</strong> the task on short notice. 그녀는 갑자기 업무를 떠맡아야만 했다.",
+        "examples": [
+            {
+                "origin": "She had to <span class=\"target-word\">undertake</span> the task on short notice.",
+                "translation": "그녀는 갑자기 업무를 떠맡아야만 했다."
+            }
+        ]
+    },
+    {
+        "origin": "assume",
+        "pronunciations": {
+            "us": "əsuːm",
+            "uk": "əsjuːm"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "(증거는 없으나) 사실이라고 생각하다; (책임·역할을) 맡다"
+            }
+        ],
+        "notes": "The management <strong class=\"target-word\">assumes</strong> employees are satisfied. 경영진은 직원들이 만족하고 있다고 생각한다.<br>The marketing department will <strong class=\"target-word\">assume</strong> responsibility for the project. 마케팅 부서가 그 프로젝트에 대한 책임을 맡을 것이다.",
+        "examples": [
+            {
+                "origin": "The management <span class=\"target-word\">assumes</span> employees are satisfied.",
+                "translation": "경영진은 직원들이 만족하고 있다고 생각한다."
+            },
+            {
+                "origin": "The marketing department will <span class=\"target-word\">assume</span> responsibility for the project.",
+                "translation": "마케팅 부서가 그 프로젝트에 대한 책임을 맡을 것이다."
+            }
+        ]
+    },
+    {
+        "origin": "occasionally",
+        "pronunciations": {
+            "us": "əkeɪʒənəli"
+        },
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "가끔, 때때로"
+            }
+        ],
+        "notes": "Staff should <strong class=\"target-word\">occasionally</strong> take time to relax so they do not get tired. 직원들은 지치지 않기 위해 가끔 휴식을 취하는 시간을 가져야 한다.",
+        "examples": [
+            {
+                "origin": "Staff should <span class=\"target-word\">occasionally</span> take time to relax so they do not get tired.",
+                "translation": "직원들은 지치지 않기 위해 가끔 휴식을 취하는 시간을 가져야 한다."
+            }
+        ]
+    },
+    {
+        "origin": "employee",
+        "pronunciations": {
+            "us": "ɪmplɔɪiː"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "직원, 고용인"
+            }
+        ],
+        "notes": "There are only three <strong class=\"target-word\">employees</strong> working under Ms. Anderson. Ms. Anderson 밑에서 일하는 직원은 단 세 명뿐이다.",
+        "examples": [
+            {
+                "origin": "There are only three <span class=\"target-word\">employees</span> working under Ms. Anderson.",
+                "translation": "Ms. Anderson 밑에서 일하는 직원은 단 세 명뿐이다."
+            }
+        ]
+    },
+    {
+        "origin": "assist",
+        "pronunciations": {
+            "us": "əsɪst"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "돕다, 조력하다"
+            }
+        ],
+        "notes": "A staff member <strong class=\"target-word\">assisted</strong> with preparations for the conference. 한 직원이 회담 준비를 도왔다.",
+        "examples": [
+            {
+                "origin": "A staff member <span class=\"target-word\">assisted</span> with preparations for the conference.",
+                "translation": "한 직원이 회담 준비를 도왔다."
+            }
+        ]
+    },
+    {
+        "origin": "satisfied",
+        "pronunciations": {
+            "us": "sætɪsfaɪd"
+        },
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "만족하는, 만족스러워하는"
+            }
+        ],
+        "notes": "Not everyone was <strong class=\"target-word\">satisfied</strong> with changes to the overtime policy. 초과 근무 정책 변경에 대해 모두가 만족하지는 않았다.",
+        "examples": [
+            {
+                "origin": "Not everyone was <span class=\"target-word\">satisfied</span> with changes to the overtime policy.",
+                "translation": "초과 근무 정책 변경에 대해 모두가 만족하지는 않았다."
+            }
+        ]
+    },
+    {
+        "origin": "manner",
+        "pronunciations": {
+            "us": "mænər",
+            "uk": "mænə"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "방식; 태도"
+            }
+        ],
+        "notes": "Sean was annoyed by the <strong class=\"target-word\">manner</strong> in which his boss gave him orders. Sean은 상사가 그에게 지시하는 방식에 불쾌해졌다.",
+        "examples": [
+            {
+                "origin": "Sean was annoyed by the <span class=\"target-word\">manner</span> in which his boss gave him orders.",
+                "translation": "Sean은 상사가 그에게 지시하는 방식에 불쾌해졌다."
+            }
+        ]
+    },
+    {
+        "origin": "responsible",
+        "pronunciations": {
+            "us": "rɪspɑːnsəbl",
+            "uk": "rɪspɒnsəbl"
+        },
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "책임이 있는, 책임져야 할"
+            }
+        ],
+        "notes": "Businesses are <strong class=\"target-word\">responsible</strong> for ensuring customer satisfaction. 기업들은 고객 만족을 보장할 책임이 있다.",
+        "examples": [
+            {
+                "origin": "Businesses are <span class=\"target-word\">responsible</span> for ensuring customer satisfaction.",
+                "translation": "기업들은 고객 만족을 보장할 책임이 있다."
+            }
+        ]
+    },
+    {
+        "origin": "conduct",
+        "pronunciations": {
+            "us": "kəndʌkt"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "(업무 등을) 수행하다"
+            }
+        ],
+        "notes": "IJMR Ltd.'s technology department will <strong class=\"target-word\">conduct</strong> the research study. IJMR사의 기술 부서가 조사 연구를 할 것이다.",
+        "examples": [
+            {
+                "origin": "IJMR Ltd.'s technology department will <span class=\"target-word\">conduct</span> the research study.",
+                "translation": "IJMR사의 기술 부서가 조사 연구를 할 것이다."
+            }
+        ]
+    },
+    {
+        "origin": "adjust",
+        "pronunciations": {
+            "us": "ədʒʌst"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "적응하다"
+            }
+        ],
+        "notes": "The employees quickly <strong class=\"target-word\">adjusted</strong> to the new e-mail system. 직원들은 새로운 이메일 시스템에 빠르게 적응했다.",
+        "examples": [
+            {
+                "origin": "The employees quickly <span class=\"target-word\">adjusted</span> to the new e-mail system.",
+                "translation": "직원들은 새로운 이메일 시스템에 빠르게 적응했다."
+            }
+        ]
+    },
+    {
+        "origin": "personnel",
+        "pronunciations": {
+            "us": "ˌpɜːrsənel",
+            "uk": "ˌpɜːsənel"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "(집합적) 직원, 인원; 인사과"
+            }
+        ],
+        "notes": "We often use an agency to find reliable temporary <strong class=\"target-word\">personnel</strong>. 우리는 믿을 만한 임시 직원을 구하기 위해 중개업소를 자주 이용한다.",
+        "examples": [
+            {
+                "origin": "We often use an agency to find reliable temporary <span class=\"target-word\">personnel</span>.",
+                "translation": "우리는 믿을 만한 임시 직원을 구하기 위해 중개업소를 자주 이용한다."
+            }
+        ]
+    },
+    {
+        "origin": "agree",
+        "pronunciations": {
+            "us": "əɡriː"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "동의하다"
+            }
+        ],
+        "notes": "The team <strong class=\"target-word\">agreed</strong> on the recommendations of the advisor. 그 팀은 고문의 권고에 동의했다.",
+        "examples": [
+            {
+                "origin": "The team <span class=\"target-word\">agreed</span> on the recommendations of the advisor.",
+                "translation": "그 팀은 고문의 권고에 동의했다."
+            }
+        ]
+    },
+    {
+        "origin": "supervise",
+        "pronunciations": {
+            "us": "suːpərvaɪz",
+            "uk": "suːpəvaɪz"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "감독하다, 지도하다"
+            }
+        ],
+        "notes": "Ms. Wilson <strong class=\"target-word\">supervises</strong> the employees in sector B. Ms. Wilson은 B구역의 직원들을 감독한다.",
+        "examples": [
+            {
+                "origin": "Ms. Wilson <span class=\"target-word\">supervises</span> the employees in sector B.",
+                "translation": "Ms. Wilson은 B구역의 직원들을 감독한다."
+            }
+        ]
+    },
+    {
+        "origin": "coworker",
+        "pronunciations": {
+            "us": "koʊwɜːrkər",
+            "uk": "kəʊwɜːkə"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "동료, 협력자"
+            }
+        ],
+        "notes": "Coworkers who live near each other often travel to work together. 서로 가까이에 사는 동료들은 종종 함께 출근한다.",
+        "examples": [
+            {
+                "origin": "<span class=\"target-word\">Coworkers</span> who live near each other often travel to work together.",
+                "translation": "서로 가까이에 사는 동료들은 종종 함께 출근한다."
+            }
+        ]
+    },
+    {
+        "origin": "direct",
+        "pronunciations": {
+            "us": "dərekt",
+            "uk": "daɪrekt"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "~에게 길을 안내하다, 가르쳐 주다"
+            }
+        ],
+        "notes": "The receptionist <strong class=\"target-word\">directs</strong> new employees to the auditorium where orientation will be held. 접수원은 신입 직원들을 오리엔테이션이 열릴 강당으로 안내한다.",
+        "examples": [
+            {
+                "origin": "The receptionist <span class=\"target-word\">directs</span> new employees to the auditorium where orientation will be held.",
+                "translation": "접수원은 신입 직원들을 오리엔테이션이 열릴 강당으로 안내한다."
+            }
+        ]
+    },
+    {
+        "origin": "confidential",
+        "pronunciations": {
+            "us": "ˌkɑːnfɪdenʃəl",
+            "uk": "ˌkɒnfɪdenʃəl"
+        },
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "기밀의, 내밀한"
+            }
+        ],
+        "notes": "Internal documents must be kept <strong class=\"target-word\">confidential</strong>. 내부 문서는 기밀로 유지되어야 한다.",
+        "examples": [
+            {
+                "origin": "Internal documents must be kept <span class=\"target-word\">confidential</span>.",
+                "translation": "내부 문서는 기밀로 유지되어야 한다."
+            }
+        ]
+    },
+    {
+        "origin": "assign",
+        "pronunciations": {
+            "us": "əsaɪn"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "배정하다, 할당하다"
+            }
+        ],
+        "notes": "The office manager <strong class=\"target-word\">assigned</strong> desks to the new recruits. 사무실 관리자가 신입 사원들에게 책상을 배정해 주었다.",
+        "examples": [
+            {
+                "origin": "The office manager <span class=\"target-word\">assigned</span> desks to the new recruits.",
+                "translation": "사무실 관리자가 신입 사원들에게 책상을 배정해 주었다."
+            }
+        ]
+    },
+    {
+        "origin": "leading",
+        "pronunciations": {
+            "us": "liːdɪŋ"
+        },
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "선도적인, 일류의, 가장 중요한, 선두적인"
+            }
+        ],
+        "notes": "Shepherd Inc. is a <strong class=\"target-word\">leading</strong> exporter in the wood furniture industry. Shepherd사는 목재 가구 업계의 선도적인 수출업체이다.",
+        "examples": [
+            {
+                "origin": "Shepherd Inc. is a <span class=\"target-word\">leading</span> exporter in the wood furniture industry.",
+                "translation": "Shepherd사는 목재 가구 업계의 선도적인 수출업체이다."
+            }
+        ]
+    },
+    {
+        "origin": "formal",
+        "pronunciations": {
+            "us": "fɔːrməl",
+            "uk": "fɔːməl"
+        },
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "격식을 갖춘"
+            }
+        ],
+        "notes": "The awards ceremony requires wearing <strong class=\"target-word\">formal</strong> business attire. 시상식은 격식을 갖춘 정장을 착용하는 것을 요구한다.",
+        "examples": [
+            {
+                "origin": "The awards ceremony requires wearing <span class=\"target-word\">formal</span> business attire.",
+                "translation": "시상식은 격식을 갖춘 정장을 착용하는 것을 요구한다."
+            }
+        ]
+    },
+    {
+        "origin": "remove",
+        "pronunciations": {
+            "us": "rɪmuːv"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "해임하다, 제거하다"
+            }
+        ],
+        "notes": "The vice president was <strong class=\"target-word\">removed</strong> from his position because of a scandal. 그 부사장은 스캔들 때문에 직위에서 해임되었다.",
+        "examples": [
+            {
+                "origin": "The vice president was <span class=\"target-word\">removed</span> from his position because of a scandal.",
+                "translation": "그 부사장은 스캔들 때문에 직위에서 해임되었다."
+            }
+        ]
+    },
+    {
+        "origin": "collect",
+        "pronunciations": {
+            "us": "kəlekt"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "모으다, 수집하다"
+            }
+        ],
+        "notes": "The author <strong class=\"target-word\">collected</strong> management ideas from around the world for his book. 그 작가는 그의 책을 위해 전 세계에서 경영 지식을 모았다.",
+        "examples": [
+            {
+                "origin": "The author <span class=\"target-word\">collected</span> management ideas from around the world for his book.",
+                "translation": "그 작가는 그의 책을 위해 전 세계에서 경영 지식을 모았다."
+            }
+        ]
+    },
+    {
+        "origin": "coordinate",
+        "pronunciations": {
+            "us": "koʊɔːrdɪneɪt",
+            "uk": "kəʊɔːdɪneɪt"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "조정하다"
+            }
+        ],
+        "notes": "The Chicago office <strong class=\"target-word\">coordinated</strong> the planning process. 시카고 지사가 기획 과정을 조정했다.",
+        "examples": [
+            {
+                "origin": "The Chicago office <span class=\"target-word\">coordinated</span> the planning process.",
+                "translation": "시카고 지사가 기획 과정을 조정했다."
+            }
+        ]
+    },
+    {
+        "origin": "hardly",
+        "pronunciations": {
+            "us": "hɑːrdli",
+            "uk": "hɑːdli"
+        },
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "거의 ~하지 않다"
+            }
+        ],
+        "notes": "She was <strong class=\"target-word\">hardly</strong> ever late for her shift. 그녀는 좀처럼 교대 근무 시간에 늦지 않았다.",
+        "examples": [
+            {
+                "origin": "She was <span class=\"target-word\">hardly</span> ever late for her shift.",
+                "translation": "그녀는 좀처럼 교대 근무 시간에 늦지 않았다."
+            }
+        ]
+    },
+    {
+        "origin": "abstract",
+        "pronunciations": {
+            "us": "æbstrækt"
+        },
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "추상적인; 막연한"
+            }
+        ],
+        "notes": "Copland spent thousands of dollars on an <strong class=\"target-word\">abstract</strong> painting for the lobby. Copland사는 로비에 걸 추상화에 수천 달러를 썼다.<br>Ideals such as loyalty may seem <strong class=\"target-word\">abstract</strong>, so employees need specific examples. 충성과 같은 이상은 막연한 것처럼 보일 수 있어서 직원들에게는 구체적인 사례가 필요하다.",
+        "examples": [
+            {
+                "origin": "Copland spent thousands of dollars on an <span class=\"target-word\">abstract</span> painting for the lobby.",
+                "translation": "Copland사는 로비에 걸 추상화에 수천 달러를 썼다."
+            },
+            {
+                "origin": "Ideals such as loyalty may seem <span class=\"target-word\">abstract</span>, so employees need specific examples.",
+                "translation": "충성과 같은 이상은 막연한 것처럼 보일 수 있어서 직원들에게는 구체적인 사례가 필요하다."
+            }
+        ]
+    },
+    {
+        "origin": "directory",
+        "pronunciations": {
+            "us": "dərektəri",
+            "uk": "daɪrektəri"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "주소록"
+            }
+        ],
+        "notes": "The company <strong class=\"target-word\">directory</strong> shows where the marketing department is. 회사 주소록은 마케팅 부서가 어디에 있는지 알려 준다.",
+        "examples": [
+            {
+                "origin": "The company <span class=\"target-word\">directory</span> shows where the marketing department is.",
+                "translation": "회사 주소록은 마케팅 부서가 어디에 있는지 알려 준다."
+            }
+        ]
+    },
+    {
+        "origin": "accountable",
+        "pronunciations": {
+            "us": "əkaʊntəbl"
+        },
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "책임이 있는"
+            }
+        ],
+        "notes": "All employees are <strong class=\"target-word\">accountable</strong> for the duties they have been assigned to complete. 모든 직원들은 완료하도록 배정된 임무에 대한 책임이 있다.",
+        "examples": [
+            {
+                "origin": "All employees are <span class=\"target-word\">accountable</span> for the duties they have been assigned to complete.",
+                "translation": "모든 직원들은 완료하도록 배정된 임무에 대한 책임이 있다."
+            }
+        ]
+    },
+    {
+        "origin": "skillfully",
+        "pronunciations": {
+            "us": "skɪlfəli"
+        },
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "능숙하게, 솜씨 있게"
+            }
+        ],
+        "notes": "Brenda <strong class=\"target-word\">skillfully</strong> edited the report to fit on one page. Brenda는 보고서가 한 페이지에 들어갈 수 있도록 능숙하게 편집했다.",
+        "examples": [
+            {
+                "origin": "Brenda <span class=\"target-word\">skillfully</span> edited the report to fit on one page.",
+                "translation": "Brenda는 보고서가 한 페이지에 들어갈 수 있도록 능숙하게 편집했다."
+            }
+        ]
+    },
+    {
+        "origin": "exclusive",
+        "pronunciations": {
+            "us": "ɪkskluːsɪv"
+        },
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "독점적인; 배타적인"
+            }
+        ],
+        "notes": "Delegates with special passes have <strong class=\"target-word\">exclusive</strong> access to a tour of the facilities. 특별 통행증을 가진 대표들은 시설 견학에 참가할 독점적인 권리를 갖는다.",
+        "examples": [
+            {
+                "origin": "Delegates with special passes have <span class=\"target-word\">exclusive</span> access to a tour of the facilities.",
+                "translation": "특별 통행증을 가진 대표들은 시설 견학에 참가할 독점적인 권리를 갖는다."
+            }
+        ]
+    },
+    {
+        "origin": "intention",
+        "pronunciations": {
+            "us": "ɪntenʃən"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "의지, 의향"
+            }
+        ],
+        "notes": "She had every <strong class=\"target-word\">intention</strong> of attending the conference, but could not. 그녀는 회의에 꼭 참석하려고 했지만, 그렇게 하지 못했다.",
+        "examples": [
+            {
+                "origin": "She had every <span class=\"target-word\">intention</span> of attending the conference, but could not.",
+                "translation": "그녀는 회의에 꼭 참석하려고 했지만, 그렇게 하지 못했다."
+            }
+        ]
+    },
+    {
+        "origin": "transform",
+        "pronunciations": {
+            "us": "trænsfɔːrm",
+            "uk": "trænsfɔːm"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "바꾸다, 변모시키다"
+            }
+        ],
+        "notes": "Computerization has <strong class=\"target-word\">transformed</strong> the way companies do business. 전산화는 기업들이 사업하는 방식을 바꿨다.",
+        "examples": [
+            {
+                "origin": "Computerization has <span class=\"target-word\">transformed</span> the way companies do business.",
+                "translation": "전산화는 기업들이 사업하는 방식을 바꿨다."
+            }
+        ]
+    },
+    {
+        "origin": "respectful",
+        "pronunciations": {
+            "us": "rɪspektfəl"
+        },
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "정중한, 존중하는"
+            }
+        ],
+        "notes": "Sales clerks are reminded to be <strong class=\"target-word\">respectful</strong> to all clients. 판매 사원들은 모든 고객에게 정중해야 함을 상기하기 바랍니다.",
+        "examples": [
+            {
+                "origin": "Sales clerks are reminded to be <span class=\"target-word\">respectful</span> to all clients.",
+                "translation": "판매 사원들은 모든 고객에게 정중해야 함을 상기하기 바랍니다."
+            }
+        ]
+    },
+    {
+        "origin": "duplicate",
+        "pronunciations": {
+            "us": "duːplɪkət",
+            "uk": "djuːplɪkət"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "사본"
+            }
+        ],
+        "notes": "A <strong class=\"target-word\">duplicate</strong> of each contract is kept in the company records. 각 계약서의 사본 한 부는 회사 기록에 보관될 것이다.",
+        "examples": [
+            {
+                "origin": "A <span class=\"target-word\">duplicate</span> of each contract is kept in the company records.",
+                "translation": "각 계약서의 사본 한 부는 회사 기록에 보관될 것이다."
+            }
+        ]
+    },
+    {
+        "origin": "contrary",
+        "pronunciations": {
+            "us": "kɑːntreri",
+            "uk": "kɒntrəri"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "반대"
+            }
+        ],
+        "notes": "TechWorld is in financial trouble, despite claims to the <strong class=\"target-word\">contrary</strong>. TechWorld사는 그렇지 않다는 주장에도 불구하고 재정난에 처해 있다.",
+        "examples": [
+            {
+                "origin": "TechWorld is in financial trouble, despite claims to the <span class=\"target-word\">contrary</span>.",
+                "translation": "TechWorld사는 그렇지 않다는 주장에도 불구하고 재정난에 처해 있다."
+            }
+        ]
+    },
+    {
+        "origin": "disturbing",
+        "pronunciations": {
+            "us": "dɪstɜːrbɪŋ",
+            "uk": "dɪstɜːbɪŋ"
+        },
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "충격적인, 불안감을 주는, 방해하는"
+            }
+        ],
+        "notes": "Shareholders found reports of the CEO's incompetence <strong class=\"target-word\">disturbing</strong>. 주주들은 그 최고 경영자의 무능함에 대한 보도가 충격적이라고 생각했다.",
+        "examples": [
+            {
+                "origin": "Shareholders found reports of the CEO's incompetence <span class=\"target-word\">disturbing</span>.",
+                "translation": "주주들은 그 최고 경영자의 무능함에 대한 보도가 충격적이라고 생각했다."
+            }
+        ]
+    },
+    {
+        "origin": "engage",
+        "pronunciations": {
+            "us": "ɪnɡeɪdʒ"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "관여하다, 종사하다"
+            }
+        ],
+        "notes": "Each worker was <strong class=\"target-word\">engaged</strong> in at least two projects. 각 직원이 최소 두 프로젝트에 관여했다.",
+        "examples": [
+            {
+                "origin": "Each worker was <span class=\"target-word\">engaged</span> in at least two projects.",
+                "translation": "각 직원이 최소 두 프로젝트에 관여했다."
+            }
+        ]
+    },
+    {
+        "origin": "foster",
+        "pronunciations": {
+            "us": "fɔːstər",
+            "uk": "fɒstə"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "촉진하다, 육성하다"
+            }
+        ],
+        "notes": "Staff dinners helped <strong class=\"target-word\">foster</strong> better work relations. 직원 저녁 식사 모임은 보다 나은 업무 관계를 촉진하는 데 도움이 되었다.",
+        "examples": [
+            {
+                "origin": "Staff dinners helped <span class=\"target-word\">foster</span> better work relations.",
+                "translation": "직원 저녁 식사 모임은 보다 나은 업무 관계를 촉진하는 데 도움이 되었다."
+            }
+        ]
+    },
+    {
+        "origin": "neutrality",
+        "pronunciations": {
+            "us": "nuːtræləti",
+            "uk": "njuːtræləti"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "중립성, 중립"
+            }
+        ],
+        "notes": "Managers must display complete <strong class=\"target-word\">neutrality</strong> in disagreements between employees. 관리자들은 직원들 사이의 다툼에서 완벽한 중립성을 보여야 한다.",
+        "examples": [
+            {
+                "origin": "Managers must display complete <span class=\"target-word\">neutrality</span> in disagreements between employees.",
+                "translation": "관리자들은 직원들 사이의 다툼에서 완벽한 중립성을 보여야 한다."
+            }
+        ]
+    },
+    {
+        "origin": "widely",
+        "pronunciations": {
+            "us": "waɪdli"
+        },
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "널리"
+            }
+        ],
+        "notes": "Ben Hurley is a <strong class=\"target-word\">widely</strong> admired business leader. Ben Hurley는 널리 존경받는 재계 리더이다.",
+        "examples": [
+            {
+                "origin": "Ben Hurley is a <span class=\"target-word\">widely</span> admired business leader.",
+                "translation": "Ben Hurley는 널리 존경받는 재계 리더이다."
+            }
+        ]
+    },
+    {
+        "origin": "externally",
+        "pronunciations": {
+            "us": "ɪkstɜːrnəli",
+            "uk": "ɪkstɜːnəli"
+        },
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "외부에서, 외부적으로"
+            }
+        ],
+        "notes": "Most of the company's marketing is handled <strong class=\"target-word\">externally</strong> through contractors. 대부분의 회사 마케팅은 도급업자들을 통해 외부에서 처리된다.",
+        "examples": [
+            {
+                "origin": "Most of the company's marketing is handled <span class=\"target-word\">externally</span> through contractors.",
+                "translation": "대부분의 회사 마케팅은 도급업자들을 통해 외부에서 처리된다."
+            }
+        ]
+    }
+]

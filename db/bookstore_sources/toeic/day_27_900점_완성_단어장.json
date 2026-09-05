@@ -1,0 +1,394 @@
+[
+    {
+        "origin": "arbitrary",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "임의적인, 자의적인"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "bequeath",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "물려주다, 유증하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "bonus",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "보너스, 장려금"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "brokerage",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "중개, 중개 수수료"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "commodity",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "상품, 일용품"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "depreciate",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "가치가 떨어지다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "diversification",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "다양화, 다각화"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "downsize",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "규모를 축소하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "earnings",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "수입, 소득"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "feasible",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "실행 가능한"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "financial statement",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "재무제표"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "fluctuation",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "변동, 오르내림"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "hedge",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "(위험 등을) 방지하다, 대비하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "inflation",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "인플레이션, 물가 상승"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "intangible",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "무형의"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "investment firm",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "투자 회사"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "joint venture",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "합작 투자"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "liability",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "부채, 책임"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "mutual fund",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "뮤추얼 펀드"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "net profit",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "순이익"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "pension",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "연금"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "plummet",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "폭락하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "portfolio",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "포트폴리오"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "premium",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "보험료"
+            },
+            {
+                "pos": "adj",
+                "text": "우수한"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "profitability",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "수익성"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "prospectus",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "(투자) 안내서"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "recede",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "물러나다, 약해지다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "shareholder",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "주주"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "soar",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "치솟다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "stagnant",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "정체된, 침체된"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "subsidiary",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "자회사"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "volatile",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "휘발성의"
+            },
+            {
+                "pos": "",
+                "text": "변덕스러운"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    }
+]

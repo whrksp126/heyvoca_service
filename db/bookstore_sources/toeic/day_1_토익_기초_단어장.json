@@ -1,0 +1,346 @@
+[
+    {
+        "origin": "application form",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "신청서"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "career",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "직업, 경력"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "completion",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "완료, 완성"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "fair",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "공정한, 타당한"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "graduation",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "졸업"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "in fact",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "사실은"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "job fair",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "취업 박람회"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "job offer",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "일자리 제안"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "list",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "목록, 명단"
+            },
+            {
+                "pos": "v",
+                "text": "목록에 기입하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "newcomer",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "새로 온 사람, 신입사원"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "part-time",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "파트타임의, 시간제의"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "previous job",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "이전 직업"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "secretary",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "비서"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "send in",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~을 제출하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "tidy",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "단정한, 깔끔한"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "trainee",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "훈련받는 사람"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "apply for",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~에 지원하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "aptitude",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "재능, 소질"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "be admitted to",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~에 입장이 허용되다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "be advised to do",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~할 것을 권유받다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "criteria",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "기준 (criterion의 복수형)"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "decade",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "10년"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "employ",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "고용하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "insufficient",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "불충분한"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "minimum",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "최소한도"
+            },
+            {
+                "pos": "adj",
+                "text": "최소한의"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "party",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "단체, 당사자, 연회"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "plentiful",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "풍부한"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "profession",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "직업"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    }
+]

@@ -1,0 +1,386 @@
+[
+    {
+        "origin": "It is no wonder (that)",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~은 당연하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "portray",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "(인물·풍경을) 그리다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "reinstall",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "재설치하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "repave",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "(도로를) 재포장하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "run the risk of",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~의 위험을 무릅쓰다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "think over",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "숙고하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "affiliation",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "합병"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "arbitration",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "중재"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "beside the point",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "요점을 벗어난"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "foil",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "좌절시키다, 뒤엎다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "impartially",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "공명정대하게, 치우치지 않게"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "inconclusively",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "결론 없이, 요점 없이"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "omission",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "생략, 누락"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "originate in",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~에서 시작되다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "preferential treatment",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "우대"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "recollection",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "회상, 회고"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "reconcile",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "화해시키다, 양립시키다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "relinquish",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "포기하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "remembrance",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "추억"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "solicit",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "요청하다, 간청하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "subcontract",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "하청 계약; v. 하청 주다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "subcontractor",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "하청인, 하청업자"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "trustworthy",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "믿을 수 있는"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "annotated",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "(책 등이) 주석이 달린"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "commercial relations",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "통상 관계"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "credit limit",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "신용대출 한도액"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "down payment",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "계약금, 첫 할부금"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "embark",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "착수하다, 나서다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "mediation",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "조정, 중재"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "moderator",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "(토론 등의) 사회자, 중재자"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "provision",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "(조약의) 조항"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "rocky",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "장애가 많은"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    }
+]

@@ -1,0 +1,346 @@
+[
+    {
+        "origin": "armchair",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "안락의자"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "ceiling",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "천장"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "cleanup",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "대청소"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "decoration",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "장식, 장식물"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "fence",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "울타리"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "floor",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "바닥"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "frame",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "틀, 액자"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "furniture",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "가구"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "garage",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "차고"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "heating system",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "난방 시스템"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "lobby",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "로비"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "remodeling",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "주택 개조"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "rooftop",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "지붕, 옥상"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "rope",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "밧줄, 로프"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "stick",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "막대기, 지팡이"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "tank",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "(물·가스 등의) 탱크"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "veranda",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "베란다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "desktop",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "탁상용의"
+            },
+            {
+                "pos": "n",
+                "text": "데스크톱 컴퓨터"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "dwell",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "거주하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "fireplace",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "(벽)난로"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "heat",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "열기"
+            },
+            {
+                "pos": "v",
+                "text": "뜨겁게 만들다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "homemade",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "집에서 만든"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "homeowner",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "주택 소유자"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "inhabit",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "거주하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "lighten",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "밝게 하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "neighbor",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "이웃"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "urban",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "도시의 (↔ rural)"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "washing machine",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "세탁기"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    }
+]

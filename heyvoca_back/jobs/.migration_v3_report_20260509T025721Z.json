@@ -1,0 +1,11 @@
+{
+  "timestamp": "20260509T025721Z",
+  "dry_run": true,
+  "total_processed": 715,
+  "v1_to_v3": 63,
+  "v2_to_v3": 635,
+  "skipped": 17,
+  "null": 0,
+  "errors": 0,
+  "error_ids": []
+}

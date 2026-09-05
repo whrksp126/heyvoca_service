@@ -1,0 +1,386 @@
+[
+    {
+        "origin": "adequate",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "적절한, 충분한"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "adversely",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "불리하게, 반대로"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "allocation",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "할당, 배급"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "bankrupt",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "파산한"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "comparatively",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "비교적"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "curtail",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "삭감하다, 단축하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "deficit",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "적자, 부족액"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "depreciation",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "가치 하락, 감가상각"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "discrepancy",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "불일치, 차이"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "dwindle",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "점차 줄어들다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "expenditure",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "지출, 비용"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "fluctuate",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "변동하다, 오르내리다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "forfeit",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "몰수당하다, 포기하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "inflation",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "물가 상승, 인플레이션"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "interest",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "이자; 이익; 관심"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "ledger",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "회계 장부"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "marginal",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "약간의; 주변의"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "net",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "순전한, 순익의"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "offset",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "상쇄하다; n. 차감 계산"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "outcome",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "결과"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "precariously",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "위태롭게"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "projection",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "예상, 투영"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "recede",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "물러나다; 감소하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "reimburse",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "배상[변제]하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "remuneration",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "보수, 보상"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "revenue",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "수입, 세입"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "scrutinize",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "정밀 조사하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "sluggish",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "부진한, 활발하지 못한"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "solvent",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "지불 능력이 있는"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "statement",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "명세서, 성명서"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "surplus",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "흑자, 잉여"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "yield",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "(수익 등을) 내다; 양보하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    }
+]

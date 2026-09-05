@@ -1,0 +1,342 @@
+[
+    {
+        "origin": "airline",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "항공사"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "announcement",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "공고, 안내 방송"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "backpack",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "배낭"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "be familiar with",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~에 익숙하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "belongings",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "소지품, 소유물"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "delayed",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "지연된"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "direct flight",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "직항편"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "embark",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "배를 타다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "get to",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~에 도착하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "immigration",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "출입국 관리(소)"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "land",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "착륙하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "last-minute",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "마지막 순간의, 막바지의"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "local",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "지역의, 현지의"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "on vacation",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "휴가 중에"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "at the latest",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "늦어도"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "be about to",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "막 ~하려 하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "beyond",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "prep",
+                "text": "~ 너머에"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "by oneself",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "혼자서"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "claim",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "(권리 등을) 주장하다; (자기 것임을) 청구하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "en route",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "도중에"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "foreign",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "외국의"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "give ... a ride",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~를 태워 주다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "overnight",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "하룻밤 사이의"
+            },
+            {
+                "pos": "adv",
+                "text": "밤새도록"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "pack",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "짐을 싸다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "passport",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "여권"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "platform",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "승강장"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "reservation",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "예약"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "suitcase",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "여행 가방"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    }
+]

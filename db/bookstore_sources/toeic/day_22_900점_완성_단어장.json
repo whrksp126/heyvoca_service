@@ -1,0 +1,758 @@
+[
+    {
+        "origin": "adjourn",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "(회의 등을) 휴회하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "allegation",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "(증거 없는) 혐의, 주장"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "articulate",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "똑똑히 말하다; adj. 명료한"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "belated",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "뒤늦은"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "coherent",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "일관성 있는, 논리적인"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "collaboration",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "협력, 공동 작업"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "concede",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "(마지못해) 인정하다, 양보하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "discrepancy",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "차이, 불일치"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "elucidate",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "명확히 설명하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "equivocal",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "모호한, 불분명한"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "grievance",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "불만, 고충"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "impartial",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "치우치지 않는, 공정한"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "impromptu",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "즉흥적인, 준비 없는"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "incentive",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "혜택, 장려금; adj. 격려하는"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "jargon",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "전문 용어"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "legitimate",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "합법적인, 타당한"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "mandatory",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "의무적인"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "negotiate",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "협상하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "occurrence",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "발생, 사건"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "perplexed",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "당혹스러운"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "precedence",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "우선순위, 선행"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "quorum",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "정족수"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "ratify",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "비준하다, 재가하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "reconciliation",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "화해, 조정"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "slander",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "비방, 중상; v. 비방하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "stipulate",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "규정하다, 명기하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "tangible",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "실질적인, 유형의"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "tentative",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "임시의, 잠정적인"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "unanimous",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "만장일치의"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "verbose",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "말이 많은, 장황한"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "virtually",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "사실상, 거의"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "withdraw",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "철회하다; 인출하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "chair",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "의장을 맡다, 사회를 보다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "conflict of interest",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "이해관계의 충돌"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "excerpt",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "발췌, 인용구"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "prop against",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~에 받쳐 놓다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "run late",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "늦게 하다, 늦게 도착하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "sit through",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "끝까지 자리를 지키다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "stand on",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~에 기초하다, ~에 의거하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "symposium",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "토론회, 심포지엄"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "consenting",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "동의하는, 승낙하는"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "conversationally",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "담화로, 회화체로"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "eloquent",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "웅변을 잘 하는, 감명을 주는"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "faction",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "파벌, 당파"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "illegible",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "읽기 어려운"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "presumably",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "아마, 생각건대"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "abbreviate",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "요약하다, 단축하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "abridgment",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "요약본, 요약"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "confine",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "제한하다, ~에 한정시키다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "counteroffer",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "수정 제안, 대안"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "disperse",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "(군중 등이) 흩어지다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "distinguished",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "뛰어난, 저명한"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "elaborate",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "상세하게 설명하다; adj. 공들인"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "enthuse",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "열변을 토하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "moderate a meeting",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "회의의 사회를 보다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "off chance",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "요행, 희박한 가능성"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "presiding",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "(회의를) 주재하는"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "put off",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "연기하다, 미루다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "stand up for",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~을 옹호하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "succinct",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "간결한"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "summit meeting",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "정상 회담"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "summon",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "소환하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "uphold",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "지지하다, 떠받들다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    }
+]

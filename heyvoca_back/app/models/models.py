@@ -390,6 +390,12 @@ class CheckIn(db.Model):
     today_study_complete = Column(Boolean, nullable=False, default=False)
     # 데일리 미션 완료: 신규 목표 달성 AND 복습 잔여 0 둘 다 충족된 날만 True
     daily_mission_complete = Column(Boolean, nullable=False, default=False, server_default='0')
+    # 출석 보상(보석 +1 · 출석왕 진행)을 오늘 이미 줬는가.
+    # today_study_complete 로는 판정할 수 없다 — 당근 농장 연속 학습(streak_v2)이 **답안마다**
+    # CheckIn 을 먼저 만들면서 그 값을 True 로 올려 두기 때문에, 세션 끝에 오는
+    # /user_study_history 에서는 언제나 '이미 출석함'으로 보여 출석 보석도 출석왕도 나오지 않았다.
+    # 지급 여부는 지급하는 쪽에서만 세운다.
+    attend_rewarded = Column(Boolean, nullable=False, default=False, server_default='0')
     # ── 당근 농장 V2 연속 학습일 (기획 11.1) ──
     # 연속 학습일의 기준은 데일리 미션이 아니라 "그날 정답 완료한 서로 다른 단어 5개"다.
     # 미션을 다 못 채운 날도 5개를 했으면 연속은 이어진다 — 그래서 별도 컬럼이 필요하다.
@@ -403,6 +409,7 @@ class CheckIn(db.Model):
         self.attendence_date = attendence_date
         self.today_study_complete = today_study_complete
         self.daily_mission_complete = daily_mission_complete
+        self.attend_rewarded = False
         self.correct_word_cnt = 0
         self.streak_qualified = False
         self.streak_protected = False

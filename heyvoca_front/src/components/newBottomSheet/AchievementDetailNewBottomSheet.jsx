@@ -241,7 +241,8 @@ export const AchievementDetailNewBottomSheet = ({ selectedType = '초대왕' }) 
                 bg-gradient-to-b from-transparent to-layout-white dark:to-layout-black
             ">
                 <motion.button
-                    className="w-full h-[45px] bg-layout-gray-200 text-layout-white dark:text-layout-black rounded-[8px] text-[16px] font-[700]"
+                    className="w-full h-[52px] rounded-[12px] text-[16px] font-[700] tracking-[-0.03em]
+            border-[2px] border-border dark:border-border-dark bg-layout-white dark:bg-layout-black text-layout-gray-400 dark:text-layout-gray-100"
                     onClick={handleClose}
                     whileTap={{ scale: 0.98 }}
                     transition={{

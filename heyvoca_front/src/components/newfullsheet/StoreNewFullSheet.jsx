@@ -149,7 +149,7 @@ const StoreNewFullSheet = ({ initialTab = 'books', onInventoryChanged, onGoRotte
   const { popNewFullSheet, pushNewFullSheet } = useNewFullSheetActions();
   const { gemItems, userProfile } = useUser();
   const { pushNewBottomSheet } = useNewBottomSheetActions();
-  const { bookStore, recommendedBooks, isBookStoreLoading, isRecommendedBooksLoading } = useVocabulary();
+  const { bookStore, isBookStoreLoading } = useVocabulary();
 
   const [activeTab, setActiveTab] = useState(
     TABS.some((tab) => tab.key === initialTab) ? initialTab : 'books'
@@ -325,22 +325,6 @@ const StoreNewFullSheet = ({ initialTab = 'books', onInventoryChanged, onGoRotte
             {isBookStoreLoading && (
               <div className="flex items-center justify-center py-[60px]">
                 <span className="animate-spin rounded-full h-[28px] w-[28px] border-b-2 border-primary-main-600" />
-              </div>
-            )}
-
-            {!isBookStoreLoading && !isRecommendedBooksLoading && recommendedBooks.length > 0 && (
-              <div>
-                <SecHead title="추천 단어장" sub="지금 레벨에 맞춰 골랐어요" />
-                <ul className="flex gap-[10px] overflow-x-auto scrollbar-hide -mx-[16px] px-[16px]">
-                  {recommendedBooks.map((item) => (
-                    <ShopBookCard
-                      key={`rec-${item.id}`}
-                      item={item}
-                      className="w-[154px] min-w-[154px] shrink-0"
-                      onClick={() => openBook(item.id)}
-                    />
-                  ))}
-                </ul>
               </div>
             )}
 

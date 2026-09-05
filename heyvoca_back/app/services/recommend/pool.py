@@ -20,9 +20,13 @@ from app import db, cache
 from app.models.models import UserVocaBook, UserVocaBookMap, UserVoca
 from sqlalchemy.orm import joinedload
 
-# bucket 분류 stability 임계값
-_STABILITY_SHORT  = 10.0
-_STABILITY_MEDIUM = 60.0
+# bucket 분류 임계값 — fsrs/thresholds.py 가 단일 소스.
+# 예전에는 study.py 의 값을 손으로 복사해 뒀는데, 한쪽만 조정되면 추천이 고르는 구간과
+# 화면이 보여 주는 구간이 어긋난다(그 파일 주석 참고).
+from app.services.fsrs.thresholds import (
+    STABILITY_SHORT as _STABILITY_SHORT,
+    STABILITY_MEDIUM as _STABILITY_MEDIUM,
+)
 
 
 @dataclass

@@ -1,0 +1,338 @@
+[
+    {
+        "origin": "administer",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "관리하다, 운영하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "appointment",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "진찰[방문] 예약; 임명"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "briefcase",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "서류 가방"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "busy",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "바쁜"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "carry",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "나르다, 운반하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "case",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "사례, 경우; 사건"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "clerk",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "점원, 사무원"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "copy",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "복사하다; n. 복제(본)"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "correctly",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "똑바르게, 올바르게"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "disk",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "디스크, 원반"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "eraser",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "지우개"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "hand over",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~을 건네주다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "help",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "돕다, 거들다; n. 도움"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "instead",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "대신에"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "least",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "가장 적은"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "matter",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "문제, 일"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "notice",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "공고문, 통지; v. 알아채다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "office",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "사무실"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "paper",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "종이, 서류"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "pencil",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "연필"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "plan",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "계획하다; n. 계획"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "project",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "프로젝트, 사업"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "secretary",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "비서"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "sort",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "분류하다; n. 종류"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "stamp",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "도장, 우표; v. 도장을 찍다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "stapler",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "스테이플러"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "suggestion",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "제안"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "work",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "일하다; n. 일, 직업"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    }
+]

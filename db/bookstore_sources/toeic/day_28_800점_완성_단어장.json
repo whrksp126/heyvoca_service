@@ -1,0 +1,874 @@
+[
+    {
+        "origin": "architecture",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "건축물, 건축학"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "canopy",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "덮개, 차양"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "cast a shadow",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "그림자를 드리우다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "column",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "기둥, 원주"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "courtyard",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "안뜰"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "cupboard",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "찬장"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "cut the grass",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "잔디를 깎다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "dedication ceremony",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "준공식, 헌당식"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "doorway",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "문간"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "dresser",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "화장대, 서랍장"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "emergency exit",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "비상구"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "erect",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "똑바로 선"
+            },
+            {
+                "pos": "v",
+                "text": "세우다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "every hour on the hour",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "매 정시에"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "faucet",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "수도꼭지"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "floor plan",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "(건물 등의) 평면도"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "flooring",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "바닥재"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "front door",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "정문"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "hallway",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "복도"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "hammering",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "쿵쾅거리는"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "handrail",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "(계단 등의) 난간"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "home-improvement",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "주거 개선용의"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "lamppost",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "가로등 기둥"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "lean against the fence",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "울타리에 기대다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "light bulb",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "백열전구"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "make repairs",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "수리하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "make the bed",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "잠자리를 준비하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "multistory",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "다층의, 고층의"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "outdoor wall",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "외벽, 바깥벽"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "plug in",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~의 플러그를 꽂다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "pole",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "기둥"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "private residence",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "개인 주택"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "put away",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "집어넣다, 치우다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "rebuild",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "재건하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "cautiously",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "조심스럽게"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "considerate",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "사려 깊은, 배려하는"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "consultation",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "상담, 협의"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "effectively",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "효과적으로"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "favored",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "호의를 사고 있는"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "impractical",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "비현실적인, 비실용적인"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "improper",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "부당한, 부도덕한"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "insecure",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "불안한, 확신이 안 가는"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "insecurely",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "불안하여"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "justify",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "정당화하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "reduced",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "축소한, 감소한"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "reluctance",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "마지못해 함"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "reviewer",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "논평가, 비평가"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "take pride in",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~을 자랑하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "threaten",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "위협하다, ~할 우려가 있다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "venture",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "모험"
+            },
+            {
+                "pos": "v",
+                "text": "(위험을 무릅쓰고) 가다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "branch office (= satellite office)",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "지점, 지사"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "confusion",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "혼란"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "controversy",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "논란"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "cost analysis",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "비용 분석"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "faintly",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "희미하게"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "input",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "투입"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "investor",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "투자자"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "legacy",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "유산, 유물"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "meet the expenses",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "경비를 대다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "on a regular basis",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "정기적으로"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "on one's own account",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "혼자서, 자신의 이익을 위해서"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "pioneer",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "개척자, 선구자"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "projected",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "예상된"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "reexamine",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "재검사하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "repetitive",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "반복적인"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "set up a business",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "사업을 시작하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "strength",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "힘, 장점"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "take precautions",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "조심하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "throw out (= throw away)",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "버리다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "building maintenance",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "건물 유지 관리"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "evict a tenant",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "세입자를 내쫓다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "fully equipped",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "시설이 완비된"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "landlord liability",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "임대인 책임"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    }
+]

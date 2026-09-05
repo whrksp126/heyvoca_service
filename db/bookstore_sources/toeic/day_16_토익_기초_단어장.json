@@ -1,0 +1,338 @@
+[
+    {
+        "origin": "afford",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "~할 여유가 있다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "agree",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "동의하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "bill",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "고지서, 청구서; v. 청구하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "business hours",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "영업시간"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "cash",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "현금"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "choose",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "고르다, 선택하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "complain",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "불평하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "customer",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "고객"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "delivery",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "배송"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "exchange",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "교환하다; n. 교환"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "expensive",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "비싼"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "item",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "항목; 물품"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "list",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "명단, 목록; v. 열거하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "local",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "지역의, 현지의"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "mall",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "쇼핑몰"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "offer",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "제공하다; n. 제안"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "pay",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "지불하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "prefer",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "선호하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "price",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "가격"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "purchase",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "구매하다; n. 구매"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "quality",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "질, 품질"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "receipt",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "영수증; 수령"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "refund",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "환불; v. 환불하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "return",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "반납하다; 돌아오다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "select",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "선택하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "set",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "세트; v. 설비하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "sell",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "팔다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "store",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "상점; v. 저장하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    }
+]

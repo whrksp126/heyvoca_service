@@ -1,0 +1,386 @@
+[
+    {
+        "origin": "biodiversity",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "생물 다양성"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "biosphere",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "생물권"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "carcinogen",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "발암 물질"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "chlorofluorocarbons",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "염화불화탄소 (프레온 가스)"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "deforestation",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "삼림 파괴"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "desalination",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "담수화 (해수에서 염분을 제거함)"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "desertification",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "사막화"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "effluent",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "유출수, 폐수"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "ecosystem",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "생태계"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "emissions trading",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "배출권 거래"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "environmental degradation",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "환경 저하"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "fossil fuel",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "화석 연료"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "global cooling",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "지구 한랭화"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "green auditing",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "환경 감사"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "heavy metals",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "중금속"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "incineration",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "소각"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "industrial runoff",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "산업 유출수"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "marine debris",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "해양 쓰레기"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "meteorological",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "기상의, 기상학의"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "microplastics",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "미세 플라스틱"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "nitrous oxide",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "아산화질소"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "nuclear waste",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "핵폐기물"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "particulate matter",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "입자상 물질 (미세 먼지)"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "photovoltaic",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "광기전성의, 태양광 발전의"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "precipitation",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "강수, 강수량"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "reforestation",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "재조림"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "sewage treatment",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "하수 처리"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "smog",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "스모그"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "stratosphere",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "성층권"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "toxicity",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "독성"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "waste management",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "폐기물 관리"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "wildlife conservation",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "야생 동물 보호"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    }
+]

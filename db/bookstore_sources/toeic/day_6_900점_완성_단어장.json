@@ -1,0 +1,394 @@
+[
+    {
+        "origin": "be in line",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "줄 서다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "for a change",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "기분 전환으로"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "pass the time",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "시간을 보내다, 시간을 때우다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "pose",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "자세를 취하다"
+            },
+            {
+                "pos": "n",
+                "text": "(사진 등을 위한) 자세"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "stay tuned",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "채널을 고정시키다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "vacate",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "집을 비우다, 방을 비우다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "appreciative",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "감사하는"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "casually",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "(복장을) 캐주얼하게, 약식으로"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "enlightening",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "계몽적인, 깨우치는"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "enthusiastically",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "열광적으로, 매우 열심히"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "excellence",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "우수, 탁월성"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "excursion",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "소풍"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "festivity",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "축제, (-ties) 축하 행사"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "flock",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "떼 지어 가다, 모이다"
+            },
+            {
+                "pos": "n",
+                "text": "무리, 떼"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "intriguingly",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "흥미를 자아내어, 호기심을 자극하여"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "leg room",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "(자동차 등에) 다리를 뻗을 수 있는 공간"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "mural",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "벽화"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "portrait",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "초상화"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "publication",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "출판, 출판물"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "sculpture",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "조각상"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "transferable",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "양도 가능한, 이동 가능한"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "unsanitary",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "비위생적인"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "be in the mood for -ing",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~하고 싶은 기분이다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "botanical garden",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "식물원"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "censorship",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "검열 (제도)"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "have yet to do",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "아직 ~해야 한다, 아직 ~하고 있지 않다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "intermission",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "(연극·영화의) 휴식시간, 막간"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "memoirs",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "회고록, 전기"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "must-see",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "꼭 보아야 할 것"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "rally",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "랠리 (자동차·오토바이 등의 경주), 집회"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "ridiculous",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "우스꽝스러운, 터무니없는"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "roam around",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "이리저리 돌아다니다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    }
+]

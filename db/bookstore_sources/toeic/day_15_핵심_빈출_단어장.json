@@ -1,0 +1,809 @@
+[
+    {
+        "origin": "transportation",
+        "pronunciations": {
+            "us": "træ̀nspərtéiʃən",
+            "uk": "træ̀nspɔːtéiʃən"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "운송, 수송; 운송 수단"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "Construction work has caused delays in public <strong class=\"target-word\">transportation</strong>.",
+                "meaning": "건설 작업 때문에 대중교통 이용이 지연되었다."
+            }
+        ]
+    },
+    {
+        "origin": "commute",
+        "pronunciations": {
+            "us": "kəmjúːt"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "출퇴근하다"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "Regular <strong class=\"target-word\">commuters</strong> can purchase a monthly pass at a discount.",
+                "meaning": "정기 통근자들은 할인 가격에 월 정기권을 구입할 수 있다."
+            }
+        ]
+    },
+    {
+        "origin": "environment",
+        "pronunciations": {
+            "us": "inváiərənmənt"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "환경"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "The <strong class=\"target-word\">environmental</strong> impact of the new factory is under review.",
+                "meaning": "새 공장이 환경에 미치는 영향이 검토 중이다."
+            }
+        ]
+    },
+    {
+        "origin": "pollute",
+        "pronunciations": {
+            "us": "pəlúːt"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "오염시키다"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "Automobile exhaust <strong class=\"target-word\">pollutes</strong> the air in large cities.",
+                "meaning": "자동차 배기가스는 대도시의 공기를 오염시킨다."
+            }
+        ]
+    },
+    {
+        "origin": "reduce",
+        "pronunciations": {
+            "us": "ridjúːs"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "줄이다, 감소시키다"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "The local government has decided to <strong class=\"target-word\">reduce</strong> bus fares.",
+                "meaning": "지방 정부는 버스 요금을 인하하기로 결정했다."
+            }
+        ]
+    },
+    {
+        "origin": "resource",
+        "pronunciations": {
+            "us": "ríːsɔːrs",
+            "uk": "rizɔ́ːs"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "자원"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "The city spent all of its <strong class=\"target-word\">resources</strong> on the subway project.",
+                "meaning": "그 도시는 모든 자원을 지하철 프로젝트에 쏟아 부었다."
+            }
+        ]
+    },
+    {
+        "origin": "preserve",
+        "pronunciations": {
+            "us": "prizə́ːrv",
+            "uk": "prizə́ːv"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "보존하다, 보호하다"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "The government's goal is to <strong class=\"target-word\">preserve</strong> more of the countryside.",
+                "meaning": "정부의 목표는 시골 지역을 더 보호하는 것이다."
+            }
+        ]
+    },
+    {
+        "origin": "waste",
+        "pronunciations": {
+            "us": "weist"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "낭비하다"
+            },
+            {
+                "pos": "n",
+                "text": "낭비; 쓰레기, 폐기물"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "We should avoid <strong class=\"target-word\">wasting</strong> energy.",
+                "meaning": "우리는 에너지 낭비를 피해야 한다."
+            },
+            {
+                "origin": "The local landfill is nearly full of household <strong class=\"target-word\">waste</strong>.",
+                "meaning": "지역 쓰레기 매립지는 가계 폐기물로 거의 가득 찼다."
+            }
+        ]
+    },
+    {
+        "origin": "convenient",
+        "pronunciations": {
+            "us": "kənvíːnjənt"
+        },
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "편리한"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "The building is at a <strong class=\"target-word\">convenient</strong> location near the train station.",
+                "meaning": "그 건물은 기차역 근처의 편리한 장소에 위치해 있다."
+            }
+        ]
+    },
+    {
+        "origin": "congested",
+        "pronunciations": {
+            "us": "kəndʒéstid"
+        },
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "정체된, 혼잡한"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "The <strong class=\"target-word\">congested</strong> roads resulted in many late arrivals.",
+                "meaning": "도로의 정체로 인해 많은 지각 도착이 발생했다."
+            }
+        ]
+    },
+    {
+        "origin": "alternative",
+        "pronunciations": {
+            "us": "ɔːltə́ːrnətiv",
+            "uk": "ɔːltə́ːnətiv"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "대안"
+            },
+            {
+                "pos": "adj",
+                "text": "대안의, 대체 가능한"
+            }
+        ],
+        "notes": "Renewable energy is an <strong class=\"target-word\">alternative</strong> to fossil fuels.<br>재생 에너지는 화석 연료의 대안이다.",
+        "examples": [
+            {
+                "origin": "We are looking for <strong class=\"target-word\">alternative</strong> routes to avoid the construction.",
+                "meaning": "우리는 공사를 피하기 위해 대안 노선을 찾고 있다."
+            }
+        ]
+    },
+    {
+        "origin": "regulation",
+        "pronunciations": {
+            "us": "rèɡjuléiʃən"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "규정, 법규"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "Construction safety <strong class=\"target-word\">regulations</strong> are strictly enforced.",
+                "meaning": "건설 안전 규정은 엄격히 시행된다."
+            }
+        ]
+    },
+    {
+        "origin": "impact",
+        "pronunciations": {
+            "us": "ímpækt"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "영향, 충격"
+            },
+            {
+                "pos": "v",
+                "text": "영향을 주다"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "The closure of the bridge will have a significant <strong class=\"target-word\">impact</strong> on traffic.",
+                "meaning": "다리 폐쇄는 교통에 상당한 영향을 줄 것이다."
+            }
+        ]
+    },
+    {
+        "origin": "benefit",
+        "pronunciations": {
+            "us": "bénəfit"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "혜택, 이익"
+            },
+            {
+                "pos": "v",
+                "text": "득이 되다, 이익을 얻다"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "Reduced air pollution will <strong class=\"target-word\">benefit</strong> everyone.",
+                "meaning": "대기 오염이 감소하면 모두에게 이로울 것이다."
+            }
+        ]
+    },
+    {
+        "origin": "efficient",
+        "pronunciations": {
+            "us": "ifíʃənt"
+        },
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "효율적인"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "The <strong class=\"target-word\">efficient</strong> distribution of goods keeps costs low.",
+                "meaning": "상품의 효율적인 유통이 비용을 낮게 유지해 준다."
+            }
+        ]
+    },
+    {
+        "origin": "hazardous",
+        "pronunciations": {
+            "us": "hǽzərdəs"
+        },
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "위험한"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "It is <strong class=\"target-word\">hazardous</strong> to drive when the roads are icy.",
+                "meaning": "도로가 얼었을 때 운전하는 것은 위험하다."
+            }
+        ]
+    },
+    {
+        "origin": "implement",
+        "pronunciations": {
+            "us": "ímpləmènt"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "시행하다, 이행하다"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "The plan to <strong class=\"target-word\">implement</strong> a new traffic system was approved.",
+                "meaning": "새로운 교통망을 확충하려는 계획이 승인되었다."
+            }
+        ]
+    },
+    {
+        "origin": "leak",
+        "pronunciations": {
+            "us": "liːk"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "(액체·가스 등이) 새다; 누설하다"
+            },
+            {
+                "pos": "n",
+                "text": "샘, 누출"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "They should fix the <strong class=\"target-word\">leak</strong> in the pipe immediately.",
+                "meaning": "그들은 파이프의 샘을 즉시 고쳐야 한다."
+            }
+        ]
+    },
+    {
+        "origin": "monitor",
+        "pronunciations": {
+            "us": "mάnətər",
+            "uk": "mɔ́nətə"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "감시하다, 관찰하다"
+            },
+            {
+                "pos": "n",
+                "text": "모니터, 감시 장치"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "Security cameras <strong class=\"target-word\">monitor</strong> the warehouse around the clock.",
+                "meaning": "보안 카메라들이 24시간 내내 창고를 감시한다."
+            }
+        ]
+    },
+    {
+        "origin": "penalty",
+        "pronunciations": {
+            "us": "pénəlti"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "처벌, 벌금; 불이익"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "The <strong class=\"target-word\">penalty</strong> for overdue books is 50 cents a day.",
+                "meaning": "연체 도서에 대한 벌금은 하루에 50센트이다."
+            }
+        ]
+    },
+    {
+        "origin": "properly",
+        "pronunciations": {
+            "us": "prάpərli",
+            "uk": "prɔ́pəli"
+        },
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "제대로, 적절하게"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "The data in the contract must be <strong class=\"target-word\">properly</strong> reviewed.",
+                "meaning": "계약서의 정보는 적절하게 검토되어야 한다."
+            }
+        ]
+    },
+    {
+        "origin": "proximity",
+        "pronunciations": {
+            "us": "prαksíməti",
+            "uk": "prɔksíməti"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "근접, 가까움"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "We are in close <strong class=\"target-word\">proximity</strong> to reaching a final agreement.",
+                "meaning": "우리는 최종 합의에 도달하는 것에 아주 근접해 있다."
+            }
+        ]
+    },
+    {
+        "origin": "reliable",
+        "pronunciations": {
+            "us": "riláiəbl"
+        },
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "믿을 수 있는, 신뢰할 만한"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "The firm has a <strong class=\"target-word\">reliable</strong> reputation for honoring its contracts.",
+                "meaning": "그 회사는 계약을 준수하는 것에 대해 신뢰할 만한 명성을 가지고 있다."
+            }
+        ]
+    },
+    {
+        "origin": "rural",
+        "pronunciations": {
+            "us": "rúərəl"
+        },
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "시골의, 지방의"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "Lawyers are often used to settle disputes in <strong class=\"target-word\">rural</strong> areas.",
+                "meaning": "변호사들은 시골 지역의 분쟁을 해결하기 위해 자주 고용된다."
+            }
+        ]
+    },
+    {
+        "origin": "significant",
+        "pronunciations": {
+            "us": "siɡnífikənt"
+        },
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "상당한, 중대한"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "A <strong class=\"target-word\">significant</strong> amount of money was spent on the negotiation.",
+                "meaning": "협상에 상당한 액수의 돈이 쓰였다."
+            }
+        ]
+    },
+    {
+        "origin": "suburban",
+        "pronunciations": {
+            "us": "səbə́ːrbən",
+            "uk": "səbə́ːbən"
+        },
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "교외의"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "The law firm is located in a <strong class=\"target-word\">suburban</strong> area.",
+                "meaning": "그 법률 회사는 교외 지역에 위치해 있다."
+            }
+        ]
+    },
+    {
+        "origin": "surround",
+        "pronunciations": {
+            "us": "səráund"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "둘러싸다, 에워싸다"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "The building is <strong class=\"target-word\">surrounded</strong> by a high security fence.",
+                "meaning": "그 건물은 높은 보안 울타리로 둘러싸여 있다."
+            }
+        ]
+    },
+    {
+        "origin": "sustainable",
+        "pronunciations": {
+            "us": "səstéinəbl"
+        },
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "지속 가능한"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "We are seeking a <strong class=\"target-word\">sustainable</strong> agreement for both parties.",
+                "meaning": "우리는 양측 모두에게 지속 가능한 합의를 찾고 있다."
+            }
+        ]
+    },
+    {
+        "origin": "toxic",
+        "pronunciations": {
+            "us": "tάksik",
+            "uk": "tɔ́ksik"
+        },
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "독성의, 유독한"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "The dispute was caused by <strong class=\"target-word\">toxic</strong> waste disposal in the area.",
+                "meaning": "분쟁은 그 지역의 독성 폐기물 처리로 인해 발생했다."
+            }
+        ]
+    },
+    {
+        "origin": "urban",
+        "pronunciations": {
+            "us": "ə́ːrbən",
+            "uk": "ə́ːbən"
+        },
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "도시의"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "The <strong class=\"target-word\">urban</strong> renewal project was included in the contract.",
+                "meaning": "도시 재생 프로젝트가 계약에 포함되었다."
+            }
+        ]
+    },
+    {
+        "origin": "vehicle",
+        "pronunciations": {
+            "us": "víːikl"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "탈것, 차량; 수단"
+            }
+        ],
+        "notes": "Electric <strong class=\"target-word\">vehicles</strong> are becoming more popular.<br>전기 자동차가 점점 더 인기를 얻고 있다.",
+        "examples": [
+            {
+                "origin": "car, transport",
+                "meaning": "차량"
+            }
+        ]
+    },
+    {
+        "origin": "vital",
+        "pronunciations": {
+            "us": "váitl"
+        },
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "매우 중요한, 활기찬"
+            }
+        ],
+        "notes": "Protecting the rainforest is <strong class=\"target-word\">vital</strong> for the planet's health.<br>열대 우림을 보호하는 것은 지구의 건강을 위해 매우 중요하다.",
+        "examples": [
+            {
+                "origin": "essential, crucial",
+                "meaning": "매우 중요한"
+            }
+        ]
+    },
+    {
+        "origin": "wasteful",
+        "pronunciations": {
+            "us": "wéistfəl"
+        },
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "낭비하는"
+            }
+        ],
+        "notes": "Leaving the lights on all day is <strong class=\"target-word\">wasteful</strong>.<br>하루 종일 불을 켜 두는 것은 낭비이다.",
+        "examples": [
+            {
+                "origin": "extravagant",
+                "meaning": "낭비하는"
+            }
+        ]
+    },
+    {
+        "origin": "accidental",
+        "pronunciations": {
+            "us": "æ̀ksidéntl"
+        },
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "우연한, 돌발적인"
+            }
+        ],
+        "notes": "The fire was found to be <strong class=\"target-word\">accidental</strong>, not intentional.<br>화재는 의도적인 것이 아니라 우연한 것으로 밝혀졌다.",
+        "examples": [
+            {
+                "origin": "accidentally adv. 우연히",
+                "meaning": ""
+            },
+            {
+                "origin": "intentional",
+                "meaning": "의도적인"
+            }
+        ]
+    },
+    {
+        "origin": "adequate",
+        "pronunciations": {
+            "us": "ǽdikwət"
+        },
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "적절한, 충분한"
+            }
+        ],
+        "notes": "The company provided <strong class=\"target-word\">adequate</strong> training for the new staff.<br>그 회사는 신입 사원들에게 충분한 교육을 제공했다.",
+        "examples": [
+            {
+                "origin": "adequately adv. 적절히",
+                "meaning": ""
+            },
+            {
+                "origin": "sufficient, enough",
+                "meaning": "충분한"
+            }
+        ]
+    },
+    {
+        "origin": "conservation",
+        "pronunciations": {
+            "us": "kὰnsərvéiʃən",
+            "uk": "kɔ̀nsəvéiʃən"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "(자원 등의) 보호, 보존"
+            }
+        ],
+        "notes": "Energy <strong class=\"target-word\">conservation</strong> is key to reducing costs.<br>에너지 절약은 비용을 줄이는 열쇠이다.",
+        "examples": [
+            {
+                "origin": "conserve v. 아껴 쓰다, 보존하다",
+                "meaning": ""
+            },
+            {
+                "origin": "preservation",
+                "meaning": "보존"
+            }
+        ]
+    },
+    {
+        "origin": "ecology",
+        "pronunciations": {
+            "us": "iːkάlədʒi",
+            "uk": "iːkɔ́lədʒi"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "생태계, 생태학"
+            }
+        ],
+        "notes": "The project aims to study the <strong class=\"target-word\">ecology</strong> of the wetlands.<br>그 프로젝트는 습지의 생태계를 연구하는 것을 목표로 한다.",
+        "examples": [
+            {
+                "origin": "ecological adj. 생태학적인",
+                "meaning": ""
+            }
+        ]
+    },
+    {
+        "origin": "extinct",
+        "pronunciations": {
+            "us": "ikstíŋkt"
+        },
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "멸종된"
+            }
+        ],
+        "notes": "Many species are at risk of becoming <strong class=\"target-word\">extinct</strong>.<br>많은 종들이 멸종될 위험에 처해 있다.",
+        "examples": [
+            {
+                "origin": "extinction n. 멸종",
+                "meaning": ""
+            }
+        ]
+    },
+    {
+        "origin": "habitat",
+        "pronunciations": {
+            "us": "hǽbətæt"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "서식지"
+            }
+        ],
+        "notes": "Loss of <strong class=\"target-word\">habitat</strong> is the main threat to these tigers.<br>서식지 파괴는 이 호랑이들에게 가장 큰 위협이다.",
+        "examples": []
+    },
+    {
+        "origin": "renewable",
+        "pronunciations": {
+            "us": "rinjúːəbl"
+        },
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "재생 가능한"
+            }
+        ],
+        "notes": "The government is investing in <strong class=\"target-word\">renewable</strong> energy projects.<br>정부는 재생 에너지 프로젝트에 투자하고 있다.",
+        "examples": [
+            {
+                "origin": "renew v. 갱신하다, 재개하다",
+                "meaning": ""
+            }
+        ]
+    }
+]

@@ -54,33 +54,26 @@ def _get_or_create(user_voca_id: int, user_id: UUID) -> UserVocaGame:
 def stage_progress(game: UserVocaGame, fsrs_state: dict, now: dt.datetime) -> int:
     """다음 단계까지의 진행률 0~100.
 
-    막대가 채워지는 근거는 단계마다 다르다. 씨앗은 **시간**이 차야 발아하고
-    (다음 학습일 + 첫 예정 복습), 그 위로는 **안정성**이 쌓여야 한다.
-    같은 막대로 보이지만 재는 것이 다르므로 여기서 한 번에 정리한다.
+    심은 씨앗 위로는 전부 **다음 복습 간격**이 문턱이므로, 막대도 그 하나로 잰다.
+    (예전에는 씨앗만 '심은 시각 → 첫 예정 복습' 경과 시간으로 쟀다. 발아 조건이
+     시간·행동이던 시절의 잔재라, 조건이 간격으로 통일된 지금은 막대만 다른 것을
+     재고 있어 "막대가 다 찼는데 안 자란다"가 나온다.)
     """
-    from app.routes.study import _STABILITY_SHORT, _STABILITY_MEDIUM
-
     stage = game.visual_stage or VisualStage.UNPLANTED_SEED
     if stage == VisualStage.GOLDEN:
         return 100
     if stage == VisualStage.UNPLANTED_SEED:
         return 0
 
-    if stage == VisualStage.PLANTED_SEED:
-        # 심은 시점 → 첫 예정 복습 시점 사이의 경과 비율.
-        # 조건이 이산적이라(다음 학습일 + 예정일 이후) 시간 말고는 표현할 게 없다.
-        start, target = game.first_planted_at, game.first_due_at
-        if not start or not target or target <= start:
-            return 50
-        return _pct((now - start).total_seconds(), (target - start).total_seconds())
-
     s = growth._stability(fsrs_state)
+    if stage == VisualStage.PLANTED_SEED:
+        return _pct(s, C.STAGE_SPROUT_DAYS)
     if stage == VisualStage.SPROUT:
-        return _pct(s, _STABILITY_SHORT)
+        return _pct(s - C.STAGE_SPROUT_DAYS, C.STAGE_LEAF_DAYS - C.STAGE_SPROUT_DAYS)
     if stage == VisualStage.LEAF:
-        return _pct(s - _STABILITY_SHORT, _STABILITY_MEDIUM - _STABILITY_SHORT)
+        return _pct(s - C.STAGE_LEAF_DAYS, C.STAGE_CARROT_DAYS - C.STAGE_LEAF_DAYS)
     # 당근 → 황금
-    return _pct(s - _STABILITY_MEDIUM, C.GOLDEN_MIN_STABILITY_DAYS - _STABILITY_MEDIUM)
+    return _pct(s - C.STAGE_CARROT_DAYS, C.GOLDEN_MIN_STABILITY_DAYS - C.STAGE_CARROT_DAYS)
 
 
 def _pct(num: float, den: float) -> int:
@@ -90,10 +83,17 @@ def _pct(num: float, den: float) -> int:
 
 
 def on_answer(user_id: UUID, user_voca_id: int, was_correct: bool,
-              session_id=None, now: Optional[dt.datetime] = None) -> Optional[dict]:
+              session_id=None, now: Optional[dt.datetime] = None,
+              fsrs_before: Optional[dict] = None) -> Optional[dict]:
     """답안 1건을 농장에 반영하고 화면용 payload 를 만든다.
 
     커밋까지 여기서 한다. 호출부(hooks)는 학습 트랜잭션을 이미 닫은 뒤다.
+
+    `fsrs_before` 는 **이 답안을 반영하기 전**의 FSRS 상태다. 반드시 받아야 한다 —
+    호출 시점에는 user_voca.data 가 이미 새 상태로 커밋돼 있어서, 여기서 다시 읽으면
+    학습 전/후가 같은 값이 된다. 예전에는 인자가 없어 pct_from 과 pct_to 를 둘 다
+    **학습 후** 상태로 계산했고, 그래서 단계가 오르지 않는 회차에는 두 값이 항상 같아
+    막대가 한 번도 움직이지 않았다(오르는 `+N%` 도, 오답으로 줄어드는 것도 없었다).
     """
     now = now or dt.datetime.utcnow()
 
@@ -108,7 +108,8 @@ def on_answer(user_id: UUID, user_voca_id: int, was_correct: bool,
 
     stage_before = game.visual_stage or VisualStage.UNPLANTED_SEED
     health_before = game.health_state or HealthState.FRESH
-    pct_before = stage_progress(game, fsrs_state, now)
+    # 학습 전 상태를 못 받았으면(구 호출부) 최소한 예전 동작으로 떨어진다
+    pct_before = stage_progress(game, fsrs_before if fsrs_before is not None else fsrs_state, now)
 
     # ── 독립 정답 판정 ──
     # 씨앗 구간에서만 로그를 뒤진다. 잎 이상은 안정성만으로 단계가 정해지므로

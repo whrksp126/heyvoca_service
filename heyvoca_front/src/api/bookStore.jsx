@@ -27,14 +27,3 @@ export const getBookStoreDetailApi = async (id) => {
 };
 
 // 추천 서점 단어장 조회 API
-export const getRecommendedBookStoreApi = async (limit = 3) => {
-  const url = `${backendUrl}/search/bookstore/recommend`;
-  const method = 'GET';
-  const fetchData = { limit };
-  try {
-    const result = await fetchDataAsync(url, method, fetchData);
-    return result;
-  } catch (error) {
-    console.error('getRecommendedBookStoreApi 오류:', error);
-  }
-};

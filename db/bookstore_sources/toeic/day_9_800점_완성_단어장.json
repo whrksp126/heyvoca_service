@@ -1,0 +1,818 @@
+[
+    {
+        "origin": "blueprint",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "청사진, 계획"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "business deal",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "사업 거래"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "family-run",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "가족이 운영하는"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "fluctuation",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "변동, 오르내림"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "for business",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "사업상"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "foreign trade",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "해외 무역"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "go into business",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "사업을 시작하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "go out of business",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "폐업하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "mutual",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "상호의"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "nationwide",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "전국적인"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "need monitoring",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "관찰이 필요하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "neighboring",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "이웃의, 인접한"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "real estate sale",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "부동산 매매"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "recession",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "경기 후퇴"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "relieve pain",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "고통을 덜어주다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "role model",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "역할 모델"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "unplug",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "플러그를 뽑다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "worsen",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "악화되다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "accumulation",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "축적, 누적"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "ascend",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "오르다, 올라가다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "commerce",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "통상, 교역"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "indifferent",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "무관심한, 중요하지 않은"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "prolong",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "연장시키다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "relevantly",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "관련되어"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "stimulate",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "자극하다, 격려하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "supplement",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "보완하다, 보충하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "tedious",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "지루한, 싫증나는"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "unavoidable",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "불가피한"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "be related to",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~에 관련되다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "bring in",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "(시스템을) 도입하다, (돈을) 벌다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "brokerage",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "중개, 중개업소"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "business management",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "경영(학)"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "business practice",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "사업 관행"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "collapse",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "붕괴"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "cope with",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~에 대처하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "cost-effective",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "비용 효율적인"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "descending",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "내려가는, 하향의"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "dominate",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "지배하다, 우위를 차지하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "downturn",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "(경기) 침체"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "entail",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "~을 수반하다, ~을 유발하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "exchange rate",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "환율"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "flourish",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "번창하다, 융성하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "for large purchases",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "대량 구매에 대해서"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "for the benefit of",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~의 이익을 위해"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "foremost",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "선두의, 으뜸가는"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "forerunner",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "선구자"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "from around the globe",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "전 세계에서"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "infrastructure",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "사회 기반 시설, 경제 기반 시설"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "marketable",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "시장성이 높은"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "momentary",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "순간적인, 잠깐의"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "multinational corporation",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "다국적 기업"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "multi-regional",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "다지역의"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "nationality",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "국적"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "net income",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "순수입, 실수입"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "penalize",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "벌하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "put forth",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~을 내밀다, 내뿜다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "ratio",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "비율"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "set up",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~을 세우다, 시작하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "skyrocket",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "(가격 등이) 치솟다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "so far (= to date)",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "지금까지"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "surge",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "(물가가) 급등하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "synergy",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "상승효과"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "synthesis",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "종합, 통합"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "tactics",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "전략"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "unemployment",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "실업"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "variable",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "변하기 쉬운, 변덕스러운"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "vicious cycle",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "악순환"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "without a doubt",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "의심할 바 없이"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    }
+]

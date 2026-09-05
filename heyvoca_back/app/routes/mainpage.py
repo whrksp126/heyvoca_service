@@ -451,9 +451,16 @@ def api_user_study_history():
             daily_mission_complete=False,
         )
         db.session.add(checkin)
-        attend_newly = True
     elif not checkin.today_study_complete:
         checkin.today_study_complete = True
+
+    # 출석 보상은 **전용 플래그**로만 판정한다.
+    # 예전에는 today_study_complete 가 False→True 로 바뀌는 순간을 출석으로 봤는데,
+    # 당근 농장 연속 학습(streak_v2.on_answer_streak)이 답안마다 CheckIn 을 먼저 만들며
+    # 그 값을 True 로 세워 둔 뒤로, 세션 끝에 오는 이 요청에서는 항상 '이미 출석함'이 되어
+    # 출석 보석도 출석왕도 한 번도 나오지 않았다(농장 V2 이후 전 사용자).
+    if not checkin.attend_rewarded:
+        checkin.attend_rewarded = True
         attend_newly = True
 
     # 출석왕 업적 진행 + 보석 +1
@@ -475,9 +482,30 @@ def api_user_study_history():
     daily_new_limit = user.daily_new_limit if user.daily_new_limit is not None else 20
     new_target = daily_new_limit if daily_new_limit > 0 else 0
 
+    # ── 온보딩 당일 예외 ────────────────────────────────────
+    # 온보딩 첫 학습은 분량이 **하루 목표와 무관하게 고정**이고(맛보기 14알), 고른 하루 목표는
+    # 내일부터 적용된다 — 온보딩 예고 화면이 그렇게 안내한다. 그런데 목표를 20·30알로 고르면
+    # 첫날 계획을 남김없이 끝내고도 신규 미달이 되어, 하라는 걸 다 한 날에 미션만 실패한다.
+    # 그래서 온보딩 세션이 있는 날은 '오늘 준 계획을 다 했는가'로만 본다.
+    #
+    # 복습 잔여도 같은 이유로 묻지 않는다. 이 계정의 단어는 방금 심은 것이 전부라,
+    # 여기서 잡히는 잔여는 마지막 답이 오답이라 FSRS 학습 단계가 몇 분 뒤로 잡아 둔 것뿐이고
+    # 그건 '오늘 못 끝낸 몫'이 아니다.
+    from app.models.models import UserStudySession
+    from app.services.study_day import logical_day_start_utc
+    onboarding_today = db.session.query(UserStudySession.id).filter(
+        UserStudySession.user_id == user_id,
+        UserStudySession.is_onboarding.is_(True),
+        UserStudySession.started_at >= logical_day_start_utc(),
+    ).first() is not None
+
     # 신규 충족: daily_new_limit > 0 → new_done >= limit, 0 → new_done > 0
-    new_met = (new_done >= daily_new_limit) if daily_new_limit > 0 else (new_done > 0)
-    review_met = (review_due == 0)
+    if onboarding_today:
+        new_met = new_done > 0
+        review_met = True
+    else:
+        new_met = (new_done >= daily_new_limit) if daily_new_limit > 0 else (new_done > 0)
+        review_met = (review_due == 0)
     mission_met = new_met and review_met
 
     # 이번 세션에 처음으로 미션을 달성한 경우만 처리
@@ -515,8 +543,12 @@ def api_user_study_history():
             if reset_goal:
                 reset_goal.current_value = 1
             else:
-                # 레코드가 없는 경우(첫 시작·전 레벨 완료 등): update_user_goal로 생성 후 +1
-                update_user_goal('끈기왕')
+                # 레코드가 없는 경우(첫 시작·전 레벨 완료 등): update_user_goal로 생성 후 +1.
+                # **반환값을 받아 둔다.** 끈기왕 1레벨 목표는 '연속 학습 1일'이라 이 첫 호출에서
+                # 곧바로 완료되고 보석까지 지급되는데, 예전에는 결과를 버려서 화면에는
+                # 아무 업적도 뜨지 않았다 — 가장 처음 학습한 사람이 유일하게 못 보는 업적이었다.
+                per_done, per_reward, per_badge, per_lv = update_user_goal('끈기왕')
+                perseverance_goal_complete, perseverance_goal_reward_count, perseverance_goal_badge_img, perseverance_goal_level = per_done, per_reward, per_badge, per_lv
 
     db.session.commit()
 

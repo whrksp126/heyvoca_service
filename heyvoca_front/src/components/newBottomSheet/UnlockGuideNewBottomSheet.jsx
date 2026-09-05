@@ -131,7 +131,7 @@ export const UnlockGuideNewBottomSheet = ({ highlightKey } = {}) => {
         <button
           type="button"
           onClick={handleRewardDone}
-          className="shrink-0 mt-[20px] h-[45px] rounded-[8px] bg-primary-main-600 text-[16px] font-[700] text-layout-white dark:text-layout-black"
+          className="shrink-0 mt-[20px] h-[52px] rounded-[12px] bg-primary-main-600 text-[16px] font-[700] tracking-[-0.03em] text-layout-white dark:text-layout-black"
         >
           확인
         </button>
@@ -209,7 +209,7 @@ export const UnlockGuideNewBottomSheet = ({ highlightKey } = {}) => {
       <button
         type="button"
         onClick={handleConfirm}
-        className="shrink-0 mt-[24px] h-[45px] rounded-[8px] bg-primary-main-600 text-[16px] font-[700] text-layout-white dark:text-layout-black"
+        className="shrink-0 mt-[24px] h-[52px] rounded-[12px] bg-primary-main-600 text-[16px] font-[700] tracking-[-0.03em] text-layout-white dark:text-layout-black"
       >
         확인
       </button>

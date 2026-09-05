@@ -6,6 +6,7 @@ import { useUser } from '../context/UserContext';
 import { migrateOnboardingApi } from '../api/study';
 import { pendingGuestMigration, clearGuest } from '../utils/guestStorage';
 import { useVocabulary } from '../context/VocabularyContext';
+import { useStats } from '../context/StatsContext';
 import lottie from 'lottie-web';
 import animationData from '../assets/lottie/heyvoca logo-01.json';
 import postMessageManager from '../utils/postMessageManager';
@@ -29,6 +30,7 @@ const Index = () => {
     isAchievementCriteriaLoading,
     performLogout,
     fetchUserProfile,
+    updateUserHistory,
   } = useUser();
 
   const {
@@ -36,9 +38,11 @@ const Index = () => {
     isUserDictionaryLoading,
     isRecentStudyLoading,
     isBookStoreLoading,
-    isRecommendedBooksLoading,
     fetchVocabularySheets,
   } = useVocabulary();
+
+  // 온보딩 이전 직후 홈 통계(밭·오늘 요약) 캐시를 다시 채우기 위해서만 쓴다
+  const { refreshStats } = useStats();
 
   // 바가 100% 차 보이고 나서 실제 네비게이트
   const [graceDone, setGraceDone] = useState(false);
@@ -116,10 +120,6 @@ const Index = () => {
       label: '서점을 불러오는 중',
     },
     {
-      done: !isRecommendedBooksLoading,
-      label: '추천 단어장을 불러오는 중',
-    },
-    {
       done: !isAchievementCriteriaLoading,
       label: '마무리하는 중',
     },
@@ -163,7 +163,25 @@ const Index = () => {
       daily_new_limit: pending.daily_new_limit,
       username: pending.username,
       answers: pending.answers,
-    }).then((res) => {
+    }).then(async (res) => {
+      if (res?.code === 200) {
+        // 온보딩 학습을 **정규 세션과 똑같이** 집계한다.
+        // /mainpage/user_study_history 가 XP · 출석 · 출석왕 · 노력왕 · 데일리 미션 · 끈기왕을
+        // 한 번에 처리하는 허브인데, 게스트 구간에서는 로그인이 없어 못 불렀다.
+        // migrate 가 학습 로그를 막 심어 놨으므로(신규 판정은 로그 기준) 지금 부르면
+        // 온보딩에서 한 학습이 그대로 오늘의 기록으로 잡힌다.
+        // 409(이미 온보딩 완료)는 앞선 시도에서 이미 처리된 것이라 건너뛴다.
+        const studied = res?.data?.studied ?? 0;
+        const correct = res?.data?.correct ?? 0;
+        //
+        // **끝날 때까지 기다린다.** 보석·XP·출석·업적이 여기서 붙는데, 기다리지 않고 바로
+        // 아래에서 프로필을 다시 읽으면 지급 **전** 잔액이 캐시된다 — 실제로 홈 첫 화면의
+        // 보석이 1,000 으로 떠 있고 DB 에는 1,013 이 들어 있는 상태를 기기에서 확인했다.
+        if (studied > 0 && typeof updateUserHistory === 'function') {
+          await updateUserHistory({ correct_cnt: correct, incorrect_cnt: Math.max(0, studied - correct) })
+            .catch(() => { /* 실패해도 온보딩 흐름은 계속 */ });
+        }
+      }
       if (res?.code === 200 || res?.code === 409) {
         clearGuest();
         // migrate가 서버에서 username·레벨·단어장·onboarding_ver('1')를 세팅하지만,
@@ -177,6 +195,13 @@ const Index = () => {
         // "단어가 부족해요"가 뜬다(앱 재시작 전까지). fetchVocabularySheets가 vocaBooks+userDictionary를 재조회.
         if (typeof fetchVocabularySheets === 'function') {
           fetchVocabularySheets().catch(() => { /* 실패해도 흐름은 계속 */ });
+        }
+        // 홈의 밭 그림·씨앗 수·오늘 요약은 StatsContext 캐시에서 온다. 그 캐시는
+        // **로그인되는 순간**(= migrate 전에) 한 번 채워지고 학습 세션이 끝날 때까지
+        // 다시 돌지 않는다. 갱신하지 않으면 방금 14알을 심은 사람의 첫 홈 화면이
+        // "아직 밭이 비어 있어요"가 된다 — 기기에서 실제로 그렇게 떴다.
+        if (typeof refreshStats === 'function') {
+          refreshStats().catch(() => { /* 실패해도 흐름은 계속 */ });
         }
         if (res?.code === 200) navigate('/home', { replace: true });
       }

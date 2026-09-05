@@ -1,0 +1,394 @@
+[
+    {
+        "origin": "billing address",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "청구서 주소"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "government grant",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "정부 보조금"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "market value",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "시가, 시세"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "pull down",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~을 끌어내리다, ~을 하락시키다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "stationary",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "움직이지 않는, 정지된"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "abate",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "누그러지다, 약해지다, 감소하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "cease",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "중지하다, 그치다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "conspicuously",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "눈에 띄게, 두드러지게"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "deteriorate",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "악화되다, 나빠지다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "implicitly",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "암암리에, 절대적으로"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "leisurely",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "느긋한, 여유 있는"
+            },
+            {
+                "pos": "adv",
+                "text": "천천히"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "menace",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "위협하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "perceptible",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "상당한 정도의, 인지할 수 있는"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "placement",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "놓기, 배치, 취업 알선"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "remark",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "주의하다, 말하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "retrieval",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "복구, 만회"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "slowdown",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "경기 후퇴"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "solitary",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "혼자의, 외로운"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "ailing",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "병든, 괴로워하는"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "financial statement",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "재무제표"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "have a monopoly on",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~의 독점권을 갖다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "in demand",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "수요가 있는"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "multilateral",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "다국간의"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "nontransferable",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "양도할 수 없는"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "parent company",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "모(母)회사"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "privatization",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "민영화"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "rebound",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "회복"
+            },
+            {
+                "pos": "v",
+                "text": "다시 일어서다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "runner-up",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "2위의 경기자, 차점자"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "secondary effect",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "부차적 영향"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "sluggish",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "불경기의"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "stagnation",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "침체, 불경기"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "volatile",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "(가격 등이) 심하게 변동하는"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    }
+]

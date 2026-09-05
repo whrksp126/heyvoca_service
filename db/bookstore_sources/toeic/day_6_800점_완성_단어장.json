@@ -1,0 +1,838 @@
+[
+    {
+        "origin": "amusement park",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "놀이동산"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "ancient history",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "고대 역사"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "artifact",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "공예품"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "auditorium",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "강당"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "be booked up",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "예약이 차다, 매진되다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "box office",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "매표소"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "cheerful",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "쾌활한, 명랑한"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "choir",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "합창단"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "entertain",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "즐겁게 하다, 대접하다, 환대하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "flower arrangement",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "꽃꽂이"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "flower bed",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "화단"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "go to a film",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "영화 보러 가다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "grip",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "꽉 잡다, 움켜잡다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "have a race",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "경주하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "jog along the street",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "길을 따라 조깅하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "musical instrument",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "악기"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "oar",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "노"
+            },
+            {
+                "pos": "v",
+                "text": "노를 젓다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "oil painting",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "유화"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "outdoor",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "야외의"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "paddle",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "노를 젓다, 물장구를 치다"
+            },
+            {
+                "pos": "n",
+                "text": "노"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "premiere",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "특별 개봉, 초연"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "rake leaves",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "(갈퀴로) 낙엽을 긁어모으다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "recreational activity",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "오락 활동"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "right",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "권리"
+            },
+            {
+                "pos": "adj",
+                "text": "바른, 옳은"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "running time",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "(영화) 상영 시간"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "sail a boat",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "보트를 타고 항해하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "slide down",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "미끄러져 내려가다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "splash",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "(물을) 튀기다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "sport tournament",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "운동 경기"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "stadium",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "경기장"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "stay up",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "(잠을 자지 않고) 일어나 있다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "stroll",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "한가롭게 거닐다, 산책하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "take a break",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "잠깐 휴식을 취하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "take A for a walk",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "A를 산책에 데려가다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "take a photograph",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "사진을 찍다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "take a walk",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "산책하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "take great pleasure",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "큰 즐거움을 찾다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "touch up a photograph",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "사진을 조금 수정하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "vacation package",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "휴가 패키지, 여행 패키지"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "wait for seats",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "자리를 기다리다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "wait in line",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "줄을 서서 기다리다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "water the plants",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "화초에 물을 주다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "amuse",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "재미있게 하다, 즐겁게 하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "artistic",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "예술적인"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "donate",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "기부하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "even though",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "비록 ~일지라도"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "exhibit",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "전시회"
+            },
+            {
+                "pos": "v",
+                "text": "전시하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "free admission",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "무료입장"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "make oneself at home",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "편히 쉬다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "municipal",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "자치 도시의, 시립의"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "owed",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "(돈을) 빚지고 있는"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "several",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "몇몇의, 몇 개의"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "spectator",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "관중"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "usher",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "(극장 등의) 좌석 안내원"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "win a contest",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "대회에서 이기다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "admission to",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~로 입장"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "contestant",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "경기자, 경쟁자"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "delight",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "기쁨"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "do one's hair",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "머리 손질하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "enjoyable",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "재미있는, 즐거운"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "group rate",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "단체 요금"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "head for",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~로 향하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "out of order",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "고장 난"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "periodical",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "정기 간행물"
+            },
+            {
+                "pos": "adj",
+                "text": "주기적인"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "playing field",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "경기장"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "register for",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~에 등록하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "show up",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "나타나다, 돋보이게 하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "take a tour",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "여행하다, 둘러보다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    }
+]

@@ -18,7 +18,8 @@ import { vibrate } from '../../utils/osFunction';
 import { playSuccessSound, playErrorSound } from '../../utils/audio';
 import { getQuestionType } from '../../plugins/questionTypes';
 import { logStudyQuestion } from '../../api/study';
-import { getAdvanceDelay } from '../../utils/studyTiming';
+import { getAdvanceDelay, ADVANCE_DELAY_GROW } from '../../utils/studyTiming';
+import { optimisticFarmPayload } from '../../utils/farmOptimistic';
 import { getComboApi, protectComboApi, forfeitComboApi } from '../../api/game';
 import ComboBar from './ComboBar';
 import { ComboProtectNewBottomSheet } from '../newBottomSheet/ComboProtectNewBottomSheet';
@@ -189,6 +190,32 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
   const [updateType, setUpdateType] = useState(null); // SM-2 업데이트 타입
   const startTimeRef = useRef(null);
   const endTimeRef = useRef(null);
+
+  /*
+    다음 문제로 넘기는 타이머.
+
+    지연을 채점 시점에 한 번 정하고 끝낼 수 없다. 단계가 올랐는지(grew)는
+    **로그인 사용자에게는 /study/log 응답이 도착한 뒤에야** 알 수 있는데, 그때는 이미
+    1초짜리 타이머가 돌고 있다. 그래서 타이머를 ref 로 들고 있다가, 진화가 확정되면
+    **채점 시각 기준 절대 시간**으로 다시 건다 — 늦게 온 응답이 전체 지연을
+    2200ms 로 늘리되, 응답까지 걸린 시간만큼은 이미 흘러간 것으로 친다.
+  */
+  const advanceTimerRef = useRef(null);
+  const gradedAtRef = useRef(0);
+  const advanceActionRef = useRef(null);
+
+  const scheduleAdvance = (totalMs) => {
+    if (advanceTimerRef.current) clearTimeout(advanceTimerRef.current);
+    const elapsed = Date.now() - gradedAtRef.current;
+    advanceTimerRef.current = setTimeout(() => {
+      advanceTimerRef.current = null;
+      advanceActionRef.current?.();
+    }, Math.max(0, totalMs - elapsed));
+  };
+
+  useEffect(() => () => {
+    if (advanceTimerRef.current) clearTimeout(advanceTimerRef.current);
+  }, []);
   // ── 전역 콤보 (AI 추천 테스트 전용) ──
   const { userProfile, setUserProfile } = useUser();
   const [combo, setCombo] = useState(null);
@@ -233,6 +260,36 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
   const [farmStatus, setFarmStatus] = useState(null);
   // 카드 매칭은 카드마다 따로 채점되므로 단어별로 보관한다.
   const [cardFarmByWordId, setCardFarmByWordId] = useState({});
+
+  /*
+    단어별 **마지막** 농장 payload.
+
+    재출제 문제는 /study/log 를 보내지 않고(첫 시도만 기록한다) 게스트 낙관 payload 도
+    만들지 않았다. 그래서 다시 풀 때는 farmStatus 가 비어 상태 바가 안 뜨고,
+    화면이 **구버전 UI**(암기상태 배지 + '3일 후 복습 예정' pill)로 폴백했다 —
+    같은 세션 안에서 같은 단어가 두 번 다른 얼굴로 채점되는 셈이었다.
+    첫 시도 때의 payload 를 들고 있다가 재출제에서 그대로 다시 세운다.
+  */
+  const lastFarmByVocaRef = useRef({});
+
+  const publishFarm = (payload, vocaId, qIndex) => {
+    lastFarmByVocaRef.current[vocaId] = payload;
+    setFarmStatus({ ...payload, vocaId, qIndex });
+  };
+
+  /*
+    단계가 올랐으면 전환을 2.2초로 늦춘다.
+
+    게스트는 채점과 동시에(applyOptimisticGrade), 로그인 사용자는 /study/log 응답과 함께
+    grew 가 정해진다. 두 경로 모두 farmStatus 가 새로 꽂히는 순간을 잡으면 되므로 여기서 한 번만 건다.
+    이미 넘어간 문제의 뒤늦은 응답은 대기 중인 타이머가 없으므로 그냥 지나간다.
+  */
+  useEffect(() => {
+    if (!farmStatus?.grew) return;
+    if (!advanceTimerRef.current) return;
+    scheduleAdvance(ADVANCE_DELAY_GROW);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [farmStatus]);
 
   const navigate = useNavigate();
 
@@ -377,12 +434,11 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
         if (logRes?.data?.combo) handleComboPayload(logRes.data.combo);
         // 농장 상태 바 payload — 없으면(구버전 응답) 기존 암기상태 배지가 그대로 보인다
         if (logRes?.data?.farm) {
-          setFarmStatus({
-            ...logRes.data.farm,
+          publishFarm(
+            { ...logRes.data.farm, wasCorrect: !!payload.was_correct },
             vocaId,
-            qIndex: progressIndex,
-            wasCorrect: !!payload.was_correct,
-          });
+            progressIndex,
+          );
         }
         if (logRes?.data?.fsrs) {
           const idx = testQuestions.findIndex(
@@ -560,6 +616,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
   const applyOptimisticGrade = (idx, isCorrectAnswer) => {
     const q = testQuestions[idx];
     const predicted = q.predictedReview?.[isCorrectAnswer ? 'correct' : 'wrong'];
+    const fsrsBefore = q.fsrs;          // 아래에서 덮이기 전의 값 — 막대의 '학습 전'이다
     const optimistic = computeOptimisticFsrs(q.fsrs, isCorrectAnswer);
     q.displayNextReview = predicted?.next_review ?? optimistic.next_review;
     q.fsrs = optimistic; // 추정 fsrs — 백엔드 응답 도착 시 갱신(배지/홈 카운터용)
@@ -575,14 +632,30 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
         dir: (STATE_RANK[newStateKey] ?? 0) > (STATE_RANK[prevMemoryState] ?? 0) ? 'up' : 'down',
       });
     }
-    // 게스트는 서버 응답이 없으므로 여기서 상태 바를 직접 세운다(재출제는 성장이 아니다)
-    if (guestMode && !q.isRetry) {
-      setFarmStatus({
-        ...guestFarmPayload(isCorrectAnswer, q.displayNextReview),
-        vocaId: q.vocaIndexId ?? q.id,
-        qIndex: idx,
-      });
-    }
+
+    /*
+      상태 바는 **언제나** 뜬다. 구버전 UI 로 폴백하던 자리를 전부 없앴으므로
+      여기서 값을 못 만들면 화면이 빈다. 서버 payload 를 못 받는 세 경우
+      (게스트 온보딩 · 재출제 · 로그인 첫 시도의 응답 대기)를 낙관값으로 덮고,
+      응답이 오면 publishFarm 이 정본으로 갈아 끼운다.
+    */
+    const vid = q.vocaIndexId ?? q.id;
+    publishFarm(
+      optimisticFarmPayload({
+        base: lastFarmByVocaRef.current[vid],
+        fsrsBefore,
+        fsrsAfter: optimistic,
+        wasCorrect: isCorrectAnswer,
+        // 게스트 온보딩은 **마지막** 정오답을 서버로 보낸다(TakeTest 의 answers 집계).
+        // 그러니 재출제에서 맞히면 실제로 심긴다 — 화면도 그때 심는 연출을 해야 한다.
+        // 정규 학습은 반대다. 서버가 세션 로그로 독립 회상을 판정해 재출제를 성장으로
+        // 치지 않으므로(기획 5.2), 화면도 제자리에 세운다.
+        isRetry: !!q.isRetry && !guestMode,
+        daysToReview: daysUntilReview(q.displayNextReview),
+      }),
+      vid,
+      idx,
+    );
   }
 
   // React Compiler가 자동으로 useCallback 처리
@@ -705,10 +778,11 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
 
     setIsAnswered(true);
 
-    // 오답일 때는 정답·해설을 충분히 인지하도록 전환을 더 천천히 (정답 1초 / 오답 2.5초)
-    setTimeout(() => {
-      setUpdateRecentStudyStateAndStatus();
-    }, getAdvanceDelay(isCorrectAnswer));
+    // 오답일 때는 정답·해설을 충분히 인지하도록 전환을 더 천천히 (정답 1초 / 오답 2.5초).
+    // 단계가 오른 정답은 아래 useEffect 가 2.2초로 다시 건다 — 진화 연출이 1초라 여기서 넘기면 잘린다.
+    gradedAtRef.current = Date.now();
+    advanceActionRef.current = setUpdateRecentStudyStateAndStatus;
+    scheduleAdvance(getAdvanceDelay(isCorrectAnswer));
   }
 
 
@@ -884,13 +958,24 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
     // 게스트 온보딩 로컬 콤보 — 카드매칭은 항상 첫 시도(오답 카드는 사지선다로 재출제되어 이 경로를 다시 타지 않음)
     bumpLocalCombo(!!wordIsCorrect);
 
-    // 게스트 온보딩 농장 상태 바 — 카드는 카드(단어)마다 따로 붙는다.
-    // 서버 경로(sendCardLog)의 setCardFarmByWordId 와 같은 모양을 로컬로 만든다.
-    if (guestMode) {
+    /*
+      카드별 농장 상태 바 — 카드는 카드(단어)마다 따로 붙는다.
+      게스트뿐 아니라 **항상** 낙관값을 세운다. 구버전 UI 폴백을 없앴기 때문에
+      서버 응답(sendCardLog)이 오기 전이나 재출제 카드에서 값이 비면 화면이 빈다.
+      응답이 오면 setCardFarmByWordId 가 정본으로 갈아 끼운다.
+    */
+    {
       const optimistic = computeOptimisticFsrs(target?.fsrs, !!wordIsCorrect);
       setCardFarmByWordId(prev => ({
         ...prev,
-        [wordId]: guestFarmPayload(!!wordIsCorrect, optimistic?.next_review),
+        [wordId]: optimisticFarmPayload({
+          base: prev[wordId],
+          fsrsBefore: target?.fsrs,
+          fsrsAfter: optimistic,
+          wasCorrect: !!wordIsCorrect,
+          isRetry: !!currentQuestion?.isRetry && !guestMode,
+          daysToReview: daysUntilReview(optimistic?.next_review),
+        }),
       }));
     }
 
@@ -1025,7 +1110,8 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
   const progressFillClass = isDiagnosis ? 'bg-crop-carrot' : 'bg-primary-main-600';
 
   // 농장 상태 바 노출 여부 — 지금 보고 있는 문제의 payload 일 때만 띄운다(응답 지연 대비).
-  // payload 가 없으면 기존 암기상태 배지·복습 예정일 배지가 그대로 보인다.
+  // 채점하면 applyOptimisticGrade 가 낙관값이라도 반드시 세우므로 이 조건은 사실상
+  // "채점했고 그 문제의 값인가"만 본다. 폴백 UI 는 없다.
   const currentVocaId =
     testQuestions[progressIndex]?.vocaIndexId ?? testQuestions[progressIndex]?.id;
   const showFarmBar =
@@ -1214,36 +1300,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
                   {/* 상단 중앙 - 암기 상태 배지 (채점 전에는 숨김)
                       농장 상태 바가 뜨면 같은 말을 두 번 하는 것이라 배지는 숨긴다.
                       부패 진단(6절)은 시안에 이 배지가 없다 — 하단 삽 pill 하나만 쓴다. */}
-                  {isCorrect !== null && !showFarmBar && !isDiagnosis && (
-                  <div className="
-                    absolute top-[15px] left-[50%] translate-x-[-50%]
-                    flex items-center justify-center
-                    z-[2]
-                    whitespace-nowrap
-                  ">
-                    {memoryStateChange ? (
-                      <MemoryStateChangeBadge
-                        toKey={memoryStateChange.toKey}
-                        dir={memoryStateChange.dir}
-                        changed={true}
-                        size="large"
-                      />
-                    ) : (
-                      (() => {
-                        const stability = testQuestions[progressIndex].fsrs?.stability ?? 0;
-                        const fsrsState = testQuestions[progressIndex].fsrs?.state ?? null;
-                        const stateKey = getMemoryStateKeyByStability(stability, fsrsState);
-                        return (
-                          <MemoryStateChangeBadge
-                            toKey={stateKey}
-                            changed={false}
-                            size="large"
-                          />
-                        );
-                      })()
-                    )}
-                  </div>
-                  )}
+                  
 
                   {testQuestions[progressIndex].questionType === 'multipleChoiceListening' && !isAnswered ? (
                     /* 듣기 모드: 채점 전 스피커 아이콘 */
@@ -1356,29 +1413,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
                   {/* 하단 중앙 - 채점 후: 다음 복습 예정일 (채점 전에는 숨김) */}
                   {/* displayNextReview는 채점 시 고정 — 백엔드 응답으로 덮지 않아 깜빡임 없음 */}
                   {/* 농장 상태 바가 같은 자리에서 다음 복습일까지 말하므로 그때는 숨긴다 */}
-                  {isCorrect !== null && !showFarmBar && !isDiagnosis && (() => {
-                    const nextReviewDate = testQuestions[progressIndex].displayNextReview;
-                    if (!nextReviewDate) return null;
-                    const date = new Date(nextReviewDate);
-                    const today = new Date();
-                    today.setHours(0, 0, 0, 0);
-                    date.setHours(0, 0, 0, 0);
-                    const daysDiff = Math.round((date - today) / (1000 * 60 * 60 * 24));
-                    if (daysDiff < 1) return null;
-                    const text = `${daysDiff}일 후 복습 예정`;
-                    return (
-                      <div className="absolute bottom-[15px] left-[50%] translate-x-[-50%] flex items-center justify-center z-[2]">
-                        <motion.div
-                          initial={{ opacity: 0, y: 8 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          transition={{ duration: 0.25, ease: [0.4, 0, 0.2, 1] }}
-                          className="flex items-center justify-center h-[18px] px-[6px] rounded-[3px] bg-primary-main-200 dark:bg-primary-main-dark text-[10px] font-[600] text-primary-main-600 whitespace-nowrap"
-                        >
-                          {text}
-                        </motion.div>
-                      </div>
-                    );
-                  })()}
+                  
                   {testType === "test" && isAnswered && (
                     <motion.button
                       onClick={(e) => {

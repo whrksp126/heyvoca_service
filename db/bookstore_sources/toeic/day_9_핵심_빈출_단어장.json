@@ -1,0 +1,817 @@
+[
+    {
+        "origin": "stagnant",
+        "pronunciations": {
+            "us": "stǽgnənt"
+        },
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "침체된, 불경기인"
+            }
+        ],
+        "notes": "[파] <strong class=\"target-word\">stagnate</strong> v. 침체시키다<br>[동] <strong class=\"target-word\">sluggish</strong> 불경기의<br><strong class=\"target-word\">토익 이렇게 나온다</strong><br>'불경기의'라는 뜻으로 사용될 때 <strong class=\"target-word\">stagnant</strong>는 <strong class=\"target-word\">sluggish</strong>로 바꾸어 쓸 수 있다.",
+        "examples": [
+            {
+                "origin": "Profits are down this year as sales have been <strong class=\"target-word\">stagnant</strong>.",
+                "translation": "판매가 침체되면서 올해 수익이 감소했다."
+            }
+        ]
+    },
+    {
+        "origin": "dramatically",
+        "pronunciations": {
+            "us": "drəmǽtikəli"
+        },
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "극적으로"
+            }
+        ],
+        "notes": "[파] <strong class=\"target-word\">dramatic</strong> adj. 극적인<br>[동] <strong class=\"target-word\">substantially</strong> 상당히, 충분히<br><strong class=\"target-word\">토익 이렇게 나온다</strong><br><strong class=\"target-word\">increase/grow/climb + dramatically</strong><br>극적으로 증가하다/성장하다/상승하다<br>dramatically는 increase 등 '증가하다'를 의미하는 동사와 어울려 주로 출제된다.<br>변화가 매우 커서 극적이라는 문맥일 때 <strong class=\"target-word\">dramatically</strong>는 <strong class=\"target-word\">substantially</strong>로 바꾸어 쓸 수 있다.",
+        "examples": [
+            {
+                "origin": "Interest rates climbed <strong class=\"target-word\">dramatically</strong>.",
+                "translation": "금리가 극적으로 상승했다."
+            }
+        ]
+    },
+    {
+        "origin": "brisk",
+        "pronunciations": {
+            "us": "brisk"
+        },
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "활발한, 호황의"
+            }
+        ],
+        "notes": "[동] <strong class=\"target-word\">strong, lively</strong> 활발한, 호황의<br><strong class=\"target-word\">토익 이렇게 나온다</strong><br>시장에서의 거래가 활발하다는 의미로 쓰일 때 <strong class=\"target-word\">brisk</strong>는 <strong class=\"target-word\">strong, lively</strong> 등으로 바꾸어 쓸 수 있다. 참고로, <strong class=\"target-word\">brisk</strong>에는 '(날씨가) 상쾌한'이나 '빠른'이라는 뜻도 있는데, 각각 <strong class=\"target-word\">fresh</strong>와 <strong class=\"target-word\">quick, rapid, brief</strong> 등으로 바꾸어 쓸 수 있다.",
+        "examples": [
+            {
+                "origin": "A <strong class=\"target-word\">brisk</strong> market is developing in online shopping.",
+                "translation": "온라인 쇼핑 분야에서 활발한 시장이 형성되고 있다."
+            }
+        ]
+    },
+    {
+        "origin": "unstable",
+        "pronunciations": {
+            "us": "ʌnstéibl"
+        },
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "불안정한, 변하기 쉬운"
+            }
+        ],
+        "notes": "[반] <strong class=\"target-word\">stable</strong> 안정된",
+        "examples": [
+            {
+                "origin": "Gas prices have been <strong class=\"target-word\">unstable</strong> in recent years.",
+                "translation": "휘발유 가격이 최근 몇 년간 불안정했다."
+            }
+        ]
+    },
+    {
+        "origin": "rapidly",
+        "pronunciations": {
+            "us": "rǽpidli"
+        },
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "급속히, 빨리"
+            }
+        ],
+        "notes": "[파] <strong class=\"target-word\">rapid</strong> adj. 신속한<br><strong class=\"target-word\">rapidity</strong> n. 급속, 신속",
+        "examples": [
+            {
+                "origin": "Energy demand increased <strong class=\"target-word\">rapidly</strong>.",
+                "translation": "에너지 수요가 급속히 증가했다."
+            }
+        ]
+    },
+    {
+        "origin": "soar",
+        "pronunciations": {
+            "us": "sɔːr",
+            "uk": "sɔː"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "(물가 등이) 폭등하다, 높이 치솟다"
+            }
+        ],
+        "notes": "[반] <strong class=\"target-word\">plummet</strong> 폭락하다",
+        "examples": [
+            {
+                "origin": "Interest rates have <strong class=\"target-word\">soared</strong> due to inflation.",
+                "translation": "인플레이션으로 금리가 폭등했다."
+            }
+        ]
+    },
+    {
+        "origin": "assert",
+        "pronunciations": {
+            "us": "əsə́ːrt",
+            "uk": "əsə́ːt"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "단언하다, 주장하다"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "The report <strong class=\"target-word\">asserts</strong> that corporate growth will continue.",
+                "translation": "그 보고서는 기업 성장이 계속될 것이라 단언한다."
+            }
+        ]
+    },
+    {
+        "origin": "boost",
+        "pronunciations": {
+            "us": "buːst"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "(경기를) 부양시키다, 상승시키다"
+            },
+            {
+                "pos": "n",
+                "text": "후원, (가격의) 인상"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "The real estate industry has helped <strong class=\"target-word\">boost</strong> the economy.",
+                "translation": "부동산 산업이 경기를 부양시키는 데 도움이 되었다."
+            }
+        ]
+    },
+    {
+        "origin": "analyst",
+        "pronunciations": {
+            "us": "ǽnəlist"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "분석가"
+            }
+        ],
+        "notes": "[파] <strong class=\"target-word\">analyze</strong> v. 분석하다<br><strong class=\"target-word\">analysis</strong> n. 분석 연구, 분석",
+        "examples": [
+            {
+                "origin": "<strong class=\"target-word\">Analysts</strong> recommend buying stock in energy companies.",
+                "translation": "분석가들은 에너지 회사들의 주식을 사는 것을 추천한다."
+            }
+        ]
+    },
+    {
+        "origin": "potential",
+        "pronunciations": {
+            "us": "pənténʃəl"
+        },
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "잠재적인"
+            },
+            {
+                "pos": "n",
+                "text": "가능성"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "<strong class=\"target-word\">Potential</strong> earnings from the trade deal could reach billions of dollars.",
+                "translation": "그 무역 거래에서 나올 잠재적인 수익은 수십억 달러에 이를 수 있다."
+            },
+            {
+                "origin": "The newly formed company has great <strong class=\"target-word\">potential</strong> to succeed.",
+                "translation": "새로 생긴 그 회사는 성공할 가능성이 크다."
+            }
+        ]
+    },
+    {
+        "origin": "pleased",
+        "pronunciations": {
+            "us": "pliːzd"
+        },
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "만족해하는, 기쁜"
+            }
+        ],
+        "notes": "<strong class=\"target-word\">토익 이렇게 나온다</strong><br><strong class=\"target-word\">be pleased to do</strong> ~하게 되어 기쁘다<br>pleased는 be pleased to do 형태로 자주 출제된다.",
+        "examples": [
+            {
+                "origin": "Investors are <strong class=\"target-word\">pleased</strong> with the market's performance.",
+                "translation": "투자자들은 시장 성과에 만족해한다."
+            }
+        ]
+    },
+    {
+        "origin": "remain",
+        "pronunciations": {
+            "us": "riméin"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "계속 ~한 상태이다; 아직 ~해야 하다"
+            }
+        ],
+        "notes": "[파] <strong class=\"target-word\">remainder</strong> n. 나머지<br><strong class=\"target-word\">remaining</strong> adj. 남아 있는<br><strong class=\"target-word\">토익 이렇게 나온다</strong><br><strong class=\"target-word\">remain + steady/harmonious/the same</strong><br>안정된/조화로운/동일한 상태를 유지하다<br>remain은 형용사나 명사 보어를 취한 형태로 주로 시험에 출제된다.",
+        "examples": [
+            {
+                "origin": "The cost of living will <strong class=\"target-word\">remain</strong> stable over the next decade.",
+                "translation": "생활비는 향후 10년 동안 계속 안정적인 상태일 것이다."
+            },
+            {
+                "origin": "It <strong class=\"target-word\">remains</strong> to be seen whether or not the tax cut will be passed.",
+                "translation": "세제 감면안이 통과될지는 아직 두고 봐야 한다."
+            }
+        ]
+    },
+    {
+        "origin": "limited",
+        "pronunciations": {
+            "us": "límitid"
+        },
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "제한된, 한정된"
+            }
+        ],
+        "notes": "<strong class=\"target-word\">토익 이렇게 나온다</strong><br><strong class=\"target-word\">limited offer</strong> 한정 판매/제공<br><strong class=\"target-word\">for a limited time</strong> 한시적으로<br>limited는 offer, time 등의 명사와 자주 사용되므로 묶어서 기억해 두자.",
+        "examples": [
+            {
+                "origin": "The island nation has <strong class=\"target-word\">limited</strong> natural resources.",
+                "translation": "그 섬나라는 제한된 천연자원을 가지고 있다."
+            }
+        ]
+    },
+    {
+        "origin": "costly",
+        "pronunciations": {
+            "us": "kástli",
+            "uk": "kɔ́stli"
+        },
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "비용이 많이 드는, 손실이 큰"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "Starting a business is <strong class=\"target-word\">costly</strong>.",
+                "translation": "사업을 시작하는 것은 비용이 많이 든다."
+            }
+        ]
+    },
+    {
+        "origin": "particular",
+        "pronunciations": {
+            "us": "pərtíkjulər",
+            "uk": "pətíkjulə"
+        },
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "특정한"
+            },
+            {
+                "pos": "n",
+                "text": "자세한 내용, 세목"
+            }
+        ],
+        "notes": "<strong class=\"target-word\">토익 이렇게 나온다</strong><br><strong class=\"target-word\">in particular</strong> 특히<br>particular와 함께 쓰이는 전치사 in을 묶어서 기억해 투자.",
+        "examples": [
+            {
+                "origin": "Import taxes are higher for <strong class=\"target-word\">particular</strong> products that are luxury goods.",
+                "translation": "수입세는 사치품인 특정 제품에 대해 더 높다."
+            }
+        ]
+    },
+    {
+        "origin": "drastic",
+        "pronunciations": {
+            "us": "drǽstik"
+        },
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "과감한; 급격한"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "Resolving the financial crisis will require <strong class=\"target-word\">drastic</strong> action.",
+                "translation": "금융 위기를 해결하는 것은 과감한 조치를 필요로 할 것이다."
+            },
+            {
+                "origin": "Private citizens want <strong class=\"target-word\">drastic</strong> reform of the banking industry.",
+                "translation": "일반 시민들은 은행 산업의 급격한 개혁을 원한다."
+            }
+        ]
+    },
+    {
+        "origin": "evenly",
+        "pronunciations": {
+            "us": "íːvənli"
+        },
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "고르게, 균등하게"
+            }
+        ],
+        "notes": "[파] <strong class=\"target-word\">even</strong> adj. 평평한, 고른",
+        "examples": [
+            {
+                "origin": "Economic wealth is not <strong class=\"target-word\">evenly</strong> distributed.",
+                "translation": "경제적인 부는 고르게 분배되지 않는다."
+            }
+        ]
+    },
+    {
+        "origin": "evidence",
+        "pronunciations": {
+            "us": "évidəns",
+            "uk": "évidəns"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "증거"
+            }
+        ],
+        "notes": "[파] <strong class=\"target-word\">evident</strong> adj. 분명한<br><strong class=\"target-word\">evidently</strong> adv. 분명히",
+        "examples": [
+            {
+                "origin": "The latest employment data shows <strong class=\"target-word\">evidence</strong> that the economy is improving.",
+                "translation": "최신 취업 자료는 경제가 개선되고 있다는 증거를 보여 준다."
+            }
+        ]
+    },
+    {
+        "origin": "prospect",
+        "pronunciations": {
+            "us": "práspekt",
+            "uk": "prɔ́spekt"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "전망, 예상"
+            }
+        ],
+        "notes": "[파] <strong class=\"target-word\">prospective</strong> adj. 장래의, 예상된",
+        "examples": [
+            {
+                "origin": "Bolton Industries is facing the <strong class=\"target-word\">prospect</strong> of having to reduce its workforce.",
+                "translation": "Bolton Industries사는 직원을 줄여야 한다는 전망에 직면하고 있다."
+            }
+        ]
+    },
+    {
+        "origin": "lead",
+        "pronunciations": {
+            "us": "liːd"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "이끌다, 지휘하다; (어떤 결과에) 이르다"
+            }
+        ],
+        "notes": "[파] <strong class=\"target-word\">leading</strong> adj. 선도하는<br><strong class=\"target-word\">토익 이렇게 나온다</strong><br>1. <strong class=\"target-word\">lead to</strong> (어떤 결과로) 이어지다<br>lead와 함께 쓰이는 전치사 to가 문제로 출제된다.<br>2. <strong class=\"target-word\">leading + brand/company/figure</strong> 선도하는 브랜드/업체/인물<br>leading은 브랜드, 회사, 인물 등과 함께 자주 사용된다.",
+        "examples": [
+            {
+                "origin": "Ms. Vasquez helped <strong class=\"target-word\">lead</strong> the company to success.",
+                "translation": "Ms. Vasquez는 회사를 성공으로 이끄는 데 도움을 주었다."
+            },
+            {
+                "origin": "Growing oil markets will <strong class=\"target-word\">lead</strong> to economic improvement.",
+                "translation": "석유 시장의 성장은 경제 발전으로 이어질 것이다."
+            }
+        ]
+    },
+    {
+        "origin": "fall",
+        "pronunciations": {
+            "us": "fɔːl"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "(값·가치가) 하락하다"
+            },
+            {
+                "pos": "n",
+                "text": "하락, 낙하"
+            }
+        ],
+        "notes": "[동] <strong class=\"target-word\">decrease</strong> 감소하다",
+        "examples": [
+            {
+                "origin": "The rate of unemployment has <strong class=\"target-word\">fallen</strong> steadily this quarter.",
+                "translation": "실업률이 이번 분기에 꾸준히 하락했다."
+            }
+        ]
+    },
+    {
+        "origin": "period",
+        "pronunciations": {
+            "us": "píəriəd"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "기간, 시기"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "For a <strong class=\"target-word\">period</strong> of three years, the company underwent rapid expansion.",
+                "translation": "3년의 기간 동안, 그 회사는 빠른 확장을 겪었다."
+            }
+        ]
+    },
+    {
+        "origin": "indicator",
+        "pronunciations": {
+            "us": "índikèitər",
+            "uk": "índikeitə"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "지표, 지수"
+            }
+        ],
+        "notes": "[파] <strong class=\"target-word\">indicate</strong> v. 나타내다<br><strong class=\"target-word\">indication</strong> n. 징후, 조짐",
+        "examples": [
+            {
+                "origin": "Current economic <strong class=\"target-word\">indicators</strong> show rising growth in mining.",
+                "translation": "현재의 경제 지표는 광업 분야의 성장 증대를 보여 준다."
+            }
+        ]
+    },
+    {
+        "origin": "industry",
+        "pronunciations": {
+            "us": "índəstri"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "산업"
+            }
+        ],
+        "notes": "[파] <strong class=\"target-word\">industrial</strong> adj. 산업의<br><strong class=\"target-word\">industrious</strong> adj. 근면한",
+        "examples": [
+            {
+                "origin": "Jobs in the newspaper <strong class=\"target-word\">industry</strong> are declining rapidly.",
+                "translation": "신문 산업에서의 일자리가 급속히 감소하고 있다."
+            }
+        ]
+    },
+    {
+        "origin": "likely",
+        "pronunciations": {
+            "us": "láikli"
+        },
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "~할 것 같은"
+            }
+        ],
+        "notes": "[파] <strong class=\"target-word\">likelihood</strong> n. 가망, 가능성<br>[반] <strong class=\"target-word\">unlikely</strong> ~할 것 같지 않은<br><strong class=\"target-word\">토익 이렇게 나온다</strong><br><strong class=\"target-word\">be likely to do</strong> ~할 것 같다<br>likely는 to 부정사와 어울려 자주 출제되므로 묶어서 기억해 투자.<br><strong class=\"target-word\">likely : possible</strong><br>'~일 것 같은'을 뜻하는 단어들의 용례 차이를 구별해 두자.<br>- <strong class=\"target-word\">likely</strong> ~일 것 같은<br>어떤 일이 사실일 가능성이 높을 때 쓰이며, 주어로 사람이 올 수 있다.<br>- <strong class=\"target-word\">possible</strong> 할 수 있는, 가능한<br>어떤 일을 실행하는 것이 가능할 때 쓰이며, 주어로 사람이 올 수 없다.<br>It is not <strong class=\"target-word\">possible</strong> to process your request at the moment.<br>지금은 귀하의 요청 사항을 처리해 드릴 수 없습니다.",
+        "examples": [
+            {
+                "origin": "The new CEO is <strong class=\"target-word\">likely</strong> to confront major challenges.",
+                "translation": "새로 부임한 최고 경영자는 큰 난제들에 직면할 것 같다."
+            }
+        ]
+    },
+    {
+        "origin": "boom",
+        "pronunciations": {
+            "us": "buːm"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "붐, 호황"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "Land developers are taking advantage of the housing <strong class=\"target-word\">boom</strong>.",
+                "translation": "주택 개발업자들은 주택 시장의 붐을 이용하고 있다."
+            }
+        ]
+    },
+    {
+        "origin": "director",
+        "pronunciations": {
+            "us": "diréktər",
+            "uk": "dairéktə"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "임원, 책임자"
+            }
+        ],
+        "notes": "[파] <strong class=\"target-word\">direction</strong> n. 지침, 설명<br><strong class=\"target-word\">direct</strong> adj. 직접적인, 직행의 v. 안내하다, 지도하다",
+        "examples": [
+            {
+                "origin": "The company <strong class=\"target-word\">directors</strong> are discussing a new business strategy.",
+                "translation": "회사의 임원들이 새로운 사업 전략을 논의하고 있다."
+            }
+        ]
+    },
+    {
+        "origin": "substitute",
+        "pronunciations": {
+            "us": "sʌ́bstətjùːt",
+            "uk": "sʌ́bstətjùːt"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "대용품"
+            },
+            {
+                "pos": "v",
+                "text": "대신하다"
+            }
+        ],
+        "notes": "<strong class=\"target-word\">토익 이렇게 나온다</strong><br><strong class=\"target-word\">substitute A with B (B for A)</strong> A를 B로 대체하다<br><strong class=\"target-word\">be substituted for A</strong> A를 대신하다<br><strong class=\"target-word\">be substituted with B</strong> B로 대신하다<br>substitute는 전치사 for, with와 함께 주로 사용된다. 수동태 표현도 시험에 자주 등장하므로 반드시 익혀 둬야 한다.",
+        "examples": [
+            {
+                "origin": "Corn syrup is used as a <strong class=\"target-word\">substitute</strong> for sugar in many food products.",
+                "translation": "옥수수 시럽은 많은 식품에서 설탕의 대용품으로 사용된다."
+            },
+            {
+                "origin": "Ms. Ohara will be <strong class=\"target-word\">substituting</strong> for the project manager this week.",
+                "translation": "Ms. Ohara가 이번 주에 프로젝트 관리자를 대신할 것이다."
+            }
+        ]
+    },
+    {
+        "origin": "consequence",
+        "pronunciations": {
+            "us": "kánsəkwèns",
+            "uk": "kónsikwəns"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "결과"
+            }
+        ],
+        "notes": "[파] <strong class=\"target-word\">consequential</strong> adj. 결과로서 일어나는",
+        "examples": [
+            {
+                "origin": "Profits grew as a <strong class=\"target-word\">consequence</strong> of increased business.",
+                "translation": "늘어난 거래의 결과로 이윤이 증가했다."
+            }
+        ]
+    },
+    {
+        "origin": "fairly",
+        "pronunciations": {
+            "us": "fέərli",
+            "uk": "fέəli"
+        },
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "상당히, 꽤"
+            }
+        ],
+        "notes": "[파] <strong class=\"target-word\">fair</strong> adj. 상당한, 꽤 많은<br>[동] <strong class=\"target-word\">quite, reasonably</strong> 상당히, 꽤<br><strong class=\"target-word\">토익 이렇게 나온다</strong><br>양이나 정도가 상당함을 강조할 때 <strong class=\"target-word\">fairly</strong>는 <strong class=\"target-word\">quite, reasonably</strong> 등으로 바꾸어 쓸 수 있다. 참고로, <strong class=\"target-word\">fairly</strong>에는 '공정하게, 정직하게'라는 뜻도 있는데, 이때는 <strong class=\"target-word\">equally, impartially</strong> 등으로 바꾸어 쓸 수 있다.",
+        "examples": [
+            {
+                "origin": "Concerns over the bankruptcy are <strong class=\"target-word\">fairly</strong> widespread.",
+                "translation": "파산에 대한 우려가 상당히 널리 퍼져 있다."
+            }
+        ]
+    },
+    {
+        "origin": "economical",
+        "pronunciations": {
+            "us": "èkənámikəl",
+            "uk": "ìːkənámikəl"
+        },
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "경제적인, 절약되는"
+            }
+        ],
+        "notes": "[파] <strong class=\"target-word\">economic</strong> adj. 경제의<br><strong class=\"target-word\">economy</strong> n. 경제, 절약<br><strong class=\"target-word\">economics</strong> n. 경제학<br><strong class=\"target-word\">economist</strong> n. 경제학자<br>[반] <strong class=\"target-word\">extravagant</strong> 낭비하는<br><strong class=\"target-word\">토익 이렇게 나온다</strong><br><strong class=\"target-word\">economical</strong> 경제적인, 절약되는<br><strong class=\"target-word\">economic</strong> 경제의, 경제와 관련된<br>어근이 같지만 뜻이 다른 두 단어의 차이를 구별해 두자.<br>The latest <strong class=\"target-word\">economic</strong> indicators are available on the Internet.<br>최신 경제 지표들은 인터넷에서 이용 가능하다.<br><strong class=\"target-word\">economics</strong> 경제학 (단수 취급, 무관사)<br>economics는 복수 형태이지만 항상 단수 취급을 하며 관사 없이 사용된다.",
+        "examples": [
+            {
+                "origin": "Companies are searching for <strong class=\"target-word\">economical</strong> ways to utilize energy.",
+                "translation": "기업들은 경제적인 에너지 사용법을 모색하고 있다."
+            }
+        ]
+    },
+    {
+        "origin": "thrive",
+        "pronunciations": {
+            "us": "θraiv"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "번영하다, 성공하다"
+            }
+        ],
+        "notes": "[동] <strong class=\"target-word\">prosper, flourish</strong> 번영하다, 번창하다",
+        "examples": [
+            {
+                "origin": "The delivery service industry is <strong class=\"target-word\">thriving</strong>.",
+                "translation": "배송 산업이 번영하고 있다."
+            }
+        ]
+    },
+    {
+        "origin": "implication",
+        "pronunciations": {
+            "us": "implikéiʃən"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "영향, 밀접한 관계"
+            }
+        ],
+        "notes": "[파] <strong class=\"target-word\">implicate</strong> v. 연루시키다, (의미를) 포함하다",
+        "examples": [
+            {
+                "origin": "The Supreme Court ruling has <strong class=\"target-word\">implications</strong> for small businesses.",
+                "translation": "대법원 판결은 소규모 업체들에 영향을 미친다."
+            }
+        ]
+    },
+    {
+        "origin": "wane",
+        "pronunciations": {
+            "us": "wein"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "감소, 쇠퇴"
+            }
+        ],
+        "notes": "v. 감소하다",
+        "examples": [
+            {
+                "origin": "Consumer spending is on the <strong class=\"target-word\">wane</strong>.",
+                "translation": "소비자 지출이 감소하고 있다."
+            }
+        ]
+    },
+    {
+        "origin": "prosperity",
+        "pronunciations": {
+            "us": "prasperəti",
+            "uk": "prospériti"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "번영"
+            }
+        ],
+        "notes": "[파] <strong class=\"target-word\">prosper</strong> v. 번영하다<br><strong class=\"target-word\">prosperous</strong> adj. 번영하는<br><strong class=\"target-word\">토익 이렇게 나온다</strong><br><strong class=\"target-word\">in times of prosperity</strong> 번영기에<br>전치사 of가 문제로 출제된다.",
+        "examples": [
+            {
+                "origin": "Strong economic growth is a prerequisite for national <strong class=\"target-word\">prosperity</strong>.",
+                "translation": "안정적인 경제 성장은 국가 번영의 필요 요건이다."
+            }
+        ]
+    },
+    {
+        "origin": "depression",
+        "pronunciations": {
+            "us": "dipréʃən"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "불황"
+            }
+        ],
+        "notes": "[동] <strong class=\"target-word\">slump, recession</strong> 불황",
+        "examples": [
+            {
+                "origin": "The entire industry is going through an economic <strong class=\"target-word\">depression</strong>.",
+                "translation": "산업 전체가 경제 불황을 겪고 있다."
+            }
+        ]
+    },
+    {
+        "origin": "dwindle",
+        "pronunciations": {
+            "us": "dwíndl"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "줄어들다, 감소되다"
+            }
+        ],
+        "notes": "[동] <strong class=\"target-word\">diminish</strong> 감소되다",
+        "examples": [
+            {
+                "origin": "The company's profits <strong class=\"target-word\">dwindled</strong> in the 1990s.",
+                "translation": "회사의 이윤이 1990년대에 줄어들었다."
+            }
+        ]
+    },
+    {
+        "origin": "impede",
+        "pronunciations": {
+            "us": "impíːd"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "저해하다, 방해하다"
+            }
+        ],
+        "notes": "[파] <strong class=\"target-word\">impediment</strong> n. 방해, 방해물<br>[반] <strong class=\"target-word\">facilitate</strong> 촉진하다",
+        "examples": [
+            {
+                "origin": "Natural calamities in the summer will <strong class=\"target-word\">impede</strong> national growth.",
+                "translation": "여름에 발생한 자연재해가 국가 성장을 저해할 것이다."
+            }
+        ]
+    },
+    {
+        "origin": "promising",
+        "pronunciations": {
+            "us": "prámisiŋ",
+            "uk": "prómisiŋ"
+        },
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "유망한, 전망이 좋은"
+            }
+        ],
+        "notes": "",
+        "examples": [
+            {
+                "origin": "Many people find <strong class=\"target-word\">promising</strong> careers in health and technology.",
+                "translation": "많은 사람들이 의료 및 기술 분야에서 유망한 직업을 찾는다."
+            }
+        ]
+    },
+    {
+        "origin": "adversity",
+        "pronunciations": {
+            "us": "ædvə́ːrsəti",
+            "uk": "ædvə́ːsəti"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "역경, 불운"
+            }
+        ],
+        "notes": "[파] <strong class=\"target-word\">adverse</strong> adj. 불리한, 불운의",
+        "examples": [
+            {
+                "origin": "In spite of the <strong class=\"target-word\">adversity</strong> he faced, Mike managed to find a job.",
+                "translation": "그가 직면한 역경에도 불구하고, Mike는 직업을 구했다."
+            }
+        ]
+    }
+]

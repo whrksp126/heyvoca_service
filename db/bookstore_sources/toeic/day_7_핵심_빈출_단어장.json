@@ -1,0 +1,829 @@
+[
+    {
+        "origin": "survey",
+        "pronunciations": {
+            "us": "sɜːrveɪ",
+            "uk": "sɜːveɪ"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "설문 조사"
+            },
+            {
+                "pos": "v",
+                "text": "(설문) 조사하다"
+            }
+        ],
+        "notes": "Customer <strong class=\"target-word\">surveys</strong> help to improve product quality. 고객 설문 조사는 제품의 품질을 향상시키는 데 도움이 된다.",
+        "examples": [
+            {
+                "origin": "Customer <span class=\"target-word\">surveys</span> help to improve product quality.",
+                "translation": "고객 설문 조사는 제품의 품질을 향상시키는 데 도움이 된다."
+            }
+        ]
+    },
+    {
+        "origin": "analysis",
+        "pronunciations": {
+            "us": "ənæləsɪs"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "분석"
+            }
+        ],
+        "notes": "The latest market <strong class=\"target-word\">analysis</strong> shows an increase in used car purchases. 최근의 시장 분석은 중고차 구매의 증가를 보여 준다.",
+        "examples": [
+            {
+                "origin": "The latest market <span class=\"target-word\">analysis</span> shows an increase in used car purchases.",
+                "translation": "최근의 시장 분석은 중고차 구매의 증가를 보여 준다."
+            }
+        ]
+    },
+    {
+        "origin": "respondent",
+        "pronunciations": {
+            "us": "rɪspɑːndənt",
+            "uk": "rɪspɒndənt"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "응답자"
+            }
+        ],
+        "notes": "Almost all survey <strong class=\"target-word\">respondents</strong> rated the product highly. 거의 모든 설문 응답자가 제품을 높이 평가했다.",
+        "examples": [
+            {
+                "origin": "Almost all survey <span class=\"target-word\">respondents</span> rated the product highly.",
+                "translation": "거의 모든 설문 응답자가 제품을 높이 평가했다."
+            }
+        ]
+    },
+    {
+        "origin": "monopoly",
+        "pronunciations": {
+            "us": "mənɑːpəli",
+            "uk": "mənɒpəli"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "(상품의) 독점, 전매"
+            }
+        ],
+        "notes": "Panatronic has a virtual <strong class=\"target-word\">monopoly</strong> on the manufacture of digital recorders. Panatronic사는 사실상 디지털 녹음기 제조 독점권을 가지고 있다.",
+        "examples": [
+            {
+                "origin": "Panatronic has a virtual <span class=\"target-word\">monopoly</span> on the manufacture of digital recorders.",
+                "translation": "Panatronic사는 사실상 디지털 녹음기 제조 독점권을 가지고 있다."
+            }
+        ]
+    },
+    {
+        "origin": "competition",
+        "pronunciations": {
+            "us": "ˌkɑːmpətɪʃn",
+            "uk": "ˌkɒmpətɪʃn"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "경쟁"
+            }
+        ],
+        "notes": "<strong class=\"target-word\">Competition</strong> in the game software market has increased. 게임 소프트웨어 시장에서의 경쟁이 증가했다.",
+        "examples": [
+            {
+                "origin": "<span class=\"target-word\">Competition</span> in the game software market has increased.",
+                "translation": "게임 소프트웨어 시장에서의 경쟁이 증가했다."
+            }
+        ]
+    },
+    {
+        "origin": "consistently",
+        "pronunciations": {
+            "us": "kənsɪstəntli"
+        },
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "항상, 일관되게"
+            }
+        ],
+        "notes": "The factory has <strong class=\"target-word\">consistently</strong> provided the highest grade products. 그 공장은 항상 최상급 제품을 공급해 왔다.",
+        "examples": [
+            {
+                "origin": "The factory has <span class=\"target-word\">consistently</span> provided the highest grade products.",
+                "translation": "그 공장은 항상 최상급 제품을 공급해 왔다."
+            }
+        ]
+    },
+    {
+        "origin": "demand",
+        "pronunciations": {
+            "us": "dɪmænd",
+            "uk": "dɪmɑːnd"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "수요"
+            },
+            {
+                "pos": "v",
+                "text": "요구하다"
+            }
+        ],
+        "notes": "The company could not meet the increased <strong class=\"target-word\">demand</strong> for mobile devices. 그 회사는 늘어난 휴대 기기 수요를 충족시킬 수 없었다.<br>Mr. Hawkesby <strong class=\"target-word\">demanded</strong> that the clause be removed. Mr. Hawkesby는 그 조항을 삭제하라고 요구했다.",
+        "examples": [
+            {
+                "origin": "The company could not meet the increased <span class=\"target-word\">demand</span> for mobile devices.",
+                "translation": "그 회사는 늘어난 휴대 기기 수요를 충족시킬 수 없었다."
+            },
+            {
+                "origin": "Mr. Hawkesby <span class=\"target-word\">demanded</span> that the clause be removed.",
+                "translation": "Mr. Hawkesby는 그 조항을 삭제하라고 요구했다."
+            }
+        ]
+    },
+    {
+        "origin": "do one's utmost",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "전력을 다하다"
+            }
+        ],
+        "notes": "Sun Manufacturing <strong class=\"target-word\">does its utmost</strong> to ensure the quality of its products. Sun Manufacturing사는 제품의 품질을 보장하기 위해 전력을 다한다.",
+        "examples": [
+            {
+                "origin": "Sun Manufacturing <span class=\"target-word\">does its utmost</span> to ensure the quality of its products.",
+                "translation": "Sun Manufacturing사는 제품의 품질을 보장하기 위해 전력을 다한다."
+            }
+        ]
+    },
+    {
+        "origin": "expand",
+        "pronunciations": {
+            "us": "ɪkspænd"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "확장하다, 확대하다"
+            }
+        ],
+        "notes": "Brahe Optics has <strong class=\"target-word\">expanded</strong> its marketing and sales division. Brahe Optics사는 마케팅 영업 부서를 확장했다.",
+        "examples": [
+            {
+                "origin": "Brahe Optics has <span class=\"target-word\">expanded</span> its marketing and sales division.",
+                "translation": "Brahe Optics사는 마케팅 영업 부서를 확장했다."
+            }
+        ]
+    },
+    {
+        "origin": "advanced",
+        "pronunciations": {
+            "us": "ədvænst",
+            "uk": "ədvɑːnst"
+        },
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "고급의; 진보한, 앞선"
+            }
+        ],
+        "notes": "Modern cell phones are very <strong class=\"target-word\">advanced</strong> compared to those from a decade ago. 요즘 휴대 전화는 10년 전의 것에 비해 매우 고급이다.<br>The company is already in the <strong class=\"target-word\">advanced</strong> stages of the product design. 그 회사는 이미 제품 디자인에 있어 진보한 단계에 있다.",
+        "examples": [
+            {
+                "origin": "Modern cell phones are very <span class=\"target-word\">advanced</span> compared to those from a decade ago.",
+                "translation": "요즘 휴대 전화는 10년 전의 것에 비해 매우 고급이다."
+            },
+            {
+                "origin": "The company is already in the <span class=\"target-word\">advanced</span> stages of the product design.",
+                "translation": "그 회사는 이미 제품 디자인에 있어 진보한 단계에 있다."
+            }
+        ]
+    },
+    {
+        "origin": "postpone",
+        "pronunciations": {
+            "us": "poʊstpoʊn",
+            "uk": "pəʊstpəʊn"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "연기하다, 뒤로 미루다"
+            }
+        ],
+        "notes": "Organizers <strong class=\"target-word\">postponed</strong> the conference on management strategies because of bad weather. 주최 측은 악천후 때문에 경영 전략에 관한 회의를 연기했다.",
+        "examples": [
+            {
+                "origin": "Organizers <span class=\"target-word\">postponed</span> the conference on management strategies because of bad weather.",
+                "translation": "주최 측은 악천후 때문에 경영 전략에 관한 회의를 연기했다."
+            }
+        ]
+    },
+    {
+        "origin": "additional",
+        "pronunciations": {
+            "us": "ədɪʃənl"
+        },
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "추가의, 부가적인"
+            }
+        ],
+        "notes": "Several investors decided to purchase <strong class=\"target-word\">additional</strong> stocks. 몇몇 투자자들은 추가 주식을 매입하기로 결정했다.",
+        "examples": [
+            {
+                "origin": "Several investors decided to purchase <span class=\"target-word\">additional</span> stocks.",
+                "translation": "몇몇 투자자들은 추가 주식을 매입하기로 결정했다."
+            }
+        ]
+    },
+    {
+        "origin": "appreciate",
+        "pronunciations": {
+            "us": "əpriːʃieɪt"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "고맙게 생각하다; 높이 평가하다; 감상하다"
+            }
+        ],
+        "notes": "Benson Co. <strong class=\"target-word\">appreciates</strong> your continued business. Benson사는 귀하의 지속적인 거래를 고맙게 생각합니다.<br>The supervisor <strong class=\"target-word\">appreciated</strong> Gloria's excellent organizing skills. 그 관리자는 Gloria의 탁월한 정리 능력을 높이 평가했다.<br>The gallery was filled with people <strong class=\"target-word\">appreciating</strong> the masterpieces. 그 미술관은 명작을 감상하는 사람들로 만원이었다.",
+        "examples": [
+            {
+                "origin": "Benson Co. <span class=\"target-word\">appreciates</span> your continued business.",
+                "translation": "Benson사는 귀하의 지속적인 거래를 고맙게 생각합니다."
+            },
+            {
+                "origin": "The supervisor <span class=\"target-word\">appreciated</span> Gloria's excellent organizing skills.",
+                "translation": "그 관리자는 Gloria의 탁월한 정리 능력을 높이 평가했다."
+            },
+            {
+                "origin": "The gallery was filled with people <span class=\"target-word\">appreciating</span> the masterpieces.",
+                "translation": "그 미술관은 명작을 감상하는 사람들로 만원이었다."
+            }
+        ]
+    },
+    {
+        "origin": "demonstration",
+        "pronunciations": {
+            "us": "ˌdemənstreɪʃn"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "설명; 드러냄, 시연"
+            }
+        ],
+        "notes": "The salesclerk offered to provide a <strong class=\"target-word\">demonstration</strong> on how to use the photocopier. 그 판매원은 복사기 사용법에 대한 설명을 제공하겠다고 나섰다.<br>The short software <strong class=\"target-word\">demonstration</strong> showed how much money the business could save. 짧은 소프트웨어 시연은 회사가 얼마나 많은 돈을 절약할 수 있는지 보여 주었다.",
+        "examples": [
+            {
+                "origin": "The salesclerk offered to provide a <span class=\"target-word\">demonstration</span> on how to use the photocopier.",
+                "translation": "그 판매원은 복사기 사용법에 대한 설명을 제공하겠다고 나섰다."
+            },
+            {
+                "origin": "The short software <span class=\"target-word\">demonstration</span> showed how much money the business could save.",
+                "translation": "짧은 소프트웨어 시연은 회사가 얼마나 많은 돈을 절약할 수 있는지 보여 주었다."
+            }
+        ]
+    },
+    {
+        "origin": "buy",
+        "pronunciations": {
+            "us": "baɪ"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "사다, 구입하다"
+            }
+        ],
+        "notes": "The acquisitions department <strong class=\"target-word\">buys</strong> all of the office equipment. 구매부에서 모든 사무실 비품을 산다.",
+        "examples": [
+            {
+                "origin": "The acquisitions department <span class=\"target-word\">buys</span> all of the office equipment.",
+                "translation": "구매부에서 모든 사무실 비품을 산다."
+            }
+        ]
+    },
+    {
+        "origin": "examine",
+        "pronunciations": {
+            "us": "ɪɡzæmɪn"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "조사하다"
+            }
+        ],
+        "notes": "Research and Development will <strong class=\"target-word\">examine</strong> food consumption trends in foreign markets. 연구 개발 부서가 해외 시장에서의 식품 소비 경향을 조사할 것이다.",
+        "examples": [
+            {
+                "origin": "Research and Development will <span class=\"target-word\">examine</span> food consumption trends in foreign markets.",
+                "translation": "연구 개발 부서가 해외 시장에서의 식품 소비 경향을 조사할 것이다."
+            }
+        ]
+    },
+    {
+        "origin": "effective",
+        "pronunciations": {
+            "us": "ɪfektɪv"
+        },
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "효과적인; (법률 등이) 발효되는, 시행되는"
+            }
+        ],
+        "notes": "An <strong class=\"target-word\">effective</strong> advertising campaign is one that people remember for a long time. 효과적인 광고 캠페인은 사람들이 오랫동안 기억하는 것이다.<br>Increased tax deductions will be <strong class=\"target-word\">effective</strong> as of June 1. 늘어난 소득 공제가 6월 1일부로 발효될 것이다.",
+        "examples": [
+            {
+                "origin": "An <span class=\"target-word\">effective</span> advertising campaign is one that people remember for a long time.",
+                "translation": "효과적인 광고 캠페인은 사람들이 오랫동안 기억하는 것이다."
+            },
+            {
+                "origin": "Increased tax deductions will be <span class=\"target-word\">effective</span> as of June 1.",
+                "translation": "늘어난 소득 공제가 6월 1일부로 발효될 것이다."
+            }
+        ]
+    },
+    {
+        "origin": "like",
+        "pronunciations": {
+            "us": "laɪk"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "좋아하다"
+            }
+        ],
+        "notes": "Consumers <strong class=\"target-word\">like</strong> products that look high-end but are less expensive. 소비자들은 최고급으로 보이지만 덜 비싼 제품을 좋아한다.",
+        "examples": [
+            {
+                "origin": "Consumers <span class=\"target-word\">like</span> products that look high-end but are less expensive.",
+                "translation": "소비자들은 최고급으로 보이지만 덜 비싼 제품을 좋아한다."
+            }
+        ]
+    },
+    {
+        "origin": "especially",
+        "pronunciations": {
+            "us": "ɪspeʃəli"
+        },
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "특히"
+            }
+        ],
+        "notes": "Manufacturers of large vehicles are facing an <strong class=\"target-word\">especially</strong> difficult year for sales. 대형 차량 제조업체들은 판매에 있어 특히 힘든 한 해를 맞고 있다.",
+        "examples": [
+            {
+                "origin": "Manufacturers of large vehicles are facing an <span class=\"target-word\">especially</span> difficult year for sales.",
+                "translation": "대형 차량 제조업체들은 판매에 있어 특히 힘든 한 해를 맞고 있다."
+            }
+        ]
+    },
+    {
+        "origin": "closely",
+        "pronunciations": {
+            "us": "kloʊsli",
+            "uk": "kləʊsli"
+        },
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "면밀히, 엄밀히"
+            }
+        ],
+        "notes": "Marketing departments monitor the latest trends <strong class=\"target-word\">closely</strong>. 마케팅 부서는 최신 경향을 면밀히 관찰한다.",
+        "examples": [
+            {
+                "origin": "Marketing departments monitor the latest trends <span class=\"target-word\">closely</span>.",
+                "translation": "마케팅 부서는 최신 경향을 면밀히 관찰한다."
+            }
+        ]
+    },
+    {
+        "origin": "reserve",
+        "pronunciations": {
+            "us": "rɪzɜːrv",
+            "uk": "rɪzɜːv"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "예약하다, 지정하다; 보존하다"
+            }
+        ],
+        "notes": "The secretary will <strong class=\"target-word\">reserve</strong> hotel rooms for anyone going to the convention. 비서가 대회에 참석하는 사람들을 위해 호텔 방을 예약할 것이다.<br>Some funds have been <strong class=\"target-word\">reserved</strong> to pay for the banquet. 일부 자금은 만찬 대금을 지불하기 위해 보존되었다.",
+        "examples": [
+            {
+                "origin": "The secretary will <span class=\"target-word\">reserve</span> hotel rooms for anyone going to the convention.",
+                "translation": "비서가 대회에 참석하는 사람들을 위해 호텔 방을 예약할 것이다."
+            },
+            {
+                "origin": "Some funds have been <span class=\"target-word\">reserved</span> to pay for the banquet.",
+                "translation": "일부 자금은 만찬 대금을 지불하기 위해 보존되었다."
+            }
+        ]
+    },
+    {
+        "origin": "cooperate",
+        "pronunciations": {
+            "us": "koʊɑːpəreɪt",
+            "uk": "kəʊɒpəreɪt"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "협력하다, 협동하다"
+            }
+        ],
+        "notes": "The two companies <strong class=\"target-word\">cooperated</strong> on developing the promotional campaign for the new spring collection. 두 회사는 새로운 봄 컬렉션 홍보 캠페인을 개발하는 것에 대해 협력했다.",
+        "examples": [
+            {
+                "origin": "The two companies <span class=\"target-word\">cooperated</span> on developing the promotional campaign for the new spring collection.",
+                "translation": "두 회사는 새로운 봄 컬렉션 홍보 캠페인을 개발하는 것에 대해 협력했다."
+            }
+        ]
+    },
+    {
+        "origin": "very",
+        "pronunciations": {
+            "us": "veri"
+        },
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "매우, 대단히, 아주"
+            }
+        ],
+        "notes": "The survey was <strong class=\"target-word\">very</strong> effective at identifying the target market. 그 설문 조사는 표적 시장을 찾는 데 매우 효과적이었다.",
+        "examples": [
+            {
+                "origin": "The survey was <span class=\"target-word\">very</span> effective at identifying the target market.",
+                "translation": "그 설문 조사는 표적 시장을 찾는 데 매우 효과적이었다."
+            }
+        ]
+    },
+    {
+        "origin": "consecutive",
+        "pronunciations": {
+            "us": "kənsekjətɪv"
+        },
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "연속적인"
+            }
+        ],
+        "notes": "The Barkley Company achieved high sales growth for the third <strong class=\"target-word\">consecutive</strong> year. Barkley사는 3년 연속으로 고매출 성장을 달성했다.",
+        "examples": [
+            {
+                "origin": "The Barkley Company achieved high sales growth for the third <span class=\"target-word\">consecutive</span> year.",
+                "translation": "Barkley사는 3년 연속으로 고매출 성장을 달성했다."
+            }
+        ]
+    },
+    {
+        "origin": "expectation",
+        "pronunciations": {
+            "us": "ˌekspekteɪʃn"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "예상, 기대"
+            }
+        ],
+        "notes": "The <strong class=\"target-word\">expectation</strong> is that costs will be cut. 비용이 감소될 것으로 예상된다.",
+        "examples": [
+            {
+                "origin": "The <span class=\"target-word\">expectation</span> is that costs will be cut.",
+                "translation": "비용이 감소될 것으로 예상된다."
+            }
+        ]
+    },
+    {
+        "origin": "publicize",
+        "pronunciations": {
+            "us": "pʌblɪsaɪz"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "공표하다; 광고하다, 선전하다"
+            }
+        ],
+        "notes": "New regulations are <strong class=\"target-word\">publicized</strong> on the government Web site. 새로운 규정들은 정부 웹사이트에 공표된다.<br>The hospital <strong class=\"target-word\">publicized</strong> its newly built wing to attract more patients. 그 병원은 더 많은 환자들을 끌어들이기 위해 새로 지은 병동을 광고했다.",
+        "examples": [
+            {
+                "origin": "New regulations are <span class=\"target-word\">publicized</span> on the government Web site.",
+                "translation": "새로운 규정들은 정부 웹사이트에 공표된다."
+            },
+            {
+                "origin": "The hospital <span class=\"target-word\">publicized</span> its newly built wing to attract more patients.",
+                "translation": "그 병원은 더 많은 환자들을 끌어들이기 위해 새로 지은 병동을 광고했다."
+            }
+        ]
+    },
+    {
+        "origin": "raise",
+        "pronunciations": {
+            "us": "reɪz"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "높이다, 올리다; (의문을) 제기하다"
+            }
+        ],
+        "notes": "We used mass-mailing methods to <strong class=\"target-word\">raise</strong> awareness of our brand. 우리는 자사 브랜드에 대한 인식을 높이기 위해 대량 메일 발송법을 이용했다.<br>The president <strong class=\"target-word\">raised</strong> questions about the quality of the new product. 회장이 신상품의 품질에 대해 의문을 제기했다.",
+        "examples": [
+            {
+                "origin": "We used mass-mailing methods to <span class=\"target-word\">raise</span> awareness of our brand.",
+                "translation": "우리는 자사 브랜드에 대한 인식을 높이기 위해 대량 메일 발송법을 이용했다."
+            },
+            {
+                "origin": "The president <span class=\"target-word\">raised</span> questions about the quality of the new product.",
+                "translation": "회장이 신상품의 품질에 대해 의문을 제기했다."
+            }
+        ]
+    },
+    {
+        "origin": "extremely",
+        "pronunciations": {
+            "us": "ɪkstriːmli"
+        },
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "극도로, 대단히"
+            }
+        ],
+        "notes": "Internet service providers struggle to survive in today's <strong class=\"target-word\">extremely</strong> competitive market. 인터넷 서비스 사업자들은 오늘날의 극도로 경쟁적인 시장에서 살아남기 위해 분투한다.",
+        "examples": [
+            {
+                "origin": "Internet service providers struggle to survive in today's <span class=\"target-word\">extremely</span> competitive market.",
+                "translation": "인터넷 서비스 사업자들은 오늘날의 극도로 경쟁적인 시장에서 살아남기 위해 분투한다."
+            }
+        ]
+    },
+    {
+        "origin": "affect",
+        "pronunciations": {
+            "us": "əfekt"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "~에 영향을 미치다, 불리하게 작용하다"
+            }
+        ],
+        "notes": "The frozen-food industry can <strong class=\"target-word\">affect</strong> the canned goods market. 냉동식품 산업이 통조림 시장에 영향을 미칠 수 있다.",
+        "examples": [
+            {
+                "origin": "The frozen-food industry can <span class=\"target-word\">affect</span> the canned goods market.",
+                "translation": "냉동식품 산업이 통조림 시장에 영향을 미칠 수 있다."
+            }
+        ]
+    },
+    {
+        "origin": "target",
+        "pronunciations": {
+            "us": "tɑːrɡɪt",
+            "uk": "tɑːɡɪt"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "목표"
+            },
+            {
+                "pos": "v",
+                "text": "목표로 삼다"
+            }
+        ],
+        "notes": "Sales for this quarter are right on <strong class=\"target-word\">target</strong>. 이번 분기 매출은 정확히 목표에 이르렀다.<br>The advertisement <strong class=\"target-word\">targets</strong> the age range of 25-40 years. 그 광고는 25세부터 40세까지의 연령대를 목표로 삼는다.",
+        "examples": [
+            {
+                "origin": "Sales for this quarter are right on <span class=\"target-word\">target</span>.",
+                "translation": "이번 분기 매출은 정확히 목표에 이르렀다."
+            },
+            {
+                "origin": "The advertisement <span class=\"target-word\">targets</span> the age range of 25-40 years.",
+                "translation": "그 광고는 25세부터 40세까지의 연령대를 목표로 삼는다."
+            }
+        ]
+    },
+    {
+        "origin": "campaign",
+        "pronunciations": {
+            "us": "kæmpeɪn"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "운동, 캠페인"
+            }
+        ],
+        "notes": "The mayor's election <strong class=\"target-word\">campaign</strong> focused on his strong record in office. 시장의 선거 운동은 재직 중 그의 눈부신 업적에 초점을 맞추었다.",
+        "examples": [
+            {
+                "origin": "The mayor's election <span class=\"target-word\">campaign</span> focused on his strong record in office.",
+                "translation": "시장의 선거 운동은 재직 중 그의 눈부신 업적에 초점을 맞추었다."
+            }
+        ]
+    },
+    {
+        "origin": "probable",
+        "pronunciations": {
+            "us": "prɑːbəbl",
+            "uk": "prɒbəbl"
+        },
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "개연성이 높은, 유망한"
+            }
+        ],
+        "notes": "One of the <strong class=\"target-word\">probable</strong> causes for low sales was the lack of promotion. 낮은 매출의 개연성 높은 원인 중 하나는 홍보의 부족이었다.",
+        "examples": [
+            {
+                "origin": "One of the <span class=\"target-word\">probable</span> causes for low sales was the lack of promotion.",
+                "translation": "낮은 매출의 개연성 높은 원인 중 하나는 홍보의 부족이었다."
+            }
+        ]
+    },
+    {
+        "origin": "focus",
+        "pronunciations": {
+            "us": "foʊkəs",
+            "uk": "fəʊkəs"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "집중시키다, 집중하다"
+            },
+            {
+                "pos": "n",
+                "text": "초점"
+            }
+        ],
+        "notes": "Management decided to <strong class=\"target-word\">focus</strong> resources on expanding its business. 경영진은 사업을 확장하는 데 자원을 집중하기로 결정했다.",
+        "examples": [
+            {
+                "origin": "Management decided to <span class=\"target-word\">focus</span> resources on expanding its business.",
+                "translation": "경영진은 사업을 확장하는 데 자원을 집중하기로 결정했다."
+            }
+        ]
+    },
+    {
+        "origin": "seasonal",
+        "pronunciations": {
+            "us": "siːzənl"
+        },
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "계절의, 계절적인"
+            }
+        ],
+        "notes": "The sugarcane industry is vulnerable to <strong class=\"target-word\">seasonal</strong> variations. 사탕수수 산업은 계절에 따른 차이에 민감하다.",
+        "examples": [
+            {
+                "origin": "The sugarcane industry is vulnerable to <span class=\"target-word\">seasonal</span> variations.",
+                "translation": "사탕수수 산업은 계절에 따른 차이에 민감하다."
+            }
+        ]
+    },
+    {
+        "origin": "impact",
+        "pronunciations": {
+            "us": "ɪmpækt"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "영향, 충격"
+            }
+        ],
+        "notes": "Price fluctuations had a major <strong class=\"target-word\">impact</strong> on the market. 물가 변동은 시장에 큰 영향을 주었다.",
+        "examples": [
+            {
+                "origin": "Price fluctuations had a major <span class=\"target-word\">impact</span> on the market.",
+                "translation": "물가 변동은 시장에 큰 영향을 주었다."
+            }
+        ]
+    },
+    {
+        "origin": "comparison",
+        "pronunciations": {
+            "us": "kəmpærɪsn"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "비표"
+            }
+        ],
+        "notes": "Online advertising is cheaper in <strong class=\"target-word\">comparison</strong> with television. 온라인 광고는 텔레비전 광고와 비교해 볼 때 더 저렴하다.",
+        "examples": [
+            {
+                "origin": "Online advertising is cheaper in <span class=\"target-word\">comparison</span> with television.",
+                "translation": "온라인 광고는 텔레비전 광고와 비교해 볼 때 더 저렴하다."
+            }
+        ]
+    },
+    {
+        "origin": "gap",
+        "pronunciations": {
+            "us": "ɡæp"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "격차"
+            }
+        ],
+        "notes": "Severe deficits can occur when there is a huge <strong class=\"target-word\">gap</strong> between exports and imports. 수출과 수입 간에 큰 격차가 있을 때 극심한 적자가 발생할 수 있다.",
+        "examples": [
+            {
+                "origin": "Severe deficits can occur when there is a huge <span class=\"target-word\">gap</span> between exports and imports.",
+                "translation": "수출과 수입 간에 큰 격차가 있을 때 극심한 적자가 발생할 수 있다."
+            }
+        ]
+    },
+    {
+        "origin": "mounting",
+        "pronunciations": {
+            "us": "maʊntɪŋ"
+        },
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "증가하는, 오르는"
+            }
+        ],
+        "notes": "There is <strong class=\"target-word\">mounting</strong> pressure from management to increase productivity. 경영진으로부터 생산성을 증대하라는 압박이 증가하고 있다.",
+        "examples": [
+            {
+                "origin": "There is <span class=\"target-word\">mounting</span> pressure from management to increase productivity.",
+                "translation": "경영진으로부터 생산성을 증대하라는 압박이 증가하고 있다."
+            }
+        ]
+    },
+    {
+        "origin": "reflective",
+        "pronunciations": {
+            "us": "rɪflektɪv"
+        },
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "반영하는"
+            }
+        ],
+        "notes": "Shrinking profits are <strong class=\"target-word\">reflective</strong> of the current state of the company. 줄어드는 수익이 회사의 현재 상태를 반영한다.",
+        "examples": [
+            {
+                "origin": "Shrinking profits are <span class=\"target-word\">reflective</span> of the current state of the company.",
+                "translation": "줄어드는 수익이 회사의 현재 상태를 반영한다."
+            }
+        ]
+    },
+    {
+        "origin": "meeting",
+        "pronunciations": {
+            "us": "miːtɪŋ"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "회의"
+            }
+        ],
+        "notes": "The <strong class=\"target-word\">meeting</strong> was postponed because of a scheduling conflict. 일정 충돌 때문에 회의가 연기되었다.",
+        "examples": [
+            {
+                "origin": "The <span class=\"target-word\">meeting</span> was postponed because of a scheduling conflict.",
+                "translation": "일정 충돌 때문에 회의가 연기되었다."
+            }
+        ]
+    }
+]

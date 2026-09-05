@@ -1,0 +1,866 @@
+[
+    {
+        "origin": "rest",
+        "pronunciations": {
+            "us": "rest"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "쉬다, 휴식을 취하다"
+            },
+            {
+                "pos": "n",
+                "text": "휴식; 나머지"
+            }
+        ],
+        "notes": "Hikers can <strong class=\"target-word\">rest</strong> on the bench halfway up the hill. 도보 여행자들은 언덕 중턱의 벤치에서 쉴 수 있다.<br>The tour group had a <strong class=\"target-word\">rest</strong> before visiting the palace. 그 관광 단체는 궁전을 방문하기 전에 휴식을 취했다.",
+        "examples": [
+            {
+                "origin": "Hikers can <span class=\"target-word\">rest</span> on the bench halfway up the hill.",
+                "translation": "도보 여행자들은 언덕 중턱의 벤치에서 쉴 수 있다."
+            },
+            {
+                "origin": "The tour group had a <span class=\"target-word\">rest</span> before visiting the palace.",
+                "translation": "그 관광 단체는 궁전을 방문하기 전에 휴식을 취했다."
+            }
+        ]
+    },
+    {
+        "origin": "exhibition",
+        "pronunciations": {
+            "us": "ˌeksɪbɪʃn",
+            "uk": "ˌeksɪbɪʃn"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "전시회"
+            }
+        ],
+        "notes": "The gallery hosted an <strong class=\"target-word\">exhibition</strong> of urban scenic photographs. 그 화랑은 도시 풍경 사진 전시회를 주최했다.",
+        "examples": [
+            {
+                "origin": "The gallery hosted an <span class=\"target-word\">exhibition</span> of urban scenic photographs.",
+                "translation": "그 화랑은 도시 풍경 사진 전시회를 주최했다."
+            }
+        ]
+    },
+    {
+        "origin": "celebrity",
+        "pronunciations": {
+            "us": "səlebrəti",
+            "uk": "sɪlebrəti"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "유명 인사, 명사"
+            }
+        ],
+        "notes": "Many <strong class=\"target-word\">celebrities</strong> attended the city's summer park festival. 많은 유명 인사들이 그 도시의 여름 공원 축제에 참석했다.",
+        "examples": [
+            {
+                "origin": "Many <span class=\"target-word\">celebrities</span> attended the city's summer park festival.",
+                "translation": "많은 유명 인사들이 그 도시의 여름 공원 축제에 참석했다."
+            }
+        ]
+    },
+    {
+        "origin": "live",
+        "pronunciations": {
+            "us": "laɪv"
+        },
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "(라디오·TV가) 생방송인"
+            }
+        ],
+        "notes": "Finnegan's café hosts a <strong class=\"target-word\">live</strong> music performance every Saturday. Finnegan's 카페는 매주 토요일마다 라이브 음악 공연을 주최한다.",
+        "examples": [
+            {
+                "origin": "Finnegan's café hosts a <span class=\"target-word\">live</span> music performance every Saturday.",
+                "translation": "Finnegan's 카페는 매주 토요일마다 라이브 음악 공연을 주최한다."
+            }
+        ]
+    },
+    {
+        "origin": "improvise",
+        "pronunciations": {
+            "us": "ɪmprəvaɪz"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "(연주·연설 등을) 즉흥적으로 하다, 즉석에서 만들다"
+            }
+        ],
+        "notes": "The performers <strong class=\"target-word\">improvised</strong> a jazz melody. 연주자들은 재즈 멜로디를 즉흥적으로 연주했다.",
+        "examples": [
+            {
+                "origin": "The performers <span class=\"target-word\">improvised</span> a jazz melody.",
+                "translation": "연주자들은 재즈 멜로디를 즉흥적으로 연주했다."
+            }
+        ]
+    },
+    {
+        "origin": "popular",
+        "pronunciations": {
+            "us": "pɑːpjələr",
+            "uk": "pɒpjələ"
+        },
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "인기 있는"
+            }
+        ],
+        "notes": "Broadway musicals are so <strong class=\"target-word\">popular</strong> that they frequently go on tour. 브로드웨이 뮤지컬은 정말 인기가 많아서 순회공연을 자주 떠난다.",
+        "examples": [
+            {
+                "origin": "Broadway musicals are so <span class=\"target-word\">popular</span> that they frequently go on tour.",
+                "translation": "브로드웨이 뮤지컬은 정말 인기가 많아서 순회공연을 자주 떠난다."
+            }
+        ]
+    },
+    {
+        "origin": "donation",
+        "pronunciations": {
+            "us": "doʊneɪʃn",
+            "uk": "dəʊneɪʃn"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "기증, 기부"
+            }
+        ],
+        "notes": "The library is accepting <strong class=\"target-word\">donations</strong> of children's books. 도서관에서는 아동 도서를 기증받고 있습니다.",
+        "examples": [
+            {
+                "origin": "The library is accepting <span class=\"target-word\">donations</span> of children's books.",
+                "translation": "도서관에서는 아동 도서를 기증받고 있습니다."
+            }
+        ]
+    },
+    {
+        "origin": "alumni",
+        "pronunciations": {
+            "us": "əlʌmnaɪ"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "동창생들, 졸업생들"
+            }
+        ],
+        "notes": "St. John's University <strong class=\"target-word\">alumni</strong> were invited to the graduation ceremony. St. John's 대학교 동창생들이 졸업식에 초대되었다.",
+        "examples": [
+            {
+                "origin": "St. John's University <span class=\"target-word\">alumni</span> were invited to the graduation ceremony.",
+                "translation": "St. John's 대학교 동창생들이 졸업식에 초대되었다."
+            }
+        ]
+    },
+    {
+        "origin": "present",
+        "pronunciations": {
+            "us": "prɪzent"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "제시하다"
+            },
+            {
+                "pos": "adj",
+                "text": "현재의; 참석한"
+            }
+        ],
+        "notes": "Please <strong class=\"target-word\">present</strong> valid tickets at the door. 유효한 표를 입구에서 제시해 주십시오.<br>The <strong class=\"target-word\">present</strong> owner of the resort intends to renovate it. 그 리조트의 현 소유주는 리조트를 보수하려 한다.<br>Famous athlete Matt London was <strong class=\"target-word\">present</strong> at the game. 유명한 운동선수인 Matt London이 그 경기에 참석했다.",
+        "examples": [
+            {
+                "origin": "Please <span class=\"target-word\">present</span> valid tickets at the door.",
+                "translation": "유효한 표를 입구에서 제시해 주십시오."
+            },
+            {
+                "origin": "The <span class=\"target-word\">present</span> owner of the resort intends to renovate it.",
+                "translation": "그 리조트의 현 소유주는 리조트를 보수하려 한다."
+            },
+            {
+                "origin": "Famous athlete Matt London was <span class=\"target-word\">present</span> at the game.",
+                "translation": "유명한 운동선수인 Matt London이 그 경기에 참석했다."
+            }
+        ]
+    },
+    {
+        "origin": "admission",
+        "pronunciations": {
+            "us": "ədmɪʃn"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "입장"
+            }
+        ],
+        "notes": "Those wishing to visit the exhibit will be charged an extra <strong class=\"target-word\">admission</strong> fee. 전시회 관람을 원하는 분들에게는 추가 입장료가 부과될 것입니다.",
+        "examples": [
+            {
+                "origin": "Those wishing to visit the exhibit will be charged an extra <span class=\"target-word\">admission</span> fee.",
+                "translation": "전시회 관람을 원하는 분들에게는 추가 입장료가 부과될 것입니다."
+            }
+        ]
+    },
+    {
+        "origin": "banquet",
+        "pronunciations": {
+            "us": "bæŋkwɪt"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "연회, 만찬"
+            }
+        ],
+        "notes": "The hotel has facilities for large-scale wedding <strong class=\"target-word\">banquets</strong>. 그 호텔은 대규모 피로연을 위한 시설을 가지고 있다.",
+        "examples": [
+            {
+                "origin": "The hotel has facilities for large-scale wedding <span class=\"target-word\">banquets</span>.",
+                "translation": "그 호텔은 대규모 피로연을 위한 시설을 가지고 있다."
+            }
+        ]
+    },
+    {
+        "origin": "anniversary",
+        "pronunciations": {
+            "us": "ˌænɪvɜːrsəri",
+            "uk": "ˌænɪvɜːsəri"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "기념일"
+            }
+        ],
+        "notes": "The couple celebrated their 50th <strong class=\"target-word\">anniversary</strong> with a party. 그 부부는 그들의 50번째 기념일을 파티로 축하했다.",
+        "examples": [
+            {
+                "origin": "The couple celebrated their 50th <span class=\"target-word\">anniversary</span> with a party.",
+                "translation": "그 부부는 그들의 50번째 기념일을 파티로 축하했다."
+            }
+        ]
+    },
+    {
+        "origin": "required",
+        "pronunciations": {
+            "us": "rɪkwaɪərd"
+        },
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "필수의, 의무적인"
+            }
+        ],
+        "notes": "Proper swimming attire is <strong class=\"target-word\">required</strong> when using the hotel pool. 호텔 수영장을 이용할 시에는 적절한 수영 복장이 필수다.",
+        "examples": [
+            {
+                "origin": "Proper swimming attire is <span class=\"target-word\">required</span> when using the hotel pool.",
+                "translation": "호텔 수영장을 이용할 시에는 적절한 수영 복장이 필수다."
+            }
+        ]
+    },
+    {
+        "origin": "succeed",
+        "pronunciations": {
+            "us": "səksiːd"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "성공하다; 뒤를 잇다"
+            }
+        ],
+        "notes": "Peggy <strong class=\"target-word\">succeeded</strong> in convincing her family to visit Hawaii. Peggy는 그녀의 가족이 하와이를 방문하도록 설득하는 데 성공했다.<br>Mr. Chambers will <strong class=\"target-word\">succeed</strong> Ms. Shipman as head of the Tourism Board after she retires. Mr. Chambers는 Ms. Shipman이 은퇴한 후에 관광팀장으로서 그녀의 뒤를 이을 것이다.",
+        "examples": [
+            {
+                "origin": "Peggy <span class=\"target-word\">succeeded</span> in convincing her family to visit Hawaii.",
+                "translation": "Peggy는 그녀의 가족이 하와이를 방문하도록 설득하는 데 성공했다."
+            },
+            {
+                "origin": "Mr. Chambers will <span class=\"target-word\">succeed</span> Ms. Shipman as head of the Tourism Board after she retires.",
+                "translation": "Mr. Chambers는 Ms. Shipman이 은퇴한 후에 관광팀장으로서 그녀의 뒤를 이을 것이다."
+            }
+        ]
+    },
+    {
+        "origin": "collection",
+        "pronunciations": {
+            "us": "kəlekʃn"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "소장품, 수집물; 징수, 수금"
+            }
+        ],
+        "notes": "The museum has a unique <strong class=\"target-word\">collection</strong> of stamps. 그 박물관은 독특한 우표 소장품을 보유하고 있다.<br>Toll <strong class=\"target-word\">collection</strong> operates by means of an electronic system. 통행료 징수는 전자 시스템으로 운영된다.",
+        "examples": [
+            {
+                "origin": "The museum has a unique <span class=\"target-word\">collection</span> of stamps.",
+                "translation": "그 박물관은 독특한 우표 소장품을 보유하고 있다."
+            },
+            {
+                "origin": "Toll <span class=\"target-word\">collection</span> operates by means of an electronic system.",
+                "translation": "통행료 징수는 전자 시스템으로 운영된다."
+            }
+        ]
+    },
+    {
+        "origin": "fund-raising",
+        "pronunciations": {
+            "us": "fʌndˌreɪzɪŋ"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "모금"
+            }
+        ],
+        "notes": "Auctions are a popular form of <strong class=\"target-word\">fund-raising</strong>. 경매는 모금의 인기 있는 형태이다.",
+        "examples": [
+            {
+                "origin": "Auctions are a popular form of <span class=\"target-word\">fund-raising</span>.",
+                "translation": "경매는 모금의 인기 있는 형태이다."
+            }
+        ]
+    },
+    {
+        "origin": "resume",
+        "pronunciations": {
+            "us": "rɪzuːm",
+            "uk": "rɪzjuːm"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "재개하다, 다시 시작하다"
+            }
+        ],
+        "notes": "The play will <strong class=\"target-word\">resume</strong> after a short intermission. 그 연극은 짧은 휴식 시간 후에 재개될 것이다.",
+        "examples": [
+            {
+                "origin": "The play will <span class=\"target-word\">resume</span> after a short intermission.",
+                "translation": "그 연극은 짧은 휴식 시간 후에 재개될 것이다."
+            }
+        ]
+    },
+    {
+        "origin": "issue",
+        "pronunciations": {
+            "us": "ɪʃuː"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "(출판물의) 제 ~호; 문제, 쟁점"
+            }
+        ],
+        "notes": "Jack's cake recipe was in the April <strong class=\"target-word\">issue</strong> of Baker Monthly. Baker Monthly지의 4월호에 Jack의 케이크 조리법이 실렸다.<br>There are many perspectives on the <strong class=\"target-word\">issue</strong> of global warming. 지구 온난화 문제에 관한 다양한 관점들이 있다.",
+        "examples": [
+            {
+                "origin": "Jack's cake recipe was in the April <span class=\"target-word\">issue</span> of Baker Monthly.",
+                "translation": "Baker Monthly지의 4월호에 Jack의 케이크 조리법이 실렸다."
+            },
+            {
+                "origin": "There are many perspectives on the <span class=\"target-word\">issue</span> of global warming.",
+                "translation": "지구 온난화 문제에 관한 다양한 관점들이 있다."
+            }
+        ]
+    },
+    {
+        "origin": "subscription",
+        "pronunciations": {
+            "us": "səbskrɪpʃn"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "(정기 발행물의) 구독"
+            }
+        ],
+        "notes": "I would like to get a <strong class=\"target-word\">subscription</strong> to the Weekly Herald. Weekly Herald지를 구독하고 싶습니다.",
+        "examples": [
+            {
+                "origin": "I would like to get a <span class=\"target-word\">subscription</span> to the Weekly Herald.",
+                "translation": "Weekly Herald지를 구독하고 싶습니다."
+            }
+        ]
+    },
+    {
+        "origin": "appear",
+        "pronunciations": {
+            "us": "əpɪər",
+            "uk": "əpɪə"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "나타나다, 출현하다"
+            }
+        ],
+        "notes": "The novelist <strong class=\"target-word\">appeared</strong> at the bookstore to sign autographs. 그 소설가는 사인회를 하기 위해 서점에 나타났다.",
+        "examples": [
+            {
+                "origin": "The novelist <span class=\"target-word\">appeared</span> at the bookstore to sign autographs.",
+                "translation": "그 소설가는 사인회를 하기 위해 서점에 나타났다."
+            }
+        ]
+    },
+    {
+        "origin": "accompany",
+        "pronunciations": {
+            "us": "əkʌmpəni"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "동행하다; 동반하다"
+            }
+        ],
+        "notes": "Mary <strong class=\"target-word\">accompanied</strong> her grandmother to the mall. Mary는 쇼핑몰까지 그녀의 할머니와 동행했다.<br>Be careful because strong winds often <strong class=\"target-word\">accompany</strong> rain in the mountains. 산에서는 종종 강한 바람이 비를 동반하므로 조심하십시오.",
+        "examples": [
+            {
+                "origin": "Mary <span class=\"target-word\">accompanied</span> her grandmother to the mall.",
+                "translation": "Mary는 쇼핑몰까지 그녀의 할머니와 동행했다."
+            },
+            {
+                "origin": "Be careful because strong winds often <span class=\"target-word\">accompany</span> rain in the mountains.",
+                "translation": "산에서는 종종 강한 바람이 비를 동반하므로 조심하십시오."
+            }
+        ]
+    },
+    {
+        "origin": "edition",
+        "pronunciations": {
+            "us": "ɪdɪʃn"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "(간행물의) 판"
+            }
+        ],
+        "notes": "A revised <strong class=\"target-word\">edition</strong> of the economics book will be published soon. 그 경제학 서적의 개정판이 곧 출간될 것이다.",
+        "examples": [
+            {
+                "origin": "A revised <span class=\"target-word\">edition</span> of the economics book will be published soon.",
+                "translation": "그 경제학 서적의 개정판이 곧 출간될 것이다."
+            }
+        ]
+    },
+    {
+        "origin": "specifically",
+        "pronunciations": {
+            "us": "spəsɪfɪkəli"
+        },
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "명확하게, 분명히; 특히, 특별히"
+            }
+        ],
+        "notes": "The package terms <strong class=\"target-word\">specifically</strong> stated that guests would stay at a hotel. 그 패키지 여행 조건은 손님들이 호텔에 머물 것임을 명확하게 언급했다.<br>Campgrounds around the lake are worth visiting, <strong class=\"target-word\">specifically</strong> the Milligan site. 호수 주변의 야영지는 가볼 만한 가치가 있는데, 특히 Milligan 부지가 그러하다.",
+        "examples": [
+            {
+                "origin": "The package terms <span class=\"target-word\">specifically</span> stated that guests would stay at a hotel.",
+                "translation": "그 패키지 여행 조건은 손님들이 호텔에 머물 것임을 명확하게 언급했다."
+            },
+            {
+                "origin": "Campgrounds around the lake are worth visiting, <span class=\"target-word\">specifically</span> the Milligan site.",
+                "translation": "호수 주변의 야영지는 가볼 만한 가치가 있는데, 특히 Milligan 부지가 그러하다."
+            }
+        ]
+    },
+    {
+        "origin": "anonymous",
+        "pronunciations": {
+            "us": "ənɑːnɪməs",
+            "uk": "ənɒnɪməs"
+        },
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "익명의, 이름을 모르는"
+            }
+        ],
+        "notes": "The charity received $6,000 from an <strong class=\"target-word\">anonymous</strong> donor. 그 자선 단체는 익명의 기부자로부터 6천 달러를 받았다.",
+        "examples": [
+            {
+                "origin": "The charity received $6,000 from an <span class=\"target-word\">anonymous</span> donor.",
+                "translation": "그 자선 단체는 익명의 기부자로부터 6천 달러를 받았다."
+            }
+        ]
+    },
+    {
+        "origin": "commit",
+        "pronunciations": {
+            "us": "kəmɪt"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "헌신하다, 전념하다"
+            }
+        ],
+        "notes": "The store is <strong class=\"target-word\">committed</strong> to providing excellent customer service. 그 가게는 훌륭한 고객 서비스를 제공하는 데 헌신한다.",
+        "examples": [
+            {
+                "origin": "The store is <span class=\"target-word\">committed</span> to providing excellent customer service.",
+                "translation": "그 가게는 훌륭한 고객 서비스를 제공하는 데 헌신한다."
+            }
+        ]
+    },
+    {
+        "origin": "informative",
+        "pronunciations": {
+            "us": "ɪnfɔːrmətɪv",
+            "uk": "ɪnfɔːmətɪv"
+        },
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "유익한, 정보를 주는"
+            }
+        ],
+        "notes": "The documentary was <strong class=\"target-word\">informative</strong> and interesting. 그 다큐멘터리는 유익하고도 흥미로웠다.",
+        "examples": [
+            {
+                "origin": "The documentary was <span class=\"target-word\">informative</span> and interesting.",
+                "translation": "그 다큐멘터리는 유익하고도 흥미로웠다."
+            }
+        ]
+    },
+    {
+        "origin": "audience",
+        "pronunciations": {
+            "us": "ɔːdiəns"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "청중, 관중"
+            }
+        ],
+        "notes": "The <strong class=\"target-word\">audience</strong> applauded the singer enthusiastically. 청중은 그 가수에게 열광적으로 갈채를 보냈다.",
+        "examples": [
+            {
+                "origin": "The <span class=\"target-word\">audience</span> applauded the singer enthusiastically.",
+                "translation": "청중은 그 가수에게 열광적으로 갈채를 보냈다."
+            }
+        ]
+    },
+    {
+        "origin": "author",
+        "pronunciations": {
+            "us": "ɔːθər",
+            "uk": "ɔːθə"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "작가, 저자"
+            }
+        ],
+        "notes": "All of the <strong class=\"target-word\">author's</strong> short stories are popular. 그 작가의 모든 단편 소설들은 인기가 있다.",
+        "examples": [
+            {
+                "origin": "All of the <span class=\"target-word\">author's</span> short stories are popular.",
+                "translation": "그 작가의 모든 단편 소설들은 인기가 있다."
+            }
+        ]
+    },
+    {
+        "origin": "note",
+        "pronunciations": {
+            "us": "noʊt",
+            "uk": "nəʊt"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "주목하다; 특별히 언급하다"
+            }
+        ],
+        "notes": "Please <strong class=\"target-word\">note</strong> the intricate details of the architecture. 그 건축물의 복잡한 세부 양식에 주목해 주십시오.",
+        "examples": [
+            {
+                "origin": "Please <span class=\"target-word\">note</span> the intricate details of the architecture.",
+                "translation": "그 건축물의 복잡한 세부 양식에 주목해 주십시오."
+            }
+        ]
+    },
+    {
+        "origin": "antique",
+        "pronunciations": {
+            "us": "æntiːk"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "골동품"
+            }
+        ],
+        "notes": "<strong class=\"target-word\">Antiques</strong> are popular for home decor. 골동품은 실내 장식용으로 인기 있다.",
+        "examples": [
+            {
+                "origin": "<span class=\"target-word\">Antiques</span> are popular for home decor.",
+                "translation": "골동품은 실내 장식용으로 인기 있다."
+            }
+        ]
+    },
+    {
+        "origin": "manuscript",
+        "pronunciations": {
+            "us": "mænjuskrɪpt"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "원고"
+            }
+        ],
+        "notes": "The author is working on several <strong class=\"target-word\">manuscripts</strong>. 그 작가는 몇 편의 원고를 작업 중이다.",
+        "examples": [
+            {
+                "origin": "The author is working on several <span class=\"target-word\">manuscripts</span>.",
+                "translation": "그 작가는 몇 편의 원고를 작업 중이다."
+            }
+        ]
+    },
+    {
+        "origin": "beneficial",
+        "pronunciations": {
+            "us": "ˌbenɪfɪʃl"
+        },
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "유익한, 이로운"
+            }
+        ],
+        "notes": "The organization's work is <strong class=\"target-word\">beneficial</strong> to the community. 그 단체의 활동은 지역 사회에 이익이 된다.",
+        "examples": [
+            {
+                "origin": "The organization's work is <span class=\"target-word\">beneficial</span> to the community.",
+                "translation": "그 단체의 활동은 지역 사회에 이익이 된다."
+            }
+        ]
+    },
+    {
+        "origin": "upcoming",
+        "pronunciations": {
+            "us": "ʌpkʌmɪŋ"
+        },
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "곧 있을, 다가오는"
+            }
+        ],
+        "notes": "A reporter spoke to a candidate for the <strong class=\"target-word\">upcoming</strong> election. 리포터는 곧 있을 선거의 한 후보자에게 말을 걸었다.",
+        "examples": [
+            {
+                "origin": "A reporter spoke to a candidate for the <span class=\"target-word\">upcoming</span> election.",
+                "translation": "리포터는 곧 있을 선거의 한 후보자에게 말을 걸었다."
+            }
+        ]
+    },
+    {
+        "origin": "lend",
+        "pronunciations": {
+            "us": "lend"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "빌려 주다"
+            }
+        ],
+        "notes": "The library <strong class=\"target-word\">lends</strong> a variety of audio-visual materials. 그 도서관은 다양한 시청각 자료를 빌려 준다.",
+        "examples": [
+            {
+                "origin": "The library <span class=\"target-word\">lends</span> a variety of audio-visual materials.",
+                "translation": "그 도서관은 다양한 시청각 자료를 빌려 준다."
+            }
+        ]
+    },
+    {
+        "origin": "current",
+        "pronunciations": {
+            "us": "kɜːrənt",
+            "uk": "kʌrənt"
+        },
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "현재의; 현행의, 통용되는"
+            }
+        ],
+        "notes": "<strong class=\"target-word\">Current</strong> subscribers to the magazine will receive a free supplement. 그 잡지의 현 구독자들은 무료 부록을 받을 것이다.",
+        "examples": [
+            {
+                "origin": "<span class=\"target-word\">Current</span> subscribers to the magazine will receive a free supplement.",
+                "translation": "그 잡지의 현 구독자들은 무료 부록을 받을 것이다."
+            }
+        ]
+    },
+    {
+        "origin": "local",
+        "pronunciations": {
+            "us": "loʊkl",
+            "uk": "ləʊkl"
+        },
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "지방의, 고장의"
+            }
+        ],
+        "notes": "The tournament will be held at the <strong class=\"target-word\">local</strong> high school. 그 토너먼트는 지역 고등학교에서 열릴 것이다.",
+        "examples": [
+            {
+                "origin": "The tournament will be held at the <span class=\"target-word\">local</span> high school.",
+                "translation": "그 토너먼트는 지역 고등학교에서 열릴 것이다."
+            }
+        ]
+    },
+    {
+        "origin": "variety",
+        "pronunciations": {
+            "us": "vəraɪəti"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "다양성, 변화; 종류, 품종"
+            }
+        ],
+        "notes": "The newsstand sells a <strong class=\"target-word\">variety</strong> of magazines and newspapers. 신문 가판대는 다양한 잡지와 신문을 판다.<br>The specialty coffee store sells more than twenty <strong class=\"target-word\">varieties</strong> of coffee. 그 커피 전문점은 스무 가지가 넘는 종류의 커피를 판매한다.",
+        "examples": [
+            {
+                "origin": "The newsstand sells a <span class=\"target-word\">variety</span> of magazines and newspapers.",
+                "translation": "신문 가판대는 다양한 잡지와 신문을 판다."
+            },
+            {
+                "origin": "The specialty coffee store sells more than twenty <span class=\"target-word\">varieties</span> of coffee.",
+                "translation": "그 커피 전문점은 스무 가지가 넘는 종류의 커피를 판매한다."
+            }
+        ]
+    },
+    {
+        "origin": "advocate",
+        "pronunciations": {
+            "us": "ædvəkət"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "옹호자"
+            }
+        ],
+        "notes": "The writer is an <strong class=\"target-word\">advocate</strong> of public education. 그 작가는 공교육 옹호자이다.",
+        "examples": [
+            {
+                "origin": "The writer is an <span class=\"target-word\">advocate</span> of public education.",
+                "translation": "그 작가는 공교육 옹호자이다."
+            }
+        ]
+    },
+    {
+        "origin": "contributor",
+        "pronunciations": {
+            "us": "kəntrɪbjətər"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "기고가, 공헌자"
+            }
+        ],
+        "notes": "The doctor is a regular <strong class=\"target-word\">contributor</strong> to the medical journal. 그 의사는 그 의학 학술지의 정기 기고가이다.",
+        "examples": [
+            {
+                "origin": "The doctor is a regular <span class=\"target-word\">contributor</span> to the medical journal.",
+                "translation": "그 의사는 그 의학 학술지의 정기 기고가이다."
+            }
+        ]
+    },
+    {
+        "origin": "defy",
+        "pronunciations": {
+            "us": "dɪfaɪ"
+        },
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "저항하다; (설명·묘사 등이) 거의 불가능하다"
+            }
+        ],
+        "notes": "The documentary series <strong class=\"target-word\">defies</strong> conventional wisdom about fitness. 그 다큐멘터리 시리즈는 건강에 대한 사회적인 통념에 저항한다.<br>The play <strong class=\"target-word\">defied</strong> all description. 그 연극은 형언할 수 없을 만큼 훌륭했다. (그 연극은 일체의 묘사가 거의 불가능했다.)",
+        "examples": [
+            {
+                "origin": "The documentary series <span class=\"target-word\">defies</span> conventional wisdom about fitness.",
+                "translation": "그 다큐멘터리 시리즈는 건강에 대한 사회적인 통념에 저항한다."
+            },
+            {
+                "origin": "The play <span class=\"target-word\">defied</span> all description.",
+                "translation": "그 연극은 형언할 수 없을 만큼 훌륭했다. (그 연극은 일체의 묘사가 거의 불가능했다.)"
+            }
+        ]
+    },
+    {
+        "origin": "fascinating",
+        "pronunciations": {
+            "us": "fæsɪneɪtɪŋ"
+        },
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "매혹적인, 황홀한"
+            }
+        ],
+        "notes": "Many <strong class=\"target-word\">fascinating</strong> pieces of art were on display. 매혹적인 많은 미술 작품들이 전시되어 있었다.",
+        "examples": [
+            {
+                "origin": "Many <span class=\"target-word\">fascinating</span> pieces of art were on display.",
+                "translation": "매혹적인 많은 미술 작품들이 전시되어 있었다."
+            }
+        ]
+    },
+    {
+        "origin": "showing",
+        "pronunciations": {
+            "us": "ʃoʊɪŋ",
+            "uk": "ʃəʊɪŋ"
+        },
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "(영화·연극의) 상영; 전시"
+            }
+        ],
+        "notes": "We attended the premiere <strong class=\"target-word\">showing</strong> of the Rita Garner movie. 우리는 Rita Garner의 영화 시사회에 참석했다.<br>There will be another <strong class=\"target-word\">showing</strong> of this artist's work. 이 예술가의 작품 전시가 한 번 더 있을 것이다.",
+        "examples": [
+            {
+                "origin": "We attended the premiere <span class=\"target-word\">showing</span> of the Rita Garner movie.",
+                "translation": "우리는 Rita Garner의 영화 시사회에 참석했다."
+            },
+            {
+                "origin": "There will be another <span class=\"target-word\">showing</span> of this artist's work.",
+                "translation": "이 예술가의 작품 전시가 한 번 더 있을 것이다."
+            }
+        ]
+    }
+]

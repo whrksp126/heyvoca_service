@@ -22,6 +22,7 @@ import postMessageManager from '../utils/postMessageManager';
 import FarmField from '../components/farm/FarmField';
 import { CROP_ASSETS, cropAssetByVariant } from '../components/farm/CropImage';
 import { useStatusBarStyle } from '../hooks/useStatusBarStyle';
+import { nodeEnv } from '../utils/common';
 
 /*
   온보딩 — 인사에서 첫 학습까지.
@@ -59,8 +60,10 @@ const DAILY = [
   { key: 30, label: '하루 30알', desc: '빠르게' },
 ];
 
-// 학습을 마친 뒤 묻는 세 가지 — 진행바는 이 구간에만 있다.
-// 앞 구간(인사·소개·단어장·예고)은 되돌아갈 일이 없어 진행률이 의미가 없다.
+// 학습을 마친 뒤 묻는 세 가지. 이 구간에도 **진행바를 두지 않는다** —
+// 앞의 소개 화면들에는 없는 장치라, 학습을 마치고 넘어오는 순간 화면이 통째로 다른
+// 앱처럼 바뀌어 보였다. 남은 개수는 세 화면을 넘기면 바로 끝나는 길이라 굳이 셀 것도 없다.
+// 목록은 헤더 줄(뒤로가기 자리)의 높이를 예약하는 용도로만 남는다.
 const QUESTION_ORDER = ['channel', 'goal', 'daily'];
 
 // 소개 화면의 예시 밭 — 실제 데이터가 아니라 "이렇게 자란다"를 보여주는 장면이다.
@@ -71,24 +74,32 @@ const INTRO_FIELD = { seed: 6, sprout: 5, leaf: 4, carrot: 3 };
 //
 // 【라벨에 단계 이름을 쓰지 않는다】 씨앗·새싹·이파리·당근은 그림이 이미 말한다.
 // 글자는 그림이 못 말하는 것, 즉 **그 단계가 되면 다음 복습이 얼마나 멀어지는지**를 맡는다.
-// 숫자 근거: 이파리·당근은 FSRS stability 임계값(10 / 60)으로 갈리고
-// (heyvoca_back/app/routes/study.py 의 _STABILITY_SHORT / _STABILITY_MEDIUM),
-// 목표 기억률 0.9 에서는 다음 복습 간격(일) = stability 다(fsrs/core.py `_next_interval`).
-// 새싹은 간격이 아니라 "심은 다음 학습일 이후 다시 맞히기"라 하루 이상으로 적는다.
+// 숫자 정본은 백엔드 `fsrs/thresholds.py` (5 / 21 / 60). 프론트 사본은 utils/common.jsx.
+// 목표 기억률 0.9 에서 다음 복습 간격(일) = FSRS stability 라(fsrs/core.py `_next_interval`)
+// 그 값이 곧 "다음 복습이 며칠 뒤인가"이고, 그래서 그대로 화면에 적을 수 있다.
+//
+// 실측 간격 진행(전부 Good): 3 → 9 → 24 → 61 일. 복습 회차마다 한 단계씩 오른다.
+// 이파리가 21인 건 빠른 정답(EASY)이 첫 회차부터 15일을 줘서다 — 15면 새싹을 건너뛴다.
+// 씨앗 칸만 숫자가 아닌 이유는 첫 정답의 간격이 3일 남짓으로 고정이라(w[2]=3.1262)
+// 어떤 문턱을 걸어도 심기와 발아를 가르지 못해서다 — 심기는 "처음 맞혔는가"로 정한다.
 const GROWTH_STAGES = [
   { crop: 'seed', label: '처음 맞힘' },
-  { crop: 'sprout', label: '1일 이상' },
-  { crop: 'leaf', label: '10일 이상' },
+  { crop: 'sprout', label: '5일 이상' },
+  { crop: 'leaf', label: '21일 이상' },
   { crop: 'carrot', label: '60일 이상' },
 ];
 
 // 기억이 넘어가는 세 칸 — 백엔드 `_classify_memory_state`(study.py)가 쓰는 short/medium/long 과
-// 같은 구분이다. 경계도 같은 stability 10 / 60 이라 화면과 서버가 어긋나지 않는다.
+// 같은 구분이고, 경계도 같은 값(fsrs/thresholds.py · common.jsx 의 21 / 60)이다.
+//
+// **바로 앞 화면(진화 줄)과 같은 숫자를 쓴다.** 단기=씨앗·새싹, 중기=이파리, 장기=당근이라
+// 두 줄은 같은 눈금을 다른 이름으로 부르는 것이다. 예전에 1 / 10 / 60 으로 적혀 있어
+// 앞 화면의 5 / 21 / 60 과 나란히 놓으면 서로 다른 기준처럼 보였다.
 // 색이 회색 → 연분홍 → 분홍으로 진해지는 것이 곧 "넘어간다"는 표시다.
 const MEMORY_STEPS = [
-  { key: 'short', label: '단기', days: '1일 뒤',
+  { key: 'short', label: '단기', days: '5일 뒤',
     box: 'bg-layout-gray-50 dark:bg-layout-gray-dark text-layout-gray-300' },
-  { key: 'medium', label: '중기', days: '10일 뒤',
+  { key: 'medium', label: '중기', days: '21일 뒤',
     box: 'bg-primary-main-50 dark:bg-primary-main-dark text-primary-main-600' },
   { key: 'long', label: '장기', days: '60일 뒤',
     box: 'bg-primary-main-600 text-layout-white dark:text-layout-black' },
@@ -107,7 +118,10 @@ const OptionRow = ({ active, Icon, title, desc, onClick }) => (
       flex items-center gap-[14px] w-full px-[18px] py-[16px] rounded-[14px] border-[2px] text-left mb-[10px]
       ${active
         ? 'border-primary-main-600 bg-primary-main-50 dark:bg-primary-main-dark'
-        : 'border-layout-gray-100 dark:border-layout-gray-dark bg-layout-white dark:bg-layout-black'}
+        /* 테두리 색은 NoteCard 와 같은 `border` 토큰을 쓴다 — 같은 화면 안에서 카드마다
+           회색이 달라 보이던 원인이다(예전엔 layout-gray-100). 두께만 2px 로 두는 건
+           선택되는 순간 굵기가 변해 줄이 밀리지 않게 하기 위해서다. */
+        : 'border-border dark:border-border-dark bg-layout-white dark:bg-layout-black'}
     `}
   >
     {Icon && (
@@ -122,7 +136,7 @@ const OptionRow = ({ active, Icon, title, desc, onClick }) => (
     </span>
     {active
       ? <CheckCircle size={24} weight="fill" className="text-primary-main-600 flex-shrink-0" />
-      : <span className="w-[22px] h-[22px] rounded-full border-[2px] border-layout-gray-100 dark:border-layout-gray-dark flex-shrink-0" />}
+      : <span className="w-[22px] h-[22px] rounded-full border-[2px] border-border dark:border-border-dark flex-shrink-0" />}
   </motion.button>
 );
 
@@ -184,7 +198,7 @@ const Onboarding = () => {
   const location = useLocation();
   const { pushNewFullSheet, popNewFullSheet } = useNewFullSheetActions();
   const { pushAwaitNewBottomSheet } = useNewBottomSheetActions();
-  const { Login, AppleLogin, clickGoogleOauth, clickAppleOauth, isLogin, fetchUserProfile, performLogout } = useUser();
+  const { Login, AppleLogin, clickGoogleOauth, clickAppleOauth, isLogin, fetchUserProfile, performLogout, updateUserHistory, DevLogin } = useUser();
 
   // 온보딩 내부 로그인/회원가입 스텝(auth)에서만 앱 OAuth 노출 (안드로이드는 애플 숨김)
   const isAndroid = getDevicePlatform() === 'android' || navigator.userAgent.toLowerCase().includes('android');
@@ -255,8 +269,10 @@ const Onboarding = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // 질문 구간인지 — 헤더 줄(뒤로가기 자리)의 높이를 예약하는 데만 쓴다.
+  // 예전에는 여기에 진행바(1/3)도 달려 있었는데, 소개 화면들에는 없는 장치라
+  // 학습을 마치고 넘어오는 순간 화면이 다른 앱처럼 바뀌어 보였다.
   const isQuestion = QUESTION_ORDER.includes(step);
-  const questionIndex = QUESTION_ORDER.indexOf(step);
 
   // 뒤로가기가 있는 스텝과, 각 스텝의 이전 자리.
   // 학습은 별도 라우트라 그 앞뒤(ready ↔ channel)는 이어 붙이지 않는다 —
@@ -272,6 +288,38 @@ const Onboarding = () => {
   };
 
   const goLogin = () => { vibrate({ duration: 5 }); navigate('/login'); };
+
+  /*
+    로컬 전용 이메일 가입 — 실기기에서 구글·애플 없이 온보딩 가입까지 확인하려고 둔다.
+    서버 `/auth/dev-login`(auth.py)은 없는 이메일이면 계정을 새로 만들어 주므로
+    로그인과 가입을 겸한다. 라우트 자체가 `FLASK_CONFIG=local` 이 아니면 403 이라
+    화면을 감추는 것과 서버가 거부하는 것, 두 겹으로 막혀 있다.
+
+    기본값을 매번 **새 주소**로 잡는다. 이미 있는 이메일을 넣으면 가입이 아니라 로그인이 되고,
+    그 계정은 이미 온보딩을 마쳤으므로 `/onboarding/migrate` 가 409 로 끝난다 —
+    정작 확인하려던 가입 경로(심은 씨앗 이전·출석·업적)가 한 줄도 안 돈다.
+  */
+  const isLocal = nodeEnv === 'local';
+  const [devEmail, setDevEmail] = useState(() => `dev+${Date.now().toString(36)}@heyvoca.test`);
+  const [devBusy, setDevBusy] = useState(false);
+  const [devError, setDevError] = useState(null);
+
+  const clickDevSignup = async () => {
+    const email = devEmail.trim();
+    if (devBusy || !email) return;
+    vibrate({ duration: 5 });
+    setDevBusy(true);
+    setDevError(null);
+    try {
+      const result = await DevLogin({ email });
+      // 성공하면 홈으로 — 게스트 데이터 이전(migrate)은 구글·애플과 똑같이 Index.jsx 가 맡는다
+      if (result?.success) { navigate('/'); return; }
+      setDevError(result?.message || '로그인 실패');
+    } catch (e) {
+      setDevError('서버 오류');
+    }
+    setDevBusy(false);
+  };
 
   // 이미 로그인된 상태에서 온보딩에 갇힌 경우 — 확인 바텀시트 후 로그아웃하고 로그인 화면으로 이동.
   // fromOnboarding state를 넘기지 않으므로 Login.jsx에서 회원가입 버튼도 그대로 노출된다.
@@ -401,6 +449,22 @@ const Onboarding = () => {
         username: trimmedUsername,
         answers,
       });
+      if (res?.code === 200) {
+        // 온보딩 학습을 **정규 세션과 똑같이** 집계한다.
+        // /mainpage/user_study_history 가 XP · 출석 · 출석왕 · 노력왕 · 데일리 미션 · 끈기왕을
+        // 한 번에 처리하는 허브인데, 게스트 구간에서는 로그인이 없어 못 불렀다.
+        // migrate 가 학습 로그를 막 심어 놨으므로(신규 판정은 로그 기준) 지금 부르면
+        // 온보딩에서 한 학습이 그대로 오늘의 기록으로 잡힌다.
+        // 409(이미 온보딩 완료)는 앞선 시도에서 이미 처리된 것이라 건너뛴다.
+        const studied = res?.data?.studied ?? 0;
+        const correct = res?.data?.correct ?? 0;
+        if (studied > 0 && typeof updateUserHistory === 'function') {
+          await updateUserHistory({
+            correct_cnt: correct,
+            incorrect_cnt: Math.max(0, studied - correct),
+          }).catch(() => { /* 실패해도 온보딩 흐름은 계속 */ });
+        }
+      }
       if (res?.code === 200 || res?.code === 409) {
         clearGuest();
         // 홈 등 다른 화면에서 최신 닉네임/온보딩 상태가 바로 보이도록 프로필 재조회(best-effort)
@@ -450,9 +514,17 @@ const Onboarding = () => {
     <div className="flex flex-col h-screen w-full bg-layout-white dark:bg-layout-black">
       <div style={{ paddingTop: 'var(--status-bar-height)' }}></div>
 
-      {/* 진행 헤더 — 뒤로가기는 되돌아갈 자리가 있는 스텝에만, 진행바는 질문 3개에만 */}
+      {/*
+        헤더 — 뒤로가기는 되돌아갈 자리가 있는 스텝에만. 질문 구간은 자리만 예약한다.
+
+        **`data-page-header` 를 달지 않는다.** 그 표식이 붙으면 전역 규칙
+        (index.css `html[data-keyboard-visible] [data-page-header]{display:none}`)에 걸려
+        키보드가 올라오는 순간 헤더가 통째로 사라진다. 그 규칙은 목록이 긴 화면에서
+        자리를 벌려 주려고 만든 것인데, 여기는 입력칸 하나뿐이라 벌 자리가 필요 없고
+        뒤로가기만 없어져 화면이 덜컥 위로 튄다.
+      */}
       {(BACK_TO[step] || isQuestion) && (
-        <div data-page-header className="relative flex items-end w-full h-[55px] px-[10px] pb-[13px] shrink-0">
+        <div className="relative flex items-end w-full h-[55px] px-[10px] pb-[13px] shrink-0">
           {BACK_TO[step] && (
             <motion.button onClick={goBack}
               className="flex text-layout-gray-200 dark:text-layout-white rounded-[8px]"
@@ -462,18 +534,6 @@ const Onboarding = () => {
               <CaretLeft size={24} />
             </motion.button>
           )}
-        </div>
-      )}
-      {isQuestion && (
-        <div className="px-[16px] shrink-0">
-          <div className="relative w-full h-[16px] rounded-[50px] bg-primary-main-100 dark:bg-layout-gray-dark overflow-hidden">
-            <motion.div className="h-[100%] rounded-[50px] bg-primary-main-600"
-              initial={{ width: '0%' }} animate={{ width: `${(questionIndex + 1) / QUESTION_ORDER.length * 100}%` }}
-              transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }} />
-            <span className="absolute right-[10px] top-[50%] translate-y-[-50%] text-[#7b7b7b] text-[10px] font-semibold tracking-[-0.2px]">
-              {questionIndex + 1}/{QUESTION_ORDER.length}
-            </span>
-          </div>
         </div>
       )}
 
@@ -546,7 +606,9 @@ const Onboarding = () => {
                         <img src={cropAssetByVariant(s.crop, 'healthy', { solo: s.crop === 'seed' })}
                           alt="" draggable={false}
                           className="block w-[60px] h-[60px] object-contain object-bottom select-none" />
-                        <span className="text-[11.5px] font-[800] tracking-[-0.03em] text-layout-gray-400 dark:text-layout-gray-100">
+                        {/* 새싹 라벨만 두 줄이라 가운데 정렬과 어절 단위 줄바꿈이 필요하다.
+                            break-keep 이 없으면 "예정일에 또 맞"에서 끊긴다. */}
+                        <span className="text-center break-keep leading-[1.35] text-[11.5px] font-[800] tracking-[-0.03em] text-layout-gray-400 dark:text-layout-gray-100">
                           {s.label}
                         </span>
                       </span>
@@ -559,7 +621,10 @@ const Onboarding = () => {
               </div>
 
               <div className="px-[24px] pt-[18px] pb-[26px] shrink-0">
-                <Cta label="좋아요" onClick={() => { vibrate({ duration: 5 }); setStep('memory'); }} />
+                {/* 버튼이 읽는 사람의 다음 질문이 되고, 다음 화면("다음 물 줄 날은 제가
+                    계산해요")이 그 답이 된다. "좋아요"는 어느 화면에나 붙일 수 있는 추임새라
+                    이 화면이 무슨 말을 했는지도, 다음에 뭐가 오는지도 말하지 못했다. */}
+                <Cta label="물은 언제 주죠?" onClick={() => { vibrate({ duration: 5 }); setStep('memory'); }} />
               </div>
             </>
           )}
@@ -604,7 +669,8 @@ const Onboarding = () => {
               </div>
 
               <div className="px-[24px] pt-[18px] pb-[26px] shrink-0">
-                <Cta label="좋아요" onClick={() => { vibrate({ duration: 5 }); setStep('level'); }} />
+                {/* 앞 화면의 질문에 답을 마쳤으니, 여기서는 다음에 할 일을 그대로 적는다 */}
+                <Cta label="단어장 고르러 가기" onClick={() => { vibrate({ duration: 5 }); setStep('level'); }} />
               </div>
             </>
           )}
@@ -654,13 +720,15 @@ const Onboarding = () => {
           {/* ⑩ 유입 경로 */}
           {step === 'channel' && (
             <>
-              <div className="flex flex-col flex-1 min-h-0 px-[24px] pt-[20px] overflow-y-auto">
-                <h1 className="text-[22px] font-[800] leading-[1.35] tracking-[-0.04em] text-layout-black dark:text-layout-white mb-[20px]">
-                  헤이보카를<br />어떻게 알게 되셨어요?
-                </h1>
-                {CHANNELS.map((c) => (
-                  <OptionRow key={c.key} active={channel === c.key} Icon={c.Icon} title={c.label} onClick={() => pickChannel(c.key)} />
-                ))}
+              <div className="flex flex-col flex-1 min-h-0 px-[24px] pt-[6px] overflow-y-auto">
+                <Headline>
+                  헤이보카를<br /><span className="text-primary-main-600">어떻게 알게 되셨어요?</span>
+                </Headline>
+                <div className="mt-[26px]">
+                  {CHANNELS.map((c) => (
+                    <OptionRow key={c.key} active={channel === c.key} Icon={c.Icon} title={c.label} onClick={() => pickChannel(c.key)} />
+                  ))}
+                </div>
               </div>
               <div className="px-[24px] pt-[18px] pb-[26px] shrink-0">
                 <Cta label="다음" disabled={!channel} onClick={() => { vibrate({ duration: 5 }); setStep('goal'); }} />
@@ -671,13 +739,15 @@ const Onboarding = () => {
           {/* ⑪ 학습 목적 */}
           {step === 'goal' && (
             <>
-              <div className="flex flex-col flex-1 min-h-0 px-[24px] pt-[20px] overflow-y-auto">
-                <h1 className="text-[22px] font-[800] leading-[1.35] tracking-[-0.04em] text-layout-black dark:text-layout-white mb-[20px]">
-                  어떤 목표로<br />공부하세요?
-                </h1>
-                {GOALS.map((g) => (
-                  <OptionRow key={g.key} active={goal === g.key} Icon={g.Icon} title={g.label} onClick={() => pickGoal(g.key)} />
-                ))}
+              <div className="flex flex-col flex-1 min-h-0 px-[24px] pt-[6px] overflow-y-auto">
+                <Headline>
+                  어떤 목표로<br /><span className="text-primary-main-600">공부하세요?</span>
+                </Headline>
+                <div className="mt-[26px]">
+                  {GOALS.map((g) => (
+                    <OptionRow key={g.key} active={goal === g.key} Icon={g.Icon} title={g.label} onClick={() => pickGoal(g.key)} />
+                  ))}
+                </div>
               </div>
               <div className="px-[24px] pt-[18px] pb-[26px] shrink-0">
                 <Cta label="다음" disabled={!goal} onClick={() => { vibrate({ duration: 5 }); setStep('daily'); }} />
@@ -688,18 +758,23 @@ const Onboarding = () => {
           {/* ⑫ 하루 목표 — 학습 뒤라 "오늘 n알"이 예고가 아니라 이미 일어난 일이다 */}
           {step === 'daily' && (
             <>
-              <div className="flex flex-col flex-1 min-h-0 px-[24px] pt-[20px] overflow-y-auto">
-                <h1 className="text-[22px] font-[800] leading-[1.35] tracking-[-0.04em] text-layout-black dark:text-layout-white mb-[20px]">
+              <div className="flex flex-col flex-1 min-h-0 px-[24px] pt-[6px] overflow-y-auto">
+                <Headline>
                   <span className="text-primary-main-600">내일부터</span> 하루에<br />몇 알씩 심을까요?
-                </h1>
-                {DAILY.map((d) => (
-                  <OptionRow key={d.key} active={daily === d.key} title={d.label} desc={d.desc} onClick={() => pickDaily(d.key)} />
-                ))}
-                <div className="flex gap-[8px] rounded-[10px] bg-primary-main-50 dark:bg-primary-main-dark p-[11px_12px] mt-[2px]">
-                  <p className="text-[11.5px] font-[500] leading-[1.6] text-primary-main-600">
-                    오늘 심은 <b className="font-[800]">{planted}알</b>은 첫날 분량이에요.
-                    여기서 고른 개수는 <b className="font-[800]">내일부터</b> 적용됩니다.
-                  </p>
+                </Headline>
+                <div className="mt-[26px]">
+                  {DAILY.map((d) => (
+                    <OptionRow key={d.key} active={daily === d.key} title={d.label} desc={d.desc} onClick={() => pickDaily(d.key)} />
+                  ))}
+                  {/* 안내 박스 — 포인트 컬러는 결정을 유도할 때만 쓴다(시안 톤 규칙).
+                      여기는 "왜 오늘치가 다르게 보이는지" 설명일 뿐이라, 다른 화면의
+                      보조 카드(NoteCard)와 같은 회색 배경·본문 톤을 쓴다. */}
+                  <div className="flex gap-[8px] rounded-[14px] bg-layout-gray-50 dark:bg-layout-gray-dark p-[13px_14px] mt-[2px]">
+                    <p className="text-[11.5px] font-[500] leading-[1.6] text-layout-gray-400 dark:text-layout-gray-100">
+                      오늘 심은 <b className="font-[800]">{planted}알</b>은 첫날 분량이에요.
+                      여기서 고른 개수는 <b className="font-[800]">내일부터</b> 적용됩니다.
+                    </p>
+                  </div>
                 </div>
               </div>
               <div className="px-[24px] pt-[18px] pb-[26px] shrink-0">
@@ -711,21 +786,38 @@ const Onboarding = () => {
           {/* ⑬ 닉네임 */}
           {step === 'nick' && (
             <>
-              <div className="flex flex-col flex-1 min-h-0 px-[24px] pt-[20px]">
-                <h1 className="text-[22px] font-[800] leading-[1.35] tracking-[-0.04em] text-layout-black dark:text-layout-white mb-[20px]">
-                  어떻게 부르면<br />될까요?
-                </h1>
-                <input
-                  value={username} onChange={(e) => setUsername(e.target.value.slice(0, 8))}
-                  placeholder="닉네임을 입력해주세요"
-                  className="w-full h-[52px] px-[16px] rounded-[12px] bg-layout-gray-50 dark:bg-layout-gray-dark text-[15px] font-[600] text-layout-black dark:text-layout-white outline-none"
-                />
-                <div className="mt-[8px] mr-[2px] text-right text-[11.5px] font-[600] text-layout-gray-200">
-                  {username.trim().length} / 8
+              <div className="flex flex-col flex-1 min-h-0 px-[24px] pt-[6px]">
+                {/* '나중에 바꿀 수 있다'는 안내는 입력 아래가 아니라 제목의 부제 자리로 옮겼다 —
+                    소개 화면들이 전부 [제목 + 회색 한 줄] 짜임이라 같은 자리에 둬야 같은 화면으로 읽힌다. */}
+                {/* 한 줄로 끝나는 짧은 물음이라 줄을 나누지 않고, 색도 나누지 않는다 —
+                    강조색은 두 줄을 갈라 앞뒤를 대비시킬 때만 뜻이 있다. */}
+                <Headline sub="나중에 언제든 바꿀 수 있어요.">
+                  어떻게 부르면 될까요?
+                </Headline>
+                <div className="mt-[26px]">
+                  <input
+                    value={username} onChange={(e) => setUsername(e.target.value.slice(0, 8))}
+                    placeholder="닉네임을 입력해주세요"
+                    enterKeyHint="done"
+                    /* 키보드의 '이동'/Enter 로도 넘어간다 — 버튼을 찾아 손을 옮기지 않아도 되게 */
+                    onKeyDown={(e) => {
+                      if (e.key !== 'Enter') return;
+                      e.preventDefault();
+                      if (username.trim() && !finishingOnboarding) handleNickNext();
+                    }}
+                    className="
+                      w-full h-[52px] px-[16px] rounded-[14px] border-[2px]
+                      border-border dark:border-border-dark bg-layout-white dark:bg-layout-black
+                      text-center text-[16px] font-[700] tracking-[-0.03em]
+                      text-layout-black dark:text-layout-white outline-none
+                      focus:border-primary-main-600
+                      placeholder:font-[500] placeholder:text-layout-gray-200
+                    "
+                  />
+                  <div className="mt-[8px] text-center text-[11.5px] font-[600] text-layout-gray-200">
+                    {username.trim().length} / 8
+                  </div>
                 </div>
-                <p className="mt-[6px] text-[11.5px] font-[500] leading-[1.6] text-layout-gray-300">
-                  나중에 언제든 바꿀 수 있어요.
-                </p>
               </div>
               <div className="px-[24px] pt-[18px] pb-[26px] shrink-0">
                 <Cta label={finishingOnboarding ? '처리 중...' : '다음'}
@@ -768,6 +860,36 @@ const Onboarding = () => {
                   계속하면 <span className="underline text-layout-gray-300">이용약관</span>과{' '}
                   <span className="underline text-layout-gray-300">개인정보처리방침</span>에 동의하게 됩니다.
                 </p>
+
+                {/* 로컬 전용 이메일 가입 — 실기기에서 소셜 없이 가입 경로를 확인하기 위한 것.
+                    다른 환경에서는 렌더되지도, 서버가 받아 주지도 않는다(clickDevSignup 주석). */}
+                {isLocal && (
+                  <div className="flex flex-col gap-[8px] mt-[10px] pt-[14px] border-t border-border dark:border-border-dark">
+                    <p className="text-center text-[10.5px] font-[800] tracking-[0.06em] text-layout-gray-200">
+                      LOCAL ONLY · 이메일로 가입
+                    </p>
+                    <input
+                      type="email" inputMode="email" autoCapitalize="none" autoCorrect="off"
+                      value={devEmail}
+                      onChange={(e) => { setDevEmail(e.target.value); setDevError(null); }}
+                      enterKeyHint="go"
+                      onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); clickDevSignup(); } }}
+                      className="
+                        w-full h-[46px] px-[14px] rounded-[12px] border border-border dark:border-border-dark
+                        bg-layout-white dark:bg-layout-black text-center text-[13.5px] font-[600]
+                        text-layout-black dark:text-layout-white outline-none focus:border-primary-main-600
+                      "
+                    />
+                    <motion.button type="button" whileTap={{ scale: 0.97 }}
+                      disabled={devBusy || !devEmail.trim()} onClick={clickDevSignup}
+                      className="w-full h-[46px] rounded-[12px] bg-layout-gray-400 dark:bg-layout-gray-dark text-layout-white text-[14px] font-[700] disabled:opacity-40">
+                      {devBusy ? '처리 중...' : '이 이메일로 가입하고 시작하기'}
+                    </motion.button>
+                    {devError && (
+                      <p className="text-center text-[11.5px] font-[600] text-status-error-600">{devError}</p>
+                    )}
+                  </div>
+                )}
               </div>
             </>
           )}

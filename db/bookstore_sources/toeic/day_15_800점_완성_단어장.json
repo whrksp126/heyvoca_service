@@ -1,0 +1,866 @@
+[
+    {
+        "origin": "abundant",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "풍부한"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "adhere to",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~을 고수하다, ~을 지키다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "at a brisk pace",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "빠른 속도로"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "automatic",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "자동의"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "be aware of",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~을 인지하고 있다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "be crowded with",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~로 붐비다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "be stuck in traffic",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "교통 체증으로 꼼짝 못 하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "bypass",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "우회하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "carbon dioxide",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "이산화탄소"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "congestion",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "(교통) 혼잡, 정체"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "damaged",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "손상된"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "detour",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "우회(로)"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "disposable",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "일회용의"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "eliminate",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "제거하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "environmental awareness",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "환경 의식"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "exhaust fumes",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "배기가스"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "get stuck in",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~에 갇히다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "give off",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "(냄새·빛 등을) 내뿜다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "greenhouse effect",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "온실 효과"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "hazardous waste",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "유해 폐기물"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "heavy traffic",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "교통 체증"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "in close proximity to",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~에 아주 가까운"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "landfill",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "쓰레기 매립지"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "on the alternative route",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "우회로 상에"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "organic",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "유기농의, 생물의"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "public transportation",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "대중교통"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "renewable energy",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "재생 에너지"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "rush hour",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "출퇴근 시간대"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "sustainable development",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "지속 가능한 개발"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "under renovation",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "개보수 중인"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "alternative",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "대안; adj. 대안의"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "appeal",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "호소하다; n. 호소, 매력"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "congested",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "붐비는, 혼잡한"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "consequence",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "결과, 중요성"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "contaminate",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "오염시키다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "critical",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "비판적인; 위태로운; 결정적인"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "decrease",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "감소; v. 줄이다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "deplete",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "고갈시키다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "disaster",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "재앙, 재해"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "efficiently",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "효율적으로"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "environmentally friendly",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "친환경적인"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "essential",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "필수적인"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "extinct",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "멸종된"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "fossil fuel",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "화석 연료"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "habitat",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "서식지"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "impact",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "영향, 충격; v. 영향을 주다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "implement",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "시행하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "increase",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "증가하다; n. 증가"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "lack",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "부족; v. 부족하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "leak",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "새다; n. 새는 곳"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "at a standstill",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "정지해 있는"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "be designated as",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~로 지정되다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "be related to",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~와 관련되다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "breakdown",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "고장; 분해"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "bypass",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "우회하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "commuter",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "통근자"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "conservation",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "(자원 등의) 보호, 보존"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "detour",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "우회로; v. 우회하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "emission",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "배출, 방출"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "exhaust",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "고갈시키다; 기진맥진하게 하다; n. 배기가스"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "fumes",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "(유독) 가스, 연기"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "hazardous",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "위험한"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "in accordance with",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~에 따라, ~과 일치하여"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "incident",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "사건, 사고"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "intersection",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "교차로"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "landfill",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "쓰레기 매립지"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "monitor",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "감시하다; n. 모니터"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "penalty",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "벌금, 형벌"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "pollution",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "오염"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "proximity",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "근접, 가까움"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "punishment",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "처벌, 형벌"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "vehicle",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "차량, 탈것"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    }
+]

@@ -39,6 +39,11 @@ const ROW_HEIGHT_EX = 118;  // 예문을 켜면 뜻 아래로 두 줄이 더 붙
 const LIST_OFFSET = 399;
 // 히어로를 감췄을 때 목록 위에 남는 높이 — 헤더(52) + 목록과 헤더 사이 숨 쉴 틈
 const HEADER_OFFSET = 64;
+// 상태바(안드로이드) · 노치 안전영역(iOS) 높이.
+// 헤더는 이 띠까지 **덮어야** 하고, 목록은 이 띠만큼 **더 비워야** 한다.
+// 예전에는 헤더만 이만큼 내려 앉히고 목록은 그대로 최상단에서 시작해서,
+// 헤더 위 상태바 자리로 스크롤된 행이 그대로 비쳤다.
+const SAFE_TOP = 'max(var(--status-bar-height), env(safe-area-inset-top, 0px))';
 
 // onPrimaryAction/primaryActionLabel: 지정 시 하단 주요 버튼을 구매/추가 대신 커스텀 동작으로 대체
 // (온보딩에서 '이 단어장으로 시작하기' 선택에 재사용). 미지정이면 서점 기본(구매/추가).
@@ -261,30 +266,35 @@ export const PreviewBookStoreNewFullSheet = ({
         헤더 — 배경을 깔지 않고 일러스트 위에 얹는다 (산 뒤 화면과 같은 처리).
         하늘이 밝은 크림색이라 검은 글자와 아이콘이 그대로 읽힌다.
       */}
+      {/* 화면 최상단(y=0)에서 시작하고 안전영역만큼을 패딩으로 밀어 낸다.
+          배경이 상태바 띠까지 이어져야 그 자리로 목록이 비치지 않는다.
+          안쪽 줄의 위치·높이(52px)는 예전과 같아 서점 쪽 모습은 그대로다. */}
       <div
         data-page-header
         className={`
-          absolute left-0 right-0 z-[22] flex items-center gap-[10px] h-[52px] px-[16px]
+          absolute left-0 right-0 top-0 z-[22] px-[16px]
           ${hideFieldHero ? 'bg-layout-white dark:bg-layout-black' : ''}
         `}
-        style={{ top: 'max(var(--status-bar-height), env(safe-area-inset-top, 0px))' }}
+        style={{ paddingTop: SAFE_TOP }}
       >
-        <motion.button
-          onClick={() => {
-            vibrate({ duration: 5 });
-            handleClose();
-          }}
-          className="shrink-0 rounded-[8px] text-farm-ink"
-          whileTap={{ scale: 0.95 }}
-          transition={{ type: 'spring', stiffness: 400, damping: 17 }}
-          aria-label="뒤로"
-        >
-          <CaretLeft size={22} weight="bold" />
-        </motion.button>
+        <div className="flex items-center gap-[10px] h-[52px]">
+          <motion.button
+            onClick={() => {
+              vibrate({ duration: 5 });
+              handleClose();
+            }}
+            className="shrink-0 rounded-[8px] text-farm-ink"
+            whileTap={{ scale: 0.95 }}
+            transition={{ type: 'spring', stiffness: 400, damping: 17 }}
+            aria-label="뒤로"
+          >
+            <CaretLeft size={22} weight="bold" />
+          </motion.button>
 
-        <h1 className="flex-1 min-w-0 truncate text-[18px] font-[700] tracking-[-0.03em] text-farm-ink">
-          {bookStoreVocabularySheet?.name}
-        </h1>
+          <h1 className="flex-1 min-w-0 truncate text-[18px] font-[700] tracking-[-0.03em] text-farm-ink">
+            {bookStoreVocabularySheet?.name}
+          </h1>
+        </div>
       </div>
 
       <div
@@ -297,8 +307,9 @@ export const PreviewBookStoreNewFullSheet = ({
         }}
       >
         {hideFieldHero ? (
-          // 헤더가 목록 위에 떠 있으므로 그만큼만 비워 둔다
-          <div className="shrink-0" style={{ height: HEADER_OFFSET }} />
+          // 헤더가 목록 위에 떠 있으므로 그만큼 비워 둔다.
+          // 헤더는 상태바 아래에 앉으므로 안전영역까지 더해야 첫 행이 헤더 뒤로 들어가지 않는다.
+          <div className="shrink-0" style={{ height: `calc(${HEADER_OFFSET}px + ${SAFE_TOP})` }} />
         ) : (
           <>
             {/* 이 단어장이 열어 줄 밭 — 전부 씨앗이다. 아직 아무것도 심지 않았다 */}

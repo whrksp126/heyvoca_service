@@ -1,0 +1,818 @@
+[
+    {
+        "origin": "advertising campaign",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "광고 캠페인"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "be anxious to do",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "몹시 ~하고 싶다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "bring on",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~을 초래하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "chase",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "뒤쫓다, 추구하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "come along",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "함께 가다, 함께 오다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "come loose",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "풀리다, 느슨해지다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "conditional",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "조건부의"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "customer survey",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "고객 설문 조사"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "date back to",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "(시기가) ~까지 거슬러 올라가다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "depict",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "묘사하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "destruction",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "파괴"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "enter into",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~에 들어가다, 참가하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "get back to",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~에게 답변 전화를 하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "gradual",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "점차적인, 단계적인"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "inactive",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "활동하지 않는, 활발하지 않은"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "in the meantime",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "그동안에"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "invalid",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "실효성이 없는, 무효인"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "look over",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~을 훑어보다, 조사하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "make up one's mind",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "결정을 내리다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "meaningful",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "의미 있는, 중요한"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "put a rush",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "서두르다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "put a strain on",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~에 부담을 주다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "put up with",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~을 참다, 견디다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "reach for",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~을 잡으려고 손을 뻗다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "stay ahead of",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~보다 앞서 있다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "A as well as B",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "B뿐만 아니라 A도"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "ample",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "충분한, 풍부한"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "a range of",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "다양한"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "attend to a client",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "고객을 상대하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "confront",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "직면하다, 맞서다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "context",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "문맥, (어떤 일의) 정황, 배경"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "despair",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "절망"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "disconnected",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "연결이 끊긴"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "dissatisfied",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "불만인"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "driven",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "의욕이 넘치는"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "dynamic",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "활동적인"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "eagerly await",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "간절히 기다리다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "enormous",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "거대한"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "fall behind",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "뒤처지다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "feasible",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "실행 가능한"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "forwarding address",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "(우편물의) 전송 주소"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "get over",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "극복하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "impress",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "감동시키다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "inadequate",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "부적절한, 불충분한"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "in a timely fashion",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "적시에"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "irreplaceable",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "바꿀 수 없는"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "limitation",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "제한, 한계"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "massive",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "대량의, 대규모의"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "point out",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~을 지적하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "rave review",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "호평, 극찬하는 기사"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "repeatedly",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "되풀이하여, 여러 차례"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "strategically",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adv",
+                "text": "전략적으로"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "unveil",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "밝히다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "a great deal",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "다량, 상당량"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "be sensitive to",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~에 민감하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "bother to do",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~하느라 애쓰다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "call off",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "취소하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "carry out market studies",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "시장 조사를 수행하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "come across",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "우연히 만나다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "contrive to do",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "용케 ~해내다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "deliberate",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "adj",
+                "text": "고의적인, 신중한, 생각이 깊은"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "discounted rate",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "할인율"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "have a tendency to do",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~하는 경향이 있다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "have an opportunity to do",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~할 기회를 갖다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "have something to do with",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~과 연관이 있다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "in turn",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "차례로, 번갈아, 결과적으로"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "make no exception",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "예외를 두지 않다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "televise",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "텔레비전으로 방송하다, 방영하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    }
+]

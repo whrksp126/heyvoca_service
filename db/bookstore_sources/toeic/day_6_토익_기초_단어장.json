@@ -1,0 +1,346 @@
+[
+    {
+        "origin": "backpack",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "배낭"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "bike",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "자전거, 오토바이"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "cabin",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "조종실, 통나무집"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "climb a mountain",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "산에 오르다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "film festival",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "영화제"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "fishing",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "낚시"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "gallery",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "화랑, 미술관"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "invitation",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "초대"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "lawn",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "잔디, 잔디밭"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "paint",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "물감"
+            },
+            {
+                "pos": "v",
+                "text": "그림을 그리다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "painting",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "그림, 회화"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "play cards",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "카드놀이를 하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "public library",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "공공 도서관"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "race",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "경주"
+            },
+            {
+                "pos": "v",
+                "text": "경주하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "resort",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "리조트"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "theater",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "극장"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "watch a film",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "영화를 보다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "adventure",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "모험"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "art museum",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "미술관"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "begin",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "시작하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "bring",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "v",
+                "text": "가져오다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "care for",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "phr",
+                "text": "~를 돌보다, ~를 좋아하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "concert",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "콘서트"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "length",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "길이"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "leisure",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "여가"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "librarian",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "도서관원, 사서"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "menu",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "메뉴, 음식, 요리"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "sightseeing",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "n",
+                "text": "관광"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    }
+]

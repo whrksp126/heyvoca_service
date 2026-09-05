@@ -41,24 +41,24 @@ export const VocabularyLimitNewBottomSheet = () => {
             <div className="flex gap-[15px] w-full">
                 <motion.button
                     className="
-            flex-[1] h-[45px] 
-            bg-layout-gray-200 dark:bg-layout-gray-500 
-            rounded-[8px] 
+            flex-[1] h-[52px] 
+            rounded-[12px] 
             flex items-center justify-center
-          "
+            border-[2px] border-border dark:border-border-dark bg-layout-white dark:bg-layout-black text-layout-gray-400 dark:text-layout-gray-100"
                     onClick={handleCancel}
                     whileTap={{ scale: 0.95 }}
                     transition={{ type: "spring", stiffness: 500, damping: 15 }}
                 >
-                    <span className="text-[16px] font-bold text-layout-white tracking-[-0.32px]">
+                    {/* 글자색은 버튼이 정한다 — 면을 걷어낸 외곽선 형이라 흰 글자면 안 보인다 */}
+                    <span className="text-[16px] font-bold tracking-[-0.03em]">
                         취소
                     </span>
                 </motion.button>
                 <motion.button
                     className="
-            flex-[1] h-[45px] 
+            flex-[1] h-[52px] 
             bg-primary-main-600 
-            rounded-[8px] 
+            rounded-[12px] 
             flex items-center justify-center
           "
                     onClick={handleGoToStore}

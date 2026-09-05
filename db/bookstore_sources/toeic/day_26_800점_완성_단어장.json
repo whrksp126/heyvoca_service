@@ -1,0 +1,866 @@
+[
+    {
+        "origin": "account balance",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "계좌 잔고"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "account number",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "계좌 번호"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "accumulated interest",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "누적 이자"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "approve a loan",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "대출을 승인하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "ask for a loan",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "대출을 신청하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "authorized signature",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "공인된 서명"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "bank transaction",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "은행 거래"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "bear interest",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "이자가 붙다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "by the due date",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "만기일까지"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "cash a check",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "수표를 현금으로 바꾸다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "cash in on",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "~에서 이익을 얻다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "closing balance",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "기말 잔고"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "come to a standstill",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "멈추다, 정지하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "compound interest",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "복리"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "credit rating",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "신용 등급"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "current account",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "당좌 예금"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "deduct A from B",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "B에서 A를 빼다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "deposit money",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "돈을 예금하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "due on delivery",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "배달 시 지불해야 하는"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "fall into arrears",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "체납하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "fill out an application",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "신청서를 작성하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "finance the project",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "프로젝트에 자금을 대다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "financial institution",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "금융 기관"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "fixed interest rate",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "고정 금리"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "foreign exchange",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "외환"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "get into debt",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "빚을 지다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "grant a loan",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "대출을 허가하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "gross income",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "총수입"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "high interest rate",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "높은 이자율"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "in extreme cases",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "극단적인 경우에"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "install a system",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "시스템을 설치하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "interest-free loan",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "무이자 대출"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "investment advisor",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "투자 고문"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "joint account",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "공동 계좌"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "keep a close watch on",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "~을 예의 주시하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "late payment fee",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "연체료"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "lend money",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "돈을 빌려주다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "loan application",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "대출 신청서"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "low interest rate",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "낮은 이자율"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "make a payment",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "지불하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "make a withdrawal",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "인출하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "market value",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "시장 가치"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "monthly statement",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "월간 명세서"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "mortgage loan",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "담보 대출"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "net income",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "순수입"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "on a monthly basis",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "매달"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "opening balance",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "기초 잔고"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "outstanding balance",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "미결제 잔액"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "overdue payment",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "연체 대금"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "pay off a debt",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "빚을 갚다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "payment terms",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "지불 조건"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "personal loan",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "개인 대출"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "proof of identity",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "신원 증명"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "provide collateral",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "담보를 제공하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "reach an agreement",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "합의에 도달하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "repay a loan",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "대출금을 상환하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "savings plan",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "저축 계획"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "secure a loan",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "대출을 받다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "set up an account",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "계좌를 개설하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "take out a mortgage",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "담보 대출을 받다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "tax return",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "세금 신고"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "transfer funds",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "자금을 이체하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "traveler's check",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "여행자 수표"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "unpaid balance",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "미지불 잔액"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "variable interest rate",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "변동 금리"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "with no interest",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "무이자로"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "within the limit",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "한도 내에서"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "worth the money",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "돈 가치가 있는"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "write a check",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "수표를 발행하다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "yield a profit",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "수익을 내다"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "zero interest",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "무이자"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    },
+    {
+        "origin": "accountable for",
+        "pronunciations": {},
+        "meanings": [
+            {
+                "pos": "",
+                "text": "~에 책임이 있는"
+            }
+        ],
+        "notes": "",
+        "examples": []
+    }
+]
