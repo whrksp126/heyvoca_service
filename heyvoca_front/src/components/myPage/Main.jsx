@@ -189,7 +189,10 @@ const Main = () => {
       animate={{ opacity: 1, y: 0, transition: { duration: 0.2 } }}
       exit={{ opacity: 0, y: -20, transition: { duration: 0.2 } }}
     >
-      <div className="flex flex-col gap-[16px] px-[16px] pt-[16px] pb-[20px]">
+      {/* 맨 아래 "친구 초대하기"가 하단 네비게이션에 가려지지 않도록,
+          홈(components/home/Main.jsx)이 쓰는 것과 같은 하단 여백 값을 그대로 재사용한다.
+          84px = BottomNav 높이(60px) + 여유, 거기에 iOS 세이프에어리어(--safe-area-bottom)를 더한다. */}
+      <div className="flex flex-col gap-[16px] px-[16px] pt-[16px] pb-[calc(84px+var(--safe-area-bottom))]">
         {/* 프로필 — 아바타를 두지 않는다 (시안 .prof). 눌러서 계정 풀시트로 */}
         <div
           onClick={() => openSheet(AccountNewFullSheet)}
