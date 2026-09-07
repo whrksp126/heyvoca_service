@@ -28,6 +28,7 @@ from flask import Blueprint, jsonify, g, request, current_app
 from app import db, cache
 from app.models.models import (
     User, UserVoca, UserVocaBook, UserVocaBookMap, UserStudyLog, UserStudySession,
+    Bookstore,
 )
 from app.utils.jwt_utils import jwt_required
 
@@ -407,9 +408,15 @@ def migrate():
     if username and not user.username:
         user.username = username[:36]
 
-    # 레벨 단어장 생성
+    # 레벨 단어장 생성 — 헤이보카 검증본 마크(bookstore_id)를 위해 레벨 대응 서점 행을 조회.
+    # 못 찾아도(서점 미등록 등) 온보딩 자체는 실패하면 안 되므로 None으로 폴백한다.
+    admin_book_id = LEVEL_ADMIN_BOOK.get(level)
+    bookstore = (
+        Bookstore.query.filter_by(admin_voca_book_id=admin_book_id).first()
+        if admin_book_id else None
+    )
     vbook = UserVocaBook(
-        user_id=user_id, bookstore_id=None,
+        user_id=user_id, bookstore_id=(bookstore.id if bookstore else None),
         color=json.dumps(book['color'], ensure_ascii=False),
         name=book['title'][:36], total_word_cnt=0, memorized_word_cnt=0,
         voca_list=None, updated_at=now,
