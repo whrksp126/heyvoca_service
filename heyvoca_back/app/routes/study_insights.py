@@ -208,12 +208,15 @@ def today_changes():
 
     응답 data:
       {
-        "promoted": [{"user_voca_id","word","from","to"}, ...],  # 기존 단어 승급
-        "new":      [{"user_voca_id","word","from","to"}, ...],  # 오늘 첫 학습 진입
+        "promoted": [{"user_voca_id","word","meaning","from","to"}, ...],  # 기존 단어 승급
+        "new":      [{"user_voca_id","word","meaning","from","to"}, ...],  # 오늘 첫 학습 진입
         "counts":   {"promoted": n, "new": n, "by_state": {"short":n,"medium":n,"long":n}}
       }
     """
     from app.services.study_day import logical_day_start_utc
+    # 대표 뜻 추출은 farm_v2.query 의 구현을 재사용한다(문자열/딕셔너리 배열 두 형태 처리).
+    # 상단 import 로 올리지 않는 이유는 다른 서비스 모듈 순환 참조를 피하기 위해서다.
+    from app.services.game.farm_v2.query import _first_meaning
 
     user_id = UUID(g.user_id)
     day_start_utc = logical_day_start_utc()
@@ -249,20 +252,22 @@ def today_changes():
 
     words = {}
     if changed_ids:
-        for uv_id, word in (
-            db.session.query(UserVoca.id, UserVoca.word)
+        for uv_id, word, meanings in (
+            db.session.query(UserVoca.id, UserVoca.word, UserVoca.voca_meanings)
             .filter(UserVoca.user_id == user_id, UserVoca.id.in_(changed_ids))
             .all()
         ):
-            words[uv_id] = word
+            words[uv_id] = (word or '', _first_meaning(meanings))
 
     promoted, new_words = [], []
     by_state = {}
     for vid in changed_ids:
         st = day_states[vid]
+        word, meaning = words.get(vid) or ('', '')
         entry = {
             'user_voca_id': vid,
-            'word': words.get(vid) or '',
+            'word': word,
+            'meaning': meaning,
             'from': st['from'],
             'to': st['to'],
         }

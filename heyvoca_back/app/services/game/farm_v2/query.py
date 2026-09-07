@@ -45,12 +45,18 @@ from app.services.game.farm_v2 import health as health_calc
 
 # 홈 4그룹 → 해당 성장 단계. growth.HOME_GROUP 의 역방향이다.
 # 'golden' 은 별도 그룹이 아니라 당근 그룹의 하위 집합이다(계약 counts 의 golden 과 같은 뜻).
+# 'unplanted' / 'planted_seed' 는 'seed' 그룹의 하위 집합이다 — 전체 목록 시트가
+# "아직 심지 않은 씨앗만" 을 걸러 봐야 할 때 쓴다(golden 과 같은 패턴).
+# 'unplanted' 는 UNPLANTED_SEED 하나뿐이라 list_plants 의
+# `if VisualStage.UNPLANTED_SEED in stages` 분기를 그대로 타서 게임 행이 없는 보유 씨앗도 잡힌다.
 GROUP_STAGES = {
-    'seed':   (VisualStage.UNPLANTED_SEED, VisualStage.PLANTED_SEED),
-    'sprout': (VisualStage.SPROUT,),
-    'leaf':   (VisualStage.LEAF,),
-    'carrot': (VisualStage.CARROT, VisualStage.GOLDEN),
-    'golden': (VisualStage.GOLDEN,),
+    'seed':          (VisualStage.UNPLANTED_SEED, VisualStage.PLANTED_SEED),
+    'sprout':        (VisualStage.SPROUT,),
+    'leaf':          (VisualStage.LEAF,),
+    'carrot':        (VisualStage.CARROT, VisualStage.GOLDEN),
+    'golden':        (VisualStage.GOLDEN,),
+    'unplanted':     (VisualStage.UNPLANTED_SEED,),
+    'planted_seed':  (VisualStage.PLANTED_SEED,),
 }
 
 # 계약 overview.health 의 키. GOLDEN 은 건강 축에서 빠진다 — 부패 면역이라
