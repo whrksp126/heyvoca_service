@@ -316,12 +316,12 @@ export const PreviewBookStoreNewFullSheet = ({
             <BookFieldHero counts={{ seed: totalCount }} />
 
             {/* 시안 shop §4 가 카드에 넣으라고 한 줄을 여기서도 같은 말로 반복한다.
-                카드에서 읽고 들어온 값이 상세에서 사라지면 같은 상품인지 확신이 안 선다. */}
+                카드에서 읽고 들어온 값이 상세에서 사라지면 같은 상품인지 확신이 안 선다.
+                이름은 상단 고정 헤더(52px) 안에 있어 "이름 바로 아래"로 붙이려면 헤더를 늘려야 한다.
+                헤더는 밭 그림 위에 배경 없이 얹는 오버레이라 줄을 더하면 그 자리가 부자연스러워져서
+                자리는 그대로 두고 아이콘만 뺐다(카드 쪽 개정과 같은 규칙 — 텍스트만). */}
             <div className="flex items-center gap-[12px] shrink-0 px-[16px] pt-[26px] pb-[12px]">
-              <span className="flex items-center gap-[5px] text-[13px] font-[800] tracking-[-0.03em] text-layout-black dark:text-layout-white">
-                {/* 상점 카드의 "심을 씨앗 N개" 줄과 같은 크기로 보이게 한다.
-                    카드 쪽은 raw <img> 13px 이고 여기는 단계 비율(0.64)이 곱해지므로 20 이 그 값이다 */}
-                <CropImage stage="seed" health={HEALTH_STATES.FRESH} size={36} alt="씨앗" />
+              <span className="text-[13px] font-[800] tracking-[-0.03em] text-layout-black dark:text-layout-white">
                 {isEmptyBook ? '씨앗 0 — 직접 추가' : `심을 씨앗 ${totalCount.toLocaleString()}개`}
               </span>
               {/* 검증 표시는 두지 않는다 — 상점에 올라온 단어장은 전부 검증된 것이라

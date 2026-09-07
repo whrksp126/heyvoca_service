@@ -23,9 +23,7 @@ import {
   resolveVocaBookBackground, resolveVocaBookAccentColor, resolveVocaBookSubColor,
 } from '../../utils/vocaBookColor';
 import { vibrate } from '../../utils/osFunction';
-import iconGem from '../../assets/images/farm/icon-gem.png';
-// 아직 사지 않은 단어장의 '심을 씨앗' — 봉투 그림이 맞다 (기획 5.1 보유 씨앗)
-import seedImg from '../../assets/images/farm/crops/unplanted/healthy-seed.png';
+import gemImg from '../../assets/images/gem.png';
 
 /**
  * 상점 — 단어장 · 농장 도구 · 보석 3탭 (시안 shop.txt §1).
@@ -79,8 +77,9 @@ const OwnPill = ({ count }) => (
 /**
  * 서점 단어장 카드 (시안 §4).
  * 골격 — 정사각형, 색 배경, 카테고리 pill, 좌하단 가격, 우하단 + 버튼 — 은 그대로 두고
- * 심을 씨앗 수 한 줄만 새로 넣었다. 검증 마크는 서점 단어장이 전부 검증된 데이터라
- * 붙이지 않고, 반대인 빈 단어장에만 "내가 채우는 밭"을 회색으로 남긴다.
+ * "심을 씨앗 N개"는 아이콘 없이 텍스트로만, 단어장 이름 바로 아래에 붙인다(§4 개정).
+ * 검증 마크는 서점 단어장이 전부 검증된 데이터라 붙이지 않고,
+ * 반대인 빈 단어장에만 "내가 채우는 밭"을 회색으로 남긴다.
  */
 const ShopBookCard = ({ item, custom = false, onClick, className = '' }) => {
   const { isDark } = useTheme();
@@ -111,12 +110,8 @@ const ShopBookCard = ({ item, custom = false, onClick, className = '' }) => {
         <h5 className="mt-[6px] text-[14.5px] font-[800] leading-[1.3] tracking-[-0.04em] text-layout-black dark:text-layout-white">
           {custom ? '빈 단어장' : item.name}
         </h5>
-      </div>
-
-      <div>
-        {/* 새로 들어간 줄 — 단어 수는 이 밭이 얼마나 커지는지를 정하는 가장 큰 값이다 */}
-        <div className="flex items-center gap-[4px] text-[10.5px] font-[700] tracking-[-0.02em] text-layout-gray-400 dark:text-layout-gray-300">
-          <img src={seedImg} alt="" draggable={false} className="w-[26px] h-[26px] object-contain select-none" />
+        {/* 이름 바로 아래 — 단어 수는 이 밭이 얼마나 커지는지를 정하는 가장 큰 값이다 (아이콘 없이 텍스트만) */}
+        <div className="mt-[2px] text-[10.5px] font-[700] tracking-[-0.02em] text-layout-gray-400 dark:text-layout-gray-300">
           {custom ? '씨앗 0 — 직접 추가' : `심을 씨앗 ${seeds.toLocaleString('ko-KR')}개`}
         </div>
         {custom && (
@@ -125,6 +120,9 @@ const ShopBookCard = ({ item, custom = false, onClick, className = '' }) => {
             내가 채우는 밭
           </div>
         )}
+      </div>
+
+      <div>
         <div className="flex items-center justify-between mt-[8px]">
           <span className="flex items-center text-[14px] font-[800] text-layout-black dark:text-layout-white">
             <Gem n={custom ? EMPTY_BOOK_PRICE : item.gem} />
@@ -288,7 +286,7 @@ const StoreNewFullSheet = ({ initialTab = 'books', onInventoryChanged, onGoRotte
           id="gem-counter"
           className="absolute right-[16px] flex items-center gap-[5px] text-[16px] font-[800] tracking-[-0.02em] text-layout-black dark:text-layout-white"
         >
-          <img src={iconGem} alt="보석" draggable={false} className="w-[20px] h-[20px] object-contain select-none" />
+          <img src={gemImg} alt="보석" draggable={false} className="w-[20px] h-[20px] object-contain select-none" />
           {userProfile?.gem_cnt ?? 0}
         </div>
       </div>
@@ -486,7 +484,7 @@ const StoreNewFullSheet = ({ initialTab = 'books', onInventoryChanged, onGoRotte
         {activeTab === 'gems' && (
           <>
             <div className="flex items-center gap-[12px] p-[16px] rounded-[12px] bg-layout-gray-50 dark:bg-layout-gray-dark">
-              <img src={iconGem} alt="" draggable={false} className="w-[44px] h-[44px] shrink-0 object-contain select-none" />
+              <img src={gemImg} alt="" draggable={false} className="w-[44px] h-[44px] shrink-0 object-contain select-none" />
               <div className="flex-1 min-w-0">
                 <div className="text-[11px] font-[600] tracking-[-0.02em] text-layout-gray-300">보유 보석</div>
                 <div className="text-[24px] font-[800] leading-[1.15] tracking-[-0.04em] text-layout-black dark:text-layout-white">

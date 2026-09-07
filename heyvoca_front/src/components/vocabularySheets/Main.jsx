@@ -1,5 +1,7 @@
 import React, { useMemo, useState } from 'react';
-import { Plus, WarningCircle, Check } from '@phosphor-icons/react';
+import {
+  Plus, WarningCircle, Check, SealCheck,
+} from '@phosphor-icons/react';
 import { motion } from 'framer-motion';
 import { useVocabulary } from '../../context/VocabularyContext';
 import { useNewFullSheet } from '../../hooks/useNewFullSheet';
@@ -67,6 +69,10 @@ const Main = () => {
       care: bookCareCount(book.words),
       badge: bookBadge(book.words, counts),
       touchedAt: lastTouchedAt(book),
+      // 서점에서 받았거나 온보딩으로 제공받은 단어장 — 단어 추가·수정·삭제가
+      // 막혀 있는 헤이보카 검증 단어장이다. WordDetaileNewBottomSheet·
+      // VocabularyWordsNewFullSheet 의 isPurchasedBook 과 같은 판별이다.
+      isVerified: book.vocaBookStoreId != null,
     };
   }), [vocabularySheets]);
 
@@ -137,7 +143,9 @@ const Main = () => {
       </div>
 
       <div className="flex flex-col gap-[10px] px-[16px] pb-[20px]">
-        {visible.map(({ book, counts, field, badge }) => {
+        {visible.map(({
+          book, counts, field, badge, isVerified,
+        }) => {
           const BadgeIcon = badge ? BADGE_ICON[badge.kind] : null;
 
           return (
@@ -169,12 +177,19 @@ const Main = () => {
 
               <span className="flex-1 min-w-0">
                 <span className="flex items-center gap-[6px]">
+                  {/* 헤이보카 검증 단어장 마크 — 서점/온보딩으로 받아 단어 추가·수정·
+                      삭제가 막힌 단어장. VerifyMark(단어 단위)와 같은 아이콘·색이다. */}
+                  {isVerified && (
+                    <SealCheck
+                      size={14}
+                      weight="fill"
+                      className="shrink-0 text-secondary-blue-600"
+                      aria-label="헤이보카가 검증한 단어장"
+                    />
+                  )}
                   <span className="flex-1 min-w-0 truncate text-[15px] font-[700] tracking-[-0.03em] text-layout-black dark:text-layout-white">
                     {book.title}
                   </span>
-                  {/* 서점 아이콘은 두지 않는다 — 어디서 왔는지는 목록에서 내리는 판단
-                      ("어느 밭이 급한가")에 쓰이지 않고, 배지 옆에 붙어 돌봄 배지의
-                      눈에 띄는 정도만 깎아 먹었다. */}
                   {badge && (
                     <span
                       className={`
@@ -195,9 +210,8 @@ const Main = () => {
                   "심은 것" 4단계다. 그림이 이미 구분한다 — 보유 씨앗은 봉투(CropImage
                   stage="seed"), 심은 씨앗은 흙에 묻힌 낱알(stage="PLANTED_SEED").
                   BookFieldHero 의 SIGN_STAGE 와 같은 구분이라, 카드 안에서도 밭
-                  썸네일과 같은 말을 한다. 두 칸 그룹 아래 아주 작은 라벨을 한 줄 더
-                  둔다 — 그리드 열을 숫자 줄과 똑같이 맞춰서, 숫자 폭이 달라져도
-                  "보유"·"심은 것"이 각자의 그룹 아래에 붙는다.
+                  썸네일과 같은 말을 한다. 라벨 줄은 두지 않는다 — 아이콘 그림과
+                  세로 구분선만으로 두 그룹이 이미 나뉜다.
                 */}
                 <span className="grid grid-cols-[auto_1px_1fr] items-center gap-x-[6px] mt-[6px] w-full min-w-0">
                   <span
@@ -238,14 +252,6 @@ const Main = () => {
                         {counts[stage]}
                       </span>
                     ))}
-                  </span>
-
-                  <span className="text-[9px] font-[700] tracking-[-0.02em] text-layout-gray-300">
-                    보유
-                  </span>
-                  <span aria-hidden />
-                  <span className="text-[9px] font-[700] tracking-[-0.02em] text-layout-gray-300">
-                    심은 것
                   </span>
                 </span>
               </span>

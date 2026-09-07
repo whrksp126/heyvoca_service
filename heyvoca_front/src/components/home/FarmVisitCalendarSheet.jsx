@@ -18,6 +18,7 @@ import { CaretLeft, CaretRight, Drop, ShieldCheck, Check, Fire, Crown } from '@p
 import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
 import { getStreakApi } from '../../api/farm';
 import { CROP_ASSETS } from '../farm/CropImage';
+import gemIcon from '../../assets/images/gem.png';
 import { toLocalDateString } from '../../utils/common';
 import { vibrate } from '../../utils/osFunction';
 
@@ -366,10 +367,10 @@ const FarmVisitCalendarSheet = () => {
                   {r.label ?? (
                     <>
                       <img
-                        src={CROP_ASSETS.gem}
+                        src={gemIcon}
                         alt="보석"
                         draggable={false}
-                        className="w-[14px] h-[14px] object-contain select-none"
+                        className="w-[13px] h-[12px] object-contain select-none"
                       />
                       {r.amount}
                     </>

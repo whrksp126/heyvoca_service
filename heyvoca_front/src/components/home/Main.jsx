@@ -44,7 +44,8 @@ import { NotifPermissionNewBottomSheet } from '../newBottomSheet/NotifPermission
 import AchievementRewardOverlay from '../overlay/AchievementRewardOverlay';
 
 import FarmHero from '../farm/FarmHero';
-import CropImage, { CROP_ASSETS } from '../farm/CropImage';
+import CropImage from '../farm/CropImage';
+import gemIcon from '../../assets/images/gem.png';
 import RottenListSheet from '../farm/RottenListSheet';
 import WordListSheet from '../farm/WordListSheet';
 import FarmCta, {
@@ -363,8 +364,9 @@ const Main = () => {
       key: 'seeds',
       title: '아직 심지 않은 씨앗',
       items: feed.seeds ?? [],
-      // 상태어(안 배움) 제거 → 뜻으로(tone 없음). 헤더도 "심으러 가기"(바로 학습)에서
-      // 개수로 바꿔 전체 목록 시트를 연다 — 학습 진입은 시트 하단 CTA로 옮겼다(⑤-3).
+      // 상태어(안 배움) 제거 → 뜻으로(tone 없음). 헤더는 "심으러 가기"(바로 학습)를 뗐고
+      // 학습 진입은 시트 하단 CTA로 옮겼다(⑤-3). onMore가 없어 헤더는 숫자만 있고 안 눌린다 —
+      // "+n개 더"와 같은 곳으로 가는 중복 진입점이었기 때문(사용자 목업 승인). "+n개 더"만 시트를 연다.
       moreLabel: null,
       onMore: null,
       totalCount: unplanted,
@@ -374,7 +376,8 @@ const Main = () => {
       key: 'recent',
       title: '최근에 심은 단어',
       items: feed.recent ?? [],
-      // 상태어(씨앗) 제거 → 뜻으로, 좌측 작물 아이콘도 뺀다(showCrop=false, 사용자 요청)
+      // 상태어(씨앗) 제거 → 뜻으로, 좌측 작물 아이콘도 뺀다(showCrop=false, 사용자 요청).
+      // onMore가 없어 헤더는 숫자만 있고 안 눌린다 — "+n개 더"만 시트를 연다.
       showCrop: false,
       moreLabel: null,
       onMore: null,
@@ -440,10 +443,10 @@ const Main = () => {
           "
         >
           <img
-            src={CROP_ASSETS.gem}
+            src={gemIcon}
             alt=""
             draggable={false}
-            className="block w-[24px] h-[24px] object-contain select-none"
+            className="block w-[22px] h-[20px] object-contain select-none"
           />
           {gemCnt.toLocaleString()}
         </button>

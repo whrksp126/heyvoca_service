@@ -34,10 +34,13 @@ const TONE_CLASS = {
  * @param {function} [tone]     행 → { text, tone } — 우측에 찍을 상태 글자. **없으면 대신 뜻을 옅게 우측 정렬로 찍는다**
  *                              ("아직 심지 않은 씨앗" · "최근에 심은 단어" — 안 배움/씨앗 같은 상태어를 없애고 뜻으로 바꿨다)
  * @param {boolean}  [showCrop=true] false면 좌측 작물 아이콘을 생략한다("최근에 심은 단어" 전용 — 단어가 왼쪽 끝에서 시작)
- * @param {string}   [moreLabel] 헤더 우측 링크 글자. 있으면 개수 대신 이 글자를 쓴다(예: "물주기"·"보관소")
- * @param {function} [onMore]    헤더 우측 링크를 눌렀을 때(예: 물주기 → 바로 학습 시작, 보관소 → 돌볼 작물 시트)
+ * @param {string}   [moreLabel] 헤더 우측 링크 글자. onMore와 함께 있을 때만 쓴다(예: "물주기"·"보관소") —
+ *                              이건 더보기가 아니라 학습·보관소로 가는 별도 동작이라 화살표를 유지한다
+ * @param {function} [onMore]    헤더 우측 링크를 눌렀을 때(예: 물주기 → 바로 학습 시작, 보관소 → 돌볼 작물 시트).
+ *                              없으면 헤더는 안 눌리는 숫자로 남는다 — "+n개 더"와 같은 곳으로 가는 중복
+ *                              진입점이었기 때문(사용자 목업 승인)
  * @param {number}   [totalCount] 헤더 숫자·"+n개 더" 계산에 쓸 실제 총량. 없으면 items.length
- * @param {function} [onViewAll] 전체 목록 시트를 여는 핸들러. moreLabel/onMore가 없을 때 헤더가, 그리고 항상 "+n개 더"가 이걸 부른다
+ * @param {function} [onViewAll] "+n개 더"를 눌렀을 때 전체 목록 시트를 여는 핸들러
  */
 const WordFeedCard = ({ title, items = [], tone, showCrop = true, moreLabel, onMore, totalCount, onViewAll }) => {
   "use memo";
@@ -48,9 +51,10 @@ const WordFeedCard = ({ title, items = [], tone, showCrop = true, moreLabel, onM
   const total = totalCount ?? items.length;
   const rest = Math.max(0, total - rows.length);
 
-  // 헤더 우측 — moreLabel/onMore(물주기·보관소 같은 전용 동작)가 있으면 그걸 우선하고,
-  // 없으면 전체 목록 시트를 여는 onViewAll로 대신한다(예전에는 여기가 숫자만 있고 안 눌렸다).
-  const headerHandler = onMore || onViewAll;
+  // 헤더 우측 — onMore(물주기·보관소 같은 전용 동작)가 있을 때만 누를 수 있다.
+  // onMore가 없는 카드(씨앗·최근에 심은 단어)는 헤더가 "+n개 더"와 같은 곳으로 가는 중복
+  // 진입점이었다 — "+n개 더"만 남기고 헤더는 안 눌리는 숫자로 되돌린다(사용자 목업 승인).
+  const headerHandler = onMore;
   const headerLabel = moreLabel || total;
 
   return (
@@ -74,7 +78,7 @@ const WordFeedCard = ({ title, items = [], tone, showCrop = true, moreLabel, onM
           </button>
         ) : (
           <span className="flex-shrink-0 text-layout-gray-300 text-[12px] font-[700]">
-            {total}
+            {headerLabel}
           </span>
         )}
       </div>

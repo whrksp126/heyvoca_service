@@ -21,10 +21,11 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useTheme } from '../../context/ThemeContext';
 import { resolveVocaBookBackground } from '../../utils/vocaBookColor';
 import { useOnboardingUnlock } from '../../context/OnboardingUnlockContext';
-import CropImage, { CROP_ASSETS } from '../farm/CropImage';
+import CropImage from '../farm/CropImage';
 import { stageToCrop, cropLabelDetail } from '../../utils/crop';
 import useFarmPlants from './useFarmPlants';
 import bookEmptyImg from '../../assets/images/farm/book-empty.png';
+import gemImg from '../../assets/images/gem.png';
 
 const ITEMS_PER_PAGE = 30;
 const SCROLL_THRESHOLD = 200;
@@ -958,8 +959,7 @@ const Main = () => {
                     <div className="truncate text-[13.5px] font-[800] tracking-[-0.03em] text-layout-black dark:text-layout-white">
                       {item.bookstore_name}
                     </div>
-                    <div className="mt-[2px] flex items-center gap-[4px] text-[11px] font-[600] tracking-[-0.02em] text-layout-gray-300 dark:text-layout-gray-200">
-                      <CropImage stage="seed" health="FRESH" size={36} alt="" />
+                    <div className="mt-[2px] text-[11px] font-[600] tracking-[-0.02em] text-layout-gray-300 dark:text-layout-gray-200">
                       {store?.vocaCount ? `심을 씨앗 ${store.vocaCount}개` : '심을 씨앗이 들어 있어요'}
                     </div>
                   </div>
@@ -970,7 +970,7 @@ const Main = () => {
                   >
                     {store?.gem !== undefined && store?.gem !== null ? (
                       <>
-                        <img src={CROP_ASSETS.gem} alt="" className="w-[14px] h-[14px] object-contain" />
+                        <img src={gemImg} alt="" className="w-[14px] h-[14px] object-contain" />
                         {store.gem}개로 구매
                       </>
                     ) : '구매하러 가기'}

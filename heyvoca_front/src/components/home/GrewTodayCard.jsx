@@ -23,7 +23,6 @@
 // 대표 뜻을 넣어 목록만 보고도 무슨 단어인지 알 수 있게 한다.
 
 import React from 'react';
-import { CaretRight } from '@phosphor-icons/react';
 import CropImage from '../farm/CropImage';
 import { HEALTH_STATES } from '../../utils/crop';
 
@@ -32,7 +31,9 @@ const VISIBLE_ROWS = 3;
 /**
  * @param {array}    items      { user_voca_id, word, from, to, meaning } — meaning은 없을 수 있다
  *                              (todayChanges 응답에 방금 추가되는 필드라 과도기에는 비어 있을 수 있음).
- * @param {function} [onViewAll] 헤더 숫자·"+n개 더" 를 눌렀을 때 — 전체 목록 시트를 연다
+ * @param {function} [onViewAll] "+n개 더" 를 눌렀을 때 — 전체 목록 시트를 연다.
+ *                              헤더 숫자는 진입점이 아니다(사용자 목업 승인) — "+n개 더"와 같은 곳으로 가는
+ *                              중복 진입점이라 화살표를 떼고 글자만 남겼다.
  */
 const GrewTodayCard = ({ items = [], onViewAll }) => {
   "use memo";
@@ -52,21 +53,9 @@ const GrewTodayCard = ({ items = [], onViewAll }) => {
         <h4 className="flex-1 text-layout-black dark:text-layout-white text-[14px] font-[700] tracking-[-0.02em]">
           오늘 자란 단어
         </h4>
-        {onViewAll ? (
-          <button
-            type="button"
-            onClick={onViewAll}
-            className="flex items-center gap-[3px] flex-shrink-0 text-layout-gray-300 text-[12px] font-[700]"
-          >
-            {items.length}
-            <CaretRight size={10} weight="fill" className="text-layout-gray-200" />
-          </button>
-        ) : (
-          <span className="flex items-center gap-[3px] flex-shrink-0 text-layout-gray-300 text-[12px] font-[700]">
-            {items.length}
-            <CaretRight size={10} weight="fill" className="text-layout-gray-200" />
-          </span>
-        )}
+        <span className="flex-shrink-0 text-layout-gray-300 text-[12px] font-[700]">
+          {items.length}
+        </span>
       </div>
 
       <div className="mt-[8px]">

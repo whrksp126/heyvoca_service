@@ -17,7 +17,9 @@ import {
   SHEET_SHELL, Grab, Gem, Btn, Btns, BtnSpinner, SheetHead,
   RecvBox, RecvRow, RecvHr, Arrow, Up, Down, InfoBox, EmBlue, HintB,
 } from './purchaseParts';
-// 아직 사지 않은 단어장의 '심을 씨앗' — 봉투 그림이 맞다 (기획 5.1 보유 씨앗)
+// 씨앗 도착(성공 리턴)과 확인 시트 머리(§3)의 아이콘 — "심을 씨앗 N개" 문구 자체에는
+// 더 이상 아이콘을 붙이지 않기로 했다(상점 카드 §4 개정). 이 파일에서는 원래도 desc 텍스트에
+// 인라인 아이콘이 없어 그 규칙은 이미 지켜지고 있었고, seedImg 는 시트 머리의 대표 그림으로만 쓴다.
 import seedImg from '../../assets/images/farm/crops/unplanted/healthy-seed.png';
 
 /**
