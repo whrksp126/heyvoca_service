@@ -2,12 +2,20 @@
 import React from 'react';
 import Header from '../components/myPage/Header';
 import Main from '../components/myPage/Main';
-import BottomNav from '../components/component/BottomNav';
+// BottomNav는 components/TabShell.jsx가 탭 전체에 걸쳐 한 번만 그린다
+// (5탭이 동시에 마운트되므로 각 페이지가 각자 그리면 5개가 겹친다).
 const MyPage = () => {
   return (
-    <div>
+    // h-screen + overflow-y-auto — 다른 4개 탭(홈·단어장·찾기·상점)은 이미 각자
+    // h-screen 안에서 자체 overflow-y-auto로 스크롤한다. 마이페이지만 이 자체 스크롤이
+    // 없어서 Layout.jsx의 앱 전역 .scroll-container(모든 탭이 TabShell 아래 함께 마운트된
+    // 채로 공유)에 얹혀 스크롤했는데, TabShell이 탭을 오갈 때 비활성 탭을 문서 흐름에서
+    // 빼버리면(position:fixed) 공유 스크롤 컨테이너의 scrollHeight가 매번 바뀌어 scrollTop이
+    // 클램프되며 마이페이지로 돌아왔을 때 스크롤 위치가 날아간다. 자체 스크롤 컨테이너를
+    // 두면 이 DOM 노드가 마운트된 채로 유지되는 동안 스크롤 위치도 그대로 보존된다.
+    <div className="h-screen overflow-y-auto">
       {/*
-        헤더 고정 — 스크롤은 본문(.scroll-container, Layout.jsx)만 하고 헤더는 화면 위에 그대로 머문다.
+        헤더 고정 — 스크롤은 본문(위 자체 스크롤 컨테이너)만 하고 헤더는 화면 위에 그대로 머문다.
 
         z-index 없이 DOM 순서(그리기 순서)만으로 위에 뜨는 방식은 BottomNav(맨 뒤에 렌더링)에만
         통한다. 헤더는 그 반대로 Main 보다 **먼저** 오는데, 본문(myPage/Main.jsx)의 루트가
@@ -33,7 +41,6 @@ const MyPage = () => {
       {/* 고정 헤더가 차지하던 자리만큼 본문을 밀어내는 스페이서 — 첫 요소가 헤더에 가리지 않게 한다 */}
       <div style={{ paddingTop: 'calc(var(--status-bar-height) + 55px)' }}></div>
       <Main />
-      <BottomNav />
     </div>
   );
 };

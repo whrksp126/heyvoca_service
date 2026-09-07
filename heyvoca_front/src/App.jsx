@@ -3,19 +3,14 @@
 import React, { useContext } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import Index from './pages/Index';
-import Home from './pages/Home';
 import Login from './pages/Login';
 import Onboarding from './pages/Onboarding';
 import InitialProfile from './pages/InitialProfile';
-import VocabularySheets from './pages/VocabularySheets';
-import BookStore from './pages/BookStore';
-import Dictionary from './pages/Dictionary';
 import Class from './pages/Class';
 import TakeTest from './pages/TakeTest';
 import StudyResult from './components/takeTest/StudyResult';
 import Study from './pages/Study';
-
-import MyPage from './pages/myPage';
+import TabShell from './components/TabShell';
 
 // import { BottomSheetProvider } from './context/BottomSheetContext';
 // import { FullSheetProvider } from './context/FullSheetContext';
@@ -41,33 +36,45 @@ import OnboardingMissionRewardWatcher from './components/onboarding/OnboardingMi
 
 const AppLayout = () => {
   return (
-    <Routes>
-      <Route path="/" element={<Index />} />
-      <Route path="/login" element={<Login />} />
-      <Route path="/onboarding" element={<Onboarding />} />
-      <Route path="/initial-profile" element={<InitialProfile />} />
+    <>
+      {/*
+        탭 셸(components/TabShell.jsx) — 바텀 네비 5탭(농장·단어장·찾기·상점·마이)을
+        모두 마운트해 두고 탭 이동은 "보이는 것만 바꾸는" 방식으로 처리한다(탭을 오갈 때마다
+        API 재호출·등장 애니메이션 재생·스크롤 초기화가 일어나던 문제를 잡기 위함).
+        <Routes>와 형제로 항상 마운트해 둔다 — 학습 화면 등 탭이 아닌 라우트에 있는 동안에도
+        마운트는 유지한 채 전부 숨겨서, 학습을 마치고 탭으로 돌아올 때도 즉시 뜨게 한다.
+        아래 <Routes>의 탭 경로들은 라우트 매칭·리다이렉트 목적만 남기고 실제 화면은
+        비워둔다(element={null}) — TabShell이 그린다.
+      */}
+      <TabShell />
+      <Routes>
+        <Route path="/" element={<Index />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/onboarding" element={<Onboarding />} />
+        <Route path="/initial-profile" element={<InitialProfile />} />
 
-      <Route path="/home" element={<Home />} />
-      {/* /farm(농장 상세 · 단계별 작물 목록)은 시안에 없는 화면이라 제거했다.
-          홈 시안 §10 화면 구조는 히어로·보석 칩·주 CTA·연속 학습·성과 카드·바텀 네비뿐이고,
-          §11 의 첫 탭 "농장"은 홈 그 자체다. 단계별 목록은 단어장 시안 4절(단어장 안)이,
-          황금 당근은 마이페이지 시안 4절(창고 · 황금 온실)이 이미 맡고 있다.
-          다만 이 앱에는 catch-all 라우트가 없어서 지우기만 하면 /farm 이 빈 화면이 된다
-          (앱 WebView 히스토리·북마크에 남아 있을 수 있다) → 홈으로 넘긴다. */}
-      <Route path="/farm" element={<Navigate to="/home" replace />} />
-      <Route path="/vocabulary-sheets" element={<VocabularySheets />} />
-      <Route path="/vocabulary-sheets/:id" element={<VocabularySheets />} />
-      <Route path="/dictionary" element={<Dictionary />} />
-      <Route path="/book-store" element={<BookStore />} />
-      <Route path="/class" element={<Class />} />
-      <Route path="/take-test" element={<TakeTest />} />
-      <Route path="/take-test/result" element={<StudyResult />} />
-      <Route path="/study" element={<Study />} />
+        <Route path="/home" element={null} />
+        {/* /farm(농장 상세 · 단계별 작물 목록)은 시안에 없는 화면이라 제거했다.
+            홈 시안 §10 화면 구조는 히어로·보석 칩·주 CTA·연속 학습·성과 카드·바텀 네비뿐이고,
+            §11 의 첫 탭 "농장"은 홈 그 자체다. 단계별 목록은 단어장 시안 4절(단어장 안)이,
+            황금 당근은 마이페이지 시안 4절(창고 · 황금 온실)이 이미 맡고 있다.
+            다만 이 앱에는 catch-all 라우트가 없어서 지우기만 하면 /farm 이 빈 화면이 된다
+            (앱 WebView 히스토리·북마크에 남아 있을 수 있다) → 홈으로 넘긴다. */}
+        <Route path="/farm" element={<Navigate to="/home" replace />} />
+        <Route path="/vocabulary-sheets" element={null} />
+        <Route path="/vocabulary-sheets/:id" element={null} />
+        <Route path="/dictionary" element={null} />
+        <Route path="/book-store" element={null} />
+        <Route path="/class" element={<Class />} />
+        <Route path="/take-test" element={<TakeTest />} />
+        <Route path="/take-test/result" element={<StudyResult />} />
+        <Route path="/study" element={<Study />} />
 
-      <Route path="/mypage" element={<MyPage />} />
+        <Route path="/mypage" element={null} />
 
 
-    </Routes>
+      </Routes>
+    </>
   );
 };
 
