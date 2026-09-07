@@ -190,27 +190,63 @@ const Main = () => {
                   )}
                 </span>
 
-                {/* 단계별 개수 — 아이콘은 홈의 팻말·단어 목록 행과 같은 작물 에셋이다 */}
-                <span className="flex gap-[10px] mt-[6px]">
-                  {CROP_ORDER.map((stage) => (
-                    <span
-                      key={stage}
-                      className={`
-                        flex items-center gap-[3px]
-                        text-[12.5px] font-[800] tracking-[-0.03em]
-                        ${counts[stage] === 0 ? 'opacity-[0.32]' : ''}
-                      `}
-                      style={{ color: `var(--crop-${stage})` }}
-                    >
-                      <CropImage
-                        stage={stage}
-                        health={HEALTH_STATES.FRESH}
-                        size={36}
-                        alt={CROP_LABEL[stage]}
-                      />
-                      {counts[stage]}
-                    </span>
-                  ))}
+                {/*
+                  단계별 개수 — 시안 승인본. 첫 칸은 "보유"(아직 안 심음), 세로선 뒤가
+                  "심은 것" 4단계다. 그림이 이미 구분한다 — 보유 씨앗은 봉투(CropImage
+                  stage="seed"), 심은 씨앗은 흙에 묻힌 낱알(stage="PLANTED_SEED").
+                  BookFieldHero 의 SIGN_STAGE 와 같은 구분이라, 카드 안에서도 밭
+                  썸네일과 같은 말을 한다. 두 칸 그룹 아래 아주 작은 라벨을 한 줄 더
+                  둔다 — 그리드 열을 숫자 줄과 똑같이 맞춰서, 숫자 폭이 달라져도
+                  "보유"·"심은 것"이 각자의 그룹 아래에 붙는다.
+                */}
+                <span className="grid grid-cols-[auto_1px_1fr] items-center gap-x-[6px] mt-[6px] w-full min-w-0">
+                  <span
+                    className={`
+                      flex items-center gap-[2px] shrink-0 text-[11.5px] font-[800] tracking-[-0.02em]
+                      text-layout-gray-400 dark:text-layout-gray-200
+                      ${counts.unplanted === 0 ? 'opacity-[0.32]' : ''}
+                    `}
+                  >
+                    <CropImage
+                      stage="seed"
+                      health={HEALTH_STATES.FRESH}
+                      size={22}
+                      alt="보유 씨앗"
+                    />
+                    {counts.unplanted}
+                  </span>
+
+                  <span className="w-px h-[16px] bg-layout-gray-100 dark:bg-layout-gray-dark" aria-hidden />
+
+                  <span className="flex items-center justify-between min-w-0">
+                    {CROP_ORDER.map((stage) => (
+                      <span
+                        key={stage}
+                        className={`
+                          flex items-center gap-[1px] shrink-0 whitespace-nowrap
+                          text-[11.5px] font-[800] tracking-[-0.02em]
+                          ${counts[stage] === 0 ? 'opacity-[0.32]' : ''}
+                        `}
+                        style={{ color: `var(--crop-${stage})` }}
+                      >
+                        <CropImage
+                          stage={stage === 'seed' ? 'PLANTED_SEED' : stage}
+                          health={HEALTH_STATES.FRESH}
+                          size={22}
+                          alt={CROP_LABEL[stage]}
+                        />
+                        {counts[stage]}
+                      </span>
+                    ))}
+                  </span>
+
+                  <span className="text-[9px] font-[700] tracking-[-0.02em] text-layout-gray-300">
+                    보유
+                  </span>
+                  <span aria-hidden />
+                  <span className="text-[9px] font-[700] tracking-[-0.02em] text-layout-gray-300">
+                    심은 것
+                  </span>
                 </span>
               </span>
             </motion.button>

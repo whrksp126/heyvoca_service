@@ -48,7 +48,9 @@ export const StatsProvider = ({ children }) => {
         getReviewScheduleApi(),
         getTodayMemoryChangesApi(),
         getFarmOverviewApi().catch(() => null),
-        getFarmHomeFeedApi({ limit: 5 }).catch(() => null),
+        // limit 20(서버 상한) — 카드는 여전히 3행만 보여주지만(WordFeedCard VISIBLE_ROWS),
+        // "+n개 더" 전체 목록 시트(recent·care)가 별도 API 없이 이 캐시를 그대로 보여준다.
+        getFarmHomeFeedApi({ limit: 20 }).catch(() => null),
       ]);
       if (summary?.code === 200) setTodaySummary(summary.data);
       if (schedule?.code === 200) setReviewSchedule(schedule.data);

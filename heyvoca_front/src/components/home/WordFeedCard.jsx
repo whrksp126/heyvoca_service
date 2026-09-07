@@ -29,19 +29,29 @@ const TONE_CLASS = {
 };
 
 /**
- * @param {string}   title    카드 제목
- * @param {array}    items    /farm/home-feed 의 행들 (user_voca_id · word · crop · health · days_to_review)
- * @param {function} tone     행 → { text, tone } — 우측에 찍을 글자
- * @param {string}   moreLabel 우측 링크 글자 (없으면 개수만)
- * @param {function} onMore   우측 링크·카드를 눌렀을 때
+ * @param {string}   title      카드 제목
+ * @param {array}    items      /farm/home-feed 의 행들 (user_voca_id · word · meaning · crop · health · days_to_review)
+ * @param {function} [tone]     행 → { text, tone } — 우측에 찍을 상태 글자. **없으면 대신 뜻을 옅게 우측 정렬로 찍는다**
+ *                              ("아직 심지 않은 씨앗" · "최근에 심은 단어" — 안 배움/씨앗 같은 상태어를 없애고 뜻으로 바꿨다)
+ * @param {boolean}  [showCrop=true] false면 좌측 작물 아이콘을 생략한다("최근에 심은 단어" 전용 — 단어가 왼쪽 끝에서 시작)
+ * @param {string}   [moreLabel] 헤더 우측 링크 글자. 있으면 개수 대신 이 글자를 쓴다(예: "물주기"·"보관소")
+ * @param {function} [onMore]    헤더 우측 링크를 눌렀을 때(예: 물주기 → 바로 학습 시작, 보관소 → 돌볼 작물 시트)
+ * @param {number}   [totalCount] 헤더 숫자·"+n개 더" 계산에 쓸 실제 총량. 없으면 items.length
+ * @param {function} [onViewAll] 전체 목록 시트를 여는 핸들러. moreLabel/onMore가 없을 때 헤더가, 그리고 항상 "+n개 더"가 이걸 부른다
  */
-const WordFeedCard = ({ title, items = [], tone, moreLabel, onMore }) => {
+const WordFeedCard = ({ title, items = [], tone, showCrop = true, moreLabel, onMore, totalCount, onViewAll }) => {
   "use memo";
 
   if (!items.length) return null;
 
   const rows = items.slice(0, VISIBLE_ROWS);
-  const rest = items.length - rows.length;
+  const total = totalCount ?? items.length;
+  const rest = Math.max(0, total - rows.length);
+
+  // 헤더 우측 — moreLabel/onMore(물주기·보관소 같은 전용 동작)가 있으면 그걸 우선하고,
+  // 없으면 전체 목록 시트를 여는 onViewAll로 대신한다(예전에는 여기가 숫자만 있고 안 눌렸다).
+  const headerHandler = onMore || onViewAll;
+  const headerLabel = moreLabel || total;
 
   return (
     <div className="
@@ -53,18 +63,18 @@ const WordFeedCard = ({ title, items = [], tone, moreLabel, onMore }) => {
         <h4 className="flex-1 text-layout-black dark:text-layout-white text-[14px] font-[700] tracking-[-0.02em]">
           {title}
         </h4>
-        {onMore ? (
+        {headerHandler ? (
           <button
             type="button"
-            onClick={onMore}
+            onClick={headerHandler}
             className="flex items-center gap-[3px] flex-shrink-0 text-layout-gray-300 text-[12px] font-[700]"
           >
-            {moreLabel || items.length}
+            {headerLabel}
             <CaretRight size={10} weight="fill" className="text-layout-gray-200" />
           </button>
         ) : (
           <span className="flex-shrink-0 text-layout-gray-300 text-[12px] font-[700]">
-            {items.length}
+            {total}
           </span>
         )}
       </div>
@@ -79,34 +89,54 @@ const WordFeedCard = ({ title, items = [], tone, moreLabel, onMore }) => {
                 idx > 0 ? 'border-t border-[#F4F4F4] dark:border-[rgba(255,255,255,.08)]' : ''
               }`}
             >
-              <CropImage
-                stage={item.stage || item.crop}
-                health={item.health || HEALTH_STATES.FRESH}
-                size={46}
-                className="flex-shrink-0"
-              />
+              {showCrop && (
+                <CropImage
+                  stage={item.stage || item.crop}
+                  health={item.health || HEALTH_STATES.FRESH}
+                  size={46}
+                  className="flex-shrink-0"
+                />
+              )}
               <span className="flex-1 min-w-0 truncate text-layout-black dark:text-layout-white text-[15px] font-[700] tracking-[-0.02em]">
                 {item.word}
               </span>
-              {/* 뜻은 넣지 않는다 — 36px 한 줄에 단어·뜻·상태를 다 넣으면 셋 다 잘린다.
-                  홈에서 필요한 판단은 "무엇을 봐야 하나"까지고, 뜻은 학습에서 바로 나온다.
-                  (오늘 자란 단어 카드도 같은 이유로 단어와 단계만 적는다) */}
-              {right && (
+              {right ? (
                 <span className={`flex-shrink-0 text-[11px] font-[700] ${TONE_CLASS[right.tone] || TONE_CLASS.muted}`}>
                   {right.text}
                 </span>
+              ) : (
+                // 상태 글자 대신 대표 뜻 — 옅은 색으로 우측 정렬(사용자 승인 목업).
+                item.meaning ? (
+                  <span className="flex-shrink-0 max-w-[45%] truncate text-[11px] font-[400] text-layout-gray-300 text-right">
+                    {item.meaning}
+                  </span>
+                ) : null
               )}
             </div>
           );
         })}
         {rest > 0 && (
-          <div className="
-            flex items-center justify-center h-[30px]
-            border-t border-[#F4F4F4] dark:border-[rgba(255,255,255,.08)]
-            text-[12px] font-[700] text-[#9A9A9A]
-          ">
-            +{rest}개 더
-          </div>
+          onViewAll ? (
+            <button
+              type="button"
+              onClick={onViewAll}
+              className="
+                flex items-center justify-center w-full h-[30px]
+                border-t border-[#F4F4F4] dark:border-[rgba(255,255,255,.08)]
+                text-[12px] font-[700] text-[#9A9A9A]
+              "
+            >
+              +{rest}개 더
+            </button>
+          ) : (
+            <div className="
+              flex items-center justify-center h-[30px]
+              border-t border-[#F4F4F4] dark:border-[rgba(255,255,255,.08)]
+              text-[12px] font-[700] text-[#9A9A9A]
+            ">
+              +{rest}개 더
+            </div>
+          )
         )}
       </div>
     </div>

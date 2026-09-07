@@ -41,10 +41,12 @@ import { useQuickReview } from '../../hooks/useQuickReview';
 import StoreNewFullSheet from '../newfullsheet/StoreNewFullSheet';
 import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 import { NotifPermissionNewBottomSheet } from '../newBottomSheet/NotifPermissionNewBottomSheet';
+import AchievementRewardOverlay from '../overlay/AchievementRewardOverlay';
 
 import FarmHero from '../farm/FarmHero';
 import CropImage, { CROP_ASSETS } from '../farm/CropImage';
 import RottenListSheet from '../farm/RottenListSheet';
+import WordListSheet from '../farm/WordListSheet';
 import FarmCta, {
   CRITICAL_CTA_THRESHOLD,
   HOME_STATES,
@@ -55,7 +57,7 @@ import StreakCard from './StreakCard';
 import GrewTodayCard from './GrewTodayCard';
 import InfoStrip from './InfoStrip';
 import WordFeedCard from './WordFeedCard';
-import { HEALTH_STATES, CROP_LABEL } from '../../utils/crop';
+import { HEALTH_STATES } from '../../utils/crop';
 import { healthMixFromOverview } from '../../utils/farmField';
 
 /**
@@ -83,14 +85,14 @@ const careTone = (item) => {
 };
 
 const rottenTone = () => ({ text: '되살리기', tone: 'rot' });
-const seedTone = () => ({ text: '안 배움', tone: 'muted' });
-const grownTone = (item) => ({ text: CROP_LABEL[item.crop] || '', tone: 'grown' });
+// "아직 심지 않은 씨앗"·"최근에 심은 단어"는 더 이상 상태어(안 배움/씨앗)를 안 쓴다 —
+// WordFeedCard 가 tone 을 안 받으면 그 자리에 대표 뜻을 대신 그린다(사용자 목업 승인).
 
 const Main = () => {
   "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
 
   const navigate = useNavigate();
-  const { userProfile, fetchUserCheckin } = useUser();
+  const { userProfile, fetchUserCheckin, markGoalOverlayShown } = useUser();
 
   // 통계는 StatsContext(라우터 바깥 캐시)에서 구독 — 탭 전환마다 재조회/스피너 없이 캐시값을 즉시 사용,
   // 학습 세션 완료 시에만 조용히 갱신된다.
@@ -107,6 +109,8 @@ const Main = () => {
   const criticalCnt = today.critical_first ?? 0;
   const unplanted = seedDetail.unplanted ?? 0;
   const rottenCnt = health.rotten ?? 0;
+  // "지금 물이 필요한 단어" 카드의 실제 총량 — care 피드(thirsty·wilted·critical)와 같은 집합
+  const careCnt = (health.thirsty ?? 0) + (health.wilted ?? 0) + (health.critical ?? 0);
   const inventory = farmOverview?.items ?? {};
   const restoreItemCnt = (inventory.SHOVEL ?? 0) + (inventory.NUTRIENT ?? 0);
   const newRemaining = Math.max(0, dailyNewLimit - todayNewWords);
@@ -138,6 +142,9 @@ const Main = () => {
       word: e.word,
       from: MEMORY_TO_CROP[e.from] ?? 'seed',
       to: MEMORY_TO_CROP[e.to] ?? 'sprout',
+      // /insights/today-changes 응답에 방금 추가된 필드 — 아직 안 내려오는 과도기에는
+      // undefined 로 와도 카드·시트 양쪽이 빈칸으로 안전하게 처리한다(단계 문구로 되돌리지 않음).
+      meaning: e.meaning,
     }));
   }, [todayChanges]);
 
@@ -152,23 +159,60 @@ const Main = () => {
     if (isAppVersionAtLeast('1.1.0')) prefetchLabSettings();
   }, []);
 
-  // 온보딩→가입→로그인 후 홈 첫 진입 시 1회 알림 권한 프롬프트 (온보딩 signup에서 플래그 설정)
+  /*
+    ④ 온보딩→가입→로그인 후 홈 첫 진입 시 벌어지는 두 연출을 **순서대로만** 띄운다.
+      1) 업적 1레벨 오버레이(대기열) — pages/Index.jsx 가 migrate 직후 updateUserHistory 응답의
+         goals 를 localStorage 대기열에 담아 둔다. 여기서 읽는 즉시 지워 중복 소비를 막고,
+         AchievementRewardOverlay(3초 자동 닫힘)를 하나씩 await 하며 순차로 띄운다.
+      2) 알림 권한 바텀시트 — 온보딩 signup에서 세운 플래그. 원래 있던 700ms 지연 로직 그대로.
+    업적 오버레이가 다 끝난 뒤에 알림 시트를 열어야 한다 — 동시에 뜨면 오버레이가 시트를 덮는다.
+  */
   useEffect(() => {
-    let pending = null;
-    try { pending = localStorage.getItem('heyvoca_notif_prompt'); } catch (e) { pending = null; }
-    if (pending !== '1') return;
     if (!userProfile || !userProfile.id) return;
-    try { localStorage.removeItem('heyvoca_notif_prompt'); } catch (e) { /* noop */ }
 
     let cancelled = false;
     let t = null;
-    checkNotificationPermissionGranted().then((granted) => {
-      if (cancelled) return;
-      if (granted === true) return; // 이미 허용됨 → 바텀시트 노출 없이 플래그만 소비
-      t = setTimeout(() => {
-        pushNewBottomSheet(NotifPermissionNewBottomSheet, {}, { isBackdropClickClosable: true, isDragToCloseEnabled: true });
-      }, 700);
+
+    const showPendingGoalOverlays = async () => {
+      let goals = null;
+      try {
+        const raw = localStorage.getItem('heyvoca_pending_goal_overlay');
+        if (raw) goals = JSON.parse(raw);
+      } catch (e) { goals = null; }
+      // 읽는 즉시 지운다 — 다시 마운트돼도 같은 업적을 또 띄우지 않게.
+      try { localStorage.removeItem('heyvoca_pending_goal_overlay'); } catch (e) { /* noop */ }
+
+      if (!Array.isArray(goals) || goals.length === 0) return;
+      if (!window.overlayContext?.showAwaitOverlay) return;
+
+      for (const goal of goals) {
+        if (cancelled) return;
+        // fetchUserCheckin이 같은 업적을 이미 띄웠으면 건너뛴다(UserContext markGoalOverlayShown 주석 참고)
+        if (typeof markGoalOverlayShown === 'function' && !markGoalOverlayShown(goal)) continue;
+        await window.overlayContext.showAwaitOverlay(AchievementRewardOverlay, { goal });
+      }
+    };
+
+    const promptNotifPermission = () => {
+      let pending = null;
+      try { pending = localStorage.getItem('heyvoca_notif_prompt'); } catch (e) { pending = null; }
+      if (pending !== '1') return;
+      try { localStorage.removeItem('heyvoca_notif_prompt'); } catch (e) { /* noop */ }
+
+      checkNotificationPermissionGranted().then((granted) => {
+        if (cancelled) return;
+        if (granted === true) return; // 이미 허용됨 → 바텀시트 노출 없이 플래그만 소비
+        t = setTimeout(() => {
+          if (cancelled) return;
+          pushNewBottomSheet(NotifPermissionNewBottomSheet, {}, { isBackdropClickClosable: true, isDragToCloseEnabled: true });
+        }, 700);
+      });
+    };
+
+    showPendingGoalOverlays().then(() => {
+      if (!cancelled) promptNotifPermission();
     });
+
     return () => { cancelled = true; if (t) clearTimeout(t); };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userProfile?.id]);
@@ -231,6 +275,53 @@ const Main = () => {
   };
 
   /*
+    ⑤ "지금 볼 만한 단어" 카드들의 "+n개 더"·헤더 숫자가 여는 전체 목록 시트.
+    RottenListSheet 는 그대로 전용 진입점(보관소)으로 남긴다 — rotten 카드는 새 시트를 쓰지 않는다.
+  */
+  // 오늘 자란 단어 — todayChanges(promoted+new)를 이미 클라이언트가 다 갖고 있어 API 호출이 없다.
+  const openGrownSheet = () => {
+    vibrate({ duration: 5 });
+    pushNewFullSheet(WordListSheet, {
+      title: '오늘 자란 단어',
+      items: grewItems,
+    }, { smFull: true, closeOnBackdropClick: true });
+  };
+
+  // 아직 심지 않은 씨앗 — 총량이 커서(최대 수백) 커서 페이지네이션(GET /farm/plants?group=unplanted).
+  // 학습 진입은 헤더가 아니라 시트 하단 고정 CTA로 옮겼다(⑤-3 "심으러 가기"가 목록을 가리던 문제).
+  const openSeedsSheet = () => {
+    vibrate({ duration: 5 });
+    pushNewFullSheet(WordListSheet, {
+      title: '아직 심지 않은 씨앗',
+      paged: true,
+      emptyText: '아직 심지 않은 씨앗이 없어요',
+      ctaLabel: '씨앗 심으러 가기',
+      onCta: handleTodayStudyButtonClick,
+    }, { smFull: true, closeOnBackdropClick: true });
+  };
+
+  // 최근에 심은 단어 — 전용 페이징 API가 없어 홈 피드 캐시(limit 20)를 그대로 보여준다.
+  const openRecentSheet = () => {
+    vibrate({ duration: 5 });
+    pushNewFullSheet(WordListSheet, {
+      title: '최근에 심은 단어',
+      items: feed.recent ?? [],
+      emptyText: '최근에 심은 단어가 없어요',
+    }, { smFull: true, closeOnBackdropClick: true });
+  };
+
+  // 지금 물이 필요한 단어 — 헤더의 "물주기"는 그대로 바로 학습으로 보내고(§5-3 판단 근거는
+  // 하단 보고 참고), "+n개 더"만 홈 피드 캐시(limit 20)로 목록을 보여준다.
+  const openCareSheet = () => {
+    vibrate({ duration: 5 });
+    pushNewFullSheet(WordListSheet, {
+      title: '지금 물이 필요한 단어',
+      items: feed.care ?? [],
+      emptyText: '지금 물이 필요한 단어가 없어요',
+    }, { smFull: true, closeOnBackdropClick: true });
+  };
+
+  /*
     성과 카드 아래에 붙는 "지금 볼 만한 단어".
 
     시안 §10 이 홈에 놓는 것을 다 적어 두긴 했지만, 그 목록대로만 두면 급한 일이 없는
@@ -249,8 +340,12 @@ const Main = () => {
       title: '지금 물이 필요한 단어',
       items: feed.care ?? [],
       tone: careTone,
+      // 헤더 "물주기"는 그대로 바로 학습으로 보낸다(⑤-3, 지적된 씨앗과 달리 바꾸지 않기로 판단
+      // — 보고 참고). "+n개 더"만 새 시트로 목록을 보여준다.
       moreLabel: '물주기',
       onMore: handleTodayStudyButtonClick,
+      totalCount: careCnt,
+      onViewAll: openCareSheet,
     },
     {
       key: 'rotten',
@@ -258,23 +353,32 @@ const Main = () => {
       items: feed.rotten ?? [],
       tone: rottenTone,
       moreLabel: '보관소',
+      // rotten은 이미 RottenListSheet가 전용 진입점이라 "+n개 더"도 같은 곳으로 보낸다
+      // (새 WordListSheet를 또 만들지 않는다 — ⑤-2 지시사항).
       onMore: openRottenSheet,
+      totalCount: rottenCnt,
+      onViewAll: openRottenSheet,
     },
     {
       key: 'seeds',
       title: '아직 심지 않은 씨앗',
       items: feed.seeds ?? [],
-      tone: seedTone,
-      moreLabel: '심으러 가기',
-      onMore: handleTodayStudyButtonClick,
+      // 상태어(안 배움) 제거 → 뜻으로(tone 없음). 헤더도 "심으러 가기"(바로 학습)에서
+      // 개수로 바꿔 전체 목록 시트를 연다 — 학습 진입은 시트 하단 CTA로 옮겼다(⑤-3).
+      moreLabel: null,
+      onMore: null,
+      totalCount: unplanted,
+      onViewAll: openSeedsSheet,
     },
     {
       key: 'recent',
       title: '최근에 심은 단어',
       items: feed.recent ?? [],
-      tone: grownTone,
+      // 상태어(씨앗) 제거 → 뜻으로, 좌측 작물 아이콘도 뺀다(showCrop=false, 사용자 요청)
+      showCrop: false,
       moreLabel: null,
       onMore: null,
+      onViewAll: openRecentSheet,
     },
   ];
 
@@ -419,7 +523,7 @@ const Main = () => {
         {/* 오늘 자란 단어 — 조건부다(§10). 오늘 자란 것이 없으면 카드를 아예 띄우지 않는다.
             "황금 당근" 카드는 내렸다 — 개수 하나만 적혀 있어 대부분의 날에 "0개"만 말했고,
             황금 당근은 마이페이지 온실에 그대로 있다. */}
-        <GrewTodayCard items={grewItems} />
+        <GrewTodayCard items={grewItems} onViewAll={openGrownSheet} />
 
         {/* §8 seed 스트립 — 급한 일이 없을 때 다음 학습거리를 제안한다 */}
         {showSeedStrip && !shownFeedKeys.has('seeds') && (
@@ -438,8 +542,11 @@ const Main = () => {
             title={section.title}
             items={section.items}
             tone={section.tone}
+            showCrop={section.showCrop}
             moreLabel={section.moreLabel}
             onMore={section.onMore}
+            totalCount={section.totalCount}
+            onViewAll={section.onViewAll}
           />
         ))}
 

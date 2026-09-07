@@ -188,9 +188,24 @@ export const wordVerification = (word) => {
    시안 §2 — 진행률 바를 버리고 **네 단계의 실제 수**를 적는다. */
 export const CROP_ORDER = ['seed', 'sprout', 'leaf', 'carrot'];
 
+/**
+ * `{ unplanted, seed, sprout, leaf, carrot }` — **`unplanted`는 별도 칸이다.**
+ *
+ * `wordCropStage` 는 밭의 구역만 알아서 보유 씨앗(아직 안 심음)과 심은 씨앗을
+ * 둘 다 'seed' 로 뭉갠다. 그대로 합치면 "포장된 씨앗 100개"처럼 보유 수가
+ * 심은 수인 척 나온다 — 여기서는 `isUnplanted` 로 먼저 갈라, `seed` 는
+ * **심은 씨앗(PLANTED_SEED)만** 센다. `bookFieldData`(밭에 실제로 심는 것)와
+ * 같은 판정 기준이라야 카드 왼쪽 그림과 오른쪽 숫자가 같은 말을 한다.
+ */
 export const bookStageCounts = (words) => {
-  const counts = { seed: 0, sprout: 0, leaf: 0, carrot: 0 };
+  const counts = {
+    unplanted: 0, seed: 0, sprout: 0, leaf: 0, carrot: 0,
+  };
   (words || []).forEach((word) => {
+    if (isUnplanted(word)) {
+      counts.unplanted += 1;
+      return;
+    }
     counts[wordCropStage(word)] += 1;
   });
   return counts;
