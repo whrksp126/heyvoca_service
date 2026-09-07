@@ -262,12 +262,18 @@ const buildGuestSignupResult = async () => {
     .reduce((sum, type) => sum + (rewardByType[type] ?? GUEST_GOAL_REWARD_FALLBACK), 0);
 
   return {
+    // 보석 합계는 그대로 둔다 — 서버가 실제로 데일리 미션(GUEST_MISSION_GEM)과
+    // 업적 1레벨(goalGem)까지 지급하므로, 화면에 슬라이드로 안 그려도 지급분을 빼면 안 된다.
     gem: { before: 0, after: GUEST_SIGNUP_GEM + GUEST_ATTEND_GEM + GUEST_MISSION_GEM + goalGem },
     attend: true,
     today_study_complete: true,
-    daily_mission_complete: true,
-    // 업적 슬라이드는 type 과 level 만 읽는다(배지 그림은 ACHIEVEMENT_IMAGES 가 이름으로 찾는다)
-    goals: GUEST_FIRST_DAY_GOALS.map((type) => ({ name: type, type, level: 1 })),
+    // ⑪⑫ 슬라이드는 여기서 비운다 — 데일리 미션 완료·업적 1레벨은 온보딩 "가입 직전 학습"에서
+    // 매번 조건 없이 달성돼(첫 학습이라 예외가 없다) 게스트 결과 화면에 붙이면 매번 똑같은
+    // 두 장이 반복 재생되는 형식적인 연출이 됐다. 업적 연출은 가입 후 실제 계정에 반영된
+    // 시점(홈 첫 진입)으로 옮겼다 — pages/Index.jsx → components/home/Main.jsx,
+    // AchievementRewardOverlay 재사용. 위 gem 계산에는 여전히 반영돼 있다.
+    daily_mission_complete: false,
+    goals: [],
   };
 };
 

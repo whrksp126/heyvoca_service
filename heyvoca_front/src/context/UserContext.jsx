@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
+import React, { createContext, useContext, useState, useEffect, useCallback, useRef } from 'react';
 import { backendUrl, setCookie, getCookie, fetchDataAsync } from '../utils/common';
 import { getDevicePlatform, isAppVersionAtLeast } from '../utils/osFunction';
 import { loginApi, updateUserInfoApi, getUserInfoApi, withdrawApi, appleLoginApi, devLoginApi } from '../api/auth';
@@ -42,6 +42,21 @@ export const UserProvider = ({ children }) => {
   const [isWithdrawInProgress, setIsWithdrawInProgress] = useState(false);
   const [achievementCriteria, setAchievementCriteria] = useState({});
   const [isAchievementCriteriaLoading, setIsAchievementCriteriaLoading] = useState(false);
+
+  /*
+    이번 세션에서 이미 보여 준 업적 오버레이(type+level) — 온보딩 가입 직후에는
+    pages/Index.jsx 가 대기열(localStorage)로 넘긴 업적을 components/home/Main.jsx 가 홈
+    첫 진입에서 띄우는데, 그 직후 홈이 도는 fetchUserCheckin 이 같은 업적을 서버에서
+    다시 받아 여기서도 띄우면 같은 배지가 두 번 재생된다. 두 경로가 같은 Set 을 공유해
+    먼저 띄운 쪽이 표시해 두면 나중 쪽은 건너뛴다.
+  */
+  const shownGoalOverlayKeysRef = useRef(new Set());
+  const markGoalOverlayShown = useCallback((goal) => {
+    const key = `${goal?.type}:${goal?.level}`;
+    if (shownGoalOverlayKeysRef.current.has(key)) return false;
+    shownGoalOverlayKeysRef.current.add(key);
+    return true;
+  }, []);
 
   // 현재 기기의 FCM 토큰 보관
   const [fcmToken, setFcmToken] = useState(null);
@@ -242,9 +257,11 @@ export const UserProvider = ({ children }) => {
 
     // 업적 업데이트 (새로 완료된 업적이 있는 경우) - 먼저 표시
     if (result.data?.goals && result.data.goals.length > 0) {
-      // 업적 오버레이 표시
+      // 업적 오버레이 표시 — 온보딩 가입 직후 홈 첫 진입이면 Main.jsx 가 대기열로 이미
+      // 같은 업적을 띄웠을 수 있다(markGoalOverlayShown 주석 참고). 그런 건 건너뛴다.
       if (window.overlayContext?.showAwaitOverlay) {
         result.data.goals.forEach(goal => {
+          if (!markGoalOverlayShown(goal)) return;
           window.overlayContext.showAwaitOverlay(AchievementRewardOverlay, { goal });
         });
       }
@@ -754,6 +771,9 @@ export const UserProvider = ({ children }) => {
     setUserProfile,
     setUserMainPage,
     updateUserHistory,
+    // ④ 온보딩→가입→홈 첫 진입 업적 연출 — Index.jsx(대기열 적재)와 Main.jsx(대기열 소비) +
+    // 여기 fetchUserCheckin 이 같은 Set 을 써서 같은 업적을 두 번 안 띄우게 한다.
+    markGoalOverlayShown,
     // 인증 상태 추가
     auth,
     setAuth,

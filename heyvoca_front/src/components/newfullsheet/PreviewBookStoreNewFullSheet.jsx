@@ -409,9 +409,12 @@ export const PreviewBookStoreNewFullSheet = ({
 
                 {/* 산 뒤 화면에서 복습 예정일이 앉는 자리. 사기 전에는 예정일이 없어
                     그 자리에 발음을 둔다 — 살지 말지 정할 때 실제로 쓰는 정보다.
-                    소리만 듣고 싶은 것이니 여기서는 상세 시트를 열지 않는다. */}
+                    소리만 듣고 싶은 것이니 여기서는 상세 시트를 열지 않는다.
+                    self-center — 행 전체는 예문 때문에 items-start(위 정렬)이지만
+                    발음 버튼만은 행 세로 중앙에 둔다. 예문이 늘어나 행이 길어져도
+                    버튼이 꼭대기에 붙지 않아야 누르기 편하다. */}
                 <span
-                  className="shrink-0"
+                  className="shrink-0 self-center"
                   onClick={(e) => e.stopPropagation()}
                   onKeyDown={(e) => e.stopPropagation()}
                 >

@@ -178,8 +178,19 @@ const Index = () => {
         // 아래에서 프로필을 다시 읽으면 지급 **전** 잔액이 캐시된다 — 실제로 홈 첫 화면의
         // 보석이 1,000 으로 떠 있고 DB 에는 1,013 이 들어 있는 상태를 기기에서 확인했다.
         if (studied > 0 && typeof updateUserHistory === 'function') {
-          await updateUserHistory({ correct_cnt: correct, incorrect_cnt: Math.max(0, studied - correct) })
-            .catch(() => { /* 실패해도 온보딩 흐름은 계속 */ });
+          const historyData = await updateUserHistory({ correct_cnt: correct, incorrect_cnt: Math.max(0, studied - correct) })
+            .catch(() => null); // 실패해도 온보딩 흐름은 계속
+
+          // ④ 이 호출로 서버가 방금 지급한 출석왕·노력왕·끈기왕 1레벨(goals)이 응답에 실려 온다.
+          // StudyResult.jsx(게스트 결과 화면, ②③)는 이 연출을 뺐다 — 계정도 없는 시점에
+          // 매번 똑같이 달성되는 업적을 보여주는 게 형식적이었다. 대신 계정에 실제로 반영된
+          // 지금, 홈 첫 진입에서 한 번만 보여주기 위해 대기열에 담아 둔다.
+          // components/home/Main.jsx 가 홈 마운트 시 이 값을 읽는 즉시 지우고 순차로 띄운다.
+          if (historyData?.goals?.length > 0) {
+            try {
+              localStorage.setItem('heyvoca_pending_goal_overlay', JSON.stringify(historyData.goals));
+            } catch (e) { /* 저장 실패는 무시 — 업적 연출만 못 볼 뿐 학습 자체엔 영향 없다 */ }
+          }
         }
       }
       if (res?.code === 200 || res?.code === 409) {
