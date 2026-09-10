@@ -16,7 +16,7 @@ export const useVocabularyDeleteNewBottomSheet = () => {
 
         const result = await pushAwaitNewBottomSheet(
             VocabularyDeleteNewBottomSheet,
-            {},
+            { bookId: id },
             { isBackdropClickClosable: true, isDragToCloseEnabled: true }
         );
 
@@ -38,8 +38,12 @@ export const useVocabularyDeleteNewBottomSheet = () => {
 /**
  * 바텀시트 UI 컴포넌트
  */
-export const VocabularyDeleteNewBottomSheet = () => {
+export const VocabularyDeleteNewBottomSheet = ({ bookId }) => {
     const { resolveNewBottomSheet } = useNewBottomSheet();
+    const { getVocabularySheet } = useVocabulary();
+
+    const vocabularySheet = getVocabularySheet(bookId);
+    const isPurchasedBook = vocabularySheet?.vocaBookStoreId != null;
 
     const handleConfirm = () => {
         vibrate({ duration: 5 });
@@ -60,6 +64,11 @@ export const VocabularyDeleteNewBottomSheet = () => {
                 <p className="text-[14px] font-normal text-[#666] dark:text-layout-gray-300">
                     삭제하면 되돌릴 수 없어요.
                 </p>
+                {isPurchasedBook && (
+                    <p className="text-[14px] font-normal text-[#666] dark:text-layout-gray-300">
+                        다시 받으려면 서점에서 보석이 들어요.
+                    </p>
+                )}
             </div>
 
             <div className="flex items-center justify-between gap-[15px] p-[20px]">
