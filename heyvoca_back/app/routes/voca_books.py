@@ -15,7 +15,7 @@ from flask import request, jsonify, g
 from uuid import UUID, uuid4
 
 from app.routes import voca_books_bp
-from app.models.models import db, UserVocaBook, UserVocaBookMap, UserVoca, Bookstore, AdminVocaBookMap
+from app.models.models import db, UserVocaBook, UserVocaBookMap, UserVoca, Bookstore, AdminVocaBookMap, UserVocaGame
 from app.utils.jwt_utils import jwt_required
 from app.routes.voca_indexs import merge_meanings, merge_examples
 from app.routes.user_voca_book import parse_quizlet_pdf
@@ -1004,8 +1004,8 @@ def update_voca_book(vocaBookId):
     if not voca_book:
         return jsonify({'code': 404, 'message': '해당 단어장을 찾을 수 없습니다.'}), 404
 
-    if is_purchased_book(voca_book):
-        return jsonify({'code': 403, 'message': '구매한 단어장은 수정할 수 없어요.'}), 403
+    # 이 라우트는 title/color만 다룬다(단어 데이터 필드 없음) — 제공받은(검증) 단어장도
+    # 이름/색은 내 목록을 정리하는 수단이므로 허용한다. (user_voca_book.py와 동일 기준)
 
     try:
         if 'title' in req:
@@ -1042,8 +1042,7 @@ def delete_voca_book(vocaBookId):
     if not voca_book:
         return jsonify({'code': 404, 'message': '해당 단어장을 찾을 수 없습니다.'}), 404
 
-    if is_purchased_book(voca_book):
-        return jsonify({'code': 403, 'message': '구매한 단어장은 삭제할 수 없어요.'}), 403
+    # 제공받은(검증) 단어장도 단어장 자체는 삭제 가능 — 잠기는 건 단어 데이터뿐이다.
 
     try:
         # 1. 삭제 대상 단어장에 포함된 단어 ID(user_voca_id) 목록 수집
@@ -1055,6 +1054,7 @@ def delete_voca_book(vocaBookId):
         db.session.flush()
 
         # 3. 수집된 단어들에 대해 다른 단어장 매핑이 있는지 확인 후 고아 단어 삭제
+        #    (user_voca_book.py의 delete_user_voca_book과 동일 패턴으로 유지)
         if voca_ids:
             for uv_id in set(voca_ids):
                 exists_other = db.session.query(UserVocaBookMap).filter(
@@ -1062,6 +1062,13 @@ def delete_voca_book(vocaBookId):
                 ).first()
                 
                 if not exists_other:
+                    # 농장 게임 행(user_voca_game)이 user_voca_id를 FK로 참조(cascade 없음).
+                    # 먼저 지우지 않으면 학습(심기)까지 한 단어의 UserVoca 삭제 시
+                    # IntegrityError(1451)로 전체 삭제가 실패한다.
+                    db.session.query(UserVocaGame).filter(
+                        UserVocaGame.user_voca_id == uv_id,
+                        UserVocaGame.user_id == user_id
+                    ).delete()
                     db.session.query(UserVoca).filter(
                         UserVoca.id == uv_id,
                         UserVoca.user_id == user_id

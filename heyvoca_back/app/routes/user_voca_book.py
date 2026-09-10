@@ -10,7 +10,7 @@ import datetime, time, random
 from uuid import uuid4, UUID
 
 from app.routes import user_voca_book_bp
-from app.models.models import db, User, VocaBook, Voca, VocaMeaning, VocaExample, VocaBookMap, VocaMeaningMap, VocaExampleMap, Bookstore, UserVocaBook
+from app.models.models import db, User, VocaBook, Voca, VocaMeaning, VocaExample, VocaBookMap, VocaMeaningMap, VocaExampleMap, Bookstore, UserVocaBook, UserVoca, UserVocaBookMap, UserVocaGame
 from app.routes.mainpage import update_user_goal
 from app.utils.jwt_utils import jwt_required
 
@@ -146,9 +146,10 @@ def update_user_voca_book():
 
     is_purchased = user_voca_book.bookstore_id is not None
 
-    # 구매한 단어장은 학습 진행 메타(total/memorized)만 허용 — 단어 내용은 변경 불가
-    if is_purchased and any(k in data for k in ('title', 'color', 'words')):
-        return jsonify({'code': 403, 'message': '구매한 단어장의 내용은 변경할 수 없어요.'}), 403
+    # 제공받은(검증) 단어장도 이름/색은 내 목록을 정리하는 수단이므로 허용한다.
+    # 단어 목록(words)만 사전 데이터이므로 계속 막는다.
+    if is_purchased and 'words' in data:
+        return jsonify({'code': 403, 'message': '제공받은 단어장의 단어는 변경할 수 없어요.'}), 403
 
     # 넘어온 key만 업데이트
     if 'title' in data:
@@ -188,11 +189,42 @@ def delete_user_voca_book():
     if not user_voca_book:
         return jsonify({'code': 404, 'message': '해당 단어장이 존재하지 않습니다.'}), 404
 
-    if user_voca_book.bookstore_id is not None:
-        return jsonify({'code': 403, 'message': '구매한 단어장은 삭제할 수 없어요.'}), 403
+    # 제공받은(검증) 단어장도 단어장 자체는 삭제 가능 — 잠기는 건 단어 데이터뿐이다.
 
-    db.session.delete(user_voca_book)
-    db.session.commit()
+    try:
+        # 1. 삭제 대상 단어장에 포함된 단어 ID(user_voca_id) 목록 수집
+        voca_ids = [m.user_voca_id for m in user_voca_book.voca_maps if m.user_voca_id is not None]
+
+        # 2. 단어장 삭제 (UserVocaBookMap은 cascade="all, delete-orphan"으로 자동 삭제)
+        db.session.delete(user_voca_book)
+        db.session.flush()
+
+        # 3. 수집된 단어들에 대해 다른 단어장 매핑이 있는지 확인 후 고아 단어 삭제
+        #    (voca_books.py의 delete_voca_book과 동일 패턴)
+        if voca_ids:
+            for uv_id in set(voca_ids):
+                exists_other = db.session.query(UserVocaBookMap).filter(
+                    UserVocaBookMap.user_voca_id == uv_id
+                ).first()
+
+                if not exists_other:
+                    # 농장 게임 행(user_voca_game)이 user_voca_id를 FK로 참조(cascade 없음).
+                    # 먼저 지우지 않으면 학습(심기)까지 한 단어의 UserVoca 삭제 시
+                    # IntegrityError(1451)로 전체 삭제가 실패한다.
+                    db.session.query(UserVocaGame).filter(
+                        UserVocaGame.user_voca_id == uv_id,
+                        UserVocaGame.user_id == user_id
+                    ).delete()
+                    db.session.query(UserVoca).filter(
+                        UserVoca.id == uv_id,
+                        UserVoca.user_id == user_id
+                    ).delete()
+
+        db.session.commit()
+    except Exception as e:
+        db.session.rollback()
+        print("###delete_user_voca_book error : ", e)
+        return jsonify({'code': 500, 'message': '단어장 삭제 중 오류가 발생했습니다.'}), 500
 
     return jsonify({'code': 200, 'data': {}}), 200
 
