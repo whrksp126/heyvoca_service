@@ -694,9 +694,16 @@ const StudyResult = () => {
         });
       }
 
-      // 시안 순서표에 없는 기존 슬라이드 — 콤보(AI 추천 전용)와 출석.
-      // 출석은 연속 학습과 겹치지만 출석왕 업적이 attend 를 쓰고 있어 지우지 않았다(시안 §4 콜아웃).
-      if (testType === 'quick' && (comboSummary?.maxCombo ?? 0) >= 5) {
+      /*
+        시안 순서표에 없는 기존 슬라이드 — 콤보(AI 추천 전용)와 출석.
+        출석은 연속 학습과 겹치지만 출석왕 업적이 attend 를 쓰고 있어 지우지 않았다(시안 §4 콜아웃).
+
+        콤보 슬라이드는 '이 세션에서 최고 기록을 실제로 갱신했을 때만' 보여준다(동률 제외).
+        comboSummary.bestUpdated 는 Main.jsx 의 isComboRecordEvent(핵심 판정: 백엔드
+        combo.py apply_answer 의 events.best_updated — 엄격 초과만 true, 동률/최고 기록
+        미달은 false)를 세션 동안 누적한 값으로, 콤보 위기 팝업 노출 여부와 같은 판정을 공유한다.
+      */
+      if (testType === 'quick' && comboSummary?.bestUpdated) {
         screens.push({
           type: 'combo',
           data: comboSummary,
@@ -1166,8 +1173,8 @@ const StudyResult = () => {
         />
       );
     } else if (currentScreen.type === 'combo') {
-      // 콤보 달성 (AI 추천 테스트)
-      const { maxCombo, bestUpdated } = currentScreen.data;
+      // 콤보 달성 (AI 추천 테스트) — 이 슬라이드는 최고 기록을 갱신했을 때만 만들어진다(위 push 조건 참고).
+      const { maxCombo } = currentScreen.data;
       // 불꽃 계열(주황)로 — 아이콘 + 한 줄만 두어 오로라 중앙 아이콘 정렬 유지
       content = (
         <div className='relative flex flex-col items-center justify-center gap-[15px]'>
@@ -1188,11 +1195,7 @@ const StudyResult = () => {
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.3, duration: 0.5 }}
           >
-            {bestUpdated ? (
-              <><strong className='text-[#FF7A00]'>최고 기록 갱신!</strong> {maxCombo}콤보</>
-            ) : (
-              <><strong className='text-[#FF7A00]'>연속 정답 {maxCombo}콤보</strong> 달성!</>
-            )}
+            <><strong className='text-[#FF7A00]'>최고 기록 갱신!</strong> {maxCombo}콤보</>
           </motion.p>
         </div>
       );

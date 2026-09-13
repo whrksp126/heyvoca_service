@@ -32,6 +32,15 @@ import { removePendingReplantIds } from '../../utils/replantPending';
 // 백엔드 memory state 키(short/medium/long) → 프론트 키(leaf/plant/carrot) 정규화
 const backendStateKeyMap = { unlearned: 'unlearned', short: 'leaf', medium: 'plant', long: 'carrot' };
 
+// ── 콤보 "신기록" 판정 — 단일 소스 ──
+// /study/log combo payload 의 events.best_updated 는 백엔드(combo.py apply_answer)가
+// '이번 정답으로 current_combo 가 기존 best_combo 를 엄격히 초과했을 때만' true 를 준다
+// (동률은 false, 최고 기록이 없던 최초 사용자는 첫 정답에서 true). 콤보 위기 팝업 노출
+// 여부(판 단위, handleComboPayload)와 결과 화면 콤보 슬라이드 노출 여부(세션 단위,
+// comboSessionRef.bestUpdated → heyvoca_combo_summary → StudyResult)가 이 값 하나만
+// 신뢰하도록 묶어서, 두 지점의 "갱신" 기준이 갈라지지 않게 한다.
+const isComboRecordEvent = (payload) => !!payload?.events?.best_updated;
+
 // ── 부패 진단 문제 판별 (시안 6절) ────────────────────────────────────────────
 // 삽으로 '다시 심기'를 예약한 작물은 다음 학습에서 진단 문제 1개로 만난다.
 // 화면은 이 문제만 다르게 그린다 — 주황 진행바 + 채점 전부터 뜨는 삽 pill.
@@ -222,6 +231,18 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
   const comboSessionRef = useRef({ maxCombo: 0, bestUpdated: false, best: 0 });
   const comboPopupOpenRef = useRef(false);
   /*
+    현재 진행 중인 콤보 판(스트릭)이 기존 최고 기록을 갱신 중인지 추적.
+
+    AT_RISK 로 전환되는 순간(오답)엔 combo.py apply_answer 가 current_combo 를 이미 0으로
+    리셋해버려 그 payload 만으로는 "이 판이 신기록이었는지" 판정할 수 없다(신기록을 넘긴
+    판이든 예전 최고 기록과 동률로 끝난 판이든, AT_RISK 시점엔 둘 다 at_risk_combo === best
+    로 보인다). 그래서 판이 진행되는 동안 정답마다 isComboRecordEvent 로 누적해뒀다가
+    위기 시점에 이 값으로 "위기 안내 팝업을 띄울지" 정한다. 판이 끝나면(조용한 리셋 또는
+    위기 콤보 포기 확정) false 로 되돌린다 — 보호(protect) 는 같은 판이 이어지는 것이므로
+    유지한다.
+  */
+  const comboRunIsRecordRef = useRef(false);
+  /*
     연속 학습(streak) 세션 요약 — /study/log 응답의 streak.qualified_now 를 그대로 담아 둔다.
 
     /farm/session-summary(getSessionFarmSummaryApi)의 streak 는 {current, milestone}뿐이라
@@ -402,12 +423,29 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
     if (!payload) return;
     const s = comboSessionRef.current;
     s.maxCombo = Math.max(s.maxCombo, payload.current ?? 0, payload.at_risk_combo ?? 0);
-    s.bestUpdated = s.bestUpdated || !!payload?.events?.best_updated;
+    s.bestUpdated = s.bestUpdated || isComboRecordEvent(payload);
     s.best = payload.best ?? s.best;
     persistComboSummary();
     setCombo(payload);
 
+    // 판 단위 신기록 추적 — AT_RISK 가 아닌 응답만으로 갱신한다(현재 판이 계속 진행 중이거나
+    // 조용히 0으로 리셋된 경우). current === 0 이면 판이 끝난 것이므로 다음 판을 위해 초기화.
+    if (payload.status !== 'AT_RISK') {
+      comboRunIsRecordRef.current = (payload.current ?? 0) === 0
+        ? false
+        : (comboRunIsRecordRef.current || isComboRecordEvent(payload));
+    }
+
     if (payload.status !== 'AT_RISK' || comboPopupOpenRef.current) return;
+
+    // 이번에 위기에 처한 판이 기존 최고 기록을 갱신하지 못했다면(동률 포함) 안내 없이
+    // 조용히 포기 처리 — MIN_PROTECT_COMBO 미만이라 애초에 조용히 리셋되는 경우와 같은 취급.
+    if (!comboRunIsRecordRef.current) {
+      const res = await forfeitComboApi();
+      if (res?.code === 200) setCombo(res.data);
+      return;
+    }
+
     comboPopupOpenRef.current = true;
     try {
       const choice = await pushAwaitNewBottomSheet(
@@ -426,12 +464,13 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
           if (typeof res.data.gem_cnt === 'number' && setUserProfile) {
             setUserProfile(prev => ({ ...prev, gem_cnt: res.data.gem_cnt }));
           }
-          return;
+          return; // 같은 판이 이어지므로 comboRunIsRecordRef 는 그대로 유지
         }
         // 보호 실패(보석 부족/네트워크) → 포기로 폴백
       }
       const res = await forfeitComboApi();
       if (res?.code === 200) setCombo(res.data);
+      comboRunIsRecordRef.current = false; // 판 종료
     } finally {
       comboPopupOpenRef.current = false;
       // 팝업 응답 처리 완료 → 대기 중이던 카드 채점 로그를 순서대로 전송 재개
