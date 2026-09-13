@@ -221,6 +221,16 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
   const [combo, setCombo] = useState(null);
   const comboSessionRef = useRef({ maxCombo: 0, bestUpdated: false, best: 0 });
   const comboPopupOpenRef = useRef(false);
+  /*
+    연속 학습(streak) 세션 요약 — /study/log 응답의 streak.qualified_now 를 그대로 담아 둔다.
+
+    /farm/session-summary(getSessionFarmSummaryApi)의 streak 는 {current, milestone}뿐이라
+    '오늘 이미 5개 정답 문턱을 넘겼는지'를 담지 않는다. 그 판정은 정답을 채점하는 순간에만
+    알 수 있고(streak_v2.record_correct_word — CheckIn.streak_qualified 가 false→true 로
+    바뀌는 그 answer 에서만 qualified_now=true), 세션이 끝난 뒤에는 다시 계산할 방법이 없다.
+    그래서 콤보 요약과 같은 방식으로 세션 도중 캡처해 결과 화면에 넘긴다.
+  */
+  const streakSessionRef = useRef({ qualifiedNow: false, current: null });
   // 콤보 보존 팝업이 열려 있는 동안 대기시킬 카드 채점 로그 큐 (cardMatch/cardMatchListening 전용).
   // 백엔드 combo 로직(combo.py:163-167)이 AT_RISK 상태에서 새 로그가 들어오면 자동 포기시키므로,
   // 팝업 응답을 기다리는 카드 이후의 로그는 팝업이 닫힐 때까지 순서대로 큐잉해둔다.
@@ -371,6 +381,22 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
     } catch (e) { /* 저장 실패는 무시 */ }
   };
 
+  // 연속 학습 세션 요약을 결과 화면(StudyResult)에 전달 (sessionStorage 경유, 콤보와 같은 방식)
+  const persistStreakSummary = () => {
+    try {
+      sessionStorage.setItem('heyvoca_streak_summary', JSON.stringify(streakSessionRef.current));
+    } catch (e) { /* 저장 실패는 무시 */ }
+  };
+
+  // /study/log 응답의 streak payload 처리 — qualifiedNow 는 세션 중 한 번이라도 true 면 계속 true.
+  const handleStreakPayload = (payload) => {
+    if (!payload) return;
+    const s = streakSessionRef.current;
+    s.current = payload.streak ?? s.current;
+    s.qualifiedNow = s.qualifiedNow || !!payload.qualified_now;
+    persistStreakSummary();
+  };
+
   // /study/log 응답의 combo payload 처리 — 상태 갱신 + 위기 시 보호 팝업
   const handleComboPayload = async (payload) => {
     if (!payload) return;
@@ -432,6 +458,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
     const promise = logStudyQuestion(payload)
       .then((logRes) => {
         if (logRes?.data?.combo) handleComboPayload(logRes.data.combo);
+        if (logRes?.data?.streak) handleStreakPayload(logRes.data.streak);
         // 농장 상태 바 payload — 없으면(구버전 응답) 기존 암기상태 배지가 그대로 보인다
         if (logRes?.data?.farm) {
           publishFarm(
@@ -451,7 +478,12 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
               logRes.data.fsrs.stability ?? 0,
               logRes.data.fsrs.state
             );
-            setTestQuestions([...testQuestions]);
+            // 함수형 업데이트 필수: 이 콜백은 /study/log 응답(비동기) 도착 시 실행되는데,
+            // 그 사이 enqueueRetry가 큐 끝에 재출제 문제를 이미 삽입했을 수 있다.
+            // 여기서 닫혀 있는 testQuestions는 요청을 보낼 당시(답변 시점)의 스냅샷이라
+            // [...testQuestions]로 덮으면 그 사이 삽입된 재출제 문제가 통째로 사라져
+            // progressIndex가 배열 범위를 벗어나 "문제를 불러오는 중..."에서 멈춘다.
+            setTestQuestions((prev) => [...prev]);
           }
           if (logRes.data.memory_state_change) {
             const fromKey = backendStateKeyMap[logRes.data.memory_state_change.from] ?? logRes.data.memory_state_change.from;
@@ -558,10 +590,42 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
   // 훅을 전부 부른 **뒤에** 빠져나간다 — 훅보다 위에 두면 이 분기가 실제로 걸리는 순간
   // 렌더마다 훅 개수가 달라져 "Rendered more hooks than during the previous render"로
   // 터진다. 안내 문구를 띄우려고 만든 방어 코드가 오히려 화면을 죽이던 자리였다.
-  if (!testQuestions || testQuestions.length === 0 || !testQuestions[progressIndex]) {
+  const isMissingQuestion = !testQuestions || testQuestions.length === 0 || !testQuestions[progressIndex];
+  // 정상적인 최초 진입 시에도 아주 짧게 이 상태를 스칠 수 있어(문제 세팅 직후 첫 렌더 등),
+  // 몇 초 이상 지속될 때만 "멈췄다"고 보고 다음 행동을 보여준다 — 원인 불명 상태를
+  // 무한 로딩으로 방치하지 않기 위함(예: 위 fsrs 응답 경쟁 조건이 다시 생기는 경우의 안전망).
+  const [showStuckFallback, setShowStuckFallback] = useState(false);
+  useEffect(() => {
+    if (!isMissingQuestion) {
+      setShowStuckFallback(false);
+      return;
+    }
+    const timer = setTimeout(() => setShowStuckFallback(true), 4000);
+    return () => clearTimeout(timer);
+  }, [isMissingQuestion]);
+
+  if (isMissingQuestion) {
     return (
-      <div className="flex items-center justify-center h-full">
+      <div className="flex flex-col items-center justify-center h-full gap-[14px] px-[24px]">
         <p className="text-[16px] text-[#999]">문제를 불러오는 중...</p>
+        {showStuckFallback && (
+          <>
+            <p className="text-[13px] text-layout-gray-300 text-center">
+              문제를 불러오지 못했어요. 학습을 종료하고 다시 시도해주세요.
+            </p>
+            <button
+              type="button"
+              onClick={() => navigate('/home', { replace: true })}
+              className="
+                px-[18px] py-[10px] rounded-[10px]
+                bg-primary-main-600
+                text-layout-white text-[14px] font-[700]
+              "
+            >
+              홈으로 돌아가기
+            </button>
+          </>
+        )}
       </div>
     );
   }
@@ -620,7 +684,10 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
     const optimistic = computeOptimisticFsrs(q.fsrs, isCorrectAnswer);
     q.displayNextReview = predicted?.next_review ?? optimistic.next_review;
     q.fsrs = optimistic; // 추정 fsrs — 백엔드 응답 도착 시 갱신(배지/홈 카운터용)
-    setTestQuestions([...testQuestions]);
+    // 함수형 업데이트 필수: 지금은 호출부(enqueueRetry보다 먼저 호출됨)에 기대어 안전하지만,
+    // 위 486행과 같은 이유로 닫혀 있는 testQuestions를 그대로 덮으면 호출 순서가 바뀌는 순간
+    // 같은 버그(재출제 문제 유실 → progressIndex 범위 초과)가 재발한다.
+    setTestQuestions((prev) => [...prev]);
     const dispStability = predicted?.stability ?? optimistic.stability;
     const dispState = predicted?.state ?? optimistic.state;
     const newStateKey = getMemoryStateKeyByStability(dispStability, dispState);
@@ -894,6 +961,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
     return logStudyQuestion(payload)
       .then(logRes => {
         if (logRes?.data?.combo) handleComboPayload(logRes.data.combo);
+        if (logRes?.data?.streak) handleStreakPayload(logRes.data.streak);
         // 농장 상태 바 payload — 카드 매칭은 카드(단어)마다 따로 붙는다
         if (logRes?.data?.farm) {
           setCardFarmByWordId(prev => ({
@@ -908,7 +976,9 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
             if (target) target.fsrs = logRes.data.fsrs;
           }
           if (currentQuestion?.id === wordId) currentQuestion.fsrs = logRes.data.fsrs;
-          setTestQuestions([...testQuestions]);
+          // 함수형 업데이트 필수 — 위 logIfFirstAttempt와 동일한 이유(비동기 응답 도착 전
+          // enqueueRetry가 재출제 카드를 큐에 이미 넣었을 수 있음).
+          setTestQuestions((prev) => [...prev]);
         }
       })
       .catch(e => console.warn('[FSRS] logStudyQuestion(card) 실패:', e));

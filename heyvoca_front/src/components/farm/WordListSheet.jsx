@@ -115,8 +115,12 @@ const WordListSheet = ({ title, items, paged = false, emptyText = '목록이 비
               key={it.user_voca_id ?? `${it.word}-${idx}`}
               className="flex items-center gap-[11px] w-full h-[58px] border-b border-[#F4F4F4] dark:border-border-dark"
             >
+              {/* it.stage/it.crop — /farm/home-feed·/farm/plants 응답(visual_stage).
+                  it.to — "오늘 자란 단어"(Main.jsx grewItems)는 API 필드가 아니라 클라이언트가
+                  MEMORY_TO_CROP 로 미리 매핑해 둔 crop 키라 이름이 다르다. 이걸 빼먹으면
+                  stage 가 항상 undefined 로 떨어져 전부 씨앗 봉지로 보인다(버그 참고). */}
               <CropImage
-                stage={it.stage || it.crop}
+                stage={it.stage || it.crop || it.to}
                 health={it.health || HEALTH_STATES.FRESH}
                 size={40}
                 className="flex-shrink-0"

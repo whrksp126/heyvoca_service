@@ -9,7 +9,6 @@ import ResultItemBackground01 from '../../assets/images/ResultItemBackground01.s
 import ResultItemBackground02 from '../../assets/images/ResultItemBackground02.svg';
 import { vibrate } from '../../utils/osFunction';
 import { warmTts } from '../../api/tts';
-import MemorizationStatus from '../common/MemorizationStatus';
 import SpeakerButton from '../common/SpeakerButton';
 import { useTheme } from '../../context/ThemeContext';
 import { useExampleSettings } from '../../context/ExampleSettingsContext';
@@ -351,6 +350,14 @@ const StreakWeek = ({ current }) => (
   </div>
 );
 
+// 암기 상태(FSRS 버킷) 순위 · → 작물 단계.
+// (코드 leaf = 기획 새싹, 코드 plant = 기획 이파리)
+// farm 세션 요약(planted/grown/rescued)은 '이번 세션에 단계가 바뀐 단어'만 담는 delta 라,
+// 그대로 복습만 하고 단계가 안 바뀐 단어는 거기 없다 — cropOfWord 가 그 단어들의 작물을
+// 정할 때 쓰는 두 번째 근거가 이 표다(모듈 스코프로 둬 결과 목록 집계와 값을 공유한다).
+const STATE_RANK = { unlearned: 0, leaf: 1, plant: 2, carrot: 3 };
+const STATE_TO_CROP = { unlearned: 'seed', leaf: 'sprout', plant: 'leaf', carrot: 'carrot' };
+
 const StudyResult = () => {
   "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
 
@@ -414,20 +421,60 @@ const StudyResult = () => {
   // 당근 농장 V2 세션 요약 (심은 씨앗 / 자란 작물 / 되살린 작물 / 아이템 / 연속 학습일)
   const [farmSummary, setFarmSummary] = useState(null);
 
-  // 최종 결과 카드의 왼쪽 작물 그림 — 세션 요약에 있는 단어만 단계를 알 수 있다.
+  /*
+    학습 결과 전용 단계 정규화 — 씨앗 구간이면 무조건 'PLANTED_SEED'로 맞춘다.
+
+    stageToCrop()은 UNPLANTED_SEED 와 PLANTED_SEED 를 **둘 다 'seed'로 뭉갠다**(농장 4구역
+    표기에는 맞는 설계다). 하지만 "심었는지 여부" 구분은 그 뒤에도 사라지지 않고 딱 한 곳에만
+    남아 있다 — CropImage/getCropAsset 에 넘기는 stage 문자열이 정확히 'PLANTED_SEED' **리터럴**
+    이냐 아니냐. 그 리터럴일 때만 낱알(심은 씨앗) 그림을 고르고, stageToCrop 을 거쳐 나온
+    'seed'를 포함해 그 외의 모든 'seed'류 입력은 UNPLANTED 봉지(보유 씨앗, 아직 안 심음)로
+    그린다(getCropAsset '씨앗 예외' 주석 참고).
+    이 화면은 "학습을 끝낸 단어"만 모아 두는 목록이라 여기 뜨는 단어는 절대 미심음(보유 씨앗)일
+    수 없다 — planted/rescued/grown 중 무엇으로 알아냈든 씨앗 구간이면 심었다는 사실은 이미
+    확정이다. 그래서 아래 세 경로(farmCropMap 채우기)와 암기 상태 버킷 폴백이 전부 이 함수
+    하나만 거치게 해서, 같은 규칙을 두 군데에 따로 적어 두다 하나를 빠뜨리는 일을 막는다.
+  */
+  const toResultStage = (rawStage) => {
+    const crop = stageToCrop(rawStage);
+    return crop === 'seed' ? 'PLANTED_SEED' : crop;
+  };
+
+  // 최종 결과 카드의 왼쪽 작물 그림 — 세션 요약(delta)에 있는 단어만 여기서 단계를 알 수 있다.
   const farmCropMap = new Map();
   if (farmSummary) {
-    (farmSummary.planted ?? []).forEach(p => farmCropMap.set(p.user_voca_id, 'seed'));
-    (farmSummary.rescued ?? []).forEach(r => farmCropMap.set(r.user_voca_id, stageToCrop(r.crop)));
-    (farmSummary.grown ?? []).forEach(g => farmCropMap.set(g.user_voca_id, stageToCrop(g.crop ?? g.to_stage)));
+    (farmSummary.planted ?? []).forEach(p => farmCropMap.set(p.user_voca_id, toResultStage('PLANTED_SEED')));
+    (farmSummary.rescued ?? []).forEach(r => farmCropMap.set(r.user_voca_id, toResultStage(r.crop)));
+    (farmSummary.grown ?? []).forEach(g => farmCropMap.set(g.user_voca_id, toResultStage(g.crop ?? g.to_stage)));
   }
+  /*
+    조회 우선순위 (정확도 순):
+
+    1) farmSummary.word_stages — /farm/session-summary 응답에 새로 추가된 필드.
+       이번 세션에 문제가 한 번이라도 나온 **모든** 단어의 현재 visual_stage 를 담는다
+       (단계 변화가 없어 delta 에는 안 잡히는 단어까지 포함 — 아래 2)가 못 채우던 자리).
+       키가 JSON 객체 키라 문자열이므로 반드시 String(userVocaId) 로 조회해야 한다 —
+       숫자로 그대로 찾으면 항상 못 찾는다.
+    2) farmCropMap — planted/rescued/grown delta. word_stages 가 없을 때만 쓴다.
+    3) STATE_TO_CROP[item.nextMemoryStateKey] — FSRS 암기 상태 버킷 근사치.
+       farm 축(visual_stage)과는 다른 축이라 완전히 같은 그림이라는 보장은 없다.
+    4) 위 셋 다 없으면 호출부에서 'PLANTED_SEED' 로 떨어진다.
+
+    2)~3)을 남겨 두는 이유: 프론트가 이 백엔드 확장보다 먼저 배포되거나, 어떤 환경에
+    아직 이 변경이 안 올라갔으면 word_stages 자체가 응답에 없다. 그때도 델타/암기 상태
+    버킷으로 계속 작물 그림을 그려서(텍스트 배지·봉지 버그 없이) 자연스럽게 낮은
+    정확도로 내려가야지, 화면이 깨지거나 예전 버그로 되돌아가면 안 된다.
+  */
   const cropOfWord = (item) => {
     // /study/log 가 보내는 user_voca_id 와 같은 키로 찾는다 (vocaIndexId 우선 — id 와 다를 수 있다)
     const userVocaId = item?.vocaIndexId ?? item?.id;
-    if (userVocaId != null && farmCropMap.has(userVocaId)) return farmCropMap.get(userVocaId);
-    // 학습 중 /study/log 응답의 farm payload 를 문항에 남겨두는 경우의 보조 경로
-    const payload = item?.farm;
-    if (payload?.crop || payload?.stage) return stageToCrop(payload.crop ?? payload.stage);
+    if (userVocaId != null) {
+      const exactStage = farmSummary?.word_stages?.[String(userVocaId)];
+      if (exactStage) return toResultStage(exactStage);
+      if (farmCropMap.has(userVocaId)) return farmCropMap.get(userVocaId);
+    }
+    const stateCrop = STATE_TO_CROP[item?.nextMemoryStateKey];
+    if (stateCrop) return toResultStage(stateCrop);
     return null;
   };
 
@@ -485,6 +532,18 @@ const StudyResult = () => {
         }
       } catch (e) { /* 콤보 요약 파싱 실패는 무시 */ }
 
+      // 연속 학습(streak) 요약 — /study/log 응답에서 세션 도중 캡처해 온 것.
+      // qualifiedNow 가 '오늘 5개 정답 문턱을 이 세션에서 처음 넘었는가'의 유일한 근거다
+      // (자세한 이유는 Main.jsx streakSessionRef 주석 참고).
+      let streakSummary = null;
+      try {
+        const rawStreak = sessionStorage.getItem('heyvoca_streak_summary');
+        if (rawStreak) {
+          sessionStorage.removeItem('heyvoca_streak_summary');
+          streakSummary = JSON.parse(rawStreak);
+        }
+      } catch (e) { /* 연속 학습 요약 파싱 실패는 무시 */ }
+
       // 당근 농장 V2 — 세션 요약 조회. 실패하면 농장 슬라이드 없이 기존 슬라이드만 보여준다.
       const sessionId = state?.sessionId ?? state?.session_id ?? comboSummary?.sessionId ?? null;
       let farm = null;
@@ -527,10 +586,7 @@ const StudyResult = () => {
       }));
       const newWordCount = newWordRows.length;
 
-      // 암기 상태가 좋아진 단어 집계
-      const STATE_RANK = { unlearned: 0, leaf: 1, plant: 2, carrot: 3 };
-      // 기존 암기 상태 키 → 작물 단계 (코드 leaf = 기획 새싹, 코드 plant = 기획 이파리)
-      const STATE_TO_CROP = { unlearned: 'seed', leaf: 'sprout', plant: 'leaf', carrot: 'carrot' };
+      // 암기 상태가 좋아진 단어 집계 (STATE_RANK/STATE_TO_CROP 은 모듈 스코프 — cropOfWord 와 공유)
       const improvedWords = testQuestions.filter(q => {
         const before = STATE_RANK[q.prevMemoryStateKey];
         const after = STATE_RANK[q.nextMemoryStateKey];
@@ -611,11 +667,18 @@ const StudyResult = () => {
         screens.push({ type: 'farmGolden', gold: true, data: { items: goldenList } });
       }
 
-      // ⑩ 연속 학습 — 오늘 5개 이상 정답일 때만(기획 11.1)
-      const todayDone = farmStreak?.today_done
-        ?? ((farm?.correct ?? correctCnt) >= 5);
-      if ((farmStreak?.current ?? 0) > 0 && todayDone) {
-        screens.push({ type: 'farmStreak', data: farmStreak });
+      /*
+        ⑩ 연속 학습 — 오늘 5개 정답 문턱을 '이 세션에서 처음' 넘겼을 때만(기획 11.1, 하루 1회).
+
+        예전에는 `farmStreak?.today_done` (항상 undefined — /farm/session-summary 의 streak 는
+        {current, milestone}뿐이라 이 필드를 준 적이 없다) 이 폴백으로 넘어가 매 세션의
+        정답 수(farm.correct ?? correctCnt) >= 5 를 그대로 썼다. 보통 세션 하나가 5문항을
+        넘기므로 사실상 매번 참이 되어, 연속 기록이 있는 사용자에게는 학습을 끝낼 때마다
+        이 슬라이드가 떴다. `streakSummary.qualifiedNow` 는 오늘 문턱을 처음 넘긴 그 순간의
+        /study/log 응답(streak_v2.record_correct_word)에서만 true 라 세션당 정확히 하루 1회다.
+      */
+      if ((farmStreak?.current ?? streakSummary?.current ?? 0) > 0 && streakSummary?.qualifiedNow) {
+        screens.push({ type: 'farmStreak', data: { current: farmStreak?.current ?? streakSummary?.current } });
       }
 
       // 메인 화면 동기부여 멘트용 — 방금 학습 결과 캐시 (게스트는 홈 진입 전이라 생략)
@@ -851,14 +914,18 @@ const StudyResult = () => {
                 });
                 return flat.map((item, index) => {
                   const meaningsArr = Array.isArray(item.meanings) ? item.meanings : [];
-                  // FSRS 기반 현재 암기 상태
-                  const fsrsReps = item.fsrs?.reps ?? 0;
-                  const fsrsStability = Math.round(item.fsrs?.stability ?? 0);
-                  const fsrsNextReview = item.fsrs?.next_review ?? null;
                   // [정답/오답][단어·뜻][상태] 순서.
                   // 이 목록에서 먼저 찾는 것은 "무엇을 틀렸나"라 채점 표시가 맨 앞에 온다.
-                  // 상태(작물 그림, 없으면 암기 상태 배지)는 부가 정보라 끝에 붙는다.
-                  const crop = cropOfWord(item);
+                  // 상태(작물 그림)는 부가 정보라 끝에 붙는다.
+                  //
+                  // 예전에는 cropOfWord가 null이면 암기 상태 텍스트 배지("단기암기" 등)로
+                  // 돌아갔다. 그런데 그 null은 "농장 요약을 못 받아서"가 아니라 "이 단어는
+                  // 이번 세션에 farm 단계가 안 바뀌어서"였다 — cropOfWord가 세션 요약(delta)에
+                  // 없으면 FSRS 암기 상태 버킷으로 한 번 더 찾아보고, 그래도 없으면 이 화면의
+                  // 전제(전부 학습을 끝낸 단어)를 살려 최소값인 '심은 씨앗'으로 그린다.
+                  // 그 결과 같은 목록에서 어떤 행은 텍스트 배지, 어떤 행은 작물 그림으로
+                  // 갈리던 것을 전부 작물 그림으로 통일한다.
+                  const crop = cropOfWord(item) ?? 'PLANTED_SEED';
                   return (
                     <motion.div
                       key={`${item.id ?? 'q'}-${index}`}
@@ -897,22 +964,8 @@ const StudyResult = () => {
                           {showExamples && <ExampleList examples={item.examples} className="mt-[2px]" />}
                         </div>
 
-                        {/* ③ 상태 — 작물 그림. 농장 요약을 못 받았을 때만 암기 상태 배지로 되돌린다 */}
-                        {crop ? (
-                          <CropImage stage={crop} size={52} className='flex-shrink-0' />
-                        ) : (
-                          <span className='flex-shrink-0'>
-                            <MemorizationStatus
-                              repetition={fsrsReps}
-                              interval={fsrsStability}
-                              ef={2.5}
-                              nextReview={fsrsNextReview}
-                              wordId={item.id}
-                              useRandomMessages={false}
-                              forceText={item.priorityBucket === 'new' ? 'NEW' : null}
-                            />
-                          </span>
-                        )}
+                        {/* ③ 상태 — 작물 그림으로 통일 (텍스트 배지 분기 제거, 위 crop 계산 주석 참고) */}
+                        <CropImage stage={crop} size={52} className='flex-shrink-0' />
                       </div>
                     </motion.div>
                   );
