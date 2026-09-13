@@ -28,6 +28,7 @@ GET 마다 수천 행을 쓰기 잠금으로 훑으면 홈 화면이 곧 병목�
 
 import datetime as dt
 import json
+import logging
 from typing import Optional
 from uuid import UUID
 
@@ -37,11 +38,14 @@ from app import db
 from app.models.models import (CheckIn, FarmEvent, FarmEventLog, FarmItem, FarmItemReason,
                                GemLog, GemReason, HealthState, User, UserFarmItemLog,
                                UserFarmMigration, UserFarmSetting, UserStreak,
-                               UserStudySession, UserVoca, UserVocaGame, VisualStage)
+                               UserStudyLog, UserStudySession, UserVoca, UserVocaGame,
+                               VisualStage)
 from app.services.game.farm_v2 import answer, comeback, growth, inventory, localday
 from app.services.game.farm_v2 import constants as C
 # `health` 는 아래에서 파라미터 이름으로도 써야 한다(계약의 ?health=). 모듈 쪽에 별칭을 준다.
 from app.services.game.farm_v2 import health as health_calc
+
+_log = logging.getLogger(__name__)
 
 # 홈 4그룹 → 해당 성장 단계. growth.HOME_GROUP 의 역방향이다.
 # 'golden' 은 별도 그룹이 아니라 당근 그룹의 하위 집합이다(계약 counts 의 golden 과 같은 뜻).
@@ -528,6 +532,12 @@ def get_session_summary(user_id: UUID, session_id, now: Optional[dt.datetime] = 
 
     슬라이드 순서는 프론트가 정한다. 빈 배열/0 을 그대로 준다.
 
+    응답에 planted/grown/rescued 와 별도로 word_stages(dict, {user_voca_id: visual_stage})를
+    담아 세션에 등장한 모든 단어의 **현재** 농장 단계를 함께 내려준다. 세 delta 배열은
+    "이번 세션에 단계가 바뀐 단어"만 담으므로, 정답을 맞혀 복습만 되고 단계 변화가 없던
+    단어는 거기 없다 — word_stages 는 그 빈틈을 메운다(UserStudyLog 기준, 조회 실패 시
+    {}로 방어).
+
     Raises:
         LookupError — 세션이 없거나 남의 세션
     """
@@ -592,6 +602,20 @@ def get_session_summary(user_id: UUID, session_id, now: Optional[dt.datetime] = 
     words = _word_map(voca_ids)
     stages = _stage_map(voca_ids)
 
+    # planted/grown/rescued 는 '이번 세션에 단계가 바뀐 단어'만 담는 delta 다. 복습만 되고
+    # 단계가 그대로인 단어는 여기 없어서, 프론트는 지금까지 FSRS 암기 상태 버킷으로 그
+    # 단어들의 작물 그림을 근사해 왔다(farm 의 visual_stage 축과 달라 화면마다 다르게
+    # 보일 수 있는 원인). word_stages 는 그 근사를 없애기 위해 **세션에 등장한 모든
+    # user_voca_id 의 현재 visual_stage** 를 delta 와 별도로 통째로 내려준다.
+    try:
+        session_word_ids = _session_word_ids(user_id, session_id)
+        word_stages = _session_word_stages(session_word_ids)
+    except Exception:
+        db.session.rollback()
+        _log.warning('세션 단어 stage 조회 실패 — word_stages 를 빈 값으로 내려줌',
+                     exc_info=True)
+        word_stages = {}
+
     return {
         'planted': [_word_entry(vid, words) for vid in planted],
         'grown': [
@@ -610,6 +634,9 @@ def get_session_summary(user_id: UUID, session_id, now: Optional[dt.datetime] = 
         'protected': protected,
         'correct': int(session.correct_count or 0),
         'total': int(session.question_count or 0),
+        # {user_voca_id(int): visual_stage 리터럴}. 이번 세션에서 문제가 나온 단어 전체를
+        # 담는다(planted/grown/rescued 에 없는, 단계 변화 없이 복습만 된 단어 포함).
+        'word_stages': word_stages,
     }
 
 
@@ -633,6 +660,37 @@ def _stage_map(voca_ids) -> dict:
         .all()
     )
     return dict(rows)
+
+
+def _session_word_ids(user_id: UUID, session_id) -> set:
+    """이번 세션에서 문제로 나온 모든 user_voca_id (단계 변화 여부 무관).
+
+    FarmEventLog 는 상태가 실제로 바뀐 순간만 남기지만(16.2), UserStudyLog 는 세션에서
+    풀린 문제마다 한 행씩 남는다 — 같은 단어가 여러 문제 유형으로 여러 번 나올 수 있어
+    DISTINCT 로 중복을 접는다. 이 테이블은 연도별 파티션이라(c3e8a10b4d22) FK 는 없지만
+    ix_usl_session 인덱스가 session_id 단독으로 걸려 있어 이 조회 하나로 끝난다.
+    """
+    rows = (
+        db.session.query(UserStudyLog.user_voca_id)
+        .filter(UserStudyLog.user_id == user_id,
+                UserStudyLog.session_id == session_id)
+        .distinct()
+        .all()
+    )
+    return {vid for (vid,) in rows}
+
+
+def _session_word_stages(voca_ids) -> dict:
+    """`voca_ids` 각각의 **현재** 농장 visual_stage, user_voca_id 를 키로.
+
+    _plant_item 과 같은 기본값 규칙을 쓴다 — 게임 행이 없으면(한 번도 독립 정답을 내지
+    못한 채 세션이 끝난 단어) 아직 심지 않은 상태이므로 UNPLANTED_SEED 다. 단어 수만큼
+    왕복하지 않도록 IN 절 한 번으로 전체를 끌어온다(N+1 금지).
+    """
+    if not voca_ids:
+        return {}
+    game_stage = _stage_map(voca_ids)
+    return {vid: (game_stage.get(vid) or VisualStage.UNPLANTED_SEED) for vid in voca_ids}
 
 
 def _word_entry(vid: int, words: dict) -> dict:
