@@ -17,8 +17,15 @@
 //
 // §6 — 홈은 "얼마나 해 왔나"만 말한다. "14일 배지까지 2일 남음" 같은 남은 거리 문구는
 // 두지 않는다. 홈에서 눌러야 할 것은 CTA 하나인데 또 하나의 목표가 생기면 시선이 나뉜다.
+//
+// QA §F — 학습 세션 완료 말고도 두 시점에 조용히 재조회한다. 홈은 keep-alive 탭(TabShell)이라
+// 다른 탭에서 학습하고 돌아와도 다시 마운트되지 않아 useLocation().pathname 이 '/home' 으로
+// 바뀌는 순간(=탭 전환)을 감지해야 하고, 앱을 백그라운드에 뒀다 돌아온 경우는 마운트도
+// 경로 전환도 없어 document.visibilitychange 로 따로 봐야 한다. 둘 다 연타 방지로 최소
+// 5초 간격을 둔다 — 짧은 시간에 탭을 왔다갔다 하거나 화면을 껐다 켜도 요청이 겹치지 않게.
 
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import { CaretRight } from '@phosphor-icons/react';
 import { getStreakApi } from '../../api/farm';
 import { CROP_ASSETS } from '../farm/CropImage';
@@ -28,6 +35,8 @@ import { vibrate } from '../../utils/osFunction';
 import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
 import FarmVisitCalendarSheet from './FarmVisitCalendarSheet';
 
+const MIN_RELOAD_INTERVAL_MS = 5000;
+
 const DOW = ['일', '월', '화', '수', '목', '금', '토'];
 
 const StreakCard = () => {
@@ -36,17 +45,42 @@ const StreakCard = () => {
   const { lastSessionResult } = useVocabulary();
   const { pushNewFullSheet } = useNewFullSheetActions();
   const [streak, setStreak] = useState(null);
+  const lastLoadedAtRef = useRef(0);
+  const location = useLocation();
+  const isHomeTab = location.pathname === '/home';
+  const wasHomeTabRef = useRef(isHomeTab);
 
-  const loadStreak = useCallback(async () => {
+  const loadStreak = useCallback(async (force = false) => {
+    // 연타 방지 — 최소 5초 간격. force(학습 세션 완료 직후·최초 로딩)는 이 간격을 건너뛴다.
+    const now = Date.now();
+    if (!force && now - lastLoadedAtRef.current < MIN_RELOAD_INTERVAL_MS) return;
+    lastLoadedAtRef.current = now;
+
     const res = await getStreakApi();
     if (res?.code === 200) setStreak(res.data);
   }, []);
 
   // 최초 1회 + 학습 세션 완료 시 조용히 갱신(스피너 없이 기존 값 유지)
   useEffect(() => {
-    loadStreak();
+    loadStreak(true);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [lastSessionResult?.completedAt]);
+
+  // 홈 탭이 다시 활성될 때 재조회 — keep-alive 탭이라 마운트가 아니라 경로 전환으로 감지한다
+  useEffect(() => {
+    const wasActive = wasHomeTabRef.current;
+    wasHomeTabRef.current = isHomeTab;
+    if (!wasActive && isHomeTab) loadStreak();
+  }, [isHomeTab, loadStreak]);
+
+  // 백그라운드에 있다가 돌아왔을 때 재조회 — 탭 전환이 없어도 화면을 다시 보게 된 시점이다
+  useEffect(() => {
+    const onVisibilityChange = () => {
+      if (document.visibilityState === 'visible') loadStreak();
+    };
+    document.addEventListener('visibilitychange', onVisibilityChange);
+    return () => document.removeEventListener('visibilitychange', onVisibilityChange);
+  }, [loadStreak]);
 
   const today = toLocalDateString(new Date());
   const required = Math.max(1, streak?.required ?? 5);

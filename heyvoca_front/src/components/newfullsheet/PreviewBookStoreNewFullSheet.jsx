@@ -53,8 +53,13 @@ const SAFE_TOP = 'max(var(--status-bar-height), env(safe-area-inset-top, 0px))';
 //   화면(예고)에서 "오늘은 14알만 심어요"로 다시 말한다. 같은 그림과 같은 수를 세 번
 //   연속으로 보게 되므로 여기서는 뺀다. 서점·사전에서 열 때는 그대로 나온다 —
 //   거기서는 이 화면이 밭을 보여 주는 유일한 자리다.
+//
+// listItem: QA §D. 서점 목록(StoreNewFullSheet·BookSection)의 원본 item — 로그인 사용자에게는
+//   `notOwnedCount`(안 갖고 있는 단어 수)가 실려 있다. 넘겨받으면 상점 카드와 같은 규칙으로
+//   "미보유 단어 N개"를 이어 말하고, 없으면(다른 진입 경로·게스트) 전체 단어 수로 되돌아간다 —
+//   상세 응답(bookStoreVocabularySheet)에는 이 필드가 없다(계약에 없는 엔드포인트라서다).
 export const PreviewBookStoreNewFullSheet = ({
-  bookStoreVocabularySheet, onPrimaryAction, primaryActionLabel, hideFieldHero = false,
+  bookStoreVocabularySheet, listItem, onPrimaryAction, primaryActionLabel, hideFieldHero = false,
 }) => {
   "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
 
@@ -247,6 +252,17 @@ export const PreviewBookStoreNewFullSheet = ({
 
   const isEmptyBook = totalCount === 0;
 
+  // QA §D — listItem 이 있으면 그 규칙(미보유/모두 보유/전체), 없으면 이 화면이 아는
+  // 값(totalCount)으로 "단어 N개"만 말한다.
+  const notOwnedCount = listItem?.notOwnedCount;
+  const seedLine = isEmptyBook
+    ? { text: '단어 0 — 직접 추가', className: 'text-layout-black dark:text-layout-white' }
+    : typeof notOwnedCount === 'number'
+      ? (notOwnedCount === 0
+        ? { text: '모두 보유 중', className: 'text-status-success-600' }
+        : { text: `미보유 단어 ${notOwnedCount.toLocaleString()}개`, className: 'text-layout-black dark:text-layout-white' })
+      : { text: `단어 ${totalCount.toLocaleString()}개`, className: 'text-layout-black dark:text-layout-white' };
+
   /*
     단어 한 줄 → 상세 시트.
 
@@ -321,8 +337,8 @@ export const PreviewBookStoreNewFullSheet = ({
                 헤더는 밭 그림 위에 배경 없이 얹는 오버레이라 줄을 더하면 그 자리가 부자연스러워져서
                 자리는 그대로 두고 아이콘만 뺐다(카드 쪽 개정과 같은 규칙 — 텍스트만). */}
             <div className="flex items-center gap-[12px] shrink-0 px-[16px] pt-[26px] pb-[12px]">
-              <span className="text-[13px] font-[800] tracking-[-0.03em] text-layout-black dark:text-layout-white">
-                {isEmptyBook ? '씨앗 0 — 직접 추가' : `심을 씨앗 ${totalCount.toLocaleString()}개`}
+              <span className={`text-[13px] font-[800] tracking-[-0.03em] ${seedLine.className}`}>
+                {seedLine.text}
               </span>
               {/* 검증 표시는 두지 않는다 — 상점에 올라온 단어장은 전부 검증된 것이라
                   굳이 적으면 "검증 안 된 것도 있다"는 뜻이 되어 버린다. */}
@@ -362,7 +378,7 @@ export const PreviewBookStoreNewFullSheet = ({
                 `}
               >
                 {/* 사기 전이라 모든 단어가 같은 씨앗이다 — 산 뒤에는 여기가 실제 단계로 바뀐다 */}
-                <CropImage stage="seed" health={HEALTH_STATES.FRESH} size={52} className="shrink-0" />
+                <CropImage stage="seed" health={HEALTH_STATES.FRESH} size={52} align="center" className="shrink-0" />
 
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-[5px]">

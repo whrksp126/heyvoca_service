@@ -135,14 +135,27 @@ const Main = () => {
 
   const gemCnt = farmOverview?.gem_cnt ?? userProfile?.gem_cnt ?? 0;
 
-  // 오늘 자란 단어 — 승급 + 오늘 첫 진입을 한 목록으로 합친다(§10 "오늘 승급한 단어 목록")
+  /*
+    오늘 자란 단어 — 승급 + 오늘 첫 진입을 한 목록으로 합친다(§10 "오늘 승급한 단어 목록").
+
+    QA §A.4 — `/insights/today-changes` 가 각 항목에 `stage`(visual_stage 리터럴)를 실어
+    보내기 시작한다. 있으면 그걸 그대로 쓴다 — CropImage 가 봉투/낱알을 가르려면 crop 키
+    ('seed')가 아니라 visual_stage 가 필요해서다. 아직 안 내려오는 과도기(구서버) 폴백은
+    기존 FSRS 구간 매핑(MEMORY_TO_CROP)을 쓰되, 'seed'는 항상 PLANTED_SEED 로 바꾼다 —
+    여기 나열되는 단어는 오늘 자란(=이미 심긴) 단어라 미학습(봉투) 그림이 나올 수 없다.
+  */
+  const toPlantedCrop = (memoryState) => {
+    const crop = MEMORY_TO_CROP[memoryState] ?? 'sprout';
+    return crop === 'seed' ? 'PLANTED_SEED' : crop;
+  };
+
   const grewItems = useMemo(() => {
     const raw = [...(todayChanges?.promoted ?? []), ...(todayChanges?.new ?? [])];
     return raw.map((e) => ({
       user_voca_id: e.user_voca_id,
       word: e.word,
-      from: MEMORY_TO_CROP[e.from] ?? 'seed',
-      to: MEMORY_TO_CROP[e.to] ?? 'sprout',
+      from: e.stage ?? toPlantedCrop(e.from),
+      to: e.stage ?? toPlantedCrop(e.to),
       // /insights/today-changes 응답에 방금 추가된 필드 — 아직 안 내려오는 과도기에는
       // undefined 로 와도 카드·시트 양쪽이 빈칸으로 안전하게 처리한다(단계 문구로 되돌리지 않음).
       meaning: e.meaning,

@@ -21,10 +21,16 @@
 // 우측 "씨앗 → 새싹" 단계 변화 문구는 뺐다(사용자 목업 승인) — 이 카드는 이미 "오늘 자란"이라고
 // 제목에서 말하고 있어 단계 변화까지 다시 읽는 건 같은 사실의 반복이었다. 대신 그 자리에
 // 대표 뜻을 넣어 목록만 보고도 무슨 단어인지 알 수 있게 한다.
+//
+// QA §B — 행을 누르면 단어 상세 바텀시트를 연다(시안 A: 별도 힌트 없이 press 배경만).
+// 캐럿 같은 시각 힌트는 두지 않는다(사용자 목업 승인) — 목록 전체가 눌린다는 사실은
+// press 배경으로 충분히 전해진다.
 
 import React from 'react';
 import CropImage from '../farm/CropImage';
 import { HEALTH_STATES } from '../../utils/crop';
+import { useOpenWordDetail } from '../../hooks/useOpenWordDetail';
+import { vibrate } from '../../utils/osFunction';
 
 const VISIBLE_ROWS = 3;
 
@@ -37,6 +43,8 @@ const VISIBLE_ROWS = 3;
  */
 const GrewTodayCard = ({ items = [], onViewAll }) => {
   "use memo";
+
+  const openWordDetail = useOpenWordDetail();
 
   if (!items.length) return null;
 
@@ -60,9 +68,11 @@ const GrewTodayCard = ({ items = [], onViewAll }) => {
 
       <div className="mt-[8px]">
         {rows.map((item, idx) => (
-          <div
+          <button
             key={`${item.user_voca_id ?? item.word}-${idx}`}
-            className={`flex items-center gap-[10px] h-[36px] ${
+            type="button"
+            onClick={() => { vibrate({ duration: 5 }); openWordDetail(item.user_voca_id); }}
+            className={`flex items-center gap-[10px] w-full h-[36px] text-left rounded-[6px] active:bg-layout-gray-50 dark:active:bg-layout-gray-dark ${
               idx > 0 ? 'border-t border-[#F4F4F4] dark:border-[rgba(255,255,255,.08)]' : ''
             }`}
           >
@@ -70,6 +80,7 @@ const GrewTodayCard = ({ items = [], onViewAll }) => {
               stage={item.to}
               health={HEALTH_STATES.FRESH}
               size={28}
+              align="center"
               className="flex-shrink-0"
             />
             <span className="flex-1 min-w-0 truncate text-layout-black dark:text-layout-white text-[15px] font-[700] tracking-[-0.02em]">
@@ -80,7 +91,7 @@ const GrewTodayCard = ({ items = [], onViewAll }) => {
                 {item.meaning}
               </span>
             ) : null}
-          </div>
+          </button>
         ))}
         {rest > 0 && (
           onViewAll ? (

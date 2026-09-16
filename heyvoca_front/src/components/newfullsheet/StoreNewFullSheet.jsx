@@ -1,4 +1,5 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   CaretLeft, CaretRight, Plus, PencilSimple, Info,
@@ -80,6 +81,11 @@ const OwnPill = ({ count }) => (
  * "심을 씨앗 N개"는 아이콘 없이 텍스트로만, 단어장 이름 바로 아래에 붙인다(§4 개정).
  * 검증 마크는 서점 단어장이 전부 검증된 데이터라 붙이지 않고,
  * 반대인 빈 단어장에만 "내가 채우는 밭"을 회색으로 남긴다.
+ *
+ * QA §D — "심을 씨앗 N개"는 이 단어장의 전체 크기만 말해서, 이미 절반을 갖고 있는
+ * 사람에게도 매번 같은 큰 수를 들이밀었다. `GET /search/bookstore` 가 로그인 사용자에게
+ * `notOwnedCount`(안 갖고 있는 단어 수)를 함께 내려주면 그걸 우선 쓴다 — 0이면 살 이유가
+ * 없다는 뜻이라 초록으로 안내하고, 게스트·구서버(필드 없음)는 예전처럼 전체 개수로 되돌아간다.
  */
 const ShopBookCard = ({ item, custom = false, onClick, className = '' }) => {
   const { isDark } = useTheme();
@@ -87,6 +93,14 @@ const ShopBookCard = ({ item, custom = false, onClick, className = '' }) => {
   const accent = custom ? undefined : resolveVocaBookAccentColor(item?.color?.main, isDark);
   const sub = custom ? undefined : resolveVocaBookSubColor(item?.color?.sub, item?.color?.main, isDark);
   const seeds = Number(item?.vocaCount) || 0;
+  const notOwnedCount = item?.notOwnedCount;
+  const seedLine = custom
+    ? { text: '단어 0 — 직접 추가', className: 'text-layout-gray-400 dark:text-layout-gray-300' }
+    : typeof notOwnedCount === 'number'
+      ? (notOwnedCount === 0
+        ? { text: '모두 보유 중', className: 'text-status-success-600' }
+        : { text: `미보유 단어 ${notOwnedCount.toLocaleString('ko-KR')}개`, className: 'text-layout-gray-400 dark:text-layout-gray-300' })
+      : { text: `단어 ${seeds.toLocaleString('ko-KR')}개`, className: 'text-layout-gray-400 dark:text-layout-gray-300' };
 
   return (
     <motion.li
@@ -111,8 +125,8 @@ const ShopBookCard = ({ item, custom = false, onClick, className = '' }) => {
           {custom ? '빈 단어장' : item.name}
         </h5>
         {/* 이름 바로 아래 — 단어 수는 이 밭이 얼마나 커지는지를 정하는 가장 큰 값이다 (아이콘 없이 텍스트만) */}
-        <div className="mt-[2px] text-[10.5px] font-[700] tracking-[-0.02em] text-layout-gray-400 dark:text-layout-gray-300">
-          {custom ? '씨앗 0 — 직접 추가' : `심을 씨앗 ${seeds.toLocaleString('ko-KR')}개`}
+        <div className={`mt-[2px] text-[10.5px] font-[700] tracking-[-0.02em] ${seedLine.className}`}>
+          {seedLine.text}
         </div>
         {custom && (
           <div className="flex items-center gap-[3px] mt-[3px] text-[10px] font-[700] tracking-[-0.02em] text-[#BBBBBB]">
@@ -147,7 +161,26 @@ const StoreNewFullSheet = ({ initialTab = 'books', onInventoryChanged, onGoRotte
   const { popNewFullSheet, pushNewFullSheet } = useNewFullSheetActions();
   const { gemItems, userProfile } = useUser();
   const { pushNewBottomSheet } = useNewBottomSheetActions();
-  const { bookStore, isBookStoreLoading } = useVocabulary();
+  const { bookStore, isBookStoreLoading, fetchBookStore } = useVocabulary();
+
+  /*
+    후속 QA — 상점의 notOwnedCount 는 VocabularyContext 가 로그인 시 1회만 조회해 굳는다.
+    단어장을 사거나(구매 성공 경로는 AddBookStoreNewBottomSheet 가 조용히 재조회) 단어를
+    직접 추가한 뒤 상점으로 돌아오면 그 사이의 변화가 반영돼야 한다. 이 컴포넌트는
+    바텀 네비 "상점" 탭(pages/BookStore.jsx 가 asPage 로 마운트)이 keep-alive(TabShell)라
+    다시 마운트되지 않으므로, useFarmPlants 와 같은 패턴으로 useLocation().pathname 이
+    '/book-store' 로 바뀌는 순간(=탭 전환)을 감지해 조용히 재조회한다.
+    asPage 가 아닌 호출(홈·단어 상세 등에서 띄우는 모달)은 이 탭의 마운트 인스턴스가
+    아니므로 재조회 대상에서 뺀다.
+  */
+  const location = useLocation();
+  const isBookStoreTab = asPage && location.pathname === '/book-store';
+  const wasBookStoreTabRef = useRef(isBookStoreTab);
+  useEffect(() => {
+    const wasActive = wasBookStoreTabRef.current;
+    wasBookStoreTabRef.current = isBookStoreTab;
+    if (!wasActive && isBookStoreTab) fetchBookStore({ silent: true });
+  }, [isBookStoreTab, fetchBookStore]);
 
   const [activeTab, setActiveTab] = useState(
     TABS.some((tab) => tab.key === initialTab) ? initialTab : 'books'
@@ -170,13 +203,16 @@ const StoreNewFullSheet = ({ initialTab = 'books', onInventoryChanged, onGoRotte
     category === ALL_CATEGORY ? bookStore : bookStore.filter((b) => b.category === category)
   ), [bookStore, category]);
 
-  const openBook = async (id) => {
+  const openBook = async (item) => {
     vibrate({ duration: 5 });
     setLoadingDetail(true);
     try {
-      const res = await getBookStoreDetailApi(id);
+      const res = await getBookStoreDetailApi(item.id);
       if (res?.code === 200) {
-        pushNewFullSheet(PreviewBookStoreNewFullSheet, { bookStoreVocabularySheet: res.data });
+        // listItem — 서점 목록(item, notOwnedCount 포함)을 상세 화면에도 넘겨 같은 규칙으로
+        // "미보유 단어 N개"를 이어 말한다(QA §D). 상세 응답(bookStoreVocabularySheet)에는
+        // 이 필드가 없다 — /search/bookstore/{id} 는 계약에 없는 엔드포인트라서다.
+        pushNewFullSheet(PreviewBookStoreNewFullSheet, { bookStoreVocabularySheet: res.data, listItem: item });
       }
     } finally {
       setLoadingDetail(false);
@@ -350,7 +386,7 @@ const StoreNewFullSheet = ({ initialTab = 'books', onInventoryChanged, onGoRotte
 
                 <ul className="grid grid-cols-2 gap-[10px]">
                   {filteredBooks.map((item) => (
-                    <ShopBookCard key={item.id} item={item} onClick={() => openBook(item.id)} />
+                    <ShopBookCard key={item.id} item={item} onClick={() => openBook(item)} />
                   ))}
                   {category === ALL_CATEGORY && (
                     <ShopBookCard key="empty-book" custom onClick={openEmptyBook} />

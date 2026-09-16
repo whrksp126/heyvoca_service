@@ -11,11 +11,17 @@
 // 홈에 진행 지표를 두지 않는다는 시안 §7 은 그대로 지킨다 — 여기 적히는 건 퍼센트나
 // n/m 이 아니라 **단어 그 자체**다. "오늘 6/20"은 얼마나 했는지를 말하지만
 // "abandon 3일 지남"은 무엇을 해야 하는지를 말한다.
+//
+// QA §B — 행을 누르면 단어 상세 바텀시트를 연다(시안 A: 별도 힌트 없이 press 배경만).
+// 헤더의 "물주기"·"보관소" 링크와 "+n개 더"는 이미 각자의 onClick 을 갖고 있어 그대로 둔다 —
+// 행 자체에만 새 클릭을 얹는다.
 
 import React from 'react';
 import { CaretRight } from '@phosphor-icons/react';
 import CropImage from '../farm/CropImage';
 import { HEALTH_STATES } from '../../utils/crop';
+import { useOpenWordDetail } from '../../hooks/useOpenWordDetail';
+import { vibrate } from '../../utils/osFunction';
 
 const VISIBLE_ROWS = 3;
 
@@ -44,6 +50,8 @@ const TONE_CLASS = {
  */
 const WordFeedCard = ({ title, items = [], tone, showCrop = true, moreLabel, onMore, totalCount, onViewAll }) => {
   "use memo";
+
+  const openWordDetail = useOpenWordDetail();
 
   if (!items.length) return null;
 
@@ -87,9 +95,11 @@ const WordFeedCard = ({ title, items = [], tone, showCrop = true, moreLabel, onM
         {rows.map((item, idx) => {
           const right = tone ? tone(item) : null;
           return (
-            <div
+            <button
               key={item.user_voca_id ?? `${item.word}-${idx}`}
-              className={`flex items-center gap-[10px] h-[36px] ${
+              type="button"
+              onClick={() => { vibrate({ duration: 5 }); openWordDetail(item.user_voca_id); }}
+              className={`flex items-center gap-[10px] w-full h-[36px] text-left rounded-[6px] active:bg-layout-gray-50 dark:active:bg-layout-gray-dark ${
                 idx > 0 ? 'border-t border-[#F4F4F4] dark:border-[rgba(255,255,255,.08)]' : ''
               }`}
             >
@@ -98,6 +108,7 @@ const WordFeedCard = ({ title, items = [], tone, showCrop = true, moreLabel, onM
                   stage={item.stage || item.crop}
                   health={item.health || HEALTH_STATES.FRESH}
                   size={46}
+                  align="center"
                   className="flex-shrink-0"
                 />
               )}
@@ -116,7 +127,7 @@ const WordFeedCard = ({ title, items = [], tone, showCrop = true, moreLabel, onM
                   </span>
                 ) : null
               )}
-            </div>
+            </button>
           );
         })}
         {rest > 0 && (

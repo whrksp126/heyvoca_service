@@ -134,7 +134,7 @@ const FarmArt = ({ src, alt }) => (
 // 단어장·최종 결과와 같은 배치다(시안 학습결과 §1 ①).
 const FarmGrowRow = ({ crop, word, meaning, right }) => (
   <div className='flex items-center gap-[11px] px-[14px] py-[12px] rounded-[10px] bg-layout-gray-50 dark:bg-layout-gray-dark'>
-    <CropImage stage={crop} size={52} className='flex-shrink-0' />
+    <CropImage stage={crop} size={52} align="center" className='flex-shrink-0' />
     <div className='flex flex-col flex-1 min-w-0 text-left'>
       <span className='text-[15px] font-[700] text-layout-black dark:text-layout-white truncate'>{word}</span>
       {meaning ? (
@@ -972,7 +972,7 @@ const StudyResult = () => {
                         </div>
 
                         {/* ③ 상태 — 작물 그림으로 통일 (텍스트 배지 분기 제거, 위 crop 계산 주석 참고) */}
-                        <CropImage stage={crop} size={52} className='flex-shrink-0' />
+                        <CropImage stage={crop} size={52} align="center" className='flex-shrink-0' />
                       </div>
                     </motion.div>
                   );

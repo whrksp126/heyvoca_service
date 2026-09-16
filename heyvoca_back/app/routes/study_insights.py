@@ -6,7 +6,7 @@ from uuid import UUID
 from flask import Blueprint, jsonify, g, request
 
 from app import db
-from app.models.models import UserStudyLog, UserVoca
+from app.models.models import UserStudyLog, UserVoca, VisualStage
 from app.utils.jwt_utils import jwt_required
 # 분류 기준은 study.py 단일 소스를 import (중복 정의 금지 — 임계값 변경 시 자동 추종)
 from app.routes.study import _classify_memory_state, _STABILITY_SHORT, _STABILITY_MEDIUM
@@ -208,15 +208,20 @@ def today_changes():
 
     응답 data:
       {
-        "promoted": [{"user_voca_id","word","meaning","from","to"}, ...],  # 기존 단어 승급
-        "new":      [{"user_voca_id","word","meaning","from","to"}, ...],  # 오늘 첫 학습 진입
+        "promoted": [{"user_voca_id","word","meaning","from","to","stage"}, ...],  # 기존 단어 승급
+        "new":      [{"user_voca_id","word","meaning","from","to","stage"}, ...],  # 오늘 첫 학습 진입
         "counts":   {"promoted": n, "new": n, "by_state": {"short":n,"medium":n,"long":n}}
       }
+
+    `stage` 는 농장의 실제 visual_stage 리터럴(예 PLANTED_SEED/SPROUT)이다. FSRS 구간
+    (unlearned/short/...)만으로 화면이 작물을 근사하면, 심은 씨앗도 아직 안 심은 봉투로
+    잘못 그려지는 문제가 있었다(session-summary의 word_stages와 같은 이유).
     """
     from app.services.study_day import logical_day_start_utc
-    # 대표 뜻 추출은 farm_v2.query 의 구현을 재사용한다(문자열/딕셔너리 배열 두 형태 처리).
-    # 상단 import 로 올리지 않는 이유는 다른 서비스 모듈 순환 참조를 피하기 위해서다.
-    from app.services.game.farm_v2.query import _first_meaning
+    # 대표 뜻 추출과 stage 조회는 farm_v2.query 의 구현을 재사용한다(문자열/딕셔너리 배열
+    # 두 형태 처리, 게임 행 없으면 UNPLANTED_SEED). 상단 import 로 올리지 않는 이유는
+    # 다른 서비스 모듈 순환 참조를 피하기 위해서다.
+    from app.services.game.farm_v2.query import _first_meaning, _session_word_stages
 
     user_id = UUID(g.user_id)
     day_start_utc = logical_day_start_utc()
@@ -251,6 +256,7 @@ def today_changes():
     ]
 
     words = {}
+    stage_map = {}
     if changed_ids:
         for uv_id, word, meanings in (
             db.session.query(UserVoca.id, UserVoca.word, UserVoca.voca_meanings)
@@ -258,6 +264,13 @@ def today_changes():
             .all()
         ):
             words[uv_id] = (word or '', _first_meaning(meanings))
+        # IN 절 1회 — 단어 수만큼 왕복하지 않는다. 조회 실패해도 목록 자체는 내려줘야
+        # 하므로 stage 만 빈 값으로 방어한다(session-summary의 word_stages 방어와 동일 패턴).
+        try:
+            stage_map = _session_word_stages(changed_ids)
+        except Exception:
+            db.session.rollback()
+            stage_map = {}
 
     promoted, new_words = [], []
     by_state = {}
@@ -270,6 +283,7 @@ def today_changes():
             'meaning': meaning,
             'from': st['from'],
             'to': st['to'],
+            'stage': stage_map.get(vid, VisualStage.UNPLANTED_SEED),
         }
         if st['from'] == 'unlearned':
             new_words.append(entry)

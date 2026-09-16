@@ -294,7 +294,7 @@ const WordDetaileNewBottomSheet = ({ vocabularyId, id }) => {
           위 정렬로 두면 씨앗처럼 작은 단계가 상자 한가운데(=글자보다 한참 아래)에
           떨어져 단어와 따로 노는 것처럼 보인다. */}
       <div className="flex items-center gap-[13px]">
-        <CropImage stage={detailStage} health={health} size={88} className="shrink-0 -my-[10px]" />
+        <CropImage stage={detailStage} health={health} size={88} align="center" className="shrink-0 -my-[10px]" />
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-[6px] text-[24px] font-[800] tracking-[-0.04em] leading-[1.15] text-layout-black dark:text-layout-white">
             <span className="min-w-0 break-words">{word.origin}</span>

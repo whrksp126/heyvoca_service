@@ -86,7 +86,7 @@ const FarmField = ({
             />
             <span className="text-left leading-none whitespace-nowrap">
               <span className="block text-[8.5px] font-[700] text-[#7A5433] tracking-[-0.05em]">
-                보유 씨앗
+                미학습
               </span>
               <span className="block mt-[2px] text-[12.5px] font-[800] text-[#4A2E17] tracking-[-0.05em]">
                 {storedSeeds.toLocaleString()}

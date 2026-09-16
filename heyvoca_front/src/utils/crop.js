@@ -116,9 +116,11 @@ export const CROP_LABEL = {
    위해 4개 그룹을 유지"). 그래서 CROP_LABEL 에는 씨앗이 하나뿐이다.
 
    하지만 **단어 하나**를 두고 말할 때는 그 씨앗이 둘로 갈린다.
-     보유 씨앗  담아만 두고 한 번도 독립 정답을 맞히지 못했다 → 밭에 없다. 썩지도 않는다
-     심은 씨앗  첫 독립 정답을 맞혀 흙에 심겼다 → 밭에 있고 물이 필요하다
-   둘을 똑같이 "씨앗"이라 부르면 "왜 이건 물을 줘야 하고 저건 아닌가"에 답할 말이 없다. */
+     미학습(옛 "보유 씨앗")  담아만 두고 한 번도 독립 정답을 맞히지 못했다 → 밭에 없다. 썩지도 않는다
+     씨앗(옛 "심은 씨앗")    첫 독립 정답을 맞혀 흙에 심겼다 → 밭에 있고 물이 필요하다
+   둘을 똑같은 이름으로 부르면 "왜 이건 물을 줘야 하고 저건 아닌가"에 답할 말이 없다(사용자 승인
+   목업 — "보유 씨앗"은 아직 배우지 않았다는 뜻이 더 잘 전해지는 "미학습"으로, "심은 씨앗"은
+   이미 밭에 있다는 사실이 그림으로 보이니 "씨앗"으로 줄였다). */
 export const CROP_DETAIL_STAGES = ['unplanted', 'seed', 'sprout', 'leaf', 'carrot', 'golden'];
 
 const STAGE_TO_DETAIL = {
@@ -144,8 +146,8 @@ export const stageDetail = (visualStage) => {
 };
 
 export const CROP_LABEL_DETAIL = {
-  unplanted: '보유 씨앗',
-  seed: '심은 씨앗',
+  unplanted: '미학습',
+  seed: '씨앗',
   sprout: '새싹',
   leaf: '이파리',
   carrot: '당근',
@@ -154,7 +156,7 @@ export const CROP_LABEL_DETAIL = {
 
 export const cropLabelDetail = (visualStage) => CROP_LABEL_DETAIL[stageDetail(visualStage)];
 
-/** 아직 밭에 없는 단어인가 — 보유 씨앗 */
+/** 아직 밭에 없는 단어인가 — 미학습 */
 export const isUnplantedStage = (visualStage) => stageDetail(visualStage) === 'unplanted';
 
 /**

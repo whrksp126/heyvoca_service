@@ -90,14 +90,17 @@ const BookSection = () => {
     return bookStore.filter((b) => b.category === selectedCategory);
   }, [bookStore, selectedCategory]);
 
-  const handleBookStoreClick = async (id) => {
+  const handleBookStoreClick = async (item) => {
     try {
       vibrate({ duration: 5 });
       setIsLoadingDetail(true);
-      const result = await getBookStoreDetailApi(id);
+      const result = await getBookStoreDetailApi(item.id);
       if (result && result.code === 200) {
+        // listItem — QA §D. 목록 item(notOwnedCount 포함)을 상세 화면에도 넘겨 같은
+        // "미보유 단어 N개" 규칙을 이어 쓴다(상세 응답 자체에는 이 필드가 없다).
         pushNewFullSheet(PreviewBookStoreNewFullSheet, {
           bookStoreVocabularySheet: result.data,
+          listItem: item,
         });
       } else {
         alert('단어장 정보를 가져오는데 실패했습니다.');
@@ -200,7 +203,7 @@ const BookSection = () => {
           <BookCard
             key={item.id}
             item={item}
-            onClick={() => handleBookStoreClick(item.id)}
+            onClick={() => handleBookStoreClick(item)}
           />
         ))}
       </ul>

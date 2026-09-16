@@ -163,7 +163,7 @@ const FarmHero = ({ counts, fieldCounts, healthMix, storedSeeds = 0, health, sta
                     aria-hidden
                     className="absolute left-[5%] right-[5%] top-[9%] h-[42%] rounded-[4px] bg-[rgba(255,240,214,0.18)] blur-[2px]"
                   />
-                  <CropImage stage={SIGN_STAGE[sign.crop]} health={HEALTH_STATES.FRESH} size={30} />
+                  <CropImage stage={SIGN_STAGE[sign.crop]} health={HEALTH_STATES.FRESH} size={30} align="center" />
                   {/* §5 — 단계명 9px/700 #7A5433 · 보유 수 13px/800 #4A2E17 (나무 위에서 읽히는 갈색) */}
                   <span className="relative min-w-0 text-left">
                     <span className="block text-[9px] font-[700] text-[#7A5433] tracking-[-0.05em] leading-[1.05]">

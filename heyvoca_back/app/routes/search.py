@@ -3,11 +3,11 @@ import logging
 import re
 import os
 from flask import render_template, redirect, url_for, request, session, jsonify, g
-from sqlalchemy import text, select, case, func
+from sqlalchemy import text, select, case, func, bindparam
 from sqlalchemy.orm import joinedload, contains_eager
 from app.routes import search_bp
-from app.models.models import db, VocaBook, Voca, VocaMeaning, VocaExample, VocaBookMap, VocaMeaningMap, VocaExampleMap, Bookstore
-from app.utils.jwt_utils import jwt_required
+from app.models.models import db, VocaBook, Voca, VocaMeaning, VocaExample, VocaBookMap, VocaMeaningMap, VocaExampleMap, Bookstore, UserVoca
+from app.utils.jwt_utils import jwt_required, optional_user_id
 from flask_caching import Cache
 import redis
 from uuid import UUID
@@ -343,9 +343,14 @@ def search_bookstore_word():
 # bookstore, admin_voca_book, admin_voca_book_map 테이블의 데이터를 가져옴
 @search_bp.route('/bookstore', methods=['GET'])
 def search_bookstore_all():
+    # 선택적 인증 — 게스트 온보딩도 이 API를 부른다. 토큰이 없거나 무효해도 401을 내지
+    # 않고 그냥 게스트로 취급한다(notOwnedCount만 null로 내려간다).
+    user_id = optional_user_id()
+
     # MySQL용 쿼리 (단어 목록 제외)
     # NOTE: heyvoca_dict.* prefix 필수 (default bind = heyvoca_user)
     # 카테고리는 bookstore_category.sort_order 기준 정렬 (없으면 999)
+    # admin_voca_book_id 는 화면에는 안 나가지만 notOwnedCount 계산에 필요해 추가했다.
     query = text("""
         SELECT
             bs.id AS bookstore_id,
@@ -355,6 +360,7 @@ def search_bookstore_all():
             bs.color,
             bs.hide,
             bs.gem,
+            bs.admin_voca_book_id,
             COALESCE(avb.word_count, 0) AS word_count,
             COALESCE(bc.sort_order, 999) AS category_sort_order
         FROM heyvoca_dict.bookstore bs
@@ -367,6 +373,35 @@ def search_bookstore_all():
     # 데이터 조회
     rows = db.session.execute(query).fetchall()
 
+    # 로그인 사용자만 서점별 "미보유 단어 수"를 계산한다. 서점 수만큼 쿼리를 돌리면
+    # (N+1) 서점이 늘어날 때마다 이 API가 느려지므로, 사용자 보유 voca_id 집합 1쿼리 +
+    # 사전 DB의 book→voca 매핑 1쿼리(IN절)로 끝내고 차집합은 파이썬에서 계산한다.
+    # cross-schema(heyvoca_user ↔ heyvoca_dict) JOIN/FK는 규칙상 금지돼 있어 이 방식이 맞다.
+    not_owned_map = {}
+    if user_id:
+        book_ids = [row.admin_voca_book_id for row in rows]
+        if book_ids:
+            owned_rows = (
+                db.session.query(UserVoca.voca_id)
+                .filter(UserVoca.user_id == UUID(user_id), UserVoca.voca_id.isnot(None))
+                .all()
+            )
+            owned_ids = {r[0] for r in owned_rows}
+
+            map_query = text("""
+                SELECT book_id, voca_id
+                FROM heyvoca_dict.admin_voca_book_map
+                WHERE book_id IN :book_ids
+            """).bindparams(bindparam('book_ids', expanding=True))
+            map_rows = db.session.execute(map_query, {'book_ids': book_ids}).fetchall()
+
+            book_voca_map = {}
+            for book_id, voca_id in map_rows:
+                book_voca_map.setdefault(book_id, set()).add(voca_id)
+
+            for book_id, voca_ids in book_voca_map.items():
+                not_owned_map[book_id] = len(voca_ids - owned_ids)
+
     # 결과 가공
     final_results = []
     for row in rows:
@@ -374,6 +409,8 @@ def search_bookstore_all():
         color_data = row.color
         if isinstance(color_data, str):
             color_data = json.loads(color_data)
+
+        not_owned_count = not_owned_map.get(row.admin_voca_book_id, 0) if user_id else None
 
         final_results.append({
             "id": row.bookstore_id,
@@ -383,7 +420,8 @@ def search_bookstore_all():
             "color": color_data,
             "hide": row.hide,
             "gem": row.gem,
-            "vocaCount": row.word_count
+            "vocaCount": row.word_count,
+            "notOwnedCount": not_owned_count
         })
 
     return jsonify({'code': 200, 'data': final_results}), 200

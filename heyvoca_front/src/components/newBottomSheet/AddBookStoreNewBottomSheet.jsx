@@ -40,7 +40,7 @@ export const AddBookStoreNewBottomSheet = ({ bookStoreVocabularySheet }) => {
   "use memo";
 
   const navigate = useNavigate();
-  const { addBookStoreVocabularySheet, vocabularySheets } = useVocabulary();
+  const { addBookStoreVocabularySheet, vocabularySheets, fetchBookStore } = useVocabulary();
   const { popNewBottomSheet, openNewBottomSheet, clearStack } = useNewBottomSheetActions();
   const { popNewFullSheet } = useNewFullSheetActions();
   const { userProfile, setUserProfile } = useUser();
@@ -117,6 +117,9 @@ export const AddBookStoreNewBottomSheet = ({ bookStoreVocabularySheet }) => {
       refreshUnlock();
       // 밭에 씨앗이 늘었다. 홈·마이 통계 캐시를 조용히 맞춘다.
       refreshStats?.();
+      // 후속 QA — 방금 산 단어장의 notOwnedCount 가 상점 목록에 굳어 있으면 산 직후에도
+      // "미보유 단어 N개"가 그대로 남는다. 서점 목록을 조용히 재조회해 맞춘다.
+      fetchBookStore({ silent: true });
       openSuccess(remainGem);
     } catch (e) {
       console.error('단어장 추가 실패:', e);
@@ -196,7 +199,7 @@ export const AddBookStoreNewBottomSheet = ({ bookStoreVocabularySheet }) => {
         image={seedImg}
         imageAlt=""
         title={name}
-        desc={seeds > 0 ? `심을 씨앗 ${n(seeds)}개 · 헤이보카 검증` : '헤이보카 검증'}
+        desc={seeds > 0 ? `단어 ${n(seeds)}개 · 헤이보카 검증` : '헤이보카 검증'}
       />
 
       {/* §3 — 결제액 하나가 아니라 세 값이 어떻게 바뀌는지를 적는다 */}

@@ -13,9 +13,11 @@
 //   페이지드(paged) 총량이 커서(수십~백 단위) 커서 페이지네이션이 필요한 "아직 심지 않은
 //                씨앗" 전용. GET /farm/plants?group=unplanted 를 스크롤에 맞춰 이어 부른다.
 //
-// 행을 눌러도 단어 상세 시트를 열지 않는다 — 여기 넘어오는 행(user_voca_id)은
-// WordDetaileNewBottomSheet 가 요구하는 (vocabularySheetId, id) 쌍이 아니라서, 그 매핑을
-// 새로 만들어야 하는데 이번 범위에 없다(보고 참고). 목록만 정확히 보여주는 쪽을 택했다.
+// QA §B — 행을 누르면 단어 상세 바텀시트를 연다. 예전에는 이 시트가 넘겨받는 행
+// (user_voca_id)이 WordDetaileNewBottomSheet 가 요구하는 (vocabularySheetId, id) 쌍이
+// 아니라서 열 수 없었는데, 공용 훅 useOpenWordDetail 이 userDictionary 에서 그 매핑을
+// user_voca_id 하나로 찾아 주므로 이 풀시트 위에 바텀시트를 그대로 push 할 수 있다
+// (VocabularySheetNewFullSheet 가 쓰는 것과 같은 패턴).
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { CaretLeft } from '@phosphor-icons/react';
 import { motion } from 'framer-motion';
@@ -24,6 +26,7 @@ import { vibrate } from '../../utils/osFunction';
 import { getFarmPlantsApi } from '../../api/farm';
 import CropImage, { CROP_ASSETS } from './CropImage';
 import { HEALTH_STATES } from '../../utils/crop';
+import { useOpenWordDetail } from '../../hooks/useOpenWordDetail';
 
 const PAGE_SIZE = 20;
 
@@ -37,6 +40,7 @@ const PAGE_SIZE = 20;
  */
 const WordListSheet = ({ title, items, paged = false, emptyText = '목록이 비어 있어요', ctaLabel, onCta }) => {
   const { popNewFullSheet } = useNewFullSheetActions();
+  const openWordDetail = useOpenWordDetail();
 
   const [pagedItems, setPagedItems] = useState([]);
   const [cursor, setCursor] = useState(null);
@@ -111,9 +115,11 @@ const WordListSheet = ({ title, items, paged = false, emptyText = '목록이 비
       <div className="flex-1 overflow-y-auto">
         <div className="px-[16px]">
           {rows.map((it, idx) => (
-            <div
+            <button
               key={it.user_voca_id ?? `${it.word}-${idx}`}
-              className="flex items-center gap-[11px] w-full h-[58px] border-b border-[#F4F4F4] dark:border-border-dark"
+              type="button"
+              onClick={() => { vibrate({ duration: 5 }); openWordDetail(it.user_voca_id); }}
+              className="flex items-center gap-[11px] w-full h-[58px] text-left border-b border-[#F4F4F4] dark:border-border-dark active:bg-layout-gray-50 dark:active:bg-layout-gray-dark"
             >
               {/* it.stage/it.crop — /farm/home-feed·/farm/plants 응답(visual_stage).
                   it.to — "오늘 자란 단어"(Main.jsx grewItems)는 API 필드가 아니라 클라이언트가
@@ -123,6 +129,7 @@ const WordListSheet = ({ title, items, paged = false, emptyText = '목록이 비
                 stage={it.stage || it.crop || it.to}
                 health={it.health || HEALTH_STATES.FRESH}
                 size={40}
+                align="center"
                 className="flex-shrink-0"
               />
               <div className="flex-1 min-w-0">
@@ -135,7 +142,7 @@ const WordListSheet = ({ title, items, paged = false, emptyText = '목록이 비
                   </div>
                 ) : null}
               </div>
-            </div>
+            </button>
           ))}
 
           {loading && (

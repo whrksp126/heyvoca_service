@@ -8,8 +8,6 @@ import { useUser } from '../../context/UserContext';
 import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
 import { backendUrl, fetchDataAsync, getTextSound, prefetchTtsList, stripHtmlTags } from '../../utils/common';
-import WordDetaileNewBottomSheet from '../newBottomSheet/WordDetaileNewBottomSheet';
-import SelectVocaBookForWordNewBottomSheet from '../newBottomSheet/SelectVocaBookForWordNewBottomSheet';
 import AddWordNewBottomSheet from '../newBottomSheet/AddWordNewBottomSheet';
 import PickPlotNewBottomSheet from '../newBottomSheet/PickPlotNewBottomSheet';
 import VocabularyWordsNewFullSheet from '../newfullsheet/VocabularyWordsNewFullSheet';
@@ -22,8 +20,9 @@ import { useTheme } from '../../context/ThemeContext';
 import { resolveVocaBookBackground } from '../../utils/vocaBookColor';
 import { useOnboardingUnlock } from '../../context/OnboardingUnlockContext';
 import CropImage from '../farm/CropImage';
-import { stageToCrop, cropLabelDetail } from '../../utils/crop';
+import { stageDetail, cropLabelDetail } from '../../utils/crop';
 import useFarmPlants from './useFarmPlants';
+import { useOpenWordDetail } from '../../hooks/useOpenWordDetail';
 import bookEmptyImg from '../../assets/images/farm/book-empty.png';
 import gemImg from '../../assets/images/gem.png';
 
@@ -32,12 +31,17 @@ const SCROLL_THRESHOLD = 200;
 const RECENT_KEY = 'heyvoca:find:recent';
 const RECENT_MAX = 8;
 
-/** 성장 단계 필터 — 시안 find §4 "단계 4종". 황금은 홈과 같이 당근 그룹에 포함한다. */
+/**
+ * 성장 단계 필터 — 시안 find §4 "단계 5종"(QA 개정). 황금은 홈과 같이 당근 그룹에 포함한다.
+ * `stage` 는 CropImage 에 그대로 넘겨 칩 그림을 고른다 — crop 키('seed')만 넘기면 봉투/낱알을
+ * 가르지 못해 미학습(UNPLANTED_SEED)과 씨앗(PLANTED_SEED) 칩이 같은 그림이 되어 버린다.
+ */
 const STAGE_FILTERS = [
-  { key: 'seed', label: '씨앗' },
-  { key: 'sprout', label: '새싹' },
-  { key: 'leaf', label: '이파리' },
-  { key: 'carrot', label: '당근' },
+  { key: 'unplanted', label: '미학습', stage: 'UNPLANTED_SEED' },
+  { key: 'seed', label: '씨앗', stage: 'PLANTED_SEED' },
+  { key: 'sprout', label: '새싹', stage: 'SPROUT' },
+  { key: 'leaf', label: '이파리', stage: 'LEAF' },
+  { key: 'carrot', label: '당근', stage: 'CARROT' },
 ];
 
 /** 돌봄 = 시들거나 썩기 직전인 것 (시안 find §4) */
@@ -137,6 +141,7 @@ const Main = () => {
   const { completeMission } = useOnboardingUnlock();
   const { isLogin } = useUser();
   const { plants } = useFarmPlants(isLogin);
+  const openWordDetail = useOpenWordDetail();
 
   // 검색 상태
   const [isSearchMode, setIsSearchMode] = useState(false);
@@ -198,13 +203,15 @@ const Main = () => {
     });
   }, [userDictionary, sortBy]);
 
-  // 필터 칩 개수 — 목록과 같은 모집단에서 세야 칩과 목록이 어긋나지 않는다
+  // 필터 칩 개수 — 목록과 같은 모집단에서 세야 칩과 목록이 어긋나지 않는다.
+  // stageDetail 로 여섯 단계를 그대로 세야 미학습/씨앗이 갈린다 — stageToCrop 은 둘을
+  // 'seed' 하나로 뭉갠다. 농장 정보가 아직 없는 단어(plant 없음)는 밭에 없으니 미학습이다.
   const filterCounts = useMemo(() => {
-    const c = { all: sortedWords.length, seed: 0, sprout: 0, leaf: 0, carrot: 0, care: 0 };
+    const c = { all: sortedWords.length, unplanted: 0, seed: 0, sprout: 0, leaf: 0, carrot: 0, care: 0 };
     sortedWords.forEach((word) => {
       const plant = plants[String(word.vocaIndexId)];
-      const crop = plant ? stageToCrop(plant.stage) : 'seed';
-      const key = crop === 'golden' ? 'carrot' : crop;
+      const detail = plant ? stageDetail(plant.stage) : 'unplanted';
+      const key = detail === 'golden' ? 'carrot' : detail;
       if (c[key] !== undefined) c[key] += 1;
       if (CARE_HEALTH.includes(String(plant?.health || '').toUpperCase())) c.care += 1;
     });
@@ -219,8 +226,8 @@ const Main = () => {
     }
     return sortedWords.filter((w) => {
       const plant = plants[String(w.vocaIndexId)];
-      const crop = plant ? stageToCrop(plant.stage) : 'seed';
-      return (crop === 'golden' ? 'carrot' : crop) === filter;
+      const detail = plant ? stageDetail(plant.stage) : 'unplanted';
+      return (detail === 'golden' ? 'carrot' : detail) === filter;
     });
   }, [sortedWords, plants, filter]);
 
@@ -465,23 +472,9 @@ const Main = () => {
     pushNewBottomSheet(AddWordNewBottomSheet, { origin: submittedQuery });
   };
 
-  const handleWordItemClick = (word) => {
-    const books = word.vocaBooks ?? [];
-    if (books.length === 0) return;
-    vibrate({ duration: 5 });
-
-    if (books.length === 1) {
-      pushNewBottomSheet(WordDetaileNewBottomSheet, {
-        vocabularyId: books[0].vocaBookId,
-        id: word.vocaIndexId,
-      });
-      return;
-    }
-    pushNewBottomSheet(SelectVocaBookForWordNewBottomSheet, {
-      vocaIndexId: word.vocaIndexId,
-      vocaBookIds: books.map(b => b.vocaBookId),
-    });
-  };
+  // QA §B — 단어장 1개면 상세 시트, 여러 개면 고르는 시트. 원래 이 파일에만 있던 로직을
+  // useOpenWordDetail 공용 훅으로 뽑았다(홈 피드·농장 목록도 같은 판단을 쓴다).
+  const handleWordItemClick = (word) => openWordDetail(word.vocaIndexId);
 
   // ── 필터 칩 ────────────────────────────────────────────────
   const chipBase = 'flex items-center gap-[5px] h-[32px] rounded-full text-[12.5px] font-[700] tracking-[-0.02em] whitespace-nowrap shrink-0';
@@ -497,14 +490,14 @@ const Main = () => {
       >
         전체 <b className="font-[800]">{filterCounts.all}</b>
       </button>
-      {STAGE_FILTERS.map(({ key, label }) => (
+      {STAGE_FILTERS.map(({ key, label, stage }) => (
         <button
           key={key}
           type="button"
           onClick={() => { vibrate({ duration: 5 }); setFilter(key); }}
           className={`${chipBase} pl-[8px] pr-[11px] ${filter === key ? chipOn : chipOff}`}
         >
-          <CropImage stage={key} health="FRESH" size={34} alt="" />
+          <CropImage stage={stage} health="FRESH" size={34} align="center" alt="" />
           {label} <b className="font-[800]">{filterCounts[key]}</b>
         </button>
       ))}
@@ -539,9 +532,10 @@ const Main = () => {
         className="flex items-center gap-[11px] h-[58px] shrink-0 cursor-pointer border-b border-[#F4F4F4] dark:border-white/[0.07]"
       >
         <CropImage
-          stage={plant?.stage ?? 'seed'}
+          stage={plant?.stage ?? 'UNPLANTED_SEED'}
           health={plant?.health ?? 'FRESH'}
           size={52}
+          align="center"
           className="shrink-0"
         />
         <div className="flex-1 min-w-0">
@@ -705,7 +699,7 @@ const Main = () => {
             <span className="flex items-center justify-center w-[22px] h-[22px] shrink-0">
               {owned ? (
                 <CropImage
-                  stage={plant?.stage ?? 'seed'}
+                  stage={plant?.stage ?? 'UNPLANTED_SEED'}
                   health={plant?.health ?? 'FRESH'}
                   size={38}
                 />
@@ -781,7 +775,7 @@ const Main = () => {
               {myWord ? (
                 <span className="flex items-center gap-[5px] h-[28px] pl-[6px] pr-[11px] rounded-full bg-layout-gray-50 dark:bg-layout-gray-dark text-[12px] font-[800] tracking-[-0.02em] text-layout-black dark:text-layout-white">
                   <CropImage
-                    stage={plant?.stage ?? 'seed'}
+                    stage={plant?.stage ?? 'UNPLANTED_SEED'}
                     health={plant?.health ?? 'FRESH'}
                     size={36}
                   />
@@ -883,7 +877,7 @@ const Main = () => {
                   style={{ backgroundColor: bg }}
                 >
                   <CropImage
-                    stage={plant?.stage ?? 'seed'}
+                    stage={plant?.stage ?? 'UNPLANTED_SEED'}
                     health={plant?.health ?? 'FRESH'}
                     size={52}
                     className="shrink-0"
@@ -894,7 +888,7 @@ const Main = () => {
                     </div>
                     <div className="mt-[2px] flex items-center gap-[4px] text-[11px] font-[600] tracking-[-0.02em] text-layout-gray-300 dark:text-layout-gray-200">
                       <CropImage
-                        stage={plant?.stage ?? 'seed'}
+                        stage={plant?.stage ?? 'UNPLANTED_SEED'}
                         health={plant?.health ?? 'FRESH'}
                         size={13}
                         alt=""
@@ -954,13 +948,15 @@ const Main = () => {
                   className="flex items-center gap-[10px] rounded-[12px] px-[12px] py-[10px] mb-[7px]"
                   style={{ backgroundColor: bg }}
                 >
-                  <CropImage stage="seed" health="FRESH" size={52} className="shrink-0" />
+                  <CropImage stage="seed" health="FRESH" size={52} align="center" className="shrink-0" />
                   <div className="flex-1 min-w-0">
                     <div className="truncate text-[13.5px] font-[800] tracking-[-0.03em] text-layout-black dark:text-layout-white">
                       {item.bookstore_name}
                     </div>
                     <div className="mt-[2px] text-[11px] font-[600] tracking-[-0.02em] text-layout-gray-300 dark:text-layout-gray-200">
-                      {store?.vocaCount ? `심을 씨앗 ${store.vocaCount}개` : '심을 씨앗이 들어 있어요'}
+                      {/* QA §D — "심을 씨앗"은 아직 심지 않은 상태만 가리키는 말이라 서점
+                          미리보기에는 맞지 않는다(사용자 목업 승인, "단어"로 통일) */}
+                      {store?.vocaCount ? `단어 ${store.vocaCount}개` : '단어가 들어 있어요'}
                     </div>
                   </div>
                   <button

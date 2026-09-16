@@ -135,6 +135,45 @@ export const cropAssetByVariant = (stage, variant, { solo = false } = {}) => {
 };
 
 /**
+ * QA §A.1 — 정사각형 칸(밭이 아닌 자리)에서 작물을 세로 가운데로 맞추는 상수.
+ *
+ * 에셋은 전부 512² 에 **바닥선 y=440** 기준이라, 목록·칩·상세 상단처럼 정사각형 칸에
+ * 그대로 넣으면 작은 단계(씨앗·새싹)일수록 칸 아래쪽에 깔린다. 에셋을 고치는 대신
+ * img 에 CSS transform 만 준다 — 실측 바운딩박스(알파>40) 기준 내용물의 세로 중심(cy,
+ * 512 기준 px)과 확대 배율(scale)이다.
+ *
+ *   공식: translateY(%) = -scale × (cy - 256) / 512
+ *
+ * golden(황금 당근)은 이 표에 없다 — icon-golden-carrot.png 는 이미 꽉 찬 그림이라
+ * 변환이 필요 없다. solo=false(밭에 심긴 판)에도 적용하지 않는다 — 그쪽은 흙 위 배치가
+ * 이미 다른 좌표계(FarmField)를 쓴다.
+ */
+const ALIGN_CENTER_TRANSFORM = {
+  envelopeSeed: { scale: 1, cy: 323 },   // 봉투(UNPLANTED healthy-seed) — 미학습
+  bareSeed: { scale: 1.6, cy: 397 },     // 낱알(BARE seed) — 씨앗(심은 것)
+  sprout: { scale: 1.2, cy: 358 },       // 새싹(UNPLANTED sprout)
+  leaf: { scale: 1, cy: 276 },           // 이파리(UNPLANTED leaf)
+  carrot: { scale: 1, cy: 245 },         // 당근(UNPLANTED carrot)
+};
+
+/**
+ * align="center" 가 쓸 변환 키를 고른다 — getCropAsset 이 실제로 고르는 에셋(봉투/낱알
+ * 등)과 반드시 같은 판정이어야 한다. 다르면 낱알 그림에 봉투용 변환을 씌우는 식으로 어긋난다.
+ */
+const alignCenterKey = (stage, health, solo) => {
+  if (!solo) return null;
+  const crop = stageToCrop(stage);
+  const variant = healthToVariant(health);
+  if (crop === 'golden' || variant === 'golden') return null;
+  if (crop === 'seed') {
+    const planted = String(stage || '').trim().toUpperCase() === 'PLANTED_SEED';
+    return planted ? 'bareSeed' : 'envelopeSeed';
+  }
+  if (crop === 'sprout' || crop === 'leaf' || crop === 'carrot') return crop;
+  return null;
+};
+
+/**
  * @param {object} props
  * @param {string} props.stage    백엔드 visual_stage(`SPROUT` 등) 또는 crop 키(`sprout` 등)
  * @param {string} props.health   백엔드 health(`FRESH` 등). 없으면 건강한 그림
@@ -142,12 +181,26 @@ export const cropAssetByVariant = (stage, variant, { solo = false } = {}) => {
  *                                에셋이 정사각형이고 단계별 크기가 그림에 들어 있어
  *                                모든 단계에 같은 값을 주면 된다.
  * @param {boolean} props.solo    false 면 흙에 심긴 판을 쓴다
+ * @param {'bottom'|'center'} props.align  'bottom'(기본) 은 현행 그대로. 'center' 는 밭이
+ *                                아닌 **정사각형 칸**(목록 행·칩·상세 상단 등)에서 써서
+ *                                작은 단계가 칸 아래에 깔리지 않고 가운데로 맞춰지게 한다.
  * @param {string} props.className
  * @param {string} props.alt      직접 지정하지 않으면 단계·상태 문구가 들어간다
  */
-const CropImage = ({ stage, health, size = 26, solo = true, className = '', alt }) => {
+const CropImage = ({ stage, health, size = 26, solo = true, align = 'bottom', className = '', alt }) => {
   const src = getCropAsset(stage, health, { solo });
   const label = alt ?? `${cropLabel(stage)} ${healthLabel(health)}`;
+
+  const style = { width: size, height: size };
+  if (align === 'center') {
+    const key = alignCenterKey(stage, health, solo);
+    const cfg = key ? ALIGN_CENTER_TRANSFORM[key] : null;
+    if (cfg) {
+      const translateY = (-cfg.scale * (cfg.cy - 256)) / 512 * 100;
+      style.transform = `translateY(${translateY.toFixed(2)}%) scale(${cfg.scale})`;
+      style.transformOrigin = 'center';
+    }
+  }
 
   return (
     <img
@@ -155,7 +208,7 @@ const CropImage = ({ stage, health, size = 26, solo = true, className = '', alt 
       alt={label}
       draggable={false}
       className={`object-contain select-none ${className}`}
-      style={{ width: size, height: size }}
+      style={style}
     />
   );
 };

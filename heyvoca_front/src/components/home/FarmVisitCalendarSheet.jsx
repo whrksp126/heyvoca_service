@@ -11,6 +11,15 @@
 //
 // 기획 11.5 — 끊겼을 때의 연출은 이 화면에 없다. 큰 빨간 0 도, 복구(보호권 구매) 유도도
 // 두지 않는다. 끊긴 사실은 `current` 가 작아진 것으로만 드러난다.
+//
+// QA §C — §2 개정: 날짜 셀은 버튼이다. 기본 선택은 오늘이고, 오늘보다 미래인 날짜는
+// (모양은 그대로 두고) 탭을 막는다 — 아직 일어나지 않은 날을 조회할 수는 없다. 쉰 날은
+// 탭할 수 있다 — "기록이 없다"는 것도 하나의 사실이라서다. 다른 달로 넘겨도 선택은
+// 유지되고, 그 달에 선택일이 없으면(달력 창 밖) 요약 칸은 마지막으로 고른 날을 그대로
+// 보여준다. 선택된 셀은 핑크 링(ring-2 ring-primary-main-600 + ring-offset-2)으로,
+// 오늘과 겹치면 기존 검정 inset 테두리 위에 핑크 링이 함께 선다. 달력과 범례 사이에
+// 선택한 날의 요약 칸을 둔다 — correct_cnt(구서버는 없을 수 있다)가 있으면 개수까지 말하고,
+// 없으면 자격 문구만 남긴다(문구 4+1종은 아래 summaryFor 참고).
 
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
@@ -76,6 +85,57 @@ const CELL_CLASS = {
   miss: 'text-layout-gray-100 dark:text-[#3A3A3A]',
 };
 
+/** 선택 날짜 라벨 — "9월 13일 (일)" */
+const formatDateLabel = (dateStr) => {
+  const [y, m, d] = dateStr.split('-').map(Number);
+  const dow = DOW[new Date(y, m - 1, d).getDay()];
+  return `${m}월 ${d}일 (${dow})`;
+};
+
+/**
+ * 선택한 날짜의 요약 칸 문구 — QA §C.
+ *
+ * 순서가 곧 규칙이다.
+ *   ① 오늘인데 아직 자격(required)을 못 채웠다 → 진행 중이라는 사실을 먼저 말한다
+ *   ② 자격을 채웠다(qualified) → 이어진 날
+ *   ③ 학습은 없었지만 보호권으로 지켰다(protected)
+ *   ④ 과거인데 correct_cnt>0 이고 미달 → "했지만 모자랐다"
+ *   ⑤ 그 외 → 쉰 날
+ * correct_cnt 는 QA 계약으로 `/farm/streak` calendar 항목에 추가되는 필드라 구서버는
+ * 안 줄 수 있다 — 그때는 개수 문구를 빼고 자격 여부만 남긴다(오늘 칸은 홈 카드와 같은
+ * today_correct 로 대신할 수 있어 예외로 둔다).
+ */
+const summaryFor = (date, info, streak, today) => {
+  const required = streak?.required ?? 5;
+  const isToday = date === today;
+  const hasCorrectCnt = typeof info?.correct_cnt === 'number';
+  const correctCnt = isToday
+    ? (streak?.today_correct ?? (hasCorrectCnt ? info.correct_cnt : 0))
+    : (hasCorrectCnt ? info.correct_cnt : 0);
+
+  if (isToday && !info?.qualified) {
+    const remain = Math.max(0, required - correctCnt);
+    return {
+      title: `맞힌 단어 ${correctCnt}개`,
+      sub: remain > 0 ? `${remain}개만 더 맞히면 오늘도 이어져요` : '오늘도 이어졌어요',
+    };
+  }
+  if (info?.qualified) {
+    if (isToday || hasCorrectCnt) {
+      return { title: `맞힌 단어 ${correctCnt}개`, sub: `${required}개 이상 맞혀 연속으로 이어졌어요` };
+    }
+    // 구서버 폴백 — 개수를 모르니 자격 문구만 남긴다
+    return { title: '연속으로 이어진 날', sub: null };
+  }
+  if (info?.protected) {
+    return { title: '보호권으로 지킨 날', sub: '학습은 없었지만 연속은 끊기지 않았어요' };
+  }
+  if (!isToday && hasCorrectCnt && correctCnt > 0) {
+    return { title: `맞힌 단어 ${correctCnt}개`, sub: `${required}개를 못 채워 연속엔 들어가지 않았어요` };
+  }
+  return { title: '쉰 날', sub: '기록이 없어요' };
+};
+
 /** 셀 안의 표식 — 물방울 / 방패. 쉰 날은 아무것도 두지 않는다(§2) */
 const CellMark = ({ state }) => {
   if (state === 'goal') {
@@ -113,6 +173,8 @@ const FarmVisitCalendarSheet = () => {
     const now = new Date();
     return { year: now.getFullYear(), month: now.getMonth() + 1 };
   });
+  // QA §C — 기본 선택은 오늘. 달을 넘겨도 선택은 그대로 두고 요약 칸만 따라간다.
+  const [selectedDate, setSelectedDate] = useState(today);
 
   const load = useCallback(async () => {
     const res = await getStreakApi();
@@ -164,6 +226,21 @@ const FarmVisitCalendarSheet = () => {
     vibrate({ duration: 5 });
     setView((v) => shiftYM(v.year, v.month, offset));
   };
+
+  // QA §C — 미래 날짜는 탭을 막는다. 쉰 날을 포함해 오늘까지는 전부 고를 수 있다.
+  const selectDate = (date) => {
+    if (date > today) return;
+    vibrate({ duration: 5 });
+    setSelectedDate(date);
+  };
+
+  // 다른 달로 넘어가 선택일이 그 달의 byDate 창 밖이어도(예: 35일 창을 벗어난 과거)
+  // byDate[selectedDate] 는 그냥 undefined 가 되고 summaryFor 가 "쉰 날"로 안전하게 그린다 —
+  // 요약 칸은 마지막으로 고른 날짜 자체는 그대로 보여준다(달력이 어느 달을 보고 있든 무관).
+  const selectedSummary = useMemo(
+    () => summaryFor(selectedDate, byDate[selectedDate], streak, today),
+    [selectedDate, byDate, streak, today],
+  );
 
   // §1 하단 — 연속 보상. 받은 것 하나 + 앞으로 둘(시안 3행)
   const rewardRows = useMemo(() => {
@@ -285,22 +362,50 @@ const FarmVisitCalendarSheet = () => {
           >
             {weeks.map((cell, i) => {
               if (!cell) return <span key={`e${i}`} className="aspect-square" />;
+              const isFuture = cell.date > today;
+              const isSelected = cell.date === selectedDate;
               return (
-                <span
+                <button
                   key={cell.date}
+                  type="button"
+                  disabled={isFuture}
+                  onClick={() => selectDate(cell.date)}
+                  aria-label={`${cell.day}일`}
+                  aria-pressed={isSelected}
                   className={`
                     aspect-square rounded-[10px] flex flex-col items-center justify-center gap-[1px]
                     text-[11px] font-[700]
                     ${CELL_CLASS[cell.state]}
                     ${cell.isToday ? 'shadow-[inset_0_0_0_1.5px_#111111] dark:shadow-[inset_0_0_0_1.5px_#FFFFFF]' : ''}
+                    ${isSelected ? 'ring-2 ring-primary-main-600 ring-offset-2 ring-offset-[#FFD7F3]' : ''}
                   `}
                 >
                   {cell.day}
                   <CellMark state={cell.state} />
-                </span>
+                </button>
               );
             })}
           </motion.div>
+
+          {/* QA §C — 선택한 날의 요약. 달력 그리드 아래·범례 위.
+              날짜 라벨이 왼쪽, 본문·부제가 그 오른쪽에 왼쪽 정렬로 이어진다. 부제(자격 문구)는
+              좁은 폰에서 한 줄에 다 안 들어갈 수 있어(예: "5개 이상 맞혀 연속으로 이어졌어요")
+              truncate 로 자르지 않고 최대 2줄까지 자연스럽게 줄바꿈한다 — 제목만 한 줄로 자른다. */}
+          <div className="flex items-start justify-between gap-[10px] mt-[10px] rounded-[10px] bg-primary-main-50 dark:bg-primary-main-dark border border-primary-main-200 dark:border-transparent px-[12px] py-[10px]">
+            <span className="shrink-0 text-[12px] font-[800] tracking-[-0.02em] text-[#B8709F]">
+              {formatDateLabel(selectedDate)}
+            </span>
+            <span className="flex-1 min-w-0 text-left">
+              <span className="block truncate text-[13px] font-[700] tracking-[-0.02em] text-layout-black dark:text-layout-white">
+                {selectedSummary.title}
+              </span>
+              {selectedSummary.sub && (
+                <span className="block line-clamp-2 text-[11px] font-[500] leading-[1.4] text-layout-gray-400">
+                  {selectedSummary.sub}
+                </span>
+              )}
+            </span>
+          </div>
 
           {/* §2 범례 — 네 가지 상태. 쉰 날에도 X 나 빨강을 쓰지 않는다 */}
           <div className="flex flex-wrap gap-[12px] mt-[12px]">

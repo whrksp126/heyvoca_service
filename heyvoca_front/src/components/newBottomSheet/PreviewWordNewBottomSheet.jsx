@@ -34,7 +34,7 @@ const PreviewWordNewBottomSheet = ({ word }) => {
       {/* 헤더 — 산 뒤 상세와 같은 짜임(작물 · 단어 24px · 발음 · 스피커).
           아직 심기 전이라 작물은 전부 씨앗이다. */}
       <div className="flex items-center gap-[13px]">
-        <CropImage stage="seed" health={HEALTH_STATES.FRESH} size={88} className="shrink-0 -my-[10px]" />
+        <CropImage stage="seed" health={HEALTH_STATES.FRESH} size={88} align="center" className="shrink-0 -my-[10px]" />
         <div className="flex-1 min-w-0">
           <div className="text-[24px] font-[800] tracking-[-0.04em] leading-[1.15] text-layout-black dark:text-layout-white">
             <span className="min-w-0 break-words">{word.origin}</span>

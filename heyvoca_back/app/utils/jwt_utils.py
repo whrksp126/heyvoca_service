@@ -57,6 +57,33 @@ def jwt_required(f):
     return decorated
 
 
+def optional_user_id():
+    """Authorization 헤더가 있고 유효하면 user_id(str), 없거나 무효하면 None.
+
+    `jwt_required` 는 검증 실패 시 401 을 내려 라우트 진입 자체를 막는다. 하지만
+    `/search/bookstore` 처럼 비로그인(게스트 온보딩)도 호출하는 API에서 "로그인했으면
+    개인화 필드를 얹는다"를 하려면 실패를 에러가 아니라 '게스트'로 다뤄야 한다.
+    검증 로직(`jwt.decode` + SECRET_KEY + HS256)은 `jwt_required` 와 동일하게 맞춘다 —
+    두 곳이 갈리면 한쪽만 통과하는 토큰이 생긴다.
+    """
+    auth_header = request.headers.get('Authorization')
+    if not auth_header:
+        return None
+
+    try:
+        token = auth_header.split(" ")[1]
+    except IndexError:
+        return None
+
+    try:
+        data = jwt.decode(token, SECRET_KEY, algorithms=['HS256'])
+        return data.get('user_id')
+    except jwt.PyJWTError:
+        return None
+    except Exception:
+        return None
+
+
 def generate_access_token(user_id, email=None):
     """
     액세스 토큰 생성

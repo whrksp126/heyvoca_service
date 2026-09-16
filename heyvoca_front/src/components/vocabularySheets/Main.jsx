@@ -225,7 +225,8 @@ const Main = () => {
                       stage="seed"
                       health={HEALTH_STATES.FRESH}
                       size={22}
-                      alt="보유 씨앗"
+                      align="center"
+                      alt="미학습"
                     />
                     {counts.unplanted}
                   </span>
@@ -247,6 +248,7 @@ const Main = () => {
                           stage={stage === 'seed' ? 'PLANTED_SEED' : stage}
                           health={HEALTH_STATES.FRESH}
                           size={22}
+                          align="center"
                           alt={CROP_LABEL[stage]}
                         />
                         {counts[stage]}

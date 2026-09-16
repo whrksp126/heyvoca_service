@@ -28,7 +28,7 @@ const WordRow = ({ word, onClick }) => {
         border-b border-[#F4F4F4] dark:border-layout-gray-dark
       "
     >
-      <CropImage stage={stage} health={health} size={52} className="shrink-0" />
+      <CropImage stage={stage} health={health} size={52} align="center" className="shrink-0" />
 
       <span className="flex-1 min-w-0">
         {/* 검증 인장은 여기 두지 않는다.

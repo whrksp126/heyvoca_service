@@ -377,6 +377,7 @@ const RottenListSheet = ({ onChanged, onOpenShop }) => {
                   stage={it.crop || it.highest_stage}
                   health="ROTTEN"
                   size={30}
+                  align="center"
                   className="flex-shrink-0"
                 />
                 <div className="flex-1 min-w-0">

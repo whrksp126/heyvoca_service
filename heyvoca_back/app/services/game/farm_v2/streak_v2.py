@@ -164,6 +164,23 @@ def _flag_days(user_id: UUID, since: dt.date, until: dt.date) -> dict:
     return {r[0]: (bool(r[1]), bool(r[2])) for r in rows}
 
 
+def _correct_counts(user_id: UUID, since: dt.date, until: dt.date) -> dict:
+    """{날짜: 그날 정답 완료한 서로 다른 단어 수}.
+
+    `_flag_days` 와 별도 함수로 둔 이유는 그 함수가 `(qualified, protected)` 튜플
+    시그니처로 이미 다른 곳(`_counted_days`/`_walk_back`)에 물려 있어서다. 캘린더 탭 시
+    "맞힌 단어 N개" 요약(프론트 `StreakCard.jsx`)에만 쓰는 값이라 얹지 않고 따로 뺐다.
+    """
+    rows = (
+        db.session.query(CheckIn.attendence_date, CheckIn.correct_word_cnt)
+        .filter(CheckIn.user_id == user_id,
+                CheckIn.attendence_date >= since,
+                CheckIn.attendence_date <= until)
+        .all()
+    )
+    return {r[0]: (r[1] or 0) for r in rows}
+
+
 def _counted_days(flags: dict) -> set:
     """연속으로 세는 날 = 자격을 채운 날 + 보호권으로 이은 날(11.3)."""
     return {d for d, (qualified, protected) in flags.items() if qualified or protected}
@@ -564,12 +581,14 @@ def get_state(user_id: UUID, now: Optional[dt.datetime] = None) -> dict:
 
     since = today - dt.timedelta(days=34)
     flags = _flag_days(user_id, since, today)
+    correct_counts = _correct_counts(user_id, since, today)   # 캘린더 날짜 탭 요약용 — 쿼리 1회 추가
     calendar = []
     cursor = since
     while cursor <= today:
         qualified, protected = flags.get(cursor, (False, False))
         calendar.append({'date': cursor.isoformat(),
-                         'qualified': qualified, 'protected': protected})
+                         'qualified': qualified, 'protected': protected,
+                         'correct_cnt': correct_counts.get(cursor, 0)})
         cursor += _DAY
 
     today_row = (

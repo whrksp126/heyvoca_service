@@ -640,19 +640,27 @@ export const VocabularyProvider = ({ children }) => {
     return bookStore.find(book => book.id === bookStoreId);
   }, [bookStore]);
 
-  // 서점 데이터 불러오기
-  const fetchBookStore = useCallback(async () => {
+  // 서점 데이터 불러오기.
+  // silent — QA 후속(§D 스테일 notOwnedCount) 재조회용. 앱 시작 시 최초 1회만 부르던 걸
+  // 구매 직후·상점 탭 재활성 시에도 부르게 됐는데, 그때마다 기본 동작(로딩 스피너 노출 +
+  // 실패 시 alert)이 뜨면 이미 그려진 카드 위로 스피너가 깜빡이거나 조용해야 할 배경
+  // 갱신이 알림창을 띄운다. silent=true 면 로딩 플래그를 건드리지 않고 실패도 콘솔에만 남긴다.
+  const fetchBookStore = useCallback(async ({ silent = false } = {}) => {
     try {
-      setIsBookStoreLoading(true);
+      if (!silent) setIsBookStoreLoading(true);
       const result = await getBookStoreApi();
-      if (result.code != 200) return alert('서점 데이터를 불러오는데 실패했습니다.');
+      if (result.code != 200) {
+        if (silent) { console.error('서점 데이터 재조회 실패:', result); return; }
+        return alert('서점 데이터를 불러오는데 실패했습니다.');
+      }
       setBookStore(result.data);
       setErrorBookStore(null);
     } catch (err) {
+      if (silent) { console.error('서점 데이터 재조회 오류:', err); return; }
       setErrorBookStore('서점 데이터를 불러오는데 실패했습니다.');
       console.error('Failed to fetch book store:', err);
     } finally {
-      setIsBookStoreLoading(false);
+      if (!silent) setIsBookStoreLoading(false);
     }
   }, []);
 
