@@ -324,8 +324,8 @@ const Main = () => {
     }, { smFull: true, closeOnBackdropClick: true });
   };
 
-  // 지금 물이 필요한 단어 — 헤더의 "물주기"는 그대로 바로 학습으로 보내고(§5-3 판단 근거는
-  // 하단 보고 참고), "+n개 더"만 홈 피드 캐시(limit 20)로 목록을 보여준다.
+  // 지금 물이 필요한 단어 — 헤더의 "물주기" 링크는 뗐다(아래 feedCandidates 참고).
+  // "+n개 더"만 홈 피드 캐시(limit 20)로 목록을 보여준다.
   const openCareSheet = () => {
     vibrate({ duration: 5 });
     pushNewFullSheet(WordListSheet, {
@@ -354,10 +354,10 @@ const Main = () => {
       title: '지금 물이 필요한 단어',
       items: feed.care ?? [],
       tone: careTone,
-      // 헤더 "물주기"는 그대로 바로 학습으로 보낸다(⑤-3, 지적된 씨앗과 달리 바꾸지 않기로 판단
-      // — 보고 참고). "+n개 더"만 새 시트로 목록을 보여준다.
-      moreLabel: '물주기',
-      onMore: handleTodayStudyButtonClick,
+      // 헤더 "물주기" 링크를 뗐다 — "아직 심지 않은 씨앗"과 같은 구조로, 헤더는 안 눌리는
+      // 총 개수만 남기고 "+n개 더"만 목록 진입점으로 남긴다(사용자 요청).
+      moreLabel: null,
+      onMore: null,
       totalCount: careCnt,
       onViewAll: openCareSheet,
     },

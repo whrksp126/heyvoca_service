@@ -27,41 +27,47 @@ const ProgressSplash = ({ progress = 0, message = '' }) => {
     <div className="bg-primary-main-100 dark:bg-layout-gray-dark w-full h-screen absolute top-0 left-0 flex flex-col items-center z-[9999]">
       <div style={{ paddingTop: 'var(--status-bar-height)' }}></div>
 
-      {/* 물 주는 헤이 — 화면 정중앙(로그인 스플래시와 같은 자리). bob 애니메이션은
-          reduceMotion 이면 아예 걸지 않는다 — transition 을 지워도 초기 프레임이 남아
-          움직임이 없는 게 아니라 "멈춰 있다"로 보이는 편이 낫다. */}
-      <motion.div
-        className="w-[190px] h-[190px] absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
-        animate={reduceMotion ? undefined : { y: [0, -6, 0] }}
-        transition={reduceMotion ? undefined : { duration: 2.4, repeat: Infinity, ease: 'easeInOut' }}
-      >
-        <img
-          src={mascotWatering}
-          alt=""
-          draggable={false}
-          className="block w-full h-full object-contain select-none"
-        />
-
-        {/* 물방울 3개 — 방울마다 0.6초씩 늦게 시작해서 순서대로 떨어지고, 1.8초마다 처음부터
-            반복한다. 한 방울의 움직임 구간(0~50%)만 낙하·소멸이고 나머지 구간은 다음 차례를
-            기다리며 숨어 있다 — times 로 그 구간을 정해 준다. */}
-        {!reduceMotion && Array.from({ length: DROPLET_COUNT }).map((_, i) => (
-          <motion.span
-            key={i}
-            aria-hidden
-            className="absolute w-[6px] h-[6px] rounded-full bg-[#9ED2FF]"
-            style={DROPLET_ORIGIN}
-            animate={{ y: [0, 26, 26], opacity: [1, 0, 0] }}
-            transition={{
-              duration: DROPLET_CYCLE,
-              times: [0, 0.5, 1],
-              repeat: Infinity,
-              delay: i * DROPLET_INTERVAL,
-              ease: 'easeIn',
-            }}
+      {/* 물 주는 헤이 — 화면 정중앙(로그인 스플래시와 같은 자리). 바깥 div는 순수 CSS
+          transform(-translate-x/y-1/2)으로만 중앙 정렬한다 — framer-motion의 animate={{ y }}는
+          엘리먼트의 transform을 인라인 스타일로 통째로 관리해서, 같은 엘리먼트에 Tailwind의
+          중앙 정렬 translate 클래스를 같이 걸면 그 클래스가 지워지고 좌상단 기준으로 밀려버린다
+          (QA에서 오른쪽 아래로 쏠려 보이던 원인). 그래서 bob 애니메이션은 안쪽 motion.div에서만
+          건다 — reduceMotion 이면 아예 걸지 않는다(transition만 지우면 초기 프레임이 남아
+          "멈춰 있다"가 아니라 어색하게 보임). */}
+      <div className="w-[190px] max-w-[45vw] aspect-square absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+        <motion.div
+          className="relative w-full h-full"
+          animate={reduceMotion ? undefined : { y: [0, -6, 0] }}
+          transition={reduceMotion ? undefined : { duration: 2.4, repeat: Infinity, ease: 'easeInOut' }}
+        >
+          <img
+            src={mascotWatering}
+            alt=""
+            draggable={false}
+            className="block w-full h-full object-contain select-none"
           />
-        ))}
-      </motion.div>
+
+          {/* 물방울 3개 — 방울마다 0.6초씩 늦게 시작해서 순서대로 떨어지고, 1.8초마다 처음부터
+              반복한다. 한 방울의 움직임 구간(0~50%)만 낙하·소멸이고 나머지 구간은 다음 차례를
+              기다리며 숨어 있다 — times 로 그 구간을 정해 준다. */}
+          {!reduceMotion && Array.from({ length: DROPLET_COUNT }).map((_, i) => (
+            <motion.span
+              key={i}
+              aria-hidden
+              className="absolute w-[6px] h-[6px] rounded-full bg-[#9ED2FF]"
+              style={DROPLET_ORIGIN}
+              animate={{ y: [0, 26, 26], opacity: [1, 0, 0] }}
+              transition={{
+                duration: DROPLET_CYCLE,
+                times: [0, 0.5, 1],
+                repeat: Infinity,
+                delay: i * DROPLET_INTERVAL,
+                ease: 'easeIn',
+              }}
+            />
+          ))}
+        </motion.div>
+      </div>
 
       {/* 프로그래스 영역 — 하단(화면 하단에서 약 20% 지점) */}
       <div className="absolute bottom-[20%] left-1/2 -translate-x-1/2 flex flex-col items-center gap-[12px]">

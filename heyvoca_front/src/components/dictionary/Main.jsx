@@ -21,6 +21,7 @@ import { resolveVocaBookBackground } from '../../utils/vocaBookColor';
 import { useOnboardingUnlock } from '../../context/OnboardingUnlockContext';
 import CropImage from '../farm/CropImage';
 import { stageDetail, cropLabelDetail } from '../../utils/crop';
+import { isCareDue } from '../../utils/vocaCrop';
 import useFarmPlants from './useFarmPlants';
 import { useOpenWordDetail } from '../../hooks/useOpenWordDetail';
 import bookEmptyImg from '../../assets/images/farm/book-empty.png';
@@ -44,8 +45,13 @@ const STAGE_FILTERS = [
   { key: 'carrot', label: '당근', stage: 'CARROT' },
 ];
 
-/** 돌봄 = 시들거나 썩기 직전인 것 (시안 find §4) */
-const CARE_HEALTH = ['WILTED', 'CRITICAL'];
+/**
+ * 돌봄 = 예정일이 오늘이거나 이미 지난 것 (썩음 포함) — 단어장 목록·상세와 같은
+ * 정의(`utils/vocaCrop.js`의 `isCareDue`)를 쓴다. 예전에는 건강 상태(WILTED/CRITICAL)로
+ * 셌는데, 부패 유예가 끝나야 WILTED 가 되어 방금 지난 단어는 여기서 0으로 잡히면서
+ * 단어장 카드의 "돌봄 N"과 어긋났다.
+ */
+const isPlantCareDue = (plant) => isCareDue(plant?.days_to_review, !plant || plant.stage === 'UNPLANTED_SEED');
 
 const readRecent = () => {
   try {
@@ -213,7 +219,7 @@ const Main = () => {
       const detail = plant ? stageDetail(plant.stage) : 'unplanted';
       const key = detail === 'golden' ? 'carrot' : detail;
       if (c[key] !== undefined) c[key] += 1;
-      if (CARE_HEALTH.includes(String(plant?.health || '').toUpperCase())) c.care += 1;
+      if (isPlantCareDue(plant)) c.care += 1;
     });
     return c;
   }, [sortedWords, plants]);
@@ -221,8 +227,7 @@ const Main = () => {
   const allWords = useMemo(() => {
     if (filter === 'all') return sortedWords;
     if (filter === 'care') {
-      return sortedWords.filter(w =>
-        CARE_HEALTH.includes(String(plants[String(w.vocaIndexId)]?.health || '').toUpperCase()));
+      return sortedWords.filter(w => isPlantCareDue(plants[String(w.vocaIndexId)]));
     }
     return sortedWords.filter((w) => {
       const plant = plants[String(w.vocaIndexId)];

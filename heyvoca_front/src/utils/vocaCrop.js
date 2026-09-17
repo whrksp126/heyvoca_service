@@ -211,13 +211,29 @@ export const bookStageCounts = (words) => {
   return counts;
 };
 
+/**
+ * 돌봄 판정 — 오늘 물이 필요하거나 이미 지난 것(썩음 포함). **단어장(목록·상세)과
+ * 찾기 탭이 반드시 같은 결과를 내야 하는 자리라 함수를 하나로 뺐다.**
+ *
+ * 예전에는 찾기 탭(dictionary/Main.jsx)이 이 정의 대신 건강 상태(WILTED/CRITICAL)로
+ * "돌봄"을 셌다. 부패 유예(최소 3~30일, 초기 단어는 5일)가 끝나야 WILTED 가 되므로
+ * 방금 예정일이 지난 단어는 건강상 아직 FRESH/THIRSTY 라 찾기 탭 돌봄 칩이 0으로
+ * 나오면서 단어장 카드의 "돌봄 N"과 어긋났다. "돌봄"은 언제나 **예정일** 기준이고,
+ * "시듦"(bookWiltedCount)만 건강 상태 기준이다 — 이름이 다른 두 개념을 섞지 않는다.
+ *
+ * @param {number|null|undefined} days - daysToReview(word) 또는 서버가 준
+ *   farm.days_to_review 값. 0 이하면 오늘이거나 이미 지났다는 뜻이다.
+ * @param {boolean} unplanted - 아직 심지 않은 단어(보유 씨앗)인가. 보유 씨앗은
+ *   예정일 자체가 없으니 항상 false.
+ */
+export const isCareDue = (days, unplanted) => {
+  if (unplanted) return false;
+  return days !== null && days !== undefined && days <= 0;
+};
+
 /** 돌봄이 필요한 단어 수 — 오늘 물이 필요하거나 이미 지난 것(썩음 포함) */
 export const bookCareCount = (words, now = new Date()) =>
-  (words || []).filter((word) => {
-    if (isUnplanted(word)) return false;
-    const days = daysToReview(word);
-    return days !== null && days <= 0;
-  }).length;
+  (words || []).filter((word) => isCareDue(daysToReview(word), isUnplanted(word))).length;
 
 /** 시든 단어 수 — 시안 §4 필터 칩 "시듦" */
 export const bookWiltedCount = (words, now = new Date()) =>
@@ -228,11 +244,7 @@ export const bookWiltedCount = (words, now = new Date()) =>
 
 /** 오늘 복습해야 하는 단어 수 — 시안 §4 필터 칩 "오늘" (지남 포함) */
 export const bookDueTodayCount = (words) =>
-  (words || []).filter((word) => {
-    if (isUnplanted(word)) return false;
-    const days = daysToReview(word);
-    return days !== null && days <= 0;
-  }).length;
+  (words || []).filter((word) => isCareDue(daysToReview(word), isUnplanted(word))).length;
 
 export const bookUnverifiedCount = (words) =>
   (words || []).filter((word) => wordVerification(word) === 'unverified').length;
