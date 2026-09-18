@@ -60,6 +60,13 @@ import InfoStrip from './InfoStrip';
 import WordFeedCard from './WordFeedCard';
 import { HEALTH_STATES } from '../../utils/crop';
 import { healthMixFromOverview } from '../../utils/farmField';
+import { toLocalDateString } from '../../utils/common';
+import {
+  buildGreetingContext,
+  resolveGreetingSituation,
+  pickGreetingVariant,
+  formatGreetingName,
+} from '../../data/homeGreetings';
 
 /**
  * `/insights/today-changes` 의 암기 상태 키 → 농장 단계 키.
@@ -161,6 +168,35 @@ const Main = () => {
       meaning: e.meaning,
     }));
   }, [todayChanges]);
+
+  /*
+    히어로 인사말 — farmOverview(이미 캐시된 값)로 상황을 판정해 src/data/homeGreetings.js의
+    상황 중 하나를 고르고, 그 안에서 문구 변형 하나를 무작위로 뽑는다.
+
+    무작위는 리렌더마다 바뀌면 안 되므로(세션 내 고정), 뽑기 자체는
+    useMemo(key = 상황 id + 오늘 날짜)로 감싼다 — greetingCtx(숫자가 담긴 원본)를
+    deps에서 일부러 뺐다. 같은 상황이 유지되는 동안은 같은 문구가 보이고, 학습을 마치고
+    돌아와 farmOverview가 새로 조회돼 상황이 바뀌거나(예: careMany → doneAll) 날짜가
+    바뀌면(자정 지나 재진입) 새로 하나를 뽑는다.
+
+    농장 조회 전(farmOverview===null)에는 situation 'empty'(빈 밭)와 구분이 안 돼
+    "밭이 비어 있어요"가 한 프레임 스치게 된다 — 위 homeState 기본값(HOME_STATES.DUE)과
+    같은 이유로, 조회 전에는 상황 판정을 하지 않고 중립 문구를 깔아 둔다.
+  */
+  const greetingCtx = useMemo(
+    () => buildGreetingContext(farmOverview, { grewTodayCount: grewItems.length }),
+    [farmOverview, grewItems]
+  );
+  const greetingSituation = farmOverview ? resolveGreetingSituation(greetingCtx) : null;
+  const greetingDateKey = toLocalDateString(new Date());
+  const greeting = useMemo(() => {
+    if (!greetingSituation) return { line1: ' 오늘도', line2: '농장을 둘러봐요' };
+    return pickGreetingVariant(greetingSituation, greetingCtx);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [greetingSituation?.id, greetingDateKey]);
+  // "헤이," 자리 — 닉네임이 있으면 닉네임(+콤마)으로, 없거나 너무 길면 줄이거나 폴백한다.
+  // vocabularySheets/Header.jsx가 "{username}의 단어장"에 쓰는 것과 같은 필드.
+  const greetingName = formatGreetingName(userProfile?.username);
 
   // Actions만 구독하므로 state 변경 시 리렌더링 안 됨
   const { pushNewFullSheet } = useNewFullSheetActions();
@@ -464,17 +500,18 @@ const Main = () => {
           {gemCnt.toLocaleString()}
         </button>
 
-        {/* §4 2줄 헤드라인 — "헤이,"만 브랜드 핑크로 칠해 brand 를 끼워 넣는다.
-            농장 전체를 핑크로 칠하지 않는다는 기획 20.1 을 지키는 지점이다 */}
+        {/* §4 2줄 헤드라인 — 첫머리(닉네임 또는 "헤이,")만 브랜드 핑크로 칠해 brand 를
+            끼워 넣는다. 농장 전체를 핑크로 칠하지 않는다는 기획 20.1 을 지키는 지점이다.
+            문구 자체는 src/data/homeGreetings.js가 상황별로 고른다(CTA 5상태와 분리) */}
         <div className="
           absolute top-[max(92px,calc(var(--status-bar-height)+48px))] left-0 right-0 z-[6]
           px-[26px] text-center
           text-[22px] font-[700] tracking-[-0.02em] leading-[1.4]
           text-farm-ink dark:text-layout-white
         ">
-          <em className="not-italic text-primary-main-600">헤이,</em>{view.line1}
+          <em className="not-italic text-primary-main-600">{greetingName}</em>{greeting.line1}
           <br />
-          {view.line2}
+          {greeting.line2}
         </div>
 
         {/* §12 — 주황 핀은 1번(부패 직전 다수) 상태에서만 뜬다.

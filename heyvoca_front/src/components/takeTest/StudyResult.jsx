@@ -19,7 +19,7 @@ import { useStatusBarStyle } from '../../hooks/useStatusBarStyle';
 // 당근 농장 V2 — 세션 요약 슬라이드
 import CropImage, { CROP_ASSETS, FARM_ITEM_ASSETS } from '../farm/CropImage';
 import { stageToCrop, cropLabel, FARM_ITEMS, FARM_ITEM_LABEL } from '../../utils/crop';
-import { StreakDayMark, StreakProtectedLegend } from '../farm/StreakDayMark';
+import { StreakDayMark } from '../farm/StreakDayMark';
 
 // 아이템 이름은 utils/crop.js 의 FARM_ITEM_LABEL 하나로 통일돼 있다(시안 §1⑤ "새심기 삽").
 import { getSessionFarmSummaryApi } from '../../api/farm';
@@ -356,6 +356,8 @@ const ResultCtaBar = ({ children, className = '' }) => (
 // 이어진 날도 학습일과 똑같이 채워진 칸으로 그려져 홈 카드(빈 칸)와 다르게 보였다.
 // `week`가 없을 때만(구버전 캐시·응답 누락) 이 역산 폴백을 쓴다 — 이 경우 보호일은
 // 구분할 수 없어 studied/missed/future만 나온다.
+// 보호일은 별도 범례 문구 없이 칸 색(StreakDayMark의 STREAK_PROTECTED_BG_CLASS)만으로
+// 구분한다 — 아이콘+범례 조합이 과하다는 QA 피드백으로 색 하나로 정리했다.
 const DOW = ['월', '화', '수', '목', '금', '토', '일'];
 
 const buildStreakWeekFallback = (current) => {
@@ -373,7 +375,6 @@ const StreakWeek = ({ week, current }) => {
   const cells = Array.isArray(week) && week.length > 0
     ? week.map((d, index) => ({ label: DOW[index] ?? '', status: d?.status, isToday: !!d?.is_today }))
     : buildStreakWeekFallback(current);
-  const hasProtected = cells.some((cell) => cell.status === 'protected');
 
   return (
     <div className='flex flex-col items-center gap-[10px] w-full'>
@@ -386,7 +387,6 @@ const StreakWeek = ({ week, current }) => {
           </div>
         ))}
       </div>
-      {hasProtected && <StreakProtectedLegend />}
     </div>
   );
 };

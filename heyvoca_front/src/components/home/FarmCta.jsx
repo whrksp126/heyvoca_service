@@ -78,27 +78,24 @@ export const resolveHomeState = (overview, { newRemaining = 0 } = {}) => {
 };
 
 /**
- * 상태별 얼굴 — §12 표(주 CTA · 헤드라인 2줄 · 일러스트) + §4 헤드라인 문구.
- * 헤드라인은 "헤이,"로 시작해 브랜드명과 연결하고 그 부분만 브랜드 핑크로 칠한다(§4).
+ * 상태별 얼굴 — §12 표(주 CTA · 일러스트 mood). 헤드라인 2줄은 더 이상 여기서 나지 않는다
+ * — CTA 5상태에 강제로 묶여 있던 것을 히어로 인사말(src/data/homeGreetings.js)로 분리했다.
+ * 그쪽은 상황을 더 세분화하고("시든 단어 있음"·"연속 위기"·시간대 등) 첫머리도 "헤이,"
+ * 대신 로그인 유저 닉네임(userProfile.username)을 쓴다. mood는 FarmHero 일러스트 표정에,
+ * cta는 주 CTA 버튼 문구에 그대로 쓰인다.
  */
 export const HOME_STATE_VIEW = {
   [HOME_STATES.CRITICAL]: {
     mood: 'risk',
     cta: '급한 작물부터 돌보기',
-    line1: ' 먼저 구해야 할',
-    line2: '작물이 있어요',
   },
   [HOME_STATES.DUE]: {
     mood: 'thirsty',
     cta: '오늘의 물주기 시작',
-    line1: ' 당근이',
-    line2: '물을 기다리고 있어요',
   },
   [HOME_STATES.NEW_SEED]: {
     mood: 'fresh',
     cta: '새 씨앗 심으러 가기',
-    line1: ' 밭이 촉촉해요',
-    line2: '새 씨앗이 왔어요',
   },
   [HOME_STATES.DONE]: {
     mood: 'fresh',
@@ -106,14 +103,10 @@ export const HOME_STATE_VIEW = {
     // 이 버튼 하나에서만 농장이 사라지고 앱 설명서 말투가 나왔다.
     // 급한 일이 없는 날의 버튼이므로 '더'를 살려 자발적인 한 바퀴로 읽히게 한다.
     cta: '더 돌보러 가기',
-    line1: ' 당신의 당근이',
-    line2: '잘 자라고 있어요',
   },
   [HOME_STATES.EMPTY]: {
     mood: 'fresh',
     cta: '단어장 받으러 가기',
-    line1: ' 아직 밭이',
-    line2: '비어 있어요',
   },
 };
 

@@ -26,10 +26,10 @@
 
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import { CaretRight, ShieldCheck } from '@phosphor-icons/react';
+import { CaretRight } from '@phosphor-icons/react';
 import { getStreakApi } from '../../api/farm';
 import { CROP_ASSETS } from '../farm/CropImage';
-import { STREAK_PROTECTED_BG_CLASS, STREAK_PROTECTED_ICON_CLASS, StreakProtectedLegend } from '../farm/StreakDayMark';
+import { STREAK_PROTECTED_BG_CLASS } from '../farm/StreakDayMark';
 import { useVocabulary } from '../../context/VocabularyContext';
 import { toLocalDateString } from '../../utils/common';
 import { vibrate } from '../../utils/osFunction';
@@ -90,14 +90,16 @@ const StreakCard = () => {
   /**
    * 최근 7일 — 날짜 오름차순, 맨 오른쪽이 오늘.
    *
-   * 막대 높이는 "그날 맞힌 개수"인데 GET /farm/streak 의 calendar 는 date/qualified/protected
-   * 세 필드만 준다(백엔드에 CheckIn.correct_word_cnt 는 있으나 응답에 실리지 않는다 — 보고 참조).
-   * 개수 필드가 실려 오면 그대로 쓰고, 없으면 자격을 채운 날을 기준선(required)으로 근사한다.
+   * 막대 높이는 "그날 맞힌 개수"다. GET /farm/streak 의 calendar는 이제 correct_cnt를 항상
+   * 내려준다(값이 없던 날은 0 — 사전조회 필드 아님, query.py `correct_counts.get(cursor, 0)`).
+   * `d.correct_cnt ?? d.correct_word_cnt ?? (counted ? required : 0)` 의 `??`는 0을
+   * "값 있음"으로 보므로 보호일도 여기서는 항상 value=0이 된다 — 의도한 동작이다. 보호일은
+   * 실제 개수가 없는 상태라 이 값을 그대로 안 쓰고, 아래 렌더에서 status==='protected'일 때
+   * value를 무시하고 학습일과 같은 높이(100%)로 그린다.
    *
    * `status`('studied'|'protected'|'missed'|'future') 는 학습 결과 슬라이드(StudyResult.jsx
-   * `StreakWeek`)와 같은 계약값이다. 보호권으로 이어진 날은 실제 정답 수(correct_cnt)가 0이라
-   * value 그대로 막대를 그리면 빈 날처럼 보인다 — 아래 렌더에서 status로 따로 분기한다.
-   * status가 없는 구버전 응답이면 기존 value>0 기준으로만 채움을 판정한다(폴백).
+   * `StreakWeek`)와 같은 계약값이다. status가 없는 구버전 응답이면 기존 value>0 기준으로만
+   * 채움을 판정한다(폴백).
    */
   const days = useMemo(() => {
     const calendar = (streak?.calendar ?? [])
@@ -126,9 +128,6 @@ const StreakCard = () => {
     () => Math.max(required, ...days.map((d) => d.value || 0)),
     [days, required]
   );
-
-  // 범례("보호권으로 이어진 날") 노출 여부 — status가 없는 구버전 응답이면 항상 false
-  const hasProtectedDay = useMemo(() => days.some((d) => d.status === 'protected'), [days]);
 
   // §6 "최장 기록 … 누르면 기록 화면" — 농장 방문 달력은 하단 탭을 덮는 풀시트다
   // (home-calendar §3 "풀시트라 하단 탭이 없다"). 진입로는 홈의 이 버튼 하나뿐이다.
@@ -191,18 +190,23 @@ const StreakCard = () => {
               </div>
             );
           }
-          // 보호권으로 이어진 날은 실제 정답 수(d.value)가 0이라 그대로 그리면 빈 날처럼
-          // 보인다 — 학습한 날과 같은 기준선(required)으로 높이를 잡고 색·아이콘만 다르게 한다.
-          // status가 없는 구버전 응답이면 항상 false라 기존 value>0 로직 그대로 동작한다.
+          // 보호권으로 이어진 날은 실제 정답 수(d.value)가 항상 0이다(백엔드 correct_cnt는
+          // 그날 실제로 맞힌 개수라 학습을 안 한 날은 0) — nullish 병합(??)은 0을 "값 있음"
+          // 으로 보므로 이전 코드가 required 대비 peak 비율로 아주 작은 pct를 만들어(예:
+          // required 5 / peak 30 → 17%) 막대가 실드 아이콘에 가려질 만큼 짧아 보였다(버그).
+          // 보호일은 실제 개수를 비교할 대상이 없는 "이어졌다/안 이어졌다"뿐인 상태라 peak
+          // 대비 비율이 아니라 학습일과 동일하게 트랙 최대 높이(100%)로 올린다 — 색만 다르다.
           const isProtected = d.status === 'protected';
           const filled = d.status ? d.status === 'studied' : d.value > 0;
-          const effectiveValue = isProtected ? required : d.value;
-          const pct = peak > 0 ? Math.round((effectiveValue / peak) * 100) : 0;
+          const pct = isProtected
+            ? 100
+            : (peak > 0 ? Math.round((d.value / peak) * 100) : 0);
           return (
-            <div key={d.date} className="relative flex-1 h-full flex items-end">
+            <div key={d.date} className="flex-1 h-full flex items-end">
               {/* 학습한 날 #FF88DC · 최소 높이 4px — 1개만 해도 흔적이 남는다.
                   빠뜨린 날은 회색이 아니라 연한 핑크다 — 실패로 읽히지 않게.
-                  보호권으로 이어진 날은 결과 슬라이드(StreakDayMark)와 같은 옅은 브랜드 톤 */}
+                  보호권으로 이어진 날은 학습일과 같은 높이, 색만 결과 슬라이드(StreakDayMark)와
+                  같은 보호권 색(STREAK_PROTECTED_BG_CLASS) */}
               <i
                 style={{ height: `${pct}%`, minHeight: 4 }}
                 className={`block w-full rounded-[4px] ${
@@ -213,13 +217,6 @@ const StreakCard = () => {
                       : 'bg-[#F3DEEC] dark:bg-[rgba(255,255,255,.14)]'
                 }`}
               />
-              {isProtected && (
-                <ShieldCheck
-                  size={10}
-                  weight="fill"
-                  className={`absolute left-1/2 bottom-[3px] -translate-x-1/2 ${STREAK_PROTECTED_ICON_CLASS}`}
-                />
-              )}
             </div>
           );
         })}
@@ -236,14 +233,6 @@ const StreakCard = () => {
           </span>
         ))}
       </div>
-
-      {/* 보호일이 있으면 결과 슬라이드와 같은 범례 한 줄 — 카드 톤(#B8709F)에 맞춰 muted */}
-      {hasProtectedDay && (
-        <StreakProtectedLegend
-          className="mt-[8px]"
-          textClassName="text-[#B8709F] dark:text-primary-main-400"
-        />
-      )}
     </div>
   );
 };
