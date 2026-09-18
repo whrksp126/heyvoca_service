@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Circle, X, Flame, Drop } from '@phosphor-icons/react';
+import { Circle, X, Flame } from '@phosphor-icons/react';
 import { useVocabulary } from '../../context/VocabularyContext';
 import { useUser } from '../../context/UserContext';
 import gemImg from '../../assets/images/gem.png';
@@ -17,8 +17,9 @@ import WordDetaileNewBottomSheet from '../newBottomSheet/WordDetaileNewBottomShe
 import ExampleList from '../common/ExampleList';
 import { useStatusBarStyle } from '../../hooks/useStatusBarStyle';
 // 당근 농장 V2 — 세션 요약 슬라이드
-import CropImage, { CROP_ASSETS, FARM_ITEM_ASSETS, getCropAsset } from '../farm/CropImage';
+import CropImage, { CROP_ASSETS, FARM_ITEM_ASSETS } from '../farm/CropImage';
 import { stageToCrop, cropLabel, FARM_ITEMS, FARM_ITEM_LABEL } from '../../utils/crop';
+import { StreakDayMark, StreakProtectedLegend } from '../farm/StreakDayMark';
 
 // 아이템 이름은 utils/crop.js 의 FARM_ITEM_LABEL 하나로 통일돼 있다(시안 §1⑤ "새심기 삽").
 import { getSessionFarmSummaryApi } from '../../api/farm';
@@ -130,8 +131,38 @@ const FarmArt = ({ src, alt }) => (
   />
 );
 
+/*
+  100px 히어로 그림 — **작물 단계(stage) 전용**. FarmArt와 달리 뒤 글로우(ResultItemBackground01/02)의
+  중심(top-[50px]/50%)에 실제 그림 내용물이 맞도록 CropImage의 align="center" 보정을 함께 쓴다.
+
+  씨앗·새싹·이파리 에셋은 512² 캔버스에 바닥선(y=440) 기준으로 그려져 있어(CropImage.jsx 주석),
+  100px 정사각형에 object-contain으로만 넣으면 내용물이 칸 아래쪽에 깔린다 — 글로우 중심보다
+  낮게 보이는 버그의 원인이었다.
+
+  애니메이션(scale/opacity/y)과 정렬 보정(translateY+scale)을 같은 엘리먼트에 같이 걸면 프레이머
+  모션이 style.transform을 통째로 관리해 정렬 보정이 지워진다(ProgressSplash.jsx 주석과 같은 버그
+  유형). 그래서 애니메이션은 바깥 motion.div에, 정렬 보정은 안쪽 CropImage(align="center")에 나눠
+  둔다 — 서로 다른 엘리먼트라 지우지 않는다.
+*/
+const FarmCropArt = ({ stage, health = 'FRESH', alt }) => (
+  <motion.div
+    className='w-[100px] h-[100px]'
+    initial={{ scale: 0, opacity: 0 }}
+    animate={{ scale: [0, 1.2, 1, 1.1, 1], opacity: 1, y: [0, -8, 0] }}
+    transition={{
+      scale: { type: 'tween', ease: 'easeOut', duration: 0.6, times: [0, 0.5, 0.7, 0.85, 1] },
+      opacity: { duration: 0.6 },
+      y: { delay: 0.8, duration: 2.5, repeat: Infinity, repeatType: 'reverse', ease: 'easeInOut' },
+    }}
+  >
+    <CropImage stage={stage} health={health} size={100} align="center" alt={alt} />
+  </motion.div>
+);
+
 // 성장 목록 한 줄 — 시안 `.grow2` [작물][단어·뜻][오른쪽 결과].
 // 단어장·최종 결과와 같은 배치다(시안 학습결과 §1 ①).
+// `right` 는 선택이다 — 시든 작물 회복 목록처럼 상태 라벨이 필요 없는 자리는 통째로 뺀다
+// (빈 문자열 칸을 남기지 않고 단어·뜻 칸이 남은 폭을 그대로 채우도록 flex-1 만 남긴다).
 const FarmGrowRow = ({ crop, word, meaning, right }) => (
   <div className='flex items-center gap-[11px] px-[14px] py-[12px] rounded-[10px] bg-layout-gray-50 dark:bg-layout-gray-dark'>
     <CropImage stage={crop} size={52} align="center" className='flex-shrink-0' />
@@ -144,9 +175,11 @@ const FarmGrowRow = ({ crop, word, meaning, right }) => (
       ) : null}
     </div>
     {/* 시안 `.grow2 .rt` — 11.5px/700 #12B76A(status-success-600) */}
-    <span className='flex-shrink-0 whitespace-nowrap text-[11.5px] font-[700] text-status-success-600'>
-      {right}
-    </span>
+    {right ? (
+      <span className='flex-shrink-0 whitespace-nowrap text-[11.5px] font-[700] text-status-success-600'>
+        {right}
+      </span>
+    ) : null}
   </div>
 );
 
@@ -315,40 +348,48 @@ const ResultCtaBar = ({ children, className = '' }) => (
   </div>
 );
 
-// 연속 학습 주간 막대 — 이번 주 월~일. 연속 일수(current)로 이번 주에 채워진 날을 되짚는다.
-const buildStreakWeek = (current) => {
-  const DOW = ['월', '화', '수', '목', '금', '토', '일'];
+// 연속 학습 주간 막대 — 이번 주 월~일.
+//
+// 정본은 백엔드가 주는 `week`(session-summary.streak.week — 월~일 7개, 날짜별 실제
+// status/is_today, query.py `_session_streak` 주석 참고)다. 예전에는 연속 일수(current)
+// 하나로 "오늘부터 거꾸로 current일만큼 학습함"을 가정해 이번 주를 되짚었는데, 보호권으로
+// 이어진 날도 학습일과 똑같이 채워진 칸으로 그려져 홈 카드(빈 칸)와 다르게 보였다.
+// `week`가 없을 때만(구버전 캐시·응답 누락) 이 역산 폴백을 쓴다 — 이 경우 보호일은
+// 구분할 수 없어 studied/missed/future만 나온다.
+const DOW = ['월', '화', '수', '목', '금', '토', '일'];
+
+const buildStreakWeekFallback = (current) => {
   const now = new Date();
   const sinceMonday = (now.getDay() + 6) % 7; // 월요일부터 며칠 지났는지
   return DOW.map((label, index) => {
     const daysAgo = sinceMonday - index;
-    if (daysAgo < 0) return { label, state: 'future' };
-    if (daysAgo === 0) return { label, state: 'today' };
-    return { label, state: daysAgo < (current ?? 0) ? 'on' : 'off' };
+    if (daysAgo < 0) return { label, status: 'future', isToday: false };
+    if (daysAgo === 0) return { label, status: 'missed', isToday: true };
+    return { label, status: daysAgo < (current ?? 0) ? 'studied' : 'missed', isToday: false };
   });
 };
 
-const StreakWeek = ({ current }) => (
-  <div className='flex justify-center gap-[6px] w-full px-[10px]'>
-    {buildStreakWeek(current).map((cell) => (
-      <div key={cell.label} className='flex flex-col items-center gap-[5px] flex-1 max-w-[40px]'>
-        <div
-          className={`
-            flex items-center justify-center w-full aspect-square rounded-[10px]
-            ${cell.state === 'on' ? 'bg-primary-main-600' : ''}
-            ${cell.state === 'today' ? 'bg-primary-main-100 dark:bg-[#3D1D34] border-[2px] border-primary-main-600' : ''}
-            ${cell.state === 'off' || cell.state === 'future' ? 'bg-layout-gray-50 dark:bg-layout-gray-dark' : ''}
-          `}
-        >
-          {cell.state === 'on' && <Drop size={15} weight='fill' className='text-layout-white' />}
-          {cell.state === 'today' && <Drop size={15} weight='fill' className='text-primary-main-600' />}
-        </div>
-        {/* 시안 `.wk .l` — 10px/600 #BBBBBB */}
-        <span className='text-[10px] font-[600] text-[#BBBBBB]'>{cell.label}</span>
+const StreakWeek = ({ week, current }) => {
+  const cells = Array.isArray(week) && week.length > 0
+    ? week.map((d, index) => ({ label: DOW[index] ?? '', status: d?.status, isToday: !!d?.is_today }))
+    : buildStreakWeekFallback(current);
+  const hasProtected = cells.some((cell) => cell.status === 'protected');
+
+  return (
+    <div className='flex flex-col items-center gap-[10px] w-full'>
+      <div className='flex justify-center gap-[6px] w-full px-[10px]'>
+        {cells.map((cell, index) => (
+          <div key={`${cell.label}-${index}`} className='flex flex-col items-center gap-[5px] flex-1 max-w-[40px]'>
+            <StreakDayMark status={cell.status} isToday={cell.isToday} />
+            {/* 시안 `.wk .l` — 10px/600 #BBBBBB */}
+            <span className='text-[10px] font-[600] text-[#BBBBBB]'>{cell.label}</span>
+          </div>
+        ))}
       </div>
-    ))}
-  </div>
-);
+      {hasProtected && <StreakProtectedLegend />}
+    </div>
+  );
+};
 
 // 암기 상태(FSRS 버킷) 순위 · → 작물 단계.
 // (코드 leaf = 기획 새싹, 코드 plant = 기획 이파리)
@@ -678,7 +719,14 @@ const StudyResult = () => {
         /study/log 응답(streak_v2.record_correct_word)에서만 true 라 세션당 정확히 하루 1회다.
       */
       if ((farmStreak?.current ?? streakSummary?.current ?? 0) > 0 && streakSummary?.qualifiedNow) {
-        screens.push({ type: 'farmStreak', data: { current: farmStreak?.current ?? streakSummary?.current } });
+        screens.push({
+          type: 'farmStreak',
+          data: {
+            current: farmStreak?.current ?? streakSummary?.current,
+            // 월~일 실제 status(studied/protected/missed/future) — 없으면 StreakWeek가 역산 폴백을 쓴다
+            week: farmStreak?.week ?? null,
+          },
+        });
       }
 
       // 메인 화면 동기부여 멘트용 — 방금 학습 결과 캐시 (게스트는 홈 진입 전이라 생략)
@@ -1012,7 +1060,7 @@ const StudyResult = () => {
         <FarmListSlide
           /* 봉투(unplanted)가 아니라 낱알(PLANTED_SEED)이다 — 방금 심은 씨앗이므로.
              crop 키 'seed' 를 넘기면 두 상태가 합쳐진 값이라 봉투가 나온다(CropImage 주석). */
-          art={<FarmArt src={getCropAsset('PLANTED_SEED', 'FRESH')} alt="새로 심은 씨앗" />}
+          art={<FarmCropArt stage="PLANTED_SEED" alt="새로 심은 씨앗" />}
           line={<>처음 배운 <strong className='text-primary-main-600'>{items.length}개</strong>를 씨앗으로 심었어요!</>}
           rows={items.map((row) => (
             <FarmGrowRow
@@ -1031,10 +1079,12 @@ const StudyResult = () => {
       const items = currentScreen.data.items ?? [];
       content = (
         <FarmListSlide
-          art={<FarmArt src={getCropAsset('leaf', 'FRESH')} alt="자란 작물" />}
+          art={<FarmCropArt stage="leaf" alt="자란 작물" />}
           line={<><strong className='text-primary-main-600'>{items.length}개</strong>의 작물이 자랐어요!</>}
           rows={items.map((row) => {
-            const to = stageToCrop(row.to_stage ?? row.crop);
+            /* 아이콘은 toResultStage 로 — 씨앗 구간이면 반드시 심은 씨앗(낱알)이다.
+               이 목록은 "학습을 끝낸 단어"만 모으므로 미학습(봉투)일 수 없다(cropOfWord 주석 참고). */
+            const to = toResultStage(row.to_stage ?? row.crop);
             const from = row.from_stage ? stageToCrop(row.from_stage) : null;
             return (
               <FarmGrowRow
@@ -1053,7 +1103,7 @@ const StudyResult = () => {
       const items = currentScreen.data.items ?? [];
       content = (
         <FarmAwardSlide
-          art={<FarmArt src={getCropAsset('sprout', 'FRESH')} alt="새싹 발아" />}
+          art={<FarmCropArt stage="sprout" alt="새싹 발아" />}
           line={
             items.length === 1
               ? <><strong className='text-primary-main-600'>{items[0]?.word}</strong>에 새싹이 돋았어요!</>
@@ -1080,15 +1130,18 @@ const StudyResult = () => {
       const items = currentScreen.data.items ?? [];
       content = (
         <FarmListSlide
-          art={<FarmArt src={getCropAsset('leaf', 'FRESH')} alt="되살린 작물" />}
+          art={<FarmCropArt stage="leaf" alt="되살린 작물" />}
           line={<>시들었던 <strong className='text-primary-main-600'>{items.length}개</strong>를 되살렸어요!</>}
           rows={items.map((row) => (
             <FarmGrowRow
               key={row.user_voca_id}
-              crop={stageToCrop(row.crop)}
+              /* toResultStage — 씨앗 구간이면 무조건 심은 씨앗(낱알). 되살린 단어는 이미 학습
+                 이력이 있어(그렇지 않으면 시들 밭에 있을 수 없다) 미학습(봉투)일 수 없다. */
+              crop={toResultStage(row.crop)}
               word={row.word}
               meaning={row.meaning}
-              right="다시 촉촉해요"
+              // 상태 라벨 없음 — 시든 작물 회복 목록은 "이미 안전해졌다"는 사실만 위 한 줄로
+              // 전하고, 행마다 반복되는 "다시 촉촉해요" 라벨은 정보가 없어 없앤다(QA).
             />
           ))}
         />
@@ -1106,7 +1159,7 @@ const StudyResult = () => {
       );
     } else if (currentScreen.type === 'farmStreak') {
       // ⑩ 연속 학습 — 마스코트 + 한 줄 + 이번 주 물뿌리개 기록. 시안에는 아래 한 줄이 없다.
-      const { current } = currentScreen.data;
+      const { current, week } = currentScreen.data;
       content = (
         <div className='relative flex flex-col items-center justify-center gap-[15px] w-full'>
           <FarmArt src={CROP_ASSETS.mascotWalk} alt="연속 학습" />
@@ -1124,7 +1177,7 @@ const StudyResult = () => {
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.5, duration: 0.4 }}
           >
-            <StreakWeek current={current} />
+            <StreakWeek week={week} current={current} />
           </motion.div>
         </div>
       );

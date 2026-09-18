@@ -40,7 +40,7 @@ from app.models.models import (CheckIn, FarmEvent, FarmEventLog, FarmItem, FarmI
                                UserFarmMigration, UserFarmSetting, UserStreak,
                                UserStudyLog, UserStudySession, UserVoca, UserVocaGame,
                                VisualStage)
-from app.services.game.farm_v2 import answer, comeback, growth, inventory, localday
+from app.services.game.farm_v2 import answer, comeback, growth, inventory, localday, streak_v2
 from app.services.game.farm_v2 import constants as C
 # `health` 는 아래에서 파라미터 이름으로도 써야 한다(계약의 ?health=). 모듈 쪽에 별칭을 준다.
 from app.services.game.farm_v2 import health as health_calc
@@ -630,7 +630,7 @@ def get_session_summary(user_id: UUID, session_id, now: Optional[dt.datetime] = 
             for vid in rescued
         ],
         'rewards': _session_rewards(user_id, started, ended),
-        'streak': _session_streak(user_id),
+        'streak': _session_streak(user_id, now),
         'protected': protected,
         'correct': int(session.correct_count or 0),
         'total': int(session.question_count or 0),
@@ -740,12 +740,24 @@ def _session_rewards(user_id: UUID, started: dt.datetime, ended: dt.datetime) ->
     return rewards
 
 
-def _session_streak(user_id: UUID) -> dict:
-    """계약 session-summary.streak — 현재 연속일과 이번에 닿은 마일스톤.
+def _session_streak(user_id: UUID, now: Optional[dt.datetime] = None) -> dict:
+    """계약 session-summary.streak — 현재 연속일, 이번에 닿은 마일스톤, 이번 주(월~일) 상태.
 
     마일스톤을 '지금 연속일과 같은 값'으로 찾는 이유는, 마일스톤이 정확히 그 날짜에
     한 번만 걸리기 때문이다(11.4). 지급 여부 자체는 max_milestone_awarded 가 관리한다.
+
+    `week` — 프론트(StudyResult.jsx `buildStreakWeek`)가 실제 날짜별 기록 없이 `current`
+    하나로 "오늘부터 거꾸로 current 일만큼 학습함"을 가정해 이번 주 물방울을 그리던 문제의
+    원인이다. 보호권으로 이어진 날도 학습일과 똑같이 'on'으로 그려져, 홈 카드(빈 칸으로
+    그림)와 서로 다른 그림이 됐다. 이제 서버가 월~일 각 날짜의 실제 `status` 를 내려주므로
+    프론트는 더 이상 `current` 로 날짜를 역산하지 않아도 된다.
     """
+    now = now or dt.datetime.utcnow()
+    tz = localday.get_timezone(user_id)
+    today = localday.local_day(now, tz)
+    monday = localday.week_monday(today)
+    sunday = monday + dt.timedelta(days=6)
+
     row = db.session.query(UserStreak).filter(UserStreak.user_id == user_id).first()
     current = int(getattr(row, 'current_streak', 0) or 0)
     milestone = None
@@ -753,7 +765,21 @@ def _session_streak(user_id: UUID) -> dict:
         if days == current:
             milestone = {'days': days, 'reward': _reward_label(kind, amount)}
             break
-    return {'current': current, 'milestone': milestone}
+
+    # sunday >= today 는 항상 성립한다(monday = week_monday(today)) — today 까지만 조회하면 된다.
+    flags = streak_v2.day_flags(user_id, monday, today)
+    week = []
+    cursor = monday
+    while cursor <= sunday:
+        if cursor > today:
+            status = 'future'
+        else:
+            qualified, protected = flags.get(cursor, (False, False))
+            status = streak_v2.day_status(qualified, protected)
+        week.append({'date': cursor.isoformat(), 'status': status, 'is_today': cursor == today})
+        cursor += dt.timedelta(days=1)
+
+    return {'current': current, 'milestone': milestone, 'week': week}
 
 
 def _reward_label(kind: str, amount: int) -> str:

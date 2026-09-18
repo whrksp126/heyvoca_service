@@ -26,9 +26,10 @@
 
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import { CaretRight } from '@phosphor-icons/react';
+import { CaretRight, ShieldCheck } from '@phosphor-icons/react';
 import { getStreakApi } from '../../api/farm';
 import { CROP_ASSETS } from '../farm/CropImage';
+import { STREAK_PROTECTED_BG_CLASS, STREAK_PROTECTED_ICON_CLASS, StreakProtectedLegend } from '../farm/StreakDayMark';
 import { useVocabulary } from '../../context/VocabularyContext';
 import { toLocalDateString } from '../../utils/common';
 import { vibrate } from '../../utils/osFunction';
@@ -92,6 +93,11 @@ const StreakCard = () => {
    * 막대 높이는 "그날 맞힌 개수"인데 GET /farm/streak 의 calendar 는 date/qualified/protected
    * 세 필드만 준다(백엔드에 CheckIn.correct_word_cnt 는 있으나 응답에 실리지 않는다 — 보고 참조).
    * 개수 필드가 실려 오면 그대로 쓰고, 없으면 자격을 채운 날을 기준선(required)으로 근사한다.
+   *
+   * `status`('studied'|'protected'|'missed'|'future') 는 학습 결과 슬라이드(StudyResult.jsx
+   * `StreakWeek`)와 같은 계약값이다. 보호권으로 이어진 날은 실제 정답 수(correct_cnt)가 0이라
+   * value 그대로 막대를 그리면 빈 날처럼 보인다 — 아래 렌더에서 status로 따로 분기한다.
+   * status가 없는 구버전 응답이면 기존 value>0 기준으로만 채움을 판정한다(폴백).
    */
   const days = useMemo(() => {
     const calendar = (streak?.calendar ?? [])
@@ -109,6 +115,7 @@ const StreakCard = () => {
         date: d.date,
         isToday,
         value,
+        status: d.status,
         label: isToday ? '오늘' : (Number.isNaN(date.getTime()) ? '' : DOW[date.getDay()]),
       };
     });
@@ -119,6 +126,9 @@ const StreakCard = () => {
     () => Math.max(required, ...days.map((d) => d.value || 0)),
     [days, required]
   );
+
+  // 범례("보호권으로 이어진 날") 노출 여부 — status가 없는 구버전 응답이면 항상 false
+  const hasProtectedDay = useMemo(() => days.some((d) => d.status === 'protected'), [days]);
 
   // §6 "최장 기록 … 누르면 기록 화면" — 농장 방문 달력은 하단 탭을 덮는 풀시트다
   // (home-calendar §3 "풀시트라 하단 탭이 없다"). 진입로는 홈의 이 버튼 하나뿐이다.
@@ -181,19 +191,35 @@ const StreakCard = () => {
               </div>
             );
           }
-          const pct = peak > 0 ? Math.round((d.value / peak) * 100) : 0;
+          // 보호권으로 이어진 날은 실제 정답 수(d.value)가 0이라 그대로 그리면 빈 날처럼
+          // 보인다 — 학습한 날과 같은 기준선(required)으로 높이를 잡고 색·아이콘만 다르게 한다.
+          // status가 없는 구버전 응답이면 항상 false라 기존 value>0 로직 그대로 동작한다.
+          const isProtected = d.status === 'protected';
+          const filled = d.status ? d.status === 'studied' : d.value > 0;
+          const effectiveValue = isProtected ? required : d.value;
+          const pct = peak > 0 ? Math.round((effectiveValue / peak) * 100) : 0;
           return (
-            <div key={d.date} className="flex-1 h-full flex items-end">
+            <div key={d.date} className="relative flex-1 h-full flex items-end">
               {/* 학습한 날 #FF88DC · 최소 높이 4px — 1개만 해도 흔적이 남는다.
-                  빠뜨린 날은 회색이 아니라 연한 핑크다 — 실패로 읽히지 않게 */}
+                  빠뜨린 날은 회색이 아니라 연한 핑크다 — 실패로 읽히지 않게.
+                  보호권으로 이어진 날은 결과 슬라이드(StreakDayMark)와 같은 옅은 브랜드 톤 */}
               <i
                 style={{ height: `${pct}%`, minHeight: 4 }}
                 className={`block w-full rounded-[4px] ${
-                  d.value > 0
-                    ? 'bg-primary-main-500'
-                    : 'bg-[#F3DEEC] dark:bg-[rgba(255,255,255,.14)]'
+                  isProtected
+                    ? STREAK_PROTECTED_BG_CLASS
+                    : filled
+                      ? 'bg-primary-main-500'
+                      : 'bg-[#F3DEEC] dark:bg-[rgba(255,255,255,.14)]'
                 }`}
               />
+              {isProtected && (
+                <ShieldCheck
+                  size={10}
+                  weight="fill"
+                  className={`absolute left-1/2 bottom-[3px] -translate-x-1/2 ${STREAK_PROTECTED_ICON_CLASS}`}
+                />
+              )}
             </div>
           );
         })}
@@ -210,6 +236,14 @@ const StreakCard = () => {
           </span>
         ))}
       </div>
+
+      {/* 보호일이 있으면 결과 슬라이드와 같은 범례 한 줄 — 카드 톤(#B8709F)에 맞춰 muted */}
+      {hasProtectedDay && (
+        <StreakProtectedLegend
+          className="mt-[8px]"
+          textClassName="text-[#B8709F] dark:text-primary-main-400"
+        />
+      )}
     </div>
   );
 };

@@ -186,6 +186,34 @@ def _counted_days(flags: dict) -> set:
     return {d for d, (qualified, protected) in flags.items() if qualified or protected}
 
 
+def day_flags(user_id: UUID, since: dt.date, until: dt.date) -> dict:
+    """`_flag_days` 의 공개 래퍼. 다른 조회 모듈(query.py 의 session-summary 등)이 날짜별
+    (자격 충족, 보호권 적용) 을 읽을 때 이걸 통해서만 접근한다 — 판정 규칙이 이 모듈
+    하나에만 있게 하기 위해서다.
+    """
+    return _flag_days(user_id, since, until)
+
+
+def day_status(qualified: bool, protected: bool) -> str:
+    """날짜 하나의 상태를 화면이 바로 쓸 수 있는 enum 하나로 통일한다.
+
+    홈 카드(GET /farm/streak)와 학습 결과 슬라이드(GET /farm/session-summary)가 같은 날을
+    다르게 그리던 문제(보호권으로 이은 날을 한쪽은 학습일처럼, 한쪽은 빈 날처럼 표시)의
+    원인이 "qualified/protected 두 불리언을 각 화면이 각자 다르게 해석"한 것이었다.
+    이후로는 두 API 모두 이 함수가 만든 값만 내려보낸다.
+
+    'studied' 가 최우선이다 — 보호권으로 이어진 날 중에도 이론상 qualified 가 같이 서는
+    경우(예: 자정 근처 경합)가 있을 수 있는데, 그런 날은 실제로 학습을 했다는 뜻이라
+    학습으로 보여야 한다. 'future'/'missed'(오늘)는 호출부가 today/is_today 로 얹는다 —
+    이 함수는 과거·오늘 구분 없이 그 날의 원시 플래그만 본다.
+    """
+    if qualified:
+        return 'studied'
+    if protected:
+        return 'protected'
+    return 'missed'
+
+
 def _walk_back(counted: set, today: dt.date) -> tuple:
     """오늘(또는 어제)부터 거슬러 올라가 이어진 날 수. (일수, **가장 최근에 센 날**).
 
@@ -586,9 +614,13 @@ def get_state(user_id: UUID, now: Optional[dt.datetime] = None) -> dict:
     cursor = since
     while cursor <= today:
         qualified, protected = flags.get(cursor, (False, False))
+        # 'qualified'/'protected'는 하위 호환을 위해 유지한다(구버전 웹/앱 캐시 대비).
+        # 새로 붙는 'status'/'is_today'가 화면이 실제로 그려야 할 값이다 — day_status 참고.
         calendar.append({'date': cursor.isoformat(),
                          'qualified': qualified, 'protected': protected,
-                         'correct_cnt': correct_counts.get(cursor, 0)})
+                         'correct_cnt': correct_counts.get(cursor, 0),
+                         'status': day_status(qualified, protected),
+                         'is_today': cursor == today})
         cursor += _DAY
 
     today_row = (
