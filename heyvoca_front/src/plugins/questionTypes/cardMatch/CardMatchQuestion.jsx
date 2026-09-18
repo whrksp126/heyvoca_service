@@ -9,6 +9,7 @@ import MemoryStateChangeBadge, {
   getMemoryStateKeyByStability,
 } from '../../../components/common/MemoryStateChangeBadge';
 import FarmStatusBar from '../../../components/farm/FarmStatusBar';
+import { useResumeReplayKey } from '../../../hooks/useResumeReplayKey';
 
 const FitText = ({ text, maxSize = 20, minSize = 12, className = '' }) => {
   const spanRef = useRef(null);
@@ -66,6 +67,9 @@ const CardMatchQuestion = ({ question, testType, onComplete, onCardMatched, farm
   const [speakingWordId, setSpeakingWordId] = useState(null);
   const [speakingDuration, setSpeakingDuration] = useState(null);
   const [wordResolvedStates, setWordResolvedStates] = useState({});
+  // 백그라운드 복귀 시 성장 게이지가 최종 상태로 정적으로 스냅되는 것을 막기 위한
+  // 재마운트용 키 (이유는 useResumeReplayKey 주석 참고)
+  const resumeReplayKey = useResumeReplayKey();
   const wordResultsRef = useRef({});
   const resolvedCountRef = useRef(0);
   const questionStartRef = useRef(Date.now());
@@ -290,6 +294,7 @@ const CardMatchQuestion = ({ question, testType, onComplete, onCardMatched, farm
               {/* 하단 - 채점 후: 농장 상태 바 좁은 형 (작물·성장 막대·다음 복습일) */}
               {!!farmByWordId?.[word.id] && (
                 <motion.div
+                  key={`farmbar-${word.id}-${resumeReplayKey}`}
                   initial={{ opacity: 0, y: 6 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.25, ease: [0.4, 0, 0.2, 1] }}

@@ -4,11 +4,23 @@ import { motion } from 'framer-motion';
 /**
  * 당근 농장 V2 — 학습 상태 바의 **막대 부분만** 떼어낸 재사용 컴포넌트.
  * 시안 study.html 의 `.fb .tk` / `.fb .tk u` / `.fb.up` / `.fb.ng` 규격을 그대로 옮겼다.
- * (`study_css.py` 는 `max-width:78px` 로 남아 있는 구버전이다. 시안 렌더값은 **132px**.)
  *
- * 진화(단계 상승)일 때는 막대가 **100% 를 찍고 0% 로 리셋된 뒤** 새 단계 진행률로 간다.
- * 그냥 새 값으로 갈아 끼우면 막대가 줄어든 것처럼 보인다.
+ * 【폭은 항상 칸 기준 100%】 예전엔 132px 로 못박아 뒀는데(시안 렌더값), 호출부(FarmStatusBar)가
+ * 문제 유형마다 다른 폭의 카드에 절대배치되다 보니 어떤 화면은 카드보다 훨씬 짧은 막대가,
+ * 어떤 화면은 꽉 찬 막대가 나와 "트랙 길이가 콘텐츠마다 다르다"는 일관성 문제가 됐다.
+ * 이제 항상 부모가 내준 폭(`flex-1`)을 그대로 쓴다 — 카드 매칭처럼 좁은 칸에서도 칸 폭 기준 100%.
+ *
+ * 진화(단계 상승)일 때는 막대가 **`pctFrom`(실제 학습 전 진행률)에서 100% 를 찍고 0% 로
+ * 리셋된 뒤** 새 단계 진행률로 간다. 그냥 새 값으로 갈아 끼우면 막대가 줄어든 것처럼 보이고,
+ * 0% 에서부터 채우면 학습 전 진행률을 무시한 채 "새로 시작한" 것처럼 보인다.
  */
+
+// 진화 시 막대가 리셋되는 구간표 — FarmStatusBar 의 작물 아이콘 교체(크로스페이드)를
+// 이 값과 같은 시각(0.62~0.7 구간)에 맞추려면 반드시 이 상수를 그대로 가져다 써야 한다.
+// 여기서만 숫자를 들고 있고 FarmStatusBar 는 import 해서 쓴다 — 두 곳에 같은 숫자를
+// 따로 적으면 한쪽만 바뀌었을 때 막대와 아이콘이 어긋난다.
+export const GROW_FILL_DURATION = 0.9;
+export const GROW_FILL_TIMES = [0, 0.42, 0.62, 0.7, 1];
 
 // 색은 토큰(CSS 변수)으로만 잡는다 — 같은 값을 화면마다 다시 적으면 반드시 어긋난다.
 // `#D9A15C` 만 토큰이 없어 시안 값을 그대로 쓴다.
@@ -29,7 +41,7 @@ const clamp = (n) => Math.max(0, Math.min(100, Number(n) || 0));
  * @param {number} props.pctTo    학습 후 진행률 (0~100)
  * @param {boolean} props.grew    단계가 올랐는지 — true 면 100% → 0% → 새 진행률 연출
  * @param {'primary'|'up'|'ng'} props.tone
- * @param {number|string} props.width  막대 최대 폭 (기본 132px — 시안 `.fb .tk{max-width:132px}`)
+ * @param {number|string} props.width  막대 최대 폭 (기본 `'100%'` — 항상 부모 칸 폭 그대로)
  * @param {number} props.height 막대 두께 (기본 5px. 좁은 형 `.fb.sm .tk` 는 4px)
  * @param {number} props.delay  채우기 시작을 늦추는 초 — 앞선 연출이 끝난 뒤 차오르게 할 때
  * @param {boolean} props.showGain  오른 구간을 밝게 덧칠할지. 이번에 오른 만큼을 구분해 보여
@@ -43,7 +55,7 @@ const CropProgressBar = ({
   pctTo = 0,
   grew = false,
   tone = 'primary',
-  width = 132,
+  width = '100%',
   height = 5,
   delay = 0,
   showGain = true,
@@ -72,6 +84,19 @@ const CropProgressBar = ({
     것인데 그 값이 0 이면 보여 줄 게 없고, 빈 막대만 남아 방금 채운 것이 없어진 것처럼
     읽힌다. 씨앗을 막 심은 순간이 늘 이 경우다(진행률이 시간으로만 차기 때문).
   */
+  /*
+    【낙관값 → 서버값 교체가 두 번째 움직임으로 보이지 않게】 호출부(Main.jsx)는 채점 직후
+    낙관적 추정치로 먼저 이 막대를 그리고, `/study/log` 응답이 오면 같은 자리에서 pctFrom/
+    pctTo 를 정본 값으로 덮어쓴다(같은 질문이 떠 있는 동안 — 문제가 바뀌면 호출부가 이
+    컴포넌트째로 새로 마운트한다). 예전엔 아래 `motion.span` 의 key 에 `from`/`to` 값을
+    그대로 넣어서, 값이 한 프레임이라도 다르면 React 가 엘리먼트를 통째로 새로 만들어
+    `initial` 부터 다시 재생했다 — 이미 30% 까지 차오른 막대가 순간 사라지고 처음부터
+    다시 70% 로 차오르는 식으로, 실제로는 없는 "리셋 후 재성장"이 보였다.
+    지금은 `grew` 가 바뀔 때만(추정과 다르게 진화 여부 자체가 뒤집힌 드문 경우) 다시
+    마운트한다. 나머지는 같은 엘리먼트를 유지해 Framer Motion 이 **지금 멈춰 있는 지점에서
+    새 목표값까지** 이어서 보간한다 — 낙관값과 서버값이 같으면 애초에 목표가 안 바뀌어
+    재생되지 않고, 다르면 한 번의 연속된 움직임으로만 갱신된다.
+  */
   const resets = to > 0;
   const fillAnimate = grew
     ? (resets
@@ -80,7 +105,7 @@ const CropProgressBar = ({
     : { width: `${to}%` };
   const fillTransition = grew
     ? (resets
-      ? { duration: 0.9, delay, times: [0, 0.42, 0.62, 0.7, 1], ease: ['easeOut', 'linear', 'easeIn', 'easeOut'] }
+      ? { duration: GROW_FILL_DURATION, delay, times: GROW_FILL_TIMES, ease: ['easeOut', 'linear', 'easeIn', 'easeOut'] }
       : { duration: 0.5, delay, ease: 'easeOut' })
     : { duration: 0.45, delay, ease: 'easeOut' };
 
@@ -90,7 +115,7 @@ const CropProgressBar = ({
       style={{ maxWidth: width, height }}
     >
       <motion.span
-        key={`fill-${from}-${to}-${grew ? 1 : 0}`}
+        key={`fill-${grew ? 1 : 0}`}
         className="absolute left-0 top-0 bottom-0 rounded-[99px]"
         style={{ backgroundColor: color.fill }}
         initial={{ width: `${from}%` }}
@@ -100,7 +125,7 @@ const CropProgressBar = ({
       {gained && (
         // 이번 학습으로 오른 만큼만 밝게 남긴다 — 그게 '몇 % 올랐는지'다
         <motion.span
-          key={`gain-${from}-${to}`}
+          key="gain"
           className="absolute top-0 bottom-0 rounded-[99px]"
           style={{ backgroundColor: color.gain, left: `${from}%` }}
           initial={{ width: 0, opacity: 0 }}
@@ -112,7 +137,7 @@ const CropProgressBar = ({
         // 줄어든 구간 — 있던 자리에 그대로 서 있다가 사라진다.
         // 같이 짧아지게 하면 채워진 막대와 붙어서 움직여 경계가 안 보인다.
         <motion.span
-          key={`lost-${from}-${to}`}
+          key="lost"
           className="absolute top-0 bottom-0 rounded-[99px]"
           style={{ backgroundColor: color.gain, left: `${to}%`, width: `${from - to}%` }}
           initial={{ opacity: 0 }}

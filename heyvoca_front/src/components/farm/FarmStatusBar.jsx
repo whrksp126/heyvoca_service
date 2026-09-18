@@ -1,15 +1,13 @@
 import { useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import CropImage, { CROP_ASSETS } from './CropImage';
-import CropProgressBar from './CropProgressBar';
+import CropProgressBar, { GROW_FILL_DURATION, GROW_FILL_TIMES } from './CropProgressBar';
 import { CROP_STAGES, cropIndex, stageToCrop } from '../../utils/crop';
 import { vibrate } from '../../utils/osFunction';
 
 /**
  * 당근 농장 V2 — 채점 후 상태 바. **모든 문제 유형이 이 하나를 쓴다.**
  * 시안 study.html 의 `.fb` / `.fb.up` / `.fb.ng` / `.fb.sm` 규격을 그대로 옮겼다.
- * (수치 정본은 시안 HTML 안의 CSS 다 — `study_css.py` 는 `.tk max-width` 가 78px 로 남아 있는
- *  구버전이라 따르지 않는다. 시안 렌더값은 132px.)
  *
  *   [작물 26px] [막대 5px] [+22%] [12일 뒤]
  *
@@ -20,6 +18,34 @@ import { vibrate } from '../../utils/osFunction';
  *   우측 문구는 비운다 — 틀린 단어는 이번 세션에서 바로 다시 나오므로 다음 예정일을 말하면 거짓이 된다.
  * - `compact` 는 카드 매칭용 좁은 형(`.fb.sm`)이다. 다른 구조가 아니라 **같은 컴포넌트가 접히는 것**이라
  *   `+N%` 만 접히고 작물·막대·일수는 남는다(시안 ⑩ 은 좁은 형에도 막대가 있다).
+ *
+ * 【채점 결과 게이지는 값 하나로만 움직인다 — 2026-09 정리】
+ * 이전 구현은 진화(단계 상승) 회차에 "이전 작물 + 건너가는 막대"와 "새 작물 + 안착 막대"를
+ * 나란히 두 요소로 세워 순서대로 접고 펼쳤다. 문제는 그 두 막대가 **서로 다른 칸 폭**을
+ * 나눠 쓴다는 것 — 건너가는 막대는 옆에 작물 그림 두 개(이전·도착)와 자리를 나누느라
+ * 실제 카드 폭보다 짧게 보이고, 접힌 뒤 안착 막대는 그림 하나만 남아 꽉 찬 폭으로 보였다.
+ * 같은 막대인데 폭이 바뀌니 "짧은 초록 막대가 차오르다가 리셋되고 긴 분홍 막대가 다시
+ * 차오른다"는, 실제로는 없는 **세 번째 움직임**처럼 읽혔다.
+ *
+ * 지금은 막대·작물 자리를 **각각 하나씩만** 쓴다. 막대는 `CropProgressBar` 하나가 그대로
+ * 담당한다 — 진화 회차엔 그 컴포넌트가 이미 갖고 있는 "학습 전 진행률 → 100% → 0% → 새
+ * 진행률"의 2단 리셋 애니메이션을 쓴다(요구사항 B: 이 경우만 두 번 움직인다). 값의 정본은
+ * FSRS stability 기반 **단계 내 진행률**(`stageProgress`, farmOptimistic.js 와 동일 축) 하나뿐이고,
+ * "N일 뒤"는 그 옆에 붙는 텍스트일 뿐 별도의 막대가 아니다(요구사항 A). 폭은 항상 부모 칸의
+ * 100%(`CropProgressBar` 기본값) — 카드 매칭처럼 좁은 칸이든 4지선다 카드든 같은 규칙이다(요구사항 C).
+ *
+ * 작물 그림도 자리를 하나만 쓴다. 이전 그림과 새 그림을 같은 정사각형 칸 안에 **겹쳐 놓고**
+ * 크로스페이드한다(3절 "화살표가 아니라 그래픽 전환") — 옆으로 나열하지 않으므로 막대 폭을
+ * 잠식하지 않는다. 전환 시점은 막대가 100%를 찍고 리셋되는 구간(`GROW_FILL_TIMES`의
+ * 0.62~0.7)에 맞춘다 — 막대와 아이콘이 같은 순간에 같이 바뀌어야 "막대를 다 채워서
+ * 올라갔다"가 한 동작으로 읽힌다(요구사항 B 후반). 두 상수(`GROW_FILL_DURATION`,
+ * `GROW_FILL_TIMES`)는 `CropProgressBar`에서 가져와 쓴다 — 각자 따로 숫자를 적으면
+ * 나중에 한쪽만 바뀌었을 때 막대와 아이콘이 어긋난다.
+ *
+ * 【씨앗을 심는 순간은 왜 여전히 느리게 보이나】 예전에 120ms 제자리 크로스페이드를 쓰다가
+ * 버렸던 이유(첫 학습 14문항 전부가 "봉투→낱알" 전환인데 120ms 는 너무 빨라 처음부터
+ * 낱알이었던 것처럼 보였다)는 여전히 유효하다. 지금 크로스페이드는 막대의 리셋 구간
+ * (0.9초 중 0.62~0.7초)에 걸려 있어 그보다 훨씬 느리므로 같은 문제가 재발하지 않는다.
  */
 
 /** 진화 스파클 — 새 작물이 솟아오를 때 바깥으로 튀는 세 점 (시안 `.fb .spk`) */
@@ -29,23 +55,10 @@ const SPARKS = [
   { className: 'top-[6px] right-0 w-[3px] h-[3px]', peak: 0.65 },
 ];
 
-/*
-  진화 연출 구간표 (전체 1.0초).
-
-  정답 후 다음 문제로 넘어가는 지연이 1000ms 라, 그 안에 끝나야 애니메이션이 잘리지 않는다.
-
-  【왜 제자리 크로스페이드를 그만뒀나】 예전에는 작물 자리 **하나**에서 이전 그림이 120ms 만에
-  쪼그라들며 사라지고 새 그림이 튀어올랐다. 120ms 는 눈이 따라잡지 못하는 길이라,
-  씨앗을 심는 순간 — 봉투(보유 씨앗)가 낱알(심은 씨앗)로 바뀌는, 첫 학습에서 14번 연속으로
-  일어나는 그 순간 — 이 **처음부터 낱알이었던 것처럼** 보였다.
-  지금은 두 그림을 동시에 세우고 그 사이를 막대가 채운다. 다 차면 앞 그림과 막대가 접히고
-  뒷 그림이 그 자리로 미끄러져 들어온다 — "막대를 다 채워서 올라갔다"가 한 동작으로 읽힌다.
-*/
-const T_FILL     = 0.62;   // 막대가 100% 를 찍는 시점
-const T_POP      = 0.80;   // 도착 작물이 가장 크게 부푸는 시점
-const T_HOLD     = 0.76;   // 가득 찬 채로 붙잡아 두는 끝
-const T_COLLAPSE = 0.94;   // 앞 그림·막대가 접히기를 마치는 시점
-const T_TOTAL    = 1.0;    // 초 단위 전체 길이
+// 막대가 100%를 찍고 리셋되는 구간(GROW_FILL_TIMES 의 index 2~3) — 작물 아이콘의
+// 크로스페이드도 정확히 이 구간에서 일어나야 막대·아이콘이 같은 순간에 바뀐다.
+const [, , GROW_RESET_START, GROW_RESET_END] = GROW_FILL_TIMES;
+const ICON_SWAP_TIMES = [0, GROW_RESET_START, GROW_RESET_END, 1];
 
 const FarmStatusBar = ({
   crop,
@@ -89,16 +102,6 @@ const FarmStatusBar = ({
 
   const size = compact ? 18 : 26;
   const barH = compact ? 4 : 5;
-  const gap = compact ? 6 : 10;
-  // 접힘 애니메이션은 px 로만 보간된다 — 좁은 형의 '100%' 는 사실상 무제한이므로 큰 수로 둔다
-  const barMax = compact ? 999 : 132;
-
-  /*
-    진화 회차에만 두 그림을 세운다. 같은 단계에 머무는 정답까지 이 배치를 쓰면
-    매 문제마다 "아직 못 간 다음 단계"가 눈에 밟혀, 성과가 아니라 남은 거리를 말하는
-    화면이 된다. 그때는 예전 그대로 [작물] [막대] [n일 뒤] 한 줄이다.
-  */
-  const growLayout = grew && !diagnosis;
 
   // 진화한 순간에만 햅틱을 한 번 준다 (채점 햅틱은 문제 화면이 이미 준다)
   const buzzedRef = useRef(false);
@@ -170,125 +173,8 @@ const FarmStatusBar = ({
           초록이 화면에서 가장 큰 색 덩어리가 되어 버린다. 성장은 막대와 작물이 말하고,
           면은 다른 회차와 같은 표면을 유지한다. */}
 
-      {growLayout ? (
-        /* ── 진화 회차 — 앞 그림에서 뒤 그림으로 건너간다 ─────────────────── */
-        <>
-          {/* ① 출발 작물(봉투). 막대가 다 차면 폭 0으로 접히며 사라진다.
-              음수 marginRight 는 접힐 때 부모의 gap 까지 같이 지우기 위한 것이다. */}
-          <motion.span
-            className="relative z-[1] flex-shrink-0 flex items-center justify-center overflow-hidden"
-            style={{ height: size }}
-            initial={{ width: size, opacity: 1, marginRight: 0 }}
-            animate={{ width: [size, size, 0, 0], opacity: [1, 1, 0, 0], marginRight: [0, 0, -gap, -gap] }}
-            transition={{ duration: T_TOTAL, times: [0, T_HOLD, T_COLLAPSE, 1], ease: 'easeInOut' }}
-          >
-            <CropImage stage={prevCropForImage} health={health} size={size} alt="" />
-          </motion.span>
-
-          {/* ② 건너가는 막대 — 0 → 100% 로 채우고, 다 차면 출발 작물과 함께 접힌다 */}
-          <motion.span
-            className="relative z-[1] flex flex-1 min-w-0 items-center"
-            initial={{ maxWidth: barMax, opacity: 1, marginRight: 0 }}
-            animate={{
-              maxWidth: [barMax, barMax, 0, 0],
-              opacity: [1, 1, 0, 0],
-              marginRight: [0, 0, -gap, -gap],
-            }}
-            transition={{ duration: T_TOTAL, times: [0, T_HOLD, T_COLLAPSE, 1], ease: 'easeInOut' }}
-          >
-            <span
-              className="block w-full rounded-[99px] bg-[#E8E8E8] dark:bg-[#454545] overflow-hidden"
-              style={{ height: barH }}
-            >
-              <motion.span
-                className="block h-full rounded-[99px] bg-status-success-600"
-                initial={{ width: '0%' }}
-                animate={{ width: ['0%', '100%', '100%', '100%'] }}
-                transition={{ duration: T_TOTAL, times: [0, T_FILL, T_HOLD, 1], ease: 'easeOut' }}
-              />
-            </span>
-          </motion.span>
-
-          {/* ③ 도착 작물(낱알) — 흐리게 서 있다가 막대가 차는 동안 또렷해지고, 다 차면 한 번 부푼다.
-              처음부터 또렷하면 '이미 도달했다'로 읽혀 막대를 채울 이유가 사라진다. */}
-          <span
-            className="relative z-[1] flex-shrink-0 flex items-center justify-center"
-            style={{ width: size, height: size }}
-          >
-            <motion.span
-              className="absolute inset-0 flex items-center justify-center"
-              initial={{ opacity: 0.28, filter: 'grayscale(1)', scale: 1 }}
-              animate={{
-                opacity: [0.28, 1, 1, 1],
-                filter: ['grayscale(1)', 'grayscale(0)', 'grayscale(0)', 'grayscale(0)'],
-                scale: [1, 1, 1.18, 1],
-              }}
-              transition={{
-                opacity: { duration: T_TOTAL, times: [0, T_FILL, T_HOLD, 1], ease: 'easeOut' },
-                filter: { duration: T_TOTAL, times: [0, T_FILL, T_HOLD, 1], ease: 'easeOut' },
-                scale: { duration: T_TOTAL, times: [0, T_FILL, T_POP, T_COLLAPSE], ease: 'easeOut' },
-              }}
-            >
-              <CropImage stage={cropForImage} health={health} size={size} />
-            </motion.span>
-            {/* 스파클은 막대가 다 찬 순간에 튄다 */}
-            <span className={`absolute ${compact ? 'inset-[-5px]' : 'inset-[-7px]'} pointer-events-none`}>
-              {SPARKS.map((spark, i) => (
-                <motion.i
-                  key={i}
-                  className={`absolute rounded-full bg-status-success-500 ${spark.className}`}
-                  initial={{ scale: 0, opacity: 0 }}
-                  animate={{ scale: [0, 1, 0.6], opacity: [0, spark.peak, 0] }}
-                  transition={{ duration: 0.32, delay: T_FILL + i * 0.02, ease: 'easeOut' }}
-                />
-              ))}
-            </span>
-          </span>
-
-          {/* ④ 안착 — 새 단계의 막대와 다음 복습일이 뒤늦게 들어온다.
-              **빈 막대로 들어와서 그 자리에서 차오른다.** 예전에는 이미 채워진 채로 나타났는데,
-              그러면 새 단계에서 얼마나 왔는지가 '주어진 값'으로 보여서, 방금 맞힌 것이
-              여기에도 기여했다는 게 읽히지 않았다. 앞 막대가 다 접힌 뒤(T_COLLAPSE)에 시작하므로
-              두 막대가 동시에 차오르는 일은 없다. */}
-          <motion.span
-            className="relative z-[1] flex flex-1 min-w-0 items-center"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: [0, 0, 1] }}
-            transition={{ duration: T_TOTAL, times: [0, T_COLLAPSE, 1], ease: 'easeOut' }}
-          >
-            <CropProgressBar
-              pctFrom={0}
-              pctTo={pctTo}
-              grew={false}
-              tone="primary"
-              width={compact ? '100%' : 132}
-              height={barH}
-              /* 앞 연출이 끝나고 이 막대가 다 보이게 된 뒤부터 채운다 */
-              delay={T_TOTAL}
-              /* 0 에서 채우므로 막대 전체가 '오른 구간'이 된다 — 밝은 덧칠을 끄지 않으면
-                 이 회차만 막대 색이 연해진다(CropProgressBar showGain 주석) */
-              showGain={false}
-            />
-          </motion.span>
-
-          {dayLabel && (
-            <motion.span
-              className={`
-                relative z-[1] flex-shrink-0 whitespace-nowrap font-[600] tracking-[-0.02em] text-layout-gray-300
-                ${compact ? 'text-[10.5px]' : 'text-[12px]'}
-              `}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: [0, 0, 1] }}
-              transition={{ duration: T_TOTAL, times: [0, T_COLLAPSE, 1], ease: 'easeOut' }}
-            >
-              <b className="font-[700] text-layout-black dark:text-layout-white">{dayLabel}</b>
-              {daySuffix ? ` ${daySuffix}` : ''}
-            </motion.span>
-          )}
-        </>
-      ) : (
-      <>
-      {/* 작물 자리 — 진화하지 않는 회차는 그림 하나만 선다.
+      {/* 작물 자리 — 이전·새 그림이 같은 정사각형 칸에 겹쳐 서서 크로스페이드한다(위 파일
+          상단 주석). 옆으로 나열하지 않으므로 막대 폭을 잠식하지 않는다.
           원으로 감싸지 않는다(2절): 에셋 자체가 형태를 가진 그림이다. */}
       <span
         className="relative z-[1] flex-shrink-0 flex items-center justify-center"
@@ -302,21 +188,46 @@ const FarmStatusBar = ({
             className="object-contain select-none"
             style={{ width: size, height: size }}
           />
+        ) : grew ? (
+          <>
+            {/* 이전 작물 — 막대가 리셋되는 순간(GROW_RESET_START~END)에 사라진다 */}
+            <motion.span
+              className="absolute inset-0 flex items-center justify-center"
+              initial={{ opacity: 1, scale: 1 }}
+              animate={{ opacity: [1, 1, 0, 0], scale: [1, 1, 0.7, 0.7] }}
+              transition={{ duration: GROW_FILL_DURATION, times: ICON_SWAP_TIMES, ease: 'easeInOut' }}
+            >
+              <CropImage stage={prevCropForImage} health={health} size={size} align="center" alt="" />
+            </motion.span>
+            {/* 새 작물 — 같은 순간에 흙에서 솟듯 튀어오른다 */}
+            <motion.span
+              className="absolute inset-0 flex items-center justify-center"
+              initial={{ opacity: 0, scale: 0.4 }}
+              animate={{ opacity: [0, 0, 1, 1], scale: [0.4, 0.4, 1.18, 1] }}
+              transition={{ duration: GROW_FILL_DURATION, times: ICON_SWAP_TIMES, ease: 'easeOut' }}
+            >
+              <CropImage stage={cropForImage} health={health} size={size} align="center" />
+            </motion.span>
+            {/* 스파클은 막대가 리셋을 시작하는 순간 튄다 */}
+            <span className={`absolute ${compact ? 'inset-[-5px]' : 'inset-[-7px]'} pointer-events-none`}>
+              {SPARKS.map((spark, i) => (
+                <motion.i
+                  key={i}
+                  className={`absolute rounded-full bg-status-success-500 ${spark.className}`}
+                  initial={{ scale: 0, opacity: 0 }}
+                  animate={{ scale: [0, 1, 0.6], opacity: [0, spark.peak, 0] }}
+                  transition={{ duration: 0.32, delay: GROW_FILL_DURATION * GROW_RESET_START + i * 0.02, ease: 'easeOut' }}
+                />
+              ))}
+            </span>
+          </>
         ) : (
-          /* 이 갈래에는 진화가 오지 않는다(growLayout 이 먼저 받는다) — 그림 한 장을 그대로 놓는다 */
-          <motion.span
-            key={cropKey}
-            className="absolute inset-0 flex items-center justify-center"
-            initial={{ scale: 1, opacity: 1 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{ duration: 0.2, ease: 'easeOut' }}
-          >
-            <CropImage stage={cropForImage} health={health} size={size} />
-          </motion.span>
+          /* 진화하지 않는 회차 — 그림 한 장을 그대로 놓는다 */
+          <CropImage stage={cropForImage} health={health} size={size} align="center" />
         )}
       </span>
 
-      {/* 가운데 — 이번 학습으로 오른 만큼이 밝게 얹힌다.
+      {/* 가운데 — 막대 하나가 값 하나(단계 내 진행률)만 말한다.
           부패 진단만 막대 대신 `.st` 문구를 쓴다(6절). */}
       <div className={`relative z-[1] flex flex-1 min-w-0 items-center ${compact ? 'gap-[6px]' : 'gap-[8px]'}`}>
         {diagnosis ? (
@@ -327,6 +238,9 @@ const FarmStatusBar = ({
           </span>
         ) : (
           <>
+            {/* 진화 회차엔 이 컴포넌트가 자체적으로 pctFrom→100%→0%→pctTo 2단 리셋을
+                재생한다(요구사항 B) — 별도의 두 번째 막대를 세우지 않는다. 폭은 기본값
+                (부모 칸의 100%)을 그대로 써서 어떤 문제 유형에서도 트랙 길이가 같다(요구사항 C). */}
             <CropProgressBar
               pctFrom={pctFrom}
               /* 오답이면 막대가 실제로 줄어든다. FSRS 는 오답에서 안정성을 깎으므로
@@ -336,8 +250,7 @@ const FarmStatusBar = ({
               pctTo={pctTo}
               grew={grew}
               tone={tone}
-              width={compact ? '100%' : 132}
-              height={compact ? 4 : 5}
+              height={barH}
             />
             {!compact && gain > 0 && (
               <motion.span
@@ -372,8 +285,6 @@ const FarmStatusBar = ({
           </b>
           {daySuffix ? ` ${daySuffix}` : ''}
         </span>
-      )}
-      </>
       )}
     </div>
   );

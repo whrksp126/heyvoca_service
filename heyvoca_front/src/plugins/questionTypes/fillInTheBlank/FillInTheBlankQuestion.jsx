@@ -6,6 +6,7 @@ import { vibrate } from '../../../utils/osFunction';
 import { playSuccessSound, playErrorSound } from '../../../utils/audio';
 import { getAdvanceDelay, ADVANCE_DELAY_GROW } from '../../../utils/studyTiming';
 import { getMemoryStateKeyByStability } from '../../../components/common/MemoryStateChangeBadge';
+import { useResumeReplayKey } from '../../../hooks/useResumeReplayKey';
 
 const stateIconMap = {
   unlearned: <EggCrack size={10} weight="fill" />,
@@ -64,6 +65,9 @@ const FillInTheBlankQuestion = ({ question, testType, onComplete, onCardMatched,
   const [memoryStateChange, setMemoryStateChange] = useState(null);
   const [nextReviewDate, setNextReviewDate] = useState(null);
   const startTimeRef = useRef(Date.now());
+  // 백그라운드 복귀 시 정답 링/성장 게이지가 최종 상태로 정적으로 스냅되는 것을 막기 위한
+  // 재마운트용 키 (이유는 useResumeReplayKey 주석 참고)
+  const resumeReplayKey = useResumeReplayKey();
 
   const advanceTimerRef = useRef(null);
   const gradedAtRef = useRef(0);
@@ -235,6 +239,7 @@ const FillInTheBlankQuestion = ({ question, testType, onComplete, onCardMatched,
           <AnimatePresence>
             {isCorrect === true && (
               <motion.div
+                key={`correct-${resumeReplayKey}`}
                 initial={{ scale: 0, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
                 exit={{ scale: 0, opacity: 0 }}
@@ -246,6 +251,7 @@ const FillInTheBlankQuestion = ({ question, testType, onComplete, onCardMatched,
             )}
             {isCorrect === false && (
               <motion.div
+                key={`wrong-${resumeReplayKey}`}
                 initial={{ scale: 0, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
                 exit={{ scale: 0, opacity: 0 }}
@@ -260,6 +266,7 @@ const FillInTheBlankQuestion = ({ question, testType, onComplete, onCardMatched,
         {/* 농장 상태 바 (채점 후, 카드 하단) — 다른 문제 유형과 같은 컴포넌트를 쓴다 */}
         {farm && (
           <motion.div
+            key={`farmbar-${resumeReplayKey}`}
             initial={{ opacity: 0, y: 6 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.25, ease: [0.4, 0, 0.2, 1] }}

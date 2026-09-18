@@ -27,6 +27,7 @@ import { useUser } from '../../context/UserContext';
 import FarmStatusBar from '../farm/FarmStatusBar';
 import { HEALTH_STATES } from '../../utils/crop';
 import { removePendingReplantIds } from '../../utils/replantPending';
+import { useResumeReplayKey } from '../../hooks/useResumeReplayKey';
 
 
 // 백엔드 memory state 키(short/medium/long) → 프론트 키(leaf/plant/carrot) 정규화
@@ -174,6 +175,11 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
 
   const [isCorrect, setIsCorrect] = useState(null);
   const [userSelected, setUserSelected] = useState(null);
+  // 백그라운드→포그라운드 복귀 시 1씩 증가 — 정답 링/성장 게이지가 framer-motion의
+  // "경과 실시간 기반 애니메이션 스냅" 버그로 최종 상태에 정적으로 멈춰 보이는 것을 막기 위해
+  // 복귀 시점에 해당 엘리먼트를 강제로 재마운트(key 변경)해 연출을 다시 재생시킨다.
+  // (상세 이유는 useResumeReplayKey 주석 참고)
+  const resumeReplayKey = useResumeReplayKey();
   // 진행률 바: 통과한 고유 단어 수 기준 (재출제 문제는 통과 시에만 카운트)
   const [passedCount, setPassedCount] = useState(0);
   const [isAnswered, setIsAnswered] = useState(false);
@@ -1441,6 +1447,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
                         <AnimatePresence>
                           {isCorrect === true && (
                             <motion.div
+                              key={`correct-${resumeReplayKey}`}
                               initial={{ scale: 0, opacity: 0 }}
                               animate={{ scale: 1, opacity: 1 }}
                               exit={{ scale: 0, opacity: 0 }}
@@ -1457,6 +1464,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
                           )}
                           {isCorrect === false && (
                             <motion.div
+                              key={`wrong-${resumeReplayKey}`}
                               initial={{ scale: 0, opacity: 0 }}
                               animate={{ scale: 1, opacity: 1 }}
                               exit={{ scale: 0, opacity: 0 }}
@@ -1482,6 +1490,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
                       채점 결과(농장 payload)가 오면 평소 상태 바로 교체된다. */}
                   {isDiagnosis && !showFarmBar && (
                     <motion.div
+                      key={`diagbar-${resumeReplayKey}`}
                       initial={{ opacity: 0, y: 8 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.25, ease: [0.4, 0, 0.2, 1] }}
@@ -1495,6 +1504,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
                   {/* 하단 - 채점 후: 농장 상태 바 (작물·성장 막대·다음 복습일) */}
                   {showFarmBar && (
                     <motion.div
+                      key={`farmbar-${resumeReplayKey}`}
                       initial={{ opacity: 0, y: 8 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.25, ease: [0.4, 0, 0.2, 1] }}
