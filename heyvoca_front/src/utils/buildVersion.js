@@ -13,7 +13,16 @@
  *     적용한다. 학습 도중 갑자기 새로고침되면 그건 우리가 없애려는 버그보다 나쁘다.
  *  2. **모르면 아무것도 하지 않는다.** version.json 을 못 읽거나(구버전 배포·네트워크 오류) 값이
  *     이상하면 조용히 넘어간다. 잘못된 판정으로 무한 새로고침을 만드는 것이 최악이다.
+ *
+ * ⚠️ 2026-09-19 정정: "화면이 보이지 않게 된 뒤"를 예전엔 "hidden 이벤트가 발생한 바로 그 순간"으로
+ * 구현했다. 그런데 학습(TakeTest) 도중 앱을 백그라운드로 보내는 것도 hidden 전환이라, 학습 세션이
+ * 아직 진행 중인데 그 즉시 reload가 걸려버렸다 — 진행 중이던 슬라이드·진행률 저장(updateRecentStudyServer)·
+ * /study/log 전송이 reload 네비게이션에 끊기고, 복귀 시엔 마지막으로 저장 성공한 서버 상태로 되돌아가
+ * "학습 화면이 초기화된 것처럼" 보였다(규율 1 위반). 이제 studySessionGuard로 "학습 세션 활성" 여부를
+ * 확인해서, 활성 중에는 hidden 전환이어도 reload를 걸지 않고 pendingBuild만 유지한다 — 학습 세션이
+ * 끝나는 순간(TakeTest 언마운트) 그때 화면이 숨겨져 있으면 즉시 적용한다.
  */
+import { isStudySessionActive, onStudySessionEnd } from './studySessionGuard';
 
 const VERSION_URL = '/version.json';
 // 앱을 켜 둔 채 오래 쓰는 사용자를 위한 주기 확인. 짧을 이유가 없다(배포는 하루 몇 번이다).
@@ -37,6 +46,9 @@ async function fetchBuild() {
 
 function applyIfPending() {
   if (!pendingBuild) return;
+  // 학습 세션(TakeTest) 진행 중에는 hidden 전환이어도 reload를 걸지 않는다.
+  // pendingBuild는 그대로 유지 — 세션이 끝나면(studySessionGuard) 그때 다시 시도한다.
+  if (isStudySessionActive()) return;
   // ★ 새로고침을 **걸기 전에** 기준값을 목표 빌드로 옮긴다.
   //   실제 브라우저라면 reload 로 모듈이 재초기화되므로 무의미해 보이지만, 새로고침이 실제로 일어나지
   //   않는 경우(웹뷰가 백그라운드에서 지연시키거나 차단하는 경우)에 이게 없으면 화면 전환 때마다
@@ -74,6 +86,13 @@ export function startBuildVersionWatch() {
   check();
   const timer = setInterval(check, POLL_INTERVAL_MS);
 
+  // 학습 세션이 끝나는 순간(TakeTest 언마운트) — 그때 화면이 이미 숨겨져 있다면
+  // (예: 결과 화면 안 보고 바로 백그라운드로 나감) 미뤄뒀던 갱신을 지금 적용한다.
+  // 화면이 보이는 상태라면 규율 1(작업 중 새로고침 금지)에 따라 다음 hidden 전환까지 계속 기다린다.
+  const stopSessionWatch = onStudySessionEnd(() => {
+    if (typeof document !== 'undefined' && document.visibilityState === 'hidden') applyIfPending();
+  });
+
   const onVisibility = () => {
     if (document.visibilityState === 'visible') {
       // 돌아온 순간 = 사용자가 아직 아무것도 하지 않은 시점 → 대기 중이던 갱신을 여기서 적용한다.
@@ -88,6 +107,7 @@ export function startBuildVersionWatch() {
   return () => {
     clearInterval(timer);
     document.removeEventListener('visibilitychange', onVisibility);
+    stopSessionWatch();
     started = false;
   };
 }

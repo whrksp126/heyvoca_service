@@ -16,6 +16,7 @@ import { useUser } from '../context/UserContext';
 import { useOnboardingUnlock } from '../context/OnboardingUnlockContext';
 import { getGuestTrial, clearGuestTrial, patchGuest } from '../utils/guestStorage';
 import { getPendingReplantIds } from '../utils/replantPending';
+import { beginStudySession } from '../utils/studySessionGuard';
 
 // 발음(TTS) 준비 게이트 최대 대기(ms). 이 시간을 넘기면 준비가 덜 됐어도 학습에 진입한다
 // (나머지는 백그라운드에서 계속 준비) — 준비 화면에서 무한 대기하는 것을 방지.
@@ -68,6 +69,15 @@ const TakeTest = () => {
   // (카드 1장 즉시 콜백(onCardMatched)과 세트 완료 콜백(onComplete)이 같은 단어를 중복 처리하므로
   //  단어당 재출제를 정확히 1회만 큐잉하도록 방지)
   const cardRetryEnqueuedRef = useRef(new Set());
+
+  // 이 화면이 떠 있는 동안(게스트 맛보기 포함) "학습 세션 활성" 상태를 전역에 알린다.
+  // buildVersion.js가 이 신호를 보고 백그라운드 복귀 시 페이지를 reload하지 않도록 막는다
+  // (reload가 학습 도중 발생하면 진행 중이던 슬라이드가 초기화되고, 재출제 로깅 ref가 리셋되며
+  //  /study/log가 중복 전송돼 암기 게이지가 과다 상승하는 문제로 이어졌다).
+  useEffect(() => {
+    const endSession = beginStudySession();
+    return () => endSession();
+  }, []);
 
   // Fisher-Yates 셔플 알고리즘 (더 정확한 랜덤 셔플)
   const shuffleArray = (array) => {
@@ -434,32 +444,43 @@ const TakeTest = () => {
           setTestQuestions(studyData);
           setProgressIndex(recentStudy[state.testType].progress_index);
           // 재출제 ref 리셋 (복원 시 안전하게 클린 스타트)
-          loggedVocaIdsRef.current = new Set();
           retryCountMapRef.current = new Map();
           cardRetryEnqueuedRef.current = new Set();
           // 고유 단어 수 재계산 + 이미 정답 처리된 고유 단어 복원
           // (버그 수정: 예전엔 passedVocaIdsRef를 무조건 빈 Set으로 리셋해서, 이어하기/
           //  백그라운드 복귀로 재마운트될 때마다 상단 진행 바가 0부터 다시 시작했다.
           //  study_data에 저장된 문제별 isCorrect를 기준으로 진행률 분자를 다시 채운다.)
+          //
+          // loggedVocaIdsRef도 같은 이유로 무조건 빈 Set으로 리셋하면 안 된다 — 이미 첫 시도가
+          // 채점되어 /study/log를 보낸 단어(isCorrect가 true/false로 확정된 단어, null=미응답)까지
+          // "안 보낸 것"으로 착각해서, 복원 직후 같은 단어가 다시 채점되는 경로를 타면 /study/log를
+          // 중복 전송한다 → 백엔드가 FSRS review()를 두 번 적용해 암기 게이지가 실제보다 과다 상승한다
+          // (heyvoca_back/app/routes/study.py: POST /study/log에 세션·단어 단위 멱등 가드가 없어
+          //  중복 요청을 그대로 다 반영한다). isCorrect!==null(응답 완료, 정오답 무관)을 "이미 로깅됨"
+          // 신호로 재시딩해서 막는다.
           {
             const uniqueIds = new Set();
             const passedIds = new Set();
+            const loggedIds = new Set();
             for (const q of studyData) {
               if (Array.isArray(q.words)) {
                 q.words.forEach(w => {
                   if (w.id == null) return;
                   uniqueIds.add(w.id);
                   if (w.isCorrect === true) passedIds.add(w.id);
+                  if (w.isCorrect !== null && w.isCorrect !== undefined) loggedIds.add(w.id);
                 });
               } else {
                 const id = q.vocaIndexId ?? q.id;
                 if (id == null) continue;
                 uniqueIds.add(id);
                 if (q.isCorrect === true) passedIds.add(id);
+                if (!q.isRetry && q.isCorrect !== null && q.isCorrect !== undefined) loggedIds.add(id);
               }
             }
             totalUniqueVocaCountRef.current = uniqueIds.size || studyData.length;
             passedVocaIdsRef.current = passedIds;
+            loggedVocaIdsRef.current = loggedIds;
           }
           // 발음(TTS) 준비 완료까지 준비 화면을 보여준 뒤 학습으로 진입.
           await prepareThenReveal(studyData);

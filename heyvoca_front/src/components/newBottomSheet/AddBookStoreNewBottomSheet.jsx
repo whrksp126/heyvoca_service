@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Seal } from '@phosphor-icons/react';
 import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
 import { useUser } from '../../context/UserContext';
@@ -14,24 +13,21 @@ import {
 } from './StorePurchaseResultNewBottomSheet';
 import { GemPurchaseNewBottomSheet } from './GemPurchaseNewBottomSheet';
 import {
-  SHEET_SHELL, Grab, Gem, Btn, Btns, BtnSpinner, SheetHead,
-  RecvBox, RecvRow, RecvHr, Arrow, Up, Down, InfoBox, EmBlue, HintB,
+  SHEET_SHELL, Grab, Gem, Btn, Btns, BtnSpinner, SheetHead, HintB,
 } from './purchaseParts';
-// 씨앗 도착(성공 리턴)과 확인 시트 머리(§3)의 아이콘 — "심을 씨앗 N개" 문구 자체에는
-// 더 이상 아이콘을 붙이지 않기로 했다(상점 카드 §4 개정). 이 파일에서는 원래도 desc 텍스트에
-// 인라인 아이콘이 없어 그 규칙은 이미 지켜지고 있었고, seedImg 는 시트 머리의 대표 그림으로만 쓴다.
+// 씨앗 도착(성공 리턴)에서만 쓰는 그림 — 확인 시트 머리는 이름과 가격만 보여주므로
+// 여기서는 더 이상 쓰지 않는다.
 import seedImg from '../../assets/images/farm/crops/unplanted/healthy-seed.png';
 
 /**
  * 서점 단어장 구매 확인 시트.
  *
- * 시안 정본: shop-purchase.txt §2⑥(단어장 구매 확인) · §3(확인 시트의 세 값) ·
- *            §6(겹치는 단어를 사기 전에 말한다) · §7(산 것은 보유 씨앗이다),
+ * 시안 정본: shop-purchase.txt §2⑥(단어장 구매 확인),
  *            shop-result.txt §2③(단어장 성공) · §3⑦⑧(보석 부족 · 처리 실패) · §6(실패를 네 갈래로).
  *
- * 전 버전은 "보석 N개로 단어장을 추가하시겠어요?" 한 문장이 전부였다(§3 이 지목한 그 화면).
- * 시안이 요구하는 건 결제액 하나가 아니라 **세 값이 어떻게 바뀌는지**다 —
- * 보석 잔액 · 보유 씨앗 · 단어장 수. 화살표는 늘 "지금 → 산 뒤" 방향이다.
+ * 확인 시트는 "무엇을 얼마에 사는지"만 보여준다 — 이름 · 단어 수 · 가격.
+ * 보유 씨앗/단어장 변화, 중복 단어 검증 안내는 결과 화면과 서점 목록에서 이미 확인할 수 있어
+ * 구매 결정 단계에서는 뺐다.
  *
  * 실패는 한 화면으로 합치지 않는다(§6). 보석 부족에서 "다시 시도"는 반드시 또 실패하므로
  * 본문을 한 줄로 줄인 뒤에도 **버튼만은 원인마다 다르게** 둔다.
@@ -40,11 +36,11 @@ export const AddBookStoreNewBottomSheet = ({ bookStoreVocabularySheet }) => {
   "use memo";
 
   const navigate = useNavigate();
-  const { addBookStoreVocabularySheet, vocabularySheets, fetchBookStore } = useVocabulary();
+  const { addBookStoreVocabularySheet, fetchBookStore } = useVocabulary();
   const { popNewBottomSheet, openNewBottomSheet, clearStack } = useNewBottomSheetActions();
   const { popNewFullSheet } = useNewFullSheetActions();
   const { userProfile, setUserProfile } = useUser();
-  const { farmOverview, refreshStats } = useStats();
+  const { refreshStats } = useStats();
   const { refreshUnlock } = useOnboardingUnlock();
 
   // confirm → loading → (성공: 결과 시트로 교체) | short | error
@@ -58,12 +54,6 @@ export const AddBookStoreNewBottomSheet = ({ bookStoreVocabularySheet }) => {
 
   const gemCnt = Number(userProfile?.gem_cnt) || 0;
   const shortage = Math.max(0, cost - gemCnt);
-  const bookCnt = Array.isArray(vocabularySheets) ? vocabularySheets.length : null;
-  // 보유 씨앗 = 아직 밭에 심지 않은 단어(§7). 농장 요약이 아직 없으면 그 줄만 접는다 —
-  // 없는 값을 0 으로 적으면 "지금 → 산 뒤"가 거짓말이 된다.
-  const heldSeeds = Number.isFinite(Number(farmOverview?.seed_detail?.unplanted))
-    ? Number(farmOverview.seed_detail.unplanted)
-    : null;
 
   const n = (v) => v.toLocaleString('ko-KR');
 
@@ -169,55 +159,18 @@ export const AddBookStoreNewBottomSheet = ({ bookStoreVocabularySheet }) => {
     );
   }
 
-  // 화살표 줄은 "지금 → 산 뒤" 하나뿐이라 값이 있는 것만 순서대로 쌓는다(§3).
-  const changeRows = [];
-  if (cost > 0) {
-    changeRows.push({
-      k: '보유 보석',
-      value: <><span>{n(gemCnt)}</span><Arrow /><Down>{n(Math.max(0, gemCnt - cost))}</Down></>,
-    });
-  }
-  if (heldSeeds !== null && seeds > 0) {
-    changeRows.push({
-      k: '보유 씨앗',
-      value: <><span>{n(heldSeeds)}개</span><Arrow /><Up>{n(heldSeeds + seeds)}개</Up></>,
-    });
-  }
-  if (bookCnt !== null) {
-    changeRows.push({
-      k: '단어장',
-      value: <><span>{n(bookCnt)}개</span><Arrow /><Up>{n(bookCnt + 1)}개</Up></>,
-    });
-  }
-
-  // ── ⑥ 구매 확인 (shop-purchase §2⑥) ─────────────────────
+  // ── ⑥ 구매 확인 (shop-purchase §2⑥) — 이름 · 단어 수 · 가격만 보여준다 ──
   return (
     <div className={`${SHEET_SHELL} max-h-[calc(90vh-40px)] overflow-y-auto`}>
       <Grab />
 
       <SheetHead
-        image={seedImg}
-        imageAlt=""
         title={name}
-        desc={seeds > 0 ? `단어 ${n(seeds)}개 · 헤이보카 검증` : '헤이보카 검증'}
+        desc={seeds > 0 ? `단어 ${n(seeds)}개` : undefined}
+        right={cost > 0
+          ? <Gem n={cost} />
+          : <span className="text-[13px] font-[800] text-status-success-600">무료</span>}
       />
-
-      {/* §3 — 결제액 하나가 아니라 세 값이 어떻게 바뀌는지를 적는다 */}
-      <RecvBox>
-        <RecvRow k="결제" tight>
-          {cost > 0 ? <Gem n={cost} /> : '무료'}
-        </RecvRow>
-        {changeRows.length > 0 && <RecvHr />}
-        {changeRows.map((r, i) => (
-          <RecvRow key={r.k} k={r.k} tight={i === 0}>{r.value}</RecvRow>
-        ))}
-      </RecvBox>
-
-      {/* §6 — 겹치는 단어를 사기 전에 말한다. 검증 시스템의 이득으로 읽히게 먼저 말한다 */}
-      <InfoBox tone="blue" icon={<Seal size={13} weight="fill" className="text-secondary-blue-600" />}>
-        검증된 단어라 <EmBlue>다른 단어장에 같은 단어가 있으면 성장 상태를 함께 써요.</EmBlue>
-        {' '}이미 키우던 단어는 처음부터 다시 심지 않아요.
-      </InfoBox>
 
       <Btns>
         <Btn tone="sec" onClick={close} disabled={status === 'loading'}>취소</Btn>

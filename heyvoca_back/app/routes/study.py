@@ -249,6 +249,49 @@ def post_study_log():
     if not user_voca:
         return jsonify({'code': 403, 'message': '단어 접근 권한이 없습니다.'}), 403
 
+    # ── 멱등 가드: 같은 세션에서 같은 단어의 로그가 이미 있으면 재적용하지 않는다 ──
+    # 프론트는 세션당 단어 1회(첫 시도)만 이 엔드포인트를 부르도록 설계돼 있다(재출제는
+    # 프론트에서 스킵). 하지만 클라이언트가 재전송하는 경로(예: 백그라운드 복귀 직후 로컬
+    # 중복 방지 상태가 유실된 채 같은 답을 다시 채점하는 경우)가 완전히 막혀 있다는 보장이
+    # 없어서, 서버에서도 같은 (session_id, user_voca_id) 조합의 두 번째 요청은 FSRS review를
+    # 다시 적용하지 않고 직전 저장된 결과를 그대로 돌려준다 — review()를 두 번 적용하면
+    # 실제 학습량보다 stability/pct가 과다 상승하는 데이터 오염으로 이어진다.
+    # (UserVoca 행 락을 먼저 잡아 동시 중복 요청도 여기서 직렬화된다.)
+    existing_log = (
+        UserStudyLog.query
+        .filter_by(session_id=session_uuid, user_voca_id=user_voca_id)
+        .order_by(UserStudyLog.created_at.desc())
+        .first()
+    )
+    if existing_log is not None:
+        try:
+            dup_fsrs_after = json.loads(existing_log.state_after) if existing_log.state_after else {}
+        except (TypeError, ValueError):
+            dup_fsrs_after = {}
+        try:
+            dup_fsrs_before = json.loads(existing_log.state_before) if existing_log.state_before else {}
+        except (TypeError, ValueError):
+            dup_fsrs_before = {}
+        logging.getLogger(__name__).warning(
+            '[study/log] 중복 요청 무시 — session_id=%s user_voca_id=%s',
+            session_id_str, user_voca_id,
+        )
+        return jsonify({
+            'code': 200,
+            'data': {
+                'rating': existing_log.rating,
+                'fsrs': dup_fsrs_after,
+                'memory_state_change': {
+                    'from': _classify_memory_state(dup_fsrs_before),
+                    'to':   _classify_memory_state(dup_fsrs_after),
+                },
+                'combo': None,
+                'farm': None,
+                'streak': None,
+                'duplicate': True,
+            },
+        }), 200
+
     # ── FSRS state 로드 ──
     payload = parse_user_voca_data(user_voca.data)
 

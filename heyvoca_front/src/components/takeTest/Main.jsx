@@ -518,6 +518,17 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
     }
     const promise = logStudyQuestion(payload)
       .then((logRes) => {
+        if (logRes?.data?.duplicate) {
+          // 백엔드 멱등 가드가 "이미 처리된 요청"으로 판단해 FSRS/콤보/연속학습일을 전혀
+          // 재적용하지 않았다 — 실제로 아무 것도 안 늘었으므로 화면도 정지 상태(pct_from ===
+          // pct_to)를 "변화 없음"으로 확정 승격할 뿐, 낙관값 폴백(farmFallbackRef)으로
+          // 넘기지 않는다. 폴백을 타면 서버는 무시했는데 화면만 오른 것처럼 보이는
+          // 모순(중복 전송이 없었어도 게이지가 오르는 것처럼 보이는 버그)이 재발한다.
+          const held = lastFarmByVocaRef.current[vocaId];
+          if (held) publishFarm({ ...held, pending: false }, vocaId, progressIndex);
+          delete farmFallbackRef.current[vocaId];
+          return;
+        }
         if (logRes?.data?.combo) handleComboPayload(logRes.data.combo);
         if (logRes?.data?.streak) handleStreakPayload(logRes.data.streak);
         // 농장 상태 바 payload — 채점 직후엔 pendingFarmPayload(정지 상태)만 떠 있었다.
@@ -1054,6 +1065,16 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
   const sendCardLog = (payload, { sheetId, wordId, currentQuestion, setWords }) => {
     return logStudyQuestion(payload)
       .then(logRes => {
+        if (logRes?.data?.duplicate) {
+          // 비카드 경로(logIfFirstAttempt)와 동일 — 서버가 중복으로 판단해 아무 것도
+          // 재적용하지 않았으므로, 카드 게이지도 정지 상태를 "변화 없음"으로 확정 승격만
+          // 하고 낙관값 폴백은 타지 않는다.
+          setCardFarmByWordId(prev => (
+            prev[wordId] ? { ...prev, [wordId]: { ...prev[wordId], pending: false } } : prev
+          ));
+          delete farmFallbackRef.current[wordId];
+          return;
+        }
         if (logRes?.data?.combo) handleComboPayload(logRes.data.combo);
         if (logRes?.data?.streak) handleStreakPayload(logRes.data.streak);
         // 농장 상태 바 payload — 카드 매칭은 카드(단어)마다 따로 붙는다.
