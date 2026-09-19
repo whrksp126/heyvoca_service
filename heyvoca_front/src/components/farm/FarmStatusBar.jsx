@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
+import { Clock } from '@phosphor-icons/react';
 import CropImage, { CROP_ASSETS } from './CropImage';
 import CropProgressBar, { GROW_FILL_DURATION, GROW_FILL_TIMES } from './CropProgressBar';
 import { CROP_STAGES, cropIndex, stageToCrop } from '../../utils/crop';
@@ -60,6 +61,23 @@ const SPARKS = [
 const [, , GROW_RESET_START, GROW_RESET_END] = GROW_FILL_TIMES;
 const ICON_SWAP_TIMES = [0, GROW_RESET_START, GROW_RESET_END, 1];
 
+/*
+  같은 날 재복습(elapsedLabel) — 텍스트 변환 단일 소스.
+
+  FSRS-5 는 같은 날 두 번째 복습이면 elapsed_days(직전 복습 대비 경과일)≈0 이라 stability 가
+  사실상 안 올라(+0.01) 게이지 숫자가 그대로다(의도된 설계). 이유를 몰라도 되게, 원래
+  `+N%` 가 뜨던 자리(항상 고정폭인 배지 슬롯)에 "언제 이미 풀었는지"를 시계 아이콘 + 상대
+  시간으로 보여준다 — 게이지 pill 의 높이·레이아웃 자체는 건드리지 않는다.
+  판정(sameDayElapsedHours 가 오는지)은 호출부(Main.jsx `isSameDayReview`)가 정오답까지
+  걸러 결정하므로, 여기서는 시간 문자열로 바꾸는 표기만 담당한다.
+*/
+const formatElapsedLabel = (hours, compact) => {
+  if (hours == null) return null;
+  if (hours < 1) return compact ? '방금' : '방금 전';
+  const h = Math.floor(hours);
+  return compact ? `${h}h` : `${h}시간 전`;
+};
+
 const FarmStatusBar = ({
   crop,
   stage,
@@ -71,6 +89,10 @@ const FarmStatusBar = ({
   health,
   days_to_review: daysToReview = null,
   wasCorrect = true,
+  // 같은 날 두 번째 복습(서버 `/study/log` 응답의 `fsrs.elapsed_days`, 시간 단위로 환산한 값) —
+  // 정답이고 24시간 이내 재복습일 때만 호출부(Main.jsx `isSameDayReview`)가 이 값을 채워
+  // 준다. null 이면 평소처럼 `+N%` 배지 자리가 비거나 그대로 게인을 보여준다.
+  sameDayElapsedHours = null,
   compact = false,
   // 부패 진단(시안 6절) 전용 — 채점 전부터 뜨는 `.fb.ng` 형. 삽 그림 + '삽 1개를 씁니다' + '맞히면 씨앗부터'
   diagnosis = false,
@@ -106,6 +128,10 @@ const FarmStatusBar = ({
   const tone = grew ? 'up' : (isNg && !pending ? 'ng' : 'primary');
   // 오답은 막대가 늘지 않는다(2절) — 시안 ⑤ 에는 `u`(오른 구간)도 `pc`(+N%)도 없다.
   const gain = !grew && !isNg && pctTo > pctFrom ? Math.round(pctTo - pctFrom) : 0;
+  // 같은 날 재복습이면 gain 은 어차피 0(막대가 안 움직이므로) — 배지 슬롯에서 두 값이
+  // 동시에 뜰 일은 없다. 그래도 `elapsedLabel` 을 gain 과 별개로 계산해 슬롯 렌더 쪽만
+  // "무엇을 보여줄지" 고르면 되게 한다.
+  const elapsedLabel = formatElapsedLabel(sameDayElapsedHours, compact);
 
   const size = compact ? 18 : 26;
   const barH = compact ? 4 : 5;
@@ -159,10 +185,13 @@ const FarmStatusBar = ({
       바로 보여줘야 한다. 여기서 접으면 응답이 오는 순간 바가 없다가 갑자기 나타나
       역시 "화면이 비었다가 채워진다"는 어색함이 생긴다.
 
-    이 다섯이 전부 없다면(정오답 무관) 작물 그림과 빈 회색 막대만 남아 자리만 차지하므로
+    - 같은 날 재복습(elapsedLabel) — 막대·작물은 그대로라도, `+N%` 배지 자리에 "언제 이미
+      풀었는지"를 보여주는 시계 배지 자체가 내용이다.
+
+    이 여섯이 전부 없다면(정오답 무관) 작물 그림과 빈 회색 막대만 남아 자리만 차지하므로
     호출부의 absolute 컨테이너째로 접히도록 null 을 반환한다.
   */
-  const hasContent = Boolean(diagnosis || dayLabel || grew || pctTo !== pctFrom || pending);
+  const hasContent = Boolean(diagnosis || dayLabel || grew || pctTo !== pctFrom || pending || elapsedLabel);
   if (!hasContent) {
     return null;
   }
@@ -264,21 +293,44 @@ const FarmStatusBar = ({
             />
             {/* `+N%` 배지 자리를 **항상** 고정폭으로 예약한다. 예전엔 gain>0 일 때만
                 엘리먼트를 넣어서, 정지 상태(pending·오답)엔 이 자리가 아예 없다가 응답이
-                오는 순간 막대의 flex-1 몫이 그만큼 줄어 트랙이 짧아진 것처럼 보였다. */}
-            {!compact && (
-              <span className="relative z-[1] flex-shrink-0 w-[34px] text-right">
-                {gain > 0 && (
-                  <motion.span
-                    className={`text-[11.5px] font-[800] tracking-[-0.02em] ${grew ? 'text-status-success-600' : 'text-primary-main-600'}`}
-                    initial={{ opacity: 0, y: 4 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.25, delay: 0.15, ease: [0.4, 0, 0.2, 1] }}
-                  >
-                    +{gain}%
-                  </motion.span>
-                )}
-              </span>
-            )}
+                오는 순간 막대의 flex-1 몫이 그만큼 줄어 트랙이 짧아진 것처럼 보였다.
+                같은 날 재복습(elapsedLabel)도 이 같은 슬롯을 쓴다 — gain 은 그 경우 항상 0
+                이라(막대가 안 움직이므로) 한 슬롯 안에서 서로 겹칠 일이 없다. compact 는
+                원래 이 슬롯 자체가 없었지만(`.fb.sm` 은 `+N%`를 접는다), 시계 배지는 좁은
+                형에도 필요해 compact 전용 폭으로 새로 둔다 — 배지가 뜨든 안 뜨든 폭은
+                고정이라 트랙 길이가 흔들리지 않는다. */}
+            <span
+              className={`
+                relative z-[1] flex-shrink-0 flex items-center justify-end gap-[2px] text-right
+                ${compact ? 'w-[34px]' : 'w-[58px]'}
+              `}
+            >
+              {!compact && gain > 0 && (
+                <motion.span
+                  className={`text-[11.5px] font-[800] tracking-[-0.02em] ${grew ? 'text-status-success-600' : 'text-primary-main-600'}`}
+                  initial={{ opacity: 0, y: 4 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.25, delay: 0.15, ease: [0.4, 0, 0.2, 1] }}
+                >
+                  +{gain}%
+                </motion.span>
+              )}
+              {elapsedLabel && (
+                <motion.span
+                  className={`
+                    inline-flex items-center gap-[2px] font-[700] whitespace-nowrap
+                    text-layout-gray-300 dark:text-layout-gray-200
+                    ${compact ? 'text-[9.5px]' : 'text-[11px]'}
+                  `}
+                  initial={{ opacity: 0, y: 4 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.25, delay: 0.15, ease: [0.4, 0, 0.2, 1] }}
+                >
+                  <Clock size={compact ? 10 : 12} weight="bold" />
+                  {elapsedLabel}
+                </motion.span>
+              )}
+            </span>
           </>
         )}
       </div>

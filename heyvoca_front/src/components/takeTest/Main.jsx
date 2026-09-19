@@ -42,6 +42,24 @@ const backendStateKeyMap = { unlearned: 'unlearned', short: 'leaf', medium: 'pla
 // 신뢰하도록 묶어서, 두 지점의 "갱신" 기준이 갈라지지 않게 한다.
 const isComboRecordEvent = (payload) => !!payload?.events?.best_updated;
 
+// ── 같은 날 재복습 판정 — 단일 소스 ──
+// FSRS-5 는 같은 날 두 번째 복습이면 `/study/log` 응답의 fsrs.elapsed_days(직전 복습 대비
+// 경과일)가 0에 가까워 stability 가 사실상 안 올라(+0.01) 게이지 숫자가 그대로다 — 의도된
+// 설계이고 백엔드 수정 대상이 아니다(농장 상태 바의 `+N%` 배지 자리에 시계 아이콘 +
+// 상대시간으로만 알린다, FarmStatusBar.jsx 참고). 오답은 원래도 게이지가 안 자라거나
+// 줄어드는 게 자연스러우므로 정답일 때만 본다.
+const isSameDayReview = (wasCorrect, fsrs) =>
+  !!wasCorrect && typeof fsrs?.elapsed_days === 'number' && fsrs.elapsed_days < 1;
+
+// 판정(위)이 참일 때만 시간 단위 값을 만든다 — FarmStatusBar 는 이 값이 null 이면 평소처럼
+// `+N%` 배지 자리를 그대로 쓰고, 숫자가 오면 "N시간 전"/"방금 전"으로 바꿔 그린다.
+// 서버 응답 없이 프론트에서 근사한 낙관값(computeOptimisticFsrs)에는 elapsed_days 가 없어
+// 항상 null — 낙관 폴백·재출제 경로에서 배지가 뜨지 않는 이유가 여기에 있다.
+// (payload 필드명과 겹치지만 별개 — FarmStatusBar 의 prop 이름 `sameDayElapsedHours` 와
+// 맞춰 이 함수가 그 값을 만든다는 걸 바로 알 수 있게 이름을 같게 뒀다.)
+const computeSameDayElapsedHours = (wasCorrect, fsrs) =>
+  isSameDayReview(wasCorrect, fsrs) ? Number(fsrs.elapsed_days) * 24 : null;
+
 // ── 부패 진단 문제 판별 (시안 6절) ────────────────────────────────────────────
 // 삽으로 '다시 심기'를 예약한 작물은 다음 학습에서 진단 문제 1개로 만난다.
 // 화면은 이 문제만 다르게 그린다 — 주황 진행바 + 채점 전부터 뜨는 삽 pill.
@@ -525,7 +543,9 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
           // 넘기지 않는다. 폴백을 타면 서버는 무시했는데 화면만 오른 것처럼 보이는
           // 모순(중복 전송이 없었어도 게이지가 오르는 것처럼 보이는 버그)이 재발한다.
           const held = lastFarmByVocaRef.current[vocaId];
-          if (held) publishFarm({ ...held, pending: false }, vocaId, progressIndex);
+          // 중복 응답은 실제로 아무것도 재적용되지 않았다 — "같은 날 재복습" 배지도
+          // 이번 요청이 새로 확인해 준 사실이 아니므로 끄고 승격한다.
+          if (held) publishFarm({ ...held, pending: false, sameDayElapsedHours: null }, vocaId, progressIndex);
           delete farmFallbackRef.current[vocaId];
           return;
         }
@@ -535,7 +555,11 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
         // 이 응답이 도착해야 비로소 실제 값으로 **한 번** 움직인다(farmOptimistic.js 상단 주석).
         if (logRes?.data?.farm) {
           publishFarm(
-            { ...logRes.data.farm, wasCorrect: !!payload.was_correct },
+            {
+              ...logRes.data.farm,
+              wasCorrect: !!payload.was_correct,
+              sameDayElapsedHours: computeSameDayElapsedHours(payload.was_correct, logRes.data.fsrs),
+            },
             vocaId,
             progressIndex,
           );
@@ -1069,8 +1093,10 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
           // 비카드 경로(logIfFirstAttempt)와 동일 — 서버가 중복으로 판단해 아무 것도
           // 재적용하지 않았으므로, 카드 게이지도 정지 상태를 "변화 없음"으로 확정 승격만
           // 하고 낙관값 폴백은 타지 않는다.
+          // 중복 응답은 실제로 아무것도 재적용되지 않았다 — "같은 날 재복습" 배지도
+          // 이번 요청이 새로 확인해 준 사실이 아니므로 끄고 승격한다.
           setCardFarmByWordId(prev => (
-            prev[wordId] ? { ...prev, [wordId]: { ...prev[wordId], pending: false } } : prev
+            prev[wordId] ? { ...prev, [wordId]: { ...prev[wordId], pending: false, sameDayElapsedHours: null } } : prev
           ));
           delete farmFallbackRef.current[wordId];
           return;
@@ -1083,7 +1109,11 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
         if (logRes?.data?.farm) {
           setCardFarmByWordId(prev => ({
             ...prev,
-            [wordId]: { ...logRes.data.farm, wasCorrect: !!payload.was_correct },
+            [wordId]: {
+              ...logRes.data.farm,
+              wasCorrect: !!payload.was_correct,
+              sameDayElapsedHours: computeSameDayElapsedHours(payload.was_correct, logRes.data.fsrs),
+            },
           }));
         } else {
           // 구버전 응답(farm payload 없음) — 정지 상태를 풀어 줄 정본이 영영 없으므로
@@ -1626,6 +1656,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
                         days_to_review={farmStatus.days_to_review}
                         wasCorrect={farmStatus.wasCorrect}
                         pending={!!farmStatus.pending}
+                        sameDayElapsedHours={farmStatus.sameDayElapsedHours ?? null}
                       />
                     </motion.div>
                   )}
