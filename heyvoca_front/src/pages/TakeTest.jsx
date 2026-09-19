@@ -70,6 +70,28 @@ const TakeTest = () => {
   //  단어당 재출제를 정확히 1회만 큐잉하도록 방지)
   const cardRetryEnqueuedRef = useRef(new Set());
 
+  // initializeTest가 이 마운트에서 이미 실제로 초기화(캐시 복원 또는 신규 생성)를 마쳤는지.
+  // ── 왜 필요한가 ──
+  // 학습 중 앱이 백그라운드로 가면 아래 handleVisibilityChange(hidden)가
+  // updateVocabularySheetAndRecentStudyData → fetchVocabularySheets()를 호출하고, 이 함수는
+  // VocabularyContext의 isVocabularySheetsLoading을 true→false로 토글한다. 그런데 이 fetch가
+  // RN WebView가 백그라운드에서 네트워크/타이머를 멈추는 바람에 정지해있다가, 앱이 다시
+  // 포그라운드로 돌아오는 순간에야 완료되는 경우가 많다 — 그 순간 isVocabularySheetsLoading이
+  // false로 바뀌면서 아래 initializeTest useEffect(dep: [isRecentStudyLoading,
+  // isVocabularySheetsLoading])가 재실행된다.
+  // 재실행된 initializeTest는 "복원" 분기를 다시 타서 recentStudy[testType].study_data /
+  // progress_index로 testQuestions·progressIndex를 덮어쓰는데, 이 recentStudy 스냅샷은
+  // 카드매칭 같은 "세트 단위" 문제 진행 중엔 세트가 끝나기 전까지 갱신되지 않는다
+  // (Main.jsx의 handleCardMatched는 카드 1장을 즉시 채점하지만 updateRecentStudyState는
+  //  handlePluginComplete=세트 완료 시에만 호출한다). 그 결과 복귀 시 "같은 문제가 스플래시 없이
+  // 다시 그려지고, 문제 화면(Main)이 통째로 재마운트되며 콤보 상태(Main의 combo useState +
+  // 서버 재조회 useEffect)가 0부터 리셋됐다가 서버 최신값으로 점프해 콤보 배지가 다시
+  // 팝업되는" 것처럼 보인다. 실제로는 reload가 아니라 이 effect의 불필요한 재실행이다.
+  // 고치는 방법: initializeTest는 이 컴포넌트가 마운트된 동안 "한 번만" 실제로 초기화하도록
+  // 가드한다. loading 플래그가 이후에 다시 토글돼도(백그라운드 복귀 포함) 이미 진행 중인
+  // 세션 상태(testQuestions/progressIndex/각종 ref)는 절대 덮어쓰지 않는다.
+  const hasInitializedTestRef = useRef(false);
+
   // 이 화면이 떠 있는 동안(게스트 맛보기 포함) "학습 세션 활성" 상태를 전역에 알린다.
   // buildVersion.js가 이 신호를 보고 백그라운드 복귀 시 페이지를 reload하지 않도록 막는다
   // (reload가 학습 도중 발생하면 진행 중이던 슬라이드가 초기화되고, 재출제 로깅 ref가 리셋되며
@@ -428,8 +450,14 @@ const TakeTest = () => {
 
   useEffect(() => {
     if (isGuestMode) return; // 게스트는 위 전용 이펙트에서 처리
+    // 마운트당 1회만 초기화 — 이미 초기화를 마쳤다면 loading 플래그가 다시 토글돼도
+    // (백그라운드 복귀로 인한 재조회 포함) 진행 중인 세션 상태를 재조회 결과로 덮어쓰지 않는다.
+    if (hasInitializedTestRef.current) return;
     const initializeTest = async () => {
       if (isRecentStudyLoading || isVocabularySheetsLoading) return;
+      // 아직 로딩 중이 아니면 지금부터 실제 초기화를 진행한다 — 이 시점부터 "초기화 완료"로
+      // 표시해 이후 이 effect가 다시 실행되더라도(아래 dep 배열 참고) 더는 아무 일도 하지 않는다.
+      hasInitializedTestRef.current = true;
       if (recentStudy && recentStudy[state.testType] && recentStudy[state.testType].status === "end") {
         setIsTestQuestionsSetting(false);
         return;

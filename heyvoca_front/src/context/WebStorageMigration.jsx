@@ -3,6 +3,27 @@ import { backendUrl, fetchDataAsync } from '../utils/common';
 import { useNewBottomSheetActions } from './NewBottomSheetContext';
 import { UpdateNewBottomSheet } from '../components/newBottomSheet/UpdateNewBottomSheet';
 import { startBuildVersionWatch } from '../utils/buildVersion';
+import { isStudySessionActive, onStudySessionEnd } from '../utils/studySessionGuard';
+
+// 새로 감지된 web_version — 학습 세션 중에는 reload를 미루고 여기 보관해 둔다.
+// (utils/buildVersion.js의 pendingBuild와 동일한 패턴. 모듈 스코프 상태이므로 컴포넌트
+//  재마운트와 무관하게 유지된다.)
+let pendingWebVersion = null;
+
+// 대기 중인 web_version reload를 안전한 시점에 적용한다.
+// 학습(TakeTest) 세션이 진행 중이면 보류하고, studySessionGuard.onStudySessionEnd로
+// 세션이 끝나는 순간(그리고 다음 visibilitychange)에 다시 시도한다.
+function applyPendingWebVersionReload() {
+  if (!pendingWebVersion) return;
+  if (isStudySessionActive()) return; // 학습 중엔 reload를 걸지 않는다 — pendingWebVersion은 유지
+  const version = pendingWebVersion;
+  pendingWebVersion = null;
+  // reload를 걸기 전에 먼저 기준값을 옮겨 둔다 — reload가 실제로 일어나지 않는 환경(웹뷰가
+  // 백그라운드에서 지연/차단하는 경우)에서도 다음 체크마다 같은 버전을 다시 조르며
+  // 무한 새로고침에 빠지지 않게 한다(buildVersion.js applyIfPending과 동일한 이유).
+  localStorage.setItem("web_version", version);
+  window.location.reload();
+}
 
 // 백엔드 version 조회 API 주소
 const CHECK_VERSION_URL = `${backendUrl}/version/get_version`;
@@ -118,12 +139,13 @@ export default function WebStorageMigration() {
         if (!data) return;
 
         // 1) 웹 버전 — 신버전 배포 감지 시 reload (캐시된 index.html 우회)
+        //    학습 세션(TakeTest) 진행 중에는 reload만 미룬다 — 강제/권장 업데이트 모달과
+        //    저장소 마이그레이션(2, 3번)은 학습 중이어도 그대로 진행한다.
         const latestWebVersion = data.web_version;
         const currentWebVersion = localStorage.getItem("web_version") || "1.0.0";
         if (compareVersions(currentWebVersion, latestWebVersion) < 0) {
-          localStorage.setItem("web_version", latestWebVersion);
-          window.location.reload();
-          return;
+          pendingWebVersion = latestWebVersion;
+          applyPendingWebVersionReload(); // 학습 중이 아니면 즉시 reload, 학습 중이면 보류만 됨
         }
 
         // 2) 앱 버전 — userAgent로 받은 현재 앱 버전과 비교 (앱 환경에서만)
@@ -184,13 +206,26 @@ export default function WebStorageMigration() {
     //  수기 bump 를 잊어도 열려 있던 탭이 스스로 낡음을 알고 안전한 순간에 갱신한다.
     const stopBuildWatch = startBuildVersionWatch();
 
+    // 학습 세션이 끝나는 순간(TakeTest 언마운트) — 대기 중이던 web_version reload가 있다면
+    // 그때 적용한다(buildVersion.js의 stopSessionWatch와 동일 패턴).
+    const stopSessionWatch = onStudySessionEnd(() => {
+      applyPendingWebVersionReload();
+    });
+
     const onVisible = () => {
-      if (document.visibilityState === "visible") check();
+      if (document.visibilityState === "visible") {
+        // 돌아온 순간 = 아직 아무것도 안 한 시점 → 대기 중이던 reload를 먼저 적용 시도.
+        applyPendingWebVersionReload();
+        check();
+      } else {
+        applyPendingWebVersionReload();
+      }
     };
     document.addEventListener("visibilitychange", onVisible);
     return () => {
       document.removeEventListener("visibilitychange", onVisible);
       stopBuildWatch();
+      stopSessionWatch();
     };
   }, [openAwaitNewBottomSheet]);
 
