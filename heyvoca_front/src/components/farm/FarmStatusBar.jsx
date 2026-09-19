@@ -74,6 +74,10 @@ const FarmStatusBar = ({
   compact = false,
   // 부패 진단(시안 6절) 전용 — 채점 전부터 뜨는 `.fb.ng` 형. 삽 그림 + '삽 1개를 씁니다' + '맞히면 씨앗부터'
   diagnosis = false,
+  // 서버 응답 대기 중(farmOptimistic.js pendingFarmPayload) — 채점 전 값에 멈춰 있고
+  // 움직이지 않는다. pctTo === pctFrom 이라 다른 이유가 없으면 hasContent 가 접어 버리므로
+  // 이 상태에서도 그려야 한다는 걸 명시적으로 알려준다.
+  pending = false,
   className = '',
 }) => {
   // 백엔드는 `crop`(화면 키)과 `stage`(visual_stage)를 함께 준다. 둘 중 있는 쪽을 쓴다.
@@ -96,7 +100,10 @@ const FarmStatusBar = ({
   const prevCropForImage = stageFrom || cropFrom || prevCrop;
 
   const isNg = diagnosis || wasCorrect === false;
-  const tone = grew ? 'up' : (isNg ? 'ng' : 'primary');
+  // 정지 상태(pending)는 톤도 '이전 상태' 그대로다 — 아직 아무것도 움직이지 않았는데
+  // 오답이라는 이유만으로 막대 색이 먼저 주황으로 바뀌면 "벌써 줄었다"로 잘못 읽힌다.
+  // 실제로 줄어드는 건 서버 응답이 와서 pending 이 풀리는 순간이다.
+  const tone = grew ? 'up' : (isNg && !pending ? 'ng' : 'primary');
   // 오답은 막대가 늘지 않는다(2절) — 시안 ⑤ 에는 `u`(오른 구간)도 `pc`(+N%)도 없다.
   const gain = !grew && !isNg && pctTo > pctFrom ? Math.round(pctTo - pctFrom) : 0;
 
@@ -148,11 +155,14 @@ const FarmStatusBar = ({
     - 막대가 실제로 움직인다(pctTo !== pctFrom) — **늘어나는 것만이 아니라 줄어드는 것도 포함.**
       오답은 우측 문구를 비우지만(위 주석), FSRS 가 안정성을 깎아 막대가 줄었다면
       그 자체가 "이 답이 무슨 일을 했는지"를 말하는 유일한 정보라 숨기면 안 된다.
+    - 서버 응답을 기다리는 중(pending) — 아직 움직이진 않지만 "채점됐다"는 것 자체는
+      바로 보여줘야 한다. 여기서 접으면 응답이 오는 순간 바가 없다가 갑자기 나타나
+      역시 "화면이 비었다가 채워진다"는 어색함이 생긴다.
 
-    이 넷이 전부 없다면(정오답 무관) 작물 그림과 빈 회색 막대만 남아 자리만 차지하므로
+    이 다섯이 전부 없다면(정오답 무관) 작물 그림과 빈 회색 막대만 남아 자리만 차지하므로
     호출부의 absolute 컨테이너째로 접히도록 null 을 반환한다.
   */
-  const hasContent = Boolean(diagnosis || dayLabel || grew || pctTo !== pctFrom);
+  const hasContent = Boolean(diagnosis || dayLabel || grew || pctTo !== pctFrom || pending);
   if (!hasContent) {
     return null;
   }
@@ -252,38 +262,53 @@ const FarmStatusBar = ({
               tone={tone}
               height={barH}
             />
-            {!compact && gain > 0 && (
-              <motion.span
-                className={`flex-shrink-0 text-[11.5px] font-[800] tracking-[-0.02em] ${grew ? 'text-status-success-600' : 'text-primary-main-600'}`}
-                initial={{ opacity: 0, y: 4 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.25, delay: 0.15, ease: [0.4, 0, 0.2, 1] }}
-              >
-                +{gain}%
-              </motion.span>
+            {/* `+N%` 배지 자리를 **항상** 고정폭으로 예약한다. 예전엔 gain>0 일 때만
+                엘리먼트를 넣어서, 정지 상태(pending·오답)엔 이 자리가 아예 없다가 응답이
+                오는 순간 막대의 flex-1 몫이 그만큼 줄어 트랙이 짧아진 것처럼 보였다. */}
+            {!compact && (
+              <span className="relative z-[1] flex-shrink-0 w-[34px] text-right">
+                {gain > 0 && (
+                  <motion.span
+                    className={`text-[11.5px] font-[800] tracking-[-0.02em] ${grew ? 'text-status-success-600' : 'text-primary-main-600'}`}
+                    initial={{ opacity: 0, y: 4 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.25, delay: 0.15, ease: [0.4, 0, 0.2, 1] }}
+                  >
+                    +{gain}%
+                  </motion.span>
+                )}
+              </span>
             )}
           </>
         )}
       </div>
 
-      {/* 오른쪽 — 다음 복습일. 진단에서는 '맞히면 씨앗부터'가 그 자리를 쓴다(6절). */}
+      {/* 오른쪽 — 다음 복습일. 진단에서는 '맞히면 씨앗부터'가 그 자리를 쓴다(6절).
+          진단이 아닌 자리는 텍스트가 있든 없든(pending·오답) **항상 같은 폭을 예약**한다 —
+          '내일'(2자)과 '14일 뒤'(4자)처럼 라벨 길이가 회차마다 달라, 텍스트가 있을 때만
+          렌더링하면 그 폭만큼 가운데 막대의 flex-1 몫이 오락가락해 트랙 길이가 흔들렸다. */}
       {diagnosis ? (
         <span className={`relative z-[1] flex-shrink-0 whitespace-nowrap font-[600] tracking-[-0.02em] text-layout-gray-300 ${compact ? 'text-[10.5px]' : 'text-[12px]'}`}>
           맞히면 <b className="font-[700] text-layout-black dark:text-layout-white">씨앗</b>부터
         </span>
-      ) : dayLabel && (
+      ) : (
         <span
           className={`
-            relative z-[1] flex-shrink-0 whitespace-nowrap font-[600] tracking-[-0.02em] text-layout-gray-300
-            ${compact ? 'text-[10.5px]' : 'text-[12px]'}
+            relative z-[1] flex-shrink-0 whitespace-nowrap text-right tabular-nums
+            font-[600] tracking-[-0.02em] text-layout-gray-300
+            ${compact ? 'min-w-[34px] text-[10.5px]' : 'min-w-[42px] text-[12px]'}
           `}
         >
-          {/* 오답 강조색(#B54708)은 다크 surface(#2E2E2E) 위에서 거의 안 읽힌다 —
-              시안에는 다크 대응 규칙이 없어 밝은 쪽으로 되돌린다. */}
-          <b className={`font-[700] ${wasCorrect === false ? 'text-[#B54708] dark:text-secondary-yellow-400' : 'text-layout-black dark:text-layout-white'}`}>
-            {dayLabel}
-          </b>
-          {daySuffix ? ` ${daySuffix}` : ''}
+          {dayLabel && (
+            <>
+              {/* 오답 강조색(#B54708)은 다크 surface(#2E2E2E) 위에서 거의 안 읽힌다 —
+                  시안에는 다크 대응 규칙이 없어 밝은 쪽으로 되돌린다. */}
+              <b className={`font-[700] ${wasCorrect === false ? 'text-[#B54708] dark:text-secondary-yellow-400' : 'text-layout-black dark:text-layout-white'}`}>
+                {dayLabel}
+              </b>
+              {daySuffix ? ` ${daySuffix}` : ''}
+            </>
+          )}
         </span>
       )}
     </div>

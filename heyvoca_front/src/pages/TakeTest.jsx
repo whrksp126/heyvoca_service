@@ -436,20 +436,30 @@ const TakeTest = () => {
           // 재출제 ref 리셋 (복원 시 안전하게 클린 스타트)
           loggedVocaIdsRef.current = new Set();
           retryCountMapRef.current = new Map();
-          passedVocaIdsRef.current = new Set();
           cardRetryEnqueuedRef.current = new Set();
-          // 고유 단어 수 재계산
+          // 고유 단어 수 재계산 + 이미 정답 처리된 고유 단어 복원
+          // (버그 수정: 예전엔 passedVocaIdsRef를 무조건 빈 Set으로 리셋해서, 이어하기/
+          //  백그라운드 복귀로 재마운트될 때마다 상단 진행 바가 0부터 다시 시작했다.
+          //  study_data에 저장된 문제별 isCorrect를 기준으로 진행률 분자를 다시 채운다.)
           {
             const uniqueIds = new Set();
+            const passedIds = new Set();
             for (const q of studyData) {
               if (Array.isArray(q.words)) {
-                q.words.forEach(w => { if (w.id != null) uniqueIds.add(w.id); });
+                q.words.forEach(w => {
+                  if (w.id == null) return;
+                  uniqueIds.add(w.id);
+                  if (w.isCorrect === true) passedIds.add(w.id);
+                });
               } else {
                 const id = q.vocaIndexId ?? q.id;
-                if (id != null) uniqueIds.add(id);
+                if (id == null) continue;
+                uniqueIds.add(id);
+                if (q.isCorrect === true) passedIds.add(id);
               }
             }
             totalUniqueVocaCountRef.current = uniqueIds.size || studyData.length;
+            passedVocaIdsRef.current = passedIds;
           }
           // 발음(TTS) 준비 완료까지 준비 화면을 보여준 뒤 학습으로 진입.
           await prepareThenReveal(studyData);

@@ -284,6 +284,7 @@ const FillInTheBlankQuestion = ({ question, testType, onComplete, onCardMatched,
               health={farm.health}
               days_to_review={farm.days_to_review}
               wasCorrect={farm.wasCorrect}
+              pending={!!farm.pending}
             />
           </motion.div>
         )}

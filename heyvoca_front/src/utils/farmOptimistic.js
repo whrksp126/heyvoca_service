@@ -10,6 +10,15 @@
   폴백했다. 같은 세션에서 같은 단어가 두 얼굴로 채점되는 셈이라 폴백을 전부 걷어냈고,
   그러려면 어느 경우에도 그릴 값이 있어야 한다. 여기서 그 값을 만든다.
 
+  【2026-09 QA — "낙관값으로 먼저 움직이지 않는다"로 정정】 이 낙관값(`optimisticFarmPayload`)은
+  프론트 FSRS 근사식이고 서버는 실제 FSRS(재시도 이력·fuzz 등 포함) 로 계산한다. 두 값이
+  달라 낙관값으로 막대를 **먼저 움직이면** 응답이 도착했을 때 다른 목표로 또 움직여
+  "찼다가 되돌아간다"로 보였다(v3 QA). 그래서 **응답이 확실히 올 자리**(로그인 첫 시도)는
+  이제 낙관값으로 먼저 그리지 않는다 — `pendingFarmPayload` 로 **이전 값에 멈춰** 있다가,
+  응답이 도착하면 그 값 하나로 한 번만 움직인다. 낙관값(`optimisticFarmPayload`)은 응답이
+  아예 오지 않는 세 경우(게스트·재출제)와, 응답 요청 자체가 실패했을 때의 **최후 폴백**으로만
+  쓴다 — 그때는 어차피 더는 움직일 다음 값이 없으므로 한 번만 움직이는 원칙이 깨지지 않는다.
+
   【서버가 이기게 한다】 여기서 만든 값은 응답이 도착하면 그대로 덮인다. 추정이 틀려도
   한 프레임 뒤 정정되므로, 정확도보다 **절대 이상한 그림을 그리지 않는 것**을 우선한다.
 
@@ -73,6 +82,34 @@ const stageBefore = (base, fsrs) => {
   if (base?.stage) return base.stage;
   if (isNewFsrs(fsrs)) return 'UNPLANTED_SEED';
   return stageFromStability(fsrs?.stability) ?? 'PLANTED_SEED';
+};
+
+/**
+ * 채점 직후, `/study/log` 응답이 오기 **전까지** 보여줄 정지 상태 payload.
+ *
+ * 막대는 이 단어의 채점 전 진행률에 멈춰 서 있다(`pct_from === pct_to`) — 늘거나 줄지
+ * 않으므로 애니메이션이 아예 없다. 작물 그림·다음 복습일도 전부 "채점 전" 값이다(진화
+ * 아이콘 전환·"N일 뒤" 문구는 응답이 와서 `optimisticFarmPayload`/서버 payload 로 교체될
+ * 때 딱 한 번만 등장한다). 응답이 확실히 올 자리(로그인 첫 시도)에서만 쓴다 — 응답이 아예
+ * 안 오는 게스트·재출제는 이 값이 아니라 `optimisticFarmPayload` 를 바로 쓴다(그 자리엔
+ * 이 값을 교체해 줄 다음 이벤트가 없으므로 정지시켜 봐야 영영 빈 것처럼 보이기만 한다).
+ *
+ * @param {object}  base        이 단어의 마지막 서버 payload (없으면 undefined)
+ * @param {object}  fsrsBefore  채점 전 FSRS
+ * @param {boolean} wasCorrect
+ */
+export const pendingFarmPayload = ({ base, fsrsBefore, wasCorrect }) => {
+  const from = stageBefore(base, fsrsBefore);
+  const pct = base?.pct_to ?? stageProgress(from, fsrsBefore);
+  return {
+    crop: STAGE_TO_CROP[from], stage: from,
+    crop_from: STAGE_TO_CROP[from], stage_from: from,
+    grew: false, pct_from: pct, pct_to: pct,
+    health: base?.health ?? 'FRESH',
+    days_to_review: null,
+    wasCorrect: !!wasCorrect,
+    pending: true,
+  };
 };
 
 /**

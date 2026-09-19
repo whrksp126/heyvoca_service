@@ -313,6 +313,7 @@ const CardMatchQuestion = ({ question, testType, onComplete, onCardMatched, farm
                     health={farmByWordId[word.id].health}
                     days_to_review={farmByWordId[word.id].days_to_review}
                     wasCorrect={farmByWordId[word.id].wasCorrect}
+                    pending={!!farmByWordId[word.id].pending}
                   />
                 </motion.div>
               )}

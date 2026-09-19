@@ -19,7 +19,7 @@ import { playSuccessSound, playErrorSound } from '../../utils/audio';
 import { getQuestionType } from '../../plugins/questionTypes';
 import { logStudyQuestion } from '../../api/study';
 import { getAdvanceDelay, ADVANCE_DELAY_GROW } from '../../utils/studyTiming';
-import { optimisticFarmPayload } from '../../utils/farmOptimistic';
+import { optimisticFarmPayload, pendingFarmPayload } from '../../utils/farmOptimistic';
 import { getComboApi, protectComboApi, forfeitComboApi } from '../../api/game';
 import ComboBar from './ComboBar';
 import { ComboProtectNewBottomSheet } from '../newBottomSheet/ComboProtectNewBottomSheet';
@@ -181,7 +181,10 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
   // (상세 이유는 useResumeReplayKey 주석 참고)
   const resumeReplayKey = useResumeReplayKey();
   // 진행률 바: 통과한 고유 단어 수 기준 (재출제 문제는 통과 시에만 카운트)
-  const [passedCount, setPassedCount] = useState(0);
+  // 이어하기/백그라운드 복귀로 재마운트될 때 passedVocaIdsRef가 이미 이전 진행분으로
+  // 시딩되어 있으므로(TakeTest.jsx 복원 로직 참고), 그 값으로 초기화해야 진행 바가
+  // 0%부터 다시 차오르지 않고 실제 진행률을 곧바로 보여준다.
+  const [passedCount, setPassedCount] = useState(() => passedVocaIdsRef?.current?.size ?? 0);
   const [isAnswered, setIsAnswered] = useState(false);
   const [isStay, setIsStay] = useState(false);
   const [isFetching, setIsFetching] = useState(false);
@@ -308,6 +311,19 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
     첫 시도 때의 payload 를 들고 있다가 재출제에서 그대로 다시 세운다.
   */
   const lastFarmByVocaRef = useRef({});
+
+  /*
+    단어(vocaId 또는 카드 wordId)별 **낙관값 폴백 함수**.
+
+    /study/log 응답이 확실히 올 자리(로그인 첫 시도)는 이제 낙관값으로 먼저 그리지 않고
+    `pendingFarmPayload`(정지 상태)만 보여준다(아래 applyOptimisticGrade·processCardWord).
+    그런데 요청 자체가 실패하면(네트워크 오류 등) 그 정지 상태를 영영 갈아 끼워 줄 응답이
+    안 온다 — 이때만 예외적으로 낙관값을 최후 폴백으로 쓴다. 요청을 보내기 직전에 낙관값을
+    미리 계산해 "그 값을 발행하는 함수"를 여기 담아 두고, catch 에서 딱 한 번 호출한다.
+    성공(then)하면 더 이상 필요 없으므로 지운다 — 늦게 도착한 실패 콜백이 이미 정본으로
+    갈아 끼워진 화면을 다시 낙관값으로 덮어쓰는 사고를 막는다.
+  */
+  const farmFallbackRef = useRef({});
 
   const publishFarm = (payload, vocaId, qIndex) => {
     lastFarmByVocaRef.current[vocaId] = payload;
@@ -504,14 +520,21 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
       .then((logRes) => {
         if (logRes?.data?.combo) handleComboPayload(logRes.data.combo);
         if (logRes?.data?.streak) handleStreakPayload(logRes.data.streak);
-        // 농장 상태 바 payload — 없으면(구버전 응답) 기존 암기상태 배지가 그대로 보인다
+        // 농장 상태 바 payload — 채점 직후엔 pendingFarmPayload(정지 상태)만 떠 있었다.
+        // 이 응답이 도착해야 비로소 실제 값으로 **한 번** 움직인다(farmOptimistic.js 상단 주석).
         if (logRes?.data?.farm) {
           publishFarm(
             { ...logRes.data.farm, wasCorrect: !!payload.was_correct },
             vocaId,
             progressIndex,
           );
+        } else {
+          // 구버전 응답(farm payload 없음) — 정지 상태를 풀어 줄 정본이 영영 없으므로
+          // 요청 실패 때와 같은 낙관값 폴백을 대신 쓴다.
+          farmFallbackRef.current[vocaId]?.();
         }
+        // 늦게 도착한 catch 가 방금 세운 값을 다시 낙관값으로 덮어쓰는 사고를 막는다.
+        delete farmFallbackRef.current[vocaId];
         if (logRes?.data?.fsrs) {
           const idx = testQuestions.findIndex(
             (q) => (q.vocaIndexId ?? q.id) === vocaId && !q.isRetry
@@ -551,7 +574,13 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
           }
         }
       })
-      .catch((e) => console.warn('[FSRS] logStudyQuestion 실패:', e));
+      .catch((e) => {
+        console.warn('[FSRS] logStudyQuestion 실패:', e);
+        // 요청 자체가 실패해 정본을 영영 못 받는다 — 정지해 있던 게이지를 낙관값으로라도
+        // 한 번은 움직여 준다(farmOptimistic.js 상단 주석 — 최후 폴백).
+        farmFallbackRef.current[vocaId]?.();
+        delete farmFallbackRef.current[vocaId];
+      });
     if (pendingLogPromisesRef) pendingLogPromisesRef.current.push(promise);
   };
 
@@ -747,27 +776,47 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
 
     /*
       상태 바는 **언제나** 뜬다. 구버전 UI 로 폴백하던 자리를 전부 없앴으므로
-      여기서 값을 못 만들면 화면이 빈다. 서버 payload 를 못 받는 세 경우
-      (게스트 온보딩 · 재출제 · 로그인 첫 시도의 응답 대기)를 낙관값으로 덮고,
-      응답이 오면 publishFarm 이 정본으로 갈아 끼운다.
+      여기서 값을 못 만들면 화면이 빈다.
+
+      【언제 낙관값을 바로 쓰고, 언제 정지시키나】 서버 payload 를 못 받는 두 경우
+      (게스트 온보딩 · 재출제)는 이 값을 갈아 끼워 줄 다음 이벤트가 영영 없으므로
+      낙관값(optimisticFarmPayload)을 바로 보여준다 — 예전과 동일.
+      로그인 첫 시도(=logIfFirstAttempt 가 실제로 /study/log 를 보낼 자리)는 이제
+      낙관값으로 먼저 움직이지 않는다. 프론트 낙관식과 서버 FSRS 가 달라서(재시도 이력·
+      fuzz 등) 값이 어긋나면, 낙관값으로 한 번 움직인 뒤 응답이 오면 또 움직여
+      "찼다가 되돌아간다"로 보였다(2026-09 QA). 대신 pendingFarmPayload 로 **채점 전 값에
+      멈춰** 세워 두고, 응답이 오면(logIfFirstAttempt) 그 값 하나로만 움직인다.
+      요청이 실패했을 때만 예외적으로 낙관값을 최후 폴백으로 쓴다 — farmFallbackRef 에
+      "낙관값을 발행하는 함수"를 미리 담아 두고 logIfFirstAttempt 의 catch 에서 호출한다.
     */
     const vid = q.vocaIndexId ?? q.id;
-    publishFarm(
-      optimisticFarmPayload({
-        base: lastFarmByVocaRef.current[vid],
-        fsrsBefore,
-        fsrsAfter: optimistic,
-        wasCorrect: isCorrectAnswer,
-        // 게스트 온보딩은 **마지막** 정오답을 서버로 보낸다(TakeTest 의 answers 집계).
-        // 그러니 재출제에서 맞히면 실제로 심긴다 — 화면도 그때 심는 연출을 해야 한다.
-        // 정규 학습은 반대다. 서버가 세션 로그로 독립 회상을 판정해 재출제를 성장으로
-        // 치지 않으므로(기획 5.2), 화면도 제자리에 세운다.
-        isRetry: !!q.isRetry && !guestMode,
-        daysToReview: daysUntilReview(q.displayNextReview),
-      }),
-      vid,
-      idx,
-    );
+    const base = lastFarmByVocaRef.current[vid];
+    // logIfFirstAttempt 의 로깅 게이트(505~513행)와 정확히 같은 조건이어야 한다 —
+    // 여기서 "응답이 온다"고 판단했는데 실제로는 로깅이 스킵되면 정지 화면이 영영
+    // 안 풀린다.
+    const willReceiveServerFarm = !!studySessionRef?.current
+      && !!loggedVocaIdsRef?.current
+      && !q.isRetry
+      && !loggedVocaIdsRef.current.has(vid);
+    const buildOptimisticFarm = () => optimisticFarmPayload({
+      base,
+      fsrsBefore,
+      fsrsAfter: optimistic,
+      wasCorrect: isCorrectAnswer,
+      // 게스트 온보딩은 **마지막** 정오답을 서버로 보낸다(TakeTest 의 answers 집계).
+      // 그러니 재출제에서 맞히면 실제로 심긴다 — 화면도 그때 심는 연출을 해야 한다.
+      // 정규 학습은 반대다. 서버가 세션 로그로 독립 회상을 판정해 재출제를 성장으로
+      // 치지 않으므로(기획 5.2), 화면도 제자리에 세운다.
+      isRetry: !!q.isRetry && !guestMode,
+      daysToReview: daysUntilReview(q.displayNextReview),
+    });
+
+    if (willReceiveServerFarm) {
+      publishFarm(pendingFarmPayload({ base, fsrsBefore, wasCorrect: isCorrectAnswer }), vid, idx);
+      farmFallbackRef.current[vid] = () => publishFarm(buildOptimisticFarm(), vid, idx);
+    } else {
+      publishFarm(buildOptimisticFarm(), vid, idx);
+    }
   }
 
   // React Compiler가 자동으로 useCallback 처리
@@ -1007,13 +1056,21 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
       .then(logRes => {
         if (logRes?.data?.combo) handleComboPayload(logRes.data.combo);
         if (logRes?.data?.streak) handleStreakPayload(logRes.data.streak);
-        // 농장 상태 바 payload — 카드 매칭은 카드(단어)마다 따로 붙는다
+        // 농장 상태 바 payload — 카드 매칭은 카드(단어)마다 따로 붙는다.
+        // 채점 직후엔 pendingFarmPayload(정지 상태)만 떠 있었다 — 이 응답이 도착해야
+        // 비로소 실제 값으로 **한 번** 움직인다(farmOptimistic.js 상단 주석).
         if (logRes?.data?.farm) {
           setCardFarmByWordId(prev => ({
             ...prev,
             [wordId]: { ...logRes.data.farm, wasCorrect: !!payload.was_correct },
           }));
+        } else {
+          // 구버전 응답(farm payload 없음) — 정지 상태를 풀어 줄 정본이 영영 없으므로
+          // 요청 실패 때와 같은 낙관값 폴백을 대신 쓴다.
+          farmFallbackRef.current[wordId]?.();
         }
+        // 늦게 도착한 catch 가 방금 세운 값을 다시 낙관값으로 덮어쓰는 사고를 막는다.
+        delete farmFallbackRef.current[wordId];
         if (logRes?.data?.fsrs) {
           updateWordState(sheetId, wordId, { fsrs: logRes.data.fsrs });
           if (Array.isArray(setWords)) {
@@ -1026,7 +1083,13 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
           setTestQuestions((prev) => [...prev]);
         }
       })
-      .catch(e => console.warn('[FSRS] logStudyQuestion(card) 실패:', e));
+      .catch(e => {
+        console.warn('[FSRS] logStudyQuestion(card) 실패:', e);
+        // 요청 자체가 실패해 정본을 영영 못 받는다 — 정지해 있던 카드 게이지를 낙관값으로라도
+        // 한 번은 움직여 준다(farmOptimistic.js 상단 주석 — 최후 폴백).
+        farmFallbackRef.current[wordId]?.();
+        delete farmFallbackRef.current[wordId];
+      });
   };
 
   // 콤보 보존 팝업이 열려 있는 동안 큐잉된 카드 로그를 순서대로(직렬로) 전송한다.
@@ -1074,27 +1137,43 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
     bumpLocalCombo(!!wordIsCorrect);
 
     /*
-      카드별 농장 상태 바 — 카드는 카드(단어)마다 따로 붙는다.
-      게스트뿐 아니라 **항상** 낙관값을 세운다. 구버전 UI 폴백을 없앴기 때문에
-      서버 응답(sendCardLog)이 오기 전이나 재출제 카드에서 값이 비면 화면이 빈다.
-      응답이 오면 setCardFarmByWordId 가 정본으로 갈아 끼운다.
+      카드별 농장 상태 바 — 카드는 카드(단어)마다 따로 붙는다. 구버전 UI 폴백을 없앴기
+      때문에 값이 비면 화면이 빈다 — 그건 그대로 유지한다.
+
+      【언제 낙관값을 바로 쓰고, 언제 정지시키나】 applyOptimisticGrade(MCQ 경로)와 같은
+      원칙이다 — 상세 이유는 그쪽 주석과 farmOptimistic.js 상단 참고. 이 카드가 실제로
+      /study/log 를 보낼 대상(아래 로깅 게이트와 정확히 같은 조건)이면 pendingFarmPayload
+      로 채점 전 값에 멈춰 세워 두고, sendCardLog 응답이 도착했을 때 그 값 하나로만
+      움직인다. 게스트·이미 로깅된 카드처럼 응답이 안 오는 자리만 낙관값을 바로 쓴다.
     */
-    {
-      const optimistic = computeOptimisticFsrs(target?.fsrs, !!wordIsCorrect);
+    const optimistic = computeOptimisticFsrs(target?.fsrs, !!wordIsCorrect);
+    const buildOptimisticCardFarm = (base) => optimisticFarmPayload({
+      base,
+      fsrsBefore: target?.fsrs,
+      fsrsAfter: optimistic,
+      wasCorrect: !!wordIsCorrect,
+      isRetry: !!currentQuestion?.isRetry && !guestMode,
+      daysToReview: daysUntilReview(optimistic?.next_review),
+    });
+    // sendCardLog 가 실제로 호출될 조건(아래 if)과 정확히 같아야 한다 — 다르면
+    // 정지 화면이 영영 안 풀리거나, 낙관값을 두 번 쓰는 경우가 생긴다.
+    const willReceiveServerFarm = studySessionRef?.current != null
+      && !!loggedVocaIdsRef?.current
+      && !loggedVocaIdsRef.current.has(wordId);
+
+    if (willReceiveServerFarm) {
       setCardFarmByWordId(prev => ({
         ...prev,
-        [wordId]: optimisticFarmPayload({
-          base: prev[wordId],
-          fsrsBefore: target?.fsrs,
-          fsrsAfter: optimistic,
-          wasCorrect: !!wordIsCorrect,
-          isRetry: !!currentQuestion?.isRetry && !guestMode,
-          daysToReview: daysUntilReview(optimistic?.next_review),
-        }),
+        [wordId]: pendingFarmPayload({ base: prev[wordId], fsrsBefore: target?.fsrs, wasCorrect: !!wordIsCorrect }),
       }));
+      farmFallbackRef.current[wordId] = () => {
+        setCardFarmByWordId(prev => ({ ...prev, [wordId]: buildOptimisticCardFarm(prev[wordId]) }));
+      };
+    } else {
+      setCardFarmByWordId(prev => ({ ...prev, [wordId]: buildOptimisticCardFarm(prev[wordId]) }));
     }
 
-    if (studySessionRef?.current != null && loggedVocaIdsRef?.current && !loggedVocaIdsRef.current.has(wordId)) {
+    if (willReceiveServerFarm) {
       loggedVocaIdsRef.current.add(wordId);
       const payload = {
         session_id: studySessionRef.current,
@@ -1525,6 +1604,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
                         health={farmStatus.health}
                         days_to_review={farmStatus.days_to_review}
                         wasCorrect={farmStatus.wasCorrect}
+                        pending={!!farmStatus.pending}
                       />
                     </motion.div>
                   )}
