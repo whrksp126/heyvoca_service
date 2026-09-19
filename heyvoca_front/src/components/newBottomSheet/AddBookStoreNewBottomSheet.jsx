@@ -13,7 +13,7 @@ import {
 } from './StorePurchaseResultNewBottomSheet';
 import { GemPurchaseNewBottomSheet } from './GemPurchaseNewBottomSheet';
 import {
-  SHEET_SHELL, Grab, Gem, Btn, Btns, BtnSpinner, SheetHead, HintB,
+  SHEET_SHELL, Grab, Gem, Btn, Btns, BtnSpinner, HintB,
 } from './purchaseParts';
 // 씨앗 도착(성공 리턴)에서만 쓰는 그림 — 확인 시트 머리는 이름과 가격만 보여주므로
 // 여기서는 더 이상 쓰지 않는다.
@@ -25,7 +25,8 @@ import seedImg from '../../assets/images/farm/crops/unplanted/healthy-seed.png';
  * 시안 정본: shop-purchase.txt §2⑥(단어장 구매 확인),
  *            shop-result.txt §2③(단어장 성공) · §3⑦⑧(보석 부족 · 처리 실패) · §6(실패를 네 갈래로).
  *
- * 확인 시트는 "무엇을 얼마에 사는지"만 보여준다 — 이름 · 단어 수 · 가격.
+ * 확인 시트는 "무엇을 사는지" 하나만 가운데 정렬 문장으로 묻는다 — 이름 · 단어 수.
+ * 가격은 구매 버튼에만 적는다(제목 옆에 또 적으면 같은 값이 두 번 보인다).
  * 보유 씨앗/단어장 변화, 중복 단어 검증 안내는 결과 화면과 서점 목록에서 이미 확인할 수 있어
  * 구매 결정 단계에서는 뺐다.
  *
@@ -159,18 +160,22 @@ export const AddBookStoreNewBottomSheet = ({ bookStoreVocabularySheet }) => {
     );
   }
 
-  // ── ⑥ 구매 확인 (shop-purchase §2⑥) — 이름 · 단어 수 · 가격만 보여준다 ──
+  // ── ⑥ 구매 확인 (shop-purchase §2⑥) — 가운데 정렬 안내문 하나 + 버튼.
+  // 가격은 버튼에만 적는다 — 제목 옆에 또 적으면 같은 값이 두 번 보인다.
   return (
     <div className={`${SHEET_SHELL} max-h-[calc(90vh-40px)] overflow-y-auto`}>
       <Grab />
 
-      <SheetHead
-        title={name}
-        desc={seeds > 0 ? `단어 ${n(seeds)}개` : undefined}
-        right={cost > 0
-          ? <Gem n={cost} />
-          : <span className="text-[13px] font-[800] text-status-success-600">무료</span>}
-      />
+      <div className="pt-[20px] pb-[8px] text-center">
+        <p className="mx-auto max-w-[280px] text-[15.5px] font-[700] leading-[1.5] tracking-[-0.03em] text-layout-black dark:text-layout-white">
+          <b className="font-[800]">{name}</b> 단어장을 {cost > 0 ? '구매하시겠어요?' : '무료로 담으시겠어요?'}
+        </p>
+        {seeds > 0 && (
+          <p className="mt-[8px] text-[12px] font-[500] tracking-[-0.02em] text-layout-gray-300">
+            단어 {n(seeds)}개
+          </p>
+        )}
+      </div>
 
       <Btns>
         <Btn tone="sec" onClick={close} disabled={status === 'loading'}>취소</Btn>
