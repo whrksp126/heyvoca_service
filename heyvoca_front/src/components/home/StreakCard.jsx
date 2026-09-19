@@ -40,7 +40,13 @@ const MIN_RELOAD_INTERVAL_MS = 5000;
 
 const DOW = ['일', '월', '화', '수', '목', '금', '토'];
 
-const StreakCard = () => {
+/**
+ * registerRefresh — 부모(홈 Main)가 당겨서 새로고침 때 이 카드의 /farm/streak도 같이
+ * 갱신하고 싶을 때 쓰는 트리거 전달용 콜백. 마운트 시 한 번 `loadStreak(true)`(연타 방지
+ * 간격 무시)를 실행 함수로 넘겨준다 — 이 카드 자체는 streak 상태를 밖으로 내보내지 않으므로
+ * 부모가 직접 재조회할 수 없어, 실행 함수를 대신 내려받는 방식을 쓴다.
+ */
+const StreakCard = ({ registerRefresh } = {}) => {
   "use memo";
 
   const { lastSessionResult } = useVocabulary();
@@ -82,6 +88,11 @@ const StreakCard = () => {
     document.addEventListener('visibilitychange', onVisibilityChange);
     return () => document.removeEventListener('visibilitychange', onVisibilityChange);
   }, [loadStreak]);
+
+  // 부모(홈 Main)에게 강제 재조회 함수를 내려준다 — 당겨서 새로고침용
+  useEffect(() => {
+    if (typeof registerRefresh === 'function') registerRefresh(() => loadStreak(true));
+  }, [registerRefresh, loadStreak]);
 
   const today = toLocalDateString(new Date());
   const required = Math.max(1, streak?.required ?? 5);

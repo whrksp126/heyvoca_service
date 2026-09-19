@@ -1,9 +1,10 @@
-import React, { useMemo, useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import {
   Plus, WarningCircle, Check, SealCheck,
 } from '@phosphor-icons/react';
 import { motion } from 'framer-motion';
 import { useVocabulary } from '../../context/VocabularyContext';
+import PullToRefresh from '../common/PullToRefresh';
 import { useNewFullSheet } from '../../hooks/useNewFullSheet';
 import { useVocabularyManageNewBottomSheet } from '../newBottomSheet/VocabularyManageNewBottomSheet';
 import VocabularyWordsNewFullSheet from '../newfullsheet/VocabularyWordsNewFullSheet';
@@ -54,10 +55,15 @@ const Main = () => {
   "use memo";
 
   const { pushNewFullSheet } = useNewFullSheet();
-  const { vocabularySheets } = useVocabulary();
+  const { vocabularySheets, fetchVocabularySheets, fetchRecentStudy } = useVocabulary();
   const { showVocabularyManageNewBottomSheet } = useVocabularyManageNewBottomSheet();
 
   const [filter, setFilter] = useState('all'); // all | care | recent
+
+  // 당겨서 새로고침 — 단어장 목록(+단어 사전)과 최근 학습 기록을 함께 최신화한다
+  const handlePullToRefresh = useCallback(async () => {
+    await Promise.all([fetchVocabularySheets(), fetchRecentStudy()]);
+  }, [fetchVocabularySheets, fetchRecentStudy]);
 
   // 카드마다 필요한 파생값을 한 번만 계산한다 — 목록·칩·배지가 같은 수를 봐야 한다
   const books = useMemo(() => vocabularySheets.map((book) => {
@@ -104,7 +110,10 @@ const Main = () => {
   ];
 
   return (
-    <motion.div
+    <PullToRefresh
+      as={motion.div}
+      onRefresh={handlePullToRefresh}
+      contentClassName="flex flex-col"
       className="
         flex flex-col
         h-[calc(100vh-var(--current-header-height)-var(--current-bottom-nav-height)-var(--status-bar-height))]
@@ -275,7 +284,7 @@ const Main = () => {
           단어장 만들기
         </button>
       </div>
-    </motion.div>
+    </PullToRefresh>
   );
 };
 

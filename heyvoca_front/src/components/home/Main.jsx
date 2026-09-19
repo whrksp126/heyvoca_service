@@ -26,7 +26,7 @@
 //   온보딩 배너  → §10 구조에 없다. 해금 안내는 잠긴 탭을 눌렀을 때 뜬다
 //                 (해금 스위치 자체가 지금 꺼져 있어 실제 노출도 없던 블록)
 
-import React, { useEffect, useMemo } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { Warning } from '@phosphor-icons/react';
@@ -37,6 +37,7 @@ import { vibrate, checkNotificationPermissionGranted, isAppVersionAtLeast } from
 import { useStats } from '../../context/StatsContext';
 import { prefetchLabSettings } from '../../api/lab';
 import { useQuickReview } from '../../hooks/useQuickReview';
+import PullToRefresh from '../common/PullToRefresh';
 
 import StoreNewFullSheet from '../newfullsheet/StoreNewFullSheet';
 import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
@@ -202,6 +203,18 @@ const Main = () => {
   const { pushNewFullSheet } = useNewFullSheetActions();
   const { startQuickReview } = useQuickReview();
   const { pushNewBottomSheet } = useNewBottomSheetActions();
+
+  // 당겨서 새로고침 — StreakCard는 /farm/streak를 자체 상태로 들고 있어(streak 값이 이 컴포넌트에
+  // 없음) 직접 재조회할 수 없다. 대신 StreakCard가 마운트 시 자신의 재조회 함수를
+  // registerRefresh로 여기 넘겨주면, 그 함수를 ref에 담아뒀다가 당겨서 새로고침 때 같이 부른다.
+  const streakRefreshRef = useRef(null);
+  const registerStreakRefresh = useCallback((fn) => { streakRefreshRef.current = fn; }, []);
+  const handlePullToRefresh = useCallback(async () => {
+    await Promise.all([
+      refreshStats(),
+      streakRefreshRef.current ? streakRefreshRef.current() : Promise.resolve(),
+    ]);
+  }, [refreshStats]);
 
   // 홈 화면 진입 시 출석 체크 호출 + (실험실 지원 앱 버전에서만) 실험실 설정 프리로드
   useEffect(() => {
@@ -466,7 +479,11 @@ const Main = () => {
       화면의 절반을 차지하는 그림이 스크롤에 반응하지 않는 건 "고정된 헤더"가 아니라
       **고장 난 화면**으로 읽힌다.
     */
-    <div className="isolate flex flex-col h-screen overflow-y-auto bg-farm-canvas dark:bg-layout-black">
+    <PullToRefresh
+      onRefresh={handlePullToRefresh}
+      className="isolate flex flex-col h-screen overflow-y-auto bg-farm-canvas dark:bg-layout-black"
+      contentClassName="flex flex-col"
+    >
 
       <FarmHero
         counts={counts}
@@ -551,7 +568,7 @@ const Main = () => {
         "
       >
         {/* 연속 학습 — 홈에서 성과를 말하는 유일한 블록. 항상 노출된다(§6 · §10) */}
-        <StreakCard />
+        <StreakCard registerRefresh={registerStreakRefresh} />
 
         {/* §8 water 스트립 — 부패 직전이 1~3개일 때만 */}
         {showWaterStrip && !shownFeedKeys.has('care') && (
@@ -604,7 +621,7 @@ const Main = () => {
         ))}
 
       </motion.div>
-    </div>
+    </PullToRefresh>
   );
 };
 

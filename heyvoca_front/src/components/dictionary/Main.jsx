@@ -24,6 +24,7 @@ import { stageDetail, cropLabelDetail } from '../../utils/crop';
 import { isCareDue } from '../../utils/vocaCrop';
 import useFarmPlants from './useFarmPlants';
 import { useOpenWordDetail } from '../../hooks/useOpenWordDetail';
+import PullToRefresh from '../common/PullToRefresh';
 import bookEmptyImg from '../../assets/images/farm/book-empty.png';
 import gemImg from '../../assets/images/gem.png';
 
@@ -140,14 +141,19 @@ const GroupHead = ({ title, count, hint, action, first = false }) => (
 const Main = () => {
   "use memo";
 
-  const { userDictionary, isUserDictionaryLoading, vocaBooks, bookStore } = useVocabulary();
+  const { userDictionary, isUserDictionaryLoading, vocaBooks, bookStore, fetchUserDictionary } = useVocabulary();
   const { pushNewBottomSheet } = useNewBottomSheetActions();
   const { pushNewFullSheet } = useNewFullSheetActions();
   const { isDark } = useTheme();
   const { completeMission } = useOnboardingUnlock();
   const { isLogin } = useUser();
-  const { plants } = useFarmPlants(isLogin);
+  const { plants, reloadPlants } = useFarmPlants(isLogin);
   const openWordDetail = useOpenWordDetail();
+
+  // 당겨서 새로고침 — 내 사전(/vocaIndexs)과 농장 상태(/farm/plants)를 함께 최신화한다
+  const handlePullToRefresh = useCallback(async () => {
+    await Promise.all([fetchUserDictionary(), reloadPlants()]);
+  }, [fetchUserDictionary, reloadPlants]);
 
   // 검색 상태
   const [isSearchMode, setIsSearchMode] = useState(false);
@@ -986,14 +992,16 @@ const Main = () => {
   };
 
   return (
-    <motion.div
+    <PullToRefresh
+      as={motion.div}
+      ref={scrollContainerRef}
+      onRefresh={handlePullToRefresh}
       className="
         h-[calc(100vh-var(--current-header-height)-var(--current-bottom-nav-height)-var(--status-bar-height))]
         bg-layout-white dark:bg-layout-black
         overflow-y-auto
         transition-[height] duration-[250ms] ease
       "
-      ref={scrollContainerRef}
       onScroll={handleScroll}
       initial={{ opacity: 0, y: 20, transition: { duration: 0.2 } }}
       animate={{ opacity: 1, y: 0, transition: { duration: 0.2 } }}
@@ -1116,7 +1124,7 @@ const Main = () => {
           </motion.button>
         )}
       </AnimatePresence>
-    </motion.div>
+    </PullToRefresh>
   );
 };
 

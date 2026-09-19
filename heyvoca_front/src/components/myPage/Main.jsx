@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { CaretRight, Gift, Plus } from "@phosphor-icons/react";
 import { motion } from 'framer-motion';
 import { useUser } from '../../context/UserContext';
@@ -122,7 +122,12 @@ const InventoryCard = ({ image, label, desc, count }) => (
  * 밭 상태·연속 학습·농장 방문 달력·통계는 여기 두지 않는다 — 홈이 매일 보여준다.
  * 창고는 상세 화면을 두지 않고 이 안에서 다 보여준다 (시안 4절).
  */
-const Main = () => {
+/**
+ * registerRefresh — 부모(pages/myPage.jsx)가 당겨서 새로고침 때 이 화면 안에서만
+ * 들고 있는 상태(창고·황금 온실·초대 수)도 같이 갱신하고 싶을 때 쓰는 트리거 전달용
+ * 콜백. StreakCard(components/home/StreakCard.jsx)와 같은 패턴이다.
+ */
+const Main = ({ registerRefresh } = {}) => {
   "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
 
   const { userProfile, userMainPage, achievementCriteria } = useUser();
@@ -136,25 +141,25 @@ const Main = () => {
   const [goldenCnt, setGoldenCnt] = useState(null);
   const [inviteCnt, setInviteCnt] = useState(null);
 
-  useEffect(() => {
-    let alive = true;
-    (async () => {
-      const res = await getFarmItemsApi();
-      if (!alive) return;
-      if (res?.code === 200) setFarmItems(res.data?.items || {});
-    })();
-    (async () => {
-      const res = await getFarmOverviewApi();
-      if (!alive) return;
-      if (res?.code === 200) setGoldenCnt(res.data?.counts?.golden ?? 0);
-    })();
-    (async () => {
-      const res = await getInvitesApi();
-      if (!alive) return;
-      if (res?.code === 200) setInviteCnt((res.data?.invites || []).length);
-    })();
-    return () => { alive = false; };
+  const loadPageData = useCallback(async () => {
+    const [itemsRes, overviewRes, invitesRes] = await Promise.all([
+      getFarmItemsApi(),
+      getFarmOverviewApi(),
+      getInvitesApi(),
+    ]);
+    if (itemsRes?.code === 200) setFarmItems(itemsRes.data?.items || {});
+    if (overviewRes?.code === 200) setGoldenCnt(overviewRes.data?.counts?.golden ?? 0);
+    if (invitesRes?.code === 200) setInviteCnt((invitesRes.data?.invites || []).length);
   }, []);
+
+  useEffect(() => {
+    loadPageData();
+  }, [loadPageData]);
+
+  // 부모(pages/myPage.jsx)에게 강제 재조회 함수를 내려준다 — 당겨서 새로고침용
+  useEffect(() => {
+    if (typeof registerRefresh === 'function') registerRefresh(loadPageData);
+  }, [registerRefresh, loadPageData]);
 
   const openSheet = (Component, props = {}) => {
     vibrate({ duration: 5 });

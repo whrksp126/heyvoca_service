@@ -20,6 +20,7 @@ import {
 import { getFarmItemsApi, getFarmShopApi } from '../../api/farm';
 import { getBookStoreDetailApi } from '../../api/bookStore';
 import { FARM_ITEM_ASSETS } from '../farm/CropImage';
+import PullToRefresh from '../common/PullToRefresh';
 import {
   resolveVocaBookBackground, resolveVocaBookAccentColor, resolveVocaBookSubColor,
 } from '../../utils/vocaBookColor';
@@ -159,7 +160,7 @@ const StoreNewFullSheet = ({ initialTab = 'books', onInventoryChanged, onGoRotte
   "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
 
   const { popNewFullSheet, pushNewFullSheet } = useNewFullSheetActions();
-  const { gemItems, userProfile } = useUser();
+  const { gemItems, userProfile, fetchUserProfile, fetchGemItems } = useUser();
   const { pushNewBottomSheet } = useNewBottomSheetActions();
   const { bookStore, isBookStoreLoading, fetchBookStore } = useVocabulary();
 
@@ -246,6 +247,18 @@ const StoreNewFullSheet = ({ initialTab = 'books', onInventoryChanged, onGoRotte
     if (toolsStatus !== 'idle') return;
     loadTools();
   }, [activeTab, toolsStatus, loadTools]);
+
+  // 당겨서 새로고침(바텀 네비 "상점" 탭 — asPage일 때만) — 단어장 상품·보유 보석·농장 도구
+  // 재고를 함께 최신화한다. 지금 보고 있지 않은 탭 데이터까지 전부 갱신해서, 탭을 넘어가도
+  // 스테일 데이터가 남지 않게 한다.
+  const handlePullToRefresh = useCallback(async () => {
+    await Promise.all([
+      fetchBookStore({ silent: true }),
+      fetchUserProfile(),
+      fetchGemItems(),
+      loadTools(),
+    ]);
+  }, [fetchBookStore, fetchUserProfile, fetchGemItems, loadTools]);
 
   // 서버가 준 순서를 그대로 유지하며 아이템 종류별로 묶는다.
   const packGroups = [];
@@ -348,8 +361,13 @@ const StoreNewFullSheet = ({ initialTab = 'books', onInventoryChanged, onGoRotte
         })}
       </div>
 
-      <div
+      <PullToRefresh
+        onRefresh={handlePullToRefresh}
+        // 바텀 네비 "상점" 탭(asPage)에서만 당겨서 새로고침을 켠다 — 홈·단어 상세 등에서
+        // 모달로 띄우는 인스턴스(풀시트)는 과제 범위 밖이라 제스처를 비활성화한다.
+        disabled={!asPage}
         className={`flex-1 flex flex-col px-[16px] overflow-y-auto ${activeTab === 'tools' ? 'gap-[13px]' : 'gap-[18px]'}`}
+        contentClassName={`flex flex-col ${activeTab === 'tools' ? 'gap-[13px]' : 'gap-[18px]'}`}
         /* 페이지로 열리면 바텀 네비(60px) 밑으로 마지막 카드가 숨지 않게 여백을 준다 */
         style={asPage ? { paddingBottom: 'calc(72px + var(--safe-area-bottom))' } : { paddingBottom: 6 }}
       >
@@ -590,7 +608,7 @@ const StoreNewFullSheet = ({ initialTab = 'books', onInventoryChanged, onGoRotte
             </div>
           </>
         )}
-      </div>
+      </PullToRefresh>
 
       <AnimatePresence>
         {loadingDetail && (

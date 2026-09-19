@@ -92,5 +92,7 @@ export default function useFarmPlants(enabled = true) {
     if (!wasActive && isDictionaryTab) load();
   }, [isDictionaryTab, load]);
 
-  return { plants, isPlantsLoading };
+  // reload — 당겨서 새로고침 등 외부에서 강제 재조회할 때 쓴다. load() 자체가 loadingRef로
+  // 중복 실행을 막으므로 그대로 노출해도 안전하다.
+  return { plants, isPlantsLoading, reloadPlants: load };
 }
