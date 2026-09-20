@@ -27,10 +27,10 @@ const PlaybackOrderItem = ({ item, onLongPressStart, onLongPressEnd }) => {
         onPointerDown={(e) => { e.preventDefault(); e.stopPropagation(); controls.start(e); }}
         className="touch-none cursor-grab active:cursor-grabbing"
       >
-        <CaretUpDown size={14} weight="fill" className="text-layout-gray-200" />
+        <CaretUpDown size={14} weight="fill" className="text-layout-gray-400 dark:text-layout-gray-300" />
       </div>
 
-      <span className="flex-1 text-[16px] font-[700] text-layout-black dark:text-layout-black">
+      <span className="flex-1 text-[16px] font-[700] text-layout-black dark:text-layout-white">
         {item.label}
       </span>
 
