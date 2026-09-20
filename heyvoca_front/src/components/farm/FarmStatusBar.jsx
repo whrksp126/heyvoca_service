@@ -128,10 +128,25 @@ const FarmStatusBar = ({
   const tone = grew ? 'up' : (isNg && !pending ? 'ng' : 'primary');
   // 오답은 막대가 늘지 않는다(2절) — 시안 ⑤ 에는 `u`(오른 구간)도 `pc`(+N%)도 없다.
   const gain = !grew && !isNg && pctTo > pctFrom ? Math.round(pctTo - pctFrom) : 0;
-  // 같은 날 재복습이면 gain 은 어차피 0(막대가 안 움직이므로) — 배지 슬롯에서 두 값이
-  // 동시에 뜰 일은 없다. 그래도 `elapsedLabel` 을 gain 과 별개로 계산해 슬롯 렌더 쪽만
-  // "무엇을 보여줄지" 고르면 되게 한다.
   const elapsedLabel = formatElapsedLabel(sameDayElapsedHours, compact);
+  /*
+    배지 슬롯(`+N%` 자리)은 "이번 채점의 결과 하나"만 보여준다 — 2026-09 QA.
+
+    이론상 `gain>0`(막대가 실제로 늘었다)과 `elapsedLabel`(같은 날이라 안 늘었다)은
+    서로 배타적이어야 한다(같은 날 재복습이면 FSRS 가 stability 를 거의 안 올려 gain 이
+    0이어야 정상). 그런데 서버 elapsed_days 판정(Main.jsx `isSameDayReview`, 24시간
+    미만)과 프론트 gain 계산(pctTo>pctFrom 반올림)은 서로 다른 소스라 아주 드물게 어긋날
+    수 있다 — 실제로 elapsed_days=13/24≈0.54일인데 반올림된 stage_progress 가 이미 한
+    칸 올라 gain=24 로 잡힌 사례가 있었다(+24% 와 시계 배지가 동시에 렌더돼 슬롯을
+    넘쳤다). 그래서 우선순위를 명시적으로 고정한다 — 막대가 조금이라도 늘었다면(gain>0)
+    "무엇이 늘었는지"가 우선이고, 안 늘었을 때만(gain===0) "왜 안 늘었는지"를 보여준다.
+    진화(grew)는 애초에 gain 계산에서 제외되는 별도 연출이라 여기 배지와 겹치지 않는다.
+  */
+  // gain 텍스트 자체는 원래도 compact 에서 숨긴다(`.fb.sm` 은 `+N%`를 접는다) — 하지만
+  // "gain>0 이면 시계 없음" 규칙은 compact 에도 그대로 적용한다(값이 있는데 다른 이유를
+  // 보여주면 안 되므로), 그래서 시계 조건은 `!compact` 가 아니라 `gain` 값 자체로 가른다.
+  const showGainBadge = !compact && gain > 0;
+  const showElapsedBadge = gain === 0 && !!elapsedLabel;
 
   const size = compact ? 18 : 26;
   const barH = compact ? 4 : 5;
@@ -295,20 +310,23 @@ const FarmStatusBar = ({
             {/* `+N%` 배지 자리를 **항상** 고정폭으로 예약한다. 예전엔 gain>0 일 때만
                 엘리먼트를 넣어서, 정지 상태(pending·오답)엔 이 자리가 아예 없다가 응답이
                 오는 순간 막대의 flex-1 몫이 그만큼 줄어 트랙이 짧아진 것처럼 보였다.
-                같은 날 재복습(elapsedLabel)도 이 같은 슬롯을 쓴다 — gain 은 그 경우 항상 0
-                이라(막대가 안 움직이므로) 한 슬롯 안에서 서로 겹칠 일이 없다. compact 는
-                원래 이 슬롯 자체가 없었지만(`.fb.sm` 은 `+N%`를 접는다), 시계 배지는 좁은
-                형에도 필요해 compact 전용 폭으로 새로 둔다 — 배지가 뜨든 안 뜨든 폭은
-                고정이라 트랙 길이가 흔들리지 않는다. */}
+                같은 날 재복습(elapsedLabel)도 이 같은 슬롯을 쓰되, `showGainBadge`/
+                `showElapsedBadge` 로 **상호 배타** 렌더한다(위 주석 — gain>0 이면 시계는
+                안 뜬다). compact 는 원래 이 슬롯 자체가 없었지만(`.fb.sm` 은 `+N%`를
+                접는다), 시계 배지는 좁은 형에도 필요해 compact 전용 폭으로 새로 둔다 —
+                배지가 뜨든 안 뜨든 폭은 고정이라 트랙 길이가 흔들리지 않는다.
+                `overflow-hidden`+자식 `shrink-0`/`whitespace-nowrap`로, 혹시라도 두 배지가
+                동시에 계산되는 방어 실패가 나도 슬롯 폭을 넘어 막대를 침범하지 않게 막는다. */}
             <span
               className={`
-                relative z-[1] flex-shrink-0 flex items-center justify-end gap-[2px] text-right
+                relative z-[1] flex-shrink-0 flex items-center justify-end gap-[2px]
+                text-right overflow-hidden
                 ${compact ? 'w-[34px]' : 'w-[58px]'}
               `}
             >
-              {!compact && gain > 0 && (
+              {showGainBadge && (
                 <motion.span
-                  className={`text-[11.5px] font-[800] tracking-[-0.02em] ${grew ? 'text-status-success-600' : 'text-primary-main-600'}`}
+                  className={`flex-shrink-0 whitespace-nowrap text-[11.5px] font-[800] tracking-[-0.02em] ${grew ? 'text-status-success-600' : 'text-primary-main-600'}`}
                   initial={{ opacity: 0, y: 4 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.25, delay: 0.15, ease: [0.4, 0, 0.2, 1] }}
@@ -316,10 +334,10 @@ const FarmStatusBar = ({
                   +{gain}%
                 </motion.span>
               )}
-              {elapsedLabel && (
+              {showElapsedBadge && (
                 <motion.span
                   className={`
-                    inline-flex items-center gap-[2px] font-[700] whitespace-nowrap
+                    inline-flex flex-shrink-0 items-center gap-[2px] font-[700] whitespace-nowrap
                     text-layout-gray-300 dark:text-layout-gray-200
                     ${compact ? 'text-[9.5px]' : 'text-[11px]'}
                   `}
