@@ -4,18 +4,12 @@
 // 쓰지 않는다 — 그래서 여기 로고를 바꿔도 로그인 스플래시는 영향받지 않는다(QA §G 확인 사항).
 //
 // QA §G — 로티 로고 대신 물 주는 헤이(mascot-watering)를 쓴다. 2.4초 주기로 살짝
-// 떠올랐다 내려오고(bob), 물뿌리개 주둥이 앞에서 물방울 3개가 0.6초 간격으로 떨어지며
-// 사라지는 루프를 더했다 — "준비 중"이라는 정적인 사실에 "지금 하고 있다"는 동작을 얹는다.
+// 떠올랐다 내려오는(bob) 루프만 남겼다 — "준비 중"이라는 정적인 사실에 "지금 하고 있다"는
+// 동작을 얹는다. 물방울 낙하 애니메이션은 제거했다(QA 피드백).
 // prefers-reduced-motion 이면 framer-motion 의 useReducedMotion 훅으로 전부 정지한다.
 import React from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import mascotWatering from '../../assets/images/farm/mascot-watering.png';
-
-const DROPLET_COUNT = 3;
-const DROPLET_INTERVAL = 0.6;              // 초 — 물방울 사이 간격
-const DROPLET_CYCLE = DROPLET_COUNT * DROPLET_INTERVAL; // 1.8초 — 다 돌면 처음 방울과 다시 겹친다
-// 물뿌리개 주둥이 위치 — 그림 기준 x 52~60% · y 44~46%. 세 방울 모두 같은 자리에서 시작한다.
-const DROPLET_ORIGIN = { left: '56%', top: '45%' };
 
 const ProgressSplash = ({ progress = 0, message = '' }) => {
   const reduceMotion = useReducedMotion();
@@ -46,26 +40,6 @@ const ProgressSplash = ({ progress = 0, message = '' }) => {
             draggable={false}
             className="block w-full h-full object-contain select-none"
           />
-
-          {/* 물방울 3개 — 방울마다 0.6초씩 늦게 시작해서 순서대로 떨어지고, 1.8초마다 처음부터
-              반복한다. 한 방울의 움직임 구간(0~50%)만 낙하·소멸이고 나머지 구간은 다음 차례를
-              기다리며 숨어 있다 — times 로 그 구간을 정해 준다. */}
-          {!reduceMotion && Array.from({ length: DROPLET_COUNT }).map((_, i) => (
-            <motion.span
-              key={i}
-              aria-hidden
-              className="absolute w-[6px] h-[6px] rounded-full bg-[#9ED2FF]"
-              style={DROPLET_ORIGIN}
-              animate={{ y: [0, 26, 26], opacity: [1, 0, 0] }}
-              transition={{
-                duration: DROPLET_CYCLE,
-                times: [0, 0.5, 1],
-                repeat: Infinity,
-                delay: i * DROPLET_INTERVAL,
-                ease: 'easeIn',
-              }}
-            />
-          ))}
         </motion.div>
       </div>
 
