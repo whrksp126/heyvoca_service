@@ -210,15 +210,21 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
   const [isFetching, setIsFetching] = useState(false);
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [speakDuration, setSpeakDuration] = useState(null);
+  // reverseMultipleChoice(뜻→단어) 전용 — 지금 재생 중인 게 "뜻(카드)"인지 "단어(정답 선택지)"인지.
+  // 채점 전엔 뜻이, 채점 직후엔 정답 단어가 재생되는데 둘 다 isSpeaking=true라 이것만으로는
+  // 구분이 안 돼 리플(카드)/스피커 배지(선택지) 중 하나만 켜야 하는 자리에서 헷갈렸다.
+  // 다른 유형(multipleChoice/Listening)은 이 값을 쓰지 않는다(항상 null로 둬도 무방).
+  const [speakingTarget, setSpeakingTarget] = useState(null); // 'meaning' | 'word' | null
   // TTS 재생 "세대" 가드. getTextSound는 새 재생 시작 시 이전 재생을 강제 resolve하므로,
   // 등장 자동재생이 진행 중일 때 카드를 클릭하면 중단된 이전 재생의 finally가 isSpeaking을
   // false로 덮어써 음파(TtsRipple)가 사라진다. 각 재생에 세대 번호를 부여해, finally/onMeta는
   // "자신이 최신 재생일 때만" 상태를 갱신하도록 한다.
   const speakGenRef = useRef(0);
-  const speakText = async (text, lang = 'en') => {
+  const speakText = async (text, lang = 'en', target = null) => {
     const gen = ++speakGenRef.current;
     setIsSpeaking(true);
     setSpeakDuration(null);
+    setSpeakingTarget(target);
     try {
       await getTextSound(text, lang, (d) => { if (gen === speakGenRef.current) setSpeakDuration(d); });
     } finally {
@@ -678,7 +684,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
         // 뜻 문자열(currentQuestionDisplayMeanings)을 그대로 읽되, 너무 길어지지 않게
         // 최대 2개까지만 이어 읽는다. 단어 발음은 정답 공개 후에만(handleClickExamOption).
         const meaningsToSpeak = currentQuestionDisplayMeanings.slice(0, 2).join(', ');
-        if (meaningsToSpeak) speakText(meaningsToSpeak, 'ko');
+        if (meaningsToSpeak) speakText(meaningsToSpeak, 'ko', 'meaning');
       } else if (!['cardMatch', 'cardMatchListening', 'fillInTheBlank'].includes(question.questionType) && question.origin) {
         speakText(question.origin, "en");
       }
@@ -998,8 +1004,9 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
 
     // reverseMultipleChoice(뜻→단어): 정답 공개 후 단어 발음 재생 — 뜻 화면에서는
     // 자동 재생하지 않았으므로(위 progressIndex useEffect), 여기서 한 번 들려준다.
+    // target='word' — 카드(뜻) 리플이 아니라 정답 선택지 버튼에 스피커 표시를 띄운다.
     if (question.questionType === 'reverseMultipleChoice') {
-      speakText(question.origin, 'en');
+      speakText(question.origin, 'en', 'word');
     }
 
     // 오답일 때는 정답·해설을 충분히 인지하도록 전환을 더 천천히 (정답 1초 / 오답 2.5초).
@@ -1019,10 +1026,12 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
     // 대신 뜻(한국어)을 다시 들려준다. 채점 후에는 기존대로 단어(영어) 발음.
     if (question.questionType === 'reverseMultipleChoice' && !isAnswered) {
       const meaningsToSpeak = currentQuestionDisplayMeanings.slice(0, 2).join(', ');
-      if (meaningsToSpeak) await speakText(meaningsToSpeak, 'ko');
+      if (meaningsToSpeak) await speakText(meaningsToSpeak, 'ko', 'meaning');
       return;
     }
-    await speakText(question.origin, "en");
+    // reverseMultipleChoice 채점 후 카드 재탭 — target='word'로 선택지 스피커 표시를 다시 띄운다.
+    // 다른 유형은 target을 안 쓰므로 넘겨도 무해하다.
+    await speakText(question.origin, "en", question.questionType === 'reverseMultipleChoice' ? 'word' : null);
   }
 
   // 듣기 문제 건너뛰기: 안내 바텀시트 확인 → 5분 활성화 + 진행 중 미답 듣기 문제를 일반 유형으로 즉시 변환
@@ -1380,11 +1389,16 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
 
   // 역방향 사지선다(뜻→단어) 여부 — 카드 상단 텍스트/선택지 텍스트/TTS 타이밍을 이 값으로 분기
   const isReverseChoice = testQuestions[progressIndex]?.questionType === 'reverseMultipleChoice';
-  // TtsRipple 노출 조건 — 일반 유형은 "등장 자동재생 중(채점 전)"에만, reverseMultipleChoice는
-  // 자동재생이 없는 대신 "정답 공개 후 재생 중"에 보여준다(handleClickExamOption 참고).
+  // TtsRipple(카드 영역) 노출 조건 — 일반 유형은 "등장 자동재생 중(채점 전)"에만.
+  // reverseMultipleChoice는 카드에 "뜻"만 있으므로, 뜻을 읽는 동안(speakingTarget==='meaning')만
+  // 카드에 리플을 띄운다 — 채점 후 "단어"를 읽을 때는 카드가 아니라 정답 선택지 버튼에
+  // 스피커 표시를 띄운다(아래 선택지 렌더 부분, wordSpeakerVisible 참고) — 카드엔 뜻이 보이는데
+  // 단어를 읽는 소리가 카드에서 나는 것처럼 보이는 어긋남을 막기 위함.
   const showTtsRipple = isReverseChoice
-    ? isSpeaking
+    ? (isSpeaking && speakingTarget === 'meaning')
     : (testQuestions[progressIndex]?.questionType !== 'multipleChoiceListening' && isSpeaking && !isAnswered);
+  // 정답 선택지 버튼에 스피커 표시 — reverseMultipleChoice에서 채점 후 "단어"를 읽는 동안만.
+  const wordSpeakerVisible = isReverseChoice && isAnswered && isSpeaking && speakingTarget === 'word';
 
   // 플러그인 컴포넌트가 있으면 동적 렌더링 (cardMatch 등)
   // 진행률 바: 통과 고유 단어 수 / 전체 고유 단어 수
@@ -1779,6 +1793,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
                         disabled={isAnswered}
                         style={{ willChange: 'transform' }}
                         className={`
+                          relative
                           flex items-center justify-center
                           w-full h-[50px]
                           px-[20px]
@@ -1795,6 +1810,17 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
                         `}
                       >
                         {isReverseChoice ? option.origin : option.displayMeanings.join(", ")}
+                        {/* reverseMultipleChoice: 채점 후 이 단어(정답) 발음이 재생되는 동안만
+                            표시 — 카드가 아니라 여기서 소리가 난다는 것을 보여준다. */}
+                        {wordSpeakerVisible && index === testQuestions[progressIndex].resultIndex && (
+                          <motion.span
+                            className="absolute right-[14px] top-1/2 -translate-y-1/2 text-status-success-600"
+                            animate={{ scale: [1, 1.15, 1] }}
+                            transition={{ duration: 0.6, repeat: Infinity, ease: "easeInOut" }}
+                          >
+                            <SpeakerHigh size={14} weight="fill" />
+                          </motion.span>
+                        )}
                       </motion.button>
                     )
                   })}
