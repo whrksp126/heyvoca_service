@@ -80,6 +80,18 @@ export const QUESTION_TYPE_PLUGINS = [
     setupQuestions: null,
   },
   {
+    // 역방향 사지선다 — 뜻을 보고 영어 단어 4개 중 고르기. 일반 사지선다(multipleChoice)와
+    // 렌더링·채점·로깅 경로를 전부 공유한다(TakeTest.jsx/Main.jsx가 questionType으로 방향만 분기).
+    // 출제 데이터 요구사항이 multipleChoice와 같아 component/setupQuestions는 동일하게 null —
+    // Main.jsx 기존 코드(사지선다 인라인 렌더)와 TakeTest.jsx의 createMultipleChoiceQuestion이 처리한다.
+    id: 'reverseMultipleChoice',
+    label: '뜻 보고 단어 고르기',
+    enabled: true,
+    minWords: 4,
+    component: null,
+    setupQuestions: null,
+  },
+  {
     id: 'fillInTheBlank',
     label: '빈칸 채우기',
     enabled: false,

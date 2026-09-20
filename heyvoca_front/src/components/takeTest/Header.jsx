@@ -11,6 +11,7 @@ import { vibrate } from '../../utils/osFunction';
 const QUESTION_INSTRUCTIONS = {
   multipleChoice: '알맞은 뜻을 선택하세요',
   multipleChoiceListening: '듣고 알맞은 뜻을 선택하세요',
+  reverseMultipleChoice: '알맞은 단어를 선택하세요',
   fillInTheBlank: '빈칸에 알맞은 단어를 입력하세요',
   cardMatch: '같은 뜻끼리 짝지어 보세요',
   cardMatchListening: '듣고 같은 카드를 짝지어 보세요',

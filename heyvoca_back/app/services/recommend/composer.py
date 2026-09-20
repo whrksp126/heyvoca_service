@@ -69,11 +69,16 @@ _BUCKET_REASON: Dict[str, str] = {
 # 지원 question_type 목록
 _ALL_QUESTION_TYPES = [
     'multipleChoice',
+    'reverseMultipleChoice',   # 뜻→단어 (역방향 사지선다) — multipleChoice와 요구 데이터가 같다
     'multipleChoiceListening',
     'fillInTheBlank',
     'cardMatch',
     'cardMatchListening',
 ]
+
+# 사지선다 계열 중 "방향만 다른" 두 유형 — 리스트 순서에 기대면 항상 multipleChoice만
+# 나오므로, 둘 다 출제 가능하면 여기서 50:50 랜덤으로 방향을 정한다.
+_FORWARD_REVERSE_CHOICE_TYPES = ('multipleChoice', 'reverseMultipleChoice')
 
 # ──────────────────────────────────────────────
 # "지금 아는 단어" 제외 규칙 (2026-09 추가)
@@ -339,13 +344,22 @@ def _assign_suggested_question_type(
 ) -> Optional[str]:
     """
     1. 약점 유형 우선 (이 단어가 지원하고 avoid에 없는 것)
-    2. avoid에 없는 일반 유형
-    3. 모든 유형이 회피 대상이면 avoid 무시하고 지원 가능한 첫 번째
+    2. 사지선다 방향(단어→뜻 / 뜻→단어)이 둘 다 가능하면 50:50 랜덤
+    3. avoid에 없는 일반 유형
+    4. 모든 유형이 회피 대상이면 avoid 무시하고 지원 가능한 첫 번째
     """
     avoid = avoid_types or set()
     for wt in weakness_types:
         if wt not in avoid and _item_can_use_question_type(item, wt):
             return wt
+
+    choice_pool = [
+        qt for qt in _FORWARD_REVERSE_CHOICE_TYPES
+        if qt not in avoid and _item_can_use_question_type(item, qt)
+    ]
+    if choice_pool:
+        return random.choice(choice_pool)
+
     for qt in _ALL_QUESTION_TYPES:
         if qt not in avoid and _item_can_use_question_type(item, qt):
             return qt

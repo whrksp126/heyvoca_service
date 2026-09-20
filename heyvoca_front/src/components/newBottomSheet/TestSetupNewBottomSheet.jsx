@@ -50,7 +50,7 @@ function getMemoryStateLabel(type) {
 }
 
 export const TestSetupNewBottomSheet = ({ onCancel, onSet, maxVocabularyCount, vocabularySheetId, testType }) => {
-  const [questionTypes, setQuestionTypes] = useState(['multipleChoice']);
+  const [questionTypes, setQuestionTypes] = useState(['multipleChoice', 'reverseMultipleChoice']);
   const [selectionType, setSelectionType] = useState('recommended'); // 'recommended' | 'random'
   const [memoryState, setMemoryState] = useState(['unlearned', 'shortTerm', 'mediumTerm', 'longTerm']);
   const [errorMessage, setErrorMessage] = useState('');

@@ -651,6 +651,12 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
     }));
   }, [progressIndex, testQuestions]);
 
+  // 역방향 사지선다(뜻→단어) 상단 카드에 띄울 정답 단어의 뜻 — 옵션과 같은 결정적 선택 함수 사용
+  const currentQuestionDisplayMeanings = useMemo(() => {
+    if (!testQuestions[progressIndex]) return [];
+    return getDisplayMeanings(testQuestions[progressIndex].meanings);
+  }, [progressIndex, testQuestions]);
+
   useEffect(() => {
     console.log("testType,", testType);
   }, [])
@@ -666,7 +672,9 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
     setIsSpeaking(false);
     if (testQuestions[progressIndex]) {
       const question = testQuestions[progressIndex];
-      if (!['cardMatch', 'cardMatchListening', 'fillInTheBlank'].includes(question.questionType) && question.origin) {
+      // reverseMultipleChoice(뜻→단어)는 뜻 화면 진입 시 단어를 미리 들려주면 정답을
+      // 알려주는 셈이라 자동 재생하지 않는다 — 정답 공개 후에만 재생(handleClickExamOption).
+      if (!['cardMatch', 'cardMatchListening', 'fillInTheBlank', 'reverseMultipleChoice'].includes(question.questionType) && question.origin) {
         speakText(question.origin, "en");
       }
 
@@ -983,6 +991,12 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
 
     setIsAnswered(true);
 
+    // reverseMultipleChoice(뜻→단어): 정답 공개 후 단어 발음 재생 — 뜻 화면에서는
+    // 자동 재생하지 않았으므로(위 progressIndex useEffect), 여기서 한 번 들려준다.
+    if (question.questionType === 'reverseMultipleChoice') {
+      speakText(question.origin, 'en');
+    }
+
     // 오답일 때는 정답·해설을 충분히 인지하도록 전환을 더 천천히 (정답 1초 / 오답 2.5초).
     // 단계가 오른 정답은 아래 useEffect 가 2.2초로 다시 건다 — 진화 연출이 1초라 여기서 넘기면 잘린다.
     gradedAtRef.current = Date.now();
@@ -995,6 +1009,9 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
   // 문제 읽기
   const handleClickTTS = async () => {
     const question = testQuestions[progressIndex];
+    // reverseMultipleChoice(뜻→단어)는 카드에 뜻만 보이고 정답(단어)은 아직 비공개 —
+    // 채점 전에 카드를 눌러 단어 발음을 재생하면 정답을 알려주는 셈이라 막는다.
+    if (question.questionType === 'reverseMultipleChoice' && !isAnswered) return;
     await speakText(question.origin, "en");
   }
 
@@ -1351,6 +1368,14 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
     ease: [0.4, 0, 0.2, 1] // cubic-bezier for smoother animation
   };
 
+  // 역방향 사지선다(뜻→단어) 여부 — 카드 상단 텍스트/선택지 텍스트/TTS 타이밍을 이 값으로 분기
+  const isReverseChoice = testQuestions[progressIndex]?.questionType === 'reverseMultipleChoice';
+  // TtsRipple 노출 조건 — 일반 유형은 "등장 자동재생 중(채점 전)"에만, reverseMultipleChoice는
+  // 자동재생이 없는 대신 "정답 공개 후 재생 중"에 보여준다(handleClickExamOption 참고).
+  const showTtsRipple = isReverseChoice
+    ? isSpeaking
+    : (testQuestions[progressIndex]?.questionType !== 'multipleChoiceListening' && isSpeaking && !isAnswered);
+
   // 플러그인 컴포넌트가 있으면 동적 렌더링 (cardMatch 등)
   // 진행률 바: 통과 고유 단어 수 / 전체 고유 단어 수
   // totalUniqueCount는 세션 시작 시 확정된 값 (재출제 문제가 추가돼도 분모는 고정)
@@ -1523,7 +1548,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
             style={{ willChange: 'transform, opacity' }}
             className="flex flex-col gap-[15px] w-full h-full absolute"
           >
-            {['multipleChoice', 'multipleChoiceListening'].includes(testQuestions[progressIndex]?.questionType) && (
+            {['multipleChoice', 'multipleChoiceListening', 'reverseMultipleChoice'].includes(testQuestions[progressIndex]?.questionType) && (
               <>
                 <motion.div
                   className={`
@@ -1546,7 +1571,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
                 >
 
                   {/* 일반 유형 클릭(TTS 재생) 시 ripple — 아이콘 없이 카드 중앙에서 확산 */}
-                  {testQuestions[progressIndex].questionType !== 'multipleChoiceListening' && isSpeaking && !isAnswered && (
+                  {showTtsRipple && (
                     <TtsRipple size={160} duration={speakDuration} className="z-[0]" />
                   )}
 
@@ -1619,7 +1644,9 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
                           )}
                         </AnimatePresence>
                       </div>
-                      {testQuestions[progressIndex].origin}
+                      {isReverseChoice
+                        ? currentQuestionDisplayMeanings.join(', ')
+                        : testQuestions[progressIndex].origin}
                     </h2>
                   )}
                   {/* 하단 - 부패 진단(시안 6절): 채점 전부터 뜨는 `.fb.ng` 형.
@@ -1757,7 +1784,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
                           ${btnStyle}
                         `}
                       >
-                        {option.displayMeanings.join(", ")}
+                        {isReverseChoice ? option.origin : option.displayMeanings.join(", ")}
                       </motion.button>
                     )
                   })}

@@ -174,11 +174,38 @@ const TakeTest = () => {
       vocabularySheetId: vocabularySheetId !== "all" ? vocabularySheetId : word.vocabularySheetId,
     }));
 
+    // 역방향(뜻→단어) 오답 선택지용 — 두 단어의 뜻이 하나라도 겹치는지.
+    // 겹치는 단어를 오답으로 섞으면 정답이 사실상 2개가 되어 버린다.
+    // 품사(pos)는 이 화면까지 내려오는 단어 데이터에 없어 "같은 품사 우선" 규칙은
+    // 적용하지 못했다 — 뜻 비대칭만 걸러내고 부족분은 임의로 채운다.
+    const wordMeaningsOverlap = (a, b) => {
+      const setA = new Set((a?.meanings ?? []).map(m => String(m).trim()));
+      return (b?.meanings ?? []).some(m => setA.has(String(m).trim()));
+    };
+
     const createMultipleChoiceQuestion = (word, questionType = 'multipleChoice') => {
-      const otherWords = allWords.filter(w => (w.id ?? w.vocaIndexId) !== (word.id ?? word.vocaIndexId));
-      const randomOptions = otherWords.sort(() => Math.random() - 0.5).slice(0, 3);
+      const wordKey = (w) => w.id ?? w.vocaIndexId;
+      const otherWords = allWords.filter(w => wordKey(w) !== wordKey(word));
+
+      let randomOptions;
+      if (questionType === 'reverseMultipleChoice') {
+        const nonOverlapping = otherWords.filter(w => !wordMeaningsOverlap(word, w));
+        randomOptions = nonOverlapping.sort(() => Math.random() - 0.5).slice(0, 3);
+        if (randomOptions.length < 3) {
+          // 뜻이 안 겹치는 단어만으로 3개를 못 채우면 나머지는 임의로 보충
+          const usedKeys = new Set(randomOptions.map(wordKey));
+          const fillers = otherWords
+            .filter(w => !usedKeys.has(wordKey(w)))
+            .sort(() => Math.random() - 0.5)
+            .slice(0, 3 - randomOptions.length);
+          randomOptions = [...randomOptions, ...fillers];
+        }
+      } else {
+        randomOptions = otherWords.sort(() => Math.random() - 0.5).slice(0, 3);
+      }
+
       const options = [word, ...randomOptions].sort(() => Math.random() - 0.5);
-      const resultIndex = options.findIndex(w => (w.id ?? w.vocaIndexId) === (word.id ?? word.vocaIndexId));
+      const resultIndex = options.findIndex(w => wordKey(w) === wordKey(word));
       return {
         ...word,
         options,
