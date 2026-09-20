@@ -18,8 +18,20 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useMotionValue, animate } from 'framer-motion';
 import { showToast } from '../utils/osFunction';
+import { haptic } from '../lib/feel';
 
 const clamp = (v, min, max) => Math.min(max, Math.max(min, v));
+
+// 탭 중 손끝이 1~2px 떨리는 것까지 "당김 시작"으로 잡으면 버튼 탭이 당김 제스처에
+// 먹혀 click이 아예 발생하지 않는다(WebView는 touchmove에서 preventDefault가 걸리면
+// 그 터치 시퀀스의 합성 click을 만들지 않음). 이 슬롭 안에서는 pulling으로 전환하지도,
+// preventDefault도 호출하지 않는다 — 순수한 탭은 그대로 브라우저 기본 클릭 경로를 탄다.
+const TAP_SLOP = 6;
+
+// 버튼/링크/폼 요소 위에서 시작한 터치는 애초에 당김 제스처 후보에서 제외한다 —
+// 스크롤 최상단에 버튼이 있는 화면(홈 CTA 등)에서 버튼을 누르자마자 당김이 가로채는
+// 사고를 막는다. data-no-ptr 로 개별 요소를 추가 제외할 수 있다.
+const INTERACTIVE_SELECTOR = 'button, a, [role="button"], input, textarea, select, [data-no-ptr]';
 
 /**
  * @param {Object} opts
@@ -86,6 +98,7 @@ export function usePullToRefresh({
     } finally {
       const wait = Math.max(0, minShowMs - (Date.now() - startedAt));
       window.setTimeout(() => {
+        haptic('light');
         setPhaseSafe('done');
         window.setTimeout(() => reset(), 420);
       }, wait);
@@ -100,6 +113,9 @@ export function usePullToRefresh({
       if (phaseRef.current === 'refreshing' || phaseRef.current === 'done') return;
       if (e.touches.length !== 1) return;
       if (el.scrollTop > 0) { gestureRef.current.active = false; return; }
+      // 버튼 등 인터랙티브 요소 위에서 시작한 터치는 당김 후보에서 제외 — 탭이 당김에
+      // 먹혀 click이 씹히는 사고를 막는다(아래 TAP_SLOP 주석 참고).
+      if (e.target?.closest?.(INTERACTIVE_SELECTOR)) { gestureRef.current.active = false; return; }
       stopAnim();
       gestureRef.current = {
         active: true,
@@ -127,6 +143,11 @@ export function usePullToRefresh({
         g.active = false;
         return;
       }
+      // 슬롭 안(아직 "당김"이라 부를 만큼 움직이지 않음) — pulling으로 확정하지 않고
+      // preventDefault도 하지 않는다. 제자리에서 떨리기만 한 탭은 그대로 click으로 이어진다.
+      if (!g.pulling && dy <= TAP_SLOP) {
+        return;
+      }
 
       g.pulling = true;
       // 세로 당김으로 확정된 순간에만 기본 동작(브라우저/WebView 오버스크롤 바운스)을 막는다
@@ -135,7 +156,11 @@ export function usePullToRefresh({
       const damped = clamp(dy * 0.5, 0, maxPull);
       pull.set(damped);
       const next = damped >= threshold ? 'ready' : 'pulling';
-      if (phaseRef.current !== next) setPhaseSafe(next);
+      if (phaseRef.current !== next) {
+        // 'pulling'→'ready' 문턱을 처음 넘는 순간에만 — 새로고침이 "확정"됐다는 신호
+        if (next === 'ready') haptic('medium');
+        setPhaseSafe(next);
+      }
     };
 
     const onTouchEnd = () => {

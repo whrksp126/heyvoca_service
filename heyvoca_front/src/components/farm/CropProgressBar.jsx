@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
+import { haptic } from '../../lib/feel';
 
 /**
  * 당근 농장 V2 — 학습 상태 바의 **막대 부분만** 떼어낸 재사용 컴포넌트.
@@ -72,6 +73,17 @@ const CropProgressBar = ({
   // 줄어든 구간 — 사라진 자리를 잠깐 비춰 줘야 '줄었다'가 읽힌다.
   // 막대만 스르륵 짧아지면 어디까지 있었는지 알 수 없어 그냥 짧은 막대로 보인다.
   const lost = !grew && to < from;
+
+  // 막대가 실제로 차오르기 시작하는 회차에만 가벼운 햅틱 한 번(진화 햅틱은 FarmStatusBar가
+  // 별도로 담당 — 여기는 grew일 때 제외). 문제마다(진행바 slide-key로) 새로 마운트되므로
+  // ref는 그 문제 안에서만 유효하다.
+  const buzzedGainRef = useRef(false);
+  useEffect(() => {
+    if (gained && !buzzedGainRef.current) {
+      buzzedGainRef.current = true;
+      haptic('light');
+    }
+  }, [gained]);
 
   /*
     진화: 이전 진행률 → 100% → 0% → 새 단계 진행률.

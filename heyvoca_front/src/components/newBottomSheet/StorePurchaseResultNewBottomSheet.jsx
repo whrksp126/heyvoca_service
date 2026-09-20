@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { X, WarningCircle } from '@phosphor-icons/react';
 import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
-import { vibrate } from '../../utils/osFunction';
+import { haptic } from '../../lib/feel';
 import {
   SHEET_SHELL, Grab, Btn, Btns, Hint,
 } from './purchaseParts';
@@ -85,7 +85,17 @@ const ResultPill = ({ from, to }) => (
  */
 export const PurchaseResultBody = ({
   success = true, kind = 'error', image, plot = false, title, pill = null, desc = null,
-}) => (
+}) => {
+  // 구매 결과가 이 몸통 하나(성공/실패 여덟 장 공통)로 모이므로, 손맛도 여기 한 곳에서만
+  // 울리면 모든 구매 흐름(보석 IAP StoreBuyItemNewBottomSheet · 단어장/아이템
+  // StorePurchaseResultNewBottomSheet)에 자동으로 적용된다. success 가 바뀔 일은 없지만
+  // (컴포넌트가 성공/실패마다 다른 분기로 새로 그려짐) 안전하게 값 변경 시에도 다시 운다.
+  useEffect(() => {
+    haptic(success ? 'success' : 'error');
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [success]);
+
+  return (
   <div className="relative text-center pt-[6px]">
     {success
       ? (image ? <ResultImage src={image} plot={plot} /> : null)
@@ -100,7 +110,8 @@ export const PurchaseResultBody = ({
       </p>
     )}
   </div>
-);
+  );
+};
 
 /**
  * @param {object} options
@@ -127,12 +138,12 @@ export const StorePurchaseResultNewBottomSheet = ({ options = {} }) => {
   } = options;
 
   const close = () => {
-    vibrate({ duration: 5 });
+    haptic('light');
     popNewBottomSheet();
   };
 
   const run = (btn) => {
-    vibrate({ duration: 5 });
+    haptic('light');
     if (btn?.onClick) btn.onClick();
     else popNewBottomSheet();
   };

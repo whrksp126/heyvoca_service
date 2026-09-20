@@ -295,7 +295,12 @@ const TakeTest = () => {
       [MEMORY_STATES.ALL]: 'all',
       all: 'all',
     };
-    const targetStatesArr = Array.isArray(targetMemoryState) ? targetMemoryState : [targetMemoryState];
+    // targetMemoryState가 null/undefined면 "필터 없음"이므로 빈 배열로 둔다.
+    // [null]처럼 원소가 falsy인 배열로 감싸면 join(',')이 ''가 돼 백엔드에 빈 값으로
+    // 전송되고, 서버가 이를 "명시적 필터"로 오인해 AI 추천 모드가 꺼진다(보고 참조).
+    const targetStatesArr = Array.isArray(targetMemoryState)
+      ? targetMemoryState.filter(Boolean)
+      : (targetMemoryState ? [targetMemoryState] : []);
     const backendTargetStates = targetStatesArr.map(s => memoryStateToBackend[s] ?? s);
 
     const selectionType = state.data?.selectionType ?? 'recommended';

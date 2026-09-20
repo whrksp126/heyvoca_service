@@ -296,9 +296,14 @@ export const getStudyRecommend = async ({
   }
 
   // targetStates: 배열 또는 문자열 → 콤마 구분 문자열
-  if (targetStates) {
-    const states = Array.isArray(targetStates) ? targetStates : [targetStates];
-    params.target_states = states.join(',');
+  // 빈 배열(예: [null] 같은 falsy 원소만 있는 경우)은 전송하지 않는다 — 빈 문자열이
+  // 그대로 전송되면 백엔드가 "필터 없음"이 아니라 "명시적 필터"로 오인해
+  // AI 추천 모드(full_recommend)의 신규/단기 floor 보호가 꺼진다.
+  const targetStatesArr = targetStates
+    ? (Array.isArray(targetStates) ? targetStates : [targetStates]).filter(Boolean)
+    : [];
+  if (targetStatesArr.length > 0) {
+    params.target_states = targetStatesArr.join(',');
   }
 
   params.selection = selection;

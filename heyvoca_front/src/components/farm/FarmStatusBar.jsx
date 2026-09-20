@@ -1,10 +1,10 @@
 import { useEffect, useRef } from 'react';
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 import { Clock } from '@phosphor-icons/react';
 import CropImage, { CROP_ASSETS } from './CropImage';
 import CropProgressBar, { GROW_FILL_DURATION, GROW_FILL_TIMES } from './CropProgressBar';
 import { CROP_STAGES, cropIndex, stageToCrop } from '../../utils/crop';
-import { vibrate } from '../../utils/osFunction';
+import { haptic, pickVariant } from '../../lib/feel';
 
 /**
  * 당근 농장 V2 — 채점 후 상태 바. **모든 문제 유형이 이 하나를 쓴다.**
@@ -151,12 +151,15 @@ const FarmStatusBar = ({
   const size = compact ? 18 : 26;
   const barH = compact ? 4 : 5;
 
-  // 진화한 순간에만 햅틱을 한 번 준다 (채점 햅틱은 문제 화면이 이미 준다)
+  const reducedMotion = useReducedMotion();
+
+  // 진화한 순간에만 햅틱을 한 번 준다 (채점 햅틱은 문제 화면이 이미 준다).
+  // 정오답 자체보다 한 단계 무거운 사건이라 medium을 쓴다(light인 일반 탭/채점보다 확실히 다르게).
   const buzzedRef = useRef(false);
   useEffect(() => {
     if (grew && !buzzedRef.current) {
       buzzedRef.current = true;
-      vibrate({ duration: 5 });
+      haptic('medium');
     }
   }, [grew]);
 
@@ -327,9 +330,12 @@ const FarmStatusBar = ({
               {showGainBadge && (
                 <motion.span
                   className={`flex-shrink-0 whitespace-nowrap text-[11.5px] font-[800] tracking-[-0.02em] ${grew ? 'text-status-success-600' : 'text-primary-main-600'}`}
-                  initial={{ opacity: 0, y: 4 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.25, delay: 0.15, ease: [0.4, 0, 0.2, 1] }}
+                  // popIn 프리셋 그대로 쓰되, 막대가 다 찬 뒤(0.15s)에 등장하도록 지연만 얹는다.
+                  initial={pickVariant('popIn', reducedMotion).initial}
+                  animate={{
+                    ...pickVariant('popIn', reducedMotion).animate,
+                    transition: { ...pickVariant('popIn', reducedMotion).animate.transition, delay: 0.15 },
+                  }}
                 >
                   +{gain}%
                 </motion.span>

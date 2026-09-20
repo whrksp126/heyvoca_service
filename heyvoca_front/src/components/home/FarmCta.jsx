@@ -27,6 +27,7 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
+import { haptic, SPRING, TAP } from '../../lib/feel';
 
 /** §12 상태 적응형 CTA 규칙 — 우선순위 순 */
 export const HOME_STATES = {
@@ -118,8 +119,9 @@ const FarmCta = ({ label, onClick }) => {
       <motion.button
         type="button"
         onClick={onClick}
-        whileTap={{ scale: 0.98 }}
-        transition={{ type: 'spring', stiffness: 400, damping: 17 }}
+        whileTap={{ scale: TAP.scale }}
+        transition={SPRING.snappy}
+        onTapStart={() => haptic('light')}
         className="
           flex items-center justify-center
           w-full h-[56px] rounded-[12px]

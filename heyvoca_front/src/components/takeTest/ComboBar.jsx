@@ -1,16 +1,22 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Flame } from '@phosphor-icons/react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
+import { haptic, pickVariant } from '../../lib/feel';
 
 /**
  * 콤보 팝업 — AI 추천 테스트에서 콤보가 "오를 때"만 프로그래스 바 위에 텍스트로 잠깐 달렸다 사라짐.
  * - 진입 시 초기 콤보값으로는 표시하지 않음(초기 노출 버그 방지).
  * - 다음 문제 슬라이드 전환(정답 ~1s) 전에 사라지도록 800ms 후 숨김.
  * - 레이아웃을 차지하지 않도록 0높이 relative 컨테이너 + absolute.
+ *
+ * @param {boolean} isRecord — 이번 판이 기존 최고 기록을 갱신 중인지(Main.jsx
+ *   comboRunIsRecordRef 와 같은 값). 갱신 중일 때만 haptic('success')로 다르게 울린다 —
+ *   그냥 콤보가 늘어나는 매 순간을 success로 울리면 "신기록"이라는 말이 옅어진다.
  */
-const ComboBar = ({ combo }) => {
+const ComboBar = ({ combo, isRecord = false }) => {
   "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
 
+  const reducedMotion = useReducedMotion();
   const current = combo?.current ?? 0;
   const [show, setShow] = useState(false);
   const prevRef = useRef(null); // null = 아직 초기화 전(첫 값은 트리거하지 않음)
@@ -24,12 +30,14 @@ const ComboBar = ({ combo }) => {
     }
     if (current >= 2 && current > prevRef.current) {
       setShow(true);
+      haptic(isRecord ? 'success' : 'light');
       if (timerRef.current) clearTimeout(timerRef.current);
       timerRef.current = setTimeout(() => setShow(false), 800);
     } else if (current < prevRef.current) {
       setShow(false); // 콤보 깨짐
     }
     prevRef.current = current;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [current]);
 
   useEffect(() => () => { if (timerRef.current) clearTimeout(timerRef.current); }, []);
@@ -40,10 +48,7 @@ const ComboBar = ({ combo }) => {
         {show && (
           <motion.div
             key={current}
-            initial={{ opacity: 0, y: 6 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -6 }}
-            transition={{ duration: 0.2, ease: [0.4, 0, 0.2, 1] }}
+            {...pickVariant('popIn', reducedMotion)}
             className="absolute bottom-[2px] right-[2px] z-[6] flex items-center gap-[3px] text-primary-main-600 whitespace-nowrap"
           >
             <Flame weight="fill" className="text-[14px]" />

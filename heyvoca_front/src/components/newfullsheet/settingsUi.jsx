@@ -2,7 +2,7 @@ import React from 'react';
 import { CaretLeft, CaretRight } from '@phosphor-icons/react';
 import { motion } from 'framer-motion';
 import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
-import { vibrate } from '../../utils/osFunction';
+import { haptic } from '../../lib/feel';
 
 /**
  * 설정 계열 풀시트 공용 조각 — 시안 "설정" 5·6절.
@@ -20,7 +20,7 @@ export const SheetBar = ({ title }) => {
       className="relative flex items-center justify-center h-[52px] shrink-0 px-[16px] bg-layout-white dark:bg-layout-black"
     >
       <motion.button
-        onClick={() => { vibrate({ duration: 5 }); popNewFullSheet(); }}
+        onClick={() => { haptic('light'); popNewFullSheet(); }}
         className="absolute left-[12px] flex items-center text-layout-black dark:text-layout-white rounded-[8px]"
         whileTap={{ scale: 0.9 }}
         transition={{ type: 'spring', stiffness: 400, damping: 17 }}
@@ -49,13 +49,25 @@ export const IconCircle = ({ children }) => (
   </span>
 );
 
-/** 토글 — 켜짐만 분홍 (시안 .tg) */
+/**
+ * 토글 — 켜짐만 분홍 (시안 .tg)
+ *
+ * ⚠️ 2026-09-20 정정: SettingRow는 toggle이 있을 때도 바깥 div에 onClick을 그대로 걸어 둔다
+ * (행 전체를 눌러도 토글되게 하려는 의도). 그런데 이 버튼이 그 div 안에 있어서, 버튼을
+ * 직접 누르면 클릭이 버튼→div로 버블링돼 같은 onClick이 두 번(버튼 자체 + div 버블링)
+ * 불린다 — 토글이 켜졌다 그 자리에서 바로 꺼지는 것처럼 보여 사실상 안 눌리는 버그였다.
+ * stopPropagation으로 버블링을 막고, 바깥 div가 주던 탭 피드백(haptic)은 여기서 대신 준다.
+ */
 export const Toggle = ({ on, onClick }) => (
   <button
     type="button"
     role="switch"
     aria-checked={on}
-    onClick={onClick}
+    onClick={(e) => {
+      e.stopPropagation();
+      haptic('light');
+      onClick?.();
+    }}
     className={`w-[48px] h-[28px] shrink-0 rounded-full p-[3px] flex items-center transition-colors ${
       on ? 'bg-primary-main-600 justify-end' : 'bg-layout-gray-100 dark:bg-[#3A3A3A]'
     }`}
@@ -70,7 +82,7 @@ export const Toggle = ({ on, onClick }) => (
  */
 export const SettingRow = ({ icon, title, sub, value, onClick, caret = true, toggle, first = false }) => (
   <div
-    onClick={onClick ? () => { vibrate({ duration: 5 }); onClick(); } : undefined}
+    onClick={onClick ? () => { haptic('light'); onClick(); } : undefined}
     className={`flex items-center gap-[11px] py-[11px] ${first ? '' : 'border-t border-[#F4F4F4] dark:border-[rgba(255,255,255,.07)]'}`}
   >
     <IconCircle>{icon}</IconCircle>

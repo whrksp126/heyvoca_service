@@ -1,8 +1,8 @@
 import { useState, useRef, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { Circle, X, Leaf, Plant, Carrot, EggCrack, ArrowUpRight, ArrowDownRight } from '@phosphor-icons/react';
 import FarmStatusBar from '../../../components/farm/FarmStatusBar';
-import { vibrate } from '../../../utils/osFunction';
+import { haptic, pickVariant } from '../../../lib/feel';
 import { playSuccessSound, playErrorSound } from '../../../utils/audio';
 import { getAdvanceDelay, ADVANCE_DELAY_GROW } from '../../../utils/studyTiming';
 import { getMemoryStateKeyByStability } from '../../../components/common/MemoryStateChangeBadge';
@@ -68,6 +68,7 @@ const FillInTheBlankQuestion = ({ question, testType, onComplete, onCardMatched,
   // 백그라운드 복귀 시 정답 링/성장 게이지가 최종 상태로 정적으로 스냅되는 것을 막기 위한
   // 재마운트용 키 (이유는 useResumeReplayKey 주석 참고)
   const resumeReplayKey = useResumeReplayKey();
+  const reducedMotion = useReducedMotion();
 
   const advanceTimerRef = useRef(null);
   const gradedAtRef = useRef(0);
@@ -102,10 +103,10 @@ const FillInTheBlankQuestion = ({ question, testType, onComplete, onCardMatched,
     const q = correct ? (timeTakenSec <= 5 ? 5 : timeTakenSec <= 10 ? 4 : 3) : 0;
 
     if (correct) {
-      vibrate({ type: 'notificationSuccess' });
+      haptic('success');
       playSuccessSound();
     } else {
-      vibrate({ type: 'notificationError' });
+      haptic('error');
       playErrorSound();
     }
 
@@ -299,9 +300,10 @@ const FillInTheBlankQuestion = ({ question, testType, onComplete, onCardMatched,
       <div className="flex flex-col gap-[8px]">
         {options.map((option, index) => {
           let btnStyle = 'border-layout-gray-200 text-layout-black dark:text-layout-white';
+          const isWrongSelected = isAnswered && selectedIndex === index && !isCorrect;
           if (isAnswered && resultIndex === index) {
             btnStyle = 'border-status-success-500 text-status-success-600 bg-status-success-100';
-          } else if (isAnswered && selectedIndex === index && !isCorrect) {
+          } else if (isWrongSelected) {
             btnStyle = 'border-status-error-500 text-status-error-600 bg-status-error-100 dark:bg-status-error-dark';
           } else if (!isAnswered && selectedIndex === index) {
             btnStyle = 'border-primary-main-600 bg-primary-main-50 dark:bg-primary-main-dark text-layout-black dark:text-layout-white';
@@ -310,9 +312,10 @@ const FillInTheBlankQuestion = ({ question, testType, onComplete, onCardMatched,
           return (
             <motion.button
               key={index}
-              onClick={() => { vibrate({ duration: 5 }); handleOptionClick(index); }}
+              onClick={() => { haptic('light'); handleOptionClick(index); }}
               disabled={isAnswered}
               whileTap={{ scale: isAnswered ? 1 : 0.92, transition: { type: 'spring', stiffness: 400, damping: 17 } }}
+              animate={isWrongSelected ? pickVariant('shake', reducedMotion).animate : undefined}
               style={{ willChange: 'transform' }}
               className={`
                 flex items-center justify-center

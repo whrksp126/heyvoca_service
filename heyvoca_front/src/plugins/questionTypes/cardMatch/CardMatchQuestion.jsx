@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { getTextSound } from '../../../utils/common';
-import { vibrate } from '../../../utils/osFunction';
+import { haptic } from '../../../lib/feel';
 import { playSuccessSound, playErrorSound } from '../../../utils/audio';
 import TtsRipple from '../../../components/common/TtsRipple';
 import MemoryStateChangeBadge, {
@@ -152,7 +152,7 @@ const CardMatchQuestion = ({ question, testType, onComplete, onCardMatched, farm
     };
 
     if (isMatch) {
-      vibrate({ type: 'notificationSuccess' });
+      haptic('success');
       playSuccessSound();
       resolveWordState(leftWord, true, newAttempts);
       // 카드가 풀린 **그 순간** 부모에 알린다. 800ms 뒤에 알리면 그동안 구버전 표시가
@@ -171,7 +171,7 @@ const CardMatchQuestion = ({ question, testType, onComplete, onCardMatched, farm
         }
       }, 800);
     } else {
-      vibrate({ type: 'notificationError' });
+      haptic('error');
       playErrorSound();
       resolveWordState(leftWord, false, newAttempts);
       notifyResolved();   // 정답 분기와 같은 이유 — 표시가 두 번 바뀌지 않게 즉시 알린다
@@ -276,6 +276,7 @@ const CardMatchQuestion = ({ question, testType, onComplete, onCardMatched, farm
               onClick={() => handleLeftClick(index)}
               disabled={isResolved || isAnimating}
               whileTap={!isResolved && !isAnimating ? { scale: 0.95 } : {}}
+              onTapStart={!isResolved && !isAnimating ? () => haptic('light') : undefined}
               transition={{ type: 'spring', stiffness: 400, damping: 17 }}
             >
               {/* 상단 중앙 - 암기 상태 배지 (채점 후)
@@ -345,6 +346,7 @@ const CardMatchQuestion = ({ question, testType, onComplete, onCardMatched, farm
               onClick={() => handleRightClick(index)}
               disabled={isMatchResolved || isFlashingWrong}
               whileTap={!isMatchResolved && !isFlashingWrong ? { scale: 0.95 } : {}}
+              onTapStart={!isMatchResolved && !isFlashingWrong ? () => haptic('light') : undefined}
               transition={{ type: 'spring', stiffness: 400, damping: 17 }}
             >
               <span className={`text-[14px] font-[600] ${getRightTextStyle(index)} text-center leading-snug break-keep`}>

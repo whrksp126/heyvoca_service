@@ -5,6 +5,7 @@ import { useUser } from '../../context/UserContext';
 import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
 import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 import { vibrate } from '../../utils/osFunction';
+import { useCountUp } from '../../lib/feel';
 
 import AccountNewFullSheet from '../newfullsheet/AccountNewFullSheet';
 import GemNewFullSheet from '../newfullsheet/GemNewFullSheet';
@@ -134,6 +135,8 @@ const Main = ({ registerRefresh } = {}) => {
   // Actions만 구독하므로 state 변경 시 리렌더링 안 됨
   const { pushNewFullSheet } = useNewFullSheetActions();
   const { pushNewBottomSheet } = useNewBottomSheetActions();
+  // 보석 구매·사용 직후 값이 점프하지 않고 굴러가며 바뀌게 — 최초 진입 시에는 애니메이션 없이 바로 표시
+  const displayGemCnt = useCountUp(userProfile?.gem_cnt ?? 0);
 
   // 창고 — 농장 API 가 응답했을 때만 보여준다 (아직 없는 환경에서 0개로 오해시키지 않는다)
   const [farmItems, setFarmItems] = useState(null);
@@ -298,7 +301,7 @@ const Main = ({ registerRefresh } = {}) => {
             <div className="flex-1 min-w-0">
               <div className="text-[11px] font-[600] tracking-[-0.02em] text-layout-gray-300">보유 보석</div>
               <div className="text-[24px] font-[800] leading-[1.15] tracking-[-0.04em] text-layout-black dark:text-layout-white">
-                {userProfile?.gem_cnt ?? 0}
+                {displayGemCnt}
               </div>
             </div>
             <button

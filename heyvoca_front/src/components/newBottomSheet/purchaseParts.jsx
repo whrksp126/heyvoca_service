@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { haptic, SPRING, TAP } from '../../lib/feel';
 import iconGem from '../../assets/images/gem.png';
 
 /**
@@ -40,7 +41,9 @@ export const Btn = ({ tone = 'sec', onClick, disabled = false, wide = false, chi
     type="button"
     onClick={disabled ? undefined : onClick}
     disabled={disabled}
-    whileTap={disabled ? undefined : { scale: 0.97 }}
+    whileTap={disabled ? undefined : { scale: TAP.scale }}
+    transition={SPRING.snappy}
+    onTapStart={disabled ? undefined : () => haptic('light')}
     className={`${wide ? 'w-full' : 'flex-1'} h-[48px] rounded-[10px] flex items-center justify-center gap-[5px] text-[15.5px] font-[700] tracking-[-0.03em] ${
       tone === 'pri'
         ? 'bg-primary-main-600 text-layout-white'

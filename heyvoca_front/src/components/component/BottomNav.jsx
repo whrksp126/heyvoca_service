@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { animate } from 'framer-motion';
 import { Lock } from "@phosphor-icons/react";
-import { vibrate } from '../../utils/osFunction';
+import { haptic, SPRING } from '../../lib/feel';
 import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 import { useOnboardingUnlock } from '../../context/OnboardingUnlockContext';
 import { UnlockGuideNewBottomSheet } from '../newBottomSheet/UnlockGuideNewBottomSheet';
@@ -37,6 +38,9 @@ const BottomNav = () => {
   const location = useLocation();
   const { pushNewBottomSheet } = useNewBottomSheetActions();
   const { isFeatureLocked } = useOnboardingUnlock();
+  // 탭 선택 순간의 아이콘 "통통" 연출용 — 실제 DOM 노드에 직접 animate() 를 걸어
+  // (motion 컴포넌트 remount 트릭 없이) 매 탭마다 재생한다.
+  const iconRefs = useRef({});
 
   const isLocked = (lockKey) => {
     if (!lockKey) return false;
@@ -44,7 +48,9 @@ const BottomNav = () => {
   };
 
   const handleTap = (item) => {
-    vibrate({ duration: 5 });
+    haptic('selection');
+    const iconEl = iconRefs.current[item.path];
+    if (iconEl) animate(iconEl, { scale: [1, 1.18, 1] }, SPRING.bouncy);
     if (isLocked(item.lockKey)) {
       pushNewBottomSheet(
         UnlockGuideNewBottomSheet,
@@ -88,6 +94,7 @@ const BottomNav = () => {
                       켜짐·꺼짐은 아이콘이 아니라 **뒤에 깔리는 면**(위 div 의 분홍 알약)이 말한다.
                       잠금(opacity-45)은 다른 뜻이라 그대로 둔다 — 그건 '못 쓴다'는 표시다. */}
                   <img
+                    ref={(el) => { iconRefs.current[item.path] = el; }}
                     src={item.icon}
                     alt=""
                     aria-hidden="true"

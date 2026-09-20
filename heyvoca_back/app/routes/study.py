@@ -819,7 +819,10 @@ def get_recommend():
 
     target_states_raw = request.args.get('target_states', 'all')
     target_states = [s.strip() for s in target_states_raw.split(',') if s.strip()]
-    if 'all' in target_states:
+    # 빈 값(파라미터는 존재하지만 값이 ''인 경우)·'all' 모두 "필터 없음"으로 취급한다.
+    # 그렇지 않으면 target_states가 []([]는 None이 아님)로 남아 full_recommend 판정이
+    # False가 되고, AI 추천 모드의 신규/단기 floor 보호(composer.py)가 꺼진다.
+    if not target_states or 'all' in target_states:
         target_states = None
 
     selection = request.args.get('selection', 'recommended').lower()

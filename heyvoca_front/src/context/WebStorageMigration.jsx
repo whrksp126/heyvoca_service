@@ -13,9 +13,20 @@ let pendingWebVersion = null;
 // 대기 중인 web_version reload를 안전한 시점에 적용한다.
 // 학습(TakeTest) 세션이 진행 중이면 보류하고, studySessionGuard.onStudySessionEnd로
 // 세션이 끝나는 순간(그리고 다음 visibilitychange)에 다시 시도한다.
-function applyPendingWebVersionReload() {
+//
+// ⚠️ 2026-09-20 정정: 세션이 "진행 중이 아니다"만으로는 안전하지 않다. 학습 완료 →
+// 결과 화면 전환처럼 화면이 계속 보이는 상태에서 TakeTest가 언마운트되며
+// onStudySessionEnd 콜백이 곧바로 이 함수를 불렀는데, 그 순간 reload가 걸려 방금 끝낸
+// 학습 결과 화면이 통째로 새로고침되어 날아갔다. utils/buildVersion.js의 applyIfPending과
+// 같은 원칙으로, 화면이 실제로 보이지 않는(hidden) 상태이거나 "방금 화면으로 돌아온
+// 순간"(allowVisible=true, 아래 onVisible 'visible' 분기 전용)일 때만 적용한다 — 그 외
+// visible 상태에서는 pendingWebVersion을 그대로 두고 다음 hidden/visibilitychange를 기다린다.
+function applyPendingWebVersionReload({ allowVisible = false } = {}) {
   if (!pendingWebVersion) return;
   if (isStudySessionActive()) return; // 학습 중엔 reload를 걸지 않는다 — pendingWebVersion은 유지
+  if (!allowVisible && typeof document !== 'undefined' && document.visibilityState === 'visible') {
+    return; // 화면이 보이는 중엔 보류 — 다음 hidden 전환이나 foreground 복귀 시점에 다시 시도된다
+  }
   const version = pendingWebVersion;
   pendingWebVersion = null;
   // reload를 걸기 전에 먼저 기준값을 옮겨 둔다 — reload가 실제로 일어나지 않는 환경(웹뷰가
@@ -145,7 +156,9 @@ export default function WebStorageMigration() {
         const currentWebVersion = localStorage.getItem("web_version") || "1.0.0";
         if (compareVersions(currentWebVersion, latestWebVersion) < 0) {
           pendingWebVersion = latestWebVersion;
-          applyPendingWebVersionReload(); // 학습 중이 아니면 즉시 reload, 학습 중이면 보류만 됨
+          // 화면이 보이는 상태에서 이 체크가 도는 게 보통이라(mount 시·주기 폴링), 대개는
+          // pending으로만 남고 다음 hidden/foreground 복귀 시점에 실제로 적용된다.
+          applyPendingWebVersionReload();
         }
 
         // 2) 앱 버전 — userAgent로 받은 현재 앱 버전과 비교 (앱 환경에서만)
@@ -215,7 +228,8 @@ export default function WebStorageMigration() {
     const onVisible = () => {
       if (document.visibilityState === "visible") {
         // 돌아온 순간 = 아직 아무것도 안 한 시점 → 대기 중이던 reload를 먼저 적용 시도.
-        applyPendingWebVersionReload();
+        // (여기서만 allowVisible=true — "막 되돌아온 순간"이라는 안전한 예외)
+        applyPendingWebVersionReload({ allowVisible: true });
         check();
       } else {
         applyPendingWebVersionReload();

@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
+import { haptic, pickVariant } from '../../lib/feel';
 import { useVocabulary } from '../../context/VocabularyContext';
 import { Circle, X, BookOpenText, SpeakerHigh } from "@phosphor-icons/react";
 import { getTextSound, prefetchTextSound } from '../../utils/common';
@@ -14,7 +15,6 @@ import MemoryStateChangeBadge, {
   MEMORY_STATE_RANK as STATE_RANK,
   getMemoryStateKeyByStability,
 } from "../common/MemoryStateChangeBadge";
-import { vibrate } from '../../utils/osFunction';
 import { playSuccessSound, playErrorSound } from '../../utils/audio';
 import { getQuestionType } from '../../plugins/questionTypes';
 import { logStudyQuestion } from '../../api/study';
@@ -198,6 +198,8 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
   // 복귀 시점에 해당 엘리먼트를 강제로 재마운트(key 변경)해 연출을 다시 재생시킨다.
   // (상세 이유는 useResumeReplayKey 주석 참고)
   const resumeReplayKey = useResumeReplayKey();
+  // 오답 선택지 shake 연출용 — prefers-reduced-motion 이면 흔들림을 최소화한다
+  const reducedMotion = useReducedMotion();
   // 진행률 바: 통과한 고유 단어 수 기준 (재출제 문제는 통과 시에만 카운트)
   // 이어하기/백그라운드 복귀로 재마운트될 때 passedVocaIdsRef가 이미 이전 진행분으로
   // 시딩되어 있으므로(TakeTest.jsx 복원 로직 참고), 그 값으로 초기화해야 진행 바가
@@ -878,14 +880,14 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
     const isCorrectAnswer = resultIndex === userSelected;
     let q = 0;
     if (isCorrectAnswer) {
-      vibrate({ type: 'notificationSuccess' });
+      haptic('success');
       playSuccessSound();
       setIsCorrect(true);
       question.isCorrect = true;
       question.userResultIndex = userSelected;
       q = timeTakenSec <= 5 ? 5 : timeTakenSec <= 10 ? 4 : timeTakenSec <= 15 ? 3 : 0;
     } else {
-      vibrate({ type: 'notificationError' });
+      haptic('error');
       playErrorSound();
       setIsCorrect(false);
       question.isCorrect = false;
@@ -936,14 +938,14 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
     const isCorrectAnswer = resultIndex === index;
     let q = 0;
     if (isCorrectAnswer) {
-      vibrate({ type: 'notificationSuccess' });
+      haptic('success');
       playSuccessSound();
       setIsCorrect(true);
       question.isCorrect = true;
       question.userResultIndex = index;
       q = timeTakenMs <= 5000 ? 5 : timeTakenMs <= 10000 ? 4 : timeTakenMs <= 15000 ? 3 : 0;
     } else {
-      vibrate({ type: 'notificationError' });
+      haptic('error');
       playErrorSound();
       setIsCorrect(false);
       question.isCorrect = false;
@@ -1380,7 +1382,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
     <div className="flex-shrink-0 flex justify-center pt-[10px]">
       <motion.button
         type="button"
-        onClick={() => { vibrate({ duration: 5 }); handleSkipListening(); }}
+        onClick={() => { haptic('light'); handleSkipListening(); }}
         whileTap={{ scale: 0.95 }}
         transition={{ type: 'spring', stiffness: 400, damping: 17 }}
         className="
@@ -1410,7 +1412,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
         transition={optimizedTransition}
         style={{ willChange: 'transform, opacity' }}
       >
-        {isComboMode && <ComboBar combo={combo} />}
+        {isComboMode && <ComboBar combo={combo} isRecord={comboRunIsRecordRef.current} />}
         <motion.div className="
           relative
           w-full h-[16px]
@@ -1475,7 +1477,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
       transition={optimizedTransition}
       style={{ willChange: 'transform, opacity' }}
     >
-      {isComboMode && <ComboBar combo={combo} />}
+      {isComboMode && <ComboBar combo={combo} isRecord={comboRunIsRecordRef.current} />}
       <motion.div className="
         relative
         w-full h-[16px]
@@ -1538,7 +1540,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
                   transition={{ duration: 0.2, ease: [0.4, 0, 0.2, 1] }}
                   style={{ willChange: 'transform, opacity' }}
                   onClick={() => {
-                    vibrate({ duration: 5 });
+                    haptic('light');
                     handleClickTTS();
                   }}
                 >
@@ -1675,7 +1677,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
                     <motion.button
                       onClick={(e) => {
                         e.stopPropagation();
-                        vibrate({ duration: 5 });
+                        haptic('light');
                         handleClickProblemHintData();
                       }}
                       whileHover={{
@@ -1708,9 +1710,10 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
                 ">
                   {optionsWithDisplayMeanings.map((option, index) => {
                     let btnStyle = "";
+                    const isWrongSelected = isCorrect === false && userSelected === index;
                     if (isCorrect !== null && testQuestions[progressIndex].resultIndex == index) {
                       btnStyle = 'border-status-success-500 text-status-success-600 bg-status-success-100';
-                    } else if (isCorrect === false && userSelected === index) {
+                    } else if (isWrongSelected) {
                       btnStyle = 'border-status-error-500 text-status-error-600 bg-status-error-100 dark:bg-status-error-dark';
                     } else if (isCorrect === null && userSelected == index) {
                       btnStyle = 'border-primary-main-600 bg-primary-main-50 dark:bg-primary-main-dark text-layout-black dark:text-layout-white';
@@ -1729,8 +1732,11 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
                             damping: 17
                           }
                         }}
+                        // 오답으로 확정되는 순간에만(isWrongSelected 가 false→true 로 바뀌는
+                        // 그 렌더) 흔들린다 — 매 렌더 재생되지 않도록 animate 값 자체를 조건부로 둔다.
+                        animate={isWrongSelected ? pickVariant('shake', reducedMotion).animate : undefined}
                         onClick={() => {
-                          vibrate({ duration: 5 });
+                          haptic('light');
                           handleOptionClick(index, option);
                         }}
                         disabled={isAnswered}

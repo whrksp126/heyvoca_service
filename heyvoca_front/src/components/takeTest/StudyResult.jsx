@@ -7,7 +7,7 @@ import { useUser } from '../../context/UserContext';
 import gemImg from '../../assets/images/gem.png';
 import ResultItemBackground01 from '../../assets/images/ResultItemBackground01.svg';
 import ResultItemBackground02 from '../../assets/images/ResultItemBackground02.svg';
-import { vibrate } from '../../utils/osFunction';
+import { haptic } from '../../lib/feel';
 import { warmTts } from '../../api/tts';
 import SpeakerButton from '../common/SpeakerButton';
 import { useTheme } from '../../context/ThemeContext';
@@ -426,7 +426,7 @@ const StudyResult = () => {
       word = null;
     }
     if (!word) return;
-    vibrate({ duration: 5 });
+    haptic('light');
     pushNewBottomSheet(WordDetaileNewBottomSheet, {
       vocabularyId: item.vocabularySheetId,
       id: item.id,
@@ -802,6 +802,17 @@ const StudyResult = () => {
     }
   }
 
+  // 좋은 소식 슬라이드(진화·황금 당근·시든 작물 회복·연속 기록)가 화면에 뜨는 순간
+  // haptic('success') — 슬라이드 자체 전환음은 handleNextScreen 의 selection이 담당하고,
+  // 이건 "그 안의 내용이 좋은 소식"이라는 것만 따로 강조한다.
+  useEffect(() => {
+    const type = screenList[currentScreenIndex]?.type;
+    if (['farmGrown', 'farmGolden', 'farmRescued', 'farmStreak'].includes(type)) {
+      haptic('success');
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentScreenIndex, screenList]);
+
   useEffect(() => {
     if (recentStudy && recentStudy[testType] && recentStudy[testType].status === "learning") {
       navigate('/home');
@@ -1034,13 +1045,13 @@ const StudyResult = () => {
                 secondary
                 className="flex-1"
                 label="테스트 다시 하기"
-                onClick={() => { vibrate({ duration: 5 }); onClickTestAgain(); }}
+                onClick={() => { haptic('light'); onClickTestAgain(); }}
               />
             )}
             <ResultCta
               className="flex-1"
               label={isGuest ? '계속하기' : '학습 종료'}
-              onClick={() => { vibrate({ duration: 5 }); onClickEndStudy(); }}
+              onClick={() => { haptic('light'); onClickEndStudy(); }}
             />
           </ResultCtaBar>
         </motion.div>
@@ -1499,7 +1510,7 @@ const StudyResult = () => {
               <ResultCta
                 className="w-full"
                 label="확인"
-                onClick={() => { vibrate({ duration: 5 }); handleNextScreen(); }}
+                onClick={() => { haptic('selection'); handleNextScreen(); }}
               />
             </ResultCtaBar>
           </motion.div>

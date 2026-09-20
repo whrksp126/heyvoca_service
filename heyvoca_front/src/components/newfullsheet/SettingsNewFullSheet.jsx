@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Coins, HandHeart, CircleHalf, Quotes, SpeakerHigh, Bell,
-  Plant, Drop, Flask, FileText, Lock, Info,
+  Plant, Drop, Flask, FileText, Lock, Info, Sparkle,
 } from '@phosphor-icons/react';
 import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
 import { useUser } from '../../context/UserContext';
@@ -9,6 +9,7 @@ import { useTheme } from '../../context/ThemeContext';
 import { useExampleSettings } from '../../context/ExampleSettingsContext';
 import { openExternalUrl, parseAppVersion, isAppVersionAtLeast } from '../../utils/osFunction';
 import { readFarmSettings, isCareNotifyOn } from '../../utils/farmSettings';
+import { haptic, isHapticsEnabled, setHapticsEnabled } from '../../lib/feel';
 import { SheetBar, GroupLabel, SettingRow } from './settingsUi';
 
 // '실험실'(채팅으로 학습 등 네이티브 기능)을 지원하는 최소 앱 버전.
@@ -43,6 +44,14 @@ const SettingsNewFullSheet = () => {
   const { userProfile } = useUser();
   const { isDark } = useTheme();
   const { showExamples } = useExampleSettings();
+  // 손맛(햅틱) — localStorage 'feel.haptics' 하나로 켜짐/꺼짐만 오간다(lib/feel/haptics.js)
+  const [hapticsOn, setHapticsOn] = useState(() => isHapticsEnabled());
+  const toggleHaptics = () => {
+    const next = !hapticsOn;
+    setHapticsEnabled(next);
+    setHapticsOn(next);
+    if (next) haptic('selection'); // 켜지는 순간에만 — 꺼질 땐 이미 꺼진 상태라 울리지 않는다
+  };
 
   const openSheet = (Component) => {
     pushNewFullSheet(Component, {}, { smFull: true, closeOnBackdropClick: true });
@@ -99,6 +108,13 @@ const SettingsNewFullSheet = () => {
           icon={<Bell size={iconSize} />}
           title="푸시 알림"
           onClick={() => openSheet(PushNotificationsNewFullSheet)}
+        />
+        <SettingRow
+          icon={<Sparkle size={iconSize} />}
+          title="손맛"
+          sub="탭·정답·성장 순간의 진동"
+          toggle={hapticsOn}
+          onClick={toggleHaptics}
         />
 
         {/* ── 학습 관리 — 새 단어 수만 있던 자리에 복습량이 붙는다 (시안 1절 ③) ── */}
