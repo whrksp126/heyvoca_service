@@ -374,6 +374,15 @@ export const VocabularyProvider = ({ children }) => {
       setVocaBooks(prev => [...prev, newBook]);
 
       // [NEW] 서버에서 반환된 단어들을 userDictionary에 즉시 반영
+      //
+      // 【이 병합은 GET /vocaIndexs 와 필드가 다르다】 여기서 쓰는 `newBook.vocas`는
+      // build_vocas_for_book()(POST /vocaBooks 응답) 이 만든 것이라
+      // {vocaIndexId, origin, fsrs, meanings, examples, createdAt, updatedAt} 뿐이고,
+      // `farm`(단계·건강·진행률) 필드가 없다 — 그건 GET /vocaIndexs(get_voca_indexs, 사용자당
+      // UserVocaGame 1쿼리를 더 태우는 무거운 조회)에서만 채워 준다. 학습 화면 게이지 자체는
+      // 이 값을 안 쓰고(테스트 문제는 /study/recommend·/study/log 가 항상 서버 정본을 새로
+      // 준다) 영향이 없지만, 단어장 목록의 작물 아이콘 등 `farm` 을 읽는 다른 화면은 구매
+      // 직후 잠깐 기본값(보유 씨앗)으로 보일 수 있다. 아래에서 전체 재조회로 바로잡는다.
       if (newBook.vocas && newBook.vocas.length > 0) {
         setUserDictionary(prev => {
           const newDict = { ...prev };
@@ -393,6 +402,9 @@ export const VocabularyProvider = ({ children }) => {
           });
           return newDict;
         });
+        // 구매 흐름을 막지 않도록 기다리지 않는다 — 성공 직후 위 낙관값으로 이미 화면은
+        // 맞다. 응답이 오면 `farm` 을 포함한 정본으로 조용히 갈아 끼운다.
+        fetchUserDictionary().catch(() => {});
       }
 
       // 서버에서 반환된 최신 단어장 개수 업데이트
@@ -469,7 +481,7 @@ export const VocabularyProvider = ({ children }) => {
       setErrorVocabularySheets('단어장 추가에 실패했습니다.');
       throw err;
     }
-  }, []);
+  }, [fetchUserDictionary]);
 
   // [UPDATED] 단어장 수정
   const updateVocabularySheet = useCallback(async (id, updates) => {

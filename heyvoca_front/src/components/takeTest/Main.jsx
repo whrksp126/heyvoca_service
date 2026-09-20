@@ -538,14 +538,21 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
       .then((logRes) => {
         if (logRes?.data?.duplicate) {
           // 백엔드 멱등 가드가 "이미 처리된 요청"으로 판단해 FSRS/콤보/연속학습일을 전혀
-          // 재적용하지 않았다 — 실제로 아무 것도 안 늘었으므로 화면도 정지 상태(pct_from ===
-          // pct_to)를 "변화 없음"으로 확정 승격할 뿐, 낙관값 폴백(farmFallbackRef)으로
-          // 넘기지 않는다. 폴백을 타면 서버는 무시했는데 화면만 오른 것처럼 보이는
-          // 모순(중복 전송이 없었어도 게이지가 오르는 것처럼 보이는 버그)이 재발한다.
-          const held = lastFarmByVocaRef.current[vocaId];
-          // 중복 응답은 실제로 아무것도 재적용되지 않았다 — "같은 날 재복습" 배지도
-          // 이번 요청이 새로 확인해 준 사실이 아니므로 끄고 승격한다.
-          if (held) publishFarm({ ...held, pending: false, sameDayElapsedHours: null }, vocaId, progressIndex);
+          // 재적용하지 않았다 — 이 요청 기준으로는 아무 것도 안 늘지 않았다.
+          //
+          // 【정지 상태가 한 번도 안 풀린 채였다면 낙관값으로 대신 푼다】 "중복"은 **먼저
+          // 보낸 요청이 이미 서버에 반영됐다**는 뜻이다 — 실제로는 자랐는데, 그 첫 응답을
+          // 이 화면이 못 받았을 뿐이다(예: 두 요청 중 하나가 늦게 도착). `farmFallbackRef`
+          // 는 정지 상태가 아직 실제 값으로 안 풀렸을 때만 살아있으므로(성공 응답을 받으면
+          // 바로 지운다), 그 존재 여부로 판단한다 — 살아있으면 "farm payload 없음"과 같은
+          // 취급으로 낙관값 폴백을 쓴다. 이미 실제 값으로 확정된 뒤라면(폴백이 이미 지워진
+          // 뒤) 이 콜백은 완전한 no-op이다 — 이미 맞는 값을 괜히 다시 덮어써 같은 날
+          // 재복습 배지 같은 부가 정보를 잃을 이유가 없다.
+          //
+          // 이 분기가 없던 예전엔 held(정지 상태, pct_from===pct_to===0 근방)를 그대로
+          // "변화 없음"으로 확정해 버려서, 미학습(봉투) 단어를 처음 맞혀도 게이지가 전혀
+          // 안 오르는 버그로 이어졌다.
+          farmFallbackRef.current[vocaId]?.();
           delete farmFallbackRef.current[vocaId];
           return;
         }
@@ -1090,14 +1097,13 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
     return logStudyQuestion(payload)
       .then(logRes => {
         if (logRes?.data?.duplicate) {
-          // 비카드 경로(logIfFirstAttempt)와 동일 — 서버가 중복으로 판단해 아무 것도
-          // 재적용하지 않았으므로, 카드 게이지도 정지 상태를 "변화 없음"으로 확정 승격만
-          // 하고 낙관값 폴백은 타지 않는다.
-          // 중복 응답은 실제로 아무것도 재적용되지 않았다 — "같은 날 재복습" 배지도
-          // 이번 요청이 새로 확인해 준 사실이 아니므로 끄고 승격한다.
-          setCardFarmByWordId(prev => (
-            prev[wordId] ? { ...prev, [wordId]: { ...prev[wordId], pending: false, sameDayElapsedHours: null } } : prev
-          ));
+          // 비카드 경로(logIfFirstAttempt)와 같은 원리 — 자세한 이유는 그쪽 주석 참고.
+          // farmFallbackRef 는 이 카드가 정지 상태에서 실제 값으로 아직 안 풀렸을 때만
+          // 살아있다(성공 응답을 받으면 바로 지운다) — 살아있으면 "farm payload 없음"과
+          // 같은 취급으로 낙관값 폴백을 쓴다. 이미 확정된 뒤라면 완전한 no-op 이다.
+          // 이 분기가 없던 예전엔 정지 상태를 그대로 "변화 없음"으로 확정해 버려서,
+          // 미학습(봉투) 카드를 처음 맞혀도 게이지가 전혀 안 오르는 버그로 이어졌다.
+          farmFallbackRef.current[wordId]?.();
           delete farmFallbackRef.current[wordId];
           return;
         }

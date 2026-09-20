@@ -48,6 +48,9 @@ const clamp = (n) => Math.max(0, Math.min(100, Number(n) || 0));
  *   주는 장치라, 0 에서 새로 채우는 막대(진화 직후 새 단계)에서는 꺼야 한다 —
  *   그 경우 막대 전체가 '오른 구간'이 되어 통째로 밝은 색이 되고, 다른 회차의 같은 막대와
  *   색이 달라진다.
+ * @param {boolean} props.pending  서버 응답 대기 중(farmOptimistic.js pendingFarmPayload) —
+ *   `pctFrom === pctTo` 라 실제로는 움직이지 않는 정지 상태다. 이 값이 바뀌는 순간(응답
+ *   도착)은 반드시 새로 마운트한다 — 아래 주석 참고.
  * @param {string} props.className
  */
 const CropProgressBar = ({
@@ -59,6 +62,7 @@ const CropProgressBar = ({
   height = 5,
   delay = 0,
   showGain = true,
+  pending = false,
   className = '',
 }) => {
   const from = clamp(pctFrom);
@@ -96,6 +100,17 @@ const CropProgressBar = ({
     마운트한다. 나머지는 같은 엘리먼트를 유지해 Framer Motion 이 **지금 멈춰 있는 지점에서
     새 목표값까지** 이어서 보간한다 — 낙관값과 서버값이 같으면 애초에 목표가 안 바뀌어
     재생되지 않고, 다르면 한 번의 연속된 움직임으로만 갱신된다.
+
+    【pending → 확정 전환은 항상 새로 마운트한다】 `pending` 상태는 `pctFrom === pctTo`라
+    막대가 실제로 정지해 있다(회전 중인 애니메이션이 없다) — 그래서 이 경계에서 리마운트해도
+    "재생 중이던 움직임이 끊기는" 문제가 생기지 않는다. 반대로 리마운트하지 **않으면** 위험한
+    경우가 있다 — 정지 중엔 항상 `grew=false`로 고정해 두는데, 확정 응답이 "단계가 올랐다"
+    (`grew=true`)로 오면 `grew` 값 자체가 바뀌어 자동으로 리마운트되지만, 그 사이 프레임에서
+    이미 몇 % 라도 그려진 채였다면(예: 정지 판정 로직이 언젠가 바뀌어 pending 인데도
+    pctFrom≠pctTo가 되는 경우) 리마운트 없이 이어그리다 어색해질 수 있다. `pending` 자체를
+    키에 넣어 두면 "정지 해제"라는 사건이 grew 값과 무관하게 **항상** 새 애니메이션의
+    시작점이 되도록 보장된다 — 씨앗을 심는 순간(미학습→심은 씨앗, grew=true지만 시작이
+    0→0인 회차)처럼 흔한 회차가 이 안전장치의 실사용 경로다.
   */
   const resets = to > 0;
   const fillAnimate = grew
@@ -115,7 +130,7 @@ const CropProgressBar = ({
       style={{ maxWidth: width, height }}
     >
       <motion.span
-        key={`fill-${grew ? 1 : 0}`}
+        key={`fill-${pending ? 'p' : 'r'}-${grew ? 1 : 0}`}
         className="absolute left-0 top-0 bottom-0 rounded-[99px]"
         style={{ backgroundColor: color.fill }}
         initial={{ width: `${from}%` }}

@@ -290,6 +290,7 @@ const FarmStatusBar = ({
               grew={grew}
               tone={tone}
               height={barH}
+              pending={pending}
             />
             {/* `+N%` 배지 자리를 **항상** 고정폭으로 예약한다. 예전엔 gain>0 일 때만
                 엘리먼트를 넣어서, 정지 상태(pending·오답)엔 이 자리가 아예 없다가 응답이
