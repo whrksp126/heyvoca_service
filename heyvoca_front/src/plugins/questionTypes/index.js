@@ -168,3 +168,9 @@ export const QUESTION_TYPE_PLUGINS = [
 ];
 
 export const getQuestionType = (id) => QUESTION_TYPE_PLUGINS.find(p => p.id === id);
+
+// "AI 추천 학습"(quick — 홈 물주기·빠른 복습) 진입 시 쓰는 유형 후보 풀.
+// enabled 플러그인에서 파생해 새 유형을 여기 배열에 추가하면 자동으로 quick에도 반영된다
+// (예전엔 useQuickReview.jsx/StudyNewFullSheet.jsx 세 곳에 이 목록이 따로 복제돼 있어서
+//  새 유형을 추가해도 quick에서만 빠지는 사고가 있었다).
+export const QUICK_QUESTION_TYPES = QUESTION_TYPE_PLUGINS.filter(p => p.enabled).map(p => p.id);

@@ -159,8 +159,13 @@ const TakeTest = () => {
       : [state.data.questionType];
 
     // Phase 2.2: 사용자가 명시적으로 유형을 선택했는지 판단
-    // questionType이 'recommended' 이거나 배열에 포함되면 백엔드 추천 우선 사용
+    // questionType이 'recommended' 이거나 배열에 포함되면 백엔드 추천 우선 사용.
+    // useRecommendedTypes — quick(홈 물주기/빠른 복습) 전용 플래그. quick은 questionType에
+    // "폴백용 후보 배열"(QUICK_QUESTION_TYPES)을 넘기면서 동시에 백엔드 suggested_question_type을
+    // 우선 쓰길 원하므로, questionType 배열 자체에 'recommended' 문자열을 섞는(=유효하지 않은
+    // 타입으로 오염시키는) 대신 별도 플래그로 분리했다.
     const isRecommendedMode =
+      !!state.data.useRecommendedTypes ||
       !state.data.questionType ||
       state.data.questionType === 'recommended' ||
       (Array.isArray(state.data.questionType) && state.data.questionType.includes('recommended'));
@@ -168,6 +173,18 @@ const TakeTest = () => {
     // "듣기 문제 건너뛰기"가 활성이면 듣기 유형을 일반 유형으로 변환해 출제
     const skipListening = isListeningSkipActive();
     const resolveType = (type) => (skipListening ? mapSkippedQuestionType(type) : type);
+
+    // 백엔드가 이 단어에 제안한 suggested_question_type을 "지금 이 화면에서 실제로 쓸 수 있는지"
+    // 검증한다 — 추천 모드가 아니거나, 제안 자체가 없거나, 프론트 플러그인이 비활성(enabled:false,
+    // 예: fillInTheBlank)이면 폴백(호출부의 randomType/fallbackType)으로 넘긴다.
+    const resolveSuggestedType = (word) => {
+      if (!isRecommendedMode) return null;
+      const suggested = word?.suggestedQuestionType;
+      if (!suggested) return null;
+      const plugin = getQuestionType(suggested);
+      if (plugin && plugin.enabled === false) return null;
+      return suggested;
+    };
 
     const wordsWithSheetId = selectedWords.map(word => ({
       ...word,
@@ -217,7 +234,7 @@ const TakeTest = () => {
 
     // Phase 2.2: 단일 단어에 대해 suggestedQuestionType을 시도하고 실패 시 폴백
     const buildSingleWordQuestion = (word, fallbackType) => {
-      const suggestedType = isRecommendedMode ? (word.suggestedQuestionType ?? null) : null;
+      const suggestedType = resolveSuggestedType(word);
       const targetType = resolveType(suggestedType ?? fallbackType ?? 'multipleChoice');
       const plugin = getQuestionType(targetType);
 
@@ -261,7 +278,7 @@ const TakeTest = () => {
       const currentWord = shuffledWords[wordIdx];
 
       // Phase 2.2: 추천 모드일 때 suggestedQuestionType 우선
-      const suggestedType = isRecommendedMode ? (currentWord.suggestedQuestionType ?? null) : null;
+      const suggestedType = resolveSuggestedType(currentWord);
       const randomType = questionTypesArr[Math.floor(Math.random() * questionTypesArr.length)];
       const chosenType = resolveType(suggestedType ?? randomType);
 

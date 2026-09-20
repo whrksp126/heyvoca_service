@@ -13,6 +13,7 @@ import VocabularySheetNewFullSheet from './VocabularySheetNewFullSheet';
 import { vibrate } from '../../utils/osFunction';
 import { useTheme } from '../../context/ThemeContext';
 import { primeSfx } from '../../utils/audio';
+import { QUICK_QUESTION_TYPES } from '../../plugins/questionTypes';
 
 const StudyNewFullSheet = () => {
   "use memo";
@@ -82,7 +83,8 @@ const StudyNewFullSheet = () => {
       state: {
         testType: 'quick',
         data: {
-          questionType: ['multipleChoice', 'multipleChoiceListening', 'cardMatch', 'cardMatchListening'],
+          questionType: QUICK_QUESTION_TYPES,
+          useRecommendedTypes: true,
           vocabularySheetId: "all",
           memoryState: null,
           count,
@@ -179,7 +181,8 @@ const StudyNewFullSheet = () => {
               state: {
                 testType: 'quick',
                 data: {
-                  questionType: ['multipleChoice', 'multipleChoiceListening', 'cardMatch', 'cardMatchListening'],
+                  questionType: QUICK_QUESTION_TYPES,
+                  useRecommendedTypes: true,
                   vocabularySheetId: "all",
                   memoryState: null,
                   count: Math.min(14, allWords.length),

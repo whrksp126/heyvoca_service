@@ -76,9 +76,22 @@ _ALL_QUESTION_TYPES = [
     'cardMatchListening',
 ]
 
-# 사지선다 계열 중 "방향만 다른" 두 유형 — 리스트 순서에 기대면 항상 multipleChoice만
-# 나오므로, 둘 다 출제 가능하면 여기서 50:50 랜덤으로 방향을 정한다.
-_FORWARD_REVERSE_CHOICE_TYPES = ('multipleChoice', 'reverseMultipleChoice')
+# 유형 배정 가중치 (2026-09) — "리스트 순서대로 첫 지원 유형"이면 앞쪽 유형(multipleChoice)만
+# 계속 뽑혀 뒤쪽 유형(특히 카드매칭류)이 사실상 노출되지 않는 문제가 있었다(약점이 없고
+# avoid 회피 대상도 아닌 "오늘 처음 보는 단어"는 항상 순서 1번을 받았다). 이제 avoid를 뺀
+# 지원 가능 유형 전체를 대상으로 가중치 비례 랜덤을 뽑는다.
+# 가중치 근거: 사지선다 방향(단어→뜻 / 뜻→단어)을 주력으로 유지하되(각 30, 합 60/100)
+# 듣기(20)와 카드매칭류(각 10, 합 20)도 꾸준히 섞이게 한다. fillInTheBlank는 프론트에서
+# 비활성(enabled:false)이라 가중치 풀에서 제외 — 기존처럼 약점 유형 우선 배정으로만
+# 예외적으로 나올 수 있다(약점 통계가 애초에 프론트가 실제로 출제한 유형에서만 쌓이므로
+# 사실상 거의 나오지 않는다).
+_QUESTION_TYPE_WEIGHTS: Dict[str, int] = {
+    'multipleChoice':          30,
+    'reverseMultipleChoice':   30,
+    'multipleChoiceListening': 20,
+    'cardMatch':               10,
+    'cardMatchListening':      10,
+}
 
 # ──────────────────────────────────────────────
 # "지금 아는 단어" 제외 규칙 (2026-09 추가)
@@ -337,6 +350,22 @@ def _item_can_use_question_type(item: CandidateItem, qtype: str) -> bool:
     return has_meanings or has_examples
 
 
+def _weighted_type_choice(candidates: List[str]) -> Optional[str]:
+    """지원 가능 유형 후보에서 _QUESTION_TYPE_WEIGHTS 가중치 비례로 하나를 뽑는다.
+
+    가중치 풀에 없는 유형(fillInTheBlank 등)만 후보에 있으면 첫 번째를 그대로 쓴다
+    (기존 "리스트 순서 우선" 폴백과 동일한 결정 방식 — 이런 유형은 애초에 가중 랜덤
+    대상이 아니라서 순서 결정이 큰 의미가 없다).
+    """
+    if not candidates:
+        return None
+    weighted = [qt for qt in candidates if _QUESTION_TYPE_WEIGHTS.get(qt, 0) > 0]
+    if weighted:
+        weights = [_QUESTION_TYPE_WEIGHTS[qt] for qt in weighted]
+        return random.choices(weighted, weights=weights, k=1)[0]
+    return candidates[0]
+
+
 def _assign_suggested_question_type(
     item: CandidateItem,
     weakness_types: List[str],
@@ -344,29 +373,22 @@ def _assign_suggested_question_type(
 ) -> Optional[str]:
     """
     1. 약점 유형 우선 (이 단어가 지원하고 avoid에 없는 것)
-    2. 사지선다 방향(단어→뜻 / 뜻→단어)이 둘 다 가능하면 50:50 랜덤
-    3. avoid에 없는 일반 유형
-    4. 모든 유형이 회피 대상이면 avoid 무시하고 지원 가능한 첫 번째
+    2. avoid를 뺀 지원 가능 유형 전체에서 가중 랜덤(_QUESTION_TYPE_WEIGHTS, _weighted_type_choice)
+    3. 모든 유형이 회피 대상이면 avoid 무시하고 지원 가능한 유형 전체에서 다시 가중 랜덤
     """
     avoid = avoid_types or set()
     for wt in weakness_types:
         if wt not in avoid and _item_can_use_question_type(item, wt):
             return wt
 
-    choice_pool = [
-        qt for qt in _FORWARD_REVERSE_CHOICE_TYPES
-        if qt not in avoid and _item_can_use_question_type(item, qt)
-    ]
-    if choice_pool:
-        return random.choice(choice_pool)
+    candidates = [qt for qt in _ALL_QUESTION_TYPES if qt not in avoid and _item_can_use_question_type(item, qt)]
+    chosen = _weighted_type_choice(candidates)
+    if chosen:
+        return chosen
 
-    for qt in _ALL_QUESTION_TYPES:
-        if qt not in avoid and _item_can_use_question_type(item, qt):
-            return qt
-    for qt in _ALL_QUESTION_TYPES:
-        if _item_can_use_question_type(item, qt):
-            return qt
-    return None
+    # avoid를 전부 회피하면 후보가 하나도 안 남을 수 있다 — avoid 무시하고 다시 시도
+    fallback_candidates = [qt for qt in _ALL_QUESTION_TYPES if _item_can_use_question_type(item, qt)]
+    return _weighted_type_choice(fallback_candidates)
 
 
 def _enrich_items(

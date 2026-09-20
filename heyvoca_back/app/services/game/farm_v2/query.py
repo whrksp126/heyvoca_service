@@ -129,51 +129,61 @@ def refresh_health(user_id: UUID, now: dt.datetime) -> None:
 
 
 def get_care_due_ids(user_id: UUID, now: Optional[dt.datetime] = None) -> set:
-    """오늘 돌봄이 필요한 단어(user_voca_id 집합) — **예정일(FSRS next_review)의 현지
-    날짜**가 오늘이거나 이미 지난 것.
+    """오늘 돌봄이 필요한 단어(user_voca_id 집합) — 단어장 목록/찾기 탭의 **정본**
+    (`utils/vocaCrop.js::bookCareCount`/`isCareDue`)과 **정확히 같은 판정**을 직접 계산한다.
 
-    `_DUE_STATES`(위)는 건강 상태(health_state) 기준이라 THIRSTY 전이가 **정확한 시각**을
-    넘어야 잡힌다(health.py::compute_health — thirsty_at = due_at, 시각 비교). 그래서
-    예정일이 오늘인데 아직 그 시각이 안 지난 단어는 새벽 시간대에 홈에서 0으로 잡혀
-    "오늘 할 일 다 끝냈어요"로 잘못 보였다(2026-09 QA) — 단어장 목록/찾기 탭이 쓰는
-    `isCareDue`(프론트 `utils/vocaCrop.js`, days_to_review <= 0, 날짜 기준)와도 어긋났다.
+    정본 = 예정일(FSRS `next_review`)의 **KST 자정 경계**(컷오프 없음, `Date.setHours(0,0,0,0)`
+    와 동일)가 오늘이거나 이미 지난 것. **부패(ROTTEN)도 포함한다** — "예정일이 지났고
+    방치됐다"는 점에서 원칙("돌봄이 있다 = 오늘 물 줘야 하거나 예정일이 지난 단어가
+    있다")에 정확히 들어맞고, 되살리기도 사용자가 해야 할 학습 행동이다(2026-09 QA).
+    황금(GOLDEN)만 뺀다 — 부패 면역이라 "물이 필요하다"는 말 자체가 성립하지 않는다.
+    아직 한 번도 학습하지 않은 단어(FSRS 예정일 없음)도 뺀다.
 
-    `/study/recommend` 의 today·overdue 버킷, 데일리 미션의 review_due
-    (`app/services/daily_progress.py::get_review_due`)가 이미 같은 날짜 기준을 쓰고
-    있어(`recommend/pool.py::_classify_bucket` — `study_day.logical_today()`), 새로
-    만들지 않고 그 후보 풀(Redis 30초 캐시)을 그대로 재사용한다.
+    **이전 구현(재작성 전)의 문제 둘:**
+      1) `/study/recommend`·데일리 미션이 쓰는 `recommend/pool.py::build_candidate_pool`을
+         재사용했는데, 그 버킷은 `study_day.logical_today()`(전역 APP_TZ + **새벽 4시
+         컷오프**)로 날짜를 가른다. 정본은 컷오프가 없어 00:00~03:59 KST 사이 "오늘 늦게
+         (4시 이후) 예정"인 단어에서 둘이 갈렸다.
+      2) ROTTEN·GOLDEN을 둘 다 뺐다 — "부패는 이미 별도 카드(되살릴 수 있는 단어)로
+         보여준다"는 판단이었지만, 실제로는 방치가 길어 ROTTEN 이 된 단어가 대부분인
+         사용자에게 홈이 "다 끝냈어요"를 보여주는 원인이 됐다. 되살리기 학습을 유도해야
+         하므로 ROTTEN도 돌봄에 포함해야 한다.
 
-    부패(ROTTEN)·황금(GOLDEN)은 뺀다 — 부패는 학습 자체가 막혀 있어 이미 별도 지표
-    (`health.rotten`)로 보여주고, 황금은 부패 면역이라 "물이 필요하다"는 말이 맞지 않다
-    (건강 축의 `_HEALTH_KEYS`가 GOLDEN을 아예 빼는 것과 같은 이유).
-
-    건강 상태 자체(THIRSTY→WILTED→CRITICAL 전이, 부패 유예)는 **시각 기준을 그대로
-    유지한다** — 여기서 바꾸는 건 "오늘 할 일이 있는가"라는 이 지표 하나뿐이다.
+    건강 상태 자체(THIRSTY→WILTED→CRITICAL 전이, 부패 유예, `_DUE_STATES`)는 이 함수와
+    무관하게 시각 기준을 그대로 유지한다 — 바뀌는 건 "오늘 할 일이 있는가" 하나뿐이다.
+    미션/추천의 새벽 4시 컷오프도 이번에는 건드리지 않는다(범위 밖 — 코디네이터 확인).
     """
     now = now or dt.datetime.utcnow()
+    today = localday.local_day(now, localday.DEFAULT_TZ)  # KST 자정 경계, 컷오프 없음 — 정본과 동일
 
-    from app.services.recommend.pool import build_candidate_pool
-    try:
-        pool = build_candidate_pool(user_id, None)
-    except Exception:
-        return set()
+    from app.services.fsrs.state import parse_user_voca_data, get_fsrs_state, is_v1, migrate_v1_to_v2
 
-    due_ids = {item.user_voca_id for item in pool if item.bucket in ('overdue', 'today')}
-    if not due_ids:
-        return set()
-
-    eff = effective_health_expr(now)
-    excluded = {
-        row[0] for row in
-        db.session.query(UserVocaGame.user_voca_id)
-        .filter(
-            UserVocaGame.user_id == user_id,
-            UserVocaGame.user_voca_id.in_(due_ids),
-            or_(eff == HealthState.ROTTEN, eff == HealthState.GOLDEN),
-        )
+    # UserVoca 를 기준으로 LEFT JOIN — 게임 행이 없는(한 번도 안 심은) 단어는 애초에
+    # FSRS 예정일이 없어 아래 due_at 체크에서 자연히 빠지지만, 이미 로드하는 행에서
+    # 한 번에 걸러 추가 쿼리를 만들지 않는다(요청: 추가 쿼리 최소화).
+    rows = (
+        db.session.query(UserVocaGame.user_voca_id, UserVocaGame.visual_stage, UserVoca.id, UserVoca.data)
+        .select_from(UserVoca)
+        .outerjoin(UserVocaGame, UserVocaGame.user_voca_id == UserVoca.id)
+        .filter(UserVoca.user_id == user_id)
         .all()
-    }
-    return due_ids - excluded if excluded else due_ids
+    )
+
+    due_ids = set()
+    for _game_voca_id, visual_stage, uv_id, raw_data in rows:
+        if visual_stage == VisualStage.GOLDEN:
+            continue
+        payload = parse_user_voca_data(raw_data)
+        if is_v1(payload):
+            payload = migrate_v1_to_v2(payload)
+        fsrs_state = get_fsrs_state(payload) or {}
+        due_at = growth.parse_fsrs_due(fsrs_state)
+        if due_at is None:
+            continue  # 미학습(예정일 없음) — 정본의 isUnplanted 와 같은 효과
+        if localday.local_day(due_at, localday.DEFAULT_TZ) <= today:
+            due_ids.add(uv_id)
+
+    return due_ids
 
 
 def get_care_due_count(user_id: UUID, now: Optional[dt.datetime] = None) -> int:

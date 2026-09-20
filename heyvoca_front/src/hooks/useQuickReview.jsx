@@ -6,6 +6,7 @@ import { useNewFullSheetActions } from '../context/NewFullSheetContext';
 import { ConfirmNewBottomSheet } from '../components/newBottomSheet/ConfirmNewBottomSheet';
 import { vibrate } from '../utils/osFunction';
 import { primeSfx } from '../utils/audio';
+import { QUICK_QUESTION_TYPES } from '../plugins/questionTypes';
 
 /*
   AI 추천 학습(quick) 시작 — **한 자리에 모아 둔 진입 로직.**
@@ -28,8 +29,6 @@ import { primeSfx } from '../utils/audio';
 const MIN_WORDS = 4;
 const MAX_QUESTIONS = 14;
 
-const QUESTION_TYPES = ['multipleChoice', 'multipleChoiceListening', 'cardMatch', 'cardMatchListening'];
-
 export const useQuickReview = () => {
   const navigate = useNavigate();
   const { recentStudy, vocabularySheets, updateRecentStudy } = useVocabulary();
@@ -39,7 +38,10 @@ export const useQuickReview = () => {
   const buildState = (count) => ({
     testType: 'quick',
     data: {
-      questionType: QUESTION_TYPES,
+      // questionType: 백엔드 추천(suggested_question_type)이 없거나 못 쓸 때의 폴백 풀.
+      // useRecommendedTypes: true — TakeTest.jsx가 단어별 suggested_question_type을 우선 사용하게 한다.
+      questionType: QUICK_QUESTION_TYPES,
+      useRecommendedTypes: true,
       vocabularySheetId: 'all',
       memoryState: null,
       count,
