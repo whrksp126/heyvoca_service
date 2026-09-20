@@ -190,6 +190,7 @@ def post_study_log():
         parse_user_voca_data, serialize_user_voca_data,
         get_fsrs_state, set_fsrs_state,
         migrate_v1_to_v2, is_v1,
+        set_mastery,
     )
     from app.services.fsrs.scheduler import review as fsrs_review
     from app.services.fsrs.ratings import derive_rating, rating_to_q_score
@@ -345,6 +346,9 @@ def post_study_log():
 
     # ── payload 업데이트 ──
     payload = set_fsrs_state(payload, fsrs_state_after)
+    # mastery 비정규화(2026-09) — 추천 알고리즘의 "약함 점수"용. 이미 잠그고 쓰는 이 행에
+    # 필드만 더 얹는 것이라 추가 쿼리·추가 락 없음(중복 요청은 위 멱등 가드에서 이미 리턴됨).
+    payload = set_mastery(payload, bool(was_correct), now.isoformat() + "Z")
 
     user_voca.data       = serialize_user_voca_data(payload)
     user_voca.updated_at = dt.datetime.utcnow()

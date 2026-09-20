@@ -27,8 +27,9 @@ from typing import List, Optional, Dict, Any, Set, Tuple
 
 from app.services.recommend.pool import CandidateItem
 from app.services.recommend.ranking import (
-    rank_overdue, rank_today, rank_long_interleave,
-    rank_new, rank_short_medium,
+    rank_overdue, rank_today,
+    rank_new, rank_short_medium, rank_by_weakness,
+    compute_weakness, is_known_word, weighted_sample_without_replacement,
 )
 from app.utils.interleave import interleave_avoid_adjacent
 
@@ -73,6 +74,29 @@ _ALL_QUESTION_TYPES = [
     'cardMatch',
     'cardMatchListening',
 ]
+
+# ──────────────────────────────────────────────
+# "지금 아는 단어" 제외 규칙 (2026-09 추가)
+# ──────────────────────────────────────────────
+
+# 연속 정답 N회 이상 && 마지막 학습이 이 시간 이내면 "지금은 확실히 아는 단어"로 보고
+# lapse/overdue/today가 아닌 버킷 후보에서 제외한다(ranking.is_known_word).
+_KNOWN_WORD_STREAK_THRESHOLD = 3
+_KNOWN_WORD_RECENCY_HOURS    = 24.0
+
+# 제외 대상이 될 수 있는 버킷 — lapse/overdue/today는 "지금 급한" 단어라 대상에서 뺀다.
+_KNOWN_WORD_EXCLUDABLE_BUCKETS = ('short', 'medium', 'new', 'long')
+
+# short/medium/long 선택 시 "약함 점수 상위 3*quota 안에서 가중 랜덤 샘플링" 배수.
+# 매 세션 top-N이 고정 반복되는 걸 막으면서도, quota 밖의 훨씬 약한 단어가 실수로
+# 밀려나지 않을 만큼 좁은 범위(3배)로만 흔든다.
+_WEAKNESS_TOPN_MULTIPLIER = 3
+
+# DONE 상태(lapse+overdue+today == 0)에서 하루 신규 상한이 소진돼 있어도 세션당 최소
+# 이만큼은 신규를 허용한다 — "급한 게 없는데 새 단어도 하나도 안 나온다"는 체감을 막는다.
+_DONE_NEW_MIN_QUOTA   = 4
+# DONE 신규 쿼터의 절대 상한 비율(사용자 레벨 가중치와 무관하게 항상 이 비율로 캡).
+_DONE_NEW_QUOTA_RATIO = 0.3
 
 
 # ──────────────────────────────────────────────
@@ -121,19 +145,45 @@ def _split_pool(
     return buckets
 
 
+def _extract_known_words(
+    buckets: Dict[str, List[CandidateItem]],
+    now: dt.datetime,
+) -> List[Tuple[CandidateItem, str]]:
+    """
+    "지금 아는 단어"(연속 정답 >= _KNOWN_WORD_STREAK_THRESHOLD && 마지막 학습이
+    _KNOWN_WORD_RECENCY_HOURS 이내)를 lapse/overdue/today를 제외한 버킷에서 분리해
+    낸다. buckets는 in-place로 걸러진 나머지만 남도록 수정되고, 제외된 (item, bucket)
+    쌍은 반환값으로 돌려준다(composer가 세션이 모자랄 때 여기서 다시 채운다).
+    """
+    excluded: List[Tuple[CandidateItem, str]] = []
+    for b in _KNOWN_WORD_EXCLUDABLE_BUCKETS:
+        kept: List[CandidateItem] = []
+        for item in buckets.get(b, []):
+            if is_known_word(
+                item, now,
+                streak_threshold=_KNOWN_WORD_STREAK_THRESHOLD,
+                recency_hours=_KNOWN_WORD_RECENCY_HOURS,
+            ):
+                excluded.append((item, b))
+            else:
+                kept.append(item)
+        buckets[b] = kept
+    return excluded
+
+
 def _rank_bucket(name: str, items: List[CandidateItem], now: dt.datetime) -> List[CandidateItem]:
     """bucket별 정렬 함수 디스패치."""
     if name == 'lapse':
-        # 최근 틀린 단어는 retrievability 낮은 순(망각 임박) 우선
-        return rank_short_medium(items)
+        # 최근 틀린 단어는 retrievability 낮은 순(망각 임박) 우선, 동률은 약함 점수로 tie-break
+        return rank_short_medium(items, now)
     if name == 'overdue':
         return rank_overdue(items, now)
     if name == 'today':
         return rank_today(items, now)
-    if name == 'short' or name == 'medium':
-        return rank_short_medium(items)
-    if name == 'long':
-        return rank_long_interleave(items)
+    if name in ('short', 'medium', 'long'):
+        # 약함 점수(최근5회·D·lapses·R·recency) 내림차순 — 선택 단계에서 상위 N 안에서
+        # 가중 랜덤 샘플링한다(_compose_recommend 6번 참조).
+        return rank_by_weakness(items, now)
     if name == 'new':
         return rank_new(items)
     return list(items)
@@ -179,8 +229,25 @@ def _decide_slot_quotas(
         weights = {'new': 0.30, 'short': 0.40, 'medium': 0.30}
 
     # AI 추천 한정: 신규 일일 상한 캡
+    # DONE 상태(급한 단어가 전혀 없음: lapse+overdue+today == 0)에서는 하루 신규 상한이
+    # 이미 소진돼 있어도(new_allowance<=0) 세션당 최소 _DONE_NEW_MIN_QUOTA개는 허용한다 —
+    # "더 돌보러 가기"를 눌렀는데 신규가 0개인 체감을 막기 위한 예외(2026-09).
+    # 하루 누적 카운터(new_introduced_today) 자체는 여기서 건드리지 않는다 — 이 세션에서
+    # 몇 개를 "허용"할지만 완화할 뿐, 상한 정책 자체를 바꾸는 게 아니다.
+    is_done_state = (
+        available.get('lapse', 0) == 0
+        and available.get('overdue', 0) == 0
+        and available.get('today', 0) == 0
+    )
     if full_recommend and new_allowance is not None:
-        avail['new'] = min(avail.get('new', 0), max(0, new_allowance))
+        if is_done_state:
+            avail['new'] = min(
+                avail.get('new', 0),
+                max(new_allowance, _DONE_NEW_MIN_QUOTA),
+                round(count * _DONE_NEW_QUOTA_RATIO),
+            )
+        else:
+            avail['new'] = min(avail.get('new', 0), max(0, new_allowance))
 
     # AI 추천 한정: 신규/단기 floor 예약 (overdue가 다 먹지 못하게)
     reserve = 0
@@ -333,6 +400,11 @@ def _compose_recommend(
     # 1. bucket 분류 (lapse 재분류 포함)
     buckets = _split_pool(pool, lapse_ids)
 
+    # 1b. "지금 아는 단어"(연속 정답 3+ && 24h 이내) 제외 — lapse/overdue/today는 대상 제외.
+    # 제외된 항목은 따로 들고 있다가(excluded_known) 세션이 count에 못 미치면 약함 점수
+    # 순으로 다시 채운다(아래 6b) — 빈 세션 방지.
+    excluded_known = _extract_known_words(buckets, now)
+
     # 2. bucket별 정렬
     ranked = {b: _rank_bucket(b, items, now) for b, items in buckets.items()}
 
@@ -350,12 +422,33 @@ def _compose_recommend(
     )
 
     # 6. 선택 (각 bucket에서 quota만큼)
+    # short/medium/long: 약함 점수 상위 min(len, 3*quota) 안에서 점수 가중 랜덤 샘플링
+    # (top-N 고정 반복 방지). 나머지 bucket은 정렬된 순서 그대로 앞에서 n개.
     selected_with_bucket: List[Tuple[CandidateItem, str]] = []
     for b in _BUCKET_PRIORITY:
         n = quotas.get(b, 0)
-        if n > 0:
+        if n <= 0:
+            continue
+        if b in ('short', 'medium', 'long'):
+            top_pool = ranked[b][:min(len(ranked[b]), _WEAKNESS_TOPN_MULTIPLIER * n)]
+            picked = weighted_sample_without_replacement(top_pool, now, n)
+            for it in picked:
+                selected_with_bucket.append((it, b))
+        else:
             for it in ranked[b][:n]:
                 selected_with_bucket.append((it, b))
+
+    # 6b. 빈 세션 방지 — "지금 아는 단어"로 제외했던 후보를 약함 점수 순으로 다시 채운다.
+    # (기존에도 있던 "전체 후보가 count 미만" 케이스의 0개/부족 응답 처리 경로는 그대로 —
+    #  여기서 다 채우지 못해도 이 함수는 그냥 가진 만큼만 반환한다.)
+    if len(selected_with_bucket) < count and excluded_known:
+        selected_ids = {it.user_voca_id for it, _ in selected_with_bucket}
+        refill_candidates = [
+            pair for pair in excluded_known if pair[0].user_voca_id not in selected_ids
+        ]
+        refill_candidates.sort(key=lambda pair: compute_weakness(pair[0], now), reverse=True)
+        need = count - len(selected_with_bucket)
+        selected_with_bucket.extend(refill_candidates[:need])
 
     # 7. 인터리빙 (음성/형태소 유사 단어 인접 회피)
     items_only = [it for it, _ in selected_with_bucket]
@@ -367,7 +460,11 @@ def _compose_recommend(
     # 8. enrich (suggested_question_type, reason)
     enriched = _enrich_items(final_with_bucket, today_seen, weakness_types)
 
-    composition = {b: q for b, q in quotas.items() if q > 0}
+    # composition은 실제 선택된 결과 기준으로 집계한다(6b 빈 세션 방지 리필로 quotas와
+    # 실제 선택 수가 달라질 수 있음 — quotas 그대로 쓰면 리필된 만큼 누락된다).
+    composition: Dict[str, int] = {}
+    for _, b in selected_with_bucket:
+        composition[b] = composition.get(b, 0) + 1
 
     return {
         'composition': composition,

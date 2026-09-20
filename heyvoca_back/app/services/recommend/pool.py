@@ -39,6 +39,7 @@ class CandidateItem:
     fsrs_state:        dict   # v2 FSRS state (runtime)
     bucket:            str    # 'new'|'overdue'|'today'|'short'|'medium'|'long'
     word_length:       int
+    mastery:           dict = field(default_factory=dict)  # {recent, streak, last_studied_at} — get_mastery() 결과
 
 
 def _classify_bucket(fsrs_state: dict, today: dt.date) -> str:
@@ -84,7 +85,7 @@ def _load_pool_raw(user_id: UUID, book_ids_filter: Optional[list]) -> list:
     book_ids_filter가 None이면 사용자의 모든 단어장.
     """
     from app.services.fsrs.state import (
-        parse_user_voca_data, get_fsrs_state, is_v1, migrate_v1_to_v2,
+        parse_user_voca_data, get_fsrs_state, is_v1, migrate_v1_to_v2, get_mastery,
     )
 
     query = db.session.query(UserVocaBook).options(
@@ -123,6 +124,9 @@ def _load_pool_raw(user_id: UUID, book_ids_filter: Optional[list]) -> list:
             if is_v1(payload):
                 payload = migrate_v1_to_v2(payload)
             fsrs_state = get_fsrs_state(payload) or {}
+            # mastery는 이미 파싱해 둔 payload에서 꺼낸다 — 추가 쿼리 없음(get_mastery는
+            # 필드가 없는 기존 행에도 안전 기본값을 반환한다).
+            mastery = get_mastery(payload)
 
             # meanings / examples: UserVocaBookMap 우선, 없으면 UserVoca 직접
             try:
@@ -158,6 +162,7 @@ def _load_pool_raw(user_id: UUID, book_ids_filter: Optional[list]) -> list:
                 fsrs_state=fsrs_state,
                 bucket=bucket,
                 word_length=len(word),
+                mastery=mastery,
             ))
 
     return items
