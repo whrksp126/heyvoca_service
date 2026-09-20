@@ -18,7 +18,7 @@ import ExampleList from '../common/ExampleList';
 import { useStatusBarStyle } from '../../hooks/useStatusBarStyle';
 // 당근 농장 V2 — 세션 요약 슬라이드
 import CropImage, { CROP_ASSETS, FARM_ITEM_ASSETS } from '../farm/CropImage';
-import { stageToCrop, cropLabel, FARM_ITEMS, FARM_ITEM_LABEL } from '../../utils/crop';
+import { stageToCrop, FARM_ITEMS, FARM_ITEM_LABEL } from '../../utils/crop';
 import { StreakDayMark } from '../farm/StreakDayMark';
 
 // 아이템 이름은 utils/crop.js 의 FARM_ITEM_LABEL 하나로 통일돼 있다(시안 §1⑤ "새심기 삽").
@@ -181,17 +181,6 @@ const FarmGrowRow = ({ crop, word, meaning, right }) => (
       </span>
     ) : null}
   </div>
-);
-
-// 단계 상승 표기 — 시안 `<s>이전</s> → 이후`. 이전 단계는 #BBBBBB/600 으로 물러난다.
-const CropStep = ({ from, to }) => (
-  from && from !== to ? (
-    <>
-      <span className='font-[600] text-[#BBBBBB]'>{cropLabel(from)}</span>
-      {' → '}
-      {cropLabel(to)}
-    </>
-  ) : cropLabel(to)
 );
 
 // 목록형 슬라이드 — 보상 슬라이드와 같은 형식(그림 + 한 줄 + 목록). 전부 가운데 정렬.
@@ -1096,14 +1085,14 @@ const StudyResult = () => {
             /* 아이콘은 toResultStage 로 — 씨앗 구간이면 반드시 심은 씨앗(낱알)이다.
                이 목록은 "학습을 끝낸 단어"만 모으므로 미학습(봉투)일 수 없다(cropOfWord 주석 참고). */
             const to = toResultStage(row.to_stage ?? row.crop);
-            const from = row.from_stage ? stageToCrop(row.from_stage) : null;
             return (
               <FarmGrowRow
                 key={row.user_voca_id}
                 crop={to}
                 word={row.word}
                 meaning={row.meaning}
-                right={<CropStep from={from} to={to} />}
+                // 상태 라벨 없음 — "새싹 → 이파리" 단계 전환 표기(CropStep)를 없애고
+                // 아이콘 + 단어 + 뜻만 남긴다(QA).
               />
             );
           })}

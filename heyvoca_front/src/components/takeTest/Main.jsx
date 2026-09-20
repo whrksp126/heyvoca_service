@@ -672,9 +672,14 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
     setIsSpeaking(false);
     if (testQuestions[progressIndex]) {
       const question = testQuestions[progressIndex];
-      // reverseMultipleChoice(뜻→단어)는 뜻 화면 진입 시 단어를 미리 들려주면 정답을
-      // 알려주는 셈이라 자동 재생하지 않는다 — 정답 공개 후에만 재생(handleClickExamOption).
-      if (!['cardMatch', 'cardMatchListening', 'fillInTheBlank', 'reverseMultipleChoice'].includes(question.questionType) && question.origin) {
+      if (question.questionType === 'reverseMultipleChoice') {
+        // reverseMultipleChoice(뜻→단어): 단어(영어) 대신 뜻(한국어)을 자동 재생한다 —
+        // 일반 사지선다가 등장 시 단어를 읽어 주는 것과 같은 타이밍/훅. 카드에 보이는
+        // 뜻 문자열(currentQuestionDisplayMeanings)을 그대로 읽되, 너무 길어지지 않게
+        // 최대 2개까지만 이어 읽는다. 단어 발음은 정답 공개 후에만(handleClickExamOption).
+        const meaningsToSpeak = currentQuestionDisplayMeanings.slice(0, 2).join(', ');
+        if (meaningsToSpeak) speakText(meaningsToSpeak, 'ko');
+      } else if (!['cardMatch', 'cardMatchListening', 'fillInTheBlank'].includes(question.questionType) && question.origin) {
         speakText(question.origin, "en");
       }
 
@@ -1009,9 +1014,14 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
   // 문제 읽기
   const handleClickTTS = async () => {
     const question = testQuestions[progressIndex];
-    // reverseMultipleChoice(뜻→단어)는 카드에 뜻만 보이고 정답(단어)은 아직 비공개 —
-    // 채점 전에 카드를 눌러 단어 발음을 재생하면 정답을 알려주는 셈이라 막는다.
-    if (question.questionType === 'reverseMultipleChoice' && !isAnswered) return;
+    // reverseMultipleChoice(뜻→단어): 채점 전에는 카드에 뜻만 보이고 정답(단어)은 아직
+    // 비공개라, 카드를 눌러도 단어 발음은 재생하지 않는다(정답을 알려주는 셈이라 금지) —
+    // 대신 뜻(한국어)을 다시 들려준다. 채점 후에는 기존대로 단어(영어) 발음.
+    if (question.questionType === 'reverseMultipleChoice' && !isAnswered) {
+      const meaningsToSpeak = currentQuestionDisplayMeanings.slice(0, 2).join(', ');
+      if (meaningsToSpeak) await speakText(meaningsToSpeak, 'ko');
+      return;
+    }
     await speakText(question.origin, "en");
   }
 
