@@ -68,7 +68,11 @@ export const resolveHomeState = (overview, { newRemaining = 0 } = {}) => {
   const total = ['seed', 'sprout', 'leaf', 'carrot']
     .reduce((sum, key) => sum + (counts[key] ?? 0), 0);
   const critical = today.critical_first ?? 0;
-  const due = today.due ?? 0;
+  // care_due_cnt — 예정일의 **날짜**가 오늘이거나 지난 것(단어장/찾기 탭의 "돌봄"과 같은
+  // 기준). 예전 today.due는 건강 상태(정확한 시각 경과) 기준이라, 예정일은 오늘인데
+  // 아직 그 시각이 안 된 새벽 시간대에는 0으로 잡혀 "다 끝냈어요"로 잘못 보였다.
+  // 구버전 응답(필드 없음) 폴백만 today.due를 쓴다.
+  const due = today.care_due_cnt ?? today.due ?? 0;
   const unplanted = seedDetail.unplanted ?? 0;
 
   if (total <= 0) return HOME_STATES.EMPTY;

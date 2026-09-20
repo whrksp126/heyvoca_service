@@ -128,6 +128,59 @@ def refresh_health(user_id: UUID, now: dt.datetime) -> None:
         db.session.rollback()
 
 
+def get_care_due_ids(user_id: UUID, now: Optional[dt.datetime] = None) -> set:
+    """오늘 돌봄이 필요한 단어(user_voca_id 집합) — **예정일(FSRS next_review)의 현지
+    날짜**가 오늘이거나 이미 지난 것.
+
+    `_DUE_STATES`(위)는 건강 상태(health_state) 기준이라 THIRSTY 전이가 **정확한 시각**을
+    넘어야 잡힌다(health.py::compute_health — thirsty_at = due_at, 시각 비교). 그래서
+    예정일이 오늘인데 아직 그 시각이 안 지난 단어는 새벽 시간대에 홈에서 0으로 잡혀
+    "오늘 할 일 다 끝냈어요"로 잘못 보였다(2026-09 QA) — 단어장 목록/찾기 탭이 쓰는
+    `isCareDue`(프론트 `utils/vocaCrop.js`, days_to_review <= 0, 날짜 기준)와도 어긋났다.
+
+    `/study/recommend` 의 today·overdue 버킷, 데일리 미션의 review_due
+    (`app/services/daily_progress.py::get_review_due`)가 이미 같은 날짜 기준을 쓰고
+    있어(`recommend/pool.py::_classify_bucket` — `study_day.logical_today()`), 새로
+    만들지 않고 그 후보 풀(Redis 30초 캐시)을 그대로 재사용한다.
+
+    부패(ROTTEN)·황금(GOLDEN)은 뺀다 — 부패는 학습 자체가 막혀 있어 이미 별도 지표
+    (`health.rotten`)로 보여주고, 황금은 부패 면역이라 "물이 필요하다"는 말이 맞지 않다
+    (건강 축의 `_HEALTH_KEYS`가 GOLDEN을 아예 빼는 것과 같은 이유).
+
+    건강 상태 자체(THIRSTY→WILTED→CRITICAL 전이, 부패 유예)는 **시각 기준을 그대로
+    유지한다** — 여기서 바꾸는 건 "오늘 할 일이 있는가"라는 이 지표 하나뿐이다.
+    """
+    now = now or dt.datetime.utcnow()
+
+    from app.services.recommend.pool import build_candidate_pool
+    try:
+        pool = build_candidate_pool(user_id, None)
+    except Exception:
+        return set()
+
+    due_ids = {item.user_voca_id for item in pool if item.bucket in ('overdue', 'today')}
+    if not due_ids:
+        return set()
+
+    eff = effective_health_expr(now)
+    excluded = {
+        row[0] for row in
+        db.session.query(UserVocaGame.user_voca_id)
+        .filter(
+            UserVocaGame.user_id == user_id,
+            UserVocaGame.user_voca_id.in_(due_ids),
+            or_(eff == HealthState.ROTTEN, eff == HealthState.GOLDEN),
+        )
+        .all()
+    }
+    return due_ids - excluded if excluded else due_ids
+
+
+def get_care_due_count(user_id: UUID, now: Optional[dt.datetime] = None) -> int:
+    """`get_care_due_ids` 의 개수. 홈 overview.today.care_due_cnt 가 이걸 쓴다."""
+    return len(get_care_due_ids(user_id, now))
+
+
 # ──────────────────────────────────────────────────────────────
 # GET /farm/overview
 # ──────────────────────────────────────────────────────────────
@@ -165,8 +218,16 @@ def get_overview(user_id: UUID, now: Optional[dt.datetime] = None,
         'seed_detail': seed_detail,
         'health': health_counts,
         'today': {
-            # 예정일이 지난 작물 수. 부패는 학습이 막혀 있으므로 오늘 할 일에 넣지 않는다(6.1).
+            # 예정일이 지난 작물 수(건강 상태 기준 — 정확한 시각을 넘어야 잡힌다).
+            # 부패는 학습이 막혀 있으므로 오늘 할 일에 넣지 않는다(6.1).
+            # **레거시 필드.** 구버전 프론트 폴백용으로 남긴다 — 새로 읽을 곳은
+            # care_due_cnt 를 쓴다.
             'due': sum(health_counts[_HEALTH_KEYS[s]] for s in _DUE_STATES),
+            # 오늘 돌봄이 필요한 작물 수(**날짜 기준** — 예정일의 현지 날짜가 오늘이거나
+            # 이미 지남). 단어장 목록/찾기 탭의 "돌봄"(isCareDue), 데일리 미션의
+            # review_due, /study/recommend 의 today·overdue 버킷과 같은 정의다.
+            # 홈이 실제로 써야 하는 값 — get_care_due_ids 문서 참고.
+            'care_due_cnt': get_care_due_count(user_id, now),
             # 부패까지 남은 단계가 하나뿐인 작물 — 오늘 목록 맨 앞에 올린다(8.4).
             'critical_first': health_counts['critical'],
             'recommended_limit': comeback.course_limit(comeback_state, setting_limit),
@@ -438,13 +499,18 @@ def home_feed(user_id: UUID, now: Optional[dt.datetime] = None,
         return [_plant_item(game, uv, now) for game, uv in q.limit(limit).all()]
 
     eff = effective_health_expr(now)
-    care_states = (HealthState.THIRSTY, HealthState.WILTED, HealthState.CRITICAL)
 
-    care = rows(lambda q: q
-                .filter(eff.in_(care_states))
+    # **날짜 기준**(get_care_due_ids)으로 바꿨다 — 예전에는 건강 상태(THIRSTY 이상)로
+    # 걸러서, 카운트(overview.today.care_due_cnt)는 예정일이 오늘인 단어를 세는데
+    # 정작 이 목록에는 정확한 시각이 지나야 뜨는 어긋남이 있었다("총량 23인데
+    # 목록은 비어 있음"). 같은 집합이어야 카드 숫자와 실제로 펼친 목록이 맞는다.
+    care_due_ids = get_care_due_ids(user_id, now)
+    care = (rows(lambda q: q
+                .filter(UserVocaGame.user_voca_id.in_(care_due_ids))
                 # 마감이 없는 행은 뒤로 — MySQL 은 NULL 을 먼저 놓는다
                 .order_by(UserVocaGame.rot_due_at.is_(None).asc(),
                           UserVocaGame.rot_due_at.asc()))
+            if care_due_ids else [])
 
     rotten = rows(lambda q: q
                   .filter(eff == HealthState.ROTTEN)

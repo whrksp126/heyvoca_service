@@ -118,8 +118,13 @@ const Main = () => {
   const criticalCnt = today.critical_first ?? 0;
   const unplanted = seedDetail.unplanted ?? 0;
   const rottenCnt = health.rotten ?? 0;
-  // "지금 물이 필요한 단어" 카드의 실제 총량 — care 피드(thirsty·wilted·critical)와 같은 집합
-  const careCnt = (health.thirsty ?? 0) + (health.wilted ?? 0) + (health.critical ?? 0);
+  // "지금 물이 필요한 단어" 카드의 실제 총량 — 백엔드 home_feed()의 care 피드와 같은
+  // 집합(farm_v2/query.py::get_care_due_ids, **날짜** 기준). 예전에는 건강 상태
+  // (thirsty·wilted·critical, 정확한 시각 경과) 합이라 예정일은 오늘인데 그 시각이 아직
+  // 안 된 단어가 새벽 시간대에 빠져, 단어장 목록의 "돌봄" 합계와 어긋났다.
+  // 구버전 응답(필드 없음) 폴백만 예전 건강 상태 합을 쓴다.
+  const careCnt = today.care_due_cnt
+    ?? ((health.thirsty ?? 0) + (health.wilted ?? 0) + (health.critical ?? 0));
   const inventory = farmOverview?.items ?? {};
   const restoreItemCnt = (inventory.SHOVEL ?? 0) + (inventory.NUTRIENT ?? 0);
   const newRemaining = Math.max(0, dailyNewLimit - todayNewWords);

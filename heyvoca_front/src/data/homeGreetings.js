@@ -75,12 +75,19 @@ export function formatGreetingName(username) {
 export function buildGreetingContext(farmOverview, { grewTodayCount = 0, now = new Date() } = {}) {
   const counts = farmOverview?.counts ?? {};
   const health = farmOverview?.health ?? {};
+  const today = farmOverview?.today ?? {};
   const seedDetail = farmOverview?.seed_detail ?? {};
   const streak = farmOverview?.streak ?? {};
 
   const thirstyCount = health.thirsty ?? 0;
   const wiltedCount = health.wilted ?? 0;
   const criticalCount = health.critical ?? 0;
+  // care_due_cnt — 예정일의 **날짜** 기준(단어장/찾기 탭의 "돌봄"과 같은 정의).
+  // 예전에는 thirsty+wilted+critical(건강 상태, 정확한 시각 경과) 합을 썼는데, 새벽
+  // 시간대처럼 예정일은 오늘인데 그 시각이 아직 안 된 단어가 빠져 "doneAll"(오늘 할 일
+  // 다 끝냈어요) 인사말이 실제로는 남은 단어가 있는데도 떴다. 구버전 응답(필드 없음)
+  // 폴백만 예전 건강 상태 합을 쓴다.
+  const careCount = today.care_due_cnt ?? (thirstyCount + wiltedCount + criticalCount);
 
   return {
     totalCount: ['seed', 'sprout', 'leaf', 'carrot'].reduce((sum, key) => sum + (counts[key] ?? 0), 0),
@@ -88,7 +95,7 @@ export function buildGreetingContext(farmOverview, { grewTodayCount = 0, now = n
     thirstyCount,
     wiltedCount,
     criticalCount,
-    careCount: thirstyCount + wiltedCount + criticalCount,
+    careCount,
     sproutCount: counts.sprout ?? 0,
     leafCount: counts.leaf ?? 0,
     carrotCount: counts.carrot ?? 0,
