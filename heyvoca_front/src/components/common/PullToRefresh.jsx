@@ -92,6 +92,13 @@ const PullToRefreshIndicator = ({ pull, phase, threshold, maxPull }) => {
   useEffect(() => {
     if (isRefreshing || isDone) reveal.set(1);
   }, [isRefreshing, isDone, reveal]);
+  // 제스처가 끝나 idle로 돌아왔는데 pull이 이미 0이면 change 이벤트가 안 와 floor(0.32)에
+  // 걸린 채 남을 수 있다 — phase 변화 시점에 현재 pull 기준으로 한 번 재계산한다.
+  useEffect(() => {
+    if (isRefreshing || isDone) return;
+    const raw = threshold > 0 ? Math.min(1, Math.max(0, pull.get() / threshold)) : 0;
+    reveal.set(Math.max(raw, engaged ? REVEAL_FLOOR : 0));
+  }, [engaged, isRefreshing, isDone, pull, threshold, reveal]);
 
   const translateY = useTransform(reveal, [0, 1], [-REVEAL_TRAVEL, 0]);
   const scale = useTransform(reveal, [0, 1], [0.6, 1]);
