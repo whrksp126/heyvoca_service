@@ -28,6 +28,7 @@ import FarmStatusBar from '../farm/FarmStatusBar';
 import { HEALTH_STATES } from '../../utils/crop';
 import { removePendingReplantIds } from '../../utils/replantPending';
 import { useResumeReplayKey } from '../../hooks/useResumeReplayKey';
+import { wordsOverlap } from '../../utils/meaningConcept';
 
 
 // 백엔드 memory state 키(short/medium/long) → 프론트 키(leaf/plant/carrot) 정규화
@@ -175,7 +176,17 @@ const buildMultipleChoiceFromWord = (word, pool) => {
     const wid = w.vocaIndexId ?? w.id;
     return wid !== wordId && Array.isArray(w.meanings) && w.meanings.length > 0;
   });
-  const shuffledDistractors = [...distractorCandidates].sort(() => Math.random() - 0.5).slice(0, 3);
+  // 뜻이 겹치는 단어는 우선 배제(utils/meaningConcept.js) — 부족하면 나머지로 채운다.
+  const nonOverlapping = distractorCandidates.filter(w => !wordsOverlap(word, w));
+  let shuffledDistractors = [...nonOverlapping].sort(() => Math.random() - 0.5).slice(0, 3);
+  if (shuffledDistractors.length < 3) {
+    const used = new Set(shuffledDistractors.map(w => w.vocaIndexId ?? w.id));
+    const fillers = distractorCandidates
+      .filter(w => !used.has(w.vocaIndexId ?? w.id))
+      .sort(() => Math.random() - 0.5)
+      .slice(0, 3 - shuffledDistractors.length);
+    shuffledDistractors = [...shuffledDistractors, ...fillers];
+  }
   const options = [word, ...shuffledDistractors].sort(() => Math.random() - 0.5);
   const resultIndex = options.findIndex(o => (o.vocaIndexId ?? o.id) === wordId);
   return {

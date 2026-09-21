@@ -789,7 +789,9 @@ def get_recommend():
               "user_voca_id": ...,
               "user_voca_book_id": ...,
               "word": ...,
-              "meanings": [...],
+              "meanings": [...],              # 기존과 동일한 문자열 배열
+              "concept_ids": [12, ...],       # 단어 단위 distinct concept_id (없으면 [])
+              "meaning_concepts": [[12], []],   # meanings와 순서/길이가 같은 concept_id 리스트의 리스트
               "examples": [...],
               "fsrs": {...},
               "priority_bucket": "overdue" | "lapse" | ...,
@@ -923,6 +925,10 @@ def get_recommend():
             'user_voca_book_id':       str(item.user_voca_book_id) if item.user_voca_book_id else None,
             'word':                    item.word,
             'meanings':                item.meanings,
+            # 단어 단위 distinct concept_id 목록(같은/유사 뜻 그룹, 사전 미연결 단어는 [])
+            'concept_ids':             item.concept_ids,
+            # meanings와 순서/길이가 같은 concept_id 배열 — 뜻 하나하나의 그룹이 필요할 때 사용
+            'meaning_concepts':        item.meaning_concepts,
             'examples':                item.examples,
             'fsrs': {
                 'state':          fsrs.get('state', 'new'),
@@ -946,18 +952,40 @@ def get_recommend():
     }), 200
 
 
-def _build_mcq_options(correct: str, distractor_pool: list, k: int = 3):
+def _build_mcq_options(correct: str, distractor_pool: list, k: int = 3,
+                        correct_concept_ids: list = None, correct_norms: list = None):
     """정답 + 오답 k개로 사지선다 보기 구성.
+
+    distractor_pool: [{'text': str, 'concept_ids': list, 'normalized_meanings': list}, ...]
+    correct_concept_ids / correct_norms: 정답 단어의 concept_id / 정규화 뜻(오답 제외 판정용).
+    정답과 "뜻이 겹치는"(개념 그룹이 같거나 정규화 뜻이 같은) 후보는 1차로 제외하고,
+    그렇게 걸러낸 후보가 k개 미만이면 겹침을 허용한 원래 후보 풀로 폴백한다(최소 보기 수 보장).
 
     Returns:
         (options: list[str], answer_index: int) — 오답을 하나도 못 뽑으면 (None, None).
     """
-    candidates = [d for d in distractor_pool if d and d != correct]
-    # 중복 제거(순서 무관, 셔플하므로)
-    candidates = list(dict.fromkeys(candidates))
+    from app.services.meaning_concept import words_overlap
+
+    seen = set()
+    dedup = []
+    for d in distractor_pool:
+        text = d.get('text') if isinstance(d, dict) else d
+        if not text or text == correct or text in seen:
+            continue
+        seen.add(text)
+        dedup.append(d if isinstance(d, dict) else {'text': text, 'concept_ids': [], 'normalized_meanings': []})
+
+    filtered = [
+        d for d in dedup
+        if not words_overlap(correct_concept_ids or [], correct_norms or [],
+                              d.get('concept_ids') or [], d.get('normalized_meanings') or [])
+    ]
+    # 겹침 제외 후보가 부족하면(k개 미만) 기존 폴백(겹침 허용)으로 채운다.
+    candidates = filtered if len(filtered) >= k else dedup
     if not candidates:
         return None, None
-    distractors = random.sample(candidates, min(k, len(candidates)))
+    texts = [d['text'] for d in candidates]
+    distractors = random.sample(texts, min(k, len(texts)))
     options = distractors + [correct]
     random.shuffle(options)
     return options, options.index(correct)
@@ -981,8 +1009,11 @@ def get_chat_session():
           "composition": {...},
           "questions": [{
             "user_voca_id", "user_voca_book_id", "word",
-            "meanings", "examples",
-            "options": [str,...], "answer_index": int,
+            "meanings": [...],               # 기존과 동일한 문자열 배열
+            "concept_ids": [12, ...],        # 단어 단위 distinct concept_id (없으면 [])
+            "meaning_concepts": [[12], []],    # meanings와 순서/길이가 같은 concept_id 리스트의 리스트
+            "examples",
+            "options": [str,...], "answer_index": int,  # 오답은 정답과 concept 겹치지 않게 1차 필터링(부족하면 폴백)
             "fsrs": {...}, "priority_bucket", "suggested_question_type"
           }, ...]
       }}
@@ -1038,7 +1069,7 @@ def get_chat_session():
     composition:    dict = result['composition']
     enriched_items: list = result['enriched_items']
 
-    # ── 오답 풀: 후보 전체 단어의 대표 뜻 모음 ──
+    # ── 오답 풀: 후보 전체 단어의 대표 뜻 모음(+ 뜻 겹침 판정용 concept 정보) ──
     distractor_pool = []
     seen_d = set()
     for it in pool:
@@ -1046,7 +1077,11 @@ def get_chat_session():
             m = it.meanings[0]
             if m and m not in seen_d:
                 seen_d.add(m)
-                distractor_pool.append(m)
+                distractor_pool.append({
+                    'text':                m,
+                    'concept_ids':         it.concept_ids,
+                    'normalized_meanings': it.normalized_meanings,
+                })
 
     # ── 사지선다 생성 ──
     questions = []
@@ -1055,7 +1090,10 @@ def get_chat_session():
         if not item.meanings:
             continue  # 정답으로 쓸 뜻이 없으면 스킵
         correct = item.meanings[0]
-        options, answer_index = _build_mcq_options(correct, distractor_pool, k=3)
+        options, answer_index = _build_mcq_options(
+            correct, distractor_pool, k=3,
+            correct_concept_ids=item.concept_ids, correct_norms=item.normalized_meanings,
+        )
         if options is None:
             continue  # 오답을 하나도 못 뽑으면 스킵(최소 2지선다 보장)
 
@@ -1065,6 +1103,8 @@ def get_chat_session():
             'user_voca_book_id':       str(item.user_voca_book_id) if item.user_voca_book_id else None,
             'word':                    item.word,
             'meanings':                item.meanings,
+            'concept_ids':             item.concept_ids,
+            'meaning_concepts':        item.meaning_concepts,
             'examples':                item.examples,
             'options':                 options,
             'answer_index':            answer_index,

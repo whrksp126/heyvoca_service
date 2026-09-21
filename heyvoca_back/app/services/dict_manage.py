@@ -41,6 +41,7 @@ TRACKED_TABLES = [
     'voca_book', 'admin_voca_book', 'bookstore', 'bookstore_category',
     'daily_sentence',
     'voca_book_map', 'voca_meaning_map', 'voca_example_map', 'admin_voca_book_map',
+    'voca_meaning_concept',
     'dict_meta',
 ]
 COUNT_TABLES = ['voca', 'voca_meaning', 'voca_example', 'voca_book', 'bookstore']

@@ -17,6 +17,7 @@ import { useOnboardingUnlock } from '../context/OnboardingUnlockContext';
 import { getGuestTrial, clearGuestTrial, patchGuest } from '../utils/guestStorage';
 import { getPendingReplantIds } from '../utils/replantPending';
 import { beginStudySession } from '../utils/studySessionGuard';
+import { wordsOverlap } from '../utils/meaningConcept';
 
 // 발음(TTS) 준비 게이트 최대 대기(ms). 이 시간을 넘기면 준비가 덜 됐어도 학습에 진입한다
 // (나머지는 백그라운드에서 계속 준비) — 준비 화면에서 무한 대기하는 것을 방지.
@@ -191,14 +192,11 @@ const TakeTest = () => {
       vocabularySheetId: vocabularySheetId !== "all" ? vocabularySheetId : word.vocabularySheetId,
     }));
 
-    // 역방향(뜻→단어) 오답 선택지용 — 두 단어의 뜻이 하나라도 겹치는지.
+    // 역방향(뜻→단어) 오답 선택지용 — 두 단어의 뜻이 하나라도 겹치는지(concept_id 교집합
+    // 우선, 없으면 정규화 뜻 문자열 교집합으로 폴백. 단일 소스: utils/meaningConcept.js).
     // 겹치는 단어를 오답으로 섞으면 정답이 사실상 2개가 되어 버린다.
     // 품사(pos)는 이 화면까지 내려오는 단어 데이터에 없어 "같은 품사 우선" 규칙은
     // 적용하지 못했다 — 뜻 비대칭만 걸러내고 부족분은 임의로 채운다.
-    const wordMeaningsOverlap = (a, b) => {
-      const setA = new Set((a?.meanings ?? []).map(m => String(m).trim()));
-      return (b?.meanings ?? []).some(m => setA.has(String(m).trim()));
-    };
 
     const createMultipleChoiceQuestion = (word, questionType = 'multipleChoice') => {
       const wordKey = (w) => w.id ?? w.vocaIndexId;
@@ -206,7 +204,7 @@ const TakeTest = () => {
 
       let randomOptions;
       if (questionType === 'reverseMultipleChoice') {
-        const nonOverlapping = otherWords.filter(w => !wordMeaningsOverlap(word, w));
+        const nonOverlapping = otherWords.filter(w => !wordsOverlap(word, w));
         randomOptions = nonOverlapping.sort(() => Math.random() - 0.5).slice(0, 3);
         if (randomOptions.length < 3) {
           // 뜻이 안 겹치는 단어만으로 3개를 못 채우면 나머지는 임의로 보충
@@ -218,7 +216,17 @@ const TakeTest = () => {
           randomOptions = [...randomOptions, ...fillers];
         }
       } else {
-        randomOptions = otherWords.sort(() => Math.random() - 0.5).slice(0, 3);
+        // 정방향(단어→뜻) 오답 선택지도 동일하게 뜻이 겹치는 단어는 우선 배제한다.
+        const nonOverlapping = otherWords.filter(w => !wordsOverlap(word, w));
+        randomOptions = nonOverlapping.sort(() => Math.random() - 0.5).slice(0, 3);
+        if (randomOptions.length < 3) {
+          const usedKeys = new Set(randomOptions.map(wordKey));
+          const fillers = otherWords
+            .filter(w => !usedKeys.has(wordKey(w)))
+            .sort(() => Math.random() - 0.5)
+            .slice(0, 3 - randomOptions.length);
+          randomOptions = [...randomOptions, ...fillers];
+        }
       }
 
       const options = [word, ...randomOptions].sort(() => Math.random() - 0.5);
@@ -380,6 +388,10 @@ const TakeTest = () => {
       origin: item.word,
       meanings: item.meanings ?? [],
       examples: item.examples ?? [],
+      // 오답 선택지에서 "뜻이 같거나 유사한 단어"를 제외하는 데 쓰는 개념 그룹 정보
+      // (utils/meaningConcept.js 단일 소스 — meanings와 유실 없이 함께 실어 나른다)
+      concept_ids: item.concept_ids ?? [],
+      meaning_concepts: item.meaning_concepts ?? [],
       fsrs: item.fsrs,
       priorityBucket: item.priority_bucket,
       suggestedQuestionType: item.suggested_question_type ?? null,

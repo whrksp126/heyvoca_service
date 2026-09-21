@@ -10,6 +10,7 @@ from app.utils.jwt_utils import jwt_required
 from app.services.fsrs.state import (
     parse_user_voca_data, get_fsrs_state, is_v1, migrate_v1_to_v2, DEFAULT_FSRS_NEW,
 )
+from app.services.meaning_concept import load_dict_meaning_concepts, attach_concept_ids
 
 
 def _is_purchased_book_id(user_id, voca_book_id):
@@ -72,13 +73,20 @@ def build_voca_index_response(user_voca):
         UserVocaBookMap.user_voca_id == user_voca.id
     ).all()
 
+    # 유사 뜻(concept) 조회 — 사전 연결 단어(voca_id 존재)만 대상. 단건 호출(생성/연결 직후)이라
+    # 배치가 필요 없지만 인터페이스를 get_voca_indexs와 통일해 둔다.
+    concept_lookup = load_dict_meaning_concepts([user_voca.voca_id]) if user_voca.voca_id else {}
+
     voca_books = []
     for m in maps:
         meanings = json.loads(m.voca_meanings) if m.voca_meanings else []
         examples = json.loads(m.voca_examples) if m.voca_examples else []
+        meaning_concepts, concept_ids = attach_concept_ids(user_voca.voca_id, meanings, concept_lookup)
         voca_books.append({
             'vocaBookId': str(m.user_voca_book_id),
             'meanings': meanings,
+            'conceptIds': concept_ids,
+            'meaningConcepts': meaning_concepts,
             'examples': examples,
         })
 
@@ -159,6 +167,9 @@ def get_voca_indexs():
     }
     now = datetime.datetime.utcnow()
 
+    # 유사 뜻(concept) 배치 조회 — 사용자 사전 전체의 voca_id를 한 번에 모아 단일 쿼리(N+1 방지).
+    concept_lookup = load_dict_meaning_concepts(uv.voca_id for uv in user_vocas)
+
     data = []
     for uv in user_vocas:
         payload = parse_user_voca_data(uv.data)
@@ -170,10 +181,13 @@ def get_voca_indexs():
         for m in uv.book_maps:
             meanings = json.loads(m.voca_meanings) if m.voca_meanings else []
             examples = json.loads(m.voca_examples) if m.voca_examples else []
+            meaning_concepts, concept_ids = attach_concept_ids(uv.voca_id, meanings, concept_lookup)
 
             voca_books.append({
                 'vocaBookId': str(m.user_voca_book_id),
                 'meanings': meanings,
+                'conceptIds': concept_ids,
+                'meaningConcepts': meaning_concepts,
                 'examples': examples,
             })
 
@@ -312,11 +326,15 @@ def update_voca_index_book(vocaIndexId, vocaBookId):
         # 응답: 해당 매핑 데이터
         response_meanings = json.loads(book_map.voca_meanings) if book_map.voca_meanings else []
         response_examples = json.loads(book_map.voca_examples) if book_map.voca_examples else []
+        concept_lookup = load_dict_meaning_concepts([user_voca.voca_id]) if user_voca.voca_id else {}
+        meaning_concepts, concept_ids = attach_concept_ids(user_voca.voca_id, response_meanings, concept_lookup)
 
         data = {
             'vocaIndexId': vocaIndexId,
             'vocaBookId': str(book_map.user_voca_book_id),
             'meanings': response_meanings,
+            'conceptIds': concept_ids,
+            'meaningConcepts': meaning_concepts,
             'examples': response_examples,
             'createdAt': (book_map.user_voca_book.created_at + datetime.timedelta(hours=9)).strftime('%Y-%m-%d') if book_map.user_voca_book and book_map.user_voca_book.created_at else None,
         }

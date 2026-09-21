@@ -2,6 +2,8 @@
 // 실제 takeTest UI가 읽는 question 스키마와 동일하게 만든다 (서버 추천/세션 없이).
 // 유형: 사지선다 / 사지선다(듣기) / 카드맞추기 / 카드맞추기(듣기) 각 1문제.
 
+import { wordsOverlap } from './meaningConcept';
+
 const shuffle = (arr) => {
   const a = [...arr];
   for (let i = a.length - 1; i > 0; i--) {
@@ -35,8 +37,18 @@ const fsrsStub = () => {
 // 정답 뜻 + 다른 단어 뜻 3개를 보기로. voca_id를 vocaIndexId/id로 사용 → migrate 답안 매칭.
 function buildChoiceQuestion(word, pool, questionType) {
   const wid = word.voca_id;
-  const distractors = shuffle(pool.filter((x) => x.voca_id !== wid))
-    .slice(0, 3)
+  // 게스트 맛보기 단어는 concept_id가 없으므로(레벨 단어장 API 미제공) 정규화 뜻 문자열
+  // 비교로만 겹침을 판정한다(utils/meaningConcept.js). 부족하면 나머지로 채운다.
+  const others = pool.filter((x) => x.voca_id !== wid);
+  const nonOverlapping = others.filter((x) => !wordsOverlap(word, x));
+  let distractorPool = shuffle(nonOverlapping).slice(0, 3);
+  if (distractorPool.length < 3) {
+    const used = new Set(distractorPool.map((x) => x.voca_id));
+    const fillers = shuffle(others.filter((x) => !used.has(x.voca_id)))
+      .slice(0, 3 - distractorPool.length);
+    distractorPool = [...distractorPool, ...fillers];
+  }
+  const distractors = distractorPool
     .map((x) => ({ id: x.voca_id, origin: x.origin, meanings: x.meanings }));
   const correctOption = { id: wid, origin: word.origin, meanings: word.meanings };
   const options = shuffle([correctOption, ...distractors]);
@@ -120,15 +132,12 @@ export function buildGuestQuestions(words) {
     }
     return null;
   };
-  // 뜻(첫 뜻)이 서로 겹치지 않는 n개 단어 세트 소비 (카드매치 매칭 모호성 방지)
+  // 뜻이 서로 겹치지 않는 n개 단어 세트 소비 (카드매치 매칭 모호성 방지)
   const takeSet = (n) => {
     const set = [];
-    const seenMeaning = new Set();
     for (const w of pool) {
       if (used.has(w.voca_id)) continue;
-      const m = (w.meanings[0] || '').trim();
-      if (!m || seenMeaning.has(m)) continue;
-      seenMeaning.add(m);
+      if (set.some((s) => wordsOverlap(s, w))) continue;
       used.add(w.voca_id);
       set.push(w);
       if (set.length === n) break;

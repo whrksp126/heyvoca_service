@@ -40,6 +40,13 @@ class CandidateItem:
     bucket:            str    # 'new'|'overdue'|'today'|'short'|'medium'|'long'
     word_length:       int
     mastery:           dict = field(default_factory=dict)  # {recent, streak, last_studied_at} — get_mastery() 결과
+    voca_id:           Optional[int] = None  # 사전(dict schema) voca.id — 사용자 직접 생성 단어는 None
+    # meanings와 순서/길이가 같은 concept_id 리스트의 리스트: [[int, ...], ...] (meanings 자체는 문자열 그대로 유지)
+    meaning_concepts:  list = field(default_factory=list)
+    # 단어 단위 distinct concept_id (오답 제외 판정용)
+    concept_ids:       list = field(default_factory=list)
+    # 정규화된 뜻 문자열(concept_id가 없을 때 오답 제외 판정 폴백용)
+    normalized_meanings: list = field(default_factory=list)
 
 
 def _classify_bucket(fsrs_state: dict, today: dt.date) -> str:
@@ -108,7 +115,7 @@ def _load_pool_raw(user_id: UUID, book_ids_filter: Optional[list]) -> list:
     from app.services.study_day import logical_today
     today = logical_today()
     seen_voca_ids = set()
-    items: list[CandidateItem] = []
+    raw_items: list[dict] = []
 
     for vb in voca_books:
         for vmap in vb.voca_maps:
@@ -153,7 +160,7 @@ def _load_pool_raw(user_id: UUID, book_ids_filter: Optional[list]) -> list:
             word = uv.word or ""
             bucket = _classify_bucket(fsrs_state, today)
 
-            items.append(CandidateItem(
+            raw_items.append(dict(
                 user_voca_id=uv.id,
                 user_voca_book_id=vb.id,
                 word=word,
@@ -163,7 +170,31 @@ def _load_pool_raw(user_id: UUID, book_ids_filter: Optional[list]) -> list:
                 bucket=bucket,
                 word_length=len(word),
                 mastery=mastery,
+                voca_id=uv.voca_id,
             ))
+
+    # 유사 뜻(concept) 배치 조회 — voca_id 집합을 한 번에 모아 단일 쿼리로 조회(N+1 방지).
+    from app.services.meaning_concept import load_dict_meaning_concepts, attach_concept_ids, normalized_meanings_for_word
+    concept_lookup = load_dict_meaning_concepts(r['voca_id'] for r in raw_items)
+
+    items: list[CandidateItem] = []
+    for r in raw_items:
+        meaning_concepts, concept_ids = attach_concept_ids(r['voca_id'], r['meanings'], concept_lookup)
+        items.append(CandidateItem(
+            user_voca_id=r['user_voca_id'],
+            user_voca_book_id=r['user_voca_book_id'],
+            word=r['word'],
+            meanings=r['meanings'],
+            examples=r['examples'],
+            fsrs_state=r['fsrs_state'],
+            bucket=r['bucket'],
+            word_length=r['word_length'],
+            mastery=r['mastery'],
+            voca_id=r['voca_id'],
+            meaning_concepts=meaning_concepts,
+            concept_ids=concept_ids,
+            normalized_meanings=normalized_meanings_for_word(r['meanings']),
+        ))
 
     return items
 

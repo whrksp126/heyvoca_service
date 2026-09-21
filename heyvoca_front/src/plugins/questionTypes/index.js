@@ -1,6 +1,7 @@
 import CardMatchQuestion from './cardMatch/CardMatchQuestion';
 import CardMatchListeningQuestion from './cardMatch/CardMatchListeningQuestion';
 import FillInTheBlankQuestion from './fillInTheBlank/FillInTheBlankQuestion';
+import { wordsOverlap } from '../../utils/meaningConcept';
 
 const TARGET_WORD_RE = /<strong[^>]*class="target-word"[^>]*>(.*?)<\/strong>/;
 
@@ -21,12 +22,6 @@ const shuffleArray = (array) => {
   return shuffled;
 };
 
-// 두 단어의 의미가 하나라도 겹치는지 (동의어 충돌 검사용)
-const meaningsOverlap = (a, b) => {
-  const setA = new Set((a.meanings ?? []).map(m => String(m).trim()));
-  return (b.meanings ?? []).some(m => setA.has(String(m).trim()));
-};
-
 // cardMatch 세트 빌드 — 같은 세트 안에 의미가 겹치는 단어가 들어가지 않게 분배.
 // 예: [town:마을, village:마을, home:집, park:공원]
 //     → [[town, home, park], [village]] → 후처리로 village를 다른 청크에 시도
@@ -38,7 +33,7 @@ const buildChunksAvoidingMeaningClash = (words, maxSize = 4) => {
     let placed = false;
     for (const chunk of chunks) {
       if (chunk.length >= maxSize) continue;
-      if (chunk.some(c => meaningsOverlap(c, w))) continue;
+      if (chunk.some(c => wordsOverlap(c, w))) continue;
       chunk.push(w);
       placed = true;
       break;
@@ -52,7 +47,7 @@ const buildChunksAvoidingMeaningClash = (words, maxSize = 4) => {
     for (let j = 0; j < chunks.length; j++) {
       if (j === i) continue;
       if (chunks[j].length >= maxSize) continue;
-      if (chunks[j].some(c => meaningsOverlap(c, single))) continue;
+      if (chunks[j].some(c => wordsOverlap(c, single))) continue;
       chunks[j].push(single);
       chunks.splice(i, 1);
       break;
@@ -110,11 +105,17 @@ export const QUESTION_TYPE_PLUGINS = [
         if (!validExample) continue;
 
         const targetWord = extractTargetWord(validExample.origin);
-        const wrongOptions = allWords
-          .filter(w => w.id !== word.id)
-          .sort(() => Math.random() - 0.5)
-          .slice(0, 3)
-          .map(w => w.origin);
+        // 뜻이 겹치는 단어는 오답 후보에서 우선 배제 — 부족하면 나머지로 채운다.
+        const otherWords = allWords.filter(w => w.id !== word.id);
+        const nonOverlapping = otherWords.filter(w => !wordsOverlap(word, w));
+        let wrongCandidates = shuffleArray(nonOverlapping).slice(0, 3);
+        if (wrongCandidates.length < 3) {
+          const used = new Set(wrongCandidates.map(w => w.id));
+          const fillers = shuffleArray(otherWords.filter(w => !used.has(w.id)))
+            .slice(0, 3 - wrongCandidates.length);
+          wrongCandidates = [...wrongCandidates, ...fillers];
+        }
+        const wrongOptions = wrongCandidates.map(w => w.origin);
 
         const opts = shuffleArray([targetWord, ...wrongOptions]);
         questions.push({

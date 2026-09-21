@@ -253,6 +253,20 @@ class VocaMeaning(db.Model):
 
     # 관계 정의
     voca_meanings = relationship("VocaMeaningMap", back_populates="meaning")
+    # 유사/동일 개념 그룹 매핑(N:M) — 뜻 하나가 여러 판정 그룹에 속할 수 있다.
+    # 조회 전용(viewonly). 실제 로딩은 app/services/meaning_concept.py에서 배치 쿼리로 처리.
+    concepts = relationship("VocaMeaningConcept", viewonly=True)
+
+
+# 단어뜻-유사개념그룹 매핑. concept_id를 하나라도 공유하면 "뜻이 겹친다"로 판정한다
+# (예: achieve '이루다' / attain '이루다' / accomplish '달성하다').
+# 판정 단위 그룹을 그대로 저장 — 전이적 합치기로 인한 거대 그룹 생성을 막기 위해
+# voca_meaning.concept_id(1:1) 대신 N:M 매핑 테이블로 관리한다.
+class VocaMeaningConcept(db.Model):
+    __tablename__ = 'voca_meaning_concept'
+    __bind_key__ = 'dict'
+    meaning_id = Column(Integer, ForeignKey('voca_meaning.id', ondelete='CASCADE', onupdate='NO ACTION'), primary_key=True)
+    concept_id = Column(Integer, primary_key=True, index=True)
 
 
 # 단어 예문
