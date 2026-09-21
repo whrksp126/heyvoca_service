@@ -1002,15 +1002,15 @@ const Main = () => {
         overflow-y-auto
         transition-[height] duration-[250ms] ease
       "
-      // header — 검색바는 당김에 실려 내려가지 않는 sticky 헤더다(header 슬롯). 이 헤더
-      // 바로 아래가 콘텐츠의 원래 상단 모서리가 되고, 인디케이터는 그 틈에 자동으로 자리잡는다
-      // (PullToRefresh.jsx "인디케이터 위치" 참고) — 페이지별 offset을 더 넘길 필요가 없다.
-      header={renderSearchBar()}
       onScroll={handleScroll}
       initial={{ opacity: 0, y: 20, transition: { duration: 0.2 } }}
       animate={{ opacity: 1, y: 0, transition: { duration: 0.2 } }}
       exit={{ opacity: 0, y: -20, transition: { duration: 0.2 } }}
     >
+      {/* 검색바 — 콘텐츠 흐름 안의 sticky 헤더로 복귀(당김이 콘텐츠를 밀지 않으므로
+          별도 header 슬롯이 필요 없다) */}
+      {renderSearchBar()}
+
       {view === 'detail' && renderDetail()}
 
       {view === 'search' && (

@@ -75,32 +75,6 @@ export const heroMood = (health) => {
 };
 
 /**
- * 히어로 하늘(그라디언트 + 해) — FarmHero 본문(밭·헤드라인·CTA)과 분리해서 내보낸다.
- *
- * 당겨서 새로고침(PullToRefresh)으로 콘텐츠를 당기면 FarmHero 본문은 콘텐츠 래퍼와 함께
- * 아래로 밀린다(의도된 동작 — 농장·카드가 손끝을 따라온다). 예전에는 이 하늘 그라디언트가
- * FarmHero 본문 **안에** 칠해져 있어 본문과 함께 내려갔고, 그 위(원래 하늘이 있던 자리)로
- * 스크롤 컨테이너의 바탕색(farm-canvas — 다크에서는 #111111)이 그대로 드러나 하늘의
- * 밝은 시작색이 갑자기 어두운 단색으로 끊겨 보이는 버그가 있었다(보고 참조).
- *
- * 그래서 하늘만 떼어 PullToRefresh의 `background` 레이어(당김에 딸려가는 transform 밖에
- * 그려짐 — PullToRefresh.jsx 주석 참고)로 넘긴다. 하늘은 그 자리에 고정되고, FarmHero
- * 본문(밭·마스코트·헤드라인)만 그 위에서 내려가 하늘이 더 드러나는 것처럼 보인다.
- */
-export const FarmHeroSky = ({ health, state }) => {
-  "use memo";
-
-  const mood = SKY_CLASS[state] ? state : heroMood(health);
-
-  return (
-    <div className={`relative w-full h-[420px] ${SKY_CLASS[mood]}`}>
-      {/* 해 — 시안 .hero .sun (top:150px · right:26px · 56×56) */}
-      <div className={`absolute top-[150px] right-[26px] w-[56px] h-[56px] rounded-full ${SUN_CLASS[mood]}`} />
-    </div>
-  );
-};
-
-/**
  * @param {object} counts      단계별 **보유** 수 — 팻말에 적히는 값
  * @param {object} fieldCounts 단계별 **심은** 수 — 밭에 실제로 서는 작물.
  *                             주지 않으면 counts 를 쓴다(단어장 화면처럼 둘이 같은 경우).
@@ -111,17 +85,18 @@ export const FarmHeroSky = ({ health, state }) => {
 const FarmHero = ({ counts, fieldCounts, healthMix, storedSeeds = 0, health, state, onSelectGroup, children }) => {
   "use memo";
 
+  const mood = SKY_CLASS[state] ? state : heroMood(health);
+
   return (
     /*
       §9 상단과 본문을 잇는 방식 — 히어로와 본문 사이에 선도, 색 경계도, 모서리도 없다.
       히어로 자체는 overflow 를 열어 둔다 — 주 CTA 가 아래로 16px 흘러나와야 하기 때문이다(§7).
       112% 폭 일러스트는 아래 클립 상자가 가둔다.
-
-      하늘(그라디언트 + 해)은 더 이상 여기서 칠하지 않는다 — FarmHeroSky(위)로 옮겨
-      PullToRefresh의 고정 배경 레이어에 그린다. 이 박스는 투명한 채로 밭 장면·헤드라인·
-      CTA 만 담고, 당겨서 새로고침 때 콘텐츠로서 하늘 위를 미끄러져 내려간다.
     */
-    <div className="relative w-full h-[420px] flex-shrink-0 z-[1]">
+    <div className={`relative w-full h-[420px] flex-shrink-0 z-[1] ${SKY_CLASS[mood]}`}>
+      {/* 해 — 시안 .hero .sun (top:150px · right:26px · 56×56) */}
+      <div className={`absolute top-[150px] right-[26px] w-[56px] h-[56px] rounded-full ${SUN_CLASS[mood]}`} />
+
       {/*
         클립 상자 — 히어로 폭 + 아래로 4px. 일러스트가 좌우로 넘치는 만큼만 잘라내고
         시안의 bottom:-4px 흘러내림은 그대로 살린다.

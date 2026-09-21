@@ -367,12 +367,8 @@ const StoreNewFullSheet = ({ initialTab = 'books', onInventoryChanged, onGoRotte
         // 모달로 띄우는 인스턴스(풀시트)는 과제 범위 밖이라 제스처를 비활성화한다.
         disabled={!asPage}
         className={`flex-1 flex flex-col px-[16px] overflow-y-auto ${activeTab === 'tools' ? 'gap-[13px]' : 'gap-[18px]'}`}
-        contentClassName={`flex flex-col ${activeTab === 'tools' ? 'gap-[13px]' : 'gap-[18px]'}`}
         /* 페이지로 열리면 바텀 네비(60px) 밑으로 마지막 카드가 숨지 않게 여백을 준다 */
         style={asPage ? { paddingBottom: 'calc(72px + var(--safe-area-bottom))' } : { paddingBottom: 6 }}
-        // header/fixedHeader 없음 — 상태바 spacer + 타이틀 바 + 세그먼트 탭이 모두 이
-        // PullToRefresh보다 먼저(같은 flex 컬럼 안에) 그려지므로, 인디케이터는 이 Component
-        // 자신의 원래 상단 모서리(=탭 콘텐츠 바로 위)를 기준으로 자동으로 자리잡는다.
       >
         {/* ── ① 단어장 ─────────────────────────────────── */}
         {activeTab === 'books' && (

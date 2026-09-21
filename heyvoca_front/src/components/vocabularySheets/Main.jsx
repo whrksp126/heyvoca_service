@@ -113,15 +113,11 @@ const Main = () => {
     <PullToRefresh
       as={motion.div}
       onRefresh={handlePullToRefresh}
-      contentClassName="flex flex-col"
       className="
         flex flex-col
         h-[calc(100vh-var(--current-header-height)-var(--current-bottom-nav-height)-var(--status-bar-height))]
         overflow-y-auto
       "
-      // header/fixedHeader 없음 — pages/VocabularySheets.jsx가 상태바 spacer + <Header/>를
-      // 이 컴포넌트보다 먼저(문서 흐름으로) 그리므로, 인디케이터는 이 Component 자신의
-      // 원래 상단 모서리(=필터 칩 위)를 기준으로 자동으로 자리잡는다.
       initial={{ opacity: 0, y: 20, transition: { duration: 0.2 } }}
       animate={{ opacity: 1, y: 0, transition: { duration: 0.2 } }}
       exit={{ opacity: 0, y: -20, transition: { duration: 0.2 } }}
