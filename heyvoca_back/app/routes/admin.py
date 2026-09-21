@@ -541,8 +541,32 @@ def get_admin_voca_book_words(admin_voca_book_id):
     }})
 
 
+def _example_en_ko(ex):
+    """예문 dict에서 (en, ko) 쌍을 뽑아낸다. {'en','ko'}·{'origin','meaning'} 두 형식 모두 허용."""
+    en = ex.get('en')
+    if en is None:
+        en = ex.get('origin', '')
+    ko = ex.get('ko')
+    if ko is None:
+        ko = ex.get('meaning', '')
+    return (en or '').strip() if isinstance(en, str) else (en or ''), \
+           (ko or '').strip() if isinstance(ko, str) else (ko or '')
+
+
+def _to_origin_meaning(ex):
+    """예문 dict를 표준 저장 형식 {'origin','meaning'}으로 변환."""
+    en, ko = _example_en_ko(ex)
+    return {'origin': en, 'meaning': ko}
+
+
 def _process_word_into_book(word_text, meanings_list, examples_list, book_id):
-    """단어를 Voca/관리자사전 체크 후 AdminVocaBookMap에 추가. 이미 있으면 skip."""
+    """단어를 Voca/관리자사전 체크 후 AdminVocaBookMap에 추가. 이미 있으면 skip.
+
+    examples_list 항목은 {'en','ko'} 또는 {'origin','meaning'} 둘 다 받되,
+    AdminVocaBookMap.voca_examples 저장은 항상 표준 {'origin','meaning'} 형식으로 한다.
+    """
+    normalized_examples = [_example_en_ko(ex) for ex in examples_list]  # [(en, ko), ...]
+
     existing_voca = Voca.query.filter_by(word=word_text).first()
     if existing_voca:
         voca_id = existing_voca.id
@@ -563,9 +587,9 @@ def _process_word_into_book(word_text, meanings_list, examples_list, book_id):
             for em in VocaExampleMap.query.filter_by(voca_id=voca_id).all()
             if VocaExample.query.get(em.example_id)
         }
-        for ex in examples_list:
-            if (ex['en'], ex['ko']) not in existing_examples:
-                ve = VocaExample(exam_en=ex['en'], exam_ko=ex['ko'])
+        for en, ko in normalized_examples:
+            if (en, ko) not in existing_examples:
+                ve = VocaExample(exam_en=en, exam_ko=ko)
                 db.session.add(ve)
                 db.session.flush()
                 db.session.add(VocaExampleMap(voca_id=voca_id, example_id=ve.id))
@@ -579,8 +603,8 @@ def _process_word_into_book(word_text, meanings_list, examples_list, book_id):
             db.session.add(vm)
             db.session.flush()
             db.session.add(VocaMeaningMap(voca_id=voca_id, meaning_id=vm.id))
-        for ex in examples_list:
-            ve = VocaExample(exam_en=ex['en'], exam_ko=ex['ko'])
+        for en, ko in normalized_examples:
+            ve = VocaExample(exam_en=en, exam_ko=ko)
             db.session.add(ve)
             db.session.flush()
             db.session.add(VocaExampleMap(voca_id=voca_id, example_id=ve.id))
@@ -588,10 +612,12 @@ def _process_word_into_book(word_text, meanings_list, examples_list, book_id):
     if AdminVocaBookMap.query.filter_by(book_id=book_id, voca_id=voca_id).first():
         return False  # 이미 존재
 
+    origin_meaning_examples = [{'origin': en, 'meaning': ko} for en, ko in normalized_examples]
+
     db.session.add(AdminVocaBookMap(
         voca_id=voca_id, book_id=book_id,
         voca_meanings=json.dumps(meanings_list, ensure_ascii=False) if meanings_list else None,
-        voca_examples=json.dumps(examples_list, ensure_ascii=False) if examples_list else None,
+        voca_examples=json.dumps(origin_meaning_examples, ensure_ascii=False) if origin_meaning_examples else None,
     ))
     return True
 
@@ -626,10 +652,11 @@ def create_admin_voca_book_from_ai():
             if not word_text:
                 continue
             meanings_list = [m.strip() for m in w.get('meanings', []) if str(m).strip()]
+            # 입력은 {'en','ko'} / {'origin','meaning'} 둘 다 허용 — _process_word_into_book에서 정규화
             examples_list = [
-                {'en': str(ex.get('en', '')).strip(), 'ko': str(ex.get('ko', '')).strip()}
-                for ex in w.get('examples', [])
-                if ex.get('en') or ex.get('ko')
+                {'en': en, 'ko': ko}
+                for en, ko in (_example_en_ko(ex) for ex in w.get('examples', []))
+                if en or ko
             ]
             if _process_word_into_book(word_text, meanings_list, examples_list, avb.id):
                 word_count += 1
@@ -666,7 +693,8 @@ def add_word_to_admin_voca_book(admin_voca_book_id):
             for em in VocaExampleMap.query.filter_by(voca_id=voca_id).all():
                 eo = VocaExample.query.get(em.example_id)
                 if eo:
-                    examples_list.append({'en': eo.exam_en, 'ko': eo.exam_ko})
+                    # AdminVocaBookMap.voca_examples 저장은 표준 {'origin','meaning'} 형식으로 통일
+                    examples_list.append({'origin': eo.exam_en or '', 'meaning': eo.exam_ko or ''})
         else:
             new_voca = Voca(word=word_text, pronunciation=data.get('pronunciation'))
             db.session.add(new_voca)
@@ -992,8 +1020,8 @@ def tag_admin_voca_book_examples(admin_voca_book_id):
             tagged_exs = []
 
             for ex in examples:
-                en_orig = ex.get('en', '')
-                ko_orig = ex.get('ko', '')
+                # 저장 형식이 {'en','ko'}(과거) / {'origin','meaning'}(표준) 섞여 있을 수 있어 둘 다 허용
+                en_orig, ko_orig = _example_en_ko(ex)
                 STRONG = '<strong class="target-word">'
 
                 # 이미 태그된 예문은 재처리 스킵
@@ -1124,8 +1152,9 @@ def save_tagged_examples(admin_voca_book_id):
             bm = AdminVocaBookMap.query.filter_by(id=map_id, book_id=admin_voca_book_id).first()
             if not bm:
                 continue
+            # 입력은 {'en','ko'} / {'origin','meaning'} 둘 다 허용, 저장은 항상 {'origin','meaning'}
             bm.voca_examples = json.dumps(
-                [{'en': ex.get('en', ''), 'ko': ex.get('ko', '')} for ex in item.get('examples', [])],
+                [_to_origin_meaning(ex) for ex in item.get('examples', [])],
                 ensure_ascii=False
             )
         db.session.commit()
