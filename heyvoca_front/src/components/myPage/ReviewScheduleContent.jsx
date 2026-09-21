@@ -1,18 +1,23 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { EggCrack, Leaf, Plant, Carrot, WarningCircle } from '@phosphor-icons/react';
+import { WarningCircle } from '@phosphor-icons/react';
 import { motion } from 'framer-motion';
 import { useStats } from '../../context/StatsContext';
 import { vibrate } from '../../utils/osFunction';
+import { memoryStateVisualStage } from '../../utils/vocaCrop';
+import CropImage from '../farm/CropImage';
 import ReviewScheduleCalendar from './ReviewScheduleCalendar';
 
 /**
- * 암기 상태 정의.
+ * 암기 상태 정의. label·description은 이 화면(망각곡선/복습 주기) 고유의 "기억 유지 기간"
+ * 설명이라 CROP_LABEL_DETAIL(씨앗/새싹/…)로 바꾸지 않고 그대로 둔다 — 아이콘만 실제 작물
+ * 그림(CropImage)으로 바꿔 다른 화면과 그림을 통일한다. 'new'는 정말 한 번도 학습하지 않은
+ * 단어라 UNPLANTED_SEED(미학습)를 직접 쓴다.
  */
 const STATES = [
-  { key: 'new',    label: '미학습',   icon: EggCrack, iconColor: '#9D835A', iconClass: 'text-[#9D835A]', twActiveRing: 'ring-[#9D835A]/50', twActiveBorder: 'border-[#9D835A]/60', description: '아직 학습하지 않은 단어예요. 오늘 새 단어 학습을 시작해보세요.' },
-  { key: 'short',  label: '단기기억', icon: Leaf,     iconColor: '#77CE4F', iconClass: 'text-[#77CE4F]', twActiveRing: 'ring-[#77CE4F]/50', twActiveBorder: 'border-[#77CE4F]/60', description: '10일 미만 유지되는 단어예요. 꾸준한 복습으로 중기기억으로 넘어갈 수 있어요.' },
-  { key: 'medium', label: '중기기억', icon: Plant,    iconColor: '#38CE38', iconClass: 'text-[#38CE38]', twActiveRing: 'ring-[#38CE38]/50', twActiveBorder: 'border-[#38CE38]/60', description: '10~60일 유지되는 단어예요. 안정권에 접어들고 있어요.' },
-  { key: 'long',   label: '장기기억', icon: Carrot,   iconColor: '#F68300', iconClass: 'text-[#F68300]', twActiveRing: 'ring-[#F68300]/50', twActiveBorder: 'border-[#F68300]/60', description: '60일 이상 안정적으로 기억하는 단어예요. 오래 기억할 가능성이 높아요.' },
+  { key: 'new',    label: '미학습',   stage: 'UNPLANTED_SEED',                 twActiveRing: 'ring-[#9D835A]/50', twActiveBorder: 'border-[#9D835A]/60', description: '아직 학습하지 않은 단어예요. 오늘 새 단어 학습을 시작해보세요.' },
+  { key: 'short',  label: '단기기억', stage: memoryStateVisualStage('short'),  twActiveRing: 'ring-[#77CE4F]/50', twActiveBorder: 'border-[#77CE4F]/60', description: '10일 미만 유지되는 단어예요. 꾸준한 복습으로 중기기억으로 넘어갈 수 있어요.' },
+  { key: 'medium', label: '중기기억', stage: memoryStateVisualStage('medium'), twActiveRing: 'ring-[#38CE38]/50', twActiveBorder: 'border-[#38CE38]/60', description: '10~60일 유지되는 단어예요. 안정권에 접어들고 있어요.' },
+  { key: 'long',   label: '장기기억', stage: memoryStateVisualStage('long'),   twActiveRing: 'ring-[#F68300]/50', twActiveBorder: 'border-[#F68300]/60', description: '60일 이상 안정적으로 기억하는 단어예요. 오래 기억할 가능성이 높아요.' },
 ];
 
 /** 통합 망각곡선 + 암기상태 구간 시각화 SVG. */
@@ -130,23 +135,20 @@ const IntegratedCurveGraph = ({ activeKey }) => {
   );
 };
 
-const StateChip = ({ state, count, isActive, onTap }) => {
-  const Icon = state.icon;
-  return (
-    <motion.button
-      type="button" onClick={onTap} whileTap={{ scale: 0.94 }}
-      className={`flex flex-col items-center justify-center gap-[4px] flex-1 py-[10px] px-[4px] rounded-[10px] border transition-all duration-200 ${isActive ? `bg-layout-gray-50 dark:bg-layout-gray-dark ${state.twActiveBorder} ring-[1.5px] ${state.twActiveRing}` : 'bg-layout-gray-50 dark:bg-layout-gray-dark border-transparent'}`}
-      aria-pressed={isActive}
-    >
-      <Icon size={18} weight="fill" className={`shrink-0 ${state.iconClass}`} />
-      <span className="text-[15px] font-[800] tabular-nums leading-none text-layout-black dark:text-layout-white">{count}</span>
-    </motion.button>
-  );
-};
+const StateChip = ({ state, count, isActive, onTap }) => (
+  <motion.button
+    type="button" onClick={onTap} whileTap={{ scale: 0.94 }}
+    className={`flex flex-col items-center justify-center gap-[4px] flex-1 py-[10px] px-[4px] rounded-[10px] border transition-all duration-200 ${isActive ? `bg-layout-gray-50 dark:bg-layout-gray-dark ${state.twActiveBorder} ring-[1.5px] ${state.twActiveRing}` : 'bg-layout-gray-50 dark:bg-layout-gray-dark border-transparent'}`}
+    aria-pressed={isActive}
+  >
+    <CropImage stage={state.stage} size={18} align="center" className="shrink-0" />
+    <span className="text-[15px] font-[800] tabular-nums leading-none text-layout-black dark:text-layout-white">{count}</span>
+  </motion.button>
+);
 
 const StateDescPanel = ({ activeState }) => (
   <div className="flex items-start gap-[8px] w-full px-[10px] py-[10px] rounded-[10px] border border-border dark:border-border-dark bg-layout-gray-50 dark:bg-layout-gray-dark min-h-[56px]">
-    <activeState.icon size={14} weight="fill" className={`mt-[2px] shrink-0 ${activeState.iconClass}`} />
+    <CropImage stage={activeState.stage} size={14} align="center" className="mt-[2px] shrink-0" />
     <p className="text-[12px] leading-relaxed font-[500] text-layout-black dark:text-layout-white">
       <span className="font-[700]">{activeState.label}</span>{' '}— {activeState.description}
     </p>

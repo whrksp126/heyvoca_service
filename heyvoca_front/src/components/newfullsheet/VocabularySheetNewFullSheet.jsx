@@ -2,12 +2,14 @@ import React, { useState, useMemo } from 'react';
 import { useVocabulary } from '../../context/VocabularyContext';
 import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
 // import TestSetup from '../class/TestSetup';
-import { PencilSimple, Trash, CaretLeft, EggCrack, Leaf, Plant, Carrot } from '@phosphor-icons/react';
+import { PencilSimple, Trash, CaretLeft } from '@phosphor-icons/react';
 import { motion } from 'framer-motion';
 import {
   MIN_TEST_VOCABULARY_COUNT, MAX_TEST_VOCABULARY_COUNT,
   STABILITY_LEAF_DAYS, STABILITY_CARROT_DAYS,
 } from '../../utils/common';
+import { memoryStateVisualStage } from '../../utils/vocaCrop';
+import CropImage from '../farm/CropImage';
 import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 import { TestSetupNewBottomSheet } from '../newBottomSheet/TestSetupNewBottomSheet';
 import { StudySetupNewBottomSheet } from '../newBottomSheet/StudySetupNewBottomSheet';
@@ -305,7 +307,7 @@ const VocabularySheetNewFullSheet = ({ testType }) => {
               <div className="flex items-center gap-[12px] flex-wrap">
                 <div className="flex items-center gap-[4px]">
                   <div className="w-[14px] h-[14px] flex items-center justify-center border-[1px] border-[#9D835A] rounded-[14px] bg-[#FFFCF3] dark:bg-[#FFFCF3]/20">
-                    <EggCrack size={8} weight="fill" className="text-[#9D835A]" />
+                    <CropImage stage={memoryStateVisualStage('unlearned')} size={9} align="center" />
                   </div>
                   <span className="text-[11px] font-[500] text-[#9D835A]">
                     {memorizationStats.unlearned || 0}
@@ -313,7 +315,7 @@ const VocabularySheetNewFullSheet = ({ testType }) => {
                 </div>
                 <div className="flex items-center gap-[4px]">
                   <div className="w-[14px] h-[14px] flex items-center justify-center border-[1px] border-[#77CE4F] rounded-[14px] bg-[#F2FFEB] dark:bg-[#F2FFEB]/20">
-                    <Leaf size={8} weight="fill" className="text-[#77CE4F]" />
+                    <CropImage stage={memoryStateVisualStage('short')} size={9} align="center" />
                   </div>
                   <span className="text-[11px] font-[500] text-[#77CE4F]">
                     {memorizationStats.shortTerm || 0}
@@ -321,7 +323,7 @@ const VocabularySheetNewFullSheet = ({ testType }) => {
                 </div>
                 <div className="flex items-center gap-[4px]">
                   <div className="w-[14px] h-[14px] flex items-center justify-center border-[1px] border-[#38CE38] rounded-[14px] bg-[#EBFFEE] dark:bg-[#EBFFEE]/20">
-                    <Plant size={8} weight="fill" className="text-[#38CE38]" />
+                    <CropImage stage={memoryStateVisualStage('medium')} size={9} align="center" />
                   </div>
                   <span className="text-[11px] font-[500] text-[#38CE38]">
                     {memorizationStats.mediumTerm || 0}
@@ -329,7 +331,7 @@ const VocabularySheetNewFullSheet = ({ testType }) => {
                 </div>
                 <div className="flex items-center gap-[4px]">
                   <div className="w-[14px] h-[14px] flex items-center justify-center border-[1px] border-[#F68300] rounded-[14px] bg-[#FFF8E8] dark:bg-[#FFF8E8]/20">
-                    <Carrot size={8} weight="fill" className="text-[#F68300]" />
+                    <CropImage stage={memoryStateVisualStage('long')} size={9} align="center" />
                   </div>
                   <span className="text-[11px] font-[500] text-[#F68300]">
                     {memorizationStats.longTerm || 0}

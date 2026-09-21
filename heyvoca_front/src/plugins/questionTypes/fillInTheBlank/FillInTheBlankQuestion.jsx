@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
-import { Circle, X, Leaf, Plant, Carrot, EggCrack, ArrowUpRight, ArrowDownRight } from '@phosphor-icons/react';
+import { Circle, X, ArrowUpRight, ArrowDownRight } from '@phosphor-icons/react';
 import FarmStatusBar from '../../../components/farm/FarmStatusBar';
 import { haptic, pickVariant } from '../../../lib/feel';
 import { playSuccessSound, playErrorSound } from '../../../utils/audio';
@@ -8,22 +8,8 @@ import { getAdvanceDelay, ADVANCE_DELAY_GROW } from '../../../utils/studyTiming'
 import { getMemoryStateKeyByStability } from '../../../components/common/MemoryStateChangeBadge';
 import { useResumeReplayKey } from '../../../hooks/useResumeReplayKey';
 
-const stateIconMap = {
-  unlearned: <EggCrack size={10} weight="fill" />,
-  leaf: <Leaf size={10} weight="fill" />,
-  plant: <Plant size={10} weight="fill" />,
-  carrot: <Carrot size={10} weight="fill" />,
-};
-
-const stateColorMap = {
-  unlearned: { border: 'border-[#9D835A]', text: 'text-[#9D835A]', bg: 'bg-[#FFFCF3] dark:bg-[#FFFCF3]/20' },
-  leaf: { border: 'border-[#77CE4F]', text: 'text-[#77CE4F]', bg: 'bg-[#F2FFEB] dark:bg-[#F2FFEB]/20' },
-  plant: { border: 'border-[#38CE38]', text: 'text-[#38CE38]', bg: 'bg-[#EBFFEE] dark:bg-[#EBFFEE]/20' },
-  carrot: { border: 'border-[#F68300]', text: 'text-[#F68300]', bg: 'bg-[#FFF8E8] dark:bg-[#FFF8E8]/20' },
-};
-
-const stateNameMap = { unlearned: '미학습', leaf: '단기 암기', plant: '중기 암기', carrot: '장기 암기' };
-
+// 예전 배지(아이콘/색/이름) 정의가 남아 있었지만 어디서도 렌더링에 쓰이지 않는 죽은 코드였다
+// (실제 배지는 MemoryStateChangeBadge 컴포넌트가 그린다). STATE_RANK만 등급 비교에 쓰인다.
 const STATE_RANK = { unlearned: 0, leaf: 1, plant: 2, carrot: 3 };
 
 const renderHighlightedText = (html) => {

@@ -370,6 +370,12 @@ const StoreNewFullSheet = ({ initialTab = 'books', onInventoryChanged, onGoRotte
         contentClassName={`flex flex-col ${activeTab === 'tools' ? 'gap-[13px]' : 'gap-[18px]'}`}
         /* 페이지로 열리면 바텀 네비(60px) 밑으로 마지막 카드가 숨지 않게 여백을 준다 */
         style={asPage ? { paddingBottom: 'calc(72px + var(--safe-area-bottom))' } : { paddingBottom: 6 }}
+        // indicatorTop — 상태바 spacer(§318) + 타이틀 바(52px) + 세그먼트 탭(36px+mb 14px)이
+        // 모두 이 PullToRefresh보다 먼저, 같은 flex 컬럼 안에서 그려진다(고정이 아니라 flex로
+        // "얹혀" 있는 것뿐이지만 Component 자신은 그 아래에서 시작한다는 점은 같다) — 기본값을
+        // 쓰면 상태바 높이가 이중으로 들어간다("indicatorTop 계산법" 2번 경우, disabled여도
+        // 무해하므로 asPage 여부와 무관하게 항상 이 값을 쓴다).
+        indicatorTop="14px"
       >
         {/* ── ① 단어장 ─────────────────────────────────── */}
         {activeTab === 'books' && (

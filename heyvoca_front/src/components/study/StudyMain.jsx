@@ -3,7 +3,7 @@ import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { SpeakerHigh, Play, Pause, CaretLeft, CaretRight, Repeat } from '@phosphor-icons/react';
 import { useNavigate } from 'react-router-dom';
 import StudyHeader from './StudyHeader';
-import StudyFarmStatusBar from './StudyFarmStatusBar';
+import CropImage from '../farm/CropImage';
 import { StudySettingsNewBottomSheet } from '../newBottomSheet/StudySettingsNewBottomSheet';
 import { ConfirmNewBottomSheet } from '../newBottomSheet/ConfirmNewBottomSheet';
 import TtsRipple from '../common/TtsRipple';
@@ -562,8 +562,8 @@ const StudyMain = ({ words }) => {
             className="absolute inset-x-[20px] top-[15px] bottom-0 bg-layout-gray-50 dark:bg-layout-gray-dark rounded-[12px] overflow-y-auto touch-pan-y"
           >
             <div className="p-[20px] flex flex-col gap-[22px]">
-              {/* 작물 상태 바 — 옛 미학습 배지를 대체한다 */}
-              <StudyFarmStatusBar farm={word.farm} />
+              {/* 작물 아이콘 — 옛 미학습 배지를 대체한다(라벨/프로그레스/일수 없이 그림만) */}
+              <CropImage stage={word.farm?.stage || 'UNPLANTED_SEED'} health={word.farm?.health} size={30} align="center" />
 
               <div className="flex flex-col gap-[12px]">
                 <div>

@@ -58,7 +58,31 @@
 // 훅이 같은 시점에 이미 울리므로 여기서 중복 호출하지 않는다. 손을 떼 새로고침이 시작되면
 // 호는 고정 폭을 유지한 채 링만 계속 도는 스피너로 전환되고, 완료 시 Check 아이콘으로
 // 짧게 바뀐 뒤 훅의 스프링으로 접힌다.
-import React, { forwardRef, useEffect, useImperativeHandle, useRef } from 'react';
+//
+// ── indicatorTop 계산법(2026-09-21 QA — "적용처마다 다 꼬여 있다") ─────────────────
+// indicatorTop은 이 컴포넌트가 렌더하는 Component(=scrollRef, `relative`) 자신의 top을
+// 기준으로 한 값이다. **화면 어디서 status-bar-height를 이미 소비했는지**를 반드시 먼저
+// 확인해야 한다 — 실수하기 가장 쉬운 지점이다.
+//   1) Component 자신이 `h-screen`이라 진짜 뷰포트 최상단(y=0)부터 시작하는 화면
+//      (예: 홈 — 상단 헤더가 아예 없다, 시안상 일러스트가 상태바 아래까지 이어짐)
+//      → 기본값 `calc(var(--status-bar-height) + 14px)` 그대로 쓴다. status-bar-height를
+//      여기서 처음 빼주는 게 맞다.
+//   2) Component 이전에 이미 상태바 spacer + 고정 타이틀 헤더가 형제로 먼저 그려지는 화면
+//      (예: 단어장·찾기 — 페이지 파일이 `<div style={paddingTop:'var(--status-bar-height)'}/>`
+//      + `<Header/>`를 Main보다 먼저 렌더한다) → Component 자신의 top은 이미 그 아래다.
+//      여기서 또 status-bar-height를 더하면 상태바 높이만큼 **이중으로** 내려가 버린다.
+//      이런 화면은 status-bar-height를 빼고 순수 px 여백만 넘긴다.
+//   3) Component **내부**(children)에 sticky 헤더가 있어 당기는 동안 콘텐츠와 함께
+//      내려가는 화면(예: 찾기의 검색바, `sticky top-0`) → indicatorTop을 그 헤더 높이로
+//      맞추면, 헤더가 제자리에 있는 동안(pull < 헤더 높이)은 인디케이터가 헤더 뒤에 가려
+//      있다가, 헤더가 그만큼 밀려 내려간 뒤(pull ≥ 헤더 높이)에야 헤더 아래 빈 공간에
+//      드러난다 — "검색 헤더 아래에서 나온다"는 요구를 그림 계산 없이 만족한다.
+//   4) fixedHeader(진짜 position:fixed, 예: 마이페이지)를 쓰는 화면은 Component가 다시
+//      y=0부터 시작하므로(1)과 같다 — status-bar-height + 헤더 높이를 더한다.
+// 화면별로 실제 적용한 값은 각 파일(components/home/Main.jsx 등)의 PullToRefresh 호출부
+// 주석을 참고.
+import React, { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
 import {
   motion, useMotionValue, useTransform, useMotionValueEvent, useAnimationControls,
   useReducedMotion, animate, AnimatePresence,
@@ -218,6 +242,41 @@ const PullToRefreshIndicator = ({ pull, phase, threshold, maxPull, top }) => {
  * 부작용을 제스처가 실제로 진행 중인 짧은 구간으로만 한정한다. scrollTop/height는 절대
  * 건드리지 않고 transform만 쓰므로(will-change-transform) 프레임 드롭 없이 따라온다.
  */
+/**
+ * 디버그 오버레이 — `localStorage.setItem('ptr.debug','1')`일 때만 렌더된다(기본 꺼짐).
+ * usePullToRefresh가 남긴 최근 이벤트(최대 8줄)를 화면 좌상단에 반투명 박스로 보여준다 —
+ * 실기기에서 "왜 풀렸는지"(reset의 reason)를 콘솔 연결 없이 바로 읽기 위한 용도다.
+ * 디자인 토큰만 쓴다(하드코딩 색상 금지) — layout-black/white 토큰을 다크와 무관하게
+ * 항상 어두운 칩으로 고정해 어느 배경 위에서도 로그 텍스트가 읽히게 한다.
+ *
+ * document.body에 포털로 그린다 — 5개 적용처 중 상당수가 `as={motion.div}`를 쓰는데,
+ * framer-motion은 값이 0이어도 transform을 인라인으로 남겨(PullToRefreshContent 주석 참고)
+ * 그 자손인 position:fixed 요소의 기준을 뷰포트가 아니라 그 motion.div로 바꿔버린다.
+ * 포털로 Component 서브트리 밖에 그리면 이 문제와 완전히 무관해진다.
+ */
+const PullToRefreshDebugOverlay = ({ log }) => createPortal(
+  <div
+    aria-hidden="true"
+    className="
+      fixed z-[99999] pointer-events-none
+      top-[calc(var(--status-bar-height)+4px)] left-[8px]
+      max-w-[220px] px-[8px] py-[6px] rounded-[8px]
+      bg-layout-black/75
+    "
+  >
+    {log.length === 0 ? (
+      <p className="text-[10px] leading-[1.5] font-[600] text-layout-white">ptr.debug 대기 중</p>
+    ) : (
+      log.map((line, i) => (
+        <p key={i} className="text-[10px] leading-[1.5] font-[600] text-layout-white whitespace-nowrap overflow-hidden text-ellipsis">
+          {line}
+        </p>
+      ))
+    )}
+  </div>,
+  document.body,
+);
+
 const PullToRefreshContent = ({ pull, className, children }) => {
   const ref = useRef(null);
   useMotionValueEvent(pull, 'change', (v) => {
@@ -243,10 +302,11 @@ const PullToRefresh = forwardRef(function PullToRefresh(
     // 단색이 아닌 상단 배경(그라디언트 등) — 당김에 딸려가지 않는 고정 레이어에 그린다.
     // 위 "단색이 아닌 배경" 주석 참고. 대부분의 화면(단색 bg-* 하나로 충분)은 안 써도 된다.
     background = null,
-    // 인디케이터 시작 위치 — 기본값이 상태바 높이(safe-area-inset-top, index.css의
-    // --status-bar-height)를 이미 감안하므로 대부분의 화면(홈·단어장·찾기·상점)은
-    // 그대로 두면 된다. 고정 헤더가 상태바 아래를 추가로 덮는 화면(마이페이지)만
-    // 헤더 높이를 더한 값을 넘겨 헤더 아래에서 나오게 한다.
+    // 인디케이터 시작 위치 — 기본값은 "Component 자신이 뷰포트 최상단(y=0)부터 시작하는
+    // 화면"에만 맞다(2026-09-21 정정: 예전 주석은 "대부분의 화면은 그대로 두면 된다"고
+    // 했는데 실제로는 화면마다 달라 다섯 곳 다 값을 확인해야 했다). 위 "indicatorTop
+    // 계산법" 주석의 4가지 경우를 보고 호출부에서 직접 넘긴다 — 기본값은 그중 1)번
+    // (외부 헤더 없이 Component가 곧 화면 전체인 경우, 예: 홈)에만 해당한다.
     indicatorTop = 'calc(var(--status-bar-height) + 14px)',
     children,
     ...rest
@@ -256,8 +316,20 @@ const PullToRefresh = forwardRef(function PullToRefresh(
   const scrollRef = useRef(null);
   useImperativeHandle(forwardedRef, () => scrollRef.current, []);
 
-  const { pull, phase } = usePullToRefresh({
+  const { pull, phase, debugLog } = usePullToRefresh({
     scrollRef, onRefresh, disabled, threshold, maxPull, minShowMs, errorMessage,
+  });
+
+  // ptr.debug 플래그는 껐다 켜도 새로고침 전까지는 안 바뀐다고 가정하고 마운트 시 한 번만
+  // 읽는다 — 매 렌더 localStorage를 읽지 않기 위함. 훅 쪽 debugLog도 같은 플래그로 게이팅돼
+  // 있어 플래그가 꺼져 있으면 log는 항상 빈 배열이라 이 오버레이 자체도 사실상 아무 일도
+  // 안 한다.
+  const [debugEnabled] = useState(() => {
+    try {
+      return typeof window !== 'undefined' && window.localStorage.getItem('ptr.debug') === '1';
+    } catch {
+      return false;
+    }
   });
 
   return (
@@ -282,6 +354,7 @@ const PullToRefresh = forwardRef(function PullToRefresh(
       <PullToRefreshContent pull={pull} className={contentClassName}>
         {children}
       </PullToRefreshContent>
+      {debugEnabled && <PullToRefreshDebugOverlay log={debugLog} />}
     </Component>
   );
 });

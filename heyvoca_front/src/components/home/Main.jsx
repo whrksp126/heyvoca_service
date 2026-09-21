@@ -491,6 +491,9 @@ const Main = () => {
       // 히어로 하늘(그라디언트+해)을 콘텐츠 밖 고정 레이어로 — 당겨도 하늘은 그 자리에 있고
       // 밭·카드만 내려온다(PullToRefresh.jsx "단색이 아닌 배경" 주석 · FarmHero.jsx 참고).
       background={<FarmHeroSky health={health} state={view.mood} />}
+      // indicatorTop — 이 화면은 고정 헤더가 없다(h-screen, y=0부터 시작). 기본값
+      // (PullToRefresh.jsx "indicatorTop 계산법" 1번 경우)을 그대로 쓴다 — 별도로 넘기지
+      // 않아도 상태바 아래 14px에서 나온다.
     >
 
       <FarmHero

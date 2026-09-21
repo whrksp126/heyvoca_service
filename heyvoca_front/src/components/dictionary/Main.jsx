@@ -1002,6 +1002,15 @@ const Main = () => {
         overflow-y-auto
         transition-[height] duration-[250ms] ease
       "
+      // indicatorTop — pages/Dictionary.jsx가 상태바 spacer + <Header/>("찾기" 타이틀,
+      // 55px)를 이 컴포넌트보다 먼저 그려서 Component 자신은 이미 그 아래에서 시작한다
+      // (vocabularySheets와 같은 이유 — "indicatorTop 계산법" 2번 경우). 거기에 더해
+      // renderSearchBar()의 sticky 검색바(pt-10 + h-46 + pb-12 = 68px)가 콘텐츠 맨 위에
+      // 항상 있고, 당기는 동안 scrollTop===0이라 검색바도 콘텐츠와 함께 내려간다
+      // (PullToRefresh.jsx 상단 "position:sticky 헤더" 설명 참고) — 인디케이터를 검색바
+      // 높이만큼 내려 두면 검색바가 그 자리를 벗어난 뒤에야(=검색 헤더 아래) 드러난다
+      // (계산법 3번 경우).
+      indicatorTop="68px"
       onScroll={handleScroll}
       initial={{ opacity: 0, y: 20, transition: { duration: 0.2 } }}
       animate={{ opacity: 1, y: 0, transition: { duration: 0.2 } }}

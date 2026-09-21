@@ -15,6 +15,32 @@ import {
   STABILITY_SPROUT_DAYS, STABILITY_LEAF_DAYS, STABILITY_CARROT_DAYS,
 } from './common';
 
+/* ── 레거시 암기 상태(state) → 작물 그림 ─────────────────────
+   MemoryStateChangeBadge.jsx · MemorizationStatus.jsx 는 짧은 키(unlearned/leaf/plant/carrot)를,
+   WordMemorySection.jsx · TodayMemoryChangesNewBottomSheet.jsx · ReviewScheduleContent.jsx 는
+   insights API 키(unlearned/short/medium/long)를 쓴다 — 같은 4단계를 이름만 다르게 부른다.
+   두 이름을 여기 한 곳에서만 흡수해, 다섯 화면이 전부 같은 CropImage 그림을 그리게 한다.
+
+   【한계】 이 4단계 매핑은 "심은 뒤" 기준이라 unlearned/new 를 항상 PLANTED_SEED(씨앗)로 그린다.
+   한 번도 학습하지 않은 진짜 미학습(UNPLANTED_SEED)과는 다른 그림이다 — 호출부가 "이 값이 정말
+   한 번도 학습 안 한 단어"라고 보장할 수 있으면(예: 오늘의 기억 변화의 '신규' 목록) 직접
+   'UNPLANTED_SEED'를 넘길 것. 여기서 자동으로 구분하지 않는 이유는, 이 함수가 받는 값(과거 로그의
+   state_after 등)만으로는 정말 미학습인지 이미 심겼다가 그대로인지 알 수 없어서다. */
+export const MEMORY_STATE_VISUAL_STAGE = {
+  unlearned: 'PLANTED_SEED',
+  new: 'PLANTED_SEED',
+  short: 'SPROUT',
+  leaf: 'SPROUT',
+  medium: 'LEAF',
+  plant: 'LEAF',
+  long: 'CARROT',
+  carrot: 'CARROT',
+};
+
+/** 레거시 암기 상태 키 → CropImage 가 읽는 visual_stage. 모르는 키는 unlearned 취급 */
+export const memoryStateVisualStage = (state) =>
+  MEMORY_STATE_VISUAL_STAGE[state] ?? MEMORY_STATE_VISUAL_STAGE.unlearned;
+
 /* ── 성장 단계 ─────────────────────────────────────────────
    시안 §2 — "이름만 바뀌고(미학습→씨앗, 단기→새싹, 중기→이파리, 장기→당근) 색은 유지".
    즉 기존 서비스의 암기 상태 판정을 그대로 쓴다 — 경계는 common.jsx 가 단일 소스다.

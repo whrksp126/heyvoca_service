@@ -1,14 +1,18 @@
 import { motion } from 'framer-motion';
-import { EggCrack, Leaf, Plant, Carrot, ArrowUp, ArrowDown } from '@phosphor-icons/react';
+import { ArrowUp, ArrowDown } from '@phosphor-icons/react';
 import { STABILITY_LEAF_DAYS, STABILITY_CARROT_DAYS } from '../../utils/common';
+import { memoryStateVisualStage } from '../../utils/vocaCrop';
+import CropImage from '../farm/CropImage';
 
 // 암기 상태(FSRS 기반) 공용 아이콘/색상/랭크 맵.
 // 사지선다(components/takeTest/Main.jsx)와 카드맞추기(plugins/questionTypes/cardMatch/*)에서 공용으로 사용.
+// 아이콘은 실제 작물 그림(CropImage) — memoryStateVisualStage 가 이 파일 고유 키(leaf/plant)를
+// 다른 화면들과 같은 visual_stage 로 옮겨준다(단일 소스는 utils/vocaCrop.js).
 export const MEMORY_STATE_ICON_MAP = {
-  unlearned: <EggCrack size={10} weight="fill" />,
-  leaf: <Leaf size={10} weight="fill" />,
-  plant: <Plant size={10} weight="fill" />,
-  carrot: <Carrot size={10} weight="fill" />,
+  unlearned: <CropImage stage={memoryStateVisualStage('unlearned')} size={14} align="center" />,
+  leaf: <CropImage stage={memoryStateVisualStage('leaf')} size={14} align="center" />,
+  plant: <CropImage stage={memoryStateVisualStage('plant')} size={14} align="center" />,
+  carrot: <CropImage stage={memoryStateVisualStage('carrot')} size={14} align="center" />,
 };
 
 export const MEMORY_STATE_COLOR_MAP = {

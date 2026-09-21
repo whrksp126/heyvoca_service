@@ -2,6 +2,8 @@ import React, { useEffect, useState, useRef, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import { EggCrack, Leaf, Plant, Carrot, Circle, X, Timer, CircleNotch } from '@phosphor-icons/react';
 import { getWordInsightsApi, getWordTimelineApi } from '../../api/study';
+import CropImage from '../farm/CropImage';
+import { memoryStateVisualStage } from '../../utils/vocaCrop';
 
 // 백엔드 memory state 키(unlearned/short/medium/long) 기준
 // color=상단 라벨의 border/text(강조), bg=상단 라벨의 배경 틴트(프로그래스 채움색)
@@ -255,7 +257,10 @@ export const WordMemoryHistory = ({ insights, userVocaId }) => {
             {/* 기록 (우측, 넘치면 줄바꿈). 각 기록 = [채점 결과][채점 직후 암기 상태] */}
             <div className="flex flex-wrap items-center gap-x-[10px] gap-y-[8px] flex-1 min-w-0">
               {byDate.get(date).map((entry, i) => {
-                const stInfo = STATE_INFO[entry.state] ?? STATE_INFO.unlearned;
+                // entry는 실제 채점 로그(이미 심긴 뒤)라 memoryStateVisualStage의 기본 근사(씨앗~당근)를 그대로 쓴다.
+                // 한계는 vocaCrop.js의 memoryStateVisualStage 주석 참조 — 진짜 미학습(UNPLANTED_SEED) 구분은
+                // /insights/word 응답에 그 시점 visual_stage 필드가 없어 불가능하다.
+                const visualStage = memoryStateVisualStage(entry.state);
                 // 가장 최근 기록(첫 그룹의 첫 항목) 왼쪽에 현재 연속 정답 수 표시
                 const isLatest = gi === 0 && i === 0;
                 // 스트릭(최근 연속 정답)에 해당하는 기록은 포인트 배경
@@ -267,13 +272,13 @@ export const WordMemoryHistory = ({ insights, userVocaId }) => {
                         연속 정답 {streak}회
                       </span>
                     )}
-                    <div className={`flex items-center gap-[4px] pl-[6px] pr-[7px] py-[3px] rounded-full ${inStreak ? 'bg-primary-main-50 dark:bg-primary-main-dark' : 'bg-layout-gray-50 dark:bg-layout-gray-dark'}`}>
+                    <div className={`flex items-center gap-[2px] pl-[6px] pr-[7px] py-[2px] rounded-full ${inStreak ? 'bg-primary-main-50 dark:bg-primary-main-dark' : 'bg-layout-gray-50 dark:bg-layout-gray-dark'}`}>
                       {/* 정답=초록 동그라미 / 오답=빨간 X */}
                       {entry.was_correct
                         ? <Circle size={13} weight="bold" className="text-status-success-500 flex-shrink-0" />
                         : <X size={13} weight="bold" className="text-status-error-500 flex-shrink-0" />}
-                      {/* 채점 직후 암기 상태 아이콘 (최상단 라벨처럼 작게) */}
-                      <stInfo.Icon size={11} weight="fill" color={stInfo.color} className="flex-shrink-0" />
+                      {/* 채점 직후 암기 상태 = 그 시점의 작물 그림(농장 표현과 통일) */}
+                      <CropImage stage={visualStage} size={16} align="center" className="flex-shrink-0" />
                     </div>
                   </React.Fragment>
                 );

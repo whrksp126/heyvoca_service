@@ -1,6 +1,7 @@
 import React, { useMemo, useState, useRef, useEffect } from 'react';
-import { Leaf, Plant, Carrot, EggCrack } from '@phosphor-icons/react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { memoryStateVisualStage } from '../../utils/vocaCrop';
+import CropImage from '../farm/CropImage';
 
 const MemorizationStatus = ({ repetition, interval, ef, isCorrect = null, nextReview = null, wordId = null, useRandomMessages = false, updateType = null, clickable = false, iconOnly = false, hideOverdue = false, forceText = null }) => {
   // 암기 상태 판단 함수
@@ -326,31 +327,31 @@ const MemorizationStatus = ({ repetition, interval, ef, isCorrect = null, nextRe
         border: 'border-[#9D835A]',
         text: 'text-[#9D835A]',
         bg: 'bg-[#FFFCF3] dark:bg-[#FFFCF3]/20',
-        icon: <EggCrack size={10} weight="fill" />
+        stage: memoryStateVisualStage('unlearned'),
       },
       leaf: {
         border: 'border-[#77CE4F]',
         text: 'text-[#77CE4F]',
         bg: 'bg-[#F2FFEB] dark:bg-[#F2FFEB]/20',
-        icon: <Leaf size={10} weight="fill" />
+        stage: memoryStateVisualStage('leaf'),
       },
       plant: {
         border: 'border-[#38CE38]',
         text: 'text-[#38CE38]',
         bg: 'bg-[#EBFFEE] dark:bg-[#EBFFEE]/20',
-        icon: <Plant size={10} weight="fill" />
+        stage: memoryStateVisualStage('plant'),
       },
       carrot: {
         border: 'border-[#F68300]',
         text: 'text-[#F68300]',
         bg: 'bg-[#FFF8E8] dark:bg-[#FFF8E8]/20',
-        icon: <Carrot size={10} weight="fill" />
+        stage: memoryStateVisualStage('carrot'),
       },
       new: {
         border: 'border-secondary-yellow-500',
         text: 'text-secondary-yellow-500',
         bg: 'bg-secondary-yellow-100 dark:bg-secondary-yellow-dark',
-        icon: null
+        stage: null,
       }
     };
 
@@ -384,6 +385,10 @@ const MemorizationStatus = ({ repetition, interval, ef, isCorrect = null, nextRe
   };
 
   const styles = getStateStyles(memoryState, isCorrect, nextReview);
+  // 상태 아이콘 — 실제 작물 그림(CropImage). 'NEW' 강제 표시일 때는 styles.stage가 null이라 아무것도 안 그림
+  const stageIcon = styles.stage
+    ? <CropImage stage={styles.stage} size={14} align="center" className="flex-shrink-0" />
+    : null;
 
   const [showText, setShowText] = useState(false);
   const textTimerRef = useRef(null);
@@ -407,7 +412,7 @@ const MemorizationStatus = ({ repetition, interval, ef, isCorrect = null, nextRe
         border rounded-full
         ${styles.border} ${styles.bg} ${styles.text}
       `}>
-        {styles.icon}
+        {stageIcon}
       </div>
     );
   }
@@ -431,7 +436,7 @@ const MemorizationStatus = ({ repetition, interval, ef, isCorrect = null, nextRe
           initial={false}
           transition={{ duration: 0.25, ease: 'easeInOut' }}
         >
-          <span className="flex-shrink-0 flex items-center">{styles.icon}</span>
+          <span className="flex-shrink-0 flex items-center">{stageIcon}</span>
           <AnimatePresence>
             {showText && (
               <motion.span
@@ -459,7 +464,7 @@ const MemorizationStatus = ({ repetition, interval, ef, isCorrect = null, nextRe
         text-[10px] font-[600]
         ${styles.border} ${styles.text} ${styles.bg}
       `}>
-        {styles.icon}
+        {stageIcon}
         <span>{statusText}</span>
       </div>
     );
@@ -480,7 +485,7 @@ const MemorizationStatus = ({ repetition, interval, ef, isCorrect = null, nextRe
       animate={{ opacity: 1, y: 0, scale: 1, rotate: 0 }}
       transition={{ type: "spring", stiffness: 700, damping: 18, duration: 0.5 }}
     >
-      {styles.icon}
+      {stageIcon}
       <span>{statusText}</span>
     </motion.div>
   );

@@ -1,31 +1,29 @@
 import React from 'react';
-import { EggCrack, Leaf, Plant, Carrot, ArrowRight, TrendUp, Sparkle } from '@phosphor-icons/react';
+import { ArrowRight, TrendUp, Sparkle } from '@phosphor-icons/react';
 import { motion } from 'framer-motion';
 import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 import { vibrate } from '../../utils/osFunction';
-
-// 백엔드 memory state 키(unlearned/short/medium/long) 기준
-const STATE_INFO = {
-  unlearned: { name: '미학습',   Icon: EggCrack, color: '#9D835A' },
-  short:     { name: '단기 암기', Icon: Leaf,     color: '#77CE4F' },
-  medium:    { name: '중기 암기', Icon: Plant,    color: '#38CE38' },
-  long:      { name: '장기 암기', Icon: Carrot,   color: '#F68300' },
-};
+import { memoryStateVisualStage } from '../../utils/vocaCrop';
+import { cropLabelDetail, cropTextClass } from '../../utils/crop';
+import CropImage from '../farm/CropImage';
 
 const ChangeRow = ({ entry }) => {
-  const fromInfo = STATE_INFO[entry.from] ?? STATE_INFO.unlearned;
-  const toInfo = STATE_INFO[entry.to] ?? STATE_INFO.short;
+  // '신규' 목록(from===unlearned)은 오늘 처음 학습한 단어임이 백엔드 분류로 보장돼 있어
+  // 진짜 미학습(UNPLANTED_SEED)으로 그린다. 그 외 from은 memoryStateVisualStage의 근사(씨앗~당근)를 쓴다.
+  const fromStage = entry.from === 'unlearned' ? 'UNPLANTED_SEED' : memoryStateVisualStage(entry.from);
+  // to는 백엔드가 오늘 승급/신규 판정 시점의 실제 visual_stage를 내려준다(entry.stage) — 있으면 그대로 쓴다.
+  const toStage = entry.stage || memoryStateVisualStage(entry.to);
   return (
     <div className="flex items-center justify-between py-[10px] px-[14px] rounded-[8px] bg-layout-gray-50 dark:bg-layout-gray-dark">
       <span className="text-[14px] font-[700] text-layout-black dark:text-layout-white truncate">
         {entry.word}
       </span>
       <span className="flex items-center gap-[6px] flex-shrink-0 ml-[10px]">
-        <fromInfo.Icon size={14} weight="fill" color={fromInfo.color} />
+        <CropImage stage={fromStage} size={18} align="center" className="flex-shrink-0" />
         <ArrowRight size={12} weight="bold" className="text-layout-gray-300" />
-        <toInfo.Icon size={16} weight="fill" color={toInfo.color} />
-        <span className="text-[12px] font-[600]" style={{ color: toInfo.color }}>
-          {toInfo.name}
+        <CropImage stage={toStage} size={20} align="center" className="flex-shrink-0" />
+        <span className={`text-[12px] font-[600] ${cropTextClass(toStage)}`}>
+          {cropLabelDetail(toStage)}
         </span>
       </span>
     </div>

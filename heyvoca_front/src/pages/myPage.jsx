@@ -35,7 +35,10 @@ const MyPage = () => {
     <PullToRefresh
       onRefresh={handlePullToRefresh}
       className="h-screen overflow-y-auto"
-      // 인디케이터가 고정 헤더 아래에서 나오도록 헤더 높이(상태바+55px)만큼 시작 위치를 내린다
+      // 인디케이터가 고정 헤더 아래에서 나오도록 헤더 높이(상태바+55px)만큼 시작 위치를 내린다.
+      // 이 화면은 fixedHeader(진짜 position:fixed)라 Component 자신이 y=0부터 시작하므로
+      // 상태바 높이를 더하는 게 맞다(PullToRefresh.jsx "indicatorTop 계산법" 4번 경우 —
+      // 단어장·찾기·상점처럼 헤더가 문서 흐름으로 먼저 그려지는 화면과는 반대 케이스다).
       indicatorTop="calc(var(--status-bar-height) + 55px)"
       fixedHeader={(
         /*
