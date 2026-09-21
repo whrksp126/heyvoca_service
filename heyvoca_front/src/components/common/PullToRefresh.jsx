@@ -36,6 +36,22 @@
 // 그래서 기본 indicatorTop을 `--status-bar-height`(env(safe-area-inset-top), index.css)
 // 아래로 내려 항상 안전 영역 밑·페이지 배경 위에서만 그려지도록 고쳤다(아래 prop 설명 참고).
 //
+// ── 단색이 아닌 배경(그라디언트 등) — `background` prop (2026-09 QA) ─────────────
+// 위 설명은 "Component 자신의 bg-* 단색 토큰"에만 맞는다. 화면 상단이 단색이 아니라
+// 그라디언트(예: 홈 히어로 하늘)라면 얘기가 다르다 — 그 그라디언트를 그리는 요소가
+// children(=PullToRefreshContent, 당김만큼 translateY됨) 안에 있으면, 당길 때 그 요소가
+// 함께 내려가면서 원래 있던 자리 위로 Component의 flat한 bg-* 색(예: 다크 모드
+// bg-layout-black #111111)이 드러난다. 그라디언트의 시작색(보통 밝은 톤)과 그 flat
+// 색이 다르면 "그라디언트가 끊기고 그 위로 단색이 새로 나타난" 것처럼 보인다 — 실제로는
+// Component 배경이 움직인 게 아니라, 그라디언트 쪽이 콘텐츠로 취급되어 비켜난 것이다.
+//
+// 해결은 인디케이터와 같은 자리(Component의 직계 자식, PullToRefreshContent 밖)에
+// 그라디언트 레이어를 하나 더 두는 것 — 이 `background` prop이 그 레이어다. 인디케이터와
+// 마찬가지로 pull의 translateY는 받지 않으므로 당기는 동안 제자리에 고정되고, 실제
+// 스크롤(scrollTop 변화)에는 자연스럽게 같이 움직인다(스크롤 컨테이너의 콘텐츠 흐름
+// 안에 있는 absolute 요소라 일반 스크롤과는 분리되지 않는다 — 오직 pull의 인위적인
+// transform만 안 받는다). 홈은 FarmHero의 하늘(FarmHeroSky)을 여기에 넘긴다.
+//
 // 인디케이터 — 원형 링 + 진행 호(arc). 당긴 거리(0~threshold)에 비례해 호가 채워지고
 // 링이 손끝 이동에 맞춰 회전한다(유튜브류 앱의 손맛). 임계값을 처음 넘는 순간 살짝
 // 커졌다 돌아오는 스냅 펄스(lib/feel의 SPRING.bouncy 재사용) — 햅틱은 usePullToRefresh
@@ -224,6 +240,9 @@ const PullToRefresh = forwardRef(function PullToRefresh(
     className = '',
     contentClassName = '',
     fixedHeader = null,
+    // 단색이 아닌 상단 배경(그라디언트 등) — 당김에 딸려가지 않는 고정 레이어에 그린다.
+    // 위 "단색이 아닌 배경" 주석 참고. 대부분의 화면(단색 bg-* 하나로 충분)은 안 써도 된다.
+    background = null,
     // 인디케이터 시작 위치 — 기본값이 상태바 높이(safe-area-inset-top, index.css의
     // --status-bar-height)를 이미 감안하므로 대부분의 화면(홈·단어장·찾기·상점)은
     // 그대로 두면 된다. 고정 헤더가 상태바 아래를 추가로 덮는 화면(마이페이지)만
@@ -244,12 +263,21 @@ const PullToRefresh = forwardRef(function PullToRefresh(
   return (
     <Component
       ref={scrollRef}
-      // overscroll-y-contain — 브라우저/WebView 기본 오버스크롤 글로우·바운스가 우리 인디케이터와
-      // 겹치지 않게 한다. relative — 인디케이터(absolute) 위치 기준.
-      className={`relative overscroll-y-contain ${className}`}
+      // overscroll-y-none — 브라우저/WebView 기본 오버스크롤 글로우·바운스를 완전히 끈다.
+      // 예전에는 overscroll-y-contain(스크롤 체이닝만 막음)을 썼는데, Android WebView는
+      // contain이어도 최상단에서 자체 오버스크롤 글로우를 그리며 우리 제스처의 터치
+      // 시퀀스를 가로채 touchcancel을 보낼 수 있었다(usePullToRefresh.js 상단 "손을 안
+      // 뗐는데 풀린다" 설명 참고) — none으로 네이티브 효과 자체를 없애 우리 제스처만 남긴다.
+      // relative — 인디케이터·배경(absolute) 위치 기준.
+      className={`relative overscroll-y-none ${className}`}
       {...rest}
     >
       {fixedHeader}
+      {background && (
+        <div aria-hidden="true" className="absolute inset-x-0 top-0 z-0 pointer-events-none">
+          {background}
+        </div>
+      )}
       <PullToRefreshIndicator pull={pull} phase={phase} threshold={threshold} maxPull={maxPull} top={indicatorTop} />
       <PullToRefreshContent pull={pull} className={contentClassName}>
         {children}

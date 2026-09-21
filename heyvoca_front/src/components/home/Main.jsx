@@ -44,7 +44,7 @@ import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 import { NotifPermissionNewBottomSheet } from '../newBottomSheet/NotifPermissionNewBottomSheet';
 import AchievementRewardOverlay from '../overlay/AchievementRewardOverlay';
 
-import FarmHero from '../farm/FarmHero';
+import FarmHero, { FarmHeroSky } from '../farm/FarmHero';
 import CropImage from '../farm/CropImage';
 import gemIcon from '../../assets/images/gem.png';
 import RottenListSheet from '../farm/RottenListSheet';
@@ -488,6 +488,9 @@ const Main = () => {
       onRefresh={handlePullToRefresh}
       className="isolate flex flex-col h-screen overflow-y-auto bg-farm-canvas dark:bg-layout-black"
       contentClassName="flex flex-col"
+      // 히어로 하늘(그라디언트+해)을 콘텐츠 밖 고정 레이어로 — 당겨도 하늘은 그 자리에 있고
+      // 밭·카드만 내려온다(PullToRefresh.jsx "단색이 아닌 배경" 주석 · FarmHero.jsx 참고).
+      background={<FarmHeroSky health={health} state={view.mood} />}
     >
 
       <FarmHero

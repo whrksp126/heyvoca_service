@@ -15,6 +15,33 @@
 //
 // 새로고침 중 재당김은 무시한다(터치 시작 시 phase가 refreshing/done이면 제스처를 시작하지
 // 않음). 최소 노출 시간(minShowMs)을 둬 아주 빠른 응답에서도 인디케이터가 깜빡이지 않는다.
+//
+// ── "손을 안 뗐는데 풀린다" 버그(2026-09 QA) — 원인과 대응 ───────────────────────
+// 실기기(Android WebView)에서 당기는 도중 제스처가 제멋대로 원위치로 돌아가는 문제가
+// 코드 리뷰로 확인된 원인은 두 가지였다(둘 다 아래에서 고쳤다):
+//
+//  (b) [확정 원인] 아래 onTouchMove의 `dy <= 0` 분기 — 이미 pulling 중인데 손가락이
+//      시작점보다 살짝 위로만 올라가도(자연스러운 손떨림 수준) `reset()`(스프링 복귀
+//      애니메이션)과 `g.active = false`(제스처 완전 종료)를 **동시에** 했다. 그 뒤로
+//      같은 터치 시퀀스 안에서 다시 아래로 내려도 `onTouchStart`가 다시 불리지 않는 한
+//      (같은 시퀀스라 안 불린다) 제스처가 복구되지 않아 "손 안 뗐는데 풀린" 것처럼 보였다.
+//      고침: pulling이 이미 확정된 상태에서 dy<=0이면 pull만 0으로 줄이고 제스처는
+//      유지한다 — 최종 판정(복귀 vs 새로고침)은 오직 touchend/touchcancel에서만 내린다.
+//      (반대로 el.scrollTop>0, 즉 실제 스크롤이 시작된 경우는 그대로 제스처를 접는다 —
+//      이건 더 이상 pull이 아니라 일반 스크롤이다.)
+//
+//  (a) [보강] Android WebView가 자체 오버스크롤 글로우/바운스를 우리보다 먼저 가져가며
+//      touchcancel을 보내면, 예전 코드는 touchcancel을 touchend와 똑같이 처리해 즉시
+//      복귀시켰다. preventDefault(passive:false로 등록됨, 당김이 확정된 순간부터 호출)에
+//      더해 pulling이 확정되면 대상 요소의 touch-action을 'none'으로 바꿔 네이티브가
+//      이 터치 시퀀스를 아예 못 가져가게 막았다. 그래도 touchcancel이 오면(진짜 해석 불가
+//      상황 — 전화 수신, 시스템 제스처 등) 곧장 리셋하지 않고 짧은 유예(CANCEL_GRACE_MS)
+//      동안 pull 값을 얼려 둔다 — 그 사이 같은 손가락이 새 touchstart로 이어지면(일부
+//      WebView가 실제로 이렇게 한다) 이어서 당기는 것으로 보고, 유예가 끝나도록 아무 입력이
+//      없으면 그때 최종 판정을 내린다.
+//
+// 컨테이너의 `overscroll-behavior`(PullToRefresh.jsx의 overscroll-y-none)도 함께 봐야
+// 한다 — 네이티브 바운스 자체를 CSS 레벨에서 끈다.
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useMotionValue, animate } from 'framer-motion';
 import { showToast } from '../utils/osFunction';
@@ -27,6 +54,11 @@ const clamp = (v, min, max) => Math.min(max, Math.max(min, v));
 // 그 터치 시퀀스의 합성 click을 만들지 않음). 이 슬롭 안에서는 pulling으로 전환하지도,
 // preventDefault도 호출하지 않는다 — 순수한 탭은 그대로 브라우저 기본 클릭 경로를 탄다.
 const TAP_SLOP = 6;
+
+// touchcancel 뒤 짧은 유예 — 이 시간 안에 같은 손가락이 새 touchstart로 이어지면
+// "아직 안 뗐다"로 보고 pull을 이어간다. 너무 길면 진짜로 뗀 경우 인디케이터가
+// 늦게 반응하는 것처럼 보이므로 사람이 인지하기 어려운 수준(수백 ms 이내)으로 둔다.
+const CANCEL_GRACE_MS = 220;
 
 // 버튼/링크/폼 요소 위에서 시작한 터치는 애초에 당김 제스처 후보에서 제외한다 —
 // 스크롤 최상단에 버튼이 있는 화면(홈 CTA 등)에서 버튼을 누르자마자 당김이 가로채는
@@ -60,13 +92,31 @@ export function usePullToRefresh({
     setPhase(p);
   }, []);
 
-  const gestureRef = useRef({ active: false, pulling: false, startY: 0, startX: 0 });
+  // touchId    — 이 제스처를 시작한 손가락의 identifier. 멀티터치 중 다른 손가락의
+  //              move/end/cancel을 우리 제스처로 착각하지 않기 위해 고정해 둔다.
+  // cancelling — touchcancel을 받고 최종 판정을 유예 중인 상태(위 (a) 설명 참고).
+  const gestureRef = useRef({
+    active: false, pulling: false, cancelling: false, startY: 0, startX: 0, touchId: null,
+  });
   const animRef = useRef(null);
+  const graceTimerRef = useRef(null);
 
   const stopAnim = useCallback(() => {
     animRef.current?.stop?.();
     animRef.current = null;
   }, []);
+
+  const clearGraceTimer = useCallback(() => {
+    if (graceTimerRef.current) {
+      window.clearTimeout(graceTimerRef.current);
+      graceTimerRef.current = null;
+    }
+  }, []);
+
+  const clearTouchAction = useCallback(() => {
+    const el = scrollRef?.current;
+    if (el) el.style.touchAction = '';
+  }, [scrollRef]);
 
   const snapTo = useCallback((value, springOpts = {}) => {
     stopAnim();
@@ -82,11 +132,16 @@ export function usePullToRefresh({
   const reset = useCallback(() => {
     gestureRef.current.active = false;
     gestureRef.current.pulling = false;
+    gestureRef.current.cancelling = false;
+    clearGraceTimer();
+    clearTouchAction();
     snapTo(0);
     setPhaseSafe('idle');
-  }, [snapTo, setPhaseSafe]);
+  }, [snapTo, setPhaseSafe, clearGraceTimer, clearTouchAction]);
 
   const runRefresh = useCallback(async () => {
+    clearGraceTimer();
+    clearTouchAction();
     setPhaseSafe('refreshing');
     snapTo(threshold, { stiffness: 520, damping: 28 });
     const startedAt = Date.now();
@@ -103,7 +158,14 @@ export function usePullToRefresh({
         window.setTimeout(() => reset(), 420);
       }, wait);
     }
-  }, [onRefresh, threshold, minShowMs, errorMessage, snapTo, setPhaseSafe, reset]);
+  }, [onRefresh, threshold, minShowMs, errorMessage, snapTo, setPhaseSafe, reset, clearGraceTimer, clearTouchAction]);
+
+  // touchend/touchcancel(유예 종료)에서 공통으로 쓰는 최종 판정 — threshold를 넘었으면
+  // 새로고침, 아니면 원위치. "확실히 끝났다"고 확인된 시점에만 불린다.
+  const resolveGesture = useCallback(() => {
+    if (pull.get() >= threshold) runRefresh();
+    else reset();
+  }, [pull, threshold, runRefresh, reset]);
 
   useEffect(() => {
     const el = scrollRef?.current;
@@ -112,30 +174,66 @@ export function usePullToRefresh({
     const onTouchStart = (e) => {
       if (phaseRef.current === 'refreshing' || phaseRef.current === 'done') return;
       if (e.touches.length !== 1) return;
-      if (el.scrollTop > 0) { gestureRef.current.active = false; return; }
+
+      const g = gestureRef.current;
+      // touchcancel 유예 중(원인 a) — 같은 동작이 새 touchstart로 이어졌다. 손가락
+      // identifier는 바뀌어도(시스템이 터치를 재발급했을 뿐) pull 값은 그대로 이어가고,
+      // 다음 dy 계산이 지금 pull과 맞아떨어지도록 startY만 역산해 맞춘다.
+      if (g.active && g.cancelling) {
+        clearGraceTimer();
+        g.cancelling = false;
+        g.pulling = true;
+        g.touchId = e.touches[0].identifier;
+        g.startY = e.touches[0].clientY - (pull.get() / 0.5);
+        g.startX = e.touches[0].clientX;
+        return;
+      }
+
+      if (el.scrollTop > 0) { g.active = false; return; }
       // 버튼 등 인터랙티브 요소 위에서 시작한 터치는 당김 후보에서 제외 — 탭이 당김에
       // 먹혀 click이 씹히는 사고를 막는다(아래 TAP_SLOP 주석 참고).
-      if (e.target?.closest?.(INTERACTIVE_SELECTOR)) { gestureRef.current.active = false; return; }
+      if (e.target?.closest?.(INTERACTIVE_SELECTOR)) { g.active = false; return; }
       stopAnim();
       gestureRef.current = {
         active: true,
         pulling: false,
+        cancelling: false,
         startY: e.touches[0].clientY,
         startX: e.touches[0].clientX,
+        touchId: e.touches[0].identifier,
       };
     };
 
     const onTouchMove = (e) => {
       const g = gestureRef.current;
-      if (!g.active || phaseRef.current === 'refreshing' || phaseRef.current === 'done') return;
-      const touch = e.touches[0];
+      if (!g.active || g.cancelling) return;
+      if (phaseRef.current === 'refreshing' || phaseRef.current === 'done') return;
+
+      // 시작한 손가락만 추적한다 — 도중에 다른 손가락이 스치거나 겹쳐 닿아도(멀티터치)
+      // 그 손가락의 움직임을 우리 제스처로 착각하지 않는다(원인 c).
+      const touch = Array.from(e.touches).find((t) => t.identifier === g.touchId);
+      if (!touch) return;
+
       const dy = touch.clientY - g.startY;
       const dx = touch.clientX - g.startX;
 
-      // 위로 스와이프했거나 이미 스크롤이 내려간 상태 — 일반 스크롤에 맡기고 제스처를 접는다
       if (dy <= 0 || el.scrollTop > 0) {
-        if (g.pulling) reset();
-        g.active = false;
+        if (!g.pulling) {
+          // 아직 "당김"으로 확정되지 않았다 — 후보를 접고 일반 스크롤/탭에 맡긴다.
+          g.active = false;
+          return;
+        }
+        if (el.scrollTop > 0) {
+          // 실제 스크롤이 시작됐다 — 더 이상 pull 제스처가 아니다. 여기서만 완전히 접는다.
+          reset();
+          g.active = false;
+          return;
+        }
+        // 이미 당기는 중에 손가락이 시작점 위로 살짝 올라간 것뿐이다(원인 b) — 제스처를
+        // 끝내지 않고 pull만 0으로 줄인다. 손을 뗄 때(touchend)만 최종 판정을 내린다.
+        if (e.cancelable) e.preventDefault();
+        pull.set(0);
+        if (phaseRef.current !== 'pulling') setPhaseSafe('pulling');
         return;
       }
       // 가로 이동이 세로보다 크면 가로 스와이프 — 가로채지 않는다(뒤로가기 등)
@@ -149,7 +247,13 @@ export function usePullToRefresh({
         return;
       }
 
-      g.pulling = true;
+      if (!g.pulling) {
+        g.pulling = true;
+        // 당김이 확정된 순간부터 이 요소의 네이티브 터치 처리(스크롤·오버스크롤 글로우)를
+        // 완전히 끈다 — Android WebView가 제스처를 가로채며 touchcancel을 보내는 사고를
+        // 줄인다(원인 a). 확정 전(TAP_SLOP 이내)에는 건드리지 않아 탭이 그대로 통한다.
+        el.style.touchAction = 'none';
+      }
       // 세로 당김으로 확정된 순간에만 기본 동작(브라우저/WebView 오버스크롤 바운스)을 막는다
       if (e.cancelable) e.preventDefault();
 
@@ -163,27 +267,68 @@ export function usePullToRefresh({
       }
     };
 
-    const onTouchEnd = () => {
+    const onTouchEnd = (e) => {
       const g = gestureRef.current;
       if (!g.active) return;
+      // 우리가 추적하던 손가락이 뗀 것인지 확인한다 — 다른 손가락이 뗀 것이면 무시하고
+      // 우리 손가락은 계속 추적한다(원인 c).
+      const lifted = Array.from(e.changedTouches).some((t) => t.identifier === g.touchId);
+      if (!lifted) return;
+
+      clearGraceTimer();
       g.active = false;
-      if (!g.pulling) return;
+      g.cancelling = false;
+      if (!g.pulling) { clearTouchAction(); return; }
       g.pulling = false;
-      if (pull.get() >= threshold) runRefresh();
-      else reset();
+      resolveGesture();
+    };
+
+    const onTouchCancel = (e) => {
+      const g = gestureRef.current;
+      if (!g.active) return;
+      const cancelled = Array.from(e.changedTouches).some((t) => t.identifier === g.touchId);
+      if (!cancelled) return;
+
+      if (!g.pulling) {
+        // 아직 당김으로 확정되지 않은 상태에서 취소됐다 — 보여줄 pull이 없으니 그냥 접는다.
+        g.active = false;
+        g.cancelling = false;
+        clearTouchAction();
+        return;
+      }
+
+      // 진짜로 손을 뗀 것인지, 시스템이 잠깐 가로챈 것뿐인지 touchcancel만으로는 알 수
+      // 없다(원인 a — 위 파일 상단 설명 참고). pull 값을 그 자리에서 얼려 두고 짧은 유예
+      // 동안 기다린다 — 그 사이 onTouchStart가 "이어받기"로 들어오면 계속 당겨지고,
+      // 유예가 끝나도록 아무 입력이 없으면 그때 최종 판정(복귀/새로고침)을 내린다.
+      g.pulling = false;
+      g.cancelling = true;
+      clearGraceTimer();
+      graceTimerRef.current = window.setTimeout(() => {
+        graceTimerRef.current = null;
+        // 그 사이 onTouchStart가 이어받았다면 cancelling이 이미 false다 — 손 안 뗀 것으로
+        // 확정됐으니 여기서는 아무 것도 하지 않는다.
+        if (!gestureRef.current.cancelling) return;
+        gestureRef.current.active = false;
+        gestureRef.current.cancelling = false;
+        clearTouchAction();
+        resolveGesture();
+      }, CANCEL_GRACE_MS);
     };
 
     el.addEventListener('touchstart', onTouchStart, { passive: true });
     el.addEventListener('touchmove', onTouchMove, { passive: false });
     el.addEventListener('touchend', onTouchEnd, { passive: true });
-    el.addEventListener('touchcancel', onTouchEnd, { passive: true });
+    el.addEventListener('touchcancel', onTouchCancel, { passive: true });
     return () => {
       el.removeEventListener('touchstart', onTouchStart);
       el.removeEventListener('touchmove', onTouchMove);
       el.removeEventListener('touchend', onTouchEnd);
-      el.removeEventListener('touchcancel', onTouchEnd);
+      el.removeEventListener('touchcancel', onTouchCancel);
+      clearGraceTimer();
+      el.style.touchAction = '';
     };
-  }, [scrollRef, disabled, threshold, maxPull, pull, runRefresh, reset, stopAnim, setPhaseSafe]);
+  }, [scrollRef, disabled, threshold, maxPull, pull, resolveGesture, reset, stopAnim, setPhaseSafe, clearGraceTimer, clearTouchAction]);
 
   // 비활성화되면(예: 탭 전환·검색 모드 진입 등 호출부가 막을 때) 진행 중이던 제스처를 리셋
   useEffect(() => {
