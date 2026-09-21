@@ -118,14 +118,36 @@ const clamp = (v, min, max) => Math.min(max, Math.max(min, v));
 const CANCEL_SAFETY_MS = 3000;
 
 // 디버그 오버레이(ptr.debug)에 남기는 최근 이벤트 줄 수
-const DEBUG_LOG_LIMIT = 8;
+const DEBUG_LOG_LIMIT = 20;
 
-const isPtrDebugEnabled = () => {
+// 설정 화면 토글(ptr.debug)이 켜지고/꺼지는 순간 같은 탭 안에서 훅과 오버레이 둘 다
+// 즉시 반영하기 위한 커스텀 이벤트 — localStorage의 'storage' 이벤트는 같은 탭에서는
+// 발생하지 않으므로(다른 탭/윈도우에서 바꿀 때만 발생), setPtrDebugEnabled가 값을 쓴
+// 직후 이 이벤트를 직접 쏜다.
+export const PTR_DEBUG_EVENT = 'ptr-debug-change';
+
+export const isPtrDebugEnabled = () => {
   try {
     return typeof window !== 'undefined' && window.localStorage.getItem('ptr.debug') === '1';
   } catch {
     // 일부 WebView는 localStorage 접근이 막혀 있을 수 있다 — 그런 경우 그냥 디버그를 끈다.
     return false;
+  }
+};
+
+// 설정 화면(SettingsNewFullSheet)의 "당겨서 새로고침 진단 표시" 토글이 호출한다 —
+// localStorage에 쓰고 PTR_DEBUG_EVENT를 쏴서 새로고침 없이 오버레이가 켜지고/꺼지게 한다.
+export const setPtrDebugEnabled = (enabled) => {
+  try {
+    if (enabled) window.localStorage.setItem('ptr.debug', '1');
+    else window.localStorage.removeItem('ptr.debug');
+  } catch {
+    // localStorage 접근 불가 — 이벤트만 쏴서 이번 세션 동안은 동작하게 한다.
+  }
+  try {
+    window.dispatchEvent(new CustomEvent(PTR_DEBUG_EVENT, { detail: { enabled } }));
+  } catch {
+    // CustomEvent 미지원 환경(구형 WebView) — 조용히 무시, 다음 마운트에서 localStorage로 반영.
   }
 };
 
@@ -171,14 +193,28 @@ export function usePullToRefresh({
 
   // 디버그 오버레이용 이벤트 로그 — localStorage.setItem('ptr.debug','1')일 때만 쌓인다.
   // 껴 있을 때는 setState 자체를 안 타므로(logDebug 안에서 바로 return) 평소 성능에는
-  // 영향이 없다.
+  // 영향이 없다. 설정 화면 토글이 실행 중에 값을 바꿀 수 있으므로 PTR_DEBUG_EVENT를 듣고
+  // 즉시 갱신하고(아래 useEffect), 그와 별개로 매 제스처 시작(onTouchStart) 시점에도 한 번 더
+  // localStorage를 다시 읽는다 — 이벤트를 놓쳤거나(오래된 WebView) 다른 화면에서 훅이 새로
+  // 마운트된 경우에도 최신 값을 보장한다.
   const debugEnabledRef = useRef(isPtrDebugEnabled());
+  useEffect(() => {
+    const onDebugChange = (e) => { debugEnabledRef.current = !!e.detail?.enabled; };
+    window.addEventListener(PTR_DEBUG_EVENT, onDebugChange);
+    return () => window.removeEventListener(PTR_DEBUG_EVENT, onDebugChange);
+  }, []);
   const [debugLog, setDebugLog] = useState([]);
+  // 제스처가 실제로 시작된 시각 — 로그 각 줄에 "손을 댄 뒤 몇 ms가 지났는지"를 남기기 위함
+  // (실기기 로그만 보고도 "1400ms째 당긴 채 멈춰 있다가 풀렸다" 같은 타이밍을 바로 읽을 수
+  // 있게 한다). touchcancel 뒤 "이어받기"로 이어지는 동안은 원래 시작 시각을 유지한다.
+  const gestureStartAtRef = useRef(null);
   const logDebug = useCallback((line) => {
     if (!debugEnabledRef.current) return;
+    const elapsed = gestureStartAtRef.current != null ? Date.now() - gestureStartAtRef.current : 0;
+    const withElapsed = `+${elapsed}ms ${line}`;
     setDebugLog((prev) => {
       const next = prev.length >= DEBUG_LOG_LIMIT ? prev.slice(prev.length - DEBUG_LOG_LIMIT + 1) : prev.slice();
-      next.push(line);
+      next.push(withElapsed);
       return next;
     });
   }, []);
@@ -271,6 +307,10 @@ export function usePullToRefresh({
       if (phaseRef.current === 'refreshing' || phaseRef.current === 'done') return;
       if (e.touches.length !== 1) return;
 
+      // 매 제스처 시작마다 ptr.debug 플래그를 다시 읽는다 — 설정 화면에서 토글을 켜고
+      // 바로 이어서 당겨도(페이지 새로고침 없이) 그 제스처부터 로그가 남는다.
+      debugEnabledRef.current = isPtrDebugEnabled();
+
       const g = gestureRef.current;
       // touchcancel 유예 중(원인 a) — 같은 동작이 새 touchstart로 이어졌다. 손가락
       // identifier는 바뀌어도(시스템이 터치를 재발급했을 뿐) pull 값은 그대로 이어가고,
@@ -292,6 +332,7 @@ export function usePullToRefresh({
       // 탭 보호를 맡는다(2026-09-21 보완 — "진짜 원인" 절 참고).
       if (e.target?.closest?.(INTERACTIVE_SELECTOR)) { g.active = false; return; }
       stopAnim();
+      gestureStartAtRef.current = Date.now();
       gestureRef.current = {
         active: true,
         // decided — 방향(아래로·세로 우세) 판정 여부. pulling(시각적 확정)과 분리했다 —

@@ -90,7 +90,7 @@ import {
   useReducedMotion, animate, AnimatePresence,
 } from 'framer-motion';
 import { Check } from '@phosphor-icons/react';
-import { usePullToRefresh } from '../../hooks/usePullToRefresh';
+import { usePullToRefresh, isPtrDebugEnabled, PTR_DEBUG_EVENT } from '../../hooks/usePullToRefresh';
 import { SPRING } from '../../lib/feel';
 
 // 링 지오메트리 — 배경 칩(40px) 안에 30px 링을 둔다(예전 물방울 칩과 비슷한 크기감).
@@ -259,8 +259,10 @@ const PullToRefreshIndicator = ({ pull, phase, threshold, maxPull }) => {
  */
 /**
  * 디버그 오버레이 — `localStorage.setItem('ptr.debug','1')`일 때만 렌더된다(기본 꺼짐).
- * usePullToRefresh가 남긴 최근 이벤트(최대 8줄)를 화면 좌상단에 반투명 박스로 보여준다 —
- * 실기기에서 "왜 풀렸는지"(reset의 reason)를 콘솔 연결 없이 바로 읽기 위한 용도다.
+ * usePullToRefresh가 남긴 최근 이벤트(최대 20줄, 각 줄 앞에 제스처 시작 후 경과 `+Nms`)를
+ * 화면 좌상단에 반투명 박스로 보여준다 — 실기기에서 "왜 풀렸는지"(reset의 reason)를 콘솔
+ * 연결 없이 바로 읽기 위한 용도다. 설정 화면(SettingsNewFullSheet)의 "당겨서 새로고침
+ * 진단 표시" 토글이 PTR_DEBUG_EVENT를 쏘면 새로고침 없이 즉시 나타나고/사라진다.
  * 디자인 토큰만 쓴다(하드코딩 색상 금지) — layout-black/white 토큰을 다크와 무관하게
  * 항상 어두운 칩으로 고정해 어느 배경 위에서도 로그 텍스트가 읽히게 한다.
  *
@@ -336,17 +338,16 @@ const PullToRefresh = forwardRef(function PullToRefresh(
     scrollRef, onRefresh, disabled, threshold, maxPull, minShowMs, errorMessage,
   });
 
-  // ptr.debug 플래그는 껐다 켜도 새로고침 전까지는 안 바뀐다고 가정하고 마운트 시 한 번만
-  // 읽는다 — 매 렌더 localStorage를 읽지 않기 위함. 훅 쪽 debugLog도 같은 플래그로 게이팅돼
-  // 있어 플래그가 꺼져 있으면 log는 항상 빈 배열이라 이 오버레이 자체도 사실상 아무 일도
-  // 안 한다.
-  const [debugEnabled] = useState(() => {
-    try {
-      return typeof window !== 'undefined' && window.localStorage.getItem('ptr.debug') === '1';
-    } catch {
-      return false;
-    }
-  });
+  // ptr.debug 플래그 — 마운트 시 한 번 읽어 초기값으로 삼되, 설정 화면 토글이 쏘는
+  // PTR_DEBUG_EVENT를 들어 실시간으로 갱신한다(새로고침 없이 오버레이가 켜지고/꺼진다).
+  // 훅 쪽 debugLog도 같은 플래그로 게이팅돼 있어 플래그가 꺼져 있으면 log는 항상 빈
+  // 배열이라 이 오버레이 자체도 사실상 아무 일도 안 한다.
+  const [debugEnabled, setDebugEnabled] = useState(() => isPtrDebugEnabled());
+  useEffect(() => {
+    const onDebugChange = (e) => setDebugEnabled(!!e.detail?.enabled);
+    window.addEventListener(PTR_DEBUG_EVENT, onDebugChange);
+    return () => window.removeEventListener(PTR_DEBUG_EVENT, onDebugChange);
+  }, []);
 
   // fixedHeader 높이 자동 측정 — position:fixed는 문서 흐름을 차지하지 않으므로, 콘텐츠와
   // 인디케이터를 그 아래로 밀어내려면 실제 렌더 높이를 알아야 한다. 호출부가 상태바+헤더

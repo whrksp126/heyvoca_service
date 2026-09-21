@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import {
   Coins, HandHeart, CircleHalf, Quotes, SpeakerHigh, Bell,
-  Plant, Drop, Flask, FileText, Lock, Info, Sparkle,
+  Plant, Drop, Flask, FileText, Lock, Info, Sparkle, Bug,
 } from '@phosphor-icons/react';
 import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
 import { useUser } from '../../context/UserContext';
@@ -10,6 +10,7 @@ import { useExampleSettings } from '../../context/ExampleSettingsContext';
 import { openExternalUrl, parseAppVersion, isAppVersionAtLeast } from '../../utils/osFunction';
 import { readFarmSettings, isCareNotifyOn } from '../../utils/farmSettings';
 import { haptic, isHapticsEnabled, setHapticsEnabled } from '../../lib/feel';
+import { isPtrDebugEnabled, setPtrDebugEnabled } from '../../hooks/usePullToRefresh';
 import { SheetBar, GroupLabel, SettingRow } from './settingsUi';
 
 // '실험실'(채팅으로 학습 등 네이티브 기능)을 지원하는 최소 앱 버전.
@@ -51,6 +52,17 @@ const SettingsNewFullSheet = () => {
     setHapticsEnabled(next);
     setHapticsOn(next);
     if (next) haptic('selection'); // 켜지는 순간에만 — 꺼질 땐 이미 꺼진 상태라 울리지 않는다
+  };
+
+  // 당겨서 새로고침 진단 표시 — localStorage 'ptr.debug' 하나로 오버레이 on/off만 오간다
+  // (hooks/usePullToRefresh.js). 앱(WebView)에서는 localStorage를 직접 못 만지므로 실기기
+  // QA 때 이 토글로만 켤 수 있다. setPtrDebugEnabled가 값을 쓰는 즉시 PTR_DEBUG_EVENT를 쏴서
+  // 이미 화면에 떠 있는 PullToRefresh 오버레이도 새로고침 없이 바로 반응한다.
+  const [ptrDebugOn, setPtrDebugOn] = useState(() => isPtrDebugEnabled());
+  const togglePtrDebug = () => {
+    const next = !ptrDebugOn;
+    setPtrDebugEnabled(next);
+    setPtrDebugOn(next);
   };
 
   const openSheet = (Component) => {
@@ -115,6 +127,13 @@ const SettingsNewFullSheet = () => {
           sub="탭·정답·성장 순간의 진동"
           toggle={hapticsOn}
           onClick={toggleHaptics}
+        />
+        <SettingRow
+          icon={<Bug size={iconSize} />}
+          title="당겨서 새로고침 진단 표시"
+          sub="화면 좌상단에 제스처 로그를 띄워요"
+          toggle={ptrDebugOn}
+          onClick={togglePtrDebug}
         />
 
         {/* ── 학습 관리 — 새 단어 수만 있던 자리에 복습량이 붙는다 (시안 1절 ③) ── */}
