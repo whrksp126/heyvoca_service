@@ -174,6 +174,33 @@ body {
   overflow: hidden;
 }
 
+/* 바텀시트가 열려 있는 동안(NewBottomSheetProvider 가 <html> 에 붙임) 아래 레이어를 잠근다.
+   증상: Android WebView 에서 풀시트(단어장 내부 등) 위에 바텀시트를 열고 바텀시트 콘텐츠를
+   스크롤하면 그 아래 풀시트 목록이 같이 스크롤됐다. 두 시트는 서로 다른 body 포털이라 DOM
+   스크롤 체이닝이 아니다 — Chrome(Android) 의 ImplicitRootScroller 가 원인이다:
+   <html> 이 overflow:hidden 이고, 화면을 정확히 꽉 채운 overflow-y:auto 요소가 하나뿐이면
+   (풀시트 헤더가 absolute 라 목록 컨테이너가 100vw×100vh) 그 요소를 뷰포트의 root scroller 로
+   승격한다(blink RootScrollerController::IsValidImplicit). 그러면 바텀시트 콘텐츠가
+   최상단/최하단이거나 스크롤할 게 없어 제스처가 뷰포트까지 체이닝될 때 그 목록이 스크롤된다.
+   #root 안 페이지 스크롤러는 #root 가 overflow:hidden 이라 승격 후보에서 빠지지만, 풀시트는
+   body 직속 포털이라 후보가 된다.
+
+   왜 touch-action / overscroll-behavior 가 아니라 pointer-events 인가:
+   · touch-action 은 "터치가 시작된 요소와 그 조상"에서만 계산된다(blink
+     EffectiveTouchActionAtPointerDown). 바텀시트에서 시작한 터치에 풀시트는 조상이 아니라
+     아래 레이어에 touch-action:none 을 줘도 아무 효과가 없다.
+   · overscroll-behavior 는 "그 스크롤러에서 바깥으로" 나가는 체이닝만 막는다. 바깥에서
+     "안으로" 들어오는 뷰포트 스크롤은 못 막는다.
+   · pointer-events:none 은 승격 조건(VisibleToHitTesting) 자체를 깨서 root scroller 를
+     문서로 되돌리고(<html> overflow:hidden → 뷰포트는 사용자 스크롤 불가), 컴포지터
+     히트테스트 대상에서도 빠진다. 레이아웃에는 손대지 않아 스크롤 위치·sticky·스크롤바 폭이
+     그대로다. 바텀시트 백드롭(z-1000)이 어차피 아래 레이어의 입력을 전부 가리고 있어
+     동작 변화도 없다. 바텀시트 트리(z-1001)는 body 직속이라 영향받지 않는다. */
+html.bottom-sheet-open #root,
+html.bottom-sheet-open [data-newfullsheet-root] {
+  pointer-events: none;
+}
+
 /* 메인 콘텐츠 영역 스크롤 처리를 위한 클래스 */
 .scroll-container {
   flex: 1;

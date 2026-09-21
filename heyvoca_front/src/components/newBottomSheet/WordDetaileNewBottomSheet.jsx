@@ -254,8 +254,10 @@ const WordDetaileNewBottomSheet = ({ vocabularyId, id }) => {
   const shovelCnt = items?.SHOVEL ?? 0;
   const nutrientCnt = items?.NUTRIENT ?? 0;
 
+  // overscroll-y-contain — 최상단/최하단에서 계속 당겨도 스크롤이 시트 밖(뷰포트 →
+  // 아래 풀시트 목록)으로 체이닝되지 않는다. NewBottomSheetProvider 주석 참고.
   return (
-    <div className="max-h-[90vh] overflow-y-auto px-[20px] pt-[8px] pb-[22px]">
+    <div className="max-h-[90vh] overflow-y-auto overscroll-y-contain px-[20px] pt-[8px] pb-[22px]">
       <span className="block w-[38px] h-[4px] mx-auto mb-[10px] rounded-full bg-layout-gray-100 dark:bg-[#3A3A3A]" />
 
       {/*

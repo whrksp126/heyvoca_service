@@ -63,6 +63,8 @@ export const NewFullSheetProvider = () => {
       {(visible || phase === 'exit') && (
         <motion.div
           key="newFullSheet-backdrop"
+          // 바텀시트가 열려 있는 동안 index.css(.bottom-sheet-open)가 이 루트를 잠근다
+          data-newfullsheet-root=""
           className="
             fixed z-50 
             flex items-center justify-center 
