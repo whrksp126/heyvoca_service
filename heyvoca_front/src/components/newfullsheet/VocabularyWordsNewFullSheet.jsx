@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
-import { CaretLeft, Plus, CaretUp, Lock, DotsThreeVertical } from '@phosphor-icons/react';
+import { CaretLeft, Plus, CaretUp, Lock, DotsThreeVertical, CloudSlash, ArrowClockwise, BookOpen, Plant } from '@phosphor-icons/react';
 
 import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
 import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
@@ -32,6 +32,39 @@ const ITEM_HEIGHT = 58;       // 시안 §5 — 행 높이 58px 고정
 // 목록 위에 얹힌 것들의 높이 합(히어로 341 + 칩줄 72). 윈도우 렌더링이 스크롤 위치를
 // 행 index 로 바꿀 때 이만큼을 먼저 빼야 엉뚱한 구간을 그린다.
 const LIST_OFFSET = 413;
+const SKELETON_ROW_COUNT = 6; // 로딩 중 보여줄 스켈레톤 행 개수
+
+/**
+ * 빈 상태 공용 원형 아이콘 컨테이너 — 불러오기 실패 · 제공 단어장 빈 상태 · 내 단어장 빈 상태가 공유한다.
+ */
+const EmptyIcon = ({ icon: Icon }) => (
+  <div
+    className="
+      flex items-center justify-center shrink-0
+      w-[72px] h-[72px] rounded-full mb-[16px]
+      bg-layout-gray-50 dark:bg-layout-gray-dark
+    "
+  >
+    <Icon size={40} weight="light" className="text-layout-gray-300" />
+  </div>
+);
+
+/**
+ * 단어 목록 로딩 중 스켈레톤 한 줄 — WordRow와 같은 높이(ITEM_HEIGHT)를 차지해
+ * 데이터가 도착했을 때 레이아웃이 튀지 않게 한다.
+ */
+const WordRowSkeleton = () => (
+  <div
+    className="flex items-center gap-[11px] w-full h-[58px] shrink-0 animate-pulse"
+    style={{ height: ITEM_HEIGHT }}
+  >
+    <div className="shrink-0 w-[52px] h-[52px] rounded-full bg-layout-gray-50 dark:bg-layout-gray-dark" />
+    <span className="flex-1 min-w-0 flex flex-col gap-[6px]">
+      <span className="block h-[14px] w-[60%] rounded-full bg-layout-gray-50 dark:bg-layout-gray-dark" />
+      <span className="block h-[11px] w-[40%] rounded-full bg-layout-gray-50 dark:bg-layout-gray-dark" />
+    </span>
+  </div>
+);
 
 /**
  * 단어장 안 — 단어 목록. 시안 vocabooks §1② · §4 · §5.
@@ -44,10 +77,11 @@ const VocabularyWordsNewFullSheet = ({ id }) => {
   "use memo";
 
   const { popNewFullSheet } = useNewFullSheetActions();
-  const { isVocabularySheetsLoading, getVocabularySheet } = useVocabulary();
+  const { isVocabularySheetsLoading, getVocabularySheet, userDictionaryError, retryUserDictionary } = useVocabulary();
   const { pushNewBottomSheet } = useNewBottomSheetActions();
 
   const vocabularySheet = getVocabularySheet(id);
+  const [isRetrying, setIsRetrying] = useState(false);
 
   const [filter, setFilter] = useState('all'); // all | today | wilted | unverified
   const [displayCount, setDisplayCount] = useState(ITEMS_PER_PAGE);
@@ -218,11 +252,14 @@ const VocabularyWordsNewFullSheet = ({ id }) => {
   if (isVocabularySheetsLoading) {
     return (
       <div className="
-        flex items-center justify-center h-full
+        flex flex-col h-full
         sm:max-w-[500px] sm:h-[90vh] sm:rounded-[20px] sm:overflow-hidden
         bg-layout-white dark:bg-layout-black
+        px-[16px] pt-[64px]
       ">
-        <p>로딩 중...</p>
+        {Array.from({ length: SKELETON_ROW_COUNT }).map((_, i) => (
+          <WordRowSkeleton key={i} />
+        ))}
       </div>
     );
   }
@@ -232,6 +269,23 @@ const VocabularyWordsNewFullSheet = ({ id }) => {
 
   const isPurchasedBook = vocabularySheet?.vocaBookStoreId != null;
   const totalCount = words?.length || 0;
+  // 서버가 파악하고 있는 이 단어장의 단어 수(vocaBooks API `vocaCount`) — 실제로는 단어가
+  // 있는데 GET /vocaIndexs 요청이 실패해 userDictionary가 비어 있는 상황을 가려낸다.
+  const serverVocaCount = Number(vocabularySheet?.vocaCount) || 0;
+  // 불러오기 실패: 사전 로드 자체가 에러였거나, 제공 단어장인데 서버는 단어가 있다고
+  // 하는데 화면엔 0개인 모순 상황 — 후자는 "진짜 빈 단어장"이 아니라 요청 실패다.
+  const isLoadFailed = !!userDictionaryError
+    || (isPurchasedBook && serverVocaCount > 0 && totalCount === 0 && !isVocabularySheetsLoading);
+
+  const handleRetryClick = async () => {
+    vibrate({ duration: 5 });
+    setIsRetrying(true);
+    try {
+      await retryUserDictionary();
+    } finally {
+      setIsRetrying(false);
+    }
+  };
 
   const handleAddClick = () => {
     vibrate({ duration: 5 });
@@ -419,18 +473,63 @@ const VocabularyWordsNewFullSheet = ({ id }) => {
         </div>
 
         <div className="flex flex-col px-[16px] pb-[20px]">
-          {totalCount === 0 ? (
+          {isRetrying ? (
+            <div className="flex flex-col pt-[8px]">
+              {Array.from({ length: SKELETON_ROW_COUNT }).map((_, i) => (
+                <WordRowSkeleton key={i} />
+              ))}
+            </div>
+          ) : isLoadFailed ? (
             <div className="flex flex-col items-center pt-[40px]">
-              <div
-                className="text-center text-[16px] leading-[1.4] tracking-[-0.32px] mb-[20px]"
+              <EmptyIcon icon={CloudSlash} />
+              <p
+                className="m-0 mb-[4px] text-[16px] font-[700] tracking-[-0.32px] text-layout-black dark:text-layout-white"
                 style={{ fontFamily: "'Pretendard Variable', sans-serif" }}
               >
-                {isPurchasedBook ? (
-                  <p className="m-0 font-[400] text-layout-black dark:text-layout-white">
-                    이 단어장에는 단어가 없어요.
-                  </p>
-                ) : (
-                  <>
+                단어를 불러오지 못했어요
+              </p>
+              <p
+                className="m-0 mb-[20px] text-[13px] font-[400] tracking-[-0.02em] text-layout-gray-300"
+                style={{ fontFamily: "'Pretendard Variable', sans-serif" }}
+              >
+                네트워크 상태를 확인하고 다시 시도해 주세요
+              </p>
+
+              <motion.button
+                type="button"
+                onClick={handleRetryClick}
+                disabled={isRetrying}
+                whileTap={{ scale: 0.95 }}
+                className="
+                  flex items-center justify-center gap-[5px]
+                  h-[40px] px-[16px] rounded-[8px]
+                  bg-primary-main-600
+                "
+                aria-label="다시 불러오기"
+              >
+                <ArrowClockwise size={16} weight="bold" className="text-layout-white dark:text-layout-black" />
+                <span className="text-[14px] font-[700] text-layout-white dark:text-layout-black">
+                  다시 불러오기
+                </span>
+              </motion.button>
+            </div>
+          ) : totalCount === 0 ? (
+            <div className="flex flex-col items-center pt-[40px]">
+              <EmptyIcon icon={isPurchasedBook ? BookOpen : Plant} />
+
+              {isPurchasedBook ? (
+                <p
+                  className="m-0 text-center text-[16px] font-[400] leading-[1.4] tracking-[-0.32px] text-layout-black dark:text-layout-white"
+                  style={{ fontFamily: "'Pretendard Variable', sans-serif" }}
+                >
+                  이 단어장에는 단어가 없어요
+                </p>
+              ) : (
+                <>
+                  <div
+                    className="text-center text-[16px] leading-[1.4] tracking-[-0.32px] mb-[20px]"
+                    style={{ fontFamily: "'Pretendard Variable', sans-serif" }}
+                  >
                     <p className="m-0 font-[400] text-layout-black dark:text-layout-white">
                       아직 심은 단어가 없어요.
                     </p>
@@ -438,29 +537,25 @@ const VocabularyWordsNewFullSheet = ({ id }) => {
                       <span className="font-[700] text-primary-main-500">단어</span>
                       <span className="font-[400] text-layout-black dark:text-layout-white">를 추가해 밭을 채워 보세요.</span>
                     </p>
-                  </>
-                )}
-              </div>
+                  </div>
 
-              <motion.button
-                onClick={handleAddClick}
-                whileTap={{ scale: 0.95 }}
-                className={`
-                  flex items-center justify-center gap-[5px]
-                  w-[136px] h-[40px] rounded-[8px]
-                  ${isPurchasedBook ? 'bg-layout-gray-200' : 'bg-primary-main-600'}
-                `}
-                aria-label={isPurchasedBook ? '제공받은 단어장은 단어를 추가할 수 없어요' : '단어 추가하기'}
-              >
-                {isPurchasedBook ? (
-                  <Lock size={16} weight="light" className="text-layout-white dark:text-layout-black" />
-                ) : (
-                  <Plus size={16} weight="light" className="text-layout-white dark:text-layout-black" />
-                )}
-                <span className="text-[14px] font-[700] text-layout-white dark:text-layout-black">
-                  단어 추가하기
-                </span>
-              </motion.button>
+                  <motion.button
+                    onClick={handleAddClick}
+                    whileTap={{ scale: 0.95 }}
+                    className="
+                      flex items-center justify-center gap-[5px]
+                      w-[136px] h-[40px] rounded-[8px]
+                      bg-primary-main-600
+                    "
+                    aria-label="단어 추가하기"
+                  >
+                    <Plus size={16} weight="light" className="text-layout-white dark:text-layout-black" />
+                    <span className="text-[14px] font-[700] text-layout-white dark:text-layout-black">
+                      단어 추가하기
+                    </span>
+                  </motion.button>
+                </>
+              )}
             </div>
           ) : allDisplayedWords.length === 0 ? (
             <p className="pt-[40px] text-center text-[14px] font-[400] text-layout-gray-300">

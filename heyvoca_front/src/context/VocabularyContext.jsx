@@ -35,6 +35,9 @@ export const VocabularyProvider = ({ children }) => {
   const [vocaBooks, setVocaBooks] = useState([]);
   const [isUserDictionaryLoading, setIsUserDictionaryLoading] = useState(true);
   const [isVocaBooksLoading, setIsVocaBooksLoading] = useState(true);
+  // 사용자 사전 로드 실패 사유 — 네트워크 타임아웃 등으로 실패했을 때 "빈 단어장"과
+  // 구분해서 보여 주기 위한 상태. 성공하면 null로 되돌린다.
+  const [userDictionaryError, setUserDictionaryError] = useState(null);
 
   // Legacy loading states (mapped to new states or kept for compatibility)
   const [isVocabularySheetsLoading, setIsVocabularySheetsLoading] = useState(true);
@@ -149,15 +152,21 @@ export const VocabularyProvider = ({ children }) => {
           dictionaryMap[word.vocaIndexId] = word;
         });
         setUserDictionary(dictionaryMap);
+        setUserDictionaryError(null);
       } else {
         console.error('사용자 사전 로드 실패:', result);
+        setUserDictionaryError(result?.message || '사용자 사전을 불러오지 못했습니다.');
       }
     } catch (err) {
       console.error('fetchUserDictionary 오류:', err);
+      setUserDictionaryError('사용자 사전을 불러오지 못했습니다.');
     } finally {
       setIsUserDictionaryLoading(false);
     }
   }, []);
+
+  // 사용자 사전 재조회 — 로드 실패 화면의 "다시 불러오기" 버튼용 별칭
+  const retryUserDictionary = fetchUserDictionary;
 
   // [NEW] 단어장(Books) 데이터 불러오기
   const fetchVocaBooks = useCallback(async () => {
@@ -895,7 +904,9 @@ export const VocabularyProvider = ({ children }) => {
     vocaBooks,
     isUserDictionaryLoading,
     isVocaBooksLoading,
+    userDictionaryError,
     fetchUserDictionary,
+    retryUserDictionary,
     fetchVocaBooks,
     setUserDictionary, // 필요 시 외부에서 상태 업데이트용
     setVocaBooks,
