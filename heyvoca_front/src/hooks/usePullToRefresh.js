@@ -79,21 +79,35 @@
 //    deps가 빈 배열이라 완전히 안정적이다 — 즉 드래그 중 이 훅의 메인 이펙트가 onRefresh
 //    identity 변화로 재실행되는 경로는 없다. 이 각도는 원인에서 제외한다.
 //
+// ── "당긴 채로 멈춰 있으면 손 안 뗐는데 풀린다" 재현 — 진짜 원인(2026-09-21 실기기 확정) ──
+// 위 조치들을 다 넣은 뒤에도 재현됐다. 실기기 콘솔에 다음 경고가 함께 찍히는 걸 확인했다:
+//   "Ignored attempt to cancel a touchmove event with cancelable=false, because scrolling
+//    is in progress and cannot be interrupted"
+// 원인은 아래 onTouchMove의 예전 구조에 있었다 — pulling으로 "확정"되기 전(TAP_SLOP 이내)
+// 에는 preventDefault를 아예 호출하지 않았다(탭이 당김에 먹혀 click이 씹히는 걸 막으려는
+// 의도였다). 그런데 그 몇 프레임 동안 Chrome은 이미 이 터치 시퀀스를 "스크롤 제스처"로
+// 확정해 자기가 가져가 버린다 — 그 뒤로는 우리가 아무리 나중에 preventDefault를 걸어도
+// (pulling 확정 후) 이미 cancelable=false라 무시되고, 곧 touchcancel로 끊긴다. 스크롤 불가능한
+// 화면(단어장 목록)에서 멀쩡했던 이유도 이거다 — 가져갈 스크롤이 없으니 Chrome이 애초에
+// 스크롤 제스처를 시작하지 않는다.
+// 고침: 슬롭을 기다리지 않는다. 첫 touchmove에서 즉시 방향을 판정해(아래로·세로 우세) 그
+// 이벤트 안에서 바로 preventDefault한다 — Chrome이 스크롤을 선점할 틈 자체를 주지 않는다.
+// 그 대가로 예전 TAP_SLOP(탭의 미세한 떨림까지 당김으로 잡지 않으려던 여유 구간)은 걷어냈다.
+// 버튼 위 탭은 여전히 INTERACTIVE_SELECTOR가 애초에 후보에서 제외하고, 그 외 요소의 탭은
+// 보통 touchmove 자체가 거의 없거나 있어도 방향이 위/가로로 튀어 이 분기를 타지 않는 경우가
+// 대부분이라 실사용 영향은 제한적으로 본다 — 스크롤 가능한 5개 탭 전부에서 "손 안 뗐는데
+// 풀린다"를 확정적으로 없애는 쪽을 우선했다.
+//
 // 아래에서 실제로 무슨 일이 있었는지 실기기에서 바로 확인할 수 있도록
 // `localStorage.setItem('ptr.debug','1')`일 때만 동작하는 이벤트 로그를 추가했다
 // (PullToRefresh.jsx의 디버그 오버레이가 이 로그를 그린다). 기본은 꺼져 있다.
+// `move(non-cancelable)` 로그가 보이면 여전히 Chrome이 스크롤을 선점했다는 뜻이다.
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useMotionValue, animate } from 'framer-motion';
 import { showToast } from '../utils/osFunction';
 import { haptic } from '../lib/feel';
 
 const clamp = (v, min, max) => Math.min(max, Math.max(min, v));
-
-// 탭 중 손끝이 1~2px 떨리는 것까지 "당김 시작"으로 잡으면 버튼 탭이 당김 제스처에
-// 먹혀 click이 아예 발생하지 않는다(WebView는 touchmove에서 preventDefault가 걸리면
-// 그 터치 시퀀스의 합성 click을 만들지 않음). 이 슬롭 안에서는 pulling으로 전환하지도,
-// preventDefault도 호출하지 않는다 — 순수한 탭은 그대로 브라우저 기본 클릭 경로를 탄다.
-const TAP_SLOP = 6;
 
 // touchcancel 뒤 최종 판정까지 기다리는 안전장치 시간 — 이 시간 안에 같은 손가락이 새
 // touchstart로 이어지면 "아직 안 뗐다"로 보고 pull을 이어간다. 예전엔 220ms였는데
@@ -119,6 +133,14 @@ const isPtrDebugEnabled = () => {
 // 스크롤 최상단에 버튼이 있는 화면(홈 CTA 등)에서 버튼을 누르자마자 당김이 가로채는
 // 사고를 막는다. data-no-ptr 로 개별 요소를 추가 제외할 수 있다.
 const INTERACTIVE_SELECTOR = 'button, a, [role="button"], input, textarea, select, [data-no-ptr]';
+
+// "방향 확정(decided)"과 "시각적 당김 확정(pulling)"을 분리하는 슬롭(2026-09-21 보완).
+// preventDefault는 방향이 정해지는 즉시(아래 dy 4px) 걸어 브라우저의 스크롤 선점을 막아야
+// 하지만, 그 즉시 콘텐츠를 밀거나 인디케이터를 보여주면 카드형(비-버튼) 탭에서 손끝이
+// 1~수 px 흔들리기만 해도 화면이 반응해 버린다. 그래서 방향 판정과 별개로, 이 거리만큼
+// 세로로 누적돼야만 비로소 "당김"으로 보여준다 — 그 전에 손을 떼면 pull=0·phase=idle 그대로라
+// 아무 상태 변화 없이 순수 탭(click)으로 남는다.
+const VISUAL_SLOP = 4;
 
 /**
  * @param {Object} opts
@@ -266,11 +288,16 @@ export function usePullToRefresh({
 
       if (el.scrollTop > 0) { g.active = false; return; }
       // 버튼 등 인터랙티브 요소 위에서 시작한 터치는 당김 후보에서 제외 — 탭이 당김에
-      // 먹혀 click이 씹히는 사고를 막는다(아래 TAP_SLOP 주석 참고).
+      // 먹혀 click이 씹히는 사고를 막는다. 그 외 요소는 아래 onTouchMove의 VISUAL_SLOP이
+      // 탭 보호를 맡는다(2026-09-21 보완 — "진짜 원인" 절 참고).
       if (e.target?.closest?.(INTERACTIVE_SELECTOR)) { g.active = false; return; }
       stopAnim();
       gestureRef.current = {
         active: true,
+        // decided — 방향(아래로·세로 우세) 판정 여부. pulling(시각적 확정)과 분리했다 —
+        // decided는 preventDefault를 걸지 말지만 결정하고, pulling은 실제로 콘텐츠를
+        // 밀고 인디케이터를 보여줄지를 결정한다(아래 onTouchMove 참고).
+        decided: false,
         pulling: false,
         cancelling: false,
         startY: e.touches[0].clientY,
@@ -293,21 +320,57 @@ export function usePullToRefresh({
       const dy = touch.clientY - g.startY;
       const dx = touch.clientX - g.startX;
 
-      if (dy <= 0 || el.scrollTop > 0) {
-        if (!g.pulling) {
-          // 아직 "당김"으로 확정되지 않았다 — 후보를 접고 일반 스크롤/탭에 맡긴다.
+      if (!g.decided) {
+        // 방향 미확정 — 첫 touchmove에서 곧바로 판정한다(슬롭을 기다리지 않는다,
+        // 2026-09-21). 여기서 기다리면 그 사이 Chrome이 스크롤 제스처를 이미 선점해 버려
+        // 다음 touchmove부터 cancelable=false가 되고 곧 touchcancel로 끊긴다 — "손 안
+        // 뗐는데 풀리는" 진짜 원인이었다(파일 상단 "진짜 원인" 절 참고).
+        // 주의: 여기서 확정하는 건 "이 터치 시퀀스를 우리가 가져간다"(preventDefault)이지
+        // "당김을 화면에 보여준다"(pulling)가 아니다 — 그 둘은 아래에서 분리한다
+        // (VISUAL_SLOP 설명 참고, 2026-09-21 보완).
+        if (el.scrollTop > 0 || dy <= 0 || Math.abs(dx) >= dy) {
+          // 이미 스크롤 중이거나 위/가로/모호함 — 당김 후보를 접고 브라우저 기본 동작
+          // (스크롤·탭)에 맡긴다.
           g.active = false;
           return;
         }
-        if (el.scrollTop > 0) {
-          // 실제 스크롤이 시작됐다 — 더 이상 pull 제스처가 아니다. 여기서만 완전히 접는다.
-          reset('scroll');
-          g.active = false;
+        g.decided = true;
+      } else if (el.scrollTop > 0) {
+        // 방향은 이미 정했는데 실제 스크롤이 시작됐다 — 더 이상 pull 제스처가 아니다.
+        // 아직 시각적으로 당김을 보여준 적이 없다면(pulling===false) 되돌릴 것도 없다.
+        if (g.pulling) reset('scroll');
+        g.active = false;
+        return;
+      }
+
+      // 방향이 확정된 모든 touchmove(첫 이벤트 포함)에서 즉시 preventDefault — 슬롭을
+      // 기다리지 않고 이 터치 시퀀스를 우리가 가져간다(브라우저의 스크롤 선점 방지).
+      // cancelable=false로 들어오면(이미 네이티브가 스크롤을 선점했다는 뜻) 조용히
+      // 넘기지 않고 디버그 로그에 남긴다. 이 호출은 "시각적 당김 확정"과는 무관하다.
+      if (e.cancelable) {
+        e.preventDefault();
+      } else {
+        logDebug('move(non-cancelable)');
+      }
+
+      if (!g.pulling) {
+        if (dy < VISUAL_SLOP) {
+          // 아직 시각적 슬롭(VISUAL_SLOP) 안 — 스크롤 선점만 막아 둘 뿐, pull/phase는
+          // idle 그대로 둔다. 이 상태에서 손을 떼면(touchend) g.pulling이 여전히 false라
+          // 아무 상태 변화 없이 순수 탭(click)으로 남는다(카드형 탭 보호, 2026-09-21).
           return;
         }
+        g.pulling = true;
+        // 당김이 시각적으로 확정된 순간부터 이 요소의 네이티브 터치 처리(스크롤·오버스크롤
+        // 글로우)를 끈다 — 실질적 방어는 위 preventDefault다(원인 a 설명 참고). Android는
+        // 터치 시퀀스의 touch-action을 시작 시점에 한 번만 확정해 이 줄 자체는 이번
+        // 시퀀스에는 무효일 수 있지만, 다음 프레임/다른 브라우저에 도움이 될 수 있어 남겨둔다.
+        el.style.touchAction = 'none';
+      }
+
+      if (dy <= 0) {
         // 이미 당기는 중에 손가락이 시작점 위로 살짝 올라간 것뿐이다(원인 b) — 제스처를
         // 끝내지 않고 pull만 0으로 줄인다. 손을 뗄 때(touchend)만 최종 판정을 내린다.
-        if (e.cancelable) e.preventDefault();
         pull.set(0);
         if (phaseRef.current !== 'pulling') setPhaseSafe('pulling');
         const now = Date.now();
@@ -317,26 +380,6 @@ export function usePullToRefresh({
         }
         return;
       }
-      // 가로 이동이 세로보다 크면 가로 스와이프 — 가로채지 않는다(뒤로가기 등)
-      if (!g.pulling && Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 10) {
-        g.active = false;
-        return;
-      }
-      // 슬롭 안(아직 "당김"이라 부를 만큼 움직이지 않음) — pulling으로 확정하지 않고
-      // preventDefault도 하지 않는다. 제자리에서 떨리기만 한 탭은 그대로 click으로 이어진다.
-      if (!g.pulling && dy <= TAP_SLOP) {
-        return;
-      }
-
-      if (!g.pulling) {
-        g.pulling = true;
-        // 당김이 확정된 순간부터 이 요소의 네이티브 터치 처리(스크롤·오버스크롤 글로우)를
-        // 완전히 끈다 — Android WebView가 제스처를 가로채며 touchcancel을 보내는 사고를
-        // 줄인다(원인 a). 확정 전(TAP_SLOP 이내)에는 건드리지 않아 탭이 그대로 통한다.
-        el.style.touchAction = 'none';
-      }
-      // 세로 당김으로 확정된 순간에만 기본 동작(브라우저/WebView 오버스크롤 바운스)을 막는다
-      if (e.cancelable) e.preventDefault();
 
       const damped = clamp(dy * 0.5, 0, maxPull);
       pull.set(damped);

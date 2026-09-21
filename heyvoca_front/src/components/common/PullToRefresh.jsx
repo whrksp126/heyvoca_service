@@ -13,11 +13,19 @@
 //     {...기존 children...}
 //   </PullToRefresh>
 //
-// fixedHeader — position:fixed로 화면에 떠 있는 헤더(예: 마이페이지)를 당김 동작에 실려
-// 함께 움직이지 않게 하려면 children이 아니라 이 prop으로 넘긴다(내부 콘텐츠 래퍼 밖에 그려진다).
-// position:sticky 헤더(예: 찾기 화면 검색바)는 children 그대로 둬도 된다 — 당기는 동안은
-// scrollTop이 항상 0이라 sticky가 아직 고정되기 전이라, 콘텐츠 전체와 함께 내려가는 편이
-// 자연스럽고 이질감이 없다.
+// ── 헤더 두 종류 — `fixedHeader` vs `header` ────────────────────────────────
+// fixedHeader — 진짜 position:fixed로 화면 위에 떠 있는 헤더(예: 마이페이지). 당김에도
+// 절대 움직이지 않아야 하고, 스크롤 컨테이너의 문서 흐름에도 애초에 속하지 않는다(호출부가
+// 이미 그렇게 스타일링한 엘리먼트를 그대로 넘긴다). 렌더된 실제 높이를 ResizeObserver로
+// 자동 측정해 콘텐츠·인디케이터를 그만큼 아래로 밀어낸다 — 호출부가 상태바+헤더 높이를
+// 손으로 계산해 넘길 필요가 없다(2026-09-21 이전에는 `indicatorTop`이라는 prop에 각 화면이
+// calc() 문자열을 직접 만들어 넘겼는데, 화면마다 기준이 달라 계속 어긋났다 — 아래
+// "인디케이터 위치" 설명 참고).
+//
+// header — position:sticky 또는 일반 헤더(예: 찾기 화면의 검색바). fixedHeader와 달리
+// 스크롤 컨테이너의 문서 흐름 **안**에 그대로 있다(같이 스크롤되다가 sticky면 멈춘다).
+// 다만 당김의 translateY만은 받지 않는다 — children(PullToRefreshContent)과 형제로
+// 그려지고, 당겨지는 콘텐츠는 그 바로 아래에서 시작한다.
 //
 // ── 배경 vs 콘텐츠 분리(2026-09 개편) ─────────────────────────────────────
 // 이 컴포넌트가 그리는 최상위 엘리먼트(Component, as/className/style/onScroll 등 호출부
@@ -27,14 +35,7 @@
 // 대신 "배경이 콘텐츠와 함께 당겨져 보인다"는 문제는 애초에 이 구조에 없다 — 당김 중
 // translateY가 걸리는 건 아래 `PullToRefreshContent`(children 래퍼) 하나뿐이고, Component
 // 자신의 배경(className의 bg-* 토큰)은 그 바깥 박스에 그대로 칠해져 있어 함께 움직이지
-// 않는다. 인디케이터도 PullToRefreshContent 밖(Component의 직계 자식)에 그려서 콘텐츠
-// translateY의 영향을 받지 않는다 — scrollTop===0에서만 제스처가 시작되므로 인디케이터는
-// 사실상 "콘텐츠가 비켜준 그 배경 위"에만 나타난다.
-//
-// 예전 버그는 배경이 실제로 움직인 게 아니라, 인디케이터가 그 자리(배경이 드러나는 영역)에서
-// safe-area를 무시하고 상단 끝(top:0)에 그려져 상태바/노치 영역을 침범해 보였던 것이다.
-// 그래서 기본 indicatorTop을 `--status-bar-height`(env(safe-area-inset-top), index.css)
-// 아래로 내려 항상 안전 영역 밑·페이지 배경 위에서만 그려지도록 고쳤다(아래 prop 설명 참고).
+// 않는다.
 //
 // ── 단색이 아닌 배경(그라디언트 등) — `background` prop (2026-09 QA) ─────────────
 // 위 설명은 "Component 자신의 bg-* 단색 토큰"에만 맞는다. 화면 상단이 단색이 아니라
@@ -45,12 +46,34 @@
 // 색이 다르면 "그라디언트가 끊기고 그 위로 단색이 새로 나타난" 것처럼 보인다 — 실제로는
 // Component 배경이 움직인 게 아니라, 그라디언트 쪽이 콘텐츠로 취급되어 비켜난 것이다.
 //
-// 해결은 인디케이터와 같은 자리(Component의 직계 자식, PullToRefreshContent 밖)에
-// 그라디언트 레이어를 하나 더 두는 것 — 이 `background` prop이 그 레이어다. 인디케이터와
-// 마찬가지로 pull의 translateY는 받지 않으므로 당기는 동안 제자리에 고정되고, 실제
-// 스크롤(scrollTop 변화)에는 자연스럽게 같이 움직인다(스크롤 컨테이너의 콘텐츠 흐름
-// 안에 있는 absolute 요소라 일반 스크롤과는 분리되지 않는다 — 오직 pull의 인위적인
-// transform만 안 받는다). 홈은 FarmHero의 하늘(FarmHeroSky)을 여기에 넘긴다.
+// 해결은 Component의 직계 자식(PullToRefreshContent 밖)에 그라디언트 레이어를 하나 더
+// 두는 것 — 이 `background` prop이 그 레이어다. pull의 translateY는 받지 않으므로 당기는
+// 동안 제자리에 고정되고, 실제 스크롤(scrollTop 변화)에는 자연스럽게 같이 움직인다(스크롤
+// 컨테이너의 콘텐츠 흐름 안에 있는 absolute 요소라 일반 스크롤과는 분리되지 않는다 — 오직
+// pull의 인위적인 transform만 안 받는다). 홈은 FarmHero의 하늘(FarmHeroSky)을 여기에 넘긴다.
+//
+// ── 인디케이터 위치 — "틈에 놓인다" 방식(2026-09-21 재설계) ─────────────────────
+// 예전에는 화면마다 `indicatorTop`(px/calc 문자열)을 직접 계산해 넘겼는데, 화면마다
+// status-bar-height를 이미 소비했는지 · 헤더가 흐름 안에 있는지 fixed인지가 달라 거의 매번
+// 어긋났다(찾기·마이페이지가 특히 그랬다). 지금은 좌표 계산을 아예 없앴다 —
+//
+//   인디케이터의 "쉬는 자리"(pull=0일 때 기준)는 당겨지는 콘텐츠(PullToRefreshContent)의
+//   **원래 상단 모서리**와 같은 점이다(아래 `.relative` 래퍼의 y=0). 당김이 진행되면
+//   인디케이터는 `translateY(pull - 칩높이 - 여백)`만큼만 내려간다 — 즉 콘텐츠 자신의
+//   translateY(pull)보다 정확히 "칩높이+여백"만큼 덜 내려가므로, 인디케이터는 항상 콘텐츠
+//   바로 위, 일정한 틈(margin)을 두고 따라온다(유튜브·안드로이드 새로고침과 같은 느낌).
+//
+//   pull이 그 값(INDICATOR_GAP)보다 작을 때는 translateY가 음수라 인디케이터가 아직 "틈"
+//   자체가 없는 자리에 있다 — header가 없는 화면(홈·단어장·상점)은 이 구간이 스크롤
+//   컨테이너 밖(위)이라 그냥 안 보이고, fixedHeader가 있는 화면(마이페이지)은 fixedHeader의
+//   불투명 배경(z-20)에 자연히 가려진다 — 둘 다 별도 처리 없이 저절로 "숨는다". opacity도
+//   같은 구간(GAP → threshold)에서 0→1로 페이드인해 "그 순간 갑자기 나타난" 느낌 대신
+//   틈 위쪽에서부터 옅게 드러나며 내려오는 것처럼 보인다.
+//
+//   header(찾기의 sticky 검색바)를 쓰는 화면은 그 헤더가 `.relative` 래퍼보다 **먼저**
+//   문서 흐름에 그려지므로, 래퍼의 y=0은 자동으로 "헤더 바로 아래"가 된다 — 좌표를 넘길
+//   필요가 없다. fixedHeader(마이페이지)를 쓰는 화면은 fixedHeader의 렌더된 높이를
+//   ResizeObserver로 재서 같은 래퍼에 marginTop으로 준다 — 이것도 손으로 값을 넘기지 않는다.
 //
 // 인디케이터 — 원형 링 + 진행 호(arc). 당긴 거리(0~threshold)에 비례해 호가 채워지고
 // 링이 손끝 이동에 맞춰 회전한다(유튜브류 앱의 손맛). 임계값을 처음 넘는 순간 살짝
@@ -58,30 +81,9 @@
 // 훅이 같은 시점에 이미 울리므로 여기서 중복 호출하지 않는다. 손을 떼 새로고침이 시작되면
 // 호는 고정 폭을 유지한 채 링만 계속 도는 스피너로 전환되고, 완료 시 Check 아이콘으로
 // 짧게 바뀐 뒤 훅의 스프링으로 접힌다.
-//
-// ── indicatorTop 계산법(2026-09-21 QA — "적용처마다 다 꼬여 있다") ─────────────────
-// indicatorTop은 이 컴포넌트가 렌더하는 Component(=scrollRef, `relative`) 자신의 top을
-// 기준으로 한 값이다. **화면 어디서 status-bar-height를 이미 소비했는지**를 반드시 먼저
-// 확인해야 한다 — 실수하기 가장 쉬운 지점이다.
-//   1) Component 자신이 `h-screen`이라 진짜 뷰포트 최상단(y=0)부터 시작하는 화면
-//      (예: 홈 — 상단 헤더가 아예 없다, 시안상 일러스트가 상태바 아래까지 이어짐)
-//      → 기본값 `calc(var(--status-bar-height) + 14px)` 그대로 쓴다. status-bar-height를
-//      여기서 처음 빼주는 게 맞다.
-//   2) Component 이전에 이미 상태바 spacer + 고정 타이틀 헤더가 형제로 먼저 그려지는 화면
-//      (예: 단어장·찾기 — 페이지 파일이 `<div style={paddingTop:'var(--status-bar-height)'}/>`
-//      + `<Header/>`를 Main보다 먼저 렌더한다) → Component 자신의 top은 이미 그 아래다.
-//      여기서 또 status-bar-height를 더하면 상태바 높이만큼 **이중으로** 내려가 버린다.
-//      이런 화면은 status-bar-height를 빼고 순수 px 여백만 넘긴다.
-//   3) Component **내부**(children)에 sticky 헤더가 있어 당기는 동안 콘텐츠와 함께
-//      내려가는 화면(예: 찾기의 검색바, `sticky top-0`) → indicatorTop을 그 헤더 높이로
-//      맞추면, 헤더가 제자리에 있는 동안(pull < 헤더 높이)은 인디케이터가 헤더 뒤에 가려
-//      있다가, 헤더가 그만큼 밀려 내려간 뒤(pull ≥ 헤더 높이)에야 헤더 아래 빈 공간에
-//      드러난다 — "검색 헤더 아래에서 나온다"는 요구를 그림 계산 없이 만족한다.
-//   4) fixedHeader(진짜 position:fixed, 예: 마이페이지)를 쓰는 화면은 Component가 다시
-//      y=0부터 시작하므로(1)과 같다 — status-bar-height + 헤더 높이를 더한다.
-// 화면별로 실제 적용한 값은 각 파일(components/home/Main.jsx 등)의 PullToRefresh 호출부
-// 주석을 참고.
-import React, { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react';
+import React, {
+  forwardRef, useEffect, useImperativeHandle, useLayoutEffect, useRef, useState,
+} from 'react';
 import { createPortal } from 'react-dom';
 import {
   motion, useMotionValue, useTransform, useMotionValueEvent, useAnimationControls,
@@ -99,7 +101,13 @@ const RING_CIRC = 2 * Math.PI * RING_RADIUS;
 // 새로고침 중 스피너로 보일 때 고정으로 채워 두는 호의 비율(나머지는 빈 트랙)
 const SPINNER_ARC_RATIO = 0.28;
 
-const PullToRefreshIndicator = ({ pull, phase, threshold, maxPull, top }) => {
+// 인디케이터 칩 크기 + 콘텐츠와 벌어지는 여백 — "틈에 놓인다" 위치 계산의 기준값
+// (위 파일 상단 "인디케이터 위치" 설명 참고).
+const INDICATOR_CHIP_SIZE = 40;
+const INDICATOR_GAP_MARGIN = 10;
+const INDICATOR_GAP = INDICATOR_CHIP_SIZE + INDICATOR_GAP_MARGIN;
+
+const PullToRefreshIndicator = ({ pull, phase, threshold, maxPull }) => {
   "use memo";
 
   const reducedMotion = useReducedMotion();
@@ -110,9 +118,17 @@ const PullToRefreshIndicator = ({ pull, phase, threshold, maxPull, top }) => {
   const isRefreshingRef = useRef(false);
   useEffect(() => { isRefreshingRef.current = isRefreshing; }, [isRefreshing]);
 
-  // 칩 자체의 등장 — 당김 초반엔 옅고 작게, threshold 근처에서 완전히 드러난다.
-  const opacity = useTransform(pull, [0, threshold * 0.4], [0, 1], { clamp: true });
-  const scale = useTransform(pull, [0, threshold], [0.55, 1], { clamp: true });
+  // 위치 — 이 인디케이터가 그려지는 `.relative` 래퍼의 y=0(=당겨지는 콘텐츠의 원래 상단
+  // 모서리)을 기준으로, 당긴 만큼(pull) 내려오되 칩 높이+여백(INDICATOR_GAP)만큼 미리
+  // 빼 둔다. pull이 GAP보다 작을 때는 이 값이 음수라 컨테이너 밖(또는 fixedHeader 뒤)에
+  // 가려 있고, GAP을 넘는 순간부터 콘텐츠 바로 위 틈에 자리잡은 채 함께 내려온다.
+  const translateY = useTransform(pull, (v) => v - INDICATOR_GAP);
+
+  // 등장 — 틈에서 막 드러나는 지점(GAP)부터 옅게 나타나 threshold 부근에서 완전히
+  // 불투명해진다. threshold를 GAP보다 작게 설정하는 실수를 대비해 최소 폭을 둔다.
+  const fadeEnd = Math.max(threshold, INDICATOR_GAP + 8);
+  const opacity = useTransform(pull, [INDICATOR_GAP, fadeEnd], [0, 1], { clamp: true });
+  const scale = useTransform(pull, [INDICATOR_GAP, fadeEnd], [0.55, 1], { clamp: true });
 
   // 진행 호 — pull(=당긴 거리)에 정확히 비례해 채워진다(0→threshold가 0→100%).
   // clamp로 maxPull까지 당겨도 100%를 넘지 않는다. 새로고침 중엔 고정 폭 스피너로 바뀐다.
@@ -165,12 +181,11 @@ const PullToRefreshIndicator = ({ pull, phase, threshold, maxPull, top }) => {
   return (
     <div
       aria-hidden="true"
-      style={{ top }}
-      className="absolute left-0 right-0 z-[5] flex justify-center pointer-events-none"
+      className="absolute left-0 right-0 top-0 z-[5] flex justify-center pointer-events-none"
     >
       <motion.div
         animate={chipControls}
-        style={{ opacity, scale }}
+        style={{ opacity, scale, y: translateY }}
         className="
           relative flex items-center justify-center w-[40px] h-[40px] rounded-full
           bg-layout-white dark:bg-layout-gray-dark
@@ -298,16 +313,17 @@ const PullToRefresh = forwardRef(function PullToRefresh(
     errorMessage,
     className = '',
     contentClassName = '',
+    // 진짜 position:fixed 헤더(예: 마이페이지). 당김에 실려 움직이지 않는다. 렌더된 실제
+    // 높이를 자동으로 재서 콘텐츠·인디케이터를 그만큼 밀어낸다(위 "헤더 두 종류" 참고) —
+    // 호출부가 별도 spacer를 넣을 필요가 없다.
     fixedHeader = null,
+    // position:sticky 또는 일반 헤더(예: 찾기 화면의 검색바). 문서 흐름 안에 그대로 있지만
+    // 당김의 translateY는 받지 않는다 — 이 헤더 바로 아래가 콘텐츠의 "원래 상단 모서리"가
+    // 되고, 인디케이터도 자동으로 그 자리를 기준으로 삼는다.
+    header = null,
     // 단색이 아닌 상단 배경(그라디언트 등) — 당김에 딸려가지 않는 고정 레이어에 그린다.
     // 위 "단색이 아닌 배경" 주석 참고. 대부분의 화면(단색 bg-* 하나로 충분)은 안 써도 된다.
     background = null,
-    // 인디케이터 시작 위치 — 기본값은 "Component 자신이 뷰포트 최상단(y=0)부터 시작하는
-    // 화면"에만 맞다(2026-09-21 정정: 예전 주석은 "대부분의 화면은 그대로 두면 된다"고
-    // 했는데 실제로는 화면마다 달라 다섯 곳 다 값을 확인해야 했다). 위 "indicatorTop
-    // 계산법" 주석의 4가지 경우를 보고 호출부에서 직접 넘긴다 — 기본값은 그중 1)번
-    // (외부 헤더 없이 Component가 곧 화면 전체인 경우, 예: 홈)에만 해당한다.
-    indicatorTop = 'calc(var(--status-bar-height) + 14px)',
     children,
     ...rest
   },
@@ -332,6 +348,24 @@ const PullToRefresh = forwardRef(function PullToRefresh(
     }
   });
 
+  // fixedHeader 높이 자동 측정 — position:fixed는 문서 흐름을 차지하지 않으므로, 콘텐츠와
+  // 인디케이터를 그 아래로 밀어내려면 실제 렌더 높이를 알아야 한다. 호출부가 상태바+헤더
+  // 높이를 손으로 계산해 넘기던 옛 `indicatorTop`(calc 문자열)을 없애는 대신, 렌더된 DOM을
+  // ResizeObserver로 직접 재서 항상 맞는 값을 쓴다(폰트 크기·safe-area가 달라져도 안전).
+  const fixedHeaderWrapRef = useRef(null);
+  const [fixedHeaderHeight, setFixedHeaderHeight] = useState(0);
+  useLayoutEffect(() => {
+    if (!fixedHeader) { setFixedHeaderHeight(0); return undefined; }
+    const target = fixedHeaderWrapRef.current?.firstElementChild;
+    if (!target) return undefined;
+    const measure = () => setFixedHeaderHeight(target.getBoundingClientRect().height);
+    measure();
+    if (typeof ResizeObserver === 'undefined') return undefined;
+    const ro = new ResizeObserver(measure);
+    ro.observe(target);
+    return () => ro.disconnect();
+  }, [fixedHeader]);
+
   return (
     <Component
       ref={scrollRef}
@@ -340,20 +374,29 @@ const PullToRefresh = forwardRef(function PullToRefresh(
       // contain이어도 최상단에서 자체 오버스크롤 글로우를 그리며 우리 제스처의 터치
       // 시퀀스를 가로채 touchcancel을 보낼 수 있었다(usePullToRefresh.js 상단 "손을 안
       // 뗐는데 풀린다" 설명 참고) — none으로 네이티브 효과 자체를 없애 우리 제스처만 남긴다.
-      // relative — 인디케이터·배경(absolute) 위치 기준.
+      // relative — 배경(absolute)·아래 인디케이터 래퍼 위치 기준.
       className={`relative overscroll-y-none ${className}`}
       {...rest}
     >
-      {fixedHeader}
+      {fixedHeader && <div ref={fixedHeaderWrapRef}>{fixedHeader}</div>}
       {background && (
         <div aria-hidden="true" className="absolute inset-x-0 top-0 z-0 pointer-events-none">
           {background}
         </div>
       )}
-      <PullToRefreshIndicator pull={pull} phase={phase} threshold={threshold} maxPull={maxPull} top={indicatorTop} />
-      <PullToRefreshContent pull={pull} className={contentClassName}>
-        {children}
-      </PullToRefreshContent>
+      {header}
+      {/* 인디케이터 + 콘텐츠 — 이 relative 래퍼의 y=0이 "당겨지는 콘텐츠의 원래 상단
+          모서리"다. header가 있으면 문서 흐름상 바로 아래에서 자연히 시작하고,
+          fixedHeader가 있으면 그 측정된 높이만큼 marginTop으로 밀려난다. */}
+      <div
+        className="relative"
+        style={fixedHeaderHeight ? { marginTop: fixedHeaderHeight } : undefined}
+      >
+        <PullToRefreshIndicator pull={pull} phase={phase} threshold={threshold} maxPull={maxPull} />
+        <PullToRefreshContent pull={pull} className={contentClassName}>
+          {children}
+        </PullToRefreshContent>
+      </div>
       {debugEnabled && <PullToRefreshDebugOverlay log={debugLog} />}
     </Component>
   );

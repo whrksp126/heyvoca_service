@@ -119,12 +119,9 @@ const Main = () => {
         h-[calc(100vh-var(--current-header-height)-var(--current-bottom-nav-height)-var(--status-bar-height))]
         overflow-y-auto
       "
-      // indicatorTop — pages/VocabularySheets.jsx가 이 컴포넌트보다 먼저 상태바 spacer +
-      // <Header/>(55px, 고정 아님·문서 흐름)를 그린다. 즉 이 PullToRefresh의 Component 자신은
-      // 이미 그 아래에서 시작하므로(className의 calc가 그만큼 높이를 뺀 것도 같은 이유),
-      // 기본값(상태바 높이를 한 번 더 더함)을 쓰면 이중으로 내려간다. 순수 여백만 준다
-      // (PullToRefresh.jsx "indicatorTop 계산법" 2번 경우).
-      indicatorTop="14px"
+      // header/fixedHeader 없음 — pages/VocabularySheets.jsx가 상태바 spacer + <Header/>를
+      // 이 컴포넌트보다 먼저(문서 흐름으로) 그리므로, 인디케이터는 이 Component 자신의
+      // 원래 상단 모서리(=필터 칩 위)를 기준으로 자동으로 자리잡는다.
       initial={{ opacity: 0, y: 20, transition: { duration: 0.2 } }}
       animate={{ opacity: 1, y: 0, transition: { duration: 0.2 } }}
       exit={{ opacity: 0, y: -20, transition: { duration: 0.2 } }}
