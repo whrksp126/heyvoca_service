@@ -10,6 +10,8 @@ import PreviewWordNewBottomSheet from '../newBottomSheet/PreviewWordNewBottomShe
 import { vibrate } from '../../utils/osFunction';
 import { useVocabulary } from '../../context/VocabularyContext';
 import { useExampleSettings } from '../../context/ExampleSettingsContext';
+import { getBookStoreDetailApi } from '../../api/bookStore';
+import PullToRefresh from '../common/PullToRefresh';
 import gem from '../../assets/images/gem.png';
 import BookFieldHero from '../vocabularySheets/BookFieldHero';
 import CropImage from '../farm/CropImage';
@@ -59,7 +61,7 @@ const SAFE_TOP = 'max(var(--status-bar-height), env(safe-area-inset-top, 0px))';
 //   "미보유 단어 N개"를 이어 말하고, 없으면(다른 진입 경로·게스트) 전체 단어 수로 되돌아간다 —
 //   상세 응답(bookStoreVocabularySheet)에는 이 필드가 없다(계약에 없는 엔드포인트라서다).
 export const PreviewBookStoreNewFullSheet = ({
-  bookStoreVocabularySheet, listItem, onPrimaryAction, primaryActionLabel, hideFieldHero = false,
+  bookStoreVocabularySheet: initialBookStoreVocabularySheet, listItem, onPrimaryAction, primaryActionLabel, hideFieldHero = false,
 }) => {
   "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
 
@@ -69,6 +71,11 @@ export const PreviewBookStoreNewFullSheet = ({
   const { vocabularySheets } = useVocabulary();
   const { showExamples } = useExampleSettings();
   const itemHeightEstimate = showExamples ? ROW_HEIGHT_EX : ROW_HEIGHT;
+
+  // 이 화면은 상세를 prop으로 통째로 받아 그린다(부모 StoreNewFullSheet가 getBookStoreDetailApi로
+  // 미리 조회해 넘겨준다) — 당겨서 새로고침도 같은 엔드포인트를 이 화면 안에서 직접 다시 불러
+  // 로컬 상태만 교체한다(부모 목록·prop 자체는 건드리지 않는다).
+  const [bookStoreVocabularySheet, setBookStoreVocabularySheet] = useState(initialBookStoreVocabularySheet);
 
   // 무한 스크롤을 위한 state
   const [displayCount, setDisplayCount] = useState(ITEMS_PER_PAGE);
@@ -276,6 +283,13 @@ export const PreviewBookStoreNewFullSheet = ({
     pushNewBottomSheet(PreviewWordNewBottomSheet, { word: item });
   };
 
+  // 당겨서 새로고침 — 이 단어장 상세(단어 목록·가격 등)를 서버에서 다시 받는다
+  const handlePullToRefresh = async () => {
+    if (!bookStoreVocabularySheet?.id) return;
+    const res = await getBookStoreDetailApi(bookStoreVocabularySheet.id);
+    if (res?.code === 200) setBookStoreVocabularySheet(res.data);
+  };
+
   return (
     <div className="relative flex flex-col h-full w-full bg-layout-white dark:bg-layout-black">
       {/*
@@ -313,8 +327,9 @@ export const PreviewBookStoreNewFullSheet = ({
         </div>
       </div>
 
-      <div
+      <PullToRefresh
         ref={scrollContainerRef}
+        onRefresh={handlePullToRefresh}
         className="flex flex-col flex-1 overflow-y-auto pb-[105px]"
         style={{
           overscrollBehaviorY: 'auto',
@@ -478,7 +493,7 @@ export const PreviewBookStoreNewFullSheet = ({
             </motion.div>
           )}
         </div>
-      </div>
+      </PullToRefresh>
 
       {/*
         구매 버튼 — 목록이 길어 히어로가 화면 밖으로 나가도 늘 손에 닿아야 하므로 아래에 고정한다.

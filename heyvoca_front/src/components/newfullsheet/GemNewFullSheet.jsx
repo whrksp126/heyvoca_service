@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { CaretLeft } from '@phosphor-icons/react';
 import { motion } from 'framer-motion';
 import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
@@ -7,6 +7,7 @@ import { useUser } from '../../context/UserContext';
 import { GemPurchaseNewBottomSheet } from '../newBottomSheet/GemPurchaseNewBottomSheet';
 import { getGemHistoryApi } from '../../api/store';
 import { vibrate } from '../../utils/osFunction';
+import PullToRefresh from '../common/PullToRefresh';
 import gem from '../../assets/images/gem.png';
 
 // GemReason → 표시 라벨 (description이 없을 때 폴백)
@@ -37,22 +38,26 @@ const GemNewFullSheet = () => {
 
   const { popNewFullSheet } = useNewFullSheetActions();
   const { pushNewBottomSheet } = useNewBottomSheetActions();
-  const { userProfile } = useUser();
+  const { userProfile, fetchUserProfile } = useUser();
 
   const [logs, setLogs] = useState([]);
   const [isLoadingLogs, setIsLoadingLogs] = useState(true);
+
+  // 보석 내역 1페이지 재조회 — 최초 마운트 + 당겨서 새로고침이 함께 쓴다
+  const fetchGemHistory = useCallback(async () => {
+    const result = await getGemHistoryApi(1, 30);
+    if (result?.code === 200) {
+      setLogs(Array.isArray(result?.data?.logs) ? result.data.logs : []);
+    } else {
+      setLogs([]);
+    }
+  }, []);
 
   useEffect(() => {
     let isMounted = true;
     (async () => {
       try {
-        const result = await getGemHistoryApi(1, 30);
-        if (!isMounted) return;
-        if (result?.code === 200) {
-          setLogs(Array.isArray(result?.data?.logs) ? result.data.logs : []);
-        } else {
-          setLogs([]);
-        }
+        await fetchGemHistory();
       } catch (error) {
         if (isMounted) setLogs([]);
       } finally {
@@ -60,7 +65,12 @@ const GemNewFullSheet = () => {
       }
     })();
     return () => { isMounted = false; };
-  }, []);
+  }, [fetchGemHistory]);
+
+  // 당겨서 새로고침 — 이 화면이 보여주는 건 보유 보석(프로필)과 보석 내역(1페이지)뿐이다
+  const handlePullToRefresh = useCallback(async () => {
+    await Promise.all([fetchGemHistory(), fetchUserProfile()]);
+  }, [fetchGemHistory, fetchUserProfile]);
 
   const handlePurchaseClick = () => {
     vibrate({ duration: 5 });
@@ -100,7 +110,7 @@ const GemNewFullSheet = () => {
         <div className="w-[24px]" />
       </div>
 
-      <div className="flex-1 overflow-y-auto">
+      <PullToRefresh onRefresh={handlePullToRefresh} className="flex-1 overflow-y-auto">
         {/* 보유 보석 + 구매 버튼 */}
         <section className="px-[16px] pt-[20px] pb-[8px]">
           <div className="flex items-center justify-between p-[20px] rounded-[12px] bg-layout-gray-50 dark:bg-layout-gray-dark">
@@ -173,7 +183,7 @@ const GemNewFullSheet = () => {
             </ul>
           )}
         </section>
-      </div>
+      </PullToRefresh>
     </div>
   );
 };

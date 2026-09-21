@@ -363,9 +363,9 @@ const StoreNewFullSheet = ({ initialTab = 'books', onInventoryChanged, onGoRotte
 
       <PullToRefresh
         onRefresh={handlePullToRefresh}
-        // 바텀 네비 "상점" 탭(asPage)에서만 당겨서 새로고침을 켠다 — 홈·단어 상세 등에서
-        // 모달로 띄우는 인스턴스(풀시트)는 과제 범위 밖이라 제스처를 비활성화한다.
-        disabled={!asPage}
+        // 바텀 네비 "상점" 탭(asPage)뿐 아니라 홈·단어 상세 등에서 모달로 띄우는 인스턴스
+        // (풀시트)에서도 당겨서 새로고침을 켠다 — 어느 쪽이든 서버 최신 상태(단어장 상품·
+        // 보유 보석·농장 도구 재고)를 보여주는 화면이라 새로고침이 필요한 건 같다.
         className={`flex-1 flex flex-col px-[16px] overflow-y-auto ${activeTab === 'tools' ? 'gap-[13px]' : 'gap-[18px]'}`}
         /* 페이지로 열리면 바텀 네비(60px) 밑으로 마지막 카드가 숨지 않게 여백을 준다 */
         style={asPage ? { paddingBottom: 'calc(72px + var(--safe-area-bottom))' } : { paddingBottom: 6 }}

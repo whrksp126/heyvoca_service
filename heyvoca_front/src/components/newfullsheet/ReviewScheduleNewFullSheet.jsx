@@ -1,15 +1,23 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { CaretLeft } from '@phosphor-icons/react';
 import { motion } from 'framer-motion';
 import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
+import { useStats } from '../../context/StatsContext';
 import { vibrate } from '../../utils/osFunction';
+import PullToRefresh from '../common/PullToRefresh';
 import ReviewScheduleContent from '../myPage/ReviewScheduleContent';
 
 // 통계(복습 일정/분포) 풀시트 — 본문은 마이페이지와 공유하는 ReviewScheduleContent.
+// ReviewScheduleContent가 보는 reviewSchedule은 StatsContext 캐시라, 새로고침도 그
+// 캐시를 채우는 refreshStats로 한다(개별 복습 일정만 다시 받는 API는 따로 없다).
 const ReviewScheduleNewFullSheet = () => {
   "use memo";
 
   const { popNewFullSheet } = useNewFullSheetActions();
+  const { refreshStats } = useStats();
+  const handlePullToRefresh = useCallback(async () => {
+    await refreshStats();
+  }, [refreshStats]);
 
   return (
     <div className="flex flex-col h-full w-full bg-layout-white dark:bg-layout-black">
@@ -33,9 +41,9 @@ const ReviewScheduleNewFullSheet = () => {
         <div />
       </div>
 
-      <div className="flex-1 overflow-y-auto px-[16px] py-[20px]">
+      <PullToRefresh onRefresh={handlePullToRefresh} className="flex-1 overflow-y-auto px-[16px] py-[20px]">
         <ReviewScheduleContent />
-      </div>
+      </PullToRefresh>
     </div>
   );
 };

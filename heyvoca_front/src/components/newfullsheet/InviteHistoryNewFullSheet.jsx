@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { CaretLeft, Copy, EnvelopeSimple } from '@phosphor-icons/react';
 import { motion } from 'framer-motion';
 import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
 import { useUser } from '../../context/UserContext';
 import { getInvitesApi } from '../../api/auth';
 import { vibrate, showToast } from '../../utils/osFunction';
+import PullToRefresh from '../common/PullToRefresh';
 import gem from '../../assets/images/gem.png';
 
 const formatDate = (iso) => {
@@ -22,24 +23,28 @@ const InviteHistoryNewFullSheet = () => {
   "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
 
   const { popNewFullSheet } = useNewFullSheetActions();
-  const { userProfile } = useUser();
+  const { userProfile, fetchUserProfile } = useUser();
 
   const [invites, setInvites] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
   const inviteCode = userProfile?.invite_code || '-';
 
+  // 초대 기록 재조회 — 최초 마운트 + 당겨서 새로고침이 함께 쓴다
+  const fetchInvites = useCallback(async () => {
+    const result = await getInvitesApi();
+    if (result?.code === 200) {
+      setInvites(Array.isArray(result?.data?.invites) ? result.data.invites : []);
+    } else {
+      setInvites([]);
+    }
+  }, []);
+
   useEffect(() => {
     let isMounted = true;
     (async () => {
       try {
-        const result = await getInvitesApi();
-        if (!isMounted) return;
-        if (result?.code === 200) {
-          setInvites(Array.isArray(result?.data?.invites) ? result.data.invites : []);
-        } else {
-          setInvites([]);
-        }
+        await fetchInvites();
       } catch (error) {
         if (isMounted) setInvites([]);
       } finally {
@@ -47,7 +52,12 @@ const InviteHistoryNewFullSheet = () => {
       }
     })();
     return () => { isMounted = false; };
-  }, []);
+  }, [fetchInvites]);
+
+  // 당겨서 새로고침 — 초대 코드는 프로필에서 오고, 아래는 초대 기록 목록이다
+  const handlePullToRefresh = useCallback(async () => {
+    await Promise.all([fetchInvites(), fetchUserProfile()]);
+  }, [fetchInvites, fetchUserProfile]);
 
   const handleCopyInviteCode = async () => {
     if (!userProfile?.invite_code) return;
@@ -94,7 +104,7 @@ const InviteHistoryNewFullSheet = () => {
         <div className="w-[24px]" />
       </div>
 
-      <div className="flex-1 overflow-y-auto">
+      <PullToRefresh onRefresh={handlePullToRefresh} className="flex-1 overflow-y-auto">
         {/* 내 초대 코드 */}
         <section className="px-[16px] pt-[20px] pb-[8px]">
           <div className="flex flex-col items-center gap-[12px] p-[24px] rounded-[12px] bg-layout-gray-50 dark:bg-layout-gray-dark">
@@ -159,7 +169,7 @@ const InviteHistoryNewFullSheet = () => {
             </ul>
           )}
         </section>
-      </div>
+      </PullToRefresh>
     </div>
   );
 };

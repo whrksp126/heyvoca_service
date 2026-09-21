@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useMemo } from 'react';
+import React, { useState, useEffect, useRef, useMemo, useCallback } from 'react';
 import { CaretLeft, Plus, CaretUp, Lock, DotsThreeVertical, CloudSlash, ArrowClockwise, BookOpen, Plant } from '@phosphor-icons/react';
 
 import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
@@ -12,6 +12,7 @@ import { VocabularyBookMenuNewBottomSheet } from '../newBottomSheet/VocabularyBo
 import { vibrate, showToast } from '../../utils/osFunction';
 import BookFieldHero from '../vocabularySheets/BookFieldHero';
 import WordRow from '../vocabularySheets/WordRow';
+import PullToRefresh from '../common/PullToRefresh';
 import {
   bookStageCounts,
   bookFieldData,
@@ -77,7 +78,10 @@ const VocabularyWordsNewFullSheet = ({ id }) => {
   "use memo";
 
   const { popNewFullSheet } = useNewFullSheetActions();
-  const { isVocabularySheetsLoading, getVocabularySheet, userDictionaryError, retryUserDictionary } = useVocabulary();
+  const {
+    isVocabularySheetsLoading, getVocabularySheet, userDictionaryError,
+    retryUserDictionary, fetchUserDictionary, fetchVocaBooks,
+  } = useVocabulary();
   const { pushNewBottomSheet } = useNewBottomSheetActions();
 
   const vocabularySheet = getVocabularySheet(id);
@@ -335,6 +339,12 @@ const VocabularyWordsNewFullSheet = ({ id }) => {
     });
   };
 
+  // 당겨서 새로고침 — 이 화면이 보여주는 건 "이 단어장 안 단어 목록"과 밭 상태(단어장
+  // 목록의 vocaCount 등)이므로 사용자 사전·단어장 목록을 함께 다시 받는다.
+  const handlePullToRefresh = useCallback(async () => {
+    await Promise.all([fetchUserDictionary(), fetchVocaBooks()]);
+  }, [fetchUserDictionary, fetchVocaBooks]);
+
   const chips = [
     { key: 'all', label: '전체', count: totalCount },
     { key: 'today', label: '오늘', count: todayCnt },
@@ -417,8 +427,14 @@ const VocabularyWordsNewFullSheet = ({ id }) => {
         </div>
       </div>
 
-      <div
+      {/*
+        onScroll은 별도 prop으로 넘기지 않는다 — 아래 useEffect가 scrollContainerRef.current
+        (PullToRefresh가 forwardRef로 내려주는 실제 DOM 노드)에 직접 addEventListener로
+        스크롤 리스너를 붙이므로, JSX onScroll을 추가하면 같은 handleScroll이 두 번 불린다.
+      */}
+      <PullToRefresh
         ref={scrollContainerRef}
+        onRefresh={handlePullToRefresh}
         className="flex flex-col flex-1 overflow-y-auto"
         style={{
           overscrollBehaviorY: 'auto',
@@ -596,7 +612,7 @@ const VocabularyWordsNewFullSheet = ({ id }) => {
             </>
           )}
         </div>
-      </div>
+      </PullToRefresh>
 
       <AnimatePresence>
         {showTopBtn && (

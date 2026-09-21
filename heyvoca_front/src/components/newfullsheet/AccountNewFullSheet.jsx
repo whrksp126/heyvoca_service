@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { SignOut, PencilSimple, CaretRight } from '@phosphor-icons/react';
 
 import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
@@ -12,6 +12,7 @@ import { withdrawApi } from '../../api/auth';
 import { getFarmOverviewApi } from '../../api/farm';
 import { setCookie } from '../../utils/common';
 import { launchGoogleWithdraw, showToast, vibrate, getDevicePlatform } from '../../utils/osFunction';
+import PullToRefresh from '../common/PullToRefresh';
 import { SheetBar } from './settingsUi';
 
 /**
@@ -25,29 +26,40 @@ const AccountNewFullSheet = () => {
   // Actions만 구독하므로 state 변경 시 리렌더링 안 됨
   const { pushNewBottomSheet, pushAwaitNewBottomSheet, clearStack: clearNewBottomSheetStack } = useNewBottomSheetActions();
   const { clearStack: clearNewFullSheetStack } = useNewFullSheetActions();
-  const { userProfile, setIsWithdrawInProgress, updateUserProfile, loginProvider } = useUser();
+  const { userProfile, setIsWithdrawInProgress, updateUserProfile, loginProvider, fetchUserProfile } = useUser();
   const { vocabularySheets } = useVocabulary();
   const [isWithdrawing, setIsWithdrawing] = useState(false);
   const [farmSummary, setFarmSummary] = useState(null);
 
-  // "이 계정의 농장" — 탈퇴 확인 시트가 그대로 다시 쓰는 숫자들이다.
+  // "이 계정의 농장" 재조회 — 최초 마운트 + 당겨서 새로고침이 함께 쓴다.
+  // 탈퇴 확인 시트가 그대로 다시 쓰는 숫자들이다.
+  const fetchFarmSummary = useCallback(async () => {
+    const res = await getFarmOverviewApi();
+    if (res?.code !== 200) return;
+    const counts = res.data?.counts || {};
+    const items = res.data?.items || {};
+    setFarmSummary({
+      plants: ['seed', 'sprout', 'leaf', 'carrot'].reduce((sum, k) => sum + (counts[k] || 0), 0),
+      golden: counts.golden || 0,
+      streakCurrent: res.data?.streak?.current || 0,
+      streakBest: res.data?.streak?.best || 0,
+      tools: Object.values(items).reduce((sum, n) => sum + (n || 0), 0),
+    });
+  }, []);
+
   useEffect(() => {
     let alive = true;
     (async () => {
-      const res = await getFarmOverviewApi();
-      if (!alive || res?.code !== 200) return;
-      const counts = res.data?.counts || {};
-      const items = res.data?.items || {};
-      setFarmSummary({
-        plants: ['seed', 'sprout', 'leaf', 'carrot'].reduce((sum, k) => sum + (counts[k] || 0), 0),
-        golden: counts.golden || 0,
-        streakCurrent: res.data?.streak?.current || 0,
-        streakBest: res.data?.streak?.best || 0,
-        tools: Object.values(items).reduce((sum, n) => sum + (n || 0), 0),
-      });
+      if (!alive) return;
+      await fetchFarmSummary();
     })();
     return () => { alive = false; };
-  }, []);
+  }, [fetchFarmSummary]);
+
+  // 당겨서 새로고침 — 계정 값(프로필)과 "이 계정의 농장" 요약을 함께 갱신한다
+  const handlePullToRefresh = useCallback(async () => {
+    await Promise.all([fetchFarmSummary(), fetchUserProfile()]);
+  }, [fetchFarmSummary, fetchUserProfile]);
 
   const handleNicknameEdit = async () => {
     const newNickname = await pushAwaitNewBottomSheet(
@@ -194,7 +206,7 @@ const AccountNewFullSheet = () => {
       <div style={{ paddingTop: 'var(--status-bar-height)' }}></div>
       <SheetBar title="계정" />
 
-      <div className="flex-1 overflow-y-auto flex flex-col gap-[14px] px-[16px] pb-[20px]">
+      <PullToRefresh onRefresh={handlePullToRefresh} className="flex-1 overflow-y-auto flex flex-col gap-[14px] px-[16px] pb-[20px]">
         {/* ── 계정 값 ── */}
         <div className="rounded-[14px] overflow-hidden bg-layout-gray-50 dark:bg-layout-gray-dark">
           <div
@@ -259,7 +271,7 @@ const AccountNewFullSheet = () => {
         >
           {isWithdrawing ? '처리 중...' : '회원 탈퇴'}
         </button>
-      </div>
+      </PullToRefresh>
     </div>
   );
 };
