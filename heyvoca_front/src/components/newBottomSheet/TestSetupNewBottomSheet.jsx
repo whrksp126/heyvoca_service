@@ -388,7 +388,7 @@ export const TestSetupNewBottomSheet = ({ onCancel, onSet, maxVocabularyCount, v
                 ref={el => inputRefs.current['count'] = el}
                 min={MIN_TEST_VOCABULARY_COUNT}
                 max={maxCount}
-                className="w-full h-[40px] text-[32px] font-[800] leading-none text-layout-black dark:text-layout-white text-center outline-none bg-transparent"
+                className="w-full h-[40px] text-[32px] font-[800] leading-none text-primary-main-600 text-center outline-none bg-transparent"
                 onChange={e => {
                   vibrate({ duration: 5 });
                   setCountFun(Number(e.target.value));
@@ -437,7 +437,7 @@ export const TestSetupNewBottomSheet = ({ onCancel, onSet, maxVocabularyCount, v
                       h-[30px] px-[14px] rounded-[15px]
                       border-[1px] text-[12px] font-[700]
                       ${selected
-                        ? 'border-layout-black dark:border-layout-white text-layout-black dark:text-layout-white'
+                        ? 'border-primary-main-600 text-primary-main-600'
                         : 'border-layout-gray-200 dark:border-[#3A3A3A] text-layout-gray-300'}
                     `}
                   >
@@ -465,7 +465,7 @@ export const TestSetupNewBottomSheet = ({ onCancel, onSet, maxVocabularyCount, v
               >
                 {icon}
                 <span className="flex flex-col items-center gap-[2px]">
-                  <span className="text-[14px] font-[700]">{label}</span>
+                  <span className="text-[14px] font-[700] group-data-[selected=true]:text-layout-black dark:group-data-[selected=true]:text-layout-white">{label}</span>
                   <span className="text-[11px] text-layout-gray-300 text-center">{sub}</span>
                 </span>
               </SetupTile>
@@ -492,7 +492,7 @@ export const TestSetupNewBottomSheet = ({ onCancel, onSet, maxVocabularyCount, v
                 className="h-[104px]"
               >
                 <Glyph size={44} />
-                <span className="text-[14px] font-[700] break-keep">{label}</span>
+                <span className="text-[14px] font-[700] break-keep group-data-[selected=true]:text-layout-black dark:group-data-[selected=true]:text-layout-white">{label}</span>
               </SetupTile>
             ))}
           </div>
@@ -520,7 +520,7 @@ export const TestSetupNewBottomSheet = ({ onCancel, onSet, maxVocabularyCount, v
                   <ArrowRight size={16} weight="bold" />
                   <LangBadge>{to}</LangBadge>
                 </span>
-                <span className="text-[14px] font-[700]">{label}</span>
+                <span className="text-[14px] font-[700] group-data-[selected=true]:text-layout-black dark:group-data-[selected=true]:text-layout-white">{label}</span>
               </SetupTile>
             ))}
           </div>
