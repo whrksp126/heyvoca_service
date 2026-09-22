@@ -143,6 +143,9 @@ export const HOME_GREETINGS = [
       [' 오늘 할 일', '다 끝냈어요'],
       [' 농장을 다', '돌봤어요'],
       [` 오늘 ${ctx.todayCorrect}개`, '정답 맞췄어요'],
+      // "내일 또 만나요"는 남은 돌봄이 0일 때만 — doneMoreLeft(남은 작물 있음)에 두면
+      // 단어장 탭의 "돌봄 N"과 정면으로 어긋난다(2026-09-22 사용자 지적).
+      [' 내일 또', '만나요'],
     ],
   },
 
@@ -151,10 +154,11 @@ export const HOME_GREETINGS = [
     id: 'doneMoreLeft',
     priority: 90,
     when: (ctx) => ctx.todayDone && ctx.careCount > 0,
+    // 모든 변형이 "남은 작물이 있다"를 말해야 한다 — 마무리 인사("내일 또 만나요")는 금지.
     lines: (ctx) => [
-      [' 오늘 몫은', '다 마쳤어요'],
       [` 아직 ${ctx.careCount}개가`, '기다리고 있어요'],
-      [' 내일 또', '만나요'],
+      [` 오늘 몫은 끝,`, `${ctx.careCount}개 더 돌볼까요`],
+      [` 작물 ${ctx.careCount}개가`, '아직 목말라요'],
     ],
   },
 
@@ -200,7 +204,8 @@ export const HOME_GREETINGS = [
     priority: 75,
     when: (ctx) => ctx.careCount >= 1 && ctx.careCount < 10,
     lines: (ctx) => [
-      [' 당근이', '물을 기다리고 있어요'],
+      // "당근이 물을 기다려요"는 당근이 0개인 밭에서도 떠서 틀린 말이 됐다 — 작물로 통일.
+      [` 작물 ${ctx.careCount}개가`, '물을 기다려요'],
       [` 작물 ${ctx.careCount}개만`, '주면 끝나요'],
       [' 오늘도', '살짝 적셔줄까요'],
     ],
