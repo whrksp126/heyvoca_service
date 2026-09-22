@@ -77,16 +77,16 @@ _ALL_QUESTION_TYPES = list(RECOMMENDABLE_QUESTION_TYPES)
 # avoid 회피 대상도 아닌 "오늘 처음 보는 단어"는 항상 순서 1번을 받았다). 이제 avoid를 뺀
 # 지원 가능 유형 전체를 대상으로 가중치 비례 랜덤을 뽑는다.
 # 가중치 근거: 사지선다 방향(단어→뜻 / 뜻→단어)을 주력으로 유지하되(각 25, 합 50/100),
-# 듣기(15)도 꾸준히 섞이게 한다. fillInTheBlank/fillInTheBlankReverse(빈칸 채우기 정방향/
-# 역방향, 각 10)는 강조 태그가 있는 예문이 있는 단어에서만 후보가 되므로 실제 노출 빈도는
-# 가중치보다 낮게 자연 감쇠한다. cardMatch(10)/cardMatchListening(5)는 세트 단위 특성상
-# 노출 체감이 더 크게 느껴져 낮게 유지한다. 합계 100.
+# 듣기(15)도 꾸준히 섞이게 한다. fillInTheBlank(빈칸 채우기 한→영, 20)는 강조 태그가 있는
+# 예문이 있는 단어에서만 후보가 되므로 실제 노출 빈도는 가중치보다 낮게 자연 감쇠한다.
+# fillInTheBlankReverse는 프론트에서 드롭되어(2026-09) 추천 후보/가중치에서 제외했다
+# (ALLOWED_QUESTION_TYPES에는 과거 로그 호환을 위해 남아 있음). cardMatch(10)/
+# cardMatchListening(5)는 세트 단위 특성상 노출 체감이 더 크게 느껴져 낮게 유지한다. 합계 100.
 _QUESTION_TYPE_WEIGHTS: Dict[str, int] = {
     'multipleChoice':          25,
     'reverseMultipleChoice':   25,
     'multipleChoiceListening': 15,
-    'fillInTheBlank':          10,
-    'fillInTheBlankReverse':   10,
+    'fillInTheBlank':          20,
     'cardMatch':               10,
     'cardMatchListening':      5,
 }

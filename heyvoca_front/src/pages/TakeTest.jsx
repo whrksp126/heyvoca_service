@@ -251,7 +251,7 @@ const TakeTest = () => {
         return createMultipleChoiceQuestion(word, targetType);
       }
 
-      // 단일 단어 플러그인(빈칸 채우기 두 방향): 단일 단어로 시도, 자격 예문이 없으면 multipleChoice 폴백
+      // 단일 단어 플러그인(빈칸 채우기): 단일 단어로 시도, 자격 예문이 없으면 multipleChoice 폴백
       // 주의: 폴백 시 questionType은 반드시 'multipleChoice'로 고정해야 한다.
       //       fallbackType이 빈칸 채우기 id 인 채로 createMultipleChoiceQuestion에
       //       넘기면 options가 word 객체 배열인 빈칸 채우기 문제가 생성되어
@@ -536,9 +536,11 @@ const TakeTest = () => {
       if (recentStudy && recentStudy[state.testType] && recentStudy[state.testType].status === "learning" && recentStudy[state.testType].study_data?.length > 0) {
         const studyData = recentStudy[state.testType].study_data;
         // cardMatch/cardMatchListening 질문에 words 배열이 없으면 잘못된 캐시 → 재생성.
-        // 빈칸 채우기(두 방향)는 문자열 선택지 4개 + 빈칸 문장 + resultIndex 가 있어야 한다
+        // 빈칸 채우기는 문자열 선택지 4개 + 빈칸 문장 + resultIndex 가 있어야 한다
         // (예전 스키마의 exampleText/targetWord 캐시는 여기서 걸러 재생성).
+        // 제거된 역방향(fillInTheBlankReverse) 캐시는 플러그인이 없어 렌더할 수 없으므로 재생성.
         const isCacheValid = studyData.every(q => {
+          if (q.questionType === 'fillInTheBlankReverse') return false;
           if (['cardMatch', 'cardMatchListening'].includes(q.questionType)) return Array.isArray(q.words);
           if (isFillInTheBlankType(q.questionType)) {
             return Array.isArray(q.options) && q.options.length === 4

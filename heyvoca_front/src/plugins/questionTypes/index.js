@@ -2,7 +2,6 @@ import CardMatchQuestion from './cardMatch/CardMatchQuestion';
 import CardMatchListeningQuestion from './cardMatch/CardMatchListeningQuestion';
 import FillInTheBlankQuestion from './fillInTheBlank/FillInTheBlankQuestion';
 import { wordsOverlap } from '../../utils/meaningConcept';
-import { getDisplayMeaningText } from '../../utils/displayMeanings';
 
 // ─── 강조 마커(<strong class="target-word">…</strong>) 유틸 ─────────────────────
 const TARGET_WORD_RE = /<strong\b[^>]*\btarget-word\b[^>]*>([\s\S]*?)<\/strong\s*>/i;
@@ -22,48 +21,34 @@ const exampleEn = (ex) => ex?.origin ?? ex?.en ?? '';
 const exampleKo = (ex) => ex?.meaning ?? ex?.ko ?? '';
 
 /*
-  빈칸 채우기 방향 — 두 유형이 같은 컴포넌트를 쓰고, 여기 정의만 다르다.
-
-  - ko2en(fillInTheBlank):        한국어 예문을 보여 주고 영어 예문의 빈칸에 들어갈 **단어**를 고른다.
-                                  자격: 영어 예문에 강조 마커가 있고, 보여 줄 한국어 예문이 비어 있지 않다.
-  - en2ko(fillInTheBlankReverse): 영어 예문을 보여 주고 한국어 예문의 빈칸에 들어갈 **뜻**을 고른다.
-                                  자격: 한국어 예문에 강조 마커가 있고, 단어에 뜻이 1개 이상 있다.
+  빈칸 채우기 — 한 방향(ko2en)만 존재한다.
+  한국어 예문을 보여 주고 영어 예문의 빈칸에 들어갈 **단어**를 고른다.
+  자격: 영어 예문에 강조 마커가 있고, 보여 줄 한국어 예문이 비어 있지 않다.
+  (예전에 있던 역방향 fillInTheBlankReverse(en2ko)는 제품 결정으로 제거됐다.)
 */
-const FILL_DIRECTIONS = {
-  ko2en: {
-    shown: exampleKo,
-    blank: exampleEn,
-    qualifies: (word, ex) => !!extractTargetWord(exampleEn(ex)) && stripTags(exampleKo(ex)).trim() !== '',
-    // 선택지는 기본형(word.origin) — 빈칸에는 채점 후 활용형(blankFill)이 들어간다.
-    optionText: (w) => (typeof w?.origin === 'string' ? w.origin.trim() : ''),
-  },
-  en2ko: {
-    shown: exampleEn,
-    blank: exampleKo,
-    qualifies: (word, ex) =>
-      !!extractTargetWord(exampleKo(ex)) && Array.isArray(word?.meanings) && word.meanings.length > 0,
-    // 선택지는 사지선다와 같은 표시 뜻 문자열(utils/displayMeanings — 단일 소스)
-    optionText: (w) => getDisplayMeaningText(w?.meanings),
-  },
+const FILL_RULE = {
+  shown: exampleKo,
+  blank: exampleEn,
+  qualifies: (ex) => !!extractTargetWord(exampleEn(ex)) && stripTags(exampleKo(ex)).trim() !== '',
+  // 선택지는 기본형(word.origin) — 빈칸에는 채점 후 활용형(blankFill)이 들어간다.
+  optionText: (w) => (typeof w?.origin === 'string' ? w.origin.trim() : ''),
 };
 
-const FILL_TYPE_BY_DIRECTION = { ko2en: 'fillInTheBlank', en2ko: 'fillInTheBlankReverse' };
-
-const qualifyingExamples = (word, direction) => {
-  const dir = FILL_DIRECTIONS[direction];
-  if (!dir || !Array.isArray(word?.examples)) return [];
-  return word.examples.filter((ex) => dir.qualifies(word, ex));
+const qualifyingExamples = (word) => {
+  if (!Array.isArray(word?.examples)) return [];
+  return word.examples.filter((ex) => FILL_RULE.qualifies(ex));
 };
 
-// 빈칸 채우기 출제 가능 여부 — 방향별(기본 ko2en: 영어 예문에 강조 마커)
-export const hasFillInTheBlankExample = (word, direction = 'ko2en') =>
-  qualifyingExamples(word, direction).length > 0;
+// 빈칸 채우기 출제 가능 여부 — 영어 예문에 강조 마커 + 한국어 예문 존재.
+// 두 번째 인자(옛 direction)는 호환을 위해 받기만 하고 무시한다.
+export const hasFillInTheBlankExample = (word, _direction) =>
+  qualifyingExamples(word).length > 0;
 
-// 주어진 단어 배열에서 빈칸 채우기 출제 가능한 단어 개수 — 주어진 방향 중 하나라도 되면 셈
-export const countFillInTheBlankCandidates = (words, directions = ['ko2en']) => {
+// 주어진 단어 배열에서 빈칸 채우기 출제 가능한 단어 개수.
+// 두 번째 인자(옛 directions)는 호환을 위해 받기만 하고 무시한다.
+export const countFillInTheBlankCandidates = (words, _directions) => {
   if (!Array.isArray(words)) return 0;
-  const dirs = Array.isArray(directions) && directions.length > 0 ? directions : ['ko2en'];
-  return words.filter((w) => dirs.some((d) => hasFillInTheBlankExample(w, d))).length;
+  return words.filter((w) => hasFillInTheBlankExample(w)).length;
 };
 
 const shuffleArray = (array) => {
@@ -75,15 +60,15 @@ const shuffleArray = (array) => {
   return shuffled;
 };
 
-// 빈칸 채우기 문제 빌더(두 방향 공용). 자격 예문이 없는 단어는 건너뛴다(호출부가 사지선다로 폴백).
-const buildFillInTheBlankQuestions = (selectedWords, allWords, direction) => {
-  const dir = FILL_DIRECTIONS[direction];
-  const questionType = FILL_TYPE_BY_DIRECTION[direction];
+// 빈칸 채우기 문제 빌더. 자격 예문이 없는 단어는 건너뛴다(호출부가 사지선다로 폴백).
+const buildFillInTheBlankQuestions = (selectedWords, allWords) => {
+  const dir = FILL_RULE;
+  const questionType = 'fillInTheBlank';
   const wordKey = (w) => w?.id ?? w?.vocaIndexId;
   const questions = [];
 
   for (const word of selectedWords ?? []) {
-    const candidates = qualifyingExamples(word, direction);
+    const candidates = qualifyingExamples(word);
     if (candidates.length === 0) continue;
     const correctText = dir.optionText(word);
     if (!correctText) continue;
@@ -117,7 +102,6 @@ const buildFillInTheBlankQuestions = (selectedWords, allWords, direction) => {
     questions.push({
       ...word,
       questionType,
-      direction,
       shownText,
       blankText,
       blankFill,
@@ -208,26 +192,16 @@ export const QUESTION_TYPE_PLUGINS = [
     setupQuestions: null,
   },
   {
-    // 빈칸 채우기(한→영) — 한국어 예문을 보고 영어 예문의 빈칸에 들어갈 단어를 고른다.
+    // 빈칸 채우기 — 한국어 예문을 보고 영어 예문의 빈칸에 들어갈 단어를 고른다.
+    // 방향이 하나뿐이라 direction: null — 시트의 [방향] 선택과 무관하게 항상 포함(카드 맞추기와 같다).
     id: 'fillInTheBlank',
     label: '빈칸 채우기',
     enabled: true,
     family: 'fillInTheBlank',
-    direction: 'ko2en',
+    direction: null,
     listening: false,
     component: FillInTheBlankQuestion,
-    setupQuestions: (selectedWords, allWords) => buildFillInTheBlankQuestions(selectedWords, allWords, 'ko2en'),
-  },
-  {
-    // 빈칸 채우기(영→한) — 영어 예문을 보고 한국어 예문의 빈칸에 들어갈 뜻을 고른다.
-    id: 'fillInTheBlankReverse',
-    label: '빈칸 채우기(영→한)',
-    enabled: true,
-    family: 'fillInTheBlank',
-    direction: 'en2ko',
-    listening: false,
-    component: FillInTheBlankQuestion,
-    setupQuestions: (selectedWords, allWords) => buildFillInTheBlankQuestions(selectedWords, allWords, 'en2ko'),
+    setupQuestions: (selectedWords, allWords) => buildFillInTheBlankQuestions(selectedWords, allWords),
   },
   {
     id: 'cardMatch',

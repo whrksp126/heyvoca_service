@@ -95,10 +95,10 @@ export const TestSetupNewBottomSheet = ({ onCancel, onSet, maxVocabularyCount, v
   }, [selectedFamilies, selectedDirections, listeningOn]);
 
   const isFillSelected = selectedFamilies.includes('fillInTheBlank');
-  // 빈칸 채우기 출제 가능 단어 수 — 선택한 방향 중 하나라도 자격 예문이 있는 단어
+  // 빈칸 채우기 출제 가능 단어 수 — 영어 예문에 강조 마커가 있는 단어(방향은 한→영 하나뿐)
   const fillCandidateCount = useMemo(
-    () => countFillInTheBlankCandidates(allWords, selectedDirections),
-    [allWords, selectedDirections]
+    () => countFillInTheBlankCandidates(allWords),
+    [allWords]
   );
 
   // 작물 단계별 단어 개수 (5개 키 — 판정은 vocaCrop.wordMemoryStage 한 곳)
@@ -493,8 +493,8 @@ export const TestSetupNewBottomSheet = ({ onCancel, onSet, maxVocabularyCount, v
           </div>
         </Section>
 
-        {/* 5. 방향 — 다중. 사지선다·빈칸 채우기를 골랐을 때만(카드 맞추기는 방향이 없다) */}
-        {(selectedFamilies.includes('multipleChoice') || selectedFamilies.includes('fillInTheBlank')) && (
+        {/* 5. 방향 — 다중. 사지선다를 골랐을 때만(카드 맞추기·빈칸 채우기는 방향이 없다) */}
+        {selectedFamilies.includes('multipleChoice') && (
           <Section title="방향">
             <div className="flex gap-[8px]">
               {[

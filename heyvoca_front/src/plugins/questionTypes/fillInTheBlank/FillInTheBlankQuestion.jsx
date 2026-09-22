@@ -3,6 +3,8 @@ import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { Circle, X, SpeakerHigh } from '@phosphor-icons/react';
 import FarmStatusBar from '../../../components/farm/FarmStatusBar';
 import TtsRipple from '../../../components/common/TtsRipple';
+import WordInfoBubble from '../../../components/common/WordInfoBubble';
+import { getWordInfoApi } from '../../../api/search';
 import { haptic, pickVariant } from '../../../lib/feel';
 import { playSuccessSound, playErrorSound } from '../../../utils/audio';
 import { getTextSound, stripHtmlTags } from '../../../utils/common';
@@ -11,17 +13,19 @@ import { getMemoryStateKeyByStability } from '../../../components/common/MemoryS
 import { useResumeReplayKey } from '../../../hooks/useResumeReplayKey';
 
 /*
-  빈칸 채우기 — 두 방향이 같은 화면을 쓴다.
-  - fillInTheBlank(ko2en):        위 = 한국어 예문(강조), 아래 = 영어 예문의 빈칸 → 선택지는 영어 단어(기본형)
-  - fillInTheBlankReverse(en2ko): 위 = 영어 예문(강조),  아래 = 한국어 예문의 빈칸 → 선택지는 뜻
+  빈칸 채우기(fillInTheBlank) — 한 방향뿐이다.
+  위 = 한국어 예문(강조), 아래 = 영어 예문의 빈칸 → 선택지는 영어 단어(기본형)
 
   카드가 둘로 나뉜다.
-  - 위 카드(primary 틴트, 스피커 아이콘): 보여 주는 예문. 카드 전체 탭 = 이 예문 읽기(TTS).
+  - 위 카드(primary 틴트, 스피커 아이콘): 한국어 예문. 카드 전체 탭 = 이 예문 읽기(TTS).
     읽는 동안 스피커가 사지선다 듣기 모드처럼 맥동한다. 마운트 시 1회 자동 재생.
-  - 아래 카드(회색): 빈칸 예문. 채점 전에는 정답이 새지 않도록 탭할 수 없다. 채점 후에는
-    카드 전체 탭 = 빈칸이 채워진 문장을 그대로 읽는다(아이콘 없이 카드 중앙에서 ripple만
-    확산 — 사지선다 카드와 같은 방식). O/X 와 농장 상태 바는 이 카드 안에 뜬다.
-  - 선택지 탭: 탭한 선택지 텍스트를 읽는다(ko2en=영어 단어, en2ko=한국어 뜻).
+  - 아래 카드(회색): 영어 빈칸 예문. 채점 전에는 정답이 새지 않도록 카드 자체는 탭할 수 없다.
+    채점 후에는 카드 전체 탭 = 빈칸이 채워진 문장을 그대로 읽는다(아이콘 없이 카드 중앙에서
+    ripple만 확산 — 사지선다 카드와 같은 방식). O/X 와 농장 상태 바는 이 카드 안에 뜬다.
+    영어 예문의 **각 단어는 채점 전후 언제나 탭할 수 있다**(듀오링고 방식) — 탭하면 그 단어를
+    읽고(TTS) 단어 아래에 뜻 말풍선(WordInfoBubble)이 뜬다. 빈칸 pill 은 탭 대상이 아니다.
+    말풍선은 바깥 탭·선택지 탭·채점·스크롤·문제 전환에 닫힌다. 한 번에 하나만 뜬다.
+  - 선택지 탭: 탭한 선택지(영어 단어)를 읽는다.
   선택지·O/X·농장 상태 바 규격은 사지선다(takeTest/Main.jsx)와 같다 — 유형이 바뀔 때
   화면 문법이 달라 보이지 않게.
 */
@@ -65,6 +69,22 @@ const splitAtBlank = (html) => {
   };
 };
 
+/*
+  영어 문장을 "탭 가능한 단어" 토큰으로 나눈다. 공백은 그대로 보존해 줄바꿈 위치가 평문과 같다.
+  구두점은 화면에는 단어에 붙여 보여 주되, 사전 조회/TTS 에는 벗긴 단어(clean)만 쓴다.
+  예: "Hello," → text "Hello,", clean "hello"
+  clean 이 비면(순수 구두점·기호) 탭 대상이 아니다.
+*/
+const WORD_EDGE_PUNCT_RE = /^[^A-Za-z0-9'’]+|[^A-Za-z0-9'’]+$/g;
+const tokenizeWords = (text) => {
+  if (!text) return [];
+  return text.split(/(\s+)/).filter((t) => t !== '').map((t) => {
+    if (/^\s+$/.test(t)) return { type: 'space', text: t };
+    const clean = t.replace(WORD_EDGE_PUNCT_RE, '');
+    return { type: clean ? 'word' : 'text', text: t, clean };
+  });
+};
+
 // 선택지("word") TTS 가 끝난 뒤 다음 문제로 넘어가기까지 얹는 여유(ms) — 말이 끝나자마자
 // 화면이 넘어가 버리지 않게 한다.
 const WORD_TTS_ADVANCE_GRACE_MS = 200;
@@ -82,7 +102,15 @@ const FillInTheBlankQuestion = ({ question, onComplete, farmByWordId }) => {
   const [speakDuration, setSpeakDuration] = useState(null);
   // 지금 재생 중인 게 "보여 주는 예문"(shown)인지 "빈칸 예문"(blank)인지 "탭한 선택지"(word)인지 —
   // 사지선다 reverseMultipleChoice의 speakingTarget('meaning'/'word')과 같은 역할.
-  const [speakingTarget, setSpeakingTarget] = useState(null); // 'shown' | 'blank' | 'word' | null
+  const [speakingTarget, setSpeakingTarget] = useState(null); // 'shown' | 'blank' | 'word' | 'lookup' | null
+  /*
+    단어 말풍선(사전 조회) 상태 — 한 번에 하나만.
+    { key, word, anchor: {top,left,width,height}, container: {width,height}, status, info }
+    key 는 "영역-토큰인덱스" 로 같은 단어가 문장에 두 번 나와도 구분된다.
+  */
+  const [lookup, setLookup] = useState(null);
+  const lookupReqRef = useRef(0); // 늦게 도착한 이전 단어의 응답이 현재 말풍선을 덮지 않게
+  const blankCardRef = useRef(null);
   const startTimeRef = useRef(Date.now());
   // 백그라운드 복귀 시 정답 링/성장 게이지가 최종 상태로 정적으로 스냅되는 것을 막기 위한
   // 재마운트용 키 (이유는 useResumeReplayKey 주석 참고)
@@ -173,12 +201,12 @@ const FillInTheBlankQuestion = ({ question, onComplete, farmByWordId }) => {
   );
 
   const { shownText, blankText, blankFill, options = [], resultIndex } = question;
-  const direction = question.direction ?? (question.questionType === 'fillInTheBlankReverse' ? 'en2ko' : 'ko2en');
-  // 위 예문 언어 — ko2en 은 한국어 예문을 보여 주고, en2ko 는 영어 예문을 보여 준다.
-  const shownLang = direction === 'ko2en' ? 'ko' : 'en';
-  // 아래(빈칸) 예문 언어 — 위와 반대. 선택지 언어도 이와 같다(ko2en=영어 단어, en2ko=한국어 뜻).
-  const blankLang = direction === 'ko2en' ? 'en' : 'ko';
+  // 위 예문 = 한국어, 아래(빈칸) 예문·선택지 = 영어. 방향은 하나뿐이다.
+  const shownLang = 'ko';
+  const blankLang = 'en';
   const { before, after } = splitAtBlank(blankText);
+  const beforeTokens = tokenizeWords(before);
+  const afterTokens = tokenizeWords(after);
 
   // 농장 상태 바 — 카드 맞추기와 같은 경로(Main.processCardWord → cardFarmByWordId[wordId]).
   // 채점 전에는 절대 띄우지 않는다(문제 전환 직후 이전 문제 값이 한 프레임 남아 있을 수 있음).
@@ -202,6 +230,7 @@ const FillInTheBlankQuestion = ({ question, onComplete, farmByWordId }) => {
     setIsSpeaking(true);
     setSpeakDuration(null);
     setSpeakingTarget(target);
+    // 'word'(탭한 선택지)만 전환을 붙잡는다 — 'lookup'(예문 단어 탭)은 전환 대기와 무관하다.
     if (target === 'word') {
       wordTtsActiveRef.current = true;
       wordTtsEndedAtRef.current = null;
@@ -244,8 +273,106 @@ const FillInTheBlankQuestion = ({ question, onComplete, farmByWordId }) => {
     speakBlank();
   };
 
+  const closeLookup = () => {
+    lookupReqRef.current += 1;
+    setLookup((prev) => (prev ? null : prev));
+  };
+
+  /*
+    영어 예문 단어 탭 — 단어를 읽고 말풍선을 연다. 같은 단어를 다시 탭하면 닫힌다.
+    위치는 단어 버튼과 아래 카드의 getBoundingClientRect 차이로 구한다(카드는 relative +
+    overflow-hidden 이라 말풍선은 카드 안 좌표계에 놓인다). 카드가 whileTap 으로 살짝 축소된
+    순간에 탭이 들어와도 좌표가 어긋나지 않게 카드의 현재 scale 로 나눠 보정한다.
+    카드 onClick(채점 후 문장 읽기)으로 번지지 않게 stopPropagation.
+  */
+  const handleWordTap = (e, key, cleanWord) => {
+    e.stopPropagation();
+    if (lookup?.key === key) {
+      closeLookup();
+      return;
+    }
+    const cardEl = blankCardRef.current;
+    const wordEl = e.currentTarget;
+    if (!cardEl || !wordEl) return;
+    const cardRect = cardEl.getBoundingClientRect();
+    const wordRect = wordEl.getBoundingClientRect();
+    const scale = cardEl.offsetWidth ? (cardRect.width / cardEl.offsetWidth) || 1 : 1;
+    const anchor = {
+      top: (wordRect.top - cardRect.top) / scale,
+      left: (wordRect.left - cardRect.left) / scale,
+      width: wordRect.width / scale,
+      height: wordRect.height / scale,
+    };
+    const container = { width: cardEl.offsetWidth, height: cardEl.offsetHeight };
+
+    haptic('light');
+    speak(cleanWord, 'en', 'lookup');
+
+    const reqId = ++lookupReqRef.current;
+    setLookup({ key, word: cleanWord, anchor, container, status: 'loading', info: null });
+    getWordInfoApi(cleanWord)
+      .then((info) => {
+        if (reqId !== lookupReqRef.current) return;
+        setLookup((prev) => (prev && prev.key === key
+          ? { ...prev, status: info ? 'found' : 'notFound', info }
+          : prev));
+      })
+      .catch(() => {
+        if (reqId !== lookupReqRef.current) return;
+        setLookup((prev) => (prev && prev.key === key ? { ...prev, status: 'error' } : prev));
+      });
+  };
+
+  // 말풍선 닫기 — 바깥 탭(말풍선 밖 어디든; 단어 버튼은 자기 onClick 이 토글/전환을 맡으므로 제외) · 스크롤
+  useEffect(() => {
+    if (!lookup) return undefined;
+    const onPointerDown = (e) => {
+      const t = e.target;
+      if (!(t instanceof Element)) { closeLookup(); return; }
+      if (t.closest('[data-word-info-bubble]')) return;
+      if (t.closest('[data-lookup-word]')) return;
+      closeLookup();
+    };
+    const onScroll = () => closeLookup();
+    document.addEventListener('pointerdown', onPointerDown, true);
+    window.addEventListener('scroll', onScroll, true);
+    return () => {
+      document.removeEventListener('pointerdown', onPointerDown, true);
+      window.removeEventListener('scroll', onScroll, true);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [lookup?.key]);
+
+  // 탭 가능한 단어 토큰 렌더 — 공백/구두점은 평문, 단어는 인라인 버튼
+  const renderWordTokens = (tokens, area) => tokens.map((tok, i) => {
+    if (tok.type !== 'word') return <span key={`${area}-${i}`}>{tok.text}</span>;
+    const key = `${area}-${i}`;
+    const active = lookup?.key === key;
+    return (
+      <button
+        key={key}
+        type="button"
+        data-lookup-word
+        aria-label={`${tok.clean} 뜻 보기`}
+        aria-expanded={active}
+        className={`
+          inline font-[inherit] text-[inherit] leading-[inherit] text-left align-baseline
+          rounded-[4px] px-[1px]
+          focus:outline-none
+          transition-colors duration-150
+          ${active
+            ? 'underline decoration-dotted decoration-2 underline-offset-[6px] decoration-layout-gray-300 bg-primary-main-50 dark:bg-primary-main-dark'
+            : ''}
+        `}
+        onClick={(e) => handleWordTap(e, key, tok.clean)}
+      >
+        {tok.text}
+      </button>
+    );
+  });
+
   // 문제 등장 시 자동 재생 — Main.jsx가 사지선다 등에서 하는 등장 자동재생과 같은 자리.
-  // Main.jsx는 fillInTheBlank/fillInTheBlankReverse를 자기 자동재생 대상에서 뺀다(단어를
+  // Main.jsx는 fillInTheBlank를 자기 자동재생 대상에서 뺀다(단어를
   // 읽으면 빈칸 정답이 드러남) — 대신 이 컴포넌트가 "보여 주는 예문" 쪽을 직접 읽는다.
   // 이 컴포넌트는 Main.jsx가 progressIndex를 key로 문제마다 새로 마운트하므로,
   // 마운트 시 1회 재생이 "문제가 바뀔 때마다 자동재생"과 동일하다.
@@ -256,6 +383,7 @@ const FillInTheBlankQuestion = ({ question, onComplete, farmByWordId }) => {
 
   const handleOptionClick = (index) => {
     if (isAnswered) return;
+    closeLookup(); // 채점 순간 말풍선은 닫힌다(O/X 와 겹치지 않게)
     setSelectedIndex(index);
 
     const correct = index === resultIndex;
@@ -299,7 +427,7 @@ const FillInTheBlankQuestion = ({ question, onComplete, farmByWordId }) => {
     /*
       선택지 탭 시 "탭한 선택지" 읽기 — 사지선다(Main.jsx)는 정답 단어만 읽지만, 이 화면은
       사용자가 고른 선택지를 그 언어로 읽어 준다(오답을 골랐으면 오답이 들린다 — 정답 표시는
-      선택지 색으로 보인다). ko2en(fillInTheBlank)=영어 단어, en2ko(fillInTheBlankReverse)=한국어 뜻.
+      선택지 색으로 보인다). 영어 단어를 읽는다.
       채점 효과음이 시작된 직후 같은 타이밍에 재생한다.
     */
     const tapped = stripHtmlTags(options[index]);
@@ -382,6 +510,7 @@ const FillInTheBlankQuestion = ({ question, onComplete, farmByWordId }) => {
           <button> 이 아니라 role=button div 인 이유: 안에 <p>·농장 상태 바(블록 요소)가 들어가
           button 의 phrasing-content 제약을 어긴다. O/X 는 pointer-events-none 이라 탭을 막지 않는다. */}
       <motion.div
+        ref={blankCardRef}
         role={isAnswered ? 'button' : undefined}
         tabIndex={isAnswered ? 0 : undefined}
         aria-label={isAnswered ? '빈칸 예문 듣기' : undefined}
@@ -415,7 +544,7 @@ const FillInTheBlankQuestion = ({ question, onComplete, farmByWordId }) => {
           {/* 빈칸 예문 — pill 은 채점 전후 모두 중립색, 채점 후 활용형이 들어간다.
               아이콘이 없어졌으니 텍스트가 카드 전체 너비를 그대로 쓴다(왼쪽 여백 없음). */}
           <p className="w-full text-[22px] font-[700] leading-[1.8] text-layout-black dark:text-layout-white break-keep">
-            {before}
+            {renderWordTokens(beforeTokens, 'b')}
             <span
               className="
                 inline-flex items-center justify-center align-middle
@@ -427,9 +556,27 @@ const FillInTheBlankQuestion = ({ question, onComplete, farmByWordId }) => {
             >
               {isAnswered ? blankFill : ''}
             </span>
-            {after}
+            {renderWordTokens(afterTokens, 'a')}
           </p>
         </div>
+
+        {/* 단어 뜻 말풍선 — O/X(z-3) 위(z-4). 채점 시 닫히므로 실제로 겹치는 일은 거의 없다. */}
+        <AnimatePresence>
+          {lookup && (
+            <WordInfoBubble
+              key={lookup.key}
+              anchor={lookup.anchor}
+              container={lookup.container}
+              status={lookup.status}
+              info={lookup.info}
+              speaking={isSpeaking && speakingTarget === 'lookup'}
+              onReplay={() => {
+                haptic('light');
+                speak(lookup.word, 'en', 'lookup');
+              }}
+            />
+          )}
+        </AnimatePresence>
 
         {/* O/X — 카드 중앙 */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-[3] pointer-events-none">

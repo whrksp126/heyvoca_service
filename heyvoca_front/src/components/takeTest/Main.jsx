@@ -674,7 +674,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
         // 최대 2개까지만 이어 읽는다. 단어 발음은 정답 공개 후에만(handleClickExamOption).
         const meaningsToSpeak = currentQuestionDisplayMeanings.slice(0, 2).join(', ');
         if (meaningsToSpeak) speakText(meaningsToSpeak, 'ko', 'meaning');
-      } else if (!['cardMatch', 'cardMatchListening', 'fillInTheBlank', 'fillInTheBlankReverse'].includes(question.questionType) && question.origin) {
+      } else if (!['cardMatch', 'cardMatchListening', 'fillInTheBlank'].includes(question.questionType) && question.origin) {
         speakText(question.origin, "en");
       }
 
@@ -1302,7 +1302,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
     if (isSingleWordQuestion && isFillInTheBlankType(questionType)) {
       // 문제 전용 필드를 벗겨 순수 단어 객체로 되돌린 뒤 다시 출제한다
       const wordObj = { ...currentQuestion };
-      ['options', 'resultIndex', 'shownText', 'blankText', 'blankFill', 'direction',
+      ['options', 'resultIndex', 'shownText', 'blankText', 'blankFill',
         'questionType', 'isCorrect', 'userResultIndex', 'isRetry'].forEach(k => { delete wordObj[k]; });
       const pool = collectSessionWordPool(testQuestions);
       const regenerated = getQuestionType(questionType)?.setupQuestions?.([wordObj], pool) ?? [];

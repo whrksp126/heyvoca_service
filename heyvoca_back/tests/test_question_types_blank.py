@@ -2,13 +2,16 @@
 tests/test_question_types_blank.py — fillInTheBlank/fillInTheBlankReverse 관련 단위 테스트.
 
 DB 의존성 없음. 세 영역을 검증한다:
-  1. composer._item_can_use_question_type — 새 question_type 두 개(fillInTheBlank,
-     fillInTheBlankReverse)의 태깅/레거시 키/빈 예문 판정.
-  2. /study/log 화이트리스트(app.constants.question_types.ALLOWED_QUESTION_TYPES).
-  3. scripts/normalize_book_examples.py 의 순수 함수(태그 정규화, 중첩 span 접기, 캐노니컬 매치).
+  1. composer._item_can_use_question_type — fillInTheBlank(추천 대상)의 태깅/레거시 키/빈
+     예문 판정. fillInTheBlankReverse는 2026-09 프론트에서 드롭되어 추천 후보에서 제외됐지만
+     함수 자체(과거 로그 판정용)는 남아 있어 그 경로도 별도로 검증한다.
+  2. /study/log 화이트리스트(app.constants.question_types.ALLOWED_QUESTION_TYPES) — 드롭된
+     유형도 과거 로그 호환을 위해 화이트리스트에는 남아야 하지만, 추천 후보에서는 빠져야 한다.
+  3. composer의 question_type 가중치 테이블 — fillInTheBlankReverse 제외, 합계 100 유지.
+  4. scripts/normalize_book_examples.py 의 순수 함수(태그 정규화, 중첩 span 접기, 캐노니컬 매치).
 """
 
-from app.services.recommend.composer import _item_can_use_question_type
+from app.services.recommend.composer import _item_can_use_question_type, _QUESTION_TYPE_WEIGHTS, _ALL_QUESTION_TYPES
 from app.services.recommend.pool import CandidateItem
 from app.constants.question_types import ALLOWED_QUESTION_TYPES, RECOMMENDABLE_QUESTION_TYPES
 
@@ -72,9 +75,12 @@ class TestItemCanUseFillInTheBlank:
 
 # ──────────────────────────────────────────────
 # _item_can_use_question_type — fillInTheBlankReverse (영→한, meanings + meaning 태깅 필요)
+#
+# 2026-09 프론트 드롭으로 추천 후보(RECOMMENDABLE_QUESTION_TYPES)에서는 빠졌지만, 함수
+# 자체는 과거 로그 판정 등에 쓰일 수 있어 남아 있다 — 그 판정 로직만 검증한다.
 # ──────────────────────────────────────────────
 
-class TestItemCanUseFillInTheBlankReverse:
+class TestItemCanUseFillInTheBlankReverseLegacy:
     def test_tagged_meaning_with_meanings_allows(self):
         item = _make_item(
             meanings=['포기하다'],
@@ -120,12 +126,40 @@ class TestAllowedQuestionTypes:
     def test_contains_diagnosis_type(self):
         assert 'multipleChoiceDiagnosis' in ALLOWED_QUESTION_TYPES
 
-    def test_contains_fill_in_the_blank_reverse(self):
+    def test_contains_fill_in_the_blank_reverse_for_legacy_logs(self):
+        # 2026-09 프론트 드롭 — 더 이상 추천 후보는 아니지만 과거 /study/log 기록 호환을
+        # 위해 화이트리스트에는 남아 있어야 한다.
         assert 'fillInTheBlankReverse' in ALLOWED_QUESTION_TYPES
+
+    def test_fill_in_the_blank_reverse_not_recommendable(self):
+        assert 'fillInTheBlankReverse' not in RECOMMENDABLE_QUESTION_TYPES
 
     def test_rejects_unknown_type(self):
         assert 'notAQuestionType' not in ALLOWED_QUESTION_TYPES
         assert '' not in ALLOWED_QUESTION_TYPES
+
+
+# ──────────────────────────────────────────────
+# composer._QUESTION_TYPE_WEIGHTS — fillInTheBlankReverse 제외, 새 가중치(합계 100)
+# ──────────────────────────────────────────────
+
+class TestQuestionTypeWeights:
+    def test_fill_in_the_blank_reverse_excluded_from_weights(self):
+        assert 'fillInTheBlankReverse' not in _QUESTION_TYPE_WEIGHTS
+        assert 'fillInTheBlankReverse' not in _ALL_QUESTION_TYPES
+
+    def test_weights_sum_to_100(self):
+        assert sum(_QUESTION_TYPE_WEIGHTS.values()) == 100
+
+    def test_expected_weights(self):
+        assert _QUESTION_TYPE_WEIGHTS == {
+            'multipleChoice': 25,
+            'reverseMultipleChoice': 25,
+            'multipleChoiceListening': 15,
+            'fillInTheBlank': 20,
+            'cardMatch': 10,
+            'cardMatchListening': 5,
+        }
 
 
 # ──────────────────────────────────────────────

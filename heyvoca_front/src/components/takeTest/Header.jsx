@@ -13,7 +13,6 @@ const QUESTION_INSTRUCTIONS = {
   multipleChoiceListening: '듣고 알맞은 뜻을 선택하세요',
   reverseMultipleChoice: '알맞은 단어를 선택하세요',
   fillInTheBlank: '빈칸에 알맞은 단어를 선택하세요',
-  fillInTheBlankReverse: '빈칸에 알맞은 뜻을 선택하세요',
   cardMatch: '같은 뜻끼리 짝지어 보세요',
   cardMatchListening: '듣고 같은 카드를 짝지어 보세요',
   // 부패 진단 (당근 농장 V2 학습 시안 §6) — 헤더가 "알맞은 뜻을 선택하세요"가 아니라
