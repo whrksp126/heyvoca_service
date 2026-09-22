@@ -18,3 +18,4 @@
 | 20260907-1 | 2026-09-07 | unknown | - | - | - | dict: 레벨 기초 단어장 4권 서점 등록 + 기초 카테고리 (voca=49873, voca_meaning=131631, voca_book=12773) |
 | 20260921-1 | 2026-09-21 | claude | - | voca_meaning_concept 364,392행 | - | dict: 유사 뜻 개념 그룹 매핑 테이블 추가·시딩(45,059그룹) (voca=49873, voca_meaning=131631, voca_book=12773) |
 | 20260921-2 | 2026-09-21 | claude | voca_example 3,236건(구·숙어 1,618개 신규 예문) | admin_voca_book_map 6,464행 예문 채움 + 3,784행 en/ko→origin/meaning | - | dict: 서점 단어장 예문 전량 보강(예문 없는 행 0) (voca=49873, voca_meaning=131631, voca_book=12773) |
+| 20260922-1 | 2026-09-22 | claude | voca_example +2(preferred) −16(파생어 메모형 가짜 예문) | admin_voca_book_map 719행 정규화(빈 해석 527 채움·한글 태그 287·span/중첩 302·불일치 26행 교체) | - | dict: 빈칸 채우기 양방향 출제 기반 — 서점 예문 전량 origin/meaning 양쪽 강조 태그 확보 (voca=49873, voca_meaning=131631, voca_book=12773) |

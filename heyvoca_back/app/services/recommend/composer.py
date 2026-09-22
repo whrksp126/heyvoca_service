@@ -32,6 +32,8 @@ from app.services.recommend.ranking import (
     compute_weakness, is_known_word, weighted_sample_without_replacement,
 )
 from app.utils.interleave import interleave_avoid_adjacent
+from app.utils.example_tagging import example_has_target_tag, example_origin_text, example_meaning_text
+from app.constants.question_types import RECOMMENDABLE_QUESTION_TYPES
 
 # ──────────────────────────────────────────────
 # 상수
@@ -66,31 +68,27 @@ _BUCKET_REASON: Dict[str, str] = {
     'long':    '장기 기억 점검',
 }
 
-# 지원 question_type 목록
-_ALL_QUESTION_TYPES = [
-    'multipleChoice',
-    'reverseMultipleChoice',   # 뜻→단어 (역방향 사지선다) — multipleChoice와 요구 데이터가 같다
-    'multipleChoiceListening',
-    'fillInTheBlank',
-    'cardMatch',
-    'cardMatchListening',
-]
+# 지원 question_type 목록 — 단일 소스는 app/constants/question_types.py
+# (그쪽에 /study/log 화이트리스트도 같이 정의돼 있어 새 유형 추가 시 두 곳이 어긋나지 않는다).
+_ALL_QUESTION_TYPES = list(RECOMMENDABLE_QUESTION_TYPES)
 
 # 유형 배정 가중치 (2026-09) — "리스트 순서대로 첫 지원 유형"이면 앞쪽 유형(multipleChoice)만
 # 계속 뽑혀 뒤쪽 유형(특히 카드매칭류)이 사실상 노출되지 않는 문제가 있었다(약점이 없고
 # avoid 회피 대상도 아닌 "오늘 처음 보는 단어"는 항상 순서 1번을 받았다). 이제 avoid를 뺀
 # 지원 가능 유형 전체를 대상으로 가중치 비례 랜덤을 뽑는다.
-# 가중치 근거: 사지선다 방향(단어→뜻 / 뜻→단어)을 주력으로 유지하되(각 30, 합 60/100)
-# 듣기(20)와 카드매칭류(각 10, 합 20)도 꾸준히 섞이게 한다. fillInTheBlank는 프론트에서
-# 비활성(enabled:false)이라 가중치 풀에서 제외 — 기존처럼 약점 유형 우선 배정으로만
-# 예외적으로 나올 수 있다(약점 통계가 애초에 프론트가 실제로 출제한 유형에서만 쌓이므로
-# 사실상 거의 나오지 않는다).
+# 가중치 근거: 사지선다 방향(단어→뜻 / 뜻→단어)을 주력으로 유지하되(각 25, 합 50/100),
+# 듣기(15)도 꾸준히 섞이게 한다. fillInTheBlank/fillInTheBlankReverse(빈칸 채우기 정방향/
+# 역방향, 각 10)는 강조 태그가 있는 예문이 있는 단어에서만 후보가 되므로 실제 노출 빈도는
+# 가중치보다 낮게 자연 감쇠한다. cardMatch(10)/cardMatchListening(5)는 세트 단위 특성상
+# 노출 체감이 더 크게 느껴져 낮게 유지한다. 합계 100.
 _QUESTION_TYPE_WEIGHTS: Dict[str, int] = {
-    'multipleChoice':          30,
-    'reverseMultipleChoice':   30,
-    'multipleChoiceListening': 20,
+    'multipleChoice':          25,
+    'reverseMultipleChoice':   25,
+    'multipleChoiceListening': 15,
+    'fillInTheBlank':          10,
+    'fillInTheBlankReverse':   10,
     'cardMatch':               10,
-    'cardMatchListening':      10,
+    'cardMatchListening':      5,
 }
 
 # ──────────────────────────────────────────────
@@ -346,16 +344,25 @@ def _item_can_use_question_type(item: CandidateItem, qtype: str) -> bool:
     if qtype in ('multipleChoiceListening', 'cardMatchListening'):
         return has_meanings or has_examples
     if qtype == 'fillInTheBlank':
-        return has_meanings
+        # 한→영 빈칸: 영어(origin/legacy en) 예문 중 강조 태그가 있는 게 하나라도 있어야 한다.
+        return any(
+            example_has_target_tag(example_origin_text(ex)) for ex in (item.examples or [])
+        )
+    if qtype == 'fillInTheBlankReverse':
+        # 영→한 빈칸: 뜻이 있어야 하고, 한국어(meaning/legacy ko) 예문 중 강조 태그가 있는 게
+        # 하나라도 있어야 한다.
+        return has_meanings and any(
+            example_has_target_tag(example_meaning_text(ex)) for ex in (item.examples or [])
+        )
     return has_meanings or has_examples
 
 
 def _weighted_type_choice(candidates: List[str]) -> Optional[str]:
     """지원 가능 유형 후보에서 _QUESTION_TYPE_WEIGHTS 가중치 비례로 하나를 뽑는다.
 
-    가중치 풀에 없는 유형(fillInTheBlank 등)만 후보에 있으면 첫 번째를 그대로 쓴다
-    (기존 "리스트 순서 우선" 폴백과 동일한 결정 방식 — 이런 유형은 애초에 가중 랜덤
-    대상이 아니라서 순서 결정이 큰 의미가 없다).
+    _ALL_QUESTION_TYPES 전체가 현재 가중치 풀에 있어 이 경로는 정상적으로는 타지 않지만,
+    향후 가중치 없는 신규 유형이 추가될 경우를 대비한 안전망으로 남겨둔다 — 가중치 풀에
+    없는 유형만 후보에 있으면 첫 번째를 그대로 쓴다("리스트 순서 우선" 폴백).
     """
     if not candidates:
         return None

@@ -16,7 +16,8 @@ import MemoryStateChangeBadge, {
   getMemoryStateKeyByStability,
 } from "../common/MemoryStateChangeBadge";
 import { playSuccessSound, playErrorSound } from '../../utils/audio';
-import { getQuestionType } from '../../plugins/questionTypes';
+import { getQuestionType, isFillInTheBlankType } from '../../plugins/questionTypes';
+import { getDisplayMeanings } from '../../utils/displayMeanings';
 import { logStudyQuestion } from '../../api/study';
 import { getAdvanceDelay, ADVANCE_DELAY_GROW } from '../../utils/studyTiming';
 import { optimisticFarmPayload, pendingFarmPayload } from '../../utils/farmOptimistic';
@@ -115,32 +116,8 @@ const computeOptimisticFsrs = (prevFsrs, isCorrect) => {
   };
 };
 
-// meanings가 여러 개면 2~3개만 선택 (중복 제거).
-// 표시 뜻은 '뜻 내용'을 시드로 결정적으로 고른다 → 정답 선택 등으로 재렌더돼도
-// 옵션 텍스트가 바뀌지 않는다(기존엔 Math.random이라 재계산 시 옵션이 변경되는 버그).
-const getDisplayMeanings = (meanings) => {
-  if (!meanings || meanings.length === 0) return [];
-
-  // 중복 제거
-  const uniqueMeanings = [...new Set(meanings)];
-
-  if (uniqueMeanings.length <= 2) return uniqueMeanings;
-
-  // 내용 기반 시드 PRNG(mulberry32) — 같은 뜻 집합이면 항상 같은 결과.
-  const seedStr = uniqueMeanings.join('|');
-  let h = 2166136261;
-  for (let i = 0; i < seedStr.length; i++) { h ^= seedStr.charCodeAt(i); h = Math.imul(h, 16777619); }
-  const rand = () => {
-    h = (h + 0x6D2B79F5) | 0;
-    let t = Math.imul(h ^ (h >>> 15), 1 | h);
-    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
-    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
-  };
-
-  const count = rand() < 0.5 ? 2 : 3;
-  const shuffled = [...uniqueMeanings].sort(() => rand() - 0.5);
-  return shuffled.slice(0, Math.min(count, uniqueMeanings.length));
-};
+// 표시 뜻 선택(getDisplayMeanings)은 utils/displayMeanings.js 로 옮겼다 — 빈칸 채우기(영→한)
+// 선택지도 같은 함수를 써야 유형 간 뜻 표기가 어긋나지 않는다.
 
 // ─── 카드매칭 오답 → 사지선다 변환 (재출제용) ───────────────────────────────────
 // 세션에 존재하는 모든 단어(사지선다류 문제 자신 + 카드매칭 세트의 words[])를 모아
@@ -402,9 +379,10 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
     if (Array.isArray(question.options) && question.options.length > 0) {
       const correctOption = question.options[question.resultIndex];
       const shuffled = [...question.options].sort(() => Math.random() - 0.5);
-      const newResultIndex = shuffled.findIndex(
-        (opt) => (opt.id ?? opt.vocaIndexId) === (correctOption.id ?? correctOption.vocaIndexId)
-      );
+      // 선택지가 단어 객체(사지선다)면 id, 문자열(빈칸 채우기)이면 문자열 자체로 비교한다 —
+      // 예전엔 객체만 가정해 문자열 선택지의 resultIndex 가 어긋났다.
+      const optionKey = (opt) => (opt !== null && typeof opt === 'object') ? (opt.id ?? opt.vocaIndexId) : opt;
+      const newResultIndex = shuffled.findIndex((opt) => optionKey(opt) === optionKey(correctOption));
       retryQuestion = {
         ...question,
         options: shuffled,
@@ -696,7 +674,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
         // 최대 2개까지만 이어 읽는다. 단어 발음은 정답 공개 후에만(handleClickExamOption).
         const meaningsToSpeak = currentQuestionDisplayMeanings.slice(0, 2).join(', ');
         if (meaningsToSpeak) speakText(meaningsToSpeak, 'ko', 'meaning');
-      } else if (!['cardMatch', 'cardMatchListening', 'fillInTheBlank'].includes(question.questionType) && question.origin) {
+      } else if (!['cardMatch', 'cardMatchListening', 'fillInTheBlank', 'fillInTheBlankReverse'].includes(question.questionType) && question.origin) {
         speakText(question.origin, "en");
       }
 
@@ -1238,9 +1216,14 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
       target = setWords.find(w => w.id === wordId);
       if (target) target.isCorrect = wordIsCorrect ?? target.isCorrect;
     }
+    // 단일 단어 플러그인(빈칸 채우기 두 방향) — 문제 객체 자체가 단어를 스프레드한 것이라
+    // words[] 가 없다. fsrs 기준값과 재출제용 단어 객체를 문제 자신에서 얻는다.
+    const isSingleWordQuestion = !Array.isArray(setWords) && currentQuestion?.id === wordId;
+    const fsrsBefore = target?.fsrs ?? (isSingleWordQuestion ? currentQuestion?.fsrs : undefined);
 
-    // 게스트 온보딩 로컬 콤보 — 카드매칭은 항상 첫 시도(오답 카드는 사지선다로 재출제되어 이 경로를 다시 타지 않음)
-    bumpLocalCombo(!!wordIsCorrect);
+    // 게스트 온보딩 로컬 콤보 — 첫 시도만 반영. 카드매칭은 항상 첫 시도(오답 카드는 사지선다로
+    // 재출제되어 이 경로를 다시 타지 않음)지만, 빈칸 채우기는 같은 유형으로 재출제되어 다시 온다.
+    if (!currentQuestion?.isRetry) bumpLocalCombo(!!wordIsCorrect);
 
     /*
       카드별 농장 상태 바 — 카드는 카드(단어)마다 따로 붙는다. 구버전 UI 폴백을 없앴기
@@ -1252,10 +1235,10 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
       로 채점 전 값에 멈춰 세워 두고, sendCardLog 응답이 도착했을 때 그 값 하나로만
       움직인다. 게스트·이미 로깅된 카드처럼 응답이 안 오는 자리만 낙관값을 바로 쓴다.
     */
-    const optimistic = computeOptimisticFsrs(target?.fsrs, !!wordIsCorrect);
+    const optimistic = computeOptimisticFsrs(fsrsBefore, !!wordIsCorrect);
     const buildOptimisticCardFarm = (base) => optimisticFarmPayload({
       base,
-      fsrsBefore: target?.fsrs,
+      fsrsBefore,
       fsrsAfter: optimistic,
       wasCorrect: !!wordIsCorrect,
       isRetry: !!currentQuestion?.isRetry && !guestMode,
@@ -1270,7 +1253,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
     if (willReceiveServerFarm) {
       setCardFarmByWordId(prev => ({
         ...prev,
-        [wordId]: pendingFarmPayload({ base: prev[wordId], fsrsBefore: target?.fsrs, wasCorrect: !!wordIsCorrect }),
+        [wordId]: pendingFarmPayload({ base: prev[wordId], fsrsBefore, wasCorrect: !!wordIsCorrect }),
       }));
       farmFallbackRef.current[wordId] = () => {
         setCardFarmByWordId(prev => ({ ...prev, [wordId]: buildOptimisticCardFarm(prev[wordId]) }));
@@ -1309,6 +1292,22 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
 
     if (wordIsCorrect) {
       markVocaPassed(wordId);
+      return;
+    }
+
+    // 오답 단일 단어 문제(빈칸 채우기): **같은 유형**으로 다시 만들어(예문·선택지 새로 섞음) 큐 끝에
+    // 재출제한다. 카드와 달리 콜백이 onComplete 하나라 이중 호출이 없으므로 cardRetryEnqueuedRef
+    // 가드를 타지 않는다 — 재출제에서 또 틀리면 다시 재출제(상한은 enqueueRetry 의 MAX_RETRY).
+    // 같은 유형으로 못 만들면(예문이 사라진 비정상 캐시 등) 사지선다로 폴백한다.
+    if (isSingleWordQuestion && isFillInTheBlankType(questionType)) {
+      // 문제 전용 필드를 벗겨 순수 단어 객체로 되돌린 뒤 다시 출제한다
+      const wordObj = { ...currentQuestion };
+      ['options', 'resultIndex', 'shownText', 'blankText', 'blankFill', 'direction',
+        'questionType', 'isCorrect', 'userResultIndex', 'isRetry'].forEach(k => { delete wordObj[k]; });
+      const pool = collectSessionWordPool(testQuestions);
+      const regenerated = getQuestionType(questionType)?.setupQuestions?.([wordObj], pool) ?? [];
+      const retryQuestion = regenerated[0] ?? buildMultipleChoiceFromWord(wordObj, pool);
+      enqueueRetry(progressIndex, retryQuestion);
       return;
     }
 
@@ -1514,7 +1513,6 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
                 onComplete={handlePluginComplete}
                 onCardMatched={handleCardMatched}
                 farmByWordId={cardFarmByWordId}
-                farm={showFarmBar ? farmStatus : null}
               />
             </motion.div>
           </AnimatePresence>

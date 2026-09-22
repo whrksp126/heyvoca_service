@@ -17,8 +17,44 @@ import json
 
 STRONG = '<strong class="target-word">'
 
+# 표준 강조 태그 탐지용 정규식 — class 앞뒤로 다른 속성이 붙어 있어도(예: <strong data-x="1"
+# class="target-word">) 매치한다. 프론트 TARGET_WORD_RE(plugins/questionTypes/index.js,
+# fillInTheBlank 출제 가능 여부 판정)와 규칙을 맞춘 단일 소스 — 여기 바꾸면 그쪽도 맞춰야 한다.
+TARGET_WORD_RE = re.compile(r'<strong[^>]*class="target-word"[^>]*>', re.IGNORECASE)
+
 _spacy_nlp = None
 _kiwi_instance = None
+
+
+def example_has_target_tag(text):
+    """text 안에 헤이보카 표준 강조 태그(<strong class="target-word">)가 있는지 여부.
+
+    fillInTheBlank/fillInTheBlankReverse 출제 가능 여부 판정(추천 composer, 프론트
+    plugins/questionTypes/index.js)에서 공용으로 쓰는 단일 소스.
+    """
+    if not text:
+        return False
+    return bool(TARGET_WORD_RE.search(str(text)))
+
+
+def example_origin_text(ex):
+    """예문 dict에서 영어(origin) 쪽 텍스트를 뽑는다. {'origin'} 우선, 없으면 레거시 {'en'}."""
+    if not isinstance(ex, dict):
+        return ''
+    origin = ex.get('origin')
+    if origin is None:
+        origin = ex.get('en')
+    return origin or ''
+
+
+def example_meaning_text(ex):
+    """예문 dict에서 한국어(meaning) 쪽 텍스트를 뽑는다. {'meaning'} 우선, 없으면 레거시 {'ko'}."""
+    if not isinstance(ex, dict):
+        return ''
+    meaning = ex.get('meaning')
+    if meaning is None:
+        meaning = ex.get('ko')
+    return meaning or ''
 
 
 def _get_spacy():

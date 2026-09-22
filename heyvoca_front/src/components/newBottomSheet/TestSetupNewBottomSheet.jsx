@@ -1,7 +1,7 @@
 import React, { useState, useRef, useCallback, useMemo, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Check, Minus, Plus } from '@phosphor-icons/react';
-import { QUESTION_TYPE_PLUGINS, countFillInTheBlankCandidates } from '../../plugins/questionTypes';
+import { QUESTION_TYPE_PLUGINS, countFillInTheBlankCandidates, isFillInTheBlankType } from '../../plugins/questionTypes';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
@@ -10,29 +10,6 @@ import { MIN_TEST_VOCABULARY_COUNT, MEMORY_STATES, getWordMemoryState } from '..
 import { vibrate } from '../../utils/osFunction';
 
 
-
-function getQuestionTypeLabel(type) {
-  switch (type) {
-    case 'multipleChoice':
-      return '사지 선다';
-    case 'fillInTheBlank':
-      return '빈칸 채우기';
-    case 'trueOrFalse':
-      return 'OX';
-    case 'matchingPairs':
-      return '매칭 페어';
-    case 'typing':
-      return '타이핑';
-    case 'audioChoice':
-      return '오디오 선다';
-    case 'ordering':
-      return '순서 맞추기';
-    case 'dragAndDrop':
-      return '드래그 앤 드랍';
-    default:
-      return '';
-  }
-}
 
 function getMemoryStateLabel(type) {
   switch (type) {
@@ -50,7 +27,12 @@ function getMemoryStateLabel(type) {
 }
 
 export const TestSetupNewBottomSheet = ({ onCancel, onSet, maxVocabularyCount, vocabularySheetId, testType }) => {
-  const [questionTypes, setQuestionTypes] = useState(['multipleChoice', 'reverseMultipleChoice']);
+  // 문제 유형 선택은 [유형 묶음 × 방향 × 듣기] 세 축으로 받고, 실제 questionType id 배열은
+  // 플러그인 메타데이터(family/direction/listening)로 파생한다(아래 questionTypes).
+  // 기본값(사지선다 · 양방향 · 듣기 없음) → ['multipleChoice', 'reverseMultipleChoice'] — 예전 기본값과 같다.
+  const [selectedFamilies, setSelectedFamilies] = useState(['multipleChoice']);
+  const [selectedDirections, setSelectedDirections] = useState(['en2ko', 'ko2en']);
+  const [listeningOn, setListeningOn] = useState(false);
   const [selectionType, setSelectionType] = useState('recommended'); // 'recommended' | 'random'
   const [memoryState, setMemoryState] = useState(['unlearned', 'shortTerm', 'mediumTerm', 'longTerm']);
   const [errorMessage, setErrorMessage] = useState('');
@@ -86,6 +68,25 @@ export const TestSetupNewBottomSheet = ({ onCancel, onSet, maxVocabularyCount, v
       return vocabularySheet ? (vocabularySheet.words || []) : [];
     }
   }, [vocabularySheets, vocabularySheetId]);
+
+  // 선택 축 → questionType id 배열. 듣기 변형은 일반 유형을 대체하지 않고 **추가**된다.
+  const questionTypes = useMemo(() => {
+    const derived = QUESTION_TYPE_PLUGINS
+      .filter(p => p.enabled
+        && selectedFamilies.includes(p.family)
+        && (p.direction === null || selectedDirections.includes(p.direction))
+        && (!p.listening || listeningOn))
+      .map(p => p.id);
+    // 방어: 비면 최소 1개는 남긴다(정상 선택 조합에서는 발생하지 않음)
+    return derived.length > 0 ? derived : ['multipleChoice'];
+  }, [selectedFamilies, selectedDirections, listeningOn]);
+
+  const isFillSelected = selectedFamilies.includes('fillInTheBlank');
+  // 빈칸 채우기 출제 가능 단어 수 — 선택한 방향 중 하나라도 자격 예문이 있는 단어
+  const fillCandidateCount = useMemo(
+    () => countFillInTheBlankCandidates(allWords, selectedDirections),
+    [allWords, selectedDirections]
+  );
 
   // 암기 상태별 단어 개수 계산 (4개 키, overdue는 본래 상태로 분류)
   const memoryStateCounts = useMemo(() => {
@@ -162,12 +163,13 @@ export const TestSetupNewBottomSheet = ({ onCancel, onSet, maxVocabularyCount, v
       return;
     }
 
-    // 빈칸 채우기 단독 선택 시 강조 처리된 예문이 있는 단어가 충분한지 검사
-    if (data.questionType?.length === 1 && data.questionType[0] === 'fillInTheBlank') {
-      if (countFillInTheBlankCandidates(allWords) < MIN_TEST_VOCABULARY_COUNT) {
-        setErrorMessage('빈칸 채우기는 예문에 강조 표시가 있는 단어가 필요해요. 다른 유형도 함께 선택해주세요');
-        return;
-      }
+    // 빈칸 채우기만 선택했을 때 강조 처리된 예문이 있는 단어가 충분한지 검사
+    const onlyFill = Array.isArray(data.questionType)
+      && data.questionType.length > 0
+      && data.questionType.every(isFillInTheBlankType);
+    if (onlyFill && fillCandidateCount < MIN_TEST_VOCABULARY_COUNT) {
+      setErrorMessage('빈칸 채우기는 예문에 강조 표시가 있는 단어가 필요해요. 다른 유형도 함께 선택해주세요');
+      return;
     }
 
     // MEMO : testType : test, exam, today
@@ -274,6 +276,19 @@ export const TestSetupNewBottomSheet = ({ onCancel, onSet, maxVocabularyCount, v
     }
   };
 
+  // 다중 선택 토글 — 마지막 1개는 해제되지 않는다(≥1 보장)
+  const toggleKeepOne = (setter) => (value) => {
+    setter(prev => {
+      if (prev.includes(value)) {
+        const next = prev.filter(v => v !== value);
+        return next.length === 0 ? prev : next;
+      }
+      return [...prev, value];
+    });
+  };
+  const toggleFamily = toggleKeepOne(setSelectedFamilies);
+  const toggleDirection = toggleKeepOne(setSelectedDirections);
+
   const toggleMemoryState = (state) => {
     setMemoryState(prev =>
       prev.includes(state)
@@ -302,30 +317,24 @@ export const TestSetupNewBottomSheet = ({ onCancel, onSet, maxVocabularyCount, v
         p-[20px] pb-[115px]
         overflow-y-auto
       ">
-        {/* 1. 문제 유형 */}
-        <div
-          className="
-            flex justify-between flex-col gap-[8px]
-          "
-        >
-          <h3
-            className="
-              text-[14px] font-[700] text-layout-black dark:text-layout-white text-center
-            dark:text-layout-white
-            "
-          >
+        {/* 1. 문제 유형 — 유형 묶음(다중) */}
+        <div className="flex flex-col gap-[8px]">
+          <h3 className="text-[14px] font-[700] text-layout-black dark:text-layout-white text-center">
             문제 유형
           </h3>
-          <div className="grid grid-cols-2 gap-[10px]">
-            {QUESTION_TYPE_PLUGINS.filter(p => p.enabled).map((plugin, index) => {
-              const isSelected = questionTypes.includes(plugin.id);
+          <div className="flex gap-[8px]">
+            {[
+              { value: 'multipleChoice', label: '사지선다' },
+              { value: 'cardMatch', label: '카드 맞추기' },
+              { value: 'fillInTheBlank', label: '빈칸 채우기' },
+            ].map(({ value, label }) => {
+              const isSelected = selectedFamilies.includes(value);
               return (
                 <div
-                  key={plugin.id}
+                  key={value}
                   className={`
-                    flex items-center justify-center gap-[5px]
-                    h-[45px]
-                    px-[15px]
+                    flex-1 flex items-center justify-center gap-[5px]
+                    h-[45px] px-[10px]
                     border-[1px] rounded-[8px]
                     cursor-pointer
                     ${isSelected ? 'border-primary-main-600' : 'border-layout-gray-200'}
@@ -333,23 +342,91 @@ export const TestSetupNewBottomSheet = ({ onCancel, onSet, maxVocabularyCount, v
                   onPointerDown={(e) => e.stopPropagation()}
                   onClick={() => {
                     vibrate({ duration: 5 });
-                    setQuestionTypes(prev => {
-                      if (prev.includes(plugin.id)) {
-                        const next = prev.filter(t => t !== plugin.id);
-                        return next.length === 0 ? [plugin.id] : next;
-                      }
-                      return [...prev, plugin.id];
-                    });
+                    toggleFamily(value);
                   }}
                 >
                   {isSelected && <Check size={18} weight="bold" className="text-primary-main-600" />}
-                  <span className={`text-[16px] font-[700] ${isSelected ? 'text-primary-main-600' : 'text-layout-gray-200'}`}>
-                    {plugin.label}
+                  <span className={`text-[15px] font-[700] break-keep ${isSelected ? 'text-primary-main-600' : 'text-layout-gray-200'}`}>
+                    {label}
                   </span>
                 </div>
               );
             })}
           </div>
+          {isFillSelected && (
+            <p className="text-[12px] text-layout-gray-300 text-center break-keep">
+              빈칸 채우기: 이 단어장 {allWords.length}개 중 {fillCandidateCount}개 출제 가능
+            </p>
+          )}
+        </div>
+
+        {/* 1-2. 방향 — 다중 */}
+        <div className="flex flex-col gap-[8px]">
+          <h3 className="text-[14px] font-[700] text-layout-black dark:text-layout-white text-center">
+            방향
+          </h3>
+          <div className="flex gap-[8px]">
+            {[
+              { value: 'en2ko', label: '영어 → 한글' },
+              { value: 'ko2en', label: '한글 → 영어' },
+            ].map(({ value, label }) => {
+              const isSelected = selectedDirections.includes(value);
+              return (
+                <div
+                  key={value}
+                  className={`
+                    flex-1 flex items-center justify-center gap-[5px]
+                    h-[45px] px-[15px]
+                    border-[1px] rounded-[8px]
+                    cursor-pointer
+                    ${isSelected ? 'border-primary-main-600' : 'border-layout-gray-200'}
+                  `}
+                  onPointerDown={(e) => e.stopPropagation()}
+                  onClick={() => {
+                    vibrate({ duration: 5 });
+                    toggleDirection(value);
+                  }}
+                >
+                  {isSelected && <Check size={18} weight="bold" className="text-primary-main-600" />}
+                  <span className={`text-[16px] font-[700] ${isSelected ? 'text-primary-main-600' : 'text-layout-gray-200'}`}>
+                    {label}
+                  </span>
+                </div>
+              );
+            })}
+          </div>
+          <p className="text-[12px] text-layout-gray-300 text-center break-keep">
+            사지선다·빈칸 채우기에 적용 — 카드 맞추기는 양쪽 카드가 함께 보여요
+          </p>
+        </div>
+
+        {/* 1-3. 듣기 — 토글 */}
+        <div className="flex flex-col gap-[8px]">
+          <h3 className="text-[14px] font-[700] text-layout-black dark:text-layout-white text-center">
+            듣기
+          </h3>
+          <div
+            className={`
+              flex items-center justify-center gap-[5px]
+              h-[45px] px-[15px]
+              border-[1px] rounded-[8px]
+              cursor-pointer
+              ${listeningOn ? 'border-primary-main-600' : 'border-layout-gray-200'}
+            `}
+            onPointerDown={(e) => e.stopPropagation()}
+            onClick={() => {
+              vibrate({ duration: 5 });
+              setListeningOn(prev => !prev);
+            }}
+          >
+            {listeningOn && <Check size={18} weight="bold" className="text-primary-main-600" />}
+            <span className={`text-[16px] font-[700] ${listeningOn ? 'text-primary-main-600' : 'text-layout-gray-200'}`}>
+              듣기 문제 포함
+            </span>
+          </div>
+          <p className="text-[12px] text-layout-gray-300 text-center break-keep">
+            사지선다·카드 맞추기에 듣기 문제를 섞어요
+          </p>
         </div>
 
         {/* 2. 출제 유형 */}

@@ -1188,7 +1188,7 @@ class UserStudyLog(db.Model):
                                comment='user_voca_book.id 참조 (파티션 테이블 FK 불가)')
     session_id       = Column(BinaryUUID, nullable=False, comment='user_study_session.id 참조 (FK 없음)')
     test_type        = Column(String(16), nullable=False, comment='test|exam|today|quick')
-    question_type    = Column(String(32), nullable=False, comment='multipleChoice|multipleChoiceListening|fillInTheBlank|cardMatch|cardMatchListening')
+    question_type    = Column(String(32), nullable=False, comment='multipleChoice|multipleChoiceListening|reverseMultipleChoice|fillInTheBlank|fillInTheBlankReverse|cardMatch|cardMatchListening|multipleChoiceDiagnosis (단일 소스: app/constants/question_types.py ALLOWED_QUESTION_TYPES)')
     was_correct      = Column(Boolean, nullable=False)
     q_score          = Column(Integer,     nullable=False, comment='SM2 점수: 0/3/4/5')
     rating           = Column(Integer,     nullable=True,  comment='FSRS: 1=Again,2=Hard,3=Good,4=Easy (Phase 1.2부터 채움)')
@@ -1240,7 +1240,7 @@ class UserQuestionTypeStat(db.Model):
     id               = Column(Integer, primary_key=True, autoincrement=True)
     user_id          = Column(BinaryUUID, ForeignKey('user.id'), nullable=False, index=True)
     question_type    = Column(String(32), nullable=False,
-                              comment='multipleChoice|multipleChoiceListening|fillInTheBlank|cardMatch|cardMatchListening')
+                              comment='multipleChoice|multipleChoiceListening|reverseMultipleChoice|fillInTheBlank|fillInTheBlankReverse|cardMatch|cardMatchListening|multipleChoiceDiagnosis (단일 소스: app/constants/question_types.py ALLOWED_QUESTION_TYPES)')
     total_count      = Column(Integer, nullable=False, default=0)
     correct_count    = Column(Integer, nullable=False, default=0)
     avg_time_taken_ms = Column(Integer, nullable=False, default=0,

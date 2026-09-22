@@ -10,6 +10,7 @@ from sqlalchemy import text
 from app import db
 from app.models.models import UserStudySession, UserStudyLog, UserVoca, UserQuestionTypeStat, User
 from app.utils.jwt_utils import jwt_required
+from app.constants.question_types import ALLOWED_QUESTION_TYPES
 
 study_bp = Blueprint('study', __name__, url_prefix='/study')
 
@@ -207,6 +208,9 @@ def post_study_log():
 
     if not session_id_str or user_voca_id is None or was_correct is None:
         return jsonify({'code': 400, 'message': 'session_id, user_voca_id, was_correct는 필수입니다.'}), 400
+
+    if question_type not in ALLOWED_QUESTION_TYPES:
+        return jsonify({'code': 400, 'message': f'지원하지 않는 question_type입니다: {question_type}'}), 400
 
     try:
         session_uuid = UUID(session_id_str)
