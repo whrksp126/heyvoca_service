@@ -2,7 +2,6 @@ import json
 import logging
 import re
 import os
-import string
 from flask import render_template, redirect, url_for, request, session, jsonify, g
 from sqlalchemy import text, select, case, func, bindparam
 from sqlalchemy.orm import joinedload, contains_eager
@@ -10,6 +9,12 @@ from app.routes import search_bp
 from app.models.models import db, VocaBook, Voca, VocaMeaning, VocaExample, VocaBookMap, VocaMeaningMap, VocaExampleMap, Bookstore, UserVoca
 from app.utils.jwt_utils import jwt_required, optional_user_id
 from app.utils.example_tagging import _get_spacy
+from app.services.word_resolve import (
+    clean_word_token as _clean_word_token,
+    lookup_voca_exact as _lookup_voca_exact,
+    word_info_suffix_candidates as _word_info_suffix_candidates,
+    resolve_word_info as _resolve_word_info,
+)
 from flask_caching import Cache
 import redis
 from uuid import UUID
@@ -533,104 +538,6 @@ def bookstore_download():
 
 _WORD_INFO_CACHE_TTL = 60 * 60 * 24  # 1일
 _WORD_INFO_MAX_MEANINGS = 4
-_WORD_INFO_STRIP_CHARS = string.punctuation + string.whitespace + '“”‘’—–…'
-
-
-def _clean_word_token(raw_word):
-    """예문에서 탭한 원시 토큰의 앞뒤 구두점/따옴표/공백을 제거한다.
-
-    내부의 하이픈/어포스트로피는 보존한다("mother-in-law", "don't" 등이 그대로 남음) —
-    strip()은 문자열 양 끝만 제거하므로 안전하다.
-    """
-    if not raw_word:
-        return ''
-    return str(raw_word).strip().strip(_WORD_INFO_STRIP_CHARS)
-
-
-def _lookup_voca_exact(word):
-    """word와 대소문자 무시 정확히 일치하는 Voca 1건(가장 작은 id 우선)."""
-    if not word:
-        return None
-    return (
-        db.session.query(Voca)
-        .filter(func.lower(Voca.word) == word.lower())
-        .order_by(Voca.id.asc())
-        .first()
-    )
-
-
-def _word_info_suffix_candidates(word):
-    """정확 일치/lemma 매치 모두 실패했을 때 시도할 값싼 접미사 제거 후보들.
-
-    시도 순서(첫 DB 히트가 채택됨): s, es, ed, d, ing(+ing→e, 겹자음+ing→단자음), ies→y.
-    """
-    candidates = []
-
-    def add(candidate):
-        if candidate and candidate != word and candidate not in candidates:
-            candidates.append(candidate)
-
-    if word.endswith('s') and len(word) > 1:
-        add(word[:-1])
-    if word.endswith('es') and len(word) > 2:
-        add(word[:-2])
-    if word.endswith('ed') and len(word) > 2:
-        add(word[:-2])
-    if word.endswith('d') and len(word) > 1:
-        add(word[:-1])
-    if word.endswith('ing') and len(word) > 3:
-        stem = word[:-3]
-        add(stem)               # walking -> walk
-        add(stem + 'e')         # hoping -> hope
-        # 겹자음(running -> runn-, stopping -> stopp-) + ing -> 단자음(run, stop)
-        if len(stem) >= 2 and stem[-1] == stem[-2] and stem[-1].isalpha():
-            add(stem[:-1])
-    if word.endswith('ies') and len(word) > 3:
-        add(word[:-3] + 'y')    # cities -> city
-
-    return candidates
-
-
-def _resolve_word_info(raw_word):
-    """탭한 원시 토큰(raw_word) -> 매칭된 Voca 인스턴스, 없으면 None.
-
-    순서: 1) 정제 후 정확 일치(소문자 기준) 2) 원본 케이싱 그대로 정확 일치(고유명사 대비)
-    3) spaCy lemma 정확 일치 4) 접미사 제거 fallback.
-    """
-    cleaned = _clean_word_token(raw_word)
-    if not cleaned:
-        return None
-
-    cleaned_lower = cleaned.lower()
-
-    voca = _lookup_voca_exact(cleaned_lower)
-    if voca:
-        return voca
-
-    if cleaned != cleaned_lower:
-        voca = _lookup_voca_exact(cleaned)
-        if voca:
-            return voca
-
-    nlp = _get_spacy()
-    if nlp:
-        try:
-            doc = nlp(cleaned_lower)
-            if len(doc) > 0:
-                lemma = (doc[0].lemma_ or '').strip()
-                if lemma and lemma != cleaned_lower:
-                    voca = _lookup_voca_exact(lemma)
-                    if voca:
-                        return voca
-        except Exception:
-            pass
-
-    for candidate in _word_info_suffix_candidates(cleaned_lower):
-        voca = _lookup_voca_exact(candidate)
-        if voca:
-            return voca
-
-    return None
 
 
 def _voca_meanings(voca_id, limit=_WORD_INFO_MAX_MEANINGS):

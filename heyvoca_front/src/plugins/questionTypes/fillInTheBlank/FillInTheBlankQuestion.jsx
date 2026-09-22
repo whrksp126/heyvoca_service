@@ -19,9 +19,8 @@ import { useResumeReplayKey } from '../../../hooks/useResumeReplayKey';
   카드가 둘로 나뉜다.
   - 위 카드(primary 틴트, 스피커 아이콘): 한국어 예문. 카드 전체 탭 = 이 예문 읽기(TTS).
     읽는 동안 스피커가 사지선다 듣기 모드처럼 맥동한다. 마운트 시 1회 자동 재생.
-  - 아래 카드(회색): 영어 빈칸 예문. 채점 전에는 정답이 새지 않도록 카드 자체는 탭할 수 없다.
-    채점 후에는 카드 전체 탭 = 빈칸이 채워진 문장을 그대로 읽는다(아이콘 없이 카드 중앙에서
-    ripple만 확산 — 사지선다 카드와 같은 방식). O/X 와 농장 상태 바는 이 카드 안에 뜬다.
+  - 아래 카드(회색): 영어 빈칸 예문. 카드 자체에는 탭 인터랙션이 없다(누름 효과·클릭 없음).
+    O/X 와 농장 상태 바는 이 카드 안에 뜬다.
     영어 예문의 **각 단어는 채점 전후 언제나 탭할 수 있다**(듀오링고 방식) — 탭하면 그 단어를
     읽고(TTS) 단어 아래에 뜻 말풍선(WordInfoBubble)이 뜬다. 빈칸 pill 은 탭 대상이 아니다.
     말풍선은 바깥 탭·선택지 탭·채점·스크롤·문제 전환에 닫힌다. 한 번에 하나만 뜬다.
@@ -100,9 +99,9 @@ const FillInTheBlankQuestion = ({ question, onComplete, farmByWordId }) => {
   const [isSpeaking, setIsSpeaking] = useState(false);
   // 재생 길이(초) — TtsRipple을 실제 재생 시간에 동기화(Main.jsx의 speakDuration과 동일한 용도).
   const [speakDuration, setSpeakDuration] = useState(null);
-  // 지금 재생 중인 게 "보여 주는 예문"(shown)인지 "빈칸 예문"(blank)인지 "탭한 선택지"(word)인지 —
+  // 지금 재생 중인 게 "보여 주는 예문"(shown)인지 "탭한 선택지"(word)인지 "단어 조회"(lookup)인지 —
   // 사지선다 reverseMultipleChoice의 speakingTarget('meaning'/'word')과 같은 역할.
-  const [speakingTarget, setSpeakingTarget] = useState(null); // 'shown' | 'blank' | 'word' | 'lookup' | null
+  const [speakingTarget, setSpeakingTarget] = useState(null); // 'shown' | 'word' | 'lookup' | null
   /*
     단어 말풍선(사전 조회) 상태 — 한 번에 하나만.
     { key, word, anchor: {top,left,width,height}, container: {width,height}, status, info }
@@ -259,20 +258,6 @@ const FillInTheBlankQuestion = ({ question, onComplete, farmByWordId }) => {
     speakShown();
   };
 
-  /*
-    아래 카드(빈칸 예문) 탭 — 채점 후에만 호출된다(채점 전에는 카드 자체가 탭 불가).
-    빈칸이 채워졌으므로 문장을 그대로 읽는다(공용 getTextSound).
-  */
-  const speakBlank = () => {
-    speak(stripHtmlTags(blankText), blankLang, 'blank');
-  };
-
-  const handleBlankCardClick = () => {
-    if (!isAnswered) return;
-    haptic('light');
-    speakBlank();
-  };
-
   const closeLookup = () => {
     lookupReqRef.current += 1;
     setLookup((prev) => (prev ? null : prev));
@@ -281,9 +266,9 @@ const FillInTheBlankQuestion = ({ question, onComplete, farmByWordId }) => {
   /*
     영어 예문 단어 탭 — 단어를 읽고 말풍선을 연다. 같은 단어를 다시 탭하면 닫힌다.
     위치는 단어 버튼과 아래 카드의 getBoundingClientRect 차이로 구한다(카드는 relative +
-    overflow-hidden 이라 말풍선은 카드 안 좌표계에 놓인다). 카드가 whileTap 으로 살짝 축소된
-    순간에 탭이 들어와도 좌표가 어긋나지 않게 카드의 현재 scale 로 나눠 보정한다.
-    카드 onClick(채점 후 문장 읽기)으로 번지지 않게 stopPropagation.
+    overflow-hidden 이라 말풍선은 카드 안 좌표계에 놓인다). 카드 자체에는 탭 인터랙션이 없지만,
+    상위로 이벤트가 번지지 않게 stopPropagation은 유지한다. scale 나눗셈은 만약을 대비한
+    방어 코드(카드가 변형되는 경우가 없어도 무해하다).
   */
   const handleWordTap = (e, key, cleanWord) => {
     e.stopPropagation();
@@ -458,8 +443,6 @@ const FillInTheBlankQuestion = ({ question, onComplete, farmByWordId }) => {
 
   // 위 카드(예문) TtsRipple 노출 — 사지선다 카드와 같은 자리, "보여 주는 예문"을 읽는 동안만.
   const showTtsRipple = isSpeaking && speakingTarget === 'shown';
-  // 아래 카드(빈칸 예문) TtsRipple 노출 — 빈칸 예문을 읽는 동안만. 둘이 동시에 켜지지 않는다.
-  const showBlankRipple = isSpeaking && speakingTarget === 'blank';
 
   return (
     <div className="flex flex-col gap-[15px] h-full">
@@ -505,16 +488,13 @@ const FillInTheBlankQuestion = ({ question, onComplete, farmByWordId }) => {
         </div>
       </motion.button>
 
-      {/* 아래 카드 — 빈칸 예문. 채점 전에는 탭할 수 없다(정답 유출 방지) — role/aria/onClick 을
-          아예 붙이지 않는다. 채점 후에만 카드 전체 탭 = 빈칸이 채워진 문장 읽기.
-          <button> 이 아니라 role=button div 인 이유: 안에 <p>·농장 상태 바(블록 요소)가 들어가
+      {/* 아래 카드 — 빈칸 예문. 카드 자체에는 탭 인터랙션이 없다(정답 유출 방지 + 요청에 따라
+          누름 효과도 없앰) — role/aria/onClick/whileTap 을 아예 붙이지 않는다.
+          <button> 이 아니라 div 인 이유: 안에 <p>·농장 상태 바(블록 요소)가 들어가
           button 의 phrasing-content 제약을 어긴다. O/X 는 pointer-events-none 이라 탭을 막지 않는다. */}
       <motion.div
         ref={blankCardRef}
-        role={isAnswered ? 'button' : undefined}
-        tabIndex={isAnswered ? 0 : undefined}
-        aria-label={isAnswered ? '빈칸 예문 듣기' : undefined}
-        className={`
+        className="
           relative
           flex flex-col flex-1
           w-full
@@ -523,23 +503,12 @@ const FillInTheBlankQuestion = ({ question, onComplete, farmByWordId }) => {
           overflow-hidden
           select-none
           focus:outline-none
-          ${isAnswered ? 'cursor-pointer' : ''}
-        `}
+        "
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
-        whileTap={{ scale: 0.96 }}
         transition={{ duration: 0.2, ease: [0.4, 0, 0.2, 1] }}
         style={{ willChange: 'transform, opacity' }}
-        onClick={isAnswered ? handleBlankCardClick : undefined}
-        onKeyDown={isAnswered ? (e) => {
-          if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleBlankCardClick(); }
-        } : undefined}
       >
-        {/* 채점 후 카드 탭(빈칸 예문 읽기) 시 ripple — 아이콘 없이 카드 중앙에서 확산(사지선다 카드와 동일). */}
-        {showBlankRipple && (
-          <TtsRipple size={160} duration={speakDuration} className="z-[0]" />
-        )}
-
         <div className="relative z-[1] flex items-center flex-1 px-[20px] pt-[20px] pb-[60px]">
           {/* 빈칸 예문 — pill 은 채점 전후 모두 중립색, 채점 후 활용형이 들어간다.
               아이콘이 없어졌으니 텍스트가 카드 전체 너비를 그대로 쓴다(왼쪽 여백 없음). */}

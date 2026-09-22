@@ -15,6 +15,7 @@ from sqlalchemy import func
 
 from app.models.models import Voca, VocaMeaning, User
 from app.utils.jwt_utils import SECRET_KEY, jwt_required  # SECRET_KEY = ACCESS_SECRET
+from app.services.word_resolve import resolve_word_info
 from app.services.tts import service, voice_catalog
 from app.services.tts.registry import get_provider_for_language
 from app.services.tts.normalize import normalize_text
@@ -176,6 +177,11 @@ def _exists_in_dict(norm_text, language):
 
     공백 포함(구/문장/예문/조인된 뜻)은 정확 매칭이 어려워 통과시키고,
     단일 토큰(단어/단일 뜻)만 사전 대조 → 무작위 단어 대량 생성 차단.
+
+    영어는 정확 매칭 실패 시 `resolve_word_info`(정제 → 원본 케이싱 → spaCy lemma →
+    접미사 fallback)로 한 번 더 시도한다. 예문 속 활용형("scheduled", "desks" 등)은
+    표제어(Voca.word)가 아니라 정확 매칭만으로는 사전에 없는 것으로 오판되어
+    TTS 생성이 막히는 버그가 있었다(단어는 사전에 있는데 활용형이 다를 뿐).
     """
     if ' ' in norm_text:
         return True
@@ -190,6 +196,8 @@ def _exists_in_dict(norm_text, language):
         found = db.session.query(Voca.id).filter(
             func.lower(Voca.word) == norm_text.lower()
         ).first() is not None
+        if not found:
+            found = resolve_word_info(norm_text) is not None
     else:  # ko
         found = db.session.query(VocaMeaning.id).filter(
             VocaMeaning.meaning == norm_text

@@ -153,10 +153,13 @@ class TestSuffixCandidates:
 # ──────────────────────────────────────────────────────────
 
 class TestResolveWordInfo:
+    """_resolve_word_info(=app.services.word_resolve.resolve_word_info)의 DB/spaCy 경계는
+    이제 app.services.word_resolve 모듈에 있으므로 그 이름공간을 patch한다."""
+
     def test_exact_match_hit(self):
         fake = FakeVoca(1, 'ruler', '/ˈruːlər/')
-        with patch('app.routes.search._lookup_voca_exact') as mock_lookup, \
-             patch('app.routes.search._get_spacy') as mock_spacy:
+        with patch('app.services.word_resolve.lookup_voca_exact') as mock_lookup, \
+             patch('app.services.word_resolve._get_spacy') as mock_spacy:
             mock_lookup.side_effect = lambda w: fake if w == 'ruler' else None
             result = _resolve_word_info('ruler')
         assert result is fake
@@ -165,7 +168,7 @@ class TestResolveWordInfo:
 
     def test_exact_match_with_punctuation_and_casing(self):
         fake = FakeVoca(2, 'empire', '/ˈɛmpaɪər/')
-        with patch('app.routes.search._lookup_voca_exact') as mock_lookup:
+        with patch('app.services.word_resolve.lookup_voca_exact') as mock_lookup:
             mock_lookup.side_effect = lambda w: fake if w == 'empire' else None
             result = _resolve_word_info('Empire.')
         assert result is fake
@@ -173,7 +176,7 @@ class TestResolveWordInfo:
     def test_original_casing_fallback_for_proper_noun(self):
         # 소문자로는 없고 원본 케이싱(대문자 포함)으로만 사전에 있는 경우(고유명사 등)
         fake = FakeVoca(3, 'NASA', None)
-        with patch('app.routes.search._lookup_voca_exact') as mock_lookup:
+        with patch('app.services.word_resolve.lookup_voca_exact') as mock_lookup:
             def side_effect(w):
                 if w == 'NASA':
                     return fake
@@ -189,8 +192,8 @@ class TestResolveWordInfo:
             return fake if w == 'abandon' else None
 
         fake_nlp = MagicMock(return_value=[FakeToken('abandon')])
-        with patch('app.routes.search._lookup_voca_exact', side_effect=lookup_side_effect), \
-             patch('app.routes.search._get_spacy', return_value=fake_nlp):
+        with patch('app.services.word_resolve.lookup_voca_exact', side_effect=lookup_side_effect), \
+             patch('app.services.word_resolve._get_spacy', return_value=fake_nlp):
             result = _resolve_word_info('abandoned')
         assert result is fake
         fake_nlp.assert_called_once_with('abandoned')
@@ -201,19 +204,19 @@ class TestResolveWordInfo:
         def lookup_side_effect(w):
             return fake if w == 'desk' else None
 
-        with patch('app.routes.search._lookup_voca_exact', side_effect=lookup_side_effect), \
-             patch('app.routes.search._get_spacy', return_value=None):
+        with patch('app.services.word_resolve.lookup_voca_exact', side_effect=lookup_side_effect), \
+             patch('app.services.word_resolve._get_spacy', return_value=None):
             result = _resolve_word_info('desks,')
         assert result is fake
 
     def test_not_found_returns_none(self):
-        with patch('app.routes.search._lookup_voca_exact', return_value=None), \
-             patch('app.routes.search._get_spacy', return_value=None):
+        with patch('app.services.word_resolve.lookup_voca_exact', return_value=None), \
+             patch('app.services.word_resolve._get_spacy', return_value=None):
             result = _resolve_word_info('zzzzznotaword')
         assert result is None
 
     def test_empty_input_returns_none_without_lookup(self):
-        with patch('app.routes.search._lookup_voca_exact') as mock_lookup:
+        with patch('app.services.word_resolve.lookup_voca_exact') as mock_lookup:
             result = _resolve_word_info('...')
         assert result is None
         mock_lookup.assert_not_called()

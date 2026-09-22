@@ -1,4 +1,10 @@
-import { backendUrl, fetchDataAsync, prefetchTtsList } from '../utils/common';
+import { backendUrl, fetchDataAsync, prefetchTtsList, stripHtmlTags } from '../utils/common';
+
+// fillInTheBlank 빈칸 문장의 강조 마커(<strong class="target-word">…</strong>) — 빈칸 자체는
+// 채점 전 텍스트로 드러나면 안 되므로, 단어 수집 시 이 구간을 통째로 제거하고 나머지만 쓴다.
+const TARGET_WORD_TAG_RE = /<strong\b[^>]*\btarget-word\b[^>]*>[\s\S]*?<\/strong\s*>/gi;
+// 빈칸 문장에서 탭 가능한 "단어" 추출 — FillInTheBlankQuestion.jsx의 WORD_EDGE_PUNCT_RE와 같은 기준.
+const WORD_TOKEN_RE = /[A-Za-z0-9'’]+/g;
 
 // localStorage의 사용자 voice 설정 (getTextSound/resolve와 동일 키 사용)
 const getUserVoices = () => {
@@ -50,10 +56,16 @@ export const warmTts = async (items) => {
 
 // 테스트 문제 목록에서 자동 재생되는 텍스트(영어 단어) 수집.
 // multipleChoice 계열은 origin, cardMatch 계열은 words[].origin 을 재생한다.
+// fillInTheBlank는 진입 시 위 카드(한국어 예문)를 자동재생하므로 origin 대신 shownText를 쓴다.
 export const collectTestTexts = (questions) => {
   const out = [];
   if (!Array.isArray(questions)) return out;
   for (const q of questions) {
+    if (q?.questionType === 'fillInTheBlank') {
+      const shown = stripHtmlTags(q.shownText);
+      if (shown) out.push({ text: shown, language: 'ko' });
+      continue;
+    }
     if (q?.origin) out.push({ text: q.origin, language: 'en' });
     if (Array.isArray(q?.words)) {
       for (const w of q.words) {
@@ -124,6 +136,26 @@ export const collectTestFullTexts = (questions) => {
   };
   if (!Array.isArray(questions)) return out;
   for (const q of questions) {
+    if (q?.questionType === 'fillInTheBlank') {
+      // 선택지(영어 단어) 4개 — 탭 시 재생.
+      if (Array.isArray(q.options)) {
+        for (const opt of q.options) {
+          const text = stripHtmlTags(opt);
+          if (text) out.push({ text, language: 'en' });
+        }
+      }
+      // 빈칸 문장의 각 영어 단어 — 단어 탭 시 재생(빈칸 자체는 제외).
+      const withoutBlank = String(q.blankText ?? '').replace(TARGET_WORD_TAG_RE, ' ');
+      const plain = stripHtmlTags(withoutBlank);
+      const seenWords = new Set();
+      const wordMatches = plain.match(WORD_TOKEN_RE) || [];
+      for (const w of wordMatches) {
+        const key = w.toLowerCase();
+        if (seenWords.has(key)) continue;
+        seenWords.add(key);
+        out.push({ text: w, language: 'en' });
+      }
+    }
     pushWord(q);
     if (Array.isArray(q?.words)) q.words.forEach(pushWord);
   }
