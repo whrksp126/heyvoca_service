@@ -493,54 +493,58 @@ export const TestSetupNewBottomSheet = ({ onCancel, onSet, maxVocabularyCount, v
           </div>
         </Section>
 
-        {/* 5. 방향 — 다중 */}
-        <Section title="방향">
-          <div className="flex gap-[8px]">
-            {[
-              { value: 'en2ko', label: '영어 보고 한글', from: 'Aa', to: '가' },
-              { value: 'ko2en', label: '한글 보고 영어', from: '가', to: 'Aa' },
-            ].map(({ value, label, from, to }) => (
-              <SetupTile
-                key={value}
-                selected={selectedDirections.includes(value)}
-                onClick={() => toggleDirection(value)}
-                className="h-[96px]"
-              >
-                <span className="flex items-center gap-[6px]" aria-hidden>
-                  <LangBadge>{from}</LangBadge>
-                  <ArrowRight size={16} weight="bold" />
-                  <LangBadge>{to}</LangBadge>
-                </span>
-                <span className="text-[14px] font-[700] group-data-[selected=true]:text-layout-black dark:group-data-[selected=true]:text-layout-white">{label}</span>
-              </SetupTile>
-            ))}
-          </div>
-        </Section>
+        {/* 5. 방향 — 다중. 사지선다·빈칸 채우기를 골랐을 때만(카드 맞추기는 방향이 없다) */}
+        {(selectedFamilies.includes('multipleChoice') || selectedFamilies.includes('fillInTheBlank')) && (
+          <Section title="방향">
+            <div className="flex gap-[8px]">
+              {[
+                { value: 'en2ko', label: '영어 보고 한글', from: 'Aa', to: '가' },
+                { value: 'ko2en', label: '한글 보고 영어', from: '가', to: 'Aa' },
+              ].map(({ value, label, from, to }) => (
+                <SetupTile
+                  key={value}
+                  selected={selectedDirections.includes(value)}
+                  onClick={() => toggleDirection(value)}
+                  className="h-[96px]"
+                >
+                  <span className="flex items-center gap-[6px]" aria-hidden>
+                    <LangBadge>{from}</LangBadge>
+                    <ArrowRight size={16} weight="bold" />
+                    <LangBadge>{to}</LangBadge>
+                  </span>
+                  <span className="text-[14px] font-[700] group-data-[selected=true]:text-layout-black dark:group-data-[selected=true]:text-layout-white">{label}</span>
+                </SetupTile>
+              ))}
+            </div>
+          </Section>
+        )}
 
-        {/* 6. 듣기 — 스위치 한 줄 */}
-        <Section title="듣기">
-          <div
-            className="
-              flex items-center gap-[12px]
-              h-[56px] px-[14px] rounded-[12px]
-              border-[1px] border-layout-gray-200 dark:border-[#3A3A3A]
-              bg-layout-white dark:bg-[#1A1A1A]
-              cursor-pointer
-            "
-            onPointerDown={(e) => e.stopPropagation()}
-            onClick={() => {
-              vibrate({ duration: 5 });
-              setListeningOn(prev => !prev);
-            }}
-          >
-            <span className="flex items-center justify-center flex-shrink-0 w-[36px] h-[36px] rounded-full bg-layout-gray-50 dark:bg-[#2A2A2A]">
-              <SpeakerHigh size={20} weight="fill" className="text-layout-gray-300" />
-            </span>
-            <span className="flex-1 min-w-0 text-[14px] font-[700] text-layout-black dark:text-layout-white">듣기 문제 포함</span>
-            {/* Toggle 은 자체 stopPropagation + haptic 을 가진다 — 행 onClick 과 이중 토글되지 않는다 */}
-            <Toggle on={listeningOn} onClick={() => setListeningOn(prev => !prev)} />
-          </div>
-        </Section>
+        {/* 6. 듣기 — 스위치 한 줄. 사지선다·카드 맞추기를 골랐을 때만(빈칸 채우기는 듣기 변형이 없다) */}
+        {(selectedFamilies.includes('multipleChoice') || selectedFamilies.includes('cardMatch')) && (
+          <Section title="듣기">
+            <div
+              className="
+                flex items-center gap-[12px]
+                h-[56px] px-[14px] rounded-[12px]
+                border-[1px] border-layout-gray-200 dark:border-[#3A3A3A]
+                bg-layout-white dark:bg-[#1A1A1A]
+                cursor-pointer
+              "
+              onPointerDown={(e) => e.stopPropagation()}
+              onClick={() => {
+                vibrate({ duration: 5 });
+                setListeningOn(prev => !prev);
+              }}
+            >
+              <span className="flex items-center justify-center flex-shrink-0 w-[36px] h-[36px] rounded-full bg-layout-gray-50 dark:bg-[#2A2A2A]">
+                <SpeakerHigh size={20} weight="fill" className="text-layout-gray-300" />
+              </span>
+              <span className="flex-1 min-w-0 text-[14px] font-[700] text-layout-black dark:text-layout-white">듣기 문제 포함</span>
+              {/* Toggle 은 자체 stopPropagation + haptic 을 가진다 — 행 onClick 과 이중 토글되지 않는다 */}
+              <Toggle on={listeningOn} onClick={() => setListeningOn(prev => !prev)} />
+            </div>
+          </Section>
+        )}
       </div>
       <div className="
         absolute bottom-0 left-0 right-0
