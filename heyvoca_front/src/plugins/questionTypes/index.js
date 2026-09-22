@@ -73,7 +73,11 @@ const buildFillInTheBlankQuestions = (selectedWords, allWords) => {
     const correctText = dir.optionText(word);
     if (!correctText) continue;
 
-    const example = shuffleArray(candidates)[0];
+    // 짧은 예문은 빈칸을 뚫으면 단서가 한두 단어만 남는다("I feel cold." → "I feel ___.").
+    // 사전 쪽은 긴 예문으로 보강했지만, 한 단어에 긴 예문과 짧은 예문이 같이 남아 있을 수
+    // 있어 출제에서도 긴 쪽(4단어 이상)을 우선 고른다. 전부 짧으면 그대로 쓴다.
+    const longEnough = candidates.filter((ex) => stripTags(exampleEn(ex)).trim().split(/\s+/).length >= 4);
+    const example = shuffleArray(longEnough.length > 0 ? longEnough : candidates)[0];
     const blankText = dir.blank(example);
     const shownText = dir.shown(example);
     const blankFill = extractTargetWord(blankText);
