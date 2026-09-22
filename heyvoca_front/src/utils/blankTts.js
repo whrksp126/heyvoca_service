@@ -17,6 +17,9 @@ import { getSharedAudioContext } from './audio';
 
 // alignment 앞뒤로 더 무음 처리할 여유(초) — 단어 경계 타이밍 오차 흡수.
 const MUTE_PAD_SEC = 0.03;
+// 목표가 토큰(어절) 중간에서 시작/끝나 비례 계산으로 구간을 줄인 쪽(partial)에는 패딩을
+// 그대로 30ms 다 주면 옆에 남겨둔 음절("였다" 등)을 다시 삼켜 버린다 — 그 쪽만 절반 이하로 줄인다.
+const MUTE_PAD_PARTIAL_SEC = 0.015;
 // gain 이 0↔1 로 바뀔 때 클릭음이 나지 않도록 짧게 램프한다(초).
 const GAIN_RAMP_SEC = 0.008;
 // 디코드된 버퍼 캐시 상한 — 문제당 한 문장이라 세션 내 수십 개면 충분하다.
@@ -61,7 +64,10 @@ const normalizeToken = (s) => stripTags(s).toLowerCase().replace(/[^\p{L}\p{N}]/
           → 'art' 가 'start' 안에서 잡히는 오탐을 막는다.
   - 한국어: 어절이 목표를 "포함"하면 매치(책상을 ⊃ 책상). 목표가 두 어절에 걸치면 둘 다.
           어절 시작 경계 매치를 우선하고, 없으면 임의 위치 매치를 허용한다.
-  못 찾으면 null. 찾으면 앞뒤 30ms 패딩을 더한 { start, end }.
+          Edge 정렬 토큰은 어절 단위라 "지배자였다" 안의 "지배자"처럼 목표가 토큰 일부만
+          차지할 수 있다 — 이때는 어절 전체를 죽이지 않고, 매치가 토큰 안에서 차지하는
+          문자 비율만큼 시간 구간을 좁혀 나머지 음절("였다")이 들리게 한다.
+  못 찾으면 null. 찾으면 앞뒤 패딩(보통 30ms, 위 비례 계산으로 좁힌 쪽은 15ms)을 더한 { start, end }.
 */
 export const findMuteSpan = (alignment, blankFill, lang) => {
   if (!Array.isArray(alignment) || alignment.length === 0) return null;
@@ -92,6 +98,11 @@ export const findMuteSpan = (alignment, blankFill, lang) => {
 
   let firstIdx = -1;
   let lastIdx = -1;
+  // 한국어 전용 — 매치가 joined 문자열에서 시작/끝나는 문자 위치(끝은 배타적). 토큰 내부에서
+  // 매치가 차지하는 비율을 구해 부분 음소거 구간을 계산하는 데 쓴다(영어는 어절 단위가
+  // 아니라 그대로 토큰 전체를 죽여도 되므로 계산하지 않는다).
+  let matchStartPos = -1;
+  let matchEndPosExcl = -1;
 
   if (lang === 'en') {
     const words = stripTags(blankFill).split(/\s+/).map(normalizeToken).filter(Boolean);
@@ -123,13 +134,45 @@ export const findMuteSpan = (alignment, blankFill, lang) => {
     if (pos >= 0) {
       firstIdx = tokenIndexAt(pos);
       lastIdx = tokenIndexAt(pos + target.length - 1);
+      matchStartPos = pos;
+      matchEndPosExcl = pos + target.length;
     }
   }
 
   if (firstIdx < 0 || lastIdx < firstIdx) return null;
-  const start = Math.max(0, tokens[firstIdx].start - MUTE_PAD_SEC);
-  const end = Math.max(start, tokens[lastIdx].end + MUTE_PAD_SEC);
-  return { start, end };
+
+  const firstTok = tokens[firstIdx];
+  const lastTok = tokens[lastIdx];
+  let start = firstTok.start;
+  let end = lastTok.end;
+  let startIsPartial = false;
+  let endIsPartial = false;
+
+  // 한국어만: 매치가 firstIdx/lastIdx 토큰 경계에 딱 맞지 않으면(어절 중간에서 시작/끝나면)
+  // 토큰 시간 구간을 문자 비율로 비례 축소한다 — 어절 중간에서 걸린 목표 앞/뒤 음절은
+  // 계속 들려야 하므로(예: "지배자였다"에서 "지배자"만 죽이고 "였다"는 살려야 함).
+  if (lang !== 'en' && matchStartPos >= 0) {
+    const firstTokenLen = firstTok.norm.length;
+    const lastTokenLen = lastTok.norm.length;
+    const charOffsetStart = matchStartPos - firstTok.offset; // 첫 토큰 안에서 매치 시작까지 남겨둘 문자 수
+    const charOffsetEnd = matchEndPosExcl - lastTok.offset; // 마지막 토큰 안에서 매치가 덮는 문자 수(배타적)
+
+    if (firstTokenLen > 0 && charOffsetStart > 0) {
+      start = firstTok.start + (firstTok.end - firstTok.start) * (charOffsetStart / firstTokenLen);
+      startIsPartial = true;
+    }
+    if (lastTokenLen > 0 && charOffsetEnd < lastTokenLen) {
+      end = lastTok.end - (lastTok.end - lastTok.start) * ((lastTokenLen - charOffsetEnd) / lastTokenLen);
+      endIsPartial = true;
+    }
+  }
+
+  // 비례 축소로 남겨둔 음절 쪽(partial)은 패딩을 30ms 다 주면 다시 삼켜지므로 15ms로 줄인다.
+  const startPad = startIsPartial ? MUTE_PAD_PARTIAL_SEC : MUTE_PAD_SEC;
+  const endPad = endIsPartial ? MUTE_PAD_PARTIAL_SEC : MUTE_PAD_SEC;
+  const paddedStart = Math.max(0, start - startPad);
+  const paddedEnd = Math.max(paddedStart, end + endPad);
+  return { start: paddedStart, end: paddedEnd };
 };
 
 // ── 3) 재생 ───────────────────────────────────────────────────────────────

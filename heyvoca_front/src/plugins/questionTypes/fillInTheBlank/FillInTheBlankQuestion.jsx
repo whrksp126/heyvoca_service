@@ -281,7 +281,7 @@ const FillInTheBlankQuestion = ({ question, onComplete, farmByWordId }) => {
         aria-label="예문 듣기"
         className="
           relative overflow-hidden
-          w-full px-[20px] pt-[18px] pb-[44px]
+          w-full px-[20px] py-[18px]
           rounded-[12px] text-left
           bg-primary-main-50 dark:bg-primary-main-dark
         "
@@ -296,21 +296,21 @@ const FillInTheBlankQuestion = ({ question, onComplete, farmByWordId }) => {
           {renderHighlightedText(shownText)}
         </p>
 
-        {/* 워터마크 스피커 — 카드 하단 중앙. 평소엔 옅게, 읽는 동안 primary + 맥동.
-            ripple 은 이 아이콘과 같은 앵커(카드 하단 중앙)에 겹쳐 그려 파동 중심이 아이콘과 일치하게 한다. */}
-        <div className="absolute left-1/2 bottom-[12px] -translate-x-1/2 pointer-events-none">
+        {/* 워터마크 스피커 — 카드 정중앙, 텍스트 뒤에 깔린다. 평소엔 옅게, 읽는 동안 primary + 맥동.
+            ripple 은 이 아이콘과 같은 앵커(카드 정중앙)에 겹쳐 그려 파동 중심이 아이콘과 일치하게 한다. */}
+        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-[0] pointer-events-none">
           {showTtsRipple && (
             <TtsRipple size={160} duration={speakDuration} className="z-[0]" />
           )}
           <motion.span
             className={`
               relative z-[1] transition-colors duration-200
-              ${showTtsRipple ? 'text-primary-main-600 opacity-100' : 'text-layout-gray-300 opacity-40 dark:opacity-30'}
+              ${showTtsRipple ? 'text-primary-main-600 opacity-60' : 'text-layout-gray-300 opacity-30 dark:opacity-20'}
             `}
             animate={showTtsRipple && !reducedMotion ? { scale: [1, 1.12, 1] } : { scale: 1 }}
             transition={showTtsRipple && !reducedMotion ? { duration: 0.6, repeat: Infinity, ease: 'easeInOut' } : {}}
           >
-            <SpeakerHigh size={26} weight="fill" />
+            <SpeakerHigh size={60} weight="fill" />
           </motion.span>
         </div>
       </motion.button>
@@ -361,25 +361,23 @@ const FillInTheBlankQuestion = ({ question, onComplete, farmByWordId }) => {
           </p>
         </div>
 
-        {/* 워터마크 스피커 — 위 카드와 같은 처리. 채점 후 농장 상태 바가 하단을 차지하면 숨긴다
-            (카드는 계속 탭 가능 — 전체 문장 재생). */}
-        {!(isAnswered && farm) && (
-          <div className="absolute left-1/2 bottom-[12px] -translate-x-1/2 pointer-events-none">
-            {showBlankRipple && (
-              <TtsRipple size={160} duration={speakDuration} className="z-[0]" />
-            )}
-            <motion.span
-              className={`
-                relative z-[1] transition-colors duration-200
-                ${showBlankRipple ? 'text-primary-main-600 opacity-100' : 'text-layout-gray-300 opacity-40 dark:opacity-30'}
-              `}
-              animate={showBlankRipple && !reducedMotion ? { scale: [1, 1.12, 1] } : { scale: 1 }}
-              transition={showBlankRipple && !reducedMotion ? { duration: 0.6, repeat: Infinity, ease: 'easeInOut' } : {}}
-            >
-              <SpeakerHigh size={26} weight="fill" />
-            </motion.span>
-          </div>
-        )}
+        {/* 워터마크 스피커 — 위 카드와 같은 처리, 카드 정중앙에 텍스트 뒤로 깔린다.
+            농장 상태 바는 하단에 뜨므로 중앙 워터마크와 겹치지 않아 숨길 필요가 없다. */}
+        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-[0] pointer-events-none">
+          {showBlankRipple && (
+            <TtsRipple size={160} duration={speakDuration} className="z-[0]" />
+          )}
+          <motion.span
+            className={`
+              relative z-[1] transition-colors duration-200
+              ${showBlankRipple ? 'text-primary-main-600 opacity-60' : 'text-layout-gray-300 opacity-30 dark:opacity-20'}
+            `}
+            animate={showBlankRipple && !reducedMotion ? { scale: [1, 1.12, 1] } : { scale: 1 }}
+            transition={showBlankRipple && !reducedMotion ? { duration: 0.6, repeat: Infinity, ease: 'easeInOut' } : {}}
+          >
+            <SpeakerHigh size={60} weight="fill" />
+          </motion.span>
+        </div>
 
         {/* O/X — 카드 중앙 */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-[3] pointer-events-none">
