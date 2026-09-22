@@ -18,9 +18,9 @@ import { useResumeReplayKey } from '../../../hooks/useResumeReplayKey';
   카드가 둘로 나뉜다.
   - 위 카드(primary 틴트, 스피커 아이콘): 보여 주는 예문. 카드 전체 탭 = 이 예문 읽기(TTS).
     읽는 동안 스피커가 사지선다 듣기 모드처럼 맥동한다. 마운트 시 1회 자동 재생.
-  - 아래 카드(회색): 빈칸 예문. 채점 전에는 정답이 새지 않도록 탭할 수 없고 스피커 아이콘도
-    보이지 않는다. 채점 후에는 스피커 아이콘이 나타나고, 카드 전체 탭 = 빈칸이 채워진 문장을
-    그대로 읽는다. O/X 와 농장 상태 바는 이 카드 안에 뜬다.
+  - 아래 카드(회색): 빈칸 예문. 채점 전에는 정답이 새지 않도록 탭할 수 없다. 채점 후에는
+    카드 전체 탭 = 빈칸이 채워진 문장을 그대로 읽는다(아이콘 없이 카드 중앙에서 ripple만
+    확산 — 사지선다 카드와 같은 방식). O/X 와 농장 상태 바는 이 카드 안에 뜬다.
   - 선택지 탭: 탭한 선택지 텍스트를 읽는다(ko2en=영어 단어, en2ko=한국어 뜻).
   선택지·O/X·농장 상태 바 규격은 사지선다(takeTest/Main.jsx)와 같다 — 유형이 바뀔 때
   화면 문법이 달라 보이지 않게.
@@ -65,6 +65,13 @@ const splitAtBlank = (html) => {
   };
 };
 
+// 선택지("word") TTS 가 끝난 뒤 다음 문제로 넘어가기까지 얹는 여유(ms) — 말이 끝나자마자
+// 화면이 넘어가 버리지 않게 한다.
+const WORD_TTS_ADVANCE_GRACE_MS = 200;
+// 선택지 TTS 가 최소 지연(minReadyAt) 기준 이 시간 안에 끝나지 않으면(네트워크 지연 등)
+// 기다리지 않고 강제로 넘어간다.
+const WORD_TTS_ADVANCE_WATCHDOG_MS = 4000;
+
 // Main.jsx 는 testType 도 넘기지만 이 화면은 모드에 따라 달라지는 것이 없어 받지 않는다.
 const FillInTheBlankQuestion = ({ question, onComplete, farmByWordId }) => {
   const [selectedIndex, setSelectedIndex] = useState(null);
@@ -85,17 +92,79 @@ const FillInTheBlankQuestion = ({ question, onComplete, farmByWordId }) => {
   const advanceTimerRef = useRef(null);
   const gradedAtRef = useRef(0);
   const advanceActionRef = useRef(null);
+  const advanceFiredRef = useRef(false);
+  // 최소 지연(getAdvanceDelay/ADVANCE_DELAY_GROW)을 절대 시각으로 환산해 둔 값 — grew 로
+  // 다시 걸리면(아래 useEffect) 이 값만 늘어난다.
+  const minReadyAtRef = useRef(0);
+  // 탭한 선택지("word") TTS 재생 상태 — 실제 전환 시각은
+  // max(minReadyAt, wordTtsEndedAt + WORD_TTS_ADVANCE_GRACE_MS) 다.
+  const wordTtsActiveRef = useRef(false);
+  const wordTtsEndedAtRef = useRef(null);
   // TTS 재생 세대 가드 — getTextSound 는 새 재생 시작 시 이전 재생을 강제 resolve 하므로
   // 연타 시 이전 재생의 finally 가 isSpeaking 을 false 로 덮지 않게 한다(Main.jsx 와 같은 방식).
   const speakGenRef = useRef(0);
 
-  const scheduleAdvance = (totalMs) => {
-    if (advanceTimerRef.current) clearTimeout(advanceTimerRef.current);
-    const elapsed = Date.now() - gradedAtRef.current;
-    advanceTimerRef.current = setTimeout(() => {
+  // 실제 전환을 1회만 수행한다 — 워치독 타이머 / TTS 종료 콜백 / 재검사(attemptAdvance) 등
+  // 여러 경로에서 중복 호출될 수 있다.
+  const doAdvance = () => {
+    if (advanceFiredRef.current) return;
+    advanceFiredRef.current = true;
+    if (advanceTimerRef.current) {
+      clearTimeout(advanceTimerRef.current);
       advanceTimerRef.current = null;
-      advanceActionRef.current?.();
-    }, Math.max(0, totalMs - elapsed));
+    }
+    advanceActionRef.current?.();
+  };
+
+  /*
+    다음 문제로 넘어갈 준비가 됐는지 검사하고, 아니면 스스로를 다음 확인 시점에 다시 건다.
+    - 최소 지연(minReadyAtRef)이 아직이면 그때까지 대기.
+    - 선택지 TTS 가 재생 중이면(wordTtsActiveRef) 끝날 때까지 대기하되, 네트워크 지연 등으로
+      끝나지 않으면 워치독(WORD_TTS_ADVANCE_WATCHDOG_MS)에서 강제로 넘긴다.
+    - 재생이 이미 끝났으면(wordTtsEndedAtRef) 그 시각 + 200ms 까지 대기.
+    - 선택지 TTS 자체가 시작되지 않았으면(예: 빈 텍스트) 제약 없이 바로 넘어간다.
+  */
+  const attemptAdvance = () => {
+    if (advanceTimerRef.current) {
+      clearTimeout(advanceTimerRef.current);
+      advanceTimerRef.current = null;
+    }
+    if (advanceFiredRef.current) return;
+
+    const now = Date.now();
+    const minReadyAt = minReadyAtRef.current;
+
+    if (now < minReadyAt) {
+      advanceTimerRef.current = setTimeout(attemptAdvance, minReadyAt - now);
+      return;
+    }
+
+    if (wordTtsActiveRef.current) {
+      const watchdogAt = minReadyAt + WORD_TTS_ADVANCE_WATCHDOG_MS;
+      if (now >= watchdogAt) {
+        doAdvance();
+        return;
+      }
+      advanceTimerRef.current = setTimeout(attemptAdvance, watchdogAt - now);
+      return;
+    }
+
+    const wordReadyAt = wordTtsEndedAtRef.current != null
+      ? wordTtsEndedAtRef.current + WORD_TTS_ADVANCE_GRACE_MS
+      : -Infinity; // 선택지 TTS 가 아예 시작되지 않았으면 제약 없음
+
+    if (now < wordReadyAt) {
+      advanceTimerRef.current = setTimeout(attemptAdvance, wordReadyAt - now);
+      return;
+    }
+
+    doAdvance();
+  };
+
+  // 최소 지연을 절대 시각으로 걸고 즉시 준비 상태를 검사한다.
+  const scheduleAdvance = (totalMs) => {
+    minReadyAtRef.current = gradedAtRef.current + totalMs;
+    attemptAdvance();
   };
 
   // 채점 전 현재 암기 상태 캡처 — 판정은 MemoryStateChangeBadge 의 공용 함수를 쓴다.
@@ -121,13 +190,33 @@ const FillInTheBlankQuestion = ({ question, onComplete, farmByWordId }) => {
   const speak = async (text, lang, target = null) => {
     if (!text) return;
     const gen = ++speakGenRef.current;
+    // 새 재생이 시작되면 getTextSound 의 세대 가드가 이전 재생을 강제로 끊는다 — 그게 아직
+    // 끝나지 않은 "선택지(word)" 재생이었다면, 전환 대기가 영영 끝나지 않는 일이 없도록 여기서
+    // 바로 종료 처리한다. 이 새 재생이 "shown"(상단 카드 탭)이어도 마찬가지 — 대기를 늘리지
+    // 않고 오히려 앞당길 뿐이라 "shown 재생이 대기를 늘리면 안 된다"는 요구와도 맞는다.
+    if (wordTtsActiveRef.current) {
+      wordTtsActiveRef.current = false;
+      wordTtsEndedAtRef.current = Date.now();
+      attemptAdvance();
+    }
     setIsSpeaking(true);
     setSpeakDuration(null);
     setSpeakingTarget(target);
+    if (target === 'word') {
+      wordTtsActiveRef.current = true;
+      wordTtsEndedAtRef.current = null;
+    }
     try {
       await getTextSound(text, lang, (d) => { if (gen === speakGenRef.current) setSpeakDuration(d); });
     } finally {
       if (gen === speakGenRef.current) setIsSpeaking(false);
+      // 정상 종료·에러(getTextSound reject) 모두 여기로 온다 — 이 재생이 여전히 최신(세대 일치)
+      // 일 때만 종료로 기록한다(세대가 바뀌었으면 위 선점 처리에서 이미 기록됨).
+      if (target === 'word' && gen === speakGenRef.current) {
+        wordTtsActiveRef.current = false;
+        wordTtsEndedAtRef.current = Date.now();
+        attemptAdvance();
+      }
     }
   };
 
@@ -194,6 +283,19 @@ const FillInTheBlankQuestion = ({ question, onComplete, farmByWordId }) => {
     setIsCorrect(correct);
     setIsAnswered(true);
 
+    // 오답일 때는 더 천천히 다음 문제로 전환 (정답 1초 / 오답 2.5초).
+    // 단계가 오른 정답은 아래 useEffect 가 2.2초로 다시 건다 — 진화 연출이 1초라 여기서 넘기면 잘린다.
+    // 실제 전환 시각은 이 최소 지연과 "탭한 선택지" TTS 종료(+200ms) 중 늦은 쪽이다
+    // (speak/attemptAdvance 참고 — 말이 채 끝나기 전에 화면이 넘어가지 않게).
+    gradedAtRef.current = Date.now();
+    advanceActionRef.current = () => onComplete([{
+      sheetId: question.vocabularySheetId,
+      wordId: question.id,
+      isCorrect: correct,
+      timeTakenMs,
+      updateData: { fsrs: question.fsrs, isCorrect: correct, updatedAt: new Date().toISOString() },
+    }]);
+
     /*
       선택지 탭 시 "탭한 선택지" 읽기 — 사지선다(Main.jsx)는 정답 단어만 읽지만, 이 화면은
       사용자가 고른 선택지를 그 언어로 읽어 준다(오답을 골랐으면 오답이 들린다 — 정답 표시는
@@ -205,16 +307,6 @@ const FillInTheBlankQuestion = ({ question, onComplete, farmByWordId }) => {
       speak(tapped, blankLang, 'word');
     }
 
-    // 오답일 때는 더 천천히 다음 문제로 전환 (정답 1초 / 오답 2.5초).
-    // 단계가 오른 정답은 아래 useEffect 가 2.2초로 다시 건다 — 진화 연출이 1초라 여기서 넘기면 잘린다.
-    gradedAtRef.current = Date.now();
-    advanceActionRef.current = () => onComplete([{
-      sheetId: question.vocabularySheetId,
-      wordId: question.id,
-      isCorrect: correct,
-      timeTakenMs,
-      updateData: { fsrs: question.fsrs, isCorrect: correct, updatedAt: new Date().toISOString() },
-    }]);
     scheduleAdvance(getAdvanceDelay(correct));
   };
 
@@ -226,12 +318,13 @@ const FillInTheBlankQuestion = ({ question, onComplete, farmByWordId }) => {
   */
   useEffect(() => {
     if (!farm?.grew) return;
-    if (!advanceTimerRef.current) return;
+    if (advanceFiredRef.current) return; // 이미 넘어갔으면 늦게 도착한 grew 는 무시
     scheduleAdvance(ADVANCE_DELAY_GROW);
   }, [farm]);
 
   useEffect(() => () => {
     if (advanceTimerRef.current) clearTimeout(advanceTimerRef.current);
+    advanceFiredRef.current = true; // 언마운트 뒤 늦게 끝나는 word TTS 가 attemptAdvance 를 다시 돌리지 않게
     speakGenRef.current += 1; // 언마운트 뒤 늦게 끝나는 재생이 상태를 건드리지 않게
   }, []);
 
@@ -313,44 +406,29 @@ const FillInTheBlankQuestion = ({ question, onComplete, farmByWordId }) => {
           if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleBlankCardClick(); }
         } : undefined}
       >
+        {/* 채점 후 카드 탭(빈칸 예문 읽기) 시 ripple — 아이콘 없이 카드 중앙에서 확산(사지선다 카드와 동일). */}
+        {showBlankRipple && (
+          <TtsRipple size={160} duration={speakDuration} className="z-[0]" />
+        )}
+
         <div className="relative z-[1] flex items-center flex-1 px-[20px] pt-[20px] pb-[60px]">
-          <div className="w-full flex items-start gap-[12px]">
-            {/* 스피커 아이콘 — 채점 후에만 나타난다(채점 전엔 탭도, 소리도, 아이콘도 없음) */}
-            {isAnswered && (
-              <span className="relative flex-shrink-0 mt-[3px]">
-                {showBlankRipple && (
-                  <TtsRipple
-                    size={90}
-                    duration={speakDuration}
-                    className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-[0] pointer-events-none"
-                  />
-                )}
-                <motion.span
-                  className={`relative z-[1] transition-colors duration-200 ${showBlankRipple ? 'text-primary-main-600' : 'text-layout-gray-300'}`}
-                  animate={showBlankRipple && !reducedMotion ? { scale: [1, 1.12, 1] } : { scale: 1 }}
-                  transition={showBlankRipple && !reducedMotion ? { duration: 0.6, repeat: Infinity, ease: 'easeInOut' } : {}}
-                >
-                  <SpeakerHigh size={22} weight="fill" />
-                </motion.span>
-              </span>
-            )}
-            {/* 빈칸 예문 — pill 은 채점 전후 모두 중립색, 채점 후 활용형이 들어간다 */}
-            <p className="w-full text-[22px] font-[700] leading-[1.8] text-layout-black dark:text-layout-white break-keep">
-              {before}
-              <span
-                className="
-                  inline-flex items-center justify-center align-middle
-                  min-w-[84px] h-[34px] px-[14px]
-                  rounded-[8px] border-[1px] border-layout-gray-200 dark:border-[#444444]
-                  bg-layout-white dark:bg-layout-black
-                  text-[17px] font-[700] text-layout-black dark:text-layout-white
-                "
-              >
-                {isAnswered ? blankFill : ''}
-              </span>
-              {after}
-            </p>
-          </div>
+          {/* 빈칸 예문 — pill 은 채점 전후 모두 중립색, 채점 후 활용형이 들어간다.
+              아이콘이 없어졌으니 텍스트가 카드 전체 너비를 그대로 쓴다(왼쪽 여백 없음). */}
+          <p className="w-full text-[22px] font-[700] leading-[1.8] text-layout-black dark:text-layout-white break-keep">
+            {before}
+            <span
+              className="
+                inline-flex items-center justify-center align-middle
+                min-w-[84px] h-[34px] px-[14px]
+                rounded-[8px] border-[1px] border-layout-gray-200 dark:border-[#444444]
+                bg-layout-white dark:bg-layout-black
+                text-[17px] font-[700] text-layout-black dark:text-layout-white
+              "
+            >
+              {isAnswered ? blankFill : ''}
+            </span>
+            {after}
+          </p>
         </div>
 
         {/* O/X — 카드 중앙 */}
