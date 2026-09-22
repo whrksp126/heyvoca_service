@@ -35,6 +35,12 @@ def object_key_for(provider, language: str, norm_text: str, prefix: str = None,
     )
 
 
+def alignment_key_for(audio_key: str) -> str:
+    """오디오 object key(...mp3)에서 확장자를 .json으로 바꿔 alignment 저장 key를 만든다."""
+    base, _, _ext = audio_key.rpartition('.')
+    return f'{base}.json' if base else f'{audio_key}.json'
+
+
 # TTS는 온디맨드 생성(put)이 필수라 모든 환경이 RW 키를 보유한다.
 # 또한 objectstore 정책상 RO 키는 dict/만 읽고 tts/는 RW만 접근 가능 → 서빙도 RW로 통일.
 def exists(key: str, storage=None) -> bool:
@@ -47,8 +53,9 @@ def presigned_url(key: str, storage=None, ttl_seconds: int = None) -> str:
 
 
 def ensure_cached(text: str, language: str, provider=None, storage=None,
-                  allow_fallback: bool = True, user_voice: str = None):
-    """객체가 없으면 생성·업로드(RW 키). (object_key, created: bool) 반환.
+                  allow_fallback: bool = True, user_voice: str = None,
+                  want_alignment: bool = False):
+    """객체가 없으면 생성·업로드(RW 키). (object_key, created: bool, alignment) 반환.
 
     text는 원문(미정규화) — 내부에서 normalize 후 키 계산.
 
@@ -59,6 +66,11 @@ def ensure_cached(text: str, language: str, provider=None, storage=None,
 
     호출처는 반환된 object_key의 provider 세그먼트가 요청 provider와 다른지로
     fallback 발생 여부를 판별할 수 있다.
+
+    want_alignment=True면 단어 타이밍(json)도 함께 보장한다. 오디오는 캐시돼 있지만
+    타이밍 json이 없는 구 캐시 항목은 provider로 1회 재합성해 오디오·json을 덮어쓴다
+    (provider가 alignment를 지원하지 않으면 재합성해도 None인 채 남는다).
+    alignment은 provider가 지원하지 않으면(gTTS 등) 항상 None.
     """
     provider = provider or get_provider_for_language(language)
     storage = storage or get_storage('rw')
@@ -66,8 +78,29 @@ def ensure_cached(text: str, language: str, provider=None, storage=None,
     if not norm:
         raise TTSError('빈 텍스트')
     key = object_key_for(provider, language, norm, user_voice=user_voice)
+
     if storage.exists(key):
-        return key, False
+        alignment = storage.get_json(alignment_key_for(key)) if want_alignment else None
+        if not want_alignment or alignment is not None:
+            return key, False, alignment
+        # 오디오는 캐시돼 있지만 타이밍 json이 없는 구 캐시 → 1회 재합성해 백필.
+        voice_used = user_voice or provider.voice_for(language)
+        try:
+            result = provider.synthesize(norm, language, voice=user_voice)
+        except TTSGenerationError:
+            # 재합성 실패해도 기존 오디오는 그대로 서빙 가능 → alignment만 없이 반환.
+            return key, False, None
+        alignment = result.alignment
+        metadata = {
+            'text': quote(norm),
+            'lang': language,
+            'provider': provider.name,
+            'voice': voice_used,
+        }
+        storage.put_audio(key, result.audio, result.content_type, metadata=metadata)
+        if alignment:
+            storage.put_json(alignment_key_for(key), alignment)
+        return key, True, alignment
 
     used = provider
     voice_used = user_voice or provider.voice_for(language)
@@ -84,7 +117,7 @@ def ensure_cached(text: str, language: str, provider=None, storage=None,
         # fallback(gTTS)은 voice 선택 개념이 없어 user_voice 미적용 → 기본 키로 저장
         fb_key = object_key_for(fb, language, norm)
         if storage.exists(fb_key):
-            return fb_key, False
+            return fb_key, False, None
         result = fb.synthesize(norm, language)  # 이마저 실패하면 그대로 전파
         used = fb
         voice_used = fb.voice_for(language)
@@ -99,4 +132,7 @@ def ensure_cached(text: str, language: str, provider=None, storage=None,
         'voice': voice_used,
     }
     storage.put_audio(key, result.audio, result.content_type, metadata=metadata)
-    return key, True
+    alignment = result.alignment
+    if alignment:
+        storage.put_json(alignment_key_for(key), alignment)
+    return key, True, alignment

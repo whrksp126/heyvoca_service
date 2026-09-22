@@ -2,9 +2,11 @@ import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { Circle, X, SpeakerHigh } from '@phosphor-icons/react';
 import FarmStatusBar from '../../../components/farm/FarmStatusBar';
+import TtsRipple from '../../../components/common/TtsRipple';
 import { haptic, pickVariant } from '../../../lib/feel';
 import { playSuccessSound, playErrorSound } from '../../../utils/audio';
-import { getTextSound, stripHtmlTags } from '../../../utils/common';
+import { getTextSound, stopCurrentSound, stripHtmlTags } from '../../../utils/common';
+import { resolveTtsWithAlignment, findMuteSpan, playWithMutedSpan } from '../../../utils/blankTts';
 import { getAdvanceDelay, ADVANCE_DELAY_GROW } from '../../../utils/studyTiming';
 import { getMemoryStateKeyByStability } from '../../../components/common/MemoryStateChangeBadge';
 import { useResumeReplayKey } from '../../../hooks/useResumeReplayKey';
@@ -17,7 +19,10 @@ import { useResumeReplayKey } from '../../../hooks/useResumeReplayKey';
   카드가 둘로 나뉜다.
   - 위 카드(primary 틴트, 스피커 아이콘): 보여 주는 예문. 카드 전체 탭 = 이 예문 읽기(TTS).
     읽는 동안 스피커가 사지선다 듣기 모드처럼 맥동한다.
-  - 아래 카드(회색): 빈칸 예문. 탭해도 아무 일 없다. O/X 와 농장 상태 바는 이 카드 안에 뜬다.
+  - 아래 카드(회색, 스피커 아이콘): 빈칸 예문. 카드 전체 탭 = 이 예문 읽기.
+    채점 전에는 빈칸 구간만 무음으로 읽고(utils/blankTts — 정답이 새지 않게), 채점 후에는
+    빈칸이 채워진 문장을 그대로 읽는다. 자동 재생은 없다. O/X 와 농장 상태 바는 이 카드 안에 뜬다.
+  - 선택지 탭: 탭한 선택지 텍스트를 읽는다(ko2en=영어 단어, en2ko=한국어 뜻).
   선택지·O/X·농장 상태 바 규격은 사지선다(takeTest/Main.jsx)와 같다 — 유형이 바뀔 때
   화면 문법이 달라 보이지 않게.
 */
@@ -67,6 +72,11 @@ const FillInTheBlankQuestion = ({ question, onComplete, farmByWordId }) => {
   const [isAnswered, setIsAnswered] = useState(false);
   const [isCorrect, setIsCorrect] = useState(null);
   const [isSpeaking, setIsSpeaking] = useState(false);
+  // 재생 길이(초) — TtsRipple을 실제 재생 시간에 동기화(Main.jsx의 speakDuration과 동일한 용도).
+  const [speakDuration, setSpeakDuration] = useState(null);
+  // 지금 재생 중인 게 "보여 주는 예문"(shown)인지 "빈칸 예문"(blank)인지 "탭한 선택지"(word)인지 —
+  // 사지선다 reverseMultipleChoice의 speakingTarget('meaning'/'word')과 같은 역할.
+  const [speakingTarget, setSpeakingTarget] = useState(null); // 'shown' | 'blank' | 'word' | null
   const startTimeRef = useRef(Date.now());
   // 백그라운드 복귀 시 정답 링/성장 게이지가 최종 상태로 정적으로 스냅되는 것을 막기 위한
   // 재마운트용 키 (이유는 useResumeReplayKey 주석 참고)
@@ -98,28 +108,93 @@ const FillInTheBlankQuestion = ({ question, onComplete, farmByWordId }) => {
   const direction = question.direction ?? (question.questionType === 'fillInTheBlankReverse' ? 'en2ko' : 'ko2en');
   // 위 예문 언어 — ko2en 은 한국어 예문을 보여 주고, en2ko 는 영어 예문을 보여 준다.
   const shownLang = direction === 'ko2en' ? 'ko' : 'en';
+  // 아래(빈칸) 예문 언어 — 위와 반대. 선택지 언어도 이와 같다(ko2en=영어 단어, en2ko=한국어 뜻).
+  const blankLang = direction === 'ko2en' ? 'en' : 'ko';
   const { before, after } = splitAtBlank(blankText);
 
   // 농장 상태 바 — 카드 맞추기와 같은 경로(Main.processCardWord → cardFarmByWordId[wordId]).
   // 채점 전에는 절대 띄우지 않는다(문제 전환 직후 이전 문제 값이 한 프레임 남아 있을 수 있음).
   const farm = isAnswered ? (farmByWordId?.[question.id] ?? null) : null;
 
-  const speakShown = async () => {
-    const text = stripHtmlTags(shownText);
+  // 공용 재생 함수 — Main.jsx의 speakText와 동일한 세대 가드 방식(gen).
+  // getTextSound는 새 재생 시작 시 이전 재생을 강제 resolve하므로, 빠르게 다음 문제로
+  // 넘어가거나 카드를 연타해도 먼저 시작된 재생의 finally가 최신 상태를 덮어쓰지 않는다.
+  const speak = async (text, lang, target = null) => {
     if (!text) return;
     const gen = ++speakGenRef.current;
     setIsSpeaking(true);
+    setSpeakDuration(null);
+    setSpeakingTarget(target);
     try {
-      await getTextSound(text, shownLang);
+      await getTextSound(text, lang, (d) => { if (gen === speakGenRef.current) setSpeakDuration(d); });
     } finally {
       if (gen === speakGenRef.current) setIsSpeaking(false);
     }
+  };
+
+  const speakShown = () => {
+    const text = stripHtmlTags(shownText);
+    speak(text, shownLang, 'shown');
   };
 
   const handleCardClick = () => {
     haptic('light');
     speakShown();
   };
+
+  /*
+    아래 카드(빈칸 예문) 탭.
+    - 채점 후: 빈칸이 채워졌으므로 문장을 그대로 읽는다(공용 getTextSound).
+    - 채점 전: 정답이 새지 않게 빈칸 구간만 무음으로 읽는다(Web Audio, utils/blankTts).
+      타이밍(alignment)이 없거나 빈칸 단어를 못 찾으면 아무것도 하지 않는다(소리도 파동도 없음).
+      Web Audio 경로도 같은 세대 가드(speakGenRef)를 탄다 — resolve 를 기다리는 사이 다른
+      재생이 시작되면 이 재생은 버린다.
+  */
+  const speakBlank = async () => {
+    if (isAnswered) {
+      speak(stripHtmlTags(blankText), blankLang, 'blank');
+      return;
+    }
+    const text = stripHtmlTags(blankText);
+    if (!text) return;
+    const gen = ++speakGenRef.current;
+    // 다른 카드가 읽는 중이면 먼저 끊는다 — getTextSound 가 호출 즉시 이전 재생을 끊는 것과 같은 규칙.
+    // (이전 speak 의 finally 는 세대가 바뀌어 상태를 건드리지 못하므로 여기서 직접 내린다)
+    stopCurrentSound();
+    setIsSpeaking(false);
+    setSpeakingTarget(null);
+
+    const resolved = await resolveTtsWithAlignment(text, blankLang);
+    if (gen !== speakGenRef.current) return;
+    const span = resolved ? findMuteSpan(resolved.alignment, blankFill, blankLang) : null;
+    if (!resolved?.url || !span) return; // alignment 없음/빈칸 미검출 → 아무것도 하지 않음
+
+    // 소리가 날 것이 확정된 시점부터 파동/맥동 표시(mp3 다운로드·디코드 동안도 응답 중으로 보이게)
+    setIsSpeaking(true);
+    setSpeakDuration(null);
+    setSpeakingTarget('blank');
+    const handle = await playWithMutedSpan(resolved.url, span, {
+      onMeta: (d) => { if (gen === speakGenRef.current) setSpeakDuration(d); },
+      onEnd: () => { if (gen === speakGenRef.current) setIsSpeaking(false); },
+    });
+    // 시작 실패(다운로드 실패·컨텍스트 없음) — onEnd 가 안 올 수 있으니 직접 내린다
+    if (!handle && gen === speakGenRef.current) setIsSpeaking(false);
+  };
+
+  const handleBlankCardClick = () => {
+    haptic('light');
+    speakBlank();
+  };
+
+  // 문제 등장 시 자동 재생 — Main.jsx가 사지선다 등에서 하는 등장 자동재생과 같은 자리.
+  // Main.jsx는 fillInTheBlank/fillInTheBlankReverse를 자기 자동재생 대상에서 뺀다(단어를
+  // 읽으면 빈칸 정답이 드러남) — 대신 이 컴포넌트가 "보여 주는 예문" 쪽을 직접 읽는다.
+  // 이 컴포넌트는 Main.jsx가 progressIndex를 key로 문제마다 새로 마운트하므로,
+  // 마운트 시 1회 재생이 "문제가 바뀔 때마다 자동재생"과 동일하다.
+  useEffect(() => {
+    speakShown();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleOptionClick = (index) => {
     if (isAnswered) return;
@@ -149,6 +224,17 @@ const FillInTheBlankQuestion = ({ question, onComplete, farmByWordId }) => {
 
     setIsCorrect(correct);
     setIsAnswered(true);
+
+    /*
+      선택지 탭 시 "탭한 선택지" 읽기 — 사지선다(Main.jsx)는 정답 단어만 읽지만, 이 화면은
+      사용자가 고른 선택지를 그 언어로 읽어 준다(오답을 골랐으면 오답이 들린다 — 정답 표시는
+      선택지 색으로 보인다). ko2en(fillInTheBlank)=영어 단어, en2ko(fillInTheBlankReverse)=한국어 뜻.
+      채점 효과음이 시작된 직후 같은 타이밍에 재생한다.
+    */
+    const tapped = stripHtmlTags(options[index]);
+    if (tapped) {
+      speak(tapped, blankLang, 'word');
+    }
 
     // 오답일 때는 더 천천히 다음 문제로 전환 (정답 1초 / 오답 2.5초).
     // 단계가 오른 정답은 아래 useEffect 가 2.2초로 다시 건다 — 진화 연출이 1초라 여기서 넘기면 잘린다.
@@ -180,6 +266,13 @@ const FillInTheBlankQuestion = ({ question, onComplete, farmByWordId }) => {
     speakGenRef.current += 1; // 언마운트 뒤 늦게 끝나는 재생이 상태를 건드리지 않게
   }, []);
 
+  // 위 카드(예문) TtsRipple 노출 — 사지선다 카드와 같은 자리, "보여 주는 예문"을 읽는 동안만.
+  const showTtsRipple = isSpeaking && speakingTarget === 'shown';
+  // 아래 카드(빈칸 예문) TtsRipple 노출 — 빈칸 예문을 읽는 동안만. 둘이 동시에 켜지지 않는다.
+  const showBlankRipple = isSpeaking && speakingTarget === 'blank';
+  // 탭한 선택지에 스피커 표시 — 채점 후 탭한 선택지를 읽는 동안만.
+  const wordSpeakerVisible = isAnswered && isSpeaking && speakingTarget === 'word';
+
   return (
     <div className="flex flex-col gap-[15px] h-full">
       {/* 위 카드 — 보여 주는 예문. 카드 전체 탭 = 읽기(TTS) */}
@@ -187,6 +280,7 @@ const FillInTheBlankQuestion = ({ question, onComplete, farmByWordId }) => {
         type="button"
         aria-label="예문 듣기"
         className="
+          relative overflow-hidden
           flex items-start gap-[12px]
           w-full px-[20px] py-[18px]
           rounded-[12px] text-left
@@ -199,50 +293,80 @@ const FillInTheBlankQuestion = ({ question, onComplete, farmByWordId }) => {
         style={{ willChange: 'transform, opacity' }}
         onClick={handleCardClick}
       >
+        {/* 예문 재생 중 ripple — 사지선다 카드와 같은 처리(TtsRipple, 카드 중앙 확산) */}
+        {showTtsRipple && (
+          <TtsRipple size={160} duration={speakDuration} className="z-[0]" />
+        )}
         <motion.span
-          className="flex-shrink-0 mt-[3px] text-primary-main-600"
-          animate={isSpeaking && !reducedMotion ? { scale: [1, 1.12, 1] } : { scale: 1 }}
-          transition={isSpeaking && !reducedMotion ? { duration: 0.6, repeat: Infinity, ease: 'easeInOut' } : {}}
+          className="relative z-[1] flex-shrink-0 mt-[3px] text-primary-main-600"
+          animate={showTtsRipple && !reducedMotion ? { scale: [1, 1.12, 1] } : { scale: 1 }}
+          transition={showTtsRipple && !reducedMotion ? { duration: 0.6, repeat: Infinity, ease: 'easeInOut' } : {}}
         >
           <SpeakerHigh size={22} weight="fill" />
         </motion.span>
-        <p className="text-[19px] font-[600] leading-[1.6] text-layout-black dark:text-layout-white break-keep">
+        <p className="relative z-[1] text-[19px] font-[600] leading-[1.6] text-layout-black dark:text-layout-white break-keep">
           {renderHighlightedText(shownText)}
         </p>
       </motion.button>
 
-      {/* 아래 카드 — 빈칸 예문. 탭 동작 없음 */}
+      {/* 아래 카드 — 빈칸 예문. 카드 전체 탭 = 읽기(채점 전엔 빈칸 구간 무음).
+          <button> 이 아니라 role=button div 인 이유: 안에 <p>·농장 상태 바(블록 요소)가 들어가
+          button 의 phrasing-content 제약을 어긴다. O/X 는 pointer-events-none 이라 탭을 막지 않는다. */}
       <motion.div
+        role="button"
+        tabIndex={0}
+        aria-label="빈칸 예문 듣기"
         className="
           relative
           flex flex-col flex-1
           w-full
-          rounded-[12px]
+          rounded-[12px] text-left
           bg-layout-gray-50 dark:bg-layout-gray-dark
           overflow-hidden
+          cursor-pointer select-none
+          focus:outline-none
         "
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
+        whileTap={{ scale: 0.96 }}
         transition={{ duration: 0.2, ease: [0.4, 0, 0.2, 1] }}
         style={{ willChange: 'transform, opacity' }}
+        onClick={handleBlankCardClick}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleBlankCardClick(); }
+        }}
       >
+        {/* 빈칸 예문 재생 중 ripple — 위 카드와 같은 처리(카드 중앙 확산) */}
+        {showBlankRipple && (
+          <TtsRipple size={160} duration={speakDuration} className="z-[0]" />
+        )}
         <div className="relative z-[1] flex items-center flex-1 px-[20px] pt-[20px] pb-[60px]">
-          {/* 빈칸 예문 — pill 은 채점 전후 모두 중립색, 채점 후 활용형이 들어간다 */}
-          <p className="text-[22px] font-[700] leading-[1.8] text-layout-black dark:text-layout-white break-keep">
-            {before}
-            <span
-              className="
-                inline-flex items-center justify-center align-middle
-                min-w-[84px] h-[34px] px-[14px]
-                rounded-[8px] border-[1px] border-layout-gray-200 dark:border-[#444444]
-                bg-layout-white dark:bg-layout-black
-                text-[17px] font-[700] text-layout-black dark:text-layout-white
-              "
+          <div className="flex items-start gap-[12px] w-full">
+            {/* 스피커 — 위 카드와 같은 자리·맥동. 읽는 중일 때만 primary, 평소엔 회색 */}
+            <motion.span
+              className={`flex-shrink-0 mt-[9px] ${showBlankRipple ? 'text-primary-main-600' : 'text-layout-gray-300'}`}
+              animate={showBlankRipple && !reducedMotion ? { scale: [1, 1.12, 1] } : { scale: 1 }}
+              transition={showBlankRipple && !reducedMotion ? { duration: 0.6, repeat: Infinity, ease: 'easeInOut' } : {}}
             >
-              {isAnswered ? blankFill : ''}
-            </span>
-            {after}
-          </p>
+              <SpeakerHigh size={22} weight="fill" />
+            </motion.span>
+            {/* 빈칸 예문 — pill 은 채점 전후 모두 중립색, 채점 후 활용형이 들어간다 */}
+            <p className="text-[22px] font-[700] leading-[1.8] text-layout-black dark:text-layout-white break-keep">
+              {before}
+              <span
+                className="
+                  inline-flex items-center justify-center align-middle
+                  min-w-[84px] h-[34px] px-[14px]
+                  rounded-[8px] border-[1px] border-layout-gray-200 dark:border-[#444444]
+                  bg-layout-white dark:bg-layout-black
+                  text-[17px] font-[700] text-layout-black dark:text-layout-white
+                "
+              >
+                {isAnswered ? blankFill : ''}
+              </span>
+              {after}
+            </p>
+          </div>
         </div>
 
         {/* O/X — 카드 중앙 */}
@@ -343,6 +467,17 @@ const FillInTheBlankQuestion = ({ question, onComplete, farmByWordId }) => {
               `}
             >
               {option}
+              {/* 채점 후 "탭한 선택지"를 읽는 동안만 그 선택지에 스피커 표시 —
+                  사지선다 reverseMultipleChoice의 wordSpeakerVisible과 같은 표시(색은 선택지 상태를 따른다). */}
+              {wordSpeakerVisible && index === selectedIndex && (
+                <motion.span
+                  className={`absolute right-[14px] top-1/2 -translate-y-1/2 ${isWrongSelected ? 'text-status-error-600' : 'text-status-success-600'}`}
+                  animate={{ scale: [1, 1.15, 1] }}
+                  transition={{ duration: 0.6, repeat: Infinity, ease: 'easeInOut' }}
+                >
+                  <SpeakerHigh size={14} weight="fill" />
+                </motion.span>
+              )}
             </motion.button>
           );
         })}

@@ -27,6 +27,11 @@ const ensureCtx = () => {
   return audioCtx;
 };
 
+// 앱 공용 AudioContext — 효과음과 blankTts(빈칸 구간 무음 재생)가 같은 컨텍스트를 쓴다.
+// iOS 는 페이지당 AudioContext 수 제한이 있고, primeSfx 가 첫 제스처에서 이미 unlock 해 두므로
+// 새로 만들지 않고 이것을 재사용한다. 미지원 환경이면 null.
+export const getSharedAudioContext = () => ensureCtx();
+
 // mp3 → ArrayBuffer → decodeAudioData → AudioBuffer 캐시. gesture와 무관하게 미리 받아둔다.
 const decodeAll = () => {
   const ctx = ensureCtx();

@@ -100,6 +100,45 @@ def _flag_key(object_key):
     return f'tts:obj:{object_key}'
 
 
+_ALIGNMENT_CACHE_TTL = 24 * 3600  # 단어 타이밍(json) Redis 캐시 1일
+
+
+def _want_timestamps():
+    """?timestamps=1|true 파싱(대소문자 무관)."""
+    v = (request.args.get('timestamps') or '').strip().lower()
+    return v in ('1', 'true', 'yes')
+
+
+def _alignment_cache_key(object_key):
+    return f'tts:align:{object_key}'
+
+
+def _cache_alignment(object_key, alignment):
+    if alignment is None:
+        return
+    try:
+        cache.set(_alignment_cache_key(object_key), json.dumps(alignment, ensure_ascii=False),
+                  timeout=_ALIGNMENT_CACHE_TTL)
+    except Exception:
+        pass
+
+
+def _get_alignment(object_key):
+    """Redis 캐시 → objectstore json 순으로 단어 타이밍을 조회. 없으면 None(음수 캐싱 안 함:
+    구 캐시 백필 후 곧바로 다시 조회될 수 있어 negative 캐싱하면 반영이 늦어진다)."""
+    ck = _alignment_cache_key(object_key)
+    try:
+        cached = cache.get(ck)
+        if cached:
+            return json.loads(cached)
+    except Exception:
+        pass
+    alignment = service.get_storage('rw').get_json(service.alignment_key_for(object_key))
+    if alignment:
+        _cache_alignment(object_key, alignment)
+    return alignment
+
+
 def _resolve_object_key():
     """현재 요청(text/language/voice)으로 캐시 object key를 계산. 실패 시 None."""
     text = request.args.get('text')
@@ -263,6 +302,7 @@ def tts_resolve():
 
     # 사용자 지정 voice(쿼리) — 엄선 화이트리스트만 허용, 그 외/미지정은 언어 기본 voice.
     voice = voice_catalog.resolve_voice(language, request.args.get('voice'))
+    want_alignment = _want_timestamps()
 
     try:
         provider = get_provider_for_language(language)
@@ -287,7 +327,29 @@ def tts_resolve():
             cache.set(flag_key, '1', timeout=_EXIST_FLAG_TTL)
 
     if obj_exists:
-        return jsonify({"url": _cached_presigned_url(object_key), "cached": True}), 200
+        resp = {"url": _cached_presigned_url(object_key), "cached": True}
+        if want_alignment:
+            alignment = _get_alignment(object_key)
+            if alignment is None:
+                # 오디오는 있지만 타이밍 json이 없는 구 캐시 → 1회 재합성해 백필.
+                # (provider가 alignment 미지원이면 재합성해도 계속 None)
+                try:
+                    filled_key, created, alignment = service.ensure_cached(
+                        text, language, provider=provider, user_voice=voice,
+                        want_alignment=True,
+                    )
+                except TTSError:
+                    logging.getLogger(__name__).warning('TTS alignment 백필 실패', exc_info=True)
+                    alignment = None
+                else:
+                    if created:
+                        _record_gen_stats(language, fallback=(filled_key != object_key))
+                    if filled_key != object_key:
+                        object_key = filled_key
+                        resp["url"] = _cached_presigned_url(object_key)
+                    _cache_alignment(object_key, alignment)
+            resp["alignment"] = alignment
+        return jsonify(resp), 200
 
     # 2) miss → 생성(과금) 경로: 기본은 로그인 필수.
     #    단, 온보딩 레벨 단어장(관리자 구성 고정 세트) 화이트리스트 단어는 게스트도 허용
@@ -315,7 +377,9 @@ def tts_resolve():
     # 생성 + 업로드. 1차 provider(영어=ElevenLabs) 실패 시 service가 gTTS로 fallback.
     requested_key = object_key
     try:
-        object_key, _created = service.ensure_cached(text, language, provider=provider, user_voice=voice)
+        object_key, _created, alignment = service.ensure_cached(
+            text, language, provider=provider, user_voice=voice, want_alignment=want_alignment,
+        )
     except UnsupportedLanguageError as e:
         return jsonify({"error": str(e)}), 400
     except TTSConfigError as e:
@@ -330,7 +394,11 @@ def tts_resolve():
     _record_gen_stats(language, fallback)
 
     cache.set(_flag_key(object_key), '1', timeout=_EXIST_FLAG_TTL)
-    return jsonify({"url": _cached_presigned_url(object_key), "cached": False, "fallback": fallback}), 200
+    resp = {"url": _cached_presigned_url(object_key), "cached": False, "fallback": fallback}
+    if want_alignment:
+        _cache_alignment(object_key, alignment)
+        resp["alignment"] = alignment
+    return jsonify(resp), 200
 
 
 # ── 사전 캐싱(워밍): 학습/테스트 시작 전 캐시에 없는 음성만 미리 생성 ──────
@@ -420,7 +488,7 @@ def tts_prewarm():
             j_text, j_lang, j_provider, j_voice, j_req_key = job
             with app.app_context():
                 try:
-                    object_key, _created = service.ensure_cached(
+                    object_key, _created, _alignment = service.ensure_cached(
                         j_text, j_lang, provider=j_provider, user_voice=j_voice,
                     )
                 except TTSError:
@@ -469,7 +537,7 @@ def tts_voice_sample():
     if not sample:
         return jsonify({'code': 400, 'message': '샘플 문구 없음'}), 400
     try:
-        key, _ = service.ensure_cached(sample, language, user_voice=voice)
+        key, _created, _alignment = service.ensure_cached(sample, language, user_voice=voice)
         return jsonify({'code': 200, 'data': {'url': service.presigned_url(key)}})
     except Exception:
         # 미리듣기 실패는 치명적이지 않음 → 200+url:None (5xx면 Cloudflare가 가로챔)

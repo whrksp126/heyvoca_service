@@ -6,7 +6,7 @@
 
 핵심 진입점:
     from app.services.tts import service
-    service.ensure_cached(text, language)   # 없으면 생성·업로드 → (key, created)
+    service.ensure_cached(text, language)   # 없으면 생성·업로드 → (key, created, alignment)
     service.presigned_url(key)              # 재생용 presigned GET URL
     service.exists(key) / service.object_key_for(provider, lang, norm)
 """

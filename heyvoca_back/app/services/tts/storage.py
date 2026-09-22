@@ -5,6 +5,7 @@
 Flask app context 없이도 동작(prewarm 스크립트 공용) → os.getenv로 설정 로드.
 """
 import io
+import json
 import logging
 import os
 from datetime import timedelta
@@ -109,6 +110,43 @@ class TTSStorage:
                 metadata=metadata or None,
             )
         self._with_skew_retry(_do)
+
+    def put_json(self, key: str, obj) -> None:
+        """단어 타이밍(alignment) 등 JSON 메타를 오디오와 나란히 저장.
+
+        object_key_json_for()로 오디오 key에서 파생한 key를 넘긴다.
+        """
+        data = json.dumps(obj, ensure_ascii=False).encode('utf-8')
+
+        def _do() -> None:
+            self._client.put_object(
+                self.bucket,
+                key,
+                io.BytesIO(data),
+                length=len(data),
+                content_type='application/json',
+            )
+        self._with_skew_retry(_do)
+
+    def get_json(self, key: str):
+        """JSON 객체를 읽어 파싱해 반환. 없으면(또는 파싱 실패) None."""
+        def _do():
+            response = self._client.get_object(self.bucket, key)
+            try:
+                return json.loads(response.read())
+            finally:
+                response.close()
+                response.release_conn()
+        try:
+            return self._with_skew_retry(_do)
+        except S3Error as e:
+            if getattr(e, 'code', '') in _NOT_FOUND_CODES:
+                return None
+            logger.warning('TTS alignment JSON 조회 실패(%s): %s', key, e)
+            return None
+        except Exception as e:
+            logger.warning('TTS alignment JSON 파싱 실패(%s): %s', key, e)
+            return None
 
     def presigned_get(self, key: str, ttl_seconds: int = 3600) -> str:
         return self._with_skew_retry(lambda: self._client.presigned_get_object(

@@ -340,7 +340,6 @@ export const TestSetupNewBottomSheet = ({ onCancel, onSet, maxVocabularyCount, v
           <Section
             title="어떤 단어를"
             caption={`선택 ${currentMemoryStateCount}개`}
-            note="농장 작물 단계로 골라요 — 미학습 · 씨앗 · 새싹 · 이파리 · 당근(황금 포함)"
           >
             <MemoryStageSelector value={memoryState} counts={stageCounts} onToggle={toggleMemoryState} />
           </Section>
@@ -453,21 +452,18 @@ export const TestSetupNewBottomSheet = ({ onCancel, onSet, maxVocabularyCount, v
         <Section title="단어 고르는 방식">
           <div className="flex gap-[8px]">
             {[
-              { value: 'recommended', label: '추천', sub: '복습 시기·약점 순', icon: <Sparkle size={22} weight="fill" /> },
-              { value: 'random', label: '랜덤', sub: '무작위로 섞어요', icon: <Shuffle size={22} weight="bold" /> },
-            ].map(({ value, label, sub, icon }) => (
+              { value: 'recommended', label: '추천', icon: <Sparkle size={22} weight="fill" /> },
+              { value: 'random', label: '랜덤', icon: <Shuffle size={22} weight="bold" /> },
+            ].map(({ value, label, icon }) => (
               <SetupTile
                 key={value}
                 role="radio"
                 selected={selectionType === value}
                 onClick={() => setSelectionType(value)}
-                className="h-[96px]"
+                className="h-[88px]"
               >
                 {icon}
-                <span className="flex flex-col items-center gap-[2px]">
-                  <span className="text-[14px] font-[700] group-data-[selected=true]:text-layout-black dark:group-data-[selected=true]:text-layout-white">{label}</span>
-                  <span className="text-[11px] text-layout-gray-300 text-center">{sub}</span>
-                </span>
+                <span className="text-[14px] font-[700] group-data-[selected=true]:text-layout-black dark:group-data-[selected=true]:text-layout-white">{label}</span>
               </SetupTile>
             ))}
           </div>
@@ -476,8 +472,7 @@ export const TestSetupNewBottomSheet = ({ onCancel, onSet, maxVocabularyCount, v
         {/* 4. 문제 유형 — 유형 묶음(다중) */}
         <Section
           title="문제 유형"
-          caption="복수 선택"
-          note={isFillSelected ? `빈칸 채우기: 이 단어장 ${allWords.length}개 중 ${fillCandidateCount}개 출제 가능` : undefined}
+          note={isFillSelected && fillCandidateCount < allWords.length ? `빈칸 채우기: 이 단어장 ${allWords.length}개 중 ${fillCandidateCount}개 출제 가능` : undefined}
         >
           <div className="flex gap-[8px]">
             {[
@@ -499,11 +494,7 @@ export const TestSetupNewBottomSheet = ({ onCancel, onSet, maxVocabularyCount, v
         </Section>
 
         {/* 5. 방향 — 다중 */}
-        <Section
-          title="방향"
-          caption="복수 선택"
-          note="사지선다·빈칸 채우기에 적용돼요. 카드 맞추기는 양쪽 카드가 함께 보여요."
-        >
+        <Section title="방향">
           <div className="flex gap-[8px]">
             {[
               { value: 'en2ko', label: '영어 보고 한글', from: 'Aa', to: '가' },
@@ -531,7 +522,7 @@ export const TestSetupNewBottomSheet = ({ onCancel, onSet, maxVocabularyCount, v
           <div
             className="
               flex items-center gap-[12px]
-              h-[64px] px-[14px] rounded-[12px]
+              h-[56px] px-[14px] rounded-[12px]
               border-[1px] border-layout-gray-200 dark:border-[#3A3A3A]
               bg-layout-white dark:bg-[#1A1A1A]
               cursor-pointer
@@ -545,10 +536,7 @@ export const TestSetupNewBottomSheet = ({ onCancel, onSet, maxVocabularyCount, v
             <span className="flex items-center justify-center flex-shrink-0 w-[36px] h-[36px] rounded-full bg-layout-gray-50 dark:bg-[#2A2A2A]">
               <SpeakerHigh size={20} weight="fill" className="text-layout-gray-300" />
             </span>
-            <span className="flex flex-col flex-1 min-w-0 gap-[2px]">
-              <span className="text-[14px] font-[700] text-layout-black dark:text-layout-white">듣기 문제 포함</span>
-              <span className="text-[12px] text-layout-gray-300 break-keep">사지선다·카드 맞추기에 발음 듣고 맞히기가 섞여요</span>
-            </span>
+            <span className="flex-1 min-w-0 text-[14px] font-[700] text-layout-black dark:text-layout-white">듣기 문제 포함</span>
             {/* Toggle 은 자체 stopPropagation + haptic 을 가진다 — 행 onClick 과 이중 토글되지 않는다 */}
             <Toggle on={listeningOn} onClick={() => setListeningOn(prev => !prev)} />
           </div>

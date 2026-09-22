@@ -1,6 +1,7 @@
 """TTS provider 추상 인터페이스 + 공통 데이터/예외 타입."""
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
+from typing import Optional
 
 
 class TTSError(Exception):
@@ -32,6 +33,9 @@ class TTSResult:
     audio: bytes
     content_type: str = 'audio/mpeg'
     ext: str = 'mp3'
+    # 단어 단위 타이밍(초). [{"text": str, "start": float, "end": float}, ...].
+    # 타이밍을 지원하지 않는 provider(gTTS 등)는 None.
+    alignment: Optional[list] = None
 
 
 class TTSProvider(ABC):

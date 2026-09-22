@@ -39,21 +39,36 @@ class EdgeTTSProvider(TTSProvider):
             or self._DEFAULT_VOICES.get(language)
         )
 
+    # edge-tts 단위: offset/duration은 100ns(1e7 tick/초) 단위 정수.
+    _TICKS_PER_SECOND = 1e7
+
     def synthesize(self, text: str, language: str, voice: str = None) -> TTSResult:
         voice = voice or self.voice_for(language)
 
         async def _run():
-            comm = edge_tts.Communicate(text, voice)
+            # boundary="WordBoundary" 명시 필수 — edge-tts 7.x 기본값은
+            # SentenceBoundary라 지정하지 않으면 단어 단위 타이밍이 오지 않는다.
+            comm = edge_tts.Communicate(text, voice, boundary='WordBoundary')
             buf = bytearray()
+            words = []
             async for chunk in comm.stream():
                 if chunk.get('type') == 'audio':
                     buf += chunk['data']
-            return bytes(buf)
+                elif chunk.get('type') == 'WordBoundary':
+                    words.append({
+                        'text': chunk['text'],
+                        'start': chunk['offset'] / self._TICKS_PER_SECOND,
+                        'end': (chunk['offset'] + chunk['duration']) / self._TICKS_PER_SECOND,
+                    })
+            return bytes(buf), words
 
         try:
-            audio = asyncio.run(_run())
+            audio, alignment = asyncio.run(_run())
         except Exception as e:
             raise TTSGenerationError(f'edge-tts 생성 실패: {e}')
         if not audio:
             raise TTSGenerationError('edge-tts 빈 응답.')
-        return TTSResult(audio=audio, content_type='audio/mpeg', ext='mp3')
+        return TTSResult(
+            audio=audio, content_type='audio/mpeg', ext='mp3',
+            alignment=alignment or None,
+        )
