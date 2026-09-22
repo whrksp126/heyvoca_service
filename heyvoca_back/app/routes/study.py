@@ -777,8 +777,9 @@ def get_recommend():
     쿼리 파라미터:
       count         : 1~50                                (default: 20)
       book_ids      : 콤마 구분 UUID 또는 'all'             (default: all)
-      target_states : 콤마 구분 (unlearned,short,medium,long,all)
-                      pool에서 해당 상태 단어만 추출 (default: all)
+      target_states : 콤마 구분 (unlearned,seed,sprout,leaf,carrot | legacy short,medium,long | all)
+                      pool에서 해당 작물 단계(crop stage) 단어만 추출 — 복습 예정일과
+                      무관하게 FSRS state만 본다(default: all)
       selection     : recommended | random                (default: recommended)
       type          : (선택) 통계 라벨용. 알고리즘은 무시  (default: recommend)
 
@@ -866,18 +867,14 @@ def get_recommend():
         logging.getLogger(__name__).warning('농장 죽은단어 필터 실패 (추천은 정상)', exc_info=True)
 
     # ── target_states 필터 (테스트에서 암기 상태 좁히기) ──
+    # bucket(new/overdue/today/short/medium/long)이 아니라 crop_stage로 거른다 — bucket의
+    # short/medium/long은 "미래에 도래할" 단어에만 붙어서, bucket으로 걸렀다면 오늘 당장
+    # 복습해야 할(overdue/today) 단어가 통째로 빠졌었다(recommend/stage.py 참고).
     if target_states:
-        _state_bucket_map = {
-            'unlearned': {'new'},
-            'short':     {'short'},
-            'medium':    {'medium'},
-            'long':      {'long'},
-        }
-        allowed_buckets: set = set()
-        for state in target_states:
-            allowed_buckets.update(_state_bucket_map.get(state, set()))
-        if allowed_buckets:
-            pool = [it for it in pool if it.bucket in allowed_buckets]
+        from app.services.recommend.stage import crop_stage, expand_target_states
+        allowed_stages = expand_target_states(target_states)
+        if allowed_stages:
+            pool = [it for it in pool if crop_stage(it.fsrs_state) in allowed_stages]
 
     # ── AI 추천 모드 판정 + 신규 일일 cap 산출 ──
     # 사용자가 암기상태를 명시(target_states)하거나 random이면 그 의도를 그대로 존중 → cap/floor 미적용.

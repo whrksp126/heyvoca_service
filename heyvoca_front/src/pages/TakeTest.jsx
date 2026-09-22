@@ -341,10 +341,16 @@ const TakeTest = () => {
       bookIds = Array.isArray(vocabularySheetId) ? vocabularySheetId : [vocabularySheetId];
     }
 
-    // targetMemoryState → targetStates: MEMORY_STATES 값 → 백엔드 호환 값 변환
-    // 백엔드는 unlearned, short, medium, long, all 를 받음
+    // targetMemoryState → targetStates: 백엔드 호환 값 변환
+    // 테스트 설정 시트는 농장 작물 단계 키(unlearned/seed/sprout/leaf/carrot)를 보내고 백엔드도
+    // 그 다섯 키를 그대로 받는다 — 여기서는 통과시킨다. 아래 레거시 키(shortTerm 등)는 다른
+    // 호출부(예전 캐시·재시작 데이터)가 아직 4단계 값을 들고 있을 때를 위한 매핑이다.
     const memoryStateToBackend = {
-      [MEMORY_STATES.UNLEARNED]: 'unlearned',
+      unlearned: 'unlearned',
+      seed: 'seed',
+      sprout: 'sprout',
+      leaf: 'leaf',
+      carrot: 'carrot',
       [MEMORY_STATES.SHORT_TERM]: 'short',
       [MEMORY_STATES.MEDIUM_TERM]: 'medium',
       [MEMORY_STATES.LONG_TERM]: 'long',

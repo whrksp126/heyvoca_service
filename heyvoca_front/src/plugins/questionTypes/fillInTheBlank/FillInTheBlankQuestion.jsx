@@ -1,8 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
-import { Circle, X } from '@phosphor-icons/react';
+import { Circle, X, SpeakerHigh } from '@phosphor-icons/react';
 import FarmStatusBar from '../../../components/farm/FarmStatusBar';
-import TtsRipple from '../../../components/common/TtsRipple';
 import { haptic, pickVariant } from '../../../lib/feel';
 import { playSuccessSound, playErrorSound } from '../../../utils/audio';
 import { getTextSound, stripHtmlTags } from '../../../utils/common';
@@ -15,8 +14,12 @@ import { useResumeReplayKey } from '../../../hooks/useResumeReplayKey';
   - fillInTheBlank(ko2en):        위 = 한국어 예문(강조), 아래 = 영어 예문의 빈칸 → 선택지는 영어 단어(기본형)
   - fillInTheBlankReverse(en2ko): 위 = 영어 예문(강조),  아래 = 한국어 예문의 빈칸 → 선택지는 뜻
 
-  카드 모양·선택지·O/X·농장 상태 바는 사지선다(takeTest/Main.jsx)와 똑같이 맞춘다 — 유형이
-  바뀔 때 화면 문법이 달라 보이지 않게. 카드 전체 탭 = 위 예문 읽기(TTS, 리플만, 아이콘 없음).
+  카드가 둘로 나뉜다.
+  - 위 카드(primary 틴트, 스피커 아이콘): 보여 주는 예문. 카드 전체 탭 = 이 예문 읽기(TTS).
+    읽는 동안 스피커가 사지선다 듣기 모드처럼 맥동한다.
+  - 아래 카드(회색): 빈칸 예문. 탭해도 아무 일 없다. O/X 와 농장 상태 바는 이 카드 안에 뜬다.
+  선택지·O/X·농장 상태 바 규격은 사지선다(takeTest/Main.jsx)와 같다 — 유형이 바뀔 때
+  화면 문법이 달라 보이지 않게.
 */
 
 const TARGET_WORD_RE = /<strong\b[^>]*\btarget-word\b[^>]*>([\s\S]*?)<\/strong\s*>/gi;
@@ -64,7 +67,6 @@ const FillInTheBlankQuestion = ({ question, onComplete, farmByWordId }) => {
   const [isAnswered, setIsAnswered] = useState(false);
   const [isCorrect, setIsCorrect] = useState(null);
   const [isSpeaking, setIsSpeaking] = useState(false);
-  const [speakDuration, setSpeakDuration] = useState(null);
   const startTimeRef = useRef(Date.now());
   // 백그라운드 복귀 시 정답 링/성장 게이지가 최종 상태로 정적으로 스냅되는 것을 막기 위한
   // 재마운트용 키 (이유는 useResumeReplayKey 주석 참고)
@@ -107,14 +109,10 @@ const FillInTheBlankQuestion = ({ question, onComplete, farmByWordId }) => {
     if (!text) return;
     const gen = ++speakGenRef.current;
     setIsSpeaking(true);
-    setSpeakDuration(null);
     try {
-      await getTextSound(text, shownLang, (d) => { if (gen === speakGenRef.current) setSpeakDuration(d); });
+      await getTextSound(text, shownLang);
     } finally {
-      if (gen === speakGenRef.current) {
-        setIsSpeaking(false);
-        setSpeakDuration(null);
-      }
+      if (gen === speakGenRef.current) setIsSpeaking(false);
     }
   };
 
@@ -184,16 +182,15 @@ const FillInTheBlankQuestion = ({ question, onComplete, farmByWordId }) => {
 
   return (
     <div className="flex flex-col gap-[15px] h-full">
-      {/* 카드 — 사지선다 카드와 같은 모양. 카드 전체 탭 = 위 예문 읽기 */}
-      <motion.div
+      {/* 위 카드 — 보여 주는 예문. 카드 전체 탭 = 읽기(TTS) */}
+      <motion.button
+        type="button"
+        aria-label="예문 듣기"
         className="
-          relative
-          flex flex-col flex-1
-          w-full
-          rounded-[12px]
-          bg-layout-gray-50 dark:bg-layout-gray-dark
-          overflow-hidden
-          cursor-pointer
+          flex items-start gap-[12px]
+          w-full px-[20px] py-[18px]
+          rounded-[12px] text-left
+          bg-primary-main-50 dark:bg-primary-main-dark
         "
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
@@ -202,37 +199,50 @@ const FillInTheBlankQuestion = ({ question, onComplete, farmByWordId }) => {
         style={{ willChange: 'transform, opacity' }}
         onClick={handleCardClick}
       >
-        {/* 읽는 동안 카드 중앙에서 퍼지는 파동 — 아이콘 없이 리플만 */}
-        {isSpeaking && (
-          <TtsRipple size={160} duration={speakDuration} className="z-[0]" />
-        )}
+        <motion.span
+          className="flex-shrink-0 mt-[3px] text-primary-main-600"
+          animate={isSpeaking && !reducedMotion ? { scale: [1, 1.12, 1] } : { scale: 1 }}
+          transition={isSpeaking && !reducedMotion ? { duration: 0.6, repeat: Infinity, ease: 'easeInOut' } : {}}
+        >
+          <SpeakerHigh size={22} weight="fill" />
+        </motion.span>
+        <p className="text-[19px] font-[600] leading-[1.6] text-layout-black dark:text-layout-white break-keep">
+          {renderHighlightedText(shownText)}
+        </p>
+      </motion.button>
 
-        <div className="relative z-[1] flex flex-col flex-1 px-[20px] pt-[20px] pb-[60px]">
-          {/* 위: 보여 주는 예문(강조 표시 유지) */}
-          <p className="text-[20px] font-[600] leading-[1.6] text-layout-gray-500 dark:text-layout-gray-200 break-keep">
-            {renderHighlightedText(shownText)}
+      {/* 아래 카드 — 빈칸 예문. 탭 동작 없음 */}
+      <motion.div
+        className="
+          relative
+          flex flex-col flex-1
+          w-full
+          rounded-[12px]
+          bg-layout-gray-50 dark:bg-layout-gray-dark
+          overflow-hidden
+        "
+        initial={{ opacity: 0, scale: 0.95 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.2, ease: [0.4, 0, 0.2, 1] }}
+        style={{ willChange: 'transform, opacity' }}
+      >
+        <div className="relative z-[1] flex items-center flex-1 px-[20px] pt-[20px] pb-[60px]">
+          {/* 빈칸 예문 — pill 은 채점 전후 모두 중립색, 채점 후 활용형이 들어간다 */}
+          <p className="text-[22px] font-[700] leading-[1.8] text-layout-black dark:text-layout-white break-keep">
+            {before}
+            <span
+              className="
+                inline-flex items-center justify-center align-middle
+                min-w-[84px] h-[34px] px-[14px]
+                rounded-[8px] border-[1px] border-layout-gray-200 dark:border-[#444444]
+                bg-layout-white dark:bg-layout-black
+                text-[17px] font-[700] text-layout-black dark:text-layout-white
+              "
+            >
+              {isAnswered ? blankFill : ''}
+            </span>
+            {after}
           </p>
-
-          <div className="h-[1px] mt-[16px] bg-layout-gray-100 dark:bg-[#333333]" />
-
-          {/* 아래: 빈칸 예문 — pill 은 채점 전후 모두 중립색, 채점 후 활용형이 들어간다 */}
-          <div className="flex items-center flex-1">
-            <p className="text-[22px] font-[700] leading-[1.8] text-layout-black dark:text-layout-white break-keep">
-              {before}
-              <span
-                className="
-                  inline-flex items-center justify-center align-middle
-                  min-w-[84px] h-[34px] px-[14px]
-                  rounded-[8px] border-[1px] border-layout-gray-200 dark:border-[#444444]
-                  bg-layout-white dark:bg-layout-black
-                  text-[17px] font-[700] text-layout-black dark:text-layout-white
-                "
-              >
-                {isAnswered ? blankFill : ''}
-              </span>
-              {after}
-            </p>
-          </div>
         </div>
 
         {/* O/X — 카드 중앙 */}
@@ -273,7 +283,6 @@ const FillInTheBlankQuestion = ({ question, onComplete, farmByWordId }) => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.25, ease: [0.4, 0, 0.2, 1] }}
             className="absolute bottom-[14px] left-[14px] right-[14px] z-[2]"
-            onClick={(e) => e.stopPropagation()}
           >
             <FarmStatusBar
               crop={farm.crop}

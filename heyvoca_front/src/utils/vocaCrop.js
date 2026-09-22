@@ -95,6 +95,28 @@ export const wordCropStage = (word) => {
   return 'seed';
 };
 
+/* ── 학습·테스트 설정의 '어떤 단어를' 필터 ───────────────────
+   테스트 설정·학습 설정 시트는 예전에 암기 상태 4단계(미학습/단기/중기/장기)로 골랐다.
+   지금은 농장 작물 단계로 고른다 — 미학습(보유 씨앗) · 씨앗(심은 것) · 새싹 · 이파리 · 당근.
+   황금 당근은 당근에 합친다(필터 칸을 하나 더 두면 대개 0개라 빈 칸만 늘어난다).
+   판정은 위 isUnplanted / wordCropStage 와 같은 소스(서버 farm 우선)라, 단어장 카드의
+   단계 수와 설정 시트의 수가 같은 말을 한다. 백엔드 /study/recommend 도 이 다섯 키를 그대로 받는다. */
+export const MEMORY_STAGE_ORDER = ['unlearned', 'seed', 'sprout', 'leaf', 'carrot'];
+
+/** 단어 → 설정 시트 필터 키 (unlearned / seed / sprout / leaf / carrot) */
+export const wordMemoryStage = (word) => {
+  if (isUnplanted(word)) return 'unlearned';
+  const crop = wordCropStage(word);
+  return crop === 'golden' ? 'carrot' : crop;
+};
+
+/** `{ unlearned, seed, sprout, leaf, carrot }` — 설정 시트의 칸별 개수 */
+export const memoryStageCounts = (words) => {
+  const counts = { unlearned: 0, seed: 0, sprout: 0, leaf: 0, carrot: 0 };
+  (words || []).forEach((word) => { counts[wordMemoryStage(word)] += 1; });
+  return counts;
+};
+
 /* ── 건강 ─────────────────────────────────────────────────
    기획 6.2 / farm_v2/constants.py 의 값 그대로.
      유예 G = clamp(ceil(I × 0.5), 3, 30), 초기 단어(씨앗·새싹)는 최소 5

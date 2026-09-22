@@ -5,19 +5,11 @@ import { motion } from 'framer-motion';
 import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
 import { useVocabulary } from '../../context/VocabularyContext';
-import { MIN_TEST_VOCABULARY_COUNT, getWordMemoryState } from '../../utils/common';
+import { MIN_TEST_VOCABULARY_COUNT } from '../../utils/common';
+import { MEMORY_STAGE_ORDER, wordMemoryStage, memoryStageCounts } from '../../utils/vocaCrop';
 import { sortByForgettingPriority } from '../../utils/forgettingPriority';
 import { vibrate } from '../../utils/osFunction';
-
-function getMemoryStateLabel(type) {
-  switch (type) {
-    case 'unlearned': return '미학습';
-    case 'shortTerm': return '단기 암기';
-    case 'mediumTerm': return '중기 암기';
-    case 'longTerm': return '장기 암기';
-    default: return '';
-  }
-}
+import MemoryStageSelector from '../common/MemoryStageSelector';
 
 export const StudySetupNewBottomSheet = ({ onCancel, vocabularySheetId, maxVocabularyCount }) => {
   "use memo";
@@ -28,7 +20,8 @@ export const StudySetupNewBottomSheet = ({ onCancel, vocabularySheetId, maxVocab
   const navigate = useNavigate();
 
   const [selectionType, setSelectionType] = useState('recommended'); // 'recommended' | 'random'
-  const [memoryState, setMemoryState] = useState(['unlearned', 'shortTerm', 'mediumTerm', 'longTerm']);
+  // 어떤 단어를 — 테스트 설정과 같은 농장 작물 단계 키(unlearned/seed/sprout/leaf/carrot)
+  const [memoryState, setMemoryState] = useState([...MEMORY_STAGE_ORDER]);
 
   const longPressIntervalRef = useRef(null);
   const longPressTimeoutRef = useRef(null);
@@ -48,22 +41,14 @@ export const StudySetupNewBottomSheet = ({ onCancel, vocabularySheetId, maxVocab
     }
   }, [vocabularySheets, vocabularySheetId]);
 
-  // 암기 상태별 단어 개수 (4개 키, overdue는 본래 상태로 분류)
-  const memoryStateCounts = useMemo(() => {
-    const counts = { unlearned: 0, shortTerm: 0, mediumTerm: 0, longTerm: 0 };
-    allWords.forEach(word => {
-      const s = getWordMemoryState(word);
-      if (counts[s] !== undefined) counts[s]++;
-    });
-    return counts;
-  }, [allWords]);
+  // 작물 단계별 단어 개수 (5개 키 — 판정은 vocaCrop.wordMemoryStage 한 곳)
+  const stageCounts = useMemo(() => memoryStageCounts(allWords), [allWords]);
 
-  // 선택한 암기 상태의 단어 수
+  // 선택한 단계의 단어 수
   const currentMemoryStateCount = useMemo(() => {
     const matchingIds = new Set();
     allWords.forEach(word => {
-      const state = getWordMemoryState(word);
-      if (memoryState.includes(state)) {
+      if (memoryState.includes(wordMemoryStage(word))) {
         matchingIds.add(word.id);
       }
     });
@@ -133,11 +118,8 @@ export const StudySetupNewBottomSheet = ({ onCancel, vocabularySheetId, maxVocab
   const handleStart = () => {
     if (isStartDisabled) return;
 
-    // 1. 선택된 암기 상태로 필터 (overdue도 본래 상태로 분류)
-    const candidatePool = allWords.filter(word => {
-      const state = getWordMemoryState(word);
-      return memoryState.includes(state);
-    });
+    // 1. 선택된 작물 단계로 필터 — 테스트 설정(/study/recommend target_states)과 같은 판정
+    const candidatePool = allWords.filter(word => memoryState.includes(wordMemoryStage(word)));
 
     // 2. 출제 유형 분기
     const ordered = selectionType === 'recommended'
@@ -155,8 +137,6 @@ export const StudySetupNewBottomSheet = ({ onCancel, vocabularySheetId, maxVocab
       }
     });
   };
-
-  const memoryStateOrder = ['unlearned', 'shortTerm', 'mediumTerm', 'longTerm'];
 
   return (
     <div className="relative bg-layout-white dark:bg-layout-black">
@@ -204,44 +184,16 @@ export const StudySetupNewBottomSheet = ({ onCancel, vocabularySheetId, maxVocab
           </div>
         </div>
 
-        {/* 암기 상태 */}
-        <div className="flex flex-col gap-[15px]">
-          <p className="text-[14px] font-[600] text-layout-black dark:text-layout-white text-center">
-            암기 상태
-          </p>
-          <div className="grid grid-cols-2 gap-[10px] relative">
-            {memoryStateOrder.map(type => {
-              const stateCount = memoryStateCounts[type] || 0;
-              const isSelected = memoryState.includes(type);
-              return (
-                <div
-                  key={type}
-                  className={`
-                    flex items-center justify-center gap-[5px]
-                    h-[45px] px-[15px]
-                    border-[1px] rounded-[8px]
-                    cursor-pointer
-                    ${isSelected ? 'border-primary-main-600' : 'border-layout-gray-200'}
-                  `}
-                  onPointerDown={e => e.stopPropagation()}
-                  onClick={() => {
-                    vibrate({ duration: 5 });
-                    toggleMemoryState(type);
-                  }}
-                >
-                  {isSelected && (
-                    <Check size={18} weight="bold" className="text-primary-main-600" />
-                  )}
-                  <span className={`text-[16px] font-[700] ${isSelected ? 'text-primary-main-600' : 'text-layout-gray-200'}`}>
-                    {getMemoryStateLabel(type)}
-                  </span>
-                  <span className={`text-[12px] font-[500] ${isSelected ? 'text-primary-main-600' : 'text-[#999]'}`}>
-                    ({stateCount})
-                  </span>
-                </div>
-              );
-            })}
+        {/* 어떤 단어를 — 농장 작물 단계 5칸(테스트 설정과 같은 컴포넌트) */}
+        <div className="flex flex-col gap-[10px]">
+          <div className="flex items-baseline justify-between">
+            <h3 className="text-[15px] font-[700] text-layout-black dark:text-layout-white">어떤 단어를</h3>
+            <span className="text-[12px] text-layout-gray-300">선택 {currentMemoryStateCount}개</span>
           </div>
+          <MemoryStageSelector value={memoryState} counts={stageCounts} onToggle={toggleMemoryState} />
+          <p className="text-[12px] leading-[1.5] text-layout-gray-300 break-keep">
+            농장 작물 단계로 골라요 — 미학습 · 씨앗 · 새싹 · 이파리 · 당근(황금 포함)
+          </p>
         </div>
 
         {/* 학습 개수 */}
