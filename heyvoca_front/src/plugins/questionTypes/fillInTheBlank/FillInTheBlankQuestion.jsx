@@ -281,8 +281,7 @@ const FillInTheBlankQuestion = ({ question, onComplete, farmByWordId }) => {
         aria-label="예문 듣기"
         className="
           relative overflow-hidden
-          flex items-start gap-[12px]
-          w-full px-[20px] py-[18px]
+          w-full px-[20px] pt-[18px] pb-[44px]
           rounded-[12px] text-left
           bg-primary-main-50 dark:bg-primary-main-dark
         "
@@ -293,20 +292,27 @@ const FillInTheBlankQuestion = ({ question, onComplete, farmByWordId }) => {
         style={{ willChange: 'transform, opacity' }}
         onClick={handleCardClick}
       >
-        {/* 예문 재생 중 ripple — 사지선다 카드와 같은 처리(TtsRipple, 카드 중앙 확산) */}
-        {showTtsRipple && (
-          <TtsRipple size={160} duration={speakDuration} className="z-[0]" />
-        )}
-        <motion.span
-          className="relative z-[1] flex-shrink-0 mt-[3px] text-primary-main-600"
-          animate={showTtsRipple && !reducedMotion ? { scale: [1, 1.12, 1] } : { scale: 1 }}
-          transition={showTtsRipple && !reducedMotion ? { duration: 0.6, repeat: Infinity, ease: 'easeInOut' } : {}}
-        >
-          <SpeakerHigh size={22} weight="fill" />
-        </motion.span>
         <p className="relative z-[1] text-[19px] font-[600] leading-[1.6] text-layout-black dark:text-layout-white break-keep">
           {renderHighlightedText(shownText)}
         </p>
+
+        {/* 워터마크 스피커 — 카드 하단 중앙. 평소엔 옅게, 읽는 동안 primary + 맥동.
+            ripple 은 이 아이콘과 같은 앵커(카드 하단 중앙)에 겹쳐 그려 파동 중심이 아이콘과 일치하게 한다. */}
+        <div className="absolute left-1/2 bottom-[12px] -translate-x-1/2 pointer-events-none">
+          {showTtsRipple && (
+            <TtsRipple size={160} duration={speakDuration} className="z-[0]" />
+          )}
+          <motion.span
+            className={`
+              relative z-[1] transition-colors duration-200
+              ${showTtsRipple ? 'text-primary-main-600 opacity-100' : 'text-layout-gray-300 opacity-40 dark:opacity-30'}
+            `}
+            animate={showTtsRipple && !reducedMotion ? { scale: [1, 1.12, 1] } : { scale: 1 }}
+            transition={showTtsRipple && !reducedMotion ? { duration: 0.6, repeat: Infinity, ease: 'easeInOut' } : {}}
+          >
+            <SpeakerHigh size={26} weight="fill" />
+          </motion.span>
+        </div>
       </motion.button>
 
       {/* 아래 카드 — 빈칸 예문. 카드 전체 탭 = 읽기(채점 전엔 빈칸 구간 무음).
@@ -336,38 +342,44 @@ const FillInTheBlankQuestion = ({ question, onComplete, farmByWordId }) => {
           if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleBlankCardClick(); }
         }}
       >
-        {/* 빈칸 예문 재생 중 ripple — 위 카드와 같은 처리(카드 중앙 확산) */}
-        {showBlankRipple && (
-          <TtsRipple size={160} duration={speakDuration} className="z-[0]" />
-        )}
         <div className="relative z-[1] flex items-center flex-1 px-[20px] pt-[20px] pb-[60px]">
-          <div className="flex items-start gap-[12px] w-full">
-            {/* 스피커 — 위 카드와 같은 자리·맥동. 읽는 중일 때만 primary, 평소엔 회색 */}
+          {/* 빈칸 예문 — pill 은 채점 전후 모두 중립색, 채점 후 활용형이 들어간다 */}
+          <p className="w-full text-[22px] font-[700] leading-[1.8] text-layout-black dark:text-layout-white break-keep">
+            {before}
+            <span
+              className="
+                inline-flex items-center justify-center align-middle
+                min-w-[84px] h-[34px] px-[14px]
+                rounded-[8px] border-[1px] border-layout-gray-200 dark:border-[#444444]
+                bg-layout-white dark:bg-layout-black
+                text-[17px] font-[700] text-layout-black dark:text-layout-white
+              "
+            >
+              {isAnswered ? blankFill : ''}
+            </span>
+            {after}
+          </p>
+        </div>
+
+        {/* 워터마크 스피커 — 위 카드와 같은 처리. 채점 후 농장 상태 바가 하단을 차지하면 숨긴다
+            (카드는 계속 탭 가능 — 전체 문장 재생). */}
+        {!(isAnswered && farm) && (
+          <div className="absolute left-1/2 bottom-[12px] -translate-x-1/2 pointer-events-none">
+            {showBlankRipple && (
+              <TtsRipple size={160} duration={speakDuration} className="z-[0]" />
+            )}
             <motion.span
-              className={`flex-shrink-0 mt-[9px] ${showBlankRipple ? 'text-primary-main-600' : 'text-layout-gray-300'}`}
+              className={`
+                relative z-[1] transition-colors duration-200
+                ${showBlankRipple ? 'text-primary-main-600 opacity-100' : 'text-layout-gray-300 opacity-40 dark:opacity-30'}
+              `}
               animate={showBlankRipple && !reducedMotion ? { scale: [1, 1.12, 1] } : { scale: 1 }}
               transition={showBlankRipple && !reducedMotion ? { duration: 0.6, repeat: Infinity, ease: 'easeInOut' } : {}}
             >
-              <SpeakerHigh size={22} weight="fill" />
+              <SpeakerHigh size={26} weight="fill" />
             </motion.span>
-            {/* 빈칸 예문 — pill 은 채점 전후 모두 중립색, 채점 후 활용형이 들어간다 */}
-            <p className="text-[22px] font-[700] leading-[1.8] text-layout-black dark:text-layout-white break-keep">
-              {before}
-              <span
-                className="
-                  inline-flex items-center justify-center align-middle
-                  min-w-[84px] h-[34px] px-[14px]
-                  rounded-[8px] border-[1px] border-layout-gray-200 dark:border-[#444444]
-                  bg-layout-white dark:bg-layout-black
-                  text-[17px] font-[700] text-layout-black dark:text-layout-white
-                "
-              >
-                {isAnswered ? blankFill : ''}
-              </span>
-              {after}
-            </p>
           </div>
-        </div>
+        )}
 
         {/* O/X — 카드 중앙 */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-[3] pointer-events-none">
