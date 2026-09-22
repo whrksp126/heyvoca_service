@@ -29,7 +29,6 @@
 import React, { useCallback, useEffect, useMemo, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
-import { Warning } from '@phosphor-icons/react';
 import { useUser } from '../../context/UserContext';
 import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
 
@@ -535,24 +534,10 @@ const Main = () => {
           {greeting.line2}
         </div>
 
-        {/* §12 — 주황 핀은 1번(부패 직전 다수) 상태에서만 뜬다.
-            기획 12번(공포·손실 회피 금지)에 따라 빨강을 쓰지 않고, 개수를 해결 가능한 양으로 제시한다.
-            §17 — 주황 핀은 다크에서도 같은 #FB6514 다. 경고는 배경 모드와 무관해야 한다 */}
-        {homeState === HOME_STATES.CRITICAL && (
-          <div className="absolute z-[14] left-[50.77%] top-[212px] flex flex-col items-center">
-            <div className="
-              flex items-center gap-[4px] whitespace-nowrap
-              px-[10px] py-[5px] rounded-full
-              bg-[#FB6514] text-layout-white text-[11px] font-[800]
-              shadow-[0_3px_10px_rgba(251,101,20,.4)]
-            ">
-              <Warning size={12} weight="fill" />
-              썩기 직전 {criticalCnt}
-            </div>
-            <div className="w-[2px] h-[10px] bg-[rgba(251,101,20,.5)]" />
-            <div className="w-[9px] h-[9px] rounded-full bg-[#FB6514] border-2 border-layout-white shadow-[0_1px_3px_rgba(0,0,0,.25)]" />
-          </div>
-        )}
+        {/* §12 의 주황 핀("썩기 직전 N")은 내렸다 — QA 2차.
+            밭 그림 위에 경고 핀을 띄우면 헤드라인·CTA·팻말과 네 번째로 같은 말을 하면서
+            가장 눈에 띄는 자리를 겁주는 데 쓴다. 부패 직전 안내는 아래 water 스트립
+            ("오늘 안에 물이 필요한 작물 N개")이 이미 맡고 있고, 거기에는 누르면 갈 곳이 있다. */}
 
         {/* §7 주 CTA — 히어로 하단에 겹쳐 뜬다. 홈에서 유일한 핑크 */}
         <FarmCta label={view.cta} onClick={handleCtaClick} />

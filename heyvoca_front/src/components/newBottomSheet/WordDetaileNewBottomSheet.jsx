@@ -454,6 +454,7 @@ const WordDetaileNewBottomSheet = ({ vocabularyId, id }) => {
         planted={planted}
         rotten={rotten}
         golden={golden}
+        health={health}
       />
 
       {/* 이 단어가 있는 단어장 — 기록이 아니라 이 단어가 무엇인지에 관한 사실이다 */}

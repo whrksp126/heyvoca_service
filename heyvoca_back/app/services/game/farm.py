@@ -172,11 +172,17 @@ def on_answer(user_id: UUID, user_voca_id: int, memory_state_after: str, was_cor
 
 
 # ──────────────────────────────────────────────────────────────
-# AI 추천 필터 — 죽은 단어 제외 (직접 학습·시험은 영향 없음)
+# V1 잔존 — 학습 진입 필터는 farm_v2.query.rotten_user_voca_ids 가 정본이다
 # ──────────────────────────────────────────────────────────────
 
 def dead_user_voca_ids(user_id: UUID, candidate_ids: list) -> set:
-    """candidate 중 죽은(user_voca_game.life=DEAD) user_voca_id 집합."""
+    """candidate 중 죽은(user_voca_game.life=DEAD) user_voca_id 집합.
+
+    **더 이상 학습 진입에 쓰지 말 것.** V2 는 부패를 health_state='ROTTEN' 에 적고
+    life 는 'ALIVE' 로 두기 때문에 이 함수는 사실상 빈 집합만 돌려준다(prod 실측:
+    ROTTEN 21 / DEAD 0) — `/study/recommend` 가 썩은 단어를 그대로 출제하던 원인이다.
+    학습 가능 여부는 `app.services.game.farm_v2.query.rotten_user_voca_ids` 를 쓴다.
+    """
     if not candidate_ids:
         return set()
     rows = (

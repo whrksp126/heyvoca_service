@@ -14,6 +14,7 @@ import { vibrate } from '../../utils/osFunction';
 import { useTheme } from '../../context/ThemeContext';
 import { primeSfx } from '../../utils/audio';
 import { QUICK_QUESTION_TYPES } from '../../plugins/questionTypes';
+import { isWordStudiable } from '../../utils/vocaCrop';
 
 const StudyNewFullSheet = () => {
   "use memo";
@@ -45,7 +46,8 @@ const StudyNewFullSheet = () => {
   };
 
   const startFreshQuickReview = async () => {
-    const allWords = vocabularySheets.flatMap(sheet => sheet.words);
+    // 썩은 단어는 출제 대상이 아니다 — 문제 수 상한도 되살릴 수 있는 것만 빼고 센다
+    const allWords = vocabularySheets.flatMap(sheet => sheet.words || []).filter(isWordStudiable);
     const count = Math.min(14, allWords.length);
 
     if (count < 4) {
@@ -175,7 +177,7 @@ const StudyNewFullSheet = () => {
             { isBackdropClickClosable: true, isDragToCloseEnabled: true }
           );
           if (resume) {
-            const allWords = vocabularySheets.flatMap(sheet => sheet.words);
+            const allWords = vocabularySheets.flatMap(sheet => sheet.words || []).filter(isWordStudiable);
             closeNewFullSheet();
             navigate('/take-test', {
               state: {

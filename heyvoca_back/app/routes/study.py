@@ -856,15 +856,22 @@ def get_recommend():
         logging.getLogger(__name__).error('후보 풀 빌드 오류', exc_info=True)
         return jsonify({'code': 500, 'message': '서버 오류가 발생했습니다.'}), 500
 
-    # ── 당근 농장: 죽은 단어는 AI 추천에서만 제외 (부활 전까지). 직접 학습·시험은 영향 없음. ──
+    # ── 당근 농장: 썩은 단어는 되살리기 전까지 **모든 모드에서** 제외한다. ──
+    # 제품 결정(2026-09): AI 추천·자유 설정 테스트·빠른 학습 어디서도 썩은 단어는
+    # 출제하지 않는다. 되살리기(물주기/회복제) 전까지 학습 불가가 기획 6.1 의 정의다.
+    # 이 필터가 target_states 앞에 있으므로 selection/target_states 조합과 무관하게 적용된다.
+    #
+    # 예전에는 V1 의 dead_user_voca_ids(life=='DEAD')를 썼는데, V2 는 부패를
+    # health_state=='ROTTEN' 에 적고 life 는 ALIVE 로 두어 **한 건도 걸러지지 않았다**
+    # (prod 실측: ROTTEN 21 / DEAD 0). 화면과 같은 판정을 쓰는 V2 헬퍼로 교체한다.
     # 게임 로직은 services/game/에만 두고, 실패해도 추천을 막지 않는다.
     try:
-        from app.services.game.farm import dead_user_voca_ids
-        dead_ids = dead_user_voca_ids(user_id, [it.user_voca_id for it in pool])
-        if dead_ids:
-            pool = [it for it in pool if it.user_voca_id not in dead_ids]
+        from app.services.game.farm_v2.query import rotten_user_voca_ids
+        rotten_ids = rotten_user_voca_ids(user_id, [it.user_voca_id for it in pool])
+        if rotten_ids:
+            pool = [it for it in pool if it.user_voca_id not in rotten_ids]
     except Exception:
-        logging.getLogger(__name__).warning('농장 죽은단어 필터 실패 (추천은 정상)', exc_info=True)
+        logging.getLogger(__name__).error('농장 썩은단어 필터 실패 (추천은 정상)', exc_info=True)
 
     # ── target_states 필터 (테스트에서 암기 상태 좁히기) ──
     # bucket(new/overdue/today/short/medium/long)이 아니라 crop_stage로 거른다 — bucket의
@@ -1043,14 +1050,14 @@ def get_chat_session():
         logging.getLogger(__name__).error('chat-session 풀 빌드 오류', exc_info=True)
         return jsonify({'code': 500, 'message': '서버 오류가 발생했습니다.'}), 500
 
-    # ── 당근 농장: 죽은 단어 제외 (get_recommend와 동일) ──
+    # ── 당근 농장: 썩은 단어 제외 (get_recommend와 동일한 정본 헬퍼) ──
     try:
-        from app.services.game.farm import dead_user_voca_ids
-        dead_ids = dead_user_voca_ids(user_id, [it.user_voca_id for it in pool])
-        if dead_ids:
-            pool = [it for it in pool if it.user_voca_id not in dead_ids]
+        from app.services.game.farm_v2.query import rotten_user_voca_ids
+        rotten_ids = rotten_user_voca_ids(user_id, [it.user_voca_id for it in pool])
+        if rotten_ids:
+            pool = [it for it in pool if it.user_voca_id not in rotten_ids]
     except Exception:
-        logging.getLogger(__name__).warning('농장 죽은단어 필터 실패 (채팅세션은 정상)', exc_info=True)
+        logging.getLogger(__name__).error('농장 썩은단어 필터 실패 (채팅세션은 정상)', exc_info=True)
 
     # ── 신규 일일 cap (get_recommend와 동일) ──
     new_allowance = None

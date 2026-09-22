@@ -8,7 +8,7 @@ import {
   MIN_TEST_VOCABULARY_COUNT, MAX_TEST_VOCABULARY_COUNT,
   STABILITY_LEAF_DAYS, STABILITY_CARROT_DAYS,
 } from '../../utils/common';
-import { memoryStateVisualStage } from '../../utils/vocaCrop';
+import { memoryStateVisualStage, isWordStudiable } from '../../utils/vocaCrop';
 import CropImage from '../farm/CropImage';
 import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 import { TestSetupNewBottomSheet } from '../newBottomSheet/TestSetupNewBottomSheet';
@@ -112,10 +112,17 @@ const VocabularySheetNewFullSheet = ({ testType }) => {
         .flatMap(s => s.words || []);
     }
 
-    const totalWords = selectedWords.length;
+    // 썩은 단어는 되살리기 전에는 출제 대상이 아니다 — 설정 시트의 최대 개수도 그 수를 뺀 값이어야
+    // "몇 문제"의 상한과 실제로 나오는 문제 수가 같아진다(QA 2차).
+    const studiable = selectedWords.filter(isWordStudiable);
+    const totalWords = studiable.length;
 
     if (totalWords < MIN_TEST_VOCABULARY_COUNT) {
-      return alert(`단어 개수가 부족해요. 최소 ${MIN_TEST_VOCABULARY_COUNT}개 이상 필요합니다.`);
+      return alert(
+        selectedWords.length >= MIN_TEST_VOCABULARY_COUNT
+          ? '썩은 단어는 되살린 뒤에 학습할 수 있어요'
+          : `단어 개수가 부족해요. 최소 ${MIN_TEST_VOCABULARY_COUNT}개 이상 필요합니다.`
+      );
     }
 
     if (testType === 'study') {

@@ -6,7 +6,7 @@ import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
 import { useVocabulary } from '../../context/VocabularyContext';
 import { MIN_TEST_VOCABULARY_COUNT } from '../../utils/common';
-import { MEMORY_STAGE_ORDER, wordMemoryStage, memoryStageCounts } from '../../utils/vocaCrop';
+import { MEMORY_STAGE_ORDER, wordMemoryStage, memoryStageCounts, isWordStudiable } from '../../utils/vocaCrop';
 import { sortByForgettingPriority } from '../../utils/forgettingPriority';
 import { vibrate } from '../../utils/osFunction';
 import MemoryStageSelector from '../common/MemoryStageSelector';
@@ -27,7 +27,7 @@ export const StudySetupNewBottomSheet = ({ onCancel, vocabularySheetId, maxVocab
   const longPressTimeoutRef = useRef(null);
 
   // 선택된 단어장의 모든 단어
-  const allWords = useMemo(() => {
+  const sheetWords = useMemo(() => {
     if (vocabularySheetId === 'all') {
       return vocabularySheets.flatMap(sheet => sheet.words || []);
     } else if (Array.isArray(vocabularySheetId)) {
@@ -40,6 +40,11 @@ export const StudySetupNewBottomSheet = ({ onCancel, vocabularySheetId, maxVocab
       return sheet ? (sheet.words || []) : [];
     }
   }, [vocabularySheets, vocabularySheetId]);
+
+  // 실제로 출제할 수 있는 단어만 — 썩은 단어는 되살리기 전에는 학습에 못 낸다.
+  // 개수(단계 칸 · '선택 N개')와 시작 버튼이 고르는 풀이 같은 목록이어야 "선택 28개"가 거짓말을 하지 않는다.
+  const allWords = useMemo(() => sheetWords.filter(isWordStudiable), [sheetWords]);
+  const rottenCount = sheetWords.length - allWords.length;
 
   // 작물 단계별 단어 개수 (5개 키 — 판정은 vocaCrop.wordMemoryStage 한 곳)
   const stageCounts = useMemo(() => memoryStageCounts(allWords), [allWords]);
@@ -194,6 +199,12 @@ export const StudySetupNewBottomSheet = ({ onCancel, vocabularySheetId, maxVocab
           <p className="text-[12px] leading-[1.5] text-layout-gray-300 break-keep">
             농장 작물 단계로 골라요 — 미학습 · 씨앗 · 새싹 · 이파리 · 당근(황금 포함)
           </p>
+          {/* 썩은 단어를 빼고 나니 고를 게 없을 때만 이유를 말한다 — 평소에는 한 줄도 늘리지 않는다 */}
+          {rottenCount > 0 && currentMemoryStateCount < MIN_TEST_VOCABULARY_COUNT && (
+            <p className="text-[12px] leading-[1.5] text-secondary-yellow-600 break-keep">
+              썩은 단어는 되살린 뒤에 학습할 수 있어요
+            </p>
+          )}
         </div>
 
         {/* 학습 개수 */}

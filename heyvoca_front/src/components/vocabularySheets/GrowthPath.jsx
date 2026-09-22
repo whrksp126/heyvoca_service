@@ -16,6 +16,9 @@ import { CROP_LABEL, HEALTH_STATES } from '../../utils/crop';
  * @param {number} props.gain     이번 복습에 맞히면 늘어날 만큼 0~100
  * @param {boolean} props.planted 심었는지 — false 면 전부 비어 있다
  * @param {boolean} props.rotten  썩은 작물 — 현재 단계를 회색조로 그린다
+ * @param {string}  props.health  현재 단계에 쓸 건강 상태(FRESH/THIRSTY/WILTED/CRITICAL/ROTTEN).
+ *   **현재 칸에만** 반영한다 — 지나온 칸은 그때의 건강을 알 수 없고, 남은 칸은 아직 오지 않았다.
+ *   예전에는 썩음만 반영해서, 시든 단어를 열면 이 줄만 멀쩡한 작물을 그리고 있었다(QA 2차).
  */
 const STAGES = ['seed', 'sprout', 'leaf', 'carrot'];
 
@@ -26,7 +29,7 @@ const STAGES = ['seed', 'sprout', 'leaf', 'carrot'];
  *   "언젠가 반드시 거쳐야 할 단계"로 읽히는데, 황금은 조건을 만족해야 오는 것이지
  *   순서대로 오는 단계가 아니다.
  */
-const GrowthPath = ({ cur = 0, pct = 0, gain = 0, planted = true, rotten = false, golden = false }) => {
+const GrowthPath = ({ cur = 0, pct = 0, gain = 0, planted = true, rotten = false, golden = false, health }) => {
   "use memo";
 
   const stages = golden ? [...STAGES, 'golden'] : STAGES;
@@ -96,7 +99,7 @@ const GrowthPath = ({ cur = 0, pct = 0, gain = 0, planted = true, rotten = false
             <div className="flex flex-col items-center gap-[4px] shrink-0 w-[46px]">
               <CropImage
                 stage={stage}
-                health={rotten && isNow ? HEALTH_STATES.ROTTEN : HEALTH_STATES.FRESH}
+                health={isNow ? (rotten ? HEALTH_STATES.ROTTEN : (health || HEALTH_STATES.FRESH)) : HEALTH_STATES.FRESH}
                 solo={false}
                 size={46}
                 className={`

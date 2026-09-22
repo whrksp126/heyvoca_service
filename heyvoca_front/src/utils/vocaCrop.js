@@ -186,6 +186,27 @@ export const wordHealth = (word, now = new Date()) => {
 
 export const isRotten = (word, now) => wordHealth(word, now) === HEALTH_STATES.ROTTEN;
 
+/**
+ * 지금 학습에 낼 수 있는 단어인가 — **썩은 단어는 낼 수 없다.**
+ *
+ * 썩은 작물은 되살리기(삽·영양제)로 먼저 손을 봐야 하는 상태라, 학습 문제로 섞여 나오면
+ * 화면은 "되살려야 한다"고 말해 놓고 문제로는 그냥 물을 주게 된다. 백엔드
+ * `/study/recommend` 는 이미 빼고 주지만, 클라이언트가 직접 단어를 고르는 자리
+ * (학습 설정 시트의 로컬 선별, 설정 시트의 단계별 개수)는 아무 곳도 이 값을 보지 않아
+ * 썩은 단어가 그대로 출제됐다(QA 2차).
+ *
+ * 판정은 서버가 준 `farm.studiable` 이 정본이다. 구버전 응답처럼 그 필드가 아예 없을 때만
+ * 화면이 다시 계산한 부패 여부로 대신한다.
+ */
+export const isWordStudiable = (word) => {
+  const f = serverFarm(word);
+  if (f && f.studiable !== undefined && f.studiable !== null) return f.studiable !== false;
+  return !isRotten(word);
+};
+
+/** 학습·테스트가 고를 수 있는 단어만 남긴다 — 개수와 실제 출제가 같은 말을 하게 하는 단일 소스 */
+export const studiableWords = (words) => (words || []).filter(isWordStudiable);
+
 /* ── 우측 상태 문구 ────────────────────────────────────────
    시안 §5 — 기본 #9A9A9A · 오늘 #FF70D4 · 지남 #FB6514 · 썩음은 회색 칩.
    "안 배움"도 날짜 자리에 글자로 쓴다 (— 를 넣으면 빈칸처럼 보인다). */

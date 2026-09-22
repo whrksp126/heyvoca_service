@@ -7,6 +7,7 @@ import { ConfirmNewBottomSheet } from '../components/newBottomSheet/ConfirmNewBo
 import { vibrate } from '../utils/osFunction';
 import { primeSfx } from '../utils/audio';
 import { QUICK_QUESTION_TYPES } from '../plugins/questionTypes';
+import { isWordStudiable } from '../utils/vocaCrop';
 
 /*
   AI 추천 학습(quick) 시작 — **한 자리에 모아 둔 진입 로직.**
@@ -58,7 +59,11 @@ export const useQuickReview = () => {
     // await 뒤로 밀리면 iOS WKWebView 에서 AudioContext 가 열리지 않아 소리가 늦게 난다.
     primeSfx();
 
-    const allWords = vocabularySheets.flatMap((sheet) => sheet.words || []);
+    // 썩은 단어는 백엔드 추천에서도 빠지므로 여기서도 빼고 센다 —
+    // 그러지 않으면 "14문제" 로 들어갔다가 실제로는 몇 문제만 나온다.
+    const allWords = vocabularySheets
+      .flatMap((sheet) => sheet.words || [])
+      .filter(isWordStudiable);
     if (allWords.length < MIN_WORDS) {
       const toBookStore = await pushAwaitNewBottomSheet(
         ConfirmNewBottomSheet,

@@ -7,7 +7,7 @@ import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
 import { useVocabulary } from '../../context/VocabularyContext';
 import { MIN_TEST_VOCABULARY_COUNT } from '../../utils/common';
-import { MEMORY_STAGE_ORDER, wordMemoryStage, memoryStageCounts } from '../../utils/vocaCrop';
+import { MEMORY_STAGE_ORDER, wordMemoryStage, memoryStageCounts, isWordStudiable } from '../../utils/vocaCrop';
 import { vibrate } from '../../utils/osFunction';
 import SetupTile from '../common/SetupTile';
 import MemoryStageSelector from '../common/MemoryStageSelector';
@@ -68,7 +68,7 @@ export const TestSetupNewBottomSheet = ({ onCancel, onSet, maxVocabularyCount, v
   const { recentStudy, updateRecentStudy, vocabularySheets } = useVocabulary();
 
   // 단어 목록 (다른 useMemo에서 재사용)
-  const allWords = useMemo(() => {
+  const sheetWords = useMemo(() => {
     if (vocabularySheetId === "all") {
       return vocabularySheets.flatMap(sheet => sheet.words || []);
     } else if (Array.isArray(vocabularySheetId)) {
@@ -81,6 +81,11 @@ export const TestSetupNewBottomSheet = ({ onCancel, onSet, maxVocabularyCount, v
       return vocabularySheet ? (vocabularySheet.words || []) : [];
     }
   }, [vocabularySheets, vocabularySheetId]);
+
+  // 출제 가능한 단어만 — 썩은 단어는 되살리기 전에는 백엔드도 내주지 않는다.
+  // 단계 칸의 개수·'선택 N개'·빈칸 채우기 후보를 전부 이 목록으로 센다.
+  const allWords = useMemo(() => sheetWords.filter(isWordStudiable), [sheetWords]);
+  const rottenCount = sheetWords.length - allWords.length;
 
   // 선택 축 → questionType id 배열. 듣기 변형은 일반 유형을 대체하지 않고 **추가**된다.
   const questionTypes = useMemo(() => {
@@ -159,7 +164,11 @@ export const TestSetupNewBottomSheet = ({ onCancel, onSet, maxVocabularyCount, v
     const testTypeData = testType || data.testType;
 
     if (currentMemoryStateCount < MIN_TEST_VOCABULARY_COUNT) {
-      setErrorMessage('학습을 위해 4개 이상의 단어가 필요해요');
+      setErrorMessage(
+        rottenCount > 0
+          ? '썩은 단어는 되살린 뒤에 학습할 수 있어요'
+          : '학습을 위해 4개 이상의 단어가 필요해요'
+      );
       return;
     }
 
@@ -472,7 +481,7 @@ export const TestSetupNewBottomSheet = ({ onCancel, onSet, maxVocabularyCount, v
         {/* 4. 문제 유형 — 유형 묶음(다중) */}
         <Section
           title="문제 유형"
-          note={isFillSelected && fillCandidateCount < allWords.length ? `빈칸 채우기: 이 단어장 ${allWords.length}개 중 ${fillCandidateCount}개 출제 가능` : undefined}
+          note={isFillSelected && fillCandidateCount < allWords.length ? `빈칸 채우기: 학습할 수 있는 ${allWords.length}개 중 ${fillCandidateCount}개 출제 가능` : undefined}
         >
           <div className="flex gap-[8px]">
             {[

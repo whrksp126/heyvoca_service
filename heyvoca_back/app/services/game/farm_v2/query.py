@@ -108,6 +108,80 @@ def count_rotten(user_id: UUID, now: dt.datetime) -> int:
     )
 
 
+# ──────────────────────────────────────────────────────────────
+# 학습 진입 필터 — 썩은 단어 제외 (기획 6.1)
+# ──────────────────────────────────────────────────────────────
+
+def rotten_user_voca_ids(user_id, candidate_ids, now: Optional[dt.datetime] = None) -> set:
+    """후보 중 **썩어서 학습할 수 없는** user_voca_id 집합.
+
+    V1 의 `services/game/farm.dead_user_voca_ids`(`life == 'DEAD'`)를 대체한다.
+    V2 는 부패를 `health_state == 'ROTTEN'` 으로 적고 `life` 는 'ALIVE' 인 채로 두기
+    때문에, 구 필터는 실제로 **아무것도 걸러내지 못했다** (2026-09 QA / prod 실측:
+    health_state ROTTEN 21건인데 life DEAD 0건 → 썩은 단어가 그대로 출제됐다).
+
+    저장값(health_state)만 보지 않는 이유 — 건강은 '조회 시 계산'이 원칙이다(기획 6.3).
+    마지막 쓰기 이후 시간만 흘러 썩은 단어는 저장값이 CRITICAL 등에 멈춰 있고,
+    화면(`/vocaIndexs` 의 `_farm_state`, `/farm/plants` 의 `_plant_item`)은
+    `health.compute_health` 로 계산한 값을 보여준다. 그래서 여기서도 **같은 입력**
+    (FSRS 예정일·간격, visual_stage, protection_days, 황금 여부, 저장된 부패 여부)으로
+    `compute_health` 를 그대로 호출한다 — 그래야 "썩었다고 보이는데 문제로 나온다"가
+    사라진다.
+
+    자연히 따라오는 규칙들(모두 compute_health 의 정의 그대로다):
+      - 황금(GOLDEN)은 절대 썩지 않는다 (10.3).
+      - 보유 씨앗(UNPLANTED_SEED)·FSRS 예정일이 없는 단어는 썩지 않는다 (6.4).
+      - 게임 행 자체가 없는 단어(한 번도 학습 안 함)도 보유 씨앗과 같다.
+
+    쿼리는 1회 + 순수 계산이다(N+1 금지). 상태를 쓰지 않는다 — 부패 확정 쓰기는
+    watering/restore 경로의 몫이고, 학습 진입이 쓰기 잠금을 잡으면 안 된다.
+    """
+    if not candidate_ids:
+        return set()
+    now = now or dt.datetime.utcnow()
+    if isinstance(user_id, str):
+        user_id = UUID(user_id)
+
+    rows = (
+        db.session.query(UserVoca.id, UserVoca.data, UserVocaGame.visual_stage,
+                         UserVocaGame.health_state, UserVocaGame.protection_days)
+        .select_from(UserVoca)
+        .outerjoin(UserVocaGame, UserVocaGame.user_voca_id == UserVoca.id)
+        .filter(UserVoca.user_id == user_id, UserVoca.id.in_(list(candidate_ids)))
+        .all()
+    )
+    return rotten_ids_from_rows(rows, now)
+
+
+def rotten_ids_from_rows(rows, now: dt.datetime) -> set:
+    """`rotten_user_voca_ids` 의 순수 계산부 — DB 없이 테스트할 수 있게 분리했다.
+
+    rows: (user_voca_id, user_voca.data, visual_stage, health_state, protection_days) 튜플.
+          게임 행이 없는 단어는 뒤 세 값이 None 으로 들어온다(LEFT JOIN).
+    """
+    from app.services.fsrs.state import (parse_user_voca_data, get_fsrs_state,
+                                         is_v1, migrate_v1_to_v2)
+
+    rotten = set()
+    for uv_id, raw_data, visual_stage, health_state, protection_days in rows:
+        stage = visual_stage or VisualStage.UNPLANTED_SEED
+        payload = parse_user_voca_data(raw_data)
+        if is_v1(payload):
+            payload = migrate_v1_to_v2(payload)
+        fsrs_state = get_fsrs_state(payload) or {}
+
+        h = health_calc.compute_health(
+            growth.parse_fsrs_due(fsrs_state), growth._stability(fsrs_state), now,
+            visual_stage=stage,
+            protection_days=protection_days or 0,
+            is_golden=(stage == VisualStage.GOLDEN),
+            already_rotten=(health_state == HealthState.ROTTEN),
+        )
+        if h['state'] == HealthState.ROTTEN:
+            rotten.add(uv_id)
+    return rotten
+
+
 def refresh_health(user_id: UUID, now: dt.datetime) -> None:
     """저장된 건강 상태를 쓰기 경로에 맡겨 최신화한다 (있을 때만).
 
