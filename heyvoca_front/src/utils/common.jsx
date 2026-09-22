@@ -202,21 +202,6 @@ let currentRequestId = 0;
 let currentAudioResolve = null; // 현재 재생 중인 오디오의 Promise resolve
 let currentCleanup = null; // 현재 등록된 ended/error 리스너 제거 핸들
 
-// 외부(Web Audio 등 sharedAudio 를 쓰지 않는) 재생기의 정지 훅.
-// "한 번에 하나만 소리 난다" 규칙을 지키기 위해 getTextSound/stopCurrentSound 가 새 재생을
-// 시작하거나 정지할 때 함께 호출한다. blankTts.playWithMutedSpan 이 자신을 여기 등록한다.
-let externalStop = null;
-export const registerExternalSound = (stop) => {
-  externalStop = stop;
-  return () => { if (externalStop === stop) externalStop = null; };
-};
-const stopExternalSound = () => {
-  if (!externalStop) return;
-  const stop = externalStop;
-  externalStop = null;
-  try { stop(); } catch { /* 외부 재생기 정지 실패는 무시 */ }
-};
-
 // 첫 user gesture에서 sharedAudio를 unlock하기 위한 무음 클립.
 // 캐시 미스(uncached) 단어는 resolveTtsUrl await 이후에 play()가 호출되는데, 그 사이
 // gesture activation이 만료되어 "첫 클릭 무음, 둘째 클릭부터 재생" 버그가 있었다.
@@ -389,7 +374,6 @@ export const getTextSound = async (text, lang, onMeta) => {
     currentAudioResolve();
     currentAudioResolve = null;
   }
-  stopExternalSound();
 
   // 새로운 요청 ID 생성 (이전 요청과 구분하기 위해)
   const requestId = ++currentRequestId;
@@ -480,7 +464,6 @@ export const stopCurrentSound = () => {
     currentAudioResolve();
     currentAudioResolve = null;
   }
-  stopExternalSound();
   currentRequestId++;
 };
 
