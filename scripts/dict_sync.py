@@ -20,7 +20,7 @@ db/dict/dict_pointer.json의 sha256과 heyvoca_dict.dict_meta의 현재 해시�
 환경변수:
   DATABASE_URL_DICT      : 사전 DB connection string
   MINIO_ENDPOINT, MINIO_BUCKET, MINIO_DICT_RO_KEY, MINIO_DICT_RO_SECRET
-  APP_ENV                : local/dev/stg/prod
+  APP_ENV                : local/dev/prod
   DICT_AUTO_RESET        : true/false (기본 true)
   DICT_AUTO_RESET_ALLOW_PROD : true/false (기본 false, prod에서만 의미)
 """
@@ -368,7 +368,7 @@ def main():
             except Exception as restore_err:
                 log('CRITICAL', f"백업 복원도 실패! 수동 개입 필요: {restore_err}")
         else:
-            # 로컬/dev/stg는 임시 schema만 정리
+            # 로컬/dev는 임시 schema만 정리
             try:
                 run_mysql(conn, f"DROP DATABASE IF EXISTS {TEMP_SCHEMA};")
             except Exception:

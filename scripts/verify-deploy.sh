@@ -2,14 +2,13 @@
 # verify-deploy.sh — 배포 직후 "정말 반영됐는가" 를 실호출로 확인한다.
 #
 # 규율: 재빌드·재시작만으로 완료 보고 금지. 여기서 통과해야 배포가 끝난 것이다.
-#   사용: bash heyvoca_service/scripts/verify-deploy.sh [prod|stg|dev]
+#   사용: bash heyvoca_service/scripts/verify-deploy.sh [prod|dev]
 set -uo pipefail
 ENV="${1:-prod}"
 case "${ENV}" in
   prod) BACK="https://heyvoca-back.ghmate.com";     FRONT="https://heyvoca-front.ghmate.com" ;;
-  stg)  BACK="https://stg-heyvoca-back.ghmate.com"; FRONT="https://stg-heyvoca-front.ghmate.com" ;;
   dev)  BACK="https://dev-heyvoca-back.ghmate.com"; FRONT="https://dev-heyvoca-front.ghmate.com" ;;
-  *) echo "사용법: verify-deploy.sh [prod|stg|dev]"; exit 1 ;;
+  *) echo "사용법: verify-deploy.sh [prod|dev]"; exit 1 ;;
 esac
 
 fails=0

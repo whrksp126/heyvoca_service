@@ -2,6 +2,9 @@
 
 heyvoca 영어 단어 학습 서비스 모노레포. Vite/React 웹 프론트, Flask 백엔드, Docker 인프라를 통합 관리.
 
+> **2026-09-22**: stg(staging) 환경 폐지. 공유 호스트(디스크 1개에 MySQL 컨테이너 10개가 떠 있음) 부하를
+> 줄이기 위해 dev/prod 2환경만 운영한다.
+
 ---
 
 ## 프로젝트 구조
@@ -16,9 +19,8 @@ heyvoca_service/
 ├── dummy_vocalist/       # 더미 단어 JSON 데이터 (30일×4카테고리)
 ├── docker-compose.local.yml
 ├── docker-compose.dev.yml
-├── docker-compose.stg.yml
 ├── docker-compose.yml    # prod
-├── deploy.sh             # 배포 자동화 (dev/stg/prod)
+├── deploy.sh             # 배포 자동화 (dev/prod)
 └── SETUP.md              # 팀원 셋업 가이드
 ```
 
@@ -81,13 +83,13 @@ src/
 
 ```
 VITE_BACKEND_URL=http://{IP}:5100   # 백엔드 API URL
-VITE_ENV=local|development|staging|production
+VITE_ENV=local|development|production
 VITE_DEBUG=true|false
 VITE_FIREBASE_*                      # Firebase 설정
 ```
 
 ### Vite 설정 포인트
-- HMR: local은 `ws://localhost:3100`, dev/stg/prod는 `wss://{도메인}:443`
+- HMR: local은 `ws://localhost:3100`, dev/prod는 `wss://{도메인}:443`
 - 내부 포트: `3000`, path alias: `@` → `./src`
 
 ---
@@ -147,10 +149,10 @@ heyvoca_back/
 │   └── utils/
 │       └── jwt_utils.py      # JWT 생성/검증
 ├── run.py                    # 진입점 (create_app, FLASK_RUN_PORT)
-├── config.py                 # LocalConfig / DevelopmentConfig / StagingConfig / ProductionConfig
+├── config.py                 # LocalConfig / DevelopmentConfig / ProductionConfig
 ├── requirements.txt
-├── Dockerfile.local / .dev / .stg / Dockerfile
-└── .env.local / .env.dev / .env.stg / .env
+├── Dockerfile.local / .dev / Dockerfile
+└── .env.local / .env.dev / .env
 ```
 
 ### 주요 API 엔드포인트
@@ -194,7 +196,7 @@ heyvoca_back/
 
 ```
 FLASK_ENV=development|local|production
-FLASK_CONFIG=local|development|staging|production
+FLASK_CONFIG=local|development|production  # 레거시 값 staging은 ProductionConfig로 fallback(2026-09-22 stg 폐지)
 FLASK_RUN_PORT=5003          # run.py에서 읽음 (gunicorn은 0.0.0.0:5000)
 DATABASE_URL=mysql+pymysql://voca:voca!@34@mysql:3306/heyvoca
 FRONT_END_URL=http://{IP}:3100    # CORS origin
@@ -266,17 +268,17 @@ docker compose -f docker-compose.local.yml down
 
 ### Docker 이미지 이름
 
-| 서비스 | dev | stg | prod |
-|--------|-----|-----|------|
-| front | whrksp126/heyvoca_front:dev | whrksp126/heyvoca_front:stg | whrksp126/heyvoca_front:prod |
-| back  | whrksp126/heyvoca_back:dev  | whrksp126/heyvoca_back:stg  | whrksp126/heyvoca_back:prod  |
+| 서비스 | dev | prod |
+|--------|-----|------|
+| front | whrksp126/heyvoca_front:dev | whrksp126/heyvoca_front:prod |
+| back  | whrksp126/heyvoca_back:dev  | whrksp126/heyvoca_back:prod  |
 
 ### 환경별 front Dockerfile 차이
 
 | 환경 | 방식 | 베이스 이미지 |
 |------|------|------------|
 | local / dev | Vite dev server (node:20-alpine) | 소스 볼륨 마운트 |
-| stg / prod | 멀티스테이지 빌드 → nginx:1.27-alpine | 정적 파일 서빙 |
+| prod | 멀티스테이지 빌드 → nginx:1.27-alpine | 정적 파일 서빙 |
 
 ---
 
@@ -324,13 +326,12 @@ docker exec -it heyvoca_back_local bash -c "flask db downgrade" # 롤백
 
 ## 서버 배포
 
-### 배포 방식 (dev/stg/prod 동일)
+### 배포 방식 (dev/prod 동일)
 
-3환경 모두 **서버에서 git pull → 서버에서 빌드** 방식이다 (Docker Hub 미사용). 환경별 차이는 compose 파일/Dockerfile에만 있음(dev=Vite dev server, stg/prod=멀티스테이지 빌드→nginx 정적 서빙).
+2환경 모두 **서버에서 git pull → 서버에서 빌드** 방식이다 (Docker Hub 미사용). 환경별 차이는 compose 파일/Dockerfile에만 있음(dev=Vite dev server, prod=멀티스테이지 빌드→nginx 정적 서빙).
 
 ```bash
 ./deploy.sh dev    # docker-compose.dev.yml  / heyvoca_dev
-./deploy.sh stg    # docker-compose.stg.yml  / heyvoca_stg
 ./deploy.sh prod   # docker-compose.yml      / heyvoca_prod
 ```
 
@@ -343,16 +344,15 @@ ssh 서버 "cd /srv/projects/heyvoca && git pull && \
 ```
 
 - 서버는 `main` 브랜치 추적 → 배포 전 `git push origin local:main` 필수.
-- `.env*`는 git 제외라 deploy.sh가 전송하지 않음 → 서버 `.env`(.env.dev/.env.stg/.env) 변경은 **수동 scp + `--force-recreate`** 필요.
+- `.env*`는 git 제외라 deploy.sh가 전송하지 않음 → 서버 `.env`(.env.dev/.env) 변경은 **수동 scp + `--force-recreate`** 필요.
 
 ---
 
 ### 서버 수동 실행 (프로젝트명 `-p` 필수)
 
 ```bash
-# dev/stg를 같은 디렉토리에서 실행 시 컨테이너 충돌 방지
+# dev/prod를 같은 디렉토리에서 실행 시 컨테이너 충돌 방지
 docker compose -p heyvoca_dev  -f docker-compose.dev.yml  up -d
-docker compose -p heyvoca_stg  -f docker-compose.stg.yml  up -d
 docker compose -p heyvoca_prod -f docker-compose.yml       up -d
 ```
 
@@ -361,7 +361,6 @@ docker compose -p heyvoca_prod -f docker-compose.yml       up -d
 | 환경 | 프론트 | 백엔드 |
 |------|--------|--------|
 | dev  | https://dev-heyvoca-front.ghmate.com | https://dev-heyvoca-back.ghmate.com |
-| stg  | https://stg-heyvoca-front.ghmate.com | https://stg-heyvoca-back.ghmate.com |
 | prod | https://heyvoca-front.ghmate.com | https://heyvoca-back.ghmate.com |
 
 ### 서버 접속

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # 배포 스크립트
-# 사용법: ./deploy.sh [dev|stg|prod]
+# 사용법: ./deploy.sh [dev|prod]
 #
 # 배포 방식: 서버에서 git pull → docker compose up --build (Docker Hub 불필요)
 # local 환경은 별도: docker compose -f docker-compose.local.yml up --build -d
@@ -16,7 +16,7 @@ SSH_PORT="222"
 REMOTE_DIR="/srv/projects/heyvoca"
 
 if [[ -z "$ENV" ]]; then
-    echo "사용법: ./deploy.sh [dev|stg|prod]"
+    echo "사용법: ./deploy.sh [dev|prod]"
     exit 1
 fi
 
@@ -25,16 +25,12 @@ case $ENV in
         COMPOSE_FILE="docker-compose.dev.yml"
         PROJECT_NAME="heyvoca_dev"
         ;;
-    stg)
-        COMPOSE_FILE="docker-compose.stg.yml"
-        PROJECT_NAME="heyvoca_stg"
-        ;;
     prod)
         COMPOSE_FILE="docker-compose.yml"
         PROJECT_NAME="heyvoca_prod"
         ;;
     *)
-        echo "잘못된 환경입니다: $ENV (dev, stg, prod 중 하나를 입력하세요)"
+        echo "잘못된 환경입니다: $ENV (dev, prod 중 하나를 입력하세요)"
         exit 1
         ;;
 esac

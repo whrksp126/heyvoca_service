@@ -72,7 +72,7 @@ class Config:
     TTS_DAILY_GEN_CAP = int(os.getenv('TTS_DAILY_GEN_CAP', 1000))  # user별 일일 생성 상한(0=무제한)
 
     # 사전 자동 갱신 토글
-    APP_ENV = os.getenv('APP_ENV', 'local')  # local/dev/stg/prod
+    APP_ENV = os.getenv('APP_ENV', 'local')  # local/dev/prod
     # 사전 교체는 admin 수동 동기화로만 수행한다.
     DICT_AUTO_RESET = os.getenv('DICT_AUTO_RESET', 'false').lower() == 'true'
     DICT_AUTO_RESET_ALLOW_PROD = os.getenv('DICT_AUTO_RESET_ALLOW_PROD', 'false').lower() == 'true'
@@ -116,11 +116,6 @@ class LocalConfig(Config):
 class DevelopmentConfig(Config):
     """Development configuration"""
     DEBUG = True
-    TESTING = False
-
-class StagingConfig(Config):
-    """Staging configuration"""
-    DEBUG = False
     TESTING = False
 
 class ProductionConfig(Config):

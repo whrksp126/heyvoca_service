@@ -241,7 +241,7 @@ def main():
         log(f"  git commit -m 'dict: {args.message or version}'")
         log("  git push")
         log("")
-        log("머지 후 다른 팀원/dev/stg/prod는 docker compose up --build로 자동 동기화.")
+        log("머지 후 다른 팀원/dev/prod는 docker compose up --build로 자동 동기화.")
         log("=" * 60)
 
     finally:

@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - dev        # Development 환경
-      - staging    # Staging 환경
       - main       # Production 환경
 
 jobs:
@@ -53,10 +52,6 @@ jobs:
           sudo systemctl stop heyvoca_back
           sudo docker pull whrksp126/heyvoca_back:main
           sudo systemctl start heyvoca_back
-        elif [ "$BRANCH_NAME" == "staging" ]; then
-          sudo systemctl stop heyvoca_back_stg
-          sudo docker pull whrksp126/heyvoca_back:staging
-          sudo systemctl start heyvoca_back_stg
         elif [ "$BRANCH_NAME" == "dev" ]; then
           sudo systemctl stop heyvoca_back_dev
           sudo docker pull whrksp126/heyvoca_back:dev

@@ -1,6 +1,6 @@
 import os
 from flask import Flask, request, g
-from config import DevelopmentConfig, StagingConfig, ProductionConfig, LocalConfig, FRONT_END_URL
+from config import DevelopmentConfig, ProductionConfig, LocalConfig, FRONT_END_URL
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from sqlalchemy.ext.declarative import declarative_base
@@ -95,7 +95,6 @@ def create_app():
   # CORS origins 리스트 구성
   cors_origins = [
       "https://heyvoca-front.ghmate.com",
-      "https://stg-heyvoca-front.ghmate.com",
       "https://dev-heyvoca-front.ghmate.com",
       "https://heyvoca.ghmate.com",
       "http://localhost:3000",
@@ -121,10 +120,13 @@ def create_app():
   config_class = os.environ.get('FLASK_CONFIG') or 'development'
   if config_class == 'production':
     app.config.from_object(ProductionConfig)
-  elif config_class == 'staging':
-    app.config.from_object(StagingConfig)
   elif config_class == 'local':
     app.config.from_object(LocalConfig)
+  elif config_class == 'staging':
+    # stg 환경 폐지(2026-09-22). StagingConfig는 제거됐고, 어딘가 남은 레거시
+    # FLASK_CONFIG=staging 값이 기동을 막지 않도록 안전한 쪽(운영과 동일한 보수
+    # 설정)으로 fallback한다. DevelopmentConfig(DEBUG=True)로 새면 더 위험하다.
+    app.config.from_object(ProductionConfig)
   else:
     app.config.from_object(DevelopmentConfig)
 

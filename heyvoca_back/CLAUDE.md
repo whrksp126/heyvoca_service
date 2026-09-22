@@ -23,7 +23,6 @@ docker compose -f docker-compose.local.yml down
 ### 서버 배포 (heyvoca_service/ 루트에서)
 ```bash
 ./deploy.sh dev    # dev 배포
-./deploy.sh stg    # stg 배포
 ./deploy.sh prod   # prod 배포
 ```
 
@@ -45,7 +44,7 @@ Flask 앱 팩토리 패턴. `run.py` → `app/__init__.py`의 `create_app()`으�
 - **DB**: SQLAlchemy + MySQL (`app/models/`)
 - **Cache**: Redis (`REDIS_HOST`, `REDIS_PORT`)
 - **Scheduler**: APScheduler (백그라운드 작업)
-- **Config**: `config.py` – `FLASK_CONFIG` 환경변수로 local/development/staging/production 전환
+- **Config**: `config.py` – `FLASK_CONFIG` 환경변수로 local/development/production 전환 (레거시 `staging` 값이 남아있어도 ProductionConfig로 fallback되어 기동은 막히지 않음)
 - **TTS**: `app/services/tts/` — provider 추상화(영어=ElevenLabs, 한국어=Edge TTS, 레거시=gTTS) + objectstore(MinIO) 캐싱. 흐름: `/tts/resolve` → 정규화 → object key=`tts/{provider}/{model}/{voice}/{lang}/sha256(text)` → Redis 존재플래그/MinIO list 조회 → 있으면 presigned URL, 없으면 로그인+rate limit+사전검증 후 생성·업로드. 캐시 객체에 원문/언어/엔진 메타데이터(`x-amz-meta`) 저장. 언어별 엔진은 `get_provider_for_language()`(`TTS_PROVIDER_{LANG}`>`TTS_PROVIDER`>기본 en=elevenlabs/ko=edge).
 - **ObjectStore**: MinIO `heyvoca` 버킷, 폴더로 구분(`dict/` 사전 dump, `tts/` 음성). 기존 `MINIO_DICT_RW_KEY`로 put/presigned, 조회는 list 기반(HEAD가 간헐 stale 403이라 stat 미사용).
 
@@ -62,11 +61,10 @@ Flask 앱 팩토리 패턴. `run.py` → `app/__init__.py`의 `create_app()`으�
 |-------|---------------------------|------|---------------------------------------|
 | local | docker-compose.local.yml  | 5003 | http://{YOUR_LOCAL_IP}:5003           |
 | dev   | docker-compose.dev.yml    | 5000 | https://dev-heyvoca-back.ghmate.com   |
-| stg   | docker-compose.stg.yml    | 5000 | https://stg-heyvoca-back.ghmate.com   |
 | prod  | docker-compose.yml        | 5000 | https://heyvoca-back.ghmate.com       |
 
 ## Key Environment Variables
-- `FLASK_CONFIG` – `local` | `development` | `staging` | `production`
+- `FLASK_CONFIG` – `local` | `development` | `production`
 - `REDIS_HOST`, `REDIS_PORT`
 - `APPLE_SHARED_SECRET`, `APPLE_APP_STORE_CONNECT_KEY_ID`, `APPLE_APP_STORE_CONNECT_ISSUER_ID`, `APPLE_APP_STORE_CONNECT_PRIVATE_KEY`
 - `GOOGLE_PLAY_SERVICE_ACCOUNT_KEY`

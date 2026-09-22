@@ -4,7 +4,6 @@
 # 사용법:
 #   bash scripts/migrate_to_split.sh local
 #   bash scripts/migrate_to_split.sh dev
-#   bash scripts/migrate_to_split.sh stg
 #   bash scripts/migrate_to_split.sh prod
 #
 # 안전장치:
@@ -21,9 +20,8 @@ ENV="${1:-local}"
 case "$ENV" in
     local) MYSQL_CONTAINER="heyvoca_mysql_local"; BACK_CONTAINER="heyvoca_back_local"; ROOT_PW="rootpassword" ;;
     dev)   MYSQL_CONTAINER="heyvoca_mysql_dev";   BACK_CONTAINER="heyvoca_back_dev";   ROOT_PW="${MYSQL_ROOT_PASSWORD:-}" ;;
-    stg)   MYSQL_CONTAINER="heyvoca_mysql_stg";   BACK_CONTAINER="heyvoca_back_stg";   ROOT_PW="${MYSQL_ROOT_PASSWORD:-}" ;;
     prod)  MYSQL_CONTAINER="heyvoca_mysql_prod";  BACK_CONTAINER="heyvoca_back_prod";  ROOT_PW="${MYSQL_ROOT_PASSWORD:-}" ;;
-    *)     echo "Usage: $0 {local|dev|stg|prod}"; exit 1 ;;
+    *)     echo "Usage: $0 {local|dev|prod}"; exit 1 ;;
 esac
 
 if [ -z "$ROOT_PW" ]; then

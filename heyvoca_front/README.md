@@ -54,37 +54,6 @@ sudo systemctl restart heyvoca_front_dev
 
 ---
 
-### 스테이징(stg) 개발 환경
-
-## 컨테이너 중지(필요시)
-docker stop heyvoca_front_stg
-
-## 컨테이너 삭제(필요시)
-docker rm heyvoca_front_stg
-
-## 이미지 삭제(필요시)
-docker rmi whrksp126/heyvoca_front:stg
-
-## 데브 환경 실행
-docker compose -f docker-compose.stg.yml up --build
-
-## 데브 환경 실행 (백그라운드)
-docker compose -f docker-compose.stg.yml up --build -d
-
-## 데브 환경 실행 컨테이너 중지
-docker compose -f docker-compose.stg.yml down
-
-## stg 환경의 이미지 확인
-docker images | grep heyvoca_front
-
-## 도커 허브에 local 태그로 푸쉬
-docker push whrksp126/heyvoca_front:stg
-
-## 서버 적용
-sudo systemctl restart heyvoca_front_stg
-
----
-
 ### 프로덕션(prod) 환경
 
 ## 컨테이너 중지(필요시)
@@ -339,26 +308,9 @@ docker logs -f heyvoca_front_dev
 
 ✅ 개발 서버 (http://dev-heyvoca-front.ghmate.com)에서 정상 동작 확인!
 
-✅ 3️⃣ 스테이징 (stg) 서버 배포
-운영과 동일한 방식으로 배포 (Nginx)
-docker-compose.stg.yml 사용
-3001 포트로 실행
-# stg 환경 빌드 및 실행
-docker compose -f docker-compose.stg.yml up --build -d
+> stg(staging) 환경은 2026-09-22 폐지됨 (공유 호스트 부하 절감을 위해 dev/prod 2환경만 운영).
 
-# stg 환경의 이미지 확인
-docker images | grep heyvoca_front
-
-# stg 태그로 Docker Hub에 푸쉬
-docker push whrksp126/heyvoca_front:staging
-
-# stg 서버에서 최신 이미지 다운로드 및 실행
-docker pull whrksp126/heyvoca_front:staging
-docker run -d --name heyvoca_front_stg -p 3001:80 whrksp126/heyvoca_front:staging
-sudo systemctl restart heyvoca_front_stg
-✅ 스테이징 서버 (https://stg-heyvoca-front.ghmate.com)에서 정상 동작 확인!
-
-✅ 4️⃣ 운영 (main) 서버 배포
+✅ 3️⃣ 운영 (main) 서버 배포
 실제 서비스가 운영되는 프로덕션 서버 (heyvoca.ghmate.com)
 docker-compose.yml 사용
 80 포트로 실행

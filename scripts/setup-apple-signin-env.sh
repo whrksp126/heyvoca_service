@@ -46,7 +46,7 @@ REMOTE_ROOT="/srv/projects/heyvoca"
 REMOTE_DIR="$REMOTE_ROOT/heyvoca_back"
 
 usage() {
-  echo "사용법: bash scripts/setup-apple-signin-env.sh <dev|stg|prod> <AuthKey_XXX.p8 경로> [KEY_ID]" >&2
+  echo "사용법: bash scripts/setup-apple-signin-env.sh <dev|prod> <AuthKey_XXX.p8 경로> [KEY_ID]" >&2
   exit 1
 }
 
@@ -55,14 +55,13 @@ usage() {
 case "$ENV_NAME" in
   prod) ENV_FILE=".env";      COMPOSE="docker-compose.yml";      PROJECT="heyvoca_prod" ;;
   dev)  ENV_FILE=".env.dev";  COMPOSE="docker-compose.dev.yml";  PROJECT="heyvoca_dev"  ;;
-  stg)  ENV_FILE=".env.stg";  COMPOSE="docker-compose.stg.yml";  PROJECT="heyvoca_stg"  ;;
   *)    usage ;;
 esac
 
 if [ "$ENV_NAME" != "prod" ]; then
   cat >&2 <<'WARN'
-!!! 주의: dev/stg 도 prod 와 같은 client_id(com.ghmate.heyvoca)를 쓴다.
-    Apple 은 환경을 구분하지 않으므로, dev/stg 에서 탈퇴 테스트를 하면
+!!! 주의: dev 도 prod 와 같은 client_id(com.ghmate.heyvoca)를 쓴다.
+    Apple 은 환경을 구분하지 않으므로, dev 에서 탈퇴 테스트를 하면
     그 Apple 계정과 "앱" 자체의 연동이 실제로 해제된다(prod 포함).
     본인/테스트 전용 Apple 계정으로만 탈퇴를 시험할 것.
 

@@ -3,7 +3,7 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import path from 'path'
 
-// VITE_ENV: local | development | staging | production
+// VITE_ENV: local | development | production
 // NODE_ENV는 Vite가 dev 실행 시 'development'로 덮어쓰므로 VITE_ENV 사용
 const NODE_ENV = process.env.VITE_ENV || 'local'
 
@@ -11,14 +11,12 @@ const NODE_ENV = process.env.VITE_ENV || 'local'
 const domainMap = {
   local: 'localhost',
   development: 'dev-heyvoca-front.ghmate.com',
-  staging: 'stg-heyvoca-front.ghmate.com',
   production: 'heyvoca-front.ghmate.com',
 }
 
 // 허용 호스트 (프록시/쿠키/WS 보안 관련)
 const allowedHosts = ['localhost']
 if (NODE_ENV === 'development') allowedHosts.push(domainMap.development)
-if (NODE_ENV === 'staging') allowedHosts.push(domainMap.staging)
 if (NODE_ENV === 'production') allowedHosts.push(domainMap.production)
 
 // HMR: 로컬은 nginx 외부 포트(3100)로 WS, 그 외는 wss+도메인:443

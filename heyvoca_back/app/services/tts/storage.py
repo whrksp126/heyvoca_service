@@ -2,6 +2,10 @@
 
 기존 dict_publish.py / dict_sync.py 패턴 재사용(minio==7.2.7).
 버킷은 MINIO_BUCKET(heyvoca), 쓰기/서명은 기존 dict RW 키 재사용.
+
+엔드포인트는 둘로 나뉜다(app/services/objectstore_endpoint.py):
+  - 객체 작업(exists/put/get): MINIO_INTERNAL_ENDPOINT가 있으면 그 주소(서버↔서버).
+  - presigned 서명: 항상 MINIO_ENDPOINT(공개) — URL을 요청하는 주체가 사용자 기기다.
 Flask app context 없이도 동작(prewarm 스크립트 공용) → os.getenv로 설정 로드.
 """
 import io
@@ -14,6 +18,7 @@ from urllib.parse import urlparse
 from minio import Minio
 from minio.error import S3Error
 
+from ..objectstore_endpoint import internal_endpoint, public_endpoint
 from .base import TTSConfigError
 
 logger = logging.getLogger(__name__)
@@ -33,7 +38,13 @@ class TTSStorage:
     """
 
     def __init__(self, role='rw', endpoint=None, bucket=None, access_key=None, secret_key=None):
-        endpoint = endpoint or os.getenv('MINIO_ENDPOINT', 'https://objectstore.ghmate.com')
+        # 서버 측 객체 작업(exists/put/get)은 내부 엔드포인트로 — 같은 호스트의 MinIO를
+        # 공개 도메인(Cloudflare)으로 왕복하지 않게 한다. MINIO_INTERNAL_ENDPOINT가
+        # 없으면 공개 엔드포인트와 같은 값이라 기존 동작 그대로.
+        # endpoint를 명시로 넘기면(테스트/스크립트) 서명까지 그 주소를 쓴다.
+        explicit_endpoint = endpoint is not None
+        endpoint = endpoint or internal_endpoint()
+        sign_endpoint = endpoint if explicit_endpoint else public_endpoint()
         self.bucket = bucket or os.getenv('MINIO_BUCKET', 'heyvoca')
         if access_key and secret_key:
             pass
@@ -48,24 +59,43 @@ class TTSStorage:
             need = 'RW(MINIO_DICT_RW_KEY/SECRET)' if role == 'rw' else 'RO 또는 RW'
             raise TTSConfigError(f'MinIO {need} 키 미설정.')
         parsed = urlparse(endpoint)
+        signed = urlparse(sign_endpoint)
         # 재생성(오프셋 리셋)에 필요한 접속 파라미터를 보관.
         self._endpoint_netloc = parsed.netloc
         self._secure = (parsed.scheme == 'https')
+        # presigned 서명 전용 접속 파라미터(항상 공개 엔드포인트).
+        self._sign_netloc = signed.netloc
+        self._sign_secure = (signed.scheme == 'https')
         self._access_key = access_key
         self._secret_key = secret_key
         self._region = os.getenv('MINIO_REGION', 'us-east-1')
         self._client = self._build_client()
+        self._sign_client = None   # 내부≠공개일 때만 따로 생성(lazy)
 
-    def _build_client(self) -> Minio:
+    def _build_client(self, netloc=None, secure=None) -> Minio:
         # region을 명시해 GetBucketLocation 호출을 생략(키 정책이 버킷 location 조회를
         # 막아도 object 작업이 동작하도록). objectstore(MinIO)는 region 값을 검증하지 않음.
         return Minio(
-            self._endpoint_netloc,
+            netloc if netloc is not None else self._endpoint_netloc,
             access_key=self._access_key,
             secret_key=self._secret_key,
-            secure=self._secure,
+            secure=self._secure if secure is None else secure,
             region=self._region,
         )
+
+    def _signing_client(self) -> Minio:
+        """presigned URL 서명 전용 클라이언트 — **반드시 공개 엔드포인트**.
+
+        presigned URL은 서명에 호스트가 들어가고, 그 URL을 실제로 요청하는 주체는
+        사용자 기기다. 내부 주소(http://minio:9000)로 서명하면 기기에서 접근 불가 →
+        내부/공개가 다를 때만 별도 클라이언트를 만들어 서명한다.
+        """
+        if (self._sign_netloc == self._endpoint_netloc
+                and self._sign_secure == self._secure):
+            return self._client
+        if self._sign_client is None:
+            self._sign_client = self._build_client(self._sign_netloc, self._sign_secure)
+        return self._sign_client
 
     def _with_skew_retry(self, fn):
         # RequestTimeTooSkewed는 싱글턴 클라이언트가 낡은 시각 오프셋을 캐시해 생기므로,
@@ -149,6 +179,17 @@ class TTSStorage:
             return None
 
     def presigned_get(self, key: str, ttl_seconds: int = 3600) -> str:
-        return self._with_skew_retry(lambda: self._client.presigned_get_object(
-            self.bucket, key, expires=timedelta(seconds=ttl_seconds)
-        ))
+        # 클라이언트에 그대로 전달되는 URL → 서명은 공개 엔드포인트로만.
+        def _do():
+            return self._signing_client().presigned_get_object(
+                self.bucket, key, expires=timedelta(seconds=ttl_seconds)
+            )
+        try:
+            return _do()
+        except S3Error as e:
+            if getattr(e, 'code', '') in _SKEW_CODES:
+                logger.warning('MinIO RequestTimeTooSkewed(서명) 감지 → 클라이언트 재생성 후 1회 재시도')
+                self._sign_client = None
+                self._client = self._build_client()
+                return _do()
+            raise

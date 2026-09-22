@@ -54,37 +54,6 @@ sudo systemctl restart heyvoca_back_dev
 
 ---
 
-### 스테이징(stg) 개발 환경
-
-## 컨테이너 중지(필요시)
-docker stop heyvoca_back_stg
-
-## 컨테이너 삭제(필요시)
-docker rm heyvoca_back_stg
-
-## 이미지 삭제(필요시)
-docker rmi whrksp126/heyvoca_back:stg
-
-## stg 환경 실행
-docker compose -f docker-compose.stg.yml up --build
-
-## stg 환경 실행 (백그라운드)
-docker compose -f docker-compose.stg.yml up --build -d
-
-## stg 환경 실행 컨테이너 중지
-docker compose -f docker-compose.stg.yml down
-
-## stg 환경의 이미지 확인
-docker images | grep heyvoca_back
-
-## 도커 허브에 stg 태그로 푸쉬
-docker push whrksp126/heyvoca_back:stg
-
-## 서버 적용
-sudo systemctl restart heyvoca_back_stg
-
----
-
 ### 프로덕션(prod) 개발 환경
 
 ## 컨테이너 중지(필요시)
@@ -141,15 +110,15 @@ sudo systemctl restart heyvoca_back_prod
 ### **📌 Git 브랜치 구조**
 ```text
 main       # 실제 서비스 운영 (배포용)
-staging    # QA 테스트 환경 (실제 서비스 배포 전 검증)
 dev        # 서버 개발 환경 (서버에서 개발 및 테스트)
 local      # 개발자가 로컬에서 테스트하는 환경 (Docker 활용)
 ```
+> stg(staging) 환경은 2026-09-22 폐지됨 (공유 호스트 부하 절감을 위해 dev/prod 2환경만 운영).
+
 ✅ **개발 및 배포 흐름:**  
 1. **개발자는 로컬에서 개발 (`local`)**  
 2. **개발이 완료되면 `dev`로 PR (서버 개발 환경 테스트)**  
-3. **서버에서 테스트 후 `staging`으로 PR (QA 테스트 진행)**  
-4. **QA 완료 후 `main`으로 PR (실제 배포 진행)**  
+3. **`dev`에서 검증 후 `main`으로 PR (실제 배포 진행)**  
 
 ---
 
@@ -239,20 +208,11 @@ docker-compose -f docker-compose.dev.yml up -d --build
 
 ---
 
-## **🧪 7. QA (`staging`) 및 배포 (`main`) 프로세스**
-### **📌 1️⃣ `dev`에서 `staging`으로 PR 후 QA 진행**
-```sh
-git checkout staging
-git merge dev
-git push origin staging
-```
-✅ GitHub Actions에서 `staging` 환경 자동 배포됨  
-✅ `http://staging.yourproject.com` 에서 QA 진행  
-
-### **📌 2️⃣ `staging`에서 `main`으로 PR 후 최종 배포**
+## **🧪 7. 배포 (`main`) 프로세스**
+### **📌 `dev`에서 `main`으로 PR 후 최종 배포**
 ```sh
 git checkout main
-git merge staging
+git merge dev
 git push origin main
 ```
 ✅ `GitHub Actions`가 `main`에 푸쉬 시 서버에 자동 배포  
@@ -265,8 +225,7 @@ git push origin main
 | **1️⃣ 로컬 개발** | `docker-compose.local.yml` 실행 | `docker-compose -f docker-compose.local.yml up -d` |
 | **2️⃣ 개발 완료** | `local` → `dev`로 PR | `git push origin feature/your-feature` |
 | **3️⃣ 서버 개발 환경 적용** | `GitHub Actions` 통해 자동 배포 | `http://dev.yourproject.com` |
-| **4️⃣ QA 테스트** | `staging` 브랜치로 PR 및 배포 | `http://staging.yourproject.com` |
-| **5️⃣ 실제 배포** | `main` 브랜치로 머지 및 배포 | `http://yourproject.com` |
+| **4️⃣ 실제 배포** | `main` 브랜치로 머지 및 배포 | `http://yourproject.com` |
 
 ✅ **이제 개발자는 손쉽게 로컬 환경을 설정하고, 동일한 과정으로 배포할 수 있음!** 🚀🔥
 

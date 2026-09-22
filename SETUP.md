@@ -229,7 +229,7 @@ git commit -m "dict: 토익 800점 단어 100개 추가"
 git push
 ```
 
-> 다른 팀원/dev/stg/prod는 git pull + 컨테이너 재시작만으로 자동 동기화됩니다.
+> 다른 팀원/dev/prod는 git pull + 컨테이너 재시작만으로 자동 동기화됩니다.
 
 > **MinIO RW 키가 필요합니다.** 사전 큐레이션 권한자만 실행 가능.
 

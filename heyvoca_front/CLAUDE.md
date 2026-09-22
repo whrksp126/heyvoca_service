@@ -32,7 +32,6 @@ docker compose -f docker-compose.local.yml up --build -d front
 ### 서버 배포 (heyvoca_service/ 루트에서)
 ```bash
 ./deploy.sh dev    # dev 배포
-./deploy.sh stg    # stg 배포
 ./deploy.sh prod   # prod 배포
 ```
 
@@ -54,7 +53,7 @@ React 18 SPA (Vite 빌드). 상태 관리는 Context API 기반.
 
 ### Vite HMR 환경별 설정 (`vite.config.js`)
 - local: `ws://localhost`
-- dev/stg/prod: `wss://<domain>:443`
+- dev/prod: `wss://<domain>:443`
 
 ## Environments
 
@@ -62,9 +61,8 @@ React 18 SPA (Vite 빌드). 상태 관리는 Context API 기반.
 |------|---------------------------|----------------------------------------|
 | local | docker-compose.local.yml | http://{YOUR_LOCAL_IP}                 |
 | dev  | docker-compose.dev.yml    | https://dev-heyvoca-front.ghmate.com   |
-| stg  | docker-compose.stg.yml    | https://stg-heyvoca-front.ghmate.com   |
 | prod | docker-compose.yml        | https://heyvoca-front.ghmate.com       |
 
 ## Key Environment Variables
 - `VITE_BACKEND_URL` – 백엔드 API URL (`heyvoca_front/.env.local`에 설정)
-- `NODE_ENV` – `local` | `development` | `staging` | `production`
+- `NODE_ENV` – `local` | `development` | `production`

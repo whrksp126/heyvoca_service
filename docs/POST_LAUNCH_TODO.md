@@ -27,7 +27,7 @@
 
 ### 1. 환경변수 추가
 
-각 환경(`.env.local` / `.env.dev` / `.env.stg` / `.env`)에 다음을 추가:
+각 환경(`.env.local` / `.env.dev` / `.env`)에 다음을 추가:
 
 #### 백엔드 (`heyvoca_back/.env.*`)
 ```
@@ -53,7 +53,7 @@ VITE_FSRS_SHADOW=false
 
 ### 2. 서버 FK 이름 확인 (파티셔닝 마이그레이션 전)
 
-dev/stg/prod 배포 직전 한 번 확인:
+dev/prod 배포 직전 한 번 확인:
 
 ```bash
 docker exec heyvoca_mysql_dev bash -c 'mysql -u root -p"$MYSQL_ROOT_PASSWORD" -e "SELECT CONSTRAINT_NAME FROM information_schema.KEY_COLUMN_USAGE WHERE TABLE_SCHEMA=\"heyvoca_user\" AND TABLE_NAME=\"user_study_log\" AND REFERENCED_TABLE_NAME IS NOT NULL"'
@@ -65,7 +65,6 @@ docker exec heyvoca_mysql_dev bash -c 'mysql -u root -p"$MYSQL_ROOT_PASSWORD" -e
 
 ```bash
 ./deploy.sh dev    # 마이그레이션 자동 적용 (entrypoint)
-./deploy.sh stg
 ./deploy.sh prod
 ```
 
@@ -187,7 +186,6 @@ POC만 진행. 정식 배포는 별도 의사결정.
 |---|---|
 | 로컬 | `http://localhost:3100/admin` |
 | dev  | `https://dev-heyvoca-front.ghmate.com/admin` |
-| stg  | `https://stg-heyvoca-front.ghmate.com/admin` |
 | prod | `https://heyvoca-front.ghmate.com/admin` |
 
 ### 첫 진입 절차
@@ -225,13 +223,13 @@ POC만 진행. 정식 배포는 별도 의사결정.
 
 ```bash
 # 학습 메트릭 (정답률, 활성 사용자, 분포)
-curl -H "X-Admin-Token: $ADMIN_TOKEN" https://stg-heyvoca-back.ghmate.com/admin/study/metrics?days=1
+curl -H "X-Admin-Token: $ADMIN_TOKEN" https://heyvoca-back.ghmate.com/admin/study/metrics?days=1
 
 # FSRS 건강도 (lapse rate, stability 분포, 파티션별 row 수)
-curl -H "X-Admin-Token: $ADMIN_TOKEN" https://stg-heyvoca-back.ghmate.com/admin/fsrs/health
+curl -H "X-Admin-Token: $ADMIN_TOKEN" https://heyvoca-back.ghmate.com/admin/fsrs/health
 
 # 최근 세션 (디버그)
-curl -H "X-Admin-Token: $ADMIN_TOKEN" https://stg-heyvoca-back.ghmate.com/admin/study/recent-sessions?limit=20
+curl -H "X-Admin-Token: $ADMIN_TOKEN" https://heyvoca-back.ghmate.com/admin/study/recent-sessions?limit=20
 ```
 
 ### 알림 임계치 (권장)
