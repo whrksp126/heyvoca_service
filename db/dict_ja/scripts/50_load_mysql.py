@@ -704,7 +704,7 @@ def s3_client():
 
 def upload(res, dry_run=False):
     """dump 파일 → s3://heyvoca/dict_ja/<file>, 그 다음 dict_ja/index.json 갱신(latest=이 버전).
-    순서: 객체 PUT → HEAD 로 크기 확인 → index PUT. 같은 version 항목이 있으면 교체한다."""
+    순서: 객체 PUT → list 로 크기 확인 → index PUT. 같은 version 항목이 있으면 교체한다."""
     bucket = os.environ.get('MINIO_BUCKET', OBJECTSTORE_BUCKET)
     key = f'{OBJECT_PREFIX}/{res["file"]}'
     entry = OrderedDict(version=res['version'], key=key, sha256=res['sha256'], size=res['size'],
@@ -725,12 +725,13 @@ def upload(res, dry_run=False):
     log(f'PUT s3://{bucket}/{key}')
     cli.upload_file(res['path'], bucket, key, ExtraArgs={
         'ContentType': 'application/gzip', 'Metadata': {'sha256': res['sha256'], 'version': res['version']}})
-    try:
-        head = cli.head_object(Bucket=bucket, Key=key)
-        if head['ContentLength'] != res['size']:
-            sys.exit(f'업로드 크기 불일치: {head["ContentLength"]} ≠ {res["size"]} — index 는 갱신하지 않음')
-    except Exception as e:  # RW 키에 HEAD 권한이 없는 경우(403) — 업로드 자체는 성공했으므로 경고만
-        warn(f'HEAD 로 크기 검증 불가({type(e).__name__}) — MinIO 정책에 dict_ja/* GetObject/ListBucket 추가 권장')
+    # 크기 검증은 HEAD 대신 list 기반(objectstore 경로에서 HEAD 는 SigV4 메서드 불일치로 403 이 날 수 있음)
+    listed = cli.list_objects_v2(Bucket=bucket, Prefix=key).get('Contents', [])
+    found = [o for o in listed if o.get('Key') == key]
+    if not found:
+        sys.exit(f'업로드 후 객체를 찾지 못함: {key} — index 는 갱신하지 않음')
+    if found[0]['Size'] != res['size']:
+        sys.exit(f'업로드 크기 불일치: {found[0]["Size"]} ≠ {res["size"]} — index 는 갱신하지 않음')
     versions = [v for v in index.get('versions', []) if v.get('version') != res['version']]
     if len(versions) != len(index.get('versions', [])):
         warn(f'index 에 같은 version {res["version"]} 이 있어 교체')

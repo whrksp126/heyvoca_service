@@ -71,7 +71,7 @@
 - `51_dump_upload.sh --build-version 20260925-1 --with-books` 로 재발행(50 은 `--build-version` 명시 시 dict_meta.build_version 을 갱신한 뒤 dump). 포인터 갱신.
 
 ## 남은 일 (2단계)
-1. **MinIO 정책**: RW/RO 키에 `dict_ja/*` GetObject·ListBucket 추가(현재 RW PUT만 가능, HEAD/GET 403). 앱의 dict_manage 는 RO 키 `dict/` 한정이라 일본어 사전 동기화 경로를 별도로 만들거나 정책을 넓혀야 함.
+1. ~~MinIO 정책~~ 불필요 — RO·RW 키 모두 `heyvoca/*` 전체 읽기 가능(2026-09-25 objectstore 담당 확인). HEAD 403 은 presigned GET URL 을 HEAD 로 친 SigV4 메서드 불일치였고, 50 스크립트는 list 기반 검증으로 교체함.
 2. **앱 연동**: 언어 라우팅(검색·단어장·TTS `ja` 추가, `_SUPPORTED_LANGS`), Flask 모델 `bind_key='dict_ja'`, 후리가나 표시(reading_tokens 3원소 → ruby), JLPT 필터, 출처 표기 페이지(JMdict/EDRDG CC BY-SA, Tatoeba CC BY, Kanjium CC BY-SA, 국립국어원 CC BY-SA).
 3. dev/prod 에 스키마 생성 후 dump import(50 의 import 검증은 MySQL 8 로컬에서 확인됨).
 4. 사람 검수 권장: `audit/inactive_review.md` 경계 사례(성 관련 의학 용어 keep 방침), 예문 없는 23항목, 생성 예문 문체 편중(평서체 97%).
@@ -81,4 +81,4 @@
 - dev·prod: `heyvoca_dict_ja` 부트스트랩(20260925-1, dev 16초·prod 28초) + 사용자 DB 리비전 `9fdc12f3733a` 적용(2026-09-25 prod 배포 완료, 커밋 b7b0e87).
 - prod 절차: `./deploy.sh prod` → `docker exec heyvoca_back_prod python3 -c "...dm.apply_version('20260925-1', lang='ja', publisher='me@prod')"` → `docker restart heyvoca_back_prod` → `dm.get_status(lang='ja')` in_sync 확인.
 - 앱: 커밋 9a372c5(TTS ja·채팅 언어·OCR ja·X-App-Version). 릴리스 시 `bump-version.sh app 1.1.1`(웹 게이트 `openImagePickerLang`/`CHAT_JA_MIN_APP_VERSION`=1.1.1).
-- 남은 일: MinIO 정책 `dict_ja/*` GetObject(로컬은 됨, 서버 RO 키 확인), 일본어 TTS 사전 프리워밍(`scripts/tts_prewarm.py` ja), origin/local 브랜치 동기화, admin 화면 언어 선택 UI(현재 `?lang=` 만).
+- 남은 일: 일본어 TTS 사전 프리워밍(`scripts/tts_prewarm.py` ja), origin/local 브랜치 동기화, admin 화면 언어 선택 UI(현재 `?lang=` 만).
