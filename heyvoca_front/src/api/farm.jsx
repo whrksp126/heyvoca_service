@@ -148,7 +148,7 @@ export const getStreakApi = async () => {
   }
 };
 
-// 연속 학습일 복구 (48시간 안에 보호권 1개 사용)
+// 연속 학습일 복구 (48시간 안에 보호권 1개 사용) — 하위호환. 내부적으로 protect와 같은 로직.
 export const recoverStreakApi = async () => {
   const url = `${backendUrl}/farm/streak/recover`;
   const method = 'POST';
@@ -157,6 +157,42 @@ export const recoverStreakApi = async () => {
     return await fetchDataAsync(url, method, fetchData);
   } catch (error) {
     console.error('recoverStreakApi 오류:', error);
+  }
+};
+
+// 멈춤(paused) 상태 지키기 — 부족분 구매 + 즉시 적용(원자적). body 없음(서버가 short 계산).
+export const protectStreakApi = async () => {
+  const url = `${backendUrl}/farm/streak/protect`;
+  const method = 'POST';
+  const fetchData = {};
+  try {
+    return await fetchDataAsync(url, method, fetchData);
+  } catch (error) {
+    console.error('protectStreakApi 오류:', error);
+  }
+};
+
+// 다시 잇기 도전 시작 (offered → active, start_day=오늘)
+export const startEarnBackApi = async () => {
+  const url = `${backendUrl}/farm/streak/earn-back/start`;
+  const method = 'POST';
+  const fetchData = {};
+  try {
+    return await fetchDataAsync(url, method, fetchData);
+  } catch (error) {
+    console.error('startEarnBackApi 오류:', error);
+  }
+};
+
+// 정산 알림을 봤음으로 표시 (같은 id는 한 번만 노출)
+export const ackStreakNoticeApi = async (id) => {
+  const url = `${backendUrl}/farm/streak/notice/ack`;
+  const method = 'POST';
+  const fetchData = { id };
+  try {
+    return await fetchDataAsync(url, method, fetchData);
+  } catch (error) {
+    console.error('ackStreakNoticeApi 오류:', error);
   }
 };
 

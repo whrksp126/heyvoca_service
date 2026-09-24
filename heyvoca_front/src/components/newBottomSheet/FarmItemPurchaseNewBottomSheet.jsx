@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import {
-  X, Info, Leaf, Carrot, Gift, WarningCircle, ClockCounterClockwise, GearSix, Lock, CaretRight,
+  X, Info, Leaf, Carrot, Gift, WarningCircle, ClockCounterClockwise, CaretRight,
 } from '@phosphor-icons/react';
 import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
@@ -16,13 +16,16 @@ import { Gem } from './purchaseParts';
 /**
  * 농장 도구 상세 시트 · 구매 확인 · 결과.
  *
- * 시안 정본: shop.txt §2(상세 시트 3종) · §5(가격표) · §6(하루 상한) · §8(고지 항목),
- *            shop-purchase.txt §1(확인 → 완료 → 실패 → 한도) · §3(확인 시트의 세 값),
+ * 시안 정본: shop.txt §2(상세 시트 3종) · §5(가격표) · §8(고지 항목),
+ *            shop-purchase.txt §1(확인 → 완료 → 실패) · §3(확인 시트의 세 값),
  *            shop-result.txt §2⑤(아이템 성공) · §3⑦⑨(부족 · 실패).
  *
- * 한 시트 안에서 detail → confirm → done/error/short/capped 로 상태만 바꾼다.
+ * 한 시트 안에서 detail → confirm → done/error/short 로 상태만 바꾼다.
  * 시안이 "구매 버튼이 화면 맨 아래고 그 위가 전부 설명"이라고 못 박았기 때문에
  * 설명과 구매를 두 화면으로 쪼개지 않는다(§8).
+ *
+ * 하루 구매 지출 한도(capped 상태·CapBar)는 연속 학습 보호권 개편으로 제거했다
+ * (scratchpad/streak_shield_contract.md §1 "보석 하루 사용 한도 완전 제거").
  */
 
 // ── 시안 문구 ────────────────────────────────────────────────
@@ -132,35 +135,6 @@ const InfoBox = ({ tone = 'gray', icon, children }) => {
   );
 };
 
-/**
- * 하루 상한 막대 (시안 §6).
- * 한도는 닿기 전에 보여야 의미가 있어서, 남았을 때도 늘 띄운다.
- * `next` 를 주면 "4 → 7 / 30" 처럼 살 뒤의 값을 미리 적는다.
- */
-export const CapBar = ({ spent, limit, next = null, className = '' }) => {
-  if (!Number.isFinite(spent) || !Number.isFinite(limit) || limit <= 0) return null;
-  const shown = Number.isFinite(next) ? next : spent;
-  const ratio = Math.min(1, Math.max(0, shown / limit));
-  const hot = shown >= limit - 5;
-  return (
-    <div className={`flex items-center gap-[9px] ${className}`}>
-      <span className="shrink-0 whitespace-nowrap text-[10.5px] leading-[1.6] tracking-[-0.02em] text-layout-gray-300">
-        오늘 도구 구매{' '}
-        <b className="font-[700] text-layout-gray-400 dark:text-layout-gray-200">
-          {Number.isFinite(next) ? `${spent} → ${next}` : spent}
-        </b>{' '}
-        / {limit} 보석
-      </span>
-      <span className="flex-1 h-[5px] rounded-full bg-[#F0F0F0] dark:bg-layout-gray-dark overflow-hidden">
-        <span
-          className={`block h-full rounded-full ${hot ? 'bg-secondary-yellow-600' : 'bg-primary-main-300'}`}
-          style={{ width: `${ratio * 100}%` }}
-        />
-      </span>
-    </div>
-  );
-};
-
 /** 상품 카드 (시안 .prod). variant: '' | 'best'(가장 이득 진열) | 'sel'(시트에서 고른 묶음) */
 export const PackCard = ({ pack, itemType, ribbon, variant = '', onClick, disabled = false }) => {
   const best = variant === 'best';
@@ -264,7 +238,6 @@ export const nextGrantLabel = () => `다음 지급 ${formatDay(nextMonday())}`;
  * @param {object}   props.pack         단일 상품으로 열 때 (packs 없이도 동작)
  * @param {string}   props.initialSku   처음 선택할 묶음
  * @param {number}   props.owned        현재 보유 개수
- * @param {object}   props.spend        하루 상한 { spent, limit } — 서버가 주면 §6 막대를 띄운다
  * @param {function} props.onPurchased  성공 시 서버 응답 data 그대로
  * @param {function} props.onNeedGems   보석이 모자랄 때 보석 탭으로 (없으면 버튼을 숨긴다)
  * @param {function} props.onGoRotten   "썩은 작물 보러 가기" (없으면 상점을 닫는 것으로 대신한다)
@@ -274,7 +247,6 @@ export const FarmItemPurchaseNewBottomSheet = ({
   pack,
   initialSku,
   owned = 0,
-  spend = null,
   onPurchased,
   onNeedGems,
   onGoRotten,
@@ -288,7 +260,7 @@ export const FarmItemPurchaseNewBottomSheet = ({
 
   const list = (Array.isArray(packs) && packs.length > 0) ? packs : (pack ? [pack] : []);
   const [sku, setSku] = useState(initialSku || pack?.sku || list[0]?.sku);
-  const [status, setStatus] = useState('detail'); // detail | confirm | loading | done | error | short | capped
+  const [status, setStatus] = useState('detail'); // detail | confirm | loading | done | error | short
   const [result, setResult] = useState(null);
   const [rottenCount, setRottenCount] = useState(null);
   const [errorMessage, setErrorMessage] = useState('');
@@ -316,11 +288,6 @@ export const FarmItemPurchaseNewBottomSheet = ({
   const gemCnt = Number(userProfile?.gem_cnt) || 0;
   const shortage = Math.max(0, cost - gemCnt);
 
-  const capSpent = Number(spend?.spent);
-  const capLimit = Number(spend?.limit);
-  const hasCap = Number.isFinite(capSpent) && Number.isFinite(capLimit) && capLimit > 0;
-  const overCap = hasCap && capSpent + cost > capLimit;
-
   // 개당 단가가 가장 낮은 묶음에만 리본을 단다 (시안 §5 — 한 번 말하고 끝낸다)
   const unitOf = (p) => {
     const per = Number(p.per_unit);
@@ -345,7 +312,6 @@ export const FarmItemPurchaseNewBottomSheet = ({
 
   const openConfirm = () => {
     vibrate({ duration: 5 });
-    if (overCap) { setStatus('capped'); return; }
     if (gemCnt < cost) { setStatus('short'); return; }
     setStatus('confirm');
   };
@@ -353,7 +319,6 @@ export const FarmItemPurchaseNewBottomSheet = ({
   const handleBuy = async () => {
     vibrate({ duration: 5 });
     if (status === 'loading') return;
-    if (overCap) { setStatus('capped'); return; }
     if (gemCnt < cost) { setStatus('short'); return; }
 
     setStatus('loading');
@@ -436,9 +401,6 @@ export const FarmItemPurchaseNewBottomSheet = ({
 
         <p className="mt-[10px] text-center text-[10.5px] leading-[1.6] tracking-[-0.02em] text-layout-gray-300">
           남은 보석 <b className="font-[700] text-layout-gray-400 dark:text-layout-gray-200">{result.gem_cnt}</b>
-          {hasCap && (
-            <> · 오늘 도구 구매 <b className="font-[700] text-layout-gray-400 dark:text-layout-gray-200">{capSpent + cost} / {capLimit}</b></>
-          )}
         </p>
       </div>
     );
@@ -464,51 +426,6 @@ export const FarmItemPurchaseNewBottomSheet = ({
               보석 충전
             </Btn>
           )}
-        </div>
-      </div>
-    );
-  }
-
-  // ── 결과: 하루 한도 (시안 shop-purchase ④) ────────────────
-  if (status === 'capped') {
-    return (
-      <div className={shell}>
-        <Grab />
-        <div className="text-center pt-[6px]">
-          <span className="flex items-center justify-center w-[84px] h-[84px] mx-auto mt-[2px] mb-[14px] rounded-full bg-secondary-yellow-100 dark:bg-secondary-yellow-dark">
-            <Lock size={32} weight="fill" className="text-secondary-yellow-600" />
-          </span>
-          <h3 className="text-[19px] font-[800] leading-[1.35] tracking-[-0.04em] text-layout-black dark:text-layout-white">
-            오늘은 여기까지 샀어요
-          </h3>
-          <p className="mt-[8px] text-[12.5px] leading-[1.6] tracking-[-0.02em] text-layout-gray-400 dark:text-layout-gray-300">
-            하루 도구 구매 한도인 <b className="font-[800] text-layout-black dark:text-layout-white">{capLimit}보석</b>을 다 썼어요.
-            <br />내일 0시에 다시 살 수 있어요.
-          </p>
-        </div>
-
-        <CapBar spent={capSpent} limit={capLimit} className="mt-[16px]" />
-
-        <SLabel>지금 필요하면</SLabel>
-        <Rows
-          items={[{
-            key: 'setting',
-            tint: 'gray',
-            icon: <GearSix size={15} weight="fill" className="text-layout-gray-400" />,
-            title: '한도 바꾸기',
-            desc: '설정 · 농장 → 하루 구매 한도',
-            value: <CaretRight size={12} weight="bold" />,
-            mut: true,
-          }]}
-        />
-
-        <InfoBox icon={<Info size={13} weight="fill" className="text-[#BBBBBB]" />}>
-          한 번의 실수로 큰 손해가 나지 않게 <Em>기본 한도</Em>를 걸어 뒀어요.
-          한도는 설정에서만 바꿀 수 있어요.
-        </InfoBox>
-
-        <div className="flex gap-[10px] mt-[16px]">
-          <Btn tone="sec" wide onClick={close}>닫기</Btn>
         </div>
       </div>
     );
@@ -569,13 +486,6 @@ export const FarmItemPurchaseNewBottomSheet = ({
               <span>{owned}개</span><Arrow /><span className="text-status-success-600">{owned + amount}개</span>
             </RecvRow>
           </div>
-          {hasCap && (
-            <div className="mt-[8px]">
-              <RecvRow k="오늘 도구 구매">
-                <span>{capSpent}</span><Arrow /><span>{capSpent + cost} / {capLimit}</span>
-              </RecvRow>
-            </div>
-          )}
         </div>
 
         <InfoBox icon={<ClockCounterClockwise size={13} weight="fill" className="text-[#BBBBBB]" />}>
@@ -612,8 +522,9 @@ export const FarmItemPurchaseNewBottomSheet = ({
       ['쓸 수 없는 곳', '황금 당근 · 이미 회복한 작물'],
     ],
     SHIELD: [
-      ['적용', <>놓친 날이 끝날 때 <Em>자동으로 1개</Em></>],
-      ['없을 때', '48시간 안에 채우면 기록을 되살려요'],
+      ['적용', <>빈 날 <Em>7일까지</Em>, 빈 날마다 1개씩 자동으로</>],
+      ['없을 때', '48시간 안에 채우면 한꺼번에 적용돼요'],
+      ['8일 이상 쉬면', '보호권을 쓰지 않고 연속만 끝나요 · 보유량은 그대로'],
       ['주간 지급', '매주 첫 접속에 1개 — 소급 지급은 없어요'],
       ['이월', '만료 없이 계속 쌓여요'],
     ],
@@ -741,13 +652,10 @@ export const FarmItemPurchaseNewBottomSheet = ({
 
       <div className="flex gap-[10px] mt-[16px]">
         <Btn tone="sec" onClick={close}>닫기</Btn>
-        <Btn tone="pri" onClick={openConfirm} disabled={overCap}>
+        <Btn tone="pri" onClick={openConfirm}>
           <Gem n={cost} size="s" />개로 구매
         </Btn>
       </div>
-
-      {/* 사기 전에 결과를 본다 (시안 §6 · ④ 하단) */}
-      {hasCap && <CapBar spent={capSpent} limit={capLimit} next={capSpent + cost} className="mt-[11px]" />}
     </div>
   );
 };

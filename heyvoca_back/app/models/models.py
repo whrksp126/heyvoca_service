@@ -750,7 +750,7 @@ class FarmItem:
     """V2 에서 보유·구매 가능한 농장 아이템 3종(기획 8.1). 그 외는 이번 범위 밖이다."""
     SHOVEL   = 'SHOVEL'      # 새심기 삽 — 부패 작물을 심은 씨앗부터 다시
     NUTRIENT = 'NUTRIENT'    # 영양 회복제 — 부패 작물의 과거 단계 보존
-    SHIELD   = 'SHIELD'      # 연속 학습 보호권 — 놓친 하루 보호
+    SHIELD   = 'SHIELD'      # 연속 학습 보호권 — 빈 날 하루당 1개(빈 날 7일 이하일 때 자동 사용)
 
     ALL = [SHOVEL, NUTRIENT, SHIELD]
 
@@ -776,6 +776,7 @@ class FarmEvent:
     GOLDEN_ACHIEVED  = 'GOLDEN_ACHIEVED'
     GOLDEN_CHECKED   = 'GOLDEN_CHECKED'
     STREAK_PROTECTED = 'STREAK_PROTECTED'
+    STREAK_EARN_BACK = 'STREAK_EARN_BACK'   # 다시 잇기 도전 성공
 
 
 class UserVocaGame(db.Model):
@@ -1028,9 +1029,22 @@ class UserStreak(db.Model):
     # "이번 주 월요일 > 이 값" 하나로 판정된다.
     shield_granted_week = Column(Date, nullable=True)
     protected_days_cnt  = Column(Integer, nullable=False, default=0, server_default='0')
-    # 보호권 없이 하루를 놓쳤을 때의 48시간 복구 기한. 지나면 기록 종료.
+    # 연속 "멈춤(paused)" 기한 — 빈 날(1~7일)을 메울 보호권이 모자랄 때 연다.
+    # 값 = 마지막 빈 날의 현지 자정 종료 + 48시간. NULL 이면 멈춤 아님. 지나면 기록 종료.
+    # (컬럼 이름은 옛 '48시간 복구 창' 시절 그대로다 — 의미가 같은 자리라 재사용한다.)
     recovery_deadline   = Column(DateTime, nullable=True)
-    recovery_from_streak = Column(Integer, nullable=True)   # 복구했을 때 되살릴 값
+    recovery_from_streak = Column(Integer, nullable=True)   # 멈춤 직전(끊기기 전) 연속값 — 화면에 그대로 보인다
+    # 멈춤 기준일 = 빈 날 직전의 마지막 연속 인정일. 멈춤 동안 last_qualified_day 도 이 값에
+    # 고정된다. recovery_deadline 만 있고 이 값이 NULL 이면 옛 48시간 창(레거시)이다.
+    pause_anchor_day    = Column(Date, nullable=True)
+    # 다시 잇기 도전 (Earn Back). status: NULL | 'offered' | 'active'
+    earn_back_status      = Column(String(10), nullable=True)
+    earn_back_from_streak = Column(Integer, nullable=True)    # 되찾을 값(끊기기 직전 연속)
+    earn_back_offered_on  = Column(Date, nullable=True)       # 제안일(현지) — +2일까지 시작 가능
+    earn_back_start_day   = Column(Date, nullable=True)       # 도전 시작일(현지)
+    earn_back_last_start_day = Column(Date, nullable=True)    # 30일 쿨다운 기준 — 도전이 끝나도 남긴다
+    # 한 번만 보여 줄 정산 결과(JSON 문자열). ack 로 비운다. 새 결과가 생기면 덮어쓴다.
+    pending_notice      = Column(Text, nullable=True)
     updated_at     = Column(DateTime, nullable=False, default=datetime.utcnow, onupdate=datetime.utcnow)
 
     def __init__(self, user_id, current_streak=0, best_streak=0, last_qualified_day=None):

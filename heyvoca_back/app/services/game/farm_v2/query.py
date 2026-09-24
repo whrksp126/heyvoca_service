@@ -428,7 +428,7 @@ def _streak_state(user_id: UUID, now: dt.datetime) -> dict:
     if last_day is None:
         current = 0
     elif last_day < yesterday:
-        # 48시간 복구 창 안이면 아직 되살릴 수 있으므로 숫자를 남겨 둔다(11.3).
+        # 멈춤(paused) 기한 안이면 끊기기 전 값을 그대로 보여 준다(보호권 개편 §1).
         if not (deadline and now < deadline):
             current = 0
 
@@ -455,6 +455,8 @@ def _streak_state(user_id: UUID, now: dt.datetime) -> dict:
         'required': C.STREAK_MIN_CORRECT_WORDS,
         'protected_yesterday': protected_yesterday,
         'recovery_until': localday.iso_utc(deadline) if (deadline and now < deadline) else None,
+        # 계약서(연속 학습 보호권 개편) §2 — 멈춤·다시 잇기. notice 는 /farm/streak 에서만 준다.
+        **streak_v2.streak_extras(user_id, now),
     }
 
 

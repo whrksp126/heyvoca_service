@@ -96,13 +96,15 @@ def get_overview():
          부패 확정 뒤에 해야 "오늘 밀린 것"이 정확하다.
       3. check_and_start — 30일 공백 뒤 첫 진입이면 복귀 미션 생성(7.4).
          집계 전에 해야 overview.comeback 이 이번 응답부터 실린다.
-      4. get_overview — 집계.
+      4. settle_on_visit — 주간 보호권 지급 + 빈 날 정산(자동 소모/멈춤/종료).
+         집계 전에 해야 overview.streak 의 current/paused 가 정산 결과를 반영한다.
+      5. get_overview — 집계.
 
-    1~3 은 쓰기다. 여기서 실패해도 홈은 열려야 하므로 각각 감싸서 삼킨다 —
+    1~4 는 쓰기다. 여기서 실패해도 홈은 열려야 하므로 각각 감싸서 삼킨다 —
     부패 재계산이 늦어지는 것과 홈 화면이 안 뜨는 것은 사용자에게 무게가 다르다.
     """
     from app import db
-    from app.services.game.farm_v2 import comeback, query, watering
+    from app.services.game.farm_v2 import comeback, query, streak_v2, watering
 
     user_id = UUID(g.user_id)
     now = dt.datetime.utcnow()
@@ -110,7 +112,8 @@ def get_overview():
     refreshed = True
     for step, fn in (('부패 재계산', watering.compute_rot_state),
                      ('무료 긴급 급수', watering.apply_emergency_water),
-                     ('복귀 미션 판정', comeback.check_and_start)):
+                     ('복귀 미션 판정', comeback.check_and_start),
+                     ('연속 학습 정산', streak_v2.settle_on_visit)):
         try:
             fn(user_id, now)
         except Exception:
@@ -363,7 +366,10 @@ def get_streak():
 @farm_bp.route('/streak/recover', methods=['POST'])
 @jwt_required
 def recover_streak():
-    """보호권 1개로 연속 기록 복구 (계약 POST /farm/streak/recover)."""
+    """보유 보호권으로 멈춘 연속 잇기 (하위호환 — POST /farm/streak/recover).
+
+    새 클라이언트는 부족분 구매까지 한 번에 하는 `/streak/protect` 를 쓴다.
+    """
     from app.services.game.farm_v2 import streak_v2
 
     user_id = UUID(g.user_id)
@@ -375,6 +381,63 @@ def recover_streak():
         return jsonify({'code': 400, 'message': _msg(e, '연속 보호권이 부족해요.')}), 400
     except Exception:
         return _fail('연속 기록 복구')
+
+
+@farm_bp.route('/streak/protect', methods=['POST'])
+@jwt_required
+def protect_streak():
+    """멈춘 연속 지키기 — 부족분 보호권 구매 + 즉시 적용 (계약 POST /farm/streak/protect).
+
+    본문 없음. 필요한 개수는 서버가 계산한다. 구매·소모·연속 재계산은 한 트랜잭션.
+    """
+    from app.services.game.farm_v2 import shop, streak_v2
+
+    user_id = UUID(g.user_id)
+    try:
+        return jsonify({'code': 200, 'data': streak_v2.protect_streak(user_id)}), 200
+    except shop.GemShortage as e:
+        return jsonify({'code': 400,
+                        'message': '보석이 {}개 모자라요'.format(e.shortage),
+                        'data': {'shortage': e.shortage}}), 400
+    except ValueError as e:
+        return jsonify({'code': 409, 'message': _msg(e, '지금은 지킬 연속 기록이 없어요.')}), 409
+    except PermissionError as e:
+        return jsonify({'code': 400, 'message': _msg(e, '연속 보호권이 부족해요.')}), 400
+    except Exception:
+        return _fail('연속 기록 지키기')
+
+
+@farm_bp.route('/streak/earn-back/start', methods=['POST'])
+@jwt_required
+def start_earn_back():
+    """다시 잇기 도전 시작 (계약 POST /farm/streak/earn-back/start). 응답 = GET /farm/streak."""
+    from app.services.game.farm_v2 import streak_v2
+
+    user_id = UUID(g.user_id)
+    try:
+        return jsonify({'code': 200, 'data': streak_v2.start_earn_back(user_id)}), 200
+    except ValueError as e:
+        return jsonify({'code': 409, 'message': _msg(e, '지금은 시작할 수 있는 도전이 없어요.')}), 409
+    except Exception:
+        return _fail('다시 잇기 도전 시작')
+
+
+@farm_bp.route('/streak/notice/ack', methods=['POST'])
+@jwt_required
+def ack_streak_notice():
+    """정산 결과 안내를 봤음으로 표시 (계약 POST /farm/streak/notice/ack, body {id})."""
+    from app.services.game.farm_v2 import streak_v2
+
+    user_id = UUID(g.user_id)
+    body = request.get_json(silent=True) or {}
+    notice_id = body.get('id')
+    if not notice_id:
+        return jsonify({'code': 400, 'message': 'id는 필수입니다.'}), 400
+    try:
+        streak_v2.ack_notice(user_id, str(notice_id))
+        return jsonify({'code': 200}), 200
+    except Exception:
+        return _fail('연속 학습 안내 확인')
 
 
 # ──────────────────────────────────────────────────────────────

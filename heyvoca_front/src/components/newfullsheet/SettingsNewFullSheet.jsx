@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import {
-  Coins, HandHeart, CircleHalf, Quotes, SpeakerHigh, Bell,
+  HandHeart, CircleHalf, Quotes, SpeakerHigh, Bell,
   Plant, Drop, Flask, FileText, Lock, Info, Sparkle, Bug, Translate,
 } from '@phosphor-icons/react';
 import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
@@ -27,11 +27,6 @@ const APP_VERSION_INFO = parseAppVersion();
 
 const TERMS_URL = 'https://heyvoca.ghmate.com/terms-of-service';
 const PRIVACY_URL = 'https://heyvoca.ghmate.com/privacy-policy';
-
-// 하루 도구 구매 지출 상한 (기획 9.4). 백엔드 shop.DAILY_GEM_SPEND_LIMIT 과 같은 값이며
-// 사용자별 컬럼이 아직 없어 서버가 전역 고정값으로 다룬다.
-// 시안대로 값 + 캐럿을 그대로 두되(설정 메인 ①), 바꿀 API 가 생기기 전까지 눌러도 이동하지 않는다.
-const DAILY_GEM_SPEND_LIMIT = 30;
 
 /**
  * 설정 — 마이페이지 우상단 기어에서 들어온다 (시안 설정 1절 ①).
@@ -81,16 +76,12 @@ const SettingsNewFullSheet = () => {
       <SheetBar title="설정" />
 
       <div className="flex-1 overflow-y-auto px-[16px] pb-[20px]">
-        {/* ── 농장 — 기획안이 "설정에서만 바꾼다"고 못 박은 항목들 (시안 2절) ── */}
+        {/* ── 농장 — 기획안이 "설정에서만 바꾼다"고 못 박은 항목들 (시안 2절) ──
+            하루 도구 구매 한도 항목은 연속 학습 보호권 개편으로 제거했다
+            (계약 scratchpad/streak_shield_contract.md §1 "보석 하루 사용 한도 완전 제거"). */}
         <GroupLabel first>농장</GroupLabel>
         <SettingRow
           first
-          icon={<Coins size={iconSize} />}
-          title="하루 도구 구매 한도"
-          sub={`보석 ${DAILY_GEM_SPEND_LIMIT}개까지 살 수 있어요`}
-          value={`${DAILY_GEM_SPEND_LIMIT}보석`}
-        />
-        <SettingRow
           icon={<HandHeart size={iconSize} />}
           title="돌봄 알림"
           sub="시들거나 썩기 전에 알려드려요"

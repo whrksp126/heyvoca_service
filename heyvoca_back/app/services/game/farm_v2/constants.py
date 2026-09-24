@@ -84,7 +84,13 @@ SHIELD_PACKS = [
 
 # ── 연속 학습일 (기획 11) ──
 STREAK_MIN_CORRECT_WORDS = 5     # 11.1 — 하루 정답 완료 단어 5개
-STREAK_RECOVERY_HOURS    = 48    # 11.3 — 보호권 없이 놓쳤을 때의 복구 창
+STREAK_RECOVERY_HOURS    = 48    # 멈춤(paused) 기한 — 마지막 빈 날 종료 + 48시간
+STREAK_MAX_PROTECT_GAP   = 7     # 빈 날이 이 일수 이하일 때만 보호권을 쓴다(초과 시 소모 없이 종료)
+# 다시 잇기 도전 (Earn Back)
+STREAK_EARN_BACK_MIN_STREAK   = 30   # 끊긴 연속이 이 값 이상일 때만 제안
+STREAK_EARN_BACK_COOLDOWN_DAYS = 30  # 마지막 도전 시작일로부터 이 일수가 지나야 새 제안
+STREAK_EARN_BACK_OFFER_DAYS   = 3    # 제안일 포함 3일 안에 시작해야 한다
+STREAK_EARN_BACK_DAYS         = 3    # 시작일부터 3일 연속 자격을 채우면 성공
 # 11.4 마일스톤 — (연속일, 아이템 종류|'GEM', 수량). 한 번만 지급한다.
 STREAK_MILESTONES = [
     (3,   'GEM',      1),

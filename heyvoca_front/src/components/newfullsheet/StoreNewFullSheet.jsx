@@ -14,7 +14,7 @@ import { BuyEmptyBookNewBottomSheet } from '../newBottomSheet/BuyEmptyBookNewBot
 import { PreviewBookStoreNewFullSheet } from './PreviewBookStoreNewFullSheet';
 import GemNewFullSheet from './GemNewFullSheet';
 import {
-  FarmItemPurchaseNewBottomSheet, PackCard, CapBar, Gem, nextGrantLabel,
+  FarmItemPurchaseNewBottomSheet, PackCard, Gem, nextGrantLabel,
   ITEM_NAME, ITEM_SHORT, ITEM_TAG,
 } from '../newBottomSheet/FarmItemPurchaseNewBottomSheet';
 import { getFarmItemsApi, getFarmShopApi } from '../../api/farm';
@@ -188,7 +188,6 @@ const StoreNewFullSheet = ({ initialTab = 'books', onInventoryChanged, onGoRotte
   );
   const [packs, setPacks] = useState([]);
   const [itemCounts, setItemCounts] = useState({});
-  const [spend, setSpend] = useState(null); // 하루 상한 { spent, limit } — 서버가 줄 때만 채워진다
   const [toolsStatus, setToolsStatus] = useState('idle'); // idle | loading | ready | error
   const [category, setCategory] = useState(ALL_CATEGORY);
   const [loadingDetail, setLoadingDetail] = useState(false);
@@ -236,9 +235,6 @@ const StoreNewFullSheet = ({ initialTab = 'books', onInventoryChanged, onGoRotte
     }
     setPacks(Array.isArray(shopRes.data?.packs) ? shopRes.data.packs : []);
     setItemCounts(itemRes.data?.items || {});
-    // 하루 상한(기획 9.4)은 서버가 내려줄 때만 그린다 — 화면에서 계산하면 서버 판정과 갈린다.
-    const cap = shopRes.data?.daily_spend || itemRes.data?.daily_spend || null;
-    setSpend(cap && Number.isFinite(Number(cap.limit)) ? { spent: Number(cap.spent) || 0, limit: Number(cap.limit) } : null);
     setToolsStatus('ready');
   }, []);
 
@@ -285,12 +281,10 @@ const StoreNewFullSheet = ({ initialTab = 'books', onInventoryChanged, onGoRotte
       packs: group.packs,
       initialSku: pack.sku,
       owned: itemCounts?.[group.itemType] ?? 0,
-      spend,
       onNeedGems: () => setActiveTab('gems'),
       onGoRotten,
       onPurchased: (data) => {
         setItemCounts((prev) => ({ ...prev, [data.item_type]: data.item_qty }));
-        setSpend((prev) => (prev ? { ...prev, spent: prev.spent + (Number(pack.gem_price) || 0) } : prev));
         onInventoryChanged?.(data);
       },
     });
@@ -468,8 +462,6 @@ const StoreNewFullSheet = ({ initialTab = 'books', onInventoryChanged, onGoRotte
                       );
                     })}
                   </div>
-                  {/* 하루 상한은 닿기 전에 보여야 의미가 있다 (§6) */}
-                  {spend && <CapBar spent={spend.spent} limit={spend.limit} className="mt-[10px]" />}
                 </div>
 
                 {packGroups.map((group) => {

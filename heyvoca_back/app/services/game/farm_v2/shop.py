@@ -18,30 +18,24 @@ import datetime as dt
 from typing import Optional
 from uuid import UUID
 
-from sqlalchemy import func
-
 from app import db
 from app.models.models import (
     FarmEvent, FarmItem, FarmItemReason, GemLog, GemReason, User,
 )
 from app.services.game.farm_v2 import constants as C
-from app.services.game.farm_v2 import events, inventory, localday
+from app.services.game.farm_v2 import events, inventory
 
-# ── 경제 안전장치 (기획 9.4) ─────────────────────────────────────────
-# 하루 농장 아이템 구매 지출 상한. 기획은 "설정에서만 변경 가능"이라고 하지만
-# user_farm_setting 에 해당 컬럼이 없다(새 마이그레이션 금지) → 지금은 전역 고정값으로
-# 두고, 컬럼이 생기면 _daily_limit() 만 사용자 설정을 읽도록 바꾸면 된다.
-DAILY_GEM_SPEND_LIMIT = 30
+# ── 경제 안전장치 ─────────────────────────────────────────
+# 하루 보석 지출 한도(기획 9.4, 30개)는 2026-09 연속 학습 보호권 개편에서 **완전히 제거**했다.
+# 빈 날이 여러 날이면 보호권을 한꺼번에 사야 하는데(최대 7개 = 보석 70개), 하루 한도가
+# 그 구매를 막으면 연속을 지킬 수단이 없어진다. 남은 안전장치는 1회 수량 상한뿐이다.
 
 # 한 번의 호출로 살 수 있는 묶음 수 상한.
-# 상한을 두는 이유는 하루 한도만으로는 "한 번의 실수"를 못 막기 때문이다.
 # 수량 스테퍼가 길게 눌리거나 클라이언트가 잘못된 값을 보내면 qty=999 가 그대로 오는데,
-# 한도 안에서라도 사용자가 의도하지 않은 대량 구매는 되돌릴 방법이 없다.
-# 10 묶음이면 어떤 상품이든 하루 한도를 넘기므로 정상 사용을 막지 않는다.
+# 사용자가 의도하지 않은 대량 구매는 되돌릴 방법이 없다. 더 필요하면 나눠서 산다.
 MAX_PURCHASE_QTY = 10
 
-# 보석 원장에서 농장 상점 지출을 식별하는 값. V1 부활템 구매는 'revive_item' 이라
-# 하루 한도 집계에 섞이지 않는다.
+# 보석 원장에서 농장 상점 지출을 식별하는 값(V1 부활템 구매는 'revive_item').
 GEM_SOURCE_TYPE = 'farm_item'
 
 # 상점 진열 순서 = 삽 → 회복제 → 보호권. 부패 후 처리 흐름에서 사용자가 먼저 찾는 것이
@@ -97,41 +91,15 @@ def find_pack(sku: str) -> dict:
     raise LookupError('존재하지 않는 상품이에요.')
 
 
-def _daily_limit(user_id: UUID) -> int:
-    """하루 지출 상한 (기획 9.4). 사용자별 설정이 생기기 전까지는 전역 고정값."""
-    return DAILY_GEM_SPEND_LIMIT
+class GemShortage(PermissionError):
+    """보석 부족. `shortage` = 모자란 보석 수 — 화면이 "보석이 N개 모자라요"를 그린다.
 
-
-def daily_spend(user_id: UUID, now_utc: Optional[dt.datetime] = None) -> dict:
-    """오늘(사용자 현지일) 농장 아이템에 쓴 보석 (기획 9.4).
-
-    보유 아이템 수가 아니라 **보석 원장**을 집계한다. 아이템은 무료 획득 경로가 여럿이라
-    보유량으로는 지출을 알 수 없고, 원장이 이미 모든 소비를 남기고 있어(9.4) 별도
-    집계 테이블을 만들 이유가 없다.
-
-    하루 경계는 KST 고정이 아니라 localday 를 쓴다 — 해외 사용자의 한도가 한국 자정에
-    풀리면 자기 하루 안에서 두 번 한도를 쓰거나 반대로 못 쓰는 시간대가 생긴다.
+    PermissionError 를 상속해 기존 라우트(`/farm/shop/purchase`)의 400 처리를 그대로 탄다.
     """
-    now = now_utc or dt.datetime.utcnow()
-    tz_name = localday.get_timezone(user_id)
-    day = localday.local_day(now, tz_name)
-    start, end = localday.day_bounds_utc(day, tz_name)
 
-    spent = (
-        db.session.query(func.coalesce(func.sum(GemLog.amount), 0))
-        .filter(
-            GemLog.user_id == user_id,
-            GemLog.reason == GemReason.ITEM_PURCHASE,
-            GemLog.source_type == GEM_SOURCE_TYPE,
-            GemLog.created_at >= start,
-            GemLog.created_at < end,
-        )
-        .scalar()
-    ) or 0
-    # 원장에는 차감이 음수로 쌓인다. 화면·비교는 양수 지출액으로 다룬다.
-    spent = abs(int(spent))
-    limit = _daily_limit(user_id)
-    return {'spent': spent, 'limit': limit, 'remaining': max(0, limit - spent)}
+    def __init__(self, message: str, shortage: int):
+        super().__init__(message)
+        self.shortage = int(shortage)
 
 
 def get_wallet(user_id: UUID) -> dict:
@@ -155,19 +123,35 @@ def get_wallet(user_id: UUID) -> dict:
 
 def purchase(user_id: UUID, sku: str, qty: int = 1,
              now_utc: Optional[dt.datetime] = None) -> dict:
-    """보석으로 농장 아이템 구매 (기획 8.2, 9.3).
+    """보석으로 농장 아이템 구매 (기획 8.2, 9.3). 성공하면 커밋한다.
 
     한 트랜잭션 안에서 보석 차감 → 원장 기록 → 아이템 지급 → 이벤트 기록까지 끝낸다.
     중간에 실패하면 전부 되돌린다. 아이템만 남거나 보석만 빠지는 상태가 한 순간도
     존재하면 안 된다 — 원장과 보유량이 어긋나면 inventory.audit 으로도 원인을 못 찾는다.
 
-    사용자 행을 FOR UPDATE 로 잠그는 이유는 두 기기에서 동시에 구매 버튼을 눌렀을 때
-    두 트랜잭션이 같은 잔액을 읽어 한도를 넘겨 사는 걸 막기 위해서다.
-
     Raises:
         LookupError     — 없는 sku, 없는 사용자
         ValueError      — 수량이 1..MAX_PURCHASE_QTY 범위 밖
-        PermissionError — 보석 부족, 또는 오늘 지출 한도 초과(9.4)
+        GemShortage     — 보석 부족 (PermissionError 하위)
+    """
+    try:
+        result = purchase_in_tx(user_id, sku, qty)
+        db.session.commit()
+    except Exception:
+        db.session.rollback()
+        raise
+    return result
+
+
+def purchase_in_tx(user_id: UUID, sku: str, qty: int = 1) -> dict:
+    """`purchase` 의 본체 — **커밋하지 않는다.**
+
+    보호권 부족분 구매(`streak_v2.protect_streak`)처럼 구매와 다른 상태 변경(보호권 소모·
+    연속 재계산)을 한 트랜잭션으로 묶어야 하는 호출부가 쓴다. 보석 원장(GemLog)과 아이템
+    원장은 상점 구매와 똑같이 남는다.
+
+    사용자 행을 FOR UPDATE 로 잠그는 이유는 두 기기에서 동시에 구매 버튼을 눌렀을 때
+    두 트랜잭션이 같은 잔액을 읽어 잔액 이상을 쓰는 걸 막기 위해서다.
     """
     pack = find_pack(sku)
 
@@ -185,56 +169,42 @@ def purchase(user_id: UUID, sku: str, qty: int = 1,
     granted = pack['amount'] * qty
     label = inventory.ITEM_LABEL.get(item_type, item_type)
 
-    try:
-        user = (
-            db.session.query(User).filter(User.id == user_id).with_for_update().first()
+    user = (
+        db.session.query(User).filter(User.id == user_id).with_for_update().first()
+    )
+    if user is None:
+        raise LookupError('사용자를 찾을 수 없어요.')
+
+    if (user.gem_cnt or 0) < cost:
+        # 결제 유도 문구는 넣지 않는다(기획 13.4). 무료 획득 안내는 화면이 한다.
+        raise GemShortage('보석이 부족해요.', cost - (user.gem_cnt or 0))
+
+    user.gem_cnt = (user.gem_cnt or 0) - cost
+    gem_left = user.gem_cnt   # 커밋 후에는 인스턴스가 만료돼 다시 SELECT 가 나간다
+    db.session.add(GemLog(
+        user_id=user_id,
+        amount=-cost,
+        reason=GemReason.ITEM_PURCHASE,
+        description='{0} {1}개 구매'.format(label, granted),
+        source_type=GEM_SOURCE_TYPE,
+        source_id=None,
+        balance_after=user.gem_cnt,
+    ))
+    db.session.flush()
+
+    item_qty = inventory.grant(
+        user_id, item_type, granted, FarmItemReason.GEM_PURCHASE,
+        description='{0} 구매(보석 {1}개)'.format(pack['sku'], cost),
+    )
+
+    if item_type == FarmItem.SHOVEL:
+        # 삽만 전용 이벤트가 있다(16.2). 다시 심기 퍼널에서 "부패 → 상점 → 재심기"의
+        # 전환을 보려면 구매 시점이 농장 이벤트 축에 남아 있어야 한다.
+        events.log(
+            user_id, FarmEvent.SHOVEL_PURCHASED,
+            reason='GEM_PURCHASE',
+            detail={'sku': pack['sku'], 'qty': qty, 'granted': granted, 'gem': cost},
         )
-        if user is None:
-            raise LookupError('사용자를 찾을 수 없어요.')
-
-        if (user.gem_cnt or 0) < cost:
-            # 결제 유도 문구는 넣지 않는다(기획 13.4). 무료 획득 안내는 화면이 한다.
-            raise PermissionError('보석이 부족해요.')
-
-        spend_state = daily_spend(user_id, now_utc)
-        if spend_state['spent'] + cost > spend_state['limit']:
-            raise PermissionError(
-                '오늘 농장 아이템에 쓸 수 있는 보석은 {0}개까지예요. '
-                '오늘 {1}개를 썼어요. 내일 다시 이용할 수 있어요.'.format(
-                    spend_state['limit'], spend_state['spent'])
-            )
-
-        user.gem_cnt = (user.gem_cnt or 0) - cost
-        gem_left = user.gem_cnt   # 커밋 후에는 인스턴스가 만료돼 다시 SELECT 가 나간다
-        db.session.add(GemLog(
-            user_id=user_id,
-            amount=-cost,
-            reason=GemReason.ITEM_PURCHASE,
-            description='{0} {1}개 구매'.format(label, granted),
-            source_type=GEM_SOURCE_TYPE,
-            source_id=None,
-            balance_after=user.gem_cnt,
-        ))
-        db.session.flush()
-
-        item_qty = inventory.grant(
-            user_id, item_type, granted, FarmItemReason.GEM_PURCHASE,
-            description='{0} 구매(보석 {1}개)'.format(pack['sku'], cost),
-        )
-
-        if item_type == FarmItem.SHOVEL:
-            # 삽만 전용 이벤트가 있다(16.2). 다시 심기 퍼널에서 "부패 → 상점 → 재심기"의
-            # 전환을 보려면 구매 시점이 농장 이벤트 축에 남아 있어야 한다.
-            events.log(
-                user_id, FarmEvent.SHOVEL_PURCHASED,
-                reason='GEM_PURCHASE',
-                detail={'sku': pack['sku'], 'qty': qty, 'granted': granted, 'gem': cost},
-            )
-
-        db.session.commit()
-    except Exception:
-        db.session.rollback()
-        raise
 
     return {
         'sku': pack['sku'],

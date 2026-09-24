@@ -23,20 +23,36 @@
 // 바뀌는 순간(=탭 전환)을 감지해야 하고, 앱을 백그라운드에 뒀다 돌아온 경우는 마운트도
 // 경로 전환도 없어 document.visibilitychange 로 따로 봐야 한다. 둘 다 연타 방지로 최소
 // 5초 간격을 둔다 — 짧은 시간에 탭을 왔다갔다 하거나 화면을 껐다 켜도 요청이 겹치지 않게.
+//
+// 연속 학습 보호권 개편(scratchpad/streak_shield_contract.md §3) — 정산 알림(notice)은
+// 이 카드가 이미 불러온 /farm/streak 응답 안에 함께 내려온다. 별도 조회를 새로 만들지 않고
+// 이 컴포넌트의 streak state를 그대로 관찰해 "홈 탭에 실제로 있고 · 다른 바텀시트가 없을
+// 때"만 한 번 연다 — OnboardingMissionRewardWatcher와 같은 안전 라우트 판단 방식이다.
+// 이 카드는 TabShell이 항상 마운트해 두므로(§QA F 주석) isHomeTab이 그 자체로 "학습 결과
+// 화면 등과 겹치지 않는 화면에 있다"는 가드를 겸한다.
 
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { CaretRight } from '@phosphor-icons/react';
-import { getStreakApi } from '../../api/farm';
+import { getStreakApi, startEarnBackApi } from '../../api/farm';
 import { CROP_ASSETS } from '../farm/CropImage';
 import { STREAK_PROTECTED_BG_CLASS } from '../farm/StreakDayMark';
 import { useVocabulary } from '../../context/VocabularyContext';
 import { toLocalDateString } from '../../utils/common';
 import { vibrate } from '../../utils/osFunction';
 import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
+import { useNewBottomSheetContext, useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 import FarmVisitCalendarSheet from './FarmVisitCalendarSheet';
+import StreakSettlementNewBottomSheet from '../newBottomSheet/StreakSettlementNewBottomSheet';
 
 const MIN_RELOAD_INTERVAL_MS = 5000;
+
+/** 멈춤 기한까지 남은 시간(시간 단위, 올림) — "41시간 안에 채우면 이어져요" */
+const hoursUntil = (iso) => {
+  if (!iso) return 0;
+  const ms = new Date(iso).getTime() - Date.now();
+  return Math.max(0, Math.ceil(ms / 3600000));
+};
 
 const DOW = ['일', '월', '화', '수', '목', '금', '토'];
 
@@ -94,6 +110,39 @@ const StreakCard = ({ registerRefresh } = {}) => {
     if (typeof registerRefresh === 'function') registerRefresh(() => loadStreak(true));
   }, [registerRefresh, loadStreak]);
 
+  // ── 정산 알림(notice) — 홈 탭에 있고 다른 바텀시트가 없을 때 한 번만 연다 ─────
+  // 새 API 호출 없이 이 컴포넌트가 이미 들고 있는 streak(=/farm/streak 응답)의 notice만 본다.
+  const { stack } = useNewBottomSheetContext();
+  const { openNewBottomSheet } = useNewBottomSheetActions();
+  const shownNoticeIdRef = useRef(null);
+
+  useEffect(() => {
+    const notice = streak?.notice;
+    if (!notice?.id) return;
+    if (shownNoticeIdRef.current === notice.id) return; // 이번 세션에 이미 열었다
+    if (!isHomeTab) return; // 학습 결과 화면 등 다른 화면에 있는 동안은 열지 않는다
+    if (stack.length > 0) return; // 다른 바텀시트가 열려 있으면 방해하지 않는다(다음 재평가에 열림)
+
+    shownNoticeIdRef.current = notice.id;
+    openNewBottomSheet(
+      StreakSettlementNewBottomSheet,
+      { type: notice.type, payload: notice, streak, ackId: notice.id, onSettled: () => loadStreak(true) },
+      { isBackdropClickClosable: true, isDragToCloseEnabled: true }
+    );
+  }, [streak, isHomeTab, stack.length, openNewBottomSheet, loadStreak]);
+
+  // 멈춤 알림 행의 [지키기] — 알림(notice)이 아니라 살아있는 pause 상태를 그대로 보여준다.
+  // ack 대상이 없으므로 ackId를 넘기지 않는다.
+  const openPausedSheet = () => {
+    vibrate({ duration: 5 });
+    if (!streak?.pause) return;
+    openNewBottomSheet(
+      StreakSettlementNewBottomSheet,
+      { type: 'paused', payload: streak.pause, streak, ackId: null, onSettled: () => loadStreak(true) },
+      { isBackdropClickClosable: true, isDragToCloseEnabled: true }
+    );
+  };
+
   const today = toLocalDateString(new Date());
   const required = Math.max(1, streak?.required ?? 5);
   const todayCorrect = streak?.today_correct ?? 0;
@@ -150,11 +199,44 @@ const StreakCard = ({ registerRefresh } = {}) => {
     });
   };
 
+  // 다시 잇기 도전(§3 "막대 7칸 자리 대신 도전 진행") — active/offered 모두 막대를 밀어낸다
+  const earnBack = streak?.earn_back ?? null;
+  const showEarnBack = earnBack?.status === 'active' || earnBack?.status === 'offered';
+  const earnBackDots = useMemo(() => {
+    if (!earnBack) return [];
+    const total = earnBack.days_required ?? 3;
+    const doneCnt = earnBack.days_done ?? 0;
+    const labels = ['오늘', '내일', '모레'];
+    return Array.from({ length: total }).map((_, i) => {
+      let fillPct = 0;
+      if (i < doneCnt) fillPct = 100;
+      else if (i === doneCnt && earnBack.status === 'active' && !earnBack.today_done) {
+        fillPct = Math.min(100, Math.round((todayCorrect / required) * 100));
+      }
+      return { key: i, label: labels[i] || `${i + 1}일째`, fillPct, isNow: i === doneCnt && earnBack.status === 'active' };
+    });
+  }, [earnBack, todayCorrect, required]);
+
+  const dayOrdinal = earnBack ? (earnBack.today_done ? (earnBack.days_done ?? 0) : (earnBack.days_done ?? 0) + 1) : 0;
+  const daysLeft = earnBack ? Math.max(0, (earnBack.days_required ?? 3) - dayOrdinal) : 0;
+
+  const [startingEarnBack, setStartingEarnBack] = useState(false);
+  const handleStartEarnBack = async () => {
+    vibrate({ duration: 5 });
+    if (startingEarnBack) return;
+    setStartingEarnBack(true);
+    const res = await startEarnBackApi();
+    setStartingEarnBack(false);
+    if (res?.code === 200) loadStreak(true);
+  };
+
   // 조회 전이거나 실패했으면 홈에 빈 카드를 남기지 않는다
   if (!streak) return null;
 
   const current = streak.current ?? 0;
   const best = streak.best ?? 0;
+  const paused = !!streak.paused;
+  const pause = streak.pause ?? null;
 
   return (
     <div className="
@@ -170,8 +252,14 @@ const StreakCard = ({ registerRefresh } = {}) => {
           draggable={false}
           className="w-[26px] h-[26px] object-contain select-none flex-shrink-0"
         />
-        <span className="flex-1 text-layout-black dark:text-layout-white text-[15px] font-[700] tracking-[-0.03em]">
+        <span className="flex items-center gap-[6px] flex-1 min-w-0 text-layout-black dark:text-layout-white text-[15px] font-[700] tracking-[-0.03em]">
           {current}일 연속
+          {/* 멈춤(paused) — 계약 §3 "M일 연속 옆 멈춤 태그" */}
+          {paused && (
+            <span className="shrink-0 px-[8px] py-[3px] rounded-full text-[10.5px] font-[800] bg-primary-main-100 dark:bg-primary-main-dark text-primary-main-600 dark:text-primary-main-400">
+              멈춤
+            </span>
+          )}
         </span>
         <button
           type="button"
@@ -183,6 +271,76 @@ const StreakCard = ({ registerRefresh } = {}) => {
         </button>
       </div>
 
+      {/* 멈춤 알림 행 — 계약 §3 "보호권 이미지 · 보호권 K개가 모자라요 · N시간 안에 채우면
+          이어져요 · [지키기] → paused 시트 재오픈" */}
+      {paused && pause && (
+        <div className="flex items-center gap-[10px] mt-[12px] px-[11px] py-[10px] rounded-[10px] bg-layout-white dark:bg-layout-black">
+          <img src={CROP_ASSETS.shield} alt="" draggable={false} className="w-[28px] h-[28px] object-contain select-none shrink-0" />
+          <span className="flex-1 min-w-0 text-[12px] leading-[1.45] text-layout-gray-400 dark:text-layout-gray-300">
+            <span className="block text-[12.5px] font-[800] text-layout-black dark:text-layout-white">
+              보호권 {pause.short}개가 모자라요
+            </span>
+            {hoursUntil(pause.deadline)}시간 안에 채우면 이어져요
+          </span>
+          <button
+            type="button"
+            onClick={openPausedSheet}
+            className="shrink-0 h-[30px] px-[11px] rounded-[8px] bg-primary-main-600 text-layout-white text-[12px] font-[800]"
+          >
+            지키기
+          </button>
+        </div>
+      )}
+
+      {/* 다시 잇기 도전 — 막대 7칸 자리를 대신한다(계약 §3) */}
+      {showEarnBack ? (
+        <div className="mt-[12px] p-[12px] rounded-[10px] bg-layout-white dark:bg-layout-black">
+          {earnBack.status === 'active' ? (
+            <>
+              <div className="flex items-center gap-[6px] text-[12.5px] font-[800] text-layout-black dark:text-layout-white">
+                다시 잇기 {dayOrdinal}일째
+                <span className="px-[7px] py-[2px] rounded-full text-[10.5px] font-[800] bg-primary-main-100 dark:bg-primary-main-dark text-primary-main-600 dark:text-primary-main-400">
+                  오늘 {todayCorrect}/{required}
+                </span>
+              </div>
+              <div className="mt-[4px] text-[11px] leading-[1.5] text-layout-gray-400 dark:text-layout-gray-300">
+                {daysLeft > 0
+                  ? `${daysLeft}일 더 하면 연속 ${earnBack.from_streak}일에 이어서 ${earnBack.result_streak}일이 돼요`
+                  : `오늘 완료하면 연속 ${earnBack.result_streak}일이 돼요`}
+              </div>
+              <div className="flex gap-[8px] mt-[10px]">
+                {earnBackDots.map((dot) => (
+                  <div key={dot.key} className="flex-1 flex flex-col items-center gap-[5px]">
+                    <span className="block w-full h-[8px] rounded-full bg-[#F3DEEC] dark:bg-[rgba(255,255,255,.14)] overflow-hidden">
+                      <span
+                        style={{ width: `${dot.fillPct}%` }}
+                        className="block h-full rounded-full bg-primary-main-600"
+                      />
+                    </span>
+                    <span className="text-[10px] font-[700] text-[#B8709F] dark:text-primary-main-400">{dot.label}</span>
+                  </div>
+                ))}
+              </div>
+            </>
+          ) : (
+            <>
+              <div className="text-[12.5px] font-[800] text-layout-black dark:text-layout-white">다시 잇기 도전</div>
+              <div className="mt-[4px] text-[11px] leading-[1.5] text-layout-gray-400 dark:text-layout-gray-300">
+                끊긴 연속 {earnBack.from_streak}일, {earnBack.days_required}일 동안 이어가면 다시 연결돼요
+              </div>
+              <button
+                type="button"
+                onClick={handleStartEarnBack}
+                disabled={startingEarnBack}
+                className="mt-[10px] w-full h-[36px] rounded-[9px] bg-primary-main-600 text-layout-white text-[12.5px] font-[800] disabled:opacity-50"
+              >
+                도전 시작
+              </button>
+            </>
+          )}
+        </div>
+      ) : (
+      <>
       {/* 2층 — 일별 학습량 막대 7칸. 맨 오른쪽이 오늘 */}
       <div className="flex items-end gap-[6px] h-[38px] mt-[12px] mb-[5px]">
         {days.map((d) => {
@@ -244,6 +402,8 @@ const StreakCard = ({ registerRefresh } = {}) => {
           </span>
         ))}
       </div>
+      </>
+      )}
     </div>
   );
 };
