@@ -75,3 +75,10 @@
 2. **앱 연동**: 언어 라우팅(검색·단어장·TTS `ja` 추가, `_SUPPORTED_LANGS`), Flask 모델 `bind_key='dict_ja'`, 후리가나 표시(reading_tokens 3원소 → ruby), JLPT 필터, 출처 표기 페이지(JMdict/EDRDG CC BY-SA, Tatoeba CC BY, Kanjium CC BY-SA, 국립국어원 CC BY-SA).
 3. dev/prod 에 스키마 생성 후 dump import(50 의 import 검증은 MySQL 8 로컬에서 확인됨).
 4. 사람 검수 권장: `audit/inactive_review.md` 경계 사례(성 관련 의학 용어 keep 방침), 예문 없는 23항목, 생성 예문 문체 편중(평서체 97%).
+
+## 2단계 앱 연동 (2026-09-25 dev 배포 완료, 커밋 7415584)
+- 규격: `INTEGRATION_SPEC.md`. 사용자 학습 언어 전환 모드(실험실 `multi_lang` 베타 플래그), 홈 언어 칩·전환 시트.
+- dev: `heyvoca_dict_ja` 부트스트랩(20260925-1, 16초) + 사용자 DB 리비전 `9fdc12f3733a` 적용. prod 는 미배포.
+- prod 절차: `./deploy.sh prod` → `docker exec heyvoca_back_prod python3 -c "...dm.apply_version('20260925-1', lang='ja', publisher='me@prod')"` → `docker restart heyvoca_back_prod` → `dm.get_status(lang='ja')` in_sync 확인.
+- 앱: 커밋 9a372c5(TTS ja·채팅 언어·OCR ja·X-App-Version). 릴리스 시 `bump-version.sh app 1.1.1`(웹 게이트 `openImagePickerLang`/`CHAT_JA_MIN_APP_VERSION`=1.1.1).
+- 남은 일: MinIO 정책 `dict_ja/*` GetObject(로컬은 됨, 서버 RO 키 확인), 일본어 TTS 사전 프리워밍(`scripts/tts_prewarm.py` ja), origin/local 브랜치 동기화, admin 화면 언어 선택 UI(현재 `?lang=` 만).
