@@ -148,6 +148,9 @@ def main():
         user_meta = MetaData()
         dict_meta = MetaData()
         for table in db.metadata.tables.values():
+            # ja_only(voca_ja 등 heyvoca_dict_ja 전용 확장 테이블)은 영한 기준 검증에서 제외
+            if table.info.get('ja_only'):
+                continue
             bind_key = table.info.get('bind_key')
             if bind_key == 'dict':
                 table.tometadata(dict_meta)

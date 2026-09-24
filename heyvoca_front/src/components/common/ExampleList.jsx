@@ -1,4 +1,6 @@
 import React from 'react';
+import FuriganaText from './FuriganaText';
+import { isJa, getActiveLearningLang } from '../../utils/lang';
 
 /**
  * 단어 목록 화면에서 예문을 표시하는 공용 컴포넌트.
@@ -7,8 +9,10 @@ import React from 'react';
  *
  * @param {Array<{origin?: string, meaning?: string}>} examples
  * @param {string} className - 바깥 컨테이너 추가 클래스
+ * @param {string} [lang] - 예문 언어('ja' 면 reading_tokens 로 후리가나를 단다)
  */
-const ExampleList = ({ examples, className = '' }) => {
+const ExampleList = ({ examples, className = '', lang }) => {
+  const ja = isJa(lang ?? getActiveLearningLang());
   if (!Array.isArray(examples) || examples.length === 0) return null;
 
   return (
@@ -26,7 +30,11 @@ const ExampleList = ({ examples, className = '' }) => {
           >
             {origin && (
               <p className="text-[12px] font-[400] leading-snug text-layout-black dark:text-layout-white">
-                <span dangerouslySetInnerHTML={{ __html: origin }} />
+                <FuriganaText
+                  html={origin}
+                  readingTokens={ja ? ex.reading_tokens : undefined}
+                  lang={ja ? 'ja' : undefined}
+                />
               </p>
             )}
             {meaning && (

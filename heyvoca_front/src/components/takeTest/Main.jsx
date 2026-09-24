@@ -30,6 +30,9 @@ import { HEALTH_STATES } from '../../utils/crop';
 import { removePendingReplantIds } from '../../utils/replantPending';
 import { useResumeReplayKey } from '../../hooks/useResumeReplayKey';
 import { wordsOverlap } from '../../utils/meaningConcept';
+import { wordLang, isJa } from '../../utils/lang';
+import { getReading, shouldShowReading } from '../../utils/jaWord';
+import ReadingLine from '../common/ReadingLine';
 
 
 // 백엔드 memory state 키(short/medium/long) → 프론트 키(leaf/plant/carrot) 정규화
@@ -208,7 +211,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
   // false로 덮어써 음파(TtsRipple)가 사라진다. 각 재생에 세대 번호를 부여해, finally/onMeta는
   // "자신이 최신 재생일 때만" 상태를 갱신하도록 한다.
   const speakGenRef = useRef(0);
-  const speakText = async (text, lang = 'en', target = null) => {
+  const speakText = async (text, lang = wordLang(null), target = null) => {
     const gen = ++speakGenRef.current;
     setIsSpeaking(true);
     setSpeakDuration(null);
@@ -675,16 +678,16 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
         const meaningsToSpeak = currentQuestionDisplayMeanings.slice(0, 2).join(', ');
         if (meaningsToSpeak) speakText(meaningsToSpeak, 'ko', 'meaning');
       } else if (!['cardMatch', 'cardMatchListening', 'fillInTheBlank'].includes(question.questionType) && question.origin) {
-        speakText(question.origin, "en");
+        speakText(question.origin, wordLang(question));
       }
 
       // 다음 1~2문제의 음성을 미리 받아 blob 캐시에 채워둔다 → 전환 시 즉시 재생.
       for (let d = 1; d <= 2; d++) {
         const nq = testQuestions[progressIndex + d];
         if (!nq) break;
-        if (nq.origin) prefetchTextSound(nq.origin, 'en');
+        if (nq.origin) prefetchTextSound(nq.origin, wordLang(nq));
         if (Array.isArray(nq.words)) {
-          nq.words.forEach(w => { if (w?.origin) prefetchTextSound(w.origin, 'en'); });
+          nq.words.forEach(w => { if (w?.origin) prefetchTextSound(w.origin, wordLang(w, wordLang(nq))); });
         }
       }
       const stability = question.fsrs?.stability ?? 0;
@@ -995,7 +998,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
     // 자동 재생하지 않았으므로(위 progressIndex useEffect), 여기서 한 번 들려준다.
     // target='word' — 카드(뜻) 리플이 아니라 정답 선택지 버튼에 스피커 표시를 띄운다.
     if (question.questionType === 'reverseMultipleChoice') {
-      speakText(question.origin, 'en', 'word');
+      speakText(question.origin, wordLang(question), 'word');
     }
 
     // 오답일 때는 정답·해설을 충분히 인지하도록 전환을 더 천천히 (정답 1초 / 오답 2.5초).
@@ -1020,7 +1023,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
     }
     // reverseMultipleChoice 채점 후 카드 재탭 — target='word'로 선택지 스피커 표시를 다시 띄운다.
     // 다른 유형은 target을 안 쓰므로 넘겨도 무해하다.
-    await speakText(question.origin, "en", question.questionType === 'reverseMultipleChoice' ? 'word' : null);
+    await speakText(question.origin, wordLang(question), question.questionType === 'reverseMultipleChoice' ? 'word' : null);
   }
 
   // 듣기 문제 건너뛰기: 안내 바텀시트 확인 → 5분 활성화 + 진행 중 미답 듣기 문제를 일반 유형으로 즉시 변환
@@ -1679,7 +1682,14 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
                       </div>
                       {isReverseChoice
                         ? currentQuestionDisplayMeanings.join(', ')
-                        : testQuestions[progressIndex].origin}
+                        : <span lang={isJa(wordLang(testQuestions[progressIndex])) ? 'ja' : undefined}>{testQuestions[progressIndex].origin}</span>}
+                      {/* ja: 채점 후에만 읽기(히라가나)를 보여 준다 — 채점 전엔 정답 힌트가 되므로 숨김 */}
+                      {!isReverseChoice && isAnswered && isJa(wordLang(testQuestions[progressIndex])) && (() => {
+                        const q = testQuestions[progressIndex];
+                        return shouldShowReading(q)
+                          ? <ReadingLine reading={getReading(q)} className="block mt-[4px]" />
+                          : null;
+                      })()}
                     </h2>
                   )}
                   {/* 하단 - 부패 진단(시안 6절): 채점 전부터 뜨는 `.fb.ng` 형.

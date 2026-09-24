@@ -20,6 +20,24 @@ from app.models.models import (
     UserVocaBook,
 )
 
+from app.utils.dict_lang import get_dict_lang
+from app.utils.word_payload import load_ja_word_extras, load_ja_example_tokens, apply_word_fields
+
+# admin 요청의 사전 언어는 `?lang=`(before_request 가 g.dict_lang 설정). 관리자 단어장 language 표시명.
+LANG_DISPLAY = {'en': '영어', 'ja': '일본어'}
+
+
+def _admin_book_language(requested):
+    """AdminVocaBook.language — 현재 사전 언어 표시명. ja 사전에서는 항상 '일본어'.
+
+    en 사전은 기존처럼 입력값을 존중하되 비었으면 '영어'.
+    """
+    lang = get_dict_lang()
+    if lang != 'en':
+        return LANG_DISPLAY.get(lang, lang)
+    return (requested or '').strip() or LANG_DISPLAY['en']
+
+
 # Strong 태그 삽입 헬퍼는 app/utils/example_tagging.py 로 이동 (voca_books 와 공용)
 from app.utils.example_tagging import (
     _tag_en, _tag_ko, _tag_batch_gpt, tag_example_pair, apply_emphasis, STRONG,
@@ -143,7 +161,8 @@ def update_bookstore(bookstore_id):
 def delete_bookstore(bookstore_id):
     bookstore = Bookstore.query.get_or_404(bookstore_id)
 
-    user_voca_book = UserVocaBook.query.filter_by(bookstore_id=bookstore_id).first()
+    # bookstore.id 는 언어별 사전마다 따로 매겨지므로 같은 언어 단어장만 본다
+    user_voca_book = UserVocaBook.query.filter_by(bookstore_id=bookstore_id, language=get_dict_lang()).first()
     if user_voca_book:
         bookstore.hide = 'Y'
         db.session.commit()
@@ -340,8 +359,10 @@ def get_voca_book_words(voca_book_id):
         ).filter(VocaExampleMap.voca_id.in_(voca_ids)).all():
             examples_dict.setdefault(em.voca_id, []).append({'exam_en': e.exam_en, 'exam_ko': e.exam_ko})
 
-    words = [{'voca_id': v.id, 'word': v.word, 'pronunciation': v.pronunciation,
-               'meanings': meanings_dict.get(v.id, []), 'examples': examples_dict.get(v.id, [])}
+    extras = load_ja_word_extras(voca_ids)
+    words = [apply_word_fields({'voca_id': v.id, 'word': v.word, 'pronunciation': v.pronunciation,
+                                'meanings': meanings_dict.get(v.id, []), 'examples': examples_dict.get(v.id, [])},
+                               v.id, extras)
              for _, v in word_maps]
 
     return jsonify({'code': 200, 'data': {
@@ -423,7 +444,7 @@ def remove_word_from_voca_book(voca_book_id, voca_id):
 def create_admin_voca_book():
     try:
         book_nm = request.form.get('book_nm', '').strip()
-        language = request.form.get('language', '').strip()
+        language = _admin_book_language(request.form.get('language', ''))
         source = request.form.get('source', '').strip()
         category = request.form.get('category', '').strip()
         username = request.form.get('username', '').strip()
@@ -524,13 +545,14 @@ def get_admin_voca_book_words(admin_voca_book_id):
         (page - 1) * per_page
     ).limit(per_page).all()
 
+    extras = load_ja_word_extras([v.id for _, v in word_maps])
     words = []
     for bm, v in word_maps:
-        words.append({
+        words.append(apply_word_fields({
             'voca_id': v.id, 'map_id': bm.id, 'word': v.word, 'pronunciation': v.pronunciation,
             'meanings': json.loads(bm.voca_meanings) if bm.voca_meanings else [],
             'examples': json.loads(bm.voca_examples) if bm.voca_examples else [],
-        })
+        }, v.id, extras))
 
     return jsonify({'code': 200, 'data': {
         'voca_book': {'id': avb.id, 'book_nm': avb.book_nm, 'language': avb.language, 'word_count': total_count},
@@ -628,7 +650,7 @@ def create_admin_voca_book_from_ai():
     try:
         data = request.json or {}
         book_nm = (data.get('book_nm') or '').strip()
-        language = (data.get('language') or '').strip()
+        language = _admin_book_language(data.get('language'))
         source = (data.get('source') or '').strip()
         category = (data.get('category') or '').strip()
         username = (data.get('username') or '').strip()
@@ -764,6 +786,8 @@ def get_voca_list():
         query = query.filter(Voca.word.ilike(f'%{q}%'))
 
     pagination = query.order_by(Voca.word).paginate(page=page, per_page=per_page, error_out=False)
+    lang = get_dict_lang()
+    extras = load_ja_word_extras([v.id for v in pagination.items], lang)
     vocas = []
     for v in pagination.items:
         meanings = []
@@ -778,7 +802,7 @@ def get_voca_list():
             eo = VocaExample.query.get(em.example_id)
             if eo:
                 examples.append({'exam_en': eo.exam_en or '', 'exam_ko': eo.exam_ko or ''})
-        vocas.append({
+        vocas.append(apply_word_fields({
             'id': v.id,
             'word': v.word,
             'pronunciation': v.pronunciation,
@@ -786,7 +810,7 @@ def get_voca_list():
             'meanings': meanings,
             'meanings_detail': meanings_detail,
             'examples': examples,
-        })
+        }, v.id, extras, lang))
 
     return jsonify({'code': 200, 'data': {
         'vocas': vocas,
@@ -803,6 +827,7 @@ def voca_autocomplete():
         return jsonify({'code': 200, 'data': []})
 
     vocas = Voca.query.filter(Voca.word.ilike(f'%{q}%')).limit(10).all()
+    extras = load_ja_word_extras([v.id for v in vocas])
     words = []
     for v in vocas:
         first_meaning = None
@@ -811,7 +836,9 @@ def voca_autocomplete():
             mo = VocaMeaning.query.get(mm.meaning_id)
             if mo:
                 first_meaning = mo.meaning
-        words.append({'id': v.id, 'word': v.word, 'pronunciation': v.pronunciation, 'meaning': first_meaning})
+        words.append(apply_word_fields(
+            {'id': v.id, 'word': v.word, 'pronunciation': v.pronunciation, 'meaning': first_meaning},
+            v.id, extras))
 
     return jsonify({'code': 200, 'data': words})
 
@@ -821,16 +848,22 @@ def voca_autocomplete():
 def get_voca(voca_id):
     voca = Voca.query.get_or_404(voca_id)
 
+    lang = get_dict_lang()
     meanings = [{'id': mm.meaning.id, 'meaning': mm.meaning.meaning, 'pos': mm.meaning.pos} for mm in voca.voca_meanings]
-    examples = [{'id': em.example.id, 'exam_en': em.example.exam_en or '', 'exam_ko': em.example.exam_ko or ''}
-                for em in voca.voca_examples]
+    tokens_map = load_ja_example_tokens([em.example_id for em in voca.voca_examples], lang)
+    examples = []
+    for em in voca.voca_examples:
+        ex = {'id': em.example.id, 'exam_en': em.example.exam_en or '', 'exam_ko': em.example.exam_ko or ''}
+        if em.example.id in tokens_map:
+            ex['reading_tokens'] = tokens_map[em.example.id]
+        examples.append(ex)
 
-    return jsonify({'code': 200, 'data': {
+    return jsonify({'code': 200, 'data': apply_word_fields({
         'id': voca.id, 'word': voca.word,
         'pronunciation': voca.pronunciation or '',
         'verb_forms': voca.verb_forms or '',
         'meanings': meanings, 'examples': examples,
-    }})
+    }, voca.id, load_ja_word_extras([voca.id], lang), lang)})
 
 
 @admin_bp.route('/voca/<int:voca_id>', methods=['PATCH'])

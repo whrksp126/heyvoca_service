@@ -12,6 +12,30 @@ if [ -d "/app/migrations_dict/versions" ] && ls /app/migrations_dict/versions/*.
         echo ">>> 사전 DB 마이그레이션 실패. 컨테이너 부팅 중단."
         exit 1
     }
+
+    # 1-1. 일본어 사전(heyvoca_dict_ja) — 같은 리비전을 ja schema 에도 적용.
+    #      schema 는 dump import 로 처음 생긴다. 없으면(최초 세팅 전) 경고 후 건너뜀.
+    DICT_JA_EXISTS=$(python3 - <<'PYEOF' 2>/dev/null || echo "error"
+import os
+from sqlalchemy import create_engine, text
+from sqlalchemy.pool import NullPool
+url = os.getenv('DATABASE_URL_DICT') or os.getenv('DATABASE_URL')
+schema = os.getenv('DICT_SCHEMA_JA', 'heyvoca_dict_ja')
+eng = create_engine(url, poolclass=NullPool)
+with eng.connect() as c:
+    row = c.execute(text("SELECT SCHEMA_NAME FROM information_schema.SCHEMATA WHERE SCHEMA_NAME = :s"), {"s": schema}).first()
+print("yes" if row else "no")
+PYEOF
+)
+    if [ "$DICT_JA_EXISTS" = "yes" ]; then
+        echo ">>> DICT_BIND_LANG=ja flask db upgrade --directory migrations_dict..."
+        DICT_BIND_LANG=ja flask db upgrade --directory migrations_dict || {
+            echo ">>> 일본어 사전 DB 마이그레이션 실패. 컨테이너 부팅 중단."
+            exit 1
+        }
+    else
+        echo ">>> [WARN] 일본어 사전 schema(${DICT_SCHEMA_JA:-heyvoca_dict_ja}) 없음/확인 실패($DICT_JA_EXISTS) → ja 마이그레이션 skip (dump import 후 재시작하면 적용)"
+    fi
 else
     echo ">>> migrations_dict 비어있음 → skip (첫 마이그레이션 생성 전)"
 fi

@@ -398,6 +398,13 @@ const TakeTest = () => {
       origin: item.word,
       meanings: item.meanings ?? [],
       examples: item.examples ?? [],
+      // 일본어 연동(INTEGRATION_SPEC 4절 단어 공통 필드) — language 가 TTS·표시 언어를 정한다.
+      // 빈 값은 싣지 않는다(wordLang 이 현재 학습 언어로 폴백).
+      ...(item.language ? { language: item.language } : {}),
+      ...(item.reading ? { reading: item.reading } : {}),
+      ...(item.romaji ? { romaji: item.romaji } : {}),
+      ...(item.jlpt ? { jlpt: item.jlpt } : {}),
+      ...(item.pronunciation ? { pronunciation: item.pronunciation } : {}),
       // 오답 선택지에서 "뜻이 같거나 유사한 단어"를 제외하는 데 쓰는 개념 그룹 정보
       // (utils/meaningConcept.js 단일 소스 — meanings와 유실 없이 함께 실어 나른다)
       concept_ids: item.concept_ids ?? [],

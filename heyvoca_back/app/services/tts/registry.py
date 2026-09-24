@@ -22,6 +22,7 @@ _BUILDERS = {
 _LANG_DEFAULT_PROVIDER = {
     'en': 'edge',
     'ko': 'edge',
+    'ja': 'edge',   # 일본어 — ja-JP-NanamiNeural 기본, 실패 시 gTTS(ja) 폴백
 }
 
 _instances = {}

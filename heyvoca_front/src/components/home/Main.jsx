@@ -35,6 +35,10 @@ import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
 import { vibrate, checkNotificationPermissionGranted, isAppVersionAtLeast } from '../../utils/osFunction';
 import { useStats } from '../../context/StatsContext';
 import { prefetchLabSettings } from '../../api/lab';
+import useLabFeatures from '../../hooks/useLabFeatures';
+import { Translate } from '@phosphor-icons/react';
+import { LANG_LABEL, DEFAULT_LEARNING_LANG } from '../../utils/lang';
+import { LearningLangNewBottomSheet } from '../newBottomSheet/LearningLangNewBottomSheet';
 import { useQuickReview } from '../../hooks/useQuickReview';
 import PullToRefresh from '../common/PullToRefresh';
 
@@ -100,7 +104,11 @@ const Main = () => {
   "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
 
   const navigate = useNavigate();
-  const { userProfile, fetchUserCheckin, markGoalOverlayShown } = useUser();
+  const { userProfile, fetchUserCheckin, markGoalOverlayShown, learningLang } = useUser();
+  // 실험실 "다른 언어 학습하기(베타)" — 켜져 있을 때만 왼쪽 위 언어 칩을 띄운다.
+  // 이미 영어가 아닌 언어로 학습 중이면(플래그 조회 실패 등) 되돌아갈 길이 없어지지 않도록 항상 띄운다.
+  const labFeatures = useLabFeatures();
+  const showLangChip = !!labFeatures.multi_lang || learningLang !== DEFAULT_LEARNING_LANG;
 
   // 통계는 StatsContext(라우터 바깥 캐시)에서 구독 — 탭 전환마다 재조회/스피너 없이 캐시값을 즉시 사용,
   // 학습 세션 완료 시에만 조용히 갱신된다.
@@ -519,6 +527,31 @@ const Main = () => {
           />
           {gemCnt.toLocaleString()}
         </button>
+
+        {/* 학습 언어 칩 — 보석 칩과 대칭으로 히어로 좌측 상단에 뜬다(같은 칩 규격).
+            탭하면 학습 언어 바텀시트. 실험실 multi_lang 이 켜졌을 때만 노출 */}
+        {showLangChip && (
+          <button
+            type="button"
+            onClick={() => {
+              vibrate({ duration: 5 });
+              pushNewBottomSheet(LearningLangNewBottomSheet, {}, { isBackdropClickClosable: true, isDragToCloseEnabled: true });
+            }}
+            aria-label={`학습 언어: ${LANG_LABEL[learningLang]}`}
+            className="
+              absolute top-[max(48px,calc(var(--status-bar-height)+4px))] left-[16px] z-[20]
+              inline-flex items-center gap-[6px]
+              h-[36px] pl-[10px] pr-[12px] rounded-full
+              bg-layout-white/90 dark:bg-layout-gray-dark/90 backdrop-blur-[8px]
+              shadow-[0_2px_8px_rgba(96,80,52,.16)] dark:shadow-[0_2px_8px_rgba(0,0,0,.4)]
+              text-[14px] font-[700] tracking-[-0.02em]
+              text-layout-black dark:text-layout-white
+            "
+          >
+            <Translate size={18} weight="bold" className="text-primary-main-600" />
+            {LANG_LABEL[learningLang]}
+          </button>
+        )}
 
         {/* §4 2줄 헤드라인 — 첫머리(닉네임 또는 "헤이,")만 브랜드 핑크로 칠해 brand 를
             끼워 넣는다. 농장 전체를 핑크로 칠하지 않는다는 기획 20.1 을 지키는 지점이다.

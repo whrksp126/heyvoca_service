@@ -1,0 +1,23 @@
+# 원본 다운로드(수백 MB, 재다운로드 가능)와 중간 산출물은 git 추적 안 함
+# 단, 출처·라이선스 기록 문서는 추적한다
+sources/*
+!sources/SOURCES.md
+!sources/krdict/
+sources/krdict/*
+!sources/krdict/LICENSE.md
+build/
+batches/
+# 재현에 필요한 소형 산출물은 추적 (오버레이·매니페스트·비활성 목록·포인터)
+!build/
+build/*
+!build/meaning_overrides.jsonl
+!build/example_overrides.jsonl
+!build/example_gen_overrides.jsonl
+!build/inactive_words.json
+!build/all_rejected_ids.json
+!build/example_fix_manifest.json
+!build/example_gen_regen_manifest.json
+!build/need_generation.json
+# 감사 전체 적중 목록(대용량, 재생성 가능)은 git 제외
+audit/*_all.json
+audit/inactive_candidates.json

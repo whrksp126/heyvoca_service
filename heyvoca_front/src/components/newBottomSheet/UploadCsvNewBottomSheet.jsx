@@ -244,7 +244,7 @@ export const UploadCsvNewBottomSheet = () => {
         <div className="flex flex-col gap-[8px]">
           <h3 className="text-[14px] font-[700] text-layout-black dark:text-layout-white">파일 선택</h3>
           <p className="text-[12px] text-layout-gray-400">
-            CSV 헤더: W(단어), M(뜻), EE(예문-문장), EK(예문-뜻)
+            CSV 헤더: W(단어), M(뜻), EE(예문), EK(예문 뜻)
           </p>
 
           <input

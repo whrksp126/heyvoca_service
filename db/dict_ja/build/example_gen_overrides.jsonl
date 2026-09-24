@@ -1,0 +1,168 @@
+{"jmdict_id": 1087560, "seq": 1, "sense_no": 1, "ja": "空が<strong class=\"target-word\">トワイライト</strong>に染まってきた。", "ko": "하늘이 <strong class=\"target-word\">황혼</strong>으로 물들기 시작했다.", "fix_reason": "ko_particle_split"}
+{"jmdict_id": 1087670, "seq": 1, "sense_no": 1, "ja": "この曲は<strong class=\"target-word\">ト長調</strong>で作られている。", "ko": "이 곡은 <strong class=\"target-word\">사장조</strong>로 작곡되었다.", "fix_reason": "ko_particle_split"}
+{"jmdict_id": 1088280, "seq": 2, "sense_no": 1, "ja": "二つの装置が<strong class=\"target-word\">ドッキング</strong>で接続された。", "ko": "두 장치가 <strong class=\"target-word\">도킹</strong>으로 연결됐다.", "fix_reason": "ko_particle_split"}
+{"jmdict_id": 1088570, "seq": 2, "sense_no": 1, "ja": "彼女は<strong class=\"target-word\">ドライフラワー</strong>でリースを作った。", "ko": "그녀는 <strong class=\"target-word\">드라이플라워</strong>로 리스를 만들었다.", "fix_reason": "ko_particle_split"}
+{"jmdict_id": 1089050, "seq": 1, "sense_no": 1, "ja": "選手は<strong class=\"target-word\">ドリブル</strong>で敵を抜いた。", "ko": "선수는 <strong class=\"target-word\">드리블</strong>로 상대를 제쳤다.", "fix_reason": "ko_particle_split"}
+{"jmdict_id": 1089190, "seq": 1, "sense_no": 1, "ja": "選手は<strong class=\"target-word\">ドルフィンキック</strong>で加速した。", "ko": "선수는 <strong class=\"target-word\">돌핀킥</strong>으로 가속했다.", "fix_reason": "ko_particle_split"}
+{"jmdict_id": 1090430, "seq": 2, "sense_no": 1, "ja": "彼は<strong class=\"target-word\">ナックル</strong>で机を叩いた。", "ko": "그는 <strong class=\"target-word\">손마디</strong>로 책상을 두드렸다.", "fix_reason": "ko_particle_split"}
+{"jmdict_id": 1090940, "seq": 1, "sense_no": 1, "ja": "柔道で彼は<strong class=\"target-word\">ニー</strong>で相手を押さえた。", "ko": "유도에서 그는 <strong class=\"target-word\">무릎</strong>으로 상대를 눌렀다.", "fix_reason": "ko_particle_split"}
+{"jmdict_id": 1091470, "seq": 2, "sense_no": 1, "ja": "来月<strong class=\"target-word\">ニュージャージー</strong>へ出張する予定だ。", "ko": "다음 달 <strong class=\"target-word\">뉴저지</strong>로 출장 갈 예정이다.", "fix_reason": "ko_particle_split"}
+{"jmdict_id": 1091710, "seq": 2, "sense_no": 1, "ja": "彼らは<strong class=\"target-word\">ニュータウン</strong>に引っ越した。", "ko": "그들은 <strong class=\"target-word\">신도시</strong>로 이사했다.", "fix_reason": "ko_particle_split"}
+{"jmdict_id": 1092380, "seq": 2, "sense_no": 2, "ja": "この壁は<strong class=\"target-word\">ネイビー</strong>に塗られている。", "ko": "이 벽은 <strong class=\"target-word\">네이비</strong>로 칠해져 있다.", "fix_reason": "ko_particle_split"}
+{"jmdict_id": 1385300, "seq": 2, "sense_no": 1, "ja": "<strong class=\"target-word\">拙速</strong>に結論を出すのは避けたい。", "ko": "<strong class=\"target-word\">졸속</strong>으로 결론을 내리는 것은 피하고 싶다.", "fix_reason": "ko_particle_split"}
+{"jmdict_id": 1003950, "seq": 1, "rejected": true, "reason": "접사전용", "fix_reason": "batch_regen_0001"}
+{"jmdict_id": 1003950, "seq": 2, "rejected": true, "reason": "접사전용", "fix_reason": "batch_regen_0001"}
+{"jmdict_id": 1029400, "seq": 1, "sense_no": 1, "ja": "最近、<strong class=\"target-word\">エネ</strong>の価格が上がっている。", "ko": "최근 <strong class=\"target-word\">에너지</strong> 가격이 오르고 있다.", "fix_reason": "batch_regen_0001"}
+{"jmdict_id": 1029400, "seq": 2, "sense_no": 1, "ja": "この国は<strong class=\"target-word\">エネ</strong>を海外からの輸入に頼っている。", "ko": "이 나라는 <strong class=\"target-word\">에너지</strong>를 해외 수입에 의존하고 있다.", "fix_reason": "batch_regen_0001"}
+{"jmdict_id": 1036780, "seq": 1, "sense_no": 1, "ja": "デザイナーは文字の<strong class=\"target-word\">カーン</strong>を調整した。", "ko": "디자이너는 글자 사이의 <strong class=\"target-word\">자간</strong>을 조정했다.", "fix_reason": "batch_regen_0001"}
+{"jmdict_id": 1036780, "seq": 2, "sense_no": 1, "ja": "このフォントは<strong class=\"target-word\">カーン</strong>の設定が美しい。", "ko": "이 폰트는 <strong class=\"target-word\">자간</strong> 설정이 아름답다.", "fix_reason": "batch_regen_0001"}
+{"jmdict_id": 1037720, "seq": 1, "sense_no": 1, "ja": "今日の昼は<strong class=\"target-word\">カツ</strong>を食べた。", "ko": "오늘 점심은 <strong class=\"target-word\">카츠</strong>를 먹었다.", "fix_reason": "batch_regen_0001"}
+{"jmdict_id": 1037720, "seq": 2, "sense_no": 1, "ja": "母は夕食に<strong class=\"target-word\">カツ</strong>を揚げてくれた。", "ko": "어머니는 저녁으로 <strong class=\"target-word\">카츠</strong>를 튀겨 주셨다.", "fix_reason": "batch_regen_0001"}
+{"jmdict_id": 1066590, "seq": 1, "sense_no": 1, "ja": "北海道で<strong class=\"target-word\">ジンギスカン</strong>を食べた。", "ko": "홋카이도에서 <strong class=\"target-word\">칭기즈칸 구이</strong>를 먹었다.", "fix_reason": "batch_regen_0001"}
+{"jmdict_id": 1066590, "seq": 2, "sense_no": 1, "ja": "夏祭りでは<strong class=\"target-word\">ジンギスカン</strong>を焼いて楽しみます。", "ko": "여름 축제에서는 <strong class=\"target-word\">칭기즈칸 구이</strong>를 구워 즐겨요.", "fix_reason": "batch_regen_0001"}
+{"jmdict_id": 1074830, "seq": 1, "sense_no": 1, "ja": "このガソリンスタンドは<strong class=\"target-word\">セルフ</strong>です。", "ko": "이 주유소는 <strong class=\"target-word\">셀프서비스</strong>예요.", "fix_reason": "batch_regen_0001"}
+{"jmdict_id": 1074830, "seq": 2, "sense_no": 1, "ja": "昼食はいつも<strong class=\"target-word\">セルフ</strong>の店で食べます。", "ko": "점심은 항상 <strong class=\"target-word\">셀프서비스</strong> 가게에서 먹어요.", "fix_reason": "batch_regen_0001"}
+{"jmdict_id": 1080940, "seq": 1, "sense_no": 1, "ja": "トランプの中で<strong class=\"target-word\">テン</strong>は大きい数字だ。", "ko": "트럼프 카드 중에서 <strong class=\"target-word\">10</strong>은 큰 숫자다.", "fix_reason": "batch_regen_0001"}
+{"jmdict_id": 1080940, "seq": 2, "sense_no": 1, "ja": "彼は<strong class=\"target-word\">テン</strong>のカードを引いて喜びました。", "ko": "그는 <strong class=\"target-word\">10</strong> 카드를 뽑고 기뻐했어요.", "fix_reason": "batch_regen_0001"}
+{"jmdict_id": 1082930, "seq": 1, "rejected": true, "reason": "접두사전용", "fix_reason": "batch_regen_0001"}
+{"jmdict_id": 1082930, "seq": 2, "rejected": true, "reason": "접두사전용", "fix_reason": "batch_regen_0001"}
+{"jmdict_id": 1092890, "seq": 1, "rejected": true, "reason": "접미사전용", "fix_reason": "batch_regen_0001"}
+{"jmdict_id": 1092890, "seq": 2, "rejected": true, "reason": "접미사전용", "fix_reason": "batch_regen_0001"}
+{"jmdict_id": 1094180, "seq": 1, "rejected": true, "reason": "접두사전용", "fix_reason": "batch_regen_0001"}
+{"jmdict_id": 1094180, "seq": 2, "rejected": true, "reason": "접두사전용", "fix_reason": "batch_regen_0001"}
+{"jmdict_id": 1100590, "seq": 1, "sense_no": 1, "ja": "<strong class=\"target-word\">パーセプトロン</strong>は機械学習の基本的なモデルだ。", "ko": "<strong class=\"target-word\">퍼셉트론</strong>은 기계학습의 기본적인 모델이다.", "fix_reason": "batch_regen_0001"}
+{"jmdict_id": 1100590, "seq": 2, "sense_no": 1, "ja": "学生は<strong class=\"target-word\">パーセプトロン</strong>の仕組みを学んだ。", "ko": "학생은 <strong class=\"target-word\">퍼셉트론</strong>의 구조를 배웠다.", "fix_reason": "batch_regen_0001"}
+{"jmdict_id": 1118260, "seq": 1, "rejected": true, "reason": "접두사전용", "fix_reason": "batch_regen_0001"}
+{"jmdict_id": 1118260, "seq": 2, "rejected": true, "reason": "접두사전용", "fix_reason": "batch_regen_0001"}
+{"jmdict_id": 1129970, "seq": 1, "rejected": true, "reason": "접미사전용", "fix_reason": "batch_regen_0001"}
+{"jmdict_id": 1129970, "seq": 2, "rejected": true, "reason": "접미사전용", "fix_reason": "batch_regen_0001"}
+{"jmdict_id": 1172250, "seq": 1, "sense_no": 1, "ja": "十二支の中で<strong class=\"target-word\">丑</strong>が好きだ。", "ko": "십이지 중에서 <strong class=\"target-word\">소띠</strong>를 좋아한다.", "fix_reason": "batch_regen_0001"}
+{"jmdict_id": 1172250, "seq": 2, "sense_no": 1, "ja": "<strong class=\"target-word\">丑</strong>は十二支の二番目です。", "ko": "<strong class=\"target-word\">축</strong>은 십이지의 두 번째예요.", "fix_reason": "batch_regen_0001"}
+{"jmdict_id": 1192680, "seq": 1, "sense_no": 1, "ja": "大学でどの<strong class=\"target-word\">科</strong>を専攻していますか。", "ko": "대학에서 어느 <strong class=\"target-word\">과</strong>를 전공하고 있어요?", "fix_reason": "batch_regen_0001"}
+{"jmdict_id": 1192680, "seq": 2, "sense_no": 1, "ja": "その<strong class=\"target-word\">科</strong>の入試はとても難しい。", "ko": "그 <strong class=\"target-word\">과</strong>의 입시는 매우 어렵다.", "fix_reason": "batch_regen_0001"}
+{"jmdict_id": 1209620, "seq": 1, "sense_no": 1, "ja": "魚を<strong class=\"target-word\">干し</strong>にして保存した。", "ko": "생선을 <strong class=\"target-word\">건조</strong>해서 보관했다.", "fix_reason": "batch_regen_0001"}
+{"jmdict_id": 1209620, "seq": 2, "sense_no": 1, "ja": "天日でじっくり<strong class=\"target-word\">干し</strong>を行いました。", "ko": "햇볕에 천천히 <strong class=\"target-word\">건조</strong>를 했어요.", "fix_reason": "batch_regen_0001"}
+{"jmdict_id": 1229880, "seq": 1, "sense_no": 1, "ja": "その<strong class=\"target-word\">球</strong>を手に取った。", "ko": "그 <strong class=\"target-word\">구</strong>를 손에 들었다.", "fix_reason": "batch_regen_0001"}
+{"jmdict_id": 1229880, "seq": 2, "sense_no": 1, "ja": "<strong class=\"target-word\">球</strong>の直径を測った。", "ko": "<strong class=\"target-word\">구</strong>의 지름을 측정했다.", "fix_reason": "batch_regen_0001"}
+{"jmdict_id": 1261130, "seq": 1, "rejected": true, "reason": "접두사전용", "fix_reason": "batch_regen_0001"}
+{"jmdict_id": 1261130, "seq": 2, "rejected": true, "reason": "접두사전용", "fix_reason": "batch_regen_0001"}
+{"jmdict_id": 1268970, "seq": 1, "sense_no": 1, "ja": "十二支の中で<strong class=\"target-word\">午</strong>は七番目だ。", "ko": "십이지 중에서 <strong class=\"target-word\">말띠</strong>는 일곱 번째다.", "fix_reason": "batch_regen_0001"}
+{"jmdict_id": 1268970, "seq": 2, "sense_no": 1, "ja": "彼は今年の干支が<strong class=\"target-word\">午</strong>だと言いました。", "ko": "그는 올해 띠가 <strong class=\"target-word\">말띠</strong>라고 말했어요.", "fix_reason": "batch_regen_0001"}
+{"jmdict_id": 1284470, "seq": 1, "sense_no": 1, "ja": "色の<strong class=\"target-word\">合わせ</strong>を工夫した。", "ko": "색깔의 <strong class=\"target-word\">맞춤</strong>을 궁리했다.", "fix_reason": "batch_regen_0001"}
+{"jmdict_id": 1284470, "seq": 2, "sense_no": 1, "ja": "この靴と服の<strong class=\"target-word\">合わせ</strong>はどう思う?", "ko": "이 신발과 옷의 <strong class=\"target-word\">맞춤</strong>은 어떻게 생각해?", "fix_reason": "batch_regen_0001"}
+{"jmdict_id": 1295830, "seq": 1, "sense_no": 1, "ja": "畑で新鮮な<strong class=\"target-word\">菜</strong>を摘んだ。", "ko": "밭에서 신선한 <strong class=\"target-word\">채소</strong>를 땄다.", "fix_reason": "batch_regen_0001"}
+{"jmdict_id": 1295830, "seq": 2, "sense_no": 1, "ja": "この<strong class=\"target-word\">菜</strong>はおひたしにすると美味しいです。", "ko": "이 <strong class=\"target-word\">나물</strong>은 무침으로 하면 맛있어요.", "fix_reason": "batch_regen_0001"}
+{"jmdict_id": 1307780, "seq": 1, "sense_no": 1, "ja": "十二支の一番目は<strong class=\"target-word\">子</strong>だ。", "ko": "십이지의 첫 번째는 <strong class=\"target-word\">쥐</strong>다.", "fix_reason": "batch_regen_0001"}
+{"jmdict_id": 1307780, "seq": 2, "sense_no": 1, "ja": "十二支の中で<strong class=\"target-word\">子</strong>を選ぶ人も多い。", "ko": "십이지 중에서 <strong class=\"target-word\">쥐</strong>를 고르는 사람도 많다.", "fix_reason": "batch_regen_0001"}
+{"jmdict_id": 1324950, "seq": 1, "sense_no": 1, "ja": "彼女はその店の<strong class=\"target-word\">主</strong>だ。", "ko": "그녀는 그 가게의 <strong class=\"target-word\">주인</strong>이다.", "fix_reason": "batch_regen_0001"}
+{"jmdict_id": 1324950, "seq": 2, "sense_no": 1, "ja": "この犬の<strong class=\"target-word\">主</strong>は近所に住んでいます。", "ko": "이 개의 <strong class=\"target-word\">주인</strong>은 근처에 살고 있어요.", "fix_reason": "batch_regen_0001"}
+{"jmdict_id": 1333240, "seq": 1, "rejected": true, "reason": "단독용법드묾", "fix_reason": "batch_regen_0001"}
+{"jmdict_id": 1333240, "seq": 2, "rejected": true, "reason": "단독용법드묾", "fix_reason": "batch_regen_0001"}
+{"jmdict_id": 1333910, "seq": 1, "rejected": true, "reason": "단독용법없음", "fix_reason": "batch_regen_0001"}
+{"jmdict_id": 1333910, "seq": 2, "rejected": true, "reason": "단독용법없음", "fix_reason": "batch_regen_0001"}
+{"jmdict_id": 1335730, "seq": 1, "rejected": true, "reason": "접미사전용", "fix_reason": "batch_regen_0001"}
+{"jmdict_id": 1335730, "seq": 2, "rejected": true, "reason": "접미사전용", "fix_reason": "batch_regen_0001"}
+{"jmdict_id": 1341360, "seq": 1, "sense_no": 1, "ja": "統計は<strong class=\"target-word\">旬</strong>ごとにまとめられる。", "ko": "통계는 <strong class=\"target-word\">열흘</strong> 단위로 정리된다.", "fix_reason": "batch_regen_0001"}
+{"jmdict_id": 1341360, "seq": 2, "sense_no": 1, "ja": "一年は三十六の<strong class=\"target-word\">旬</strong>に分けられます。", "ko": "일 년은 서른여섯 번의 <strong class=\"target-word\">열흘</strong>로 나뉩니다.", "fix_reason": "batch_regen_0001"}
+{"jmdict_id": 1344360, "seq": 1, "rejected": true, "reason": "접두사전용", "fix_reason": "batch_regen_0001"}
+{"jmdict_id": 1344360, "seq": 2, "rejected": true, "reason": "접두사전용", "fix_reason": "batch_regen_0001"}
+{"jmdict_id": 1346960, "seq": 1, "sense_no": 1, "ja": "この町は<strong class=\"target-word\">商工</strong>が盛んだ。", "ko": "이 마을은 <strong class=\"target-word\">상공</strong>이 활발하다.", "fix_reason": "batch_regen_0001"}
+{"jmdict_id": 1346960, "seq": 2, "sense_no": 1, "ja": "彼はこの地域の<strong class=\"target-word\">商工</strong>に詳しい。", "ko": "그는 이 지역의 <strong class=\"target-word\">상공</strong>에 밝다.", "fix_reason": "batch_regen_0001"}
+{"jmdict_id": 1350750, "seq": 1, "sense_no": 1, "ja": "彼女は<strong class=\"target-word\">こげ茶</strong>のコートを着ている。", "ko": "그녀는 <strong class=\"target-word\">진갈색</strong> 코트를 입고 있다.", "fix_reason": "batch_regen_0001"}
+{"jmdict_id": 1350750, "seq": 2, "sense_no": 1, "ja": "この壁は<strong class=\"target-word\">こげ茶</strong>に塗られています。", "ko": "이 벽은 <strong class=\"target-word\">진갈색</strong>으로 칠해져 있어요.", "fix_reason": "batch_regen_0001"}
+{"jmdict_id": 1351820, "seq": 1, "sense_no": 1, "ja": "この地域は独特な<strong class=\"target-word\">象</strong>を呈している。", "ko": "이 지역은 독특한 <strong class=\"target-word\">양상</strong>을 띠고 있다.", "fix_reason": "batch_regen_0001"}
+{"jmdict_id": 1351820, "seq": 2, "sense_no": 1, "ja": "その事件は複雑な<strong class=\"target-word\">象</strong>を呈した。", "ko": "그 사건은 복잡한 <strong class=\"target-word\">양상</strong>을 띠었다.", "fix_reason": "batch_regen_0001"}
+{"jmdict_id": 1352140, "seq": 1, "rejected": true, "reason": "접두사전용", "fix_reason": "batch_regen_0001"}
+{"jmdict_id": 1352140, "seq": 2, "rejected": true, "reason": "접두사전용", "fix_reason": "batch_regen_0001"}
+{"jmdict_id": 1352150, "seq": 1, "sense_no": 1, "ja": "船は静かに川の<strong class=\"target-word\">上</strong>へ進んだ。", "ko": "배는 조용히 강 <strong class=\"target-word\">상류</strong>로 나아갔다.", "fix_reason": "batch_regen_0001"}
+{"jmdict_id": 1352150, "seq": 2, "sense_no": 1, "ja": "村は川の<strong class=\"target-word\">上</strong>に位置しています。", "ko": "마을은 강 <strong class=\"target-word\">상류</strong>에 위치해 있어요.", "fix_reason": "batch_regen_0001"}
+{"jmdict_id": 1378440, "seq": 1, "rejected": true, "reason": "접두사전용", "fix_reason": "batch_regen_0001"}
+{"jmdict_id": 1378440, "seq": 2, "rejected": true, "reason": "접두사전용", "fix_reason": "batch_regen_0001"}
+{"jmdict_id": 1389070, "seq": 1, "sense_no": 1, "ja": "浜辺で<strong class=\"target-word\">ちどり</strong>が飛んでいた。", "ko": "해변에서 <strong class=\"target-word\">물떼새</strong>가 날고 있었다.", "fix_reason": "batch_regen_0001"}
+{"jmdict_id": 1389070, "seq": 2, "sense_no": 1, "ja": "<strong class=\"target-word\">ちどり</strong>は砂浜でよく見られる。", "ko": "<strong class=\"target-word\">물떼새</strong>는 모래사장에서 자주 보인다.", "fix_reason": "batch_regen_0001"}
+{"jmdict_id": 1416290, "seq": 1, "sense_no": 1, "ja": "十二支の中で<strong class=\"target-word\">辰</strong>が一番人気だ。", "ko": "십이지 중에서 <strong class=\"target-word\">용띠</strong>가 가장 인기다.", "fix_reason": "batch_regen_0001"}
+{"jmdict_id": 1416290, "seq": 2, "sense_no": 1, "ja": "多くの人が<strong class=\"target-word\">辰</strong>を縁起が良いと考えます。", "ko": "많은 사람이 <strong class=\"target-word\">용띠</strong>를 길하다고 여겨요.", "fix_reason": "batch_regen_0001"}
+{"jmdict_id": 1427590, "seq": 1, "sense_no": 1, "ja": "彼はその<strong class=\"target-word\">庁</strong>に長年勤めている。", "ko": "그는 그 <strong class=\"target-word\">청</strong>에서 오랫동안 근무하고 있다.", "fix_reason": "batch_regen_0001"}
+{"jmdict_id": 1427590, "seq": 2, "sense_no": 1, "ja": "新しい<strong class=\"target-word\">庁</strong>が来月開設される。", "ko": "새로운 <strong class=\"target-word\">청</strong>이 다음 달 개설된다.", "fix_reason": "batch_regen_0001"}
+{"jmdict_id": 1431840, "seq": 1, "sense_no": 1, "ja": "今どきこんな服装は<strong class=\"target-word\">珍</strong>だ。", "ko": "요즘 이런 옷차림은 <strong class=\"target-word\">드물다</strong>.", "fix_reason": "batch_regen_0001"}
+{"jmdict_id": 1431840, "seq": 2, "sense_no": 2, "ja": "それは実に<strong class=\"target-word\">珍</strong>な話だよ。", "ko": "그것은 참으로 <strong class=\"target-word\">기이한</strong> 이야기야.", "fix_reason": "batch_regen_0001"}
+{"jmdict_id": 1445780, "seq": 1, "sense_no": 1, "ja": "彼の突然の<strong class=\"target-word\">倒れ</strong>に皆が驚いた。", "ko": "그의 갑작스러운 <strong class=\"target-word\">쓰러짐</strong>에 모두가 놀랐다.", "fix_reason": "batch_regen_0001"}
+{"jmdict_id": 1445780, "seq": 2, "sense_no": 1, "ja": "そのビルの<strong class=\"target-word\">倒れ</strong>は深刻な被害を招いた。", "ko": "그 건물의 <strong class=\"target-word\">붕괴</strong>는 심각한 피해를 불러왔다.", "fix_reason": "batch_regen_0001"}
+{"jmdict_id": 1447430, "seq": 1, "sense_no": 3, "ja": "彼女は<strong class=\"target-word\">東</strong>を美しく奏でた。", "ko": "그녀는 <strong class=\"target-word\">야마토고토</strong>를 아름답게 연주했다.", "fix_reason": "batch_regen_0001"}
+{"jmdict_id": 1447430, "seq": 2, "sense_no": 3, "ja": "祖母は昔、<strong class=\"target-word\">東</strong>を弾いていたそうです。", "ko": "할머니는 옛날에 <strong class=\"target-word\">야마토고토</strong>를 연주했다고 해요.", "fix_reason": "batch_regen_0001"}
+{"jmdict_id": 1453310, "seq": 1, "sense_no": 1, "ja": "二人は<strong class=\"target-word\">同病</strong>を患っていた。", "ko": "두 사람은 <strong class=\"target-word\">같은 병</strong>을 앓고 있었다.", "fix_reason": "batch_regen_0001"}
+{"jmdict_id": 1453310, "seq": 2, "sense_no": 1, "ja": "彼女とは<strong class=\"target-word\">同病</strong>のよしみで親しくなった。", "ko": "그녀와는 <strong class=\"target-word\">동병</strong>의 정으로 친해졌다.", "fix_reason": "batch_regen_0001"}
+{"jmdict_id": 1455410, "seq": 1, "sense_no": 1, "ja": "<strong class=\"target-word\">禿</strong>は多くの人が気にする悩みだ。", "ko": "<strong class=\"target-word\">탈모</strong>는 많은 사람이 신경 쓰는 고민이다.", "fix_reason": "batch_regen_0001"}
+{"jmdict_id": 1455410, "seq": 2, "sense_no": 1, "ja": "<strong class=\"target-word\">禿</strong>は遺伝と関係があるとされています。", "ko": "<strong class=\"target-word\">탈모</strong>는 유전과 관련이 있다고 해요.", "fix_reason": "batch_regen_0001"}
+{"jmdict_id": 1463390, "seq": 1, "sense_no": 1, "ja": "彼女は<strong class=\"target-word\">尼</strong>として静かに暮らしている。", "ko": "그녀는 <strong class=\"target-word\">비구니</strong>로서 조용히 살고 있다.", "fix_reason": "batch_regen_0001"}
+{"jmdict_id": 1463390, "seq": 2, "sense_no": 1, "ja": "<strong class=\"target-word\">尼</strong>は毎朝お経を唱える。", "ko": "<strong class=\"target-word\">비구니</strong>는 매일 아침 불경을 왼다.", "fix_reason": "batch_regen_0001"}
+{"jmdict_id": 1470790, "seq": 1, "sense_no": 1, "ja": "この地域は<strong class=\"target-word\">農林</strong>が盛んだ。", "ko": "이 지역은 <strong class=\"target-word\">농림</strong>이 활발하다.", "fix_reason": "batch_regen_0001"}
+{"jmdict_id": 1470790, "seq": 2, "sense_no": 1, "ja": "彼は<strong class=\"target-word\">農林</strong>に関する仕事をしています。", "ko": "그는 <strong class=\"target-word\">농림</strong>과 관련된 일을 하고 있어요.", "fix_reason": "batch_regen_0001"}
+{"jmdict_id": 1474240, "seq": 1, "sense_no": 1, "ja": "彼は<strong class=\"target-word\">伯</strong>の称号を持っている。", "ko": "그는 <strong class=\"target-word\">백작</strong> 칭호를 가지고 있다.", "fix_reason": "batch_regen_0001"}
+{"jmdict_id": 1474240, "seq": 2, "sense_no": 1, "ja": "その国では<strong class=\"target-word\">伯</strong>が高い地位にある。", "ko": "그 나라에서는 <strong class=\"target-word\">백작</strong>이 높은 지위에 있다.", "fix_reason": "batch_regen_0001"}
+{"jmdict_id": 1481760, "seq": 1, "sense_no": 1, "ja": "彼はその<strong class=\"target-word\">藩</strong>の家臣だった。", "ko": "그는 그 <strong class=\"target-word\">번</strong>의 가신이었다.", "fix_reason": "batch_regen_0001"}
+{"jmdict_id": 1481760, "seq": 2, "sense_no": 1, "ja": "江戸時代、多くの<strong class=\"target-word\">藩</strong>が存在しました。", "ko": "에도 시대에는 많은 <strong class=\"target-word\">번</strong>이 존재했어요.", "fix_reason": "batch_regen_0001"}
+{"jmdict_id": 1492640, "seq": 1, "sense_no": 1, "ja": "飛行機は畑に<strong class=\"target-word\">不時着</strong>を余儀なくされた。", "ko": "비행기는 밭에 <strong class=\"target-word\">불시착</strong>을 할 수밖에 없었다.", "fix_reason": "batch_regen_0001"}
+{"jmdict_id": 1492640, "seq": 2, "sense_no": 1, "ja": "エンジン故障で<strong class=\"target-word\">不時着</strong>が決まった。", "ko": "엔진 고장으로 <strong class=\"target-word\">불시착</strong>이 결정됐다.", "fix_reason": "batch_regen_0001"}
+{"jmdict_id": 1493580, "seq": 1, "sense_no": 1, "ja": "彼らは<strong class=\"target-word\">不戦</strong>を誓った。", "ko": "그들은 <strong class=\"target-word\">부전</strong>을 맹세했다.", "fix_reason": "batch_regen_0001"}
+{"jmdict_id": 1493580, "seq": 2, "sense_no": 1, "ja": "両国は<strong class=\"target-word\">不戦</strong>の条約を結びました。", "ko": "두 나라는 <strong class=\"target-word\">부전</strong> 조약을 맺었어요.", "fix_reason": "batch_regen_0001"}
+{"jmdict_id": 1514050, "seq": 1, "rejected": true, "reason": "단독용법드묾", "fix_reason": "batch_regen_0001"}
+{"jmdict_id": 1514050, "seq": 2, "rejected": true, "reason": "단독용법드묾", "fix_reason": "batch_regen_0001"}
+{"jmdict_id": 1516300, "seq": 1, "rejected": true, "reason": "단독용법드묾", "fix_reason": "batch_regen_0001"}
+{"jmdict_id": 1516300, "seq": 2, "rejected": true, "reason": "단독용법드묾", "fix_reason": "batch_regen_0001"}
+{"jmdict_id": 1521960, "seq": 1, "sense_no": 1, "ja": "彼の<strong class=\"target-word\">没</strong>は多くの人に惜しまれた。", "ko": "그의 <strong class=\"target-word\">죽음</strong>은 많은 사람이 애석해했다.", "fix_reason": "batch_regen_0001"}
+{"jmdict_id": 1521960, "seq": 2, "sense_no": 2, "ja": "その原稿は<strong class=\"target-word\">没</strong>になりました。", "ko": "그 원고는 <strong class=\"target-word\">탈락</strong>되었어요.", "fix_reason": "batch_regen_0001"}
+{"jmdict_id": 1527090, "seq": 1, "sense_no": 1, "ja": "十二支の<strong class=\"target-word\">未</strong>は羊のことです。", "ko": "십이지의 <strong class=\"target-word\">양</strong>은 양띠를 말해요.", "fix_reason": "batch_regen_0001"}
+{"jmdict_id": 1527090, "seq": 2, "sense_no": 1, "ja": "今年は<strong class=\"target-word\">未</strong>の年ですね。", "ko": "올해는 <strong class=\"target-word\">양</strong>의 해네요.", "fix_reason": "batch_regen_0001"}
+{"jmdict_id": 1528180, "seq": 1, "sense_no": 1, "ja": "<strong class=\"target-word\">巳</strong>は十二支の六番目にあたる。", "ko": "<strong class=\"target-word\">뱀띠</strong>는 십이지의 여섯 번째에 해당한다.", "fix_reason": "batch_regen_0001"}
+{"jmdict_id": 1528180, "seq": 2, "sense_no": 1, "ja": "十二支の中で<strong class=\"target-word\">巳</strong>を選ぶ人は少ないです。", "ko": "십이지 중에서 <strong class=\"target-word\">뱀띠</strong>를 고르는 사람은 적어요.", "fix_reason": "batch_regen_0001"}
+{"jmdict_id": 1537960, "seq": 1, "sense_no": 1, "ja": "その<strong class=\"target-word\">役</strong>で多くの兵が命を落とした。", "ko": "그 <strong class=\"target-word\">전투</strong>에서 많은 병사가 목숨을 잃었다.", "fix_reason": "batch_regen_0001"}
+{"jmdict_id": 1537960, "seq": 2, "sense_no": 1, "ja": "多くの学者がその<strong class=\"target-word\">役</strong>の記録を研究している。", "ko": "많은 학자가 그 <strong class=\"target-word\">전투</strong>의 기록을 연구하고 있다.", "fix_reason": "batch_regen_0001"}
+{"jmdict_id": 1552620, "seq": 1, "sense_no": 1, "ja": "雨の後、道に<strong class=\"target-word\">溜まり</strong>ができた。", "ko": "비가 온 후 길에 <strong class=\"target-word\">웅덩이</strong>가 생겼다.", "fix_reason": "batch_regen_0001"}
+{"jmdict_id": 1552620, "seq": 2, "sense_no": 2, "ja": "若者たちの<strong class=\"target-word\">溜まり</strong>になっている公園があります。", "ko": "젊은이들의 <strong class=\"target-word\">아지트</strong>가 된 공원이 있어요.", "fix_reason": "batch_regen_0001"}
+{"jmdict_id": 1555910, "seq": 1, "sense_no": 1, "ja": "ランナーは<strong class=\"target-word\">塁</strong>に触れた。", "ko": "주자는 <strong class=\"target-word\">루</strong>에 닿았다.", "fix_reason": "batch_regen_0001"}
+{"jmdict_id": 1555910, "seq": 2, "sense_no": 2, "ja": "兵士たちは<strong class=\"target-word\">塁</strong>を築いて敵に備えた。", "ko": "병사들은 <strong class=\"target-word\">요새</strong>를 쌓아 적에 대비했다.", "fix_reason": "batch_regen_0001"}
+{"jmdict_id": 1567040, "seq": 1, "sense_no": 1, "ja": "<strong class=\"target-word\">戌</strong>は十二支の十一番目だ。", "ko": "<strong class=\"target-word\">개</strong>는 십이지의 열한 번째다.", "fix_reason": "batch_regen_0001"}
+{"jmdict_id": 1567040, "seq": 2, "sense_no": 1, "ja": "彼は<strong class=\"target-word\">戌</strong>を守り神のように大切にしています。", "ko": "그는 <strong class=\"target-word\">개</strong>를 수호신처럼 소중히 여겨요.", "fix_reason": "batch_regen_0001"}
+{"jmdict_id": 1575920, "seq": 1, "sense_no": 1, "ja": "<strong class=\"target-word\">亥</strong>は十二支の最後を飾る。", "ko": "<strong class=\"target-word\">돼지</strong>는 십이지의 마지막을 장식한다.", "fix_reason": "batch_regen_0001"}
+{"jmdict_id": 1575920, "seq": 2, "sense_no": 1, "ja": "十二支の中で<strong class=\"target-word\">亥</strong>が一番力強いと言われる。", "ko": "십이지 중에서 <strong class=\"target-word\">돼지</strong>가 가장 힘차다고 한다.", "fix_reason": "batch_regen_0001"}
+{"jmdict_id": 1576460, "seq": 1, "sense_no": 1, "ja": "<strong class=\"target-word\">卯</strong>は十二支の四番目だ。", "ko": "<strong class=\"target-word\">토끼띠</strong>는 십이지의 네 번째다.", "fix_reason": "batch_regen_0001"}
+{"jmdict_id": 1576460, "seq": 2, "sense_no": 1, "ja": "多くの人が<strong class=\"target-word\">卯</strong>を可愛い干支だと思います。", "ko": "많은 사람이 <strong class=\"target-word\">토끼띠</strong>를 귀엽다고 생각해요.", "fix_reason": "batch_regen_0001"}
+{"jmdict_id": 1583000, "seq": 1, "rejected": true, "reason": "접미사전용", "fix_reason": "batch_regen_0001"}
+{"jmdict_id": 1583000, "seq": 2, "rejected": true, "reason": "접미사전용", "fix_reason": "batch_regen_0001"}
+{"jmdict_id": 1584600, "seq": 1, "sense_no": 1, "ja": "彼は<strong class=\"target-word\">密入国</strong>の容疑で逮捕された。", "ko": "그는 <strong class=\"target-word\">밀입국</strong> 혐의로 체포되었다.", "fix_reason": "batch_regen_0001"}
+{"jmdict_id": 1584600, "seq": 2, "sense_no": 1, "ja": "<strong class=\"target-word\">密入国</strong>を防ぐため警備が強化された。", "ko": "<strong class=\"target-word\">밀입국</strong>을 막기 위해 경비가 강화되었다.", "fix_reason": "batch_regen_0001"}
+{"jmdict_id": 1587210, "seq": 1, "sense_no": 1, "ja": "彼は<strong class=\"target-word\">慰謝</strong>の言葉をかけた。", "ko": "그는 <strong class=\"target-word\">위로</strong>의 말을 건넸다.", "fix_reason": "batch_regen_0001"}
+{"jmdict_id": 1587210, "seq": 2, "sense_no": 1, "ja": "<strong class=\"target-word\">慰謝</strong>の気持ちを込めて手紙を書きました。", "ko": "<strong class=\"target-word\">위로</strong>의 마음을 담아 편지를 썼어요.", "fix_reason": "batch_regen_0001"}
+{"jmdict_id": 1589250, "seq": 1, "sense_no": 1, "ja": "駅で<strong class=\"target-word\">落し物</strong>を拾った。", "ko": "역에서 <strong class=\"target-word\">유실물</strong>을 주웠다.", "fix_reason": "batch_regen_0001"}
+{"jmdict_id": 1589250, "seq": 2, "sense_no": 1, "ja": "<strong class=\"target-word\">落し物</strong>は交番に届けるべきだ。", "ko": "<strong class=\"target-word\">유실물</strong>은 파출소에 신고해야 한다.", "fix_reason": "batch_regen_0001"}
+{"jmdict_id": 1595125, "seq": 1, "rejected": true, "reason": "단독용법없음", "fix_reason": "batch_regen_0001"}
+{"jmdict_id": 1595125, "seq": 2, "rejected": true, "reason": "단독용법없음", "fix_reason": "batch_regen_0001"}
+{"jmdict_id": 1630050, "seq": 1, "sense_no": 1, "ja": "彼は<strong class=\"target-word\">居室</strong>でくつろいでいる。", "ko": "그는 <strong class=\"target-word\">거실</strong>에서 쉬고 있다.", "fix_reason": "batch_regen_0001"}
+{"jmdict_id": 1630050, "seq": 2, "sense_no": 1, "ja": "<strong class=\"target-word\">居室</strong>の掃除を毎日しています。", "ko": "<strong class=\"target-word\">거실</strong> 청소를 매일 하고 있어요.", "fix_reason": "batch_regen_0001"}
+{"jmdict_id": 1643460, "seq": 1, "sense_no": 1, "ja": "馬は大きな<strong class=\"target-word\">躍り</strong>を見せた。", "ko": "말은 큰 <strong class=\"target-word\">도약</strong>을 보여 주었다.", "fix_reason": "batch_regen_0001"}
+{"jmdict_id": 1643460, "seq": 2, "sense_no": 1, "ja": "その知らせに心の<strong class=\"target-word\">躍り</strong>を感じた。", "ko": "그 소식에 마음의 <strong class=\"target-word\">도약</strong>을 느꼈다.", "fix_reason": "batch_regen_0001"}
+{"jmdict_id": 1645370, "seq": 1, "sense_no": 1, "ja": "冷戦時代、<strong class=\"target-word\">西独</strong>は経済成長を遂げた。", "ko": "냉전 시대에 <strong class=\"target-word\">서독</strong>은 경제 성장을 이루었다.", "fix_reason": "batch_regen_0001"}
+{"jmdict_id": 1645370, "seq": 2, "sense_no": 1, "ja": "<strong class=\"target-word\">西独</strong>と東独は1990年に統一されました。", "ko": "<strong class=\"target-word\">서독</strong>과 동독은 1990년에 통일되었어요.", "fix_reason": "batch_regen_0001"}
+{"jmdict_id": 1658600, "seq": 1, "rejected": true, "reason": "단독용법없음", "fix_reason": "batch_regen_0001"}
+{"jmdict_id": 1658600, "seq": 2, "rejected": true, "reason": "단독용법없음", "fix_reason": "batch_regen_0001"}
+{"jmdict_id": 1673120, "seq": 1, "sense_no": 1, "ja": "契約期間は<strong class=\"target-word\">無期</strong>に延長された。", "ko": "계약 기간은 <strong class=\"target-word\">무기한</strong>으로 연장되었다.", "fix_reason": "batch_regen_0001"}
+{"jmdict_id": 1673120, "seq": 2, "sense_no": 1, "ja": "彼のビザは<strong class=\"target-word\">無期</strong>で発行された。", "ko": "그의 비자는 <strong class=\"target-word\">무기한</strong>으로 발급되었다.", "fix_reason": "batch_regen_0001"}
+{"jmdict_id": 1822740, "seq": 1, "sense_no": 1, "ja": "彼は<strong class=\"target-word\">本因坊</strong>のタイトルを獲得した。", "ko": "그는 <strong class=\"target-word\">혼인보</strong> 타이틀을 획득했다.", "fix_reason": "batch_regen_0001"}
+{"jmdict_id": 1822740, "seq": 2, "sense_no": 1, "ja": "<strong class=\"target-word\">本因坊</strong>は囲碁界で最も権威ある称号です。", "ko": "<strong class=\"target-word\">혼인보</strong>는 바둑계에서 가장 권위 있는 칭호예요.", "fix_reason": "batch_regen_0001"}
+{"jmdict_id": 1984240, "seq": 1, "sense_no": 1, "ja": "彼は<strong class=\"target-word\">中高</strong>で野球部に入っていた。", "ko": "그는 <strong class=\"target-word\">중고교</strong> 시절 야구부에 들어가 있었다.", "fix_reason": "batch_regen_0001"}
+{"jmdict_id": 1984240, "seq": 2, "sense_no": 1, "ja": "<strong class=\"target-word\">中高</strong>の6年間はあっという間だった。", "ko": "<strong class=\"target-word\">중고교</strong> 6년은 눈 깜짝할 사이였다.", "fix_reason": "batch_regen_0001"}
+{"jmdict_id": 2165320, "seq": 1, "rejected": true, "reason": "접두사전용", "fix_reason": "batch_regen_0001"}
+{"jmdict_id": 2165320, "seq": 2, "rejected": true, "reason": "접두사전용", "fix_reason": "batch_regen_0001"}
+{"jmdict_id": 2220320, "seq": 1, "rejected": true, "reason": "접미사전용", "fix_reason": "batch_regen_0001"}
+{"jmdict_id": 2220320, "seq": 2, "rejected": true, "reason": "접미사전용", "fix_reason": "batch_regen_0001"}
+{"jmdict_id": 2648330, "seq": 1, "rejected": true, "reason": "단독용법없음", "fix_reason": "batch_regen_0001"}
+{"jmdict_id": 2648330, "seq": 2, "rejected": true, "reason": "단독용법없음", "fix_reason": "batch_regen_0001"}
+{"jmdict_id": 2859161, "seq": 1, "sense_no": 1, "ja": "この単語の<strong class=\"target-word\">音</strong>を分析した。", "ko": "이 단어의 <strong class=\"target-word\">소리</strong>를 분석했다.", "fix_reason": "batch_regen_0001"}
+{"jmdict_id": 2859161, "seq": 2, "sense_no": 3, "ja": "漢字の<strong class=\"target-word\">音</strong>を覚えるのは難しいです。", "ko": "한자의 <strong class=\"target-word\">음독</strong>을 외우는 것은 어려워요.", "fix_reason": "batch_regen_0001"}
+{"jmdict_id": 2869020, "seq": 1, "rejected": true, "reason": "접두사전용", "fix_reason": "batch_regen_0001"}
+{"jmdict_id": 2869020, "seq": 2, "rejected": true, "reason": "접두사전용", "fix_reason": "batch_regen_0001"}
+{"jmdict_id": 2871349, "seq": 1, "sense_no": 1, "ja": "彼女は最近<strong class=\"target-word\">モテ</strong>を意識している。", "ko": "그녀는 요즘 <strong class=\"target-word\">인기</strong>를 의식하고 있다.", "fix_reason": "batch_regen_0001"}
+{"jmdict_id": 2871349, "seq": 2, "sense_no": 1, "ja": "<strong class=\"target-word\">モテ</strong>に憧れる人は多い。", "ko": "<strong class=\"target-word\">인기</strong>를 동경하는 사람이 많다.", "fix_reason": "batch_regen_0001"}
+{"jmdict_id": 2872579, "seq": 1, "sense_no": 1, "ja": "「<strong class=\"target-word\">はっはっ</strong>」と笑い声が聞こえた。", "ko": "\"<strong class=\"target-word\">하하</strong>\" 하고 웃음소리가 들렸다.", "fix_reason": "batch_regen_0001"}
+{"jmdict_id": 2872579, "seq": 2, "sense_no": 2, "ja": "坂道を走って「<strong class=\"target-word\">はっはっ</strong>」と息が切れた。", "ko": "언덕길을 달려서 \"<strong class=\"target-word\">헉헉</strong>\" 하고 숨이 찼다.", "fix_reason": "batch_regen_0001"}

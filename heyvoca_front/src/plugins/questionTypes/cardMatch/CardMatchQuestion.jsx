@@ -10,6 +10,7 @@ import MemoryStateChangeBadge, {
 } from '../../../components/common/MemoryStateChangeBadge';
 import FarmStatusBar from '../../../components/farm/FarmStatusBar';
 import { useResumeReplayKey } from '../../../hooks/useResumeReplayKey';
+import { wordLang } from '../../../utils/lang';
 
 const FitText = ({ text, maxSize = 20, minSize = 12, className = '' }) => {
   const spanRef = useRef(null);
@@ -199,7 +200,7 @@ const CardMatchQuestion = ({ question, testType, onComplete, onCardMatched, farm
     const wordId = word.id;
     setSpeakingWordId(wordId);
     setSpeakingDuration(null);
-    getTextSound(word.origin, "en", setSpeakingDuration).finally(() => {
+    getTextSound(word.origin, wordLang(word, wordLang(question)), setSpeakingDuration).finally(() => {
       setSpeakingWordId(prev => prev === wordId ? null : prev);
     });
 

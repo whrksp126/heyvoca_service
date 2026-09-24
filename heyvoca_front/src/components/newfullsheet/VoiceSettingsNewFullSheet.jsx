@@ -6,8 +6,10 @@ import { backendUrl, fetchDataAsync } from '../../utils/common';
 import { SheetBar, GroupLabel, Hint } from './settingsUi';
 
 // 학습 발음 음성(Edge 신경망)을 언어별로 선택. 다른 설정 페이지와 동일하게 선택 즉시 반영.
-const LANG_LABEL = { en: '영어', ko: '한국어' };
-const LANG_ORDER = ['en', 'ko'];
+// ja 는 서버 voice-options 에 목록이 있을 때만 그룹을 보인다(구버전 서버 호환).
+const LANG_LABEL = { en: '영어', ja: '일본어', ko: '한국어' };
+const LANG_ORDER = ['en', 'ja', 'ko'];
+const OPTIONAL_LANGS = ['ja'];
 
 const readJSON = (key, fallback) => {
   try { return JSON.parse(localStorage.getItem(key)) || fallback; } catch (e) { return fallback; }
@@ -99,7 +101,9 @@ const VoiceSettingsNewFullSheet = () => {
       <SheetBar title="음성 설정" />
 
       <div className="flex-1 overflow-y-auto px-[16px] pb-[20px]">
-        {LANG_ORDER.map((lang, langIdx) => (
+        {LANG_ORDER
+          .filter((lang) => !OPTIONAL_LANGS.includes(lang) || (options[lang] || []).length > 0)
+          .map((lang, langIdx) => (
           <div key={lang}>
             <GroupLabel first={langIdx === 0}>{LANG_LABEL[lang]}</GroupLabel>
             {(options[lang] || []).map((v, idx) => {

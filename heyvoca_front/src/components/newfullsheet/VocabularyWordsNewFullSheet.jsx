@@ -244,6 +244,15 @@ const VocabularyWordsNewFullSheet = ({ id }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // 훅은 반드시 아래 early return(로딩 스켈레톤·단어장 없음)보다 앞에 둔다 — 단어장을 삭제하면
+  // vocabularySheet 가 사라져 early return 을 타는데, 그 뒤에 훅이 있으면 훅 개수가 달라져
+  // "Rendered fewer hooks than expected" 로 화면이 죽는다.
+  // 당겨서 새로고침 — 이 화면이 보여주는 건 "이 단어장 안 단어 목록"과 밭 상태(단어장
+  // 목록의 vocaCount 등)이므로 사용자 사전·단어장 목록을 함께 다시 받는다.
+  const handlePullToRefresh = useCallback(async () => {
+    await Promise.all([fetchUserDictionary(), fetchVocaBooks()]);
+  }, [fetchUserDictionary, fetchVocaBooks]);
+
   const buttonVariants = {
     tap: {
       scale: 0.85,
@@ -338,12 +347,6 @@ const VocabularyWordsNewFullSheet = ({ id }) => {
       isDragToCloseEnabled: true,
     });
   };
-
-  // 당겨서 새로고침 — 이 화면이 보여주는 건 "이 단어장 안 단어 목록"과 밭 상태(단어장
-  // 목록의 vocaCount 등)이므로 사용자 사전·단어장 목록을 함께 다시 받는다.
-  const handlePullToRefresh = useCallback(async () => {
-    await Promise.all([fetchUserDictionary(), fetchVocaBooks()]);
-  }, [fetchUserDictionary, fetchVocaBooks]);
 
   const chips = [
     { key: 'all', label: '전체', count: totalCount },

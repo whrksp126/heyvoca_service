@@ -7,6 +7,11 @@ import CropImage from '../farm/CropImage';
 import { StudySettingsNewBottomSheet } from '../newBottomSheet/StudySettingsNewBottomSheet';
 import { ConfirmNewBottomSheet } from '../newBottomSheet/ConfirmNewBottomSheet';
 import TtsRipple from '../common/TtsRipple';
+import JlptBadge from '../common/JlptBadge';
+import ReadingLine from '../common/ReadingLine';
+import FuriganaText from '../common/FuriganaText';
+import { wordLang, isJa } from '../../utils/lang';
+import { getReading, shouldShowReading } from '../../utils/jaWord';
 import { getTextSound, stopCurrentSound, prefetchTtsList } from '../../utils/common';
 import { collectStudyTexts, prepareTtsWithProgress } from '../../api/tts';
 import ProgressSplash from '../common/ProgressSplash';
@@ -206,7 +211,7 @@ const StudyMain = ({ words }) => {
           if (playbackCancelRef.current) return;
 
           if (item.id === 'word') {
-            await playOne('word', null, currentWord.origin || '', 'en');
+            await playOne('word', null, currentWord.origin || '', wordLang(currentWord));
           } else if (item.id === 'meanings') {
             for (let i = 0; i < meaningsList.length; i++) {
               if (playbackCancelRef.current) return;
@@ -217,7 +222,7 @@ const StudyMain = ({ words }) => {
               if (playbackCancelRef.current) return;
               const ex = examplesList[i] || {};
               const text = ex.origin || ex.sentence || '';
-              await playOne('exampleSentences', i, text, 'en');
+              await playOne('exampleSentences', i, text, wordLang(currentWord));
             }
           } else if (item.id === 'exampleMeanings') {
             for (let i = 0; i < examplesList.length; i++) {
@@ -571,10 +576,15 @@ const StudyMain = ({ words }) => {
                   {isVisible('word') ? (
                     <div className={`flex items-start justify-between gap-[5px] ${playingItemId === 'word' ? 'text-primary-main-600' : ''}`}>
                       <div className="flex-1 min-w-0">
-                        <span className={`block text-[24px] font-[700] leading-[29px] ${playingItemId === 'word' ? 'text-primary-main-600' : 'text-layout-black dark:text-layout-white'}`}>
+                        <span lang={isJa(wordLang(word)) ? 'ja' : undefined} className={`block text-[24px] font-[700] leading-[29px] ${playingItemId === 'word' ? 'text-primary-main-600' : 'text-layout-black dark:text-layout-white'}`}>
                           {word.origin}
+                          {isJa(wordLang(word)) && word.jlpt && (
+                            <JlptBadge level={word.jlpt} className="inline-block align-middle ml-[6px]" />
+                          )}
                         </span>
-                        {word.pronunciation && (
+                        {isJa(wordLang(word)) ? (
+                          shouldShowReading(word) && <ReadingLine reading={getReading(word)} className="block mt-[2px] dark:text-layout-gray-200" />
+                        ) : word.pronunciation && (
                           <span className="block mt-[2px] text-[12px] font-[500] text-layout-gray-300 dark:text-layout-gray-200">
                             /{word.pronunciation}/
                           </span>
@@ -584,7 +594,7 @@ const StudyMain = ({ words }) => {
                         active={isPlayingLine('word')}
                         duration={playDuration}
                         reducedMotion={reducedMotion}
-                        onClick={() => handleSpeakerClick('word', null, word.origin, 'en')}
+                        onClick={() => handleSpeakerClick('word', null, word.origin, wordLang(word))}
                         className="mt-[3px]"
                       />
                     </div>
@@ -640,14 +650,23 @@ const StudyMain = ({ words }) => {
                         {exOrigin && (
                           isVisible('exampleSentences') ? (
                             <div className="flex items-start justify-between gap-[5px]">
-                              <span className={`text-[14px] font-[400] flex-1 ${isOriginActive ? 'text-primary-main-600' : 'text-layout-black dark:text-layout-white'}`}>
-                                {exOrigin}
-                              </span>
+                              {isJa(wordLang(word)) ? (
+                                <FuriganaText
+                                  html={exOrigin}
+                                  readingTokens={example.reading_tokens}
+                                  lang="ja"
+                                  className={`text-[14px] font-[400] flex-1 ${isOriginActive ? 'text-primary-main-600' : 'text-layout-black dark:text-layout-white'}`}
+                                />
+                              ) : (
+                                <span className={`text-[14px] font-[400] flex-1 ${isOriginActive ? 'text-primary-main-600' : 'text-layout-black dark:text-layout-white'}`}>
+                                  {exOrigin}
+                                </span>
+                              )}
                               <SpeakerButton
                                 active={isOriginActive}
                                 duration={playDuration}
                                 reducedMotion={reducedMotion}
-                                onClick={() => handleSpeakerClick('exampleSentences', idx, exOrigin, 'en')}
+                                onClick={() => handleSpeakerClick('exampleSentences', idx, exOrigin, wordLang(word))}
                                 className="mt-[2px]"
                               />
                             </div>

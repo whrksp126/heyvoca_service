@@ -7,6 +7,13 @@ import { CaretDown, Plus, Pencil, Trash } from '@phosphor-icons/react';
 import SetWordExampleNewBottomSheet from './SetWordExampleNewBottomSheet';
 import { vibrate, showToast } from '../../utils/osFunction';
 import { ConfirmNewBottomSheet } from './ConfirmNewBottomSheet';
+import { useUser } from '../../context/UserContext';
+import FuriganaText from '../common/FuriganaText';
+import { wordLang, isJa, getActiveLearningLang } from '../../utils/lang';
+import { getReading, shouldShowReading } from '../../utils/jaWord';
+
+// 검색 결과(사전 단어)의 사전 id — 응답 필드명이 섞여 있어 모두 본다.
+const dictIdOf = (w) => w?.vocaId ?? w?.voca_id ?? w?.dictionaryId ?? w?.id ?? null;
 
 const AddWordNewBottomSheet = ({
   vocabularyId = null,
@@ -19,6 +26,10 @@ const AddWordNewBottomSheet = ({
   "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
 
   const { addWord, updateWord, getWord, deleteWord, vocabularySheets, userDictionary } = useVocabulary();
+  const { learningLang: ctxLearningLang } = useUser();
+  // 현재 학습 언어 — UserContext 에 아직 없으면 lang.js 모듈 값으로 폴백
+  const learningLang = ctxLearningLang ?? getActiveLearningLang();
+  const jaMode = isJa(learningLang);
   // Actions만 구독하므로 state 변경 시 리렌더링 안 됨
   const { popNewBottomSheet, pushAwaitNewBottomSheet, clearStack } = useNewBottomSheetActions();
 
@@ -33,6 +44,7 @@ const AddWordNewBottomSheet = ({
     let initExamples = initExamplesProp || [];
     let initVocabularyId = vocabularyId ?? null;
     let initDictionaryId = dictionaryId ?? null;
+    let initReading = '';
     if (id && vocabularyId) {
       const word = getWord(vocabularyId, id);
       if (word) {
@@ -41,6 +53,7 @@ const AddWordNewBottomSheet = ({
         initMeanings = word.meanings || [];
         initExamples = word.examples || [];
         initDictionaryId = word.dictionaryId ?? initDictionaryId;
+        initReading = word.reading || '';
       }
     }
     // 추가 모드에서 vocabularyId가 비었거나 구매 단어장이면, 첫 편집 가능 단어장으로 자동 선택
@@ -56,6 +69,7 @@ const AddWordNewBottomSheet = ({
       id,
       vocabularyId: initVocabularyId,
       dictionaryId: initDictionaryId,
+      reading: initReading,
       origin: initOrigin,
       meanings: initMeanings,
       examples: initExamples
@@ -75,6 +89,7 @@ const AddWordNewBottomSheet = ({
       mode: 'add',
       vocabularyId: null,
       dictionaryId: null,
+      reading: '',
       origin: "",
       meanings: [],
       examples: [],
@@ -84,7 +99,7 @@ const AddWordNewBottomSheet = ({
   // 단어 추가 함수
   const handleAdd = useCallback(async () => {
     try {
-      const { vocabularyId: currentVocaId, origin, meanings, examples, dictionaryId } = currentStateRef.current;
+      const { vocabularyId: currentVocaId, origin, meanings, examples, dictionaryId, reading } = currentStateRef.current;
       if (!currentVocaId) {
         showToast('단어장을 선택해주세요.');
         return;
@@ -93,9 +108,23 @@ const AddWordNewBottomSheet = ({
         showToast('단어를 입력해주세요.');
         return;
       }
-      const newWord = { dictionaryId, origin, meanings, examples };
+      const newWord = {
+        dictionaryId, origin, meanings, examples,
+        // 일본어 연동 — vocaId(=dictionaryId)·읽기·언어(INTEGRATION_SPEC 5절)
+        ...(dictionaryId != null ? { vocaId: dictionaryId } : {}),
+        ...(jaMode && reading && reading.trim() ? { reading: reading.trim() } : {}),
+        language: learningLang,
+      };
 
-      const existingWord = Object.values(userDictionary).find(w => w.origin === origin);
+      const allWords = Object.values(userDictionary);
+      const existingWord =
+        (dictionaryId != null
+          ? allWords.find(w => {
+            const wId = w?.vocaId ?? w?.dictionaryId ?? null;
+            return wId != null && String(wId) === String(dictionaryId);
+          })
+          : undefined)
+        ?? allWords.find(w => w.origin === origin && wordLang(w, learningLang) === learningLang);
       if (existingWord) {
         const inCurrentBook = existingWord.vocaBooks?.some(
           vb => String(vb.vocaBookId) === String(currentVocaId)
@@ -120,7 +149,7 @@ const AddWordNewBottomSheet = ({
       console.error('단어 추가 실패:', error);
       showToast('단어 추가에 실패했습니다.');
     }
-  }, [handleClose, addWord, userDictionary, pushAwaitNewBottomSheet]);
+  }, [handleClose, addWord, userDictionary, pushAwaitNewBottomSheet, jaMode, learningLang]);
 
   // 단어 수정 함수
   const handleEdit = useCallback(async () => {
@@ -133,7 +162,8 @@ const AddWordNewBottomSheet = ({
         const updates = {
           origin: currentStateRef.current.origin,
           meanings: currentStateRef.current.meanings,
-          examples: currentStateRef.current.examples
+          examples: currentStateRef.current.examples,
+          ...(jaMode ? { reading: (currentStateRef.current.reading || '').trim() } : {}),
         }
         await updateWord(currentStateRef.current.vocabularyId, currentStateRef.current.id, updates);
       }
@@ -163,13 +193,17 @@ const AddWordNewBottomSheet = ({
   const [wordSearchResults, setWordSearchResults] = useState(null);
   const [isWordSearching, setIsWordSearching] = useState(false);
   const meaningsInputRef = useRef(currentStateRef.current.meanings.join(', ') || '');
+  const readingInputRef = useRef(null);
+  // 자동완성으로 고른 표제어 — 사용자가 단어를 다시 고치면 사전 연결(dictionaryId)을 끊는다
+  const selectedOriginRef = useRef(currentStateRef.current.dictionaryId != null ? currentStateRef.current.origin : null);
   const [examplesState, setExamplesState] = useState(currentStateRef.current.examples || []);
   // const exampleOriginInputRef = useRef(wordData.examples[exampleSetType.exampleIndex - 1]?.origin || '');
   // const exampleMeaningInputRef = useRef(wordData.examples[exampleSetType.exampleIndex - 1]?.meaning || '');
 
   // 단어 검색 함수
   const searchWord = async (word) => {
-    if (!word.trim() || word.trim().length < 2) {
+    // ja 는 한 글자 단어가 많아 최소 1자
+    if (!word.trim() || word.trim().length < (jaMode ? 1 : 2)) {
       setWordSearchResults(null);
       return;
     }
@@ -177,9 +211,11 @@ const AddWordNewBottomSheet = ({
     setIsWordSearching(true);
     try {
       const response = await fetchDataAsync(
+        // 표제어 자동완성 — ja 모드에서도 같은 엔드포인트가 현재 학습 언어 사전(표기·읽기)을 찾는다.
+        // 백엔드는 로그인 사용자의 learning_lang 으로 라우팅하고, lang 은 비인증 폴백용.
         `${backendUrl}/search/partial/en`,
         'GET',
-        { word: word },
+        { word: word, lang: learningLang },
         false,
         null
       );
@@ -193,16 +229,22 @@ const AddWordNewBottomSheet = ({
     }
   };
 
-  const handleWordSelect = ({ word, meanings, examples }) => {
-    getTextSound(word, "en");
+  const handleWordSelect = (item) => {
+    const { word, meanings = [], examples = [] } = item;
+    getTextSound(word, wordLang(item, learningLang));
     setWordSearchResults(null);
+    const reading = item.reading || '';
     currentStateRef.current = {
       ...currentStateRef.current,
       origin: word,
       meanings: meanings,
-      examples: examples
+      examples: examples,
+      dictionaryId: dictIdOf(item) ?? currentStateRef.current.dictionaryId,
+      reading,
     };
+    selectedOriginRef.current = word;
     wordInputRef.current.value = word;
+    if (readingInputRef.current) readingInputRef.current.value = reading;
     meaningsInputRef.current.value = meanings.join(', ');
 
     // document.querySelector('input[placeholder="단어를 입력하세요"]').value = word;
@@ -303,9 +345,14 @@ const AddWordNewBottomSheet = ({
               defaultValue={currentStateRef.current.origin || ''}
               onChange={(e) => {
                 wordInputRef.current.value = e.target.value;
+                const unlink = currentStateRef.current.mode === 'add'
+                  && selectedOriginRef.current != null
+                  && e.target.value !== selectedOriginRef.current;
+                if (unlink) selectedOriginRef.current = null;
                 currentStateRef.current = {
                   ...currentStateRef.current,
-                  origin: e.target.value
+                  origin: e.target.value,
+                  ...(unlink ? { dictionaryId: null } : {}),
                 };
                 searchWord(e.target.value);
               }}
@@ -329,13 +376,13 @@ const AddWordNewBottomSheet = ({
           </div>
           {wordSearchResults && wordSearchResults.length > 0 && (
             <ul className="scrollbar-pink flex flex-col gap-[10px] max-h-[200px] p-[20px] rounded-[10px] bg-primary-main-100 dark:bg-layout-gray-dark overflow-y-auto">
-              {wordSearchResults.map(({ word, meanings, examples }, index) => (
+              {wordSearchResults.map((item, index) => { const { word, meanings = [] } = item; return (
                 <li
                   key={index}
                   className="flex gap-[10px] pb-[10px] last:pb-0 last:border-b-0 border-b-[1px] border-[#DDDDDD] cursor-pointer"
                   onClick={() => {
                     vibrate({ duration: 5 });
-                    handleWordSelect({ word, meanings, examples });
+                    handleWordSelect(item);
                   }}
                 >
                   <span className="text-[14px] font-[700] text-layout-black dark:text-layout-white">
@@ -358,12 +405,44 @@ const AddWordNewBottomSheet = ({
                       );
                     })}
                   </span>
+                  {item.reading && shouldShowReading({ ...item, origin: word }, 'ja') && (
+                    <span lang="ja" className="text-[11px] font-[500] text-layout-gray-300 self-center shrink-0">{getReading(item)}</span>
+                  )}
                   <p className="text-[11px] font-[400] text-layout-black dark:text-layout-white self-center">{meanings.join(', ')}</p>
                 </li>
-              ))}
+              ); })}
             </ul>
           )}
         </div>
+        {jaMode && (
+          <div className="flex justify-between flex-col gap-[8px]">
+            <h3 className="text-[14px] font-[700] text-layout-black dark:text-layout-white">
+              읽기
+            </h3>
+            <input
+              ref={readingInputRef}
+              lang="ja"
+              defaultValue={currentStateRef.current.reading || ''}
+              onChange={(e) => {
+                currentStateRef.current = {
+                  ...currentStateRef.current,
+                  reading: e.target.value,
+                };
+              }}
+              type="text"
+              placeholder="히라가나 읽기 (예: たべる)"
+              className="bg-layout-white dark:bg-layout-black
+                w-full h-[45px]
+                px-[15px]
+                border-[1px] border-layout-gray-200 rounded-[8px]
+                font-[400] text-[14px] text-layout-black dark:text-layout-white
+                outline-none
+                focus:border--primary-main-600
+                transition-colors
+              "
+            />
+          </div>
+        )}
         <div
           className="
             flex justify-between flex-col gap-[8px]
@@ -460,7 +539,7 @@ const AddWordNewBottomSheet = ({
             </button>
           </div>
           <ul className="flex flex-col gap-[8px]">
-            {examplesState.map(({ id, origin, meaning }, index) => (
+            {examplesState.map(({ id, origin, meaning, reading_tokens }, index) => (
               <li key={index}
                 className="
                 flex flex-col gap-[5px] 
@@ -525,9 +604,13 @@ const AddWordNewBottomSheet = ({
                   <p className="text-[14px] font-[400] text-layout-black dark:text-layout-white">
                     <span
                       className="cursor-pointer"
-                      onClick={() => getTextSound(stripHtmlTags(origin), "en")}
+                      onClick={() => getTextSound(stripHtmlTags(origin), learningLang)}
                     >
-                      <span dangerouslySetInnerHTML={{ __html: origin }} />
+                      <FuriganaText
+                        html={origin}
+                        readingTokens={jaMode ? reading_tokens : undefined}
+                        lang={jaMode ? 'ja' : undefined}
+                      />
                     </span>
                     <br />
                     <span

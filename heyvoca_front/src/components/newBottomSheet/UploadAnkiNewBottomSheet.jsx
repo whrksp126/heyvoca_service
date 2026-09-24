@@ -30,7 +30,7 @@ const getColorSet = (mainColor) => {
 };
 
 const HEYVOCA_FIELDS = [
-  { key: 'word', label: '영단어', required: true },
+  { key: 'word', label: '단어', required: true },
   { key: 'meaning', label: '뜻', required: true },
   { key: 'pronunciation', label: '발음', required: false },
   { key: 'example', label: '예문', required: false },
@@ -38,7 +38,7 @@ const HEYVOCA_FIELDS = [
 ];
 
 const AUTO_MAPPING_HINTS = {
-  word: ['front', 'word', 'english', 'expression', 'term', 'vocabulary', '단어', '영어', 'vocab'],
+  word: ['front', 'word', 'english', 'expression', 'term', 'vocabulary', '단어', '영어', 'vocab', 'japanese', '일본어', '単語'],
   meaning: ['back', 'meaning', 'korean', 'definition', 'translation', '뜻', '의미', '한국어', 'answer'],
   pronunciation: ['pronunciation', 'ipa', 'phonetic', 'reading', '발음', 'pron'],
   example: ['example', 'sentence', 'usage', '예문', 'context'],
@@ -305,14 +305,14 @@ export const UploadAnkiNewBottomSheet = () => {
 
   const validateMapping = () => {
     if (!mapping.word || !mapping.meaning) {
-      return '영단어와 뜻 필드 매핑은 필수예요.';
+      return '단어와 뜻 필드 매핑은 필수예요.';
     }
     if (mapping.word === mapping.meaning) {
-      return '영단어와 뜻에 같은 필드를 선택할 수 없어요.';
+      return '단어와 뜻에 같은 필드를 선택할 수 없어요.';
     }
     const stat = selectedNoteType?.fieldStats?.[mapping.word];
     if (stat && stat.maxLen > 50) {
-      return `영단어 필드에 50자를 초과하는 값이 있어요 (최대 ${stat.maxLen}자). 다른 필드를 선택해주세요.`;
+      return `단어 필드에 50자를 초과하는 값이 있어요 (최대 ${stat.maxLen}자). 다른 필드를 선택해주세요.`;
     }
     return null;
   };

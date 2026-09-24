@@ -1,4 +1,5 @@
 import { backendUrl, fetchDataAsync } from '../utils/common';
+import { getActiveLearningLang } from '../utils/lang';
 
 // 사용자 단어장 목록 조회 API
 export const getUserVocabularySheetsApi = async () => {
@@ -21,6 +22,7 @@ export const addUserVocabularySheetApi = async (newVocabulary) => {
     words: [],
     total: 0,
     memorized: 0,
+    language: getActiveLearningLang(),
     ...newVocabulary,
   };
   try{
@@ -82,6 +84,7 @@ export const uploadQuizletApi = async (quizletText, title) => {
   const fetchData = {
     title: title,
     text: quizletText,
+    language: getActiveLearningLang(),
   };
   try{
     const result = await fetchDataAsync(url, method, fetchData);
@@ -109,7 +112,7 @@ export const uploadQuizletPdfApi = async (file, title, color) => {
   const url = `${backendUrl}/vocaBooks/upload/quizlet-pdf`;
   const method = 'POST';
   const data = {
-    json_data: { title, color },
+    json_data: { title, color, language: getActiveLearningLang() },
     form_data: [{ key: 'file', value: file }],
   };
   try {

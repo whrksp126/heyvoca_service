@@ -58,6 +58,9 @@ export const NATIVE_HANDLER_MIN_VERSION = {
   // 1.1.0 — 실험실(채팅으로 학습). ※ 2026-08-01 기준 스토어 최신은 1.0.5 라 아직 아무에게도 없다.
   launchChatStudy: '1.1.0',
   openChatStudy: '1.1.0',
+  // 1.1.1 — openImagePicker 가 props.lang 을 읽어 일본어 스크립트(가나·한자)로 인식.
+  //  (가상 키: 핸들러는 openImagePicker 그대로, 'lang 지원 여부' 판정 전용)
+  openImagePickerLang: '1.1.1',
 };
 
 /** 요청 실패 사유 — 호출부는 이 코드로 분기해 폴백을 고른다. */

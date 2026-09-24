@@ -8,6 +8,24 @@ import GemRewardOverlay from '../components/overlay/GemRewardOverlay';
 import { getGemItemsApi } from '../api/store';
 import postMessageManager from '../utils/postMessageManager';
 import { invalidateCurrentAttendance } from './AttendanceCalendarContext';
+import { normalizeLearningLang, setActiveLearningLang, isSupportedLearningLang } from '../utils/lang';
+
+// 학습 언어 전환 완료 이벤트 — VocabularyContext·StatsContext 가 듣고 refetchAll 한다.
+// (UserProvider 가 두 Provider 의 바깥이라 훅으로 직접 부를 수 없어 window 이벤트로 알린다.)
+// detail: { lang }
+export const LEARNING_LANG_CHANGED_EVENT = 'heyvoca:learning-lang-changed';
+
+// TTS 음성 설정(목록+내 선택)을 받아 localStorage 캐시에 저장. best-effort.
+// 언어 전환 시(일본어 음성 목록이 새로 생김)에도 다시 부른다.
+const refreshTtsVoiceCache = () => {
+  const optionsP = fetchDataAsync(`${backendUrl}/tts/voice-options`, 'GET', {})
+    .then((vo) => { if (vo?.code === 200 && vo.data) localStorage.setItem('ttsVoiceOptions', JSON.stringify(vo.data)); })
+    .catch(() => { /* noop */ });
+  const mineP = fetchDataAsync(`${backendUrl}/tts/my-voices`, 'GET', {})
+    .then((mv) => { if (mv?.code === 200 && mv.data) localStorage.setItem('ttsVoices', JSON.stringify(mv.data)); })
+    .catch(() => { /* noop */ });
+  return Promise.all([optionsP, mineP]);
+};
 
 // 로그인 방식(google/apple/dev) — 회원 탈퇴 시 앱 채널 분기(구글 세션 재사용 불가한 애플 사용자 구분)에 사용.
 // get_user_info 응답에는 google_id/apple_id가 내려오지 않으므로, 로그인 성공 시 프론트에서 직접 기록해
@@ -111,15 +129,12 @@ export const UserProvider = ({ children }) => {
           userProfile: null,
         }
       }
+      // React 밖(api/tts 등)의 wordLang 기본값도 즉시 맞춘다.
+      setActiveLearningLang(result.data?.learning_lang);
       setUserProfile(result.data);
       // 음성 설정(목록+내 선택)을 미리 받아 localStorage에 캐시 → 설정 화면 즉시 렌더(매번 로딩 X).
       // my-voices는 getTextSound가 참조(다기기 동기화). 모두 best-effort.
-      fetchDataAsync(`${backendUrl}/tts/voice-options`, 'GET', {})
-        .then((vo) => { if (vo?.code === 200 && vo.data) localStorage.setItem('ttsVoiceOptions', JSON.stringify(vo.data)); })
-        .catch(() => { /* noop */ });
-      fetchDataAsync(`${backendUrl}/tts/my-voices`, 'GET', {})
-        .then((mv) => { if (mv?.code === 200 && mv.data) localStorage.setItem('ttsVoices', JSON.stringify(mv.data)); })
-        .catch(() => { /* noop */ });
+      refreshTtsVoiceCache();
       return {
         success: true,
         userProfile: result.data,
@@ -149,6 +164,43 @@ export const UserProvider = ({ children }) => {
       ...(username !== undefined ? { username } : {}),
     }));
   }, [userProfile]);
+
+  // ── 학습 언어 ──────────────────────────────────────────────────────
+  // 프로필 learning_lang(기본 'en'). 서버는 모든 조회를 이 언어 기준으로 돌려준다.
+  const learningLang = normalizeLearningLang(userProfile?.learning_lang);
+
+  // 프로필이 다른 경로(setUserProfile 직접 호출 등)로 바뀌어도 모듈 값과 어긋나지 않게 동기화.
+  useEffect(() => {
+    setActiveLearningLang(learningLang);
+  }, [learningLang]);
+
+  // 학습 언어 전환 — PATCH 성공 시 상태 갱신 + 언어별 데이터 전부 재조회.
+  // 반환: 성공 true / 실패 false(호출부가 토스트 등 처리).
+  const learningLangSwitchingRef = useRef(false);
+  const setLearningLang = useCallback(async (lang) => {
+    if (!isSupportedLearningLang(lang)) return false;
+    if (learningLangSwitchingRef.current) return false;
+    learningLangSwitchingRef.current = true;
+    try {
+      const result = await updateUserInfoApi({ learning_lang: lang });
+      if (result?.code !== 200) return false;
+      setActiveLearningLang(lang);
+      setUserProfile((prev) => ({ ...prev, learning_lang: lang }));
+      // 언어별 데이터 재조회 — 기다리지 않는다(각 컨텍스트가 조용히 갈아 끼움).
+      try {
+        window.dispatchEvent(new CustomEvent(LEARNING_LANG_CHANGED_EVENT, { detail: { lang } }));
+      } catch (e) { /* noop */ }
+      Promise.resolve(fetchUserMainPage()).catch(() => {});
+      // 일본어 음성 목록/선택이 새로 생기므로 TTS 음성 캐시도 갱신.
+      refreshTtsVoiceCache();
+      return true;
+    } catch (e) {
+      console.error('setLearningLang 오류:', e);
+      return false;
+    } finally {
+      learningLangSwitchingRef.current = false;
+    }
+  }, [fetchUserMainPage]);
 
   // 업적, 보석, ... 업데이트 함수
   const updateUserHistory = useCallback(async ({ correct_cnt, incorrect_cnt }) => {
@@ -761,6 +813,9 @@ export const UserProvider = ({ children }) => {
 
   const value = {
     userProfile,
+    // 학습 언어('en'|'ja') + 전환 함수(PATCH → 전역 재조회)
+    learningLang,
+    setLearningLang,
     userMainPage,
     isUserProfileLoading,
     getUserProfile,

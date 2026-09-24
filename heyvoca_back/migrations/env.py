@@ -58,7 +58,8 @@ def get_metadata():
     from sqlalchemy import MetaData
     user_md = MetaData()
     for table in target_db.metadata.tables.values():
-        if table.info.get('bind_key') is None:
+        # ja_only(사전 확장) 테이블은 bind_key='dict' 라 원래 빠지지만 방어적으로 한 번 더 제외
+        if table.info.get('bind_key') is None and not table.info.get('ja_only'):
             table.tometadata(user_md)
     return user_md
 

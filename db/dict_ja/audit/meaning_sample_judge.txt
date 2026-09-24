@@ -1,0 +1,120 @@
+1|2|노마크=NOUN;무방비=NOUN
+2|1|잉글랜드=PROPN
+3|3|자릿수=NOUN;규모=NOUN
+4|1|에이치=NOUN
+5|1|게이트=NOUN;출입문=NOUN
+6|4|유두=NOUN
+7|1|겨울=NOUN;윈터=NOUN
+8|1|해프닝=NOUN;뜻밖의 일=NOUN
+9|1|붙다=VERB;달라붙다=VERB
+10|3|경찰서=NOUN
+11|1|좋은=ADJ;괜찮은=ADJ
+12|2|정지=NOUN;먹통=NOUN
+13|1|어떻게=ADV
+14|3|깨다=VERB;깨뜨리다=VERB
+15|1|걸리버=PROPN
+16|2|등장=NOUN;출현=NOUN;등장하다=VERB
+17|3|~중=NOUN;~동안=NOUN
+18|4|기상=NOUN
+19|3|장애물=NOUN;벽=NOUN
+20|1|효도=NOUN;효행=NOUN
+21|1|교장=NOUN
+22|2|치킴=NOUN
+23|1|샌디에이고=PROPN
+24|1|주시다=VERB
+25|1|캐스팅=NOUN;배역 선정=NOUN
+26|2|보건=NOUN
+27|1|지원=NOUN;지원하다=VERB;서포트=NOUN
+28|1|가출=NOUN;가출하다=VERB
+29|2|기가=NOUN;기가바이트=NOUN
+30|1|질의=NOUN;질문=NOUN
+31|2|합격=NOUN;통과=NOUN
+32|2|뇌신=NOUN;천둥신=NOUN
+33|2|과=NOUN;학과=NOUN
+34|1|산=NOUN
+35|2|손짓하다=VERB;손짓해 부르다=VERB
+36|1|지시=NOUN;가리킴=NOUN
+37|1|쿠바=PROPN
+38|4|한 번=NOUN
+39|1|화학적인=ADJ
+40|1|칠=NUM;일곱=NUM
+41|1|임팩트=NOUN;충격=NOUN;인상=NOUN
+42|1|빠른 페이스=NOUN
+43|2|멀미하다=VERB
+44|1|그레코로만형=NOUN
+45|2|대리=NOUN;대신=NOUN;대리인=NOUN
+46|1|업적=NOUN;실적=NOUN
+47|1|인센티브=NOUN;장려금=NOUN
+48|2|해결하다=VERB;처리하다=VERB;해치우다=VERB
+49|1|불공정한=ADJ;불공평한=ADJ
+50|1|다시=ADV;한 번 더=ADV
+51|1|인디언=NOUN;아메리카 원주민=NOUN
+52|1|모서리=NOUN;모퉁이=NOUN
+53|1|언제나=ADV;영원히=ADV
+54|1|영=NUM;제로=NUM
+55|1|추가=NOUN;추가하다=VERB
+56|1|외계인=NOUN;에일리언=NOUN
+57|1|가득 차다=VERB;꽉 차다=VERB
+58|3|언더파=NOUN
+59|2|제안하다=VERB;말을 꺼내다=VERB
+60|2|과열=NOUN;지나친 흥분=NOUN
+61|2|절약=NOUN;검약=NOUN
+62|2|향하다=VERB;면하다=VERB
+63|1|독창성=NOUN;오리지널리티=NOUN
+64|1|관세=NOUN
+65|1|키트=NOUN;조립 세트=NOUN
+66|1|이탈리아=PROPN
+67|1|주말=NOUN
+68|2|환경 운동=NOUN;환경 보호주의=NOUN
+69|2|호소하다=VERB;촉구하다=VERB
+70|1|캐시=NOUN
+71|1|에메랄드=NOUN
+72|2|뚜껑=NOUN;캡=NOUN
+73|1|쾰른=PROPN
+74|1|등급=NOUN;그레이드=NOUN
+75|1|잡음=NOUN;노이즈=NOUN
+76|1|살사=NOUN
+77|1|좌우=NOUN;왼쪽과 오른쪽=NOUN
+78|2|~학=NOUN
+79|1|월급=NOUN
+80|1|사형=NOUN;극형=NOUN
+81|2|아파트=NOUN;방=NOUN
+82|3|싱거운=ADJ;순한=ADJ
+83|1|핵심 인물=NOUN;키맨=NOUN
+84|1|갤런=NOUN
+85|3|코디=NOUN;옷차림=NOUN
+86|2|사이트=NOUN;웹사이트=NOUN
+87|1|손재주 있는=ADJ;솜씨 좋은=ADJ
+88|2|후계자=NOUN;후손=NOUN
+89|1|포수=NOUN;캐처=NOUN
+90|1|클래식=NOUN;고전 음악=NOUN
+91|1|키스=NOUN;입맞춤=NOUN;키스하다=VERB
+92|10|S등급=NOUN;최상급=NOUN
+93|1|사리=NOUN
+94|1|퀼로트=NOUN;치마바지=NOUN
+95|3|공을 지키다=VERB
+96|1|납입=NOUN;납부=NOUN;납부하다=VERB
+97|1|게토=NOUN;빈민가=NOUN
+98|1|교수=NOUN
+99|1|타다=VERB;불타다=VERB
+100|1|생태학=NOUN;에콜로지=NOUN
+101|1|회색 지대=NOUN;그레이존=NOUN
+102|1|서퍼=NOUN
+103|2|집 보는 사람=NOUN;집지기=NOUN
+104|1|어제=NOUN
+105|4|착취하다=VERB;짜내다=VERB;갈취하다=VERB
+106|2|터널링하다=VERB
+107|1|우루과이=PROPN
+108|1|고지대=NOUN;하일랜드=NOUN
+109|1|착공=NOUN;착공하다=VERB
+110|1|하와이=PROPN
+111|2|신고하다=VERB;알리다=VERB
+112|3|유흥에 빠짐=NOUN
+113|1|오세아니아=PROPN
+114|1|열매=NOUN;과실=NOUN
+115|1|사물=NOUN;일=NOUN;매사=NOUN
+116|1|할 수 있다=VERB;가능한=ADJ
+117|2|프런트=NOUN;안내 데스크=NOUN
+118|1|보기 흉한=ADJ;볼썽사나운=ADJ;꼴사나운=ADJ
+119|1|그린피=NOUN
+120|1|살롱=NOUN;응접실=NOUN

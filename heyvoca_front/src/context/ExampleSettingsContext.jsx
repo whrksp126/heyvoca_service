@@ -4,27 +4,35 @@ const ExampleSettingsContext = createContext();
 
 const STORAGE_KEY = 'exampleSettings';
 
-// "예문 항상 보기" 설정. 테마처럼 이 기기(localStorage)에만 저장한다.
+const readSaved = () => {
+  try {
+    return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {};
+  } catch (e) {
+    return {};
+  }
+};
+
+// "예문 항상 보기" · "후리가나 표시" 설정. 테마처럼 이 기기(localStorage)에만 저장한다.
 export const ExampleSettingsProvider = ({ children }) => {
-  const [showExamples, setShowExamples] = useState(() => {
-    try {
-      const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
-      return saved?.showAlways ?? false;
-    } catch (e) {
-      return false;
-    }
-  });
+  const [showExamples, setShowExamples] = useState(() => readSaved().showAlways ?? false);
+  // 일본어 예문 후리가나(ruby) 표시 — 기본 켬.
+  const [showFurigana, setShowFurigana] = useState(() => readSaved().showFurigana ?? true);
 
   useEffect(() => {
     try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify({ showAlways: showExamples }));
+      localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify({ showAlways: showExamples, showFurigana })
+      );
     } catch (e) {
       /* noop */
     }
-  }, [showExamples]);
+  }, [showExamples, showFurigana]);
 
   return (
-    <ExampleSettingsContext.Provider value={{ showExamples, setShowExamples }}>
+    <ExampleSettingsContext.Provider
+      value={{ showExamples, setShowExamples, showFurigana, setShowFurigana }}
+    >
       {children}
     </ExampleSettingsContext.Provider>
   );
@@ -36,4 +44,10 @@ export const useExampleSettings = () => {
     throw new Error('useExampleSettings must be used within an ExampleSettingsProvider');
   }
   return context;
+};
+
+// Provider 밖에서도 안전하게 쓰는 후리가나 설정 조회(없으면 기본 켬).
+export const useShowFurigana = () => {
+  const context = useContext(ExampleSettingsContext);
+  return context?.showFurigana ?? true;
 };

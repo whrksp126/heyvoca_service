@@ -1,0 +1,30 @@
+# 검증 실패(시도별, 재시도/수동검수로 감)
+batch_regen_0001	24	衆	강조가 형태소 경계를 가로지름: 衆 ⊂ 若い衆
+batch_regen_0001	47	不時着	강조가 형태소 경계를 가로지름: 不時着 ⊂ 不時着し
+batch_regen_0001	50	抱え	강조가 형태소 경계를 가로지름: 抱え ⊂ 一抱え
+batch_regen_0001	52	未	강조가 형태소 경계를 가로지름: 未 ⊂ 未だ
+batch_regen_0001	78	はっはっ	강조가 형태소 경계를 가로지름: はっはっ ⊂ はっはっと
+# 형식 오류
+# 경고
+batch_regen_0001	1	くらべ	거부(X): 접사전용
+batch_regen_0001	8	デシ	거부(X): 접두사전용
+batch_regen_0001	9	ネス	거부(X): 접미사전용
+batch_regen_0001	10	ノン	거부(X): 접두사전용
+batch_regen_0001	12	ヘクト	거부(X): 접두사전용
+batch_regen_0001	13	マン	거부(X): 접미사전용
+batch_regen_0001	18	原	거부(X): 접두사전용
+batch_regen_0001	25	住	거부(X): 단독용법없음
+batch_regen_0001	26	重	거부(X): 접미사전용
+batch_regen_0001	28	助	거부(X): 접두사전용
+batch_regen_0001	32	上	거부(X): 접두사전용
+batch_regen_0001	34	生	거부(X): 접두사전용
+batch_regen_0001	49	舗	거부(X): 단독용법드묾
+batch_regen_0001	60	博	거부(X): 접미사전용
+batch_regen_0001	64	心	거부(X): 단독용법없음
+batch_regen_0001	68	自販	거부(X): 단독용법없음
+batch_regen_0001	72	少	거부(X): 접두사전용
+batch_regen_0001	73	か	거부(X): 접미사전용
+batch_regen_0001	74	勢	거부(X): 단독용법없음
+batch_regen_0001	76	南	거부(X): 접두사전용
+batch_regen_0001_retry1	24	衆	거부(X): 단독용법드묾
+batch_regen_0001_retry1	50	抱え	거부(X): 단독용법드묾

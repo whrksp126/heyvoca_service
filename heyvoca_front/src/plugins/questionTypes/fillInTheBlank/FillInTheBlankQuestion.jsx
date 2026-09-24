@@ -11,6 +11,9 @@ import { getTextSound, stripHtmlTags } from '../../../utils/common';
 import { getAdvanceDelay, ADVANCE_DELAY_GROW } from '../../../utils/studyTiming';
 import { getMemoryStateKeyByStability } from '../../../components/common/MemoryStateChangeBadge';
 import { useResumeReplayKey } from '../../../hooks/useResumeReplayKey';
+import { wordLang, isJa } from '../../../utils/lang';
+import { getReading, shouldShowReading } from '../../../utils/jaWord';
+import { useShowFurigana } from '../../../context/ExampleSettingsContext';
 
 /*
   빈칸 채우기(fillInTheBlank) — 한 방향뿐이다.
@@ -82,6 +85,49 @@ const tokenizeWords = (text) => {
     const clean = t.replace(WORD_EDGE_PUNCT_RE, '');
     return { type: clean ? 'word' : 'text', text: t, clean };
   });
+};
+
+/*
+  일본어 빈칸 문장 토큰화 — 띄어쓰기가 없어 공백 분리를 쓸 수 없다.
+  reading_tokens([[surface, reading|null(, okurigana)]...], 이어 붙이면 빈칸 원문 plain)를
+  plain 위에 놓고 [segStart, segEnd) 구간(빈칸 앞/뒤)에 걸치는 토큰만 잘라 낸다.
+  - 구간에 온전히 들어온 토큰: 탭 가능(가나·한자·영숫자가 있을 때) + 읽기(ruby) 표시 가능
+  - 빈칸 경계에 잘린 토큰: 평문(탭·ruby 없음 — 잘린 조각의 읽기를 알 수 없다)
+  reading_tokens 가 없거나 plain 과 맞지 않으면 null → 호출부가 탭 없는 평문으로 그린다.
+*/
+const JA_TAPPABLE_RE = /[\u3040-\u30ff\u3400-\u9fffA-Za-z0-9\uff10-\uff19\uff21-\uff5a]/;
+const tokenizeJa = (readingTokens, plain, segStart, segEnd) => {
+  if (!Array.isArray(readingTokens) || readingTokens.length === 0) return null;
+  const joined = readingTokens.map((t) => (Array.isArray(t) ? String(t[0] ?? '') : '')).join('');
+  if (joined !== plain) return null;
+  const out = [];
+  let pos = 0;
+  for (const tok of readingTokens) {
+    const surface = String(tok[0] ?? '');
+    const start = pos;
+    const end = pos + surface.length;
+    pos = end;
+    if (!surface || end <= segStart || start >= segEnd) continue;
+    const clipped = start < segStart || end > segEnd;
+    const text = surface.slice(Math.max(segStart, start) - start, Math.min(segEnd, end) - start);
+    if (!text) continue;
+    if (clipped || /^\s+$/.test(text)) {
+      out.push({ type: 'text', text });
+      continue;
+    }
+    const reading = tok[1] ? String(tok[1]) : null;
+    const okurigana = tok[2] ? String(tok[2]) : '';
+    const hasOkuri = !!okurigana && surface.endsWith(okurigana) && surface.length > okurigana.length;
+    out.push({
+      type: JA_TAPPABLE_RE.test(text) ? 'word' : 'text',
+      text,
+      clean: text,
+      reading,
+      base: hasOkuri ? surface.slice(0, surface.length - okurigana.length) : surface,
+      okurigana: hasOkuri ? okurigana : '',
+    });
+  }
+  return out;
 };
 
 // 선택지("word") TTS 가 끝난 뒤 다음 문제로 넘어가기까지 얹는 여유(ms) — 말이 끝나자마자
@@ -202,10 +248,24 @@ const FillInTheBlankQuestion = ({ question, onComplete, farmByWordId }) => {
   const { shownText, blankText, blankFill, options = [], resultIndex } = question;
   // 위 예문 = 한국어, 아래(빈칸) 예문·선택지 = 영어. 방향은 하나뿐이다.
   const shownLang = 'ko';
-  const blankLang = 'en';
+  const blankLang = wordLang(question);
+  const jaBlank = isJa(blankLang);
+  const showFurigana = useShowFurigana();
   const { before, after } = splitAtBlank(blankText);
-  const beforeTokens = tokenizeWords(before);
-  const afterTokens = tokenizeWords(after);
+  // ja: 띄어쓰기 기준 토큰화가 불가능 — reading_tokens 가 있으면 토큰 단위, 없으면 탭 비활성 평문.
+  const jaPlain = jaBlank ? stripTags(blankText) : '';
+  const jaBeforeTokens = jaBlank
+    ? tokenizeJa(question.blankReadingTokens, jaPlain, 0, before.length)
+    : null;
+  const jaAfterTokens = jaBlank
+    ? tokenizeJa(question.blankReadingTokens, jaPlain, jaPlain.length - after.length, jaPlain.length)
+    : null;
+  const beforeTokens = jaBlank
+    ? (jaBeforeTokens ?? [{ type: 'text', text: before }])
+    : tokenizeWords(before);
+  const afterTokens = jaBlank
+    ? (jaAfterTokens ?? [{ type: 'text', text: after }])
+    : tokenizeWords(after);
 
   // 농장 상태 바 — 카드 맞추기와 같은 경로(Main.processCardWord → cardFarmByWordId[wordId]).
   // 채점 전에는 절대 띄우지 않는다(문제 전환 직후 이전 문제 값이 한 프레임 남아 있을 수 있음).
@@ -291,7 +351,7 @@ const FillInTheBlankQuestion = ({ question, onComplete, farmByWordId }) => {
     const container = { width: cardEl.offsetWidth, height: cardEl.offsetHeight };
 
     haptic('light');
-    speak(cleanWord, 'en', 'lookup');
+    speak(cleanWord, blankLang, 'lookup');
 
     const reqId = ++lookupReqRef.current;
     setLookup({ key, word: cleanWord, anchor, container, status: 'loading', info: null });
@@ -329,7 +389,39 @@ const FillInTheBlankQuestion = ({ question, onComplete, farmByWordId }) => {
   }, [lookup?.key]);
 
   // 탭 가능한 단어 토큰 렌더 — 공백/구두점은 평문, 단어는 인라인 버튼
-  const renderWordTokens = (tokens, area) => tokens.map((tok, i) => {
+  // ja 토큰 탭 — TTS 만(말풍선 생략: 일본어 단어 뜻 조회 API 가 아직 없다)
+  const handleJaTokenTap = (e, text) => {
+    e.stopPropagation();
+    haptic('light');
+    closeLookup();
+    speak(text, blankLang, 'lookup');
+  };
+
+  const renderJaTokens = (tokens, area) => tokens.map((tok, i) => {
+    const key = `${area}-${i}`;
+    if (tok.type !== 'word') return <span key={key}>{tok.text}</span>;
+    const body = showFurigana && tok.reading
+      ? (
+        <>
+          <ruby>{tok.base}<rt>{tok.reading}</rt></ruby>
+          {tok.okurigana}
+        </>
+      )
+      : tok.text;
+    return (
+      <button
+        key={key}
+        type="button"
+        aria-label={`${tok.clean} 듣기`}
+        className="inline font-[inherit] text-[inherit] leading-[inherit] text-left align-baseline rounded-[4px] focus:outline-none"
+        onClick={(e) => handleJaTokenTap(e, tok.clean)}
+      >
+        {body}
+      </button>
+    );
+  });
+
+  const renderWordTokens = (tokens, area) => (jaBlank ? renderJaTokens(tokens, area) : tokens.map((tok, i) => {
     if (tok.type !== 'word') return <span key={`${area}-${i}`}>{tok.text}</span>;
     const key = `${area}-${i}`;
     const active = lookup?.key === key;
@@ -354,7 +446,7 @@ const FillInTheBlankQuestion = ({ question, onComplete, farmByWordId }) => {
         {tok.text}
       </button>
     );
-  });
+  }));
 
   // 문제 등장 시 자동 재생 — Main.jsx가 사지선다 등에서 하는 등장 자동재생과 같은 자리.
   // Main.jsx는 fillInTheBlank를 자기 자동재생 대상에서 뺀다(단어를
@@ -512,16 +604,22 @@ const FillInTheBlankQuestion = ({ question, onComplete, farmByWordId }) => {
         <div className="relative z-[1] flex items-center flex-1 px-[20px] pt-[20px] pb-[60px]">
           {/* 빈칸 예문 — pill 은 채점 전후 모두 중립색, 채점 후 활용형이 들어간다.
               아이콘이 없어졌으니 텍스트가 카드 전체 너비를 그대로 쓴다(왼쪽 여백 없음). */}
-          <p className="w-full text-[22px] font-[700] leading-[1.8] text-layout-black dark:text-layout-white break-keep">
+          <p lang={jaBlank ? 'ja' : undefined} className={`w-full text-[22px] font-[700] leading-[1.8] text-layout-black dark:text-layout-white ${jaBlank ? 'break-normal' : 'break-keep'}`}>
             {renderWordTokens(beforeTokens, 'b')}
+            {/* 정렬은 en 과 같다(왼쪽 정렬·카드 세로 가운데). ja 는 띄어쓰기가 없어 빈칸이 앞뒤 글자에
+                딱 붙으므로 좌우 4px 을 띄운다(en 은 문장의 공백이 그 역할).
+                ja: 정답이 채워지면 빈칸 글자를 문장과 같은 크기(22px)로 — 문장의 일부로 읽히게.
+                en 은 기존 규격(17px) 유지. */}
             <span
-              className="
+              className={`
                 inline-flex items-center justify-center align-middle
-                min-w-[84px] h-[34px] px-[14px]
+                min-w-[84px] px-[14px]
                 rounded-[8px] border-[1px] border-layout-gray-200 dark:border-[#444444]
                 bg-layout-white dark:bg-layout-black
-                text-[17px] font-[700] text-layout-black dark:text-layout-white
-              "
+                font-[700] text-layout-black dark:text-layout-white
+                ${jaBlank ? 'mx-[4px]' : ''}
+                ${jaBlank && isAnswered ? 'h-[40px] px-[10px] text-[22px] leading-none' : 'h-[34px] text-[17px]'}
+              `}
             >
               {isAnswered ? blankFill : ''}
             </span>
@@ -541,7 +639,7 @@ const FillInTheBlankQuestion = ({ question, onComplete, farmByWordId }) => {
               speaking={isSpeaking && speakingTarget === 'lookup'}
               onReplay={() => {
                 haptic('light');
-                speak(lookup.word, 'en', 'lookup');
+                speak(lookup.word, blankLang, 'lookup');
               }}
             />
           )}
@@ -645,6 +743,13 @@ const FillInTheBlankQuestion = ({ question, onComplete, farmByWordId }) => {
               `}
             >
               {option}
+              {/* ja: 채점 후 정답 선택지에 읽기(히라가나) — 채점 전엔 힌트가 되므로 숨김.
+                  선택지 문자열은 정답 = 문제 단어(question.origin)라 읽기는 question 에서 얻는다. */}
+              {isAnswered && index === resultIndex && shouldShowReading(question) && (
+                <span lang="ja" className="ml-[6px] text-[12px] font-[500] opacity-80">
+                  {getReading(question)}
+                </span>
+              )}
             </motion.button>
           );
         })}

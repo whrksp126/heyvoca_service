@@ -16,6 +16,11 @@ ACCESS_SECRET = os.getenv('ACCESS_SECRET')
 REFRESH_SECRET = os.getenv('REFRESH_SECRET')
 OAUTH_CLIENT_SECRET = os.getenv('OAUTH_CLIENT_SECRET')
 
+# 학습 언어 코드 — 모듈 상수(앱 컨텍스트 밖 스크립트에서도 import 가능)
+SUPPORTED_LEARNING_LANGS = ('en', 'ja')
+DICT_SCHEMA_JA = os.getenv('DICT_SCHEMA_JA', 'heyvoca_dict_ja')
+
+
 class Config:
     """Base configuration"""
     SQLALCHEMY_TRACK_MODIFICATIONS = False
@@ -36,6 +41,13 @@ class Config:
     SQLALCHEMY_BINDS = {
         'dict': os.getenv('DATABASE_URL_DICT', SQLALCHEMY_DATABASE_URI),
     }
+
+    # 일본어(일한) 사전 schema — dict bind 와 같은 서버/계정, schema 만 다르다.
+    # 요청의 g.dict_lang=='ja' 이면 RoutingSession 이 dict 엔진에
+    # schema_translate_map={None: DICT_SCHEMA_JA} 를 입혀 이 schema 로 보낸다.
+    DICT_SCHEMA_JA = os.getenv('DICT_SCHEMA_JA', 'heyvoca_dict_ja')
+    # 학습 언어 코드 (User.learning_lang / UserVocaBook.language / *.dict_lang)
+    SUPPORTED_LEARNING_LANGS = SUPPORTED_LEARNING_LANGS
 
     # 커넥션 풀 — 유휴 연결 stale 방지(pre_ping)로 'MySQL server has gone away' 제거,
     # 주기적 재활용(recycle). MySQL 기본 max_connections(151) 대비

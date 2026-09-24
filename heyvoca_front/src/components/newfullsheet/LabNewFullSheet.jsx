@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { CaretLeft, CaretRight, ChatCircleDots } from '@phosphor-icons/react';
+import { CaretLeft, CaretRight, ChatCircleDots, Translate } from '@phosphor-icons/react';
 import { motion } from 'framer-motion';
 import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
 import { vibrate, showToast, checkNotificationPermissionGranted } from '../../utils/osFunction';
 import postMessageManager from '../../utils/postMessageManager';
 import { getLabSettingsApi, setLabFeatureApi, getCachedLabFeatures } from '../../api/lab';
+import { useUser } from '../../context/UserContext';
+import { DEFAULT_LEARNING_LANG, LANG_LABEL } from '../../utils/lang';
 
 // 실험실 기능 목록 — 새 기능은 이 배열에 한 줄 추가로 노출된다.
 const LAB_FEATURES = [
@@ -13,6 +15,13 @@ const LAB_FEATURES = [
     icon: ChatCircleDots,
     name: '채팅으로 학습',
     desc: '알림으로 오늘의 단어를 받고 바로 풀어요',
+    hasChatEntry: true, // 켜졌을 때 아래 "채팅방 입장" 행 노출
+  },
+  {
+    key: 'multi_lang',
+    icon: Translate,
+    name: '다른 언어 학습하기 (베타)',
+    desc: '홈 왼쪽 위에서 학습 언어를 바꿀 수 있어요',
   },
 ];
 
@@ -49,6 +58,7 @@ const LabNewFullSheet = () => {
   "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
 
   const { popNewFullSheet } = useNewFullSheetActions();
+  const { learningLang, setLearningLang } = useUser();
   // 앱 시작 시 prefetch된 캐시로 초기화 → 열자마자 올바른 토글 상태(OFF 깜빡임 없음).
   const [features, setFeatures] = useState(() => getCachedLabFeatures() || {});
 
@@ -105,6 +115,15 @@ const LabNewFullSheet = () => {
       // 롤백
       setFeatures((prev) => ({ ...prev, [key]: !next }));
       showToast('설정 변경에 실패했어요. 다시 시도해주세요.');
+      return;
+    }
+
+    // 다른 언어 학습을 끄면 기본 언어(영어)로 되돌린다 — 칩이 사라져 되돌릴 방법이 없어지므로.
+    if (key === 'multi_lang' && !next && learningLang !== DEFAULT_LEARNING_LANG) {
+      const ok = await setLearningLang(DEFAULT_LEARNING_LANG);
+      showToast(ok
+        ? `${LANG_LABEL[DEFAULT_LEARNING_LANG]} 학습으로 돌아왔어요`
+        : '학습 언어를 되돌리지 못했어요. 다시 시도해주세요.');
     }
   };
 
@@ -165,7 +184,7 @@ const LabNewFullSheet = () => {
                   <ToggleSwitch checked={enabled} onChange={() => handleToggle(feature.key)} />
                 </div>
 
-                {enabled && (
+                {enabled && feature.hasChatEntry && (
                   <div
                     onClick={handleEnterChat}
                     className="flex items-center justify-between px-[20px] py-[15px] border-b border-[#ddd] dark:border-border-dark bg-layout-gray-50 dark:bg-layout-gray-dark"

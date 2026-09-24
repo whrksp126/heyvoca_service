@@ -6,7 +6,9 @@ build_candidate_pool(user_id, book_ids):
   - v1 UserVoca.data는 즉석에서 v2 변환 (런타임 only, DB 미변경)
   - 동일 UserVoca가 여러 단어장에 걸쳐 있으면 중복 제거 (최초 book 기준 유지)
   - 각 단어를 bucket 분류: 'new' | 'overdue' | 'today' | 'short' | 'medium' | 'long'
-  - Redis 캐싱: TTL 30초, 키 = recommend:pool:{user_id}:{book_hash}
+  - 학습 언어 한정: UserVocaBook.language == lang 이고 UserVoca.dict_lang == lang 인 단어만
+    (lang 기본 = 요청의 g.dict_lang). 오답 보기도 이 풀에서 뽑으므로 자연히 같은 언어로 한정된다.
+  - Redis 캐싱: TTL 30초, 키 = recommend:pool:{user_id}:{lang}:{book_hash}
 """
 
 import json
@@ -18,6 +20,7 @@ from uuid import UUID
 
 from app import db, cache
 from app.models.models import UserVocaBook, UserVocaBookMap, UserVoca
+from app.utils.dict_lang import get_dict_lang, normalize_lang
 from sqlalchemy.orm import joinedload
 
 # bucket 분류 임계값 — fsrs/thresholds.py 가 단일 소스.
@@ -47,6 +50,8 @@ class CandidateItem:
     concept_ids:       list = field(default_factory=list)
     # 정규화된 뜻 문자열(concept_id가 없을 때 오답 제외 판정 폴백용)
     normalized_meanings: list = field(default_factory=list)
+    # 단어 언어('en'|'ja') — UserVoca.dict_lang
+    dict_lang:         str = 'en'
 
 
 def _classify_bucket(fsrs_state: dict, today: dt.date) -> str:
@@ -86,7 +91,7 @@ def _make_book_hash(book_ids_normalized: list) -> str:
     return hashlib.md5(joined.encode()).hexdigest()
 
 
-def _load_pool_raw(user_id: UUID, book_ids_filter: Optional[list]) -> list:
+def _load_pool_raw(user_id: UUID, book_ids_filter: Optional[list], lang: str = 'en') -> list:
     """
     DB에서 후보 단어 로드.
     book_ids_filter가 None이면 사용자의 모든 단어장.
@@ -97,7 +102,7 @@ def _load_pool_raw(user_id: UUID, book_ids_filter: Optional[list]) -> list:
 
     query = db.session.query(UserVocaBook).options(
         joinedload(UserVocaBook.voca_maps).joinedload(UserVocaBookMap.user_voca)
-    ).filter(UserVocaBook.user_id == user_id)
+    ).filter(UserVocaBook.user_id == user_id, UserVocaBook.language == lang)
 
     if book_ids_filter:
         # UUID 타입 일치를 위해 UUID 객체로 변환 후 필터
@@ -123,6 +128,9 @@ def _load_pool_raw(user_id: UUID, book_ids_filter: Optional[list]) -> list:
             if uv is None:
                 continue
             if uv.id in seen_voca_ids:
+                continue
+            # 단어장 언어와 단어 사전 언어가 어긋난 행(이행 중 잔재 등)도 섞지 않는다
+            if (uv.dict_lang or 'en') != lang:
                 continue
             seen_voca_ids.add(uv.id)
 
@@ -168,6 +176,7 @@ def _load_pool_raw(user_id: UUID, book_ids_filter: Optional[list]) -> list:
                 examples=examples,
                 fsrs_state=fsrs_state,
                 bucket=bucket,
+                # ja 는 띄어쓰기가 없어 '글자 수'를 그대로 쓴다(한자·가나 1자 = 1).
                 word_length=len(word),
                 mastery=mastery,
                 voca_id=uv.voca_id,
@@ -194,12 +203,13 @@ def _load_pool_raw(user_id: UUID, book_ids_filter: Optional[list]) -> list:
             meaning_concepts=meaning_concepts,
             concept_ids=concept_ids,
             normalized_meanings=normalized_meanings_for_word(r['meanings']),
+            dict_lang=lang,
         ))
 
     return items
 
 
-def build_candidate_pool(user_id, book_ids=None) -> list:
+def build_candidate_pool(user_id, book_ids=None, lang=None) -> list:
     """
     사용자의 단어를 가져와 추천 후보 풀로 변환.
 
@@ -207,12 +217,14 @@ def build_candidate_pool(user_id, book_ids=None) -> list:
         user_id:  UUID 또는 UUID 문자열
         book_ids: None / ['all'] → 전체 단어장
                   UUID 문자열 리스트 → 해당 단어장만
+        lang:     'en'|'ja' — None 이면 요청의 학습 언어(get_dict_lang())
 
     Returns:
         CandidateItem 리스트
     """
     if isinstance(user_id, str):
         user_id = UUID(user_id)
+    lang = normalize_lang(lang) or get_dict_lang()
 
     # book_ids 정규화: None / ['all'] → None(=전체)
     if not book_ids or book_ids == ['all'] or book_ids == 'all':
@@ -222,14 +234,14 @@ def build_candidate_pool(user_id, book_ids=None) -> list:
         book_ids_filter = book_ids
         cache_book_part = _make_book_hash(book_ids)
 
-    cache_key = f"recommend:pool:{user_id}:{cache_book_part}"
+    cache_key = f"recommend:pool:{user_id}:{lang}:{cache_book_part}"
 
     # Redis 캐시 조회
     cached = cache.get(cache_key)
     if cached is not None:
         return cached
 
-    items = _load_pool_raw(user_id, book_ids_filter)
+    items = _load_pool_raw(user_id, book_ids_filter, lang)
 
     # 빈 풀은 캐싱하지 않는다. 온보딩 직후 migrate가 단어를 생성하기 전에 recommend가
     # 호출되면(레이스) 빈 결과가 30초간 캐시돼, 그 사이 AI 추천 테스트가

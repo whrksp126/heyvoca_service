@@ -1,0 +1,411 @@
+# 검증 실패(시도별, 재시도/수동검수로 감)
+batch_0005	7	興じる	표제어 미등장: 子供たちは遊びに興じていた。
+batch_0006	25	準じる	표제어 미등장: 先例に準じて手続きを進めた。
+batch_0023	16	スクランブル	sense_no 부적합: 2
+batch_0023	48	ストール	sense_no 부적합: 2
+batch_0047	16	握らす	표제어 미등장: 母は子供の手に飴を握らせた。
+batch_0047_retry1	16	握らす	표제어 미등장: 母は子供に飴を握らせた。
+batch_0056	33	競る	표제어 미등장: 二人の選手が首位を競っている。
+batch_0056_retry1	33	競る	표제어 미등장: 二人の選手が首位を競っている。
+batch_0056_retry2	33	競る	표제어 미등장: 二人の選手が優勝を競った。
+batch_0072	1	初める	표제어 미등장: 桜が咲き初めた美しい朝でした。
+batch_0072_retry1	1	初める	강조가 형태소 경계를 가로지름: 初める ⊂ 咲き初める
+batch_0072_retry2	1	初める	표제어 미등장: 桜の花が咲き初めた。
+batch_0079	40	相乗	sense_no 부적합: 2
+batch_0086	7	斗	길이 7자(- 8~30)
+batch_0088	9	寅	강조가 형태소 경계를 가로지름: 寅 ⊂ 寅年
+batch_0088	10	酉	강조가 형태소 경계를 가로지름: 酉 ⊂ 酉年
+batch_0088_retry1	9	寅	강조가 형태소 경계를 가로지름: 寅 ⊂ 寅年
+batch_0088_retry1	10	酉	강조가 형태소 경계를 가로지름: 酉 ⊂ 酉年
+batch_0089	32	年男	길이 7자(- 8~30)
+batch_0093	22	舞台裏	sense_no 부적합: 2
+batch_0102	44	弔う	표제어 미등장: 彼女は毎年祖父の命日に弔いに行く。
+batch_0107	44	影の内閣	sense_no 부적합: 2
+batch_0109	4	急伸	길이 7자(- 8~30)
+batch_0110	1	迫撃	sense_no 부적합: 2
+batch_0123	3	荒れ	sense_no 부적합: 2
+batch_0124	26	合	길이 7자(- 8~30)
+batch_0132	18	いけない	표제어 미등장: 遅刻してはいけませんよ。
+batch_0133	18	来	강조가 형태소 경계를 가로지름: 来 ⊂ 来週
+batch_0135	25	くるむ	표제어 미등장: 赤ちゃんを毛布でくるんだ。
+batch_0135_retry1	25	くるむ	표제어 미등장: 母は赤ちゃんを毛布でくるんだ。
+batch_0136	11	あく	강조가 형태소 경계를 가로지름: あく ⊂ あく抜き
+batch_0142	23	ミニ	강조가 형태소 경계를 가로지름: ミニ ⊂ ミニスカート
+batch_0143	50	干る	표제어 미등장: 田んぼの水がすっかり干った。
+batch_0144	30	見極める	강조가 형태소 경계를 가로지름: 見極め ⊂ 見極めよう
+batch_0144	33	固め	강조가 형태소 경계를 가로지름: 固め ⊂ 固め技
+batch_0145	11	射る	길이 6자(- 8~30)
+batch_0145	22	出来	강조가 형태소 경계를 가로지름: 出来 ⊂ 出来し
+batch_0147	49	覆る	표제어 미등장: 強風で小舟が覆った。
+batch_0147_retry1	49	覆る	표제어 미등장: その判決は後に覆った。
+batch_0149	8	黄昏	강조가 형태소 경계를 가로지름: 黄昏 ⊂ 黄昏時
+batch_0149	13	最上	강조가 형태소 경계를 가로지름: 最上 ⊂ 最上部
+batch_0149	18	直球	길이 7자(- 8~30)
+batch_0150	4	こなす	표제어 미등장: 胃が弱くて食べ物をこなせない。
+batch_0150_retry1	4	こなす	표제어 미등장: 赤ちゃんはまだミルクをうまくこなせない。
+batch_0151	3	って	강조가 형태소 경계를 가로지름: って ⊂ たって
+batch_0151	13	辞す	표제어 미등장: 彼は静かに社長の座を辞した。
+batch_0151_retry1	13	辞す	표제어 미등장: 大臣はその職を辞した。
+# 형식 오류(해당 줄 무시, 누락은 재시도로 감)
+batch_0005_retry1 L1 입력에 없는 순번 1
+batch_0005_retry1 L2 입력에 없는 순번 1
+batch_0005_retry1 L3 입력에 없는 순번 2
+batch_0005_retry1 L4 입력에 없는 순번 2
+batch_0005_retry1 L7 입력에 없는 순번 12
+batch_0005_retry1 L8 입력에 없는 순번 12
+batch_0005_retry1 L9 입력에 없는 순번 13
+batch_0005_retry1 L10 입력에 없는 순번 13
+batch_0005_retry1 L11 입력에 없는 순번 14
+batch_0005_retry1 L12 입력에 없는 순번 14
+batch_0005_retry1 L13 입력에 없는 순번 15
+batch_0005_retry1 L14 입력에 없는 순번 15
+batch_0005_retry1 L15 입력에 없는 순번 17
+batch_0005_retry1 L16 입력에 없는 순번 17
+batch_0005_retry1 L17 입력에 없는 순번 24
+batch_0005_retry1 L18 입력에 없는 순번 24
+batch_0005_retry1 L19 입력에 없는 순번 25
+batch_0005_retry1 L20 입력에 없는 순번 25
+batch_0005_retry1 L21 입력에 없는 순번 28
+batch_0005_retry1 L22 입력에 없는 순번 28
+batch_0005_retry1 L23 입력에 없는 순번 30
+batch_0005_retry1 L24 입력에 없는 순번 30
+batch_0005_retry1 L25 입력에 없는 순번 32
+batch_0005_retry1 L26 입력에 없는 순번 32
+batch_0005_retry1 L27 입력에 없는 순번 36
+batch_0005_retry1 L28 입력에 없는 순번 36
+batch_0005_retry1 L29 입력에 없는 순번 40
+batch_0005_retry1 L30 입력에 없는 순번 40
+batch_0005_retry1 L31 입력에 없는 순번 41
+batch_0005_retry1 L32 입력에 없는 순번 41
+batch_0005_retry1 L33 입력에 없는 순번 43
+batch_0005_retry1 L34 입력에 없는 순번 43
+batch_0005_retry1 L35 입력에 없는 순번 44
+batch_0005_retry1 L36 입력에 없는 순번 44
+batch_0005_retry1 L37 입력에 없는 순번 45
+batch_0005_retry1 L38 입력에 없는 순번 45
+batch_0005_retry1 L39 입력에 없는 순번 46
+batch_0005_retry1 L40 입력에 없는 순번 46
+batch_0005_retry1 L41 입력에 없는 순번 47
+batch_0005_retry1 L42 입력에 없는 순번 47
+batch_0005_retry1 L43 입력에 없는 순번 49
+batch_0005_retry1 L44 입력에 없는 순번 49
+batch_0005_retry1 L45 입력에 없는 순번 50
+batch_0005_retry1 L46 입력에 없는 순번 50
+batch_0006_retry1 L1 입력에 없는 순번 1
+batch_0006_retry1 L2 입력에 없는 순번 1
+batch_0006_retry1 L3 입력에 없는 순번 2
+batch_0006_retry1 L4 입력에 없는 순번 2
+batch_0006_retry1 L5 입력에 없는 순번 6
+batch_0006_retry1 L6 입력에 없는 순번 6
+batch_0006_retry1 L7 입력에 없는 순번 11
+batch_0006_retry1 L8 입력에 없는 순번 11
+batch_0006_retry1 L9 입력에 없는 순번 17
+batch_0006_retry1 L10 입력에 없는 순번 17
+batch_0006_retry1 L11 입력에 없는 순번 20
+batch_0006_retry1 L12 입력에 없는 순번 20
+batch_0006_retry1 L13 입력에 없는 순번 22
+batch_0006_retry1 L14 입력에 없는 순번 22
+batch_0006_retry1 L17 입력에 없는 순번 28
+batch_0006_retry1 L18 입력에 없는 순번 28
+batch_0006_retry1 L19 입력에 없는 순번 33
+batch_0006_retry1 L20 입력에 없는 순번 33
+batch_0006_retry1 L21 입력에 없는 순번 34
+batch_0006_retry1 L22 입력에 없는 순번 34
+batch_0006_retry1 L23 입력에 없는 순번 36
+batch_0006_retry1 L24 입력에 없는 순번 36
+batch_0006_retry1 L25 입력에 없는 순번 37
+batch_0006_retry1 L26 입력에 없는 순번 37
+batch_0006_retry1 L27 입력에 없는 순번 39
+batch_0006_retry1 L28 입력에 없는 순번 39
+batch_0006_retry1 L29 입력에 없는 순번 44
+batch_0006_retry1 L30 입력에 없는 순번 44
+batch_0006_retry1 L31 입력에 없는 순번 47
+batch_0006_retry1 L32 입력에 없는 순번 47
+batch_0006_retry1 L33 입력에 없는 순번 48
+batch_0006_retry1 L34 입력에 없는 순번 48
+batch_0006_retry1 L35 입력에 없는 순번 49
+batch_0006_retry1 L36 입력에 없는 순번 49
+batch_0006_retry1 L37 입력에 없는 순번 50
+batch_0006_retry1 L38 입력에 없는 순번 50
+# 경고(자동 실패 아님, 사람 검수)
+batch_0001	6	球	강조가 형태소 경계를 가로지름: 球 ⊂ 球技 (재생성 대상 — 경고만)
+batch_0001	8	上	강조가 형태소 경계를 가로지름: 上 ⊂ 上着 (재생성 대상 — 경고만)
+batch_0001	8	上	강조가 형태소 경계를 가로지름: 上 ⊂ 上唇 (재생성 대상 — 경고만)
+batch_0001	9	上	강조가 형태소 경계를 가로지름: 上 ⊂ 上座 (재생성 대상 — 경고만)
+batch_0001	21	音	강조가 형태소 경계를 가로지름: 音 ⊂ 音読み (재생성 대상 — 경고만)
+batch_0001	21	音	강조가 형태소 경계를 가로지름: 音 ⊂ 音程 (재생성 대상 — 경고만)
+batch_0001	39	瓦	강조 안 조사 의심: 지붕의 <strong class="target-word">기와</strong>가 깨져 버렸다.
+batch_0001	39	瓦	강조 안 조사 의심: 오래된 집은 <strong class="target-word">기와</strong>로 덮여 있다.
+batch_0003	43	亜科	강조 안 조사 의심: 이 곤충은 새로운 <strong class="target-word">아과</strong>로 분류되었다.
+batch_0003	43	亜科	강조 안 조사 의심: 학자들은 이 식물을 다른 <strong class="target-word">아과</strong>로 옮겼다.
+batch_0004	18	科	강조가 형태소 경계를 가로지름: 科 ⊂ 眼科 (재생성 대상 — 경고만)
+batch_0004	28	干し	강조가 형태소 경계를 가로지름: 干し ⊂ 干し柿 (재생성 대상 — 경고만)
+batch_0005	26	原	강조가 형태소 경계를 가로지름: 原 ⊂ 原油 (재생성 대상 — 경고만)
+batch_0005	26	原	강조가 형태소 경계를 가로지름: 原 ⊂ 原文 (재생성 대상 — 경고만)
+batch_0005	37	合わせ	강조가 형태소 경계를 가로지름: 合わせ ⊂ 色合わせ (재생성 대상 — 경고만)
+batch_0006	2	歯科	강조 안 조사 의심: 충치가 생겨서 <strong class="target-word">치과</strong>에 갔다.
+batch_0006	2	歯科	강조 안 조사 의심: <strong class="target-word">치과</strong>의원에서 검진을 받았다.
+batch_0006	9	質疑	강조 안 조사 의심: 의원에게 <strong class="target-word">질의</strong> 시간이 주어졌다.
+batch_0006	9	質疑	강조 안 조사 의심: 기자회견에서 기자들의 <strong class="target-word">질의</strong>가 이어졌다.
+batch_0006	19	衆	강조가 형태소 경계를 가로지름: 衆 ⊂ 大衆 (재생성 대상 — 경고만)
+batch_0006	19	衆	강조가 형태소 경계를 가로지름: 衆 ⊂ 大衆 (재생성 대상 — 경고만)
+batch_0006	20	住	강조가 형태소 경계를 가로지름: 住 ⊂ 住居 (재생성 대상 — 경고만)
+batch_0006	20	住	강조가 형태소 경계를 가로지름: 住 ⊂ 住宅 (재생성 대상 — 경고만)
+batch_0006	21	重	강조가 형태소 경계를 가로지름: 重 ⊂ 八重桜 (재생성 대상 — 경고만)
+batch_0006	27	助	강조가 형태소 경계를 가로지름: 助 ⊂ 助手 (재생성 대상 — 경고만)
+batch_0006	27	助	강조가 형태소 경계를 가로지름: 助 ⊂ 助言 (재생성 대상 — 경고만)
+batch_0006	29	こげ茶	강조가 형태소 경계를 가로지름: こげ茶 ⊂ こげ茶色 (재생성 대상 — 경고만)
+batch_0006	30	象	강조가 형태소 경계를 가로지름: 象 ⊂ 象徴 (재생성 대상 — 경고만)
+batch_0006	30	象	강조가 형태소 경계를 가로지름: 象 ⊂ 現象 (재생성 대상 — 경고만)
+batch_0006	48	生	강조가 형태소 경계를 가로지름: 生 ⊂ 生糸 (재생성 대상 — 경고만)
+batch_0006	48	生	강조가 형태소 경계를 가로지름: 生 ⊂ 生成り (재생성 대상 — 경고만)
+batch_0007	32	庁	강조가 형태소 경계를 가로지름: 庁 ⊂ 庁舎 (재생성 대상 — 경고만)
+batch_0007	44	東	강조가 형태소 경계를 가로지름: 東 ⊂ 東琴 (재생성 대상 — 경고만)
+batch_0008	43	未	강조가 형태소 경계를 가로지름: 未 ⊂ 未年 (재생성 대상 — 경고만)
+batch_0008	43	未	강조가 형태소 경계를 가로지름: 未 ⊂ 未年 (재생성 대상 — 경고만)
+batch_0009	1	役	강조가 형태소 경계를 가로지름: 役 ⊂ 戦役 (재생성 대상 — 경고만)
+batch_0009	10	溜まり	강조가 형태소 경계를 가로지름: 溜まり ⊂ 水溜まり (재생성 대상 — 경고만)
+batch_0009	28	卯	강조가 형태소 경계를 가로지름: 卯 ⊂ 卯年 (재생성 대상 — 경고만)
+batch_0009	28	卯	강조가 형태소 경계를 가로지름: 卯 ⊂ 卯年 (재생성 대상 — 경고만)
+batch_0010	10	一挙に	강조 안 조사 의심: 그는 컵의 물을 <strong class="target-word">단숨에</strong> 마셔 버렸다.
+batch_0010	10	一挙に	강조 안 조사 의심: 문제는 <strong class="target-word">단숨에</strong> 해결로 향했다.
+batch_0010	28	か	강조가 형태소 경계를 가로지름: か ⊂ か月 (재생성 대상 — 경고만)
+batch_0010	28	か	강조가 형태소 경계를 가로지름: か ⊂ か国 (재생성 대상 — 경고만)
+batch_0010	47	南	강조가 형태소 경계를 가로지름: 南 ⊂ 南米 (재생성 대상 — 경고만)
+batch_0010	47	南	강조가 형태소 경계를 가로지름: 南 ⊂ 南蛮 (재생성 대상 — 경고만)
+batch_0011	1	くらべ	강조가 형태소 경계를 가로지름: くらべ ⊂ 力くらべ (재생성 대상 — 경고만)
+batch_0011	1	くらべ	강조가 형태소 경계를 가로지름: くらべ ⊂ 背くらべ (재생성 대상 — 경고만)
+batch_0011	22	アコード	강조 안 조사 의심: 양국은 마침내 <strong class="target-word">합의</strong>에 도달했다.
+batch_0011	22	アコード	강조 안 조사 의심: 노사 간에 새로운 <strong class="target-word">합의</strong>가 체결되었다.
+batch_0012	10	イズム	강조 안 조사 의심: 그의 사고방식에는 독특한 <strong class="target-word">주의</strong>가 있다.
+batch_0012	10	イズム	강조 안 조사 의심: 그 회사는 독자적인 경영 <strong class="target-word">주의</strong>를 가지고 있다.
+batch_0012	29	インペリアル	강조 안 조사 의심: 그 건물은 <strong class="target-word">제국의</strong> 분위기를 지니고 있다.
+batch_0012	29	インペリアル	강조 안 조사 의심: 호텔 이름은 <strong class="target-word">제국의</strong> 호텔이었다.
+batch_0013	13	エネ	강조가 형태소 경계를 가로지름: エネ ⊂ 省エネ (재생성 대상 — 경고만)
+batch_0014	28	カツ	강조가 형태소 경계를 가로지름: カツ ⊂ カツ丼 (재생성 대상 — 경고만)
+batch_0014	31	カトリシズム	강조 안 조사 의심: 이 지역에서는 <strong class="target-word">가톨릭주의</strong>의 영향이 강하다.
+batch_0014	31	カトリシズム	강조 안 조사 의심: 그는 대학에서 <strong class="target-word">가톨릭주의</strong>의 역사를 배우고 있다.
+batch_0016	1	キャピタリズム	강조 안 조사 의심: 경제학자가 <strong class="target-word">자본주의</strong>의 역사를 설명했다.
+batch_0016	1	キャピタリズム	강조 안 조사 의심: 이 나라는 <strong class="target-word">자본주의</strong>를 도입했다.
+batch_0017	33	グローバリズム	강조 안 조사 의심: 학자가 <strong class="target-word">세계주의</strong>의 영향을 분석했다.
+batch_0017	33	グローバリズム	강조 안 조사 의심: 이 책은 <strong class="target-word">세계주의</strong>에 대해 논하고 있다.
+batch_0019	10	コンテンポラリー	강조 안 조사 의심: 미술관에서 <strong class="target-word">동시대의</strong> 춤을 감상했다.
+batch_0019	19	コンビニエンス	강조 안 조사 의심: 이 서비스는 <strong class="target-word">편의</strong>를 중시하고 있다.
+batch_0019	19	コンビニエンス	강조 안 조사 의심: 새 점포는 <strong class="target-word">편의</strong>를 추구한 설계다.
+batch_0021	13	シオニズム	강조 안 조사 의심: 대학 강의에서 <strong class="target-word">시온주의</strong>의 역사를 배웠다.
+batch_0021	13	シオニズム	강조 안 조사 의심: 이 책은 <strong class="target-word">시온주의</strong>에 대해 자세히 설명한다.
+batch_0021	26	シビック	강조 안 조사 의심: 그녀는 <strong class="target-word">시민의</strong> 센터에서 봉사활동을 하고 있다.
+batch_0021	26	シビック	강조 안 조사 의심: 시장은 <strong class="target-word">시민의</strong> 정신이 중요하다고 호소했다.
+batch_0021	42	シュルレアリスム	강조 안 조사 의심: 이 미술관은 <strong class="target-word">초현실주의</strong> 작품을 많이 소장하고 있다.
+batch_0021	42	シュルレアリスム	강조 안 조사 의심: 교수는 <strong class="target-word">초현실주의</strong>의 역사에 대해 강의했다.
+batch_0022	1	シリアル	강조 안 조사 의심: 이 기계에는 <strong class="target-word">일련의</strong> 번호가 붙어 있다.
+batch_0022	1	シリアル	강조 안 조사 의심: 상품마다 다른 <strong class="target-word">일련의</strong> 코드가 표시된다.
+batch_0023	1	ジンギスカン	강조가 형태소 경계를 가로지름: ジンギスカン ⊂ ジンギスカンパーティー (재생성 대상 — 경고만)
+batch_0025	1	セルフ	강조가 형태소 경계를 가로지름: セルフ ⊂ セルフサービス (재생성 대상 — 경고만)
+batch_0026	41	テレカンファレンス	강조 안 조사 의심: 해외 지사와 <strong class="target-word">화상회의</strong>를 진행했다.
+batch_0026	41	テレカンファレンス	강조 안 조사 의심: 매주 월요일에 <strong class="target-word">화상회의</strong>가 열린다.
+batch_0027	20	デシ	강조가 형태소 경계를 가로지름: デシ ⊂ デシリットル (재생성 대상 — 경고만)
+batch_0029	12	ナショナル	강조 안 조사 의심: 이 상은 <strong class="target-word">국가의</strong> 평가를 받았다.
+batch_0029	30	ニカラグア	강조 안 조사 의심: 그는 <strong class="target-word">니카라과</strong>에서 일하고 있다.
+batch_0029	30	ニカラグア	강조 안 조사 의심: <strong class="target-word">니카라과</strong>라는 나라는 중미에 있다.
+batch_0030	5	ネス	강조가 형태소 경계를 가로지름: ネス ⊂ クリアネス (재생성 대상 — 경고만)
+batch_0030	21	ノン	강조가 형태소 경계를 가로지름: ノン ⊂ ノンアルコール (재생성 대상 — 경고만)
+batch_0030	21	ノン	강조가 형태소 경계를 가로지름: ノン ⊂ ノンフィクション (재생성 대상 — 경고만)
+batch_0030	32	ハイパー	강조 안 조사 의심: 그는 <strong class="target-word">극도의</strong> 인플레이션 영향을 걱정하고 있다.
+batch_0031	48	パーセプトロン	강조가 형태소 경계를 가로지름: パーセプトロン ⊂ パーセプトロンモデル (재생성 대상 — 경고만)
+batch_0032	19	パトリオティズム	강조 안 조사 의심: 그의 연설은 <strong class="target-word">애국주의</strong>로 가득했다.
+batch_0032	19	パトリオティズム	강조 안 조사 의심: 이 영화는 <strong class="target-word">애국주의</strong>를 강조한다.
+batch_0032	28	パブリック	강조 안 조사 의심: 여기는 <strong class="target-word">공공의</strong> 공간이다.
+batch_0032	28	パブリック	강조 안 조사 의심: 회사는 <strong class="target-word">공공의</strong> 입장을 강조했다.
+batch_0032	41	パンアメリカニズム	강조 안 조사 의심: 그는 <strong class="target-word">범미주의</strong>를 주창했다.
+batch_0032	41	パンアメリカニズム	강조 안 조사 의심: 이 책은 <strong class="target-word">범미주의</strong>의 역사를 다룬다.
+batch_0033	3	ヒロイズム	강조 안 조사 의심: 그 이야기는 <strong class="target-word">영웅주의</strong>로 가득하다.
+batch_0033	3	ヒロイズム	강조 안 조사 의심: 그의 행동은 <strong class="target-word">영웅주의</strong>에서 비롯된다.
+batch_0033	24	ビレッジ	강조 안 조사 의심: 그들은 작은 <strong class="target-word">마을</strong>에 살고 있다.
+batch_0033	24	ビレッジ	강조 안 조사 의심: 그 <strong class="target-word">마을</strong>은 관광지로 유명하다.
+batch_0033	32	ピープルズキャピタリズム	강조 안 조사 의심: 그 학자는 <strong class="target-word">인민자본주의</strong>를 제창했다.
+batch_0033	32	ピープルズキャピタリズム	강조 안 조사 의심: 이 책은 <strong class="target-word">인민자본주의</strong>를 해설한다.
+batch_0036	45	プラグマティズム	강조 안 조사 의심: 그의 사고방식은 <strong class="target-word">실용주의</strong>에 기반하고 있다.
+batch_0036	45	プラグマティズム	강조 안 조사 의심: 대학 수업에서 <strong class="target-word">실용주의</strong>에 대해 배웠다.
+batch_0037	24	プロパー	강조 안 조사 의심: 이 문제는 업계 <strong class="target-word">고유의</strong> 지식이 필요하다.
+batch_0037	35	ヘクト	강조가 형태소 경계를 가로지름: ヘクト ⊂ ヘクトパスカル (재생성 대상 — 경고만)
+batch_0040	46	マン	강조가 형태소 경계를 가로지름: マン ⊂ セールスマン (재생성 대상 — 경고만)
+batch_0040	46	マン	강조가 형태소 경계를 가로지름: マン ⊂ スポーツマン (재생성 대상 — 경고만)
+batch_0041	6	ミーイズム	강조 안 조사 의심: 평론가는 현대의 <strong class="target-word">자기중심주의</strong>를 비판했다.
+batch_0041	6	ミーイズム	강조 안 조사 의심: 그 책은 <strong class="target-word">자기중심주의</strong>의 확산에 대해 논하고 있어요.
+batch_0043	1	モミズム	강조 안 조사 의심: 사회학 수업에서 <strong class="target-word">모성 지상주의</strong>라는 개념을 배웠다.
+batch_0043	1	モミズム	강조 안 조사 의심: 이 책은 <strong class="target-word">모성 지상주의</strong>에 대해 비판적으로 논하고 있다.
+batch_0045	6	リベラリズム	강조 안 조사 의심: 이 책은 <strong class="target-word">자유주의</strong>를 설명하고 있다.
+batch_0045	6	リベラリズム	강조 안 조사 의심: 그의 생각은 <strong class="target-word">자유주의</strong>에 가깝다.
+batch_0045	46	レクチャー	강조 안 조사 의심: 교수는 학생들에게 <strong class="target-word">강의</strong>를 했다.
+batch_0045	46	レクチャー	강조 안 조사 의심: 그 <strong class="target-word">강의</strong>는 매우 이해하기 쉬웠다.
+batch_0047	49	医科	강조 안 조사 의심: 그는 <strong class="target-word">의과</strong>대학에 진학했다.
+batch_0047	49	医科	강조 안 조사 의심: 이 병원에는 <strong class="target-word">의과</strong>와 치과가 있다.
+batch_0048	10	一挙	강조 안 조사 의심: 문제를 <strong class="target-word">단번에</strong> 해결해 버렸다.
+batch_0048	10	一挙	강조 안 조사 의심: 그는 일을 <strong class="target-word">단번에</strong> 처리했다.
+batch_0049	5	丑	강조가 형태소 경계를 가로지름: 丑 ⊂ 丑年 (재생성 대상 — 경고만)
+batch_0049	5	丑	강조가 형태소 경계를 가로지름: 丑 ⊂ 丑年 (재생성 대상 — 경고만)
+batch_0051	43	懐疑	강조 안 조사 의심: 그녀는 세간의 소문에 <strong class="target-word">회의</strong>를 품었다.
+batch_0053	1	刈り込む	강조 안 조사 의심: 그는 산울타리를 짧게 <strong class="target-word">다듬을</strong> 생각이다.
+batch_0055	25	疑義	강조 안 조사 의심: 위원으로부터 판정에 <strong class="target-word">이의</strong>가 제기되었다.
+batch_0058	32	軍国主義	강조 안 조사 의심: 역사 수업에서 <strong class="target-word">군국주의</strong>에 대해 배웠다.
+batch_0058	32	軍国主義	강조 안 조사 의심: 이 책은 <strong class="target-word">군국주의</strong> 시대를 다루고 있다.
+batch_0060	27	原義	강조 안 조사 의심: <strong class="target-word">원의</strong>와는 다른 뜻으로 쓰이고 있다.
+batch_0061	16	午	강조가 형태소 경계를 가로지름: 午 ⊂ 午年 (재생성 대상 — 경고만)
+batch_0061	16	午	강조가 형태소 경계를 가로지름: 午 ⊂ 午年 (재생성 대상 — 경고만)
+batch_0062	25	厚意	강조 안 조사 의심: <strong class="target-word">후의</strong>에 진심으로 감사드립니다.
+batch_0062	25	厚意	강조 안 조사 의심: 이웃의 <strong class="target-word">호의</strong>로 채소를 받았다.
+batch_0062	36	工科	강조 안 조사 의심: 남동생은 올해 <strong class="target-word">공과</strong>대학에 진학했다.
+batch_0062	36	工科	강조 안 조사 의심: 그녀는 <strong class="target-word">공과</strong> 계열 연구자가 되었다.
+batch_0064	49	今秋	강조 안 조사 의심: <strong class="target-word">올가을</strong> 새 영화가 개봉된다.
+batch_0064	49	今秋	강조 안 조사 의심: 그들은 <strong class="target-word">올가을</strong> 결혼할 예정이다.
+batch_0065	47	菜	강조가 형태소 경계를 가로지름: 菜 ⊂ 菜の花 (재생성 대상 — 경고만)
+batch_0067	14	子	강조가 형태소 경계를 가로지름: 子 ⊂ 子年 (재생성 대상 — 경고만)
+batch_0068	10	侍医	강조 안 조사 의심: 그는 왕실의 <strong class="target-word">시의</strong>로 섬겼다.
+batch_0068	10	侍医	강조 안 조사 의심: <strong class="target-word">시의</strong>가 매일 아침 건강 상태를 확인한다.
+batch_0068	18	時宜	강조 안 조사 의심: <strong class="target-word">시의</strong>에 맞는 대응이 요구된다.
+batch_0068	29	示談	강조 안 조사 의심: 양측은 <strong class="target-word">합의</strong>로 해결하기로 했다.
+batch_0068	29	示談	강조 안 조사 의심: 변호사가 <strong class="target-word">합의</strong>를 진행하고 있다.
+batch_0069	25	主	강조가 형태소 경계를 가로지름: 主 ⊂ 主に (재생성 대상 — 경고만)
+batch_0070	31	秋口	강조 안 조사 의심: 매년 <strong class="target-word">초가을</strong>이 되면 시원해진다.
+batch_0070	31	秋口	강조 안 조사 의심: 이 <strong class="target-word">초가을</strong> 바람은 기분이 좋다.
+batch_0070	39	襲名	강조 안 조사 의심: 내년 봄, 그는 <strong class="target-word">이름을 물려받을</strong> 예정이다.
+batch_0071	18	出すぎる	강조 안 조사 의심: 이 못이 벽에서 너무 많이 <strong class="target-word">튀어나와</strong> 있다.
+batch_0071	34	旬	강조가 형태소 경계를 가로지름: 旬 ⊂ 一旬 (재생성 대상 — 경고만)
+batch_0072	38	商工	강조가 형태소 경계를 가로지름: 商工 ⊂ 商工業 (재생성 대상 — 경고만)
+batch_0072_retry3	1	初める	거부(X): 접미사전용
+batch_0074	30	信義	강조 안 조사 의심: 그는 장사에서 <strong class="target-word">신의</strong>를 중시한다.
+batch_0074	30	信義	강조 안 조사 의심: 두 사람의 관계는 <strong class="target-word">신의</strong>에 바탕을 두고 있었다.
+batch_0075	35	人道主義	강조 안 조사 의심: 그는 <strong class="target-word">인도주의</strong>의 입장에서 발언했다.
+batch_0075	35	人道主義	강조 안 조사 의심: <strong class="target-word">인도주의</strong>에 기반해 난민을 받아들였다.
+batch_0076	30	整形外科	강조 안 조사 의심: 다리가 골절되어 <strong class="target-word">정형외과</strong>에 다녔다.
+batch_0076	30	整形外科	강조 안 조사 의심: 그 병원에는 <strong class="target-word">정형외과</strong> 전문의가 있다.
+batch_0077	15	青果	강조 안 조사 의심: 시장에는 신선한 <strong class="target-word">청과</strong>가 진열되어 있었다.
+batch_0077	15	青果	강조 안 조사 의심: 그는 역 앞에서 <strong class="target-word">청과</strong>점을 운영하고 있다.
+batch_0078	11	ちどり	강조가 형태소 경계를 가로지름: ちどり ⊂ はちどり (재생성 대상 — 경고만)
+batch_0078	48	全体主義	강조 안 조사 의심: 그 나라는 <strong class="target-word">전체주의</strong> 체제를 취하고 있다.
+batch_0078	48	全体主義	강조 안 조사 의심: 역사 수업에서 <strong class="target-word">전체주의</strong>에 대해 배웠다.
+batch_0079	41	総意	강조 안 조사 의심: 이것은 전 직원의 <strong class="target-word">총의</strong>다.
+batch_0079	41	総意	강조 안 조사 의심: 회의는 <strong class="target-word">총의</strong>에 따라 결정했다.
+batch_0079_retry1	40	相乗	강조 안 조사 의심: 두 약에는 <strong class="target-word">상승효과</strong>가 있다.
+batch_0079_retry1	40	相乗	강조 안 조사 의심: 양측의 노력이 <strong class="target-word">상승효과</strong>를 낳았다.
+batch_0080	44	多寡	강조 안 조사 의심: 금액의 <strong class="target-word">다과</strong>와 상관없이 감사드립니다.
+batch_0080	44	多寡	강조 안 조사 의심: 지원의 <strong class="target-word">다과</strong>보다 마음이 중요하다.
+batch_0081	29	代議	강조 안 조사 의심: 이 나라는 <strong class="target-word">대의</strong> 제도를 채택하고 있다.
+batch_0081	29	代議	강조 안 조사 의심: 학자는 <strong class="target-word">대의</strong> 구조를 연구하고 있다.
+batch_0082	9	辰	강조가 형태소 경계를 가로지름: 辰 ⊂ 辰年 (재생성 대상 — 경고만)
+batch_0082	9	辰	강조가 형태소 경계를 가로지름: 辰 ⊂ 辰年 (재생성 대상 — 경고만)
+batch_0084	22	珍	강조가 형태소 경계를 가로지름: 珍 ⊂ 珍種 (재생성 대상 — 경고만)
+batch_0084	22	珍	강조가 형태소 경계를 가로지름: 珍 ⊂ 珍獣 (재생성 대상 — 경고만)
+batch_0084	28	陳謝	강조 안 조사 의심: 그는 실수에 대해 <strong class="target-word">사과</strong>했다.
+batch_0084	34	追随	강조 안 조사 의심: 그의 기록을 <strong class="target-word">따라잡을</strong> 선수는 없다.
+batch_0085	12	帝国主義	강조 안 조사 의심: 교수는 <strong class="target-word">제국주의</strong>의 역사를 강의했다.
+batch_0085	12	帝国主義	강조 안 조사 의심: 학생은 <strong class="target-word">제국주의</strong>에 대해 논문을 썼다.
+batch_0086	22	倒れ	강조가 형태소 경계를 가로지름: 倒れ ⊂ 貸し倒れ (재생성 대상 — 경고만)
+batch_0087	20	同町	강조 안 조사 의심: <strong class="target-word">해당 마을</strong>에서는 축제가 열렸다.
+batch_0087	20	同町	강조 안 조사 의심: <strong class="target-word">해당 마을</strong> 주민이 모였다.
+batch_0087	24	同病	강조가 형태소 경계를 가로지름: 同病 ⊂ 同病相 (재생성 대상 — 경고만)
+batch_0087	44	禿	강조가 형태소 경계를 가로지름: 禿 ⊂ 禿げ (재생성 대상 — 경고만)
+batch_0089	2	尼	강조가 형태소 경계를 가로지름: 尼 ⊂ 尼寺 (재생성 대상 — 경고만)
+batch_0089	24	年会	강조 안 조사 의심: 학회의 <strong class="target-word">연례 회의</strong>가 개최되었다.
+batch_0089	24	年会	강조 안 조사 의심: 그는 <strong class="target-word">연례 회의</strong>에서 연구를 발표했다.
+batch_0089	48	農林	강조가 형태소 경계를 가로지름: 農林 ⊂ 農林業 (재생성 대상 — 경고만)
+batch_0089	49	巴	강조 안 조사 의심: 신사 지붕에 <strong class="target-word">토모에</strong> 문양이 보였다.
+batch_0090	18	伯	강조가 형태소 경계를 가로지름: 伯 ⊂ 伯爵 (재생성 대상 — 경고만)
+batch_0091	4	半面	강조 안 조사 의심: 이 약은 잘 듣는 <strong class="target-word">반면에</strong> 부작용이 있다.
+batch_0091	17	藩	강조가 형태소 경계를 가로지름: 藩 ⊂ 各藩 (재생성 대상 — 경고만)
+batch_0091	31	皮膚科	강조 안 조사 의심: 습진이 생겨서 <strong class="target-word">피부과</strong>에 갔다.
+batch_0091	31	皮膚科	강조 안 조사 의심: 어머니는 <strong class="target-word">피부과</strong>에서 약을 받았다.
+batch_0092	28	不時着	강조가 형태소 경계를 가로지름: 不時着 ⊂ 不時着し (재생성 대상 — 경고만)
+batch_0092	28	不時着	강조가 형태소 경계를 가로지름: 不時着 ⊂ 不時着する (재생성 대상 — 경고만)
+batch_0092	36	不戦	강조가 형태소 경계를 가로지름: 不戦 ⊂ 不戦敗 (재생성 대상 — 경고만)
+batch_0092	37	不退転	강조 안 조사 의심: 그는 <strong class="target-word">굳은 결의</strong>로 시합에 임했다.
+batch_0092	37	不退転	강조 안 조사 의심: 감독은 <strong class="target-word">굳은 결의</strong>를 선수들에게 이야기했다.
+batch_0093	10	浮世絵	강조 안 조사 의심: 미술관에서 유명한 <strong class="target-word">우키요에</strong>를 보았다.
+batch_0093	10	浮世絵	강조 안 조사 의심: 에도 시대에 <strong class="target-word">우키요에</strong>가 널리 사랑받았다.
+batch_0093	17	賦課	강조 안 조사 의심: 벌금 <strong class="target-word">부과</strong>에 대해 설명을 들었다.
+batch_0093	25	部落	강조 안 조사 의심: 이 <strong class="target-word">마을</strong>에는 옛날식 집이 남아 있다.
+batch_0093	25	部落	강조 안 조사 의심: 산골짜기의 작은 <strong class="target-word">마을</strong>을 방문했다.
+batch_0094	7	文科	강조 안 조사 의심: 그녀는 대학에서 <strong class="target-word">문과</strong>를 선택했다.
+batch_0094	7	文科	강조 안 조사 의심: 고등학교에서는 <strong class="target-word">문과</strong>와 이과로 나뉘어 공부한다.
+batch_0095	3	舗	강조가 형태소 경계를 가로지름: 舗 ⊂ 老舗 (재생성 대상 — 경고만)
+batch_0095	13	抱え	강조가 형태소 경계를 가로지름: 抱え ⊂ 一抱え (재생성 대상 — 경고만)
+batch_0095	13	抱え	강조가 형태소 경계를 가로지름: 抱え ⊂ 一抱え (재생성 대상 — 경고만)
+batch_0096	3	没	강조가 형태소 경계를 가로지름: 没 ⊂ 没し (재생성 대상 — 경고만)
+batch_0096	3	没	강조가 형태소 경계를 가로지름: 没 ⊂ 没後 (재생성 대상 — 경고만)
+batch_0096	7	本会議	강조 안 조사 의심: 법안은 <strong class="target-word">본회의</strong>에서 가결되었다.
+batch_0096	7	本会議	강조 안 조사 의심: 의원들은 <strong class="target-word">본회의</strong>에서 격렬하게 토론했다.
+batch_0096	42	巳	강조가 형태소 경계를 가로지름: 巳 ⊂ 巳年 (재생성 대상 — 경고만)
+batch_0096	42	巳	강조가 형태소 경계를 가로지름: 巳 ⊂ 巳年 (재생성 대상 — 경고만)
+batch_0096	46	民意	강조 안 조사 의심: 선거는 <strong class="target-word">민의</strong>를 반영하는 중요한 수단이다.
+batch_0096	46	民意	강조 안 조사 의심: 정치인은 <strong class="target-word">민의</strong>에 귀를 기울여야 한다.
+batch_0100	45	塁	강조가 형태소 경계를 가로지름: 塁 ⊂ 一塁 (재생성 대상 — 경고만)
+batch_0100	45	塁	강조가 형태소 경계를 가로지름: 塁 ⊂ 二塁 (재생성 대상 — 경고만)
+batch_0101	44	戌	강조가 형태소 경계를 가로지름: 戌 ⊂ 戌年 (재생성 대상 — 경고만)
+batch_0102	2	亥	강조가 형태소 경계를 가로지름: 亥 ⊂ 亥年 (재생성 대상 — 경고만)
+batch_0103	10	博	강조가 형태소 경계를 가로지름: 博 ⊂ 万博 (재생성 대상 — 경고만)
+batch_0103	10	博	강조가 형태소 경계를 가로지름: 博 ⊂ 博士 (재생성 대상 — 경고만)
+batch_0103	25	密入国	강조가 형태소 경계를 가로지름: 密入国し ⊂ 密入国しよう (재생성 대상 — 경고만)
+batch_0103	37	慰謝	강조가 형태소 경계를 가로지름: 慰謝し ⊂ 慰謝しよう (재생성 대상 — 경고만)
+batch_0104	42	心	강조가 형태소 경계를 가로지름: 心 ⊂ 決心 (재생성 대상 — 경고만)
+batch_0104	42	心	강조가 형태소 경계를 가로지름: 心 ⊂ 心音 (재생성 대상 — 경고만)
+batch_0105	4	弔意	강조 안 조사 의심: 참석자들은 <strong class="target-word">조의</strong>를 표했다.
+batch_0105	4	弔意	강조 안 조사 의심: 그는 꽃을 보내 <strong class="target-word">조의</strong>를 나타냈다.
+batch_0105	21	はみ出す	강조 안 조사 의심: 셔츠가 바지에서 <strong class="target-word">삐져나와</strong> 있다.
+batch_0106	8	難波	강조 안 조사 의심: <strong class="target-word">나니와</strong>는 오사카의 번화가로 알려져 있다.
+batch_0106	8	難波	강조 안 조사 의심: 그는 <strong class="target-word">나니와</strong>에서 쇼핑을 즐겼다.
+batch_0106	31	脱衣	강조 안 조사 의심: 그는 <strong class="target-word">탈의</strong>실에서 옷을 갈아입었다.
+batch_0107	2	排他主義	강조 안 조사 의심: 그는 <strong class="target-word">배타주의</strong>적인 생각을 가지고 있다.
+batch_0107	2	排他主義	강조 안 조사 의심: <strong class="target-word">배타주의</strong>는 사회의 분열을 초래한다.
+batch_0107	7	封建主義	강조 안 조사 의심: <strong class="target-word">봉건주의</strong> 시대에는 신분제도가 엄격했다.
+batch_0107	7	封建主義	강조 안 조사 의심: 그는 <strong class="target-word">봉건주의</strong>를 비판하는 논문을 썼다.
+batch_0107	32	マルクス主義	강조 안 조사 의심: 그는 <strong class="target-word">마르크스주의</strong>를 연구하고 있다.
+batch_0107	32	マルクス主義	강조 안 조사 의심: 대학에서 <strong class="target-word">마르크스주의</strong> 강의를 들었다.
+batch_0109	30	部会	강조 안 조사 의심: 위원회는 각 <strong class="target-word">분과회의</strong>로 나뉘어 논의했다.
+batch_0112	36	躍り	강조가 형태소 경계를 가로지름: 躍り ⊂ 躍り出 (재생성 대상 — 경고만)
+batch_0112	47	西独	강조가 형태소 경계를 가로지름: 西独 ⊂ 中西独 (재생성 대상 — 경고만)
+batch_0113	16	党議	강조 안 조사 의심: 의원들은 <strong class="target-word">당 회의</strong>에서 의견을 나눴다.
+batch_0115	30	自由主義	강조 안 조사 의심: 그는 <strong class="target-word">자유주의</strong>를 지지하고 있다.
+batch_0115	30	自由主義	강조 안 조사 의심: <strong class="target-word">자유주의</strong> 사상이 퍼졌다.
+batch_0116	39	無期	강조가 형태소 경계를 가로지름: 無期 ⊂ 無期限 (재생성 대상 — 경고만)
+batch_0116	46	八重	강조 안 조사 의심: 이 꽃은 <strong class="target-word">겹겹의</strong> 꽃잎을 가지고 있다.
+batch_0121	4	大義	강조 안 조사 의심: 그는 <strong class="target-word">대의</strong>를 위해 싸우겠다고 말했다.
+batch_0121	4	大義	강조 안 조사 의심: 이 운동에는 명확한 <strong class="target-word">대의</strong>가 있다.
+batch_0124	2	日本学術会議	강조 안 조사 의심: <strong class="target-word">일본학술회의</strong>가 새로운 제언을 발표했다.
+batch_0124	2	日本学術会議	강조 안 조사 의심: 교수는 <strong class="target-word">일본학술회의</strong> 회원으로 선출되었다.
+batch_0124	49	中高	강조가 형태소 경계를 가로지름: 中高 ⊂ 中高生 (재생성 대상 — 경고만)
+batch_0126	49	少	강조가 형태소 경계를 가로지름: 少 ⊂ 少量 (재생성 대상 — 경고만)
+batch_0128	13	勢	강조가 형태소 경계를 가로지름: 勢 ⊂ 軍勢 (재생성 대상 — 경고만)
+batch_0128	13	勢	강조가 형태소 경계를 가로지름: 勢 ⊂ 勢力 (재생성 대상 — 경고만)
+batch_0128	40	そうこうしているうちに	강조 안 조사 의심: <strong class="target-word">그러는 사이에</strong> 날이 저물어 버렸다.
+batch_0128	40	そうこうしているうちに	강조 안 조사 의심: <strong class="target-word">그러는 사이에</strong> 전철이 와 버렸어요.
+batch_0129	9	令和	강조 안 조사 의심: 올해는 <strong class="target-word">레이와</strong> 7년이에요.
+batch_0129	9	令和	강조 안 조사 의심: 이 서류에는 <strong class="target-word">레이와</strong> 연호로 날짜를 적었다.
+batch_0129	16	後々	강조 안 조사 의심: <strong class="target-word">나중에</strong> 후회할지도 몰라요.
+batch_0130	33	モテ	강조가 형태소 경계를 가로지름: モテ ⊂ モテキャラ (재생성 대상 — 경고만)
+batch_0130	37	はっはっ	강조가 형태소 경계를 가로지름: はっはっ ⊂ はっはっと (재생성 대상 — 경고만)
+batch_0130	37	はっはっ	강조가 형태소 경계를 가로지름: はっはっ ⊂ はっはっと (재생성 대상 — 경고만)
+batch_0132	10	戻る	강조 안 조사 의심: 바로 자리로 <strong class="target-word">돌아와</strong> 주세요.
+batch_0133_retry1	18	来	거부(X): 접두사전용
+batch_0134	39	内科	강조 안 조사 의심: 열이 있어서 <strong class="target-word">내과</strong>에 갔다.
+batch_0134	39	内科	강조 안 조사 의심: 이 병원에는 <strong class="target-word">내과</strong>가 있어요.
+batch_0142	16	マイ	강조 안 조사 의심: 그는 매일 <strong class="target-word">나만의</strong> 젓가락을 챙긴다.
+batch_0142	16	マイ	강조 안 조사 의심: 그녀는 <strong class="target-word">자기만의</strong> 속도로 일을 진행한다.
+batch_0142	17	マイナー	강조 안 조사 의심: 그는 아직 <strong class="target-word">무명의</strong> 선수다.
+batch_0142	28	ヨーク	강조 안 조사 의심: 예전에는 소의 목에 <strong class="target-word">멍에</strong>를 걸어 밭을 갈았다.
+batch_0142	28	ヨーク	강조 안 조사 의심: 박물관에 나무로 만든 <strong class="target-word">멍에</strong>가 전시되어 있었다.
+batch_0143	27	因果	강조 안 조사 의심: 두 사건 사이에는 <strong class="target-word">인과</strong> 관계가 있다.
+batch_0143	27	因果	강조 안 조사 의심: 선생님은 <strong class="target-word">인과</strong>의 법칙에 대해 설명했다.
+batch_0144	47	産科	강조 안 조사 의심: 그녀는 <strong class="target-word">산과</strong>에서 진찰을 받았다.
+batch_0144	47	産科	강조 안 조사 의심: 이 병원에는 <strong class="target-word">산과</strong> 의사가 많다.
+batch_0145	42	仁義	강조 안 조사 의심: 그는 <strong class="target-word">인의</strong>를 중시하는 사람이다.
+batch_0145	42	仁義	강조 안 조사 의심: 옛 무사는 <strong class="target-word">인의</strong>를 소중히 여겼다.
+batch_0146	18	善意	강조 안 조사 의심: 그는 <strong class="target-word">선의</strong>로 도와주었다.
+batch_0146	18	善意	강조 안 조사 의심: <strong class="target-word">선의</strong>의 제3자가 분실물을 가져다주었다.
+batch_0147	30	白衣	강조 안 조사 의심: 의사는 <strong class="target-word">백의</strong>를 입고 진찰했다.
+batch_0147	30	白衣	강조 안 조사 의심: 연구자들은 <strong class="target-word">백의</strong> 차림으로 실험을 하고 있었다.
+batch_0148	6	くそ	강조 안 조사 의심: <strong class="target-word">빌어먹을</strong>, 지갑을 두고 왔다.
+batch_0148	47	裏目	강조 안 조사 의심: 그의 친절이 <strong class="target-word">역효과</strong>로 나타났다.
+batch_0148	47	裏目	강조 안 조사 의심: 계획이 <strong class="target-word">역효과</strong>가 나고 말았다.
+batch_0149	15	信	강조 안 조사 의심: 그는 <strong class="target-word">신의</strong>를 소중히 여기는 사람이다.
+batch_0149	15	信	강조 안 조사 의심: 친구와의 <strong class="target-word">신의</strong>를 계속 지켰다.

@@ -6,6 +6,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
 import { useVocabulary } from '../../context/VocabularyContext';
+import { useUser } from '../../context/UserContext';
+import { LANG_LABEL, LANG_GLYPH } from '../../utils/lang';
 import { MIN_TEST_VOCABULARY_COUNT } from '../../utils/common';
 import { MEMORY_STAGE_ORDER, wordMemoryStage, memoryStageCounts, isWordStudiable } from '../../utils/vocaCrop';
 import { vibrate } from '../../utils/osFunction';
@@ -60,6 +62,11 @@ export const TestSetupNewBottomSheet = ({ onCancel, onSet, maxVocabularyCount, v
   const longPressTimeoutRef = useRef(null);
 
   "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
+
+  // 방향 라벨·배지는 현재 학습 언어를 따른다(영어 보고 한글 / 일본어 보고 한글, Aa / あ).
+  const { learningLang } = useUser();
+  const learnLabel = LANG_LABEL[learningLang] ?? LANG_LABEL.en;
+  const learnGlyph = LANG_GLYPH[learningLang] ?? LANG_GLYPH.en;
 
   // Actions만 구독하므로 state 변경 시 리렌더링 안 됨
   const { popNewBottomSheet, clearStack: clearNewBottomSheetStack } = useNewBottomSheetActions();
@@ -495,7 +502,7 @@ export const TestSetupNewBottomSheet = ({ onCancel, onSet, maxVocabularyCount, v
                 onClick={() => toggleFamily(value)}
                 className="h-[104px]"
               >
-                <Glyph size={44} />
+                <Glyph size={44} lang={learningLang} />
                 <span className="text-[14px] font-[700] break-keep group-data-[selected=true]:text-layout-black dark:group-data-[selected=true]:text-layout-white">{label}</span>
               </SetupTile>
             ))}
@@ -507,8 +514,8 @@ export const TestSetupNewBottomSheet = ({ onCancel, onSet, maxVocabularyCount, v
           <Section title="방향">
             <div className="flex gap-[8px]">
               {[
-                { value: 'en2ko', label: '영어 보고 한글', from: 'Aa', to: '가' },
-                { value: 'ko2en', label: '한글 보고 영어', from: '가', to: 'Aa' },
+                { value: 'en2ko', label: `${learnLabel} 보고 한글`, from: learnGlyph, to: '가' },
+                { value: 'ko2en', label: `한글 보고 ${learnLabel}`, from: '가', to: learnGlyph },
               ].map(({ value, label, from, to }) => (
                 <SetupTile
                   key={value}

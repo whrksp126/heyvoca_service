@@ -21,6 +21,7 @@ import json
 import logging
 import threading
 import datetime as dt
+from functools import wraps
 from uuid import UUID
 
 from flask import Blueprint, jsonify, g, request, current_app
@@ -31,8 +32,24 @@ from app.models.models import (
     Bookstore,
 )
 from app.utils.jwt_utils import jwt_required
+from app.utils.dict_lang import use_dict_lang, get_dict_lang
 
 onboarding_bp = Blueprint('onboarding', __name__, url_prefix='/onboarding')
+
+# 온보딩(가입 전 맛보기·레벨 단어장)은 영어 고정이다(INTEGRATION_SPEC 4절).
+# 게스트 ?lang=ja 나 학습 언어가 ja 인 사용자가 불러도 영어 사전(heyvoca_dict)만 읽고,
+# 만드는 단어장/단어/학습 로그도 전부 'en' 으로 기록한다.
+ONBOARDING_LANG = 'en'
+
+
+def english_dict(f):
+    """요청 처리 동안 사전 언어를 'en' 으로 고정. jwt_required 아래(안쪽)에 둘 것 — 인증이
+    user.learning_lang 으로 확정한 값을 이 블록이 덮어쓰고, 끝나면 원래 값으로 되돌린다."""
+    @wraps(f)
+    def wrapper(*args, **kwargs):
+        with use_dict_lang(ONBOARDING_LANG):
+            return f(*args, **kwargs)
+    return wrapper
 
 # 기능 점진 해금(5단계, 승인) — 홈·마이페이지는 즉시.
 #  vocabook(단어장)·store(상점)·dict(사전)은 BottomNav 탭, listen(반복듣기)·custom(커스텀)은 학습 시작 카드.
@@ -130,6 +147,8 @@ def complete_onboarding_mission(user_id, mission_key) -> dict:
                 memorized_word_cnt=0,
                 voca_list=None,
                 updated_at=None,
+                # 미션을 달성한 요청의 학습 언어 단어장으로 — ja 사용자에게 en 빈 단어장이 숨어 생기지 않게
+                language=get_dict_lang(),
             )
             db.session.add(reward_book)
             db.session.commit()
@@ -248,6 +267,7 @@ def _level_book(level) -> dict:
 
 
 @onboarding_bp.route('/books', methods=['GET'])
+@english_dict
 def books():
     """온보딩에서 선택 가능한 단어장 목록(카드용) — 비인증.
 
@@ -342,6 +362,7 @@ def _trigger_level_tts_prewarm(level, book):
 
 
 @onboarding_bp.route('/level-book', methods=['GET'])
+@english_dict
 def level_book():
     """레벨별 단어장(단어 포함) — 비인증. 게스트 맛보기 소스."""
     level = request.args.get('level')
@@ -356,6 +377,7 @@ def level_book():
 
 @onboarding_bp.route('/migrate', methods=['POST'])
 @jwt_required
+@english_dict
 def migrate():
     """가입 직후 1회 — 맞춤 설정 저장 + 레벨 단어장 생성 + 맛본 답안 반영 + 보상.
 
@@ -419,7 +441,7 @@ def migrate():
         user_id=user_id, bookstore_id=(bookstore.id if bookstore else None),
         color=json.dumps(book['color'], ensure_ascii=False),
         name=book['title'][:36], total_word_cnt=0, memorized_word_cnt=0,
-        voca_list=None, updated_at=now,
+        voca_list=None, updated_at=now, language=ONBOARDING_LANG,
     )
     db.session.add(vbook)
     db.session.flush()
@@ -447,7 +469,7 @@ def migrate():
             user_id=user_id, voca_id=vid, word=w['origin'],
             voca_meanings=json.dumps(w['meanings'], ensure_ascii=False),
             voca_examples=json.dumps(w['examples'], ensure_ascii=False),
-            data=None,
+            data=None, dict_lang=ONBOARDING_LANG,
         )
         db.session.add(uv)
         db.session.flush()
@@ -478,6 +500,7 @@ def migrate():
                 rating=rating, time_taken_ms=3000, word_length=len(w['origin'] or ''),
                 state_before=json.dumps({'state': 'new', 'stability': 0}, ensure_ascii=False),
                 state_after=json.dumps(fsrs_after, ensure_ascii=False),
+                dict_lang=ONBOARDING_LANG,
             )
             log.created_at = now
             db.session.add(log)

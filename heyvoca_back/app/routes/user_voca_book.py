@@ -13,6 +13,8 @@ from app.routes import user_voca_book_bp
 from app.models.models import db, User, VocaBook, Voca, VocaMeaning, VocaExample, VocaBookMap, VocaMeaningMap, VocaExampleMap, Bookstore, UserVocaBook, UserVoca, UserVocaBookMap, UserVocaGame
 from app.routes.mainpage import update_user_goal
 from app.utils.jwt_utils import jwt_required
+from app.utils.dict_lang import get_dict_lang
+from app.utils.word_payload import check_payload_language
 
 
 
@@ -21,8 +23,11 @@ from app.utils.jwt_utils import jwt_required
 def get_user_voca_book_list():
     user_id = UUID(g.user_id)  # JWT에서 온 문자열을 UUID로 변환
 
+    # 현재 학습 언어(learning_lang) 단어장만
+    lang = get_dict_lang()
     user_voca_book_list = db.session.query(UserVocaBook)\
-                                .filter(UserVocaBook.user_id == user_id).all()
+                                .filter(UserVocaBook.user_id == user_id,
+                                        UserVocaBook.language == lang).all()
     print("###user_voca_book_list : ",user_voca_book_list)
     
     data = []
@@ -35,6 +40,7 @@ def get_user_voca_book_list():
         vocabook_dict['color'] = json.loads(user_voca_book.color)
         vocabook_dict['total'] = user_voca_book.total_word_cnt
         vocabook_dict['memorized'] = user_voca_book.memorized_word_cnt
+        vocabook_dict['language'] = user_voca_book.language or 'en'
         vocabook_dict['createdAt'] = user_voca_book.created_at + datetime.timedelta(hours=9)
         vocabook_dict['updatedAt'] = user_voca_book.updated_at + datetime.timedelta(hours=9) if user_voca_book.updated_at else user_voca_book.created_at + datetime.timedelta(hours=9)
 
@@ -56,6 +62,11 @@ def create_user_voca_book():
     user = db.session.query(User).filter(User.id == user_id).first()
     print("###user : ",user)
 
+    # 단어장 언어는 서버 현재 언어(learning_lang). payload language 가 다르면 400.
+    lang_error = check_payload_language(data.get('language'))
+    if lang_error:
+        return jsonify({'code': 400, 'message': lang_error}), 400
+
     try:
         user_voca_book = UserVocaBook(
             user_id=user_id,
@@ -65,7 +76,8 @@ def create_user_voca_book():
             total_word_cnt=0,
             memorized_word_cnt=0,
             voca_list=None,
-            updated_at=None
+            updated_at=None,
+            language=get_dict_lang(),
         )
         db.session.add(user_voca_book)
 
@@ -390,6 +402,10 @@ def upload_user_voca_book():
                 'code': 400,
                 'message': '단어장 이름이 필요합니다.'
             }), 400
+
+        lang_error = check_payload_language(data.get('language'))
+        if lang_error:
+            return jsonify({'code': 400, 'message': lang_error}), 400
         
         # 구분자 자동 감지
         card_delimiter, term_delimiter = detect_delimiters(voca_list)
@@ -434,7 +450,8 @@ def upload_user_voca_book():
             total_word_cnt=0,
             memorized_word_cnt=0,
             voca_list=None,
-            updated_at=None
+            updated_at=None,
+            language=get_dict_lang(),
         )
         db.session.add(user_voca_book)
         db.session.flush()

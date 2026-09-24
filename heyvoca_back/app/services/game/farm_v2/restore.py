@@ -226,11 +226,15 @@ def list_rotten(user_id: UUID, limit: int = 50, cursor: Optional[int] = None) ->
     첫 페이지에서만 세면 될 것 같지만, 페이지를 넘기는 동안 헤더 숫자가 사라진다.
     """
     limit = max(1, min(int(limit or 50), 100))
+    # 현재 학습 언어 단어만(되살리기 학습도 그 언어 풀에서 진행되므로)
+    from app.utils.dict_lang import get_dict_lang
+    lang = get_dict_lang()
 
     base = (
         db.session.query(UserVocaGame, UserVoca.word, UserVoca.voca_meanings)
         .join(UserVoca, UserVoca.id == UserVocaGame.user_voca_id)
         .filter(UserVocaGame.user_id == user_id,
+                UserVoca.dict_lang == lang,
                 UserVocaGame.health_state == HealthState.ROTTEN)
     )
     if cursor:
@@ -240,7 +244,9 @@ def list_rotten(user_id: UUID, limit: int = 50, cursor: Optional[int] = None) ->
 
     total = (
         db.session.query(db.func.count(UserVocaGame.user_voca_id))
+        .join(UserVoca, UserVoca.id == UserVocaGame.user_voca_id)
         .filter(UserVocaGame.user_id == user_id,
+                UserVoca.dict_lang == lang,
                 UserVocaGame.health_state == HealthState.ROTTEN)
         .scalar()
     ) or 0

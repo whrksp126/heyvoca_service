@@ -3,6 +3,7 @@ import { Check } from '@phosphor-icons/react';
 import { motion } from 'framer-motion';
 import { useNewBottomSheet } from '../../hooks/useNewBottomSheet';
 import { useVocabulary } from '../../context/VocabularyContext';
+import { useUser } from '../../context/UserContext';
 import { vibrate } from '../../utils/osFunction';
 
 export const VOCABULARY_COLORS = [
@@ -30,6 +31,8 @@ const getColorSet = (mainColor) => {
 export const useVocabularySetNewBottomSheet = () => {
     const { pushAwaitNewBottomSheet } = useNewBottomSheet();
     const { addVocabularySheet, updateVocabularySheet, vocabularySheets } = useVocabulary();
+    // 새 단어장은 현재 학습 언어로 만든다(UI 선택 없음 — 언어 전환은 홈 칩에서).
+    const { learningLang } = useUser();
 
     const showVocabularySetNewBottomSheet = useCallback(async (id = null) => {
         let initialData = {
@@ -66,6 +69,7 @@ export const useVocabularySetNewBottomSheet = () => {
                     await addVocabularySheet({
                         title: result.name,
                         color: getColorSet(result.color),
+                        language: learningLang,
                     });
                 }
                 return true;
@@ -75,7 +79,7 @@ export const useVocabularySetNewBottomSheet = () => {
             }
         }
         return false;
-    }, [pushAwaitNewBottomSheet, addVocabularySheet, updateVocabularySheet, vocabularySheets]);
+    }, [pushAwaitNewBottomSheet, addVocabularySheet, updateVocabularySheet, vocabularySheets, learningLang]);
 
     return { showVocabularySetNewBottomSheet };
 };

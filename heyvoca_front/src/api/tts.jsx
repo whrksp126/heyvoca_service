@@ -1,4 +1,5 @@
 import { backendUrl, fetchDataAsync, prefetchTtsList, stripHtmlTags } from '../utils/common';
+import { SUPPORTED_TTS_LANGS, wordLang, isJa } from '../utils/lang';
 
 // fillInTheBlank 빈칸 문장의 강조 마커(<strong class="target-word">…</strong>) — 빈칸 자체는
 // 채점 전 텍스트로 드러나면 안 되므로, 단어 수집 시 이 구간을 통째로 제거하고 나머지만 쓴다.
@@ -26,7 +27,7 @@ export const prewarmTts = async (items) => {
   for (const it of items) {
     const text = (it?.text ?? '').trim();
     const language = it?.language;
-    if (!text || (language !== 'en' && language !== 'ko')) continue;
+    if (!text || !SUPPORTED_TTS_LANGS.includes(language)) continue;
     const key = `${language}::${text}`;
     if (seen.has(key)) continue;
     seen.add(key);
@@ -66,10 +67,10 @@ export const collectTestTexts = (questions) => {
       if (shown) out.push({ text: shown, language: 'ko' });
       continue;
     }
-    if (q?.origin) out.push({ text: q.origin, language: 'en' });
+    if (q?.origin) out.push({ text: q.origin, language: wordLang(q) });
     if (Array.isArray(q?.words)) {
       for (const w of q.words) {
-        if (w?.origin) out.push({ text: w.origin, language: 'en' });
+        if (w?.origin) out.push({ text: w.origin, language: wordLang(w, wordLang(q)) });
       }
     }
   }
@@ -93,7 +94,7 @@ export const prepareTtsWithProgress = async (items, onProgress, { chunkSize = 4 
   for (const it of (Array.isArray(items) ? items : [])) {
     const text = (it?.text ?? '').trim();
     const language = it?.language;
-    if (!text || (language !== 'en' && language !== 'ko')) continue;
+    if (!text || !SUPPORTED_TTS_LANGS.includes(language)) continue;
     const k = `${language}::${text}`;
     if (seen.has(k)) continue;
     seen.add(k);
@@ -121,61 +122,67 @@ export const prepareTtsWithProgress = async (items, onProgress, { chunkSize = 4 
 // 즉시 재생할 수 있도록 진행 중 백그라운드로 미리 데워둔다(진입 게이트에는 포함하지 않음).
 export const collectTestFullTexts = (questions) => {
   const out = [];
-  const pushWord = (w) => {
+  const pushWord = (w, fallbackLang) => {
     if (!w) return;
-    if (w.origin) out.push({ text: w.origin, language: 'en' });
+    const lang = wordLang(w, fallbackLang);
+    if (w.origin) out.push({ text: w.origin, language: lang });
     for (const m of (w.meanings || [])) {
       if (typeof m === 'string' && m) out.push({ text: m, language: 'ko' });
     }
     for (const ex of (w.examples || [])) {
-      const en = ex?.origin || ex?.sentence;
+      const src = ex?.origin || ex?.sentence;
       const ko = ex?.meaning || ex?.translation;
-      if (en) out.push({ text: en, language: 'en' });
+      if (src) out.push({ text: src, language: lang });
       if (ko) out.push({ text: ko, language: 'ko' });
     }
   };
   if (!Array.isArray(questions)) return out;
   for (const q of questions) {
+    const qLang = wordLang(q);
     if (q?.questionType === 'fillInTheBlank') {
-      // 선택지(영어 단어) 4개 — 탭 시 재생.
+      // 선택지(학습 언어 단어) 4개 — 탭 시 재생.
       if (Array.isArray(q.options)) {
         for (const opt of q.options) {
           const text = stripHtmlTags(opt);
-          if (text) out.push({ text, language: 'en' });
+          if (text) out.push({ text, language: qLang });
         }
       }
       // 빈칸 문장의 각 영어 단어 — 단어 탭 시 재생(빈칸 자체는 제외).
-      const withoutBlank = String(q.blankText ?? '').replace(TARGET_WORD_TAG_RE, ' ');
-      const plain = stripHtmlTags(withoutBlank);
-      const seenWords = new Set();
-      const wordMatches = plain.match(WORD_TOKEN_RE) || [];
-      for (const w of wordMatches) {
-        const key = w.toLowerCase();
-        if (seenWords.has(key)) continue;
-        seenWords.add(key);
-        out.push({ text: w, language: 'en' });
+      // 일본어 예문은 공백 단어 경계가 없어 WORD_TOKEN_RE 로 자를 수 없으므로 건너뛴다.
+      if (!isJa(qLang)) {
+        const withoutBlank = String(q.blankText ?? '').replace(TARGET_WORD_TAG_RE, ' ');
+        const plain = stripHtmlTags(withoutBlank);
+        const seenWords = new Set();
+        const wordMatches = plain.match(WORD_TOKEN_RE) || [];
+        for (const w of wordMatches) {
+          const key = w.toLowerCase();
+          if (seenWords.has(key)) continue;
+          seenWords.add(key);
+          out.push({ text: w, language: qLang });
+        }
       }
     }
-    pushWord(q);
-    if (Array.isArray(q?.words)) q.words.forEach(pushWord);
+    pushWord(q, qLang);
+    if (Array.isArray(q?.words)) q.words.forEach((w) => pushWord(w, qLang));
   }
   return out;
 };
 
 // 학습 카드 목록에서 자동 재생되는 텍스트 전부 수집.
-// 재생 순서: 단어(en) → 뜻(ko) → 예문(en) → 예문 뜻(ko).
+// 재생 순서: 단어(학습 언어) → 뜻(ko) → 예문(학습 언어) → 예문 뜻(ko).
 export const collectStudyTexts = (words) => {
   const out = [];
   if (!Array.isArray(words)) return out;
   for (const w of words) {
-    if (w?.origin) out.push({ text: w.origin, language: 'en' });
+    const lang = wordLang(w);
+    if (w?.origin) out.push({ text: w.origin, language: lang });
     for (const m of (w?.meanings || [])) {
       if (m) out.push({ text: m, language: 'ko' });
     }
     for (const ex of (w?.examples || [])) {
-      const en = ex?.origin || ex?.sentence;
+      const src = ex?.origin || ex?.sentence;
       const ko = ex?.meaning || ex?.translation;
-      if (en) out.push({ text: en, language: 'en' });
+      if (src) out.push({ text: src, language: lang });
       if (ko) out.push({ text: ko, language: 'ko' });
     }
   }

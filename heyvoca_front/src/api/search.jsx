@@ -1,4 +1,5 @@
 import { backendUrl, fetchDataAsync } from '../utils/common';
+import { getActiveLearningLang, isJa } from '../utils/lang';
 
 /*
   단어 사전 조회 — 학습 화면에서 예문 속 영어 단어를 탭했을 때 쓰는 말풍선용.
@@ -11,12 +12,19 @@ import { backendUrl, fetchDataAsync } from '../utils/common';
 */
 const wordInfoCache = new Map();
 
-const normalizeWord = (word) => String(word ?? '').trim().toLowerCase();
+// ja 는 대소문자 개념이 없고 전각 로마자 등이 섞일 수 있어 소문자화하지 않는다.
+const normalizeWord = (word, lang) => {
+  const s = String(word ?? '').trim();
+  return isJa(lang) ? s : s.toLowerCase();
+};
 
 export const getWordInfoApi = async (word) => {
-  const key = normalizeWord(word);
+  const lang = getActiveLearningLang();
+  const key = normalizeWord(word, lang);
   if (!key) return null;
-  if (wordInfoCache.has(key)) return wordInfoCache.get(key);
+  // 캐시 키에 학습 언어를 포함 — 언어 전환 뒤 같은 표기 단어가 이전 언어 결과로 뜨지 않게
+  const cacheKey = `${lang}:${key}`;
+  if (wordInfoCache.has(cacheKey)) return wordInfoCache.get(cacheKey);
 
   // fetchDataAsync 는 GET 파라미터를 인코딩하지 않으므로 여기서 직접 인코딩한다.
   const url = `${backendUrl}/search/word-info`;
@@ -25,6 +33,6 @@ export const getWordInfoApi = async (word) => {
     throw new Error('getWordInfoApi 실패');
   }
   const data = result.data ?? null;
-  wordInfoCache.set(key, data);
+  wordInfoCache.set(cacheKey, data);
   return data;
 };

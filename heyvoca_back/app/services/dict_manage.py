@@ -16,6 +16,15 @@ objectstore(MinIO)를 단일 허브로, 어느 환경에서든 admin에서:
   - import는 세션 설정 + autocommit=0으로 흘려보내고, mysql/mysqldump는 ionice/nice로 양보한다.
   - objectstore 전송은 MINIO_INTERNAL_ENDPOINT(있으면)로 — 공개 도메인(CDN) 왕복 제거.
 
+언어별 사전(2026-09-25, INTEGRATION_SPEC 3절):
+  모든 공개/내부 함수가 lang='en'|'ja' 인자를 받는다. 기본 'en' 동작은 이전과 동일.
+  - en: heyvoca_dict / dict/dict_index.json / full_dict_v<ver>.sql (비압축)
+  - ja: config.DICT_SCHEMA_JA(heyvoca_dict_ja) / dict_ja/index.json / heyvoca_dict_ja_v<ver>.sql.gz
+        ja 인덱스는 {latest, versions:[{version,key,sha256,size,counts,created_at}]} 형식
+        (db/dict_ja/scripts/50_load_mysql.py 업로드와 호환, sha256 은 .gz 파일 기준).
+        _read_index 가 en 과 같은 내부 형식(object/url/published_at/...)으로 정규화한다.
+  - ja 스키마가 아직 없으면(신규 환경) apply_version 이 백업 없이 새로 만든다(부트스트랩).
+
 이 모듈은 백엔드 컨테이너 안에서 동작(mysql/mysqldump 클라이언트 + DATABASE_URL_DICT + MINIO RW 키).
 기존 scripts/dict_sync.py·dict_publish.py의 컨테이너 내부 로직과 동일한 방식.
 """
@@ -25,8 +34,10 @@ import json
 import hashlib
 import shutil
 import subprocess
+import gzip
 import tempfile
-from datetime import datetime
+import time
+from datetime import datetime, timezone
 from urllib.parse import urlparse, unquote
 
 from .objectstore_endpoint import internal_endpoint, public_endpoint
@@ -54,6 +65,36 @@ TRACKED_TABLES = [
     'dict_meta',
 ]
 COUNT_TABLES = ['voca', 'voca_meaning', 'voca_example', 'voca_book', 'bookstore']
+COUNT_TABLES_JA = ['voca', 'voca_meaning', 'voca_example', 'voca_ja',
+                   'bookstore', 'admin_voca_book', 'admin_voca_book_map']
+
+
+def _ja_schema_name():
+    try:
+        from config import DICT_SCHEMA_JA as name
+    except Exception:
+        name = os.getenv('DICT_SCHEMA_JA', 'heyvoca_dict_ja')
+    return name or 'heyvoca_dict_ja'
+
+
+# 언어별 설정. en 값은 위 모듈 상수와 동일(기존 호출/테스트 호환).
+LANG_CFG = {
+    'en': {
+        'schema': DICT_SCHEMA, 'temp': TEMP_SCHEMA, 'old': OLD_SCHEMA,
+        'prefix': PREFIX, 'index': INDEX_OBJECT,
+        'gz': False,                         # dump 객체가 비압축 .sql
+        'count_tables': COUNT_TABLES,
+        'archive_dir': LOCAL_ARCHIVE_DIR,
+    },
+    'ja': {
+        'schema': _ja_schema_name(), 'temp': 'heyvoca_dict_ja_apply', 'old': 'heyvoca_dict_ja_old',
+        'prefix': 'dict_ja', 'index': 'dict_ja/index.json',
+        'gz': True,                          # dump 객체가 .sql.gz (sha256 은 gz 기준)
+        'count_tables': COUNT_TABLES_JA,
+        # en 백업 정리(_prune_local_archives('en'))가 ja 백업을 지우지 않도록 하위 폴더에 둔다
+        'archive_dir': os.path.join(LOCAL_ARCHIVE_DIR, 'ja'),
+    },
+}
 
 
 class DictManageError(Exception):
@@ -62,6 +103,18 @@ class DictManageError(Exception):
 
 class DictConflictError(DictManageError):
     """최신성 가드 위반(409) — 화면에서 본 latest와 실제가 다름."""
+
+
+def _cfg(lang='en'):
+    v = (lang or 'en')
+    v = str(v).strip().lower()
+    if v not in LANG_CFG:
+        raise DictManageError(f'지원하지 않는 사전 언어입니다: {lang!r}')
+    return LANG_CFG[v]
+
+
+def _lang(lang):
+    return str(lang or 'en').strip().lower()
 
 
 # ── 내부 헬퍼 ───────────────────────────────────────────────
@@ -112,13 +165,22 @@ def _count(conn, table, schema=DICT_SCHEMA):
         return 0
 
 
-def _counts(conn, schema=DICT_SCHEMA):
+def _counts(conn, schema=DICT_SCHEMA, lang='en'):
+    cfg = _cfg(lang)
     out = {}
-    for t in COUNT_TABLES:
+    for t in cfg['count_tables']:
         try:
             out[t] = _count(conn, t, schema)
         except Exception:
             out[t] = 0
+    if _lang(lang) != 'en':
+        # 50_load_mysql.py 의 index counts 와 같은 키
+        v = _scalar(conn, f"SELECT COUNT(*) FROM {schema}.voca "
+                          f"WHERE is_active=0 OR is_active IS NULL;")
+        try:
+            out['voca_inactive'] = int(v) if v is not None else 0
+        except ValueError:
+            out['voca_inactive'] = 0
     return out
 
 
@@ -171,9 +233,11 @@ def _supported_import_settings(conn):
     return ok
 
 
-def _dump(conn, dest_path, schema=DICT_SCHEMA):
+def _dump(conn, dest_path, schema=DICT_SCHEMA, gz=False):
     # --quick: 결과를 메모리에 모으지 않고 행 단위 스트리밍(대용량에서 필수).
     # 출력 내용은 기존과 동일(포맷/순서 불변) — 옵션은 전송 방식만 바꾼다.
+    if gz:
+        return _dump_gz(conn, dest_path, schema)
     cmd = _nice_prefix() + [
         'mysqldump', '--no-tablespaces', '--single-transaction', '--quick',
         '--skip-lock-tables', '--skip-comments'] + _my_args(conn, schema)
@@ -183,7 +247,34 @@ def _dump(conn, dest_path, schema=DICT_SCHEMA):
         raise DictManageError(f"mysqldump 실패: {r.stderr.decode().strip()}")
 
 
-def _import(conn, schema, sql_path):
+def _dump_gz(conn, dest_path, schema):
+    """mysqldump → gzip(mtime=0, level 9) 스트리밍. db/dict_ja/scripts/50_load_mysql.py 의
+    dump() 와 같은 방식(같은 DB 면 같은 바이트 → sha256 결정론). MariaDB 클라이언트의
+    첫 줄 sandbox 주석은 MySQL 8 import 를 깨므로 제거한다.
+    """
+    cmd = _nice_prefix() + [
+        'mysqldump', '--no-tablespaces', '--single-transaction', '--quick',
+        '--skip-lock-tables', '--skip-comments', '--default-character-set=utf8mb4',
+    ] + _my_args(conn, schema)
+    with tempfile.TemporaryFile() as errf:
+        proc = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=errf)
+        with open(dest_path, 'wb') as fo, gzip.GzipFile(
+                filename='', mode='wb', fileobj=fo, mtime=0, compresslevel=9) as gzf:
+            first = True
+            for line in proc.stdout:
+                if first:
+                    first = False
+                    if line.startswith(b'/*M!999999'):
+                        continue
+                gzf.write(line)
+        rc = proc.wait()
+        if rc != 0:
+            errf.seek(0)
+            raise DictManageError(
+                f"mysqldump 실패: {errf.read().decode('utf-8', 'replace').strip()}")
+
+
+def _import(conn, schema, sql_path, gz=False):
     """dump SQL을 mysql에 흘려넣는다. 앞에 세션 설정 + autocommit=0을 덧붙여
     INSERT마다 redo fsync가 일어나지 않게 한다(쓰기 증폭 완화).
 
@@ -201,7 +292,9 @@ def _import(conn, schema, sql_path):
                                 stdout=subprocess.DEVNULL, stderr=errf)
         try:
             proc.stdin.write(prelude.encode('utf-8'))
-            with open(sql_path, 'rb') as f:
+            # gz: 압축 해제본을 디스크에 따로 쓰지 않고 스트리밍으로 흘린다
+            opener = gzip.open if gz else open
+            with opener(sql_path, 'rb') as f:
                 shutil.copyfileobj(f, proc.stdin, 1 << 20)
             proc.stdin.write(b'\nCOMMIT;\n')
         except (BrokenPipeError, OSError):
@@ -252,8 +345,74 @@ def _bucket():
     return os.getenv('MINIO_BUCKET', 'heyvoca')
 
 
-def _read_index():
-    """objectstore의 dict_index.json 읽기. 없으면 빈 인덱스."""
+def _is_not_found(e):
+    return getattr(e, 'code', None) in ('NoSuchKey', 'NoSuchObject', 'ResourceNotFound')
+
+
+def _ro_then_rw(op, what, lang):
+    """objectstore 읽기: RO 키 → 실패 시 RW 키 → 둘 다 실패하면 정책 안내 오류.
+
+    객체가 없는 경우(NoSuchKey)는 그대로 다시 던진다(호출자가 '없음'으로 처리).
+    dict_ja/ 는 한때 RW 키의 HEAD/GET 이 403 이었다 → 두 키를 모두 시도한다.
+    """
+    errors = []
+    for role in ('ro', 'rw'):
+        try:
+            cli = _minio(role)
+        except DictManageError as e:
+            errors.append(f"{role.upper()}: {e}")
+            continue
+        try:
+            return op(cli)
+        except Exception as e:
+            if _is_not_found(e):
+                raise
+            errors.append(f"{role.upper()}: {getattr(e, 'code', None) or type(e).__name__}")
+    prefix = _cfg(lang)['prefix']
+    raise DictManageError(
+        f"objectstore {what} 읽기 실패({', '.join(errors)}). MinIO 정책에서 RO 또는 RW 키에 "
+        f"'{_bucket()}/{prefix}/*' GetObject(+ ListBucket prefix={prefix}/) 권한을 추가하세요.")
+
+
+def _ja_entry_in(v, lang='ja'):
+    """ja 인덱스 항목 → 내부(en과 같은 키) 형식. 원래 키(key/size/created_at)도 유지."""
+    e = dict(v)
+    obj = v.get('key') or v.get('object')
+    e['object'] = obj
+    e.setdefault('url', f"{public_endpoint().rstrip('/')}/{_bucket()}/{obj}" if obj else None)
+    e['published_at'] = v.get('published_at') or v.get('created_at')
+    e.setdefault('publisher', None)
+    e.setdefault('env', None)
+    e.setdefault('message', '')
+    e.setdefault('counts', {})
+    return e
+
+
+def _ja_entry_out(e):
+    """내부 형식 → ja 인덱스 항목(50_load_mysql.py 와 같은 키 순서 + 선택 메타)."""
+    out = {
+        'version': e['version'],
+        'key': e.get('key') or e.get('object'),
+        'sha256': e['sha256'],
+        'size': e.get('size'),
+        'counts': e.get('counts', {}),
+        'created_at': e.get('created_at') or e.get('published_at'),
+    }
+    for k in ('publisher', 'env', 'message'):
+        if e.get(k):
+            out[k] = e[k]
+    return out
+
+
+def _read_index(lang='en'):
+    """objectstore의 인덱스 읽기. 없으면 빈 인덱스.
+
+    en: dict/dict_index.json(내부 형식 그대로). 읽기 실패도 빈 인덱스(기존 동작).
+    ja: dict_ja/index.json 을 내부 형식으로 정규화(버전 내림차순). 객체가 없으면 빈 인덱스,
+        권한/네트워크 오류는 DictManageError(빈 인덱스로 착각해 이력을 덮어쓰지 않도록).
+    """
+    if _lang(lang) != 'en':
+        return _read_index_ja(lang)
     cli = _minio('ro')
     try:
         resp = cli.get_object(_bucket(), INDEX_OBJECT)
@@ -267,8 +426,43 @@ def _read_index():
         return {'latest': None, 'versions': []}
 
 
-def _write_index(index):
+def _read_index_ja(lang='ja'):
+    cfg = _cfg(lang)
+
+    def op(cli):
+        resp = cli.get_object(_bucket(), cfg['index'])
+        try:
+            return json.loads(resp.read().decode('utf-8'))
+        finally:
+            resp.close()
+            resp.release_conn()
+
+    try:
+        data = _ro_then_rw(op, cfg['index'], lang)
+    except DictManageError:
+        raise
+    except Exception as e:
+        if _is_not_found(e):
+            return {'latest': None, 'versions': []}
+        raise DictManageError(f"{cfg['index']} 읽기 실패: {e}")
+    versions = [_ja_entry_in(v, lang) for v in (data.get('versions') or [])
+                if v.get('version')]
+    versions.sort(key=lambda v: v['version'], reverse=True)
+    return {'latest': versions[0]['version'] if versions else None, 'versions': versions}
+
+
+def _write_index(index, lang='en'):
+    cfg = _cfg(lang)
     cli = _minio('rw')
+    if _lang(lang) != 'en':
+        versions = sorted((_ja_entry_out(v) for v in index['versions']),
+                          key=lambda v: v['version'], reverse=True)
+        out = {'latest': versions[0]['version'] if versions else None, 'versions': versions}
+        body = json.dumps(out, ensure_ascii=False, indent=1).encode('utf-8')
+        cli.put_object(_bucket(), cfg['index'], io.BytesIO(body), length=len(body),
+                       content_type='application/json',
+                       metadata={'Cache-Control': 'no-cache'})
+        return
     body = json.dumps(index, ensure_ascii=False, indent=2).encode('utf-8')
     cli.put_object(_bucket(), INDEX_OBJECT, io.BytesIO(body), length=len(body),
                    content_type='application/json')
@@ -278,28 +472,36 @@ def _env_name():
     return os.getenv('APP_ENV', 'local').lower()
 
 
-def _ensure_dict_meta(conn):
+def _ensure_dict_meta(conn, lang='en'):
+    schema = _cfg(lang)['schema']
     _run_sql(conn,
-             f"CREATE TABLE IF NOT EXISTS {DICT_SCHEMA}.dict_meta ("
+             f"CREATE TABLE IF NOT EXISTS {schema}.dict_meta ("
              f"  `key` VARCHAR(64) PRIMARY KEY, value VARCHAR(255), "
              f"  updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP "
              f"    ON UPDATE CURRENT_TIMESTAMP) CHARACTER SET utf8mb4;")
 
 
-def _set_meta(conn, sha256, version):
-    _ensure_dict_meta(conn)
+def _set_meta(conn, sha256, version, lang='en'):
+    schema = _cfg(lang)['schema']
+    _ensure_dict_meta(conn, lang)
     _run_sql(conn,
-             f"INSERT INTO {DICT_SCHEMA}.dict_meta (`key`,value,updated_at) "
+             f"INSERT INTO {schema}.dict_meta (`key`,value,updated_at) "
              f"VALUES ('current_dump_sha256','{sha256}',NOW()) "
              f"ON DUPLICATE KEY UPDATE value=VALUES(value),updated_at=VALUES(updated_at);"
-             f"INSERT INTO {DICT_SCHEMA}.dict_meta (`key`,value,updated_at) "
+             f"INSERT INTO {schema}.dict_meta (`key`,value,updated_at) "
              f"VALUES ('current_dump_version','{version}',NOW()) "
              f"ON DUPLICATE KEY UPDATE value=VALUES(value),updated_at=VALUES(updated_at);")
 
 
-def _env_version(conn):
-    return _scalar(conn, f"SELECT value FROM {DICT_SCHEMA}.dict_meta "
-                         f"WHERE `key`='current_dump_version' LIMIT 1;")
+def _env_version(conn, lang='en'):
+    schema = _cfg(lang)['schema']
+    v = _scalar(conn, f"SELECT value FROM {schema}.dict_meta "
+                      f"WHERE `key`='current_dump_version' LIMIT 1;")
+    if v is None and _lang(lang) != 'en':
+        # ja 는 50_load_mysql.py 로 적재·발행한 환경이면 build_version 만 있다(= 발행 버전)
+        v = _scalar(conn, f"SELECT value FROM {schema}.dict_meta "
+                          f"WHERE `key`='build_version' LIMIT 1;")
+    return v
 
 
 def _next_version(latest):
@@ -315,34 +517,44 @@ def _next_version(latest):
 
 # ── 공개 API ───────────────────────────────────────────────
 
-def get_status():
+def get_status(lang='en'):
     """이 환경 버전 + objectstore 최신 버전 + 최신성 비교."""
+    cfg = _cfg(lang)
     conn = _conn()
-    index = _read_index()
+    index = _read_index(lang)
     latest = None
     if index['versions']:
         latest = index['versions'][0]
-    env_version = _env_version(conn)
-    return {
+    env_version = _env_version(conn, lang)
+    out = {
         'env': _env_name(),
         'env_version': env_version,
-        'env_voca_count': _count(conn, 'voca'),
+        'env_voca_count': _count(conn, 'voca', cfg['schema']),
         'latest': latest,
         'in_sync': bool(latest and env_version == latest['version']),
         'stale': bool(latest and env_version != latest['version']),
         'never_published': not bool(latest),
     }
+    if _lang(lang) != 'en':
+        out['lang'] = _lang(lang)
+        out['schema'] = cfg['schema']
+        out['schema_exists'] = _schema_exists(conn, cfg['schema'])
+    return out
 
 
-def list_versions(limit=RETENTION):
-    index = _read_index()
+def list_versions(limit=RETENTION, lang='en'):
+    index = _read_index(lang)
     return index['versions'][:limit]
 
 
-def publish(message, publisher, expected_latest=None):
-    """이 환경의 heyvoca_dict를 새 버전으로 발행(헤드 갱신)."""
+def publish(message, publisher, expected_latest=None, lang='en'):
+    """이 환경의 사전(lang 별 schema)을 새 버전으로 발행(헤드 갱신)."""
+    cfg = _cfg(lang)
+    is_en = _lang(lang) == 'en'
     conn = _conn()
-    index = _read_index()
+    if not is_en and not _schema_exists(conn, cfg['schema']):
+        raise DictManageError(f"이 환경에 {cfg['schema']} 가 없습니다. 발행할 사전이 없습니다.")
+    index = _read_index(lang)
     cur_latest = index['versions'][0]['version'] if index['versions'] else None
 
     # 최신성 가드: 화면에서 본 latest와 실제가 다르면 충돌
@@ -350,19 +562,28 @@ def publish(message, publisher, expected_latest=None):
         raise DictConflictError(
             f"그새 다른 발행이 있었습니다(현재 최신={cur_latest or '없음'}). 새로고침 후 다시 시도하세요.")
 
-    with tempfile.NamedTemporaryFile(suffix='.sql', delete=False) as tmp:
+    with tempfile.NamedTemporaryFile(suffix='.sql.gz' if cfg['gz'] else '.sql',
+                                     delete=False) as tmp:
         dump_path = tmp.name
     try:
-        _dump(conn, dump_path)
+        _dump(conn, dump_path, cfg['schema'], gz=cfg['gz'])
         sha = _sha256(dump_path)
-        counts = _counts(conn)
+        counts = _counts(conn, cfg['schema'], lang)
         version = _next_version(cur_latest)
-        object_name = f"{PREFIX}/full_dict_v{version}.sql"
+        if is_en:
+            object_name = f"{PREFIX}/full_dict_v{version}.sql"
+        else:
+            # 50_load_mysql.py 와 같은 파일명 규칙
+            object_name = f"{cfg['prefix']}/{cfg['schema']}_v{version}.sql.gz"
         # 인덱스에 남기는 url은 admin/사람이 브라우저로 여는 주소 → 항상 공개 엔드포인트
         url = f"{public_endpoint().rstrip('/')}/{_bucket()}/{object_name}"
 
         cli = _minio('rw')
-        cli.fput_object(_bucket(), object_name, dump_path, content_type='application/sql')
+        if is_en:
+            cli.fput_object(_bucket(), object_name, dump_path, content_type='application/sql')
+        else:
+            cli.fput_object(_bucket(), object_name, dump_path, content_type='application/gzip',
+                            metadata={'sha256': sha, 'version': version})
 
         entry = {
             'version': version, 'object': object_name, 'url': url, 'sha256': sha,
@@ -370,6 +591,10 @@ def publish(message, publisher, expected_latest=None):
             'published_at': datetime.utcnow().isoformat() + 'Z',
             'message': message or '', 'counts': counts,
         }
+        if not is_en:
+            entry['key'] = object_name
+            entry['size'] = os.path.getsize(dump_path)
+            entry['created_at'] = datetime.now(timezone.utc).replace(microsecond=0).isoformat()
         index['versions'].insert(0, entry)
         index['latest'] = version
 
@@ -382,10 +607,13 @@ def publish(message, publisher, expected_latest=None):
             except Exception:
                 pass
 
-        _write_index(index)
-        _set_meta(conn, sha, version)  # 이 환경 = 방금 발행한 버전
-        return {'version': version, 'sha256': sha, 'counts': counts,
-                'pruned': [r['version'] for r in removed]}
+        _write_index(index, lang)
+        _set_meta(conn, sha, version, lang)  # 이 환경 = 방금 발행한 버전
+        res = {'version': version, 'sha256': sha, 'counts': counts,
+               'pruned': [r['version'] for r in removed]}
+        if not is_en:
+            res.update({'lang': _lang(lang), 'object': object_name, 'size': entry['size']})
+        return res
     finally:
         try:
             os.unlink(dump_path)
@@ -393,19 +621,20 @@ def publish(message, publisher, expected_latest=None):
             pass
 
 
-def _prune_local_archives():
+def _prune_local_archives(lang='en'):
     """내려받기 백업(UNUSED_*.sql / UNUSED_*.sql.gz)을 최근 LOCAL_ARCHIVE_KEEP개만 남기고 삭제.
 
     각 팀원 로컬에 백업이 무한정 쌓이는 것을 막는다. 삭제 실패는 무시한다
     (보관은 부가 기능이라 여기서 내려받기 전체를 실패시키지 않는다).
     """
+    archive_dir = _cfg(lang)['archive_dir']
     removed = []
     try:
         # UNUSED_ 접두사만 정리 대상. CURRENT_*는 사용자가 보관 중인 작업 스냅샷이라
         # 이 함수의 목록에 절대 포함시키면 안 된다.
         # 확장자는 .sql(비압축, 코드가 만드는 형식)과 .sql.gz(사람이 수동으로 gzip한
         # 것 포함, db/local-dict-archives/의 실제 백업은 전부 .sql.gz) 둘 다 대상.
-        files = [f for f in os.listdir(LOCAL_ARCHIVE_DIR)
+        files = [f for f in os.listdir(archive_dir)
                  if f.startswith('UNUSED_') and (f.endswith('.sql') or f.endswith('.sql.gz'))]
     except OSError:
         return removed
@@ -416,13 +645,13 @@ def _prune_local_archives():
     # 실제 파일 mtime(생성/수정 시각) 기준으로 오래된 것부터 정리한다.
     def _mtime(name):
         try:
-            return os.path.getmtime(os.path.join(LOCAL_ARCHIVE_DIR, name))
+            return os.path.getmtime(os.path.join(archive_dir, name))
         except OSError:
             return 0
     files_by_age = sorted(files, key=_mtime, reverse=True)
     for name in files_by_age[LOCAL_ARCHIVE_KEEP:]:
         try:
-            os.unlink(os.path.join(LOCAL_ARCHIVE_DIR, name))
+            os.unlink(os.path.join(archive_dir, name))
             removed.append(name)
         except OSError:
             pass
@@ -480,7 +709,7 @@ def _rename_sql(pairs):
     return f"RENAME TABLE {body};"
 
 
-def _build_swap_rename(cur_tables, new_tables):
+def _build_swap_rename(cur_tables, new_tables, lang='en'):
     """현재 사전 ↔ 새 사전(TEMP_SCHEMA)을 한 문장으로 맞바꾸는 RENAME TABLE 생성.
 
     테이블 집합은 합집합으로 처리한다:
@@ -491,31 +720,35 @@ def _build_swap_rename(cur_tables, new_tables):
     (중간 실패 시 이미 바꾼 것도 되돌린다). 스키마 간 rename이라도 InnoDB가
     FK 참조를 새 스키마로 같이 갱신해준다(로컬에서 확인).
     """
+    cfg = _cfg(lang)
+    D, T, O = cfg['schema'], cfg['temp'], cfg['old']
     cur, new = set(cur_tables), set(new_tables)
     pairs = []
     for t in sorted(new):
         if t in cur:
-            pairs.append((DICT_SCHEMA, t, OLD_SCHEMA, t))
-        pairs.append((TEMP_SCHEMA, t, DICT_SCHEMA, t))
+            pairs.append((D, t, O, t))
+        pairs.append((T, t, D, t))
     for t in sorted(cur - new):
-        pairs.append((DICT_SCHEMA, t, OLD_SCHEMA, t))
+        pairs.append((D, t, O, t))
     return pairs
 
 
-def _swap_by_copy(conn):
+def _swap_by_copy(conn, lang='en'):
     """예전 방식: dict를 통째로 비우고 TEMP를 다시 dump→import.
 
     뷰/트리거/프로시저가 생겼을 때만 쓰는 폴백. 51MB 기준 dump+import가 한 번 더
     돌아 디스크 쓰기가 2배가 되고, 교체 중 heyvoca_dict가 잠시 사라진다.
     """
-    _run_sql(conn, f"DROP DATABASE IF EXISTS {DICT_SCHEMA}; "
-                   f"CREATE DATABASE {DICT_SCHEMA} CHARACTER SET utf8mb4 "
+    cfg = _cfg(lang)
+    D, T = cfg['schema'], cfg['temp']
+    _run_sql(conn, f"DROP DATABASE IF EXISTS {D}; "
+                   f"CREATE DATABASE {D} CHARACTER SET utf8mb4 "
                    f"COLLATE utf8mb4_unicode_ci;")
     with tempfile.NamedTemporaryFile(suffix='.sql', delete=False) as t2:
         swap_path = t2.name
     try:
-        _dump(conn, swap_path, TEMP_SCHEMA)
-        _import(conn, DICT_SCHEMA, swap_path)
+        _dump(conn, swap_path, T)
+        _import(conn, D, swap_path)
     finally:
         try:
             os.unlink(swap_path)
@@ -523,69 +756,98 @@ def _swap_by_copy(conn):
             pass
 
 
-def _swap(conn):
+def _swap(conn, lang='en'):
     """TEMP_SCHEMA(새 사전) ↔ DICT_SCHEMA(현재 사전) 교체.
 
     기본은 RENAME TABLE 한 문장(메타데이터만 바뀜 → 데이터 재기록 0, 수십 ms).
     구 사전은 OLD_SCHEMA에 남겨 두고, 호출자가 성공을 확정한 뒤 DROP한다.
     """
-    if _non_table_objects(conn, TEMP_SCHEMA) or _non_table_objects(conn, DICT_SCHEMA):
-        _swap_by_copy(conn)
+    cfg = _cfg(lang)
+    D, T, O = cfg['schema'], cfg['temp'], cfg['old']
+    if _non_table_objects(conn, T) or _non_table_objects(conn, D):
+        _swap_by_copy(conn, lang)
         return 'copy'
 
-    new_tables = _base_tables(conn, TEMP_SCHEMA)
+    new_tables = _base_tables(conn, T)
     if not new_tables:
         raise DictManageError('적용 대상 스키마에 테이블이 없습니다(손상 의심). 중단.')
-    cur_tables = _base_tables(conn, DICT_SCHEMA) if _schema_exists(conn, DICT_SCHEMA) else []
+    cur_tables = _base_tables(conn, D) if _schema_exists(conn, D) else []
 
-    _run_sql(conn, f"DROP DATABASE IF EXISTS {OLD_SCHEMA}; "
-                   f"CREATE DATABASE {OLD_SCHEMA} CHARACTER SET utf8mb4 "
+    _run_sql(conn, f"DROP DATABASE IF EXISTS {O}; "
+                   f"CREATE DATABASE {O} CHARACTER SET utf8mb4 "
                    f"COLLATE utf8mb4_unicode_ci;")
-    if not _schema_exists(conn, DICT_SCHEMA):
-        _run_sql(conn, f"CREATE DATABASE {DICT_SCHEMA} CHARACTER SET utf8mb4 "
+    if not _schema_exists(conn, D):
+        _run_sql(conn, f"CREATE DATABASE {D} CHARACTER SET utf8mb4 "
                        f"COLLATE utf8mb4_unicode_ci;")
-    _run_sql(conn, _rename_sql(_build_swap_rename(cur_tables, new_tables)))
+    _run_sql(conn, _rename_sql(_build_swap_rename(cur_tables, new_tables, lang)))
     return 'rename'
 
 
-def _restore_from_old(conn):
+def _restore_from_old(conn, lang='en'):
     """rename swap 이후 실패했을 때 OLD_SCHEMA의 구 사전을 원위치로 되돌린다.
 
     dump 재import 없이 rename만으로 복구하므로 즉시 끝난다. 되돌릴 게 없으면 False.
     """
-    if not _schema_exists(conn, OLD_SCHEMA):
+    cfg = _cfg(lang)
+    D, T, O = cfg['schema'], cfg['temp'], cfg['old']
+    if not _schema_exists(conn, O):
         return False
-    old_tables = _base_tables(conn, OLD_SCHEMA)
+    old_tables = _base_tables(conn, O)
     if not old_tables:
         return False
-    if not _schema_exists(conn, TEMP_SCHEMA):
-        _run_sql(conn, f"CREATE DATABASE {TEMP_SCHEMA} CHARACTER SET utf8mb4 "
+    if not _schema_exists(conn, T):
+        _run_sql(conn, f"CREATE DATABASE {T} CHARACTER SET utf8mb4 "
                        f"COLLATE utf8mb4_unicode_ci;")
-    cur_tables = _base_tables(conn, DICT_SCHEMA) if _schema_exists(conn, DICT_SCHEMA) else []
+    cur_tables = _base_tables(conn, D) if _schema_exists(conn, D) else []
     cur, old = set(cur_tables), set(old_tables)
     pairs = []
     for t in sorted(old):
         if t in cur:
-            pairs.append((DICT_SCHEMA, t, TEMP_SCHEMA, t))
-        pairs.append((OLD_SCHEMA, t, DICT_SCHEMA, t))
+            pairs.append((D, t, T, t))
+        pairs.append((O, t, D, t))
     for t in sorted(cur - old):
-        pairs.append((DICT_SCHEMA, t, TEMP_SCHEMA, t))
+        pairs.append((D, t, T, t))
     _run_sql(conn, _rename_sql(pairs))
     return True
 
 
-def _drop_swap_schemas(conn):
-    for schema in (TEMP_SCHEMA, OLD_SCHEMA):
+def _drop_swap_schemas(conn, lang='en'):
+    cfg = _cfg(lang)
+    for schema in (cfg['temp'], cfg['old']):
         try:
             _run_sql(conn, f"DROP DATABASE IF EXISTS {schema};")
         except Exception:
             pass
 
 
-def apply_version(version, publisher):
-    """objectstore의 특정 버전을 이 환경 heyvoca_dict에 swap 적용(내려받기/복원)."""
+def _download(entry, dest_path, lang='en'):
+    """dump 객체 다운로드. en: RO 키(기존 동작). ja: RO → RW → 정책 안내 오류."""
+    if _lang(lang) == 'en':
+        cli = _minio('ro')
+        cli.fget_object(_bucket(), entry['object'], dest_path)
+        return
+    try:
+        _ro_then_rw(lambda cli: cli.fget_object(_bucket(), entry['object'], dest_path),
+                    entry['object'], lang)
+    except DictManageError:
+        raise
+    except Exception as e:
+        if _is_not_found(e):
+            raise DictManageError(f"objectstore 에 객체가 없습니다: {entry['object']}")
+        raise
+
+
+def apply_version(version, publisher, lang='en'):
+    """objectstore의 특정 버전을 이 환경 사전(lang 별 schema)에 swap 적용(내려받기/복원).
+
+    ja 스키마가 아직 없으면(신규 환경 최초 적용) 백업 없이 새로 만든다(부트스트랩).
+    """
+    cfg = _cfg(lang)
+    is_en = _lang(lang) == 'en'
+    D, T = cfg['schema'], cfg['temp']
+    t_start = time.monotonic()
     conn = _conn()
-    index = _read_index()
+    index = _read_index(lang)
     entry = None
     if version:
         entry = next((v for v in index['versions'] if v['version'] == version), None)
@@ -594,70 +856,82 @@ def apply_version(version, publisher):
     if not entry:
         raise DictManageError(f"버전을 찾을 수 없습니다: {version or '(최신)'}")
 
-    with tempfile.NamedTemporaryFile(suffix='.sql', delete=False) as t1:
+    # en 은 기존 동작 그대로(스키마 존재를 가정). ja 는 없으면 부트스트랩.
+    bootstrap = (not is_en) and not _schema_exists(conn, D)
+
+    with tempfile.NamedTemporaryFile(suffix='.sql.gz' if cfg['gz'] else '.sql',
+                                     delete=False) as t1:
         dl_path = t1.name
     backup_path = None
     try:
-        # 1) 다운로드 + sha 검증
-        cli = _minio('ro')
-        cli.fget_object(_bucket(), entry['object'], dl_path)
+        # 1) 다운로드 + sha 검증 (ja: sha256 은 .gz 파일 기준)
+        _download(entry, dl_path, lang)
         actual = _sha256(dl_path)
         if actual != entry['sha256']:
             raise DictManageError(f"sha256 불일치: 기대 {entry['sha256'][:12]}… 실제 {actual[:12]}…")
 
         # 2) 현재 사전 백업(로컬 롤백 + 사용자 기기에 영구 보관)
-        #    백업이 실패하면 전체 교체를 시작하지 않는다.
-        ts = datetime.utcnow().strftime('%Y%m%d_%H%M%S')
-        os.makedirs(LOCAL_ARCHIVE_DIR, exist_ok=True)
-        backup_path = os.path.join(
-            LOCAL_ARCHIVE_DIR,
-            f"UNUSED_{ts}_before_apply_{entry['version']}.sql",
-        )
-        _dump(conn, backup_path)
+        #    백업이 실패하면 전체 교체를 시작하지 않는다. (부트스트랩은 백업할 게 없다)
+        if not bootstrap:
+            ts = datetime.utcnow().strftime('%Y%m%d_%H%M%S')
+            os.makedirs(cfg['archive_dir'], exist_ok=True)
+            if is_en:
+                name = f"UNUSED_{ts}_before_apply_{entry['version']}.sql"
+            else:
+                name = f"UNUSED_{ts}_before_apply_{_lang(lang)}_{entry['version']}.sql.gz"
+            backup_path = os.path.join(cfg['archive_dir'], name)
+            _dump(conn, backup_path, D, gz=cfg['gz'])
 
         # 3) 임시 schema import → 검증 → swap
-        _run_sql(conn, f"DROP DATABASE IF EXISTS {TEMP_SCHEMA}; "
-                       f"CREATE DATABASE {TEMP_SCHEMA} CHARACTER SET utf8mb4 "
+        _run_sql(conn, f"DROP DATABASE IF EXISTS {T}; "
+                       f"CREATE DATABASE {T} CHARACTER SET utf8mb4 "
                        f"COLLATE utf8mb4_unicode_ci;")
-        _import(conn, TEMP_SCHEMA, dl_path)
-        if _count(conn, 'voca', TEMP_SCHEMA) <= 0:
+        _import(conn, T, dl_path, gz=cfg['gz'])
+        if _count(conn, 'voca', T) <= 0:
             raise DictManageError("적용 대상에 voca가 비어 있습니다(손상 의심). 중단.")
 
         # swap: RENAME TABLE 한 문장으로 메타데이터만 교체(데이터 재기록 없음).
-        #   heyvoca_dict.t → heyvoca_dict_old.t , heyvoca_dict_apply.t → heyvoca_dict.t
-        # 구 사전은 OLD_SCHEMA에 남겨 두고, _set_meta까지 끝난 뒤에 DROP한다
+        #   <schema>.t → <old>.t , <temp>.t → <schema>.t
+        # 구 사전은 old 에 남겨 두고, _set_meta까지 끝난 뒤에 DROP한다
         # (중간 실패 시 rename 되돌리기로 즉시 복구하기 위해).
-        swap_mode = _swap(conn)
+        # 부트스트랩이면 _swap 이 <schema> 를 CREATE DATABASE 한다.
+        swap_mode = _swap(conn, lang)
 
-        _set_meta(conn, entry['sha256'], entry['version'])
-        _drop_swap_schemas(conn)
+        _set_meta(conn, entry['sha256'], entry['version'], lang)
+        _drop_swap_schemas(conn, lang)
 
     except Exception as e:
-        # 롤백 1순위: rename으로 되돌리기(OLD_SCHEMA가 살아 있으면 즉시 복구).
+        # 롤백 1순위: rename으로 되돌리기(old 가 살아 있으면 즉시 복구).
         restored = False
         try:
-            restored = _restore_from_old(conn)
+            restored = _restore_from_old(conn, lang)
         except Exception:
             restored = False
         # 2순위: 사전이 망가진 게 확인될 때만 백업 dump를 재import한다.
-        #  (rename swap 이전 단계에서 실패했다면 heyvoca_dict는 손대지 않은 상태라
+        #  (rename swap 이전 단계에서 실패했다면 사전은 손대지 않은 상태라
         #   굳이 무거운 재import를 할 이유가 없다 — 공용 디스크를 아낀다.)
         if not restored and backup_path and os.path.exists(backup_path):
             healthy = False
             try:
-                healthy = (_schema_exists(conn, DICT_SCHEMA)
-                           and _count(conn, 'voca', DICT_SCHEMA) > 0)
+                healthy = (_schema_exists(conn, D)
+                           and _count(conn, 'voca', D) > 0)
             except Exception:
                 healthy = False
             if not healthy:
                 try:
-                    _run_sql(conn, f"DROP DATABASE IF EXISTS {DICT_SCHEMA}; "
-                                   f"CREATE DATABASE {DICT_SCHEMA} CHARACTER SET utf8mb4 "
+                    _run_sql(conn, f"DROP DATABASE IF EXISTS {D}; "
+                                   f"CREATE DATABASE {D} CHARACTER SET utf8mb4 "
                                    f"COLLATE utf8mb4_unicode_ci;")
-                    _import(conn, DICT_SCHEMA, backup_path)
+                    _import(conn, D, backup_path, gz=cfg['gz'])
                 except Exception:
                     pass
-        _drop_swap_schemas(conn)
+        # 부트스트랩 실패: 원래 상태(스키마 없음)로 되돌린다 — 반쯤 만든 사전을 남기지 않는다.
+        if bootstrap:
+            try:
+                _run_sql(conn, f"DROP DATABASE IF EXISTS {D};")
+            except Exception:
+                pass
+        _drop_swap_schemas(conn, lang)
         raise DictManageError(str(e))
     else:
         # swap이 완전히 성공한 뒤에만 오래된 백업 정리. 정리 실패는 내려받기
@@ -665,16 +939,29 @@ def apply_version(version, publisher):
         # 위 try/except 블록 안에서 돌리면 정리 실패가 "적용 실패"로 오인되어
         # 이미 끝난 swap을 불필요하게 롤백해버릴 수 있다.
         try:
-            pruned = _prune_local_archives()
+            pruned = _prune_local_archives(lang)
         except Exception:
             pruned = []
-        return {
+        res = {
             'version': entry['version'],
             'counts': entry.get('counts', {}),
             'backup_path': backup_path,
             'pruned_backups': pruned,
             'swap_mode': swap_mode,
         }
+        if not is_en:
+            try:
+                env_counts = _counts(conn, D, lang)
+            except Exception:
+                env_counts = {}
+            res.update({
+                'lang': _lang(lang),
+                'schema': D,
+                'bootstrap': bootstrap,
+                'env_counts': env_counts,
+                'elapsed_sec': round(time.monotonic() - t_start, 1),
+            })
+        return res
     finally:
         for p in (dl_path,):
             if p and os.path.exists(p):

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import {
   Coins, HandHeart, CircleHalf, Quotes, SpeakerHigh, Bell,
-  Plant, Drop, Flask, FileText, Lock, Info, Sparkle, Bug,
+  Plant, Drop, Flask, FileText, Lock, Info, Sparkle, Bug, Translate,
 } from '@phosphor-icons/react';
 import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
 import { useUser } from '../../context/UserContext';
@@ -42,9 +42,11 @@ const SettingsNewFullSheet = () => {
   "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
 
   const { pushNewFullSheet } = useNewFullSheetActions();
-  const { userProfile } = useUser();
+  const { userProfile, learningLang } = useUser();
   const { isDark } = useTheme();
-  const { showExamples } = useExampleSettings();
+  const { showExamples, showFurigana, setShowFurigana } = useExampleSettings();
+  // 후리가나 표시 — 일본어 학습 중일 때만 노출(learningLang 이 아직 없으면 항상 노출)
+  const showFuriganaRow = learningLang === undefined || learningLang === 'ja';
   // 손맛(햅틱) — localStorage 'feel.haptics' 하나로 켜짐/꺼짐만 오간다(lib/feel/haptics.js)
   const [hapticsOn, setHapticsOn] = useState(() => isHapticsEnabled());
   const toggleHaptics = () => {
@@ -111,6 +113,15 @@ const SettingsNewFullSheet = () => {
           value={showExamples ? '항상 보기' : '숨김'}
           onClick={() => openSheet(ExampleSettingsNewFullSheet)}
         />
+        {showFuriganaRow && (
+          <SettingRow
+            icon={<Translate size={iconSize} />}
+            title="후리가나 표시"
+            sub="일본어 예문의 한자 위에 읽기를 달아요"
+            toggle={showFurigana}
+            onClick={() => setShowFurigana(!showFurigana)}
+          />
+        )}
         <SettingRow
           icon={<SpeakerHigh size={iconSize} />}
           title="음성"

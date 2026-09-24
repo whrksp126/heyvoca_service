@@ -157,6 +157,9 @@ module.exports = {
           'Apple SD Gothic Neo',
           'Noto Sans KR',
           'Malgun Gothic',
+          'Noto Sans JP',
+          'Hiragino Sans',
+          'Yu Gothic',
           'sans-serif'
         ],
       },

@@ -7,7 +7,9 @@ import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 import { backendUrl, fetchDataAsync } from '../../utils/common';
 import postMessageManager from '../../utils/postMessageManager';
 import { vibrate, showToast } from '../../utils/osFunction';
-import { nativeUnavailableReason, describeBridgeError } from '../../utils/nativeBridge';
+import { nativeUnavailableReason, describeBridgeError, canUseNative, getNativeEnv } from '../../utils/nativeBridge';
+import { useUser } from '../../context/UserContext';
+import { isJa, getActiveLearningLang } from '../../utils/lang';
 import CameraSourceNewBottomSheet from '../newBottomSheet/CameraSourceNewBottomSheet';
 
 const INITIAL_SCALE = 1.6;
@@ -27,8 +29,24 @@ const formatMeaningsSummary = (meanings, limit = 2) => {
     .join(', ');
 };
 
+/**
+ * 일본어 사진 인식 게이트 — ja 모드인데 앱이 openImagePicker 의 lang(일본어 스크립트)을
+ * 모르는 구버전이면 토스트를 띄우고 true(막음)를 반환한다. 순수 웹은 여기서 막지 않는다
+ * (기존 nativeUnavailableReason 경로가 "앱에서만 돼요" 류 안내를 맡는다).
+ */
+export const blockJaOcrIfUnsupported = (lang = getActiveLearningLang()) => {
+  if (!isJa(lang)) return false;
+  if (!getNativeEnv().isApp) return false;
+  if (canUseNative('openImagePickerLang')) return false;
+  showToast('일본어 사진 인식은 앱 업데이트 후 지원돼요');
+  return true;
+};
+
 const DictionaryOcrResultNewFullSheet = () => {
   "use memo";
+
+  const { learningLang } = useUser();
+  const ja = isJa(learningLang);
 
   const { popNewFullSheet } = useNewFullSheetActions();
   const { pushAwaitNewBottomSheet, clearStack: clearBottomSheetStack } = useNewBottomSheetActions();
@@ -77,9 +95,9 @@ const DictionaryOcrResultNewFullSheet = () => {
     setIsFiltering(true);
     try {
       const response = await fetchDataAsync(
-        `${backendUrl}/ocr/words`,
+        `${backendUrl}/ocr/words?lang=${encodeURIComponent(learningLang)}`,
         'POST',
-        { words },
+        { words, lang: learningLang },
       );
       if (response?.code === 200) {
         setMatchedWords(response.data?.matched_words || []);
@@ -92,7 +110,7 @@ const DictionaryOcrResultNewFullSheet = () => {
     } finally {
       setIsFiltering(false);
     }
-  }, []);
+  }, [learningLang]);
 
   // 카메라/앨범 선택 바텀시트 오픈 → 네이티브로 source 전달
   const requestImagePicker = useCallback(async () => {
@@ -101,6 +119,11 @@ const DictionaryOcrResultNewFullSheet = () => {
       // 네이티브가 이 요청을 못 받는 환경(웹 브라우저·구버전 앱)이면 **보내지 않는다.**
       //  보내 봤자 응답이 없고, 이 화면은 응답이 있어야만 촬영 대기가 풀린다 = 멈춘 화면.
       const blocked = nativeUnavailableReason('openImagePicker');
+      if (!blocked && blockJaOcrIfUnsupported(learningLang)) {
+        if (!hasDataRef.current) popNewFullSheet();
+        else setIsCapturing(false);
+        return;
+      }
       if (blocked) {
         showToast(describeBridgeError(blocked, '사진을 불러오지 못했어요. 잠시 후 다시 시도해 주세요.'));
         if (!hasDataRef.current) popNewFullSheet();
@@ -110,7 +133,8 @@ const DictionaryOcrResultNewFullSheet = () => {
       // 바텀시트 exit 애니메이션이 끝나기 전 웹뷰가 백그라운드로 가면
       // Framer Motion rAF 가 멈춰 바텀시트가 DOM 에 남는 문제가 있어 잠깐 대기
       await new Promise((r) => setTimeout(r, 280));
-      postMessageManager.sendMessageToReactNative('openImagePicker', { source });
+      // lang — 앱(1.1.1+)이 ja 면 일본어 스크립트 인식 + 가나·한자 필터를 쓴다(구버전은 무시)
+      postMessageManager.sendMessageToReactNative('openImagePicker', { source, lang: learningLang });
     } else {
       // 취소: 기존 데이터 없으면 풀시트 종료, 있으면 이전 결과로 복귀
       if (!hasDataRef.current) {
@@ -119,7 +143,7 @@ const DictionaryOcrResultNewFullSheet = () => {
         setIsCapturing(false);
       }
     }
-  }, [pushAwaitNewBottomSheet, popNewFullSheet]);
+  }, [pushAwaitNewBottomSheet, popNewFullSheet, learningLang]);
 
   // 네이티브 메시지 리스너 + 초기 바텀시트 오픈
   useEffect(() => {
@@ -247,13 +271,13 @@ const DictionaryOcrResultNewFullSheet = () => {
     const targets = selectedWord ? [selectedWord] : matchedWords;
     const byLower = new Map();
     targets.forEach((mw) => {
-      const key = mw.word?.toLowerCase?.();
+      const key = ja ? mw.word : mw.word?.toLowerCase?.();
       if (key) byLower.set(key, mw);
     });
     const boxes = [];
     const counters = new Map();
     payload.words.forEach((w) => {
-      const key = (w.text || '').toLowerCase();
+      const key = ja ? (w.text || '') : (w.text || '').toLowerCase();
       const mw = byLower.get(key);
       if (!mw || !w.boundingBox) return;
       const idx = counters.get(mw.id) || 0;
@@ -266,7 +290,7 @@ const DictionaryOcrResultNewFullSheet = () => {
       });
     });
     return boxes;
-  }, [payload, matchedWords, selectedWord]);
+  }, [payload, matchedWords, selectedWord, ja]);
 
   const handleHighlightClick = useCallback((matchedWord) => {
     vibrate({ duration: 5 });

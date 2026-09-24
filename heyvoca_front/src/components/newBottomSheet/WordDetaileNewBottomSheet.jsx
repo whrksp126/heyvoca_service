@@ -16,6 +16,10 @@ import StoreNewFullSheet from '../newfullsheet/StoreNewFullSheet';
 import CropImage, { CROP_ASSETS } from '../farm/CropImage';
 import GrowthPath from '../vocabularySheets/GrowthPath';
 import VerifyMark from '../vocabularySheets/VerifyMark';
+import JlptBadge from '../common/JlptBadge';
+import FuriganaText from '../common/FuriganaText';
+import { wordLang, isJa } from '../../utils/lang';
+import { getReading, shouldShowReading } from '../../utils/jaWord';
 import { vibrate, showToast } from '../../utils/osFunction';
 import { getFarmItemsApi, replantApi, recoverPlantsApi } from '../../api/farm';
 import { addPendingReplantIds } from '../../utils/replantPending';
@@ -299,10 +303,17 @@ const WordDetaileNewBottomSheet = ({ vocabularyId, id }) => {
         <CropImage stage={detailStage} health={health} size={88} align="center" className="shrink-0 -my-[10px]" />
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-[6px] text-[24px] font-[800] tracking-[-0.04em] leading-[1.15] text-layout-black dark:text-layout-white">
-            <span className="min-w-0 break-words">{word.origin}</span>
+            <span className="min-w-0 break-words" lang={isJa(wordLang(word)) ? 'ja' : undefined}>{word.origin}</span>
+            {isJa(wordLang(word)) && <JlptBadge level={word.jlpt} />}
             <VerifyMark word={word} size={17} badgeClassName="text-[11px]" />
           </div>
-          {(word.pronunciation || unverified) && (
+          {isJa(wordLang(word)) ? (
+            (shouldShowReading(word) || (!getReading(word) && unverified)) && (
+              <div className="mt-[3px] text-[12.5px] font-[500] text-layout-gray-300" lang="ja">
+                {getReading(word) || '읽기 정보 없음'}
+              </div>
+            )
+          ) : (word.pronunciation || unverified) && (
             <div className="mt-[3px] text-[12.5px] font-[500] text-layout-gray-300">
               {word.pronunciation || '발음 정보 없음'}
             </div>
@@ -313,7 +324,7 @@ const WordDetaileNewBottomSheet = ({ vocabularyId, id }) => {
               옆에 "심은 씨앗 · 많이 시들었어요"를 덧붙이면 같은 말이 두 번이 된다. */}
         </div>
         <span className="flex items-center justify-center w-[36px] h-[36px] shrink-0 rounded-full bg-layout-gray-50 dark:bg-layout-gray-dark">
-          <SpeakerButton text={word.origin} lang="en" size={19} label="단어 발음 듣기" />
+          <SpeakerButton text={word.origin} lang={wordLang(word)} size={19} label="단어 발음 듣기" />
         </span>
       </div>
 
@@ -396,11 +407,13 @@ const WordDetaileNewBottomSheet = ({ vocabularyId, id }) => {
               return (
                 <div key={`${id}-${index}`} className={index > 0 ? 'mt-[8px]' : ''}>
                   <div className="flex items-center gap-[8px]">
-                    <span
+                    <FuriganaText
                       className="flex-1 min-w-0 text-layout-black dark:text-layout-white"
-                      dangerouslySetInnerHTML={{ __html: origin }}
+                      html={origin}
+                      readingTokens={isJa(wordLang(word)) ? example?.reading_tokens : undefined}
+                      lang={isJa(wordLang(word)) ? 'ja' : undefined}
                     />
-                    <SpeakerButton text={originText} lang="en" size={16} label="예문 발음 듣기" />
+                    <SpeakerButton text={originText} lang={wordLang(word)} size={16} label="예문 발음 듣기" />
                   </div>
                   {meaning && (
                     <div className="flex items-center gap-[8px] mt-[4px]">

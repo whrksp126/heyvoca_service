@@ -223,8 +223,12 @@ def today_changes():
     # 다른 서비스 모듈 순환 참조를 피하기 위해서다.
     from app.services.game.farm_v2.query import _first_meaning, _session_word_stages
 
+    from app.utils.dict_lang import get_dict_lang
+    from app.services.ja_fields import load_ja_word_info
+
     user_id = UUID(g.user_id)
     day_start_utc = logical_day_start_utc()
+    lang = get_dict_lang()
 
     rows = (
         db.session.query(
@@ -235,6 +239,7 @@ def today_changes():
         )
         .filter(
             UserStudyLog.user_id == user_id,
+            UserStudyLog.dict_lang == lang,   # 현재 학습 언어의 변화만
             UserStudyLog.created_at >= day_start_utc,
         )
         .order_by(UserStudyLog.created_at.asc())
@@ -256,14 +261,16 @@ def today_changes():
     ]
 
     words = {}
+    voca_ids = {}
     stage_map = {}
     if changed_ids:
-        for uv_id, word, meanings in (
-            db.session.query(UserVoca.id, UserVoca.word, UserVoca.voca_meanings)
+        for uv_id, word, meanings, voca_id in (
+            db.session.query(UserVoca.id, UserVoca.word, UserVoca.voca_meanings, UserVoca.voca_id)
             .filter(UserVoca.user_id == user_id, UserVoca.id.in_(changed_ids))
             .all()
         ):
             words[uv_id] = (word or '', _first_meaning(meanings))
+            voca_ids[uv_id] = voca_id
         # IN 절 1회 — 단어 수만큼 왕복하지 않는다. 조회 실패해도 목록 자체는 내려줘야
         # 하므로 stage 만 빈 값으로 방어한다(session-summary의 word_stages 방어와 동일 패턴).
         try:
@@ -271,6 +278,8 @@ def today_changes():
         except Exception:
             db.session.rollback()
             stage_map = {}
+
+    ja_info = load_ja_word_info(voca_ids.values()) if lang == 'ja' else {}
 
     promoted, new_words = [], []
     by_state = {}
@@ -284,7 +293,10 @@ def today_changes():
             'from': st['from'],
             'to': st['to'],
             'stage': stage_map.get(vid, VisualStage.UNPLANTED_SEED),
+            'language': lang,
         }
+        if lang == 'ja':
+            entry['reading'] = (ja_info.get(voca_ids.get(vid)) or {}).get('reading')
         if st['from'] == 'unlearned':
             new_words.append(entry)
         else:

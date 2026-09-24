@@ -1,6 +1,7 @@
 import { useLayoutEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import { SpeakerHigh } from '@phosphor-icons/react';
+import { getReading, shouldShowReading } from '../../utils/jaWord';
 
 /*
   단어 사전 말풍선 — 예문 속 영어 단어를 탭하면 그 단어 아래(또는 위)에 뜬다(듀오링고 방식).
@@ -64,7 +65,13 @@ const WordInfoBubble = ({ anchor, container, status, info, speaking = false, onR
     : { bottom: containerH - (anchor?.top ?? 0) + TAIL_GAP_PX, left };
 
   const word = info?.word ?? info?.query ?? '';
-  const pronunciation = info?.pronunciation ? String(info.pronunciation).trim() : '';
+  // ja 단어는 발음 자리에 읽기(reading)를 둔다(romaji 는 표시하지 않음)
+  const isJaWord = info?.language === 'ja';
+  // 가나만 있는 단어(읽기 === 표기)는 읽기를 숨긴다(공용 규칙 shouldShowReading)
+  const pronunciationRaw = isJaWord
+    ? (shouldShowReading({ ...info, origin: word }, 'ja') ? getReading(info) : '')
+    : info?.pronunciation;
+  const pronunciation = pronunciationRaw ? String(pronunciationRaw).trim() : '';
   const meanings = Array.isArray(info?.meanings)
     ? info.meanings
         .map((m) => (typeof m === 'string' ? m : (m?.meaning ?? m?.text ?? '')))
@@ -139,11 +146,11 @@ const WordInfoBubble = ({ anchor, container, status, info, speaking = false, onR
         {status === 'found' && (
           <div className="flex flex-col gap-[4px]">
             <div className="flex items-center gap-[6px]">
-              <span className="text-[15px] font-[700] leading-[1.3] text-layout-black dark:text-layout-white break-keep">
+              <span lang={isJaWord ? 'ja' : undefined} className="text-[15px] font-[700] leading-[1.3] text-layout-black dark:text-layout-white break-keep">
                 {word}
               </span>
-              {pronunciation && (
-                <span className="text-[12px] font-[400] leading-[1.3] text-layout-gray-300 whitespace-nowrap">
+              {pronunciation && pronunciation !== word && (
+                <span lang={isJaWord ? 'ja' : undefined} className="text-[12px] font-[400] leading-[1.3] text-layout-gray-300 whitespace-nowrap">
                   {pronunciation}
                 </span>
               )}

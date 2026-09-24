@@ -3,6 +3,10 @@ import {
   MagnifyingGlass, CaretDown, CaretRight, X, Plus, Drop, Camera, ArrowUp,
 } from '@phosphor-icons/react';
 import SpeakerButton from '../common/SpeakerButton';
+import JlptBadge from '../common/JlptBadge';
+import FuriganaText from '../common/FuriganaText';
+import { wordLang, isJa, getActiveLearningLang } from '../../utils/lang';
+import { getReading, shouldShowReading } from '../../utils/jaWord';
 import { useVocabulary } from '../../context/VocabularyContext';
 import { useUser } from '../../context/UserContext';
 import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
@@ -11,7 +15,7 @@ import { backendUrl, fetchDataAsync, getTextSound, prefetchTtsList, stripHtmlTag
 import AddWordNewBottomSheet from '../newBottomSheet/AddWordNewBottomSheet';
 import PickPlotNewBottomSheet from '../newBottomSheet/PickPlotNewBottomSheet';
 import VocabularyWordsNewFullSheet from '../newfullsheet/VocabularyWordsNewFullSheet';
-import DictionaryOcrResultNewFullSheet from '../newfullsheet/DictionaryOcrResultNewFullSheet';
+import DictionaryOcrResultNewFullSheet, { blockJaOcrIfUnsupported } from '../newfullsheet/DictionaryOcrResultNewFullSheet';
 import { PreviewBookStoreNewFullSheet } from '../newfullsheet/PreviewBookStoreNewFullSheet';
 import { getBookStoreDetailApi } from '../../api/bookStore';
 import { vibrate } from '../../utils/osFunction';
@@ -138,6 +142,24 @@ const GroupHead = ({ title, count, hint, action, first = false }) => (
   </div>
 );
 
+// 검색 결과(사전 단어)의 사전 id — 백엔드 응답 필드명이 섞여 있어 모두 본다.
+const dictIdOf = (w) => w?.vocaId ?? w?.voca_id ?? w?.dictionaryId ?? w?.id ?? null;
+
+// 내 사전에서 같은 단어 찾기 — dictionaryId(=vocaId) 우선, 없으면 표기 완전 일치.
+const findOwnedWord = (words, item) => {
+  const itemId = dictIdOf(item);
+  if (itemId != null) {
+    const byId = words.find((w) => {
+      const wId = w?.vocaId ?? w?.voca_id ?? w?.dictionaryId ?? null;
+      return wId != null && String(wId) === String(itemId);
+    });
+    if (byId) return byId;
+  }
+  const key = String(item?.word || '').toLowerCase();
+  if (!key) return null;
+  return words.find((w) => (w.origin || '').toLowerCase() === key) || null;
+};
+
 const Main = () => {
   "use memo";
 
@@ -146,7 +168,10 @@ const Main = () => {
   const { pushNewFullSheet } = useNewFullSheetActions();
   const { isDark } = useTheme();
   const { completeMission } = useOnboardingUnlock();
-  const { isLogin } = useUser();
+  const { isLogin, learningLang: ctxLearningLang } = useUser();
+  // 현재 학습 언어 — UserContext 에 아직 없으면 lang.js 모듈 값으로 폴백
+  const learningLang = ctxLearningLang ?? getActiveLearningLang();
+  const jaMode = isJa(learningLang);
   const { plants, reloadPlants } = useFarmPlants(isLogin);
   const openWordDetail = useOpenWordDetail();
 
@@ -163,7 +188,13 @@ const Main = () => {
   const [isSearching, setIsSearching] = useState(false);
   const debounceTimerRef = useRef(null);
 
+  // 한글이면 뜻 검색(ko), 그 외(영문·가나·한자·로마자)는 표제어 검색(en 엔드포인트).
+  // ja 모드에서도 '/search/partial/en' 이 ja 사전(표기·읽기)을 검색한다(INTEGRATION_SPEC 4절).
   const detectLang = (q) => (/[가-힣ㄱ-ㅎㅏ-ㅣ]/.test(q) ? 'ko' : 'en');
+  // 표제어 검색 최소 길이 — ja 는 한 글자 단어가 많아 1
+  const minQueryLen = (lang) => (lang === 'ko' || jaMode ? 1 : 2);
+  // IME(일본어 가나 변환) 조합 중에는 제안 요청을 보류한다
+  const composingRef = useRef(false);
 
   const [suggestions, setSuggestions] = useState([]);
   const [selectedWord, setSelectedWord] = useState(null);
@@ -187,7 +218,7 @@ const Main = () => {
   const sortLabels = {
     updatedAt: '최근 수정순',
     createdAt: '생성일순',
-    alphabetical: '알파벳순',
+    alphabetical: jaMode ? '읽기순' : '알파벳순',
   };
 
   const view = selectedWord ? 'detail' : (isSearchMode ? 'search' : 'list');
@@ -209,11 +240,15 @@ const Main = () => {
         return new Date(b.createdAt || 0) - new Date(a.createdAt || 0);
       }
       if (sortBy === 'alphabetical') {
+        // ja 는 읽기(히라가나) 기준 — 읽기가 없으면 표기로
+        if (jaMode) {
+          return (a.reading || a.origin || '').localeCompare(b.reading || b.origin || '', 'ja');
+        }
         return (a.origin || '').localeCompare(b.origin || '');
       }
       return 0;
     });
-  }, [userDictionary, sortBy]);
+  }, [userDictionary, sortBy, jaMode]);
 
   // 필터 칩 개수 — 목록과 같은 모집단에서 세야 칩과 목록이 어긋나지 않는다.
   // stageDetail 로 여섯 단계를 그대로 세야 미학습/씨앗이 갈린다 — stageToCrop 은 둘을
@@ -246,10 +281,11 @@ const Main = () => {
   const hasMore = displayCount < allWords.length;
 
   // 검색 대상 단어를 내 사전에서 찾는다 (완전 일치만 — 부분 일치면 tea → teach 가 섞인다)
+  // 사전 단어 id(vocaId = dictionaryId)가 있으면 그것으로 먼저 찾는다(ja 는 같은 표기의 다른 단어가 있다).
   const myWord = useMemo(() => {
     const key = String(selectedWord?.word || '').toLowerCase();
     if (!key) return null;
-    return Object.values(userDictionary).find(w => (w.origin || '').toLowerCase() === key) || null;
+    return findOwnedWord(Object.values(userDictionary), selectedWord);
   }, [selectedWord, userDictionary]);
 
   const handleScroll = useCallback(() => {
@@ -297,12 +333,13 @@ const Main = () => {
     if (selectedWord) {
       document.documentElement.dataset.scrollHidden = 'false';
       const items = [];
-      if (selectedWord.word) items.push({ text: selectedWord.word, language: 'en' });
+      const wl = wordLang(selectedWord, learningLang);
+      if (selectedWord.word) items.push({ text: selectedWord.word, language: wl });
       (selectedWord.meanings || []).forEach(m => {
         const t = stripHtmlTags(m); if (t) items.push({ text: t, language: 'ko' });
       });
       (selectedWord.examples || []).forEach(ex => {
-        const en = stripHtmlTags(ex?.origin || ''); if (en) items.push({ text: en, language: 'en' });
+        const en = stripHtmlTags(ex?.origin || ''); if (en) items.push({ text: en, language: wl });
         const ko = stripHtmlTags(ex?.meaning || ''); if (ko) items.push({ text: ko, language: 'ko' });
       });
       prefetchTtsList(items);
@@ -334,7 +371,7 @@ const Main = () => {
   }, []);
 
   const fetchSuggestions = useCallback(async (query, lang) => {
-    const minLen = lang === 'ko' ? 1 : 2;
+    const minLen = minQueryLen(lang);
     if (!query.trim() || query.trim().length < minLen) {
       setSuggestions([]);
       setNoResults(false);
@@ -352,10 +389,10 @@ const Main = () => {
     } catch (err) {
       console.error('추천 검색 오류:', err);
     }
-  }, []);
+  }, [jaMode]);
 
   const executeSearch = useCallback(async (query) => {
-    if (!query.trim() || query.trim().length < 2) {
+    if (!query.trim() || query.trim().length < (jaMode ? 1 : 2)) {
       setStoreResults([]);
       return;
     }
@@ -369,10 +406,15 @@ const Main = () => {
     } finally {
       setIsSearching(false);
     }
-  }, []);
+  }, [jaMode]);
 
   const handleSearchChange = (e) => {
     const query = e.target.value;
+    // ja 모드 IME 조합 중 — 입력값만 반영하고 제안 요청은 compositionend 에서
+    if (jaMode && (composingRef.current || e.nativeEvent?.isComposing)) {
+      setSearchQuery(query);
+      return;
+    }
     const lang = detectLang(query);
     setSearchQuery(query);
     setSearchLang(lang);
@@ -381,7 +423,7 @@ const Main = () => {
 
     if (debounceTimerRef.current) clearTimeout(debounceTimerRef.current);
 
-    const minLen = lang === 'ko' ? 1 : 2;
+    const minLen = minQueryLen(lang);
     if (!query.trim() || query.trim().length < minLen) {
       setSuggestions([]);
       setNoResults(false);
@@ -421,7 +463,7 @@ const Main = () => {
 
   const handleSuggestionClick = useCallback((item) => {
     vibrate({ duration: 5 });
-    getTextSound(item.word, 'en');
+    getTextSound(item.word, wordLang(item, learningLang));
     setIsSearchMode(true);
     setSelectedWord(item);
     setSearchQuery(item.word);
@@ -433,7 +475,7 @@ const Main = () => {
     scrollContainerRef.current?.scrollTo({ top: 0, behavior: 'auto' });
     // 온보딩 미션(M4: 사전에서 단어 찾아보기) — 이미 완료/legacy면 Context 내부에서 스킵
     completeMission('search_word');
-  }, [executeSearch, completeMission, pushRecent]);
+  }, [executeSearch, completeMission, pushRecent, learningLang]);
 
   useEffect(() => {
     const onExternalSelect = (e) => {
@@ -447,6 +489,8 @@ const Main = () => {
 
   const openCamera = () => {
     vibrate({ duration: 5 });
+    // ja 모드 + 구버전 앱(일본어 인식 미지원)이면 시트를 열지 않고 안내만
+    if (blockJaOcrIfUnsupported(learningLang)) return;
     pushNewFullSheet(DictionaryOcrResultNewFullSheet);
   };
 
@@ -474,6 +518,9 @@ const Main = () => {
       origin: selectedWord?.word ?? '',
       meanings: selectedWord?.meanings ?? [],
       examples: selectedWord?.examples ?? [],
+      dictionaryId: dictIdOf(selectedWord),
+      reading: selectedWord?.reading ?? null,
+      language: wordLang(selectedWord, learningLang),
     });
   };
 
@@ -551,10 +598,17 @@ const Main = () => {
         />
         <div className="flex-1 min-w-0">
           <div className="flex items-baseline gap-[5px]">
-            <span className="shrink-0 text-[15px] font-[700] tracking-[-0.02em] text-layout-black dark:text-layout-white">
+            <span lang={isJa(wordLang(word, learningLang)) ? 'ja' : undefined} className="shrink-0 text-[15px] font-[700] tracking-[-0.02em] text-layout-black dark:text-layout-white">
               {word.origin}
             </span>
-            {word.pronunciation && (
+            {isJa(wordLang(word, learningLang)) ? (
+              <>
+                {shouldShowReading(word, learningLang) && (
+                  <span lang="ja" className="truncate text-[10.5px] font-[500] text-[#BBBBBB]">{getReading(word)}</span>
+                )}
+                <JlptBadge level={word.jlpt} size="sm" className="self-center" />
+              </>
+            ) : word.pronunciation && (
               <span className="truncate text-[10.5px] font-[500] text-[#BBBBBB]">{word.pronunciation}</span>
             )}
           </div>
@@ -587,7 +641,14 @@ const Main = () => {
             type="text"
             value={searchQuery}
             onChange={handleSearchChange}
+            onCompositionStart={() => { composingRef.current = true; }}
+            onCompositionEnd={(e) => {
+              composingRef.current = false;
+              // 조합 확정 — 보류했던 제안 요청을 이제 보낸다
+              if (jaMode) handleSearchChange(e);
+            }}
             onKeyDown={(e) => {
+              if (e.nativeEvent?.isComposing) return;
               if (e.key === 'Enter') {
                 e.preventDefault();
                 handleSearchSubmit();
@@ -677,7 +738,7 @@ const Main = () => {
             카메라로 찾기
           </span>
           <span className="block mt-[2px] text-[11px] font-[500] tracking-[-0.02em] text-layout-gray-300 dark:text-layout-gray-200">
-            사진 속 영어 단어를 한 번에 찾아요
+            {jaMode ? '사진 속 단어를 한 번에 찾아요' : '사진 속 영어 단어를 한 번에 찾아요'}
           </span>
         </span>
         <CaretRight size={13} weight="fill" className="text-primary-main-400" />
@@ -694,9 +755,7 @@ const Main = () => {
   const renderSuggestions = () => (
     <div className="px-[16px] pb-[24px]">
       {suggestions.map((item, index) => {
-        const owned = Object.values(userDictionary).find(
-          w => (w.origin || '').toLowerCase() === String(item.word || '').toLowerCase(),
-        );
+        const owned = findOwnedWord(Object.values(userDictionary), item);
         const plant = owned ? plantOf(owned) : null;
         const meaningText = Array.isArray(item.meanings)
           ? item.meanings.slice(0, 2).join(', ')
@@ -718,11 +777,19 @@ const Main = () => {
                 <MagnifyingGlass size={13} weight="fill" className="text-layout-gray-200" />
               )}
             </span>
-            <span className="shrink-0 text-[14.5px] font-[700] tracking-[-0.02em] text-layout-black dark:text-layout-white">
+            <span lang={isJa(wordLang(item, learningLang)) ? 'ja' : undefined} className="shrink-0 text-[14.5px] font-[700] tracking-[-0.02em] text-layout-black dark:text-layout-white">
               {searchLang === 'en'
                 ? <Highlight text={item.word} query={searchQuery} />
                 : item.word}
             </span>
+            {shouldShowReading(item, learningLang) && (
+              <span lang="ja" className="shrink-0 max-w-[40%] truncate text-[11px] font-[500] text-layout-gray-300">
+                {searchLang === 'en'
+                  ? <Highlight text={getReading(item)} query={searchQuery} />
+                  : getReading(item)}
+              </span>
+            )}
+            {isJa(wordLang(item, learningLang)) && <JlptBadge level={item.jlpt} size="sm" />}
             <span className="flex-1 min-w-0 truncate text-right text-[12px] font-[500] tracking-[-0.02em] text-layout-gray-300">
               {searchLang === 'ko'
                 ? <Highlight text={meaningText} query={searchQuery} />
@@ -772,12 +839,13 @@ const Main = () => {
         {/* 사전 상세 */}
         <div className="pt-[14px] pb-[2px]">
           <div className="flex items-center gap-[8px]">
-            <span className="text-[24px] font-[800] tracking-[-0.04em] text-layout-black dark:text-layout-white break-all">
+            <span lang={isJa(wordLang(selectedWord, learningLang)) ? 'ja' : undefined} className="text-[24px] font-[800] tracking-[-0.04em] text-layout-black dark:text-layout-white break-all">
               {selectedWord.word}
             </span>
+            {isJa(wordLang(selectedWord, learningLang)) && <JlptBadge level={selectedWord.jlpt} />}
             <SpeakerButton
               text={selectedWord.word}
-              lang="en"
+              lang={wordLang(selectedWord, learningLang)}
               size={16}
               label="단어 발음 듣기"
               className="w-[30px] h-[30px] rounded-full bg-layout-gray-50 dark:bg-layout-gray-dark text-layout-gray-400"
@@ -805,7 +873,15 @@ const Main = () => {
             </div>
           </div>
 
-          {selectedWord.pronunciation && (
+          {isJa(wordLang(selectedWord, learningLang)) ? (
+            shouldShowReading(selectedWord, learningLang) && (
+              <div className="flex items-center gap-[7px] mt-[6px]">
+                <span lang="ja" className="text-[13px] font-[500] text-layout-gray-300">
+                  {getReading(selectedWord)}
+                </span>
+              </div>
+            )
+          ) : selectedWord.pronunciation && (
             <div className="flex items-center gap-[7px] mt-[6px]">
               <span className="text-[13px] font-[500] text-layout-gray-300">{selectedWord.pronunciation}</span>
             </div>
@@ -836,13 +912,15 @@ const Main = () => {
               {selectedWord.examples.map((ex, i) => (
                 <div key={i} className="rounded-[10px] px-[12px] py-[10px] bg-[#FAFAFA] dark:bg-layout-gray-dark">
                   <div className="flex items-start gap-[7px]">
-                    <span
+                    <FuriganaText
                       className="min-w-0 text-[12.5px] font-[600] leading-[1.55] text-layout-black dark:text-layout-white"
-                      dangerouslySetInnerHTML={{ __html: ex.origin || '' }}
+                      html={ex.origin || ''}
+                      readingTokens={isJa(wordLang(selectedWord, learningLang)) ? ex.reading_tokens : undefined}
+                      lang={isJa(wordLang(selectedWord, learningLang)) ? 'ja' : undefined}
                     />
                     <SpeakerButton
                       text={stripHtmlTags(ex.origin || '')}
-                      lang="en"
+                      lang={wordLang(selectedWord, learningLang)}
                       size={14}
                       label="예문 발음 듣기"
                       className="w-[22px] h-[22px] text-layout-gray-200"

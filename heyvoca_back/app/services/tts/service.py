@@ -14,7 +14,7 @@ from .base import TTSError, TTSGenerationError
 _storages = {}
 
 # 1차 provider(예: ElevenLabs) 생성 실패 시 전환할 무료 fallback provider.
-# gTTS는 en/ko 모두 지원하고 외부 quota가 없어 토큰 소진/장애 시 안전망 역할.
+# gTTS는 en/ko/ja 모두 지원하고 외부 quota가 없어 토큰 소진/장애 시 안전망 역할.
 FALLBACK_PROVIDER = 'gtts'
 
 

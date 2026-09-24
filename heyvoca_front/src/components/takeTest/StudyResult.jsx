@@ -10,6 +10,9 @@ import ResultItemBackground02 from '../../assets/images/ResultItemBackground02.s
 import { haptic } from '../../lib/feel';
 import { warmTts } from '../../api/tts';
 import SpeakerButton from '../common/SpeakerButton';
+import JlptBadge from '../common/JlptBadge';
+import { wordLang, isJa } from '../../utils/lang';
+import { getReading, shouldShowReading } from '../../utils/jaWord';
 import { useTheme } from '../../context/ThemeContext';
 import { useExampleSettings } from '../../context/ExampleSettingsContext';
 import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
@@ -163,11 +166,23 @@ const FarmCropArt = ({ stage, health = 'FRESH', alt }) => (
 // 단어장·최종 결과와 같은 배치다(시안 학습결과 §1 ①).
 // `right` 는 선택이다 — 시든 작물 회복 목록처럼 상태 라벨이 필요 없는 자리는 통째로 뺀다
 // (빈 문자열 칸을 남기지 않고 단어·뜻 칸이 남은 폭을 그대로 채우도록 flex-1 만 남긴다).
-const FarmGrowRow = ({ crop, word, meaning, right }) => (
+// `meta` 는 이 행에 대응하는 단어 객체(문제 원본)다 — 농장 요약 행은 {word, meaning} 뿐이라
+// ja 단어의 읽기·JLPT 는 문제 목록에서 찾아 붙인다(없으면 표기만).
+const FarmGrowRow = ({ crop, word, meaning, right, meta }) => {
+  const ja = !!meta && isJa(wordLang(meta));
+  return (
   <div className='flex items-center gap-[11px] px-[14px] py-[12px] rounded-[10px] bg-layout-gray-50 dark:bg-layout-gray-dark'>
     <CropImage stage={crop} size={52} align="center" className='flex-shrink-0' />
     <div className='flex flex-col flex-1 min-w-0 text-left'>
-      <span className='text-[15px] font-[700] text-layout-black dark:text-layout-white truncate'>{word}</span>
+      <span className='flex items-center gap-[6px] min-w-0'>
+        <span lang={ja ? 'ja' : undefined} className='text-[15px] font-[700] text-layout-black dark:text-layout-white truncate'>{word}</span>
+        {ja && shouldShowReading({ ...meta, origin: word }) && (
+          <span lang="ja" className="shrink-0 truncate text-[11px] font-[500] text-layout-gray-300">
+            {getReading(meta)}
+          </span>
+        )}
+        {ja && <JlptBadge level={meta.jlpt} size="sm" />}
+      </span>
       {meaning ? (
         <span className='mt-[2px] text-[11.5px] font-[400] text-layout-gray-400 dark:text-layout-gray-50 truncate'>
           {meaning}
@@ -181,7 +196,8 @@ const FarmGrowRow = ({ crop, word, meaning, right }) => (
       </span>
     ) : null}
   </div>
-);
+  );
+};
 
 // 목록형 슬라이드 — 보상 슬라이드와 같은 형식(그림 + 한 줄 + 목록). 전부 가운데 정렬.
 //
@@ -440,6 +456,19 @@ const StudyResult = () => {
     }
     return q;
   });
+  // 농장 요약 행(user_voca_id·word) → 문제 원본 단어(읽기·JLPT·language 보유).
+  // id 가 맞지 않으면 표기(origin)로 한 번 더 찾는다.
+  const questionByVocaId = new Map();
+  const questionByOrigin = new Map();
+  testQuestions.forEach((q) => {
+    const vid = q?.vocaIndexId ?? q?.id;
+    if (vid != null) questionByVocaId.set(String(vid), q);
+    if (q?.origin) questionByOrigin.set(q.origin, q);
+  });
+  const metaOfRow = (row) =>
+    (row?.user_voca_id != null ? questionByVocaId.get(String(row.user_voca_id)) : undefined)
+    ?? (row?.word ? questionByOrigin.get(row.word) : undefined)
+    ?? null;
   const testType = state.testType;
   // 게스트 맛보기 결과 — 로그인 전용 서버로직(기록 저장·업적·추천 갱신)은 건너뛰고
   // 동일한 결과/보상 화면만 재사용한다. 완료 시 온보딩 가입으로 연결.
@@ -522,7 +551,7 @@ const StudyResult = () => {
   useEffect(() => {
     const items = [];
     (testQuestions || []).forEach((item) => {
-      if (item?.origin) items.push({ text: item.origin, language: 'en' });
+      if (item?.origin) items.push({ text: item.origin, language: wordLang(item) });
       const m = Array.isArray(item?.meanings) ? item.meanings : [];
       if (m.length) items.push({ text: m.join(', '), language: 'ko' });
     });
@@ -1008,15 +1037,21 @@ const StudyResult = () => {
                         {/* ② 단어·뜻 */}
                         <div className='flex flex-col flex-1 gap-[2px] min-w-0'>
                           <div className="flex items-center gap-[6px] min-w-0">
-                            <h3 className="text-[15px] font-[700] text-layout-black dark:text-layout-white truncate">
+                            <h3 lang={isJa(wordLang(item)) ? 'ja' : undefined} className="text-[15px] font-[700] text-layout-black dark:text-layout-white truncate">
                               {item.origin}
                             </h3>
-                            <SpeakerButton text={item.origin} lang="en" size={15} label="단어 발음 듣기" />
+                            {shouldShowReading(item) && (
+                              <span lang="ja" className="shrink-0 truncate text-[11px] font-[500] text-layout-gray-300">
+                                {getReading(item)}
+                              </span>
+                            )}
+                            {isJa(wordLang(item)) && <JlptBadge level={item.jlpt} />}
+                            <SpeakerButton text={item.origin} lang={wordLang(item)} size={15} label="단어 발음 듣기" />
                           </div>
                           <p className="text-[11.5px] font-[400] text-layout-gray-400 dark:text-layout-gray-50 truncate">
                             {meaningsArr.join(', ')}
                           </p>
-                          {showExamples && <ExampleList examples={item.examples} className="mt-[2px]" />}
+                          {showExamples && <ExampleList examples={item.examples} lang={wordLang(item)} className="mt-[2px]" />}
                         </div>
 
                         {/* ③ 상태 — 작물 그림으로 통일 (텍스트 배지 분기 제거, 위 crop 계산 주석 참고) */}
@@ -1069,6 +1104,7 @@ const StudyResult = () => {
               crop="PLANTED_SEED"
               word={row.word}
               meaning={row.meaning}
+              meta={metaOfRow(row)}
               right="새로 심었어요"
             />
           ))}
@@ -1091,6 +1127,7 @@ const StudyResult = () => {
                 crop={to}
                 word={row.word}
                 meaning={row.meaning}
+                meta={metaOfRow(row)}
                 // 상태 라벨 없음 — "새싹 → 이파리" 단계 전환 표기(CropStep)를 없애고
                 // 아이콘 + 단어 + 뜻만 남긴다(QA).
               />
@@ -1140,6 +1177,7 @@ const StudyResult = () => {
               crop={toResultStage(row.crop)}
               word={row.word}
               meaning={row.meaning}
+              meta={metaOfRow(row)}
               // 상태 라벨 없음 — 시든 작물 회복 목록은 "이미 안전해졌다"는 사실만 위 한 줄로
               // 전하고, 행마다 반복되는 "다시 촉촉해요" 라벨은 정보가 없어 없앤다(QA).
             />

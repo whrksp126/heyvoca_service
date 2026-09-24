@@ -1,4 +1,5 @@
 import { backendUrl, fetchDataAsync } from '../utils/common';
+import { getActiveLearningLang } from '../utils/lang';
 
 // 단어장 목록 조회
 export const getVocaBooksApi = async () => {
@@ -30,9 +31,9 @@ export const getVocaBookDetailApi = async (vocaBookId) => {
 export const createVocaBookApi = async (data) => {
   const url = `${backendUrl}/vocaBooks`;
   const method = 'POST';
-  // data: title, color, vocaList
+  // data: title, color, vocaList, language(생략 시 현재 학습 언어)
   try {
-    return await fetchDataAsync(url, method, data);
+    return await fetchDataAsync(url, method, { language: getActiveLearningLang(), ...data });
   } catch (error) {
     console.error('createVocaBookApi 오류:', error);
     throw error;
@@ -81,7 +82,7 @@ export const uploadExcelApi = async (file, title, color) => {
   const url = `${backendUrl}/vocaBooks/upload/excel`;
   const method = 'POST';
   const data = {
-    json_data: { title, color },
+    json_data: { title, color, language: getActiveLearningLang() },
     form_data: [{ key: 'file', value: file }],
   };
   try {
@@ -198,7 +199,7 @@ export const uploadAnkiApi = async (file, title, color, mapping, selectedNoteTyp
   const url = `${backendUrl}/vocaBooks/upload/anki`;
   const method = 'POST';
   const data = {
-    json_data: { title, color, mapping, selectedNoteTypeId },
+    json_data: { title, color, mapping, selectedNoteTypeId, language: getActiveLearningLang() },
     form_data: [{ key: 'file', value: file }],
   };
   try {
@@ -225,7 +226,7 @@ export const uploadCsvApi = async (file, title, color) => {
   const url = `${backendUrl}/vocaBooks/upload/csv`;
   const method = 'POST';
   const data = {
-    json_data: { title, color },
+    json_data: { title, color, language: getActiveLearningLang() },
     form_data: [{ key: 'file', value: file }],
   };
   try {

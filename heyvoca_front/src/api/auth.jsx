@@ -54,13 +54,15 @@ export const devLoginApi = async ({ email }) => {
 
 
 // 사용자 기본 정보 업데이트 API
-export const updateUserInfoApi = async ({ username, level_id, daily_new_limit } = {}) => {
+export const updateUserInfoApi = async ({ username, level_id, daily_new_limit, learning_lang } = {}) => {
   const url = `${backendUrl}/auth/update_user_info`;
   const method = 'PATCH';
   const fetchData = {};
   if (username !== undefined) fetchData.username = username;
   if (level_id !== undefined) fetchData.level_id = level_id;
   if (daily_new_limit !== undefined) fetchData.daily_new_limit = daily_new_limit;
+  // 학습 언어('en'|'ja') — 서버가 값 검증. 이후 모든 조회가 이 언어 기준으로 바뀐다.
+  if (learning_lang !== undefined) fetchData.learning_lang = learning_lang;
   try {
     const result = await fetchDataAsync(url, method, fetchData);
     return result;

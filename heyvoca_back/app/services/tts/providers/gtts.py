@@ -5,7 +5,7 @@ from gtts import gTTS
 
 from ..base import TTSProvider, TTSResult, UnsupportedLanguageError, TTSGenerationError
 
-_SUPPORTED = ('en', 'ko')
+_SUPPORTED = ('en', 'ko', 'ja')
 
 
 class GTTSProvider(TTSProvider):

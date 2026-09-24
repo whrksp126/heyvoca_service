@@ -1,6 +1,9 @@
 import React from 'react';
 import CropImage from '../farm/CropImage';
 import { wordStage, wordHealth, wordDue, DUE_TONE_CLASS } from '../../utils/vocaCrop';
+import { wordLang, isJa } from '../../utils/lang';
+import { getReading, shouldShowReading } from '../../utils/jaWord';
+import JlptBadge from '../common/JlptBadge';
 
 /**
  * 단어 목록 한 줄 — 시안 vocabooks §5.
@@ -17,6 +20,8 @@ const WordRow = ({ word, onClick }) => {
   const health = wordHealth(word);
   const due = wordDue(word);
   const meaning = Array.isArray(word?.meanings) ? word.meanings.join(', ') : '';
+  const ja = isJa(wordLang(word));
+  const showReading = shouldShowReading(word);
 
   return (
     <button
@@ -36,9 +41,16 @@ const WordRow = ({ word, onClick }) => {
             바꾸지 않는다. 게다가 대부분의 단어가 검증돼 있어 파란 점이 모든 줄에 찍히면
             정작 눈에 걸려야 할 것(작물 상태·지난 날짜)을 가린다. 상세 시트에만 둔다. */}
         <span className="flex items-center gap-[5px]">
-          <span className="min-w-0 truncate text-[15px] font-[700] tracking-[-0.02em] text-layout-black dark:text-layout-white">
+          <span lang={ja ? 'ja' : undefined} className="min-w-0 truncate text-[15px] font-[700] tracking-[-0.02em] text-layout-black dark:text-layout-white">
             {word?.origin}
           </span>
+          {/* ja 단어는 표기 옆에 작은 읽기(히라가나) — 표기가 가나뿐이면 같은 글자라 생략 */}
+          {showReading && (
+            <span lang="ja" className="shrink-0 truncate text-[10.5px] font-[500] text-layout-gray-300">
+              {getReading(word)}
+            </span>
+          )}
+          {ja && <JlptBadge level={word?.jlpt} size="sm" />}
         </span>
         <span className="block mt-[1px] truncate text-[12px] tracking-[-0.02em] text-layout-gray-400 dark:text-layout-gray-300">
           {meaning}

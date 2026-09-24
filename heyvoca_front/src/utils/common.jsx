@@ -1,3 +1,5 @@
+import { SUPPORTED_TTS_LANGS } from './lang';
+
 export const backendUrl = import.meta.env.VITE_BACKEND_URL;
 export const nodeEnv = import.meta.env.VITE_ENV;
 export const MAX_TEST_VOCABULARY_COUNT = 1000;
@@ -115,6 +117,19 @@ export async function refreshAccessToken() {
   }
 }
 
+// GET/DELETE 쿼리 값 인코딩. 일부 호출부(api/search.jsx 등)는 예전에 직접 encodeURIComponent 를
+// 해서 넘겼으므로, 이미 인코딩된 값(디코딩 후 재인코딩 결과가 원본과 같고 '%' 를 포함)은 그대로 둔다.
+// → 이중 인코딩 방지. 그 외(한글·가나·공백·&·# 등)는 여기서 인코딩한다.
+const encodeQueryValue = (value) => {
+  const str = String(value);
+  if (str.includes('%')) {
+    try {
+      if (encodeURIComponent(decodeURIComponent(str)) === str) return str;
+    } catch (e) { /* 잘못된 % 시퀀스 → 평문으로 보고 인코딩 */ }
+  }
+  return encodeURIComponent(str);
+};
+
 // 비동기 fetch api
 export async function fetchDataAsync(url, method, data, form = false) {
   const accessToken = getCookie("userAccessToken");
@@ -140,8 +155,7 @@ export async function fetchDataAsync(url, method, data, form = false) {
   if (method == 'GET' || method == 'DELETE') {
     newUrl += `?`
     for (const key in data) {
-      const value = data[key];
-      newUrl += `${key}=${value}&`;
+      newUrl += `${encodeURIComponent(key)}=${encodeQueryValue(data[key])}&`;
     }
   }
   fetchOptions.credentials = 'include';
@@ -270,7 +284,7 @@ const ttsCacheKey = (text, lang) => `${lang}::${ttsVoiceFor(lang)}::${text}`;
 // 캐시 miss(비로그인 등)나 실패 시 null. <audio>에 직접 물려 progressive 재생하는 용도.
 export const resolveTtsUrl = async (text, lang) => {
   const t = (text ?? '').trim();
-  if (!t || (lang !== 'en' && lang !== 'ko')) return null;
+  if (!t || !SUPPORTED_TTS_LANGS.includes(lang)) return null;
   try {
     const fetchData = { text: t, language: lang };
     const v = ttsVoiceFor(lang);
@@ -285,7 +299,7 @@ export const resolveTtsUrl = async (text, lang) => {
 // 단일 텍스트의 mp3를 미리 받아 objectURL 캐시에 저장. 반환: objectURL | null
 export const prefetchTextSound = (text, lang) => {
   const t = (text ?? '').trim();
-  if (!t || (lang !== 'en' && lang !== 'ko')) return Promise.resolve(null);
+  if (!t || !SUPPORTED_TTS_LANGS.includes(lang)) return Promise.resolve(null);
   const key = ttsCacheKey(t, lang);
   if (ttsBlobCache.has(key)) return Promise.resolve(ttsBlobCache.get(key));
   if (ttsInflight.has(key)) return ttsInflight.get(key);
@@ -326,7 +340,7 @@ export const prefetchTtsList = async (items, concurrency = 4, onProgress = null)
   for (const it of items) {
     const t = (it?.text ?? '').trim();
     const lang = it?.language;
-    if (!t || (lang !== 'en' && lang !== 'ko')) continue;
+    if (!t || !SUPPORTED_TTS_LANGS.includes(lang)) continue;
     const k = `${lang}::${t}`;
     if (seen.has(k)) continue;
     seen.add(k);

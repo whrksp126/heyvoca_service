@@ -9,6 +9,7 @@ from uuid import UUID
 
 from app import db
 from app.models.models import UserStudyLog
+from app.utils.dict_lang import get_dict_lang
 
 
 def get_today_new_done(user_id: UUID) -> tuple:
@@ -28,6 +29,8 @@ def get_today_new_done(user_id: UUID) -> tuple:
         db.session.query(UserStudyLog.user_voca_id, UserStudyLog.state_before)
         .filter(
             UserStudyLog.user_id == user_id,
+            # 현재 학습 언어 기준(today-summary 와 동일). 풀(get_review_due)도 언어 한정.
+            UserStudyLog.dict_lang == get_dict_lang(),
             UserStudyLog.created_at >= day_start_utc,
         )
         .all()

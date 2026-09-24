@@ -9,7 +9,7 @@
 // 에만 조용히(스피너 없이) 재조회한다. 캐시된 데이터는 그대로 유지되므로 변경분만 다시 그려진다.
 
 import React, { createContext, useContext, useState, useCallback, useEffect, useRef } from 'react';
-import { useUser } from './UserContext';
+import { useUser, LEARNING_LANG_CHANGED_EVENT } from './UserContext';
 import { useVocabulary } from './VocabularyContext';
 import { getTodaySummary, getReviewScheduleApi, getTodayMemoryChangesApi } from '../api/study';
 import { getFarmOverviewApi, getFarmHomeFeedApi } from '../api/farm';
@@ -90,6 +90,28 @@ export const StatsProvider = ({ children }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLogin, isLoginChecked, lastSessionResult?.completedAt]);
 
+  // 학습 언어 전환 등으로 통계·홈 피드·농장 요약을 전부 다시 받아야 할 때.
+  // 이전 언어 수치가 남아 보이지 않도록 캐시를 먼저 비우고(스피너 상태) 새로 조회한다.
+  const refetchAll = useCallback(async () => {
+    setTodaySummary(null);
+    setReviewSchedule(null);
+    setTodayChanges(null);
+    setFarmOverview(null);
+    setFarmFeed(null);
+    setReviewLoaded(false);
+    await refreshStatsRef.current();
+  }, []);
+
+  // UserContext.setLearningLang 성공 → 전역 재조회 이벤트
+  useEffect(() => {
+    const onLangChanged = () => {
+      if (!isLogin) return;
+      refetchAll();
+    };
+    window.addEventListener(LEARNING_LANG_CHANGED_EVENT, onLangChanged);
+    return () => window.removeEventListener(LEARNING_LANG_CHANGED_EVENT, onLangChanged);
+  }, [isLogin, refetchAll]);
+
   const value = {
     todaySummary,
     reviewSchedule,
@@ -98,6 +120,7 @@ export const StatsProvider = ({ children }) => {
     farmFeed,
     reviewLoaded,
     refreshStats,
+    refetchAll,
   };
 
   return <StatsContext.Provider value={value}>{children}</StatsContext.Provider>;

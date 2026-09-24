@@ -44,7 +44,7 @@ def jwt_required(f):
             
             # g.user_id에 사용자 ID 저장 (기존 코드와 호환)
             g.user_id = user_id
-            
+
         except jwt.ExpiredSignatureError:
             return jsonify({'msg': 'Token has expired'}), 401
         except jwt.InvalidTokenError:
@@ -52,6 +52,11 @@ def jwt_required(f):
         except Exception as e:
             return jsonify({'msg': 'Token validation failed'}), 401
         
+        # 사전 언어 확정 — 이 요청의 사전 모델 쿼리는 user.learning_lang 사전으로 간다.
+        # (before_request 에서 이미 같은 user 로 확정했으면 재조회하지 않음)
+        from app.utils.dict_lang import apply_user_dict_lang
+        apply_user_dict_lang(user_id)
+
         return f(*args, **kwargs)
     
     return decorated

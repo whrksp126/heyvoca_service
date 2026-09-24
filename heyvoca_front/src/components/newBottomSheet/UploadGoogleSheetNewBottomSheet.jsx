@@ -4,6 +4,7 @@ import { Check, Table, CaretRight, ArrowLeft, SpinnerGap } from '@phosphor-icons
 import { vibrate, showToast } from '../../utils/osFunction';
 import { useNewBottomSheet } from '../../hooks/useNewBottomSheet';
 import { useVocabulary } from '../../context/VocabularyContext';
+import { useUser } from '../../context/UserContext';
 import {
   fetchGoogleSheetListApi,
   fetchGoogleSheetTabsApi,
@@ -136,6 +137,8 @@ export const useUploadGoogleSheetNewBottomSheet = () => {
 export const UploadGoogleSheetNewBottomSheet = ({ accessToken }) => {
   "use memo";
   const { resolveNewBottomSheet, pushNewBottomSheet } = useNewBottomSheet();
+  // 업로드 단어장은 현재 학습 언어로 만든다.
+  const { learningLang } = useUser();
 
   const [step, setStep] = useState(STEP.SHEET_LIST);
   const [isLoading, setIsLoading] = useState(false);
@@ -272,7 +275,7 @@ export const UploadGoogleSheetNewBottomSheet = ({ accessToken }) => {
 
       if (total <= CHUNK_SIZE * 2.5) {
         setProgress({ label: '단어장 추가 중', done: 0, total });
-        const result = await createVocaBookApi({ title: title.trim(), color, vocaList: parsed });
+        const result = await createVocaBookApi({ title: title.trim(), color, vocaList: parsed, language: learningLang });
         if (!(result && (result.code === 200 || result.code === 201))) {
           const message = result?.message || result?.error || '업로드에 실패했어요.';
           setStep(STEP.SETTINGS);
@@ -287,7 +290,7 @@ export const UploadGoogleSheetNewBottomSheet = ({ accessToken }) => {
       // 큰 데이터셋: 첫 청크로 단어장 생성 + 나머지는 append
       setProgress({ label: '단어장 추가 중', done: 0, total });
       const firstChunk = parsed.slice(0, CHUNK_SIZE);
-      const firstResult = await createVocaBookApi({ title: title.trim(), color, vocaList: firstChunk });
+      const firstResult = await createVocaBookApi({ title: title.trim(), color, vocaList: firstChunk, language: learningLang });
       if (!(firstResult && (firstResult.code === 200 || firstResult.code === 201))) {
         const message = firstResult?.message || '업로드에 실패했어요.';
         setStep(STEP.SETTINGS);
@@ -532,7 +535,7 @@ export const UploadGoogleSheetNewBottomSheet = ({ accessToken }) => {
 
           {/* 헤더 정보 */}
           <p className="text-[12px] text-layout-gray-400">
-            시트 헤더: W(단어), M(뜻), EE(예문-문장), EK(예문-뜻)
+            시트 헤더: W(단어), M(뜻), EE(예문), EK(예문 뜻)
           </p>
         </div>
       )}

@@ -2,6 +2,10 @@ import React from 'react';
 
 import CropImage from '../farm/CropImage';
 import SpeakerButton from '../common/SpeakerButton';
+import JlptBadge from '../common/JlptBadge';
+import FuriganaText from '../common/FuriganaText';
+import { wordLang, isJa } from '../../utils/lang';
+import { getReading, shouldShowReading } from '../../utils/jaWord';
 import { stripHtmlTags } from '../../utils/common';
 import { HEALTH_STATES } from '../../utils/crop';
 
@@ -26,6 +30,8 @@ const PreviewWordNewBottomSheet = ({ word }) => {
     .map((m) => (typeof m === 'string' ? m : (m?.meaning || '')))
     .filter(Boolean);
   const examples = Array.isArray(word.examples) ? word.examples : [];
+  const lang = wordLang(word);
+  const ja = isJa(lang);
 
   return (
     <div className="max-h-[90vh] overflow-y-auto px-[20px] pt-[8px] pb-[22px]">
@@ -36,17 +42,22 @@ const PreviewWordNewBottomSheet = ({ word }) => {
       <div className="flex items-center gap-[13px]">
         <CropImage stage="seed" health={HEALTH_STATES.FRESH} size={88} align="center" className="shrink-0 -my-[10px]" />
         <div className="flex-1 min-w-0">
-          <div className="text-[24px] font-[800] tracking-[-0.04em] leading-[1.15] text-layout-black dark:text-layout-white">
-            <span className="min-w-0 break-words">{word.origin}</span>
+          <div className="flex items-center gap-[6px] text-[24px] font-[800] tracking-[-0.04em] leading-[1.15] text-layout-black dark:text-layout-white">
+            <span className="min-w-0 break-words" lang={ja ? 'ja' : undefined}>{word.origin}</span>
+            {ja && <JlptBadge level={word.jlpt} />}
           </div>
-          {word.pronunciation && (
+          {ja ? (shouldShowReading(word) && (
+            <div lang="ja" className="mt-[3px] text-[12.5px] font-[500] text-layout-gray-300">
+              {getReading(word)}
+            </div>
+          )) : word.pronunciation && (
             <div className="mt-[3px] text-[12.5px] font-[500] text-layout-gray-300">
               {word.pronunciation}
             </div>
           )}
         </div>
         <span className="flex items-center justify-center w-[36px] h-[36px] shrink-0 rounded-full bg-layout-gray-50 dark:bg-layout-gray-dark">
-          <SpeakerButton text={word.origin} lang="en" size={19} label="단어 발음 듣기" />
+          <SpeakerButton text={word.origin} lang={lang} size={19} label="단어 발음 듣기" />
         </span>
       </div>
 
@@ -94,11 +105,13 @@ const PreviewWordNewBottomSheet = ({ word }) => {
               return (
                 <div key={`${word.id}-${index}`} className={index > 0 ? 'mt-[8px]' : ''}>
                   <div className="flex items-center gap-[8px]">
-                    <span
+                    <FuriganaText
                       className="flex-1 min-w-0 text-layout-black dark:text-layout-white"
-                      dangerouslySetInnerHTML={{ __html: origin }}
+                      html={origin}
+                      readingTokens={ja ? example?.reading_tokens : undefined}
+                      lang={ja ? 'ja' : undefined}
                     />
-                    <SpeakerButton text={originText} lang="en" size={16} label="예문 발음 듣기" />
+                    <SpeakerButton text={originText} lang={lang} size={16} label="예문 발음 듣기" />
                   </div>
                   {meaning && (
                     <div className="flex items-center gap-[8px] mt-[4px]">

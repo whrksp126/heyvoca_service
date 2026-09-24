@@ -1,0 +1,719 @@
+#1 [] にきび(にきび) 뜻=1:여드름 span=surface b0125:23
+  JA: <strong class="target-word">ニキビ</strong>が治りません。
+  EN: I can't get rid of my pimples.
+  우리: 1|<strong class="target-word">여드름</strong>이 낫지 않아요.
+  감사: 1|<strong class="target-word">여드름</strong>이 낫지 않아요.
+
+#2 [] 研ぐ(とぐ) 뜻=1:갈다/세우다|2:씻다/일다|3:닦다/광내다 span=surface b0130:113
+  JA: 彼はナイフを<strong class="target-word">研いでいました</strong>。
+  EN: He was sharpening a knife.
+  우리: 1|그는 칼을 <strong class="target-word">갈고</strong> 있었다.
+  감사: 1|그는 칼을 <strong class="target-word">갈고</strong> 있었다.
+
+#3 [] 好色(こうしょく) 뜻=1:호색/음탕한 span=headword b0181:70
+  JA: 「<strong class="target-word">好色</strong>と倒錯の違いとは？」「好色なら羽を使うが、倒錯なら鶏をまるごと使う」
+  EN: "What's the difference between erotic and kinky?" "Erotic is when you use a feather and kinky is when you use a whole chicken."
+  우리: X|부적절 소재
+  감사: X|부적절 소재
+
+#4 [] 着く(つく) 뜻=*1:도착하다|2:앉다 span=surface b0009:45
+  JA: 彼は駅に<strong class="target-word">着いた</strong>。
+  EN: He arrived at the station.
+  우리: 1|그는 역에 <strong class="target-word">도착했다</strong>.
+  감사: 1|그는 역에 <strong class="target-word">도착했</strong>다.
+
+#5 [] 歌う(うたう) 뜻=*1:노래하다/부르다|2:읊다/노래하다 span=surface b0013:54
+  JA: 父は<strong class="target-word">歌い</strong>続けた。
+  EN: My father carried on singing.
+  우리: 1|아버지는 계속 <strong class="target-word">노래하셨다</strong>.
+  감사: 1|아버지는 계속 <strong class="target-word">노래했</strong>다.
+
+#6 [] 劣る(おとる) 뜻=1:뒤떨어지다/뒤지다 span=headword b0054:93
+  JA: この点で私は彼に<strong class="target-word">劣る</strong>。
+  EN: I fall behind him in this respect.
+  우리: 1|이 점에서 나는 그에게 <strong class="target-word">뒤진다</strong>.
+  감사: 1|이 점에서 나는 그에게 <strong class="target-word">뒤진다</strong>.
+
+#7 [] バン(バン) 뜻=1:번(헤어스타일) span=unindexed b0028:108
+  JA: 警察は<strong class="target-word">バン</strong>の指紋を採取した。
+  EN: The police dusted the van for fingerprints.
+  우리: X|다른 뜻
+  감사: X|다른 뜻
+
+#8 [] 軒先(のきさき) 뜻=1:처마 끝 span=headword b0178:90
+  JA: 彼の家は2<strong class="target-word">軒先</strong>です。
+  EN: He lives two doors off.
+  우리: X|동형어
+  감사: X|동형어
+
+#9 [] 寝坊(ねぼう) 뜻=1:늦잠|2:잠꾸러기/잠보 span=headword b0020:65
+  JA: たいてい<strong class="target-word">寝坊</strong>している。
+  EN: I usually get up late.
+  우리: 1|나는 대개 <strong class="target-word">늦잠</strong>을 잔다.
+  감사: 1|대개 <strong class="target-word">늦잠</strong>을 잔다.
+
+#10 [] いつ頃(いつごろ) 뜻=1:언제쯤 span=headword b0165:31
+  JA: ダンスフロアは、<strong class="target-word">何時頃</strong>混んできますか。
+  EN: What time does the dance floor get crowded?
+  우리: 1|댄스 플로어는 <strong class="target-word">언제쯤</strong> 붐비기 시작하나요?
+  감사: 1|댄스 플로어는 <strong class="target-word">언제쯤</strong> 붐비나요?
+
+#11 [] 話し中(はなしちゅう) 뜻=1:통화중|2:협의중/논의중 span=surface b0085:98
+  JA: あいにく<strong class="target-word">話中</strong>です。
+  EN: I'm afraid the line is busy.
+  우리: 1|공교롭게도 <strong class="target-word">통화중</strong>이에요.
+  감사: 1|공교롭게도 <strong class="target-word">통화중</strong>이에요.
+
+#12 [] 盲人(もうじん) 뜻=1:맹인/시각장애인 span=headword b0231:91
+  JA: 疑惑の影を捜そうとする<strong class="target-word">盲人</strong>。
+  EN: There's a blind man looking for a shadow of doubt.
+  우리: 1|의혹의 그림자를 찾으려는 <strong class="target-word">맹인</strong>.
+  감사: 1|의혹의 그림자를 찾아 헤매는 <strong class="target-word">맹인</strong>.
+
+#13 [] 申(さる) 뜻=1:원숭이띠 span=headword b0198:137
+  JA: 御礼の<strong class="target-word">申し</strong>ようもありません。
+  EN: I don't know how to thank you enough.
+  우리: X|동형어
+  감사: X|동형어
+
+#14 [] 売り切れる(うりきれる) 뜻=1:품절되다/매진되다 span=surface b0078:50
+  JA: 切符はたちまち<strong class="target-word">売り切れた</strong>。
+  EN: The tickets were sold out in a moment.
+  우리: 1|표는 순식간에 <strong class="target-word">매진되었</strong>다.
+  감사: 1|표는 순식간에 <strong class="target-word">매진됐</strong>다.
+
+#15 [] ぶら下がる(ぶらさがる) 뜻=*1:매달리다/늘어지다|2:눈앞에 아른거리다|3:목매다/의존하다 span=surface b0136:81
+  JA: その小さな犬が足に<strong class="target-word">ぶら下がって</strong>来ても、大きな犬は黙ったままでした。
+  EN: The big dog remained calm as the small dog hung from its leg.
+  우리: 1|그 작은 개가 다리에 <strong class="target-word">매달려도</strong> 큰 개는 잠자코 있었다.
+  감사: 1|그 작은 개가 다리에 <strong class="target-word">매달려</strong> 와도 큰 개는 가만히 있었다.
+
+#16 [] 酸っぱい(すっぱい) 뜻=1:신/시큼한 span=surface b0069:26
+  JA: <strong class="target-word">すっぱい</strong>木においしい林檎はならない。
+  EN: No good apple on a sour stock.
+  우리: 1|<strong class="target-word">신</strong> 나무에는 맛있는 사과가 열리지 않는다.
+  감사: 1|<strong class="target-word">신</strong> 나무에는 맛있는 사과가 열리지 않는다.
+
+#17 [] ジーンズ(ジーンズ) 뜻=1:청바지|2:데님 span=headword b0028:1
+  JA: 私は日曜日はたいてい<strong class="target-word">ジーンズ</strong>をはいている。
+  EN: I usually wear jeans on Sunday.
+  우리: 1|나는 일요일에는 대체로 <strong class="target-word">청바지</strong>를 입는다.
+  감사: 1|나는 일요일에는 대개 <strong class="target-word">청바지</strong>를 입는다.
+
+#18 [] 可能性が高い(かのうせいがたかい) 뜻=1:가능성이 높은 span=unindexed b0165:80
+  JA: 原子力発電所の1号機で、原子炉内の燃料の溶融が進んでいる<strong class="target-word">可能性が高い</strong>、と発表された。
+  EN: It was announced that there is a high possibility of the fuel within the nuclear reactor of Nuclear Plant 1 melting.
+  우리: 1|원자력 발전소 1호기에서 원자로 내 연료의 용융이 진행되고 있을 <strong class="target-word">가능성이 높다</strong>고 발표되었다.
+  감사: 1|원자력 발전소 1호기에서 원자로 안 연료의 용융이 진행되고 있을 <strong class="target-word">가능성이 높다</strong>고 발표되었다.
+
+#19 [] ザラザラ(ザラザラ) 뜻=1:까칠까칠/까끌까끌|2:달그락달그락 span=headword b0134:99
+  JA: この紙は<strong class="target-word">ざらざら</strong>している。
+  EN: This paper is rough.
+  우리: 1|이 종이는 <strong class="target-word">까칠까칠하다</strong>.
+  감사: 1|이 종이는 <strong class="target-word">까칠까칠</strong>하다.
+
+#20 [] 人出(ひとで) 뜻=1:인파 span=headword b0199:125
+  JA: 大勢の<strong class="target-word">人出</strong>ですよ。
+  EN: We're filled to the rafters.
+  우리: 1|엄청난 <strong class="target-word">인파</strong>예요.
+  감사: 1|엄청난 <strong class="target-word">인파</strong>예요.
+
+#21 [] 先手(せんて) 뜻=1:선수|2:선제|3:선수 span=unindexed b0203:79
+  JA: 彼が何か言いかけたが<strong class="target-word">先手</strong>を打ってやった。
+  EN: He started to say something, but I beat him to it.
+  우리: 1|그가 뭔가 말하려 했지만 내가 <strong class="target-word">선수</strong>를 쳤다.
+  감사: 1|그가 뭔가 말하려 했지만 내가 <strong class="target-word">선수</strong>를 쳤다.
+
+#22 [] ドライブイン(ドライブイン) 뜻=1:드라이브인|*2:휴게소 span=headword b0091:9
+  JA: 次の<strong class="target-word">ドライブイン</strong>で休憩していこう。
+  EN: Let's turn off at the next rest stop.
+  우리: 2|다음 <strong class="target-word">휴게소</strong>에서 좀 쉬었다 가자.
+  감사: 2|다음 <strong class="target-word">휴게소</strong>에서 쉬었다 가자.
+
+#23 [SENSE] ギプス(ギプス) 뜻=1:깁스|*2:석고 span=headword b0141:47
+  JA: 骨がくっつけば、<strong class="target-word">ギプス</strong>は取られます。
+  EN: After the bone has set, the cast will be removed.
+  우리: 2|뼈가 붙으면 <strong class="target-word">석고</strong>는 제거됩니다.
+  감사: 1|뼈가 붙으면 <strong class="target-word">깁스</strong>는 풀 거예요.
+
+#24 [] によると(によると) 뜻=1:~에 따르면 span=surface b0135:147
+  JA: 新聞<strong class="target-word">によると</strong>台風がやってくる。
+  EN: The paper says that a typhoon is on its way.
+  우리: 1|신문<strong class="target-word">에 따르면</strong> 태풍이 온다.
+  감사: 1|신문<strong class="target-word">에 따르면</strong> 태풍이 온다고 한다.
+
+#25 [] 汚れ(よごれ) 뜻=1:때/얼룩/더러움 span=surface b0247:141
+  JA: 足を水につけて<strong class="target-word">よごれ</strong>を落としなさい。
+  EN: Bathe your feet to get the dirt off.
+  우리: 1|발을 물에 담가서 <strong class="target-word">때</strong>를 씻어내라.
+  감사: 1|발을 물에 담가 <strong class="target-word">때</strong>를 씻어 내세요.
+
+#26 [] 食料(しょくりょう) 뜻=1:식료품/음식 span=headword b0042:41
+  JA: <strong class="target-word">食料</strong>の供給は十分だ。
+  EN: There are abundant food supplies.
+  우리: 1|<strong class="target-word">식료품</strong> 공급은 충분하다.
+  감사: 1|<strong class="target-word">식량</strong> 공급은 충분하다.
+
+#27 [] 飛行場(ひこうじょう) 뜻=1:비행장 span=headword b0023:54
+  JA: 飛行機はすでに<strong class="target-word">飛行場</strong>を立っていた。
+  EN: The plane had already left the airport.
+  우리: 1|비행기는 이미 <strong class="target-word">비행장</strong>을 떠난 뒤였다.
+  감사: 1|비행기는 이미 <strong class="target-word">비행장</strong>을 떠났다.
+
+#28 [] 兄貴(あにき) 뜻=1:형|2:선배|3:연상 남자 span=headword b0176:57
+  JA: 「そっか。暇なら掃除しといて」「なんだそれ。<strong class="target-word">兄貴</strong>をアゴで使うなよ」
+  EN: "Oh? If you're free get the cleaning done." "What's up with that? Don't order your brother around!"
+  우리: 1|"그렇구나. 한가하면 청소해 둬." "뭐야, 그게. <strong class="target-word">형</strong>을 함부로 부리지 마."
+  감사: 1|"그래? 한가하면 청소 좀 해 둬." "뭐야 그게. <strong class="target-word">형</strong>한테 이래라저래라 하지 마."
+
+#29 [] 劣等感(れっとうかん) 뜻=1:열등감 span=headword b0236:58
+  JA: あなたはだれにも<strong class="target-word">劣等感</strong>を感じる理由はない。
+  EN: There is no reason for you to feel inferior to anyone.
+  우리: 1|당신은 누구에게도 <strong class="target-word">열등감</strong>을 느낄 이유가 없다.
+  감사: 1|당신이 누구에게도 <strong class="target-word">열등감</strong>을 느낄 이유는 없어요.
+
+#30 [] 指定(してい) 뜻=1:지정/지정하다 span=headword b0069:73
+  JA: 切符を申し込まれる際は代替日もご<strong class="target-word">指定</strong>ください。
+  EN: When applying for tickets, please give alternative dates.
+  우리: 1|표를 신청하실 때는 대체 날짜도 <strong class="target-word">지정해</strong> 주세요.
+  감사: 1|표를 신청하실 때는 대체 날짜도 <strong class="target-word">지정해</strong> 주세요.
+
+#31 [] リス(リス) 뜻=1:골절|2:석판화 span=unindexed b0157:83
+  JA: トムは<strong class="target-word">リス</strong>を見た。
+  EN: Tom saw a squirrel.
+  우리: X|다른 뜻
+  감사: X|다른 뜻
+
+#32 [] 親族(しんぞく) 뜻=1:친족/친척 span=headword b0199:40
+  JA: <strong class="target-word">親族</strong>達は彼の無罪を確信していた。
+  EN: His relatives were convinced of his innocence.
+  우리: 1|<strong class="target-word">친척</strong>들은 그의 무죄를 확신하고 있었다.
+  감사: 1|<strong class="target-word">친척</strong>들은 그의 무죄를 확신하고 있었다.
+
+#33 [] 違う(ちがう) 뜻=1:다른|*2:틀리다|3:이상해지다|4:안 그래 span=surface b0003:27
+  JA: そんなばかなことを言うなんて彼は気でも<strong class="target-word">違った</strong>のか。
+  EN: Is he mad that he should say such a foolish thing?
+  우리: 3|그런 바보 같은 소리를 하다니 그 사람 머리가 <strong class="target-word">이상해진</strong> 거 아니야?
+  감사: 3|그런 바보 같은 소리를 하다니 그는 정신이라도 <strong class="target-word">나간</strong> 걸까.
+
+#34 [] まるで(まるで) 뜻=*1:마치|2:전혀/영|3:완전히/아주 span=surface b0033:26
+  JA: <strong class="target-word">まるで</strong>夢を見ているようだよ。
+  EN: I feel as if I were dreaming.
+  우리: 1|<strong class="target-word">마치</strong> 꿈을 꾸고 있는 것 같아.
+  감사: 1|<strong class="target-word">마치</strong> 꿈을 꾸는 것 같아.
+
+#35 [] 降伏(こうふく) 뜻=1:항복/항복하다|2:굴복/항복 span=headword b0102:122
+  JA: 彼は自発的に<strong class="target-word">降伏</strong>した。
+  EN: He surrendered of his own accord.
+  우리: 1|그는 자발적으로 <strong class="target-word">항복했다</strong>.
+  감사: 1|그는 자발적으로 <strong class="target-word">항복했</strong>다.
+
+#36 [] 進出(しんしゅつ) 뜻=*1:진출/진출하다|2:진출 span=headword b0110:40
+  JA: その会社は中国への<strong class="target-word">進出</strong>を目指している。
+  EN: The company aims to branch out into China.
+  우리: 1|그 회사는 중국으로의 <strong class="target-word">진출</strong>을 목표로 하고 있다.
+  감사: 1|그 회사는 중국 <strong class="target-word">진출</strong>을 노리고 있다.
+
+#37 [] たくさん(たくさん) 뜻=1:많이/많은|2:충분한|3:지긋지긋함 span=surface b0008:146
+  JA: <strong class="target-word">たくさん</strong>欲しい。
+  EN: I want a lot.
+  우리: 1|<strong class="target-word">많이</strong> 갖고 싶다.
+  감사: 1|<strong class="target-word">많이</strong> 갖고 싶어.
+
+#38 [] 真っ赤(まっか) 뜻=*1:새빨간/시뻘건|2:새빨간/완전한 span=surface b0042:98
+  JA: <strong class="target-word">真っ赤な</strong>夕焼けは明日の晴天を告げた。
+  EN: The deep red of the setting sun portended fine weather.
+  우리: 1|<strong class="target-word">새빨간</strong> 노을은 내일 맑은 날씨를 예고했다.
+  감사: 1|<strong class="target-word">새빨간</strong> 저녁노을은 내일 날씨가 맑을 것을 알려 주었다.
+
+#39 [] それで(それで) 뜻=1:그래서/따라서 span=surface b0014:100
+  JA: <strong class="target-word">それで</strong>十分だよ。
+  EN: You've done more than enough.
+  우리: X|다른 뜻
+  감사: X|동형어
+
+#40 [] 詰まる(つまる) 뜻=*1:가득 차다/들어차다|2:막히다|3:줄어들다/좁아지다|4:궁색해지다/말이 막히다|5:결말나다/끝나다|6:촉음이 되다|7:밀려 맞다 span=surface b0065:68
+  JA: のどが<strong class="target-word">詰まった</strong>感じです。
+  EN: My throat feels clogged up.
+  우리: 2|목이 <strong class="target-word">막힌</strong> 느낌이다.
+  감사: 2|목이 <strong class="target-word">막힌</strong> 느낌이에요.
+
+#41 [] 大事(だいじ) 뜻=*1:중요한|2:소중한|3:큰일|4:거사/대사|5:괜찮은 span=headword b0021:118
+  JA: 勉強も遊びも<strong class="target-word">大事</strong>だ。
+  EN: Both work and play are important.
+  우리: 1|공부도 놀이도 <strong class="target-word">중요하다</strong>.
+  감사: 1|공부도 노는 것도 <strong class="target-word">중요하</strong>다.
+
+#42 [] 快適(かいてき) 뜻=1:쾌적한 span=headword b0031:144
+  JA: 気候は<strong class="target-word">快適</strong>です。
+  EN: I really enjoy the climate.
+  우리: 1|기후는 <strong class="target-word">쾌적합니다</strong>.
+  감사: 1|기후가 <strong class="target-word">쾌적해</strong>요.
+
+#43 [] 訳(わけ) 뜻=*1:까닭/이유|2:뜻|3:이치|4:사정|5:연애 관계 span=surface b0024:74
+  JA: そういう<strong class="target-word">わけ</strong>で私はこんなに早く帰って来たのです。
+  EN: That's why I came back so soon.
+  우리: 1|그런 <strong class="target-word">이유</strong>로 제가 이렇게 일찍 돌아온 거예요.
+  감사: 1|그런 <strong class="target-word">이유</strong>로 저는 이렇게 일찍 돌아온 거예요.
+
+#44 [] パブ(パブ) 뜻=1:펍/선술집 span=headword b0151:12
+  JA: 居酒屋は日本風の<strong class="target-word">パブ</strong>のことです。
+  EN: An izakaya is a Japanese-style pub.
+  우리: 1|이자카야는 일본식 <strong class="target-word">펍</strong>을 말합니다.
+  감사: 1|이자카야는 일본식 <strong class="target-word">펍</strong>을 말한다.
+
+#45 [] コーン(コーン) 뜻=1:콘|2:스피커콘|3:안전콘 span=unindexed b0142:62
+  JA: キーン<strong class="target-word">コーン</strong>・・・カーンコーン・・・「うわ、まずい。本鈴だ！」
+  EN: Bing-bong ... bing-bong ... "Oh-oh. The class bell!"
+  우리: X|의성어 일부
+  감사: X|동형어
+
+#46 [] どれどれ(どれどれ) 뜻=1:어느 것|2:자/어디 span=unindexed b0094:28
+  JA: <strong class="target-word">どれどれ</strong>。
+  EN: Let me see.
+  우리: 2|<strong class="target-word">어디</strong> 보자.
+  감사: 2|<strong class="target-word">어디</strong> 보자.
+
+#47 [] アイスクリーム(アイスクリーム) 뜻=1:아이스크림 span=headword b0027:76
+  JA: 夏は<strong class="target-word">アイスクリーム</strong>に限る。
+  EN: There is nothing like ice cream in the summer.
+  우리: 1|여름엔 <strong class="target-word">아이스크림</strong>이 최고다.
+  감사: 1|여름엔 <strong class="target-word">아이스크림</strong>이 최고다.
+
+#48 [] スカウト(スカウト) 뜻=1:스카우트|2:영입하다/스카우트하다|3:스카우트 단원 span=unindexed b0145:18
+  JA: 高校時代は怪物と呼ばれ<strong class="target-word">スカウト</strong>からの評価も高かった。
+  EN: In high school he was called a "monster" and was even highly thought of by recruiters.
+  우리: 1|고교 시절엔 괴물이라 불리며 <strong class="target-word">스카우트</strong>들에게 평가도 높았다.
+  감사: 1|고교 시절에는 괴물이라 불리며 <strong class="target-word">스카우트</strong>들의 평가도 높았다.
+
+#49 [] 覆る(くつがえる) 뜻=1:뒤집히다/전복되다|2:번복되다/뒤집히다 span=unindexed b0226:117
+  JA: 審判の判定は<strong class="target-word">覆らない</strong>。
+  EN: The judge's decision is final.
+  우리: 2|심판의 판정은 <strong class="target-word">번복되지</strong> 않는다.
+  감사: 2|심판의 판정은 <strong class="target-word">번복되지</strong> 않는다.
+
+#50 [] 興味(きょうみ) 뜻=1:흥미/관심 span=headword b0017:73
+  JA: あなたは花に<strong class="target-word">興味</strong>がありますか。
+  EN: Are you interested in flowers?
+  우리: 1|당신은 꽃에 <strong class="target-word">흥미</strong>가 있습니까?
+  감사: 1|꽃에 <strong class="target-word">관심</strong> 있으세요?
+
+#51 [REJ-DIFF] 瀬(せ) 뜻=1:여울|2:급류/여울|3:처지/입장|4:기회/호기 span=headword b0201:18
+  JA: 人生沈む<strong class="target-word">瀬</strong>あれば浮かぶ瀬あるわけだから、あまりくよくよしないように。
+  EN: Don't be so glum about it. Life has its ups and downs.
+  우리: X|속담 관용구
+  감사: 3|인생은 가라앉을 <strong class="target-word">때</strong>가 있으면 떠오를 때도 있는 법이니 너무 끙끙대지 마.
+
+#52 [] 需給(じゅきゅう) 뜻=1:수급 span=headword b0192:126
+  JA: <strong class="target-word">需給</strong>関係が緩和している。
+  EN: The supply-demand balance is relaxing.
+  우리: 1|<strong class="target-word">수급</strong> 관계가 완화되고 있다.
+  감사: 1|<strong class="target-word">수급</strong> 관계가 완화되고 있다.
+
+#53 [] 実感(じっかん) 뜻=1:실감|2:실감하다/체감하다 span=headword b0069:148
+  JA: オーストラリアへ行って初めて、日本はなんと小さい国かと<strong class="target-word">実感</strong>した。
+  EN: I didn't realize till I visited Australia how small Japan really is.
+  우리: 2|호주에 가서야 비로소 일본이 얼마나 작은 나라인지 <strong class="target-word">실감했다</strong>.
+  감사: 2|호주에 가 보고서야 일본이 얼마나 작은 나라인지 <strong class="target-word">실감했</strong>다.
+
+#54 [] 賠償(ばいしょう) 뜻=1:배상/배상하다 span=headword b0119:133
+  JA: 彼は怪我の<strong class="target-word">賠償</strong>として多額の金を受け取った。
+  EN: He received a large sum of money in compensation for his injury.
+  우리: 1|그는 부상에 대한 <strong class="target-word">배상</strong>으로 거액의 돈을 받았다.
+  감사: 1|그는 부상 <strong class="target-word">배상</strong>으로 거액을 받았다.
+
+#55 [] 別館(べっかん) 뜻=1:별관 span=headword b0219:36
+  JA: <strong class="target-word">別館</strong>は本館の北側にある。
+  EN: The annex is on the north of the original building.
+  우리: 1|<strong class="target-word">별관</strong>은 본관 북쪽에 있다.
+  감사: 1|<strong class="target-word">별관</strong>은 본관 북쪽에 있다.
+
+#56 [] カートリッジ(カートリッジ) 뜻=1:카트리지 span=headword b0140:10
+  JA: 彼はインク<strong class="target-word">カートリッジ</strong>を交換していて白いシャツを汚した。
+  EN: He soiled his white shirt when he changed the ink cartridge.
+  우리: 1|그는 잉크 <strong class="target-word">카트리지</strong>를 교체하다가 흰 셔츠를 더럽혔다.
+  감사: 1|그는 잉크 <strong class="target-word">카트리지</strong>를 갈다가 흰 셔츠를 더럽혔다.
+
+#57 [] 長蛇の列(ちょうだのれつ) 뜻=1:장사진/긴 줄 span=unindexed b0210:19
+  JA: 店の前には<strong class="target-word">長蛇の列</strong>ができていた。
+  EN: A long queue had formed in front of the shop.
+  우리: 1|가게 앞에는 <strong class="target-word">장사진</strong>이 생겨 있었다.
+  감사: 1|가게 앞에는 <strong class="target-word">긴 줄</strong>이 늘어서 있었다.
+
+#58 [] 汁(しる) 뜻=1:즙/액|2:국물/국|3:소스/양념장 span=headword b0070:133
+  JA: 奴が一人でうまい<strong class="target-word">汁</strong>を吸いやがった。
+  EN: That guy took the best for himself.
+  우리: X|관용구 일부
+  감사: X|관용구 일부
+
+#59 [] あなた(あなた) 뜻=*1:당신/그대|2:자기 span=surface b0004:101
+  JA: 毎晩十分な睡眠をとれば、<strong class="target-word">あなた</strong>はずっと気分がよくなるだろう。
+  EN: If you get enough rest every night, you'll feel much better.
+  우리: 1|매일 밤 충분히 자면 <strong class="target-word">당신</strong>은 기분이 훨씬 좋아질 거예요.
+  감사: 1|매일 밤 충분히 자면 <strong class="target-word">당신</strong>은 훨씬 기분이 좋아질 거예요.
+
+#60 [] 市(いち) 뜻=1:장/저자 span=headword b0038:120
+  JA: <strong class="target-word">市</strong>は月曜ごとに立つ。
+  EN: The market is held every Monday.
+  우리: 1|<strong class="target-word">시장</strong>은 월요일마다 열립니다.
+  감사: 1|<strong class="target-word">장</strong>은 월요일마다 선다.
+
+#61 [] 反響(はんきょう) 뜻=1:울림/메아리|2:반향/파장 span=headword b0120:43
+  JA: その部屋に彼の声が<strong class="target-word">反響</strong>した。
+  EN: The room echoes with his voice.
+  우리: 1|그 방에 그의 목소리가 <strong class="target-word">울렸다</strong>.
+  감사: 1|그 방에 그의 목소리가 <strong class="target-word">울렸</strong>다.
+
+#62 [] スイマー(スイマー) 뜻=1:수영 선수 span=headword b0145:12
+  JA: 神田さんは上手な<strong class="target-word">スイマー</strong>です。
+  EN: Miss Kanda is a good swimmer.
+  우리: 1|간다 씨는 뛰어난 <strong class="target-word">수영 선수</strong>예요.
+  감사: 1|간다 씨는 뛰어난 <strong class="target-word">수영 선수</strong>예요.
+
+#63 [] 不(ふ) 뜻=1:불-/부- span=unindexed b0058:50
+  JA: 私は<strong class="target-word">不</strong>器用です。
+  EN: I'm all thumbs.
+  우리: X|복합어 일부
+  감사: X|복합어 일부
+
+#64 [] アンフェア(アンフェア) 뜻=1:불공정한/부당한 span=unindexed b0137:144
+  JA: 学生たちは<strong class="target-word">アンフェアな</strong>筆記試験に抗議した。
+  EN: The students protested against the unfair exam.
+  우리: 1|학생들은 <strong class="target-word">불공정한</strong> 필기시험에 항의했다.
+  감사: 1|학생들은 <strong class="target-word">불공정한</strong> 필기시험에 항의했다.
+
+#65 [] 出前(でまえ) 뜻=1:배달/배달하다 span=unindexed b0194:63
+  JA: 日の<strong class="target-word">出前</strong>には、トムはここにいたんだ。
+  EN: Tom was here before sunrise.
+  우리: X|동형어
+  감사: X|복합어 일부
+
+#66 [] 機体(きたい) 뜻=1:기체 span=headword b0171:33
+  JA: <strong class="target-word">機体</strong>が揺れ始めて乗客は不安になった。
+  EN: Passengers became nervous when the plane began to vibrate.
+  우리: 1|<strong class="target-word">기체</strong>가 흔들리기 시작해 승객들은 불안해졌다.
+  감사: 1|<strong class="target-word">기체</strong>가 흔들리기 시작하자 승객들은 불안해졌다.
+
+#67 [] いっそ(いっそ) 뜻=1:차라리/숫제|2:오히려/도리어 span=unindexed b0132:100
+  JA: こんな恥をかくのなら<strong class="target-word">いっそ</strong>生まれなければよかった。
+  EN: I had rather never have been born than have seen this day of shame.
+  우리: 1|이런 망신을 당할 바에야 <strong class="target-word">차라리</strong> 태어나지 않는 편이 나았다.
+  감사: 1|이런 창피를 당할 거라면 <strong class="target-word">차라리</strong> 태어나지 않는 게 나았다.
+
+#68 [] コーンスターチ(コーンスターチ) 뜻=1:옥수수전분 span=unindexed b0142:65
+  JA: <strong class="target-word">コーンスターチ</strong>はスープのとろみ付けにもってこいです。
+  EN: Cornstarch is good for thickening soup.
+  우리: 1|<strong class="target-word">옥수수전분</strong>은 수프에 농도를 내는 데 안성맞춤이다.
+  감사: 1|<strong class="target-word">옥수수전분</strong>은 수프를 걸쭉하게 만드는 데 딱이에요.
+
+#69 [] 再(さい) 뜻=1:재- span=headword b0103:62
+  JA: ビザの<strong class="target-word">再</strong>発給をお願いしたいのですが。
+  EN: Could you please issue me a visa again?
+  우리: 1|비자를 <strong class="target-word">재</strong>발급받고 싶습니다만.
+  감사: 1|비자 <strong class="target-word">재</strong>발급을 부탁드리고 싶은데요.
+
+#70 [] ラッセル(ラッセル) 뜻=1:제설차|2:러셀/눈길 헤치기 span=unindexed b0157:16
+  JA: <strong class="target-word">ラッセル</strong>は、ずば抜けた哲学者であったが、日常的なことは、ごく単純なことさえ全然出来なかった。
+  EN: Russell was a brilliant philosopher, but even the simplest practical task was quite beyond him.
+  우리: X|동형어
+  감사: X|동형어
+
+#71 [] 白人(はくじん) 뜻=*1:백인 span=headword b0223:15
+  JA: 突然、黒人と<strong class="target-word">白人</strong>がお互いに激しく暴力をふるい憎しみ会う時機が到来した。
+  EN: Suddenly, there was a period of terrible violence and hatred between blacks and whites.
+  우리: X|폭력적 소재
+  감사: X|부적절 소재
+
+#72 [] 狂気(きょうき) 뜻=1:광기/광증 span=headword b0174:73
+  JA: 怒りは<strong class="target-word">狂気</strong>の1形態です。
+  EN: Anger is a form of madness.
+  우리: 1|분노는 <strong class="target-word">광기</strong>의 한 형태이다
+  감사: 1|분노는 <strong class="target-word">광기</strong>의 한 형태다.
+
+#73 [] クーポン(クーポン) 뜻=1:쿠폰 span=unindexed b0141:66
+  JA: コンビニへ行くなら、<strong class="target-word">クーポン</strong>を持って行く方がいいと思うよ。
+  EN: If you are going to a convenience store, it's better to bring a discount coupon along with you, I think.
+  우리: 1|편의점 갈 거면 <strong class="target-word">쿠폰</strong> 챙겨가는 게 좋을 것 같아.
+  감사: 1|편의점에 갈 거면 <strong class="target-word">쿠폰</strong>을 가져가는 게 좋을 것 같아.
+
+#74 [] お姉さん(おねえさん) 뜻=1:누나/언니|2:아가씨|3:아가씨|4:부인|*5:언니/누나 span=headword b0001:23
+  JA: ねえ蓮、<strong class="target-word">お姉さん</strong>が手をつないであげようか？キミは毎年すぐにはぐれちゃうもんね。
+  EN: By the way, Ren. Should I take your hand? Every year you wander off.
+  우리: 5|얘, 렌, <strong class="target-word">언니</strong>가 손 잡아줄까? 너 매년 금방 길을 잃잖아.
+  감사: 5|있잖아 렌, <strong class="target-word">누나</strong>가 손 잡아 줄까? 너는 매년 금방 길을 잃잖아.
+
+#75 [] 私事(しじ) 뜻=1:개인사/사사로운 일|2:사생활 span=headword b0238:140
+  JA: 彼は他人の<strong class="target-word">私事</strong>を侵害する。
+  EN: He invades the privacy of others.
+  우리: 2|그는 남의 <strong class="target-word">사생활</strong>을 침해한다.
+  감사: 2|그는 남의 <strong class="target-word">사생활</strong>을 침해한다.
+
+#76 [] 表す(あらわす) 뜻=1:나타내다/상징하다|*2:드러내다|3:표현하다|4:알리다 span=surface b0036:75
+  JA: ご自分の栄光を<strong class="target-word">現された</strong>。
+  EN: He thus revealed his glory.
+  우리: 2|그분은 자신의 영광을 <strong class="target-word">드러내셨다</strong>.
+  감사: 2|그분은 자신의 영광을 <strong class="target-word">드러내셨</strong>다.
+
+#77 [] 実用的(じつようてき) 뜻=1:실용적인 span=headword b0190:110
+  JA: 彼の考えはいつも<strong class="target-word">実用的</strong>だ。
+  EN: His ideas are always practical.
+  우리: 1|그의 생각은 언제나 <strong class="target-word">실용적</strong>이다.
+  감사: 1|그의 생각은 늘 <strong class="target-word">실용적</strong>이다.
+
+#78 [SENSE] 陸路(りくろ) 뜻=1:육로|2:육로로 span=headword b0234:103
+  JA: <strong class="target-word">陸路</strong>ではそこへ行けない。
+  EN: The place is not accessible by land.
+  우리: 2|<strong class="target-word">육로로</strong>는 그곳에 갈 수 없다.
+  감사: 1|<strong class="target-word">육로</strong>로는 그곳에 갈 수 없다.
+
+#79 [] 境(さかい) 뜻=1:경계/접경|2:갈림길/분기점|3:지역|4:심경|5:대상 span=headword b0034:87
+  JA: 彼は忘我の<strong class="target-word">境</strong>をさまよっている。
+  EN: He is wandering around in a trance.
+  우리: 4|그는 무아의 <strong class="target-word">경지</strong>를 헤매고 있다.
+  감사: 4|그는 무아의 <strong class="target-word">경지</strong>를 헤매고 있다.
+
+#80 [] メンタル(メンタル) 뜻=1:정신적인|2:멘탈/정신 상태 span=headword b0156:61
+  JA: 明日から強化合宿に入るんですが、強化するのは体力面ではなく、<strong class="target-word">メンタル</strong>の部分です。
+  EN: I'm going to a training camp tomorrow. However it's not the physical side that I'll be training, but the mental.
+  우리: 2|내일부터 강화 합숙에 들어가는데, 강화하는 건 체력 면이 아니라 <strong class="target-word">멘탈</strong> 부분이에요.
+  감사: 2|내일부터 강화 합숙에 들어가는데, 강화하는 건 체력이 아니라 <strong class="target-word">멘탈</strong> 쪽이에요.
+
+#81 [] 死亡率(しぼうりつ) 뜻=1:사망률 span=headword b0188:61
+  JA: 出生率と<strong class="target-word">死亡率</strong>は、ほぼ等しかった。
+  EN: The birth rate and death rate were nearly equal.
+  우리: 1|출생률과 <strong class="target-word">사망률</strong>은 거의 같았다.
+  감사: 1|출생률과 <strong class="target-word">사망률</strong>은 거의 같았다.
+
+#82 [] エアメール(エアメール) 뜻=1:항공우편/에어메일 span=unindexed b0089:76
+  JA: 彼女は手紙を<strong class="target-word">エアメール</strong>した。
+  EN: She sent the letter by airmail.
+  우리: 1|그녀는 편지를 <strong class="target-word">에어메일</strong>로 보냈다.
+  감사: 1|그녀는 편지를 <strong class="target-word">항공우편</strong>으로 보냈다.
+
+#83 [] にわか(にわか) 뜻=1:갑작스러운/돌연한|2:즉흥적인/급조한|3:즉흥극|4:벼락팬 span=unindexed b0085:75
+  JA: <strong class="target-word">にわかに</strong>雨が降ってきた。
+  EN: Suddenly, the rain fell.
+  우리: 1|<strong class="target-word">갑자기</strong> 비가 내리기 시작했다.
+  감사: 1|<strong class="target-word">갑자기</strong> 비가 내리기 시작했다.
+
+#84 [] 留守(るす) 뜻=1:부재|*2:집보기|3:소홀 span=headword b0024:134
+  JA: 彼女に<strong class="target-word">留守</strong>を頼んで外出しました。
+  EN: I went on the trip, leaving the house in her care.
+  우리: 2|그녀에게 <strong class="target-word">집보기</strong>를 부탁하고 외출했어요.
+  감사: 2|그녀에게 <strong class="target-word">집</strong>을 봐 달라고 부탁하고 외출했다.
+
+#85 [] 休学(きゅうがく) 뜻=1:휴학/휴학하다 span=unindexed b0097:115
+  JA: トムは<strong class="target-word">休学</strong>にはならなかった。
+  EN: Tom wasn't suspended from school.
+  우리: 1|톰은 <strong class="target-word">휴학</strong>하지 않았다.
+  감사: 1|톰은 <strong class="target-word">휴학</strong>하게 되지 않았다.
+
+#86 [] ゴム(ゴム) 뜻=*1:고무|2:지우개|3:콘돔 span=surface b0060:68
+  JA: <strong class="target-word">ゴム</strong>のボールは弾力性があるから弾む。
+  EN: A rubber ball bounces because it is elastic.
+  우리: 1|<strong class="target-word">고무</strong> 공은 탄력이 있어서 잘 튄다.
+  감사: 1|<strong class="target-word">고무</strong> 공은 탄력이 있어서 튄다.
+
+#87 [] 物質(ぶっしつ) 뜻=1:물질|2:물질 span=headword b0051:42
+  JA: この<strong class="target-word">物質</strong>は水と混ざる。
+  EN: This substance will mix with water.
+  우리: 1|이 <strong class="target-word">물질</strong>은 물과 섞인다.
+  감사: 1|이 <strong class="target-word">물질</strong>은 물과 섞인다.
+
+#88 [] 他者(たしゃ) 뜻=1:타인 span=headword b0207:59
+  JA: 私たちはだれでも、<strong class="target-word">他者</strong>との一体感を切望する何かをうちに秘めている。
+  EN: Each of us has something in us that longs for a sense of oneness with others.
+  우리: 1|우리는 누구나 <strong class="target-word">타인</strong>과의 일체감을 갈망하는 무언가를 마음속에 품고 있다.
+  감사: 1|우리는 누구나 <strong class="target-word">타인</strong>과의 일체감을 갈망하는 무언가를 속에 품고 있다.
+
+#89 [] スペア(スペア) 뜻=1:여벌/예비품|2:스페어 span=unindexed b0145:127
+  JA: 鉄インゴットの<strong class="target-word">スペア</strong>はありますか？
+  EN: Do you have any spare iron ingots?
+  우리: 1|철 주괴 <strong class="target-word">여벌</strong>이 있나요?
+  감사: 1|철 잉곳 <strong class="target-word">여분</strong> 있나요?
+
+#90 [] まく(まく) 뜻=1:뿌리다/흩뿌리다|2:뿌리다/나누어 주다|3:따돌리다/떼어놓다 span=surface b0069:11
+  JA: 命の種は<strong class="target-word">まかれた</strong>。
+  EN: Life's seed is laid.
+  우리: 1|생명의 씨앗은 <strong class="target-word">뿌려졌다</strong>.
+  감사: 1|생명의 씨앗이 <strong class="target-word">뿌려졌</strong>다.
+
+#91 [] 絆(きずな) 뜻=*1:유대/끈|2:속박/굴레 span=headword b0237:110
+  JA: 彼らは強い愛情の<strong class="target-word">絆</strong>で結ばれている。
+  EN: There is a strong bond of affection between them.
+  우리: 1|그들은 강한 애정의 <strong class="target-word">유대</strong>로 맺어져 있다.
+  감사: 1|그들은 강한 애정의 <strong class="target-word">유대</strong>로 맺어져 있다.
+
+#92 [] 走る(はしる) 뜻=1:달리다|*2:달리다|3:질주하다|4:도주하다|5:달아나다|6:스치다|7:치닫다|8:뻗다 span=surface b0008:81
+  JA: この車は以前ほど快調に<strong class="target-word">走らない</strong>。
+  EN: This car is running less smoothly than it used to.
+  우리: 2|이 차는 예전만큼 쾌조로 <strong class="target-word">달리지</strong> 않는다.
+  감사: 2|이 차는 예전만큼 잘 <strong class="target-word">달리지</strong> 않는다.
+
+#93 [] 接種(せっしゅ) 뜻=1:접종/접종하다 span=unindexed b0203:7
+  JA: ワクチンを<strong class="target-word">接種</strong>しますか？
+  EN: Will you get vaccinated?
+  우리: 1|백신을 <strong class="target-word">접종하나요</strong>?
+  감사: 1|백신을 <strong class="target-word">접종하</strong>시겠어요?
+
+#94 [] おす(おす) 뜻=1:수컷/수 span=headword b0129:102
+  JA: 谷<strong class="target-word">雄</strong>がそのパーティーに出席していた。
+  EN: Mr Tani and his wife were present at that party.
+  우리: X|동형어
+  감사: X|동형어
+
+#95 [] 膜(まく) 뜻=1:막/까풀 span=unindexed b0124:49
+  JA: 冷たい牛乳は好きだけど、温めた牛乳はあまり好きじゃない。あの白い<strong class="target-word">膜</strong>と匂いが苦手なんだ。
+  EN: I like cold milk, but not hot milk. The white membrane and the smell that develops bother me.
+  우리: 1|차가운 우유는 좋아하지만 데운 우유는 별로 안 좋아해. 그 하얀 <strong class="target-word">막</strong>과 냄새가 싫거든.
+  감사: 1|차가운 우유는 좋아하지만 데운 우유는 별로야. 그 하얀 <strong class="target-word">막</strong>이랑 냄새가 싫거든.
+
+#96 [] 富(とみ) 뜻=1:부|2:자원|3:복권 span=headword b0121:93
+  JA: 神は私に<strong class="target-word">富</strong>をお恵みくださった。
+  EN: God has blessed me with riches.
+  우리: 1|신은 나에게 <strong class="target-word">부</strong>를 베풀어 주셨다.
+  감사: 1|하느님께서 내게 <strong class="target-word">부</strong>를 베풀어 주셨다.
+
+#97 [] 閣下(かっか) 뜻=1:각하 span=surface b0168:90
+  JA: そんなに<strong class="target-word">カッカ</strong>するなよ。短気は損気って言うだろ。
+  EN: Don't be such a hothead. A short temper will cost you.
+  우리: X|동형어
+  감사: X|동형어
+
+#98 [] イコール(イコール) 뜻=1:동일한/같은|2:등호|*3:~와 같다 span=headword b0059:143
+  JA: 彼らは宗教<strong class="target-word">イコール</strong>教会に行くことだと考えている。
+  EN: They equate religion with church-going.
+  우리: 3|그들은 종교는 교회에 가는 것과 <strong class="target-word">같다</strong>고 생각한다.
+  감사: 3|그들은 종교가 곧 교회에 가는 것과 <strong class="target-word">같다</strong>고 생각한다.
+
+#99 [] 果汁(かじゅう) 뜻=1:과일즙/과즙 span=unindexed b0165:138
+  JA: 彼女はオレンジから<strong class="target-word">果汁</strong>を搾り出そうとした。
+  EN: She tried to squeeze the juice from the orange.
+  우리: 1|그녀는 오렌지에서 <strong class="target-word">과즙</strong>을 짜내려고 했다.
+  감사: 1|그녀는 오렌지에서 <strong class="target-word">과즙</strong>을 짜내려고 했다.
+
+#100 [] 推定(すいてい) 뜻=1:추정/추정하다|2:추정/추산 span=headword b0072:131
+  JA: 彼女は30歳過ぎだと<strong class="target-word">推定</strong>する。
+  EN: I guess that she is over thirty.
+  우리: 1|그녀는 서른이 넘었다고 <strong class="target-word">추정한</strong>다.
+  감사: 1|나는 그녀가 서른이 넘었다고 <strong class="target-word">추정한</strong>다.
+
+#101 [] 弥生(やよい) 뜻=2:야요이 시대 span=unindexed b0232:46
+  JA: もー、<strong class="target-word">弥生</strong>のナビが判りにくいから、同じトコぐるぐる回ったじゃない。
+  EN: Hmph, Yayoi's navigation was difficult to follow so we ended up going round and round the same places.
+  우리: X|다른 뜻
+  감사: X|동형어
+
+#102 [] 困窮(こんきゅう) 뜻=1:곤궁/궁색|2:역경/곤경 span=headword b0184:6
+  JA: 我々は財政的に<strong class="target-word">困窮</strong>していた。要するに破産したのだ。
+  EN: We were financially troubled, in short, we were bankrupt.
+  우리: 1|우리는 재정적으로 <strong class="target-word">곤궁했</strong>다. 한마디로 파산한 것이었다.
+  감사: 1|우리는 재정적으로 <strong class="target-word">곤궁</strong>했다. 요컨대 파산한 것이다.
+
+#103 [] 競合(きょうごう) 뜻=1:경합 span=headword b0173:127
+  JA: この条件を受けていただけると、他社との<strong class="target-word">競合</strong>が有利になります。
+  EN: This would enable us to compete more effectively with other agencies.
+  우리: 1|이 조건을 받아들여 주시면 타사와의 <strong class="target-word">경합</strong>에서 유리해집니다
+  감사: 1|이 조건을 받아 주시면 다른 회사와의 <strong class="target-word">경합</strong>에서 유리해집니다.
+
+#104 [] 職(しょく) 뜻=1:직업/직|2:직무|3:기술 span=headword b0042:21
+  JA: 彼は事務員の<strong class="target-word">職</strong>を得た。
+  EN: He got a position as a clerk.
+  우리: 1|그는 사무원 <strong class="target-word">자리</strong>를 얻었다.
+  감사: 1|그는 사무원 <strong class="target-word">일자리</strong>를 얻었다.
+
+#105 [] 首輪(くびわ) 뜻=1:목줄|2:목걸이 span=headword b0106:148
+  JA: 彼は金の<strong class="target-word">首輪</strong>と鳥の羽で作られたコートを着ていた。
+  EN: He was wearing a gold necklace and a coat made of bird feathers.
+  우리: 2|그는 금 <strong class="target-word">목걸이</strong>와 새 깃털로 만든 코트를 입고 있었다.
+  감사: 2|그는 금 <strong class="target-word">목걸이</strong>를 하고 새 깃털로 만든 코트를 입고 있었다.
+
+#106 [] 取り揃える(とりそろえる) 뜻=1:챙기다/구색을 맞추다 span=unindexed b0251:74
+  JA: 当店では様々な本を<strong class="target-word">取りそろえて</strong>おります。
+  EN: We have a wide choice of books.
+  우리: 1|저희 가게에는 다양한 책을 <strong class="target-word">구비하</strong>고 있습니다.
+  감사: 1|저희 가게에서는 다양한 책을 <strong class="target-word">갖추고</strong> 있습니다.
+
+#107 [] ホーマー(ホーマー) 뜻=1:홈런 span=unindexed b0154:28
+  JA: <strong class="target-word">ホーマー</strong>も時には居眠りをする。
+  EN: Even the worthy Homer sometimes nods.
+  우리: X|동형어
+  감사: X|동형어
+
+#108 [] ホワイト(ホワイト) 뜻=1:흰색/하얀|2:수정액 span=headword b0154:63
+  JA: <strong class="target-word">ホワイト</strong>さんはみんなに好かれています。
+  EN: Miss White is liked by everyone.
+  우리: X|동형어
+  감사: X|동형어
+
+#109 [SENSE] 新書(しんしょ) 뜻=1:신간|2:신서판 span=unindexed b0253:4
+  JA: たまには<strong class="target-word">新書</strong>でも一冊読みきるか。
+  EN: I should read a new book every now and then.
+  우리: 2|가끔은 <strong class="target-word">신서판</strong> 책이라도 한 권 다 읽어볼까.
+  감사: 1|가끔은 <strong class="target-word">신간</strong>이라도 한 권 끝까지 읽어 볼까.
+
+#110 [] アーモンド(アーモンド) 뜻=1:아몬드 span=unindexed b0137:33
+  JA: <strong class="target-word">アーモンド</strong>と一緒にデーツを食べるのが好きです。
+  EN: I like to eat a date with almonds.
+  우리: 1|<strong class="target-word">아몬드</strong>와 함께 대추야자를 먹는 걸 좋아해요.
+  감사: 1|<strong class="target-word">아몬드</strong>랑 같이 대추야자를 먹는 걸 좋아해요.
+
+#111 [] 完工(かんこう) 뜻=1:완공/완공하다 span=unindexed b0248:102
+  JA: この建物は程なく<strong class="target-word">完工</strong>だ。
+  EN: This building is near completion.
+  우리: 1|이 건물은 머지않아 <strong class="target-word">완공</strong>이다.
+  감사: 1|이 건물은 곧 <strong class="target-word">완공</strong>된다.
+
+#112 [] 商品(しょうひん) 뜻=1:상품/물건 span=headword b0041:54
+  JA: それは人気<strong class="target-word">商品</strong>だ。
+  EN: This is a real popular item.
+  우리: 1|그것은 인기 <strong class="target-word">상품</strong>이다.
+  감사: 1|그건 인기 <strong class="target-word">상품</strong>이다.
+
+#113 [] COM(コム) 뜻=1:컴퓨터출력마이크로필름 span=unindexed b0142:98
+  JA: アマゾン・ドット・<strong class="target-word">コム</strong>で本を注文しました。
+  EN: I've ordered a book from Amazon.com.
+  우리: X|동형어
+  감사: X|동형어
+
+#114 [] 言い分(いいぶん) 뜻=1:주장/할 말|2:불만/이의 span=headword b0179:36
+  JA: 彼には彼女に反論する立派な<strong class="target-word">言い分</strong>がある。
+  EN: He has a good case against her.
+  우리: 1|그에게는 그녀에게 반박할 훌륭한 <strong class="target-word">주장</strong>이 있다.
+  감사: 1|그에게는 그녀에게 반론할 정당한 <strong class="target-word">주장</strong>이 있다.
+
+#115 [] ブラウン管(ブラウンかん) 뜻=1:브라운관 span=headword b0152:131
+  JA: テレビを点け、彼女が<strong class="target-word">ブラウン管</strong>の前で遊弋している。「おい、飯だぞ？」
+  EN: Television turned on, she patrols in front of the CRT. "Hey you, food's up!"
+  우리: 1|텔레비전을 켜고, 그녀가 <strong class="target-word">브라운관</strong> 앞을 서성이고 있다. 「야, 밥 먹어」
+  감사: 1|TV를 켜자 그녀가 <strong class="target-word">브라운관</strong> 앞을 어슬렁거린다. "어이, 밥 먹자."
+
+#116 [] フィル(フィル) 뜻=1:필하모닉 span=headword b0152:41
+  JA: この曲は<strong class="target-word">フィル</strong>が昨年書いたものだ。
+  EN: This song was written by Phil last year.
+  우리: X|고유명사
+  감사: X|동형어
+
+#117 [] 背丈(せたけ) 뜻=1:키/신장 span=headword b0217:109
+  JA: 彼は平均的な<strong class="target-word">背丈</strong>だ。
+  EN: He was a man of average height.
+  우리: 1|그는 평균적인 <strong class="target-word">키다</strong>.
+  감사: 1|그는 평균 <strong class="target-word">키</strong>였다.
+
+#118 [] 他殺(たさつ) 뜻=1:타살 span=unindexed b0207:55
+  JA: その頃、泥棒、<strong class="target-word">他殺</strong>、餓死についての話ばっかり聞いていたんだ。
+  EN: During that time, we only heard about thieves, about murders, about men who had died of hunger.
+  우리: 1|그 무렵엔 도둑, <strong class="target-word">타살</strong>, 굶어 죽는 것에 대한 이야기만 듣고 있었지.
+  감사: 1|그 무렵엔 도둑, <strong class="target-word">타살</strong>, 굶어 죽은 사람 이야기만 들었다.
+
+#119 [] 買い物(かいもの) 뜻=1:쇼핑/장보기 span=headword b0013:65
+  JA: <strong class="target-word">買い物</strong>一緒に行く？
+  EN: Would you like to go shopping with me?
+  우리: 1|같이 <strong class="target-word">쇼핑</strong>하러 갈래?
+  감사: 1|<strong class="target-word">쇼핑</strong> 같이 갈래?
+
+#120 [] 曇り(くもり) 뜻=*1:흐림|2:김서림|3:우울 span=headword b0013:78
+  JA: 晴れ後<strong class="target-word">曇り</strong>でした。
+  EN: It was sunny, then cloudy.
+  우리: 1|맑았다가 <strong class="target-word">흐렸어요</strong>.
+  감사: 1|맑았다가 <strong class="target-word">흐려</strong>졌어요.

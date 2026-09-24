@@ -17,6 +17,10 @@ from uuid import UUID, uuid4
 from app.routes import voca_books_bp
 from app.models.models import db, UserVocaBook, UserVocaBookMap, UserVoca, Bookstore, AdminVocaBookMap, UserVocaGame
 from app.utils.jwt_utils import jwt_required
+from app.utils.dict_lang import get_dict_lang
+from app.utils.word_payload import (
+    UserWordEnricher, payload_voca_id, validate_dict_voca_ids, check_payload_language,
+)
 from app.routes.voca_indexs import merge_meanings, merge_examples
 from app.routes.user_voca_book import parse_quizlet_pdf
 from app.utils.example_tagging import tag_example_pair, _tag_batch_gpt, STRONG
@@ -32,6 +36,14 @@ WORD_MAX_LEN = 50
 # 업로드 DoS 방지 — 단어장 파일/행 수 상한. 실사용(수백~수천 단어, 1~2MB) 대비 큰 여유.
 UPLOAD_MAX_BYTES = 5 * 1024 * 1024   # 5MB
 UPLOAD_MAX_ROWS = 20000              # 파싱 행 수 상한
+
+def _lang_mismatch_response(payload_lang):
+    """payload `language` 가 서버 현재 언어와 다르면 400 응답 튜플, 같거나 없으면 None."""
+    msg = check_payload_language(payload_lang)
+    if msg:
+        return jsonify({'code': 400, 'message': msg}), 400
+    return None
+
 
 def is_purchased_book(voca_book):
     """구매한 단어장(bookstore_id가 NULL이 아닌 단어장)인지 여부."""
@@ -230,12 +242,18 @@ def bulk_persist_vocas(user_id, voca_book_id, parsed_items):
     if not parsed_items:
         return 0
 
-    # 예문 강조 자동 생성 (merge 이전 시점에 처리해야 origin/meaning 키 기준 중복제거가 정확)
-    _apply_emphasis_to_items(parsed_items)
+    lang = get_dict_lang()
 
+    # 예문 강조 자동 생성 (merge 이전 시점에 처리해야 origin/meaning 키 기준 중복제거가 정확)
+    # 일본어는 영어 spaCy/kiwi 규칙이 맞지 않아 건너뛴다(ja 태깅은 example_tagging 쪽 ja 분기 담당).
+    if lang != 'ja':
+        _apply_emphasis_to_items(parsed_items)
+
+    # 중복 키 = (user_id, dict_lang, word) — 다른 언어의 같은 표기 단어와 합치지 않는다.
     origins = [item['origin'] for item in parsed_items if item.get('origin')]
     existing_vocas = db.session.query(UserVoca).filter(
         UserVoca.user_id == user_id,
+        UserVoca.dict_lang == lang,
         UserVoca.word.in_(origins)
     ).all()
     user_voca_dict = {uv.word: uv for uv in existing_vocas}
@@ -261,6 +279,7 @@ def bulk_persist_vocas(user_id, voca_book_id, parsed_items):
                 voca_meanings=json.dumps(meanings, ensure_ascii=False),
                 voca_examples=json.dumps(examples, ensure_ascii=False),
                 data=None,
+                dict_lang=lang,
             )
             new_user_vocas.append(uv)
             user_voca_dict[origin] = uv
@@ -296,6 +315,13 @@ def build_vocas_for_book(voca_book_id):
         UserVocaBookMap.user_voca_book_id == voca_book_id
     ).all()
 
+    return _serialize_book_maps(maps)
+
+
+def _serialize_book_maps(maps, enricher=None):
+    """UserVocaBookMap 목록 → 단어 응답 리스트. 공통 필드(language, ja: reading/jlpt/...) 포함."""
+    if enricher is None:
+        enricher = UserWordEnricher(m.user_voca.voca_id for m in maps if m.user_voca)
     vocas = []
     for m in maps:
         user_voca = m.user_voca
@@ -309,15 +335,18 @@ def build_vocas_for_book(voca_book_id):
             payload = migrate_v1_to_v2(payload)
         fsrs = get_fsrs_state(payload) or dict(DEFAULT_FSRS_NEW)
 
-        vocas.append({
+        item = {
             'vocaIndexId': user_voca.id,
+            'vocaId': user_voca.voca_id,
             'origin': user_voca.word,
             'fsrs': fsrs,
             'meanings': meanings,
-            'examples': examples,
+            'examples': enricher.examples(user_voca.voca_id, examples),
             'createdAt': (user_voca.created_at).isoformat() + 'Z' if user_voca.created_at else None,
             'updatedAt': (user_voca.updated_at).isoformat() + 'Z' if user_voca.updated_at else None,
-        })
+        }
+        item.update(enricher.fields(user_voca.voca_id))
+        vocas.append(item)
 
     return vocas
 
@@ -331,6 +360,7 @@ def build_voca_book_response(voca_book):
         'vocaBookStoreId': voca_book.bookstore_id,
         'title': voca_book.name,
         'color': json.loads(voca_book.color) if voca_book.color else None,
+        'language': voca_book.language or 'en',
         'vocaCount': len(vocas),
         'vocas': vocas,
     }
@@ -343,44 +373,33 @@ def get_voca_books():
     from sqlalchemy.orm import joinedload
     user_id = UUID(g.user_id)
 
+    # 현재 학습 언어(learning_lang) 단어장만 — 다른 언어 단어장은 전환 전까지 숨긴다.
+    lang = get_dict_lang()
+
     # N+1 문제 해결을 위해 UserVocaBookMap과 UserVoca를 함께 로드
     voca_books = db.session.query(UserVocaBook).options(
         joinedload(UserVocaBook.voca_maps).joinedload(UserVocaBookMap.user_voca)
     ).filter(
-        UserVocaBook.user_id == user_id
+        UserVocaBook.user_id == user_id,
+        UserVocaBook.language == lang,
     ).all()
+
+    # 사전 부가 정보(ja 읽기/JLPT/후리가나)는 전체 단어장의 voca_id 를 모아 한 번에 조회
+    enricher = UserWordEnricher(
+        m.user_voca.voca_id for vb in voca_books for m in vb.voca_maps if m.user_voca
+    )
 
     data = []
     for vb in voca_books:
         # 이미 로드된 데이터를 사용하여 속도 향상
-        vocas = []
-        for m in vb.voca_maps:
-            user_voca = m.user_voca
-            if not user_voca:
-                continue
-            
-            meanings = json.loads(m.voca_meanings) if m.voca_meanings else []
-            examples = json.loads(m.voca_examples) if m.voca_examples else []
-            payload = parse_user_voca_data(user_voca.data)
-            if is_v1(payload):
-                payload = migrate_v1_to_v2(payload)
-            fsrs = get_fsrs_state(payload) or dict(DEFAULT_FSRS_NEW)
-
-            vocas.append({
-                'vocaIndexId': user_voca.id,
-                'origin': user_voca.word,
-                'fsrs': fsrs,
-                'meanings': meanings,
-                'examples': examples,
-                'createdAt': (user_voca.created_at).isoformat() + 'Z' if user_voca.created_at else None,
-                'updatedAt': (user_voca.updated_at).isoformat() + 'Z' if user_voca.updated_at else None,
-            })
+        vocas = _serialize_book_maps(vb.voca_maps, enricher)
 
         data.append({
             'vocaBookId': str(vb.id),
             'vocaBookStoreId': vb.bookstore_id,
             'title': vb.name,
             'color': json.loads(vb.color) if vb.color else None,
+            'language': vb.language or 'en',
             'vocaCount': len(vocas),
             'vocas': vocas,
         })
@@ -424,6 +443,12 @@ def create_voca_book():
     if not title:
         return jsonify({'code': 400, 'message': '단어장 이름(title)은 필수입니다.'}), 400
 
+    # 단어장 언어는 서버(current_user.learning_lang)가 정한다. payload language 가 다르면 400.
+    lang = get_dict_lang()
+    mismatch = _lang_mismatch_response(req.get('language'))
+    if mismatch:
+        return mismatch
+
     # 단어 길이 검증 (개별 255자 / 평균 50자)
     if voca_list:
         invalid = validate_word_lengths(voca_list)
@@ -441,19 +466,26 @@ def create_voca_book():
             total_word_cnt=0,
             memorized_word_cnt=0,
             voca_list=None,
-            updated_at=None
+            updated_at=None,
+            language=lang,
         )
         db.session.add(voca_book)
         db.session.flush()
 
         # vocaList가 있으면 벌크 처리로 최적화
         if voca_list:
-            # 1. 기존 UserVoca 한 번에 조회
+            # 1. 기존 UserVoca 한 번에 조회 — 중복 키 (user_id, dict_lang, word)
             origins = [item.get('origin') for item in voca_list if item.get('origin')]
             existing_vocas = db.session.query(UserVoca).filter(
                 UserVoca.user_id == user_id,
+                UserVoca.dict_lang == lang,
                 UserVoca.word.in_(origins)
             ).all()
+
+            # 클라이언트가 보낸 사전 id(vocaId/dictionaryId)는 현재 언어 사전에서 단어가 맞을 때만 저장
+            valid_voca_pairs = validate_dict_voca_ids(
+                [(item.get('origin'), payload_voca_id(item)) for item in voca_list]
+            )
             user_voca_dict = {uv.word: uv for uv in existing_vocas}
 
             user_vocas_to_add = []
@@ -466,7 +498,9 @@ def create_voca_book():
 
                 meanings = item.get('meanings', [])
                 examples = item.get('examples', [])
-                voca_id = item.get('vocaId')
+                voca_id = payload_voca_id(item)
+                if (origin, voca_id) not in valid_voca_pairs:
+                    voca_id = None
 
                 if origin in user_voca_dict:
                     uv = user_voca_dict[origin]
@@ -484,6 +518,7 @@ def create_voca_book():
                         voca_meanings=json.dumps(meanings, ensure_ascii=False),
                         voca_examples=json.dumps(examples, ensure_ascii=False),
                         data=None,
+                        dict_lang=lang,
                     )
                     user_vocas_to_add.append(new_uv)
 
@@ -522,10 +557,11 @@ def create_voca_book():
                     AdminVocaBookMap.book_id == bookstore.admin_voca_book_id
                 ).all()
                 
-                # 1. 기존 UserVoca 조회
+                # 1. 기존 UserVoca 조회 — 중복 키 (user_id, dict_lang, word)
                 admin_words = [m.voca.word for m in admin_maps if m.voca]
                 existing_vocas = db.session.query(UserVoca).filter(
                     UserVoca.user_id == user_id,
+                    UserVoca.dict_lang == lang,
                     UserVoca.word.in_(admin_words)
                 ).all()
                 user_voca_dict = {uv.word: uv for uv in existing_vocas}
@@ -547,12 +583,14 @@ def create_voca_book():
                             uv.voca_id = admin_map.voca_id
                         uv.updated_at = datetime.datetime.utcnow()
                     else:
+                        # examples 는 admin_voca_book_map.voca_examples 그대로 — ja 는 reading_tokens 포함
                         new_uv = UserVoca(
                             user_id=user_id,
                             voca_id=admin_map.voca_id,
                             word=word,
                             voca_meanings=json.dumps(meanings, ensure_ascii=False),
-                            voca_examples=json.dumps(examples, ensure_ascii=False)
+                            voca_examples=json.dumps(examples, ensure_ascii=False),
+                            dict_lang=lang,
                         )
                         user_vocas_to_add.append(new_uv)
 
@@ -622,6 +660,9 @@ def upload_excel_voca_book():
 
     title = json_data.get('title')
     color = json_data.get('color', {'main': '#FF8DD4', 'sub': '#FF8DD44d', 'background': '#FFEFFA'})
+    mismatch = _lang_mismatch_response(json_data.get('language'))
+    if mismatch:
+        return mismatch
 
     # 검증
     if not file:
@@ -721,7 +762,8 @@ def upload_excel_voca_book():
             total_word_cnt=0,
             memorized_word_cnt=0,
             voca_list=None,
-            updated_at=None
+            updated_at=None,
+            language=get_dict_lang(),
         )
         db.session.add(voca_book)
         db.session.flush()
@@ -762,6 +804,9 @@ def upload_csv_voca_book():
 
     title = json_data.get('title')
     color = json_data.get('color', {'main': '#FF8DD4', 'sub': '#FF8DD44d', 'background': '#FFEFFA'})
+    mismatch = _lang_mismatch_response(json_data.get('language'))
+    if mismatch:
+        return mismatch
 
     # 검증
     if not file:
@@ -867,7 +912,8 @@ def upload_csv_voca_book():
             total_word_cnt=0,
             memorized_word_cnt=0,
             voca_list=None,
-            updated_at=None
+            updated_at=None,
+            language=get_dict_lang(),
         )
         db.session.add(voca_book)
         db.session.flush()
@@ -907,6 +953,9 @@ def upload_quizlet_pdf_voca_book():
 
     title = json_data.get('title')
     color = json_data.get('color', {'main': '#FF8DD4', 'sub': '#FF8DD44d', 'background': '#FFEFFA'})
+    mismatch = _lang_mismatch_response(json_data.get('language'))
+    if mismatch:
+        return mismatch
 
     if not file:
         return jsonify({'code': 400, 'message': '파일이 첨부되지 않았습니다.'}), 400
@@ -957,7 +1006,8 @@ def upload_quizlet_pdf_voca_book():
             total_word_cnt=0,
             memorized_word_cnt=0,
             voca_list=None,
-            updated_at=None
+            updated_at=None,
+            language=get_dict_lang(),
         )
         db.session.add(voca_book)
         db.session.flush()
@@ -1106,6 +1156,13 @@ def append_vocas_to_book(vocaBookId):
     if is_purchased_book(voca_book):
         return jsonify({'code': 403, 'message': '구매한 단어장은 변경할 수 없어요.'}), 403
 
+    # 단어장 언어와 현재 학습 언어가 다르면(전환 직후 이전 화면 등) 다른 사전 단어로 섞이므로 거부
+    mismatch = _lang_mismatch_response(req.get('language'))
+    if mismatch:
+        return mismatch
+    if (voca_book.language or 'en') != get_dict_lang():
+        return jsonify({'code': 400, 'message': '현재 학습 언어의 단어장이 아니에요. 앱을 새로고침해 주세요.'}), 400
+
     voca_list = req.get('vocaList') or []
     if not isinstance(voca_list, list) or not voca_list:
         return jsonify({'code': 400, 'message': '추가할 단어 목록(vocaList)이 비어 있습니다.'}), 400
@@ -1121,10 +1178,14 @@ def append_vocas_to_book(vocaBookId):
         # 예문 강조 마크업 정규화 (불러오기 외부 호출 시에도 안전하게)
         normalized_examples = []
         for ex in examples:
-            normalized_examples.append({
+            norm_ex = {
                 'origin': _normalize_target_word(ex.get('origin', '')),
                 'meaning': _normalize_target_word(ex.get('meaning', '')),
-            })
+            }
+            # 일본어 예문 후리가나(reading_tokens)는 그대로 보존
+            if isinstance(ex, dict) and ex.get('reading_tokens'):
+                norm_ex['reading_tokens'] = ex['reading_tokens']
+            normalized_examples.append(norm_ex)
         parsed_items.append({
             'origin': origin,
             'meanings': meanings,
@@ -1382,6 +1443,9 @@ def upload_anki_voca_book():
 
     title = json_data.get('title')
     color = json_data.get('color', {'main': '#FF8DD4', 'sub': '#FF8DD44d', 'background': '#FFEFFA'})
+    mismatch = _lang_mismatch_response(json_data.get('language'))
+    if mismatch:
+        return mismatch
     mapping = json_data.get('mapping', {})
     selected_note_type_id = json_data.get('selectedNoteTypeId')
 
@@ -1520,7 +1584,8 @@ def upload_anki_voca_book():
             total_word_cnt=0,
             memorized_word_cnt=0,
             voca_list=None,
-            updated_at=None
+            updated_at=None,
+            language=get_dict_lang(),
         )
         db.session.add(voca_book)
         db.session.flush()

@@ -18,18 +18,27 @@ CURATED_VOICES = {
         {'voice': 'ko-KR-InJoonNeural', 'label': '인준 (남)', 'gender': 'M'},
         {'voice': 'ko-KR-HyunsuMultilingualNeural', 'label': '현수 (남)', 'gender': 'M'},
     ],
+    # 일본어: Edge 무료 엔드포인트가 제공하는 ja 신경망은 Nanami/Keita 2개뿐이다
+    # (2026-09 edge_tts.list_voices 확인). Aoi/Daichi 등 Azure 전용 voice 는
+    # NoAudioReceived 로 실패해 매번 gTTS 폴백이 되므로 목록에 넣지 않는다.
+    'ja': [
+        {'voice': 'ja-JP-NanamiNeural', 'label': '나나미 (여)', 'gender': 'F'},
+        {'voice': 'ja-JP-KeitaNeural', 'label': '케이타 (남)', 'gender': 'M'},
+    ],
 }
 
 # 언어별 기본 voice(사용자 미설정 시). EdgeTTSProvider._DEFAULT_VOICES와 일치.
 DEFAULT_VOICE = {
     'en': 'en-US-AriaNeural',
     'ko': 'ko-KR-SunHiNeural',
+    'ja': 'ja-JP-NanamiNeural',
 }
 
 # 미리듣기 샘플 텍스트(언어별 고정). voice별로 한 번 생성·캐싱된다.
 SAMPLE_TEXT = {
     'en': 'Hello! This is a sample of my voice.',
     'ko': '안녕하세요! 제 목소리 샘플이에요.',
+    'ja': 'こんにちは。これは私の声のサンプルです。',
 }
 
 _VALID = {lang: {v['voice'] for v in vs} for lang, vs in CURATED_VOICES.items()}

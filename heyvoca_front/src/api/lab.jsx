@@ -2,20 +2,36 @@ import { backendUrl, fetchDataAsync } from '../utils/common';
 
 // 실험실 기능 상태 모듈 캐시 — 앱 시작 시 prefetch로 채워두면
 // 실험실 화면을 열 때 네트워크 대기 없이 즉시 올바른 토글 상태를 보여준다.
-let _labFeaturesCache = null; // { chat_study: bool, ... } | null
+let _labFeaturesCache = null; // { chat_study: bool, multi_lang: bool, ... } | null
+
+// 캐시 변경 구독자 — 홈 헤더 언어 칩처럼 실험실 화면 밖에서 토글 상태에 반응해야 하는 곳용.
+const _listeners = new Set();
+
+const _setCache = (features) => {
+  _labFeaturesCache = features;
+  _listeners.forEach((fn) => {
+    try { fn(features); } catch (e) { /* 구독자 오류 무시 */ }
+  });
+};
 
 const _extractFeatures = (result) => result?.data?.features || result?.features || null;
 
 // 캐시된 실험실 기능 상태(없으면 null). 화면 초기 state로 사용.
 export const getCachedLabFeatures = () => _labFeaturesCache;
 
-// 실험실 기능 설정 조회 (features: { chat_study: bool, ... })
+// 실험실 기능 캐시 변경 구독. 반환값은 구독 해제 함수.
+export const subscribeLabFeatures = (listener) => {
+  _listeners.add(listener);
+  return () => { _listeners.delete(listener); };
+};
+
+// 실험실 기능 설정 조회 (features: { chat_study: bool, multi_lang: bool, ... })
 export const getLabSettingsApi = async () => {
   const url = `${backendUrl}/lab/settings`;
   try {
     const result = await fetchDataAsync(url, 'GET', {});
     const features = _extractFeatures(result);
-    if (features) _labFeaturesCache = features;
+    if (features) _setCache(features);
     return result;
   } catch (error) {
     console.error('getLabSettingsApi 오류:', error);
@@ -38,7 +54,7 @@ export const setLabFeatureApi = async (feature, enabled) => {
   try {
     const result = await fetchDataAsync(url, 'PUT', { feature, enabled });
     const features = _extractFeatures(result);
-    if (features) _labFeaturesCache = features;
+    if (features) _setCache(features);
     return result;
   } catch (error) {
     console.error('setLabFeatureApi 오류:', error);

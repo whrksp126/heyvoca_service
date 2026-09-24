@@ -1,0 +1,9 @@
+{
+  "version": "20260925-1",
+  "url": "https://objectstore.ghmate.com/heyvoca/dict_ja/heyvoca_dict_ja_v20260925-1.sql.gz",
+  "index": "https://objectstore.ghmate.com/heyvoca/dict_ja/index.json",
+  "sha256_gz": "2c705581b525f50f49dde71ff2f303161d7ed0bd296bfd9d5b8a5fb21fefbf13",
+  "sha256_sql": "fda133bf0b0fd59b34e7dfd3b294068954510aad61524dcddcc964725a895fcc",
+  "counts": {"voca": 23143, "voca_meaning": 53613, "voca_example": 53909, "voca_inactive": 20, "bookstore": 25, "admin_voca_book": 25, "admin_voca_book_map": 7731},
+  "sources": {"jmdict": "3.6.2+20260921173324", "tatoeba": "2026-09 exports", "jlpt": "stephenmk/yomitan-jlpt-vocab(tanos)", "kanjium": "accents.txt", "krdict": "한국어기초사전 JSON 전체(2026-09-24)"}
+}

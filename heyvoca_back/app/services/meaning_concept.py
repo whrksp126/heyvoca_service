@@ -100,7 +100,13 @@ def load_dict_meaning_concepts(voca_ids: Iterable[Optional[int]]) -> dict:
     호출 측은 이 맵을 이용해 사용자 단어에 복사 저장된 뜻 문자열(voca_meanings JSON)을
     정규화해 매칭시켜 concept_id 목록을 채운다.
     (UserVoca/UserVocaBookMap에는 meaning_id가 저장돼 있지 않아 voca_id 기준으로 찾는다.)
+
+    일본어 사전(g.dict_lang == 'ja')은 voca_meaning_concept 가 비어 있으므로 쿼리 없이 {} —
+    호출 측은 정규화 뜻 문자열 폴백으로 겹침을 판정한다.
     """
+    from app.utils.dict_lang import get_dict_lang
+    if get_dict_lang() == 'ja':
+        return {}
     ids = sorted({int(v) for v in voca_ids if v is not None})
     if not ids:
         return {}

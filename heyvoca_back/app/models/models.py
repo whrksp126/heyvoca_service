@@ -2,7 +2,7 @@ from app import db
 
 from sqlalchemy import ForeignKey, Enum, UniqueConstraint, Index, PrimaryKeyConstraint, CheckConstraint
 from sqlalchemy.schema import Column
-from sqlalchemy.types import String, Integer, Date, DateTime, Boolean, Text, BigInteger, Date, TEXT, Float
+from sqlalchemy.types import String, Integer, Date, DateTime, Boolean, Text, BigInteger, Date, TEXT, Float, JSON
 
 from sqlalchemy.dialects.mysql import BINARY, LONGTEXT
 from sqlalchemy.types import TypeDecorator
@@ -94,6 +94,10 @@ class User(db.Model):
     onboarding_ver = Column(String(20), nullable=True, default=None)
     # 실험실 — '채팅으로 학습' 기능 ON/OFF. 알림 발송 대상 판정 + 채팅 진입 게이트.
     chat_study_enabled = Column(Boolean, nullable=False, default=False, server_default='0')
+    # 현재 학습 언어('en'|'ja', config.SUPPORTED_LEARNING_LANGS). 인증 요청의 사전 라우팅 기준(g.dict_lang).
+    learning_lang = Column(String(8), nullable=False, default='en', server_default='en')
+    # 실험실 — '다른 언어 학습하기(베타)' 노출 게이트. 백엔드 라우팅은 이 값과 무관하게 learning_lang 을 따른다.
+    multi_lang_enabled = Column(Boolean, nullable=False, default=False, server_default='0')
 
     def __init__(self, level_id, email, google_id, username, name, phone,
                 last_logged_at, refresh_token, code,
@@ -192,6 +196,9 @@ class Voca(db.Model):
     voca_examples = relationship("VocaExampleMap", back_populates="voca")
     label = relationship("VocaLabel", back_populates="voca", uselist=False,
                          cascade="all, delete-orphan")
+    # 일한 확장(1:1). heyvoca_dict_ja 에만 테이블이 있으므로 g.dict_lang=='ja' 일 때만 접근할 것.
+    ja = relationship("VocaJa", uselist=False, viewonly=True,
+                      primaryjoin="Voca.id == foreign(VocaJa.voca_id)")
 
     def __init__(self, word, pronunciation=None):
         self.word = word
@@ -256,6 +263,9 @@ class VocaMeaning(db.Model):
     # 유사/동일 개념 그룹 매핑(N:M) — 뜻 하나가 여러 판정 그룹에 속할 수 있다.
     # 조회 전용(viewonly). 실제 로딩은 app/services/meaning_concept.py에서 배치 쿼리로 처리.
     concepts = relationship("VocaMeaningConcept", viewonly=True)
+    # 일한 확장(1:1, ja 사전 전용)
+    ja = relationship("VocaMeaningJa", uselist=False, viewonly=True,
+                      primaryjoin="VocaMeaning.id == foreign(VocaMeaningJa.meaning_id)")
 
 
 # 단어뜻-유사개념그룹 매핑. concept_id를 하나라도 공유하면 "뜻이 겹친다"로 판정한다
@@ -279,6 +289,71 @@ class VocaExample(db.Model):
 
     # 관계 정의
     voca_examples = relationship("VocaExampleMap", back_populates="example")
+    # 일한 확장(1:1, ja 사전 전용) — reading_tokens(후리가나)
+    ja = relationship("VocaExampleJa", uselist=False, viewonly=True,
+                      primaryjoin="VocaExample.id == foreign(VocaExampleJa.example_id)")
+
+
+# ── 일한(heyvoca_dict_ja) 확장 테이블 ─────────────────────────────────────
+# heyvoca_dict(영한)에는 없는 테이블이다. info['ja_only']=True 로 표시해
+# migrations_dict autogenerate·scripts/verify_schema.py 가 제외한다.
+# 스키마 정본: db/dict_ja/scripts/schema_dict_ja.sql (dump import 로 생성, alembic 비관리).
+# ForeignKey 는 선언하지 않는다(영한 metadata 에 FK 가 섞이지 않도록) — relationship 은
+# primaryjoin + foreign() 으로 연결.
+def _ja_only():
+    # Table.info 는 복사되지 않고 그대로 쓰이므로(Flask-SQLAlchemy 가 bind_key 를 써 넣음) 테이블마다 새 dict.
+    return {'info': {'ja_only': True}}
+
+
+class VocaJa(db.Model):
+    __tablename__ = 'voca_ja'
+    __bind_key__ = 'dict'
+    __table_args__ = (
+        CheckConstraint("jlpt IS NULL OR jlpt IN ('N1','N2','N3','N4','N5')", name='ck_voca_ja_jlpt'),
+        _ja_only(),
+    )
+    voca_id = Column(Integer, primary_key=True, autoincrement=False)
+    jmdict_id = Column(Integer, nullable=False, unique=True)
+    reading = Column(String(100), nullable=True, index=True)     # 히라가나 읽기(가타카나어는 가타카나)
+    romaji = Column(String(100), nullable=True)
+    kanji_forms = Column(JSON, nullable=True)                    # [{text,tags,common}]
+    kana_forms = Column(JSON, nullable=True)                     # [{text,tags,common,appliesToKanji}]
+    jlpt = Column(String(2), nullable=True, index=True)          # N1~N5
+    freq_rank = Column(Integer, nullable=True)
+    accent = Column(String(50), nullable=True)                   # Kanjium 피치 액센트
+    uk = Column(Boolean, nullable=False, default=False, server_default='0')
+    common = Column(Boolean, nullable=False, default=False, server_default='0')
+    flags = Column(JSON, nullable=True)
+
+    def __repr__(self):
+        return f"<VocaJa(voca_id={self.voca_id}, reading='{self.reading}', jlpt={self.jlpt})>"
+
+
+class VocaMeaningJa(db.Model):
+    __tablename__ = 'voca_meaning_ja'
+    __bind_key__ = 'dict'
+    __table_args__ = _ja_only()
+    meaning_id = Column(Integer, primary_key=True, autoincrement=False)
+    sense_no = Column(Integer, nullable=True, index=True)
+    en_gloss = Column(Text, nullable=True)                       # 감사용, 앱 미노출
+    jmdict_pos = Column(JSON, nullable=True)
+
+
+class VocaExampleJa(db.Model):
+    __tablename__ = 'voca_example_ja'
+    __bind_key__ = 'dict'
+    __table_args__ = (
+        CheckConstraint("source IN ('tatoeba','generated')", name='ck_voca_example_ja_source'),
+        _ja_only(),
+    )
+    example_id = Column(Integer, primary_key=True, autoincrement=False)
+    sense_no = Column(Integer, nullable=True)
+    reading_tokens = Column(JSON, nullable=True)                 # [[surface, reading|null(, okurigana)], ...]
+    source = Column(String(20), nullable=False, index=True)      # tatoeba | generated
+    tatoeba_ja_id = Column(Integer, nullable=True, index=True)
+    tatoeba_en_id = Column(Integer, nullable=True)
+    verified = Column(Boolean, nullable=False, default=False, server_default='0')
+    span_method = Column(String(20), nullable=True)
 
 
 # 서점
@@ -381,11 +456,16 @@ class UserVocaBook(db.Model):
     voca_list = Column(TEXT, nullable=True, default=None)
     created_at = Column(DateTime, nullable=False, default=datetime.utcnow)
     updated_at = Column(DateTime, nullable=True, default=None)
+    # 단어장 언어('en'|'ja'). 새 단어장은 current_user.learning_lang 을 기록.
+    language = Column(String(8), nullable=False, default='en', server_default='en', index=True)
     
     voca_maps = relationship("UserVocaBookMap", back_populates="user_voca_book", cascade="all, delete-orphan")
 
 
-    def __init__(self, user_id, bookstore_id, color, name, total_word_cnt, memorized_word_cnt, voca_list, updated_at):
+    def __init__(self, user_id, bookstore_id, color, name, total_word_cnt, memorized_word_cnt, voca_list, updated_at,
+                 language=None):
+        if language is not None:
+            self.language = language
         self.user_id = user_id
         self.bookstore_id = bookstore_id
         self.color = color
@@ -1094,6 +1174,12 @@ class UserVoca(db.Model):
     data = Column(TEXT, nullable=True)
     created_at = Column(DateTime, nullable=False, default=datetime.utcnow)
     updated_at = Column(DateTime, nullable=True, default=None)
+    # voca_id 가 어느 사전(heyvoca_dict / heyvoca_dict_ja)을 가리키는지. 중복 키 = (user_id, dict_lang, word)
+    dict_lang = Column(String(8), nullable=False, default='en', server_default='en')
+
+    __table_args__ = (
+        Index('ix_user_voca_user_dict_lang', 'user_id', 'dict_lang'),
+    )
 
     # 관계 정의
     user = relationship("User")
@@ -1108,7 +1194,10 @@ class UserVoca(db.Model):
     )
     book_maps = relationship("UserVocaBookMap", back_populates="user_voca", cascade="all, delete-orphan")
 
-    def __init__(self, user_id=None, voca_id=None, word=None, voca_meanings=None, voca_examples=None, data=None):
+    def __init__(self, user_id=None, voca_id=None, word=None, voca_meanings=None, voca_examples=None, data=None,
+                 dict_lang=None):
+        if dict_lang is not None:
+            self.dict_lang = dict_lang
         self.user_id = user_id
         self.voca_id = voca_id
         self.word = word
@@ -1173,6 +1262,7 @@ class UserStudyLog(db.Model):
         Index('ix_usl_user_created', 'user_id', 'created_at'),
         Index('ix_usl_user_voca',    'user_id', 'user_voca_id'),
         Index('ix_usl_session',      'session_id'),
+        Index('ix_usl_user_dict_lang', 'user_id', 'dict_lang'),
     )
 
     # PrimaryKeyConstraint로 복합 PK 정의하므로 primary_key=True 제거,
@@ -1197,6 +1287,8 @@ class UserStudyLog(db.Model):
     state_before     = Column(TEXT, nullable=True, comment='FSRS state JSON (적용 전)')
     state_after      = Column(TEXT, nullable=True, comment='FSRS state JSON (적용 후)')
     created_at       = Column(DateTime, nullable=False, default=datetime.utcnow)
+    dict_lang        = Column(String(8), nullable=False, default='en', server_default='en',
+                              comment='voca_id 사전 언어 en|ja (통계 필터)')
 
     # 관계 정의 (session_id에 FK가 없으므로 primaryjoin/foreign 명시)
     session = relationship(
@@ -1209,7 +1301,9 @@ class UserStudyLog(db.Model):
                  was_correct, q_score, time_taken_ms,
                  voca_id=None, user_voca_book_id=None,
                  rating=None, word_length=None,
-                 state_before=None, state_after=None):
+                 state_before=None, state_after=None, dict_lang=None):
+        if dict_lang is not None:
+            self.dict_lang = dict_lang
         self.user_id           = user_id
         self.user_voca_id      = user_voca_id
         self.voca_id           = voca_id

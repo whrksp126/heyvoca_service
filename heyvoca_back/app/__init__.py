@@ -45,7 +45,62 @@ if env_file == 'local':
   os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
 
 
-db = SQLAlchemy()
+from flask_sqlalchemy import SignallingSession as _SignallingSession
+from sqlalchemy import orm as _orm
+
+
+# ── 사전 언어 라우팅 (INTEGRATION_SPEC 3절) ─────────────────────────────
+# dict 엔진(heyvoca_dict)과 풀을 공유하는 "schema 번역" 엔진을 엔진 객체별로 캐시.
+# execution_options() 는 OptionEngine 을 만들어 같은 pool 을 쓰므로 커넥션이 늘지 않는다.
+_JA_DICT_ENGINES = {}
+
+
+def _ja_dict_engine(dict_engine, schema_ja):
+    key = (dict_engine, schema_ja)
+    eng = _JA_DICT_ENGINES.get(key)
+    if eng is None:
+        eng = dict_engine.execution_options(schema_translate_map={None: schema_ja})
+        _JA_DICT_ENGINES[key] = eng
+    return eng
+
+
+class RoutingSession(_SignallingSession):
+    """dict bind 쿼리를 g.dict_lang 에 따라 heyvoca_dict / heyvoca_dict_ja 로 보낸다.
+
+    mapper 가 없는 원시 text() 는 기존처럼 기본(사용자 DB) 엔진 — schema 는
+    app.utils.dict_lang.dict_schema() 로 명시할 것.
+    """
+
+    def get_bind(self, mapper=None, clause=None, **kw):
+        # SA 1.4 scoped_session 프록시는 bind=/_sa_skip_events= 등을 더 넘긴다 —
+        # 부모(Flask-SQLAlchemy 2.5.1)는 (mapper, clause)만 받으므로 흡수한다.
+        bind = super().get_bind(mapper, clause)
+        # mapper 경로(ORM)든 mapper 없는 Core 문(select(Table.__table__), union 등 —
+        # 부모가 clause 의 테이블로 binds 를 찾아 dict 엔진을 돌려줌)이든,
+        # 결과가 dict 엔진이면 ja 일 때 번역 엔진으로 치환한다.
+        try:
+            from flask_sqlalchemy import get_state
+            dict_engine = get_state(self.app).db.get_engine(self.app, bind='dict')
+        except Exception:
+            return bind
+        if bind is not dict_engine:
+            return bind
+        from app.utils.dict_lang import get_dict_lang
+        if get_dict_lang() != 'ja':
+            return bind
+        schema_ja = self.app.config.get('DICT_SCHEMA_JA', 'heyvoca_dict_ja')
+        return _ja_dict_engine(bind, schema_ja)
+
+
+class RoutingSQLAlchemy(SQLAlchemy):
+    def create_session(self, options):
+        options = dict(options)
+        options.pop('class_', None)
+        options.pop('db', None)
+        return _orm.sessionmaker(class_=RoutingSession, db=self, **options)
+
+
+db = RoutingSQLAlchemy()
 login_manager = LoginManager()
 cache = Cache()
 
@@ -170,6 +225,11 @@ def create_app():
   cache.init_app(app)
   limiter.init_app(app)
   # login_manager.login_view = "main_login.html"
+
+  # 사전 언어 기본값 — 비인증은 ?lang= / X-Dict-Lang, Bearer 가 유효하면 user.learning_lang.
+  # 인증 라우트는 jwt_required 가 다시 확정한다(app/utils/dict_lang.py).
+  from app.utils.dict_lang import init_request_dict_lang
+  app.before_request(init_request_dict_lang)
 
   login_manager.user_loader(load_user)
   login_manager.unauthorized_handler(unauthorized_callback)

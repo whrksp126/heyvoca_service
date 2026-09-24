@@ -30,6 +30,19 @@ from app.models.models import (
     VocaExampleMap,
 )
 from app.routes.admin import admin_required
+from app.utils.dict_lang import get_dict_lang
+from app.utils.word_payload import (
+    load_ja_word_extras, load_ja_example_tokens, apply_word_fields, word_lang_fields,
+)
+
+
+def _dict_bind_args():
+    """mapper 없는 Core select(union 등)를 현재 언어 사전 엔진으로 보내기 위한 bind_arguments.
+
+    RoutingSession.get_bind 는 mapper 가 있을 때만 ?lang=ja → heyvoca_dict_ja 로 보낸다.
+    `__table__` 기반 Core 문은 mapper 가 없어 기본 dict(영어) 엔진으로 가므로 명시한다.
+    """
+    return {'mapper': AdminVocaBook.__mapper__}
 
 
 admin_voca_books_bp = Blueprint(
@@ -243,6 +256,9 @@ def get_voca_book(book_id):
 
     bookstore = Bookstore.query.filter_by(admin_voca_book_id=book_id).first()
 
+    lang = get_dict_lang()
+    extras = load_ja_word_extras([m.voca_id for m in maps], lang)
+
     words = []
     for m in maps:
         meanings, m_err = _parse_json_field(m.voca_meanings)
@@ -263,6 +279,8 @@ def get_voca_book(book_id):
             'raw_meanings': m.voca_meanings if m_err else None,
             'raw_examples': m.voca_examples if e_err else None,
             'parse_error': parse_error,
+            **word_lang_fields(m.voca_id, extras, lang,
+                               fallback_pronunciation=voca.pronunciation if voca else None),
         })
 
     return jsonify({
@@ -475,13 +493,14 @@ def add_word(book_id):
                     'message': '동일한 단어가 이미 사전에 있습니다. 기존 단어를 선택하거나 force=true로 재호출하세요.',
                     'data': {
                         'candidates': [
-                            {
+                            apply_word_fields({
                                 'voca_id': v.id,
                                 'word': v.word,
                                 'pronunciation': v.pronunciation,
                                 'verb_forms': v.verb_forms,
                                 'level': v.level,
-                            } for v in candidates
+                            }, v.id, load_ja_word_extras([c.id for c in candidates]))
+                            for v in candidates
                         ],
                     },
                 }), 409
@@ -535,7 +554,7 @@ def add_word(book_id):
 
     return jsonify({
         'code': 200,
-        'data': {
+        'data': apply_word_fields({
             'map_id': new_map.id,
             'voca_id': voca.id,
             'word': voca.word,
@@ -545,7 +564,7 @@ def add_word(book_id):
             'level': new_map.level,
             'meanings': meanings,
             'examples': examples,
-        },
+        }, voca.id, load_ja_word_extras([voca.id])),
     }), 200
 
 
@@ -738,18 +757,27 @@ def get_voca_dictionary(voca_id):
         .all()
     )
 
+    lang = get_dict_lang()
+    tokens_map = load_ja_example_tokens([e.id for e in examples], lang)
+
+    def _ex(e):
+        item = {'id': e.id, 'origin': e.exam_en, 'meaning': e.exam_ko}
+        if e.id in tokens_map:
+            item['reading_tokens'] = tokens_map[e.id]
+        return item
+
     return jsonify({
         'code': 200,
         'data': {
-            'voca': {
+            'voca': apply_word_fields({
                 'id': voca.id,
                 'word': voca.word,
                 'pronunciation': voca.pronunciation,
                 'verb_forms': voca.verb_forms,
                 'level': voca.level,
-            },
+            }, voca.id, load_ja_word_extras([voca.id], lang), lang),
             'meanings': [{'id': m.id, 'meaning': m.meaning} for m in meanings],
-            'examples': [{'id': e.id, 'origin': e.exam_en, 'meaning': e.exam_ko} for e in examples],
+            'examples': [_ex(e) for e in examples],
         },
     }), 200
 
@@ -1053,12 +1081,14 @@ def unified_voca_books():
     # 전체 count (서브쿼리 감싸기)
     count_subq = base_q.subquery('cnt_wrap')
     total = db.session.execute(
-        select(func.count()).select_from(count_subq)
+        select(func.count()).select_from(count_subq),
+        bind_arguments=_dict_bind_args(),
     ).scalar()
 
     # 페이지 슬라이스
     rows = db.session.execute(
-        base_q.limit(page_size).offset(offset)
+        base_q.limit(page_size).offset(offset),
+        bind_arguments=_dict_bind_args(),
     ).fetchall()
 
     # Bookstore 조회 (슬라이스 결과에 대해서만)
@@ -1136,21 +1166,35 @@ def search_voca():
     if not q:
         return jsonify({'code': 200, 'data': {'items': []}}), 200
 
-    rows = (
-        Voca.query
-        .filter(Voca.word.ilike(f'{q}%'))
-        .order_by(Voca.word.asc(), Voca.id.asc())
-        .limit(limit)
-        .all()
-    )
+    lang = get_dict_lang()
+    if lang == 'ja':
+        # 일본어: 표기 또는 읽기(가나) 접두 일치
+        from app.models.models import VocaJa
+        rows = (
+            Voca.query
+            .outerjoin(VocaJa, VocaJa.voca_id == Voca.id)
+            .filter(or_(Voca.word.like(f'{q}%'), VocaJa.reading.like(f'{q}%')))
+            .order_by(Voca.word.asc(), Voca.id.asc())
+            .limit(limit)
+            .all()
+        )
+    else:
+        rows = (
+            Voca.query
+            .filter(Voca.word.ilike(f'{q}%'))
+            .order_by(Voca.word.asc(), Voca.id.asc())
+            .limit(limit)
+            .all()
+        )
+    extras = load_ja_word_extras([v.id for v in rows], lang)
     items = [
-        {
+        apply_word_fields({
             'voca_id': v.id,
             'word': v.word,
             'pronunciation': v.pronunciation,
             'verb_forms': v.verb_forms,
             'level': v.level,
             'is_active': v.is_active,
-        } for v in rows
+        }, v.id, extras, lang) for v in rows
     ]
     return jsonify({'code': 200, 'data': {'items': items}}), 200

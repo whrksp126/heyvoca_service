@@ -4,6 +4,10 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
 import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 import SpeakerButton from '../common/SpeakerButton';
+import JlptBadge from '../common/JlptBadge';
+import FuriganaText from '../common/FuriganaText';
+import { wordLang, isJa } from '../../utils/lang';
+import { getReading, shouldShowReading } from '../../utils/jaWord';
 import { AddBookStoreNewBottomSheet } from '../newBottomSheet/AddBookStoreNewBottomSheet';
 import { AlertNewBottomSheet } from '../newBottomSheet/AlertNewBottomSheet';
 import PreviewWordNewBottomSheet from '../newBottomSheet/PreviewWordNewBottomSheet';
@@ -400,9 +404,16 @@ export const PreviewBookStoreNewFullSheet = ({
                     <span
                       className="min-w-0 truncate text-[15px] font-[700] tracking-[-0.02em] text-layout-black dark:text-layout-white"
                       id={`word-${item.id}`}
+                      lang={isJa(wordLang(item)) ? 'ja' : undefined}
                     >
                       {item.origin}
                     </span>
+                    {shouldShowReading(item) && (
+                      <span lang="ja" className="shrink-0 truncate text-[10.5px] font-[500] text-layout-gray-300">
+                        {getReading(item)}
+                      </span>
+                    )}
+                    {isJa(wordLang(item)) && <JlptBadge level={item.jlpt} size="sm" />}
                   </div>
                   <div
                     className="truncate mt-[1px] text-[12px] tracking-[-0.02em] text-layout-gray-400 dark:text-layout-gray-300"
@@ -425,7 +436,11 @@ export const PreviewBookStoreNewFullSheet = ({
                           className="text-[11.5px] leading-[1.45] tracking-[-0.02em] text-layout-gray-400 dark:text-layout-gray-300 break-words"
                           id={`example-${item.id}-${example_index}`}
                         >
-                          <span dangerouslySetInnerHTML={{ __html: exOrigin }} />
+                          <FuriganaText
+                            html={exOrigin}
+                            readingTokens={isJa(wordLang(item)) ? example.reading_tokens : undefined}
+                            lang={isJa(wordLang(item)) ? 'ja' : undefined}
+                          />
                         </p>
                         <p
                           className="text-[11.5px] leading-[1.45] tracking-[-0.02em] text-layout-gray-300 dark:text-layout-gray-400 break-words"
@@ -449,7 +464,7 @@ export const PreviewBookStoreNewFullSheet = ({
                   onClick={(e) => e.stopPropagation()}
                   onKeyDown={(e) => e.stopPropagation()}
                 >
-                  <SpeakerButton text={item.origin} lang="en" label="단어 발음 듣기" />
+                  <SpeakerButton text={item.origin} lang={wordLang(item)} label="단어 발음 듣기" />
                 </span>
               </div>
             );

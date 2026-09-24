@@ -2,6 +2,7 @@ import CardMatchQuestion from './cardMatch/CardMatchQuestion';
 import CardMatchListeningQuestion from './cardMatch/CardMatchListeningQuestion';
 import FillInTheBlankQuestion from './fillInTheBlank/FillInTheBlankQuestion';
 import { wordsOverlap } from '../../utils/meaningConcept';
+import { wordLang, isJa } from '../../utils/lang';
 
 // ─── 강조 마커(<strong class="target-word">…</strong>) 유틸 ─────────────────────
 const TARGET_WORD_RE = /<strong\b[^>]*\btarget-word\b[^>]*>([\s\S]*?)<\/strong\s*>/i;
@@ -76,7 +77,14 @@ const buildFillInTheBlankQuestions = (selectedWords, allWords) => {
     // 짧은 예문은 빈칸을 뚫으면 단서가 한두 단어만 남는다("I feel cold." → "I feel ___.").
     // 사전 쪽은 긴 예문으로 보강했지만, 한 단어에 긴 예문과 짧은 예문이 같이 남아 있을 수
     // 있어 출제에서도 긴 쪽(4단어 이상)을 우선 고른다. 전부 짧으면 그대로 쓴다.
-    const longEnough = candidates.filter((ex) => stripTags(exampleEn(ex)).trim().split(/\s+/).length >= 4);
+    // 일본어는 띄어쓰기가 없어 단어 수 대신 문자 수(공백 제외 8자 이상)로 판정한다.
+    const ja = isJa(wordLang(word));
+    const longEnough = candidates.filter((ex) => {
+      const plain = stripTags(exampleEn(ex)).trim();
+      return ja
+        ? plain.replace(/\s+/g, '').length >= 8
+        : plain.split(/\s+/).length >= 4;
+    });
     const example = shuffleArray(longEnough.length > 0 ? longEnough : candidates)[0];
     const blankText = dir.blank(example);
     const shownText = dir.shown(example);
@@ -109,6 +117,8 @@ const buildFillInTheBlankQuestions = (selectedWords, allWords) => {
       shownText,
       blankText,
       blankFill,
+      // ja 예문 후리가나/토큰 탭용 — 빈칸 원문(blankText)의 plain 과 이어 붙이면 같다
+      blankReadingTokens: Array.isArray(example?.reading_tokens) ? example.reading_tokens : null,
       options,
       resultIndex: options.indexOf(correctText),
       isCorrect: null,

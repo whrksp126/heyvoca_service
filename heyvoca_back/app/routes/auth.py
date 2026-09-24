@@ -676,6 +676,8 @@ def get_user_info():
         'onboarding_ver' : user.onboarding_ver,
         'source_channel' : user.source_channel,
         'learning_goal' : user.learning_goal,
+        # 현재 학습 언어('en'|'ja') — 사전·단어장·학습·통계 조회 기준
+        'learning_lang' : user.learning_lang or 'en',
     }
     return jsonify({'code':200, 'data': user_item})
 
@@ -706,10 +708,17 @@ def update_user_info():
             user_item.daily_new_limit = max(0, min(v, 100))
         except (TypeError, ValueError):
             pass
+    if 'learning_lang' in data:
+        # 학습 언어 전환 — 지원 언어(config.SUPPORTED_LEARNING_LANGS)만 허용
+        from app.utils.dict_lang import normalize_lang
+        lang = normalize_lang(data.get('learning_lang'))
+        if lang is None:
+            return jsonify({'code': 400, 'message': '지원하지 않는 학습 언어입니다.'}), 400
+        user_item.learning_lang = lang
 
     try:
         db.session.commit()
-        return jsonify({'code': 200, 'status': 'success'})
+        return jsonify({'code': 200, 'status': 'success', 'learning_lang': user_item.learning_lang or 'en'})
     except Exception as e:
         db.session.rollback()
         return jsonify({'code': 500, 'message': '서버 오류가 발생했습니다.'}), 500
@@ -968,18 +977,21 @@ def level_voca_list():
     
     try:
         from app.models.models import AdminVocaBook, AdminVocaBookMap, Voca
-        
-        # AdminVocaBook 정보 조회
-        admin_book = AdminVocaBook.query.get(mapping['id'])
-        if not admin_book:
-            return jsonify({'code': 404, 'message': '해당 레벨의 단어장 정보를 찾을 수 없습니다.'}), 404
-        
-        # 해당 단어장에 연결된 단어 리스트 조회
-        admin_maps = db.session.query(AdminVocaBookMap, Voca)\
-            .join(Voca, AdminVocaBookMap.voca_id == Voca.id)\
-            .filter(AdminVocaBookMap.book_id == mapping['id'])\
-            .order_by(AdminVocaBookMap.id.asc())\
-            .all()
+        from app.utils.dict_lang import use_dict_lang
+
+        # 레벨 단어장(온보딩 소스)은 영어 고정 — 학습 언어가 ja 인 사용자/게스트 ?lang=ja 여도 영어 사전.
+        with use_dict_lang('en'):
+            # AdminVocaBook 정보 조회
+            admin_book = AdminVocaBook.query.get(mapping['id'])
+            if not admin_book:
+                return jsonify({'code': 404, 'message': '해당 레벨의 단어장 정보를 찾을 수 없습니다.'}), 404
+
+            # 해당 단어장에 연결된 단어 리스트 조회
+            admin_maps = db.session.query(AdminVocaBookMap, Voca)\
+                .join(Voca, AdminVocaBookMap.voca_id == Voca.id)\
+                .filter(AdminVocaBookMap.book_id == mapping['id'])\
+                .order_by(AdminVocaBookMap.id.asc())\
+                .all()
         
         voca_list = []
         for amap, voca in admin_maps:
@@ -993,6 +1005,7 @@ def level_voca_list():
         # 프론트엔드 기대 형식에 맞게 데이터 구성
         data = {
             "id": admin_book.id,
+            "language": "en",
             "title": admin_book.book_nm,
             "color": {
                 "main": "var(--primary-main-500)",

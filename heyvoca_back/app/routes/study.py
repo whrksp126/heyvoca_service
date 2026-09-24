@@ -11,10 +11,18 @@ from app import db
 from app.models.models import UserStudySession, UserStudyLog, UserVoca, UserQuestionTypeStat, User
 from app.utils.jwt_utils import jwt_required
 from app.constants.question_types import ALLOWED_QUESTION_TYPES
+from app.utils.dict_lang import get_dict_lang
+from app.services.ja_fields import (
+    load_ja_word_info, load_ja_example_tokens, word_fields, examples_with_tokens,
+)
 
 study_bp = Blueprint('study', __name__, url_prefix='/study')
 
 _MAX_LIMIT = 500
+
+# 채팅 학습(네이티브 ChatStudyScreen)이 question.language 로 일본어를 다룰 수 있는 최소 앱 버전.
+# 미달(또는 버전 판별 불가)이면 ja 모드에서 세션을 주지 않고 업데이트를 안내한다.
+CHAT_JA_MIN_APP_VERSION = '1.1.1'
 
 # memory_state 임계점 — 값은 fsrs/thresholds.py 가 단일 소스다.
 # 여기에 숫자를 다시 적으면 농장 단계·추천 풀과 조용히 어긋난다(그 파일 주석 참고).
@@ -90,7 +98,7 @@ def get_logs():
 
     logs = (
         UserStudyLog.query
-        .filter_by(user_id=user_id)
+        .filter_by(user_id=user_id, dict_lang=get_dict_lang())
         .order_by(UserStudyLog.created_at.desc())
         .limit(limit)
         .all()
@@ -110,6 +118,7 @@ def get_logs():
             'rating':           l.rating,
             'time_taken_ms':    l.time_taken_ms,
             'word_length':      l.word_length,
+            'dict_lang':        l.dict_lang,
             'created_at':       l.created_at.isoformat() if l.created_at else None,
         }
         for l in logs
@@ -309,6 +318,7 @@ def post_study_log():
     memory_state_before = _classify_memory_state(fsrs_state_before)
 
     # ── lapse_history / prior_correct_rate 조회 (Phase 2.3, 1쿼리로 묶음) ──
+    # ja 는 띄어쓰기가 없으므로 글자 수 그대로(한자·가나 1자 = 1)를 쓴다.
     word_length      = len(user_voca.word) if user_voca.word else None
     fsrs_difficulty  = fsrs_state_before.get('difficulty') if fsrs_state_before else None
 
@@ -375,6 +385,9 @@ def post_study_log():
         word_length=word_length,
         state_before=json.dumps(fsrs_state_before, ensure_ascii=False) if fsrs_state_before else None,
         state_after=json.dumps(fsrs_state_after, ensure_ascii=False),
+        # 통계 필터용 사전 언어. 요청 언어(get_dict_lang())가 아니라 단어 자체의 언어를 쓴다 —
+        # 세션 도중 학습 언어를 바꾼 뒤 이전 언어 단어 로그가 늦게 도착해도 올바르게 분류된다.
+        dict_lang=user_voca.dict_lang or get_dict_lang(),
     )
     db.session.add(log)
 
@@ -471,6 +484,7 @@ def today_summary():
         db.session.query(UserStudyLog.user_voca_id, UserStudyLog.state_before)
         .filter(
             UserStudyLog.user_id == user_id,
+            UserStudyLog.dict_lang == get_dict_lang(),
             UserStudyLog.created_at >= day_start_utc,
         )
         .all()
@@ -533,12 +547,20 @@ def review_schedule():
     due = {'overdue': 0, 'today': 0}
     days_map: dict = {}   # date_str -> [word dict]  (오늘 + 향후 복습 예정)
 
+    # 풀은 이미 현재 학습 언어로 한정돼 있다. ja 면 단어 요약에 reading 을 붙인다.
+    lang = get_dict_lang()
+    ja_info = load_ja_word_info(it.voca_id for it in pool) if lang == 'ja' else {}
+
     def _word_entry(it):
-        return {
+        entry = {
             'user_voca_id': it.user_voca_id,
             'word':         it.word,
             'meaning':      it.meanings[0] if it.meanings else '',
+            'language':     lang,
         }
+        if lang == 'ja':
+            entry['reading'] = (ja_info.get(it.voca_id) or {}).get('reading')
+        return entry
 
     for it in pool:
         b = it.bucket
@@ -578,6 +600,7 @@ def review_schedule():
             'total':        total,
             'today':        today.isoformat(),
             'days':         days,   # 오늘+향후 날짜별 복습 예정 단어 리스트 (캘린더용)
+            'language':     lang,
         },
     }), 200
 
@@ -688,6 +711,8 @@ def _fetch_user_stats(user_id: UUID) -> dict:
         )
         .filter(
             UserStudyLog.user_id == user_id,
+            # 오늘 본 단어·lapse·신규 cap·7일 정답률 모두 현재 학습 언어 기준
+            UserStudyLog.dict_lang == get_dict_lang(),
             UserStudyLog.created_at >= seven_days_ago,
         )
         .all()
@@ -923,6 +948,10 @@ def get_recommend():
         return jsonify({'code': 500, 'message': '세션 생성에 실패했습니다.'}), 500
 
     # ── 응답 구성 ──
+    lang = get_dict_lang()
+    selected_voca_ids = [e['_item'].voca_id for e in enriched_items]
+    ja_info   = load_ja_word_info(selected_voca_ids) if lang == 'ja' else {}
+    ja_tokens = load_ja_example_tokens(selected_voca_ids) if lang == 'ja' else {}
     items_response = []
     for enriched in enriched_items:
         item = enriched['_item']
@@ -931,13 +960,17 @@ def get_recommend():
         items_response.append({
             'user_voca_id':            item.user_voca_id,
             'user_voca_book_id':       str(item.user_voca_book_id) if item.user_voca_book_id else None,
+            'voca_id':                 item.voca_id,
             'word':                    item.word,
+            # 공통 필드: language (+ ja 면 reading/romaji/jlpt/pronunciation)
+            **word_fields(lang, item.voca_id, ja_info),
             'meanings':                item.meanings,
             # 단어 단위 distinct concept_id 목록(같은/유사 뜻 그룹, 사전 미연결 단어는 [])
             'concept_ids':             item.concept_ids,
             # meanings와 순서/길이가 같은 concept_id 배열 — 뜻 하나하나의 그룹이 필요할 때 사용
             'meaning_concepts':        item.meaning_concepts,
-            'examples':                item.examples,
+            # ja 예문엔 reading_tokens(후리가나) 부착
+            'examples':                examples_with_tokens(lang, item.voca_id, item.examples, ja_tokens),
             'fsrs': {
                 'state':          fsrs.get('state', 'new'),
                 'stability':      fsrs.get('stability', 0.0),
@@ -1028,8 +1061,28 @@ def get_chat_session():
     """
     from app.services.recommend.pool import build_candidate_pool
     from app.services.recommend.composer import compose
+    from app.utils.app_version import is_app_version_at_least
 
     user_id = UUID(g.user_id)
+    lang = get_dict_lang()
+
+    # 일본어 모드: 채팅 화면(네이티브)이 question.language 를 이해하는 앱 버전부터만 제공.
+    # 버전은 X-App-Version 헤더 또는 UA 'HeyVoca iOS|Android/x.y.z' 로 판정(없으면 구버전 취급).
+    if lang == 'ja' and not is_app_version_at_least(CHAT_JA_MIN_APP_VERSION):
+        return jsonify({
+            'code': 200,
+            'data': {
+                'available': False,
+                'reason': 'app_update_required',
+                'min_app_version': CHAT_JA_MIN_APP_VERSION,
+                'language': lang,
+                'session_id': None,
+                'questions': [],
+            },
+            # 규격 4절 형태 그대로도 최상위에 노출(클라이언트가 어느 쪽을 읽어도 되게)
+            'available': False,
+            'reason': 'app_update_required',
+        }), 200
 
     try:
         count = int(request.args.get('count', 50))
@@ -1092,6 +1145,10 @@ def get_chat_session():
                 })
 
     # ── 사지선다 생성 ──
+    # 오답 풀은 build_candidate_pool 이 현재 언어로 한정했으므로 같은 언어 뜻만 보기로 나온다.
+    chat_voca_ids = [e['_item'].voca_id for e in enriched_items]
+    ja_info   = load_ja_word_info(chat_voca_ids) if lang == 'ja' else {}
+    ja_tokens = load_ja_example_tokens(chat_voca_ids) if lang == 'ja' else {}
     questions = []
     for enriched in enriched_items:
         item = enriched['_item']
@@ -1109,11 +1166,13 @@ def get_chat_session():
         questions.append({
             'user_voca_id':            item.user_voca_id,
             'user_voca_book_id':       str(item.user_voca_book_id) if item.user_voca_book_id else None,
+            'voca_id':                 item.voca_id,
             'word':                    item.word,
+            **word_fields(lang, item.voca_id, ja_info),
             'meanings':                item.meanings,
             'concept_ids':             item.concept_ids,
             'meaning_concepts':        item.meaning_concepts,
-            'examples':                item.examples,
+            'examples':                examples_with_tokens(lang, item.voca_id, item.examples, ja_tokens),
             'options':                 options,
             'answer_index':            answer_index,
             'fsrs': {
@@ -1131,7 +1190,8 @@ def get_chat_session():
     if not questions:
         return jsonify({
             'code': 200,
-            'data': {'session_id': None, 'composition': composition, 'questions': []},
+            'data': {'session_id': None, 'composition': composition, 'questions': [],
+                     'available': True, 'language': lang},
         }), 200
 
     # ── 세션 INSERT ──
@@ -1156,6 +1216,8 @@ def get_chat_session():
             'session_id':  str(session_obj.id),
             'composition': composition,
             'questions':   questions,
+            'available':   True,
+            'language':    lang,
         },
     }), 200
 

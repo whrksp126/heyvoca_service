@@ -1,16 +1,20 @@
 import React from 'react';
 import { IconCamera } from '../../assets/svg/icon';
 import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
-import DictionaryOcrResultNewFullSheet from '../newfullsheet/DictionaryOcrResultNewFullSheet';
+import DictionaryOcrResultNewFullSheet, { blockJaOcrIfUnsupported } from '../newfullsheet/DictionaryOcrResultNewFullSheet';
+import { useUser } from '../../context/UserContext';
 import { vibrate } from '../../utils/osFunction';
 
 const Header = () => {
   "use memo";
 
   const { pushNewFullSheet } = useNewFullSheetActions();
+  const { learningLang } = useUser();
 
   const handleCameraClick = () => {
     vibrate({ duration: 5 });
+    // ja 모드 + 구버전 앱(일본어 인식 미지원)이면 시트를 열지 않고 안내만
+    if (blockJaOcrIfUnsupported(learningLang)) return;
     pushNewFullSheet(DictionaryOcrResultNewFullSheet);
   };
 

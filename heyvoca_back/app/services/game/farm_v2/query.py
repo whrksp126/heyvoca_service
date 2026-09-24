@@ -44,8 +44,28 @@ from app.services.game.farm_v2 import answer, comeback, growth, inventory, local
 from app.services.game.farm_v2 import constants as C
 # `health` 는 아래에서 파라미터 이름으로도 써야 한다(계약의 ?health=). 모듈 쪽에 별칭을 준다.
 from app.services.game.farm_v2 import health as health_calc
+from app.utils.dict_lang import get_dict_lang, normalize_lang
 
 _log = logging.getLogger(__name__)
+
+
+def _lang(lang=None) -> str:
+    """집계 대상 학습 언어 — 명시값이 없으면 요청의 g.dict_lang(인증 사용자 learning_lang).
+
+    농장 **조회·집계**(개요 카운트, 작물 목록, 홈 피드, 돌봄 수)만 현재 언어로 좁힌다.
+    부패 확정·급수 같은 쓰기 경로와 보석/연속/출석은 언어와 무관한 전역 상태라 그대로 둔다.
+    """
+    return normalize_lang(lang) or get_dict_lang()
+
+
+def _attach_ja_reading(pairs, lang: str) -> None:
+    """(item, user_voca) 쌍의 item 에 ja 읽기(reading)를 붙인다 — voca_id 일괄 1쿼리."""
+    if lang != 'ja' or not pairs:
+        return
+    from app.services.ja_fields import load_ja_word_info
+    info = load_ja_word_info(uv.voca_id for _item, uv in pairs)
+    for item, uv in pairs:
+        item['reading'] = (info.get(uv.voca_id) or {}).get('reading')
 
 # 홈 4그룹 → 해당 성장 단계. growth.HOME_GROUP 의 역방향이다.
 # 'golden' 은 별도 그룹이 아니라 당근 그룹의 하위 집합이다(계약 counts 의 golden 과 같은 뜻).
@@ -202,7 +222,7 @@ def refresh_health(user_id: UUID, now: dt.datetime) -> None:
         db.session.rollback()
 
 
-def get_care_due_ids(user_id: UUID, now: Optional[dt.datetime] = None) -> set:
+def get_care_due_ids(user_id: UUID, now: Optional[dt.datetime] = None, lang: Optional[str] = None) -> set:
     """오늘 돌봄이 필요한 단어(user_voca_id 집합) — 단어장 목록/찾기 탭의 **정본**
     (`utils/vocaCrop.js::bookCareCount`/`isCareDue`)과 **정확히 같은 판정**을 직접 계산한다.
 
@@ -239,7 +259,7 @@ def get_care_due_ids(user_id: UUID, now: Optional[dt.datetime] = None) -> set:
         db.session.query(UserVocaGame.user_voca_id, UserVocaGame.visual_stage, UserVoca.id, UserVoca.data)
         .select_from(UserVoca)
         .outerjoin(UserVocaGame, UserVocaGame.user_voca_id == UserVoca.id)
-        .filter(UserVoca.user_id == user_id)
+        .filter(UserVoca.user_id == user_id, UserVoca.dict_lang == _lang(lang))
         .all()
     )
 
@@ -260,9 +280,9 @@ def get_care_due_ids(user_id: UUID, now: Optional[dt.datetime] = None) -> set:
     return due_ids
 
 
-def get_care_due_count(user_id: UUID, now: Optional[dt.datetime] = None) -> int:
+def get_care_due_count(user_id: UUID, now: Optional[dt.datetime] = None, lang: Optional[str] = None) -> int:
     """`get_care_due_ids` 의 개수. 홈 overview.today.care_due_cnt 가 이걸 쓴다."""
-    return len(get_care_due_ids(user_id, now))
+    return len(get_care_due_ids(user_id, now, lang))
 
 
 # ──────────────────────────────────────────────────────────────
@@ -270,7 +290,7 @@ def get_care_due_count(user_id: UUID, now: Optional[dt.datetime] = None) -> int:
 # ──────────────────────────────────────────────────────────────
 
 def get_overview(user_id: UUID, now: Optional[dt.datetime] = None,
-                 refresh: bool = True) -> dict:
+                 refresh: bool = True, lang: Optional[str] = None) -> dict:
     """홈 화면 한 번에 필요한 모든 수치 (계약 GET /farm/overview).
 
     한 엔드포인트로 묶은 이유는 홈이 열릴 때마다 개수·아이템·보석·연속·복귀를
@@ -284,8 +304,10 @@ def get_overview(user_id: UUID, now: Optional[dt.datetime] = None,
     if refresh:
         refresh_health(user_id, now)
 
-    counts, seed_detail = _stage_counts(user_id)
-    health_counts = _health_counts(user_id, now)
+    # 작물 수·건강·돌봄 수는 현재 학습 언어 단어만. 아이템·보석·연속·복귀는 전역.
+    lang = _lang(lang)
+    counts, seed_detail = _stage_counts(user_id, lang)
+    health_counts = _health_counts(user_id, now, lang)
 
     setting_limit = (
         db.session.query(UserFarmSetting.daily_review_limit)
@@ -311,7 +333,7 @@ def get_overview(user_id: UUID, now: Optional[dt.datetime] = None,
             # 이미 지남). 단어장 목록/찾기 탭의 "돌봄"(isCareDue), 데일리 미션의
             # review_due, /study/recommend 의 today·overdue 버킷과 같은 정의다.
             # 홈이 실제로 써야 하는 값 — get_care_due_ids 문서 참고.
-            'care_due_cnt': get_care_due_count(user_id, now),
+            'care_due_cnt': get_care_due_count(user_id, now, lang),
             # 부패까지 남은 단계가 하나뿐인 작물 — 오늘 목록 맨 앞에 올린다(8.4).
             'critical_first': health_counts['critical'],
             'recommended_limit': comeback.course_limit(comeback_state, setting_limit),
@@ -321,10 +343,11 @@ def get_overview(user_id: UUID, now: Optional[dt.datetime] = None,
         'streak': _streak_state(user_id, now),
         'comeback': comeback_state,
         'migration_notice': _migration_notice(user_id),
+        'language': lang,
     }
 
 
-def _stage_counts(user_id: UUID) -> tuple:
+def _stage_counts(user_id: UUID, lang: str = 'en') -> tuple:
     """성장 단계 집계 → 홈 4그룹 + 황금 + 씨앗 상세.
 
     황금을 당근 그룹에 **포함**시킨 이유는 홈이 4그룹 그림판이기 때문이다(5.1).
@@ -333,7 +356,8 @@ def _stage_counts(user_id: UUID) -> tuple:
     """
     rows = (
         db.session.query(UserVocaGame.visual_stage, func.count())
-        .filter(UserVocaGame.user_id == user_id)
+        .join(UserVoca, UserVoca.id == UserVocaGame.user_voca_id)
+        .filter(UserVocaGame.user_id == user_id, UserVoca.dict_lang == lang)
         .group_by(UserVocaGame.visual_stage)
         .all()
     )
@@ -357,7 +381,7 @@ def _stage_counts(user_id: UUID) -> tuple:
     # 세지 않으면 단어장에는 단어가 있는데 농장은 비어 보인다.
     total_voca = int(
         db.session.query(func.count(UserVoca.id))
-        .filter(UserVoca.user_id == user_id)
+        .filter(UserVoca.user_id == user_id, UserVoca.dict_lang == lang)
         .scalar() or 0
     )
     missing = max(0, total_voca - total_games)
@@ -366,12 +390,13 @@ def _stage_counts(user_id: UUID) -> tuple:
     return counts, seed_detail
 
 
-def _health_counts(user_id: UUID, now: dt.datetime) -> dict:
+def _health_counts(user_id: UUID, now: dt.datetime, lang: str = 'en') -> dict:
     """건강 상태 집계. GOLDEN 행은 계약의 5개 키 어디에도 넣지 않는다."""
     expr = effective_health_expr(now)
     rows = (
         db.session.query(expr, func.count())
-        .filter(UserVocaGame.user_id == user_id)
+        .join(UserVoca, UserVoca.id == UserVocaGame.user_voca_id)
+        .filter(UserVocaGame.user_id == user_id, UserVoca.dict_lang == lang)
         .group_by(expr)
         .all()
     )
@@ -486,8 +511,9 @@ def mark_migration_seen(user_id: UUID, now: Optional[dt.datetime] = None) -> dic
 
 def list_plants(user_id: UUID, now: Optional[dt.datetime] = None,
                 group: Optional[str] = None, health: Optional[str] = None,
-                limit: int = 50, cursor: Optional[int] = None) -> dict:
-    """작물 목록 (계약 GET /farm/plants). 커서 페이지네이션.
+                limit: int = 50, cursor: Optional[int] = None,
+                lang: Optional[str] = None) -> dict:
+    """작물 목록 (계약 GET /farm/plants). 커서 페이지네이션. 현재 학습 언어 단어만.
 
     커서를 offset 대신 user_voca_id 로 잡은 이유는, 스크롤 도중 학습이 끝나 정렬 대상이
     바뀌어도 이미 본 항목이 다시 나오거나 건너뛰지 않기 때문이다. id 는 변하지 않는다.
@@ -502,6 +528,7 @@ def list_plants(user_id: UUID, now: Optional[dt.datetime] = None,
     """
     now = now or dt.datetime.utcnow()
     limit = max(1, min(int(limit or 50), 100))
+    lang = _lang(lang)
 
     # **UserVoca 를 기준으로 LEFT JOIN 한다.** 게임 행(UserVocaGame)은 그 단어를 한 번이라도
     # 학습해야 생기므로, 게임 행을 기준으로 조인하면 아직 심지 않은 보유 씨앗이 목록에서
@@ -511,7 +538,7 @@ def list_plants(user_id: UUID, now: Optional[dt.datetime] = None,
         db.session.query(UserVocaGame, UserVoca)
         .select_from(UserVoca)
         .outerjoin(UserVocaGame, UserVocaGame.user_voca_id == UserVoca.id)
-        .filter(UserVoca.user_id == user_id)
+        .filter(UserVoca.user_id == user_id, UserVoca.dict_lang == lang)
     )
 
     if group:
@@ -542,7 +569,9 @@ def list_plants(user_id: UUID, now: Optional[dt.datetime] = None,
     has_more = len(rows) > limit
     rows = rows[:limit]
 
-    items = [_plant_item(game, user_voca, now) for game, user_voca in rows]
+    pairs = [(_plant_item(game, user_voca, now), user_voca) for game, user_voca in rows]
+    _attach_ja_reading(pairs, lang)
+    items = [item for item, _uv in pairs]
     return {
         'items': items,
         'next_cursor': rows[-1][1].id if (has_more and rows) else None,
@@ -550,7 +579,7 @@ def list_plants(user_id: UUID, now: Optional[dt.datetime] = None,
 
 
 def home_feed(user_id: UUID, now: Optional[dt.datetime] = None,
-              limit: int = 5) -> dict:
+              limit: int = 5, lang: Optional[str] = None) -> dict:
     """홈 아래쪽에 붙는 "지금 볼 만한 단어" 묶음.
 
     홈은 히어로·연속 학습·성과 카드까지만 규정돼 있어서, 급한 일이 없는 날에는
@@ -572,15 +601,18 @@ def home_feed(user_id: UUID, now: Optional[dt.datetime] = None,
     """
     now = now or dt.datetime.utcnow()
     limit = max(1, min(int(limit or 5), 20))
+    lang = _lang(lang)   # 현재 학습 언어 단어만
 
     def rows(build):
         q = build(
             db.session.query(UserVocaGame, UserVoca)
             .select_from(UserVoca)
             .outerjoin(UserVocaGame, UserVocaGame.user_voca_id == UserVoca.id)
-            .filter(UserVoca.user_id == user_id)
+            .filter(UserVoca.user_id == user_id, UserVoca.dict_lang == lang)
         )
-        return [_plant_item(game, uv, now) for game, uv in q.limit(limit).all()]
+        pairs = [(_plant_item(game, uv, now), uv) for game, uv in q.limit(limit).all()]
+        _attach_ja_reading(pairs, lang)
+        return [item for item, _uv in pairs]
 
     eff = effective_health_expr(now)
 
@@ -588,7 +620,7 @@ def home_feed(user_id: UUID, now: Optional[dt.datetime] = None,
     # 걸러서, 카운트(overview.today.care_due_cnt)는 예정일이 오늘인 단어를 세는데
     # 정작 이 목록에는 정확한 시각이 지나야 뜨는 어긋남이 있었다("총량 23인데
     # 목록은 비어 있음"). 같은 집합이어야 카드 숫자와 실제로 펼친 목록이 맞는다.
-    care_due_ids = get_care_due_ids(user_id, now)
+    care_due_ids = get_care_due_ids(user_id, now, lang)
     care = (rows(lambda q: q
                 .filter(UserVocaGame.user_voca_id.in_(care_due_ids))
                 # 마감이 없는 행은 뒤로 — MySQL 은 NULL 을 먼저 놓는다
@@ -637,6 +669,7 @@ def _plant_item(game: UserVocaGame, user_voca: UserVoca, now: dt.datetime) -> di
         'user_voca_id': user_voca.id,
         'word': user_voca.word or '',
         'meaning': _first_meaning(user_voca.voca_meanings),
+        'language': user_voca.dict_lang or 'en',
         'stage': stage,
         'crop': answer.CROP_KEY.get(stage, 'seed'),
         'health': h['state'],

@@ -4,6 +4,10 @@ import { motion } from 'framer-motion';
 import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 import { MIN_TEST_VOCABULARY_COUNT, getTextSound } from '../../utils/common';
 import MemorizationStatus from "../common/MemorizationStatus";
+import FuriganaText from "../common/FuriganaText";
+import ReadingLine from "../common/ReadingLine";
+import { wordLang, isJa } from "../../utils/lang";
+import { getReading, shouldShowReading } from "../../utils/jaWord";
 import { vibrate } from '../../utils/osFunction';
 
 // Hook 제거 - 직접 컴포넌트 사용
@@ -66,7 +70,7 @@ export const ProblemDataNewBottomSheet = ({ onCancel, options, resultIndex }) =>
                   "
                 >
                   <motion.span
-                    onClick={() => getTextSound(correctOption.origin, "en")}
+                    onClick={() => getTextSound(correctOption.origin, wordLang(correctOption))}
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
                     transition={{
@@ -75,11 +79,14 @@ export const ProblemDataNewBottomSheet = ({ onCancel, options, resultIndex }) =>
                       damping: 20
                     }}
                     className="inline-block cursor-pointer"
-                    style={{ 调节willChange: 'transform' }}
+                    style={{ willChange: 'transform' }}
                   >
                     {correctOption.origin}
                   </motion.span>
                 </h3>
+                {shouldShowReading(correctOption) && (
+                  <ReadingLine reading={getReading(correctOption)} className="w-full" as="p" />
+                )}
               </div>
               <div className="flex flex-wrap">
                 <span
@@ -112,7 +119,7 @@ export const ProblemDataNewBottomSheet = ({ onCancel, options, resultIndex }) =>
                     <div key={`correct_example_${index}`} className="flex flex-col">
                       <p className="text-[12px] font-[400] text-layout-gray-500 dark:text-layout-gray-50">
                         <motion.span
-                          onClick={() => getTextSound(example.origin, "en")}
+                          onClick={() => getTextSound(example.origin, wordLang(correctOption))}
                           whileHover={{ scale: 1.02 }}
                           whileTap={{ scale: 0.98 }}
                           transition={{
@@ -123,7 +130,11 @@ export const ProblemDataNewBottomSheet = ({ onCancel, options, resultIndex }) =>
                           className="inline-block cursor-pointer"
                           style={{ willChange: 'transform' }}
                         >
-                          <span dangerouslySetInnerHTML={{ __html: example.origin }} />
+                          <FuriganaText
+                            html={example.origin}
+                            readingTokens={isJa(wordLang(correctOption)) ? example.reading_tokens : undefined}
+                            lang={isJa(wordLang(correctOption)) ? 'ja' : undefined}
+                          />
                         </motion.span>
                       </p>
                       <p className="text-[12px] font-[400] text-layout-gray-500 dark:text-layout-gray-50">
@@ -188,7 +199,7 @@ export const ProblemDataNewBottomSheet = ({ onCancel, options, resultIndex }) =>
                       "
                     >
                       <motion.span
-                        onClick={() => getTextSound(option.origin, "en")}
+                        onClick={() => getTextSound(option.origin, wordLang(option))}
                         whileHover={{ scale: 1.02 }}
                         whileTap={{ scale: 0.98 }}
                         transition={{
@@ -202,6 +213,9 @@ export const ProblemDataNewBottomSheet = ({ onCancel, options, resultIndex }) =>
                         {option.origin}
                       </motion.span>
                     </h3>
+                    {shouldShowReading(option) && (
+                      <ReadingLine reading={getReading(option)} className="w-full" as="p" />
+                    )}
                   </div>
                   <div className="flex flex-wrap">
                     <span
@@ -234,7 +248,7 @@ export const ProblemDataNewBottomSheet = ({ onCancel, options, resultIndex }) =>
                         <div key={`option_example_${index}_${exIndex}`} className="flex flex-col">
                           <p className="text-[12px] font-[400] text-layout-gray-500 dark:text-layout-gray-50">
                             <motion.span
-                              onClick={() => getTextSound(example.origin, "en")}
+                              onClick={() => getTextSound(example.origin, wordLang(option))}
                               whileHover={{ scale: 1.02 }}
                               whileTap={{ scale: 0.98 }}
                               transition={{
@@ -245,7 +259,11 @@ export const ProblemDataNewBottomSheet = ({ onCancel, options, resultIndex }) =>
                               className="inline-block cursor-pointer"
                               style={{ willChange: 'transform' }}
                             >
-                              <span dangerouslySetInnerHTML={{ __html: example.origin }} />
+                              <FuriganaText
+                                html={example.origin}
+                                readingTokens={isJa(wordLang(option)) ? example.reading_tokens : undefined}
+                                lang={isJa(wordLang(option)) ? 'ja' : undefined}
+                              />
                             </motion.span>
                           </p>
                           <p className="text-[12px] font-[400] text-layout-gray-500 dark:text-layout-gray-50">

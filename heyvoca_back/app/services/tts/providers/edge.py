@@ -25,6 +25,7 @@ class EdgeTTSProvider(TTSProvider):
     _DEFAULT_VOICES = {
         'ko': 'ko-KR-SunHiNeural',
         'en': 'en-US-AriaNeural',
+        'ja': 'ja-JP-NanamiNeural',   # EDGE_TTS_VOICE_JA 로 덮어쓰기 가능
     }
 
     def voice_for(self, language: str) -> str:

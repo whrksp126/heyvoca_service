@@ -7,6 +7,8 @@ admin(사전 단어/단어장) 과 voca_books(사용자 단어장) 양쪽에서 
 
 처리 단계:
   1. spaCy(영어) / Kiwi(한국어) 로 단어(활용형 포함)를 찾아 태깅 (무료)
+     - 일본어(lang='ja'): spaCy 대신 표제어 문자열(또는 활용 어간) 첫 등장 1곳을 감싼다.
+       한국어 해석 쪽은 영어와 같은 Kiwi 경로.
   2. 실패 시 regex / 문자열 검색 fallback (무료)
   3. 그래도 실패한 잔여분만 GPT 배치로 처리 (호출 최소화)
 """
@@ -101,6 +103,34 @@ def _tag_en(word, sentence):
     return None
 
 
+def _resolve_lang(lang):
+    """명시 lang 우선, 없으면 요청의 학습 언어(g.dict_lang), 앱 컨텍스트 밖이면 'en'."""
+    from app.utils.dict_lang import normalize_lang, get_dict_lang
+    return normalize_lang(lang) or get_dict_lang()
+
+
+def _tag_ja(word, sentence):
+    """일본어 예문에서 표제어를 첫 등장 1곳 strong 으로 감싼다. 실패 시 None.
+
+    1) 표제어 문자열 그대로(食べる)
+    2) 활용 어간: 표제어 끝 1글자를 뗀 접두 문자열이 2자 이상이면 그 접두어(食べる→食べ,
+       美しい→美し). 1자 어간(見る→見)은 오탐이 많아 쓰지 않는다 → GPT 보정 대상.
+    형태소 분석기 없이 문자열로만 처리한다(띄어쓰기가 없어 spaCy 영어 경로는 쓰지 않음).
+    """
+    if not word or not sentence:
+        return sentence or ''
+    candidates = [word]
+    stem = word[:-1]
+    if len(stem) >= 2:
+        candidates.append(stem)
+    for cand in candidates:
+        idx = sentence.find(cand)
+        if idx >= 0:
+            end = idx + len(cand)
+            return sentence[:idx] + f'{STRONG}{sentence[idx:end]}</strong>' + sentence[end:]
+    return None
+
+
 def _ko_roots(meaning):
     """한국어 뜻에서 검색할 어근 후보 목록 반환"""
     roots = [meaning]
@@ -143,11 +173,13 @@ def _tag_ko(meanings, sentence):
     return None
 
 
-def _tag_batch_gpt(items):
+def _tag_batch_gpt(items, lang=None):
     """
-    items: [{'word', 'meanings', 'en', 'ko'}, ...]
+    items: [{'word', 'meanings', 'en', 'ko'}, ...]  ('en' 은 원문 — ja 면 일본어 예문)
     Returns: [{'en', 'ko'}, ...] 같은 순서
+    lang: 'ja' 면 일본어 프롬프트. None 이면 요청의 학습 언어.
     """
+    lang = _resolve_lang(lang)
     api_key = os.getenv('OPENAI_API_KEY')
     if not api_key or not items:
         return [{'en': it['en'], 'ko': it['ko']} for it in items]
@@ -159,10 +191,21 @@ def _tag_batch_gpt(items):
              'en': it['en'], 'ko': it['ko']}
             for i, it in enumerate(items)
         ]
+        if lang == 'ja':
+            head = (
+                '다음 일본어 단어와 예문 목록에서, 일본어 예문(en 필드)에는 해당 단어(활용형 포함, '
+                '송가나까지)에, 한국어 예문(ko 필드)에는 해당 단어의 한국어 뜻(활용형 포함)에 '
+                '<strong class="target-word"> 태그를 정확히 1개 삽입해주세요. '
+                '예문 문자열의 다른 글자는 절대 바꾸지 마세요.\n\n'
+            )
+        else:
+            head = (
+                '다음 영어 단어와 예문 목록에서, 영어 예문에는 해당 단어(활용형 포함)에, '
+                '한국어 예문에는 해당 단어의 한국어 뜻(활용형 포함)에 '
+                '<strong class="target-word"> 태그를 정확히 1개 삽입해주세요.\n\n'
+            )
         prompt = (
-            '다음 영어 단어와 예문 목록에서, 영어 예문에는 해당 단어(활용형 포함)에, '
-            '한국어 예문에는 해당 단어의 한국어 뜻(활용형 포함)에 '
-            '<strong class="target-word"> 태그를 정확히 1개 삽입해주세요.\n\n'
+            head
             + json.dumps(input_data, ensure_ascii=False, indent=2)
             + '\n\n출력: 인덱스 i 순서대로 JSON 배열만. 형식: [{"i":0,"en":"...","ko":"..."},...]\n다른 텍스트 없이 JSON만 출력.'
         )
@@ -188,13 +231,15 @@ def _tag_batch_gpt(items):
         return [{'en': it['en'], 'ko': it['ko']} for it in items]
 
 
-def apply_emphasis(word, meanings, examples, en_key='en', ko_key='ko'):
+def apply_emphasis(word, meanings, examples, en_key='en', ko_key='ko', lang=None):
     """examples(list[dict]) 의 en_key/ko_key 예문에 강조를 in-place 적용한다.
 
     이미 강조된 예문 skip → spaCy/Kiwi 1차 처리 → 실패 잔여분만 GPT 배치(30개).
     키 파라미터로 사용처별 키 차이(en/ko, origin/meaning, exam_en/exam_ko)를 흡수한다.
     단일 단어(같은 word/meanings)의 예문들을 한 번에 처리하는 용도.
+    lang: 'en'|'ja' — None 이면 요청의 학습 언어(g.dict_lang; admin 은 ?lang=).
     """
+    lang = _resolve_lang(lang)
     ms = [m for m in (meanings or []) if isinstance(m, str)]
     gpt_batch = []
     gpt_refs = []  # (ex_dict, mode)
@@ -203,7 +248,7 @@ def apply_emphasis(word, meanings, examples, en_key='en', ko_key='ko'):
         ko = (ex.get(ko_key) or '')
         if not en and not ko:
             continue
-        te, tk, ge, gk = tag_example_pair(word, ms, en, ko)
+        te, tk, ge, gk = tag_example_pair(word, ms, en, ko, lang=lang)
         ex[en_key] = te
         ex[ko_key] = tk
         if ge or gk:
@@ -215,7 +260,7 @@ def apply_emphasis(word, meanings, examples, en_key='en', ko_key='ko'):
     for start in range(0, len(gpt_batch), BATCH):
         chunk = gpt_batch[start:start + BATCH]
         refs = gpt_refs[start:start + BATCH]
-        tagged = _tag_batch_gpt(chunk)
+        tagged = _tag_batch_gpt(chunk, lang=lang)
         for j, (ex, mode) in enumerate(refs):
             if mode in ('both', 'en'):
                 ex[en_key] = tagged[j]['en']
@@ -224,7 +269,7 @@ def apply_emphasis(word, meanings, examples, en_key='en', ko_key='ko'):
     return examples
 
 
-def tag_example_pair(word, meanings, en, ko):
+def tag_example_pair(word, meanings, en, ko, lang=None):
     """
     예문 한 쌍(en/ko)을 spaCy/Kiwi 1차 처리한다. GPT는 호출하지 않는다.
 
@@ -232,14 +277,17 @@ def tag_example_pair(word, meanings, en, ko):
       - tagged_*: 강조 적용된 문자열. 1차 처리 실패 시 원문 그대로.
       - need_gpt_*: 1차 처리 실패하여 GPT 보정이 필요한지 여부.
     이미 강조된(STRONG 포함) 예문은 그대로 두고 need_gpt=False.
+    lang='ja' 면 원문(en 인자)은 _tag_ja(문자열/어간) — spaCy 영어 경로는 호출하지 않는다.
     """
+    lang = _resolve_lang(lang)
     en_orig = en or ''
     ko_orig = ko or ''
 
     if STRONG in en_orig:
         tagged_en = en_orig
     else:
-        tagged_en = _tag_en(word, en_orig) if en_orig else en_orig
+        tagger = _tag_ja if lang == 'ja' else _tag_en
+        tagged_en = tagger(word, en_orig) if en_orig else en_orig
 
     if STRONG in ko_orig:
         tagged_ko = ko_orig

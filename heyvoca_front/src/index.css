@@ -254,6 +254,30 @@ textarea {
   font-weight: 700;
 }
 
+/* 일본어 예문 후리가나(FuriganaText). rt 가 윗줄과 겹치지 않도록 ruby 가 있는 줄 간격을 보정한다.
+   rt 가 한자보다 길 때(脚本家=きゃくほんか) 한자 사이가 벌어지는 폭을 줄이려고 rt 를 작게·좁게·한 줄로 둔다.
+   ruby/rt 의 display 는 브라우저 기본(ruby / ruby-text)을 유지한다 — inline-flex 등으로 바꾸면
+   줄바꿈·기준선 정렬이 깨진다. */
+ruby {
+  ruby-position: over;
+  ruby-align: center;
+}
+rt {
+  font-size: 9px;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  text-align: center;
+  white-space: nowrap;
+  transform: translateY(1px);
+  color: var(--layout-gray-300);
+  user-select: none;
+}
+:lang(ja):has(> ruby),
+:lang(ja):has(> strong > ruby) {
+  line-height: 2;
+}
+
 /* 모바일 키보드 등장 시 상단 헤더와 하단 네비게이션을 숨긴다.
    컨텐츠 영역의 높이는 --current-header-height / --current-bottom-nav-height
    CSS 변수가 0px로 바뀌면서 자동으로 재계산된다. */

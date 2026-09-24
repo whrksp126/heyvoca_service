@@ -11,6 +11,10 @@ from app.services.fsrs.state import (
     parse_user_voca_data, get_fsrs_state, is_v1, migrate_v1_to_v2, DEFAULT_FSRS_NEW,
 )
 from app.services.meaning_concept import load_dict_meaning_concepts, attach_concept_ids
+from app.utils.dict_lang import get_dict_lang
+from app.utils.word_payload import (
+    UserWordEnricher, payload_voca_id, validate_dict_voca_ids, check_payload_language,
+)
 
 
 def _is_purchased_book_id(user_id, voca_book_id):
@@ -76,6 +80,9 @@ def build_voca_index_response(user_voca):
     # 유사 뜻(concept) 조회 — 사전 연결 단어(voca_id 존재)만 대상. 단건 호출(생성/연결 직후)이라
     # 배치가 필요 없지만 인터페이스를 get_voca_indexs와 통일해 둔다.
     concept_lookup = load_dict_meaning_concepts([user_voca.voca_id]) if user_voca.voca_id else {}
+    # 공통 단어 필드(language, ja: reading/romaji/jlpt/pronunciation) + 예문 후리가나
+    # (사전 조회는 현재 요청 언어 사전으로만 간다 — 다른 언어 단어는 이 요청에서 올 일이 없다)
+    enricher = UserWordEnricher([user_voca.voca_id])
 
     voca_books = []
     for m in maps:
@@ -87,10 +94,10 @@ def build_voca_index_response(user_voca):
             'meanings': meanings,
             'conceptIds': concept_ids,
             'meaningConcepts': meaning_concepts,
-            'examples': examples,
+            'examples': enricher.examples(user_voca.voca_id, examples),
         })
 
-    return {
+    data = {
         'origin': user_voca.word,
         'vocaIndexId': user_voca.id,
         # 헤이보카 사전(Voca)에 연결된 단어인지. 화면의 검증 마크가 이 값 하나로 갈린다
@@ -101,6 +108,8 @@ def build_voca_index_response(user_voca):
         'createdAt': (user_voca.created_at).isoformat() + 'Z' if user_voca.created_at else None,
         'updatedAt': (user_voca.updated_at).isoformat() + 'Z' if user_voca.updated_at else None,
     }
+    data.update(enricher.fields(user_voca.voca_id))
+    return data
 
 
 # 사용자 사전 전체 조회
@@ -143,10 +152,13 @@ def get_voca_indexs():
     user_id = UUID(g.user_id)
 
     # N+1 문제 해결을 위해 book_maps와 연관된 user_voca_book을 함께 로드
+    # 현재 학습 언어(dict_lang) 단어만
+    lang = get_dict_lang()
     user_vocas = db.session.query(UserVoca).options(
         joinedload(UserVoca.book_maps).joinedload(UserVocaBookMap.user_voca_book)
     ).filter(
-        UserVoca.user_id == user_id
+        UserVoca.user_id == user_id,
+        UserVoca.dict_lang == lang,
     ).all()
 
     # ── 농장 상태(당근 농장 V2) ──
@@ -169,6 +181,8 @@ def get_voca_indexs():
 
     # 유사 뜻(concept) 배치 조회 — 사용자 사전 전체의 voca_id를 한 번에 모아 단일 쿼리(N+1 방지).
     concept_lookup = load_dict_meaning_concepts(uv.voca_id for uv in user_vocas)
+    # ja: 읽기/JLPT(voca_ja) + 예문 후리가나(voca_example_ja)를 voca_id IN 일괄 조회. en 은 쿼리 0회.
+    enricher = UserWordEnricher((uv.voca_id for uv in user_vocas), lang=lang)
 
     data = []
     for uv in user_vocas:
@@ -188,10 +202,10 @@ def get_voca_indexs():
                 'meanings': meanings,
                 'conceptIds': concept_ids,
                 'meaningConcepts': meaning_concepts,
-                'examples': examples,
+                'examples': enricher.examples(uv.voca_id, examples),
             })
 
-        data.append({
+        item = {
             'origin': uv.word,
             'vocaIndexId': uv.id,
             # 사전 연결 여부 — 검증 마크(시안 vocabooks §3)가 이 값으로 갈린다.
@@ -204,7 +218,9 @@ def get_voca_indexs():
                                 farm_answer, farm_growth, farm_health),
             'createdAt': (uv.created_at).isoformat() + 'Z' if uv.created_at else None,
             'updatedAt': (uv.updated_at).isoformat() + 'Z' if uv.updated_at else None,
-        })
+        }
+        item.update(enricher.fields(uv.voca_id))
+        data.append(item)
 
     return jsonify({'code': 200, 'data': data}), 200
 
@@ -226,6 +242,13 @@ def create_voca_index():
     if not voca_book_id:
         return jsonify({'code': 400, 'message': '단어장 ID(vocaBookId)는 필수입니다.'}), 400
 
+    # 언어는 서버 현재 언어(learning_lang). payload language 가 다르면 400. reading 은 저장 컬럼이
+    # 없어 무시한다(응답 시 사전 조회로 채움).
+    lang = get_dict_lang()
+    lang_error = check_payload_language(req.get('language'))
+    if lang_error:
+        return jsonify({'code': 400, 'message': lang_error}), 400
+
     try:
         # 단어장 존재 확인
         voca_book = db.session.query(UserVocaBook).filter(
@@ -238,9 +261,20 @@ def create_voca_index():
         if voca_book.bookstore_id is not None:
             return jsonify({'code': 403, 'message': '구매한 단어장에는 단어를 추가할 수 없어요.'}), 403
 
-        # 같은 단어가 UserVoca에 이미 있는지 확인
+        if (voca_book.language or 'en') != lang:
+            return jsonify({'code': 400, 'message': '현재 학습 언어의 단어장이 아니에요. 앱을 새로고침해 주세요.'}), 400
+
+        # 사전 id(vocaId ?? dictionaryId) — 현재 언어 사전에 있고 단어가 맞을 때만 연결
+        dict_voca_id = payload_voca_id(req)
+        if dict_voca_id is not None and (origin, dict_voca_id) not in validate_dict_voca_ids([(origin, dict_voca_id)], lang):
+            logging.getLogger(__name__).info(
+                '사전 id 불일치로 연결 생략: origin=%s vocaId=%s lang=%s', origin, dict_voca_id, lang)
+            dict_voca_id = None
+
+        # 같은 단어가 UserVoca에 이미 있는지 확인 — 중복 키 (user_id, dict_lang, word)
         user_voca = db.session.query(UserVoca).filter(
             UserVoca.user_id == user_id,
+            UserVoca.dict_lang == lang,
             UserVoca.word == origin
         ).first()
 
@@ -248,11 +282,14 @@ def create_voca_index():
             # 기존 단어에 meanings/examples 누적 merge
             user_voca.voca_meanings = merge_meanings(user_voca.voca_meanings, meanings)
             user_voca.voca_examples = merge_examples(user_voca.voca_examples, examples)
+            if not user_voca.voca_id and dict_voca_id:
+                user_voca.voca_id = dict_voca_id
             user_voca.updated_at = datetime.datetime.utcnow()
         else:
             # 새 UserVoca 생성 (data=None: 첫 학습 시 /study/log 가 v3 payload로 초기화)
-            user_voca = UserVoca()
+            user_voca = UserVoca(dict_lang=lang)
             user_voca.user_id = user_id
+            user_voca.voca_id = dict_voca_id
             user_voca.word = origin
             user_voca.voca_meanings = json.dumps(meanings, ensure_ascii=False)
             user_voca.voca_examples = json.dumps(examples, ensure_ascii=False)
@@ -417,6 +454,10 @@ def link_voca_index_book(vocaIndexId, vocaBookId):
 
     if voca_book.bookstore_id is not None:
         return jsonify({'code': 403, 'message': '구매한 단어장에는 단어를 추가할 수 없어요.'}), 403
+
+    # 다른 언어 단어장에 연결하면 사전 id 가 섞인다
+    if (voca_book.language or 'en') != (user_voca.dict_lang or 'en'):
+        return jsonify({'code': 400, 'message': '단어와 단어장의 학습 언어가 달라요.'}), 400
 
     # 이미 매핑되어 있는지 확인
     existing_map = db.session.query(UserVocaBookMap).filter(

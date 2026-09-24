@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, useEffect, useCallback, useMemo } from 'react';
-import { useUser } from './UserContext';
+import { useUser, LEARNING_LANG_CHANGED_EVENT } from './UserContext';
+import { wordLang } from '../utils/lang';
 import { getUserVocabularySheetsApi, addUserVocabularySheetApi, updateUserVocabularySheetApi, deleteUserVocabularySheetApi } from '../api/voca';
 import {
   getUserDictionaryApi,
@@ -26,7 +27,7 @@ import GemRewardOverlay from '../components/overlay/GemRewardOverlay';
 
 const VocabularyContext = createContext(null);
 export const VocabularyProvider = ({ children }) => {
-  const { isLogin, isLoginChecked, setUserProfile } = useUser();
+  const { isLogin, isLoginChecked, setUserProfile, learningLang } = useUser();
 
   const [vocabularySheetsLegacy, setVocabularySheets] = useState([]); // Removed, but kept setter for safety locally if needed, actually we removed setter usage.
 
@@ -188,8 +189,21 @@ export const VocabularyProvider = ({ children }) => {
   // [NEW] 사용자 사전 단어 추가 (또는 연결)
   const addUserDictionaryWord = useCallback(async (vocaBookId, wordData) => {
     try {
-      // 1. 이미 존재하는 단어인지 확인 (origin 기준)
-      const existingWord = Object.values(userDictionary).find(w => w.origin === wordData.origin);
+      // 1. 이미 존재하는 단어인지 확인
+      //    사전 단어 id(dictionaryId/vocaId) 가 있으면 그것으로 먼저 찾고, 없으면 origin+언어로 찾는다.
+      //    (영어 'mine' 과 일본어 표기가 같은 단어가 겹치지 않도록 언어까지 비교 — 서버 중복 키도
+      //     (user_id, dict_lang, word) 이다.)
+      const language = wordLang(wordData, learningLang);
+      const dictId = wordData?.dictionaryId ?? wordData?.vocaId ?? null;
+      const allWords = Object.values(userDictionary);
+      const existingWord =
+        (dictId != null
+          ? allWords.find(w => {
+            const wId = w?.vocaId ?? w?.dictionaryId ?? null;
+            return wId != null && String(wId) === String(dictId);
+          })
+          : undefined)
+        ?? allWords.find(w => w.origin === wordData.origin && wordLang(w, learningLang) === language);
 
       if (existingWord) {
         // 이미 존재하면 -> 연결 (Link)
@@ -218,6 +232,7 @@ export const VocabularyProvider = ({ children }) => {
         // 존재하지 않으면 -> 생성 (Create)
         const payload = {
           ...wordData,
+          language,
           vocaBookId,
         };
         const result = await createUserDictionaryWordApi(payload);
@@ -238,7 +253,7 @@ export const VocabularyProvider = ({ children }) => {
       console.error('addUserDictionaryWord 오류:', err);
       throw err;
     }
-  }, [userDictionary, fetchVocaBooks]);
+  }, [userDictionary, fetchVocaBooks, learningLang]);
 
   // [NEW] 사용자 사전 단어 수정
   const updateUserDictionaryWord = useCallback(async (vocaIndexId, updates) => {
@@ -849,6 +864,34 @@ export const VocabularyProvider = ({ children }) => {
     }
   }, [isLogin, isLoginChecked]); // 함수 의존성 제거
 
+  // 학습 언어 전환 등으로 "언어별 데이터 전부"를 다시 받아야 할 때 — 단어장·단어·서점·최근 학습.
+  // (통계·홈 피드·농장 요약은 StatsContext.refetchAll 이 같은 이벤트로 처리한다.)
+  const refetchAll = useCallback(async () => {
+    setDelayedWords([]);
+    try {
+      await Promise.all([
+        fetchVocabularySheets(),
+        fetchBookStore(),
+        fetchRecentStudy(),
+      ]);
+    } catch (error) {
+      console.error('refetchAll(Vocabulary) 오류:', error);
+    }
+  }, [fetchVocabularySheets, fetchBookStore, fetchRecentStudy]);
+
+  // UserContext.setLearningLang 성공 → 전역 재조회 이벤트
+  useEffect(() => {
+    const onLangChanged = () => {
+      if (!isLogin) return;
+      // 이전 언어 단어가 잠깐이라도 섞여 보이지 않도록 먼저 비운다(로딩 상태로 전환).
+      setUserDictionary({});
+      setVocaBooks([]);
+      refetchAll();
+    };
+    window.addEventListener(LEARNING_LANG_CHANGED_EVENT, onLangChanged);
+    return () => window.removeEventListener(LEARNING_LANG_CHANGED_EVENT, onLangChanged);
+  }, [isLogin, refetchAll]);
+
   const value = {
     vocabularySheets,
     isVocabularySheetsLoading,
@@ -873,6 +916,7 @@ export const VocabularyProvider = ({ children }) => {
     getProgressSortedSheets,
     getNeedsReviewSheets,
     fetchVocabularySheets,
+    refetchAll,
 
     bookStore,
     isBookStoreLoading,

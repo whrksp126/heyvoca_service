@@ -19,7 +19,11 @@ import { resolveVocaBookBackground } from '../../utils/vocaBookColor';
  *
  * 결과 규격은 상점 구매 결과와 같다 — 씨앗 그림 · 무엇을 어디에 · 60개 → 61개(시안 find §9).
  */
-const PickPlotNewBottomSheet = ({ origin = '', meanings = [], examples = [] }) => {
+const PickPlotNewBottomSheet = ({
+  origin = '', meanings = [], examples = [],
+  // 일본어 연동 — 사전 단어 id·읽기·언어를 그대로 담는다(INTEGRATION_SPEC 5절)
+  dictionaryId = null, reading = null, language = undefined,
+}) => {
   "use memo";
 
   const { vocabularySheets, addWord } = useVocabulary();
@@ -46,7 +50,12 @@ const PickPlotNewBottomSheet = ({ origin = '', meanings = [], examples = [] }) =
     setSubmitting(true);
     try {
       const before = sheet.total ?? (sheet.words?.length ?? 0);
-      const result = await addWord(sheet.id, { origin, meanings, examples });
+      const result = await addWord(sheet.id, {
+        origin, meanings, examples,
+        ...(dictionaryId != null ? { vocaId: dictionaryId, dictionaryId } : {}),
+        ...(reading ? { reading } : {}),
+        ...(language ? { language } : {}),
+      });
       if (!result) {
         // 이미 그 단어장에 있는 단어 — Context 가 안내 토스트를 이미 띄웠다
         setSubmitting(false);
@@ -82,7 +91,7 @@ const PickPlotNewBottomSheet = ({ origin = '', meanings = [], examples = [] }) =
             className="relative z-[2] mx-auto mb-[14px]"
           />
           <h3 className="text-[19px] font-[800] leading-[1.35] tracking-[-0.04em] text-layout-black dark:text-layout-white">
-            <em className="not-italic text-primary-main-600">{origin}</em>를<br />
+            <em lang={language === 'ja' ? 'ja' : undefined} className="not-italic text-primary-main-600">{origin}</em>를<br />
             {done.title}에 담았어요
           </h3>
           <div className="inline-flex items-center gap-[7px] mt-[14px] px-[14px] py-[7px] rounded-full bg-layout-gray-50 dark:bg-layout-gray-dark text-[12.5px] font-[700] tracking-[-0.02em] text-layout-black dark:text-layout-white">
