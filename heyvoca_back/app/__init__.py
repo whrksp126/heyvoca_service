@@ -21,7 +21,7 @@ import re
 from app.login_manager import load_user, unauthorized_callback
 from werkzeug.middleware.proxy_fix import ProxyFix
 
-# Sentry 초기화 (prod/stg 환경에서 SENTRY_DSN 환경변수가 있을 때만 활성화)
+# Sentry 초기화 (prod 환경에서 SENTRY_DSN 환경변수가 있을 때만 활성화)
 # sentry-sdk가 아직 미설치인 환경에서도 앱 기동이 실패하지 않도록 try-except 처리
 try:
     import sentry_sdk

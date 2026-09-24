@@ -74,9 +74,9 @@ scipy, numpy 추가. 컨테이너 재빌드 필요 (docker compose -f docker-com
 
 ## 주의사항
 - 기본값 대비 retention 향상이 검증되지 않으면 is_active=True 절대 설정 X
-- A/B 테스트는 stg에서 먼저 1주 검증 후 prod 적용
+- A/B 테스트는 dev에서 먼저 1주 검증 후 prod 적용
 - .env*, db/backups/, db/batches/ 절대 건드리지 말 것
-- 새 마이그레이션은 dev/stg/prod 컨테이너 entrypoint에서 자동 적용 (flask db upgrade)
+- 새 마이그레이션은 dev/prod 컨테이너 entrypoint에서 자동 적용 (flask db upgrade)
 """
 
 PHASE_3_2 = """\
@@ -117,7 +117,7 @@ Phase 3.1 글로벌 파라미터 운영 중. 200+ reviews 누적 사용자가 10
 - 임계 미달 사용자(< 200 reviews)에게 user-specific 적용 X 검증
 
 ### 6. 운영 준비
-- stg에서 1주 A/B 테스트 (user-specific 50% vs 글로벌 50%)
+- dev에서 1주 A/B 테스트 (user-specific 50% vs 글로벌 50%)
 - retention 향상 통계적 유의미하면 prod 100% 롤아웃
 - 그 외 케이스는 글로벌 유지
 
@@ -171,7 +171,7 @@ Phase 1~3.2 완료. 임베딩 기반 추천 고도화는 정식 오픈 6개월 �
 - 환경변수 EMBEDDING_RECOMMEND=true일 때만 활성. 기본 false
 
 ### 6. POC 환경
-- stg에서만 활성화 (prod는 별도 의사결정 후)
+- dev에서만 활성화 (prod는 별도 의사결정 후)
 - A/B 테스트: 기존 추천 vs 임베딩 추천 retention 비교
 - 1개월 데이터 수집 후 정식 배포 의사결정
 
@@ -180,7 +180,7 @@ Phase 1~3.2 완료. 임베딩 기반 추천 고도화는 정식 오픈 6개월 �
 - 모델 로드 실패 시 기존 휴리스틱으로 graceful degrade
 - requirements.txt 변경 시 컨테이너 재빌드 + 이미지 크기 변화 보고
 - .env*, db/backups/, db/batches/ 절대 건드리지 말 것
-- 정식 배포 의사결정 전까지는 stg에서만 동작
+- 정식 배포 의사결정 전까지는 dev에서만 동작
 """
 
 PHASE_PROMPTS = {
