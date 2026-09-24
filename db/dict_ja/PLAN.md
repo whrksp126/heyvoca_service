@@ -81,4 +81,5 @@
 - dev·prod: `heyvoca_dict_ja` 부트스트랩(20260925-1, dev 16초·prod 28초) + 사용자 DB 리비전 `9fdc12f3733a` 적용(2026-09-25 prod 배포 완료, 커밋 b7b0e87).
 - prod 절차: `./deploy.sh prod` → `docker exec heyvoca_back_prod python3 -c "...dm.apply_version('20260925-1', lang='ja', publisher='me@prod')"` → `docker restart heyvoca_back_prod` → `dm.get_status(lang='ja')` in_sync 확인.
 - 앱: 커밋 9a372c5(TTS ja·채팅 언어·OCR ja·X-App-Version). 릴리스 시 `bump-version.sh app 1.1.1`(웹 게이트 `openImagePickerLang`/`CHAT_JA_MIN_APP_VERSION`=1.1.1).
+- 앱 1.1.1 릴리스(2026-09-25): iOS 빌드 19 제출 → WAITING_FOR_REVIEW, Android versionCode 23 → IN_REVIEW(앱 커밋 eb48d5a·12fc99e). 빌드 함정 2건: Xcode 27에서 fmt 11.0.2 consteval 실패 → Podfile에서 fmt 타깃만 C++17; Play가 targetSdk 35 AAB를 403 거부(2026-08-31 정책) → compile/target/buildTools 36. 승인되면 `asc.mjs release --yes`, Play는 자동 게시.
 - 남은 일: 일본어 TTS 사전 프리워밍(`scripts/tts_prewarm.py` ja), origin/local 브랜치 동기화, admin 화면 언어 선택 UI(현재 `?lang=` 만).
