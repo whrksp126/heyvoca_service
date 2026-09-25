@@ -1,4 +1,5 @@
 import { backendUrl, fetchDataAsync } from '../utils/common';
+import { notifyStudyDataChanged } from '../utils/studyDataEvents';
 
 // 사용자 출석 체크 API
 export const setUserCheckinApi = async () => {
@@ -131,8 +132,14 @@ export const getAchievementCriteriaApi = async () => {
 export const logStudyQuestion = async (payload) => {
   const url = `${backendUrl}/study/log`;
   const method = 'POST';
-  const result = await fetchDataAsync(url, method, payload);
-  return result;
+  try {
+    const result = await fetchDataAsync(url, method, payload);
+    return result;
+  } finally {
+    // 성공·실패와 무관하게 알린다 — 실패처럼 보여도 서버에는 반영됐을 수 있다.
+    // 홈 통계 캐시가 이 신호로 "낡음"을 표시한다(utils/studyDataEvents.js).
+    notifyStudyDataChanged();
+  }
 };
 
 // 오늘(KST) 처음 학습한 새 단어 수(누적) 조회

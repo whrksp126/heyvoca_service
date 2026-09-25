@@ -231,7 +231,8 @@ def get_care_due_ids(user_id: UUID, now: Optional[dt.datetime] = None, lang: Opt
     방치됐다"는 점에서 원칙("돌봄이 있다 = 오늘 물 줘야 하거나 예정일이 지난 단어가
     있다")에 정확히 들어맞고, 되살리기도 사용자가 해야 할 학습 행동이다(2026-09 QA).
     황금(GOLDEN)만 뺀다 — 부패 면역이라 "물이 필요하다"는 말 자체가 성립하지 않는다.
-    아직 한 번도 학습하지 않은 단어(FSRS 예정일 없음)도 뺀다.
+    아직 심지 않은 단어(게임 행 없음·UNPLANTED_SEED — 정본 `isUnplanted`)와 예정일이
+    없는 단어도 뺀다. 예정일만 보면 보유 씨앗이 섞인다(`care_due_ids_from_rows` 참고).
 
     **이전 구현(재작성 전)의 문제 둘:**
       1) `/study/recommend`·데일리 미션이 쓰는 `recommend/pool.py::build_candidate_pool`을
@@ -248,13 +249,9 @@ def get_care_due_ids(user_id: UUID, now: Optional[dt.datetime] = None, lang: Opt
     미션/추천의 새벽 4시 컷오프도 이번에는 건드리지 않는다(범위 밖 — 코디네이터 확인).
     """
     now = now or dt.datetime.utcnow()
-    today = localday.local_day(now, localday.DEFAULT_TZ)  # KST 자정 경계, 컷오프 없음 — 정본과 동일
 
-    from app.services.fsrs.state import parse_user_voca_data, get_fsrs_state, is_v1, migrate_v1_to_v2
-
-    # UserVoca 를 기준으로 LEFT JOIN — 게임 행이 없는(한 번도 안 심은) 단어는 애초에
-    # FSRS 예정일이 없어 아래 due_at 체크에서 자연히 빠지지만, 이미 로드하는 행에서
-    # 한 번에 걸러 추가 쿼리를 만들지 않는다(요청: 추가 쿼리 최소화).
+    # UserVoca 를 기준으로 LEFT JOIN — 게임 행이 없는(한 번도 안 심은) 단어도 한 번에 읽어
+    # 아래 순수 함수에서 거른다(추가 쿼리 없음).
     rows = (
         db.session.query(UserVocaGame.user_voca_id, UserVocaGame.visual_stage, UserVoca.id, UserVoca.data)
         .select_from(UserVoca)
@@ -262,9 +259,29 @@ def get_care_due_ids(user_id: UUID, now: Optional[dt.datetime] = None, lang: Opt
         .filter(UserVoca.user_id == user_id, UserVoca.dict_lang == _lang(lang))
         .all()
     )
+    return care_due_ids_from_rows(rows, now)
+
+
+def care_due_ids_from_rows(rows, now: dt.datetime) -> set:
+    """`get_care_due_ids` 의 판정부 — DB 없이 검증할 수 있게 뺐다.
+
+    rows: (game.user_voca_id | None, game.visual_stage | None, user_voca.id, user_voca.data)
+
+    **아직 심지 않은 단어(보유 씨앗)는 뺀다 — FSRS 예정일이 있어도.** 정본
+    `vocaCrop.js::isUnplanted` 는 서버 `farm.stage === 'UNPLANTED_SEED'`(게임 행이 없으면
+    UNPLANTED_SEED — voca_indexs._farm_state)로 판정해 돌봄에서 뺀다. 예전 구현은 예정일만
+    봐서, 게임 훅이 실패했거나(온보딩 migrate 는 실패를 삼킨다) 전환 전에 FSRS 만 쌓인 단어가
+    홈 "아직 N개가 기다리고 있어요" 에만 잡혔다 — 밭 팻말에서는 '미학습'으로 세고 단어장
+    카드는 "안 배움"으로 그리는 단어다(2026-09 prod 신고: 홈 46 vs 단어장 합 17).
+    """
+    today = localday.local_day(now, localday.DEFAULT_TZ)  # KST 자정 경계, 컷오프 없음 — 정본과 동일
+
+    from app.services.fsrs.state import parse_user_voca_data, get_fsrs_state, is_v1, migrate_v1_to_v2
 
     due_ids = set()
-    for _game_voca_id, visual_stage, uv_id, raw_data in rows:
+    for game_voca_id, visual_stage, uv_id, raw_data in rows:
+        if game_voca_id is None or (visual_stage or VisualStage.UNPLANTED_SEED) == VisualStage.UNPLANTED_SEED:
+            continue  # 보유 씨앗 — 정본 isUnplanted
         if visual_stage == VisualStage.GOLDEN:
             continue
         payload = parse_user_voca_data(raw_data)
@@ -273,7 +290,7 @@ def get_care_due_ids(user_id: UUID, now: Optional[dt.datetime] = None, lang: Opt
         fsrs_state = get_fsrs_state(payload) or {}
         due_at = growth.parse_fsrs_due(fsrs_state)
         if due_at is None:
-            continue  # 미학습(예정일 없음) — 정본의 isUnplanted 와 같은 효과
+            continue  # 예정일 없음
         if localday.local_day(due_at, localday.DEFAULT_TZ) <= today:
             due_ids.add(uv_id)
 

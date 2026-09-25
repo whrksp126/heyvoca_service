@@ -4,7 +4,6 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
 import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 import SpeakerButton from '../common/SpeakerButton';
-import JlptBadge from '../common/JlptBadge';
 import FuriganaText from '../common/FuriganaText';
 import { wordLang, isJa } from '../../utils/lang';
 import { getReading, shouldShowReading } from '../../utils/jaWord';
@@ -413,7 +412,6 @@ export const PreviewBookStoreNewFullSheet = ({
                         {getReading(item)}
                       </span>
                     )}
-                    {isJa(wordLang(item)) && <JlptBadge level={item.jlpt} size="sm" />}
                   </div>
                   <div
                     className="truncate mt-[1px] text-[12px] tracking-[-0.02em] text-layout-gray-400 dark:text-layout-gray-300"

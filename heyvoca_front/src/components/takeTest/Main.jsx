@@ -1404,14 +1404,11 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
   const isReverseChoice = testQuestions[progressIndex]?.questionType === 'reverseMultipleChoice';
   // TtsRipple(카드 영역) 노출 조건 — 일반 유형은 "등장 자동재생 중(채점 전)"에만.
   // reverseMultipleChoice는 카드에 "뜻"만 있으므로, 뜻을 읽는 동안(speakingTarget==='meaning')만
-  // 카드에 리플을 띄운다 — 채점 후 "단어"를 읽을 때는 카드가 아니라 정답 선택지 버튼에
-  // 스피커 표시를 띄운다(아래 선택지 렌더 부분, wordSpeakerVisible 참고) — 카드엔 뜻이 보이는데
-  // 단어를 읽는 소리가 카드에서 나는 것처럼 보이는 어긋남을 막기 위함.
+  // 카드에 리플을 띄운다 — 채점 후 "단어"를 읽을 때는 소리만 재생하고 선택지 버튼에는
+  // 아무 표시도 띄우지 않는다(카드/선택지 어디에도 스피커 아이콘 없음).
   const showTtsRipple = isReverseChoice
     ? (isSpeaking && speakingTarget === 'meaning')
     : (testQuestions[progressIndex]?.questionType !== 'multipleChoiceListening' && isSpeaking && !isAnswered);
-  // 정답 선택지 버튼에 스피커 표시 — reverseMultipleChoice에서 채점 후 "단어"를 읽는 동안만.
-  const wordSpeakerVisible = isReverseChoice && isAnswered && isSpeaking && speakingTarget === 'word';
 
   // 플러그인 컴포넌트가 있으면 동적 렌더링 (cardMatch 등)
   // 진행률 바: 통과 고유 단어 수 / 전체 고유 단어 수
@@ -1829,17 +1826,6 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
                         `}
                       >
                         {isReverseChoice ? option.origin : option.displayMeanings.join(", ")}
-                        {/* reverseMultipleChoice: 채점 후 이 단어(정답) 발음이 재생되는 동안만
-                            표시 — 카드가 아니라 여기서 소리가 난다는 것을 보여준다. */}
-                        {wordSpeakerVisible && index === testQuestions[progressIndex].resultIndex && (
-                          <motion.span
-                            className="absolute right-[14px] top-1/2 -translate-y-1/2 text-status-success-600"
-                            animate={{ scale: [1, 1.15, 1] }}
-                            transition={{ duration: 0.6, repeat: Infinity, ease: "easeInOut" }}
-                          >
-                            <SpeakerHigh size={14} weight="fill" />
-                          </motion.span>
-                        )}
                       </motion.button>
                     )
                   })}
