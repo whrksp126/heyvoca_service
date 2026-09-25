@@ -3,14 +3,16 @@ import { motion, useReducedMotion } from 'framer-motion';
 import { Clock } from '@phosphor-icons/react';
 import CropImage, { CROP_ASSETS } from './CropImage';
 import CropProgressBar, { GROW_FILL_DURATION, GROW_FILL_TIMES } from './CropProgressBar';
-import { CROP_STAGES, cropIndex, stageToCrop } from '../../utils/crop';
+import { CROP_STAGES, CROP_LABEL, cropIndex, stageToCrop, withRo } from '../../utils/crop';
+import { deriveFarmXp } from '../../utils/cropXp';
 import { haptic, pickVariant } from '../../lib/feel';
 
 /**
  * 당근 농장 V2 — 채점 후 상태 바. **모든 문제 유형이 이 하나를 쓴다.**
  * 시안 study.html 의 `.fb` / `.fb.up` / `.fb.ng` / `.fb.sm` 규격을 그대로 옮겼다.
  *
- *   [작물 26px] [막대 5px] [+22%] [12일 뒤]
+ *   [작물 26px] [막대 5px + XP 서브로우] [+N XP]     ← normal(2026-09 XP 개편, 아래 별도 주석)
+ *   [작물 18px] [막대 4px]              [+N/시계]    ← compact
  *
  * - 단계명 텍스트를 넣지 않는다(시안 2절). 작물 그림이 이미 그 말이라 같은 말을 두 번 하게 된다.
  *   `.st` 슬롯은 부패 진단(6절)에서만 쓴다.
@@ -18,7 +20,7 @@ import { haptic, pickVariant } from '../../lib/feel';
  * - 오답은 막대가 **줄어든다**(FSRS 가 안정성을 깎으므로 실제로 멀어진 것이다).
  *   우측 문구는 비운다 — 틀린 단어는 이번 세션에서 바로 다시 나오므로 다음 예정일을 말하면 거짓이 된다.
  * - `compact` 는 카드 매칭용 좁은 형(`.fb.sm`)이다. 다른 구조가 아니라 **같은 컴포넌트가 접히는 것**이라
- *   `+N%` 만 접히고 작물·막대·일수는 남는다(시안 ⑩ 은 좁은 형에도 막대가 있다).
+ *   XP 서브로우만 접히고 작물·막대·배지는 남는다(시안 ⑩ 은 좁은 형에도 막대가 있다).
  *
  * 【채점 결과 게이지는 값 하나로만 움직인다 — 2026-09 정리】
  * 이전 구현은 진화(단계 상승) 회차에 "이전 작물 + 건너가는 막대"와 "새 작물 + 안착 막대"를
@@ -47,6 +49,23 @@ import { haptic, pickVariant } from '../../lib/feel';
  * 버렸던 이유(첫 학습 14문항 전부가 "봉투→낱알" 전환인데 120ms 는 너무 빨라 처음부터
  * 낱알이었던 것처럼 보였다)는 여전히 유효하다. 지금 크로스페이드는 막대의 리셋 구간
  * (0.9초 중 0.62~0.7초)에 걸려 있어 그보다 훨씬 느리므로 같은 문제가 재발하지 않는다.
+ */
+
+/**
+ * 【2026-09 작물 경험치(XP) 표시 — crop_xp_contract.md §3】
+ *
+ * 배지 자리(옛 `+N%`)는 `+N XP`(핑크)/`−N XP`(회색)/`+0 XP`(회색) 로 **항상** 값을 보여준다
+ * (예전엔 오답·정지 상태엔 배지 자체가 없었다 — XP 는 오답도 "얼마나 줄었는지" 말할 값이라
+ * 항상 그린다. `pending` 만 예외 — 아직 확정 전이라 비워 둔다).
+ *
+ * 막대 아래 한 줄(`compact` 가 아닐 때만)이 새로 생겼다 — 왼쪽 `90 / 150 XP`(현재 굵게),
+ * 오른쪽은 우선순위대로 하나만: 오답이면 비움 → 진화면 핑크 "이파리로 자랐어요" →
+ * 같은 날 재복습이면 "N시간 전에 풀었어요" → 그 외엔 기존 "9일 뒤 복습". `compact`
+ * (카드 매칭)는 이 줄을 아예 접는다 — 기존 `+N%` 가 compact 에서 통째로 숨던 것과 같은
+ * 접힘 규칙이고, 카드 한 칸에 두 줄을 더 욱여넣을 자리가 없다. 대신 compact 의 배지
+ * 자리는 예전 그대로 시계+상대시간(같은 날 재복습)과 숫자 배지가 자리를 나눠 쓴다 —
+ * 좁은 칸에선 슬롯이 하나뿐이라 그 우선순위(같은 날이면 시계, 아니면 숫자)를 그대로
+ * 물려받는다.
  */
 
 /** 진화 스파클 — 새 작물이 솟아오를 때 바깥으로 튀는 세 점 (시안 `.fb .spk`) */
@@ -89,6 +108,14 @@ const FarmStatusBar = ({
   health,
   days_to_review: daysToReview = null,
   wasCorrect = true,
+  // 작물 경험치(crop_xp_contract.md §1) — 서버 /study/log 농장 payload 의 xp_from/xp_to/
+  // xp_delta/xp_next 를 그대로 받는다. 없으면(게스트·재출제·구버전 응답) deriveFarmXp 가
+  // pct_from/pct_to 로 역산한다(farmOptimistic.js 가 이미 이 필드를 채워 보내므로 대부분
+  // 여기서 값이 있다 — 아래 폴백은 그마저 없는 경우의 최후 방어선).
+  xp_from: xpFromProp,
+  xp_to: xpToProp,
+  xp_delta: xpDeltaProp,
+  xp_next: xpNextProp,
   // 같은 날 두 번째 복습(서버 `/study/log` 응답의 `fsrs.elapsed_days`, 시간 단위로 환산한 값) —
   // 정답이고 24시간 이내 재복습일 때만 호출부(Main.jsx `isSameDayReview`)가 이 값을 채워
   // 준다. null 이면 평소처럼 `+N%` 배지 자리가 비거나 그대로 게인을 보여준다.
@@ -126,27 +153,33 @@ const FarmStatusBar = ({
   // 오답이라는 이유만으로 막대 색이 먼저 주황으로 바뀌면 "벌써 줄었다"로 잘못 읽힌다.
   // 실제로 줄어드는 건 서버 응답이 와서 pending 이 풀리는 순간이다.
   const tone = grew ? 'up' : (isNg && !pending ? 'ng' : 'primary');
-  // 오답은 막대가 늘지 않는다(2절) — 시안 ⑤ 에는 `u`(오른 구간)도 `pc`(+N%)도 없다.
-  const gain = !grew && !isNg && pctTo > pctFrom ? Math.round(pctTo - pctFrom) : 0;
   const elapsedLabel = formatElapsedLabel(sameDayElapsedHours, compact);
-  /*
-    배지 슬롯(`+N%` 자리)은 "이번 채점의 결과 하나"만 보여준다 — 2026-09 QA.
 
-    이론상 `gain>0`(막대가 실제로 늘었다)과 `elapsedLabel`(같은 날이라 안 늘었다)은
-    서로 배타적이어야 한다(같은 날 재복습이면 FSRS 가 stability 를 거의 안 올려 gain 이
-    0이어야 정상). 그런데 서버 elapsed_days 판정(Main.jsx `isSameDayReview`, 24시간
-    미만)과 프론트 gain 계산(pctTo>pctFrom 반올림)은 서로 다른 소스라 아주 드물게 어긋날
-    수 있다 — 실제로 elapsed_days=13/24≈0.54일인데 반올림된 stage_progress 가 이미 한
-    칸 올라 gain=24 로 잡힌 사례가 있었다(+24% 와 시계 배지가 동시에 렌더돼 슬롯을
-    넘쳤다). 그래서 우선순위를 명시적으로 고정한다 — 막대가 조금이라도 늘었다면(gain>0)
-    "무엇이 늘었는지"가 우선이고, 안 늘었을 때만(gain===0) "왜 안 늘었는지"를 보여준다.
-    진화(grew)는 애초에 gain 계산에서 제외되는 별도 연출이라 여기 배지와 겹치지 않는다.
+  /*
+    작물 경험치(XP) — crop_xp_contract.md §1. 서버가 xp_from/xp_to/xp_delta/xp_next 를
+    이미 계산해 보내면(farmOptimistic.js 의 낙관값도 같은 필드를 채운다) 그대로 쓰고,
+    없을 때만(정말 오래된 캐시 등) pct_from/pct_to 로 역산한다 — pct 는 이미
+    "단계 내 진행률"이라는 같은 축이므로(계약서 §2) 역산해도 서버 공식과 어긋나지 않는다.
+    `cropForImage`/`prevCropForImage` 는 바로 위에서 이미 "crop 키보다 visual_stage 를
+    우선한다"는 같은 규칙으로 골라 둔 값이라 그대로 재사용한다.
   */
-  // gain 텍스트 자체는 원래도 compact 에서 숨긴다(`.fb.sm` 은 `+N%`를 접는다) — 하지만
-  // "gain>0 이면 시계 없음" 규칙은 compact 에도 그대로 적용한다(값이 있는데 다른 이유를
-  // 보여주면 안 되므로), 그래서 시계 조건은 `!compact` 가 아니라 `gain` 값 자체로 가른다.
-  const showGainBadge = !compact && gain > 0;
-  const showElapsedBadge = gain === 0 && !!elapsedLabel;
+  const { xpTo, xpNext: xpNextVal, xpDelta } = deriveFarmXp({
+    stageFrom: prevCropForImage,
+    stageTo: cropForImage,
+    pctFrom,
+    pctTo,
+    xpFromServer: xpFromProp,
+    xpToServer: xpToProp,
+    xpDeltaServer: xpDeltaProp,
+    xpNextServer: xpNextProp,
+  });
+  const xpBadgeSign = xpDelta > 0 ? '+' : xpDelta < 0 ? '−' : '+';
+  const xpBadgeAbs = Math.abs(xpDelta);
+  // 배지는 "얼마나 늘었는지"만 pink, 나머지(줄었거나 그대로)는 회색 — 계약서 §3.
+  const xpBadgePositive = xpDelta > 0;
+  // 진화 문구 — "이파리로 자랐어요"(withRo 가 로/으로를 고른다). 배지와 달리 색이
+  // 고정 핑크다(성장은 늘 좋은 소식이라 델타 부호를 다시 안 본다).
+  const growLabel = grew ? `${withRo(CROP_LABEL[stageToCrop(cropForImage)])} 자랐어요` : null;
 
   const size = compact ? 18 : 26;
   const barH = compact ? 4 : 5;
@@ -187,6 +220,23 @@ const FarmStatusBar = ({
     }
   }
 
+  /*
+    막대 아래 서브로우(`compact` 가 아닐 때만 그린다 — 아래 JSX)의 오른쪽 문구.
+    위 dayLabel 은 "9일" 만 들고 있던 값이라 여기서 "9일 뒤 복습" 문장으로 완성하고,
+    진화·같은 날 재복습이면 그 사건을 대신 말한다. 오답이 비는 이유는 dayLabel 주석과 같다.
+    우선순위: 진화(가장 큰 사건) > 같은 날 재복습(elapsedLabel) > 평소 복습일.
+  */
+  let subRowRight = null;
+  let subRowRightClass = 'text-layout-gray-300 dark:text-layout-gray-200';
+  if (grew) {
+    subRowRight = growLabel;
+    subRowRightClass = 'text-primary-main-600';
+  } else if (elapsedLabel) {
+    subRowRight = `${elapsedLabel}에 풀었어요`;
+  } else if (dayLabel) {
+    subRowRight = daySuffix ? `${dayLabel} ${daySuffix} 복습` : `${dayLabel} 복습`;
+  }
+
   const radius = compact ? 'rounded-[8px]' : 'rounded-[11px]';
 
   /*
@@ -203,8 +253,8 @@ const FarmStatusBar = ({
       바로 보여줘야 한다. 여기서 접으면 응답이 오는 순간 바가 없다가 갑자기 나타나
       역시 "화면이 비었다가 채워진다"는 어색함이 생긴다.
 
-    - 같은 날 재복습(elapsedLabel) — 막대·작물은 그대로라도, `+N%` 배지 자리에 "언제 이미
-      풀었는지"를 보여주는 시계 배지 자체가 내용이다.
+    - 같은 날 재복습(elapsedLabel) — 막대·작물은 그대로라도 "언제 이미 풀었는지"를
+      보여주는 문구 자체가 내용이다(normal 은 서브로우 오른쪽, compact 는 배지 슬롯의 시계).
 
     이 여섯이 전부 없다면(정오답 무관) 작물 그림과 빈 회색 막대만 남아 자리만 차지하므로
     호출부의 absolute 컨테이너째로 접히도록 null 을 반환한다.
@@ -218,7 +268,13 @@ const FarmStatusBar = ({
     <div
       className={`
         relative flex items-center
-        ${compact ? 'h-[26px] px-[8px] gap-[6px]' : 'h-[40px] px-[12px] gap-[10px]'}
+        ${compact
+          ? 'h-[26px] px-[8px] gap-[6px]'
+          // diagnosis 는 예전 그대로 한 줄 고정 높이(작물+삽 안내 문구뿐, XP 서브로우가 없다).
+          // 일반 회차만 높이를 접지 않고 py 로 열어 둔다 — 막대 아래 XP 서브로우(새로 생긴
+          // 두 번째 줄)가 늘어난 만큼 자연스럽게 40px 안팎으로 커진다(아이콘 26px 가 여전히
+          // 키를 결정하므로 실측 높이는 예전과 거의 같다).
+          : diagnosis ? 'h-[40px] px-[12px] gap-[10px]' : 'py-[7px] px-[12px] gap-[10px]'}
         ${radius}
         bg-layout-white dark:bg-[#2E2E2E]
         shadow-[0_1px_6px_rgba(0,0,0,0.06)] dark:shadow-none
@@ -284,9 +340,16 @@ const FarmStatusBar = ({
         )}
       </span>
 
-      {/* 가운데 — 막대 하나가 값 하나(단계 내 진행률)만 말한다.
+      {/* 가운데. compact 는 막대 한 줄뿐(예전 그대로) — XP 서브로우는 기존 `+N%` 접힘
+          규칙을 물려받아 통째로 접는다(칸이 좁아 두 줄을 더 넣을 자리가 없다). normal 은
+          막대 + 그 아래 서브로우(왼쪽 현재 XP/다음 문턱, 오른쪽 상황별 문구) 두 줄이다.
           부패 진단만 막대 대신 `.st` 문구를 쓴다(6절). */}
-      <div className={`relative z-[1] flex flex-1 min-w-0 items-center ${compact ? 'gap-[6px]' : 'gap-[8px]'}`}>
+      <div
+        className={`
+          relative z-[1] flex flex-1 min-w-0
+          ${compact ? 'items-center gap-[6px]' : 'flex-col justify-center gap-[3px]'}
+        `}
+      >
         {diagnosis ? (
           /* 라이트는 시안 값(#B54708) 그대로. 다크는 아래 복습일 강조와 같은 이유로
              밝은 쪽으로 되돌린다 — #B54708 이 다크 surface(#2E2E2E) 위에서 안 읽힌다. */
@@ -310,71 +373,84 @@ const FarmStatusBar = ({
               height={barH}
               pending={pending}
             />
-            {/* `+N%` 배지 자리를 **항상** 고정폭으로 예약한다. 예전엔 gain>0 일 때만
-                엘리먼트를 넣어서, 정지 상태(pending·오답)엔 이 자리가 아예 없다가 응답이
-                오는 순간 막대의 flex-1 몫이 그만큼 줄어 트랙이 짧아진 것처럼 보였다.
-                같은 날 재복습(elapsedLabel)도 이 같은 슬롯을 쓰되, `showGainBadge`/
-                `showElapsedBadge` 로 **상호 배타** 렌더한다(위 주석 — gain>0 이면 시계는
-                안 뜬다). compact 는 원래 이 슬롯 자체가 없었지만(`.fb.sm` 은 `+N%`를
-                접는다), 시계 배지는 좁은 형에도 필요해 compact 전용 폭으로 새로 둔다 —
-                배지가 뜨든 안 뜨든 폭은 고정이라 트랙 길이가 흔들리지 않는다.
-                `overflow-hidden`+자식 `shrink-0`/`whitespace-nowrap`로, 혹시라도 두 배지가
-                동시에 계산되는 방어 실패가 나도 슬롯 폭을 넘어 막대를 침범하지 않게 막는다. */}
-            <span
-              className={`
-                relative z-[1] flex-shrink-0 flex items-center justify-end gap-[2px]
-                text-right overflow-hidden
-                ${compact ? 'w-[34px]' : 'w-[58px]'}
-              `}
-            >
-              {showGainBadge && (
-                <motion.span
-                  className={`flex-shrink-0 whitespace-nowrap text-[11.5px] font-[800] tracking-[-0.02em] ${grew ? 'text-status-success-600' : 'text-primary-main-600'}`}
-                  // popIn 프리셋 그대로 쓰되, 막대가 다 찬 뒤(0.15s)에 등장하도록 지연만 얹는다.
-                  initial={pickVariant('popIn', reducedMotion).initial}
-                  animate={{
-                    ...pickVariant('popIn', reducedMotion).animate,
-                    transition: { ...pickVariant('popIn', reducedMotion).animate.transition, delay: 0.15 },
-                  }}
-                >
-                  +{gain}%
-                </motion.span>
-              )}
-              {showElapsedBadge && (
-                <motion.span
-                  className={`
-                    inline-flex flex-shrink-0 items-center gap-[2px] font-[700] whitespace-nowrap
-                    text-layout-gray-300 dark:text-layout-gray-200
-                    ${compact ? 'text-[9.5px]' : 'text-[11px]'}
-                  `}
-                  initial={{ opacity: 0, y: 4 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.25, delay: 0.15, ease: [0.4, 0, 0.2, 1] }}
-                >
-                  <Clock size={compact ? 10 : 12} weight="bold" />
-                  {elapsedLabel}
-                </motion.span>
-              )}
-            </span>
+            {!compact && (
+              <div className="flex items-center justify-between gap-[6px] text-[10.5px] font-[700] tracking-[-0.02em] text-layout-gray-300 dark:text-layout-gray-200 tabular-nums">
+                <span className="flex-shrink-0 whitespace-nowrap">
+                  <b className="font-[800] text-layout-gray-400 dark:text-layout-gray-100">{xpTo}</b>
+                  {xpNextVal != null ? ` / ${xpNextVal} XP` : ' XP'}
+                </span>
+                {subRowRight && (
+                  <span className={`flex-1 min-w-0 truncate text-right font-[700] ${subRowRightClass}`}>
+                    {subRowRight}
+                  </span>
+                )}
+              </div>
+            )}
           </>
         )}
       </div>
 
-      {/* 오른쪽 — 다음 복습일. 진단에서는 '맞히면 씨앗부터'가 그 자리를 쓴다(6절).
-          진단이 아닌 자리는 텍스트가 있든 없든(pending·오답) **항상 같은 폭을 예약**한다 —
-          '내일'(2자)과 '14일 뒤'(4자)처럼 라벨 길이가 회차마다 달라, 텍스트가 있을 때만
-          렌더링하면 그 폭만큼 가운데 막대의 flex-1 몫이 오락가락해 트랙 길이가 흔들렸다. */}
-      {diagnosis ? (
-        <span className={`relative z-[1] flex-shrink-0 whitespace-nowrap font-[600] tracking-[-0.02em] text-layout-gray-300 ${compact ? 'text-[10.5px]' : 'text-[12px]'}`}>
-          맞히면 <b className="font-[700] text-layout-black dark:text-layout-white">씨앗</b>부터
-        </span>
-      ) : (
+      {/* 배지 — 옛 `+N%` 자리. 이제 오답·정지도 값을 들고 있으니 `pending` 만 비우고
+          **항상** XP 델타를 보여준다(`+N XP` 핑크 / `−N XP`·`+0 XP` 회색 — crop_xp_contract.md
+          §3). compact 는 슬롯이 하나뿐이라 같은 날 재복습(elapsedLabel)일 때만 예전처럼
+          시계+상대시간으로 바뀌고, 그 외엔 숫자만(단위 없이) 보여준다 — normal 은 elapsedLabel
+          이 서브로우로 옮겨서 이 배지가 항상 숫자다. */}
+      {!diagnosis && (
         <span
           className={`
+            relative z-[1] flex-shrink-0 flex items-center justify-end
+            overflow-hidden
+            ${compact ? 'w-[38px]' : 'w-[72px]'}
+          `}
+        >
+          {!pending && (compact && elapsedLabel ? (
+            <motion.span
+              className="inline-flex flex-shrink-0 items-center gap-[2px] font-[700] whitespace-nowrap text-[9.5px] text-layout-gray-300 dark:text-layout-gray-200"
+              initial={{ opacity: 0, y: 4 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.25, delay: 0.15, ease: [0.4, 0, 0.2, 1] }}
+            >
+              <Clock size={10} weight="bold" />
+              {elapsedLabel}
+            </motion.span>
+          ) : (
+            <motion.span
+              className={`
+                inline-flex flex-shrink-0 items-center justify-center whitespace-nowrap
+                rounded-full font-[800] tracking-[-0.02em]
+                ${compact ? 'px-[6px] py-[2px] text-[10px]' : 'px-[8px] py-[4px] text-[11.5px]'}
+                ${xpBadgePositive
+                  ? 'bg-primary-main-100 dark:bg-primary-main-dark text-primary-main-600'
+                  : 'bg-layout-gray-50 dark:bg-layout-gray-dark text-layout-gray-400 dark:text-layout-gray-200'}
+              `}
+              // popIn 프리셋 그대로 쓰되, 막대가 다 찬 뒤(0.15s)에 등장하도록 지연만 얹는다.
+              initial={pickVariant('popIn', reducedMotion).initial}
+              animate={{
+                ...pickVariant('popIn', reducedMotion).animate,
+                transition: { ...pickVariant('popIn', reducedMotion).animate.transition, delay: 0.15 },
+              }}
+            >
+              {xpBadgeSign}{xpBadgeAbs}{compact ? '' : ' XP'}
+            </motion.span>
+          ))}
+        </span>
+      )}
+
+      {/* 오른쪽 — compact 에만 남은 옛 day-label 슬롯. normal 은 같은 정보(복습일·진화·
+          같은 날 재복습)가 전부 위 서브로우 오른쪽으로 옮겨서 이 네 번째 칸 자체가 없다
+          (시안 `.fb` 이 icon+mid+xp 셋뿐인 것과 같다). 진단은 '맞히면 씨앗부터'가 그
+          자리를 쓴다(6절). */}
+      {diagnosis ? (
+        <span className="relative z-[1] flex-shrink-0 whitespace-nowrap font-[600] tracking-[-0.02em] text-layout-gray-300 text-[12px]">
+          맞히면 <b className="font-[700] text-layout-black dark:text-layout-white">씨앗</b>부터
+        </span>
+      ) : compact && (
+        <span
+          className="
             relative z-[1] flex-shrink-0 whitespace-nowrap text-right tabular-nums
             font-[600] tracking-[-0.02em] text-layout-gray-300
-            ${compact ? 'min-w-[34px] text-[10.5px]' : 'min-w-[42px] text-[12px]'}
-          `}
+            min-w-[34px] text-[10.5px]
+          "
         >
           {dayLabel && (
             <>

@@ -692,6 +692,10 @@ const FillInTheBlankQuestion = ({ question, onComplete, farmByWordId }) => {
               grew={!!farm.grew}
               pct_from={farm.pct_from}
               pct_to={farm.pct_to}
+              xp_from={farm.xp_from}
+              xp_to={farm.xp_to}
+              xp_delta={farm.xp_delta}
+              xp_next={farm.xp_next}
               health={farm.health}
               days_to_review={farm.days_to_review}
               wasCorrect={farm.wasCorrect}

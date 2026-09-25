@@ -1,16 +1,22 @@
 import React from 'react';
 import CropImage from '../farm/CropImage';
-import { wordStage, wordHealth, wordDue, DUE_TONE_CLASS } from '../../utils/vocaCrop';
+import {
+  wordStage, wordHealth, wordDue, DUE_TONE_CLASS,
+  isUnplanted, wordXp, wordXpNext, wordFarmProgressPct,
+} from '../../utils/vocaCrop';
 import { wordLang, isJa } from '../../utils/lang';
 import { getReading, shouldShowReading } from '../../utils/jaWord';
 import JlptBadge from '../common/JlptBadge';
 
 /**
- * 단어 목록 한 줄 — 시안 vocabooks §5.
- *   작물 아이콘 · 단어 15/700 · 뜻 12px 한 줄 말줄임 · 우측 다음 복습 11.5/700
- *   행 높이 58px · 구분선 #F4F4F4
+ * 단어 목록 한 줄 — 시안 vocabooks §5 + crop_xp_contract.md §3 "단어장 단어 목록".
+ *   작물 아이콘 · 단어 15/700 · 뜻 12px 한 줄 말줄임(+ 그 아래 얇은 XP 게이지) · 우측 다음 복습 11.5/700
+ *   행 높이 62px(XP 게이지 한 줄이 늘어나 58→62px) · 구분선 #F4F4F4
  *
  * 정답률과 학습 횟수는 넣지 않는다 — 목록에서 필요한 판단은 "지금 이걸 봐야 하나" 하나다.
+ * XP 게이지는 그 판단에 쓰라는 게 아니라(그건 여전히 우측 복습일 몫이다), "얼마나
+ * 자랐는지"를 한눈에 보여주는 보조 정보라 얇게(4px) 둔다. 미심은 씨앗(보유 씨앗)은
+ * 심지도 않았으니 게이지 자체를 그리지 않는다 — 0/50 을 그리면 이미 심긴 것처럼 읽힌다.
  */
 const WordRow = ({ word, onClick }) => {
   "use memo";
@@ -23,12 +29,17 @@ const WordRow = ({ word, onClick }) => {
   const ja = isJa(wordLang(word));
   const showReading = shouldShowReading(word);
 
+  const unplanted = isUnplanted(word);
+  const xp = unplanted ? null : wordXp(word);
+  const xpNextThreshold = unplanted ? null : wordXpNext(word);
+  const xpPct = unplanted ? 0 : wordFarmProgressPct(word);
+
   return (
     <button
       type="button"
       onClick={onClick}
       className="
-        flex items-center gap-[11px] w-full h-[58px] shrink-0
+        flex items-center gap-[11px] w-full h-[62px] shrink-0
         text-left
         border-b border-[#F4F4F4] dark:border-layout-gray-dark
       "
@@ -55,6 +66,19 @@ const WordRow = ({ word, onClick }) => {
         <span className="block mt-[1px] truncate text-[12px] tracking-[-0.02em] text-layout-gray-400 dark:text-layout-gray-300">
           {meaning}
         </span>
+        {!unplanted && (
+          <span className="flex items-center gap-[6px] mt-[4px]">
+            <span className="relative flex-1 h-[4px] rounded-[99px] bg-[#E8E8E8] dark:bg-[#454545] overflow-hidden">
+              <i
+                className="absolute left-0 top-0 h-full rounded-[99px] bg-primary-main-600 block"
+                style={{ width: `${xpPct}%` }}
+              />
+            </span>
+            <span className="shrink-0 text-[10px] font-[700] tracking-[-0.02em] text-layout-gray-300 dark:text-layout-gray-200 tabular-nums whitespace-nowrap">
+              {xp}{xpNextThreshold != null ? `/${xpNextThreshold}` : ''}
+            </span>
+          </span>
+        )}
       </span>
 
       <span className={`shrink-0 text-right text-[11.5px] font-[700] ${DUE_TONE_CLASS[due.tone]}`}>

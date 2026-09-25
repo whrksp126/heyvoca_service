@@ -24,6 +24,7 @@ import { vibrate, showToast } from '../../utils/osFunction';
 import { getFarmItemsApi, replantApi, recoverPlantsApi } from '../../api/farm';
 import { addPendingReplantIds } from '../../utils/replantPending';
 import { CROP_LABEL, stageDetail } from '../../utils/crop';
+import { xpOf, xpNext as xpNextThresholdOf } from '../../utils/cropXp';
 import {
   wordCropStage,
   wordStage,
@@ -33,17 +34,6 @@ import {
   isUnplanted,
   isRotten,
 } from '../../utils/vocaCrop';
-
-/**
- * 받침 유무에 따른 조사 — "이파리으로 성장"이 되지 않게 한다.
- * 시안 문구는 "맞히면 당근으로 성장"이고, 단계 이름 네 개 중 이파리만 받침이 없다.
- */
-const withRo = (noun) => {
-  const last = String(noun ?? '').slice(-1);
-  const code = last.charCodeAt(0);
-  const hasJong = code >= 0xac00 && code <= 0xd7a3 && (code - 0xac00) % 28 !== 0;
-  return `${noun}${hasJong ? '으로' : '로'}`;
-};
 
 /** 백엔드 memory state → 성장 경로 index (시안 §2 이름 대응) */
 const STATE_INDEX = { unlearned: 0, short: 1, medium: 2, long: 3 };
@@ -138,8 +128,8 @@ const WordDetaileNewBottomSheet = ({ vocabularyId, id }) => {
     : (STATE_INDEX[insights?.memory?.state] ?? CROP_INDEX[stage] ?? 0);
   const pct = Math.round((insights?.next_stage?.progress ?? 0) * 100);
   const onCorrect = insights?.next_stage?.on_correct ?? null;
+  // 예상 증가분(연한 핑크 ghost 막대, GrowthPath)은 그대로 %축 — 막대 폭 계산용이지 글자가 아니다.
   const gain = Math.round((onCorrect?.gain ?? 0) * 100);
-  const promotes = Boolean(onCorrect?.promotes);
 
   const days = daysToReview(word);
   const reviewText = !planted
@@ -154,13 +144,27 @@ const WordDetaileNewBottomSheet = ({ vocabularyId, id }) => {
             ? '내일 복습'
             : `${days}일 뒤 복습`;
 
+  /*
+    성장 뱃지 — "맞히면 +N%" → "맞히면 +N XP"(crop_xp_contract.md §3). 승급 여부와 무관하게
+    항상 XP 수치 하나로만 말한다 — 예전엔 승급이면 "~로 성장"이라는 별도 문구를 썼는데,
+    시안은 승급 회차도 "맞히면 +364 XP"로 통일했다(작물이 바뀐다는 사실은 아래 성장 경로가
+    이미 말해 준다). `on_correct.xp_gain`(서버)을 우선 쓰고, 없으면 `next_stage.xp`/`xp_next`
+    (역시 서버 우선, 없으면 cropXp.js 로 직접 계산) 사이에서 기존 %축 gain 을 그대로 XP 로
+    환산한다(구버전 insights 응답·게스트 대비 폴백 — crop_xp_contract.md §2 "pct 와 xp 는
+    같은 축" 을 역으로 쓴다).
+  */
+  const xpNow = insights?.next_stage?.xp ?? xpOf(detailStage, word?.fsrs);
+  const xpNextThreshold = insights?.next_stage?.xp_next !== undefined
+    ? insights.next_stage.xp_next
+    : xpNextThresholdOf(detailStage);
+  const xpGain = onCorrect?.xp_gain
+    ?? (xpNextThreshold != null ? Math.round((onCorrect?.gain ?? 0) * (xpNextThreshold - xpNow)) : 0);
+
   const growthBadge = !planted || rotten
     ? null
-    : promotes
-      ? `맞히면 ${withRo(CROP_LABEL[['seed', 'sprout', 'leaf', 'carrot'][Math.min(3, cur + 1)]])} 성장`
-      : gain >= 1
-        ? `맞히면 +${gain}%`
-        : null;
+    : xpGain >= 1
+      ? `맞히면 +${xpGain} XP`
+      : null;
 
   const meanings = Array.isArray(word.meanings) ? word.meanings : [];
   const examples = Array.isArray(word.examples) ? word.examples : [];
@@ -464,6 +468,7 @@ const WordDetaileNewBottomSheet = ({ vocabularyId, id }) => {
         cur={cur}
         pct={rotten ? 100 : pct}
         gain={rotten ? 0 : gain}
+        curXp={xpNow}
         planted={planted}
         rotten={rotten}
         golden={golden}

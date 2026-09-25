@@ -1,6 +1,7 @@
 import React from 'react';
 import CropImage from '../farm/CropImage';
-import { CROP_LABEL, HEALTH_STATES } from '../../utils/crop';
+import { HEALTH_STATES } from '../../utils/crop';
+import { xpFloor } from '../../utils/cropXp';
 
 /**
  * 성장 경로 — 시안 vocabooks §6 "호리병 대신 심긴 작물".
@@ -11,9 +12,17 @@ import { CROP_LABEL, HEALTH_STATES } from '../../utils/crop';
  *   진한 핑크(i)  지금까지의 진행
  *   연한 핑크(u)  이번 복습으로 늘어날 만큼 — 승급이 아니어도 "이만큼 자란다"가 보여야 한다
  *
+ * 【2026-09 XP 개편 — 시안 이후 사용자 추가 지시가 우선】 시안(crop_xp_src.html)은 게이지
+ * 위에 "244 / 600" 핑크 배지를 띄웠지만, 승인된 최종 지시는 그 배지를 **없애고** 대신
+ * 작물 아래 라벨 쪽에서 갈린다 — 지나온·남은 칸은 그대로 단계 문턱 XP(0/50/210/600/1800,
+ * `cropXp.xpFloor` 파생값, 하드코딩 금지), **현재 칸만** 문턱 대신 실제 현재 XP(`curXp`,
+ * 예: "244 XP")를 보여준다. 그래서 링크 위 라벨(`+N%`/`N%`/`승급`)은 전부 지웠고, 연한
+ * 핑크 ghost 막대(예상 증가분)만 남겼다.
+ *
  * @param {number} props.cur      현재 단계 index (0 씨앗 ~ 3 당근)
  * @param {number} props.pct      다음 단계까지의 진행률 0~100
- * @param {number} props.gain     이번 복습에 맞히면 늘어날 만큼 0~100
+ * @param {number} props.gain     이번 복습에 맞히면 늘어날 만큼 0~100 (ghost 막대 폭 전용 — 글자로는 안 쓴다)
+ * @param {number|null} props.curXp 현재 단계의 실제 표시 XP(crop_xp_contract.md §1) — 현재 칸 라벨에만 쓴다.
  * @param {boolean} props.planted 심었는지 — false 면 전부 비어 있다
  * @param {boolean} props.rotten  썩은 작물 — 현재 단계를 회색조로 그린다
  * @param {string}  props.health  현재 단계에 쓸 건강 상태(FRESH/THIRSTY/WILTED/CRITICAL/ROTTEN).
@@ -29,7 +38,7 @@ const STAGES = ['seed', 'sprout', 'leaf', 'carrot'];
  *   "언젠가 반드시 거쳐야 할 단계"로 읽히는데, 황금은 조건을 만족해야 오는 것이지
  *   순서대로 오는 단계가 아니다.
  */
-const GrowthPath = ({ cur = 0, pct = 0, gain = 0, planted = true, rotten = false, golden = false, health }) => {
+const GrowthPath = ({ cur = 0, pct = 0, gain = 0, curXp = null, planted = true, rotten = false, golden = false, health }) => {
   "use memo";
 
   const stages = golden ? [...STAGES, 'golden'] : STAGES;
@@ -37,7 +46,6 @@ const GrowthPath = ({ cur = 0, pct = 0, gain = 0, planted = true, rotten = false
   const p = clamp(pct);
   const g = clamp(gain);
   const ghost = Math.min(100, p + g);
-  const label = g > 0 ? (ghost >= 100 ? '승급' : `+${g}%`) : `${p}%`;
 
   return (
     <div className="
@@ -64,7 +72,7 @@ const GrowthPath = ({ cur = 0, pct = 0, gain = 0, planted = true, rotten = false
                   </span>
                 );
               }
-              // 현재 구간 — 진행 + 예상 증가분 + 배지 문구
+              // 현재 구간 — 진행 + 예상 증가분(ghost). 라벨은 없다(아래 작물 밑 숫자가 대신한다).
               if (planted && linkIndex === curIndex) {
                 return (
                   <span className="relative flex-1 mx-[2px] h-[6px] rounded-[99px] bg-[#E4E4E4] dark:bg-[#3A3A3A]">
@@ -78,21 +86,12 @@ const GrowthPath = ({ cur = 0, pct = 0, gain = 0, planted = true, rotten = false
                       className="absolute left-0 top-0 h-full rounded-[99px] bg-primary-main-600 z-[2] block"
                       style={{ width: `${p}%` }}
                     />
-                    <b className="absolute top-[-16px] right-0 text-[10px] font-[800] text-primary-main-600 whitespace-nowrap">
-                      {label}
-                    </b>
                   </span>
                 );
               }
               // 아직 오지 않은 구간
               return (
-                <span className="relative flex-1 mx-[2px] h-[6px] rounded-[99px] bg-[#E4E4E4] dark:bg-[#3A3A3A]">
-                  {!planted && linkIndex === 0 && (
-                    <b className="absolute top-[-16px] right-0 text-[10px] font-[800] text-primary-main-600 whitespace-nowrap">
-                      0%
-                    </b>
-                  )}
-                </span>
+                <span className="relative flex-1 mx-[2px] h-[6px] rounded-[99px] bg-[#E4E4E4] dark:bg-[#3A3A3A]" />
               );
             })()}
 
@@ -111,16 +110,18 @@ const GrowthPath = ({ cur = 0, pct = 0, gain = 0, planted = true, rotten = false
               />
               <span
                 className={`
-                  text-[9.5px] tracking-[-0.03em]
+                  text-[9.5px] tracking-[-0.03em] tabular-nums
                   ${isNow
-                    ? 'font-[800] text-layout-black dark:text-layout-white'
+                    ? 'font-[800] text-primary-main-600'
                     : isDone
                       ? 'font-[700] text-layout-gray-300'
                       : 'font-[700] text-layout-gray-200 dark:text-layout-gray-500'}
                 `}
               >
-                {/* 칸 폭이 46px 라 "황금 당근"은 두 줄로 접힌다 — 여기서만 짧게 부른다 */}
-                {stage === 'golden' ? '황금' : CROP_LABEL[stage]}
+                {/* 작물 아래 라벨 — 지나온·남은 칸은 단계 문턱 XP(0/50/210/600/1800,
+                    cropXp.xpFloor 파생값), 현재 칸만 문턱 대신 실제 현재 XP(시안 이후
+                    사용자 추가 지시 — 게이지 위 핑크 숫자 제거하고 이 자리로 옮겼다). */}
+                {isNow ? `${curXp ?? xpFloor(stage)} XP` : xpFloor(stage)}
               </span>
             </div>
           </React.Fragment>

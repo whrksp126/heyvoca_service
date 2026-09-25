@@ -111,6 +111,19 @@ export const CROP_LABEL = {
   golden: '황금 당근',
 };
 
+/**
+ * 받침 유무에 따른 조사 — "이파리으로 성장"이 되지 않게 한다.
+ * "맞히면 당근으로 성장"/"이파리로 자랐어요" 처럼 단계 이름 뒤에 로/으로를 붙이는
+ * 모든 자리(단어 상세 성장 뱃지, 채점 상태 바의 진화 문구)가 이 하나를 쓴다 — 예전엔
+ * WordDetaileNewBottomSheet.jsx 안에 똑같은 함수가 따로 있었다.
+ */
+export const withRo = (noun) => {
+  const last = String(noun ?? '').slice(-1);
+  const code = last.charCodeAt(0);
+  const hasJong = code >= 0xac00 && code <= 0xd7a3 && (code - 0xac00) % 28 !== 0;
+  return `${noun}${hasJong ? '으로' : '로'}`;
+};
+
 /* ── 단어 하나의 상태 — 기획 5.1 의 여섯 단계 ─────────────────────────
    밭은 씨앗·새싹·이파리·당근 네 구역으로만 나눈다(기획 5.1 "메인 홈은 복잡도를 줄이기
    위해 4개 그룹을 유지"). 그래서 CROP_LABEL 에는 씨앗이 하나뿐이다.

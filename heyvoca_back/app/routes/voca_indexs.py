@@ -113,13 +113,15 @@ def build_voca_index_response(user_voca):
 
 
 # 사용자 사전 전체 조회
-def _farm_state(game, fsrs, now, farm_answer, farm_growth, farm_health):
+def _farm_state(game, fsrs, now, farm_answer, farm_growth, farm_health, farm_xp=None):
     """단어 1개의 농장 상태 — 화면이 그대로 쓰는 형태.
 
     게임 행이 아직 없는 단어(한 번도 학습하지 않음)는 보유 씨앗이다. 행을 만들지는
     않는다 — 목록 조회가 쓰기를 하면 단어 수천 개인 사용자의 첫 진입이 통째로 느려진다.
     """
     from app.models.models import HealthState, VisualStage
+    if farm_xp is None:
+        from app.services.game.farm_v2 import xp as farm_xp
 
     stage = (game.visual_stage if game else None) or VisualStage.UNPLANTED_SEED
     is_golden = stage == VisualStage.GOLDEN
@@ -139,6 +141,8 @@ def _farm_state(game, fsrs, now, farm_answer, farm_growth, farm_health):
         'highest_stage': (game.highest_stage if game else None) or stage,
         'health': h['state'],
         'pct': farm_answer.stage_progress(game, fsrs, now) if game else 0,
+        'xp': farm_xp.xp_of(stage, fsrs),
+        'xp_next': farm_xp.xp_next(stage),
         'days_to_review': farm_health.ceil_days(due_at - now) if due_at else None,
         'days_to_rot': h['days_to_rot'],
         'studiable': farm_health.is_studiable(h['state']),
@@ -170,6 +174,7 @@ def get_voca_indexs():
     from app.services.game.farm_v2 import answer as farm_answer
     from app.services.game.farm_v2 import growth as farm_growth
     from app.services.game.farm_v2 import health as farm_health
+    from app.services.game.farm_v2 import xp as farm_xp
 
     games = {
         g_.user_voca_id: g_
@@ -215,7 +220,7 @@ def get_voca_indexs():
             'fsrs': fsrs,
             'vocaBooks': voca_books,
             'farm': _farm_state(games.get(uv.id), fsrs, now,
-                                farm_answer, farm_growth, farm_health),
+                                farm_answer, farm_growth, farm_health, farm_xp),
             'createdAt': (uv.created_at).isoformat() + 'Z' if uv.created_at else None,
             'updatedAt': (uv.updated_at).isoformat() + 'Z' if uv.updated_at else None,
         }

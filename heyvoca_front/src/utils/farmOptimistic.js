@@ -25,14 +25,17 @@
   【백엔드와 같은 계산】 단계와 진행률 공식은 `farm_v2/growth.py::stage_from_stability` ·
   `farm_v2/answer.py::stage_progress` 를 그대로 옮긴 것이다. 경계값은 common.jsx 에서
   가져오므로(백엔드 fsrs/thresholds.py 와 같은 값) 숫자가 갈릴 일은 없다.
+
+  【2026-09 XP 추가】 crop_xp_contract.md §1 — `xp_from`/`xp_to`/`xp_delta`/`xp_next` 도
+  같은 이유로 여기서 만든다(FarmStatusBar 가 서버 필드가 없을 때 pct 로 역산하는 폴백이
+  또 있지만, 이 낙관값 자체가 서버와 같은 공식(`cropXp.js` = 서버 `farm_v2/xp.py`)으로
+  직접 계산하는 쪽이 더 정확하다 — pct 역산은 반올림이 두 번 겹친다).
 */
 
 import {
   STABILITY_SPROUT_DAYS, STABILITY_LEAF_DAYS, STABILITY_CARROT_DAYS,
 } from './common';
-
-// 황금 당근 문턱 — farm_v2/constants.py GOLDEN_MIN_STABILITY_DAYS
-const STABILITY_GOLDEN_DAYS = 180;
+import { STABILITY_GOLDEN_DAYS, xpOf, xpNext as xpNextThresholdOf } from './cropXp';
 
 const STAGE_RANK = {
   UNPLANTED_SEED: 0, PLANTED_SEED: 1, SPROUT: 2, LEAF: 3, CARROT: 4, GOLDEN: 5,
@@ -101,10 +104,14 @@ const stageBefore = (base, fsrs) => {
 export const pendingFarmPayload = ({ base, fsrsBefore, wasCorrect }) => {
   const from = stageBefore(base, fsrsBefore);
   const pct = base?.pct_to ?? stageProgress(from, fsrsBefore);
+  // XP(crop_xp_contract.md §1) — 정지 상태라 from/to 가 같은 값에 멈춘다. base.xp_to 를
+  // 먼저 쓰는 이유는 pct 와 같다: 이 단어의 마지막 확정 서버값이 fsrs 재계산보다 더 정확하다.
+  const xp = base?.xp_to ?? xpOf(from, fsrsBefore);
   return {
     crop: STAGE_TO_CROP[from], stage: from,
     crop_from: STAGE_TO_CROP[from], stage_from: from,
     grew: false, pct_from: pct, pct_to: pct,
+    xp_from: xp, xp_to: xp, xp_delta: 0, xp_next: base?.xp_next ?? xpNextThresholdOf(from),
     health: base?.health ?? 'FRESH',
     days_to_review: null,
     wasCorrect: !!wasCorrect,
@@ -134,10 +141,12 @@ export const optimisticFarmPayload = ({
   */
   if (isRetry) {
     const held = base?.pct_to ?? stageProgress(from, fsrsBefore);
+    const heldXp = base?.xp_to ?? xpOf(from, fsrsBefore);
     return {
       crop: STAGE_TO_CROP[from], stage: from,
       crop_from: STAGE_TO_CROP[from], stage_from: from,
       grew: false, pct_from: held, pct_to: held,
+      xp_from: heldXp, xp_to: heldXp, xp_delta: 0, xp_next: base?.xp_next ?? xpNextThresholdOf(from),
       health: base?.health ?? 'FRESH',
       days_to_review: daysToReview,
       wasCorrect: !!wasCorrect,
@@ -157,12 +166,22 @@ export const optimisticFarmPayload = ({
   }
   // 오답으로는 단계가 내려가지 않는다(기획 5.2) — from 그대로 둔다.
 
+  // XP(crop_xp_contract.md §1) — 서버 farm_v2/xp.py 의 xp_of/xp_next 와 같은 공식(cropXp.js).
+  // 오답이면 to===from 이라 xpDelta 가 음수로 나올 수 있다(FSRS 가 stability 를 깎으므로) —
+  // floor(현재 단계) 아래로는 xpOf 자체가 이미 안 내려가게 막아 준다.
+  const xpFromVal = xpOf(from, fsrsBefore);
+  const xpToVal = xpOf(to, fsrsAfter);
+
   return {
     crop: STAGE_TO_CROP[to], stage: to,
     crop_from: STAGE_TO_CROP[from], stage_from: from,
     grew: STAGE_RANK[to] > STAGE_RANK[from],
     pct_from: stageProgress(from, fsrsBefore),
     pct_to: stageProgress(to, fsrsAfter),
+    xp_from: xpFromVal,
+    xp_to: xpToVal,
+    xp_delta: xpToVal - xpFromVal,
+    xp_next: xpNextThresholdOf(to),
     health: base?.health ?? 'FRESH',
     days_to_review: daysToReview,
     wasCorrect: !!wasCorrect,

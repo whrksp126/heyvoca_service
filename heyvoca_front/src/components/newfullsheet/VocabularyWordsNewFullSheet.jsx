@@ -29,7 +29,10 @@ import { HEALTH_STATES } from '../../utils/crop';
 const ITEMS_PER_PAGE = 30;    // 한 번에 로드할 단어 개수
 const SCROLL_THRESHOLD = 200; // 스크롤 끝에서 몇 px 전에 로드할지
 const MAX_RENDERED_ITEMS = 100;
-const ITEM_HEIGHT = 58;       // 시안 §5 — 행 높이 58px 고정
+// 시안 §5 는 58px 였지만 crop_xp_contract.md §3(단어장 단어 목록에 XP 게이지 한 줄 추가)로
+// WordRow 실제 높이가 62px 로 늘었다 — 반드시 WordRow.jsx 와 같은 값이어야 가상 스크롤
+// 행 위치 계산이 실제 행 높이와 어긋나지 않는다.
+const ITEM_HEIGHT = 62;
 // 목록 위에 얹힌 것들의 높이 합(히어로 341 + 칩줄 72). 윈도우 렌더링이 스크롤 위치를
 // 행 index 로 바꿀 때 이만큼을 먼저 빼야 엉뚱한 구간을 그린다.
 const LIST_OFFSET = 413;
@@ -56,13 +59,14 @@ const EmptyIcon = ({ icon: Icon }) => (
  */
 const WordRowSkeleton = () => (
   <div
-    className="flex items-center gap-[11px] w-full h-[58px] shrink-0 animate-pulse"
+    className="flex items-center gap-[11px] w-full shrink-0 animate-pulse"
     style={{ height: ITEM_HEIGHT }}
   >
     <div className="shrink-0 w-[52px] h-[52px] rounded-full bg-layout-gray-50 dark:bg-layout-gray-dark" />
     <span className="flex-1 min-w-0 flex flex-col gap-[6px]">
       <span className="block h-[14px] w-[60%] rounded-full bg-layout-gray-50 dark:bg-layout-gray-dark" />
       <span className="block h-[11px] w-[40%] rounded-full bg-layout-gray-50 dark:bg-layout-gray-dark" />
+      <span className="block h-[4px] w-[90%] rounded-full bg-layout-gray-50 dark:bg-layout-gray-dark" />
     </span>
   </div>
 );

@@ -17,6 +17,7 @@ from app.models.models import (FarmEvent, FarmItem, FarmItemReason,
                                HealthState, UserVoca, UserVocaGame, VisualStage)
 from app.services.game.farm_v2 import constants as C
 from app.services.game.farm_v2 import events, growth, health, inventory, localday
+from app.services.game.farm_v2 import xp as xp_calc
 
 # 단계 → 시안 작물 키. 심기 전/심은 씨앗은 화면에서 같은 씨앗 그림을 쓴다(기획 5.1).
 CROP_KEY = {
@@ -109,7 +110,9 @@ def on_answer(user_id: UUID, user_voca_id: int, was_correct: bool,
     stage_before = game.visual_stage or VisualStage.UNPLANTED_SEED
     health_before = game.health_state or HealthState.FRESH
     # 학습 전 상태를 못 받았으면(구 호출부) 최소한 예전 동작으로 떨어진다
-    pct_before = stage_progress(game, fsrs_before if fsrs_before is not None else fsrs_state, now)
+    fsrs_for_before = fsrs_before if fsrs_before is not None else fsrs_state
+    pct_before = stage_progress(game, fsrs_for_before, now)
+    xp_from = xp_calc.xp_of(stage_before, fsrs_for_before)
 
     # ── 독립 정답 판정 ──
     # 씨앗 구간에서만 로그를 뒤진다. 잎 이상은 안정성만으로 단계가 정해지므로
@@ -175,6 +178,7 @@ def on_answer(user_id: UUID, user_voca_id: int, was_correct: bool,
     # 진화한 회차에도 **새 단계에서의** 진행률을 보낸다. 0 으로 눌러 버리면
     # pct_from(0) == pct_to(0) 이 되어, 가장 보여 줘야 할 순간에 막대가 멈춘다.
     pct_after = stage_progress(game, fsrs_state, now)
+    xp_to = xp_calc.xp_of(stage_after, fsrs_state)
 
     return {
         'crop': CROP_KEY.get(stage_after, 'seed'),
@@ -188,6 +192,10 @@ def on_answer(user_id: UUID, user_voca_id: int, was_correct: bool,
         # 시안의 막대 — 진화한 회차는 새 단계의 진행률로 리셋되므로 from 을 0 으로 보낸다
         'pct_from': 0 if grew else pct_before,
         'pct_to': pct_after,
+        'xp_from': xp_from,
+        'xp_to': xp_to,
+        'xp_delta': xp_to - xp_from,
+        'xp_next': xp_calc.xp_next(stage_after),
         'health': game.health_state,
         'next_review_at': localday.iso_utc(due_at) if due_at else None,
         'days_to_review': health.ceil_days(due_at - now) if due_at else None,

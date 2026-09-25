@@ -14,6 +14,7 @@ import { fieldDataFromPlants } from './farmField';
 import {
   STABILITY_SPROUT_DAYS, STABILITY_LEAF_DAYS, STABILITY_CARROT_DAYS,
 } from './common';
+import { xpOf, xpFloor, xpNext } from './cropXp';
 
 /* ── 레거시 암기 상태(state) → 작물 그림 ─────────────────────
    MemoryStateChangeBadge.jsx · MemorizationStatus.jsx 는 짧은 키(unlearned/leaf/plant/carrot)를,
@@ -93,6 +94,41 @@ export const wordCropStage = (word) => {
   // (예전에는 무조건 sprout 로 떨어져, 막 심은 단어가 폴백 경로에서만 새싹으로 보였다.)
   if (stability >= STABILITY_SPROUT_DAYS) return 'sprout';
   return 'seed';
+};
+
+/* ── 작물 경험치(XP) — crop_xp_contract.md §1 ─────────────────
+   `/vocaIndexs` 응답의 `farm.xp`/`farm.xp_next`(백엔드 farm_v2/xp.py)를 우선 쓰고,
+   없으면(구버전 응답·게스트) `cropXp.js` 로 같은 공식을 다시 계산한다 —
+   wordHealth/wordCropStage 와 같은 "서버 우선, FSRS 폴백" 패턴이다. */
+
+/** 단어 → 표시 XP(현재 단계 기준, floor 적용됨) */
+export const wordXp = (word) => {
+  const f = serverFarm(word);
+  if (f && typeof f.xp === 'number') return f.xp;
+  return xpOf(wordStage(word), word?.fsrs);
+};
+
+/** 단어 → 다음 단계 문턱 XP. 황금(최고 단계)이면 null */
+export const wordXpNext = (word) => {
+  const f = serverFarm(word);
+  if (f && f.xp_next !== undefined) return f.xp_next;
+  return xpNext(wordStage(word));
+};
+
+/**
+ * 단어 → 단계 내 진행률 0~100(단어장 목록의 얇은 게이지 폭). 서버 `farm.pct`
+ * (farm_v2/answer.py `stage_progress` 와 같은 축)를 우선 쓰고, 없으면 XP 값에서
+ * 역산한다 — `pct = (xp-floor)/(next-floor)*100`(crop_xp_contract.md §2).
+ */
+export const wordFarmProgressPct = (word) => {
+  const f = serverFarm(word);
+  if (f && typeof f.pct === 'number') return Math.max(0, Math.min(100, f.pct));
+  const stage = wordStage(word);
+  const floor = xpFloor(stage);
+  const next = wordXpNext(word);
+  if (next == null || next <= floor) return 100;
+  const xp = wordXp(word);
+  return Math.max(0, Math.min(100, Math.round(((xp - floor) / (next - floor)) * 100)));
 };
 
 /* ── 학습·테스트 설정의 '어떤 단어를' 필터 ───────────────────

@@ -6,7 +6,9 @@ from uuid import UUID
 from flask import Blueprint, jsonify, g, request
 
 from app import db
-from app.models.models import UserStudyLog, UserVoca, VisualStage
+from app.models.models import UserStudyLog, UserVoca, UserVocaGame, VisualStage
+from app.services.game.farm_v2 import growth as farm_growth
+from app.services.game.farm_v2 import xp as farm_xp
 from app.utils.jwt_utils import jwt_required
 # 분류 기준은 study.py 단일 소스를 import (중복 정의 금지 — 임계값 변경 시 자동 추종)
 from app.routes.study import _classify_memory_state, _STABILITY_SHORT, _STABILITY_MEDIUM
@@ -72,6 +74,12 @@ def word_insights(user_voca_id):
     state = _classify_memory_state(fsrs)
     stability = float(fsrs.get('stability') or 0.0)
 
+    # 표시 XP 는 암기 상태(unlearned/short/medium/long)가 아니라 **농장 성장 단계**
+    # (game.visual_stage) 기준이다 — 단계는 안 내려가지만 암기 상태는 stability 가
+    # 떨어지면 그대로 낮아져서, 여기서 재도출하면 단어장/밭 화면과 어긋난다(xp.py 참고).
+    game = UserVocaGame.query.filter_by(user_voca_id=user_voca_id, user_id=user_id).first()
+    visual_stage = (game.visual_stage if game else None) or VisualStage.UNPLANTED_SEED
+
     # 다음 단계 진행률 — long이면 최고 단계라 null
     next_stage = None
     if state != 'long':
@@ -87,6 +95,8 @@ def word_insights(user_voca_id):
             'state': target_state,
             'threshold_days': threshold,
             'progress': cur_progress,
+            'xp': farm_xp.xp_of(visual_stage, fsrs),
+            'xp_next': farm_xp.xp_next(visual_stage),
         }
         # 다음 복습에서 맞혔을 때(GOOD) 예측 — 진행률 증가분 / 승급 여부
         try:
@@ -104,11 +114,18 @@ def word_insights(user_voca_id):
             proj_stability = float(proj.get('stability') or 0.0)
             proj_state = _classify_memory_state(proj)
             proj_progress = min(1.0, proj_stability / threshold) if threshold else 0.0
+            # 표시 XP 승급 시뮬레이션 — game.visual_stage 축으로, growth.next_stage 를
+            # 그대로 재사용한다(예정 복습을 독립 정답으로 맞힌 경우와 같은 조건).
+            proj_visual_stage = farm_growth.next_stage(
+                game, proj, sim_now, None, True, True) if game else None
+            if proj_visual_stage is None:
+                proj_visual_stage = visual_stage
             next_stage['on_correct'] = {
                 'state': proj_state,
                 'progress': round(proj_progress, 4),
                 'gain': round(max(0.0, proj_progress - cur_progress), 4),
                 'promotes': _STATE_RANK.get(proj_state, 0) > _STATE_RANK.get(state, 0),
+                'xp_gain': max(0, farm_xp.xp_of(proj_visual_stage, proj) - next_stage['xp']),
             }
         except Exception:
             pass  # 예측 실패는 무시 (프론트가 없으면 미표시)
