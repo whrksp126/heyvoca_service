@@ -59,6 +59,10 @@ class Level(db.Model):
 
 class User(db.Model):
     __tablename__ = 'user'
+    __table_args__ = (
+        # Apple 로그인은 apple_id 로 계정을 찾는다 — 같은 sub 계정이 둘이면 로그인 대상이 비결정적(NULL 은 여럿 허용).
+        UniqueConstraint('apple_id', name='uq_user_apple_id'),
+    )
     id = Column(BinaryUUID, primary_key=True, default=uuid4)
     level_id = Column(Integer, ForeignKey('level.id'), nullable=True)
     email = Column(String(128), nullable=False) 
@@ -146,6 +150,8 @@ class InviteMap(db.Model):
     __tablename__ = "invite_map"
     __table_args__ = (
         PrimaryKeyConstraint("inviter_id", "invitee_id", name="pk_invite_map"),
+        # 한 사람은 한 번만 초대받는다(User.invited_by 와 같은 규칙).
+        UniqueConstraint("invitee_id", name="uq_invite_map_invitee"),
     )
 
     inviter_id = Column(BinaryUUID, ForeignKey("user.id"), nullable=False, comment="초대한 사람 (추천인)")

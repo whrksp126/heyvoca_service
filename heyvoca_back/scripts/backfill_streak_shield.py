@@ -37,6 +37,7 @@ from uuid import UUID
 from run import app
 
 from app import db
+from app.utils.db_lock import begin_user_tx
 from app.models.models import CheckIn, FarmEvent, FarmItem, UserStreak
 from app.services.game.farm_v2 import constants as C
 from app.services.game.farm_v2 import events, inventory, localday
@@ -144,9 +145,14 @@ def analyze(user_id, st, now):
 def apply_one(user_id, now):
     """한 사용자 한 트랜잭션. 잠금 후 다시 판정한다. 결과 info(또는 None)."""
     try:
+        # 전역 잠금 순서(User → UserStreak → 아이템 → CheckIn)를 따른다 — UserStreak 부터 잡고
+        # 보호권(아이템 → User FK)으로 가면 User 를 먼저 잡는 정답 기록과 교착한다. 첫 문장이 잠금이라
+        # 아래 판정(analyze)의 일반 SELECT 도 최신이다.
+        begin_user_tx(user_id)
         st = (db.session.query(UserStreak)
               .filter(UserStreak.user_id == user_id)
               .with_for_update()
+              .populate_existing()
               .first())
         if st is None:
             db.session.rollback()

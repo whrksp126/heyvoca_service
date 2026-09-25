@@ -529,10 +529,13 @@ def bookstore_download():
         if not bookstore:
             return jsonify({'code': 404, 'message': '해당하는 서점이 없습니다.'}), 404
 
-        # downloads 값 1 증가
-        bookstore.downloads = (bookstore.downloads or 0) + 1
-        print(bookstore.downloads)
+        # downloads 값 1 증가 — SQL 표현식으로(UPDATE … SET downloads = COALESCE(downloads,0) + 1).
+        # 읽은 값에 +1 해 쓰면 동시에 누른 수만큼 사라진다(lost update).
+        db.session.query(Bookstore).filter(Bookstore.id == bookstore.id).update(
+            {Bookstore.downloads: func.coalesce(Bookstore.downloads, 0) + 1},
+            synchronize_session=False)
         db.session.commit()
+        db.session.refresh(bookstore)
 
         return jsonify({'code': 200, 'data': {'id': id, 'downloads': bookstore.downloads}}), 200
 

@@ -37,6 +37,8 @@ import subprocess
 import gzip
 import tempfile
 import time
+import contextlib
+import fcntl
 from datetime import datetime, timezone
 from urllib.parse import urlparse, unquote
 
@@ -102,7 +104,32 @@ class DictManageError(Exception):
 
 
 class DictConflictError(DictManageError):
-    """최신성 가드 위반(409) — 화면에서 본 latest와 실제가 다름."""
+    """최신성 가드 위반(409) — 화면에서 본 latest와 실제가 다름. 또는 같은 환경에서 작업이 진행 중."""
+
+
+@contextlib.contextmanager
+def _op_lock(lang):
+    """같은 환경(컨테이너)에서 발행·적용을 한 번에 하나만 — 언어별 파일 잠금(gunicorn 워커 간 공유).
+
+    적용은 고정 이름의 임시 schema(heyvoca_dict_apply 등)에 import 한 뒤 RENAME 으로 바꾼다. 두 요청
+    (두 번 누름·두 관리자 탭)이 겹치면 서로의 임시 schema 를 DROP/덮어쓰고, 적용 중에 발행하면 반쯤
+    바뀐 사전을 dump 한다. 기다리지 않고 409 로 돌려보낸다 — 작업이 수십 초~수 분이라 요청을 붙잡아
+    두면 게이트웨이 타임아웃이 먼저 난다.
+    """
+    path = os.path.join(tempfile.gettempdir(), 'heyvoca_dict_op_{}.lock'.format(_lang(lang)))
+    f = open(path, 'a+')
+    try:
+        try:
+            fcntl.flock(f.fileno(), fcntl.LOCK_EX | fcntl.LOCK_NB)
+        except BlockingIOError:
+            raise DictConflictError('이 환경에서 사전 발행/적용이 이미 진행 중입니다. 끝난 뒤 다시 시도하세요.')
+        yield
+    finally:
+        try:
+            fcntl.flock(f.fileno(), fcntl.LOCK_UN)
+        except Exception:
+            pass
+        f.close()
 
 
 def _cfg(lang='en'):
@@ -548,7 +575,17 @@ def list_versions(limit=RETENTION, lang='en'):
 
 
 def publish(message, publisher, expected_latest=None, lang='en'):
-    """이 환경의 사전(lang 별 schema)을 새 버전으로 발행(헤드 갱신)."""
+    """이 환경의 사전(lang 별 schema)을 새 버전으로 발행(헤드 갱신). 같은 환경 동시 실행은 409."""
+    with _op_lock(lang):
+        return _publish(message, publisher, expected_latest, lang)
+
+
+def _latest_version(lang):
+    idx = _read_index(lang)
+    return idx['versions'][0]['version'] if idx['versions'] else None
+
+
+def _publish(message, publisher, expected_latest=None, lang='en'):
     cfg = _cfg(lang)
     is_en = _lang(lang) == 'en'
     conn = _conn()
@@ -577,6 +614,11 @@ def publish(message, publisher, expected_latest=None, lang='en'):
             object_name = f"{cfg['prefix']}/{cfg['schema']}_v{version}.sql.gz"
         # 인덱스에 남기는 url은 admin/사람이 브라우저로 여는 주소 → 항상 공개 엔드포인트
         url = f"{public_endpoint().rstrip('/')}/{_bucket()}/{object_name}"
+
+        # dump 는 수십 초 걸린다. 그 사이 **다른 환경**이 발행했으면 같은 버전 번호의 객체를 덮어쓰게
+        # 되므로 올리기 직전에 허브 최신을 다시 본다(인덱스 쓰기 직전에도 한 번 더).
+        if _latest_version(lang) != cur_latest:
+            raise DictConflictError('발행 도중 다른 환경의 발행이 있었습니다. 새로고침 후 다시 시도하세요.')
 
         cli = _minio('rw')
         if is_en:
@@ -607,6 +649,8 @@ def publish(message, publisher, expected_latest=None, lang='en'):
             except Exception:
                 pass
 
+        if _latest_version(lang) != cur_latest:
+            raise DictConflictError('발행 도중 다른 환경의 발행이 있었습니다. 새로고침 후 다시 시도하세요.')
         _write_index(index, lang)
         _set_meta(conn, sha, version, lang)  # 이 환경 = 방금 발행한 버전
         res = {'version': version, 'sha256': sha, 'counts': counts,
@@ -841,7 +885,13 @@ def apply_version(version, publisher, lang='en'):
     """objectstore의 특정 버전을 이 환경 사전(lang 별 schema)에 swap 적용(내려받기/복원).
 
     ja 스키마가 아직 없으면(신규 환경 최초 적용) 백업 없이 새로 만든다(부트스트랩).
+    같은 환경에서 발행·적용이 진행 중이면 DictConflictError(409).
     """
+    with _op_lock(lang):
+        return _apply_version(version, publisher, lang)
+
+
+def _apply_version(version, publisher, lang='en'):
     cfg = _cfg(lang)
     is_en = _lang(lang) == 'en'
     D, T = cfg['schema'], cfg['temp']

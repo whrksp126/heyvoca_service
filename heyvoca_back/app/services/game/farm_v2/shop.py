@@ -24,7 +24,7 @@ from app.models.models import (
 )
 from app.services.game.farm_v2 import constants as C
 from app.services.game.farm_v2 import events, inventory
-from app.utils.db_lock import retry_on_deadlock
+from app.utils.db_lock import begin_user_tx, retry_on_deadlock
 
 # ── 경제 안전장치 ─────────────────────────────────────────
 # 하루 보석 지출 한도(기획 9.4, 30개)는 2026-09 연속 학습 보호권 개편에서 **완전히 제거**했다.
@@ -137,6 +137,9 @@ def purchase(user_id: UUID, sku: str, qty: int = 1,
         GemShortage     — 보석 부족 (PermissionError 하위)
     """
     try:
+        # 새 트랜잭션의 첫 문장 = User 잠금(`db_lock.begin_user_tx`). 판정은 잠근 행으로 하지만,
+        # 이어지는 원장·아이템 INSERT 가 같은 사용자 안에서 한 줄로 서게 한다.
+        begin_user_tx(user_id)
         result = purchase_in_tx(user_id, sku, qty)
         db.session.commit()
     except Exception:

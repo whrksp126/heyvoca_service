@@ -175,7 +175,12 @@ def run_backfill(args):
         )
         if user_filter_id is not None:
             query = query.filter(UserVoca.user_id == user_filter_id)
-        rows = query.order_by(UserVoca.id.asc()).limit(fetch_size).all()
+        query = query.order_by(UserVoca.id.asc()).limit(fetch_size)
+        if not dry_run:
+            # 적용 모드는 배치 행을 잠그고 읽는다 — 잠그지 않고 읽은 data 에 mastery 를 얹어 쓰면
+            # 그 사이 study/log 가 커밋한 학습 결과(FSRS 상태)를 옛 값으로 덮는다(lost update).
+            query = query.with_for_update().populate_existing()
+        rows = query.all()
 
         if not rows:
             break

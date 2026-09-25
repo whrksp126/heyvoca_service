@@ -59,9 +59,11 @@ def start_user_tx(user_id: UUID):
 
     여기서는 먼저 롤백으로 그 스냅샷을 버린다. 새 트랜잭션의 첫 문장이 잠금 읽기이므로 이후
     일반 SELECT 의 스냅샷은 잠금을 얻은 **뒤**에 잡힌다. 호출 시점에 flush/커밋 안 된 변경이
-    없어야 한다(읽기만 했던 요청 진입부 전용).
+    없어야 한다(읽기만 했던 요청 진입부 전용) — 있으면 RuntimeError(`db_lock.begin_user_tx`).
     """
-    db.session.rollback()
+    from app.utils.db_lock import begin_user_tx
+
+    begin_user_tx(user_id)
     return lock_user_row(user_id)
 
 

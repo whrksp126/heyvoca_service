@@ -19,6 +19,7 @@ from uuid import UUID
 import firebase_admin
 from firebase_admin import credentials, messaging
 from firebase_admin import exceptions as fb_exceptions
+from sqlalchemy.exc import IntegrityError
 from apscheduler.schedulers.background import BackgroundScheduler
 from apscheduler.triggers.cron import CronTrigger
 import atexit
@@ -130,7 +131,13 @@ def save_token():
             is_marketing_allowed=False
         )
         db.session.add(new_token_item)
-        db.session.commit()
+        try:
+            db.session.commit()
+        except IntegrityError:
+            # 같은 토큰 저장이 동시에 두 번 오면(앱 시작 직후 재시도) 둘 다 '없음'을 보고 INSERT 한다.
+            # PK(user_id, token)가 한쪽을 막는다 — 결과는 '이미 존재'와 같다.
+            db.session.rollback()
+            return jsonify({'code': 200, 'msg': "토큰이 이미 존재합니다"})
         return jsonify({'code': 200, 'msg': "토큰이 성공적으로 저장되었습니다"})
     
     return jsonify({'code': 200, 'msg': "토큰이 이미 존재합니다"})
@@ -151,15 +158,16 @@ def delete_token():
 
     user_uuid = UUID(user_id) if isinstance(user_id, str) else user_id
 
-    token_item = db.session.query(UserHasToken)\
+    # 조건부 DELETE 한 문장 — 읽고 지우면 동시 삭제 두 건 중 뒤엣것이 0행 삭제 경고를 낸다.
+    deleted = db.session.query(UserHasToken)\
                     .filter(UserHasToken.user_id == user_uuid)\
                     .filter(UserHasToken.token == fcm_token)\
-                    .first() 
-    
-    if token_item:
-        db.session.delete(token_item)
+                    .delete(synchronize_session=False)
+
+    if deleted:
         db.session.commit()
         return jsonify({'code': 200, 'msg': "토큰이 성공적으로 삭제되었습니다"})
+    db.session.rollback()
     
     return jsonify({'code': 404, 'msg': "토큰을 찾을 수 없습니다"})
 

@@ -10,7 +10,7 @@ from sqlalchemy import text
 from app import db
 from app.models.models import UserStudySession, UserStudyLog, UserVoca, UserQuestionTypeStat, User
 from app.utils.jwt_utils import jwt_required
-from app.utils.db_lock import lock_user
+from app.utils.db_lock import begin_user_tx
 from app.constants.question_types import ALLOWED_QUESTION_TYPES
 from app.utils.dict_lang import get_dict_lang
 from app.services.ja_fields import (
@@ -255,8 +255,7 @@ def post_study_log():
     # (어차피 로그 INSERT 에서 같은 User 를 기다렸다). 먼저 롤백하는 이유는 요청 진입부에서
     # 잡힌 스냅샷을 버려, 아래 멱등 가드(같은 세션·단어 로그 존재 확인)가 잠금 뒤 최신 데이터를
     # 보게 하려는 것이다(`app.utils.gem.start_user_tx` 주석). 이 시점엔 바꾼 것이 없다.
-    db.session.rollback()
-    lock_user(user_id)
+    begin_user_tx(user_id)
 
     # ── 권한 검증 ──
     session_obj = UserStudySession.query.filter_by(

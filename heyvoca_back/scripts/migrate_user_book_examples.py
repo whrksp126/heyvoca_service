@@ -179,17 +179,23 @@ def _build_admin_lookup(db, Bookstore, AdminVocaBookMap, Voca, bookstore_ids):
 
 
 def _fill_user_maps(db, UserVocaBookMap, UserVoca, merge_examples, user_voca_books,
-                     bookstore_to_admin_book, admin_by_voca_id, admin_by_word, admin_voca_id_by_word):
+                     bookstore_to_admin_book, admin_by_voca_id, admin_by_word, admin_voca_id_by_word,
+                     lock=False):
     """3단계: user_voca_book_map 채우기 + user_voca 합산."""
     book_ids = [ub.id for ub in user_voca_books]
     maps_by_book = defaultdict(list)
     if book_ids:
-        rows = (
+        # lock=True(--apply)면 읽는 즉시 행을 잠근다(FOR UPDATE). 잠그지 않고 읽은 voca_examples 에 합쳐
+        # 쓰면, 그 사이 사용자가 자기 단어장에서 같은 단어의 예문을 고친 결과(UserVoca 병합분)가 사라진다.
+        # 학습(study/log)은 같은 UserVoca 행을 잠그므로 스크립트가 커밋할 때까지(수 초) 기다린다.
+        q = (
             db.session.query(UserVocaBookMap, UserVoca)
             .outerjoin(UserVoca, UserVocaBookMap.user_voca_id == UserVoca.id)
             .filter(UserVocaBookMap.user_voca_book_id.in_(book_ids))
-            .all()
         )
+        if lock:
+            q = q.with_for_update().populate_existing()
+        rows = q.all()
         for m, uv in rows:
             maps_by_book[m.user_voca_book_id].append((m, uv))
 
@@ -276,6 +282,7 @@ def main():
         filled_map_count, updated_uservoca_ids = _fill_user_maps(
             db, UserVocaBookMap, UserVoca, merge_examples, user_voca_books,
             bookstore_to_admin_book, admin_by_voca_id, admin_by_word, admin_voca_id_by_word,
+            lock=not args.dry_run,
         )
         print(f'채운 user_voca_book_map 수: {filled_map_count}')
         print(f'갱신한 user_voca 수: {len(updated_uservoca_ids)}')

@@ -30,6 +30,7 @@ from app.models.models import (
     VocaExampleMap,
 )
 from app.routes.admin import admin_required
+from app.utils.db_lock import lock_row
 from app.utils.dict_lang import get_dict_lang
 from app.utils.word_payload import (
     load_ja_word_extras, load_ja_example_tokens, apply_word_fields, word_lang_fields,
@@ -465,7 +466,9 @@ def add_word(book_id):
       - 409: 동음이의 후보 다수 (data.candidates) — 사용자 선택 필요
       - 409: 동일 (voca_id, book_id) 중복
     """
-    book = AdminVocaBook.query.filter_by(id=book_id).first()
+    # 단어장 행을 먼저 잠근다(이 트랜잭션의 첫 문장) — 같은 단어장 동시 편집을 한 줄로 세워
+    # 중복 매핑 확인·word_count 재계산이 앞선 편집의 커밋까지 본 값으로 이뤄지게 한다.
+    book = lock_row(AdminVocaBook, AdminVocaBook.id == book_id)
     if book is None:
         return jsonify({'code': 404, 'message': '단어장을 찾을 수 없습니다.'}), 404
 
@@ -484,7 +487,10 @@ def add_word(book_id):
         if not word:
             return jsonify({'code': 400, 'message': 'voca_id 또는 word가 필요합니다.'}), 400
 
-        candidates = Voca.query.filter_by(word=word).all()
+        # force 가 아니면 잠금 읽기 — 없는 단어면 ix_voca_word 갭 잠금으로, 같은 새 단어를 동시에
+        # 두 번 만들지 못하게 한다(force=true 는 동음이의어를 일부러 새로 만드는 경로라 잠그지 않는다).
+        cq = Voca.query.filter_by(word=word)
+        candidates = (cq if force else cq.with_for_update()).all()
         if candidates and not force:
             if len(candidates) >= 1:
                 # 후보가 있으면 사용자에게 선택 기회 제공 (force=true 또는 voca_id 지정으로 재호출)
@@ -576,6 +582,7 @@ def add_word(book_id):
 @admin_required
 def delete_word(book_id, map_id):
     """admin_voca_book_map row만 삭제. Voca 자체는 다른 단어장에서 참조 가능하므로 절대 삭제하지 않는다."""
+    lock_row(AdminVocaBook, AdminVocaBook.id == book_id)   # 첫 문장 — word_count 재계산이 최신을 보게
     m = AdminVocaBookMap.query.filter_by(id=map_id).first()
     if m is None:
         return jsonify({'code': 404, 'message': '단어 매핑을 찾을 수 없습니다.'}), 404
@@ -614,7 +621,10 @@ def toggle_bookstore(book_id):
 
     응답: { code, data: {bookstore, action: 'created'|'shown'|'hidden'} }
     """
-    book = AdminVocaBook.query.filter_by(id=book_id).first()
+    # 단어장 행을 먼저 잠근다 — '서점 행이 없으면 만들고, 있으면 hide 를 뒤집는' 판정을 한 줄로
+    # 세운다. 잠그지 않으면 두 번 누른 요청이 둘 다 '없음'을 보고 서점 행을 두 개 만들거나,
+    # 둘 다 같은 값을 읽어 뒤집어 토글이 한 번만 된다.
+    book = lock_row(AdminVocaBook, AdminVocaBook.id == book_id)
     if book is None:
         return jsonify({'code': 404, 'message': '단어장을 찾을 수 없습니다.'}), 404
 

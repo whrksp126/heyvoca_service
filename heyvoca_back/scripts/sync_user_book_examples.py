@@ -257,7 +257,7 @@ def _build_admin_lookup(db, Bookstore, AdminVocaBookMap, Voca, bookstore_ids):
 
 def _sync_user_maps(db, UserVocaBookMap, UserVoca, merge_examples, user_voca_books,
                      bookstore_to_admin_book, admin_by_voca_id, admin_by_word, admin_voca_id_by_word,
-                     enable_stale=False, voca_ids=None):
+                     enable_stale=False, voca_ids=None, lock=False):
     """user_voca_book_map 중 '결함' 상태인 행을 admin 예문으로 교체 + user_voca 합산.
 
     enable_stale: --stale 모드 여부. True면 예문 집합 불일치(user가 admin에 없는 옛 문장을
@@ -268,12 +268,17 @@ def _sync_user_maps(db, UserVocaBookMap, UserVoca, merge_examples, user_voca_boo
     book_ids = [ub.id for ub in user_voca_books]
     maps_by_book = defaultdict(list)
     if book_ids:
-        rows = (
+        # lock=True(--apply)면 읽는 즉시 행을 잠근다(FOR UPDATE). 잠그지 않고 읽은 voca_examples 에 합쳐
+        # 쓰면, 그 사이 사용자가 자기 단어장에서 같은 단어의 예문을 고친 결과(UserVoca 병합분)가 사라진다.
+        # 학습(study/log)은 같은 UserVoca 행을 잠그므로 스크립트가 커밋할 때까지(수 초) 기다린다.
+        q = (
             db.session.query(UserVocaBookMap, UserVoca)
             .outerjoin(UserVoca, UserVocaBookMap.user_voca_id == UserVoca.id)
             .filter(UserVocaBookMap.user_voca_book_id.in_(book_ids))
-            .all()
         )
+        if lock:
+            q = q.with_for_update().populate_existing()
+        rows = q.all()
         for m, uv in rows:
             maps_by_book[m.user_voca_book_id].append((m, uv))
 
@@ -379,7 +384,7 @@ def main():
          stale_replaced_count, criteria_replaced_count) = _sync_user_maps(
             db, UserVocaBookMap, UserVoca, merge_examples, user_voca_books,
             bookstore_to_admin_book, admin_by_voca_id, admin_by_word, admin_voca_id_by_word,
-            enable_stale=args.stale, voca_ids=voca_ids,
+            enable_stale=args.stale, voca_ids=voca_ids, lock=args.apply,
         )
         print(f'재동기화한 user_voca_book_map 수: {synced_map_count}')
         print(f'  - 기존 결함 기준으로 교체: {criteria_replaced_count}')

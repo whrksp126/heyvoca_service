@@ -17,6 +17,7 @@ from uuid import UUID, uuid4
 from app.routes import voca_books_bp
 from app.models.models import db, UserVocaBook, UserVocaBookMap, UserVoca, Bookstore, AdminVocaBookMap, UserVocaGame
 from app.utils.jwt_utils import jwt_required
+from app.utils.db_lock import begin_user_tx
 from app.utils.dict_lang import get_dict_lang
 from app.utils.word_payload import (
     UserWordEnricher, payload_voca_id, validate_dict_voca_ids, check_payload_language,
@@ -233,6 +234,27 @@ def _apply_emphasis_to_items(parsed_items):
                 ex['meaning'] = tagged_chunk[j]['ko']
 
 
+_PREPARED = '_emphasis_prepared'
+
+
+def prepare_items_for_persist(parsed_items):
+    """bulk_persist_vocas 전에 **잠금 밖에서** 끝낼 일 — 예문 강조(spaCy/Kiwi, 필요 시 GPT 호출).
+
+    쓰기 경로는 사용자 단위 잠금(`db_lock.begin_user_tx`) 안에서 단어를 저장한다. 강조는 외부
+    호출을 할 수 있어 잠금 안에서 돌리면 같은 사용자의 학습 답안 반영까지 그만큼 기다린다.
+    처리한 항목에 표시를 남겨 bulk_persist_vocas 가 두 번 돌리지 않게 한다.
+    """
+    if not parsed_items:
+        return parsed_items
+    if get_dict_lang() != 'ja':
+        todo = [it for it in parsed_items if not it.get(_PREPARED)]
+        if todo:
+            _apply_emphasis_to_items(todo)
+    for it in parsed_items:
+        it[_PREPARED] = True
+    return parsed_items
+
+
 def bulk_persist_vocas(user_id, voca_book_id, parsed_items):
     """
     파싱된 단어 리스트를 UserVoca / UserVocaBookMap에 벌크로 저장한다.
@@ -247,9 +269,15 @@ def bulk_persist_vocas(user_id, voca_book_id, parsed_items):
     # 예문 강조 자동 생성 (merge 이전 시점에 처리해야 origin/meaning 키 기준 중복제거가 정확)
     # 일본어는 영어 spaCy/kiwi 규칙이 맞지 않아 건너뛴다(ja 태깅은 example_tagging 쪽 ja 분기 담당).
     if lang != 'ja':
-        _apply_emphasis_to_items(parsed_items)
+        todo = [it for it in parsed_items if not it.get(_PREPARED)]
+        if todo:
+            _apply_emphasis_to_items(todo)
 
     # 중복 키 = (user_id, dict_lang, word) — 다른 언어의 같은 표기 단어와 합치지 않는다.
+    # DB 유니크가 없는 키라 '있으면 병합, 없으면 INSERT' 가 옳으려면 호출부가
+    # `begin_user_tx(user_id)` 로 연 트랜잭션 안이어야 한다(동시 업로드가 같은 단어를 두 번 만들지 않게).
+    from app.utils.db_lock import require_user_tx
+    require_user_tx(user_id)
     origins = [item['origin'] for item in parsed_items if item.get('origin')]
     existing_vocas = db.session.query(UserVoca).filter(
         UserVoca.user_id == user_id,
@@ -288,8 +316,14 @@ def bulk_persist_vocas(user_id, voca_book_id, parsed_items):
         db.session.add_all(new_user_vocas)
         db.session.flush()
 
+    # 이 단어장에 이미 연결된 단어는 다시 매핑하지 않는다 — DB 의 uq_userbook_voca
+    # (user_voca_book_id, user_voca_id) 유니크에 걸려 청크 전체가 500 으로 실패한다(같은 단어를 다시
+    # 올리거나, 동시에 보낸 청크 두 개에 같은 단어가 들어 있는 경우).
+    seen_voca_ids = {
+        r[0] for r in db.session.query(UserVocaBookMap.user_voca_id)
+        .filter(UserVocaBookMap.user_voca_book_id == voca_book_id).all()
+    }
     book_maps_data = []
-    seen_voca_ids = set()
     for item in parsed_items:
         origin = item['origin']
         uv = user_voca_dict.get(origin)
@@ -457,6 +491,9 @@ def create_voca_book():
             return jsonify({'code': status, 'message': msg}), status
 
     try:
+        # 사용자 단위 잠금(`db_lock.begin_user_tx`) — 아래 '기존 UserVoca 조회 → 없으면 INSERT'가
+        # 동시 요청에서 같은 단어를 두 번 만들지 않게 한다((user_id, dict_lang, word) 는 DB 유니크가 없다).
+        begin_user_tx(user_id)
         # UserVocaBook 생성
         voca_book = UserVocaBook(
             user_id=user_id,
@@ -753,6 +790,10 @@ def upload_excel_voca_book():
             status, msg = invalid
             return jsonify({'code': status, 'message': msg}), status
 
+        # 예문 강조는 잠금 밖에서 끝내고, 단어 저장은 사용자 단위 잠금 안에서(`db_lock.begin_user_tx`) —
+        # 같은 단어를 동시에 올려도 UserVoca 가 두 번 생기지 않는다.
+        prepare_items_for_persist(parsed_items)
+        begin_user_tx(user_id)
         # UserVocaBook 생성
         voca_book = UserVocaBook(
             user_id=user_id,
@@ -903,6 +944,10 @@ def upload_csv_voca_book():
             status, msg = invalid
             return jsonify({'code': status, 'message': msg}), status
 
+        # 예문 강조는 잠금 밖에서 끝내고, 단어 저장은 사용자 단위 잠금 안에서(`db_lock.begin_user_tx`) —
+        # 같은 단어를 동시에 올려도 UserVoca 가 두 번 생기지 않는다.
+        prepare_items_for_persist(parsed_items)
+        begin_user_tx(user_id)
         # UserVocaBook 생성
         voca_book = UserVocaBook(
             user_id=user_id,
@@ -997,6 +1042,10 @@ def upload_quizlet_pdf_voca_book():
             status, msg = invalid
             return jsonify({'code': status, 'message': msg}), status
 
+        # 예문 강조는 잠금 밖에서 끝내고, 단어 저장은 사용자 단위 잠금 안에서(`db_lock.begin_user_tx`) —
+        # 같은 단어를 동시에 올려도 UserVoca 가 두 번 생기지 않는다.
+        prepare_items_for_persist(parsed_items)
+        begin_user_tx(user_id)
         # UserVocaBook 생성
         voca_book = UserVocaBook(
             user_id=user_id,
@@ -1084,12 +1133,16 @@ def delete_voca_book(vocaBookId):
     except ValueError:
         return jsonify({'code': 400, 'message': '잘못된 형식의 단어장 ID입니다.'}), 400
 
+    # 사용자 단위 잠금(`db_lock.begin_user_tx`) — '다른 단어장에도 있는가' 판정 뒤 고아 단어를
+    # 지우는데, 그 사이 다른 요청이 같은 단어를 연결·학습하면 판정이 틀어진다.
+    begin_user_tx(user_id)
     voca_book = db.session.query(UserVocaBook).filter(
         UserVocaBook.id == voca_book_id,
         UserVocaBook.user_id == user_id
     ).first()
 
     if not voca_book:
+        db.session.rollback()
         return jsonify({'code': 404, 'message': '해당 단어장을 찾을 수 없습니다.'}), 404
 
     # 제공받은(검증) 단어장도 단어장 자체는 삭제 가능 — 잠기는 건 단어 데이터뿐이다.
@@ -1199,6 +1252,19 @@ def append_vocas_to_book(vocaBookId):
     if invalid:
         status, msg = invalid
         return jsonify({'code': status, 'message': msg}), status
+
+    # 예문 강조는 잠금 밖에서 끝낸다. 그 뒤 사용자 단위 잠금으로 새 트랜잭션을 연다
+    # (`db_lock.begin_user_tx`) — 대용량 업로드는 청크를 **동시에** 보내므로, 잠그지 않으면
+    # 청크끼리 같은 단어를 두 번 만들고, 각자 옛 스냅샷으로 센 total_word_cnt 를 덮어써 총계가 틀어진다.
+    prepare_items_for_persist(parsed_items)
+    begin_user_tx(user_id)
+    voca_book = db.session.query(UserVocaBook).filter(
+        UserVocaBook.id == voca_book_id,
+        UserVocaBook.user_id == user_id
+    ).first()
+    if not voca_book:
+        db.session.rollback()
+        return jsonify({'code': 404, 'message': '해당 단어장을 찾을 수 없습니다.'}), 404
 
     try:
         added_count = bulk_persist_vocas(user_id, voca_book.id, parsed_items)
@@ -1575,6 +1641,10 @@ def upload_anki_voca_book():
             status, msg = invalid
             return jsonify({'code': status, 'message': msg}), status
 
+        # 예문 강조는 잠금 밖에서 끝내고, 단어 저장은 사용자 단위 잠금 안에서(`db_lock.begin_user_tx`) —
+        # 같은 단어를 동시에 올려도 UserVoca 가 두 번 생기지 않는다.
+        prepare_items_for_persist(parsed_items)
+        begin_user_tx(user_id)
         # UserVocaBook 생성 (기존 CSV 업로드와 동일한 패턴)
         voca_book = UserVocaBook(
             user_id=user_id,

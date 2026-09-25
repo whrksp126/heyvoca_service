@@ -12,6 +12,7 @@ from uuid import uuid4, UUID
 from app.routes import user_voca_book_bp
 from app.models.models import db, User, VocaBook, Voca, VocaMeaning, VocaExample, VocaBookMap, VocaMeaningMap, VocaExampleMap, Bookstore, UserVocaBook, UserVoca, UserVocaBookMap, UserVocaGame
 from app.routes.mainpage import update_user_goal
+from app.utils.db_lock import begin_user_tx
 from app.utils.jwt_utils import jwt_required
 from app.utils.dict_lang import get_dict_lang
 from app.utils.word_payload import check_payload_language
@@ -88,9 +89,10 @@ def create_user_voca_book():
         message = ''
         if bookstore_id:
             # 유료 단어장인 경우 다운로드 카운트만 증가
-            bookstore_item = db.session.query(Bookstore).filter(Bookstore.id == bookstore_id).first()
-            if bookstore_item:
-                bookstore_item.downloads += 1
+            # 다운로드 수는 SQL 표현식으로 올린다(UPDATE … SET downloads = downloads + 1).
+            # 읽은 값에 +1 해 쓰면 동시에 받은 사용자 수만큼 사라진다(lost update).
+            db.session.query(Bookstore).filter(Bookstore.id == bookstore_id).update(
+                {Bookstore.downloads: Bookstore.downloads + 1}, synchronize_session=False)
             message = '단어장이 생성되었습니다.'
         else:
             # 무료 단어장인 경우 book_cnt 차감
@@ -197,12 +199,17 @@ def delete_user_voca_book():
     user_id = UUID(g.user_id)
     user_voca_book_id = UUID(data['id'])
 
+    # 사용자 단위 직렬화(`db_lock.begin_user_tx`) — 아래 '다른 단어장에도 있는가' 판정 뒤 단어를
+    # 지우는데, 그 사이 다른 요청이 같은 단어를 다른 단어장에 연결하거나 학습(게임 행 생성)하면
+    # 판정이 틀어져 삭제가 FK(1451)로 통째로 실패하거나 방금 연결한 단어가 사라진다.
+    begin_user_tx(user_id)
     user_voca_book = db.session.query(UserVocaBook).filter(
         UserVocaBook.id == user_voca_book_id,
         UserVocaBook.user_id == user_id
     ).first()
 
     if not user_voca_book:
+        db.session.rollback()
         return jsonify({'code': 404, 'message': '해당 단어장이 존재하지 않습니다.'}), 404
 
     # 제공받은(검증) 단어장도 단어장 자체는 삭제 가능 — 잠기는 건 단어 데이터뿐이다.
@@ -376,7 +383,9 @@ def convert_to_frontend_format(parsed_items):
 @jwt_required
 def upload_user_voca_book():
     # voca_books와 양방향 import가 되므로 함수 내부에서 import
-    from app.routes.voca_books import bulk_persist_vocas, build_voca_book_response
+    from app.routes.voca_books import (bulk_persist_vocas, build_voca_book_response,
+                                       prepare_items_for_persist)
+    from app.utils.gem import start_user_tx
 
     data = request.get_json()
     title = data.get('title') # 단어장 이름
@@ -437,10 +446,15 @@ def upload_user_voca_book():
         ]
 
         ### 1. 단어장 생성
-        user = db.session.query(User).filter(User.id == user_id).first()
+        # 예문 강조(외부 호출 가능)는 잠금 밖에서 먼저 끝낸다.
+        prepare_items_for_persist(normalized_items)
+        # User 를 잠근 새 트랜잭션에서 book_cnt 를 검사·차감한다. 잠그지 않고 읽은 값으로 판정하면
+        # 동시 업로드 두 건이 남은 1개로 둘 다 통과해 한 건의 차감이 사라진다(lost update).
+        user = start_user_tx(user_id)
 
         # book_cnt 차감
-        if user.book_cnt < 1:
+        if user is None or user.book_cnt < 1:
+            db.session.rollback()
             return jsonify({
                 'code': 400,
                 'message': '최대 단어장 생성 개수를 초과했습니다.'

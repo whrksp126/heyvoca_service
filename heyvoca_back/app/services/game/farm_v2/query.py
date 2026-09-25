@@ -519,8 +519,14 @@ def mark_migration_seen(user_id: UUID, now: Optional[dt.datetime] = None) -> dic
         # 전환 대상이 아니었던 사용자(신규 가입)도 이 요청을 보낼 수 있다. 오류가 아니다.
         return {'seen': False}
     if row.seen_at is None:
-        row.seen_at = now
+        # 조건부 UPDATE(… WHERE seen_at IS NULL) — 두 요청이 동시에 와도 처음 본 시각만 남는다.
+        # 읽은 값으로 판정해 덮어쓰면 뒤에 커밋한 쪽이 '처음 본 시각'을 늦은 값으로 바꾼다.
+        db.session.query(UserFarmMigration).filter(
+            UserFarmMigration.user_id == user_id,
+            UserFarmMigration.seen_at.is_(None),
+        ).update({UserFarmMigration.seen_at: now}, synchronize_session=False)
         db.session.commit()
+        db.session.refresh(row)
     return {'seen': True, 'seen_at': localday.iso_utc(row.seen_at)}
 
 

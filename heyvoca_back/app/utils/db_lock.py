@@ -25,6 +25,21 @@ User 를 맨 앞에 두는 이유
 재시도: 사용자 단위 직렬화로 같은 사용자 안의 교착은 없어지지만, **서로 다른 사용자**의 갭 잠금
 (인접한 키에 동시에 첫 행을 INSERT)은 여전히 1213 을 낼 수 있다. 그래서 커밋을 한 번만 하는
 (= 롤백하면 흔적이 전부 사라지는) 공개 함수에 한해 `retry_on_deadlock` 을 건다.
+
+스냅샷 규칙 — `begin_user_tx`
+-----------------------------
+MySQL 기본 격리수준(REPEATABLE READ)은 트랜잭션의 **첫 일반 SELECT** 시점 스냅샷을 끝까지 쓴다.
+요청 진입부(`jwt_required` 의 학습 언어 조회 등)에서 이미 일반 SELECT 가 나가 있으면, 그 뒤에
+User 를 잠가도 이어지는 일반 SELECT(오늘 CheckIn·진행 중 목표·중복 로그 확인 등)는 잠금 **이전**
+스냅샷을 본다. 앞선 잠금 보유자가 커밋한 행이 안 보여 같은 보상을 두 번 주거나, 이미 있는 행을
+다시 INSERT 해 1062 로 실패한다.
+
+그래서 한 사용자의 행을 판단·갱신하는 쓰기 트랜잭션은 `begin_user_tx(user_id)` 로 연다:
+  1. 세션에 커밋 안 된 변경이 없는지 확인(있으면 RuntimeError — 롤백이 그 변경을 지우기 때문)
+  2. 롤백으로 진입부 스냅샷을 버린다(트랜잭션이 없으면 아무 일도 안 한다 — 왕복 없음)
+  3. **새 트랜잭션의 첫 문장**으로 User 행을 잠근다
+이후의 일반 SELECT 는 잠금을 얻은 **뒤**에 스냅샷을 잡는다. 같은 사용자의 행을 바꾸는 모든 쓰기
+경로가 User 를 먼저 잠그므로, 그 스냅샷은 "앞선 잠금 보유자가 커밋한 것까지" 전부 담는다.
 """
 
 import functools
@@ -32,13 +47,92 @@ import logging
 import random
 import time
 
+from sqlalchemy import event
 from sqlalchemy.exc import OperationalError
+from sqlalchemy.orm import Session
 
 from app import db
 
 MYSQL_DEADLOCK = 1213
 
 _log = logging.getLogger(__name__)
+
+# session.info 키 — 이 트랜잭션에서 flush/대량 UPDATE·DELETE 로 DB 에 쓴 적이 있는가 /
+# begin_user_tx 로 연 트랜잭션이면 잠근 사용자 id 집합.
+_WROTE = '_heyvoca_tx_wrote'
+_USER_TX = '_heyvoca_user_tx'
+
+
+@event.listens_for(Session, 'after_flush')
+def _mark_flush(session, flush_context):
+    session.info[_WROTE] = True
+
+
+@event.listens_for(Session, 'after_bulk_update')
+def _mark_bulk_update(update_context):
+    update_context.session.info[_WROTE] = True
+
+
+@event.listens_for(Session, 'after_bulk_delete')
+def _mark_bulk_delete(delete_context):
+    delete_context.session.info[_WROTE] = True
+
+
+@event.listens_for(Session, 'after_transaction_end')
+def _clear_marks(session, transaction):
+    # 가장 바깥 트랜잭션이 끝날 때(커밋·롤백)만 지운다. SAVEPOINT 종료는 무시.
+    if transaction.parent is None:
+        session.info.pop(_WROTE, None)
+        session.info.pop(_USER_TX, None)
+
+
+def has_pending_writes(session=None) -> bool:
+    """커밋 안 된 변경(flush 전 객체 변경 + 이미 flush/대량 실행한 쓰기)이 있는가."""
+    s = session or db.session()
+    return bool(s.new or s.dirty or s.deleted or s.info.get(_WROTE))
+
+
+def begin_user_tx(*user_ids) -> None:
+    """새 트랜잭션을 열고 **첫 문장으로** 주어진 사용자들의 User 행을 잠근다(여럿이면 id 오름차순).
+
+    Raises:
+        RuntimeError — 세션에 커밋 안 된 변경이 있음(프로그래밍 오류. 롤백하면 그 변경이 사라진다)
+    """
+    s = db.session()
+    if has_pending_writes(s):
+        raise RuntimeError('begin_user_tx: 커밋 안 된 변경이 있는 세션에서 새 사용자 트랜잭션을 열 수 없습니다.')
+    db.session.rollback()
+    ids = sorted({u for u in user_ids if u is not None}, key=lambda u: u.bytes)
+    for uid in ids:
+        lock_user(uid)
+    s.info[_USER_TX] = set(ids)
+
+
+def in_user_tx(user_id) -> bool:
+    """지금 트랜잭션이 `begin_user_tx(user_id, ...)` 로 열렸는가(= 일반 SELECT 가 최신인가)."""
+    return user_id in (db.session().info.get(_USER_TX) or ())
+
+
+def require_user_tx(user_id) -> None:
+    """이 트랜잭션이 `begin_user_tx(user_id)` 로 열렸는지 확인한다(아니면 RuntimeError).
+
+    일반 SELECT 로 판정한 뒤 갱신하는 헬퍼(업적 진행 등)가 옛 스냅샷을 보지 않도록 호출 계약을
+    강제한다. 잠금만 뒤늦게 거는 것으로는 스냅샷이 바뀌지 않으므로 여기서 대신 잠그지 않는다.
+    """
+    if not in_user_tx(user_id):
+        raise RuntimeError('require_user_tx: begin_user_tx 로 연 트랜잭션 안에서만 부를 수 있습니다.')
+
+
+def lock_row(model, *criteria, populate=True):
+    """행 하나를 `SELECT ... FOR UPDATE` 로 잠그고 최신값으로 갱신된 엔티티를 돌려준다(없으면 None).
+
+    populate_existing — 같은 트랜잭션에서 잠금 없이 먼저 읽어 둔 인스턴스가 identity map 에 있으면
+    잠금을 걸어도 옛 값이 그대로 돌아온다. 잠근 뒤의 값으로 덮는다(쿼리 전 autoflush 가 먼저 돈다).
+    """
+    q = db.session.query(model).filter(*criteria).with_for_update()
+    if populate:
+        q = q.populate_existing()
+    return q.first()
 
 
 def lock_user(user_id) -> bool:

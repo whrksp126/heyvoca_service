@@ -109,6 +109,8 @@ def dict_apply():
     try:
         res = dm.apply_version(version=data.get('version'), publisher=_publisher(), lang=lang)
         return jsonify({'code': 200, 'lang': lang, 'data': res})
+    except dm.DictConflictError as e:
+        return jsonify({'code': 409, 'lang': lang, 'message': str(e)}), 409
     except dm.DictManageError as e:
         return jsonify({'code': 400, 'lang': lang, 'message': str(e)}), 400
     except Exception:

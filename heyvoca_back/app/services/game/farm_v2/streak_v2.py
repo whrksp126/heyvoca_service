@@ -38,7 +38,7 @@ from app.models.models import (CheckIn, FarmEvent, FarmItem, FarmItemReason,
                                User, UserStreak, UserStudyLog)
 from app.services.game.farm_v2 import constants as C
 from app.services.game.farm_v2 import events, inventory, localday
-from app.utils.db_lock import lock_user, retry_on_deadlock
+from app.utils.db_lock import begin_user_tx, lock_user, retry_on_deadlock
 
 _DAY = dt.timedelta(days=1)
 
@@ -80,6 +80,7 @@ def _get_or_create_streak(user_id: UUID) -> UserStreak:
         db.session.query(UserStreak)
         .filter(UserStreak.user_id == user_id)
         .with_for_update()
+        .populate_existing()
         .first()
     )
     if row is None:
@@ -745,6 +746,7 @@ def record_correct_word(user_id: UUID, user_voca_id: int,
          'streak': 현재 연속일, 'milestone': {days, reward}|None}
     """
     now = now or dt.datetime.utcnow()
+    begin_user_tx(user_id)   # 첫 문장 = User 잠금 → 이후 일반 SELECT 가 최신(`db_lock` 머리말)
     tz = localday.get_timezone(user_id)
     today = localday.local_day(now, tz)
 
@@ -799,6 +801,7 @@ def record_correct_word(user_id: UUID, user_voca_id: int,
 def settle_missed_days(user_id: UUID, now: Optional[dt.datetime] = None) -> dict:
     """빈 날 정산만 따로 (운영 도구·스크립트용). 규칙은 `_settle` 참고. 멱등하다."""
     now = now or dt.datetime.utcnow()
+    begin_user_tx(user_id)   # 첫 문장 = User 잠금 → 이후 일반 SELECT 가 최신(`db_lock` 머리말)
     tz = localday.get_timezone(user_id)
     today = localday.local_day(now, tz)
 
@@ -818,6 +821,7 @@ def settle_missed_days(user_id: UUID, now: Optional[dt.datetime] = None) -> dict
 def settle_on_visit(user_id: UUID, now: Optional[dt.datetime] = None) -> None:
     """화면 진입 시 주간 보호권 지급 + 빈 날 정산 (overview 라우트용). 커밋한다."""
     now = now or dt.datetime.utcnow()
+    begin_user_tx(user_id)   # 첫 문장 = User 잠금 → 이후 일반 SELECT 가 최신(`db_lock` 머리말)
     tz = localday.get_timezone(user_id)
     today = localday.local_day(now, tz)
     st = _get_or_create_streak(user_id)
@@ -849,6 +853,7 @@ def grant_weekly_shield(user_id: UUID, now: Optional[dt.datetime] = None) -> dic
         {'granted': 지급 개수, 'week': 'YYYY-MM-DD'(그 주 월요일), 'shield_cnt': 보유량}
     """
     now = now or dt.datetime.utcnow()
+    begin_user_tx(user_id)   # 첫 문장 = User 잠금 → 이후 일반 SELECT 가 최신(`db_lock` 머리말)
     today = localday.user_local_day(user_id, now)
     st = _get_or_create_streak(user_id)
     granted = _grant_weekly_shield(st, user_id, today)
@@ -878,6 +883,7 @@ def protect_streak(user_id: UUID, now: Optional[dt.datetime] = None) -> dict:
     from app.services.game.farm_v2 import shop
 
     now = now or dt.datetime.utcnow()
+    begin_user_tx(user_id)   # 첫 문장 = User 잠금 → 이후 일반 SELECT 가 최신(`db_lock` 머리말)
     tz = localday.get_timezone(user_id)
     today = localday.local_day(now, tz)
 
@@ -926,6 +932,7 @@ def recover_streak(user_id: UUID, now: Optional[dt.datetime] = None) -> dict:
         PermissionError — 보호권 부족 (400)
     """
     now = now or dt.datetime.utcnow()
+    begin_user_tx(user_id)   # 첫 문장 = User 잠금 → 이후 일반 SELECT 가 최신(`db_lock` 머리말)
     tz = localday.get_timezone(user_id)
     today = localday.local_day(now, tz)
 
@@ -965,6 +972,7 @@ def start_earn_back(user_id: UUID, now: Optional[dt.datetime] = None) -> dict:
         ValueError — 제안 상태가 아니거나 시작 가능일이 지남 (409)
     """
     now = now or dt.datetime.utcnow()
+    begin_user_tx(user_id)   # 첫 문장 = User 잠금 → 이후 일반 SELECT 가 최신(`db_lock` 머리말)
     tz = localday.get_timezone(user_id)
     today = localday.local_day(now, tz)
 
@@ -989,10 +997,12 @@ def ack_notice(user_id: UUID, notice_id) -> dict:
     id 가 지금 걸린 것과 다르면(이미 새 결과로 바뀜) 아무것도 하지 않는다 —
     사용자가 아직 못 본 새 결과를 옛 id 로 지우면 안 된다.
     """
+    begin_user_tx(user_id)
     st = (
         db.session.query(UserStreak)
         .filter(UserStreak.user_id == user_id)
         .with_for_update()
+        .populate_existing()
         .first()
     )
     cleared = False
@@ -1016,6 +1026,7 @@ def get_state(user_id: UUID, now: Optional[dt.datetime] = None) -> dict:
     사용자의 '오늘'이 갈린다.
     """
     now = now or dt.datetime.utcnow()
+    begin_user_tx(user_id)   # 첫 문장 = User 잠금 → 이후 일반 SELECT 가 최신(`db_lock` 머리말)
     tz = localday.get_timezone(user_id)
     today = localday.local_day(now, tz)
 
@@ -1078,6 +1089,7 @@ def get_overview_streak(user_id: UUID, now: Optional[dt.datetime] = None) -> dic
     이 함수는 스크립트·테스트용으로 남긴다.
     """
     now = now or dt.datetime.utcnow()
+    begin_user_tx(user_id)   # 첫 문장 = User 잠금 → 이후 일반 SELECT 가 최신(`db_lock` 머리말)
     tz = localday.get_timezone(user_id)
     today = localday.local_day(now, tz)
 

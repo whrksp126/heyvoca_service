@@ -22,7 +22,7 @@ from uuid import UUID
 
 from app import db
 from app.models.models import User, UserVoca, UserVocaGame, GemReason
-from app.utils.db_lock import lock_user, retry_on_deadlock
+from app.utils.db_lock import begin_user_tx, retry_on_deadlock
 from app.utils.gem import InsufficientGem, change_gem, lock_user_row
 
 # ── 튜닝 상수 ──
@@ -128,7 +128,7 @@ def compute_plant_status(fsrs_state: dict, life: str, now: dt.datetime) -> dict:
 def _get_or_create_game(user_voca_id: int, user_id: UUID, lock: bool = False) -> UserVocaGame:
     q = db.session.query(UserVocaGame).filter(UserVocaGame.user_voca_id == user_voca_id)
     if lock:
-        q = q.with_for_update()
+        q = q.with_for_update().populate_existing()
     row = q.first()
     if row is None:
         row = UserVocaGame(user_voca_id=user_voca_id, user_id=user_id)
@@ -151,7 +151,7 @@ def on_answer(user_id: UUID, user_voca_id: int, memory_state_after: str, was_cor
         farm event payload dict 또는 None.
     """
     # 전역 잠금 순서: User → UserVocaGame (`app/utils/db_lock.py`)
-    lock_user(user_id)
+    begin_user_tx(user_id)
     game = _get_or_create_game(user_voca_id, user_id, lock=True)
     event = None
 
@@ -220,6 +220,30 @@ def _load_plants(user_id: UUID, now: dt.datetime, write_deaths: bool = True) -> 
         for g in db.session.query(UserVocaGame).filter(UserVocaGame.user_id == user_id).all()
     }
 
+    if write_deaths:
+        # 1차(아래 루프를 쓰기 없이 한 번) — 새로 죽을 단어가 없으면 잠그지 않는다.
+        # 있으면 새 트랜잭션을 User 잠금으로 열고 **다시 읽어서** 확정한다. 옛 스냅샷으로 확정하면
+        # 그 사이 부활(revive)한 단어를 다시 DEAD 로 덮고 deaths_cnt 를 두 번 올린다.
+        if not any(
+            compute_plant_status(
+                get_fsrs_state(parse_user_voca_data(uv.data)) or {},
+                (game_rows[uv.id].life if uv.id in game_rows else LIFE_ALIVE), now,
+            )['is_dead_now']
+            for uv in vocas
+        ):
+            write_deaths = False
+        else:
+            begin_user_tx(user_id)
+            vocas = (
+                db.session.query(UserVoca)
+                .filter(UserVoca.user_id == user_id)
+                .all()
+            )
+            game_rows = {
+                g.user_voca_id: g
+                for g in db.session.query(UserVocaGame).filter(UserVocaGame.user_id == user_id).all()
+            }
+
     plants = []
     newly_dead = False
     for uv in vocas:
@@ -261,8 +285,11 @@ def _load_plants(user_id: UUID, now: dt.datetime, write_deaths: bool = True) -> 
             'death_at': status['death_at'],
         })
 
-    if newly_dead and write_deaths:
-        db.session.commit()
+    if write_deaths:
+        if newly_dead:
+            db.session.commit()
+        else:
+            db.session.rollback()   # 잠금만 푼다(그 사이 다른 요청이 먼저 확정했다)
 
     return plants
 
@@ -318,14 +345,17 @@ def revive(user_id: UUID, user_voca_id: int) -> dict:
         ValueError      — 죽은 단어가 아님
         PermissionError — 부활템 부족
     """
-    user = db.session.query(User).filter(User.id == user_id).with_for_update().first()
+    begin_user_tx(user_id)
+    user = lock_user_row(user_id)
     if user is None:
+        db.session.rollback()
         raise LookupError('사용자 없음')
 
     game = (
         db.session.query(UserVocaGame)
         .filter(UserVocaGame.user_voca_id == user_voca_id, UserVocaGame.user_id == user_id)
         .with_for_update()
+        .populate_existing()
         .first()
     )
     if game is None:
@@ -366,8 +396,10 @@ def buy_revive(user_id: UUID, packs: int = 1) -> dict:
     cost = BUY_REVIVE_GEM_COST * packs
     items = REVIVE_PER_GEM * packs
 
+    begin_user_tx(user_id)
     user = lock_user_row(user_id)
     if user is None:
+        db.session.rollback()
         raise LookupError('사용자 없음')
     try:
         _, balance = change_gem(user_id, -cost, GemReason.ITEM_PURCHASE,

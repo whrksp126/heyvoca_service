@@ -35,7 +35,7 @@ from app.services.game.farm_v2 import constants as C
 from app.services.game.farm_v2 import events, growth, health, localday
 from app.services.game.farm_v2.answer import CROP_KEY
 from app.services.game.farm_v2.restore import atomic, first_meaning
-from app.utils.db_lock import lock_user
+from app.utils.db_lock import begin_user_tx, lock_user
 
 # 오늘 목록의 사유. 화면이 그룹 머리말로 그대로 쓴다(12.1 의 1~3순위).
 REASON_CRITICAL = 'CRITICAL'      # 오늘 안 돌보면 실제로 썩는다
@@ -122,6 +122,31 @@ def compute_rot_state(user_id: UUID, now: Optional[dt.datetime] = None) -> dict:
     """
     now = now or dt.datetime.utcnow()
 
+    # 1차 — 읽기만 한다. 홈 진입마다 도는 경로라 바뀔 것이 없으면(대부분) 잠그지 않고 끝낸다.
+    # 2차 — 바뀔 것이 있을 때만 새 트랜잭션을 User 잠금으로 열고(begin_user_tx) **다시 계산해서**
+    #       반영한다. 1차 값을 그대로 쓰면 그 사이 정답 반영(answer.on_answer)이 FRESH 로 되돌린
+    #       작물을 옛 스냅샷 기준으로 다시 시듦·부패로 덮어쓴다(lost update). 게임 행을 바꾸는 모든
+    #       경로가 User 를 먼저 잠그므로, 잠금 뒤의 일반 SELECT 는 그 결과를 전부 본다.
+    probe = _scan_rot(user_id, now, apply=False)
+    if not probe['needs_write']:
+        probe.pop('needs_write', None)
+        return probe
+
+    begin_user_tx(user_id)
+    result = _scan_rot(user_id, now, apply=True)
+    needs_write = result.pop('needs_write', False)
+    if needs_write:
+        db.session.commit()
+    else:
+        db.session.rollback()   # 그 사이 다른 경로가 먼저 반영했다 — 잠금만 푼다
+    return result
+
+
+def _scan_rot(user_id: UUID, now: dt.datetime, apply: bool) -> dict:
+    """후보 작물의 건강을 계산한다. apply=True 면 바뀐 행을 세션에 반영(커밋은 호출부).
+
+    반환의 needs_write — 저장값과 계산값이 하나라도 다른가(상태 전이 또는 부패 마감 시각).
+    """
     rows = _candidate_query(
         user_id, now,
         [UserVocaGame, UserVoca.data],
@@ -129,6 +154,7 @@ def compute_rot_state(user_id: UUID, now: Optional[dt.datetime] = None) -> dict:
 
     transitions = []
     counts = {}
+    needs_write = False
     for game, data in rows:
         fsrs_state = _state_from_raw(data)
         due_at = growth.parse_fsrs_due(fsrs_state)
@@ -141,34 +167,27 @@ def compute_rot_state(user_id: UUID, now: Optional[dt.datetime] = None) -> dict:
         )
         new_state = result['state']
         old_state = game.health_state or HealthState.FRESH
-        # 부패 예정 시각은 상태가 그대로여도 최신으로 유지한다 —
-        # 오늘 목록 정렬과 후보 필터가 이 컬럼에 의존한다.
         if result['rot_due_at'] is not None and game.rot_due_at != result['rot_due_at']:
-            game.rot_due_at = result['rot_due_at']
+            needs_write = True
+            if apply:
+                game.rot_due_at = result['rot_due_at']
 
         if new_state == old_state:
             continue
+        needs_write = True
 
-        game.health_state = new_state
-        game.health_changed_at = now
-        game.updated_at = now
-        if new_state == HealthState.ROTTEN:
-            game.rotten_at = now
-            # 회복(RECOVER)을 걸어 두고 진단을 안 한 채 유예를 넘긴 작물이 여기로 온다.
-            # 예약 표시를 남겨 두면 그 작물은 **아무 방법으로도 되살릴 수 없게 된다** —
-            # restore.reserve_replant 는 "영양 회복이 진행 중"이라며 거부하고,
-            # restore.recover_with_nutrient 는 "이미 회복 중"으로 보고 아무 일도 하지 않는다.
-            # 다시 썩었다는 것은 그 회복 절차가 끝나지 않고 무효가 됐다는 뜻이므로
-            # 여기서 지우고, 사용자는 아이템을 새로 써서 처음부터 다시 시작한다(기획 7.3).
-            #
-            # 삽(REPLANT) 예약은 이 경로로 오지 않는다 — 예약 시점에 이미 ROTTEN 이라
-            # _candidate_query 가 걸러 낸다. 7.2 의 "다시 심기 미완료"는 그대로 보존된다.
-            game.pending_action = None
-            game.pending_started_at = None
+        if apply:
+            game.health_state = new_state
+            game.health_changed_at = now
+            game.updated_at = now
+            if new_state == HealthState.ROTTEN:
+                game.rotten_at = now
+                game.pending_action = None
+                game.pending_started_at = None
 
         if _SEVERITY.get(new_state, 0) > _SEVERITY.get(old_state, 0):
             event = events.HEALTH_DOWN_EVENT.get(new_state)
-            if event:
+            if event and apply:
                 events.log(user_id, event, user_voca_id=game.user_voca_id,
                            from_state=old_state, to_state=new_state,
                            reason='ELAPSED',
@@ -179,11 +198,8 @@ def compute_rot_state(user_id: UUID, now: Optional[dt.datetime] = None) -> dict:
         transitions.append({'user_voca_id': game.user_voca_id,
                             'from': old_state, 'to': new_state})
 
-    if transitions or db.session.dirty:
-        db.session.commit()
-
     return {'scanned': len(rows), 'changed': len(transitions),
-            'transitions': transitions, 'counts': counts}
+            'transitions': transitions, 'counts': counts, 'needs_write': needs_write}
 
 
 def _state_from_raw(raw: Optional[str]) -> dict:
@@ -311,32 +327,22 @@ def apply_emergency_water(user_id: UUID, now: Optional[dt.datetime] = None) -> d
         {'applied', 'user_voca_ids', 'due_total', 'limit'}
     """
     now = now or dt.datetime.utcnow()
-    limit = daily_limit(user_id)
-    items = _due_items(user_id, now)
 
-    if len(items) <= limit:
-        return {'applied': 0, 'user_voca_ids': [], 'due_total': len(items), 'limit': limit}
+    # 1차 — 읽기만 한다(홈 진입마다 도는 경로). 적용할 대상이 없으면 잠그지 않고 끝낸다.
+    # 2차 — 대상이 보일 때만 새 트랜잭션을 User 잠금으로 열고 **대상과 '오늘 이미 적용' 여부를
+    #       다시 계산**한다. 1차 값으로 판정하면 두 요청이 같은 옛 스냅샷을 보고 둘 다 +1일을
+    #       적용한다(홈을 연달아 두 번 열면 +2일).
+    probe = _emergency_targets(user_id, now)
+    if not probe['targets']:
+        return {'applied': 0, 'user_voca_ids': [], 'due_total': probe['due_total'],
+                'limit': probe['limit']}
 
-    excluded = items[limit:]
-    targets = [it['user_voca_id'] for it in excluded if it['reason'] == REASON_CRITICAL]
+    begin_user_tx(user_id)
+    plan = _emergency_targets(user_id, now)
+    targets, limit, items_total = plan['targets'], plan['limit'], plan['due_total']
     if not targets:
-        return {'applied': 0, 'user_voca_ids': [], 'due_total': len(items), 'limit': limit}
-
-    tz = localday.get_timezone(user_id)
-    day_start, day_end = localday.day_bounds_utc(localday.local_day(now, tz), tz)
-    already = {
-        row[0] for row in
-        db.session.query(FarmEventLog.user_voca_id)
-        .filter(FarmEventLog.user_id == user_id,
-                FarmEventLog.event == FarmEvent.PROTECTION_APPLIED,
-                FarmEventLog.user_voca_id.in_(targets),
-                FarmEventLog.created_at >= day_start,
-                FarmEventLog.created_at < day_end)
-        .all()
-    }
-    targets = [i for i in targets if i not in already]
-    if not targets:
-        return {'applied': 0, 'user_voca_ids': [], 'due_total': len(items), 'limit': limit}
+        db.session.rollback()
+        return {'applied': 0, 'user_voca_ids': [], 'due_total': items_total, 'limit': limit}
 
     # User → 게임 행(전역 순서, `app/utils/db_lock.py`). 이어지는 이벤트 로그 INSERT 가 FK 로
     # User 에 공유 잠금을 거는데, 게임 행을 쥔 채 그걸 기다리면 User 를 먼저 잡고 같은 게임 행을
@@ -348,6 +354,7 @@ def apply_emergency_water(user_id: UUID, now: Optional[dt.datetime] = None) -> d
         .filter(UserVocaGame.user_id == user_id,
                 UserVocaGame.user_voca_id.in_(targets))
         .with_for_update()
+        .populate_existing()
         .all()
     }
 
@@ -368,7 +375,7 @@ def apply_emergency_water(user_id: UUID, now: Optional[dt.datetime] = None) -> d
                    detail={'before': before.isoformat() if before else None,
                            'after': game.rot_due_at.isoformat(),
                            'days': C.EMERGENCY_WATER_DAYS,
-                           'limit': limit, 'due_total': len(items)})
+                           'limit': limit, 'due_total': items_total})
         applied.append(user_voca_id)
 
     # 적용한 게 없어도 커밋해 트랜잭션을 닫는다 — 위에서 잡은 User·게임 행 잠금을
@@ -376,4 +383,30 @@ def apply_emergency_water(user_id: UUID, now: Optional[dt.datetime] = None) -> d
     db.session.commit()
 
     return {'applied': len(applied), 'user_voca_ids': applied,
-            'due_total': len(items), 'limit': limit}
+            'due_total': items_total, 'limit': limit}
+
+
+def _emergency_targets(user_id: UUID, now: dt.datetime) -> dict:
+    """무료 긴급 급수 대상(권장량 밖으로 밀린 CRITICAL 중 오늘 아직 적용 안 한 것). 읽기만 한다."""
+    limit = daily_limit(user_id)
+    items = _due_items(user_id, now)
+    out = {'targets': [], 'limit': limit, 'due_total': len(items)}
+    if len(items) <= limit:
+        return out
+    targets = [it['user_voca_id'] for it in items[limit:] if it['reason'] == REASON_CRITICAL]
+    if not targets:
+        return out
+    tz = localday.get_timezone(user_id)
+    day_start, day_end = localday.day_bounds_utc(localday.local_day(now, tz), tz)
+    already = {
+        row[0] for row in
+        db.session.query(FarmEventLog.user_voca_id)
+        .filter(FarmEventLog.user_id == user_id,
+                FarmEventLog.event == FarmEvent.PROTECTION_APPLIED,
+                FarmEventLog.user_voca_id.in_(targets),
+                FarmEventLog.created_at >= day_start,
+                FarmEventLog.created_at < day_end)
+        .all()
+    }
+    out['targets'] = [i for i in targets if i not in already]
+    return out

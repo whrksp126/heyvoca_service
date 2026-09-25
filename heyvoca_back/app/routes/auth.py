@@ -4,10 +4,11 @@ from app import db, limiter
 from app.routes import auth_bp
 from app.models.models import User, Bookstore, GoalType, UserGoals, Goals, InviteMap, GemReason, UserHasToken, CheckIn, UserRecentStudy, UserVocaBook, Purchase, GemLog, UserVoca, UserVocaBookMap, UserCombo, UserVocaGame, UserStudySession, UserStudyLog, UserQuestionTypeStat, UserOnboardingMission, UserStreak, UserComebackMission, UserFarmItem, UserFarmItemLog, UserFarmSetting, UserFarmMigration, FarmEventLog
 from app.routes.mainpage import update_user_goal
-from app.utils.db_lock import retry_on_deadlock
+from app.utils.db_lock import begin_user_tx, retry_on_deadlock
 from app.utils.gem import InsufficientGem, change_gem, lock_users_ordered, start_user_tx
 from app.utils.jwt_utils import jwt_required, generate_access_token, generate_refresh_token, verify_refresh_token
 from uuid import UUID
+from sqlalchemy.exc import IntegrityError
 
 from flask_login import current_user, login_required, login_user, logout_user
 import requests
@@ -186,7 +187,15 @@ def google_oauth_app():
             db.session.add(user)
             try:
                 db.session.commit()
-            except:
+            except IntegrityError:
+                # 같은 계정의 첫 로그인이 동시에 두 번 들어오면(연타·재시도) 둘 다 '없음'을 보고
+                # INSERT 한다. DB 의 user.email 유니크가 한쪽을 막는다 — 진 쪽은 이긴 쪽이 만든
+                # 계정으로 그대로 로그인시킨다(400 으로 떨어뜨리면 첫 로그인이 실패처럼 보인다).
+                db.session.rollback()
+                user = User.query.filter_by(email=email).first()
+                if user is None:
+                    return jsonify({'code': 400, 'message': '사용자 저장 중 에러'}), 400
+            except Exception:
                 db.session.rollback()
                 return jsonify({'code': 400, 'message': '사용자 저장 중 에러'}), 400
         
@@ -273,6 +282,11 @@ def dev_login():
             db.session.add(user)
             try:
                 db.session.commit()
+            except IntegrityError:
+                db.session.rollback()   # 동시 생성 — email 유니크가 막은 쪽은 기존 계정으로
+                user = User.query.filter_by(email=email).first()
+                if user is None:
+                    return jsonify({'code': 400, 'message': '사용자 생성 실패'}), 400
             except Exception as e:
                 db.session.rollback()
                 print(f"Dev User Creation Error: {e}")
@@ -409,6 +423,14 @@ def apple_oauth_app():
             db.session.add(user)
             try:
                 db.session.commit()
+            except IntegrityError:
+                # 동시 첫 로그인 — user.email 유니크가 한쪽을 막는다. 이긴 쪽 계정으로 로그인시킨다.
+                db.session.rollback()
+                user = (User.query.filter_by(apple_id=apple_sub).first()
+                        or User.query.filter_by(
+                            email=email if email else f"{apple_sub}@privaterelay.appleid.com").first())
+                if user is None:
+                    return jsonify({'code': 400, 'message': '사용자 생성 실패'}), 400
             except Exception as e:
                 db.session.rollback()
                 print(f"Apple User Creation Error: {e}")
@@ -579,7 +601,14 @@ def google_app_callback():
         db.session.add(user)
     else:
         user.refresh_token = refresh_token
-    db.session.commit()
+    try:
+        db.session.commit()
+    except IntegrityError:
+        db.session.rollback()   # 동시 첫 로그인 — google_id/email 유니크가 막은 쪽은 기존 계정으로
+        user = (User.query.filter_by(google_id=google_id).first()
+                or User.query.filter_by(email=email).first())
+        if user is None:
+            return jsonify({'code': 400, 'status': 'error'}), 400
     # 사용자 정보를 세션에 저장
     session['access_token'] = access_token
     session['user_id'] = google_id
@@ -859,13 +888,16 @@ def _save_invite_tx(user_id, invite_code):
 
     반환: 본인 잔액(int) 또는 (http 코드, 메시지).
     """
-    db.session.rollback()   # 요청 진입부 스냅샷 폐기 — `app.utils.gem.start_user_tx` 주석
     inviter_id = db.session.query(User.id).filter(User.invite_code == invite_code).scalar()
     if inviter_id is None:
         return 404, '초대한 사용자 정보를 찾을 수 없습니다.'
     if inviter_id == user_id:
         return 400, '자기 자신을 초대할 수 없습니다.'
 
+    # 두 사용자를 잠그는 것이 **새 트랜잭션의 첫 문장**이어야 한다(`db_lock.begin_user_tx`).
+    # 위의 초대 코드 조회가 잡은 스냅샷을 그대로 두면, 같은 초대자에게 동시에 들어온 다른 초대의
+    # 초대왕 진행을 못 보고 같은 값을 +1 하거나(유실) 다음 레벨 행을 두 번 INSERT(1062)한다.
+    begin_user_tx(user_id, inviter_id)
     locked = lock_users_ordered(user_id, inviter_id)
     user, invite_user = locked.get(user_id), locked.get(inviter_id)
     if user is None:
@@ -1060,7 +1092,14 @@ def login():
             set_goal_cnt=3
         )
         db.session.add(user)
-        db.session.commit()
+        try:
+            db.session.commit()
+        except IntegrityError:
+            db.session.rollback()   # 동시 첫 로그인 — google_id/email 유니크가 막은 쪽은 기존 계정으로
+            user = (User.query.filter_by(google_id=google_id).first()
+                    or User.query.filter_by(email=email).first())
+            if user is None:
+                return jsonify({'msg': 'User save failed'}), 400
 
     # JWT 발급
     access_token = generate_access_token(user.id)
@@ -1187,21 +1226,36 @@ def withdraw():
         
         user_id = UUID(g.user_id)
 
-        # 사용자 존재 확인
-        user = db.session.query(User).filter(User.id == user_id).first()
-        if not user:
-            return jsonify({
-                'code': 404,
-                'message': '사용자를 찾을 수 없습니다.',
-                'status': 'error'
-            }), 404
+        def _delete_all():
+            """DB 쪽 탈퇴 전부 — 커밋 한 번. 교착(1213)이면 통째로 다시 돈다(외부 호출 없음).
 
-        # Apple revoke에 필요한 값은 User row 삭제 전에 미리 확보해둔다.
-        apple_id = user.apple_id
-        apple_refresh_token = user.apple_refresh_token
+            잠금: 이 사용자 + 이 사용자가 초대한 사용자들(invited_by 를 NULL 로 바꿀 행)을 **id 순서로,
+            트랜잭션 첫 문장으로** 잡는다(`db_lock.begin_user_tx`). 예전에는 자식 행부터 지우고 User 를
+            맨 끝에 잠가, User 를 먼저 잡고 자식 행을 기다리는 게임 트랜잭션(정답 반영 등)과 엇갈리거나
+            그 사이 새로 생긴 자식 행 때문에 User 삭제가 FK(1451)로 실패했다.
+            """
+            for _ in range(3):
+                invitee_ids = [r[0] for r in db.session.query(User.id)
+                               .filter(User.invited_by == user_id).all()]
+                begin_user_tx(user_id, *invitee_ids)
+                # 잠금 뒤 다시 본다 — 새 초대는 이 사용자의 User 잠금이 있어야 커밋되므로, 여기서 본
+                # 집합은 이 트랜잭션이 끝날 때까지 늘지 않는다. 사이에 늘었으면 다시 잡는다.
+                latest = {r[0] for r in db.session.query(User.id)
+                          .filter(User.invited_by == user_id).all()}
+                if latest <= set(invitee_ids):
+                    break
+            else:
+                raise RuntimeError('초대 관계가 계속 바뀌어 탈퇴 잠금을 잡지 못했습니다.')
 
-        # 트랜잭션 시작 - 모든 삭제 작업을 하나의 트랜잭션으로 처리
-        try:
+            # 사용자 존재 확인 (잠근 뒤의 값)
+            user = db.session.query(User).filter(User.id == user_id).populate_existing().first()
+            if not user:
+                db.session.rollback()
+                return None
+
+            # Apple revoke에 필요한 값은 User row 삭제 전에 미리 확보해둔다.
+            apple_info = (user.apple_id, user.apple_refresh_token)
+
             # 1. UserHasToken 삭제 (FCM 토큰)
             db.session.query(UserHasToken).filter(UserHasToken.user_id == user_id).delete()
 
@@ -1290,6 +1344,18 @@ def withdraw():
 
             # 모든 변경사항 커밋
             db.session.commit()
+            return apple_info
+
+        # 트랜잭션 시작 - 모든 삭제 작업을 하나의 트랜잭션으로 처리
+        try:
+            apple_info = retry_on_deadlock(_delete_all)()
+            if apple_info is None:
+                return jsonify({
+                    'code': 404,
+                    'message': '사용자를 찾을 수 없습니다.',
+                    'status': 'error'
+                }), 404
+            apple_id, apple_refresh_token = apple_info
 
             # 10. Apple Sign In revoke — DB 트랜잭션과 분리된 외부 API 호출.
             #     이미 회원 탈퇴(커밋)는 완료된 상태이므로 revoke 실패가 탈퇴 자체를 막지 않는다.

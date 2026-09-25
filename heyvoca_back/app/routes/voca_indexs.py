@@ -5,7 +5,8 @@ from flask import request, jsonify, g
 from uuid import UUID
 
 from app.routes import voca_indexs_bp
-from app.models.models import db, UserVoca, UserVocaBookMap, UserVocaBook
+from app.models.models import db, UserVoca, UserVocaBookMap, UserVocaBook, UserVocaGame
+from app.utils.db_lock import begin_user_tx
 from app.utils.jwt_utils import jwt_required
 from app.services.fsrs.state import (
     parse_user_voca_data, get_fsrs_state, is_v1, migrate_v1_to_v2, DEFAULT_FSRS_NEW,
@@ -255,6 +256,9 @@ def create_voca_index():
         return jsonify({'code': 400, 'message': lang_error}), 400
 
     try:
+        # 사용자 단위 잠금(`db_lock.begin_user_tx`) — 이 사용자의 단어/단어장 매핑을 판정 후 바꾸는
+        # 요청을 한 줄로 세운다(중복 단어·중복 매핑·뜻 병합 유실·고아 판정 오류 방지).
+        begin_user_tx(user_id)
         # 단어장 존재 확인
         voca_book = db.session.query(UserVocaBook).filter(
             UserVocaBook.id == UUID(str(voca_book_id)),
@@ -330,6 +334,9 @@ def create_voca_index():
 def update_voca_index_book(vocaIndexId, vocaBookId):
     user_id = UUID(g.user_id)
     req = request.get_json()
+    # 사용자 단위 잠금(`db_lock.begin_user_tx`) — 이 사용자의 단어/단어장 매핑을 판정 후 바꾸는
+    # 요청을 한 줄로 세운다(중복 단어·중복 매핑·뜻 병합 유실·고아 판정 오류 방지).
+    begin_user_tx(user_id)
 
     user_voca = db.session.query(UserVoca).filter(
         UserVoca.id == vocaIndexId,
@@ -394,6 +401,9 @@ def update_voca_index_book(vocaIndexId, vocaBookId):
 @jwt_required
 def delete_voca_index(vocaIndexId):
     user_id = UUID(g.user_id)
+    # 사용자 단위 잠금(`db_lock.begin_user_tx`) — 이 사용자의 단어/단어장 매핑을 판정 후 바꾸는
+    # 요청을 한 줄로 세운다(중복 단어·중복 매핑·뜻 병합 유실·고아 판정 오류 방지).
+    begin_user_tx(user_id)
 
     user_voca = db.session.query(UserVoca).filter(
         UserVoca.id == vocaIndexId,
@@ -420,6 +430,13 @@ def delete_voca_index(vocaIndexId):
             UserVocaBookMap.user_voca_id == vocaIndexId
         ).delete()
 
+        # 농장 게임 행(user_voca_game)은 user_voca_id 를 FK 로 참조한다(cascade 없음). 먼저 지우지
+        # 않으면 한 번이라도 학습한 단어는 삭제가 IntegrityError(1451)로 통째로 실패한다.
+        db.session.query(UserVocaGame).filter(
+            UserVocaGame.user_voca_id == vocaIndexId,
+            UserVocaGame.user_id == user_id,
+        ).delete(synchronize_session=False)
+
         # UserVoca 삭제
         db.session.delete(user_voca)
         db.session.commit()
@@ -438,6 +455,9 @@ def delete_voca_index(vocaIndexId):
 def link_voca_index_book(vocaIndexId, vocaBookId):
     user_id = UUID(g.user_id)
     req = request.get_json()
+    # 사용자 단위 잠금(`db_lock.begin_user_tx`) — 이 사용자의 단어/단어장 매핑을 판정 후 바꾸는
+    # 요청을 한 줄로 세운다(중복 단어·중복 매핑·뜻 병합 유실·고아 판정 오류 방지).
+    begin_user_tx(user_id)
 
     # 단어 존재 및 소유권 확인
     user_voca = db.session.query(UserVoca).filter(
@@ -514,6 +534,9 @@ def link_voca_index_book(vocaIndexId, vocaBookId):
 @jwt_required
 def delete_voca_index_book(vocaIndexId, vocaBookId):
     user_id = UUID(g.user_id)
+    # 사용자 단위 잠금(`db_lock.begin_user_tx`) — 이 사용자의 단어/단어장 매핑을 판정 후 바꾸는
+    # 요청을 한 줄로 세운다(중복 단어·중복 매핑·뜻 병합 유실·고아 판정 오류 방지).
+    begin_user_tx(user_id)
 
     # 소유권 확인
     user_voca = db.session.query(UserVoca).filter(
@@ -545,8 +568,12 @@ def delete_voca_index_book(vocaIndexId, vocaBookId):
             UserVocaBookMap.user_voca_id == vocaIndexId
         ).first()
 
-        # 3. 고아 단어라면 사용자 사전(UserVoca)에서도 삭제
+        # 3. 고아 단어라면 사용자 사전(UserVoca)에서도 삭제 — 게임 행(FK)을 먼저 지운다
         if not exists_other:
+            db.session.query(UserVocaGame).filter(
+                UserVocaGame.user_voca_id == vocaIndexId,
+                UserVocaGame.user_id == user_id,
+            ).delete(synchronize_session=False)
             db.session.delete(user_voca)
 
         db.session.commit()

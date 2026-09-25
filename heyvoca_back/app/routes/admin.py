@@ -20,6 +20,7 @@ from app.models.models import (
     UserVocaBook,
 )
 
+from app.utils.db_lock import lock_row
 from app.utils.dict_lang import get_dict_lang
 from app.utils.word_payload import load_ja_word_extras, load_ja_example_tokens, apply_word_fields
 
@@ -383,7 +384,12 @@ def add_word_to_voca_book(voca_book_id):
         if not word_text:
             return jsonify({'code': 400, 'message': '단어를 입력해주세요.'}), 400
 
-        existing_voca = Voca.query.filter_by(word=word_text).first()
+        # 단어장 행을 먼저 잠근다(이 트랜잭션의 첫 문장) — 같은 단어장에 대한 동시 편집을 한 줄로
+        # 세워, 중복 매핑 확인과 word_count 재계산이 앞선 편집의 커밋까지 본 값으로 이뤄지게 한다.
+        lock_row(VocaBook, VocaBook.id == voca_book_id)
+        # 같은 단어 조회는 잠금 읽기로 — 없는 단어면 ix_voca_word 의 그 자리에 갭 잠금이 걸려, 다른
+        # 요청이 같은 단어를 동시에 새로 만들지 못한다(한쪽은 교착으로 되돌려진다 → 다시 누르면 기존 단어 사용).
+        existing_voca = Voca.query.filter_by(word=word_text).with_for_update().first()
         if existing_voca:
             voca_id = existing_voca.id
         else:
@@ -415,6 +421,9 @@ def add_word_to_voca_book(voca_book_id):
 @admin_required
 def remove_word_from_voca_book(voca_book_id, voca_id):
     try:
+        # 단어장 행을 먼저 잠근다(이 트랜잭션의 첫 문장) — 같은 단어장에 대한 동시 편집을 한 줄로
+        # 세워, 중복 매핑 확인과 word_count 재계산이 앞선 편집의 커밋까지 본 값으로 이뤄지게 한다.
+        lock_row(VocaBook, VocaBook.id == voca_book_id)
         word_map = VocaBookMap.query.filter_by(book_id=voca_book_id, voca_id=voca_id).first()
         if not word_map:
             return jsonify({'code': 404, 'message': '단어를 찾을 수 없습니다.'}), 404
@@ -589,7 +598,8 @@ def _process_word_into_book(word_text, meanings_list, examples_list, book_id):
     """
     normalized_examples = [_example_en_ko(ex) for ex in examples_list]  # [(en, ko), ...]
 
-    existing_voca = Voca.query.filter_by(word=word_text).first()
+    # 잠금 읽기 — 동시에 같은 새 단어를 만드는 다른 요청을 갭 잠금으로 막는다(add_word_to_voca_book 주석).
+    existing_voca = Voca.query.filter_by(word=word_text).with_for_update().first()
     if existing_voca:
         voca_id = existing_voca.id
         existing_meanings = {
@@ -702,7 +712,10 @@ def add_word_to_admin_voca_book(admin_voca_book_id):
         if not word_text:
             return jsonify({'code': 400, 'message': '단어를 입력해주세요.'}), 400
 
-        existing_voca = Voca.query.filter_by(word=word_text).first()
+        # 단어장 행을 먼저 잠근다(이 트랜잭션의 첫 문장) — 같은 단어장에 대한 동시 편집을 한 줄로
+        # 세워, 중복 매핑 확인과 word_count 재계산이 앞선 편집의 커밋까지 본 값으로 이뤄지게 한다.
+        lock_row(AdminVocaBook, AdminVocaBook.id == admin_voca_book_id)
+        existing_voca = Voca.query.filter_by(word=word_text).with_for_update().first()
         meanings_list = []
         examples_list = []
 
@@ -750,6 +763,9 @@ def add_word_to_admin_voca_book(admin_voca_book_id):
 @admin_required
 def remove_word_from_admin_voca_book(admin_voca_book_id, voca_id):
     try:
+        # 단어장 행을 먼저 잠근다(이 트랜잭션의 첫 문장) — 같은 단어장에 대한 동시 편집을 한 줄로
+        # 세워, 중복 매핑 확인과 word_count 재계산이 앞선 편집의 커밋까지 본 값으로 이뤄지게 한다.
+        lock_row(AdminVocaBook, AdminVocaBook.id == admin_voca_book_id)
         word_map = AdminVocaBookMap.query.filter_by(book_id=admin_voca_book_id, voca_id=voca_id).first()
         if not word_map:
             return jsonify({'code': 404, 'message': '단어를 찾을 수 없습니다.'}), 404

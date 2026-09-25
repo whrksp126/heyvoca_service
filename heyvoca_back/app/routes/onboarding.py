@@ -96,10 +96,11 @@ def complete_onboarding_mission(user_id, mission_key) -> dict:
 
     트랜잭션: 호출부는 모두 자기 작업을 커밋한 **뒤에** 부른다. 미션 행 + 보석 + 원장은 커밋 한 번으로
     묶이고(교착 시 통째로 재시도해도 안전 — 완료 여부를 잠금 안에서 다시 보므로 이중 지급 없음),
-    make_book 보상 단어장만 그 뒤 별도 커밋이다(실패해도 미션 완료를 되돌리지 않는 정책).
+    make_book 보상 단어장도 같은 커밋에 들어간다(2026-09: 별도 커밋이던 것을 합쳤다).
     """
     from sqlalchemy.exc import IntegrityError
     from app.models.models import UserOnboardingMission, GemReason
+    from app.utils.db_lock import begin_user_tx
     from app.utils.gem import change_gem, lock_user_row
 
     mission = ONBOARDING_MISSION_BY_KEY.get(mission_key)
@@ -111,8 +112,10 @@ def complete_onboarding_mission(user_id, mission_key) -> dict:
 
     # User 를 먼저 잠근다(전역 잠금 순서 첫 번째) — 완료 여부 확인·미션 행 INSERT·보석 지급이
     # 같은 사용자 안에서 직렬화된다. 완료 확인은 잠금 **뒤**의 잠금 읽기로 한다(스냅샷이 아닌 최신값).
+    begin_user_tx(user_id)   # 첫 문장 = User 잠금(호출부는 모두 자기 커밋 뒤에 부른다)
     user = lock_user_row(user_id)
     if user is None:
+        db.session.rollback()
         raise ValueError('사용자를 찾을 수 없습니다.')
 
     existing = (
@@ -132,36 +135,31 @@ def complete_onboarding_mission(user_id, mission_key) -> dict:
                f"온보딩 미션 완료: {mission['title']}",
                source_type='onboarding_mission', user=user)
 
+    # M2(make_book) 완료 보상: 보석 외에 빈 단어장 1개를 자동 지급한다 — **같은 커밋**으로.
+    # 예전에는 미션·보석을 커밋한 뒤 단어장을 따로 커밋해, 그 사이 실패하면 미션은 완료됐는데
+    # 보상 단어장만 영영 빠졌다(미션이 이미 완료라 다시 지급할 길이 없다). 이제는 셋이 함께
+    # 들어가거나 함께 빠진다 — 빠지면 미션도 미완료로 남아 다음 단어장 생성 때 다시 지급된다.
+    if mission_key == 'make_book':
+        import json as _json
+        db.session.add(UserVocaBook(
+            user_id=user_id,
+            bookstore_id=None,
+            color=_json.dumps({'main': '#FF8DD4', 'sub': '#FF8DD44d', 'background': '#FFEFFA'}, ensure_ascii=False),
+            name='나의 단어장',
+            total_word_cnt=0,
+            memorized_word_cnt=0,
+            voca_list=None,
+            updated_at=None,
+            # 미션을 달성한 요청의 학습 언어 단어장으로 — ja 사용자에게 en 빈 단어장이 숨어 생기지 않게
+            language=get_dict_lang(),
+        ))
+
     try:
         db.session.commit()
     except IntegrityError:
         # 동시 요청 등으로 UniqueConstraint 위반 → 이미 다른 요청이 완료 처리한 것으로 간주(멱등).
         db.session.rollback()
         return {'newly_completed': False, 'reward_gem': 0, 'unlocks': mission['unlocks']}
-
-    # M2(make_book) 완료 보상: 보석 외에 빈 단어장 1개를 자동 지급한다.
-    # (미션이 멱등하게 1회만 신규 완료되므로 이 지급도 1회만 발생)
-    if mission_key == 'make_book':
-        import json as _json
-        try:
-            reward_book = UserVocaBook(
-                user_id=user_id,
-                bookstore_id=None,
-                color=_json.dumps({'main': '#FF8DD4', 'sub': '#FF8DD44d', 'background': '#FFEFFA'}, ensure_ascii=False),
-                name='나의 단어장',
-                total_word_cnt=0,
-                memorized_word_cnt=0,
-                voca_list=None,
-                updated_at=None,
-                # 미션을 달성한 요청의 학습 언어 단어장으로 — ja 사용자에게 en 빈 단어장이 숨어 생기지 않게
-                language=get_dict_lang(),
-            )
-            db.session.add(reward_book)
-            db.session.commit()
-        except Exception:
-            # 보상 단어장 생성 실패는 미션 완료 자체를 되돌리지 않는다(보석은 이미 지급됨).
-            db.session.rollback()
-            logging.getLogger(__name__).error('make_book 보상 빈 단어장 생성 실패', exc_info=True)
 
     return {'newly_completed': True, 'reward_gem': reward, 'unlocks': mission['unlocks']}
 

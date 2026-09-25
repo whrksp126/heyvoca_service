@@ -32,7 +32,7 @@ from app.services.fsrs.state import (DEFAULT_FSRS_NEW, get_fsrs_state,
                                      parse_user_voca_data,
                                      serialize_user_voca_data, set_fsrs_state)
 from app.services.game.farm_v2 import events, growth, health, inventory, localday
-from app.utils.db_lock import lock_user
+from app.utils.db_lock import begin_user_tx, lock_user
 
 # 예약 취소 창 (기획 7.2 확인 문구 → 오조작 되돌리기용).
 # 짧게 두는 이유는 이 창이 "실수로 눌렀다"를 위한 것이지 "생각해 보고 무르기"가 아니어서다.
@@ -121,9 +121,29 @@ def _lock_games(user_id: UUID, user_voca_ids: List[int]) -> dict:
         .filter(UserVocaGame.user_id == user_id,
                 UserVocaGame.user_voca_id.in_(user_voca_ids))
         .with_for_update()
+        .populate_existing()
         .all()
     )
     return {r.user_voca_id: r for r in rows}
+
+
+def _lock_vocas(user_id: UUID, user_voca_ids: List[int]) -> dict:
+    """FSRS 데이터(UserVoca.data)를 고칠 단어 행을 잠그고 {id: row} 로 반환.
+
+    study/log 가 같은 행을 FOR UPDATE 로 잡고 data 를 바꾸므로, 여기서 잠그지 않고 읽은 data 를
+    고쳐 쓰면 그 사이의 학습 결과가 사라진다(lost update). 전역 순서상 UserVoca 는 아이템 뒤다 —
+    호출부는 아이템 차감을 끝낸 뒤 부른다.
+    """
+    if not user_voca_ids:
+        return {}
+    rows = (
+        db.session.query(UserVoca)
+        .filter(UserVoca.user_id == user_id, UserVoca.id.in_(user_voca_ids))
+        .with_for_update()
+        .populate_existing()
+        .all()
+    )
+    return {r.id: r for r in rows}
 
 
 def _normalize_ids(user_voca_ids) -> List[int]:
@@ -307,6 +327,7 @@ def reserve_replant(user_id: UUID, user_voca_ids, now: Optional[dt.datetime] = N
     """
     now = now or dt.datetime.utcnow()
     ids = _normalize_ids(user_voca_ids)
+    begin_user_tx(user_id)   # 첫 문장 = User 잠금 → 이후 일반 SELECT(진단 시작 여부 등)가 최신
     games = _lock_games(user_id, ids)
 
     missing = [i for i in ids if i not in games]
@@ -364,6 +385,7 @@ def cancel_replant(user_id: UUID, user_voca_ids,
     """
     now = now or dt.datetime.utcnow()
     ids = _normalize_ids(user_voca_ids)
+    begin_user_tx(user_id)   # 첫 문장 = User 잠금 → 이후 일반 SELECT(진단 시작 여부 등)가 최신
     games = _lock_games(user_id, ids)
 
     targets = []
@@ -438,6 +460,7 @@ def recover_with_nutrient(user_id: UUID, user_voca_ids,
     """
     now = now or dt.datetime.utcnow()
     ids = _normalize_ids(user_voca_ids)
+    begin_user_tx(user_id)   # 첫 문장 = User 잠금 → 이후 일반 SELECT(진단 시작 여부 등)가 최신
     games = _lock_games(user_id, ids)
 
     missing = [i for i in ids if i not in games]
@@ -462,10 +485,11 @@ def recover_with_nutrient(user_id: UUID, user_voca_ids,
     if held < len(fresh_targets):
         raise PermissionError('영양 회복제가 부족해요.')
 
-    vocas = {
-        uv.id: uv for uv in
-        db.session.query(UserVoca).filter(UserVoca.id.in_(fresh_targets)).all()
-    }
+    # 아이템 차감을 먼저 끝내고(전역 순서 … → 아이템 → UserVoca) 단어 행을 잠근다.
+    for i in fresh_targets:
+        inventory.spend(user_id, FarmItem.NUTRIENT, 1,
+                        description='영양 회복제 사용', user_voca_id=i)
+    vocas = _lock_vocas(user_id, fresh_targets)
 
     recovered = []
     for i in fresh_targets:
@@ -474,8 +498,6 @@ def recover_with_nutrient(user_id: UUID, user_voca_ids,
         if user_voca is None:
             raise LookupError('단어 정보를 찾을 수 없어요.')
 
-        inventory.spend(user_id, FarmItem.NUTRIENT, 1,
-                        description='영양 회복제 사용', user_voca_id=i)
         moved = _soften_fsrs_for_recover(user_voca, now)
 
         from_state = game.health_state
@@ -543,7 +565,10 @@ def complete_diagnosis(user_id: UUID, user_voca_id: int, was_correct: bool,
     if peek[0] not in (PENDING_REPLANT, PENDING_RECOVER):
         raise ValueError('진단이 필요한 작물이 아니에요.')
 
-    lock_user(user_id)
+    # 여기까지는 거의 모든 답안이 지나가는 값싼 확인이다(일반 SELECT 1회). 진단 대상일 때만
+    # 새 트랜잭션을 User 잠금으로 연다 — 위의 확인이 잡은 스냅샷을 버려야, 아래에서 고칠
+    # UserVoca.data 가 잠금 전 값(= 그 사이 다른 기기의 학습 결과가 빠진 값)이 되지 않는다.
+    begin_user_tx(user_id)
     game = (
         db.session.query(UserVocaGame)
         .filter(UserVocaGame.user_id == user_id,
@@ -569,7 +594,7 @@ def complete_diagnosis(user_id: UUID, user_voca_id: int, was_correct: bool,
                 'pending_action': action, 'stage': game.visual_stage,
                 'health': game.health_state}
 
-    user_voca = db.session.query(UserVoca).filter(UserVoca.id == game.user_voca_id).first()
+    user_voca = _lock_vocas(user_id, [game.user_voca_id]).get(game.user_voca_id)
     if user_voca is None:
         raise LookupError('단어 정보를 찾을 수 없어요.')
 

@@ -6,7 +6,7 @@ from app.routes import mainpage_bp
 from app.utils.jwt_utils import jwt_required
 from uuid import UUID
 from app.models.models import User, DailySentence, UserGoals, CheckIn, Goals, GoalType, UserRecentStudy, RecentStudyType, VocaMeaning, VocaExample, VocaMeaningMap, VocaExampleMap, UserVocaBook, Bookstore, Product, GemReason
-from app.utils.db_lock import lock_user, retry_on_deadlock
+from app.utils.db_lock import begin_user_tx, require_user_tx, retry_on_deadlock
 from app.utils.gem import change_gem, start_user_tx
 from app.services.study_day import logical_today
 from app.services.daily_progress import get_today_new_done, get_review_due
@@ -241,6 +241,10 @@ def api_user_recent_study_create_update():
     user_id = UUID(g.user_id)  # 문자열을 UUID로 변환
     study_data = json.dumps(study_data) if study_data is not None else None
 
+    # (user_id, type) 유니크 행의 조회 → 없으면 INSERT 를 사용자 단위로 직렬화한다.
+    # 잠그지 않으면 두 요청이 모두 '없음'을 보고 INSERT 해 한쪽이 1062 로 500 이 난다.
+    begin_user_tx(user_id)
+
     # update
     if id is not None:
         recent_data = db.session.query(UserRecentStudy)\
@@ -296,10 +300,11 @@ def update_user_goal(goal_type_name: str, user_id: UUID = None):
     else:   # 초대왕용. 초대한 사람의 ID를 넘겨줄 경우
         user_id = UUID(user_id) if isinstance(user_id, str) else user_id
 
-    # 전역 잠금 순서의 첫 번째(User)를 먼저 잡는다(`app/utils/db_lock.py`). 이미 잡았으면 바로 돌아온다.
-    # 목표 행 갱신/생성과 보석 지급이 같은 사용자 안에서 직렬화되어, 동시 요청이 같은 진행 목표를
-    # 두 번 +1 하거나 다음 레벨을 두 번 만들지 않는다. **커밋하지 않는다** — 호출부가 커밋한다.
-    lock_user(user_id)
+    # 호출부가 `begin_user_tx(user_id)` 로 연 트랜잭션 안에서만 부른다(아니면 RuntimeError).
+    # 아래 목표 조회는 일반 SELECT 라, 잠금이 트랜잭션의 첫 문장이 아니면 앞선 잠금 보유자가 커밋한
+    # 진행값을 못 보고 같은 목표를 두 번 +1 하거나 다음 레벨 행을 두 번 INSERT(1062)한다.
+    # **커밋하지 않는다** — 호출부가 커밋한다.
+    require_user_tx(user_id)
 
     # 현재 유저가 달성 중인 해당 업적 조회
     current_user_goal = db.session.query(UserGoals)\

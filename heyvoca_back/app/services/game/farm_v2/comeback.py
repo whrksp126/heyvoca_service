@@ -30,6 +30,7 @@ from app.models.models import (CheckIn, FarmEvent, HealthState, UserComebackMiss
                                UserStudyLog, UserVocaGame, VisualStage)
 from app.services.game.farm_v2 import constants as C
 from app.services.game.farm_v2 import events, localday
+from app.utils.db_lock import begin_user_tx
 
 STATUS_ACTIVE = 'ACTIVE'
 STATUS_COMPLETED = 'COMPLETED'
@@ -124,14 +125,47 @@ def check_and_start(user_id: UUID, now: Optional[dt.datetime] = None) -> Optiona
     """
     now = now or dt.datetime.utcnow()
 
+    # 1차 — 읽기만 한다. 농장 진입마다 도는 경로라 대부분은 여기서 끝난다
+    # (진행 중 미션이 있거나, 복귀 대상이 아니거나).
     existing = get_active(user_id, now)
     if existing is not None:
         return get_state(user_id, now)
+    if not _has_stale(user_id, now) and _start_plan(user_id, now) is None:
+        return None
 
-    # 창을 넘긴 ACTIVE 는 여기서 확정 만료시킨다. 남겨 두면 다음 복귀 때 이 행이
-    # get_active 에 계속 걸려 새 미션이 만들어지지 않는다.
+    # 2차 — 쓸 것이 있을 때만 새 트랜잭션을 User 잠금으로 열고 **다시 판정한다**.
+    # 잠그지 않으면 두 요청(홈 연타·두 기기)이 둘 다 '진행 중 미션 없음'을 보고 미션을 두 개
+    # 만든다 — 진행도가 둘로 갈라지고 복귀 보상도 두 번 나간다. 유니크 제약으로 막을 수 없는
+    # 조건('사용자당 ACTIVE 1개')이라 사용자 단위 직렬화로 막는다.
+    begin_user_tx(user_id)
+    if get_active(user_id, now) is not None:
+        db.session.rollback()
+        return get_state(user_id, now)
     _expire_stale(user_id, now)
+    plan = _start_plan(user_id, now)
+    if plan is not None:
+        from app.services.game.farm_v2 import query   # 순환 참조 방지 — query 가 이 모듈을 쓴다
+        rotten = query.count_rotten(user_id, now)
+        mission = UserComebackMission(
+            user_id=user_id,
+            absent_days=plan['absent_days'],
+            rotten_snapshot=rotten,
+            expires_at=now + dt.timedelta(days=C.COMEBACK_WINDOW_DAYS),
+        )
+        mission.started_at = now
+        db.session.add(mission)
+    db.session.commit()   # 만료 정리 + 새 미션을 한 번에
+    if plan is None:
+        return None
+    return get_state(user_id, now)
 
+
+def _start_plan(user_id: UUID, now: dt.datetime) -> Optional[dict]:
+    """복귀 미션을 새로 만들어야 하면 {'absent_days'}, 아니면 None. 읽기만 한다.
+
+    이미 이번 공백으로 미션을 만든 적이 있으면(완료·만료 포함) 다시 만들지 않는다 —
+    마지막 학습일 이후에 시작된 미션이 있는지로 본다.
+    """
     tz = localday.get_timezone(user_id)
     today = localday.local_day(now, tz)
 
@@ -141,15 +175,12 @@ def check_and_start(user_id: UUID, now: Optional[dt.datetime] = None) -> Optiona
         .scalar()
     )
     if last_day is None:
-        # 학습 이력이 아예 없는 사용자는 '복귀'가 아니라 '신규'다.
-        return None
+        return None   # 한 번도 학습하지 않은 신규 사용자는 복귀자가 아니다
 
     absent_days = (today - last_day).days
     if absent_days < C.COMEBACK_ABSENT_DAYS:
         return None
 
-    # 같은 공백에 대해 미션을 두 번 만들지 않는다. 마지막 학습일 이후에 시작된 미션이
-    # 이미 있다면(완료됐든 만료됐든) 이번 복귀는 이미 처리된 것이다.
     handled = (
         db.session.query(UserComebackMission.id)
         .filter(UserComebackMission.user_id == user_id,
@@ -158,24 +189,20 @@ def check_and_start(user_id: UUID, now: Optional[dt.datetime] = None) -> Optiona
     )
     if handled is not None:
         return None
+    return {'absent_days': absent_days}
 
-    from app.services.game.farm_v2 import query   # 순환 참조 방지 — query 가 이 모듈을 쓴다
-    rotten = query.count_rotten(user_id, now)
 
-    mission = UserComebackMission(
-        user_id=user_id,
-        absent_days=absent_days,
-        rotten_snapshot=rotten,
-        expires_at=now + dt.timedelta(days=C.COMEBACK_WINDOW_DAYS),
-    )
-    mission.started_at = now
-    db.session.add(mission)
-    db.session.commit()
-
-    return get_state(user_id, now)
+def _has_stale(user_id: UUID, now: dt.datetime) -> bool:
+    return db.session.query(UserComebackMission.id).filter(
+        UserComebackMission.user_id == user_id,
+        UserComebackMission.status == STATUS_ACTIVE,
+        UserComebackMission.expires_at.isnot(None),
+        UserComebackMission.expires_at < now,
+    ).first() is not None
 
 
 def _expire_stale(user_id: UUID, now: dt.datetime) -> None:
+    """7일 창이 지난 ACTIVE 미션을 EXPIRED 로. 커밋하지 않는다(호출부가 User 잠금 안에서 부른다)."""
     rows = (
         db.session.query(UserComebackMission)
         .filter(UserComebackMission.user_id == user_id,
@@ -184,11 +211,8 @@ def _expire_stale(user_id: UUID, now: dt.datetime) -> None:
                 UserComebackMission.expires_at < now)
         .all()
     )
-    if not rows:
-        return
     for row in rows:
-        row.status = STATUS_EXPIRED
-    db.session.commit()
+        row.status = STATUS_EXPIRED   # 커밋은 호출부가 한 번에 한다
 
 
 # ──────────────────────────────────────────────────────────────
@@ -210,15 +234,49 @@ def record_day(user_id: UUID, now: Optional[dt.datetime] = None) -> Optional[dic
         갱신된 상태 dict. 미션이 없으면 None.
     """
     now = now or dt.datetime.utcnow()
+
+    # 1차 — 읽기만 한다(세션 요약마다 도는 경로). 반영할 것이 없으면 잠그지 않는다.
+    probe = _day_plan(user_id, now)
+    if probe['action'] is None:
+        return probe['state']
+
+    # 2차 — 새 트랜잭션을 User 잠금으로 열고 **다시 판정한다**. 잠그지 않으면 세션 요약이 두 번
+    # 동시에 오면(재시도·두 기기) 둘 다 '오늘 아직 안 셈'을 보고 진행도를 +2 하고, 3일째라면
+    # 복귀 보상(회복 효과·FSRS 완화)을 두 번 적용한다.
+    begin_user_tx(user_id)
+    plan = _day_plan(user_id, now)
+    action = plan['action']
+    if action is None:
+        db.session.rollback()
+        return plan['state']
+    if action == 'expire':
+        _expire_stale(user_id, now)
+        db.session.commit()
+        return None
+
+    mission = plan['mission']
+    mission.progress_days = plan['progress'] + 1
+    mission.last_progress_day = plan['today']
+    if mission.progress_days >= C.COMEBACK_REQUIRED_DAYS:
+        _apply_reward(user_id, mission, now)
+    db.session.commit()   # 진행도 + (3일째면) 보상 효과를 한 번에
+    return get_state(user_id, now)
+
+
+def _day_plan(user_id: UUID, now: dt.datetime) -> dict:
+    """record_day 가 할 일. 읽기만 한다.
+
+    action: None(할 일 없음, state 에 화면용 상태) / 'expire'(만료 정리만) /
+            'progress'(오늘 진행도 +1 — mission·progress·today 포함)
+    """
     mission = get_active(user_id, now)
     if mission is None:
-        _expire_stale(user_id, now)
-        return None
+        return {'action': 'expire' if _has_stale(user_id, now) else None, 'state': None}
 
     tz = localday.get_timezone(user_id)
     today = localday.local_day(now, tz)
     if mission.last_progress_day == today:
-        return get_state(user_id, now)   # 하루는 한 번만 센다
+        return {'action': None, 'state': get_state(user_id, now)}   # 하루는 한 번만 센다
 
     start_utc, end_utc = localday.day_bounds_utc(today, tz)
     done = int(
@@ -230,19 +288,11 @@ def record_day(user_id: UUID, now: Optional[dt.datetime] = None) -> Optional[dic
         .scalar() or 0
     )
     if done < C.COMEBACK_DAILY_WORDS:
-        return get_state(user_id, now)
+        return {'action': None, 'state': get_state(user_id, now)}
 
     # 끊긴 진행도는 여기서 확정 반영한다(읽기 경로의 _effective_progress 와 같은 판정).
-    progress = _effective_progress(mission, today)
-    mission.progress_days = progress + 1
-    mission.last_progress_day = today
-
-    if mission.progress_days >= C.COMEBACK_REQUIRED_DAYS:
-        grant_reward(user_id, mission, now)   # 안에서 커밋한다
-    else:
-        db.session.commit()
-
-    return get_state(user_id, now)
+    return {'action': 'progress', 'mission': mission, 'today': today,
+            'progress': _effective_progress(mission, today), 'state': None}
 
 
 # ──────────────────────────────────────────────────────────────
@@ -265,11 +315,31 @@ def grant_reward(user_id: UUID, mission: UserComebackMission,
         ValueError — 이미 보상을 받은 미션
     """
     now = now or dt.datetime.utcnow()
+    mission_id = mission.id
+    begin_user_tx(user_id)
+    mission = (db.session.query(UserComebackMission)
+               .filter(UserComebackMission.id == mission_id,
+                       UserComebackMission.user_id == user_id)
+               .with_for_update().populate_existing().first())
+    if mission is None:
+        db.session.rollback()
+        raise ValueError('복귀 미션을 찾을 수 없어요.')
+    result = _apply_reward(user_id, mission, now)
+    db.session.commit()
+    return result
+
+
+def _apply_reward(user_id: UUID, mission: UserComebackMission, now: dt.datetime) -> dict:
+    """grant_reward 본체 — **커밋하지 않는다.** 호출부가 begin_user_tx 로 연 트랜잭션 안에서 부른다.
+
+    Raises:
+        ValueError — 이미 보상을 받은 미션
+    """
     if mission.rewarded_at is not None:
         raise ValueError('이미 복귀 보상을 받은 미션이에요.')
 
     targets = _snapshot_rotten(user_id, mission)
-    vocas = _load_vocas([g.user_voca_id for g in targets])
+    vocas = _load_vocas(user_id, [g.user_voca_id for g in targets])
     logs = []
     for game in targets:
         _apply_nutrient_effect(game, vocas.get(game.user_voca_id), now)
@@ -284,7 +354,6 @@ def grant_reward(user_id: UUID, mission: UserComebackMission,
     mission.status = STATUS_COMPLETED
     mission.rewarded_at = now
     mission.recovered_cnt = len(targets)
-    db.session.commit()
 
     return {
         'recovered': len(targets),
@@ -310,11 +379,13 @@ def _snapshot_rotten(user_id: UUID, mission: UserComebackMission) -> list:
                     UserVocaGame.health_state == HealthState.ROTTEN,
                     UserVocaGame.rot_due_at <= started,
                 ))
+        .with_for_update()
+        .populate_existing()
         .all()
     )
 
 
-def _load_vocas(voca_ids: list) -> dict:
+def _load_vocas(user_id: UUID, voca_ids: list) -> dict:
     """대상 단어의 UserVoca 행 — {id: row}. IN 절이 커지지 않게 묶어서 읽는다.
 
     복귀자는 부패 단어가 수백 개일 수 있어 한 번에 물어보면 IN 리스트가 통째로 파싱된다.
@@ -325,7 +396,10 @@ def _load_vocas(voca_ids: list) -> dict:
     ids = list(voca_ids or [])
     for i in range(0, len(ids), 500):
         chunk = ids[i:i + 500]
-        for uv in db.session.query(UserVoca).filter(UserVoca.id.in_(chunk)).all():
+        # FOR UPDATE — FSRS 데이터를 고쳐 쓰므로(_soften_fsrs_for_recover) 잠근 뒤의 최신값으로.
+        for uv in (db.session.query(UserVoca)
+                   .filter(UserVoca.user_id == user_id, UserVoca.id.in_(chunk))
+                   .with_for_update().populate_existing().all()):
             rows[uv.id] = uv
     return rows
 

@@ -17,7 +17,7 @@ from app.models.models import (FarmEvent, FarmItem, FarmItemReason,
                                HealthState, UserVoca, UserVocaGame, VisualStage)
 from app.services.game.farm_v2 import constants as C
 from app.services.game.farm_v2 import events, growth, health, inventory, localday
-from app.utils.db_lock import lock_user, retry_on_deadlock
+from app.utils.db_lock import begin_user_tx, retry_on_deadlock
 from app.services.game.farm_v2 import xp as xp_calc
 
 # 단계 → 시안 작물 키. 심기 전/심은 씨앗은 화면에서 같은 씨앗 그림을 쓴다(기획 5.1).
@@ -44,6 +44,7 @@ def _get_or_create(user_voca_id: int, user_id: UUID) -> UserVocaGame:
         db.session.query(UserVocaGame)
         .filter(UserVocaGame.user_voca_id == user_voca_id)
         .with_for_update()
+        .populate_existing()
         .first()
     )
     if row is None:
@@ -100,15 +101,20 @@ def on_answer(user_id: UUID, user_voca_id: int, was_correct: bool,
     """
     now = now or dt.datetime.utcnow()
 
-    user_voca = db.session.query(UserVoca).filter(UserVoca.id == user_voca_id).first()
-    if user_voca is None:
-        return None
-
     # User 행을 게임 행보다 먼저 잠근다(전역 순서, `app/utils/db_lock.py`). 단계 보상이
     # 아이템(→ 원장 INSERT 가 User 에 FK 공유 잠금)이나 보석(User 배타 잠금)으로 이어지는데,
     # 게임 행을 쥔 채 User 를 기다리면 부패 처리(restore)·상점 구매와 엇갈린다.
     # 막히는 건 같은 사용자의 동시 트랜잭션뿐이다.
-    lock_user(user_id)
+    #
+    # **트랜잭션의 첫 문장**이 잠금이어야 한다(begin_user_tx). 예전에는 UserVoca 를 먼저 일반
+    # SELECT 해 스냅샷이 잠금 전에 잡혔고, 그 뒤의 '첫 황금' 판정(다른 단어 중 황금이 있는가)이
+    # 앞선 잠금 보유자가 방금 만든 황금을 못 봐 첫 황금 보석이 두 번 나갈 수 있었다.
+    # study/log 가 커밋한 직후라 롤백할 것도 없고 추가 왕복도 없다.
+    begin_user_tx(user_id)
+    user_voca = db.session.query(UserVoca).filter(UserVoca.id == user_voca_id).first()
+    if user_voca is None:
+        db.session.rollback()
+        return None
     game = _get_or_create(user_voca_id, user_id)
     fsrs_state = growth.load_fsrs_state(user_voca)
     tz = localday.get_timezone(user_id)

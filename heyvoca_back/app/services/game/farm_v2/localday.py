@@ -89,9 +89,19 @@ def week_monday(day: dt.date) -> dt.date:
 
 
 def get_or_create_setting(user_id: UUID) -> UserFarmSetting:
+    """설정 행을 잠그고(없으면 만들고) 돌려준다. 커밋하지 않는다.
+
+    User 를 먼저 잠근다(전역 순서) — 없는 행을 두 요청이 동시에 만들면 PK 충돌(1062)이 나고,
+    있는 행을 잠그지 않고 읽어 판정하면(쿨다운) 두 요청이 모두 통과한다.
+    """
+    from app.utils.db_lock import lock_user
+
+    lock_user(user_id)
     row = (
         db.session.query(UserFarmSetting)
         .filter(UserFarmSetting.user_id == user_id)
+        .with_for_update()
+        .populate_existing()
         .first()
     )
     if row is None:
@@ -115,14 +125,19 @@ def set_timezone(user_id: UUID, tz_name: str,
     except pytz.UnknownTimeZoneError:
         raise ValueError('알 수 없는 시간대입니다.')
 
+    from app.utils.db_lock import begin_user_tx
+
+    begin_user_tx(user_id)
     setting = get_or_create_setting(user_id)
     if setting.timezone == tz_name:
+        db.session.commit()   # 새로 만든 설정 행이 있으면 남긴다(없으면 잠금만 푼다)
         return {'timezone': setting.timezone, 'changed': False}
 
     if setting.tz_changed_at is not None:
         elapsed = now - setting.tz_changed_at
         if elapsed < TZ_CHANGE_COOLDOWN:
             remain = TZ_CHANGE_COOLDOWN - elapsed
+            db.session.rollback()
             raise PermissionError(
                 f'시간대는 24시간에 한 번만 바꿀 수 있어요. '
                 f'{int(remain.total_seconds() // 3600) + 1}시간 뒤에 다시 시도해 주세요.'

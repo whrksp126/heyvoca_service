@@ -22,7 +22,7 @@ from app.models.models import (
     User, UserCombo, GemReason, Goals, GoalType, UserGoals,
 )
 from app.utils.gem import InsufficientGem, change_gem, lock_user_row
-from app.utils.db_lock import lock_user, retry_on_deadlock
+from app.utils.db_lock import begin_user_tx, retry_on_deadlock
 
 # 튜닝 상수
 MIN_PROTECT_COMBO = 5   # 이 값 미만 콤보는 팝업 없이 조용히 리셋
@@ -42,6 +42,7 @@ def _get_or_create_locked(user_id: UUID) -> UserCombo:
         db.session.query(UserCombo)
         .filter(UserCombo.user_id == user_id)
         .with_for_update()
+        .populate_existing()
         .first()
     )
     if row is None:
@@ -159,7 +160,9 @@ def apply_answer(user_id: UUID, was_correct: bool) -> dict:
     기다리면 User → 콤보 순으로 잡는 `protect` 와 교착한다. 먼저 잡은 잠금 아래에서
     읽으므로 보석 잔액을 옛 값으로 덮어쓰는 일도 없어진다.
     """
-    lock_user(user_id)
+    # 첫 문장 = User 잠금(begin_user_tx) — 이어지는 암기왕 목표 조회(일반 SELECT)가 앞선 잠금
+    # 보유자가 커밋한 목표 행까지 보게 한다(같은 레벨을 두 번 완료·보상하지 않게).
+    begin_user_tx(user_id)
     row = _get_or_create_locked(user_id)
 
     # AT_RISK 방치 상태에서 새 답안 → 자동 포기 (위기 콤보 소멸)
@@ -211,11 +214,13 @@ def protect(user_id: UUID) -> dict:
         PermissionError: 보석 부족
     """
     # 락 순서 고정: user → user_combo. populate_existing 으로 잠근 뒤의 최신 잔액을 쓴다.
+    begin_user_tx(user_id)
     user = lock_user_row(user_id)
     row = (
         db.session.query(UserCombo)
         .filter(UserCombo.user_id == user_id)
         .with_for_update()
+        .populate_existing()
         .first()
     )
     try:
@@ -242,8 +247,14 @@ def protect(user_id: UUID) -> dict:
         raise
 
 
+@retry_on_deadlock
 def forfeit(user_id: UUID) -> dict:
-    """위기 콤보를 포기 확정한다 (0 유지)."""
+    """위기 콤보를 포기 확정한다 (0 유지).
+
+    User 를 먼저 잠근다(전역 순서 User → UserCombo). 행이 없으면 INSERT 하는데, 그 FK 검사가
+    User 에 공유 잠금을 걸어 User 를 먼저 잡는 apply_answer 와 엇갈릴 수 있었다.
+    """
+    begin_user_tx(user_id)
     row = _get_or_create_locked(user_id)
     row.status = STATUS_ACTIVE
     row.at_risk_combo = None

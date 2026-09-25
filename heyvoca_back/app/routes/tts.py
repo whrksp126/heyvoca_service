@@ -895,9 +895,15 @@ def get_my_voices():
 @tts_bp.route('/my-voices', methods=['PUT'])
 @jwt_required
 def put_my_voices():
-    """사용자 voice 설정 저장. 엄선 화이트리스트 외 voice는 무시."""
-    user = User.query.filter_by(id=UUID(g.user_id)).first()
+    """사용자 voice 설정 저장. 엄선 화이트리스트 외 voice는 무시.
+
+    저장값(JSON)을 읽어 언어 하나만 바꿔 다시 쓰는 읽고-고쳐-쓰기라, User 를 잠근 새 트랜잭션에서
+    한다 — 두 언어를 동시에 바꾸면 한쪽 변경이 사라지던 것을 막는다.
+    """
+    from app.utils.gem import start_user_tx
+    user = start_user_tx(UUID(g.user_id))
     if not user:
+        db.session.rollback()
         return jsonify({'code': 404, 'message': '사용자를 찾을 수 없습니다.'}), 404
     body = request.json or {}
     saved = {}

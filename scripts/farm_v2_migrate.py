@@ -271,6 +271,11 @@ def migrate_user(user_id: UUID, now: dt.datetime, apply: bool, report: 'Report')
     호출부가 트랜잭션을 열고 닫는다 — 여기서 커밋하지 않는 이유는, 단어 상태·아이템·
     보석·전환 기록이 **전부 함께** 반영되거나 전부 무효여야 하기 때문이다.
     """
+    # 사용자 단위 잠금이 트랜잭션의 첫 문장(`db_lock.begin_user_tx`) — 운영 중에 돌려도 이 사용자의
+    # 답안 반영·상점 구매와 전역 순서(User → …)가 같고, 아래 '이미 전환했나' 판정도 최신값을 본다.
+    # 두 번 동시에 돌려도 전환 보상이 두 번 나가지 않는다.
+    from app.utils.db_lock import begin_user_tx
+    begin_user_tx(user_id)
     if db.session.query(UserFarmMigration.user_id).filter(
             UserFarmMigration.user_id == user_id).first() is not None:
         report.skipped['ALREADY_MIGRATED'] += 1
