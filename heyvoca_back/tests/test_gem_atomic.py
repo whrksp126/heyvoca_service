@@ -257,3 +257,60 @@ def test_iap_grant_idempotent_under_concurrency(app, users):
     assert results.count(None) == 5
     s = _state(app, uid)
     assert s['gem'] == START_GEM + 50 and s['log_sum'] == 50
+
+
+def test_iap_grant_same_transaction_different_accounts(app, users):
+    """같은 transaction_id 를 **서로 다른 두 계정**이 동시에 제출 — 정확히 한 계정만 지급된다.
+
+    `_grant_iap_gems` 의 사용자 단위 잠금(`start_user_tx`)은 계정이 다르면 서로를 막지 못한다
+    (User 행 잠금이 계정별이라서). 최종 방어선은 `purchase.(transaction_id, platform)` 유니크
+    제약 — 늦게 커밋하는 쪽은 IntegrityError(1062)를 받고 기존 "이미 처리된 구매" 분기(None)와
+    같은 결과로 맞춰진다.
+    """
+    from app.routes.purchase import _grant_iap_gems
+    a, _ = users()
+    b, _ = users()
+    tx = 'test-tx-cross-' + uuid.uuid4().hex
+
+    class P:   # Product 대역 — _grant_iap_gems 가 쓰는 속성만
+        price = 1200
+        name = '테스트 보석'
+
+    data = {'productId': 'gem_test', 'transactionId': tx, 'platform': 'ios'}
+
+    def grant(uid):
+        def run():
+            with app.test_request_context():
+                from app import db
+                try:
+                    return _grant_iap_gems(uid, data, 'ios', P, 1, 50)
+                finally:
+                    db.session.remove()
+        return run
+
+    # 두 계정에서 같은 거래를 번갈아 여러 번 섞어 경합을 키운다.
+    jobs = [grant(a), grant(b)] * 3
+    results, errors = _run_threads(jobs)
+    assert not errors, errors
+
+    granted = [r for r in results if isinstance(r, int) and not isinstance(r, bool)]
+    assert len(granted) == 1, results          # 정확히 한 번만 지급
+    assert results.count(None) == 5            # 나머지는 전부 "이미 처리된 구매"
+
+    from app import db
+    from app.models.models import Purchase
+    with app.app_context():
+        purchases = db.session.query(Purchase).filter(Purchase.transaction_id == tx).all()
+        assert len(purchases) == 1              # DB 에도 딱 한 행
+        winner_id = purchases[0].user_id
+
+    total_log_sum = 0
+    for uid in (a, b):
+        s = _state(app, uid)
+        assert s['gem'] == START_GEM + s['log_sum'], s   # 잃어버린 갱신 없음
+        total_log_sum += s['log_sum']
+        if uid == winner_id:
+            assert s['log_sum'] == 50
+        else:
+            assert s['log_sum'] == 0                     # 패자는 보석 변동 없음
+    assert total_log_sum == 50                            # 전체적으로도 딱 한 번 지급

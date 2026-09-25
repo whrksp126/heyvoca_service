@@ -616,6 +616,11 @@ class Product(db.Model):
 # 구매 기록
 class Purchase(db.Model):
     __tablename__ = 'purchase'
+    __table_args__ = (
+        # 같은 영수증(transaction_id, platform)이 서로 다른 계정으로 동시에 들어와도
+        # DB 레벨에서 한 번만 남는다 — 사용자 단위 잠금으로는 막을 수 없는 계정 간 경합 방지.
+        UniqueConstraint('transaction_id', 'platform', name='uq_purchase_transaction_platform'),
+    )
     id = Column(BinaryUUID, primary_key=True, nullable=False, default=uuid4)
     user_id = Column(BinaryUUID, ForeignKey('user.id'), nullable=False)
     product_id = Column(String(100), nullable=False)  # 스토어 상품 ID

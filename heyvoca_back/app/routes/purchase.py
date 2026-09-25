@@ -12,8 +12,26 @@ from app.utils.jwt_utils import jwt_required
 from app import limiter
 from app.models.models import User, DailySentence, UserGoals, CheckIn, Goals, GoalType, UserRecentStudy, RecentStudyType, Voca, VocaMeaning, VocaExample, VocaBookMap, VocaMeaningMap, VocaExampleMap, UserVocaBook, Bookstore, Product, Purchase, GemReason, GemLog
 from app import db
+from sqlalchemy.exc import IntegrityError
 from app.utils.db_lock import retry_on_deadlock
 from app.utils.gem import InsufficientGem, change_gem, start_user_tx
+
+MYSQL_DUP_ENTRY = 1062
+PURCHASE_TX_PLATFORM_UNIQUE = 'uq_purchase_transaction_platform'
+
+
+def _is_duplicate_transaction(exc: IntegrityError) -> bool:
+    """`(transaction_id, platform)` 유니크 제약 위반(1062)인지 판별한다.
+
+    다른 IntegrityError(예: 예상치 못한 스키마 문제)까지 "이미 처리된 구매"로 삼켜 버리지
+    않도록 제약 이름까지 확인한다.
+    """
+    orig = getattr(exc, 'orig', None)
+    args = getattr(orig, 'args', None) or ()
+    if not args or args[0] != MYSQL_DUP_ENTRY:
+        return False
+    detail = str(args[1]) if len(args) > 1 else ''
+    return PURCHASE_TX_PLATFORM_UNIQUE in detail
 
 
 # 환경 변수
@@ -308,6 +326,11 @@ def _grant_iap_gems(user_id, data, platform, product, quantity, total_gem_amount
     - 중복 거래 검사를 **잠금 안에서 다시** 한다. 같은 영수증이 같은 계정으로 동시에 두 번
       들어와도(앱 재시도·중복 탭) 두 번째는 여기서 멈춘다. 재시도(1213) 때도 이 검사를 다시
       지나므로 이중 지급이 없다(롤백된 첫 시도는 흔적이 남지 않는다).
+    - 이 위의 검사는 **같은 계정** 안에서만 효과가 있다(User 잠금이 계정 단위라서). 같은
+      transaction_id 를 **다른 두 계정**이 동시에 제출하면 둘 다 이 검사를 통과할 수 있다 —
+      최종 방어선은 DB 의 `(transaction_id, platform)` 유니크 제약이다. 먼저 커밋한 쪽이
+      이기고, 진 쪽은 flush/commit 시 IntegrityError(1062)를 받는다 — 그 경우도 "이미 처리된
+      구매"와 같은 결과(None)로 맞춰 준다.
     """
     from uuid import uuid4
 
@@ -338,11 +361,22 @@ def _grant_iap_gems(user_id, data, platform, product, quantity, total_gem_amount
     purchase_record.id = uuid4()
     db.session.add(purchase_record)
 
-    _, balance = change_gem(user_id, total_gem_amount, GemReason.IAP_PURCHASE,
-                            f"유료 결제: {product.name}",
-                            source_type="purchase", source_id=purchase_record.id,
-                            user=user)
-    db.session.commit()
+    try:
+        _, balance = change_gem(user_id, total_gem_amount, GemReason.IAP_PURCHASE,
+                                f"유료 결제: {product.name}",
+                                source_type="purchase", source_id=purchase_record.id,
+                                user=user)
+        # change_gem 안의 add_gem_log 가 이미 flush 를 한 번 하므로, 유니크 위반이면 여기가
+        # 아니라 그 flush 시점에 날 수도 있다 — 그래서 commit 뿐 아니라 위 change_gem 호출까지
+        # 함께 감싼다.
+        db.session.commit()
+    except IntegrityError as e:
+        db.session.rollback()
+        if _is_duplicate_transaction(e):
+            # 다른 계정이 같은 transaction_id 를 먼저 커밋했다 — 우리 쪽은 지급하지 않고
+            # 기존 "이미 처리된 구매" 분기와 동일하게 취급한다(호출부에서 None → 400).
+            return None
+        raise
     return balance
 
 
