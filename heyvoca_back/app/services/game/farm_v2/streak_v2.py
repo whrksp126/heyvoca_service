@@ -38,6 +38,7 @@ from app.models.models import (CheckIn, FarmEvent, FarmItem, FarmItemReason,
                                User, UserStreak, UserStudyLog)
 from app.services.game.farm_v2 import constants as C
 from app.services.game.farm_v2 import events, inventory, localday
+from app.utils.db_lock import lock_user, retry_on_deadlock
 
 _DAY = dt.timedelta(days=1)
 
@@ -68,7 +69,13 @@ def _get_or_create_streak(user_id: UUID) -> UserStreak:
 
     행 잠금(`with_for_update`)을 거는 이유는 아이템과 같다 — 두 기기에서 같은 순간에
     답을 보내면 연속일이 하루에 두 번 오르거나 보호권이 두 번 소모될 수 있다.
+
+    **User 행을 먼저 잠근다.** 이 행을 잡는 트랜잭션은 이어서 보호권(아이템 행)·출석(CheckIn)을
+    바꾸고 마일스톤 보석(User)까지 준다. User 를 마지막에 잡으면 "User → 아이템"(상점 구매),
+    "User → 오늘 CheckIn"(세션 집계 /user_study_history)과 순서가 엇갈려 교착한다.
+    전역 순서는 `app/utils/db_lock.py`.
     """
+    lock_user(user_id)
     row = (
         db.session.query(UserStreak)
         .filter(UserStreak.user_id == user_id)
@@ -716,6 +723,7 @@ def streak_extras(user_id: UUID, now: Optional[dt.datetime] = None) -> dict:
 # 공개 함수
 # ──────────────────────────────────────────────────────────────
 
+@retry_on_deadlock
 def record_correct_word(user_id: UUID, user_voca_id: int,
                         now: Optional[dt.datetime] = None) -> dict:
     """정답 1건을 연속 학습일에 반영한다 (기획 11.1).
@@ -855,6 +863,7 @@ class NotPaused(ValueError):
     """멈춤 상태가 아님 — 라우트가 409 로 옮긴다."""
 
 
+@retry_on_deadlock
 def protect_streak(user_id: UUID, now: Optional[dt.datetime] = None) -> dict:
     """POST /farm/streak/protect — 부족분 보호권을 보석으로 사고 즉시 적용 (원자적).
 

@@ -24,6 +24,7 @@ from app.models.models import (
 )
 from app.services.game.farm_v2 import constants as C
 from app.services.game.farm_v2 import events, inventory
+from app.utils.db_lock import retry_on_deadlock
 
 # ── 경제 안전장치 ─────────────────────────────────────────
 # 하루 보석 지출 한도(기획 9.4, 30개)는 2026-09 연속 학습 보호권 개편에서 **완전히 제거**했다.
@@ -121,6 +122,7 @@ def get_wallet(user_id: UUID) -> dict:
     return {'items': inventory.get_counts(user_id), 'gem_cnt': int(gem_cnt)}
 
 
+@retry_on_deadlock
 def purchase(user_id: UUID, sku: str, qty: int = 1,
              now_utc: Optional[dt.datetime] = None) -> dict:
     """보석으로 농장 아이템 구매 (기획 8.2, 9.3). 성공하면 커밋한다.
@@ -151,7 +153,9 @@ def purchase_in_tx(user_id: UUID, sku: str, qty: int = 1) -> dict:
     원장은 상점 구매와 똑같이 남는다.
 
     사용자 행을 FOR UPDATE 로 잠그는 이유는 두 기기에서 동시에 구매 버튼을 눌렀을 때
-    두 트랜잭션이 같은 잔액을 읽어 잔액 이상을 쓰는 걸 막기 위해서다.
+    두 트랜잭션이 같은 잔액을 읽어 잔액 이상을 쓰는 걸 막기 위해서다. 잠금 순서는
+    User → 아이템 행으로 전역 순서(`app/utils/db_lock.py`)와 같다. `protect_streak` 처럼
+    호출부가 이미 User 를 잡은 경우에도 그대로 동작한다.
     """
     pack = find_pack(sku)
 
@@ -170,7 +174,8 @@ def purchase_in_tx(user_id: UUID, sku: str, qty: int = 1) -> dict:
     label = inventory.ITEM_LABEL.get(item_type, item_type)
 
     user = (
-        db.session.query(User).filter(User.id == user_id).with_for_update().first()
+        db.session.query(User).filter(User.id == user_id)
+        .with_for_update().populate_existing().first()
     )
     if user is None:
         raise LookupError('사용자를 찾을 수 없어요.')

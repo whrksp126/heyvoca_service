@@ -22,6 +22,7 @@ from app.models.models import (
     User, UserCombo, GemReason, Goals, GoalType, UserGoals,
 )
 from app.routes.common import register_gem_log
+from app.utils.db_lock import lock_user
 
 # 튜닝 상수
 MIN_PROTECT_COMBO = 5   # 이 값 미만 콤보는 팝업 없이 조용히 리셋
@@ -157,7 +158,14 @@ def _sync_combo_goal(user_id: UUID, best_combo: int) -> Optional[dict]:
 
 
 def apply_answer(user_id: UUID, was_correct: bool) -> dict:
-    """답안 1건을 콤보에 반영하고 커밋한다. (study/log 커밋 이후 호출 전제)"""
+    """답안 1건을 콤보에 반영하고 커밋한다. (study/log 커밋 이후 호출 전제)
+
+    잠금 순서는 `protect` 와 같은 user → user_combo 다(전역 순서 `app/utils/db_lock.py`).
+    최고 기록 갱신으로 암기왕이 완료되면 보석(User)을 주는데, 콤보 행을 쥔 채 User 를
+    기다리면 User → 콤보 순으로 잡는 `protect` 와 교착한다. 먼저 잡은 잠금 아래에서
+    읽으므로 보석 잔액을 옛 값으로 덮어쓰는 일도 없어진다.
+    """
+    lock_user(user_id)
     row = _get_or_create_locked(user_id)
 
     # AT_RISK 방치 상태에서 새 답안 → 자동 포기 (위기 콤보 소멸)

@@ -35,6 +35,7 @@ from app.services.game.farm_v2 import constants as C
 from app.services.game.farm_v2 import events, growth, health, localday
 from app.services.game.farm_v2.answer import CROP_KEY
 from app.services.game.farm_v2.restore import atomic, first_meaning
+from app.utils.db_lock import lock_user
 
 # 오늘 목록의 사유. 화면이 그룹 머리말로 그대로 쓴다(12.1 의 1~3순위).
 REASON_CRITICAL = 'CRITICAL'      # 오늘 안 돌보면 실제로 썩는다
@@ -337,6 +338,10 @@ def apply_emergency_water(user_id: UUID, now: Optional[dt.datetime] = None) -> d
     if not targets:
         return {'applied': 0, 'user_voca_ids': [], 'due_total': len(items), 'limit': limit}
 
+    # User → 게임 행(전역 순서, `app/utils/db_lock.py`). 이어지는 이벤트 로그 INSERT 가 FK 로
+    # User 에 공유 잠금을 거는데, 게임 행을 쥔 채 그걸 기다리면 User 를 먼저 잡고 같은 게임 행을
+    # 기다리는 정답 반영(answer.on_answer)과 교착한다. 대상이 있을 때만 여기까지 온다.
+    lock_user(user_id)
     games = {
         g.user_voca_id: g for g in
         db.session.query(UserVocaGame)
@@ -366,8 +371,9 @@ def apply_emergency_water(user_id: UUID, now: Optional[dt.datetime] = None) -> d
                            'limit': limit, 'due_total': len(items)})
         applied.append(user_voca_id)
 
-    if applied:
-        db.session.commit()
+    # 적용한 게 없어도 커밋해 트랜잭션을 닫는다 — 위에서 잡은 User·게임 행 잠금을
+    # 호출부의 다음 단계(복귀 미션·연속 정산)까지 끌고 가지 않게.
+    db.session.commit()
 
     return {'applied': len(applied), 'user_voca_ids': applied,
             'due_total': len(items), 'limit': limit}

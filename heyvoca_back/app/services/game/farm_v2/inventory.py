@@ -14,6 +14,7 @@ from sqlalchemy import func
 
 from app import db
 from app.models.models import FarmItem, FarmItemReason, UserFarmItem, UserFarmItemLog
+from app.utils.db_lock import lock_user
 
 
 def get_counts(user_id: UUID) -> dict:
@@ -43,7 +44,13 @@ def _row_for_update(user_id: UUID, item_type: str) -> UserFarmItem:
 
     잠그는 이유는 같은 사용자가 두 기기에서 동시에 아이템을 쓸 수 있어서다.
     잠그지 않으면 보유 1개로 두 번 다시 심기가 된다.
+
+    **User 행을 먼저 잠근다**(전역 순서 User → … → 아이템, `app/utils/db_lock.py`).
+    원장 INSERT 가 FK 로 User 에 공유 잠금을 거는데, 아이템 행을 쥔 채 그걸 기다리면
+    User 를 먼저 잡고 아이템을 기다리는 상점 구매와 교착한다. 호출부가 이미 잡았다면
+    같은 잠금이라 바로 돌아온다.
     """
+    lock_user(user_id)
     row = (
         db.session.query(UserFarmItem)
         .filter(UserFarmItem.user_id == user_id, UserFarmItem.item_type == item_type)
@@ -141,7 +148,10 @@ def grant_gem(user_id: UUID, amount: int, description: str,
     amount = int(amount or 0)
     if amount <= 0:
         return None
-    user = db.session.query(User).filter(User.id == user_id).with_for_update().first()
+    # populate_existing — 같은 트랜잭션에서 잠금 없이 먼저 읽어 둔 User 인스턴스가 세션에
+    # 있으면, 잠금을 걸어도 옛 잔액을 그대로 돌려준다. 잠근 뒤의 최신값으로 덮어쓴다.
+    user = (db.session.query(User).filter(User.id == user_id)
+            .with_for_update().populate_existing().first())
     if user is None:
         return None
 

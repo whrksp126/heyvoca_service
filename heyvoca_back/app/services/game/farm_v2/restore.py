@@ -32,6 +32,7 @@ from app.services.fsrs.state import (DEFAULT_FSRS_NEW, get_fsrs_state,
                                      parse_user_voca_data,
                                      serialize_user_voca_data, set_fsrs_state)
 from app.services.game.farm_v2 import events, growth, health, inventory, localday
+from app.utils.db_lock import lock_user
 
 # 예약 취소 창 (기획 7.2 확인 문구 → 오조작 되돌리기용).
 # 짧게 두는 이유는 이 창이 "실수로 눌렀다"를 위한 것이지 "생각해 보고 무르기"가 아니어서다.
@@ -107,9 +108,14 @@ def _lock_games(user_id: UUID, user_voca_ids: List[int]) -> dict:
 
     잠그는 이유는 inventory._row_for_update 와 같다 — 두 기기에서 같은 작물에
     동시에 아이템을 쓰면 아이템만 두 번 나가고 상태는 한 번 바뀐다.
+
+    User 행을 먼저 잠근다(전역 순서 User → 게임 행 → 아이템, `app/utils/db_lock.py`).
+    호출부는 전부 이어서 삽·회복제를 차감/환급하는데, 게임 행을 쥔 채 User 를 기다리면
+    User 를 먼저 잡는 정답 반영(answer.on_answer)·상점 구매와 교착한다.
     """
     if not user_voca_ids:
         return {}
+    lock_user(user_id)
     rows = (
         db.session.query(UserVocaGame)
         .filter(UserVocaGame.user_id == user_id,
@@ -522,11 +528,28 @@ def complete_diagnosis(user_id: UUID, user_voca_id: int, was_correct: bool,
         ValueError  — 진단 대상이 아님
     """
     now = now or dt.datetime.utcnow()
+    # 이 함수는 **모든 답안마다** 불리고 대부분은 진단 대상이 아니다. 그래서 먼저 잠금 없이
+    # 대상인지만 보고, 대상일 때만 User → 게임 행 순서(전역 순서)로 잠근 뒤 다시 확인한다.
+    # 게임 행부터 잠그면 이벤트 로그 INSERT 가 FK 로 User 를 기다려, User 를 먼저 잡는
+    # 정답 반영(answer.on_answer)과 엇갈린다.
+    peek = (
+        db.session.query(UserVocaGame.pending_action)
+        .filter(UserVocaGame.user_id == user_id,
+                UserVocaGame.user_voca_id == int(user_voca_id))
+        .first()
+    )
+    if peek is None:
+        raise LookupError('농장 정보를 찾을 수 없어요.')
+    if peek[0] not in (PENDING_REPLANT, PENDING_RECOVER):
+        raise ValueError('진단이 필요한 작물이 아니에요.')
+
+    lock_user(user_id)
     game = (
         db.session.query(UserVocaGame)
         .filter(UserVocaGame.user_id == user_id,
                 UserVocaGame.user_voca_id == int(user_voca_id))
         .with_for_update()
+        .populate_existing()
         .first()
     )
     if game is None:
@@ -534,6 +557,7 @@ def complete_diagnosis(user_id: UUID, user_voca_id: int, was_correct: bool,
 
     action = game.pending_action
     if action not in (PENDING_REPLANT, PENDING_RECOVER):
+        # 잠금 없이 본 사이에 다른 요청이 확정/취소했다
         raise ValueError('진단이 필요한 작물이 아니에요.')
 
     if not was_correct:
