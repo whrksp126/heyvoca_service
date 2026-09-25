@@ -326,6 +326,28 @@ async function cmdSubmit(argv) {
     console.log('\npreflight 통과. 실제로 심사에 보내려면 --yes 를 붙이세요(철회는 `cancel`).');
     return;
   }
+  // 거절된 제출(UNRESOLVED_ISSUES)이 있으면 그 안의 REJECTED 항목을 resolved 로 표시하고 같은 제출을
+  // 다시 보낸다(콘솔의 "앱 심사에 다시 제출" 과 동일). 거절 항목은 삭제가 안 되고(409) 버전도 그 항목에
+  // 묶여 있어 새 제출에 넣으면 409 "not in valid state" 가 난다 — 2026-09-25 1.1.1(19→20) 실측.
+  const unresolved = await api(`/v1/apps/${app.id}/reviewSubmissions?filter[state]=UNRESOLVED_ISSUES&limit=1`);
+  const stale = unresolved?.data?.[0] || null;
+  if (stale) {
+    const items = await api(`/v1/reviewSubmissions/${stale.id}/items?limit=20`);
+    for (const it of items?.data || []) {
+      if (it.attributes?.state === 'REJECTED') {
+        await api(`/v1/reviewSubmissionItems/${it.id}`, {
+          method: 'PATCH',
+          body: JSON.stringify({ data: { type: 'reviewSubmissionItems', id: it.id, attributes: { resolved: true } } }),
+        });
+      }
+    }
+    await api(`/v1/reviewSubmissions/${stale.id}`, {
+      method: 'PATCH',
+      body: JSON.stringify({ data: { type: 'reviewSubmissions', id: stale.id, attributes: { submitted: true } } }),
+    });
+    console.log(`\n✅ ${target.version} 거절 후 재제출 완료(제출 ${stale.id}). \`watch\` 로 결과를 감시하세요.`);
+    return;
+  }
   // 이미 열려 있는 제출이 있으면 재사용한다(중복 생성은 409 를 부른다).
   const open = await api(`/v1/apps/${app.id}/reviewSubmissions?filter[state]=READY_FOR_REVIEW&limit=1`);
   let sub = open?.data?.[0] || null;
