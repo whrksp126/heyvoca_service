@@ -102,6 +102,10 @@ class User(db.Model):
     learning_lang = Column(String(8), nullable=False, default='en', server_default='en')
     # 실험실 — '다른 언어 학습하기(베타)' 노출 게이트. 백엔드 라우팅은 이 값과 무관하게 learning_lang 을 따른다.
     multi_lang_enabled = Column(Boolean, nullable=False, default=False, server_default='0')
+    # refresh 토큰 폐기(강제 로그아웃) 버전. 로그아웃 시 +1. refresh 토큰의 'tv' 클레임과
+    # 대조해 불일치면 401 — 로그아웃 뒤에도 옛 refresh 토큰으로 계속 갱신되는 것을 막는다.
+    # tv 클레임이 없는 옛 토큰(이 컬럼 도입 이전 발급분)은 0으로 간주해 강제 로그아웃되지 않게 한다.
+    token_version = Column(Integer, nullable=False, default=0, server_default='0')
 
     def __init__(self, level_id, email, google_id, username, name, phone,
                 last_logged_at, refresh_token, code,

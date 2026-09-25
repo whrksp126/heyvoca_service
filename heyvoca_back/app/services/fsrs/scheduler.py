@@ -12,9 +12,11 @@ rating 상수:
   AGAIN=1, HARD=2, GOOD=3, EASY=4
 
 Phase 2.3 — 부드러운 lapse (FSRS_SOFT_LAPSE, 기본값 true):
-  첫 lapse:      stability *= 0.3
-  연속 lapse:    stability *= 0.1
-  prior_correct_rate >= 0.8인 경우 위 감소율 *0.5 (덜 깎음)
+  첫 lapse:      stability *= 0.3  (하한 = 원래값의 30%)
+  연속 lapse:    stability *= 0.1  (하한 = 원래값의 10%)
+  prior_correct_rate >= 0.8인 경우 위 하한율 *2.0 (0.3→0.6, 0.1→0.2. 덜 깎음.
+    직전 정답률이 높았던 단어는 이번 오답 한 번으로 더 크게 깎이면 안 되므로 하한을
+    올려서 보호한다. 1.0(=전혀 깎지 않음)을 넘지 않게 clamp.)
   최종값: max(soft_value, fsrs_standard_value)
 """
 
@@ -30,11 +32,12 @@ from app.services.fsrs.core import (
 )
 from app.services.fsrs.state import DEFAULT_FSRS_NEW
 
-# 소프트 lapse 감소율 상수
-_SOFT_LAPSE_FIRST      = 0.3   # 첫 lapse: stability * 0.3
-_SOFT_LAPSE_CONSECUTIVE = 0.1  # 연속 lapse: stability * 0.1
-_SOFT_LAPSE_GOOD_BONUS  = 0.5  # prior_correct_rate >= 0.8 이면 감소율 * 0.5
-_PRIOR_RATE_THRESHOLD   = 0.8  # 직전 정답률이 이 이상이면 bonus 적용
+# 소프트 lapse 하한율 상수 — "stability를 최소 이 비율만큼은 남긴다"는 뜻이라
+# 값이 클수록 덜 깎인다.
+_SOFT_LAPSE_FIRST      = 0.3   # 첫 lapse: 최소 stability * 0.3 은 남긴다
+_SOFT_LAPSE_CONSECUTIVE = 0.1  # 연속 lapse: 최소 stability * 0.1 은 남긴다
+_SOFT_LAPSE_GOOD_MULTIPLIER = 2.0  # prior_correct_rate >= 0.8 이면 하한율 * 2.0 (덜 깎음)
+_PRIOR_RATE_THRESHOLD   = 0.8  # 직전 정답률이 이 이상이면 가중 적용
 
 
 def _use_soft_lapse() -> bool:
@@ -52,17 +55,19 @@ def _apply_soft_lapse(
     """
     FSRS 표준 lapse 결과에 소프트 lapse 보정 적용.
 
-    감소율 결정:
+    하한율(rate) 결정 — "stability를 최소 이 비율만큼 남긴다":
       is_consecutive_lapse=True  → _SOFT_LAPSE_CONSECUTIVE (0.1)
       is_consecutive_lapse=False → _SOFT_LAPSE_FIRST (0.3)
-      prior_correct_rate >= 0.8  → 위 감소율 * 0.5
+      prior_correct_rate >= 0.8  → 위 하한율 * _SOFT_LAPSE_GOOD_MULTIPLIER (2.0),
+        단 1.0(=전혀 깎지 않음)을 넘지 않게 clamp. 직전 정답률이 높았던 단어는
+        이번 오답 한 번으로 더 크게 깎이면 안 되므로 "남기는 비율"을 올린다.
 
     최종 stability = max(soft_value, fsrs_standard_value)
     """
     rate = _SOFT_LAPSE_CONSECUTIVE if is_consecutive_lapse else _SOFT_LAPSE_FIRST
 
     if prior_correct_rate is not None and prior_correct_rate >= _PRIOR_RATE_THRESHOLD:
-        rate = rate * _SOFT_LAPSE_GOOD_BONUS
+        rate = min(rate * _SOFT_LAPSE_GOOD_MULTIPLIER, 1.0)
 
     soft_stability = max(stability_before * rate, 0.1)
     fsrs_stability = float(fsrs_result.get('stability') or 0.1)

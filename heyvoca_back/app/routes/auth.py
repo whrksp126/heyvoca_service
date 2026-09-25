@@ -6,11 +6,11 @@ from app.models.models import User, Bookstore, GoalType, UserGoals, Goals, Invit
 from app.routes.mainpage import update_user_goal
 from app.utils.db_lock import begin_user_tx, retry_on_deadlock
 from app.utils.gem import InsufficientGem, change_gem, lock_users_ordered, start_user_tx
-from app.utils.jwt_utils import jwt_required, generate_access_token, generate_refresh_token, verify_refresh_token
+from app.utils.jwt_utils import jwt_required, generate_access_token, generate_refresh_token, verify_refresh_token, get_refresh_token_version
 from uuid import UUID
 from sqlalchemy.exc import IntegrityError
 
-from flask_login import current_user, login_required, login_user, logout_user
+from flask_login import current_user, login_required, logout_user
 import requests
 
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -201,7 +201,7 @@ def google_oauth_app():
         
         # 5) JWT 발급
         access_token = generate_access_token(user.id, user.email)
-        refresh_token = generate_refresh_token(user.id, user.email)
+        refresh_token = generate_refresh_token(user.id, user.email, user.token_version)
 
         # 5) Refresh Token DB 저장 (UPDATE)
         user.refresh_token = refresh_token
@@ -294,7 +294,7 @@ def dev_login():
 
         # 4. 토큰 발급
         access_token = generate_access_token(user.id, user.email)
-        refresh_token = generate_refresh_token(user.id, user.email)
+        refresh_token = generate_refresh_token(user.id, user.email, user.token_version)
 
         # 5. Refresh Token 저장
         user.refresh_token = refresh_token
@@ -447,7 +447,7 @@ def apple_oauth_app():
 
         # 5. 토큰 발급
         access_token = generate_access_token(user.id, user.email)
-        refresh_token = generate_refresh_token(user.id, user.email)
+        refresh_token = generate_refresh_token(user.id, user.email, user.token_version)
 
         user.refresh_token = refresh_token
         # user.last_logged_at = datetime.now(tz=KST)
@@ -570,54 +570,6 @@ def google_oauth_web_callback():
     redirect_url = f"{front_end_url}?{urlencode(query_params)}"
     return redirect(redirect_url)
 
-# 앱 로그인 처리
-@auth_bp.route('/google/oauth/app/callback', methods=['POST'])
-def google_app_callback():
-    data = request.json
-    google_id = data.get('google_id')
-    access_token = data.get('access_token')
-    refresh_token = data.get('refresh_token')
-    email = data.get('email')
-    name = data.get('name')
-
-    # 사용자 정보 확인
-    user = User.query.filter_by(google_id=google_id).first()
-    if user is None:
-        # 사용자가 존재하지 않으면 회원가입 처리
-        user = User(
-            level_id=None,
-            email = email,
-            google_id = google_id,
-            username = None,
-            name = name,
-            phone = None,
-            refresh_token = refresh_token or '',
-            code = '',
-            book_cnt = 3,
-            gem_cnt = 0,
-            set_goal_cnt = 3,
-            last_logged_at = None
-        )
-        db.session.add(user)
-    else:
-        user.refresh_token = refresh_token
-    try:
-        db.session.commit()
-    except IntegrityError:
-        db.session.rollback()   # 동시 첫 로그인 — google_id/email 유니크가 막은 쪽은 기존 계정으로
-        user = (User.query.filter_by(google_id=google_id).first()
-                or User.query.filter_by(email=email).first())
-        if user is None:
-            return jsonify({'code': 400, 'status': 'error'}), 400
-    # 사용자 정보를 세션에 저장
-    session['access_token'] = access_token
-    session['user_id'] = google_id
-    session['os'] = 'android'
-    login_user(user)
-
-
-    return jsonify({ 'code' : 200, 'status': 'success'})
-
 # # 토큰 갱신 함수
 # def refresh_access_token(user):
 #     token_url = "https://accounts.google.com/o/oauth2/token"
@@ -649,12 +601,16 @@ def logout():
             }), 400
         
         user_id = UUID(g.user_id)
-        
-        user = db.session.query(User).filter(User.id == user_id).first()
-        
-        if user:
-            user.refresh_token = ''
-            db.session.commit()
+
+        # token_version 원자 증가(UPDATE ... SET token_version = token_version + 1) —
+        # 동시 로그아웃/리프레시가 겹쳐도 잃어버린 갱신 없이 정확히 1씩 오른다.
+        # 이 값이 올라가면 이 시점 이전에 발급된 모든 refresh 토큰이 /auth/refresh 에서
+        # tv 불일치로 거부된다(강제 로그아웃).
+        db.session.query(User).filter(User.id == user_id).update(
+            {User.refresh_token: '', User.token_version: User.token_version + 1},
+            synchronize_session=False
+        )
+        db.session.commit()
         response = make_response(jsonify({
             'code': 200,
             'message': '로그아웃이 성공적으로 완료되었습니다.',
@@ -1103,7 +1059,7 @@ def login():
 
     # JWT 발급
     access_token = generate_access_token(user.id)
-    refresh_token = generate_refresh_token(user.id, user.email)
+    refresh_token = generate_refresh_token(user.id, user.email, user.token_version)
 
     # 응답 및 refresh_token을 HttpOnly 쿠키로 설정 (보안 강화)
     response = make_response(jsonify({
@@ -1140,14 +1096,38 @@ def refresh():
     # 리프레시 토큰 검증
     user_id = verify_refresh_token(refresh_token)
     print(f"검증된 user_id: {user_id}")
-    
+
     if not user_id:
         print("❌ Refresh token 검증 실패")
         return jsonify({
             'code': 401,
             'message': 'Invalid or expired refresh token'
         }), 401
-    
+
+    # 사용자 존재 확인 + 토큰 버전 대조 — 로그아웃(/auth/logout) 시 User.token_version 이
+    # 증가하므로, 여기서 불일치하면 옛(로그아웃된) refresh 토큰으로 판단해 401 을 낸다.
+    # 'tv' 클레임이 없는 옛 토큰(이 컬럼 도입 이전 발급분)은 0으로 간주 — 배포 전 발급된
+    # 토큰을 강제 로그아웃시키지 않기 위함.
+    try:
+        user = db.session.query(User).filter(User.id == UUID(str(user_id))).first()
+    except (ValueError, AttributeError):
+        user = None
+
+    if user is None:
+        print("❌ Refresh token의 사용자를 찾을 수 없음(탈퇴됨)")
+        return jsonify({
+            'code': 401,
+            'message': 'Invalid or expired refresh token'
+        }), 401
+
+    token_tv = get_refresh_token_version(refresh_token) or 0
+    if token_tv != (user.token_version or 0):
+        print(f"❌ Refresh token 폐기됨(token_version 불일치): token_tv={token_tv}, user_tv={user.token_version}")
+        return jsonify({
+            'code': 401,
+            'message': 'Invalid or expired refresh token'
+        }), 401
+
     # 새로운 액세스 토큰 발급
     new_access_token = generate_access_token(user_id)
     print(f"✅ 새로운 액세스 토큰 발급 성공: {new_access_token[:20]}...")
@@ -1155,7 +1135,7 @@ def refresh():
     # 슬라이딩 만료(회전): refresh token도 새로 발급하고 쿠키 만료를 갱신한다.
     # → 활성 사용자는 refresh가 일어날 때마다 90일 윈도우가 갱신되어 사실상 무한 유지,
     #   90일 이상 미접속(=refresh 미발생)한 사용자만 자연 만료되어 재로그인.
-    new_refresh_token = generate_refresh_token(user_id)
+    new_refresh_token = generate_refresh_token(user_id, token_version=user.token_version)
     is_local = os.getenv('FLASK_CONFIG') == 'local'
     response = jsonify({
         'code': 200,

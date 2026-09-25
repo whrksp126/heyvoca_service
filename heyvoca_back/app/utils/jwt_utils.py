@@ -106,42 +106,65 @@ def generate_access_token(user_id, email=None):
     return token
 
 
-def generate_refresh_token(user_id, email=None):
+def generate_refresh_token(user_id, email=None, token_version=0):
     """
     리프레시 토큰 생성
     user_id: 사용자 ID (필수)
     email: 이메일 (선택사항, 기존 코드와의 호환성을 위해)
+    token_version: User.token_version 스냅샷('tv' 클레임). 로그아웃 시 User.token_version 이
+        증가하므로, /auth/refresh 에서 이 값과 DB 값을 대조해 로그아웃된 토큰을 거부한다.
+        호출부에서 넘기지 않으면 0(옛 사용자 호환) — DB의 실제 token_version 과 다르면
+        발급 즉시 거부되는 토큰이 생기므로 반드시 user.token_version 을 넘겨야 한다.
     """
     exp_time = datetime.utcnow() + timedelta(seconds=REFRESH_TTL_SECONDS)
     payload = {
         'user_id': str(user_id),
+        'tv': int(token_version or 0),
         'exp': exp_time
     }
     # 이메일이 제공되면 payload에 추가 (기존 코드와의 호환성)
     if email:
         payload['email'] = email
-    
+
     token = jwt.encode(payload, REFRESH_SECRET_KEY, algorithm='HS256')
     return token
 
 
 def verify_refresh_token(refresh_token):
     """
-    리프레시 토큰 검증
+    리프레시 토큰 검증(서명·만료만). 반환값은 user_id 문자열.
+
+    주의: 이 함수는 DB의 User.token_version 과 대조하지 않는다(순수 토큰 검증만).
+    로그아웃 폐기 여부는 호출부(/auth/refresh)가 토큰의 'tv' 클레임과 User.token_version 을
+    직접 비교해서 판단한다 — 이 함수만으로는 로그아웃된 토큰인지 알 수 없다.
     """
     try:
         data = jwt.decode(refresh_token, REFRESH_SECRET_KEY, algorithms=['HS256'])
-        
+
         # user_id 또는 id 키 찾기 (호환성)
         user_id = data.get('user_id') or data.get('id')
         if not user_id:
             return None
-            
+
         return user_id
     except jwt.ExpiredSignatureError:
         print("⏰ 리프레시 토큰 만료됨 - 재로그인 필요")
         return None
     except jwt.InvalidTokenError:
+        return None
+    except Exception:
+        return None
+
+
+def get_refresh_token_version(refresh_token):
+    """리프레시 토큰의 'tv' 클레임(정수). 서명 검증에 실패하면 None.
+
+    클레임이 없는 옛 토큰(이 컬럼 도입 이전 발급분)은 0으로 간주한다.
+    """
+    try:
+        data = jwt.decode(refresh_token, REFRESH_SECRET_KEY, algorithms=['HS256'])
+        return int(data.get('tv') or 0)
+    except jwt.PyJWTError:
         return None
     except Exception:
         return None

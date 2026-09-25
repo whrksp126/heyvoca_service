@@ -1,11 +1,12 @@
 """
 scheduler.py — Phase 2.3 부드러운 lapse (FSRS_SOFT_LAPSE) 단위 테스트.
 
-소프트 lapse 로직:
+소프트 lapse 로직 (rate = "남기는 하한 비율"):
   - stability_before > 0 이고 rating == AGAIN 이고 FSRS_SOFT_LAPSE=true 일 때만 적용
   - 첫 lapse (lapse_history 없음 또는 직전이 lapse 아님): soft_stab = stability * 0.3
   - 연속 lapse (lapse_history[0] == True):               soft_stab = stability * 0.1
-  - prior_correct_rate >= 0.8:                           감소율 * 0.5 (보너스)
+  - prior_correct_rate >= 0.8:                           하한율 * 2.0 (최대 1.0), 즉 덜 깎음
+    (정답률이 높았던 단어가 오답 한 번에 일반보다 더 크게 깎이면 안 된다는 불변식)
   - 최종 stability = max(soft_stab, fsrs_표준_stability)
   - FSRS_SOFT_LAPSE=false → 표준 FSRS 그대로 (소프트 보정 없음)
 """
@@ -120,11 +121,10 @@ class TestSoftLapseEnabled:
     def test_high_correct_rate_bonus_applied(self, monkeypatch):
         """
         prior_correct_rate=0.85 (>= 0.8), 첫 lapse:
-          rate = 0.3 * 0.5 = 0.15
-          soft_stab = 10 * 0.15 = 1.5
-          final = max(1.5, fsrs_표준)
-        → bonus 없을 때(soft_stab=3.0)보다 soft_stab은 작지만,
-          fsrs_표준이 더 크면 fsrs_표준 우선.
+          rate = 0.3 * 2.0 = 0.6
+          soft_stab = 10 * 0.6 = 6.0
+          final = max(6.0, fsrs_표준)
+        → 정답률이 높았던 단어는 bonus 없을 때(soft_stab=3.0)보다 덜 깎여야 한다.
         """
         monkeypatch.setenv('FSRS_SOFT_LAPSE', 'true')
         stability = 10.0
@@ -139,25 +139,26 @@ class TestSoftLapseEnabled:
             lapse_history=[False], prior_correct_rate=0.85
         )
 
-        # bonus 적용 시 soft_stab이 1.5 (no_bonus=3.0보다 작음)
-        # fsrs_표준이 둘 다 동일하므로 max() 결과가 달라질 수 있음
+        # bonus 적용 시 soft_stab이 6.0 (no_bonus=3.0보다 큼 → 덜 깎임)
         fsrs_std = _get_fsrs_standard_stability(stability)
 
-        soft_no_bonus = stability * 0.3       # 3.0
-        soft_bonus    = stability * 0.3 * 0.5  # 1.5
+        soft_no_bonus = stability * 0.3        # 3.0
+        soft_bonus    = stability * 0.3 * 2.0  # 6.0
 
         expected_no_bonus = max(soft_no_bonus, fsrs_std)
         expected_bonus    = max(soft_bonus,    fsrs_std)
 
         assert abs(result_no_bonus["stability"] - expected_no_bonus) < 0.01
         assert abs(result_bonus["stability"]    - expected_bonus)    < 0.01
+        # 정답률이 높았던 쪽이 일반보다 크거나 같아야 한다 (핵심 불변식).
+        assert result_bonus["stability"] >= result_no_bonus["stability"]
 
     def test_high_correct_rate_bonus_consecutive_lapse(self, monkeypatch):
         """
         prior_correct_rate=0.9, 연속 lapse:
-          rate = 0.1 * 0.5 = 0.05
-          soft_stab = 10 * 0.05 = 0.5 → max(0.5, 0.1) = 0.5
-          final = max(0.5, fsrs_표준)
+          rate = 0.1 * 2.0 = 0.2
+          soft_stab = 10 * 0.2 = 2.0
+          final = max(2.0, fsrs_표준)
         """
         monkeypatch.setenv('FSRS_SOFT_LAPSE', 'true')
         stability = 10.0
@@ -169,7 +170,7 @@ class TestSoftLapseEnabled:
         )
 
         fsrs_std   = _get_fsrs_standard_stability(stability)
-        soft_stab  = max(stability * 0.1 * 0.5, 0.1)  # max(0.5, 0.1)=0.5
+        soft_stab  = max(stability * 0.1 * 2.0, 0.1)  # max(2.0, 0.1)=2.0
         expected   = max(soft_stab, fsrs_std)
 
         assert abs(result["stability"] - expected) < 0.01
@@ -204,7 +205,7 @@ class TestSoftLapseEnabled:
         # 0.8은 bonus 적용, 0.79는 미적용 → soft_stab 차이
         # 단, fsrs_표준이 dominant이면 둘 다 fsrs_표준으로 같을 수 있음
         fsrs_std = _get_fsrs_standard_stability(stability)
-        soft_at    = max(stability * 0.3 * 0.5, 0.1)  # 1.5
+        soft_at    = max(stability * 0.3 * 2.0, 0.1)  # 6.0
         soft_below = max(stability * 0.3, 0.1)          # 3.0
         expected_at    = max(soft_at,    fsrs_std)
         expected_below = max(soft_below, fsrs_std)
@@ -366,7 +367,7 @@ class TestApplySoftLapseUnit:
         assert abs(result["stability"] - final) < 0.001
 
     def test_bonus_applied_when_correct_rate_high(self):
-        """prior_correct_rate=0.85 → 감소율 * 0.5."""
+        """prior_correct_rate=0.85 → 하한율 * 2.0 (덜 깎음)."""
         fsrs_result = {"stability": 0.2}
         result = _apply_soft_lapse(
             fsrs_result,
@@ -374,9 +375,22 @@ class TestApplySoftLapseUnit:
             is_consecutive_lapse=False,
             prior_correct_rate=0.85,
         )
-        soft  = max(10.0 * 0.3 * 0.5, 0.1)  # max(1.5, 0.1)=1.5
-        final = max(soft, 0.2)               # 1.5
+        soft  = max(10.0 * 0.3 * 2.0, 0.1)  # max(6.0, 0.1)=6.0
+        final = max(soft, 0.2)               # 6.0
         assert abs(result["stability"] - final) < 0.001
+
+    def test_bonus_multiplier_clamped_to_one(self):
+        """하한율 * 2.0 이 1.0을 넘으면 clamp되어 원래 stability를 넘지 않는다."""
+        fsrs_result = {"stability": 0.2}
+        result = _apply_soft_lapse(
+            fsrs_result,
+            stability_before=10.0,
+            is_consecutive_lapse=False,
+            prior_correct_rate=0.99,
+        )
+        # rate가 clamp 없이 그대로면 0.3*2.0=0.6 이라 문제 없지만, 향후 하한율이
+        # 커져도(_SOFT_LAPSE_FIRST 조정 등) 1.0을 넘지 않아야 한다는 안전장치를 고정한다.
+        assert result["stability"] <= 10.0
 
     def test_fsrs_result_other_keys_preserved(self):
         """_apply_soft_lapse는 stability만 수정, 나머지 키는 유지."""
@@ -397,6 +411,34 @@ class TestApplySoftLapseUnit:
         assert result["reps"]       == 3
         assert result["lapses"]     == 1
         assert result["difficulty"] == 7.0
+
+
+@pytest.mark.parametrize("stability,is_consecutive,desc", [
+    (10.0, False, "첫lapse"),
+    (10.0, True,  "연속lapse"),
+    (30.0, False, "30일(첫lapse)"),
+    (30.0, True,  "30일(연속lapse)"),
+])
+def test_high_correct_rate_never_worse_than_normal(stability, is_consecutive, desc, monkeypatch):
+    """핵심 불변식: 직전 정답률이 높았던 단어(>=0.8)의 소프트 lapse 결과는
+    일반(정답률 정보 없음)보다 크거나 같아야 한다 — 더 깎이면 안 된다."""
+    monkeypatch.setenv('FSRS_SOFT_LAPSE', 'true')
+    state = _build_state_with_stability(stability)
+    lapse_history = [True] if is_consecutive else [False]
+
+    result_normal = review(
+        state, AGAIN, BASE_TIME,
+        lapse_history=lapse_history, prior_correct_rate=None,
+    )
+    result_high_rate = review(
+        state, AGAIN, BASE_TIME,
+        lapse_history=lapse_history, prior_correct_rate=0.9,
+    )
+
+    assert result_high_rate["stability"] >= result_normal["stability"], (
+        f"[{desc}] 정답률 높은 쪽이 일반보다 더 깎임: "
+        f"high_rate={result_high_rate['stability']}, normal={result_normal['stability']}"
+    )
 
 
 @pytest.mark.parametrize("stability,lapse_history,prior_correct_rate,desc", [
