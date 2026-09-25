@@ -16,7 +16,6 @@ import StoreNewFullSheet from '../newfullsheet/StoreNewFullSheet';
 import CropImage, { CROP_ASSETS } from '../farm/CropImage';
 import GrowthPath from '../vocabularySheets/GrowthPath';
 import VerifyMark from '../vocabularySheets/VerifyMark';
-import JlptBadge from '../common/JlptBadge';
 import FuriganaText from '../common/FuriganaText';
 import { wordLang, isJa } from '../../utils/lang';
 import { getReading, shouldShowReading } from '../../utils/jaWord';
@@ -308,7 +307,6 @@ const WordDetaileNewBottomSheet = ({ vocabularyId, id }) => {
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-[6px] text-[24px] font-[800] tracking-[-0.04em] leading-[1.15] text-layout-black dark:text-layout-white">
             <span className="min-w-0 break-words" lang={isJa(wordLang(word)) ? 'ja' : undefined}>{word.origin}</span>
-            {isJa(wordLang(word)) && <JlptBadge level={word.jlpt} />}
             <VerifyMark word={word} size={17} badgeClassName="text-[11px]" />
           </div>
           {isJa(wordLang(word)) ? (

@@ -2,7 +2,6 @@ import React from 'react';
 
 import CropImage from '../farm/CropImage';
 import SpeakerButton from '../common/SpeakerButton';
-import JlptBadge from '../common/JlptBadge';
 import FuriganaText from '../common/FuriganaText';
 import { wordLang, isJa } from '../../utils/lang';
 import { getReading, shouldShowReading } from '../../utils/jaWord';
@@ -44,7 +43,6 @@ const PreviewWordNewBottomSheet = ({ word }) => {
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-[6px] text-[24px] font-[800] tracking-[-0.04em] leading-[1.15] text-layout-black dark:text-layout-white">
             <span className="min-w-0 break-words" lang={ja ? 'ja' : undefined}>{word.origin}</span>
-            {ja && <JlptBadge level={word.jlpt} />}
           </div>
           {ja ? (shouldShowReading(word) && (
             <div lang="ja" className="mt-[3px] text-[12.5px] font-[500] text-layout-gray-300">

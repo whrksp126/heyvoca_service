@@ -10,7 +10,6 @@ import ResultItemBackground02 from '../../assets/images/ResultItemBackground02.s
 import { haptic } from '../../lib/feel';
 import { warmTts } from '../../api/tts';
 import SpeakerButton from '../common/SpeakerButton';
-import JlptBadge from '../common/JlptBadge';
 import { wordLang, isJa } from '../../utils/lang';
 import { getReading, shouldShowReading } from '../../utils/jaWord';
 import { useTheme } from '../../context/ThemeContext';
@@ -181,7 +180,6 @@ const FarmGrowRow = ({ crop, word, meaning, right, meta }) => {
             {getReading(meta)}
           </span>
         )}
-        {ja && <JlptBadge level={meta.jlpt} size="sm" />}
       </span>
       {meaning ? (
         <span className='mt-[2px] text-[11.5px] font-[400] text-layout-gray-400 dark:text-layout-gray-50 truncate'>
@@ -1045,7 +1043,6 @@ const StudyResult = () => {
                                 {getReading(item)}
                               </span>
                             )}
-                            {isJa(wordLang(item)) && <JlptBadge level={item.jlpt} />}
                             <SpeakerButton text={item.origin} lang={wordLang(item)} size={15} label="단어 발음 듣기" />
                           </div>
                           <p className="text-[11.5px] font-[400] text-layout-gray-400 dark:text-layout-gray-50 truncate">

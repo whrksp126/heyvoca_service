@@ -6,7 +6,6 @@ import {
 } from '../../utils/vocaCrop';
 import { wordLang, isJa } from '../../utils/lang';
 import { getReading, shouldShowReading } from '../../utils/jaWord';
-import JlptBadge from '../common/JlptBadge';
 
 /**
  * 단어 목록 한 줄 — 시안 vocabooks §5 + crop_xp_contract.md §3 "단어장 단어 목록".
@@ -61,7 +60,6 @@ const WordRow = ({ word, onClick }) => {
               {getReading(word)}
             </span>
           )}
-          {ja && <JlptBadge level={word?.jlpt} size="sm" />}
         </span>
         <span className="block mt-[1px] truncate text-[12px] tracking-[-0.02em] text-layout-gray-400 dark:text-layout-gray-300">
           {meaning}

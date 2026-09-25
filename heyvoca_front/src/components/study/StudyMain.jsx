@@ -7,7 +7,6 @@ import CropImage from '../farm/CropImage';
 import { StudySettingsNewBottomSheet } from '../newBottomSheet/StudySettingsNewBottomSheet';
 import { ConfirmNewBottomSheet } from '../newBottomSheet/ConfirmNewBottomSheet';
 import TtsRipple from '../common/TtsRipple';
-import JlptBadge from '../common/JlptBadge';
 import ReadingLine from '../common/ReadingLine';
 import FuriganaText from '../common/FuriganaText';
 import { wordLang, isJa } from '../../utils/lang';
@@ -578,9 +577,6 @@ const StudyMain = ({ words }) => {
                       <div className="flex-1 min-w-0">
                         <span lang={isJa(wordLang(word)) ? 'ja' : undefined} className={`block text-[24px] font-[700] leading-[29px] ${playingItemId === 'word' ? 'text-primary-main-600' : 'text-layout-black dark:text-layout-white'}`}>
                           {word.origin}
-                          {isJa(wordLang(word)) && word.jlpt && (
-                            <JlptBadge level={word.jlpt} className="inline-block align-middle ml-[6px]" />
-                          )}
                         </span>
                         {isJa(wordLang(word)) ? (
                           shouldShowReading(word) && <ReadingLine reading={getReading(word)} className="block mt-[2px] dark:text-layout-gray-200" />

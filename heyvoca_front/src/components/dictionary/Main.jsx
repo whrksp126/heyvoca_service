@@ -3,7 +3,6 @@ import {
   MagnifyingGlass, CaretDown, CaretRight, X, Plus, Drop, Camera, ArrowUp,
 } from '@phosphor-icons/react';
 import SpeakerButton from '../common/SpeakerButton';
-import JlptBadge from '../common/JlptBadge';
 import FuriganaText from '../common/FuriganaText';
 import { wordLang, isJa, getActiveLearningLang } from '../../utils/lang';
 import { getReading, shouldShowReading } from '../../utils/jaWord';
@@ -602,12 +601,9 @@ const Main = () => {
               {word.origin}
             </span>
             {isJa(wordLang(word, learningLang)) ? (
-              <>
-                {shouldShowReading(word, learningLang) && (
-                  <span lang="ja" className="truncate text-[10.5px] font-[500] text-[#BBBBBB]">{getReading(word)}</span>
-                )}
-                <JlptBadge level={word.jlpt} size="sm" className="self-center" />
-              </>
+              shouldShowReading(word, learningLang) && (
+                <span lang="ja" className="truncate text-[10.5px] font-[500] text-[#BBBBBB]">{getReading(word)}</span>
+              )
             ) : word.pronunciation && (
               <span className="truncate text-[10.5px] font-[500] text-[#BBBBBB]">{word.pronunciation}</span>
             )}
@@ -789,7 +785,6 @@ const Main = () => {
                   : getReading(item)}
               </span>
             )}
-            {isJa(wordLang(item, learningLang)) && <JlptBadge level={item.jlpt} size="sm" />}
             <span className="flex-1 min-w-0 truncate text-right text-[12px] font-[500] tracking-[-0.02em] text-layout-gray-300">
               {searchLang === 'ko'
                 ? <Highlight text={meaningText} query={searchQuery} />
@@ -842,7 +837,6 @@ const Main = () => {
             <span lang={isJa(wordLang(selectedWord, learningLang)) ? 'ja' : undefined} className="text-[24px] font-[800] tracking-[-0.04em] text-layout-black dark:text-layout-white break-all">
               {selectedWord.word}
             </span>
-            {isJa(wordLang(selectedWord, learningLang)) && <JlptBadge level={selectedWord.jlpt} />}
             <SpeakerButton
               text={selectedWord.word}
               lang={wordLang(selectedWord, learningLang)}
