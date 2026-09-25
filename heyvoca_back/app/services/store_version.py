@@ -39,8 +39,8 @@ PLAY_PACKAGE = os.getenv('PLAY_PACKAGE', 'com.ghmate.heyvoca')
 
 # 조회가 전부 실패했을 때의 최종 폴백. **스토어에 실제로 게시된 적이 있는 값만** 적을 것
 #  (여기에 미출시 버전을 적으면 무한 업데이트 모달이 된다). env 로 덮어쓸 수 있다.
-FALLBACK_IOS = os.getenv('APP_LATEST_IOS', '1.0.5')
-FALLBACK_ANDROID = os.getenv('APP_LATEST_ANDROID', '1.0.5')
+FALLBACK_IOS = os.getenv('APP_LATEST_IOS', '1.1.1')
+FALLBACK_ANDROID = os.getenv('APP_LATEST_ANDROID', '1.1.1')
 
 _FRESH_TTL = 60 * 60        # 스토어 재조회 주기(1시간) — 게시 반영 자체가 수십 분 단위라 충분하다
 _LAST_GOOD_TTL = 7 * 24 * 3600  # 마지막 성공값 보관(7일) — 스토어가 잠시 죽어도 안내가 무너지지 않게
