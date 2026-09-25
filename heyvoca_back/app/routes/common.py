@@ -11,16 +11,14 @@ from app.models.models import User, DailySentence, UserGoals, CheckIn, Goals, Go
 from app import db
 
 
-def register_gem_log(user_id, amount, reason, description, 
+def register_gem_log(user_id, amount, reason, description,
                      source_type, source_id, balance_after):
-    gem_log = GemLog(
-        user_id=user_id,
-        amount=amount,
-        reason=reason.value,
-        description=description,
-        source_type=source_type,
-        source_id=source_id,
-        balance_after=balance_after,
-    )
-    db.session.add(gem_log)
-    db.session.commit()
+    """GemLog 한 줄 추가 — **커밋하지 않는다**(호출부가 자기 트랜잭션 끝에서 커밋).
+
+    예전에는 내부에서 커밋해 보석 변경과 원장이 트랜잭션 둘로 쪼개졌다. 잔액을 함께 바꾸는
+    경로는 `app.utils.gem.change_gem`(잠금 + 잔액 검사 + 원장)을 쓴다. 이 함수는 호환용이다.
+    """
+    from app.utils.gem import add_gem_log
+    add_gem_log(user_id, amount, reason, description,
+                source_type=source_type, source_id=source_id,
+                balance_after=balance_after)

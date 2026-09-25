@@ -59,8 +59,12 @@ def create_user_voca_book():
     color = data['color']
     user_id = UUID(g.user_id)  # JWT에서 온 문자열을 UUID로 변환
 
-    user = db.session.query(User).filter(User.id == user_id).first()
-    print("###user : ",user)
+    # User 행을 먼저 잠근다(전역 잠금 순서 첫 번째) — book_cnt 차감과 독서왕 보석 지급이
+    # 같은 사용자의 다른 보석 변경과 엇갈려 사라지지 않게. 커밋은 아래 한 번뿐이다.
+    from app.utils.gem import start_user_tx
+    user = start_user_tx(user_id)
+    if user is None:
+        return jsonify({'code': 404, 'message': '사용자를 찾을 수 없습니다.'}), 404
 
     # 단어장 언어는 서버 현재 언어(learning_lang). payload language 가 다르면 400.
     lang_error = check_payload_language(data.get('language'))

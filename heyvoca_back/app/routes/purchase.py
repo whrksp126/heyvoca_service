@@ -12,7 +12,8 @@ from app.utils.jwt_utils import jwt_required
 from app import limiter
 from app.models.models import User, DailySentence, UserGoals, CheckIn, Goals, GoalType, UserRecentStudy, RecentStudyType, Voca, VocaMeaning, VocaExample, VocaBookMap, VocaMeaningMap, VocaExampleMap, UserVocaBook, Bookstore, Product, Purchase, GemReason, GemLog
 from app import db
-from app.routes.common import register_gem_log
+from app.utils.db_lock import retry_on_deadlock
+from app.utils.gem import InsufficientGem, change_gem, start_user_tx
 
 
 # 환경 변수
@@ -76,7 +77,7 @@ def verify_purchase():
                 'message': '유효하지 않은 상품입니다.'
             }), 400
 
-        # 중복 구매 검증 (같은 거래 ID로 이미 구매한 경우)
+        # 중복 구매 빠른 거절(잠금 없이) — 최종 판정은 아래 잠금 안에서 다시 한다.
         existing_purchase = Purchase.query.filter_by(
             transaction_id=data['transactionId'],
             platform=platform
@@ -100,38 +101,21 @@ def verify_purchase():
             
             # 실제 지급할 보석 수량 계산 (상품 보석 수량 × 구매 수량)
             total_gem_amount = product.gem_amount * quantity
-            
-            # 영수증 DB 레코드 추가
-            purchase_record = Purchase(
-                user_id=user_id,
-                product_id=data['productId'],
-                transaction_id=data['transactionId'],
-                platform=platform,
-                gem_amount=total_gem_amount,  # 실제 지급할 보석 수량
-                price=product.price * quantity,  # 실제 결제 금액
-                receipt_data=json.dumps(data)  # 원본 데이터 저장
-            )
-            
-            db.session.add(purchase_record)
-            
-            # 사용자 보석 업데이트
-            user = User.query.get(user_id)
-            if not user:
+
+            # 스토어 검증(외부 호출)은 위에서 끝났다. 여기부터는 DB 만 — 교착 시 이 부분만 재시도한다.
+            result = _grant_iap_gems(
+                user_id, data, platform, product, quantity, total_gem_amount)
+            if result is None:
+                return jsonify({
+                    'code': 400,
+                    'message': '이미 처리된 구매입니다.'
+                }), 400
+            if result is False:
                 return jsonify({
                     'code': 400,
                     'message': '사용자를 찾을 수 없습니다.'
                 }), 400
-            
-            # 보석 추가 (수량만큼 곱해서)
-            user.gem_cnt += total_gem_amount
-            
-            # 보석 로그 등록
-            register_gem_log(user_id, total_gem_amount, GemReason.IAP_PURCHASE, f"유료 결제: {product.name}", 
-                            "purchase", purchase_record.id, user.gem_cnt)
-            
-            # 변경사항 저장
-            db.session.commit()
-            
+
             # 검증 성공 응답
             return jsonify({
                 'code': 200,
@@ -142,7 +126,7 @@ def verify_purchase():
                     'transaction_id': data['transactionId'],
                     'quantity': quantity,
                     'gem_added': total_gem_amount,
-                    'total_gems': user.gem_cnt
+                    'total_gems': result
                 }
             }), 200
             
@@ -313,6 +297,55 @@ def get_products():
         }), 500
 
 
+@retry_on_deadlock
+def _grant_iap_gems(user_id, data, platform, product, quantity, total_gem_amount):
+    """영수증 기록 + 보석 지급을 한 트랜잭션으로 커밋한다. 스토어 API 는 부르지 않는다.
+
+    반환: 지급 후 잔액(int) / 이미 처리된 거래면 None / 사용자 없음이면 False.
+
+    - User 행을 먼저 잠그고(전역 잠금 순서 첫 번째) 잔액에 더한다 — 다른 보석 변경과 엇갈려도
+      지급분이 사라지지 않는다.
+    - 중복 거래 검사를 **잠금 안에서 다시** 한다. 같은 영수증이 같은 계정으로 동시에 두 번
+      들어와도(앱 재시도·중복 탭) 두 번째는 여기서 멈춘다. 재시도(1213) 때도 이 검사를 다시
+      지나므로 이중 지급이 없다(롤백된 첫 시도는 흔적이 남지 않는다).
+    """
+    from uuid import uuid4
+
+    # 새 트랜잭션에서 잠금부터 — 위의 빠른 중복 검사가 잡아 둔 스냅샷을 버려야, 잠금 뒤의
+    # 중복 검사가 앞서 커밋된 같은 거래를 본다(`start_user_tx` 주석).
+    user = start_user_tx(user_id)
+    if user is None:
+        db.session.rollback()
+        return False
+
+    dup = Purchase.query.filter_by(
+        transaction_id=data['transactionId'], platform=platform
+    ).first()
+    if dup is not None:
+        db.session.rollback()
+        return None
+
+    purchase_record = Purchase(
+        user_id=user_id,
+        product_id=data['productId'],
+        transaction_id=data['transactionId'],
+        platform=platform,
+        gem_amount=total_gem_amount,  # 실제 지급할 보석 수량
+        price=product.price * quantity,  # 실제 결제 금액
+        receipt_data=json.dumps(data)  # 원본 데이터 저장
+    )
+    # id 는 flush 때 채워지는 기본값이라, 미리 넣어 두지 않으면 원장의 source_id 가 비었다.
+    purchase_record.id = uuid4()
+    db.session.add(purchase_record)
+
+    _, balance = change_gem(user_id, total_gem_amount, GemReason.IAP_PURCHASE,
+                            f"유료 결제: {product.name}",
+                            source_type="purchase", source_id=purchase_record.id,
+                            user=user)
+    db.session.commit()
+    return balance
+
+
 # 단어장 1개당 차감되는 보석 단가
 BOOK_PRICE_PER_UNIT = 3
 # 한 번에 구매 가능한 최대 단어장 수
@@ -335,43 +368,24 @@ def purchase_book():
 
         cost = amount * BOOK_PRICE_PER_UNIT
         user_id = UUID(g.user_id)
-        user = User.query.get(user_id)
-
-        if not user:
-            return jsonify({
-                'code': 404,
-                'message': '사용자를 찾을 수 없습니다.'
-            }), 404
-
-        if user.gem_cnt < cost:
-            return jsonify({
-                'code': 400,
-                'message': '보석이 부족합니다.'
-            }), 400
 
         try:
-            user.gem_cnt -= cost
-            user.book_cnt += amount
-
-            register_gem_log(
-                user_id=user_id,
-                amount=-cost,
-                reason=GemReason.BOOK_PURCHASE,
-                description=f"빈 단어장 {amount}개 구매",
-                source_type="vocabulary_book",
-                source_id=None,
-                balance_after=user.gem_cnt
-            )
-
-            db.session.commit()
+            result = _purchase_book_tx(user_id, amount, cost)
+            if result == 'no_user':
+                return jsonify({
+                    'code': 404,
+                    'message': '사용자를 찾을 수 없습니다.'
+                }), 404
+            if result == 'short':
+                return jsonify({
+                    'code': 400,
+                    'message': '보석이 부족합니다.'
+                }), 400
 
             return jsonify({
                 'code': 200,
                 'message': '구매가 완료되었습니다.',
-                'data': {
-                    'gem_cnt': user.gem_cnt,
-                    'book_cnt': user.book_cnt
-                }
+                'data': result
             }), 200
 
         except Exception as e:
@@ -388,6 +402,26 @@ def purchase_book():
             'code': 500,
             'message': '서버 오류가 발생했습니다.'
         }), 500
+
+
+@retry_on_deadlock
+def _purchase_book_tx(user_id, amount, cost):
+    """보석 차감 + book_cnt 증가를 한 트랜잭션으로. 잔액 검사는 User 잠금 안에서(음수 방지)."""
+    user = start_user_tx(user_id)
+    if user is None:
+        db.session.rollback()
+        return 'no_user'
+    try:
+        _, balance = change_gem(user_id, -cost, GemReason.BOOK_PURCHASE,
+                                f"빈 단어장 {amount}개 구매",
+                                source_type="vocabulary_book", user=user)
+    except InsufficientGem:
+        db.session.rollback()
+        return 'short'
+    user.book_cnt += amount
+    book_cnt = user.book_cnt
+    db.session.commit()
+    return {'gem_cnt': balance, 'book_cnt': book_cnt}
 
 
 def verify_ios_receipt(data):

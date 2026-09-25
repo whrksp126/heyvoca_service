@@ -10,6 +10,7 @@ from sqlalchemy import text
 from app import db
 from app.models.models import UserStudySession, UserStudyLog, UserVoca, UserQuestionTypeStat, User
 from app.utils.jwt_utils import jwt_required
+from app.utils.db_lock import lock_user
 from app.constants.question_types import ALLOWED_QUESTION_TYPES
 from app.utils.dict_lang import get_dict_lang
 from app.services.ja_fields import (
@@ -245,6 +246,17 @@ def post_study_log():
             now = dt.datetime.utcnow()
     else:
         now = dt.datetime.utcnow()
+
+    # ── 전역 잠금 순서: User 먼저 (`app/utils/db_lock.py`) ──
+    # 이 트랜잭션은 UserVoca 를 FOR UPDATE 로 잡은 뒤 학습 로그·유형 통계 행을 INSERT 한다.
+    # 그 INSERT 의 FK 검사가 User 행에 공유 잠금을 거는데, 진단 확정(complete_diagnosis)은
+    # User → UserVoca 순이라, 같은 진단 단어를 두 기기에서 동시에 풀면 서로 엇갈릴 수 있었다.
+    # User PK 한 행 잠금이라 비용은 작고, 막히는 건 같은 사용자의 동시 쓰기 트랜잭션뿐이다
+    # (어차피 로그 INSERT 에서 같은 User 를 기다렸다). 먼저 롤백하는 이유는 요청 진입부에서
+    # 잡힌 스냅샷을 버려, 아래 멱등 가드(같은 세션·단어 로그 존재 확인)가 잠금 뒤 최신 데이터를
+    # 보게 하려는 것이다(`app.utils.gem.start_user_tx` 주석). 이 시점엔 바꾼 것이 없다.
+    db.session.rollback()
+    lock_user(user_id)
 
     # ── 권한 검증 ──
     session_obj = UserStudySession.query.filter_by(

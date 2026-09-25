@@ -11,7 +11,7 @@
 
 트랜잭션 원칙: 보석 차감과 아이템 지급은 **반드시 한 트랜잭션**이다. 어느 한쪽만
 커밋되면 재화가 새거나(아이템만 지급) 사용자가 손해를 본다(보석만 차감). 그래서
-`routes/common.register_gem_log`(내부 커밋)를 쓰지 않고 원장 행을 직접 넣는다.
+원장 행을 같은 트랜잭션에 직접 넣는다(예전 `routes/common.register_gem_log` 는 내부 커밋이었다).
 """
 
 import datetime as dt

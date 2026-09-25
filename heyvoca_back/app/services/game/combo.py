@@ -21,8 +21,8 @@ from app import db
 from app.models.models import (
     User, UserCombo, GemReason, Goals, GoalType, UserGoals,
 )
-from app.routes.common import register_gem_log
-from app.utils.db_lock import lock_user
+from app.utils.gem import InsufficientGem, change_gem, lock_user_row
+from app.utils.db_lock import lock_user, retry_on_deadlock
 
 # 튜닝 상수
 MIN_PROTECT_COMBO = 5   # 이 값 미만 콤보는 팝업 없이 조용히 리셋
@@ -124,19 +124,12 @@ def _sync_combo_goal(user_id: UUID, best_combo: int) -> Optional[dict]:
         # 완료 처리 + 보상 (mainpage.update_user_goal와 동일 흐름)
         current_user_goal.is_completed = True
         current_user_goal.completed_at = dt.datetime.utcnow()
-        user = db.session.query(User).filter(User.id == user_id).first()
-        if user and goal.reward_count > 0:
-            user.gem_cnt += goal.reward_count
-            db.session.flush()
-            register_gem_log(
-                user_id=user_id,
-                amount=goal.reward_count,
-                reason=GemReason.ACHIEVEMENT,
-                description=f'암기왕 Lv.{goal.level} 달성 (콤보 {goal.goal}회)',
-                source_type='goal',
-                source_id=None,
-                balance_after=user.gem_cnt,
-            )
+        if goal.reward_count > 0:
+            # User 는 apply_answer 가 맨 먼저 잡아 두었다. change_gem 은 잠근 뒤의 최신 잔액에
+            # 더하고 원장을 남기되 커밋하지 않는다 — 커밋은 apply_answer 끝에서 한 번.
+            change_gem(user_id, goal.reward_count, GemReason.ACHIEVEMENT,
+                       f'암기왕 Lv.{goal.level} 달성 (콤보 {goal.goal}회)',
+                       source_type='goal')
         completed_info = {'level': goal.level, 'goal': goal.goal, 'reward': goal.reward_count}
 
         # 다음 레벨 목표 생성
@@ -157,6 +150,7 @@ def _sync_combo_goal(user_id: UUID, best_combo: int) -> Optional[dict]:
     return completed_info
 
 
+@retry_on_deadlock
 def apply_answer(user_id: UUID, was_correct: bool) -> dict:
     """답안 1건을 콤보에 반영하고 커밋한다. (study/log 커밋 이후 호출 전제)
 
@@ -207,6 +201,7 @@ def get_state(user_id: UUID) -> dict:
     return _payload(row)
 
 
+@retry_on_deadlock
 def protect(user_id: UUID) -> dict:
     """보석을 차감하고 위기 콤보를 복원한다.
 
@@ -215,13 +210,8 @@ def protect(user_id: UUID) -> dict:
         ValueError:   AT_RISK 상태 아님
         PermissionError: 보석 부족
     """
-    # 락 순서 고정: user → user_combo
-    user = (
-        db.session.query(User)
-        .filter(User.id == user_id)
-        .with_for_update()
-        .first()
-    )
+    # 락 순서 고정: user → user_combo. populate_existing 으로 잠근 뒤의 최신 잔액을 쓴다.
+    user = lock_user_row(user_id)
     row = (
         db.session.query(UserCombo)
         .filter(UserCombo.user_id == user_id)
@@ -233,20 +223,11 @@ def protect(user_id: UUID) -> dict:
             raise LookupError('콤보 정보가 없습니다.')
         if row.status != STATUS_AT_RISK or not row.at_risk_combo:
             raise ValueError('보호할 콤보가 없습니다.')
-        if user.gem_cnt < PROTECT_COST:
+        try:
+            change_gem(user_id, -PROTECT_COST, GemReason.COMBO_PROTECT,
+                       f'콤보 {row.at_risk_combo} 보호', source_type='combo', user=user)
+        except InsufficientGem:
             raise PermissionError('보석이 부족합니다.')
-
-        user.gem_cnt -= PROTECT_COST
-        db.session.flush()
-        register_gem_log(
-            user_id=user_id,
-            amount=-PROTECT_COST,
-            reason=GemReason.COMBO_PROTECT,
-            description=f'콤보 {row.at_risk_combo} 보호',
-            source_type='combo',
-            source_id=None,
-            balance_after=user.gem_cnt,
-        )
         row.current_combo = row.at_risk_combo
         row.status = STATUS_ACTIVE
         row.at_risk_combo = None

@@ -32,6 +32,7 @@ from app.models.models import (
     Bookstore,
 )
 from app.utils.jwt_utils import jwt_required
+from app.utils.db_lock import retry_on_deadlock
 from app.utils.dict_lang import use_dict_lang, get_dict_lang
 
 onboarding_bp = Blueprint('onboarding', __name__, url_prefix='/onboarding')
@@ -84,6 +85,7 @@ FEATURE_UNLOCK_MISSION = {m['unlocks']: m['key'] for m in ONBOARDING_MISSIONS if
 FRONTEND_SIGNAL_MISSION_KEYS = {'ai_test', 'search_word', 'focus_study', 'free_test'}
 
 
+@retry_on_deadlock
 def complete_onboarding_mission(user_id, mission_key) -> dict:
     """온보딩 미션을 멱등하게 완료 처리한다.
 
@@ -91,10 +93,14 @@ def complete_onboarding_mission(user_id, mission_key) -> dict:
     신규 완료면 UserOnboardingMission row insert + gem_cnt 증가 + gem 로그 기록.
 
     반환: {'newly_completed': bool, 'reward_gem': int, 'unlocks': str}
+
+    트랜잭션: 호출부는 모두 자기 작업을 커밋한 **뒤에** 부른다. 미션 행 + 보석 + 원장은 커밋 한 번으로
+    묶이고(교착 시 통째로 재시도해도 안전 — 완료 여부를 잠금 안에서 다시 보므로 이중 지급 없음),
+    make_book 보상 단어장만 그 뒤 별도 커밋이다(실패해도 미션 완료를 되돌리지 않는 정책).
     """
     from sqlalchemy.exc import IntegrityError
     from app.models.models import UserOnboardingMission, GemReason
-    from app.routes.common import register_gem_log
+    from app.utils.gem import change_gem, lock_user_row
 
     mission = ONBOARDING_MISSION_BY_KEY.get(mission_key)
     if not mission:
@@ -103,21 +109,28 @@ def complete_onboarding_mission(user_id, mission_key) -> dict:
     if isinstance(user_id, str):
         user_id = UUID(user_id)
 
-    existing = (
-        db.session.query(UserOnboardingMission)
-        .filter(UserOnboardingMission.user_id == user_id, UserOnboardingMission.mission_key == mission_key)
-        .first()
-    )
-    if existing:
-        return {'newly_completed': False, 'reward_gem': 0, 'unlocks': mission['unlocks']}
-
-    user = db.session.query(User).filter(User.id == user_id).with_for_update().first()
+    # User 를 먼저 잠근다(전역 잠금 순서 첫 번째) — 완료 여부 확인·미션 행 INSERT·보석 지급이
+    # 같은 사용자 안에서 직렬화된다. 완료 확인은 잠금 **뒤**의 잠금 읽기로 한다(스냅샷이 아닌 최신값).
+    user = lock_user_row(user_id)
     if user is None:
         raise ValueError('사용자를 찾을 수 없습니다.')
 
+    existing = (
+        db.session.query(UserOnboardingMission.id)
+        .filter(UserOnboardingMission.user_id == user_id, UserOnboardingMission.mission_key == mission_key)
+        .with_for_update()
+        .first()
+    )
+    if existing:
+        db.session.commit()   # 바꾼 것은 없다 — User 잠금만 푼다(호출부는 모두 자기 커밋 뒤에 부른다)
+        return {'newly_completed': False, 'reward_gem': 0, 'unlocks': mission['unlocks']}
+
     reward = mission['reward_gem']
     db.session.add(UserOnboardingMission(user_id=user_id, mission_key=mission_key))
-    user.gem_cnt = (user.gem_cnt or 0) + reward
+    # 보석 + 원장을 미션 행과 한 트랜잭션으로 커밋한다(예전에는 원장이 별도 커밋이었다).
+    change_gem(user_id, reward, GemReason.ONBOARDING_MISSION,
+               f"온보딩 미션 완료: {mission['title']}",
+               source_type='onboarding_mission', user=user)
 
     try:
         db.session.commit()
@@ -125,13 +138,6 @@ def complete_onboarding_mission(user_id, mission_key) -> dict:
         # 동시 요청 등으로 UniqueConstraint 위반 → 이미 다른 요청이 완료 처리한 것으로 간주(멱등).
         db.session.rollback()
         return {'newly_completed': False, 'reward_gem': 0, 'unlocks': mission['unlocks']}
-
-    register_gem_log(
-        user_id=user_id, amount=reward, reason=GemReason.ONBOARDING_MISSION,
-        description=f"온보딩 미션 완료: {mission['title']}",
-        source_type='onboarding_mission', source_id=None,
-        balance_after=user.gem_cnt,
-    )  # register_gem_log 내부 commit
 
     # M2(make_book) 완료 보상: 보석 외에 빈 단어장 1개를 자동 지급한다.
     # (미션이 멱등하게 1회만 신규 완료되므로 이 지급도 1회만 발생)
@@ -390,14 +396,15 @@ def migrate():
     from app.services.fsrs.state import migrate_v1_to_v2, set_fsrs_state, get_fsrs_state, serialize_user_voca_data
     from app.services.fsrs.scheduler import review as fsrs_review
     from app.services.fsrs.core import GOOD, AGAIN
-    from app.routes.common import register_gem_log
+    from app.utils.gem import change_gem, start_user_tx
     from app.models.models import GemReason
     from app.services.game.hooks import on_study_answer
 
     user_id = UUID(g.user_id)
     body = request.get_json(silent=True) or {}
 
-    user = db.session.query(User).filter(User.id == user_id).with_for_update().first()
+    # 새 트랜잭션의 첫 문장으로 User 를 잠근다(전역 순서 첫 번째 + 최신 잔액).
+    user = start_user_tx(user_id)
     if user is None:
         return jsonify({'code': 404, 'message': '사용자를 찾을 수 없습니다.'}), 404
     if user.onboarding_ver == '1':
@@ -513,7 +520,10 @@ def migrate():
 
     reward = 0
     if studied > 0:
-        user.gem_cnt = (user.gem_cnt or 0) + SIGNUP_REWARD_GEM
+        # 보석과 원장을 온보딩 저장과 한 트랜잭션으로(예전에는 원장이 게임 훅 뒤 별도 커밋이라
+        # balance_after 에 훅이 준 보석까지 섞여 들어갔다).
+        change_gem(user_id, SIGNUP_REWARD_GEM, GemReason.ACHIEVEMENT, '온보딩 가입 보상',
+                   source_type='onboarding', user=user)
         reward = SIGNUP_REWARD_GEM
 
     db.session.commit()
@@ -536,14 +546,6 @@ def migrate():
             db.session.rollback()
             logging.getLogger(__name__).warning(
                 '온보딩 게임 반영 실패 (user_voca=%s, 학습 저장은 정상)', uv_id, exc_info=True)
-
-    if reward > 0:
-        register_gem_log(
-            user_id=user_id, amount=reward, reason=GemReason.ACHIEVEMENT,
-            description='온보딩 가입 보상',
-            source_type='onboarding', source_id=None,
-            balance_after=user.gem_cnt,
-        )  # register_gem_log 내부 commit
 
     # 방금 생성한 온보딩 단어가 AI 추천 후보 풀(recommend:pool:{user_id}, Redis TTL 30초)에 즉시
     # 반영되도록 stale 캐시를 무효화한다. 온보딩 중 단어 생성 전에 빈 풀이 캐시돼 있으면, 무효화하지

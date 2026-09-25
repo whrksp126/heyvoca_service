@@ -6,7 +6,8 @@ from app.routes import mainpage_bp
 from app.utils.jwt_utils import jwt_required
 from uuid import UUID
 from app.models.models import User, DailySentence, UserGoals, CheckIn, Goals, GoalType, UserRecentStudy, RecentStudyType, VocaMeaning, VocaExample, VocaMeaningMap, VocaExampleMap, UserVocaBook, Bookstore, Product, GemReason
-from app.routes.common import register_gem_log
+from app.utils.db_lock import lock_user, retry_on_deadlock
+from app.utils.gem import change_gem, start_user_tx
 from app.services.study_day import logical_today
 from app.services.daily_progress import get_today_new_done, get_review_due
 from datetime import datetime, timedelta, date
@@ -294,7 +295,12 @@ def update_user_goal(goal_type_name: str, user_id: UUID = None):
         user_id = UUID(g.user_id)  # 문자열을 UUID로 변환
     else:   # 초대왕용. 초대한 사람의 ID를 넘겨줄 경우
         user_id = UUID(user_id) if isinstance(user_id, str) else user_id
-    
+
+    # 전역 잠금 순서의 첫 번째(User)를 먼저 잡는다(`app/utils/db_lock.py`). 이미 잡았으면 바로 돌아온다.
+    # 목표 행 갱신/생성과 보석 지급이 같은 사용자 안에서 직렬화되어, 동시 요청이 같은 진행 목표를
+    # 두 번 +1 하거나 다음 레벨을 두 번 만들지 않는다. **커밋하지 않는다** — 호출부가 커밋한다.
+    lock_user(user_id)
+
     # 현재 유저가 달성 중인 해당 업적 조회
     current_user_goal = db.session.query(UserGoals)\
                             .join(Goals, UserGoals.goal_id == Goals.id)\
@@ -385,18 +391,10 @@ def update_user_goal(goal_type_name: str, user_id: UUID = None):
             db.session.add(next_user_goal)
         
         # 업적 완료 시 보석 지급 및 로그 기록
-        user = db.session.query(User).filter(User.id == user_id).first()
-        if user and goal.reward_count > 0:
-            user.gem_cnt += goal.reward_count
-            register_gem_log(
-                user_id=user_id,
-                amount=goal.reward_count,
-                reason=GemReason.ACHIEVEMENT,
-                description=f"업적 완료: {goal_type_name} 레벨 {current_goal.level}",
-                source_type="achievement",
-                source_id=None, 
-                balance_after=user.gem_cnt
-            )
+        if goal.reward_count > 0:
+            change_gem(user_id, goal.reward_count, GemReason.ACHIEVEMENT,
+                       f"업적 완료: {goal_type_name} 레벨 {current_goal.level}",
+                       source_type="achievement")
         return current_user_goal, goal.reward_count, current_goal.badge_img, current_goal.level
     else:
         return None, None, None, None
@@ -405,6 +403,7 @@ def update_user_goal(goal_type_name: str, user_id: UUID = None):
 
 @mainpage_bp.route('/user_study_history', methods=['POST'])
 @jwt_required
+@retry_on_deadlock
 def api_user_study_history():
     """학습 세션 집계 — 출석, 데일리 미션, 업적을 한 번에 처리한다.
 
@@ -427,7 +426,11 @@ def api_user_study_history():
 
     # 1. 경험치 업데이트
     add_xp = correct_cnt * 5 + incorrect_cnt * 2
-    user = db.session.query(User).filter(User.id == user_id).first()
+    # User 행을 먼저 잠근다(전역 잠금 순서 첫 번째). 이 트랜잭션은 경험치·보석·오늘 CheckIn·
+    # 업적 행을 모두 바꾸는데, 잠그지 않고 읽은 잔액에 더하면 같은 사용자의 다른 요청(상점 구매,
+    # 정답 기록의 마일스톤 보석 등)이 사이에 바꾼 값이 사라진다. 커밋은 맨 끝 한 번뿐이라
+    # 교착(1213) 시 통째로 다시 돌려도 안전하다(@retry_on_deadlock).
+    user = start_user_tx(user_id)
     user.xp += add_xp
 
     # 보석 스냅샷 (이 요청으로 지급하기 전 잔액 — 업적 보상 포함 전)
@@ -467,7 +470,9 @@ def api_user_study_history():
     attendance_goal_complete, att_reward, att_badge, att_level = None, None, None, None
     if attend_newly:
         attendance_goal_complete, att_reward, att_badge, att_level = update_user_goal('출석왕')
-        user.gem_cnt += 1  # 출석 보석
+        # 출석 보석 — 예전에는 원장 없이 잔액만 올려 GemLog 합계와 잔액이 어긋났다.
+        change_gem(user_id, 1, GemReason.ACHIEVEMENT, '출석 보상',
+                   source_type='attendance', user=user)
 
     # ── (c) 노력왕 (total_cnt > 0 이면 진행, 기존과 동일) ──
     effort_goal_complete, effort_goal_reward_count, effort_goal_badge_img, effort_goal_level = None, None, None, None
@@ -513,7 +518,8 @@ def api_user_study_history():
     if mission_met and not checkin.daily_mission_complete:
         mission_newly = True
         checkin.daily_mission_complete = True
-        user.gem_cnt += 1  # 미션 완료 보석
+        change_gem(user_id, 1, GemReason.ACHIEVEMENT, '데일리 미션 완료 보상',
+                   source_type='daily_mission', user=user)
 
     # ── (e) 끈기왕 (mission_newly일 때만 판정) ──────────────
     perseverance_goal_complete, perseverance_goal_reward_count, perseverance_goal_badge_img, perseverance_goal_level = None, None, None, None

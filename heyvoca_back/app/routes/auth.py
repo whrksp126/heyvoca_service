@@ -4,7 +4,8 @@ from app import db, limiter
 from app.routes import auth_bp
 from app.models.models import User, Bookstore, GoalType, UserGoals, Goals, InviteMap, GemReason, UserHasToken, CheckIn, UserRecentStudy, UserVocaBook, Purchase, GemLog, UserVoca, UserVocaBookMap, UserCombo, UserVocaGame, UserStudySession, UserStudyLog, UserQuestionTypeStat, UserOnboardingMission, UserStreak, UserComebackMission, UserFarmItem, UserFarmItemLog, UserFarmSetting, UserFarmMigration, FarmEventLog
 from app.routes.mainpage import update_user_goal
-from app.routes.common import register_gem_log
+from app.utils.db_lock import retry_on_deadlock
+from app.utils.gem import InsufficientGem, change_gem, lock_users_ordered, start_user_tx
 from app.utils.jwt_utils import jwt_required, generate_access_token, generate_refresh_token, verify_refresh_token
 from uuid import UUID
 
@@ -741,60 +742,59 @@ def deduct_gem():
     if not isinstance(deduct_amount, int) or deduct_amount <= 0:
         return jsonify({'code': 400, 'message': '차감할 보석 개수는 양의 정수여야 합니다.'}), 400
 
-    # 사용자 조회
     user_id = UUID(g.user_id)
-    user = db.session.query(User).filter(User.id == user_id).first()
 
-    if not user:
-        return jsonify({'code': 404, 'message': '사용자 정보를 찾을 수 없습니다.'}), 404
-
-    # 보석이 충분한지 확인
-    if user.gem_cnt < deduct_amount:
-        return jsonify({
-            'code': 400, 
-            'message': f'보석이 부족합니다. 현재 보유 보석: {user.gem_cnt}개, 필요 보석: {deduct_amount}개'
-        }), 400
-
-    # 보석 차감
-    deducted_amount = deduct_amount
-    user.gem_cnt -= deducted_amount
-    remaining_gem = user.gem_cnt
-
-    # bookstore_id가 제공된 경우 Bookstore 정보 조회
+    # bookstore_id가 제공된 경우 Bookstore 정보 조회 (사전 DB 읽기 — 잠금 전에 끝낸다)
     bookstore_id = data.get('bookstore_id')
-    reason_enum = GemReason.BOOK_PURCHASE
-    description = f'보석 차감: {deducted_amount}개'
-    source_type = 'bookstore'
-    
+    description = f'보석 차감: {deduct_amount}개'
     if bookstore_id:
         bookstore_item = db.session.query(Bookstore).filter(Bookstore.id == bookstore_id).first()
         if bookstore_item:
             description = f'단어장 구매: {bookstore_item.name}'
-    
+
     try:
-        register_gem_log(
-            user_id=user_id,
-            amount=-deducted_amount,
-            reason=reason_enum,
-            description=description,
-            source_type=source_type,
-            source_id=None,  # bookstore_id는 Integer이므로 None
-            balance_after=remaining_gem
-        )
-        
-        db.session.commit()
-        return jsonify({
-            'code': 200,
-            'message': f'{deducted_amount}개의 보석이 차감되었습니다.',
-            'data': {
-                'remaining_gem_cnt': remaining_gem,
-                'deducted_gem_cnt': deducted_amount
-            }
-        }), 200
+        result = _deduct_gem_tx(user_id, deduct_amount, description)
     except Exception as e:
         db.session.rollback()
         print(f"###error in deduct_gem: {e}")
         return jsonify({'code': 500, 'message': '서버 오류가 발생했습니다.'}), 500
+
+    if result == 'no_user':
+        return jsonify({'code': 404, 'message': '사용자 정보를 찾을 수 없습니다.'}), 404
+    if isinstance(result, InsufficientGem):
+        return jsonify({
+            'code': 400,
+            'message': f'보석이 부족합니다. 현재 보유 보석: {result.balance}개, 필요 보석: {deduct_amount}개'
+        }), 400
+
+    return jsonify({
+        'code': 200,
+        'message': f'{deduct_amount}개의 보석이 차감되었습니다.',
+        'data': {
+            'remaining_gem_cnt': result,
+            'deducted_gem_cnt': deduct_amount
+        }
+    }), 200
+
+
+@retry_on_deadlock
+def _deduct_gem_tx(user_id, deduct_amount, description):
+    """보석 차감 — User 잠금 안에서 잔액 검사 + 차감 + 원장, 커밋 한 번.
+
+    반환: 차감 후 잔액(int) / 'no_user' / InsufficientGem(잔액 부족, 아무것도 안 바꿈).
+    """
+    user = start_user_tx(user_id)
+    if user is None:
+        db.session.rollback()
+        return 'no_user'
+    try:
+        _, balance = change_gem(user_id, -deduct_amount, GemReason.BOOK_PURCHASE, description,
+                                source_type='bookstore', user=user)
+    except InsufficientGem as e:
+        db.session.rollback()
+        return e
+    db.session.commit()
+    return balance
 
         
 # 초대 코드 유효성 검사
@@ -824,71 +824,78 @@ def save_invite_code():
     data = request.json
     invite_code = data.get('invite_code')
     user_id = UUID(g.user_id)
-    user = db.session.query(User).filter(User.id == user_id).first()
-    if user is None:
-        return jsonify({'code': 404, 'message': '사용자 정보를 찾을 수 없습니다.'}), 404
-
-    invite_user = db.session.query(User).filter(User.invite_code == invite_code).first()
-    if invite_user is None:
-        return jsonify({'code': 404, 'message': '초대한 사용자 정보를 찾을 수 없습니다.'}), 404
-    
-    if user.id == invite_user.id:
-        return jsonify({'code': 400, 'message': '자기 자신을 초대할 수 없습니다.'}), 400
-    
-    # 중복 초대 방지 체크 (이미 초대를 받았는지)
-    if user.invited_by:
-        return jsonify({'code': 400, 'message': '이미 초대 코드를 입력하셨습니다.'}), 400
+    if not invite_code:
+        return jsonify({'code': 400, 'message': '초대 코드를 입력해주세요.'}), 400
 
     try:
-        user.invited_by = invite_user.id
-        invite_map = InviteMap(inviter_id=invite_user.id, invitee_id=user.id)
-        db.session.add(invite_map)
-        
-        # --- 보상 지급 로직 ---
-        # 1. 초대받은 사람(본인) 보석 10개 지급
-        user.gem_cnt += 10
-        db.session.flush() # user.gem_cnt 반영을 위해 flush
-        
-        register_gem_log(
-            user_id=user.id,
-            amount=10,
-            reason=GemReason.REFERRAL, 
-            description="초대 코드 입력 보상",
-            source_type="referral",
-            source_id=None,
-            balance_after=user.gem_cnt
-        )
-
-        # 2. 초대한 사람 보석 10개 지급
-        invite_user.gem_cnt += 10
-        db.session.flush()
-        
-        register_gem_log(
-            user_id=invite_user.id,
-            amount=10,
-            reason=GemReason.REFERRAL,
-            description=f"초대 성공 보상 ({user.username or user.name})",
-            source_type="referral",
-            source_id=user.id,
-            balance_after=invite_user.gem_cnt
-        )
-        
-        # 초대왕 업적 업데이트 (초대한 사람의 업적)
-        update_user_goal('초대왕', user_id=invite_user.id)
-
-        db.session.commit()
-        return jsonify({
-            'code': 200, 
-            'status': 'success', 
-            'data': {
-                'my_gem_cnt': user.gem_cnt
-            }
-        })
-        
+        result = _save_invite_tx(user_id, invite_code)
     except Exception as e:
         db.session.rollback()
         print(f"Error in save_invite_code: {e}")
         return jsonify({'code': 500, 'message': '보상 처리 중 서버 오류가 발생했습니다.'}), 500
+
+    if isinstance(result, tuple):
+        code, message = result
+        return jsonify({'code': code, 'message': message}), code
+    return jsonify({
+        'code': 200,
+        'status': 'success',
+        'data': {
+            'my_gem_cnt': result
+        }
+    })
+
+
+INVITE_REWARD_GEM = 10
+
+
+@retry_on_deadlock
+def _save_invite_tx(user_id, invite_code):
+    """초대 코드 저장 + 양쪽 보석 지급 + 초대왕 업적을 한 트랜잭션으로. 커밋 한 번.
+
+    두 사용자의 User 행을 **id 오름차순**으로 잠근다. A 가 B 의 코드를, B 가 A 의 코드를
+    동시에 입력하면 두 트랜잭션이 같은 두 행을 반대 순서로 잡아 교착이 났다. 순서를 고정하면
+    한쪽이 기다릴 뿐이다. 중복 입력 검사(invited_by)도 잠금 안에서 한다.
+
+    반환: 본인 잔액(int) 또는 (http 코드, 메시지).
+    """
+    db.session.rollback()   # 요청 진입부 스냅샷 폐기 — `app.utils.gem.start_user_tx` 주석
+    inviter_id = db.session.query(User.id).filter(User.invite_code == invite_code).scalar()
+    if inviter_id is None:
+        return 404, '초대한 사용자 정보를 찾을 수 없습니다.'
+    if inviter_id == user_id:
+        return 400, '자기 자신을 초대할 수 없습니다.'
+
+    locked = lock_users_ordered(user_id, inviter_id)
+    user, invite_user = locked.get(user_id), locked.get(inviter_id)
+    if user is None:
+        db.session.rollback()
+        return 404, '사용자 정보를 찾을 수 없습니다.'
+    if invite_user is None or invite_user.invite_code != invite_code:
+        db.session.rollback()
+        return 404, '초대한 사용자 정보를 찾을 수 없습니다.'
+
+    # 중복 초대 방지 체크 (이미 초대를 받았는지) — 잠근 뒤의 값으로 판정
+    if user.invited_by:
+        db.session.rollback()
+        return 400, '이미 초대 코드를 입력하셨습니다.'
+
+    user.invited_by = invite_user.id
+    db.session.add(InviteMap(inviter_id=invite_user.id, invitee_id=user.id))
+
+    # 1. 초대받은 사람(본인) 보석 지급
+    _, my_balance = change_gem(user.id, INVITE_REWARD_GEM, GemReason.REFERRAL, "초대 코드 입력 보상",
+                               source_type="referral", user=user)
+    # 2. 초대한 사람 보석 지급
+    change_gem(invite_user.id, INVITE_REWARD_GEM, GemReason.REFERRAL,
+               f"초대 성공 보상 ({user.username or user.name})",
+               source_type="referral", source_id=user.id, user=invite_user)
+
+    # 초대왕 업적 업데이트 (초대한 사람의 업적) — 초대한 사람 User 는 이미 잠겨 있다
+    update_user_goal('초대왕', user_id=invite_user.id)
+
+    db.session.commit()
+    return my_balance
 
 
 @auth_bp.route('/invites', methods=['GET'])

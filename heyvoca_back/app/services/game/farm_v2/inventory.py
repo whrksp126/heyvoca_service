@@ -136,9 +136,9 @@ def grant_gem(user_id: UUID, amount: int, description: str,
               source_type: str = 'user_voca') -> Optional[int]:
     """보석 지급 — **커밋하지 않는** 판.
 
-    `app/routes/common.register_gem_log` 는 내부에서 커밋한다. 농장에서 그걸 쓰면
-    보상 하나를 줄 때마다 트랜잭션이 끊겨, 뒤이은 단계 상승이나 황금 판정이 실패했을 때
-    보상만 남는다. 여기서는 같은 원장 행을 쓰되 커밋은 호출부에 맡긴다.
+    예전 `app/routes/common.register_gem_log` 는 내부에서 커밋해, 농장에서 쓰면 보상 하나를
+    줄 때마다 트랜잭션이 끊겼다(2026-09 이후 그 함수도 커밋하지 않는다 — 보석 증감의 공용
+    진입점은 `app/utils/gem.change_gem`). 여기서는 같은 원장 행을 쓰되 커밋은 호출부에 맡긴다.
 
     Returns:
         지급 후 잔액. 사용자가 없으면 None.

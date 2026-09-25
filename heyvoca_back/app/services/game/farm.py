@@ -22,7 +22,8 @@ from uuid import UUID
 
 from app import db
 from app.models.models import User, UserVoca, UserVocaGame, GemReason
-from app.routes.common import register_gem_log
+from app.utils.db_lock import lock_user, retry_on_deadlock
+from app.utils.gem import InsufficientGem, change_gem, lock_user_row
 
 # ── 튜닝 상수 ──
 CARROT_REWARD_GEM   = 1    # 당근(장기) 첫 도달 보석
@@ -149,25 +150,22 @@ def on_answer(user_id: UUID, user_voca_id: int, memory_state_after: str, was_cor
     Returns:
         farm event payload dict 또는 None.
     """
+    # 전역 잠금 순서: User → UserVocaGame (`app/utils/db_lock.py`)
+    lock_user(user_id)
     game = _get_or_create_game(user_voca_id, user_id, lock=True)
     event = None
 
     # 당근(장기) 첫 도달 보석 — 단어당 1회
     if memory_state_after == 'long' and not game.carrot_rewarded:
         game.carrot_rewarded = True
-        user = db.session.query(User).filter(User.id == user_id).with_for_update().first()
-        if user is not None:
-            user.gem_cnt = (user.gem_cnt or 0) + CARROT_REWARD_GEM
-            db.session.flush()
-            register_gem_log(
-                user_id=user_id, amount=CARROT_REWARD_GEM, reason=GemReason.FARM_REWARD,
-                description=f'당근 수확 보상 (장기 암기 도달, user_voca #{user_voca_id})',
-                source_type='user_voca', source_id=None,  # source_id는 UUID 전용, user_voca_id(int)는 설명에 기록
-                balance_after=user.gem_cnt,
-            )  # register_gem_log가 내부 commit
-            event = {'type': 'carrot_harvest', 'gem': CARROT_REWARD_GEM, 'gem_balance': user.gem_cnt}
+        _, balance = change_gem(
+            user_id, CARROT_REWARD_GEM, GemReason.FARM_REWARD,
+            f'당근 수확 보상 (장기 암기 도달, user_voca #{user_voca_id})',
+            source_type='user_voca',  # source_id는 UUID 전용, user_voca_id(int)는 설명에 기록
+        )
+        event = {'type': 'carrot_harvest', 'gem': CARROT_REWARD_GEM, 'gem_balance': balance}
 
-    db.session.commit()
+    db.session.commit()   # 게임 행 + 보석 + 원장을 한 번에
     return event
 
 
@@ -351,6 +349,7 @@ def revive(user_id: UUID, user_voca_id: int) -> dict:
     }
 
 
+@retry_on_deadlock
 def buy_revive(user_id: UUID, packs: int = 1) -> dict:
     """보석 (BUY_REVIVE_GEM_COST × packs)개로 부활템 (REVIVE_PER_GEM × packs)개 구매.
 
@@ -367,24 +366,22 @@ def buy_revive(user_id: UUID, packs: int = 1) -> dict:
     cost = BUY_REVIVE_GEM_COST * packs
     items = REVIVE_PER_GEM * packs
 
-    user = db.session.query(User).filter(User.id == user_id).with_for_update().first()
+    user = lock_user_row(user_id)
     if user is None:
         raise LookupError('사용자 없음')
-    if (user.gem_cnt or 0) < cost:
+    try:
+        _, balance = change_gem(user_id, -cost, GemReason.ITEM_PURCHASE,
+                                f'부활템 {items}개 구매', source_type='revive_item', user=user)
+    except InsufficientGem:
+        db.session.rollback()
         raise PermissionError('보석이 부족합니다.')
 
-    user.gem_cnt = (user.gem_cnt or 0) - cost
     user.revive_item_cnt = (user.revive_item_cnt or 0) + items
-    db.session.flush()
-    register_gem_log(
-        user_id=user_id, amount=-cost, reason=GemReason.ITEM_PURCHASE,
-        description=f'부활템 {items}개 구매',
-        source_type='revive_item', source_id=None,
-        balance_after=user.gem_cnt,
-    )  # register_gem_log가 내부 commit
+    revive_cnt = user.revive_item_cnt
+    db.session.commit()   # 보석 차감 + 부활템 + 원장을 한 번에
 
     return {
-        'gem_cnt': user.gem_cnt,
-        'revive_item_cnt': user.revive_item_cnt,
+        'gem_cnt': balance,
+        'revive_item_cnt': revive_cnt,
         'purchased': items,
     }
