@@ -101,6 +101,14 @@ node heyvoca_service/scripts/store/play.mjs upload --aab <경로> --track produc
    `release-status.sh`/`verify-deploy.sh` 둘 다 붙인다.
 8. ASC JWT 는 만료 20분 이내여야 한다(이 스크립트는 15분). 시계가 틀어지면 401.
    401 이 계속 나면 대개 Issuer ID 오타이거나 키 권한이 "앱 관리자" 미만이다.
+9. **Xcode 27(iOS 27 SDK) 빌드는 UIScene 생명주기가 필수다.** 미채택이면 iOS 27 기기에서 런치 즉시
+   assert("UIScene life cycle is required for apps built with this SDK", TN3187)로 죽고, 심사는 자동 메시지
+   "2.1.0 App Completeness — crashed on launch" 로 거절된다(2026-09-25, 1.1.1 build 19). RN 0.80 은 씬 지원이
+   없어 `ios/heyvoca/SceneDelegate.swift` + `UIApplicationSceneManifest` 로 직접 채택했다(앱 커밋 ccfb637).
+   Xcode 메이저 상향 뒤 첫 스토어 빌드는 최신 iOS 시뮬레이터에서 Release 런치를 먼저 본다 — 단 ML Kit pods 가
+   arm64 시뮬레이터 슬라이스를 안 실어 iOS 26+ 시뮬레이터엔 그대로 못 올린다. 검증 때만 `react-native.config.js`
+   로 `@react-native-ml-kit/text-recognition` 을 iOS 에서 제외하고 `pod install` 후 `ARCHS=arm64 EXCLUDED_ARCHS=`
+   로 빌드, 끝나면 config 삭제·Podfile.lock 복구·`pod install`. 거절 사유 자체는 API 로 못 읽는다 — 콘솔 확인.
 
 ## 자동화 안 되는 구간
 
