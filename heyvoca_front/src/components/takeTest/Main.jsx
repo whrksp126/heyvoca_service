@@ -19,13 +19,14 @@ import { playSuccessSound, playErrorSound } from '../../utils/audio';
 import { getQuestionType, isFillInTheBlankType } from '../../plugins/questionTypes';
 import { getDisplayMeanings } from '../../utils/displayMeanings';
 import { logStudyQuestion } from '../../api/study';
-import { getAdvanceDelay, ADVANCE_DELAY_GROW } from '../../utils/studyTiming';
+import { getAdvanceDelay } from '../../utils/studyTiming';
+import { useStudyAdvanceGate } from '../../hooks/useStudyAdvanceGate';
 import { optimisticFarmPayload, pendingFarmPayload } from '../../utils/farmOptimistic';
 import { getComboApi, protectComboApi, forfeitComboApi } from '../../api/game';
 import ComboBar from './ComboBar';
 import { ComboProtectNewBottomSheet } from '../newBottomSheet/ComboProtectNewBottomSheet';
 import { useUser } from '../../context/UserContext';
-import FarmStatusBar from '../farm/FarmStatusBar';
+import FarmStatusBar, { FarmResultBar } from '../farm/FarmStatusBar';
 import StudyTimingTag from '../farm/StudyTimingTag';
 import { HEALTH_STATES } from '../../utils/crop';
 import { removePendingReplantIds } from '../../utils/replantPending';
@@ -212,46 +213,30 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
   // false로 덮어써 음파(TtsRipple)가 사라진다. 각 재생에 세대 번호를 부여해, finally/onMeta는
   // "자신이 최신 재생일 때만" 상태를 갱신하도록 한다.
   const speakGenRef = useRef(0);
+  // 채점 → 다음 슬라이드 전환 게이트(모든 유형 공통 규칙, utils/studyTiming.js).
+  // 여기 쓰는 사지선다·역방향·듣기만 담당한다 — 플러그인(카드·빈칸)은 각자 같은 훅을 쓴다.
+  const advanceGate = useStudyAdvanceGate();
   const speakText = async (text, lang = wordLang(null), target = null) => {
     const gen = ++speakGenRef.current;
     setIsSpeaking(true);
     setSpeakDuration(null);
     setSpeakingTarget(target);
+    // 읽는 중에는 넘기지 않는다(끝 + 200ms). 새 재생이 이전 재생을 끊으면 이전 finally 는
+    // 세대가 달라 ttsEnd 를 부르지 않는다 — 새 재생이 끝날 때 한 번만 풀린다.
+    advanceGate.ttsBegin();
     try {
       await getTextSound(text, lang, (d) => { if (gen === speakGenRef.current) setSpeakDuration(d); });
     } finally {
-      if (gen === speakGenRef.current) setIsSpeaking(false);
+      if (gen === speakGenRef.current) {
+        setIsSpeaking(false);
+        advanceGate.ttsEnd();
+      }
     }
   };
   const [updateType, setUpdateType] = useState(null); // SM-2 업데이트 타입
   const startTimeRef = useRef(null);
   const endTimeRef = useRef(null);
 
-  /*
-    다음 문제로 넘기는 타이머.
-
-    지연을 채점 시점에 한 번 정하고 끝낼 수 없다. 단계가 올랐는지(grew)는
-    **로그인 사용자에게는 /study/log 응답이 도착한 뒤에야** 알 수 있는데, 그때는 이미
-    1초짜리 타이머가 돌고 있다. 그래서 타이머를 ref 로 들고 있다가, 진화가 확정되면
-    **채점 시각 기준 절대 시간**으로 다시 건다 — 늦게 온 응답이 전체 지연을
-    2200ms 로 늘리되, 응답까지 걸린 시간만큼은 이미 흘러간 것으로 친다.
-  */
-  const advanceTimerRef = useRef(null);
-  const gradedAtRef = useRef(0);
-  const advanceActionRef = useRef(null);
-
-  const scheduleAdvance = (totalMs) => {
-    if (advanceTimerRef.current) clearTimeout(advanceTimerRef.current);
-    const elapsed = Date.now() - gradedAtRef.current;
-    advanceTimerRef.current = setTimeout(() => {
-      advanceTimerRef.current = null;
-      advanceActionRef.current?.();
-    }, Math.max(0, totalMs - elapsed));
-  };
-
-  useEffect(() => () => {
-    if (advanceTimerRef.current) clearTimeout(advanceTimerRef.current);
-  }, []);
   // ── 전역 콤보 (AI 추천 테스트 전용) ──
   const { userProfile, setUserProfile } = useUser();
   const [combo, setCombo] = useState(null);
@@ -347,20 +332,6 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
     lastFarmByVocaRef.current[vocaId] = payload;
     setFarmStatus({ ...payload, vocaId, qIndex });
   };
-
-  /*
-    단계가 올랐으면 전환을 2.2초로 늦춘다.
-
-    게스트는 채점과 동시에(applyOptimisticGrade), 로그인 사용자는 /study/log 응답과 함께
-    grew 가 정해진다. 두 경로 모두 farmStatus 가 새로 꽂히는 순간을 잡으면 되므로 여기서 한 번만 건다.
-    이미 넘어간 문제의 뒤늦은 응답은 대기 중인 타이머가 없으므로 그냥 지나간다.
-  */
-  useEffect(() => {
-    if (!farmStatus?.grew) return;
-    if (!advanceTimerRef.current) return;
-    scheduleAdvance(ADVANCE_DELAY_GROW);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [farmStatus]);
 
   const navigate = useNavigate();
 
@@ -1002,11 +973,12 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
       speakText(question.origin, wordLang(question), 'word');
     }
 
-    // 오답일 때는 정답·해설을 충분히 인지하도록 전환을 더 천천히 (정답 1초 / 오답 2.5초).
-    // 단계가 오른 정답은 아래 useEffect 가 2.2초로 다시 건다 — 진화 연출이 1초라 여기서 넘기면 잘린다.
-    gradedAtRef.current = Date.now();
-    advanceActionRef.current = setUpdateRecentStudyStateAndStatus;
-    scheduleAdvance(getAdvanceDelay(isCorrectAnswer));
+    // 전환은 가장 늦은 조건을 기다린다 — 최소 대기(정답 1초/오답 2.5초), XP 연출 끝 + 0.7초,
+    // TTS 끝 + 0.2초. 서버 응답이 안 와 연출이 시작되지 않으면 3초에 포기(utils/studyTiming.js).
+    advanceGate.arm({
+      minDelayMs: getAdvanceDelay(isCorrectAnswer),
+      onAdvance: setUpdateRecentStudyStateAndStatus,
+    });
   }
 
 
@@ -1335,14 +1307,18 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
     processCardWord(result, currentQuestion, currentQuestion?.words, currentQuestion?.questionType);
   };
 
-  const handlePluginComplete = (results) => {
+  // opts.processed — 플러그인이 채점 순간 onCardMatched 로 모든 단어를 이미 처리했다는 표시.
+  // (2026-09-26) 빈칸 채우기는 예전엔 넘어가는 순간에야 처리(=로그·농장 payload 생성)해서
+  // 채점 후 상태 바가 사실상 안 보였다. 지금은 카드와 같이 채점 즉시 처리하고, 여기서는
+  // 세션 진행만 한다 — 다시 처리하면 게스트 콤보가 두 번 오르고 서버값이 낙관값으로 덮인다.
+  const handlePluginComplete = (results, opts = {}) => {
     const currentQuestion = testQuestions[progressIndex];
     const setWords = currentQuestion.words;
     const questionType = currentQuestion.questionType;
 
     // 각 단어 처리(카드 채점 시 이미 처리된 단어는 loggedVocaIdsRef/passed Set/cardRetryEnqueuedRef로 중복 방지)
     const retryCountBefore = retryEnqueueCounterRef.current;
-    results.forEach(r => processCardWord(r, currentQuestion, setWords, questionType));
+    if (!opts.processed) results.forEach(r => processCardWord(r, currentQuestion, setWords, questionType));
     const retriesEnqueuedThisCall = retryEnqueueCounterRef.current - retryCountBefore;
 
     currentQuestion.isCorrect = results.every(r => r.isCorrect);
@@ -1612,13 +1588,12 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
                   {/* 우측 상단 - 채점 전: 최근 학습 시점 / 채점 후: 다음 복습 예정일(오답은 비움).
                       농장 상태 바에서 옮겨 온 "언제" 문구 — StudyTimingTag.jsx 참고. */}
                   <StudyTimingTag
-                    className="absolute top-[12px] right-[14px] z-[2]"
                     answered={isCorrect !== null}
                     fsrs={testQuestions[progressIndex]?.fsrs}
+                    stage={testQuestions[progressIndex]?.farmStage}
+                    farm={showFarmBar ? farmStatus : null}
                     wasCorrect={isCorrect}
-                    daysToReview={showFarmBar ? farmStatus.days_to_review : null}
                     nextReviewIso={testQuestions[progressIndex]?.displayNextReview ?? null}
-                    pending={showFarmBar ? !!farmStatus.pending : isCorrect !== null}
                   />
 
                   {/* 상단 중앙 - 암기 상태 배지 (채점 전에는 숨김)
@@ -1719,38 +1694,18 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
                     </motion.div>
                   )}
 
-                  {/* 하단 - 채점 후: 농장 상태 바 (작물·성장 막대·다음 복습일) */}
+                  {/* 하단 - 채점 후: 농장 상태 바 — 유형 공통(FarmResultBar). 연출 끝 신호로 전환 게이트를 푼다. */}
                   {showFarmBar && (
-                    <motion.div
-                      key={`farmbar-${resumeReplayKey}`}
-                      initial={{ opacity: 0, y: 8 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.25, ease: [0.4, 0, 0.2, 1] }}
+                    <FarmResultBar
+                      farm={farmStatus}
+                      replayKey={resumeReplayKey}
                       className={`
                         absolute bottom-[14px] left-[14px] z-[2]
                         ${testType === "test" && isAnswered ? 'right-[50px]' : 'right-[14px]'}
                       `}
-                      onClick={(e) => e.stopPropagation()}
-                    >
-                      <FarmStatusBar
-                        crop={farmStatus.crop}
-                        stage={farmStatus.stage}
-                        crop_from={farmStatus.crop_from}
-                        stage_from={farmStatus.stage_from}
-                        grew={!!farmStatus.grew}
-                        pct_from={farmStatus.pct_from}
-                        pct_to={farmStatus.pct_to}
-                        xp_from={farmStatus.xp_from}
-                        xp_to={farmStatus.xp_to}
-                        xp_delta={farmStatus.xp_delta}
-                        xp_next={farmStatus.xp_next}
-                        health={farmStatus.health}
-                        days_to_review={farmStatus.days_to_review}
-                        wasCorrect={farmStatus.wasCorrect}
-                        pending={!!farmStatus.pending}
-                        sameDayElapsedHours={farmStatus.sameDayElapsedHours ?? null}
-                      />
-                    </motion.div>
+                      onAnimStart={advanceGate.farmStarted}
+                      onSettled={advanceGate.farmSettled}
+                    />
                   )}
 
                   {/* 하단 중앙 - 채점 후: 다음 복습 예정일 (채점 전에는 숨김) */}

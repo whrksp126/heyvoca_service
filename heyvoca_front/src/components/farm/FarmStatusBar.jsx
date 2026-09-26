@@ -5,21 +5,24 @@ import CropProgressBar, { GROW_FILL_DURATION, GROW_FILL_TIMES } from './CropProg
 import { CROP_STAGES, CROP_LABEL, cropIndex, stageToCrop, withRo, isUnplantedStage } from '../../utils/crop';
 import { deriveFarmXp, xpBarPct, sameXpBand } from '../../utils/cropXp';
 import { haptic, pickVariant, useCountUp } from '../../lib/feel';
+import { FARM_ANIM_MS, FARM_ANIM_GROW_MS } from '../../utils/studyTiming';
 
 /**
  * 당근 농장 V2 — 채점 후 상태 바. **모든 문제 유형이 이 하나를 쓴다.**
  * 시안 study.html 의 `.fb` / `.fb.up` / `.fb.ng` / `.fb.sm` 규격을 그대로 옮겼다.
  *
  *   [작물 26px] [막대 5px + XP 서브로우] [+N XP]     ← normal(2026-09 XP 개편, 아래 별도 주석)
- *   [작물 18px] [막대 4px]              [+N XP]      ← compact
+ *   [작물 18px] [막대 4px] [+N XP]                   ← compact 윗줄
+ *   [XP 서브로우]                                    ← compact 아랫줄(2026-09-26 통일)
  *
  * - 단계명 텍스트를 넣지 않는다(시안 2절). 작물 그림이 이미 그 말이라 같은 말을 두 번 하게 된다.
  *   `.st` 슬롯은 부패 진단(6절)에서만 쓴다.
  * - 진화는 화살표로 이전→이후를 나열하지 않는다. 작물 자리 안에서 그래픽이 전환된다(3절).
  * - 오답은 막대가 **줄어든다**(FSRS 가 안정성을 깎으므로 실제로 멀어진 것이다).
  *   우측 문구는 비운다 — 틀린 단어는 이번 세션에서 바로 다시 나오므로 다음 예정일을 말하면 거짓이 된다.
- * - `compact` 는 카드 매칭용 좁은 형(`.fb.sm`)이다. 다른 구조가 아니라 **같은 컴포넌트가 접히는 것**이라
- *   XP 서브로우만 접히고 작물·막대·배지는 남는다(시안 ⑩ 은 좁은 형에도 막대가 있다).
+ * - `compact` 는 카드 매칭용 좁은 형(`.fb.sm`)이다. 다른 구조가 아니라 **같은 조각을 두 줄로 쌓은 것**이라
+ *   작물·막대·배지·XP 서브로우(현재/다음 XP·진화 문구)가 normal 과 같은 의미로 모두 있다.
+ *   (예전엔 XP 서브로우가 접혀 카드 맞추기에서만 수치·진화 문구가 안 보였다 — 2026-09-26 통일)
  *
  * 【채점 결과 게이지는 값 하나로만 움직인다 — 2026-09 정리】
  * 이전 구현은 진화(단계 상승) 회차에 "이전 작물 + 건너가는 막대"와 "새 작물 + 안착 막대"를
@@ -54,7 +57,7 @@ import { haptic, pickVariant, useCountUp } from '../../lib/feel';
  * 【2026-09 작물 경험치(XP) 표시 — crop_xp_contract.md §3, 2026-09-26 실기기 피드백 반영】
  *
  *   normal : [작물] [막대 / `12 / 50 XP` · (진화 문구)] [+N XP]
- *   compact: [작물] [막대]                             [+N XP]
+ *   compact: [작물] [막대] [+N XP] / 아랫줄 `12 / 50 XP` · (진화 문구)
  *
  * - **복습일·경과 문구는 여기서 뺐다.** "N일 뒤 복습"/"N시간 전에 풀었어요"는 문제 카드
  *   우측 상단(`StudyTimingTag`)이 전담한다. 상태 바는 작물·막대·XP 만 말한다.
@@ -113,6 +116,9 @@ const FarmStatusBar = ({
   // 서버 응답 대기 중(farmOptimistic.js pendingFarmPayload) — 채점 전 값에 멈춰 있고
   // 움직이지 않는다. 응답이 오면 같은 엘리먼트에서 막대·숫자가 한 번 움직인다.
   pending = false,
+  // 전환 게이트용 — 연출 시작(pending 해제 순간)·끝(FARM_ANIM_* 뒤) 신호
+  onAnimStart,
+  onSettled,
   className = '',
 }) => {
   // 백엔드는 `crop`(화면 키)과 `stage`(visual_stage)를 함께 준다. 둘 중 있는 쪽을 쓴다.
@@ -186,166 +192,263 @@ const FarmStatusBar = ({
     }
   }, [grew]);
 
+  /*
+    연출 시작·끝 신호 — 다음 슬라이드 전환 게이트(hooks/useStudyAdvanceGate.js)가 쓴다.
+    "XP 가 오르는 도중에 넘어간다"(2026-09-26) — 끝난 뒤 머물다 넘기려면 끝난 시각을 알아야 한다.
+    pending(서버 응답 대기)은 정지 상태라 시작으로 치지 않는다. 응답이 와서 pending 이 풀리는
+    순간이 시작이다. 연출 길이는 utils/studyTiming.js FARM_ANIM_* (막대·카운트업·배지 지연 포함).
+  */
+  const onAnimStartRef = useRef(onAnimStart);
+  const onSettledRef = useRef(onSettled);
+  useEffect(() => {
+    onAnimStartRef.current = onAnimStart;
+    onSettledRef.current = onSettled;
+  });
+  useEffect(() => {
+    if (pending || diagnosis) return undefined;
+    onAnimStartRef.current?.();
+    const t = setTimeout(() => onSettledRef.current?.(), grew ? FARM_ANIM_GROW_MS : FARM_ANIM_MS);
+    return () => clearTimeout(t);
+  }, [pending, grew, diagnosis]);
+
   const radius = compact ? 'rounded-[8px]' : 'rounded-[11px]';
 
-  return (
+  /* ── 조각 ─────────────────────────────────────────────────────────────── */
+
+  // 작물 자리 — 이전·새 그림이 같은 정사각형 칸에 겹쳐 서서 크로스페이드한다(파일 상단 주석).
+  // 옆으로 나열하지 않으므로 막대 폭을 잠식하지 않는다. 원으로 감싸지 않는다(2절).
+  const cropSlot = (
+    <span
+      className="relative z-[1] flex-shrink-0 flex items-center justify-center"
+      style={{ width: size, height: size }}
+    >
+      {diagnosis ? (
+        <img
+          src={CROP_ASSETS.shovel}
+          alt="삽"
+          draggable={false}
+          className="object-contain select-none"
+          style={{ width: size, height: size }}
+        />
+      ) : grew ? (
+        <>
+          {/* 이전 작물 — 막대가 리셋되는 순간(GROW_RESET_START~END)에 사라진다 */}
+          <motion.span
+            className="absolute inset-0 flex items-center justify-center"
+            initial={{ opacity: 1, scale: 1 }}
+            animate={{ opacity: [1, 1, 0, 0], scale: [1, 1, 0.7, 0.7] }}
+            transition={{ duration: GROW_FILL_DURATION, times: ICON_SWAP_TIMES, ease: 'easeInOut' }}
+          >
+            <CropImage stage={prevCropForImage} health={health} size={size} align="center" alt="" />
+          </motion.span>
+          {/* 새 작물 — 같은 순간에 흙에서 솟듯 튀어오른다 */}
+          <motion.span
+            className="absolute inset-0 flex items-center justify-center"
+            initial={{ opacity: 0, scale: 0.4 }}
+            animate={{ opacity: [0, 0, 1, 1], scale: [0.4, 0.4, 1.18, 1] }}
+            transition={{ duration: GROW_FILL_DURATION, times: ICON_SWAP_TIMES, ease: 'easeOut' }}
+          >
+            <CropImage stage={cropForImage} health={health} size={size} align="center" />
+          </motion.span>
+          {/* 스파클은 막대가 리셋을 시작하는 순간 튄다 */}
+          <span className={`absolute ${compact ? 'inset-[-5px]' : 'inset-[-7px]'} pointer-events-none`}>
+            {SPARKS.map((spark, i) => (
+              <motion.i
+                key={i}
+                className={`absolute rounded-full bg-status-success-500 ${spark.className}`}
+                initial={{ scale: 0, opacity: 0 }}
+                animate={{ scale: [0, 1, 0.6], opacity: [0, spark.peak, 0] }}
+                transition={{ duration: 0.32, delay: GROW_FILL_DURATION * GROW_RESET_START + i * 0.02, ease: 'easeOut' }}
+              />
+            ))}
+          </span>
+        </>
+      ) : (
+        /* 진화하지 않는 회차 — 그림 한 장을 그대로 놓는다 */
+        <CropImage stage={cropForImage} health={health} size={size} align="center" />
+      )}
+    </span>
+  );
+
+  // 막대 — 세로 칸(normal)에선 반드시 block. flex-1 이면 높이 0 으로 사라진다(위 주석).
+  const barEl = (
+    <CropProgressBar
+      pctFrom={barFrom}
+      pctTo={barTo}
+      grew={barGrew}
+      tone={tone}
+      height={barH}
+      pending={pending}
+      block={!compact}
+    />
+  );
+
+  // XP 서브로우 — 왼쪽 `현재 / 다음 XP`, 오른쪽 진화 문구. normal·compact 가 같은 내용을 쓴다
+  // (compact 는 글자만 작다). 2026-09-26 통일: 예전 compact 는 이 줄이 없어 카드 맞추기에서만
+  // XP 수치·진화 문구가 안 보였다.
+  const xpRow = (
     <div
       className={`
-        relative flex items-center
-        ${compact
-          ? 'h-[26px] px-[7px] gap-[5px]'
-          : diagnosis ? 'h-[40px] px-[12px] gap-[10px]' : 'py-[7px] px-[12px] gap-[10px]'}
-        ${radius}
-        bg-layout-white dark:bg-[#2E2E2E]
-        shadow-[0_1px_6px_rgba(0,0,0,0.06)] dark:shadow-none
-        ${className}
+        flex items-center justify-between gap-[6px] font-[700] tracking-[-0.02em] tabular-nums
+        text-layout-gray-300 dark:text-layout-gray-200
+        ${compact ? 'text-[9.5px] leading-[12px]' : 'text-[10.5px]'}
       `}
     >
-      {/* 진화해도 **면 색은 바뀌지 않는다.** 시안(study.html 3절)은 여기서 면 전체를
-          연초록으로 덧칠했는데, 상태 바는 흰 카드 위에 뜨는 작은 띠라 면이 통째로 물들면
-          초록이 화면에서 가장 큰 색 덩어리가 되어 버린다. 성장은 막대와 작물이 말하고,
-          면은 다른 회차와 같은 표면을 유지한다. */}
-
-      {/* 작물 자리 — 이전·새 그림이 같은 정사각형 칸에 겹쳐 서서 크로스페이드한다(위 파일
-          상단 주석). 옆으로 나열하지 않으므로 막대 폭을 잠식하지 않는다.
-          원으로 감싸지 않는다(2절): 에셋 자체가 형태를 가진 그림이다. */}
-      <span
-        className="relative z-[1] flex-shrink-0 flex items-center justify-center"
-        style={{ width: size, height: size }}
-      >
-        {diagnosis ? (
-          <img
-            src={CROP_ASSETS.shovel}
-            alt="삽"
-            draggable={false}
-            className="object-contain select-none"
-            style={{ width: size, height: size }}
-          />
-        ) : grew ? (
-          <>
-            {/* 이전 작물 — 막대가 리셋되는 순간(GROW_RESET_START~END)에 사라진다 */}
-            <motion.span
-              className="absolute inset-0 flex items-center justify-center"
-              initial={{ opacity: 1, scale: 1 }}
-              animate={{ opacity: [1, 1, 0, 0], scale: [1, 1, 0.7, 0.7] }}
-              transition={{ duration: GROW_FILL_DURATION, times: ICON_SWAP_TIMES, ease: 'easeInOut' }}
-            >
-              <CropImage stage={prevCropForImage} health={health} size={size} align="center" alt="" />
-            </motion.span>
-            {/* 새 작물 — 같은 순간에 흙에서 솟듯 튀어오른다 */}
-            <motion.span
-              className="absolute inset-0 flex items-center justify-center"
-              initial={{ opacity: 0, scale: 0.4 }}
-              animate={{ opacity: [0, 0, 1, 1], scale: [0.4, 0.4, 1.18, 1] }}
-              transition={{ duration: GROW_FILL_DURATION, times: ICON_SWAP_TIMES, ease: 'easeOut' }}
-            >
-              <CropImage stage={cropForImage} health={health} size={size} align="center" />
-            </motion.span>
-            {/* 스파클은 막대가 리셋을 시작하는 순간 튄다 */}
-            <span className={`absolute ${compact ? 'inset-[-5px]' : 'inset-[-7px]'} pointer-events-none`}>
-              {SPARKS.map((spark, i) => (
-                <motion.i
-                  key={i}
-                  className={`absolute rounded-full bg-status-success-500 ${spark.className}`}
-                  initial={{ scale: 0, opacity: 0 }}
-                  animate={{ scale: [0, 1, 0.6], opacity: [0, spark.peak, 0] }}
-                  transition={{ duration: 0.32, delay: GROW_FILL_DURATION * GROW_RESET_START + i * 0.02, ease: 'easeOut' }}
-                />
-              ))}
-            </span>
-          </>
-        ) : (
-          /* 진화하지 않는 회차 — 그림 한 장을 그대로 놓는다 */
-          <CropImage stage={cropForImage} health={health} size={size} align="center" />
-        )}
+      <span className="flex-shrink-0 whitespace-nowrap">
+        <b className="font-[800] text-layout-gray-400 dark:text-layout-gray-100">{shownXp}</b>
+        {xpNextVal != null ? ` / ${xpNextVal} XP` : ' XP'}
       </span>
+      {growLabel && !pending && (
+        <motion.span
+          className="flex-1 min-w-0 truncate text-right font-[700] text-primary-main-600"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.25, delay: reducedMotion ? 0 : GROW_FILL_DURATION * GROW_RESET_START }}
+        >
+          {growLabel}
+        </motion.span>
+      )}
+    </div>
+  );
 
+  // 배지 — `+N XP` 핑크 / `−N XP`·`+0 XP` 회색(crop_xp_contract.md §3). pending 만 비운다.
+  // 칸 폭은 고정해 두어 응답이 와서 배지가 생겨도 막대 폭이 흔들리지 않는다.
+  const badgeSlot = (
+    <span
+      className={`
+        relative z-[1] flex-shrink-0 flex items-center justify-end
+        ${compact ? 'w-[46px]' : 'w-[72px]'}
+      `}
+    >
+      {!pending && (
+        <motion.span
+          className={`
+            inline-flex flex-shrink-0 items-center justify-center whitespace-nowrap tabular-nums
+            rounded-full font-[800] tracking-[-0.03em]
+            ${compact ? 'px-[5px] py-[2px] text-[9.5px]' : 'px-[8px] py-[4px] text-[11.5px]'}
+            ${xpBadgePositive
+              ? 'bg-primary-main-100 dark:bg-primary-main-dark text-primary-main-600'
+              : 'bg-layout-gray-50 dark:bg-layout-gray-dark text-layout-gray-400 dark:text-layout-gray-200'}
+          `}
+          initial={pickVariant('popIn', reducedMotion).initial}
+          animate={{
+            ...pickVariant('popIn', reducedMotion).animate,
+            transition: { ...pickVariant('popIn', reducedMotion).animate.transition, delay: 0.1 },
+          }}
+        >
+          {xpBadgeSign}{shownDelta} XP
+        </motion.span>
+      )}
+    </span>
+  );
 
-      {/* 가운데. compact 는 막대 한 줄. normal 은 막대 + 그 아래 서브로우(왼쪽 현재/다음 XP,
-          오른쪽 진화 문구) 두 줄이다. 부패 진단만 막대 대신 `.st` 문구를 쓴다(6절). */}
-      <div
-        className={`
-          relative z-[1] flex flex-1 min-w-0
-          ${compact ? 'items-center' : 'flex-col justify-center gap-[4px]'}
-        `}
-      >
-        {diagnosis ? (
+  const surface = `
+    relative ${radius}
+    bg-layout-white dark:bg-[#2E2E2E]
+    shadow-[0_1px_6px_rgba(0,0,0,0.06)] dark:shadow-none
+    ${className}
+  `;
+
+  /* ── 부패 진단(시안 6절) — 채점 전부터 뜨는 `.fb.ng` 형 ─────────────────── */
+  if (diagnosis) {
+    return (
+      <div className={`flex items-center h-[40px] px-[12px] gap-[10px] ${surface}`}>
+        {cropSlot}
+        <div className="relative z-[1] flex flex-1 min-w-0 items-center">
           <span className="flex-shrink-0 text-[12.5px] font-[800] tracking-[-0.02em] text-[#B54708] dark:text-secondary-yellow-400">
             삽 1개를 씁니다
           </span>
-        ) : (
-          <>
-            {/* 세로 칸(normal)에선 반드시 block — flex-1 이면 높이 0 으로 사라진다(위 주석). */}
-            <CropProgressBar
-              pctFrom={barFrom}
-              pctTo={barTo}
-              grew={barGrew}
-              tone={tone}
-              height={barH}
-              pending={pending}
-              block={!compact}
-            />
-            {!compact && (
-              <div className="flex items-center justify-between gap-[6px] text-[10.5px] font-[700] tracking-[-0.02em] text-layout-gray-300 dark:text-layout-gray-200 tabular-nums">
-                <span className="flex-shrink-0 whitespace-nowrap">
-                  <b className="font-[800] text-layout-gray-400 dark:text-layout-gray-100">{shownXp}</b>
-                  {xpNextVal != null ? ` / ${xpNextVal} XP` : ' XP'}
-                </span>
-                {growLabel && !pending && (
-                  <motion.span
-                    className="flex-1 min-w-0 truncate text-right font-[700] text-primary-main-600"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ duration: 0.25, delay: reducedMotion ? 0 : GROW_FILL_DURATION * GROW_RESET_START }}
-                  >
-                    {growLabel}
-                  </motion.span>
-                )}
-              </div>
-            )}
-          </>
-        )}
-      </div>
-
-      {/* 배지 — `+N XP` 핑크 / `−N XP`·`+0 XP` 회색(crop_xp_contract.md §3). pending 만 비운다.
-          칸 폭은 고정해 두어 응답이 와서 배지가 생겨도 막대 폭이 흔들리지 않는다.
-          compact 도 `XP` 단위를 붙인다. */}
-      {!diagnosis && (
-        <span
-          className={`
-            relative z-[1] flex-shrink-0 flex items-center justify-end
-            ${compact ? 'w-[46px]' : 'w-[72px]'}
-          `}
-        >
-          {!pending && (
-            <motion.span
-              className={`
-                inline-flex flex-shrink-0 items-center justify-center whitespace-nowrap tabular-nums
-                rounded-full font-[800] tracking-[-0.03em]
-                ${compact ? 'px-[5px] py-[2px] text-[9.5px]' : 'px-[8px] py-[4px] text-[11.5px]'}
-                ${xpBadgePositive
-                  ? 'bg-primary-main-100 dark:bg-primary-main-dark text-primary-main-600'
-                  : 'bg-layout-gray-50 dark:bg-layout-gray-dark text-layout-gray-400 dark:text-layout-gray-200'}
-              `}
-              initial={pickVariant('popIn', reducedMotion).initial}
-              animate={{
-                ...pickVariant('popIn', reducedMotion).animate,
-                transition: { ...pickVariant('popIn', reducedMotion).animate.transition, delay: 0.1 },
-              }}
-            >
-              {xpBadgeSign}{shownDelta} XP
-            </motion.span>
-          )}
-        </span>
-      )}
-
-      {/* 진단은 '맞히면 씨앗부터'가 오른쪽 자리를 쓴다(6절). */}
-      {diagnosis && (
+        </div>
         <span className="relative z-[1] flex-shrink-0 whitespace-nowrap font-[600] tracking-[-0.02em] text-layout-gray-300 text-[12px]">
           맞히면 <b className="font-[700] text-layout-black dark:text-layout-white">씨앗</b>부터
         </span>
-      )}
+      </div>
+    );
+  }
+
+  /*
+    compact(카드 맞추기) — 칸 폭이 좁아(≈150px) 가운데 칸에 서브로우를 넣으면 숫자가 잘린다.
+    그래서 같은 조각을 두 줄로 쌓는다: 윗줄 [작물][막대][배지], 아랫줄 [현재/다음 XP · 진화 문구].
+    구성 요소·단위·문구·연출 타이밍은 normal 과 같다(크기만 작다).
+  */
+  if (compact) {
+    return (
+      <div className={`flex flex-col gap-[3px] px-[7px] pt-[4px] pb-[4px] ${surface}`}>
+        <div className="flex items-center gap-[5px]">
+          {cropSlot}
+          <div className="relative z-[1] flex flex-1 min-w-0 items-center">{barEl}</div>
+          {badgeSlot}
+        </div>
+        {xpRow}
+      </div>
+    );
+  }
+
+  // normal — [작물 26px] [막대 5px + XP 서브로우] [±N XP]
+  return (
+    <div className={`flex items-center py-[7px] px-[12px] gap-[10px] ${surface}`}>
+      {cropSlot}
+      <div className="relative z-[1] flex flex-1 min-w-0 flex-col justify-center gap-[4px]">
+        {barEl}
+        {xpRow}
+      </div>
+      {badgeSlot}
     </div>
+  );
+};
+
+/**
+ * 채점 결과 payload(/study/log `farm` 또는 farmOptimistic 의 낙관·정지값) → 상태 바.
+ * **모든 문제 유형이 이 하나로 상태 바를 띄운다** — 등장 연출(아래에서 8px 떠오름, 0.25s),
+ * 위치(카드 하단 absolute), prop 전달을 유형마다 복붙하지 않게 묶었다.
+ *
+ * @param {object} farm        payload (crop · stage · xp 필드 · wasCorrect · pending)
+ * @param {boolean} compact    카드 맞추기용 좁은 형
+ * @param {string} className   위치(absolute …) — 기본값은 유형 공통 규격
+ * @param {string|number} replayKey  백그라운드 복귀 재생용 키(useResumeReplayKey)
+ * @param {Function} onAnimStart / onSettled  전환 게이트용 연출 시작·끝 신호
+ */
+export const FarmResultBar = ({
+  farm,
+  compact = false,
+  className,
+  replayKey = 0,
+  onAnimStart,
+  onSettled,
+}) => {
+  if (!farm) return null;
+  const place = className ?? (compact
+    ? 'absolute bottom-[8px] left-[8px] right-[8px] z-[2]'
+    : 'absolute bottom-[14px] left-[14px] right-[14px] z-[2]');
+  return (
+    <motion.div
+      key={`farmbar-${replayKey}`}
+      initial={{ opacity: 0, y: 8 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.25, ease: [0.4, 0, 0.2, 1] }}
+      className={place}
+      onClick={(e) => e.stopPropagation()}
+    >
+      <FarmStatusBar
+        compact={compact}
+        crop={farm.crop}
+        stage={farm.stage}
+        crop_from={farm.crop_from}
+        stage_from={farm.stage_from}
+        grew={!!farm.grew}
+        pct_from={farm.pct_from}
+        pct_to={farm.pct_to}
+        xp_from={farm.xp_from}
+        xp_to={farm.xp_to}
+        xp_delta={farm.xp_delta}
+        xp_next={farm.xp_next}
+        health={farm.health}
+        wasCorrect={farm.wasCorrect}
+        pending={!!farm.pending}
+        onAnimStart={onAnimStart}
+        onSettled={onSettled}
+      />
+    </motion.div>
   );
 };
 

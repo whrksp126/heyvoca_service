@@ -18,6 +18,7 @@ import { getGuestTrial, clearGuestTrial, patchGuest } from '../utils/guestStorag
 import { getPendingReplantIds } from '../utils/replantPending';
 import { beginStudySession } from '../utils/studySessionGuard';
 import { wordsOverlap } from '../utils/meaningConcept';
+import { attachStudyHistory } from '../utils/studyHistory';
 
 // 발음(TTS) 준비 게이트 최대 대기(ms). 이 시간을 넘기면 준비가 덜 됐어도 학습에 진입한다
 // (나머지는 백그라운드에서 계속 준비) — 준비 화면에서 무한 대기하는 것을 방지.
@@ -38,7 +39,7 @@ const TakeTest = () => {
       ? { testType: 'today', guestMode: true, guestQuestions: pendingGuestTrial }
       : rawState
   );
-  const { isRecentStudyLoading, isVocabularySheetsLoading, vocabularySheets, recentStudy, updateRecentStudy, updateVocabularySheetServer, updateRecentStudyServer, updateRecentStudyState, fetchVocabularySheets } = useVocabulary();
+  const { isRecentStudyLoading, isVocabularySheetsLoading, vocabularySheets, recentStudy, updateRecentStudy, updateVocabularySheetServer, updateRecentStudyServer, updateRecentStudyState, fetchVocabularySheets, userDictionary } = useVocabulary();
   const { pushAwaitNewBottomSheet } = useNewBottomSheetActions();
   const { completeMission } = useOnboardingUnlock();
   const [testQuestions, setTestQuestions] = useState([]);
@@ -417,6 +418,10 @@ const TakeTest = () => {
       isDiagnosis: item.pending_action === 'REPLANT' || pendingReplant.has(String(item.user_voca_id)),
     }));
 
+    // 추천 응답 fsrs 에는 last_review·reps 가 없다 — 사전에서 채워야 "N일 전 학습"이 맞게 나온다
+    // (utils/studyHistory.js, 채우지 않으면 새싹 단어도 "첫 학습"으로 보였다).
+    attachStudyHistory(selectedWords, userDictionary);
+
     if (allWords.length === 0) {
       allWords = selectedWords;
     }
@@ -556,6 +561,8 @@ const TakeTest = () => {
           return true;
         });
         if (isCacheValid) {
+          // 저장된 문제도 추천 응답 모양이라 학습 이력(last_review 등)이 비어 있다 — 사전에서 채운다.
+          attachStudyHistory(studyData, userDictionary);
           setTestQuestions(studyData);
           setProgressIndex(recentStudy[state.testType].progress_index);
           // 재출제 ref 리셋 (복원 시 안전하게 클린 스타트)

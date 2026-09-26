@@ -13,10 +13,8 @@ import SpeakerButton from '../common/SpeakerButton';
 import { wordLang, isJa } from '../../utils/lang';
 import { getReading, shouldShowReading } from '../../utils/jaWord';
 import { useTheme } from '../../context/ThemeContext';
-import { useExampleSettings } from '../../context/ExampleSettingsContext';
 import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 import WordDetaileNewBottomSheet from '../newBottomSheet/WordDetaileNewBottomSheet';
-import ExampleList from '../common/ExampleList';
 import { useStatusBarStyle } from '../../hooks/useStatusBarStyle';
 // 당근 농장 V2 — 세션 요약 슬라이드
 import CropImage, { CROP_ASSETS, FARM_ITEM_ASSETS } from '../farm/CropImage';
@@ -25,7 +23,8 @@ import { StreakDayMark } from '../farm/StreakDayMark';
 
 // 아이템 이름은 utils/crop.js 의 FARM_ITEM_LABEL 하나로 통일돼 있다(시안 §1⑤ "새심기 삽").
 import { getSessionFarmSummaryApi } from '../../api/farm';
-import { calendarDaysFromToday, nextReviewShort } from '../../utils/reviewTiming';
+import { calendarDaysFromToday } from '../../utils/reviewTiming';
+import StudyTimingTag from '../farm/StudyTimingTag';
 import { getAchievementCriteriaApi } from '../../api/study';
 
 // 업적 이미지 import
@@ -414,7 +413,6 @@ const StudyResult = () => {
     (다크에서는 배경이 #111111 이라 흰 글자가 맞다.) 배경을 따라가게 한다.
   */
   useStatusBarStyle(isDark ? 'light-content' : 'dark-content');
-  const { showExamples } = useExampleSettings();
   const { recentStudy, updateRecentStudy, isRecentStudyLoading, fetchVocabularySheets, setLastSessionResult, getWord } = useVocabulary();
   const { updateUserHistory } = useUser();
   const { pushNewBottomSheet } = useNewBottomSheetActions();
@@ -1009,9 +1007,9 @@ const StudyResult = () => {
                   // 그 결과 같은 목록에서 어떤 행은 텍스트 배지, 어떤 행은 작물 그림으로
                   // 갈리던 것을 전부 작물 그림으로 통일한다.
                   const crop = cropOfWord(item) ?? 'PLANTED_SEED';
-                  const nextReviewText = nextReviewShort(
-                    calendarDaysFromToday(item.fsrs?.next_review ?? item.displayNextReview ?? null)
-                  );
+                  // 다음 복습까지 일수 — 세션 중 받은 /study/log 응답의 fsrs.next_review(Main 이 문제
+                  // 객체에 덮어 둔 정본), 응답을 못 받은 자리(게스트 등)는 채점 시 고정한 displayNextReview.
+                  const nextReviewDays = calendarDaysFromToday(item.fsrs?.next_review ?? item.displayNextReview ?? null);
                   return (
                     <motion.div
                       key={`${item.id ?? 'q'}-${index}`}
@@ -1020,12 +1018,17 @@ const StudyResult = () => {
                       transition={{ delay: 1.2 + (index * 0.1) }}
                       onClick={() => handleOpenWordDetail(item)}
                       className={`
+                        relative
                         flex flex-col gap-[10px]
                         px-[16px] py-[14px]
                         rounded-[12px] cursor-pointer
                         ${item.isCorrect ? 'bg-status-success-100 dark:bg-status-success-dark' : 'bg-status-error-50 dark:bg-status-error-dark'}
                       `}
                     >
+                      {/* 우측 상단 — 다음 복습 예정일("9일 뒤 복습"). 학습 화면 문제 카드의
+                          StudyTimingTag 와 같은 컴포넌트·같은 위치 규칙(top 12 / right 14)이다.
+                          세션이 끝난 뒤라 재출제가 없으므로 오답 단어도 예정일을 보여 준다. */}
+                      <StudyTimingTag answered wasCorrect={null} daysToReview={nextReviewDays} pending={false} />
                       <div className='flex items-center gap-[11px]'>
                         {/* ① 채점 결과 */}
                         <span className='flex items-center justify-center flex-shrink-0 w-[22px] h-[22px]'>
@@ -1052,20 +1055,13 @@ const StudyResult = () => {
                           <p className="text-[11.5px] font-[400] text-layout-gray-400 dark:text-layout-gray-50 truncate">
                             {meaningsArr.join(', ')}
                           </p>
-                          {showExamples && <ExampleList examples={item.examples} lang={wordLang(item)} className="mt-[2px]" />}
                         </div>
 
-                        {/* ③ 상태 — 작물 그림으로 통일 (텍스트 배지 분기 제거, 위 crop 계산 주석 참고)
-                            + 그 아래 다음 복습 예정일("9일 뒤"/"내일"/"오늘"). 값은 세션 중 받은
-                            /study/log 응답의 fsrs.next_review(Main 이 문제 객체에 덮어 둔 정본) —
-                            응답을 못 받은 자리(게스트 등)는 채점 시 고정한 displayNextReview. */}
-                        <div className='flex flex-col items-center flex-shrink-0 gap-[2px]'>
+                        {/* ③ 상태 — 작물 그림으로 통일 (텍스트 배지 분기 제거, 위 crop 계산 주석 참고).
+                            복습 예정일은 카드 우측 상단 태그로 옮겼다(2026-09-26). 태그와 겹치지 않게
+                            그림을 태그 높이만큼 내린다. */}
+                        <div className='flex flex-col items-center flex-shrink-0 mt-[14px]'>
                           <CropImage stage={crop} size={52} align="center" />
-                          {nextReviewText && (
-                            <span className='whitespace-nowrap text-[11px] font-[700] tracking-[-0.02em] tabular-nums text-layout-gray-400 dark:text-layout-gray-100'>
-                              {nextReviewText}
-                            </span>
-                          )}
                         </div>
                       </div>
                     </motion.div>

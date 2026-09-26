@@ -8,7 +8,9 @@ import MemoryStateChangeBadge, {
   MEMORY_STATE_RANK as STATE_RANK,
   getMemoryStateKeyByStability,
 } from '../../../components/common/MemoryStateChangeBadge';
-import FarmStatusBar from '../../../components/farm/FarmStatusBar';
+import { FarmResultBar } from '../../../components/farm/FarmStatusBar';
+import { useStudyAdvanceGate } from '../../../hooks/useStudyAdvanceGate';
+import { getAdvanceDelay } from '../../../utils/studyTiming';
 import StudyTimingTag from '../../../components/farm/StudyTimingTag';
 import { useResumeReplayKey } from '../../../hooks/useResumeReplayKey';
 import { wordLang } from '../../../utils/lang';
@@ -46,6 +48,9 @@ const FitText = ({ text, maxSize = 20, minSize = 12, className = '' }) => {
   );
 };
 
+// 카드 채점 깜빡임(초록/빨강 테두리) 길이 — 그 뒤 매칭 완료/실패 상태로 바뀐다.
+const CARD_FLASH_MS = 800;
+
 const shuffleArray = (array) => {
   const shuffled = [...array];
   for (let i = shuffled.length - 1; i > 0; i--) {
@@ -73,9 +78,40 @@ const CardMatchQuestion = ({ question, testType, onComplete, onCardMatched, farm
   // 재마운트용 키 (이유는 useResumeReplayKey 주석 참고)
   const resumeReplayKey = useResumeReplayKey();
   const wordResultsRef = useRef({});
-  const resolvedCountRef = useRef(0);
   const questionStartRef = useRef(Date.now());
   const wordStartRef = useRef({});
+
+  /*
+    전환 게이트 — 모든 유형 공통 규칙(utils/studyTiming.js). 세트의 **마지막 카드**가 채점된
+    순간을 기준으로, 최소 대기(그 카드 정답 1초/오답 2.5초, 단 카드 깜빡임 0.8초 + 0.6초 이상),
+    모든 카드 상태 바의 XP 연출 끝 + 0.7초, 단어 TTS 끝 + 0.2초 중 가장 늦은 시각에 넘어간다.
+    예전엔 마지막 카드 채점 1.4초 뒤 고정이라, 서버 응답이 늦으면 XP 가 오르는 도중에 넘어갔다.
+  */
+  const advanceGate = useStudyAdvanceGate();
+  const gradedCountRef = useRef(0);
+  const farmStartedIdsRef = useRef(new Set());
+  const farmSettledIdsRef = useRef(new Set());
+  const speakGenRef = useRef(0);
+  // 넘어갈 때는 최신 onComplete 를 부른다(채점 순간 함수는 재출제 삽입 전 testQuestions 를 본다).
+  const onCompleteRef = useRef(onComplete);
+  useEffect(() => { onCompleteRef.current = onComplete; });
+
+  // 게이트에 세트 전체의 XP 연출 상태를 알린다 — 모든 카드가 끝났으면 settled, 하나라도 도는 중이면 started.
+  const syncFarmGate = () => {
+    if (!advanceGate.isArmed()) return;
+    const ids = question.words.map(w => w.id);
+    if (ids.every(id => farmSettledIdsRef.current.has(id))) advanceGate.farmSettled();
+    else if (ids.some(id => farmStartedIdsRef.current.has(id))) advanceGate.farmStarted();
+  };
+  const handleFarmStart = (wordId) => {
+    farmStartedIdsRef.current.add(wordId);
+    farmSettledIdsRef.current.delete(wordId);
+    syncFarmGate();
+  };
+  const handleFarmSettled = (wordId) => {
+    farmSettledIdsRef.current.add(wordId);
+    syncFarmGate();
+  };
 
   const buildResults = (wordResults) => {
     return question.words.map(word => {
@@ -142,6 +178,10 @@ const CardMatchQuestion = ({ question, testType, onComplete, onCardMatched, farm
     setSelectedRight(null);
     setAnimatingWordIds(prev => new Set([...prev, leftWord.id]));
 
+    // 마지막 카드가 채점된 순간 전환 게이트를 건다(위 advanceGate 주석).
+    gradedCountRef.current += 1;
+    const isLastCard = gradedCountRef.current === question.words.length;
+
     // 카드 1장 채점 즉시 부모에 결과 전달 → 콤보/프로그래스 바로 반영
     const notifyResolved = () => {
       onCardMatched?.({
@@ -167,11 +207,7 @@ const CardMatchQuestion = ({ question, testType, onComplete, onCardMatched, farm
         setMatchedWordIds(prev => new Set([...prev, leftWord.id]));
         setAnimatingWordIds(prev => { const s = new Set(prev); s.delete(leftWord.id); return s; });
 
-        resolvedCountRef.current++;
-        if (resolvedCountRef.current === question.words.length) {
-          setTimeout(() => onComplete(buildResults(wordResultsRef.current)), 600);
-        }
-      }, 800);
+      }, CARD_FLASH_MS);
     } else {
       haptic('error');
       playErrorSound();
@@ -186,11 +222,16 @@ const CardMatchQuestion = ({ question, testType, onComplete, onCardMatched, farm
         setFailedWordIds(prev => new Set([...prev, leftWord.id]));
         setAnimatingWordIds(prev => { const s = new Set(prev); s.delete(leftWord.id); return s; });
 
-        resolvedCountRef.current++;
-        if (resolvedCountRef.current === question.words.length) {
-          setTimeout(() => onComplete(buildResults(wordResultsRef.current)), 600);
-        }
-      }, 800);
+      }, CARD_FLASH_MS);
+    }
+
+    if (isLastCard) {
+      advanceGate.arm({
+        minDelayMs: Math.max(CARD_FLASH_MS + 600, getAdvanceDelay(isMatch)),
+        // 모든 카드는 채점 순간 onCardMatched 로 이미 처리됐다 — 넘어갈 때는 진행만(processed).
+        onAdvance: () => onCompleteRef.current?.(buildResults(wordResultsRef.current), { processed: typeof onCardMatched === 'function' }),
+      });
+      syncFarmGate();
     }
   };
 
@@ -201,8 +242,12 @@ const CardMatchQuestion = ({ question, testType, onComplete, onCardMatched, farm
     const wordId = word.id;
     setSpeakingWordId(wordId);
     setSpeakingDuration(null);
+    // 단어를 읽는 중에는 세트를 넘기지 않는다(끝 + 0.2초) — 다른 유형과 같은 규칙.
+    const gen = ++speakGenRef.current;
+    advanceGate.ttsBegin();
     getTextSound(word.origin, wordLang(word, wordLang(question)), setSpeakingDuration).finally(() => {
       setSpeakingWordId(prev => prev === wordId ? null : prev);
+      if (gen === speakGenRef.current) advanceGate.ttsEnd();
     });
 
     if (selectedRight !== null) {
@@ -225,8 +270,10 @@ const CardMatchQuestion = ({ question, testType, onComplete, onCardMatched, farm
 
   const getLeftStyle = (index) => {
     const word = leftWords[index];
-    if (matchedWordIds.has(word.id)) return 'opacity-50 bg-status-success-100 dark:bg-status-success-dark border-status-success-500';
-    if (failedWordIds.has(word.id)) return 'opacity-50 border-status-error-500 bg-status-error-100 dark:bg-status-error-dark';
+    // 풀린 카드는 **글자만** 흐리게 한다(getLeftTextStyle). 카드 전체에 opacity 를 걸면 안에 뜬
+    // 농장 상태 바까지 반투명해져, 다른 유형과 달리 카드 맞추기만 XP 결과가 흐리게 보였다.
+    if (matchedWordIds.has(word.id)) return 'bg-status-success-100 dark:bg-status-success-dark border-status-success-500';
+    if (failedWordIds.has(word.id)) return 'border-status-error-500 bg-status-error-100 dark:bg-status-error-dark';
     if (correctFlashWordIds.has(word.id)) return 'border-[1px] border-status-success-500 bg-status-success-100 dark:bg-status-success-dark';
     if (wrongFlashLeftWordIds.has(word.id)) return 'border-[1px] border-status-error-500 bg-status-error-100 dark:bg-status-error-dark';
     if (selectedLeft === index) return 'border-[1px] border-primary-main-600 bg-primary-main-50 dark:bg-primary-main-dark';
@@ -235,8 +282,10 @@ const CardMatchQuestion = ({ question, testType, onComplete, onCardMatched, farm
 
   const getLeftTextStyle = (index) => {
     const word = leftWords[index];
-    if (matchedWordIds.has(word.id) || correctFlashWordIds.has(word.id)) return 'text-status-success-600';
-    if (failedWordIds.has(word.id) || wrongFlashLeftWordIds.has(word.id)) return 'text-status-error-600';
+    if (matchedWordIds.has(word.id)) return 'text-status-success-600 opacity-50';
+    if (failedWordIds.has(word.id)) return 'text-status-error-600 opacity-50';
+    if (correctFlashWordIds.has(word.id)) return 'text-status-success-600';
+    if (wrongFlashLeftWordIds.has(word.id)) return 'text-status-error-600';
     return 'text-layout-black dark:text-layout-white';
   };
 
@@ -271,8 +320,9 @@ const CardMatchQuestion = ({ question, testType, onComplete, onCardMatched, farm
                 relative overflow-hidden
                 flex flex-col items-center justify-center
                 flex-1 rounded-[12px] p-[10px]
+                ${farmByWordId?.[word.id] ? 'pt-[24px] pb-[50px]' : ''}
                 bg-layout-gray-50 dark:bg-layout-gray-dark
-                transition-colors duration-150
+                transition-[color,background-color,border-color,padding] duration-150
                 ${getLeftStyle(index)}
               `}
               onClick={() => handleLeftClick(index)}
@@ -287,12 +337,10 @@ const CardMatchQuestion = ({ question, testType, onComplete, onCardMatched, farm
                   뜻 카드(오른쪽 열)는 섞여 있어 단어와 짝이 아직 안 맞으므로 두지 않는다. */}
               <StudyTimingTag
                 compact
-                className="absolute top-[6px] right-[8px] z-[2]"
                 answered={!!farmByWordId?.[word.id]}
                 fsrs={word.fsrs}
-                wasCorrect={farmByWordId?.[word.id]?.wasCorrect ?? null}
-                daysToReview={farmByWordId?.[word.id]?.days_to_review ?? null}
-                pending={!!farmByWordId?.[word.id]?.pending}
+                stage={word.farmStage}
+                farm={farmByWordId?.[word.id] ?? null}
               />
               
 
@@ -305,37 +353,14 @@ const CardMatchQuestion = ({ question, testType, onComplete, onCardMatched, farm
               {/* 클릭(TTS 재생) 시 ripple 효과 — 아이콘 없이 카드 중앙에서 확산 */}
               {isSpeaking && !isResolved && <TtsRipple size={96} duration={speakingDuration} />}
 
-              {/* 하단 - 채점 후: 농장 상태 바 좁은 형 (작물·성장 막대·다음 복습일) */}
-              {!!farmByWordId?.[word.id] && (
-                <motion.div
-                  key={`farmbar-${word.id}-${resumeReplayKey}`}
-                  initial={{ opacity: 0, y: 6 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.25, ease: [0.4, 0, 0.2, 1] }}
-                  className="absolute bottom-[8px] left-[8px] right-[8px] z-[2]"
-                  onClick={(e) => e.stopPropagation()}
-                >
-                  <FarmStatusBar
-                    compact
-                    crop={farmByWordId[word.id].crop}
-                    stage={farmByWordId[word.id].stage}
-                    crop_from={farmByWordId[word.id].crop_from}
-                    stage_from={farmByWordId[word.id].stage_from}
-                    grew={!!farmByWordId[word.id].grew}
-                    pct_from={farmByWordId[word.id].pct_from}
-                    pct_to={farmByWordId[word.id].pct_to}
-                    xp_from={farmByWordId[word.id].xp_from}
-                    xp_to={farmByWordId[word.id].xp_to}
-                    xp_delta={farmByWordId[word.id].xp_delta}
-                    xp_next={farmByWordId[word.id].xp_next}
-                    health={farmByWordId[word.id].health}
-                    days_to_review={farmByWordId[word.id].days_to_review}
-                    wasCorrect={farmByWordId[word.id].wasCorrect}
-                    pending={!!farmByWordId[word.id].pending}
-                    sameDayElapsedHours={farmByWordId[word.id].sameDayElapsedHours ?? null}
-                  />
-                </motion.div>
-              )}
+              {/* 하단 - 채점 후: 농장 상태 바 좁은 형 — 유형 공통(FarmResultBar compact) */}
+              <FarmResultBar
+                compact
+                farm={farmByWordId?.[word.id] ?? null}
+                replayKey={`${word.id}-${resumeReplayKey}`}
+                onAnimStart={() => handleFarmStart(word.id)}
+                onSettled={() => handleFarmSettled(word.id)}
+              />
 
               {/* 하단 중앙 - 복습 예정일 (채점 후)
                   농장 상태 바가 같은 자리에서 다음 복습일까지 말하므로 그때는 숨긴다 */}

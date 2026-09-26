@@ -19,22 +19,37 @@ import { lastStudiedLabel, nextReviewLabel, calendarDaysFromToday } from '../../
  * 단 응답이 영영 안 오는 경로(게스트·재출제·구버전)는 pending 이 아니므로 nextReviewIso
  * (채점 시점에 고정한 예정일) 폴백으로 바로 그린다.
  *
- * 위치는 호출부가 absolute 로 잡는다(className) — 카드마다 여백이 달라서다.
+ * 【유형 공통 규격 — 2026-09-26 통일】 호출부는 농장 payload(`farm`)를 그대로 넘긴다.
+ * 정오답·복습일·대기 여부를 이 컴포넌트가 payload 에서 읽으므로 유형마다 계산이 갈라지지 않는다.
+ * 위치도 기본값이 규격이다 — 문제 카드 `top 12 / right 14`, 카드 맞추기(compact) `top 6 / right 8`
+ * (칸 여백만 다르고 글자 크기·굵기·색은 같다).
+ * 채점 전 문구는 FSRS + 농장 단계(`stage`)로 정한다(reviewTiming.js — 단계가 심은 씨앗
+ * 이상이면 절대 "첫 학습"이라 하지 않고, 날짜를 모르면 비운다).
  */
 const StudyTimingTag = ({
   answered = false,
   fsrs = null,
-  wasCorrect = null,
-  daysToReview = null,
+  stage = null,
+  farm = null,
+  wasCorrect: wasCorrectProp,
+  daysToReview: daysProp,
   nextReviewIso = null,
-  pending = false,
+  pending: pendingProp,
   compact = false,
-  className = '',
+  className,
 }) => {
+  const wasCorrect = wasCorrectProp !== undefined ? wasCorrectProp : (farm?.wasCorrect ?? null);
+  const daysToReview = daysProp !== undefined ? daysProp : (farm?.days_to_review ?? null);
+  // payload 가 아직 없거나 정지(pending) 상태면 응답 대기다 — 숫자가 튀지 않게 비워 둔다.
+  const pending = pendingProp !== undefined ? pendingProp : (answered && (!farm || !!farm.pending));
+  const place = className ?? (compact
+    ? 'absolute top-[6px] right-[8px] z-[2]'
+    : 'absolute top-[12px] right-[14px] z-[2]');
+
   let label = null;
   let tone = 'past';
   if (!answered) {
-    label = lastStudiedLabel(fsrs);
+    label = lastStudiedLabel(fsrs, stage);
   } else if (wasCorrect !== false && !pending) {
     let days = typeof daysToReview === 'number' ? daysToReview : null;
     if (days == null && nextReviewIso) days = calendarDaysFromToday(nextReviewIso);
@@ -44,7 +59,7 @@ const StudyTimingTag = ({
 
   return (
     <span
-      className={`pointer-events-none select-none ${className}`}
+      className={`pointer-events-none select-none ${place}`}
       aria-live="polite"
     >
       <AnimatePresence mode="wait" initial={false}>
@@ -56,8 +71,7 @@ const StudyTimingTag = ({
             exit={{ opacity: 0, y: 3 }}
             transition={{ duration: 0.2, ease: [0.4, 0, 0.2, 1] }}
             className={`
-              block whitespace-nowrap tracking-[-0.02em] tabular-nums
-              ${compact ? 'text-[10px]' : 'text-[11.5px]'}
+              block whitespace-nowrap tracking-[-0.02em] tabular-nums text-[11.5px]
               ${tone === 'next'
                 ? 'font-[700] text-primary-main-600'
                 : 'font-[600] text-layout-gray-300 dark:text-layout-gray-200'}

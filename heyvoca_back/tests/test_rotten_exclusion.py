@@ -182,6 +182,21 @@ def test_rotten_filter_runs_before_target_states_filter():
     assert filter_pos < target_states_pos
 
 
+def test_study_routes_fsrs_dict_includes_last_review_reps_lapses():
+    """/study/recommend, /study/chat-session 응답의 fsrs 객체 — 프론트가 "N일 전 학습"
+    표시에 쓰는 last_review/reps/lapses 가 두 곳 모두에 내려가야 한다."""
+    src = _study_source()
+    fsrs_dict_blocks = [
+        src[m.end():src.index('}', m.end())]
+        for m in __import__('re').finditer(r"'fsrs':\s*\{", src)
+    ]
+    # get_recommend / get_chat_session 두 곳 모두에 'fsrs': {...} 슬라이스 딕셔너리가 있어야 한다.
+    assert len(fsrs_dict_blocks) == 2
+    for block in fsrs_dict_blocks:
+        for key in ("'last_review'", "'reps'", "'lapses'"):
+            assert key in block, '{} 누락: {}'.format(key, block)
+
+
 # ──────────────────────────────────────────────
 # 7. /vocaIndexs 응답 — 클라이언트가 그림/차단에 쓰는 필드
 # ──────────────────────────────────────────────
