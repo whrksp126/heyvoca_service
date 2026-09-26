@@ -10,6 +10,7 @@ import MemoryStateChangeBadge, {
   getMemoryStateKeyByStability,
 } from '../../../components/common/MemoryStateChangeBadge';
 import FarmStatusBar from '../../../components/farm/FarmStatusBar';
+import StudyTimingTag from '../../../components/farm/StudyTimingTag';
 import { useResumeReplayKey } from '../../../hooks/useResumeReplayKey';
 import { wordLang } from '../../../utils/lang';
 
@@ -290,8 +291,19 @@ const CardMatchListeningQuestion = ({ question, testType, onComplete, onCardMatc
               onTapStart={!isResolved && !isAnimating ? () => haptic('light') : undefined}
               transition={{ type: 'spring', stiffness: 400, damping: 17 }}
             >
-              {/* 상단 중앙 - 암기 상태 배지 (채점 후)
-                  농장 상태 바가 뜨면 같은 말을 두 번 하는 것이라 배지는 숨긴다 */}
+              {/* 우측 상단 - 매칭 전: 최근 학습 시점 / 매칭 후: 다음 복습 예정일(오답은 비움).
+                  카드 매칭은 단어 카드(왼쪽 열)가 곧 이 단어의 "문제 카드"라 각 단어 카드의
+                  우측 상단에 둔다 — 같은 카드 하단의 좁은 상태 바와 한 쌍으로 읽힌다.
+                  뜻 카드(오른쪽 열)는 섞여 있어 단어와 짝이 아직 안 맞으므로 두지 않는다. */}
+              <StudyTimingTag
+                compact
+                className="absolute top-[6px] right-[8px] z-[2]"
+                answered={!!farmByWordId?.[word.id]}
+                fsrs={word.fsrs}
+                wasCorrect={farmByWordId?.[word.id]?.wasCorrect ?? null}
+                daysToReview={farmByWordId?.[word.id]?.days_to_review ?? null}
+                pending={!!farmByWordId?.[word.id]?.pending}
+              />
               
 
               {showText ? (

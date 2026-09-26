@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { Circle, X, SpeakerHigh } from '@phosphor-icons/react';
 import FarmStatusBar from '../../../components/farm/FarmStatusBar';
+import StudyTimingTag from '../../../components/farm/StudyTimingTag';
 import TtsRipple from '../../../components/common/TtsRipple';
 import WordInfoBubble from '../../../components/common/WordInfoBubble';
 import { getWordInfoApi } from '../../../api/search';
@@ -601,7 +602,19 @@ const FillInTheBlankQuestion = ({ question, onComplete, farmByWordId }) => {
         transition={{ duration: 0.2, ease: [0.4, 0, 0.2, 1] }}
         style={{ willChange: 'transform, opacity' }}
       >
-        <div className="relative z-[1] flex items-center flex-1 px-[20px] pt-[20px] pb-[60px]">
+        {/* 우측 상단 - 채점 전: 최근 학습 시점 / 채점 후: 다음 복습 예정일(오답은 비움).
+            농장 상태 바에서 옮겨 온 "언제" 문구 — StudyTimingTag.jsx 참고. */}
+        <StudyTimingTag
+          className="absolute top-[10px] right-[14px] z-[2]"
+          answered={isAnswered}
+          fsrs={question.fsrs}
+          wasCorrect={isCorrect}
+          daysToReview={farm?.days_to_review ?? null}
+          nextReviewIso={question.displayNextReview ?? null}
+          pending={isAnswered && (!farm || !!farm.pending)}
+        />
+        {/* pt 는 우측 상단 시점 문구(StudyTimingTag) 자리만큼 연다 — 긴 예문이 위로 차올라도 겹치지 않게 */}
+        <div className="relative z-[1] flex items-center flex-1 px-[20px] pt-[30px] pb-[60px]">
           {/* 빈칸 예문 — pill 은 채점 전후 모두 중립색, 채점 후 활용형이 들어간다.
               아이콘이 없어졌으니 텍스트가 카드 전체 너비를 그대로 쓴다(왼쪽 여백 없음). */}
           <p lang={jaBlank ? 'ja' : undefined} className={`w-full text-[22px] font-[700] leading-[1.8] text-layout-black dark:text-layout-white ${jaBlank ? 'break-normal' : 'break-keep'}`}>

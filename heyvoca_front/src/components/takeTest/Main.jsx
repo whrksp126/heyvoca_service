@@ -26,6 +26,7 @@ import ComboBar from './ComboBar';
 import { ComboProtectNewBottomSheet } from '../newBottomSheet/ComboProtectNewBottomSheet';
 import { useUser } from '../../context/UserContext';
 import FarmStatusBar from '../farm/FarmStatusBar';
+import StudyTimingTag from '../farm/StudyTimingTag';
 import { HEALTH_STATES } from '../../utils/crop';
 import { removePendingReplantIds } from '../../utils/replantPending';
 import { useResumeReplayKey } from '../../hooks/useResumeReplayKey';
@@ -1607,6 +1608,18 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
                   {showTtsRipple && (
                     <TtsRipple size={160} duration={speakDuration} className="z-[0]" />
                   )}
+
+                  {/* 우측 상단 - 채점 전: 최근 학습 시점 / 채점 후: 다음 복습 예정일(오답은 비움).
+                      농장 상태 바에서 옮겨 온 "언제" 문구 — StudyTimingTag.jsx 참고. */}
+                  <StudyTimingTag
+                    className="absolute top-[12px] right-[14px] z-[2]"
+                    answered={isCorrect !== null}
+                    fsrs={testQuestions[progressIndex]?.fsrs}
+                    wasCorrect={isCorrect}
+                    daysToReview={showFarmBar ? farmStatus.days_to_review : null}
+                    nextReviewIso={testQuestions[progressIndex]?.displayNextReview ?? null}
+                    pending={showFarmBar ? !!farmStatus.pending : isCorrect !== null}
+                  />
 
                   {/* 상단 중앙 - 암기 상태 배지 (채점 전에는 숨김)
                       농장 상태 바가 뜨면 같은 말을 두 번 하는 것이라 배지는 숨긴다.

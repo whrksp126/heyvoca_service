@@ -52,6 +52,9 @@ const clamp = (n) => Math.max(0, Math.min(100, Number(n) || 0));
  * @param {boolean} props.pending  서버 응답 대기 중(farmOptimistic.js pendingFarmPayload) —
  *   `pctFrom === pctTo` 라 실제로는 움직이지 않는 정지 상태다. 이 값이 바뀌는 순간(응답
  *   도착)은 반드시 새로 마운트한다 — 아래 주석 참고.
+ * @param {boolean} props.block  세로(flex-col) 칸에 들어갈 때 true — `flex-1` 대신 `flex-none w-full`.
+ *   세로 flex 에서 `flex-1`(flex-basis 0%)은 높이를 0 으로 눌러 막대가 사라진다
+ *   (2026-09-26 사지선다·빈칸 상태 바에서 게이지가 안 보이던 원인).
  * @param {string} props.className
  */
 const CropProgressBar = ({
@@ -64,6 +67,7 @@ const CropProgressBar = ({
   delay = 0,
   showGain = true,
   pending = false,
+  block = false,
   className = '',
 }) => {
   const from = clamp(pctFrom);
@@ -138,7 +142,7 @@ const CropProgressBar = ({
 
   return (
     <span
-      className={`relative block flex-1 rounded-[99px] bg-[#E8E8E8] dark:bg-[#454545] overflow-hidden ${className}`}
+      className={`relative block ${block ? 'flex-none w-full' : 'flex-1'} rounded-[99px] bg-[#E8E8E8] dark:bg-[#454545] overflow-hidden ${className}`}
       style={{ maxWidth: width, height }}
     >
       <motion.span

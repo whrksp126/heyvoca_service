@@ -25,6 +25,7 @@ import { StreakDayMark } from '../farm/StreakDayMark';
 
 // 아이템 이름은 utils/crop.js 의 FARM_ITEM_LABEL 하나로 통일돼 있다(시안 §1⑤ "새심기 삽").
 import { getSessionFarmSummaryApi } from '../../api/farm';
+import { calendarDaysFromToday, nextReviewShort } from '../../utils/reviewTiming';
 import { getAchievementCriteriaApi } from '../../api/study';
 
 // 업적 이미지 import
@@ -1008,6 +1009,9 @@ const StudyResult = () => {
                   // 그 결과 같은 목록에서 어떤 행은 텍스트 배지, 어떤 행은 작물 그림으로
                   // 갈리던 것을 전부 작물 그림으로 통일한다.
                   const crop = cropOfWord(item) ?? 'PLANTED_SEED';
+                  const nextReviewText = nextReviewShort(
+                    calendarDaysFromToday(item.fsrs?.next_review ?? item.displayNextReview ?? null)
+                  );
                   return (
                     <motion.div
                       key={`${item.id ?? 'q'}-${index}`}
@@ -1051,8 +1055,18 @@ const StudyResult = () => {
                           {showExamples && <ExampleList examples={item.examples} lang={wordLang(item)} className="mt-[2px]" />}
                         </div>
 
-                        {/* ③ 상태 — 작물 그림으로 통일 (텍스트 배지 분기 제거, 위 crop 계산 주석 참고) */}
-                        <CropImage stage={crop} size={52} align="center" className='flex-shrink-0' />
+                        {/* ③ 상태 — 작물 그림으로 통일 (텍스트 배지 분기 제거, 위 crop 계산 주석 참고)
+                            + 그 아래 다음 복습 예정일("9일 뒤"/"내일"/"오늘"). 값은 세션 중 받은
+                            /study/log 응답의 fsrs.next_review(Main 이 문제 객체에 덮어 둔 정본) —
+                            응답을 못 받은 자리(게스트 등)는 채점 시 고정한 displayNextReview. */}
+                        <div className='flex flex-col items-center flex-shrink-0 gap-[2px]'>
+                          <CropImage stage={crop} size={52} align="center" />
+                          {nextReviewText && (
+                            <span className='whitespace-nowrap text-[11px] font-[700] tracking-[-0.02em] tabular-nums text-layout-gray-400 dark:text-layout-gray-100'>
+                              {nextReviewText}
+                            </span>
+                          )}
+                        </div>
                       </div>
                     </motion.div>
                   );

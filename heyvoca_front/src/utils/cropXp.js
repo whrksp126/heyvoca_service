@@ -120,3 +120,25 @@ export const deriveFarmXp = ({
   const xpDeltaVal = xpDeltaServer ?? (xpToVal - xpFromVal);
   return { xpFrom: xpFromVal, xpTo: xpToVal, xpNext: xpNextVal, xpDelta: xpDeltaVal };
 };
+
+/**
+ * 표시 XP → 상태 바 막대 진행률(0~100). 막대와 옆의 `현재 / 다음 XP` 숫자가 같은 말을
+ * 하도록 막대도 XP 축으로 그린다 — `12 / 50 XP` 면 막대는 정확히 24%.
+ * 서버 `pct_to`(stage_progress)는 심은 씨앗에서 시간 기반이라 XP 와 다른 값이 나올 수 있어
+ * 숫자와 막대가 어긋났다(씨앗을 막 심으면 12 / 50 XP 인데 막대는 0%).
+ * 황금(다음 문턱 없음)은 가득 찬 막대로 그린다.
+ */
+export const xpBarPct = (stage, xp) => {
+  const floor = xpFloor(stage);
+  const next = xpNext(stage);
+  if (next == null) return 100;
+  const span = next - floor;
+  if (span <= 0) return 0;
+  return Math.max(0, Math.min(100, ((Number(xp) || 0) - floor) / span * 100));
+};
+
+/**
+ * 두 단계가 같은 XP 구간을 쓰는지. 미보유 씨앗 → 심은 씨앗은 단계는 오르지만 문턱(0→50)이
+ * 같아서, 막대가 100% 를 찍고 리셋하면 `0 / 50 → 12 / 50 XP` 와 어긋난 거짓 연출이 된다.
+ */
+export const sameXpBand = (stageA, stageB) => xpFloor(stageA) === xpFloor(stageB);
