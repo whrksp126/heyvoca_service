@@ -272,12 +272,12 @@ const CardMatchQuestion = ({ question, testType, onComplete, onCardMatched, farm
     const word = leftWords[index];
     // 풀린 카드는 **글자만** 흐리게 한다(getLeftTextStyle). 카드 전체에 opacity 를 걸면 안에 뜬
     // 농장 상태 바까지 반투명해져, 다른 유형과 달리 카드 맞추기만 XP 결과가 흐리게 보였다.
-    if (matchedWordIds.has(word.id)) return 'bg-status-success-100 dark:bg-status-success-dark border-status-success-500';
-    if (failedWordIds.has(word.id)) return 'border-status-error-500 bg-status-error-100 dark:bg-status-error-dark';
-    if (correctFlashWordIds.has(word.id)) return 'border-[1px] border-status-success-500 bg-status-success-100 dark:bg-status-success-dark';
-    if (wrongFlashLeftWordIds.has(word.id)) return 'border-[1px] border-status-error-500 bg-status-error-100 dark:bg-status-error-dark';
-    if (selectedLeft === index) return 'border-[1px] border-primary-main-600 bg-primary-main-50 dark:bg-primary-main-dark';
-    return 'border-layout-gray-200';
+    if (matchedWordIds.has(word.id)) return 'bg-status-success-100 dark:bg-status-success-dark border-transparent';
+    if (failedWordIds.has(word.id)) return 'border-transparent bg-status-error-100 dark:bg-status-error-dark';
+    if (correctFlashWordIds.has(word.id)) return 'border-status-success-500 bg-status-success-100 dark:bg-status-success-dark';
+    if (wrongFlashLeftWordIds.has(word.id)) return 'border-status-error-500 bg-status-error-100 dark:bg-status-error-dark';
+    if (selectedLeft === index) return 'border-primary-main-600 bg-primary-main-50 dark:bg-primary-main-dark';
+    return 'border-transparent';
   };
 
   const getLeftTextStyle = (index) => {
@@ -314,15 +314,24 @@ const CardMatchQuestion = ({ question, testType, onComplete, onCardMatched, farm
           const isAnimating = animatingWordIds.has(word.id);
           const isSpeaking = speakingWordId === word.id;
           return (
+            /*
+              【카드 크기는 채점 전후 절대 변하지 않는다 — 2026-09-26 실기기 피드백】
+              예전엔 상태 바가 뜨는 순간에만 pt/pb 를 늘려(단어가 바에 가리지 않게) 카드 내용
+              높이가 커졌고, flex-1 의 min-height:auto 때문에 카드가 세로로 늘어나 오른쪽 뜻 카드·
+              아래 카드와 어긋났다. 지금은 우측 상단 시점 문구(24px)·하단 상태 바(50px) 자리를
+              **처음부터** 비워 두고(단어는 늘 그 사이 가운데), min-h-0 으로 내용이 카드를 밀지
+              못하게 한다. 상태 바·시점 문구는 absolute 오버레이라 높이에 관여하지 않는다.
+              테두리도 1px 을 늘 깔아 둔다(평소엔 투명) — 선택·정오답 깜빡임에서만 border-[1px] 이
+              붙던 시절엔 그 순간 카드가 2px 커졌다(flex-basis 0 이어도 border-box 최소치는 테두리 포함).
+            */
             <motion.button
               key={word.id}
               className={`
                 relative overflow-hidden
                 flex flex-col items-center justify-center
-                flex-1 rounded-[12px] p-[10px]
-                ${farmByWordId?.[word.id] ? 'pt-[24px] pb-[50px]' : ''}
+                flex-1 min-h-0 rounded-[12px] border-[1px] px-[10px] pt-[24px] pb-[50px]
                 bg-layout-gray-50 dark:bg-layout-gray-dark
-                transition-[color,background-color,border-color,padding] duration-150
+                transition-[color,background-color,border-color] duration-150
                 ${getLeftStyle(index)}
               `}
               onClick={() => handleLeftClick(index)}
@@ -381,7 +390,7 @@ const CardMatchQuestion = ({ question, testType, onComplete, onCardMatched, farm
               key={word.id}
               className={`
                 flex flex-col items-center justify-center
-                flex-1 rounded-[12px] border-[1px] border-layout-gray-200 p-[10px]
+                flex-1 min-h-0 rounded-[12px] border-[1px] border-layout-gray-200 p-[10px]
                 transition-colors duration-150
                 ${getRightStyle(index)}
               `}

@@ -1,10 +1,11 @@
+import { useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { lastStudiedLabel, nextReviewLabel, calendarDaysFromToday } from '../../utils/reviewTiming';
 
 /**
  * 문제 카드 우측 상단의 작은 시점 문구 — 모든 문제 유형 공통.
  *
- *   채점 전  "3일 전 학습" / "오늘 학습" / "첫 학습"   (FSRS last_review)
+ *   채점 전  "3일 전 학습" / "5분 전 학습"(오늘) / "첫 학습"   (FSRS last_review)
  *   채점 후  "9일 뒤 복습" / "내일 복습"               (서버 farm.days_to_review)
  *
  * 2026-09 피드백으로 농장 상태 바에서 옮겨 왔다. 상태 바는 작물·막대·XP 만 말하고,
@@ -46,10 +47,14 @@ const StudyTimingTag = ({
     ? 'absolute top-[6px] right-[8px] z-[2]'
     : 'absolute top-[12px] right-[14px] z-[2]');
 
+  // "N초/분/시간 전 학습"의 기준 시각 — 문제 진입(마운트) 순간에 고정한다. 렌더마다 new Date()
+  // 를 쓰면 다른 상태 변화로 리렌더될 때마다 숫자가 바뀌며 문구가 다시 튀어나온다(key=label).
+  const [enteredAt] = useState(() => new Date());
+
   let label = null;
   let tone = 'past';
   if (!answered) {
-    label = lastStudiedLabel(fsrs, stage);
+    label = lastStudiedLabel(fsrs, stage, enteredAt);
   } else if (wasCorrect !== false && !pending) {
     let days = typeof daysToReview === 'number' ? daysToReview : null;
     if (days == null && nextReviewIso) days = calendarDaysFromToday(nextReviewIso);

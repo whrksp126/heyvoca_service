@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import CropImage, { CROP_ASSETS } from './CropImage';
 import CropProgressBar, { GROW_FILL_DURATION, GROW_FILL_TIMES } from './CropProgressBar';
@@ -141,7 +141,7 @@ const FarmStatusBar = ({
   // 오답이라는 이유만으로 막대 색이 먼저 주황으로 바뀌면 "벌써 줄었다"로 잘못 읽힌다.
   const tone = grew ? 'up' : (isNg && !pending ? 'ng' : 'primary');
 
-  const { xpFrom, xpTo, xpNext: xpNextVal, xpDelta } = deriveFarmXp({
+  const { xpFrom: xpFromPayload, xpTo, xpNext: xpNextVal } = deriveFarmXp({
     stageFrom: prevCropForImage,
     stageTo: cropForImage,
     pctFrom,
@@ -151,6 +151,20 @@ const FarmStatusBar = ({
     xpDeltaServer: xpDeltaProp,
     xpNextServer: xpNextProp,
   });
+
+  /*
+    【배지 = 이번 답안으로 얻은 총 XP, 채점 전 표시값 기준 — 2026-09-26】
+    배지는 서버 xp_delta 를 그대로 믿지 않고 `xp_to − (채점 전 화면에 떠 있던 XP)` 로 계산한다.
+    채점 직후엔 pendingFarmPayload(정지 상태)가 먼저 떠 있고, 응답이 오면 **같은 엘리먼트**에서
+    숫자가 그 정지값부터 굴러간다(useCountUp 은 prop 이 바뀌면 현재 표시값에서 출발). 그러니
+    사용자가 본 증가폭은 "정지값 → xp_to" 이고, 배지도 같은 두 숫자에서 나와야 어긋나지 않는다.
+    처음부터 확정값으로 마운트된 경우(게스트·재출제)는 payload 의 xp_from 이 곧 채점 전 값이다.
+    진화 회차도 마찬가지 — 새 단계 floor 로 from 을 자르지 않는다(새싹 190 → 이파리 244 = +54).
+    서버 xp_from 도 같은 정의(이전 단계 기준 채점 전 XP)라 보통은 두 값이 같다(tests/test_crop_xp.py).
+  */
+  const [xpBefore] = useState(() => (pending ? xpTo : xpFromPayload));
+  const xpFrom = xpBefore;
+  const xpDelta = pending ? 0 : xpTo - xpBefore;
 
   // 막대 — XP 축(위 주석). 진화 리셋은 XP 문턱을 실제로 넘을 때만.
   const barGrew = grew && !sameXpBand(prevCropForImage, cropForImage);

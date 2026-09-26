@@ -14,12 +14,39 @@ const startOfDay = (d) => {
   return x;
 };
 
+/**
+ * 서버 ISO 시각 → Date. 서버는 UTC 를 'Z' 또는 '+00:00' 로 내려준다(둘 다 Date 가 그대로 읽는다).
+ * 시간대 표기가 없는 naive 문자열('2026-09-26T03:00:00')은 로컬로 읽히면 9시간 어긋나므로
+ * UTC 로 간주해 'Z' 를 붙인다. 날짜만 있는 값('2026-09-26')은 그대로 둔다. 파싱 불가면 null.
+ */
+export const parseServerTime = (iso) => {
+  if (!iso) return null;
+  if (iso instanceof Date) return Number.isNaN(iso.getTime()) ? null : iso;
+  let str = String(iso).trim();
+  if (/T\d{2}:\d{2}/.test(str) && !/(Z|[+-]\d{2}:?\d{2})$/i.test(str)) str += 'Z';
+  const t = new Date(str);
+  return Number.isNaN(t.getTime()) ? null : t;
+};
+
 /** iso 날짜 − 오늘 (달력 일수). 과거면 음수. 파싱 불가면 null */
 export const calendarDaysFromToday = (iso, now = new Date()) => {
-  if (!iso) return null;
-  const t = new Date(iso);
-  if (Number.isNaN(t.getTime())) return null;
+  const t = parseServerTime(iso);
+  if (!t) return null;
   return Math.round((startOfDay(t) - startOfDay(now)) / 86400000);
+};
+
+/**
+ * 오늘 안에서의 경과 — "30초 전" / "5분 전" / "3시간 전" (2026-09-26 피드백: 오늘 학습한 단어가
+ * 전부 "오늘 학습"으로만 나와 방금 푼 것과 아침에 푼 것이 구분되지 않았다).
+ * 1분 미만은 초, 1시간 미만은 분, 그 외는 시간(내림). 시계가 살짝 어긋나 미래 시각이 와도
+ * "1초 전"으로 붙잡는다. 화면이 떠 있는 동안 실시간 갱신은 하지 않는다(문제 진입 시 계산).
+ */
+export const elapsedTodayShort = (t, now = new Date()) => {
+  const sec = Math.max(1, Math.floor((now.getTime() - t.getTime()) / 1000));
+  if (sec < 60) return `${sec}초 전`;
+  const min = Math.floor(sec / 60);
+  if (min < 60) return `${min}분 전`;
+  return `${Math.floor(min / 60)}시간 전`;
 };
 
 /**
@@ -32,7 +59,7 @@ export const calendarDaysFromToday = (iso, now = new Date()) => {
  * 지금은 세 단계로 판단한다.
  *  1) 학습 이력이 있나 — 농장 단계가 심은 씨앗 이상이거나, FSRS state 가 new 가 아니거나,
  *     reps > 0 이면 "학습한 적 있음". 이 경우 **절대 "첫 학습"이라 하지 않는다.**
- *  2) 이력이 있으면 last_review 로 "오늘/어제/N일 전 학습". 날짜를 모르면(추천 응답만 있고
+ *  2) 이력이 있으면 last_review 로 "N초/N분/N시간 전 학습"(오늘)·"어제/N일 전 학습". 날짜를 모르면(추천 응답만 있고
  *     사전 병합이 안 된 경우 등) **비운다** — 틀린 말("첫 학습")보다 말하지 않는 게 낫다.
  *  3) 이력이 없다고 확실할 때(state 'new' 또는 reps 0, 그리고 단계가 미보유/미상)만 "첫 학습".
  *     fsrs 자체가 없으면 판단 근거가 없으므로 비운다.
@@ -54,13 +81,17 @@ const hasStudyHistory = (fsrs, stage) => {
 export const isFirstStudy = (fsrs, stage = null) =>
   !hasStudyHistory(fsrs, stage) && !!fsrs && (fsrs.state === 'new' || !fsrs.state || fsrs.reps === 0);
 
-/** 채점 전 — "첫 학습" / "오늘 학습" / "어제 학습" / "N일 전 학습" / null(모름 → 비움) */
-export const lastStudiedLabel = (fsrs, stage = null) => {
+/**
+ * 채점 전 — "첫 학습" / "30초 전 학습"·"5분 전 학습"·"3시간 전 학습"(오늘) / "어제 학습" /
+ * "N일 전 학습" / null(모름 → 비움)
+ */
+export const lastStudiedLabel = (fsrs, stage = null, now = new Date()) => {
   if (!hasStudyHistory(fsrs, stage)) return isFirstStudy(fsrs, stage) ? '첫 학습' : null;
-  const d = calendarDaysFromToday(fsrs?.last_review);
-  if (d == null) return null;
+  const t = parseServerTime(fsrs?.last_review);
+  if (!t) return null;
+  const d = calendarDaysFromToday(t, now);
   const ago = -d;
-  if (ago <= 0) return '오늘 학습';
+  if (ago <= 0) return `${elapsedTodayShort(t, now)} 학습`;
   if (ago === 1) return '어제 학습';
   return `${ago}일 전 학습`;
 };

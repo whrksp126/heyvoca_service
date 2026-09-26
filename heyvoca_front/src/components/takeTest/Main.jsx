@@ -1560,11 +1560,19 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
           >
             {['multipleChoice', 'multipleChoiceListening', 'reverseMultipleChoice'].includes(testQuestions[progressIndex]?.questionType) && (
               <>
+                {/*
+                  【카드 크기·단어 위치는 채점 전후 같다 — 2026-09-26 실기기 피드백】
+                  우측 상단 시점 문구(pt 30)·하단 농장 상태 바(pb 60) 자리를 **처음부터** 비워 두고
+                  단어는 그 사이 가운데에 선다 — 상태 바가 떠도 단어가 가리거나 움직이지 않는다.
+                  min-h-0: 채점 후 늘어나는 내용(ja 읽기 줄 등)이 flex-1 카드를 밀어 키우지 못하게.
+                  상태 바·시점 문구·힌트 버튼은 absolute 오버레이라 높이에 관여하지 않는다.
+                */}
                 <motion.div
                   className={`
                     relative
-                    flex items-center justify-center flex-1
+                    flex items-center justify-center flex-1 min-h-0
                     w-full
+                    pt-[30px] pb-[60px]
                     rounded-[12px]
                     bg-layout-gray-50 dark:bg-layout-gray-dark
                     cursor-pointer

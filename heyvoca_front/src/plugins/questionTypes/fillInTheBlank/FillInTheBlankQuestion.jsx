@@ -510,7 +510,7 @@ const FillInTheBlankQuestion = ({ question, onComplete, onCardMatched, farmByWor
         ref={blankCardRef}
         className="
           relative
-          flex flex-col flex-1
+          flex flex-col flex-1 min-h-0
           w-full
           rounded-[12px] text-left
           bg-layout-gray-50 dark:bg-layout-gray-dark

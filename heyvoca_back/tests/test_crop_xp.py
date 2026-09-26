@@ -251,3 +251,66 @@ def test_pct_and_xp_share_the_same_progress_axis(uid):
     nxt = xp_calc.xp_next(payload['stage'])
     expected_pct = int(round((payload['xp_to'] - floor) / (nxt - floor) * 100))
     assert payload['pct_to'] == expected_pct
+
+
+# ──────────────────────────────────────────────────────────────
+# 3. 진화 회차 — 배지(xp_delta)는 "이번 답안으로 얻은 총 XP" = xp_to − xp_from(채점 전 값)
+#    2026-09-26 실기기 피드백("진화하면 +0 XP 로 보이는 것 같다") 추적용 단언.
+#    진화해도 xp_from 은 **이전 단계 기준의 채점 전 XP** 그대로다 — 새 단계 floor 로
+#    잘라 먹지 않는다(pct_from 만 막대 리셋용으로 0 이 된다).
+# ──────────────────────────────────────────────────────────────
+
+def _answer_with(uid, stage_before, stab_before, stab_after, next_days):
+    from app import db
+    from app.services.game.farm_v2 import answer
+
+    uv = _make_uv(uid, stability=stab_before, next_review_offset_days=0)
+    _make_game(uid, uv.id, stage_before)
+    fsrs_before = {'state': 'review', 'stability': stab_before}
+    fsrs_after = {'state': 'review', 'stability': stab_after,
+                  'next_review': (NOW + dt.timedelta(days=next_days)).isoformat() + 'Z'}
+    uv.data = json.dumps({'schema_version': 3, 'fsrs': fsrs_after}, ensure_ascii=False)
+    db.session.commit()
+    return answer.on_answer(uid, uv.id, was_correct=True, session_id=None,
+                            now=NOW, fsrs_before=fsrs_before)
+
+
+def test_evolution_sprout_to_leaf_badge_is_total_gain(uid):
+    """새싹 190 → 이파리 244 면 배지는 +54 (새 단계 floor 210 기준 +34 가 아니다)."""
+    payload = _answer_with(uid, VisualStage.SPROUT, 19.0, 24.4, 24)
+    assert payload['grew'] is True
+    assert payload['stage_from'] == VisualStage.SPROUT
+    assert payload['stage'] == VisualStage.LEAF
+    assert payload['xp_from'] == 190
+    assert payload['xp_to'] == 244
+    assert payload['xp_delta'] == 54
+    assert payload['xp_delta'] == payload['xp_to'] - payload['xp_from']
+    assert payload['pct_from'] == 0          # 막대 리셋용 — XP 와는 별개
+    assert payload['xp_next'] == xp_calc.xp_floor(VisualStage.CARROT)
+
+
+def test_evolution_leaf_to_carrot_badge_is_total_gain(uid):
+    payload = _answer_with(uid, VisualStage.LEAF, 45.0, 62.0, 62)
+    assert payload['grew'] is True
+    assert payload['stage'] == VisualStage.CARROT
+    assert (payload['xp_from'], payload['xp_to'], payload['xp_delta']) == (450, 620, 170)
+
+
+def test_evolution_skipping_a_stage_keeps_full_gain(uid):
+    """심은 씨앗 40 → 한 번에 이파리 220 — 중간 문턱으로 자르지 않고 +180."""
+    payload = _answer_with(uid, VisualStage.PLANTED_SEED, 4.0, 22.0, 22)
+    assert payload['grew'] is True
+    assert payload['stage'] == VisualStage.LEAF
+    assert (payload['xp_from'], payload['xp_to'], payload['xp_delta']) == (40, 220, 180)
+
+
+def test_evolution_never_reports_zero_gain_when_stability_grows(uid):
+    """진화 회차는 stability 가 문턱을 새로 넘은 회차다 → xp_delta 는 항상 양수."""
+    for stage, before, after in [
+        (VisualStage.PLANTED_SEED, 4.9, 5.0),
+        (VisualStage.SPROUT, 20.9, 21.0),
+        (VisualStage.LEAF, 59.9, 60.0),
+    ]:
+        payload = _answer_with(uid, stage, before, after, int(after))
+        assert payload['grew'] is True, stage
+        assert payload['xp_delta'] > 0, (stage, payload['xp_from'], payload['xp_to'])
