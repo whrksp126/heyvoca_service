@@ -28,6 +28,7 @@ import ComboBar from './ComboBar';
 import { ComboProtectNewBottomSheet } from '../newBottomSheet/ComboProtectNewBottomSheet';
 import { useUser } from '../../context/UserContext';
 import FarmStatusBar, { FarmResultBar } from '../farm/FarmStatusBar';
+import { retryCorrectApi } from '../../api/farm';
 import StudyTimingTag from '../farm/StudyTimingTag';
 import { HEALTH_STATES } from '../../utils/crop';
 import { removePendingReplantIds } from '../../utils/replantPending';
@@ -599,6 +600,24 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
     if (pendingLogPromisesRef) pendingLogPromisesRef.current.push(promise);
   };
 
+  // 재출제(isRetry) 문제를 결국 정답으로 맞힌 순간에만 서버에 알린다. logIfFirstAttempt는
+  // isRetry 답을 /study/log로 보내지 않으므로(FSRS 첫 시도 원칙, 위 496행 주석), 재출제 정답은
+  // 이 호출이 없으면 영영 "새로 심은 단어"로 반영되지 않고 추천에서 계속 "최근 틀림"으로 남는다.
+  // fire-and-forget — retryCorrectApi가 실패를 콘솔 경고로만 삼키므로 여기서도 await/catch 불필요.
+  // 같은 세션·단어 중복 호출은 retryCorrectNotifiedRef로 막는다(정답 재출제는 단어당 한 번뿐이라
+  // 정상 흐름에서는 중복이 없지만, 카드 즉시 콜백/세트 완료 콜백 이중 호출 같은 방어용).
+  const retryCorrectNotifiedRef = useRef(new Set());
+  const notifyRetryCorrect = (vocaId, questionType) => {
+    if (!studySessionRef?.current || vocaId == null) return;
+    if (retryCorrectNotifiedRef.current.has(vocaId)) return;
+    retryCorrectNotifiedRef.current.add(vocaId);
+    retryCorrectApi({
+      userVocaId: vocaId,
+      sessionId: studySessionRef.current,
+      questionType,
+    });
+  };
+
   // 단어 통과 처리 — passedVocaIds에 추가하고 진행률 카운트 증가
   // 이미 통과된 단어는 카운트하지 않음
   const markVocaPassed = (vocaId) => {
@@ -901,6 +920,11 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
     // 게스트 온보딩 로컬 콤보 — 첫 시도만 반영 (재출제는 스트릭에 영향 없음)
     if (!question.isRetry) bumpLocalCombo(isCorrectAnswer);
 
+    // 재출제 문제를 결국 맞혔을 때만 — 위 notifyRetryCorrect 주석 참고
+    if (question.isRetry && isCorrectAnswer) {
+      notifyRetryCorrect(question.vocaIndexId ?? question.id, question.questionType);
+    }
+
     if (studySessionRef?.current == null) {
       // 방어 가드: 세션이 없는 비정상 경로
       question.isCorrect = isCorrectAnswer;
@@ -960,6 +984,11 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
 
     // 게스트 온보딩 로컬 콤보 — 첫 시도만 반영 (재출제는 스트릭에 영향 없음)
     if (!question.isRetry) bumpLocalCombo(isCorrectAnswer);
+
+    // 재출제 문제를 결국 맞혔을 때만 — 위 notifyRetryCorrect 주석 참고
+    if (question.isRetry && isCorrectAnswer) {
+      notifyRetryCorrect(question.vocaIndexId ?? question.id, question.questionType);
+    }
 
     if (studySessionRef?.current == null) {
       // 방어 가드: 세션이 없는 비정상 경로
@@ -1275,6 +1304,14 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
       } else {
         job();
       }
+    }
+
+    // 재출제(빈칸 채우기 등, isSingleWordQuestion) 카드를 결국 맞혔을 때만 — 위
+    // notifyRetryCorrect 주석 참고. cardMatch/cardMatchListening 재출제는 사지선다로
+    // 변환돼 이 경로로 다시 오지 않으므로(handleClickExamOption 쪽에서 처리) 여기선
+    // 사실상 fillInTheBlank류 재출제에만 해당한다.
+    if (wordIsCorrect && currentQuestion?.isRetry) {
+      notifyRetryCorrect(wordId, questionType);
     }
 
     if (wordIsCorrect) {

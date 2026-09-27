@@ -288,11 +288,20 @@ def rank_short_medium(items: List[CandidateItem], now: dt.datetime = None) -> Li
     (lapse 버킷 전용, 2026-09부터) retrievability 낮은 것(망각 위험) 우선.
     동률 tie-break로 약함 점수 내림차순을 추가.
     short/medium 버킷은 더 이상 이 함수를 쓰지 않는다 — rank_by_weakness 참조.
+
+    최우선 규칙(rank_by_weakness와 동일, 2026-09 추가): 최근
+    `_RECENT_STUDY_PUSH_BACK_HOURS`시간 이내에 학습한 단어는 정렬 맨 뒤로 보낸다(제외는
+    아님) — 방금 세션에서 맞힌 lapse 단어가 곧바로 다음 세션에도 최우선으로 다시
+    뽑히는 것을 막는다.
     """
     now = now or dt.datetime.utcnow()
     return sorted(
         items,
-        key=lambda it: (_get_retrievability(it), -compute_weakness(it, now))
+        key=lambda it: (
+            _studied_recently(it, now),
+            _get_retrievability(it),
+            -compute_weakness(it, now),
+        )
     )
 
 

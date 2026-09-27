@@ -233,6 +233,22 @@ export const getSessionFarmSummaryApi = async (sessionId) => {
   }
 };
 
+// 재출제(오답 후 다시 출제) 문제를 결국 정답으로 맞혔을 때 알림.
+// /study/log 는 첫 시도만 보내(FSRS 원칙) 재출제 정답은 세션 로그에 안 남는다 —
+// 이 호출로 그 단어를 "새로 심은 단어"로 반영하고 추천 대상(최근 틀림)에서 뺀다.
+// fire-and-forget 호출부: 실패해도 학습 흐름에 영향 없어야 하며, 아래 catch가
+// 콘솔 경고만 남기고 삼킨다(호출부에서 await 하지 않아도 안전).
+export const retryCorrectApi = async ({ userVocaId, sessionId, questionType }) => {
+  const url = `${backendUrl}/farm/retry-correct`;
+  const method = 'POST';
+  const fetchData = { user_voca_id: userVocaId, session_id: sessionId, question_type: questionType };
+  try {
+    return await fetchDataAsync(url, method, fetchData);
+  } catch (error) {
+    console.warn('retryCorrectApi 오류:', error);
+  }
+};
+
 // 전환 안내를 확인했다고 서버에 표시.
 // 기기 저장소에만 남기면 기기를 바꿨을 때 이미 본 안내가 다시 뜬다.
 export const markFarmMigrationSeenApi = async () => {

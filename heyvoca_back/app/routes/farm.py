@@ -531,6 +531,57 @@ def session_summary():
         return _fail('세션 요약 조회')
 
 
+@farm_bp.route('/retry-correct', methods=['POST'])
+@jwt_required
+def retry_correct():
+    """세션 내 오답 재출제 정답 반영 — 씨앗 심기만(POST /farm/retry-correct).
+
+    프론트(`components/takeTest/Main.jsx` logIfFirstAttempt)는 같은 세션에서 재출제된
+    답은 `/study/log` 로 보내지 않는다(FSRS는 첫 시도만 반영 — 이 원칙은 유지). 그 결과
+    미학습 씨앗은 "첫 독립 정답"을 다음 세션까지 못 찾아 심기지 않는 문제가 있었다.
+    이 엔드포인트는 그 틈만 메운다 — 이미 심긴 단어는 성장/FSRS 모두 그대로 둔다.
+
+    요청 본문: {"user_voca_id": int, "session_id": "<uuid>", "question_type": str}
+    (question_type은 계약상 받지만 현재 로직은 로그를 쓰지 않으므로 사용하지 않는다.)
+
+    lapse_cleared 는 항상 false 다 — `study.py`의 recent_lapse_voca_ids 는 UserStudyLog
+    최신 행을 직접 읽는데, 그 파티션 테이블에 이 재출제 정답을 안전하게(다른 집계 —
+    연속 학습 correct_word_cnt/복귀 미션 하루 카운트/7일 정답률/학습기록 타임라인 —
+    를 부풀리지 않고) 반영할 방법이 없어 이번 구현에서는 보류했다(구분용 컬럼 없음,
+    models.py 변경 불가). 후속 조치는 study.py 담당 세션과 조율 필요.
+    """
+    from app.services.game.farm_v2.answer import plant_via_retry
+
+    user_id = UUID(g.user_id)
+    body = request.get_json(silent=True) or {}
+
+    user_voca_id = body.get('user_voca_id')
+    session_id_raw = body.get('session_id')
+    if user_voca_id is None or not session_id_raw:
+        return jsonify({'code': 400, 'message': 'user_voca_id, session_id는 필수입니다.'}), 400
+    try:
+        user_voca_id = int(user_voca_id)
+    except (TypeError, ValueError):
+        return jsonify({'code': 400, 'message': 'user_voca_id는 정수여야 합니다.'}), 400
+    try:
+        session_uuid = UUID(str(session_id_raw))
+    except (ValueError, AttributeError):
+        return jsonify({'code': 400, 'message': '유효하지 않은 session_id 형식입니다.'}), 400
+
+    try:
+        result = plant_via_retry(user_id, user_voca_id, session_uuid)
+    except LookupError as e:
+        return jsonify({'code': 404, 'message': _msg(e, '단어를 찾을 수 없어요.')}), 404
+    except Exception:
+        return _fail('재출제 정답 반영')
+
+    return jsonify({'code': 200, 'data': {
+        'planted': result['planted'],
+        'stage': result['stage'],
+        'lapse_cleared': False,
+    }}), 200
+
+
 @farm_bp.route('/migration/seen', methods=['POST'])
 @jwt_required
 def migration_seen():

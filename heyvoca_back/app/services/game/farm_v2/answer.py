@@ -216,6 +216,58 @@ def on_answer(user_id: UUID, user_voca_id: int, was_correct: bool,
     }
 
 
+@retry_on_deadlock
+def plant_via_retry(user_id: UUID, user_voca_id: int, session_id,
+                    now: Optional[dt.datetime] = None) -> dict:
+    """세션 내 오답 재출제 정답 → 씨앗 심기만 반영 (`POST /farm/retry-correct` 전용).
+
+    프론트는 재출제 답을 `/study/log` 로 보내지 않는다(FSRS 는 첫 시도만 반영 — 첫 시도
+    원칙 유지). 그래서 `on_answer`가 이 답을 볼 기회가 없고, UNPLANTED_SEED 단어는
+    "첫 독립 정답"을 다음 세션까지 못 찾아 심기지 않는다. 이 함수는 그 틈만 메운다 —
+    UNPLANTED_SEED → PLANTED_SEED(또는 그 이상, 이미 문턱을 넘겼다면) 전환만 반영하고
+    FSRS/stability 는 건드리지 않는다(이미 첫 시도에서 반영됐다).
+
+    이미 심긴(또는 그 이상 자란) 단어는 완전히 손대지 않는다 — 첫 시도 원칙 유지 +
+    멱등성(같은 세션·단어로 중복 호출해도 두 번째 호출부터 stage_before 가 이미
+    PLANTED_SEED 이상이라 아무 것도 하지 않는다).
+    """
+    now = now or dt.datetime.utcnow()
+
+    begin_user_tx(user_id)
+    user_voca = (
+        db.session.query(UserVoca)
+        .filter(UserVoca.id == user_voca_id, UserVoca.user_id == user_id)
+        .first()
+    )
+    if user_voca is None:
+        db.session.rollback()
+        raise LookupError('단어를 찾을 수 없어요.')
+
+    game = _get_or_create(user_voca_id, user_id)
+    stage_before = game.visual_stage or VisualStage.UNPLANTED_SEED
+
+    if stage_before != VisualStage.UNPLANTED_SEED:
+        db.session.rollback()
+        return {'planted': False, 'stage': stage_before}
+
+    fsrs_state = growth.load_fsrs_state(user_voca)
+    tz = localday.get_timezone(user_id)
+    today = localday.local_day(now, tz)
+
+    to_stage = growth.next_stage(game, fsrs_state, now, today,
+                                 is_independent=True, was_correct=True)
+    if to_stage is None:
+        db.session.rollback()
+        return {'planted': False, 'stage': stage_before}
+
+    rewards = []
+    _apply_stage_up(game, stage_before, to_stage, now, today, fsrs_state,
+                    user_id, user_voca_id, session_id, rewards)
+    game.updated_at = now
+    db.session.commit()
+    return {'planted': True, 'stage': game.visual_stage, 'rewards': rewards}
+
+
 def _apply_stage_up(game: UserVocaGame, from_stage: str, to_stage: str,
                     now: dt.datetime, today, fsrs_state: dict,
                     user_id: UUID, user_voca_id: int, session_id, rewards: list) -> None:
