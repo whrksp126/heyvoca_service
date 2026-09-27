@@ -35,12 +35,12 @@ import { getStreakApi, startEarnBackApi } from '../../api/farm';
 import { CROP_ASSETS } from '../farm/CropImage';
 import { useStats } from '../../context/StatsContext';
 import { useVocabulary } from '../../context/VocabularyContext';
-import { toLocalDateString } from '../../utils/common';
 import { vibrate } from '../../utils/osFunction';
 import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
 import { useNewBottomSheetContext, useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 import FarmVisitCalendarSheet from './FarmVisitCalendarSheet';
 import StreakSettlementNewBottomSheet from '../newBottomSheet/StreakSettlementNewBottomSheet';
+import WeekStreakStrip, { buildWeekCells } from '../farm/WeekStreakStrip';
 
 const MIN_RELOAD_INTERVAL_MS = 5000;
 
@@ -50,8 +50,6 @@ const hoursUntil = (iso) => {
   const ms = new Date(iso).getTime() - Date.now();
   return Math.max(0, Math.ceil(ms / 3600000));
 };
-
-const DOW = ['일', '월', '화', '수', '목', '금', '토'];
 
 /**
  * registerRefresh — 부모(홈 Main)가 당겨서 새로고침 때 이 카드의 /farm/streak도 같이
@@ -140,14 +138,14 @@ const StreakCard = ({ registerRefresh } = {}) => {
     );
   };
 
-  const today = toLocalDateString(new Date());
   const required = Math.max(1, streak?.required ?? 5);
   const todayCorrect = streak?.today_correct ?? 0;
 
   /**
    * 1주 불꽃 달력 — /farm/today-tasks(week)에서 받는다. 오늘 포함 최근 7일, 오래된→오늘 순.
    * status: 'all'(오늘 할 일 모두) | 'part'(일부) | 'shield'(보호권) | 'none'(빈 날) |
-   *         'today_empty'(오늘, 아직 미달성).
+   *         'today_empty'(오늘, 아직 미달성). 칸 변환은 WeekStreakStrip.buildWeekCells —
+   * 학습 결과 연속 학습 슬라이드(StudyResult.jsx)와 같은 함수를 쓴다.
    *
    * 이 카드는 원래 /farm/streak(streak state)만으로 그렸는데, week 판정 기준
    * (daily_mission_complete·streak_qualified·streak_protected)은 이 응답에 없어
@@ -155,19 +153,7 @@ const StreakCard = ({ registerRefresh } = {}) => {
    * 이미 홈이 받아 둔 캐시를 구독하기만 한다(다른 카드들과 같은 방식).
    */
   const { todayTasks } = useStats();
-  const weekCells = useMemo(() => {
-    const week = todayTasks?.week ?? [];
-    return week.map((d) => {
-      const isToday = d.date === today;
-      const date = new Date(`${d.date}T00:00:00`);
-      return {
-        date: d.date,
-        isToday,
-        status: d.status,
-        label: isToday ? '오늘' : (Number.isNaN(date.getTime()) ? '' : DOW[date.getDay()]),
-      };
-    });
-  }, [todayTasks, today]);
+  const weekCells = useMemo(() => buildWeekCells(todayTasks?.week), [todayTasks]);
 
   // §6 "최장 기록 … 누르면 기록 화면" — 농장 방문 달력은 하단 탭을 덮는 풀시트다
   // (home-calendar §3 "풀시트라 하단 탭이 없다"). 진입로는 홈의 이 버튼 하나뿐이다.
@@ -320,58 +306,7 @@ const StreakCard = ({ registerRefresh } = {}) => {
           )}
         </div>
       ) : weekCells.length === 7 ? (
-      <>
-      {/* 1주 불꽃 달력 — 오래된→오늘 7칸. "다 했는가"만 색으로 말한다(개수·말풍선 없음) */}
-      <div className="grid grid-cols-7 gap-[6px] mt-[14px]">
-        {weekCells.map((d) => {
-          let cell;
-          if (d.status === 'shield') {
-            cell = (
-              <div className="flex items-center justify-center h-[46px] rounded-[12px] bg-layout-gray-50 dark:bg-layout-gray-dark">
-                <img src={CROP_ASSETS.shield} alt="보호권" draggable={false} className="w-[22px] h-[22px] object-contain select-none opacity-80" />
-              </div>
-            );
-          } else if (d.status === 'all') {
-            cell = (
-              <div className="flex items-center justify-center h-[46px] rounded-[12px] bg-streak-all">
-                <img src={CROP_ASSETS.streak} alt="" draggable={false} className="w-[20px] h-[20px] object-contain select-none" />
-              </div>
-            );
-          } else if (d.status === 'part') {
-            cell = (
-              <div className="flex items-center justify-center h-[46px] rounded-[12px] bg-streak-part">
-                <img src={CROP_ASSETS.streak} alt="" draggable={false} className="w-[20px] h-[20px] object-contain select-none" />
-              </div>
-            );
-          } else if (d.status === 'today_empty') {
-            cell = <div className="h-[46px] rounded-[12px] bg-layout-white dark:bg-layout-black border-[1.5px] border-dashed border-layout-gray-200 dark:border-layout-gray-500" />;
-          } else {
-            // 'none' — 공부 안 한 과거 날의 빈칸
-            cell = <div className="h-[46px] rounded-[12px] bg-layout-gray-50 dark:bg-layout-gray-dark" />;
-          }
-          return (
-            <div key={d.date} className="flex flex-col gap-[6px]">
-              <span className={`text-[11px] text-center ${d.isToday ? 'font-[800] text-layout-black dark:text-layout-white' : 'font-[600] text-layout-gray-300'}`}>
-                {d.label}
-              </span>
-              {cell}
-            </div>
-          );
-        })}
-      </div>
-
-      {/* 범례 — "오늘 할 일 모두" / "일부" */}
-      <div className="flex items-center gap-[12px] mt-[10px] text-[11px] font-[600] text-layout-gray-300">
-        <span className="flex items-center gap-[4px]">
-          <i className="w-[12px] h-[12px] rounded-[4px] bg-streak-all" />
-          오늘 할 일 모두
-        </span>
-        <span className="flex items-center gap-[4px]">
-          <i className="w-[12px] h-[12px] rounded-[4px] bg-streak-part" />
-          일부
-        </span>
-      </div>
-      </>
+        <WeekStreakStrip cells={weekCells} showLegend className="mt-[14px]" />
       ) : (
         // week 응답이 아직 없을 때(로딩·구버전 백엔드) — 막대 대신 빈 칸 스켈레톤만 둔다
         <div className="grid grid-cols-7 gap-[6px] mt-[14px]">

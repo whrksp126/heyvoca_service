@@ -19,10 +19,10 @@ import { useStatusBarStyle } from '../../hooks/useStatusBarStyle';
 // 당근 농장 V2 — 세션 요약 슬라이드
 import CropImage, { CROP_ASSETS, FARM_ITEM_ASSETS } from '../farm/CropImage';
 import { stageToCrop, FARM_ITEMS, FARM_ITEM_LABEL } from '../../utils/crop';
-import { StreakDayMark } from '../farm/StreakDayMark';
+import WeekStreakStrip, { buildWeekCells } from '../farm/WeekStreakStrip';
 
 // 아이템 이름은 utils/crop.js 의 FARM_ITEM_LABEL 하나로 통일돼 있다(시안 §1⑤ "새심기 삽").
-import { getSessionFarmSummaryApi } from '../../api/farm';
+import { getSessionFarmSummaryApi, getFarmTodayTasksApi } from '../../api/farm';
 import { calendarDaysFromToday } from '../../utils/reviewTiming';
 import StudyTimingTag from '../farm/StudyTimingTag';
 import { getAchievementCriteriaApi, updateUserRecentStudyDataApi } from '../../api/study';
@@ -477,48 +477,17 @@ const NextStudyNotice = ({ show, remainingSec, onStop, reducedMotion }) => (
   </AnimatePresence>
 );
 
-// 연속 학습 주간 막대 — 이번 주 월~일.
-//
-// 정본은 백엔드가 주는 `week`(session-summary.streak.week — 월~일 7개, 날짜별 실제
-// status/is_today, query.py `_session_streak` 주석 참고)다. 예전에는 연속 일수(current)
-// 하나로 "오늘부터 거꾸로 current일만큼 학습함"을 가정해 이번 주를 되짚었는데, 보호권으로
-// 이어진 날도 학습일과 똑같이 채워진 칸으로 그려져 홈 카드(빈 칸)와 다르게 보였다.
-// `week`가 없을 때만(구버전 캐시·응답 누락) 이 역산 폴백을 쓴다 — 이 경우 보호일은
-// 구분할 수 없어 studied/missed/future만 나온다.
-// 보호일은 별도 범례 문구 없이 칸 색(StreakDayMark의 STREAK_PROTECTED_BG_CLASS)만으로
-// 구분한다 — 아이콘+범례 조합이 과하다는 QA 피드백으로 색 하나로 정리했다.
-const DOW = ['월', '화', '수', '목', '금', '토', '일'];
+/*
+  연속 학습 주간 달력 — 홈(home/StreakCard.jsx)의 "1주 불꽃 달력"과 완전히 같은 그림.
 
-const buildStreakWeekFallback = (current) => {
-  const now = new Date();
-  const sinceMonday = (now.getDay() + 6) % 7; // 월요일부터 며칠 지났는지
-  return DOW.map((label, index) => {
-    const daysAgo = sinceMonday - index;
-    if (daysAgo < 0) return { label, status: 'future', isToday: false };
-    if (daysAgo === 0) return { label, status: 'missed', isToday: true };
-    return { label, status: daysAgo < (current ?? 0) ? 'studied' : 'missed', isToday: false };
-  });
-};
-
-const StreakWeek = ({ week, current }) => {
-  const cells = Array.isArray(week) && week.length > 0
-    ? week.map((d, index) => ({ label: DOW[index] ?? '', status: d?.status, isToday: !!d?.is_today }))
-    : buildStreakWeekFallback(current);
-
-  return (
-    <div className='flex flex-col items-center gap-[10px] w-full'>
-      <div className='flex justify-center gap-[6px] w-full px-[10px]'>
-        {cells.map((cell, index) => (
-          <div key={`${cell.label}-${index}`} className='flex flex-col items-center gap-[5px] flex-1 max-w-[40px]'>
-            <StreakDayMark status={cell.status} isToday={cell.isToday} />
-            {/* 시안 `.wk .l` — 10px/600 #BBBBBB */}
-            <span className='text-[10px] font-[600] text-[#BBBBBB]'>{cell.label}</span>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-};
+  【2026-09-28 실기기 피드백 4차】 예전엔 이 화면 전용으로 분홍 물방울 7칸(월~일 고정,
+  session-summary.streak.week 의 studied/protected/missed/future 4상태)을 따로 그렸는데,
+  홈 카드는 이미 today-tasks.week 의 all/part/shield/none/today_empty 5상태(최근 6일+오늘)로
+  바뀌어 있어 같은 "연속 학습"인데 두 화면이 서로 다른 디자인이었다. 지금은 홈과 정확히 같은
+  WeekStreakStrip(farm/WeekStreakStrip.jsx)을 그대로 쓰고, 데이터도 홈과 같은 근원
+  (/farm/today-tasks) 을 결과 화면 진입 시점에 새로 받아 온다 — 방금 끝난 세션이 이미
+  반영된 "오늘" 상태여야 하기 때문이다(아래 updateUserHistoryAndNavigate 의 fetch 주석 참고).
+*/
 
 // 암기 상태(FSRS 버킷) 순위 · → 작물 단계.
 // (코드 leaf = 기획 새싹, 코드 plant = 기획 이파리)
@@ -861,12 +830,29 @@ const StudyResult = () => {
         /study/log 응답(streak_v2.record_correct_word)에서만 true 라 세션당 정확히 하루 1회다.
       */
       if ((farmStreak?.current ?? streakSummary?.current ?? 0) > 0 && streakSummary?.qualifiedNow) {
+        /*
+          홈과 같은 "1주 불꽃 달력"(WeekStreakStrip)을 그리려면 홈과 같은 근원인
+          /farm/today-tasks.week(all/part/shield/none/today_empty)가 필요하다 —
+          /farm/session-summary.streak.week는 다른 어휘(studied/protected/missed/future)라
+          그대로는 못 쓴다. 방금 끝난 세션이 반영된 "오늘" 상태여야 하므로 여기서 새로 받는다
+          (StatsContext 캐시를 쓰지 않는 이유 — 홈 탭은 이 세션 도중 재조회되지 않았을 수 있다).
+
+          순서 — 위에서 이미 await한 updateUserHistory(POST /mainpage/user_study_history)가
+          오늘 CheckIn(daily_mission_complete/streak_qualified)을 세션 안에서 동기로 확정하므로,
+          그 뒤인 지금 호출하면 오늘 칸이 이미 이번 세션 결과를 반영한 값으로 온다.
+          실패해도 화면은 깨지지 않는다 — week가 null이면 아래 렌더가 스켈레톤을 보여준다.
+        */
+        let week = null;
+        try {
+          const todayTasksRes = await getFarmTodayTasksApi();
+          if (todayTasksRes?.code === 200) week = todayTasksRes.data?.week ?? null;
+        } catch (e) { /* 실패 — week 없이 진행(아래 렌더가 스켈레톤으로 대체) */ }
+
         screens.push({
           type: 'farmStreak',
           data: {
             current: farmStreak?.current ?? streakSummary?.current,
-            // 월~일 실제 status(studied/protected/missed/future) — 없으면 StreakWeek가 역산 폴백을 쓴다
-            week: farmStreak?.week ?? null,
+            week,
           },
         });
       }
@@ -1480,6 +1466,9 @@ const StudyResult = () => {
     // 나머지 화면들 — 시안 §1 규격(그림 100px + 한 줄 + 확인 버튼)을 공유한다
     // 목록 슬라이드는 가운데 정렬도 배경 오로라도 쓰지 않는다(LIST_SLIDE_TYPES 주석 참고)
     const isListSlide = LIST_SLIDE_TYPES.has(currentScreen.type);
+    // farmStreak(연속 학습)는 목록 슬라이드는 아니지만 이제 마스코트 그림이 없어
+    // 뒤 글로우도 함께 뺀다(2026-09-28 피드백 4차) — 아래 배경 분기에서 같이 검사한다.
+    const noGlow = isListSlide || currentScreen.type === 'farmStreak';
     let content = null;
 
     if (currentScreen.type === 'farmPlanted') {
@@ -1590,16 +1579,22 @@ const StudyResult = () => {
         />
       );
     } else if (currentScreen.type === 'farmStreak') {
-      // ⑩ 연속 학습 — 마스코트 + 한 줄 + 이번 주 물뿌리개 기록. 시안에는 아래 한 줄이 없다.
+      /*
+        ⑩ 연속 학습 — 한 줄 + 홈과 같은 1주 불꽃 달력. 시안에는 아래 한 줄이 없다.
+        【2026-09-28 실기기 피드백 4차】 마스코트(토끼) 히어로 그림 + 뒤 핑크 글로우를 뺐다 —
+        이 슬라이드는 "며칠째"를 홈과 같은 달력 그림으로 보여주는 화면이지, 보상을 받는
+        화면(글로우가 어울리는 자리)이 아니다. 글로우 억제는 아래 렌더(§isListSlide 옆)에서
+        currentScreen.type === 'farmStreak' 도 같이 검사한다.
+      */
       const { current, week } = currentScreen.data;
+      const weekCells = buildWeekCells(week);
       content = (
         <div className='relative flex flex-col items-center justify-center gap-[15px] w-full'>
-          <FarmArt src={CROP_ASSETS.mascotWalk} alt="연속 학습" />
           <motion.p
             className='text-[16px] font-[700] text-center leading-[1.45]'
             initial={{ y: 20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
-            transition={{ delay: 0.3, duration: 0.5 }}
+            transition={{ delay: 0.15, duration: 0.5 }}
           >
             <strong className='text-primary-main-600'>{current}일</strong> 연속으로 농장을 돌봤어요!
           </motion.p>
@@ -1607,9 +1602,18 @@ const StudyResult = () => {
             className='w-full'
             initial={{ y: 20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
-            transition={{ delay: 0.5, duration: 0.4 }}
+            transition={{ delay: 0.3, duration: 0.4 }}
           >
-            <StreakWeek week={week} current={current} />
+            {weekCells.length === 7 ? (
+              <WeekStreakStrip cells={weekCells} />
+            ) : (
+              // week 조회 실패 시(드묾) — 달력 자리 스켈레톤만 남긴다(레이아웃 튐 방지)
+              <div className='grid grid-cols-7 gap-[6px]'>
+                {Array.from({ length: 7 }).map((_, i) => (
+                  <div key={i} className='h-[46px] rounded-[12px] bg-layout-gray-50 dark:bg-layout-gray-dark animate-pulse' />
+                ))}
+              </div>
+            )}
           </motion.div>
         </div>
       );
@@ -1871,8 +1875,8 @@ const StudyResult = () => {
               */}
               <div className='relative w-full' style={isListSlide ? { paddingTop: LIST_SLIDE_TOP_PAD } : undefined}>
               {/* 배경 — 시안 ⑨ 황금 당근만 금색 글로우로 통째로 바꾼다("배경부터 다르게 둔다").
-                  나머지 슬라이드는 지금 형식(핑크 오로라) 그대로다. */}
-              {isListSlide ? null : currentScreen.gold ? (
+                  나머지 슬라이드는 지금 형식(핑크 오로라) 그대로다. farmStreak는 글로우 없음. */}
+              {noGlow ? null : currentScreen.gold ? (
                 <div
                   className='pointer-events-none absolute top-[50px] left-[50%] z-0 translate-x-[-50%] translate-y-[-50%] w-[300px] h-[300px] rounded-full'
                   style={{
