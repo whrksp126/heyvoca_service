@@ -773,6 +773,37 @@ def _fetch_user_stats(user_id: UUID) -> dict:
         if r.created_at >= lapse_window_from and not r.was_correct
     }
 
+    # 같은 세션 재출제 정답(`POST /farm/retry-correct`)은 `/study/log`로 남지 않아
+    # 위 계산이 못 본다 — Redis 플래그(`study:retry_ok:{user_id}:{user_voca_id}`)가
+    # 그 단어의 가장 최근 로그보다 나중이면 재추천 lapse 버킷에서 뺀다.
+    # (그 뒤 다른 세션에서 다시 틀리면 새 로그가 더 최신이라 다시 lapse 로 돌아온다.)
+    if recent_lapse_voca_ids:
+        try:
+            from app import cache
+
+            candidate_ids = list(recent_lapse_voca_ids)
+            flag_keys = [f'study:retry_ok:{user_id}:{vid}' for vid in candidate_ids]
+            flag_values = cache.get_many(*flag_keys)
+            cleared_ids = set()
+            for vid, raw_val in zip(candidate_ids, flag_values):
+                if not raw_val:
+                    continue
+                try:
+                    flag_ts = float(raw_val)
+                except (TypeError, ValueError):
+                    continue
+                latest_log = latest_log_by_voca.get(vid)
+                if latest_log is None:
+                    continue
+                latest_ts = latest_log.created_at.replace(tzinfo=dt.timezone.utc).timestamp()
+                if flag_ts > latest_ts:
+                    cleared_ids.add(vid)
+            recent_lapse_voca_ids -= cleared_ids
+        except Exception:
+            logging.getLogger(__name__).warning(
+                '재출제 정답 lapse 플래그 조회 실패 — 기존 동작 유지', exc_info=True,
+            )
+
     # 약점 유형 조회 (UserQuestionTypeStat)
     stats = (
         UserQuestionTypeStat.query

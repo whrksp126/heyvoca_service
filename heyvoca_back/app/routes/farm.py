@@ -544,11 +544,13 @@ def retry_correct():
     요청 본문: {"user_voca_id": int, "session_id": "<uuid>", "question_type": str}
     (question_type은 계약상 받지만 현재 로직은 로그를 쓰지 않으므로 사용하지 않는다.)
 
-    lapse_cleared 는 항상 false 다 — `study.py`의 recent_lapse_voca_ids 는 UserStudyLog
-    최신 행을 직접 읽는데, 그 파티션 테이블에 이 재출제 정답을 안전하게(다른 집계 —
-    연속 학습 correct_word_cnt/복귀 미션 하루 카운트/7일 정답률/학습기록 타임라인 —
-    를 부풀리지 않고) 반영할 방법이 없어 이번 구현에서는 보류했다(구분용 컬럼 없음,
-    models.py 변경 불가). 후속 조치는 study.py 담당 세션과 조율 필요.
+    이 단어를 그 세션에서 재출제해 정답을 맞혔다는 뜻이므로, `study.py`의
+    recent_lapse_voca_ids(최근 48시간 오답 재추천 버킷)에서도 빼줘야 계속 같은 단어만
+    최우선으로 재추천되는 걸 막을 수 있다. UserStudyLog 에는 이 재출제 정답을 안전하게
+    (다른 집계를 부풀리지 않고) 남길 방법이 없어(구분용 컬럼 없음, models.py 변경 불가),
+    대신 Redis 에 `study:retry_ok:{user_id}:{user_voca_id}` 플래그(TTL 48시간)만 남긴다.
+    `study.py`는 이 플래그 시각이 그 단어의 가장 최근 로그보다 나중이면 lapse 에서 뺀다
+    (그 뒤 다시 틀리면 새 로그가 더 최신이라 다시 lapse 로 돌아온다).
     """
     from app.services.game.farm_v2.answer import plant_via_retry
 
@@ -575,10 +577,21 @@ def retry_correct():
     except Exception:
         return _fail('재출제 정답 반영')
 
+    lapse_cleared = False
+    try:
+        from app import cache
+
+        flag_key = f'study:retry_ok:{user_id}:{user_voca_id}'
+        now_utc = dt.datetime.utcnow().replace(tzinfo=dt.timezone.utc)
+        cache.set(flag_key, str(now_utc.timestamp()), timeout=48 * 3600)
+        lapse_cleared = True
+    except Exception:
+        _log.warning('재출제 정답 lapse 플래그 저장 실패 (씨앗 심기는 정상)', exc_info=True)
+
     return jsonify({'code': 200, 'data': {
         'planted': result['planted'],
         'stage': result['stage'],
-        'lapse_cleared': False,
+        'lapse_cleared': lapse_cleared,
     }}), 200
 
 
