@@ -4,6 +4,7 @@ import { Circle, X, SpeakerHigh } from '@phosphor-icons/react';
 import { FarmResultBar } from '../../../components/farm/FarmStatusBar';
 import StudyTimingTag from '../../../components/farm/StudyTimingTag';
 import TtsRipple from '../../../components/common/TtsRipple';
+import LiftAboveBar from '../../../components/common/LiftAboveBar';
 import WordInfoBubble from '../../../components/common/WordInfoBubble';
 import { getWordInfoApi } from '../../../api/search';
 import { haptic, pickVariant } from '../../../lib/feel';
@@ -508,6 +509,7 @@ const FillInTheBlankQuestion = ({ question, onComplete, onCardMatched, farmByWor
           button 의 phrasing-content 제약을 어긴다. O/X 는 pointer-events-none 이라 탭을 막지 않는다. */}
       <motion.div
         ref={blankCardRef}
+        data-lift-card=""
         className="
           relative
           flex flex-col flex-1 min-h-0
@@ -532,8 +534,11 @@ const FillInTheBlankQuestion = ({ question, onComplete, onCardMatched, farmByWor
           farm={farm}
           wasCorrect={isCorrect}
         />
-        {/* pt 는 우측 상단 시점 문구(StudyTimingTag) 자리만큼 연다 — 긴 예문이 위로 차올라도 겹치지 않게 */}
-        <div className="relative z-[1] flex items-center flex-1 px-[20px] pt-[30px] pb-[60px]">
+        {/* padding 위아래 대칭(45px) — 예문·O/X 가 카드 실제 정중앙에 선다(2026-09-27, 사지선다와 같은 규칙).
+            위 45 는 우측 상단 시점 문구 자리도 겸한다. 채점 후 상태 바가 예문 아래 끝에 닿으면
+            LiftAboveBar 가 닿지 않을 만큼만 예문을 위로 비킨다(카드 크기 불변). */}
+        <div className="relative z-[1] flex items-center flex-1 min-h-0 px-[20px] py-[45px]">
+          <LiftAboveBar active={!!farm} topReserve={28} className="w-full">
           {/* 빈칸 예문 — pill 은 채점 전후 모두 중립색, 채점 후 활용형이 들어간다.
               아이콘이 없어졌으니 텍스트가 카드 전체 너비를 그대로 쓴다(왼쪽 여백 없음). */}
           <p lang={jaBlank ? 'ja' : undefined} className={`w-full text-[22px] font-[700] leading-[1.8] text-layout-black dark:text-layout-white ${jaBlank ? 'break-normal' : 'break-keep'}`}>
@@ -557,6 +562,7 @@ const FillInTheBlankQuestion = ({ question, onComplete, onCardMatched, farmByWor
             </span>
             {renderWordTokens(afterTokens, 'a')}
           </p>
+          </LiftAboveBar>
         </div>
 
         {/* 단어 뜻 말풍선 — O/X(z-3) 위(z-4). 채점 시 닫히므로 실제로 겹치는 일은 거의 없다. */}
@@ -577,9 +583,8 @@ const FillInTheBlankQuestion = ({ question, onComplete, onCardMatched, farmByWor
           )}
         </AnimatePresence>
 
-        {/* O/X — 빈칸 예문과 같은 중심. 예문은 pt 30 / pb 60 콘텐츠 영역 가운데에 서므로
-            카드 전체 중앙이 아니라 같은 영역(top 30 / bottom 60)의 가운데에 둔다. */}
-        <div className="absolute inset-x-0 top-[30px] bottom-[60px] z-[3] flex items-center justify-center pointer-events-none">
+        {/* O/X — 카드 실제 정중앙(= 예문 중심, padding 대칭). */}
+        <div className="absolute inset-0 z-[3] flex items-center justify-center pointer-events-none">
           <AnimatePresence>
             {isCorrect === true && (
               <motion.div

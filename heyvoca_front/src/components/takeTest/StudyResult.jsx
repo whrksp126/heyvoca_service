@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
-import { Circle, X, Flame, Play } from '@phosphor-icons/react';
+import { Circle, X, Flame, Play, Pause } from '@phosphor-icons/react';
 import { useVocabulary } from '../../context/VocabularyContext';
 import { useUser } from '../../context/UserContext';
 import gemImg from '../../assets/images/gem.png';
@@ -400,22 +400,15 @@ const CountdownRing = ({ remainingSec, from, runSec, running, animate }) => (
 );
 
 /*
-  【2026-09-27 실기기 피드백 2】 링을 탭하면 자동 시작을 **멈춘다**(링이 사라지고 버튼은 평소 모양),
-  버튼의 나머지 부분을 탭하면 바로 시작한다. 버튼 안에 버튼을 두면 HTML 규칙 위반이라,
-  버튼은 하나로 두고 누른 자리가 링(data-countdown-ring) 안인지로 가른다.
-  링은 24px 이라 손가락으로 맞히기 어려워 안쪽 여백으로 누를 자리를 44px 까지 넓힌다
-  (음수 마진으로 레이아웃은 그대로).
+  【2026-09-27 실기기 피드백 3】 예전엔 링을 탭하면 멈췄는데(버튼 나머지는 바로 시작) 발견하기
+  어려웠고, 같은 버튼 안에서 누른 자리에 따라 반대 동작이 되어 헷갈렸다. 지금 멈추기는 버튼
+  바로 위 안내 줄(NextStudyNotice)의 `멈추기` 한 곳뿐이고, 버튼은 어디를 눌러도 바로 시작한다.
+  링은 남은 시간을 보여 주는 표시로만 남긴다.
 */
-const NextStudyCta = ({ showRing, ring, reducedMotion, onStart, onStopCountdown, className = '' }) => (
+const NextStudyCta = ({ showRing, ring, reducedMotion, onStart, className = '' }) => (
   <motion.button
     type="button"
-    onClick={(e) => {
-      if (showRing && e.target?.closest?.('[data-countdown-ring]')) {
-        onStopCountdown();
-        return;
-      }
-      onStart();
-    }}
+    onClick={onStart}
     whileTap={{ scale: 0.97 }}
     transition={{ type: 'spring', stiffness: 500, damping: 15 }}
     aria-label={showRing ? `다음 학습, ${ring.remainingSec}초 뒤 자동으로 시작` : '다음 학습'}
@@ -426,12 +419,7 @@ const NextStudyCta = ({ showRing, ring, reducedMotion, onStart, onStopCountdown,
       <Play size={14} weight="fill" />
       다음 학습
       {showRing ? (
-        <span
-          data-countdown-ring
-          data-testid="next-study-ring"
-          aria-label='자동 시작 멈추기'
-          className='-ml-[8px] -my-[10px] -mr-[10px] flex p-[10px]'
-        >
+        <span aria-hidden data-testid="next-study-ring" className='flex'>
           <CountdownRing
             key={ring.key}
             remainingSec={ring.remainingSec}
@@ -444,6 +432,49 @@ const NextStudyCta = ({ showRing, ring, reducedMotion, onStart, onStopCountdown,
       ) : null}
     </span>
   </motion.button>
+);
+
+/*
+  카운트다운 안내 줄 — 하단 버튼 줄 바로 위 은은한 pill(토스트 형).
+  `N초 뒤 다음 학습이 시작돼요` + 오른쪽 `멈추기`. N 은 링과 같은 remainingSec 이다.
+  버튼 영역(data-result-cta, 불투명 z-20) 안에 있어 목록 스크롤과 겹치지 않고,
+  결과 화면의 "명시적 탭 = 멈춤" 판정에서도 빠진다(멈추기 버튼이 직접 멈춘다).
+  사라질 때는 높이·투명도를 함께 줄여 버튼 줄이 부드럽게 내려앉는다.
+*/
+const NextStudyNotice = ({ show, remainingSec, onStop, reducedMotion }) => (
+  <AnimatePresence initial={false}>
+    {show ? (
+      <motion.div
+        key="next-study-notice"
+        initial={reducedMotion ? { opacity: 0 } : { opacity: 0, height: 0 }}
+        animate={reducedMotion ? { opacity: 1 } : { opacity: 1, height: 'auto' }}
+        exit={reducedMotion ? { opacity: 0 } : { opacity: 0, height: 0 }}
+        transition={{ duration: 0.22, ease: [0.4, 0, 0.2, 1] }}
+        className='overflow-hidden'
+      >
+        <div className='px-[24px] pt-[14px] -mb-[4px]'>
+          <div
+            role='status'
+            data-testid='next-study-notice'
+            className='flex items-center justify-between gap-[8px] rounded-full pl-[16px] pr-[4px] h-[40px] bg-layout-gray-50 dark:bg-layout-gray-dark'
+          >
+            <p className='min-w-0 truncate text-[13px] font-[600] tracking-[-0.02em] text-layout-gray-400 dark:text-layout-gray-200'>
+              <span className='tabular-nums font-[700] text-primary-main-600'>{remainingSec}초</span> 뒤 다음 학습이 시작돼요
+            </p>
+            <button
+              type='button'
+              data-testid='next-study-stop'
+              onClick={onStop}
+              className='flex-shrink-0 flex items-center gap-[4px] h-[32px] px-[12px] rounded-full text-[13px] font-[700] text-layout-black dark:text-layout-white active:bg-layout-gray-100 dark:active:bg-layout-black'
+            >
+              <Pause size={14} weight="fill" />
+              멈추기
+            </button>
+          </div>
+        </div>
+      </motion.div>
+    ) : null}
+  </AnimatePresence>
 );
 
 // 연속 학습 주간 막대 — 이번 주 월~일.
@@ -946,7 +977,7 @@ const StudyResult = () => {
       · **명시적인 탭**(누른 자리에서 10px 안에서 떼고, 700ms 안) 만 멈춤으로 본다 —
         결과 카드의 발음 버튼·단어 탭도 탭이므로 멈춘다. 스크롤 제스처는 브라우저가
         pointercancel 을 보내거나 이동거리가 커서 탭이 아니다.
-      · 다음 학습 버튼의 링을 탭하면 멈춘다(버튼 나머지 부분은 즉시 시작).
+      · 버튼 줄 위 안내 줄(NextStudyNotice)의 `멈추기` 를 누르면 멈춘다. 버튼은 어디를 눌러도 즉시 시작.
       · 앱이 백그라운드로 가면(visibilitychange hidden / pagehide) **일시정지**, 돌아오면 남은
         시간부터 이어 센다. WebView 가 visible 을 놓치는 경우를 대비해 멈춘 동안 1초마다 실제
         visibilityState 를 다시 본다.
@@ -1248,7 +1279,7 @@ const StudyResult = () => {
           {/* 아래 여백은 떠 있는 버튼 자리(52+18+26=96)보다 조금 넉넉하게 — 마지막 줄이 가리지 않도록 */}
           <div
             data-testid="result-scroll"
-            className={`relative isolate z-0 flex flex-col flex-1 overflow-y-auto scrollbar-hide ${(nextNotice || nextPlan.reason) ? 'pb-[140px]' : 'pb-[110px]'}`}
+            className={`relative isolate z-0 flex flex-col flex-1 overflow-y-auto scrollbar-hide ${showRing ? 'pb-[160px]' : (nextNotice || nextPlan.reason) ? 'pb-[140px]' : 'pb-[110px]'}`}
           >
             {/* 프로그레스 서클 영역 — 시안 `.circwrap` padding 34px 0 30px */}
             <div className='flex flex-col items-center justify-center pt-[34px] pb-[30px]'>
@@ -1409,6 +1440,12 @@ const StudyResult = () => {
                 {nextNotice || nextPlan.reason}
               </p>
             ) : null}
+            <NextStudyNotice
+              show={showRing}
+              remainingSec={remainingSec}
+              reducedMotion={reducedMotion}
+              onStop={() => { haptic('light'); stopCountdown('notice'); }}
+            />
             <ResultCtaBar>
               {nextPlan.available ? (
                 <>
@@ -1424,7 +1461,6 @@ const StudyResult = () => {
                     ring={{ ...ringSeg, remainingSec, running: counting }}
                     reducedMotion={reducedMotion}
                     onStart={() => { haptic('light'); startNextStudy('manual'); }}
-                    onStopCountdown={() => { haptic('light'); stopCountdown('ring'); }}
                   />
                 </>
               ) : (

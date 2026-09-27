@@ -5,6 +5,7 @@ import { getTextSound } from '../../../utils/common';
 import { haptic } from '../../../lib/feel';
 import { playSuccessSound, playErrorSound } from '../../../utils/audio';
 import TtsRipple from '../../../components/common/TtsRipple';
+import LiftAboveBar from '../../../components/common/LiftAboveBar';
 import MemoryStateChangeBadge, {
   MEMORY_STATE_RANK as STATE_RANK,
   getMemoryStateKeyByStability,
@@ -328,18 +329,20 @@ const CardMatchListeningQuestion = ({ question, testType, onComplete, onCardMatc
               【카드 크기는 채점 전후 절대 변하지 않는다 — 2026-09-26 실기기 피드백】
               예전엔 상태 바가 뜨는 순간에만 pt/pb 를 늘려(단어가 바에 가리지 않게) 카드 내용
               높이가 커졌고, flex-1 의 min-height:auto 때문에 카드가 세로로 늘어나 오른쪽 뜻 카드·
-              아래 카드와 어긋났다. 지금은 우측 상단 시점 문구(24px)·하단 상태 바(50px) 자리를
-              **처음부터** 비워 두고(단어는 늘 그 사이 가운데), min-h-0 으로 내용이 카드를 밀지
-              못하게 한다. 상태 바·시점 문구는 absolute 오버레이라 높이에 관여하지 않는다.
+              아래 카드와 어긋났다. 지금은 padding 을 위아래 대칭(37px)으로 두어 단어·음파가 카드
+              실제 정중앙에 서고(2026-09-27), min-h-0 으로 내용이 카드를 밀지 못하게 한다.
+              상태 바·시점 문구는 absolute 오버레이라 높이에 관여하지 않는다. 아주 작은 카드에서
+              채점 후 상태 바가 단어에 닿을 때만 LiftAboveBar 가 단어를 필요한 만큼 위로 비킨다.
               테두리도 1px 을 늘 깔아 둔다(평소엔 투명) — 선택·정오답 깜빡임에서만 border-[1px] 이
               붙던 시절엔 그 순간 카드가 2px 커졌다(flex-basis 0 이어도 border-box 최소치는 테두리 포함).
             */
             <motion.button
               key={word.id}
+              data-lift-card=""
               className={`
                 relative overflow-hidden
                 flex flex-col items-center justify-center
-                flex-1 min-h-0 rounded-[12px] border-[1px] px-[10px] pt-[24px] pb-[50px]
+                flex-1 min-h-0 rounded-[12px] border-[1px] px-[10px] py-[37px]
                 bg-layout-gray-50 dark:bg-layout-gray-dark
                 transition-[color,background-color,border-color] duration-150
                 ${getLeftCardStyle(index)}
@@ -363,6 +366,11 @@ const CardMatchListeningQuestion = ({ question, testType, onComplete, onCardMatc
               />
               
 
+              <LiftAboveBar
+                active={!!farmByWordId?.[word.id]}
+                topReserve={20}
+                className="relative z-[1] w-full flex justify-center"
+              >
               {showText ? (
                 <FitText
                   text={word.origin}
@@ -385,6 +393,7 @@ const CardMatchListeningQuestion = ({ question, testType, onComplete, onCardMatc
                   </motion.div>
                 </div>
               )}
+              </LiftAboveBar>
 
               {/* 하단 - 채점 후: 농장 상태 바 좁은 형 — 유형 공통(FarmResultBar compact) */}
               <FarmResultBar

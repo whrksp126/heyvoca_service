@@ -455,6 +455,7 @@ export const FarmResultBar = ({
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.25, ease: [0.4, 0, 0.2, 1] }}
       className={place}
+      data-farm-result-bar=""
       onClick={(e) => e.stopPropagation()}
     >
       <FarmStatusBar

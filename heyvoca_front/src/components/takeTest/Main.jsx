@@ -10,6 +10,7 @@ import { ProblemDataNewBottomSheet } from '../newBottomSheet/ProblemDataNewBotto
 import SkipListeningNewBottomSheet from '../newBottomSheet/SkipListeningNewBottomSheet';
 import { isListeningType, isListeningSkipActive, activateListeningSkip } from '../../utils/listeningSkip';
 import TtsRipple from '../common/TtsRipple';
+import LiftAboveBar from '../common/LiftAboveBar';
 import MemorizationStatus from "../common/MemorizationStatus";
 import MemoryStateChangeBadge, {
   MEMORY_STATE_RANK as STATE_RANK,
@@ -1562,17 +1563,19 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
               <>
                 {/*
                   【카드 크기·단어 위치는 채점 전후 같다 — 2026-09-26 실기기 피드백】
-                  우측 상단 시점 문구(pt 30)·하단 농장 상태 바(pb 60) 자리를 **처음부터** 비워 두고
-                  단어는 그 사이 가운데에 선다 — 상태 바가 떠도 단어가 가리거나 움직이지 않는다.
+                  padding 을 위아래 대칭(45px)으로 두어 단어·음파·O/X 가 카드 실제 정중앙에 선다
+                  (2026-09-27 — 예전 pt 30 / pb 60 은 단어가 카드 중심보다 15px 위였다).
+                  상태 바가 단어 아래 끝에 닿는 작은 카드에서만 LiftAboveBar 가 필요한 만큼 위로 비킨다.
                   min-h-0: 채점 후 늘어나는 내용(ja 읽기 줄 등)이 flex-1 카드를 밀어 키우지 못하게.
                   상태 바·시점 문구·힌트 버튼은 absolute 오버레이라 높이에 관여하지 않는다.
                 */}
                 <motion.div
+                  data-lift-card=""
                   className={`
                     relative
                     flex items-center justify-center flex-1 min-h-0
                     w-full
-                    pt-[30px] pb-[60px]
+                    py-[45px]
                     rounded-[12px]
                     bg-layout-gray-50 dark:bg-layout-gray-dark
                     cursor-pointer
@@ -1589,11 +1592,10 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
                 >
 
                   {/* 일반 유형 클릭(TTS 재생) 시 ripple — 아이콘 없이 단어 중심에서 확산.
-                      카드는 pt 30 / pb 60 이 비대칭이라 단어는 "콘텐츠 영역" 가운데에 선다.
-                      ripple 을 카드 전체(padding box) 기준으로 두면 중심이 15px 아래로 어긋나므로
-                      같은 콘텐츠 영역(top 30 / bottom 60)과 똑같은 앵커 박스 안에 그린다. */}
+                      padding 이 대칭이라 단어 중심 = 카드 정중앙 → 카드 전체를 앵커로 쓴다.
+                      (채점 전에만 뜨므로 LiftAboveBar 로 단어가 비킬 일과 겹치지 않는다) */}
                   {showTtsRipple && (
-                    <div aria-hidden className="absolute inset-x-0 top-[30px] bottom-[60px] pointer-events-none">
+                    <div aria-hidden className="absolute inset-0 pointer-events-none">
                       <TtsRipple size={160} duration={speakDuration} className="z-[0]" />
                     </div>
                   )}
@@ -1614,6 +1616,11 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
                       부패 진단(6절)은 시안에 이 배지가 없다 — 하단 삽 pill 하나만 쓴다. */}
                   
 
+                  <LiftAboveBar
+                    active={showFarmBar || isDiagnosis}
+                    topReserve={28}
+                    className="relative z-[1] w-full flex justify-center"
+                  >
                   {testQuestions[progressIndex].questionType === 'multipleChoiceListening' && !isAnswered ? (
                     /* 듣기 모드: 채점 전 스피커 아이콘 */
                     <div className="relative flex items-center justify-center">
@@ -1690,6 +1697,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
                       })()}
                     </h2>
                   )}
+                  </LiftAboveBar>
                   {/* 하단 - 부패 진단(시안 6절): 채점 전부터 뜨는 `.fb.ng` 형.
                       삽 그림 + '삽 1개를 씁니다' + '맞히면 씨앗부터'.
                       삽은 누른 순간이 아니라 진단 정답에서 빠지므로 여기서는 안내만 한다.
@@ -1701,6 +1709,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.25, ease: [0.4, 0, 0.2, 1] }}
                       className="absolute bottom-[14px] left-[14px] right-[14px] z-[2]"
+                      data-farm-result-bar=""
                       onClick={(e) => e.stopPropagation()}
                     >
                       <FarmStatusBar diagnosis />
