@@ -23,7 +23,7 @@ import { useLocation } from 'react-router-dom';
 import { useUser, LEARNING_LANG_CHANGED_EVENT } from './UserContext';
 import { useVocabulary } from './VocabularyContext';
 import { getTodaySummary, getReviewScheduleApi, getTodayMemoryChangesApi } from '../api/study';
-import { getFarmOverviewApi, getFarmHomeFeedApi, getFarmTodayTasksApi } from '../api/farm';
+import { getFarmOverviewApi, getFarmHomeFeedApi, getFarmTodayTasksApi, getFarmHeroPlantsApi } from '../api/farm';
 import { STUDY_DATA_CHANGED_EVENT } from '../utils/studyDataEvents';
 
 // 홈 탭 재진입 · 앱 복귀 때 이보다 오래된 캐시면 다시 받는다
@@ -46,6 +46,7 @@ export const StatsProvider = ({ children }) => {
   const [farmOverview, setFarmOverview] = useState(null);     // { counts, health, today, items, streak, ... }
   const [farmFeed, setFarmFeed] = useState(null);             // { care, rotten, seeds, recent } — 홈 아래 목록
   const [todayTasks, setTodayTasks] = useState(null);         // { rotten, wilted, care, new_seed, seeds_left, show_buy, items, week, streak } — 홈 "오늘 할 일" 카드 + 1주 불꽃 달력
+  const [heroPlants, setHeroPlants] = useState(null);         // [{id, stage, health}] — 홈 히어로 밭 배치(단어 id 기반 결정적 슬롯, 2026-09-27 QA 2·3차 §D). GET /farm/hero-plants — 서버가 이미 최대 96개 안정 표본으로 샘플링해 준다(미학습 제외)
   const [reviewLoaded, setReviewLoaded] = useState(false);    // 최초 로드 완료 여부(스피너 제어용)
 
   // 마지막 조회 시작 시각 · 그 뒤 서버 학습 기록이 바뀌었는지(아래 주석 1)
@@ -75,7 +76,7 @@ export const StatsProvider = ({ children }) => {
       // /farm/today-tasks 는 정산을 하지 않고 그 결과(오늘 할 일·1주 달력)만 읽으므로
       // overview 보다 먼저 뜨면 정산 전 상태를 볼 수 있다(백엔드 안내).
       const farm = await getFarmOverviewApi().catch(() => null);
-      const [summary, schedule, changes, feed, tasks] = await Promise.all([
+      const [summary, schedule, changes, feed, tasks, plants] = await Promise.all([
         getTodaySummary(),
         getReviewScheduleApi(),
         getTodayMemoryChangesApi(),
@@ -84,6 +85,9 @@ export const StatsProvider = ({ children }) => {
         getFarmHomeFeedApi({ limit: 20 }).catch(() => null),
         // 홈 "오늘 할 일" 카드 + 1주 불꽃 달력 — 실패해도 나머지 통계는 그대로 갱신된다.
         getFarmTodayTasksApi().catch(() => null),
+        // 홈 히어로 밭 배치 전용 — 서버가 이미 최대 96개 안정 표본을 뽑아 준다(미학습 제외).
+        // 프론트에서 추가로 자르거나 다시 샘플링하지 않는다(2026-09-27 QA 3차 백엔드 안내).
+        getFarmHeroPlantsApi().catch(() => null),
       ]);
       if (summary?.code === 200) setTodaySummary(summary.data);
       if (schedule?.code === 200) setReviewSchedule(schedule.data);
@@ -91,6 +95,7 @@ export const StatsProvider = ({ children }) => {
       if (farm?.code === 200) setFarmOverview(farm.data);
       if (feed?.code === 200) setFarmFeed(feed.data);
       if (tasks?.code === 200) setTodayTasks(tasks.data);
+      if (plants?.code === 200) setHeroPlants(plants.data?.plants ?? []);
     } catch (e) {
       console.error('refreshStats 오류:', e);
     } finally {
@@ -120,6 +125,7 @@ export const StatsProvider = ({ children }) => {
       setFarmOverview(null);
       setFarmFeed(null);
       setTodayTasks(null);
+      setHeroPlants(null);
       setReviewLoaded(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -199,6 +205,7 @@ export const StatsProvider = ({ children }) => {
     setFarmOverview(null);
     setFarmFeed(null);
     setTodayTasks(null);
+    setHeroPlants(null);
     setReviewLoaded(false);
     await refreshStatsRef.current();
   }, []);
@@ -220,6 +227,7 @@ export const StatsProvider = ({ children }) => {
     farmOverview,
     farmFeed,
     todayTasks,
+    heroPlants,
     reviewLoaded,
     refreshStats,
     refetchAll,

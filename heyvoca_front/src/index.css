@@ -141,6 +141,14 @@
   /* 13절 표에는 없지만 시안 CSS 의 히어로 그라디언트 중간 stop 이라 함께 둔다.
      .hero{linear-gradient(180deg, farm-sky-100 0%, farm-sky-200 32%, farm-canvas 100%)} */
   --farm-sky-200: #F8F1DC;
+
+  /* 연속 학습 1주 달력(StreakCard·FarmVisitCalendarSheet) 색 — all(오늘 할 일 모두, 진함)
+     · part(일부, 연함). 실기기 QA(2차) — 처음엔 컴포넌트 안에 #FFC34D/#FFEBC2 를 새로
+     박아 넣었는데, 디자인 시스템에 없는 색이라 반려됐다(QA 3차). **새 hex 를 만들지
+     않는다** — 이미 있는 secondary-yellow 램프(600 #FB6514 … 50)만 var() 로 참조한다.
+     불꽃 그림(icon-streak.png)은 이미지 자체 색이라 배경과 무관하게 그대로 쓴다. */
+  --streak-all: var(--secondary-yellow-300);   /* #FDDCAB */
+  --streak-part: var(--secondary-yellow-100);  /* #FFF8E5 */
 }
 
 /* 당근 농장 V2 다크 모드 — 시안 17절: 새 색을 하나도 만들지 않고
@@ -153,6 +161,14 @@ html.dark {
   /* 다크에서 카드는 보더가 아니라 면 밝기(layout-gray-dark)로 분리한다 —
      #DDDDDD 를 어둡게 낮추면 배경과 구분이 사라져 보더가 아무 역할도 못 하기 때문이다. */
   --farm-line: transparent;
+
+  /* 라이트의 파스텔(secondary-yellow-300/100)은 다크(#111111/#242424) 위에서 그대로
+     쓰면 형광처럼 튄다. 여기서도 새 hex 를 만들지 않는다 —
+       part = secondary-yellow-dark(기존 다크 서페이스 토큰, 배지 배경과 같은 자리에 쓰는 값)
+       all  = secondary-yellow-600 을 secondary-yellow-dark 위에 섞어(color-mix) part 보다
+              또렷하게 만든다 — 램프 색 자체는 그대로고 섞는 비율만 다르다. */
+  --streak-part: var(--secondary-yellow-dark);          /* #2B271D */
+  --streak-all: color-mix(in srgb, var(--secondary-yellow-600) 45%, var(--secondary-yellow-dark) 55%);
 }
 
 html,

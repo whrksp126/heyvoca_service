@@ -81,8 +81,12 @@ export const heroMood = (health) => {
  *                             홈은 아직 심지 않은 씨앗을 빼고 넘긴다.
  * @param {object} healthMix   그림 variant 분포 { healthy, drying, wilted, rotten }
  * @param {number} storedSeeds 아직 심지 않은 보유 씨앗 — 밭 **밖** 간판에 적힌다(기획 5.1)
+ * @param {Array}  words       (선택) 실제 단어 목록 {id, stage, health} — 주어지면 FarmField 가
+ *                             단어 id 기반 결정적 슬롯(plantFieldByWords)으로 심어 단계가
+ *                             섞여서 자연스럽게 배치되고, 자란 뒤에도 같은 자리를 지킨다
+ *                             (2026-09-27 QA 2차 §D). 없으면 기존 집계 기반으로 폴백한다.
  */
-const FarmHero = ({ counts, fieldCounts, healthMix, storedSeeds = 0, health, state, onSelectGroup, children }) => {
+const FarmHero = ({ counts, fieldCounts, healthMix, storedSeeds = 0, words, health, state, onSelectGroup, children }) => {
   "use memo";
 
   const mood = SKY_CLASS[state] ? state : heroMood(health);
@@ -119,6 +123,7 @@ const FarmHero = ({ counts, fieldCounts, healthMix, storedSeeds = 0, health, sta
         <FarmField
           counts={fieldCounts || counts}
           healthMix={healthMix}
+          words={words}
           maxSprites={96}
           mascot
           storedSeeds={storedSeeds}

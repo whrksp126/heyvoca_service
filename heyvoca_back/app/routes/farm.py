@@ -131,6 +131,26 @@ def get_overview():
         return _fail('농장 개요 조회')
 
 
+@farm_bp.route('/hero-plants', methods=['GET'])
+@jwt_required
+def hero_plants():
+    """홈 히어로 밭 경량 목록 (계약 GET /farm/hero-plants).
+
+    응답 모양·`stage`/`health` 값 형식은 `/farm/plants` 항목과 같다(raw VisualStage/
+    HealthState 문자열). 미학습(UNPLANTED_SEED) 제외, 부패 포함. 표본은 id 의 결정적
+    해시 정렬 상위 `limit`개(기본·최대 96) — 매 호출 같은 표본, 새 단어가 늘어도
+    기존 표본이 크게 안 흔들린다(`query.get_hero_plants` 문서 참고).
+    """
+    from app.services.game.farm_v2 import query
+
+    user_id = UUID(g.user_id)
+    try:
+        data = query.get_hero_plants(user_id, dt.datetime.utcnow(), limit=_int_arg('limit', 96))
+        return jsonify({'code': 200, 'data': data}), 200
+    except Exception:
+        return _fail('히어로 밭 조회')
+
+
 @farm_bp.route('/today-tasks', methods=['GET'])
 @jwt_required
 def today_tasks():

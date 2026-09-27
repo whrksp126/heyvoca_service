@@ -143,7 +143,13 @@ module.exports = {
             400: 'var(--farm-soil-400)',
             600: 'var(--farm-soil-600)',
           },
-        }
+        },
+        // 연속 학습 1주 달력 색 — all/part 는 html.dark 에서 낮춘 톤으로 자동 전환된다.
+        // 예: bg-streak-all / bg-streak-part
+        streak: {
+          all: 'var(--streak-all)',
+          part: 'var(--streak-part)',
+        },
       },
       fontFamily: {
         sans: [

@@ -40,6 +40,19 @@ export const getFarmPlantsApi = async ({ group, health, limit = 50, cursor } = {
   }
 };
 
+// 홈 히어로 밭 배치 전용 — 서버가 이미 안정적으로 표본 추출(최대 96개, 미학습 제외)해
+// 준다. 프론트에서 더 자르거나 다시 샘플링하지 않는다(2026-09-27 QA 3차 백엔드 안내).
+export const getFarmHeroPlantsApi = async () => {
+  const url = `${backendUrl}/farm/hero-plants`;
+  const method = 'GET';
+  const fetchData = {};
+  try {
+    return await fetchDataAsync(url, method, fetchData);
+  } catch (error) {
+    console.error('getFarmHeroPlantsApi 오류:', error);
+  }
+};
+
 // 홈 "오늘 할 일" 카드 — 썩은 단어/시듦/돌봄/새 씨앗/씨앗 구매 안내 + 1주 불꽃 달력.
 export const getFarmTodayTasksApi = async () => {
   const url = `${backendUrl}/farm/today-tasks`;

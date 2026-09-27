@@ -12,13 +12,15 @@
 import React, { useMemo } from 'react';
 import fieldBase from '../../assets/images/farm/field-base.png';
 import { CROP_ASSETS, cropAssetByVariant } from './CropImage';
-import { plantField, CROP_BASELINE } from '../../utils/farmField';
+import { plantField, plantFieldByWords, CROP_BASELINE } from '../../utils/farmField';
 
 /**
  * @param {object}  counts     단계별 **심은** 작물 수 { seed, sprout, leaf, carrot }
  * @param {object}  healthMix  그림 variant 분포 { healthy, drying, wilted, rotten }
- * @param {number}  maxSprites 화면에 올릴 작물 수 상한
- * @param {boolean} mascot     마스코트를 밭에 세울지 (홈만)
+ * @param {Array}   words      (선택) 실제 단어 목록 {id, stage, health} — 주어지면 counts/healthMix
+ *                             대신 이걸로 심는다(plantFieldByWords, 단어 id 기반 결정적 슬롯 —
+ *                             2026-09-27 QA 2차 §D). 홈 히어로만 쓴다. 비어 있으면 기존
+ *                             집계 기반(plantField)으로 자동 폴백한다(로딩 중·구버전 등).
  * @param {boolean} shadows    작물 접지 그림자 (썸네일에서는 꺼서 그리는 값을 줄인다)
  * @param {boolean} soloCrops  작물을 unplanted 판으로 그린다.
  *                             원래는 planted 에 흙 원판이 딸려 있어 밭 바닥에 얼룩처럼 보이던 것을
@@ -36,6 +38,7 @@ import { plantField, CROP_BASELINE } from '../../utils/farmField';
 const FarmField = ({
   counts,
   healthMix,
+  words,
   maxSprites = 96,
   mascot = false,
   shadows = true,
@@ -47,8 +50,10 @@ const FarmField = ({
   "use memo";
 
   const { items } = useMemo(
-    () => plantField(counts, healthMix, { maxSprites, mascot, reserveSigns }),
-    [counts, healthMix, maxSprites, mascot, reserveSigns],
+    () => (words && words.length > 0
+      ? plantFieldByWords(words, { maxSprites, mascot, reserveSigns })
+      : plantField(counts, healthMix, { maxSprites, mascot, reserveSigns })),
+    [words, counts, healthMix, maxSprites, mascot, reserveSigns],
   );
 
   return (

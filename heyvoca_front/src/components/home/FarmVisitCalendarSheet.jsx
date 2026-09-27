@@ -23,7 +23,7 @@
 
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
-import { CaretLeft, CaretRight, Drop, ShieldCheck, Check, Fire, Crown } from '@phosphor-icons/react';
+import { CaretLeft, CaretRight, Check, Fire, Crown } from '@phosphor-icons/react';
 import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
 import { getStreakApi } from '../../api/farm';
 import { CROP_ASSETS } from '../farm/CropImage';
@@ -66,23 +66,27 @@ const shiftYM = (y, m, offset) => {
 };
 
 /**
- * §2 — 셀 상태. 순서가 곧 규칙이다.
- *   goal 목표까지 달성 · on 물만 준 날(5개 이상) · prot 보호권으로 지킴 · miss 쉰 날
+ * §2 — 셀 상태. 홈 1주 불꽃 달력과 같은 규칙으로 맞춘다(2026-09-27 QA 2차 재디자인).
+ *   all 오늘 할 일 모두(진함) · part 일부(연함, 연속 인정만) · shield 보호권으로 지킴 · miss 쉰 날
  * 보호권은 학습하지 않은 날에만 서게 되므로(11.3) 자격을 먼저 본다.
+ *
+ * 【2026-09-27 QA 3차 반영】 GET /farm/streak 의 calendar 항목에 `daily_mission_complete`
+ * (그날 데일리 미션 전부 달성 여부)가 백엔드에 추가돼 all/part 를 정확히 구분해서 보여준다
+ * (요청했던 필드 — 이제 내려온다, 실측 확인 완료). `?? false` 폴백은 구버전 응답(필드
+ * 없음)을 위해 그대로 남겨 둔다 — 없으면 qualified 인 날을 "일부"로 낮춰 보여준다.
  */
 const cellState = (info) => {
   if (!info) return 'miss';
-  // goal_met 은 아직 응답에 없다(보고 참조) — 없으면 자격 충족한 날은 전부 "물만 준 날"
-  if (info.qualified) return (info.goal_met ?? info.goal ?? false) ? 'goal' : 'on';
-  if (info.protected) return 'prot';
+  if (info.qualified) return (info.daily_mission_complete ?? false) ? 'all' : 'part';
+  if (info.protected) return 'shield';
   return 'miss';
 };
 
 const CELL_CLASS = {
-  goal: 'bg-primary-main-600 text-layout-white',
-  on: 'bg-primary-main-100 dark:bg-primary-main-dark text-primary-main-600',
-  prot: 'bg-secondary-yellow-100 dark:bg-secondary-yellow-dark text-secondary-yellow-600',
-  miss: 'text-layout-gray-100 dark:text-[#3A3A3A]',
+  all: 'bg-streak-all text-layout-black dark:text-layout-white',
+  part: 'bg-streak-part text-layout-black dark:text-layout-white',
+  shield: 'bg-layout-gray-50 dark:bg-layout-gray-dark text-layout-black dark:text-layout-white',
+  miss: 'text-layout-gray-200 dark:text-layout-gray-500',
 };
 
 /** 선택 날짜 라벨 — "9월 13일 (일)" */
@@ -136,26 +140,19 @@ const summaryFor = (date, info, streak, today) => {
   return { title: '쉰 날', sub: '기록이 없어요' };
 };
 
-/** 셀 안의 표식 — 물방울 / 방패. 쉰 날은 아무것도 두지 않는다(§2) */
+/** 셀 안의 표식 — 불꽃(all/part) / 보호권(shield). 홈 1주 달력과 같은 그림. 쉰 날은 아무것도 두지 않는다(§2) */
 const CellMark = ({ state }) => {
-  if (state === 'goal') {
+  if (state === 'all' || state === 'part') {
     return (
       <span className="w-[15px] h-[15px] flex items-center justify-center">
-        <Drop size={11} weight="fill" className="text-layout-white" />
+        <img src={CROP_ASSETS.streak} alt="" draggable={false} className="w-[13px] h-[13px] object-contain select-none" />
       </span>
     );
   }
-  if (state === 'on') {
+  if (state === 'shield') {
     return (
       <span className="w-[15px] h-[15px] flex items-center justify-center">
-        <Drop size={11} weight="fill" className="text-primary-main-600" />
-      </span>
-    );
-  }
-  if (state === 'prot') {
-    return (
-      <span className="w-[15px] h-[15px] flex items-center justify-center">
-        <ShieldCheck size={11} weight="fill" className="text-secondary-yellow-600" />
+        <img src={CROP_ASSETS.shield} alt="" draggable={false} className="w-[13px] h-[13px] object-contain select-none opacity-80" />
       </span>
     );
   }
@@ -296,8 +293,9 @@ const FarmVisitCalendarSheet = () => {
       {/* 조회 전에는 아무것도 그리지 않는다 — 빈 달력을 먼저 보이면 "쉰 날"로 읽힌다 */}
       <div className="flex-1 overflow-y-auto px-[16px] pt-[14px] pb-[24px] flex flex-col gap-[14px]">
         {streak && (<>
-        {/* ① 연속 요약 — 기록 화면의 머리말. 홈 카드와 달리 최고 기록까지 한 줄에 둔다(§3) */}
-        <div className="rounded-[14px] p-[14px] bg-primary-main-50 dark:bg-primary-main-dark">
+        {/* ① 연속 요약 — 기록 화면의 머리말. 홈 카드와 달리 최고 기록까지 한 줄에 둔다(§3).
+            2026-09-27 QA 2차 — 분홍 틴트를 걷어내고 다른 홈 카드와 같은 흰 카드로 맞췄다. */}
+        <div className="rounded-[14px] p-[14px] bg-layout-white dark:bg-layout-gray-dark border border-farm-line dark:border-transparent">
           <div className="flex items-center gap-[8px]">
             <img
               src={CROP_ASSETS.streak}
@@ -309,12 +307,12 @@ const FarmVisitCalendarSheet = () => {
               {streak?.current ?? 0}
               <em className="not-italic text-[13px] font-[700] ml-[1px]">일 연속</em>
             </span>
-            <span className="ml-auto text-[11.5px] font-[700] text-primary-main-600">
+            <span className="ml-auto text-[11.5px] font-[700] text-layout-gray-300">
               최고 {streak?.best ?? 0}일
             </span>
           </div>
           {/* §1 — "앱을 연 게 아니라 5개를 맞힌 날이 기록이다"(기획 11.1) */}
-          <p className="mt-[9px] text-[11px] font-[600] tracking-[-0.02em] text-[#B87DA5] dark:text-primary-main-400">
+          <p className="mt-[9px] text-[11px] font-[600] tracking-[-0.02em] text-layout-gray-400 dark:text-layout-gray-300">
             하루에 <b className="font-[800]">{streak?.required ?? 5}개</b>만 맞히면 그날은 이어져요
           </p>
         </div>
@@ -364,6 +362,9 @@ const FarmVisitCalendarSheet = () => {
               if (!cell) return <span key={`e${i}`} className="aspect-square" />;
               const isFuture = cell.date > today;
               const isSelected = cell.date === selectedDate;
+              // 오늘인데 아직 아무 자격도 없으면(§ 홈 규칙과 동일) 점선 빈칸으로 — 채워지면
+              // 그날의 실제 상태(all/part/shield) 색으로 자연스럽게 바뀐다.
+              const isTodayEmpty = cell.isToday && cell.state === 'miss';
               return (
                 <button
                   key={cell.date}
@@ -375,13 +376,15 @@ const FarmVisitCalendarSheet = () => {
                   className={`
                     aspect-square rounded-[10px] flex flex-col items-center justify-center gap-[1px]
                     text-[11px] font-[700]
-                    ${CELL_CLASS[cell.state]}
-                    ${cell.isToday ? 'shadow-[inset_0_0_0_1.5px_#111111] dark:shadow-[inset_0_0_0_1.5px_#FFFFFF]' : ''}
-                    ${isSelected ? 'ring-2 ring-primary-main-600 ring-offset-2 ring-offset-[#FFD7F3]' : ''}
+                    ${isTodayEmpty
+                      ? 'bg-layout-white dark:bg-layout-black border-[1.5px] border-dashed border-layout-gray-200 dark:border-layout-gray-500 text-layout-black dark:text-layout-white'
+                      : CELL_CLASS[cell.state]}
+                    ${cell.isToday && !isTodayEmpty ? 'shadow-[inset_0_0_0_1.5px_#111111] dark:shadow-[inset_0_0_0_1.5px_#FFFFFF]' : ''}
+                    ${isSelected ? 'ring-2 ring-primary-main-600 ring-offset-2 ring-offset-layout-white dark:ring-offset-layout-black' : ''}
                   `}
                 >
                   {cell.day}
-                  <CellMark state={cell.state} />
+                  <CellMark state={isTodayEmpty ? null : cell.state} />
                 </button>
               );
             })}
@@ -391,8 +394,8 @@ const FarmVisitCalendarSheet = () => {
               날짜 라벨이 왼쪽, 본문·부제가 그 오른쪽에 왼쪽 정렬로 이어진다. 부제(자격 문구)는
               좁은 폰에서 한 줄에 다 안 들어갈 수 있어(예: "5개 이상 맞혀 연속으로 이어졌어요")
               truncate 로 자르지 않고 최대 2줄까지 자연스럽게 줄바꿈한다 — 제목만 한 줄로 자른다. */}
-          <div className="flex items-start justify-between gap-[10px] mt-[10px] rounded-[10px] bg-primary-main-50 dark:bg-primary-main-dark border border-primary-main-200 dark:border-transparent px-[12px] py-[10px]">
-            <span className="shrink-0 text-[12px] font-[800] tracking-[-0.02em] text-[#B8709F]">
+          <div className="flex items-start justify-between gap-[10px] mt-[10px] rounded-[10px] bg-layout-gray-50 dark:bg-layout-gray-dark px-[12px] py-[10px]">
+            <span className="shrink-0 text-[12px] font-[800] tracking-[-0.02em] text-layout-gray-500 dark:text-layout-gray-200">
               {formatDateLabel(selectedDate)}
             </span>
             <span className="flex-1 min-w-0 text-left">
@@ -407,13 +410,13 @@ const FarmVisitCalendarSheet = () => {
             </span>
           </div>
 
-          {/* §2 범례 — 네 가지 상태. 쉰 날에도 X 나 빨강을 쓰지 않는다 */}
+          {/* §2 범례 — 홈 1주 불꽃 달력과 같은 규칙(오늘 할 일 모두/일부/보호권).
+              쉰 날은 색이 없는 상태 자체가 규칙이라(§2) 범례에 다시 적지 않는다. */}
           <div className="flex flex-wrap gap-[12px] mt-[12px]">
             {[
-              { t: '목표까지 달성', c: 'bg-primary-main-600' },
-              { t: '물만 준 날', c: 'bg-primary-main-100 dark:bg-primary-main-dark' },
-              { t: '보호권으로 지킴', c: 'bg-secondary-yellow-100 dark:bg-secondary-yellow-dark' },
-              { t: '쉰 날', c: 'bg-[#F0F0F0] dark:bg-[#2A2A2A]' },
+              { t: '오늘 할 일 모두', c: 'bg-streak-all' },
+              { t: '일부', c: 'bg-streak-part' },
+              { t: '보호권', c: 'bg-layout-gray-50 dark:bg-layout-gray-dark' },
             ].map((l) => (
               <span
                 key={l.t}

@@ -8,6 +8,7 @@ import { isListeningSkipActive, mapSkippedQuestionType } from '../utils/listenin
 import { useNewBottomSheetActions } from '../context/NewBottomSheetContext';
 import { MEMORY_STATES } from '../utils/common';
 import { ConfirmNewBottomSheet } from '../components/newBottomSheet/ConfirmNewBottomSheet';
+import { AlertNewBottomSheet } from '../components/newBottomSheet/AlertNewBottomSheet';
 import { AppHistory } from '../utils/appHistory';
 import { getStudyRecommend, finishStudySession, predictReviews } from '../api/study';
 import { warmTts, collectTestTexts, collectTestFullTexts, prepareTtsWithProgress } from '../api/tts';
@@ -631,7 +632,11 @@ const TakeTest = () => {
 
           // 출제 가능한 문제가 0개이면 (예: 빈칸 채우기 단독 선택인데 강조 예문이 없는 경우) 알림 후 복귀
           if (!tempTestQuestions || tempTestQuestions.length === 0) {
-            window.alert('출제 가능한 문제가 없어요. 다른 유형을 함께 선택해주세요');
+            await pushAwaitNewBottomSheet(
+              AlertNewBottomSheet,
+              { title: '출제 가능한 문제가 없어요', subTitle: '다른 유형을 함께 선택해주세요' },
+              { isBackdropClickClosable: false, isDragToCloseEnabled: false }
+            );
             setIsTestQuestionsSetting(false);
             if (AppHistory.canGoBack()) {
               navigate(-1);
@@ -676,7 +681,11 @@ const TakeTest = () => {
           await prepareThenReveal(tempTestQuestions);
         } catch (e) {
           console.error('[TakeTest] 학습 데이터 초기화 실패:', e);
-          window.alert('학습을 시작할 수 없어요. 잠시 후 다시 시도해주세요');
+          await pushAwaitNewBottomSheet(
+            AlertNewBottomSheet,
+            { title: '학습을 시작할 수 없어요', subTitle: '잠시 후 다시 시도해주세요' },
+            { isBackdropClickClosable: false, isDragToCloseEnabled: false }
+          );
           setIsTestQuestionsSetting(false);
           if (AppHistory.canGoBack()) {
             navigate(-1);

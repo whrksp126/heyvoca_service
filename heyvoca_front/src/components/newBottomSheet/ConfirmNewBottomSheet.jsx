@@ -28,7 +28,7 @@ export const ConfirmNewBottomSheet = ({ title, subTitle, btns }) => {
           {title}
         </h3>
         {subTitle && (
-          <p className="text-center text-[13px] text-layout-gray-400 dark:text-layout-gray-500">
+          <p className="text-center text-[13px] text-layout-gray-400 dark:text-layout-gray-200">
             {subTitle}
           </p>
         )}

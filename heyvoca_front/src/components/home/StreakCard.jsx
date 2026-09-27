@@ -327,31 +327,31 @@ const StreakCard = ({ registerRefresh } = {}) => {
           let cell;
           if (d.status === 'shield') {
             cell = (
-              <div className="flex items-center justify-center h-[46px] rounded-[12px] bg-[#F4F4F4] dark:bg-layout-gray-dark">
+              <div className="flex items-center justify-center h-[46px] rounded-[12px] bg-layout-gray-50 dark:bg-layout-gray-dark">
                 <img src={CROP_ASSETS.shield} alt="보호권" draggable={false} className="w-[22px] h-[22px] object-contain select-none opacity-80" />
               </div>
             );
           } else if (d.status === 'all') {
             cell = (
-              <div className="flex items-center justify-center h-[46px] rounded-[12px] bg-[#FFC34D]">
+              <div className="flex items-center justify-center h-[46px] rounded-[12px] bg-streak-all">
                 <img src={CROP_ASSETS.streak} alt="" draggable={false} className="w-[20px] h-[20px] object-contain select-none" />
               </div>
             );
           } else if (d.status === 'part') {
             cell = (
-              <div className="flex items-center justify-center h-[46px] rounded-[12px] bg-[#FFEBC2]">
+              <div className="flex items-center justify-center h-[46px] rounded-[12px] bg-streak-part">
                 <img src={CROP_ASSETS.streak} alt="" draggable={false} className="w-[20px] h-[20px] object-contain select-none" />
               </div>
             );
           } else if (d.status === 'today_empty') {
-            cell = <div className="h-[46px] rounded-[12px] bg-layout-white dark:bg-layout-black border-[1.5px] border-dashed border-[#CFCFCF]" />;
+            cell = <div className="h-[46px] rounded-[12px] bg-layout-white dark:bg-layout-black border-[1.5px] border-dashed border-layout-gray-200 dark:border-layout-gray-500" />;
           } else {
             // 'none' — 공부 안 한 과거 날의 빈칸
-            cell = <div className="h-[46px] rounded-[12px] bg-[#F4F4F4] dark:bg-layout-gray-dark" />;
+            cell = <div className="h-[46px] rounded-[12px] bg-layout-gray-50 dark:bg-layout-gray-dark" />;
           }
           return (
             <div key={d.date} className="flex flex-col gap-[6px]">
-              <span className={`text-[11px] text-center ${d.isToday ? 'font-[800] text-layout-black dark:text-layout-white' : 'font-[600] text-[#9A9A9A]'}`}>
+              <span className={`text-[11px] text-center ${d.isToday ? 'font-[800] text-layout-black dark:text-layout-white' : 'font-[600] text-layout-gray-300'}`}>
                 {d.label}
               </span>
               {cell}
@@ -361,13 +361,13 @@ const StreakCard = ({ registerRefresh } = {}) => {
       </div>
 
       {/* 범례 — "오늘 할 일 모두" / "일부" */}
-      <div className="flex items-center gap-[12px] mt-[10px] text-[11px] font-[600] text-[#9A9A9A]">
+      <div className="flex items-center gap-[12px] mt-[10px] text-[11px] font-[600] text-layout-gray-300">
         <span className="flex items-center gap-[4px]">
-          <i className="w-[12px] h-[12px] rounded-[4px] bg-[#FFC34D]" />
+          <i className="w-[12px] h-[12px] rounded-[4px] bg-streak-all" />
           오늘 할 일 모두
         </span>
         <span className="flex items-center gap-[4px]">
-          <i className="w-[12px] h-[12px] rounded-[4px] bg-[#FFEBC2]" />
+          <i className="w-[12px] h-[12px] rounded-[4px] bg-streak-part" />
           일부
         </span>
       </div>

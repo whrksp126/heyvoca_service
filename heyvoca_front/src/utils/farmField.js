@@ -13,13 +13,21 @@
  * 같은 자리에 붙는다. 다만 **심는 마름모의 크기는 생성기를 믿지 않고 그림에서 잰다** —
  * 아래 SOIL_W/SOIL_H 주석 참고. 시안 생성기(docs/ui-concepts)는 여기와 별개다.
  *
- * 【심는 규칙】
+ * 【심는 규칙 — plantField(), 집계 수만 있을 때】
  *   · 한 칸에 한 작물. **작물 하나 = 단어 하나**다. 구역이 다 차면 거기서 멈춘다.
  *   · 성장 단계마다 자기 구역이 있다 — 뒤 씨앗 · 왼 새싹 · 오 이파리 · 앞 당근.
  *     팻말 네 개가 서는 자리와 정확히 맞물린다(시안 §3).
  *   · 단어가 많으면 격자를 잘게 나누고 작물을 그만큼 작게 그린다.
  *   · **심지 않은 씨앗은 심지 않는다.** 한 번도 학습하지 않은 단어는 밭에 없는 단어다.
  *     그 수는 홈의 "아직 심지 않은 씨앗" 카드가 따로 말한다.
+ *
+ * 【심는 규칙 — plantFieldByWords(), 실제 단어 id 목록이 있을 때(2026-09-27 QA 2차 §D)】
+ *   위 "단계마다 전용 구역"은 실기기에서 "새싹끼리 왼쪽, 이파리끼리 오른쪽"으로 보였다.
+ *   단어 id 가 있으면 구역을 나누지 않고 한 밭 전체를 공유 풀로 섞어 심는다 — 자리는
+ *   `hash(user_voca_id)` 로 정해지는 결정적 슬롯이라 그 단어가 자라 단계가 바뀌어도
+ *   (씨앗→새싹→이파리→당근) 같은 자리에 그대로 선다. 홈 히어로가 이 경로를 쓴다
+ *   (FarmHero → FarmField `words` prop → Main.jsx 가 GET /farm/hero-plants 로 가져온
+ *   표본 — 서버가 이미 최대 96개로 안정 샘플링해 준다, 프론트는 다시 추리지 않는다).
  */
 
 import { healthToVariant, stageToCrop } from './crop';
@@ -322,6 +330,117 @@ export const plantField = (counts, healthMix = {}, opts = {}) => {
   if (mascot) items.push(mascotItem(G));
 
   // 뒤 → 앞. 이 순서대로 그려야 앞의 작물이 뒤의 작물과 팻말 말뚝을 가린다
+  items.sort((a, b) => a.y - b.y);
+  return { items, grid: G, planted: items.filter((i) => i.kind === 'crop').length };
+};
+
+/** 문자열/숫자 id → 32비트 해시(자리 배정용 — 암호화 목적 아님, 충돌만 드물면 된다) */
+const hashId = (id) => {
+  const s = String(id);
+  let h = 0;
+  for (let i = 0; i < s.length; i += 1) {
+    h = (Math.imul(31, h) + s.charCodeAt(i)) | 0;
+  }
+  return Math.abs(h);
+};
+
+/**
+ * 밭에 **실제 단어 목록**으로 심는다 — 자리가 단어 고유 id 로 결정되는 결정적 슬롯이다.
+ * 같은 단어는 다음에 다시 그려도(그 사이 단계가 바뀌었어도) 같은 자리에 선다 —
+ * 씨앗을 심은 자리에서 새싹·이파리·당근이 된다(실기기 QA 2차 — §D).
+ *
+ * 【plantField()와 다른 점 — 왜 새로 만들었나】
+ * plantField()는 집계 수(counts)만 보고 심는다. 그래서
+ *   ① 단어 정체성이 없다(개수만 알지 "그 씨앗"을 모른다) — 자리가 안정적일 수 없다.
+ *   ② quadrant()가 단계마다 **전용 구역**(뒤=씨앗·왼=새싹·오=이파리·앞=당근)을 강제해
+ *      같은 단계끼리 항상 같은 구석에 모였다(실기기 QA — "새싹끼리 왼쪽, 이파리끼리 오른쪽").
+ * 이 함수는 실제 항목(id 있음)을 받아 ①을 없애고, 팻말·마스코트 자리만 뺀 격자 전체를
+ * **한 공유 풀**로 써서 ②도 없앤다 — 단계가 섞여서 자연스럽게 심긴다.
+ *
+ * 표시 개수 상한(maxSprites)·팻말 자리 배치는 plantField()와 같은 규칙을 따른다 — 팻말이
+ * 보여주는 집계 수는 이 함수가 아니라 여전히 FarmHero 가 받는 counts 에서 나온다(이 함수는
+ * "어디에 무엇을 그릴까"만 정하고, "구역별로 몇 개나 있나"는 팻말이 별도로 말한다).
+ *
+ * @param {Array<{id, stage, health}>} words  실제 심긴 단어만(UNPLANTED_SEED 제외, 호출부 책임).
+ * @param {object} opts  maxSprites/mascot/reserveSigns — plantField 와 같다.
+ */
+export const plantFieldByWords = (words, opts = {}) => {
+  const { maxSprites = 96, mascot = false, reserveSigns = true } = opts;
+
+  const list = (words || []).filter((w) => w && w.id != null);
+  if (list.length === 0) {
+    return { items: mascot ? [mascotItem(6)] : [], grid: 6, planted: 0 };
+  }
+
+  // 표시 상한을 넘으면 id 순으로 정렬해 **전 구간에서 고르게** 골라낸다 — 앞에서부터
+  // 자르면(가장 오래 심은 것만) 오래된 단어 쪽으로 치우친 표본이 된다.
+  const sample = list.length <= maxSprites
+    ? list
+    : (() => {
+        const sorted = [...list].sort((a, b) => (a.id < b.id ? -1 : a.id > b.id ? 1 : 0));
+        const step = sorted.length / maxSprites;
+        const out = [];
+        for (let k = 0; k < maxSprites; k += 1) out.push(sorted[Math.floor(k * step)]);
+        return out;
+      })();
+
+  const n = sample.length;
+  // 격자 밀도 — 팻말 4 + 마스코트 1자리를 빼고도 표본 전부가 들어갈 만큼 잘게 나눈다.
+  let G = 6;
+  while (G < 12 && (G * G) - 5 < n) G += 2;
+  const scale = 6 / G;
+
+  const grid = cells(G);
+  const signCell = SIGN_UV.map(([u, v]) => [
+    clamp(Math.round(u * G - 0.5), 0, G - 1),
+    clamp(Math.round(v * G - 0.5), 0, G - 1),
+  ]);
+  const mascotIJ = [0, Math.round(G / 3)];
+
+  // 단계별 전용 구역을 두지 않는다 — 팻말·마스코트 자리만 빼고 나머지는 전부 한 풀이다.
+  const pool = [];
+  grid.forEach((c) => {
+    if (reserveSigns && signCell.some(([si, sj]) => si === c.i && sj === c.j)) return;
+    if (mascot && c.i === mascotIJ[0] && c.j === mascotIJ[1]) return;
+    pool.push(c);
+  });
+
+  const slotCount = pool.length;
+  const taken = new Array(slotCount).fill(false);
+  const items = [];
+
+  sample.forEach((w) => {
+    if (slotCount === 0) return;
+    // 해시 → 슬롯. 충돌하면(다른 단어가 이미 그 슬롯을 쓰면) 다음 빈 슬롯으로 — 요청사항의
+    // "해시 → 밭 격자 슬롯, 충돌 시 다음 빈 슬롯" 그대로다. 해시가 id 로만 정해지므로
+    // 같은 밭·같은 단어는 다시 그려도 항상 같은 슬롯을 먼저 시도한다(자리 안정성의 근거).
+    let idx = hashId(w.id) % slotCount;
+    let tries = 0;
+    while (taken[idx] && tries < slotCount) { idx = (idx + 1) % slotCount; tries += 1; }
+    if (taken[idx]) return; // 풀이 꽉 찼다 — n<=slotCount 로 보장되므로 정상 동작에선 안 옴
+    taken[idx] = true;
+
+    const cell = pool[idx];
+    const crop = stageToCrop(w.stage);
+    const variant = healthToVariant(w.health);
+    // 깊이에 따라 조금 커진다 — plantField()와 같은 식(단계가 아니라 위치가 크기를 정한다)
+    const box = CROP_BOX * (0.8 + 0.34 * cell.y / ISL_H) * scale;
+    const x = ISL_X0 + cell.x;
+    const y = ISL_Y0 + cell.y;
+    items.push({
+      key: `w-${w.id}`,
+      kind: 'crop',
+      stage: crop,
+      variant,
+      y,
+      leftPct: x / FIELD_W * 100,
+      topPct: y / FIELD_H * 100,
+      boxPct: box / FIELD_W * 100,
+    });
+  });
+
+  if (mascot) items.push(mascotItem(G));
+
   items.sort((a, b) => a.y - b.y);
   return { items, grid: G, planted: items.filter((i) => i.kind === 'crop').length };
 };

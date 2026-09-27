@@ -102,7 +102,7 @@ const Main = () => {
 
   // 통계는 StatsContext(라우터 바깥 캐시)에서 구독 — 탭 전환마다 재조회/스피너 없이 캐시값을 즉시 사용,
   // 학습 세션 완료 시에만 조용히 갱신된다.
-  const { todaySummary, farmOverview, todayChanges, farmFeed, todayTasks, refreshStats } = useStats();
+  const { todaySummary, farmOverview, todayChanges, farmFeed, todayTasks, heroPlants, refreshStats } = useStats();
   const todayNewWords = todaySummary?.new_words ?? 0;
   const dailyNewLimit = userProfile?.daily_new_limit ?? 0;
 
@@ -124,6 +124,18 @@ const Main = () => {
 
   const healthMix = useMemo(() => healthMixFromOverview(health), [health]);
 
+  /*
+    히어로 밭 배치 — 단어 id 기반 결정적 슬롯(2026-09-27 QA 2·3차 §D).
+    GET /farm/hero-plants 가 이미 미학습 제외 + 최대 96개 안정 표본까지 뽑아 준다 —
+    여기서 다시 자르거나 필터링하지 않는다(백엔드 안내). stage 는 raw visual_stage
+    문자열("PLANTED_SEED" 등)인데 plantFieldByWords 가 내부에서 stageToCrop 으로 그대로
+    받아들인다. FarmField 는 이 목록이 비어 있으면(로딩 전·실패) 기존 집계 기반
+    (plantField)으로 자동 폴백한다.
+  */
+  const heroWords = useMemo(() => (heroPlants ?? [])
+    .map((p) => ({ id: p.id, stage: p.stage, health: p.health })),
+  [heroPlants]);
+
   // 농장 조회 전에는 §12 5번(빈 밭)으로 떨어지지 않게 2번(가장 흔한 상태)을 깔아 둔다.
   // 단어를 가진 사용자에게 "아직 밭이 비어 있어요"가 한 프레임 스치는 편이 훨씬 나쁘다.
   const homeState = farmOverview
@@ -132,20 +144,31 @@ const Main = () => {
   const view = HOME_STATE_VIEW[homeState];
 
   /*
-    §7 CTA 문구 — "오늘 할 일" 맨 위의 미완료 줄을 따라간다(홈 개편 2026-09-27).
+    §7 CTA 문구·동작 — "오늘 할 일" 맨 위의 미완료 줄을 따라간다(홈 개편 2026-09-27).
     썩은 단어는 학습 불가라 CTA 대상이 아니다 — 있어도 기존 상태별 문구를 그대로 쓴다.
     todayTasks 가 아직 없으면(로딩 전·구버전 백엔드) 기존 view.cta 로 폴백한다.
+
+    kind: 'study'(handleTodayStudyButtonClick) | 'store'(/book-store) | 'default'(handleCtaClick
+    의 기존 다섯 상태 분기 — homeState===EMPTY 일 때만 서점, 나머지는 학습).
+    문구와 동작을 한 값에 묶은 이유 — 실기기 QA: 목표(new_seed.target)는 안 채웠는데 심을
+    씨앗 재고(seeds_left)가 0인 상태에서 "새 씨앗 N개 심기" 문구만 보고 학습을 열면
+    unlearned 단어가 없어 "출제 가능한 문제가 없어요"만 뜬다. 그 상태는 문구도 동작도
+    서점으로 보내야 해서, 둘을 따로 계산하면 어긋날 위험이 있어 하나로 묶었다.
   */
-  const ctaLabel = useMemo(() => {
-    if (homeState === HOME_STATES.EMPTY || !todayTasks) return view.cta;
-    if ((todayTasks.rotten?.count ?? 0) > 0) return view.cta;
+  const ctaInfo = useMemo(() => {
+    if (homeState === HOME_STATES.EMPTY || !todayTasks) return { label: view.cta, kind: 'default' };
+    if ((todayTasks.rotten?.count ?? 0) > 0) return { label: view.cta, kind: 'default' };
     const wiltedLeft = Math.max(0, (todayTasks.wilted?.total ?? 0) - (todayTasks.wilted?.done ?? 0));
-    if (wiltedLeft > 0) return `썩기 전 ${wiltedLeft}개부터 시작`;
+    if (wiltedLeft > 0) return { label: `썩기 전 ${wiltedLeft}개부터 시작`, kind: 'study' };
     const careLeft = Math.max(0, (todayTasks.care?.total ?? 0) - (todayTasks.care?.done ?? 0));
-    if (careLeft > 0) return `물 줄 단어 ${careLeft}개 돌보기`;
+    if (careLeft > 0) return { label: `물 줄 단어 ${careLeft}개 돌보기`, kind: 'study' };
     const seedLeft = Math.max(0, (todayTasks.new_seed?.target ?? 0) - (todayTasks.new_seed?.done ?? 0));
-    if (seedLeft > 0) return `새 씨앗 ${seedLeft}개 심기`;
-    return view.cta;
+    if (seedLeft > 0) {
+      const seedsLeft = todayTasks.seeds_left ?? 0;
+      if (seedsLeft <= 0) return { label: '서점에서 새 단어장 고르기', kind: 'store' };
+      return { label: `새 씨앗 ${seedLeft}개 심기`, kind: 'study' };
+    }
+    return { label: view.cta, kind: 'default' };
   }, [homeState, view.cta, todayTasks]);
 
   const gemCnt = farmOverview?.gem_cnt ?? userProfile?.gem_cnt ?? 0;
@@ -307,9 +330,9 @@ const Main = () => {
     startQuickReview();
   };
 
-  // §12 — 버튼 모습은 다섯 상태 모두 같고 글자만 바뀐다. 가는 곳만 상태를 따른다.
+  // §12 — 버튼 모습은 다섯 상태 모두 같고 글자만 바뀐다. 가는 곳만 상태(ctaInfo.kind)를 따른다.
   const handleCtaClick = () => {
-    if (homeState === HOME_STATES.EMPTY) {
+    if (homeState === HOME_STATES.EMPTY || ctaInfo.kind === 'store') {
       vibrate({ duration: 5 });
       navigate('/book-store');
       return;
@@ -429,6 +452,7 @@ const Main = () => {
         counts={counts}
         fieldCounts={fieldCounts}
         healthMix={healthMix}
+        words={heroWords}
         storedSeeds={unplanted}
         health={health}
         state={view.mood}
@@ -502,7 +526,7 @@ const Main = () => {
             카드(TodayTasksCard)가 맡고 있고, 거기에는 누르면 갈 곳이 있다. */}
 
         {/* §7 주 CTA — 히어로 하단에 겹쳐 뜬다. 홈에서 유일한 핑크 */}
-        <FarmCta label={ctaLabel} onClick={handleCtaClick} />
+        <FarmCta label={ctaInfo.label} onClick={handleCtaClick} />
       </FarmHero>
 
       {/* §9 본문 — 배경을 깔지 않는다. 페이드된 지면이 카드 사이로 비친다.

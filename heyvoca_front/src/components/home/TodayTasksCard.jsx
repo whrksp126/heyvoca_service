@@ -232,6 +232,10 @@ const TodayTasksCard = () => {
   const seedsLeft = todayTasks.seeds_left ?? 0;
   const showBuy = !!todayTasks.show_buy;
   const nutrientCnt = todayTasks.items?.nutrient ?? 0;
+  // 오늘 목표(target)는 안 채웠는데 심을 씨앗 재고가 0인 상태 — "새 씨앗 심기"를 열어도
+  // unlearned 단어가 없어 학습이 비어서 뜬다(실기기 QA — window.alert '출제 가능한
+  // 문제가 없어요'). 이 상태에서는 그 행·CTA 모두 학습이 아니라 서점으로 보낸다.
+  const noSeedsToPlant = seedsLeft <= 0 && newSeed.done < (newSeed.target ?? 0);
 
   const toggle = (key) => setExpanded((prev) => ({ ...prev, [key]: !prev[key] }));
 
@@ -290,6 +294,8 @@ const TodayTasksCard = () => {
   const studyUnlearned = () => {
     const remaining = Math.max(0, (newSeed.target ?? 0) - (newSeed.done ?? 0));
     if (remaining <= 0) return;
+    // 심을 씨앗 재고가 없으면 학습을 열지 않는다 — goStore()가 그 자체로 서점 이동이다.
+    if (noSeedsToPlant) { goStore(); return; }
     startQuickReview({ memoryState: ['unlearned'], count: remaining });
   };
 
@@ -362,27 +368,38 @@ const TodayTasksCard = () => {
     });
   }
 
-  if (newSeed.target > 0) {
+  // 새 씨앗 행 — 목표(target)는 남았는데 심을 씨앗 재고(seedsLeft)가 0이면 학습을 열 수
+  // 없다(unlearned 필터에 걸릴 단어가 없어 "출제 가능한 문제가 없어요"만 뜬다 — 실기기
+  // 보고). 그런 상태에서는 이 행도, CTA(Main.jsx ctaInfo)도 서점으로 보낸다 — 아래에서
+  // '새 씨앗 구매' 행을 '새 씨앗 심기' 위로 올리는 것도 같은 이유다.
+  const newSeedRow = newSeed.target > 0 ? (() => {
     const done = newSeed.done >= newSeed.target;
-    rowDefs.push({
+    return {
       key: 'new_seed',
       icon: <img src={CROP_ASSETS.seedPacket} alt="" draggable={false} className="w-[74px] h-[74px] object-contain select-none" />,
       title: '새 씨앗 심기',
       faded: done,
       right: <Progress done={newSeed.done} total={newSeed.target} />,
       onRowClick: done ? undefined : studyUnlearned,
-    });
-  }
+    };
+  })() : null;
 
-  if (showBuy) {
-    rowDefs.push({
-      key: 'buy',
-      icon: <img src={navStoreIcon} alt="" draggable={false} className="w-[40px] h-[40px] object-contain select-none" />,
-      title: '새 씨앗 구매',
-      sub: <span className="text-[13px] font-[600] text-[#5A5A5A]">남은 씨앗 {seedsLeft}개</span>,
-      right: <Pill tone="secondary" onClick={goStore}>서점</Pill>,
-      onRowClick: goStore,
-    });
+  const buyRow = showBuy ? {
+    key: 'buy',
+    icon: <img src={navStoreIcon} alt="" draggable={false} className="w-[40px] h-[40px] object-contain select-none" />,
+    title: '새 씨앗 구매',
+    right: <Pill tone="secondary" onClick={goStore}>서점</Pill>,
+    onRowClick: goStore,
+  } : null;
+
+  // 심을 씨앗이 없는 상태(noSeedsToPlant)에서는 '새 씨앗 구매'가 실제로 할 수 있는 일이라
+  // 위로 올린다 — 못 여는 '새 씨앗 심기'가 먼저 보이면 눌러도 안 되는 행이 눈에 먼저 띈다.
+  if (noSeedsToPlant) {
+    if (buyRow) rowDefs.push(buyRow);
+    if (newSeedRow) rowDefs.push(newSeedRow);
+  } else {
+    if (newSeedRow) rowDefs.push(newSeedRow);
+    if (buyRow) rowDefs.push(buyRow);
   }
 
   if (rowDefs.length === 0) return null;

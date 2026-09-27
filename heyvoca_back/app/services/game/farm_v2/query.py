@@ -760,6 +760,60 @@ def get_today_tasks(user_id: UUID, now: Optional[dt.datetime] = None,
 
 
 # ──────────────────────────────────────────────────────────────
+# GET /farm/hero-plants (홈 히어로 밭 경량 목록)
+# ──────────────────────────────────────────────────────────────
+
+def _stable_sample_key(uv_id: int) -> int:
+    """id → 32비트 결정적 해시(Knuth 곱셈 해시, 홀수 상수라 mod 2^32 위에서 전단사).
+
+    이 정렬 키로 상위 N개를 뽑으면:
+      - 같은 id는 항상 같은 키를 가지므로 호출마다 같은 표본이 나온다(재현 가능).
+      - id 오름차순이 아니라서 "오래된 단어만 영원히 뽑힌다"가 안 생긴다.
+      - 무작위 셔플이 아니라서 새 id 가 하나 늘어도 **기존 id들의 키는 그대로**다 —
+        표본은 새 id 가 우연히 기존 표본보다 앞자리를 뽑았을 때만 한 자리 바뀐다.
+        전체를 다시 섞으면 새 단어 하나에도 96개 전체가 요동친다.
+    """
+    return (int(uv_id) * 2654435761) & 0xFFFFFFFF
+
+
+def get_hero_plants(user_id: UUID, now: Optional[dt.datetime] = None,
+                    limit: int = 96, lang: Optional[str] = None) -> dict:
+    """홈 히어로 밭 경량 목록 (계약 GET /farm/hero-plants).
+
+    미학습(UNPLANTED_SEED, 게임 행이 아예 없는 경우 포함)은 제외 — 밭에 심어야 보인다.
+    부패는 **포함**한다 — health 로 구분해서 그리는 건 화면 몫이다.
+
+    `/farm/plants` 목록(list_plants/_plant_item)과 달리 행마다 FSRS JSON 을 파싱하지
+    않는다. 히어로 밭은 표본만 있으면 되고, 필요한 건 이미 컬럼인 visual_stage/
+    health_state 뿐이라 그 비용을 들일 이유가 없다(overview 와 같은 판단 —
+    effective_health_expr 문서 참고. 부패만 SQL 로 보정, 그 외 저장값 그대로).
+
+    `stage`/`health` 값 형식은 `/farm/plants` 항목과 동일하다(raw `VisualStage`/
+    `HealthState` 문자열 — 예: "CARROT"/"WILTED").
+    """
+    now = now or dt.datetime.utcnow()
+    lang = _lang(lang)
+    limit = max(1, min(int(limit or 96), 96))
+    eff = effective_health_expr(now)
+
+    rows = (
+        db.session.query(UserVoca.id, UserVocaGame.visual_stage, eff)
+        .select_from(UserVocaGame)
+        .join(UserVoca, UserVoca.id == UserVocaGame.user_voca_id)
+        .filter(UserVocaGame.user_id == user_id, UserVoca.dict_lang == lang,
+                UserVocaGame.visual_stage != VisualStage.UNPLANTED_SEED)
+        .all()
+    )
+
+    total = len(rows)
+    rows.sort(key=lambda r: _stable_sample_key(r[0]))
+    sample = rows[:limit]
+
+    plants = [{'id': uv_id, 'stage': stage, 'health': state} for uv_id, stage, state in sample]
+    return {'plants': plants, 'total': total}
+
+
+# ──────────────────────────────────────────────────────────────
 # GET /farm/plants
 # ──────────────────────────────────────────────────────────────
 

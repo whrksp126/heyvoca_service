@@ -1036,17 +1036,33 @@ def get_state(user_id: UUID, now: Optional[dt.datetime] = None) -> dict:
     db.session.commit()
 
     since = today - dt.timedelta(days=34)
-    flags = _flag_days(user_id, since, today)
-    correct_counts = _correct_counts(user_id, since, today)   # 캘린더 날짜 탭 요약용 — 쿼리 1회 추가
+    # `_flag_days`(qualified, protected 만) + `_correct_counts`(correct_cnt 만) 둘로 나뉘어 있던
+    # 걸 여기서는 한 쿼리로 합쳐 읽는다 — `daily_mission_complete` 를 추가하면서 쿼리를
+    # 늘리지 않기 위해서다(이미 CheckIn 을 이 범위로 두 번 읽고 있었다). `_flag_days` 자체는
+    # 다른 호출부(연속 판정 로직)가 여전히 (qualified, protected) 2-tuple 을 기대하므로 건드리지 않는다.
+    day_rows = (
+        db.session.query(CheckIn.attendence_date, CheckIn.streak_qualified,
+                         CheckIn.streak_protected, CheckIn.daily_mission_complete,
+                         CheckIn.correct_word_cnt)
+        .filter(CheckIn.user_id == user_id,
+                CheckIn.attendence_date >= since, CheckIn.attendence_date <= today)
+        .all()
+    )
+    day_map = {d: (bool(q), bool(p), bool(m), int(c or 0))
+              for d, q, p, m, c in day_rows}
     calendar = []
     cursor = since
     while cursor <= today:
-        qualified, protected = flags.get(cursor, (False, False))
+        qualified, protected, mission_complete, correct_cnt = day_map.get(
+            cursor, (False, False, False, 0))
         # 'qualified'/'protected'는 하위 호환을 위해 유지한다(구버전 웹/앱 캐시 대비).
         # 새로 붙는 'status'/'is_today'가 화면이 실제로 그려야 할 값이다 — day_status 참고.
+        # 'daily_mission_complete'는 연속(V2, 5단어 기준)과 다른 축인 데일리 미션 완료 여부다
+        # (모듈 docstring 1번 참고) — 프론트가 "그날 전부 다 했는가"를 별도로 그리고 싶을 때 쓴다.
         calendar.append({'date': cursor.isoformat(),
                          'qualified': qualified, 'protected': protected,
-                         'correct_cnt': correct_counts.get(cursor, 0),
+                         'daily_mission_complete': mission_complete,
+                         'correct_cnt': correct_cnt,
                          'status': day_status(qualified, protected),
                          'is_today': cursor == today})
         cursor += _DAY
