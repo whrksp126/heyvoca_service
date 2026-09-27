@@ -870,6 +870,11 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
       question.isCorrect = true;
       question.userResultIndex = userSelected;
       q = timeTakenSec <= 5 ? 5 : timeTakenSec <= 10 ? 4 : timeTakenSec <= 15 ? 3 : 0;
+      // 진행 바는 "정답 처리된 이 순간" 채운다 — 정답 피드백이 뜨는 동안 채워지도록,
+      // 다음 문제로 전환되는 시점(setUpdateRecentStudyStateAndStatus)까지 기다리지 않는다.
+      // 마지막 문제를 맞히면 이 호출로 이미 14/14가 되고, 그 뒤 채점 연출이 끝나야
+      // 결과 화면으로 넘어간다(오답은 여기서 호출되지 않으므로 재출제 규칙과 충돌하지 않는다).
+      markVocaPassed(question.vocaIndexId ?? question.id);
     } else {
       haptic('error');
       playErrorSound();
@@ -928,6 +933,8 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
       question.isCorrect = true;
       question.userResultIndex = index;
       q = timeTakenMs <= 5000 ? 5 : timeTakenMs <= 10000 ? 4 : timeTakenMs <= 15000 ? 3 : 0;
+      // 진행 바는 "정답 처리된 이 순간" 채운다 — 아래 markVocaPassed 호출 참고(handleClickNext와 동일 규칙).
+      markVocaPassed(question.vocaIndexId ?? question.id);
     } else {
       haptic('error');
       playErrorSound();
@@ -1056,7 +1063,10 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
       return newMap;
     });
 
-    // 정답 시 통과 처리 (진행률 카운트 증가)
+    // 정답 시 통과 처리 (진행률 카운트 증가) — 실제로는 채점 순간(handleClickNext/
+    // handleClickExamOption)에 이미 처리됐다. markVocaPassed는 passedVocaIdsRef 기준
+    // 멱등이라 여기서 다시 불러도 중복 증가하지 않는다 — 그 경로를 타지 않는 케이스에 대한
+    // 안전망으로 남겨둔다.
     if (question.isCorrect) {
       markVocaPassed(vocaId);
     }

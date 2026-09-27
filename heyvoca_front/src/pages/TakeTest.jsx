@@ -74,32 +74,6 @@ const TakeTest = () => {
   //  단어당 재출제를 정확히 1회만 큐잉하도록 방지)
   const cardRetryEnqueuedRef = useRef(new Set());
 
-  /*
-    【2026-09-28 실기기 피드백 4차】 마지막 문제를 맞히는 순간 recentStudy[testType].status가
-    "learning"→"end"로 바뀌는데, 그 즉시 아래 렌더가 `status === "end"`를 보고 `null`을 반환해
-    Main(진행 바 포함)이 그 자리에서 통째로 사라졌다. Main.jsx의 진행 바는 passedCount가
-    이미 분모(totalWordCount)와 같아져 폭 100%로 다시 그리지만(0.3s 트랜지션), 그 애니메이션이
-    한 프레임도 재생되기 전에 부모가 언마운트해 버려 "13/14에서 바로 결과 화면으로 넘어간다"로
-    보였다 — 실제 화면 전환(navigate)은 별도 useEffect(handleUpdateAndNavigate)가 여러 네트워크
-    요청을 기다린 뒤에야 일어나므로, 이 사이 잠깐이라도 Main을 계속 그려야 진행 바가 끝까지
-    찬다. 그래서 status가 "end"로 바뀐 뒤 진행 바 트랜지션 길이(0.3s)만큼만 Main을 그대로 붙잡아
-    두고, 그 뒤에야 기존의 "빈 화면 유지"(깜빡임 방지) 분기로 넘어간다.
-  */
-  const PROGRESS_FILL_HOLD_MS = 320;
-  const [holdingForFillAnim, setHoldingForFillAnim] = useState(false);
-  const sessionEndedHeldRef = useRef(false);
-  useEffect(() => {
-    const isEnd = !!(recentStudy && recentStudy[state.testType] && recentStudy[state.testType].status === "end");
-    if (isEnd && !sessionEndedHeldRef.current) {
-      sessionEndedHeldRef.current = true;
-      setHoldingForFillAnim(true);
-      const t = setTimeout(() => setHoldingForFillAnim(false), PROGRESS_FILL_HOLD_MS);
-      return () => clearTimeout(t);
-    }
-    if (!isEnd) sessionEndedHeldRef.current = false;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [recentStudy]);
-
   // initializeTest가 이 마운트에서 이미 실제로 초기화(캐시 복원 또는 신규 생성)를 마쳤는지.
   // ── 왜 필요한가 ──
   // 학습 중 앱이 백그라운드로 가면 아래 handleVisibilityChange(hidden)가
@@ -958,16 +932,13 @@ const TakeTest = () => {
     const prog = isPreparingTts ? prepareProgress : 0.06;
     return <ProgressSplash progress={prog} message={message} />;
   } else {
-    if (recentStudy[state.testType]?.status === "end" && !holdingForFillAnim) {
+    if (recentStudy[state.testType]?.status === "end") {
       // 학습 종료 → 결과 페이지로 navigate 진행 중. 깜빡임 방지를 위해 빈 화면 유지.
-      // (holdingForFillAnim 동안은 아래에서 Main을 그대로 그려 진행 바가 14/14까지
-      //  차오르는 애니메이션을 마치게 한다 — 위 PROGRESS_FILL_HOLD_MS 주석 참고.)
       return null;
     }
 
     return (
-      // holdingForFillAnim 동안은 이미 끝난 세션 화면이라 추가 탭을 막는다(진행 바만 보여준다)
-      <div className={holdingForFillAnim ? 'pointer-events-none' : ''}>
+      <div>
         <div style={{ paddingTop: 'var(--status-bar-height)' }}></div>
         <Header
           testType={state?.testType ? state.testType : recentStudy[state.testType]?.type}
