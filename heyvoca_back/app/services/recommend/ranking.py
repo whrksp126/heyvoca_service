@@ -21,10 +21,11 @@ short/medium/long 버킷 정렬(rank_by_weakness, 2026-09 정정):
 
 import random
 import datetime as dt
-from typing import List, Optional
+from typing import Callable, List, Optional
 
 from app.services.recommend.pool import CandidateItem
 from app.services.fsrs.core import _retrievability as _fsrs_retrievability
+from app.services.recommend.stage import crop_stage
 
 # ──────────────────────────────────────────────
 # 약함 점수(weakness) 가중치 — 각 항목 0~1로 정규화한 뒤 가중합(합계 1.0).
@@ -245,7 +246,12 @@ def is_known_word(item: CandidateItem, now: dt.datetime, *, streak_threshold: in
                    recency_hours: float = 24.0) -> bool:
     """
     "지금 아는 단어" 판정 — 연속 정답 streak_threshold회 이상 && 마지막 학습이
-    recency_hours시간 이내. composer.py의 후보 제외 규칙에서 사용.
+    recency_hours시간 이내.
+
+    (2026-09 재설계로 composer.py는 더 이상 이 함수로 후보를 통째로 제외하지 않는다 —
+    그 규칙이 "방금 맞힌 단어 제외 → 빈 세션 → 방금 푼 단어로 리필"이라는 버그의 원인이었다.
+    지금은 compute_priority의 elapsed/I 값이 방금 학습한 단어를 자연히 뒤로 미룬다.
+    함수 자체는 다른 참조/테스트를 위해 남겨 둔다.)
     """
     mastery = item.mastery or {}
     streak = int(mastery.get("streak") or 0)
@@ -256,6 +262,98 @@ def is_known_word(item: CandidateItem, now: dt.datetime, *, streak_threshold: in
         return False
     hours = (now - last).total_seconds() / 3600.0
     return 0 <= hours <= recency_hours
+
+
+# ──────────────────────────────────────────────
+# 단일 priority 큐 (2026-09 추천 알고리즘 재설계)
+# ──────────────────────────────────────────────
+#
+# 옛 방식: bucket(overdue/today/short/medium/long)별로 슬롯을 나누고, 각 bucket 안에서만
+# 정렬했다. 그 결과 "맞힌 단어는 뒤로, 틀린 단어는 앞으로"를 bucket 경계를 넘어 비교할
+# 방법이 없었고, "지금 아는 단어"를 통째로 후보에서 빼는 별도 규칙(is_known_word)까지
+# 필요했다 — 그 규칙이 오히려 "빈 세션 → 방금 푼 단어로 리필"이라는 버그를 낳았다.
+#
+# 새 방식: 학습 이력이 있는 모든 단어(= bucket != 'new')를 단 하나의 숫자 priority로
+# 줄세운다. 신규(unplanted) 단어는 이 큐에 들어오지 않고 composer.py가 기존 일일 신규
+# 상한/레벨 가중치 로직으로 별도 배정한다.
+#
+# priority = elapsed_since_last_studied / I
+#   I(연습 간격) = (next_review - last_review) / k_stage, 하한 _MIN_PRACTICE_INTERVAL_HOURS.
+#   k_stage(작물 단계별 반복 배수, 제품 결정): 씨앗 4, 새싹 3, 이파리 2, 당근 1 —
+#   "당근이 1번 나올 동안 씨앗은 약 4번" 나오게 한다(같은 경과 시간이면 씨앗의 I가 더
+#   작아 priority가 더 커진다 → 정렬에서 앞).
+#
+#   elapsed가 I를 넘기면(= 복습 예정일을 지났으면) priority가 자연히 1.0을 넘어 커지고,
+#   방금 학습해 elapsed≈0이면 priority≈0으로 맨 뒤로 밀린다 — "연속 정답 N회+24h" 같은
+#   별도 규칙 없이 이 숫자 하나로 "맞히면 뒤로, 틀리면(다시 최근 학습이 아니게 되는
+#   시점부터) 앞으로"가 성립한다.
+#
+# 최근 틀린 단어(user_stats.recent_lapse_voca_ids)는 이 점수에 큰 가산을 더해 항상
+# 최상단 그룹을 이루게 한다(composer.py가 is_lapse=True로 전달).
+
+# 작물 단계 → 반복 배수(k). 'unlearned'는 이 큐 대상이 아니므로 매핑하지 않는다.
+_STAGE_REPEAT_K: dict = {
+    'seed':   4.0,
+    'sprout': 3.0,
+    'leaf':   2.0,
+    'carrot': 1.0,
+}
+
+# 연습 간격(I) 하한 — next_review와 last_review가 거의 같은 시각이거나 데이터가
+# 이례적으로 촘촘해도 분모가 0에 가까워져 priority가 폭주하지 않게 막는다.
+_MIN_PRACTICE_INTERVAL_HOURS = 1.0
+
+# 최근 틀린 단어(lapse) 가산 — 일반적인 priority 값(대개 수십~수백 배 이내)을 항상
+# 압도하도록 충분히 큰 상수로 둔다. is_lapse=True일 때만 더해진다.
+_LAPSE_PRIORITY_BONUS = 1_000_000.0
+
+
+def _parse_fsrs_last_review(item: CandidateItem) -> Optional[dt.datetime]:
+    """fsrs_state.last_review ISO 문자열 → datetime. 없거나 파싱 실패 시 None."""
+    raw = item.fsrs_state.get("last_review")
+    if not raw:
+        return None
+    try:
+        return dt.datetime.fromisoformat(
+            str(raw).replace("Z", "+00:00")
+        ).replace(tzinfo=None)
+    except (ValueError, AttributeError):
+        return None
+
+
+def _get_last_studied(item: CandidateItem) -> Optional[dt.datetime]:
+    """마지막 학습 시각 — mastery.last_studied_at 우선, 없으면 fsrs.last_review 폴백."""
+    return _parse_last_studied_at(item.mastery) or _parse_fsrs_last_review(item)
+
+
+def compute_priority(item: CandidateItem, now: dt.datetime = None, *, is_lapse: bool = False) -> float:
+    """
+    단일 priority 점수 — 값이 클수록 먼저 나와야 하는 단어.
+
+    unlearned(신규, bucket=='new') 단어는 이 큐 대상이 아니다(composer.py가 별도 처리).
+    이 함수에 신규 단어가 들어오면 is_lapse가 아닌 한 0.0을 반환한다(방어적 기본값).
+    """
+    now = now or dt.datetime.utcnow()
+    stage = crop_stage(item.fsrs_state)
+    k = _STAGE_REPEAT_K.get(stage)
+    if k is None:
+        return _LAPSE_PRIORITY_BONUS if is_lapse else 0.0
+
+    last_studied = _get_last_studied(item)
+    if last_studied is None:
+        # 학습 이력이 있어야 할 단계(seed 이상)인데 last_review/last_studied_at이 둘 다
+        # 없는 이례적 데이터 — 놓치지 않도록 안전하게 최우선 취급.
+        priority = 1_000.0
+    else:
+        next_review = _parse_next_review(item)
+        elapsed_hours = max(0.0, (now - last_studied).total_seconds() / 3600.0)
+        interval_hours = max(0.0, (next_review - last_studied).total_seconds() / 3600.0)
+        i_hours = max(interval_hours / k, _MIN_PRACTICE_INTERVAL_HOURS)
+        priority = elapsed_hours / i_hours
+
+    if is_lapse:
+        priority += _LAPSE_PRIORITY_BONUS
+    return priority
 
 
 def rank_overdue(items: List[CandidateItem], now: dt.datetime = None) -> List[CandidateItem]:
@@ -359,10 +457,15 @@ def weighted_sample_without_replacement(
     now: dt.datetime,
     k: int,
     rng: Optional[random.Random] = None,
+    weight_fn: Optional[Callable[[CandidateItem, dt.datetime], float]] = None,
 ) -> List[CandidateItem]:
     """
-    약함 점수를 가중치로 한 비복원 랜덤 샘플링.
-    items는 이미 rank_by_weakness로 top-N만 추린 후보 목록이어야 한다(호출부 책임).
+    가중치를 준 비복원 랜덤 샘플링(기본 가중치=약함 점수, compute_weakness).
+    items는 이미 정렬로 top-N만 추린 후보 목록이어야 한다(호출부 책임).
+
+    weight_fn(item, now) -> float: 가중치를 다르게 쓰고 싶을 때 주입(2026-09 재설계로
+    composer.py는 여기에 priority(compute_priority) 기반 가중치를 넘긴다). None이면
+    기존 동작대로 compute_weakness를 쓴다.
 
     rng: 테스트에서 결정적 결과를 검증할 때 random.Random(seed) 주입 가능.
     """
@@ -370,8 +473,9 @@ def weighted_sample_without_replacement(
         return []
     rng = rng or random
     now = now or dt.datetime.utcnow()
+    weight_fn = weight_fn or compute_weakness
 
-    pool = [(it, max(_SAMPLING_WEIGHT_FLOOR, compute_weakness(it, now))) for it in items]
+    pool = [(it, max(_SAMPLING_WEIGHT_FLOOR, weight_fn(it, now))) for it in items]
     result: List[CandidateItem] = []
     for _ in range(min(k, len(pool))):
         total = sum(w for _, w in pool)

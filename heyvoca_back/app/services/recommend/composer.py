@@ -27,9 +27,7 @@ from typing import List, Optional, Dict, Any, Set, Tuple
 
 from app.services.recommend.pool import CandidateItem
 from app.services.recommend.ranking import (
-    rank_overdue, rank_today,
-    rank_new, rank_short_medium, rank_by_weakness,
-    compute_weakness, is_known_word, weighted_sample_without_replacement,
+    rank_new, compute_priority, weighted_sample_without_replacement,
 )
 from app.utils.interleave import interleave_avoid_adjacent
 from app.utils.example_tagging import example_has_target_tag, example_origin_text, example_meaning_text
@@ -39,17 +37,6 @@ from app.constants.question_types import RECOMMENDABLE_QUESTION_TYPES
 # 상수
 # ──────────────────────────────────────────────
 
-# bucket 우선순위 (망각 위험도 + 학습 가치 종합)
-_BUCKET_PRIORITY: Tuple[str, ...] = (
-    'lapse',    # 최근 틀림 — 즉시 재학습 (가상 bucket, runtime 분류)
-    'overdue',  # 복습 시점 지남
-    'today',    # 오늘 복습 예정
-    'short',    # 단기 기억 강화
-    'medium',   # 중기 기억 강화
-    'new',      # 신규 도전
-    'long',     # 장기 점검
-)
-
 # 사용자 능력 평가 임계값 (recent_7d_total >= MIN_SAMPLES 일 때만 의미 있음)
 _LEVEL_MIN_SAMPLES   = 20
 _LEVEL_HIGH_RATE     = 0.85
@@ -57,15 +44,18 @@ _LEVEL_LOW_RATE      = 0.60
 
 # 다양성: 같은 bucket이 연속해서 나오지 않게 인터리빙 적용
 
-# bucket별 사용자 표시용 reason 문구
+# bucket(= reason 라벨)별 사용자 표시용 문구.
+# 2026-09 재설계: short/medium/long은 더 이상 개별 규칙으로 정렬되지 않고(단일
+# priority 큐, ranking.compute_priority) 전부 "연습 간격(I)에 도달"이라는 같은 근거로
+# 뽑히므로 문구도 하나로 통일한다.
 _BUCKET_REASON: Dict[str, str] = {
     'lapse':   '방금 틀린 단어예요',
     'overdue': '복습 시점이 지났어요',
     'today':   '오늘 복습 예정이에요',
-    'short':   '단기 기억 강화',
-    'medium':  '중기 기억 강화',
+    'short':   '다시 볼 때가 됐어요',
+    'medium':  '다시 볼 때가 됐어요',
+    'long':    '다시 볼 때가 됐어요',
     'new':     '',          # 'new'는 프론트가 NEW 칩으로 별도 표시
-    'long':    '장기 기억 점검',
 }
 
 # 지원 question_type 목록 — 단일 소스는 app/constants/question_types.py
@@ -92,23 +82,24 @@ _QUESTION_TYPE_WEIGHTS: Dict[str, int] = {
 }
 
 # ──────────────────────────────────────────────
-# "지금 아는 단어" 제외 규칙 (2026-09 추가)
+# 단일 priority 큐 선택 파라미터 (2026-09 재설계)
 # ──────────────────────────────────────────────
+#
+# 옛 "연속 정답 3회 && 24h 이내 → 아는 단어 제외"(_extract_known_words) 규칙과 그로 인해
+# 필요했던 "6b 빈 세션 리필"은 없앴다 — prod 실측상 활발한 사용자는 대부분의 후보가
+# 이 규칙에 걸려 제외되고, 리필이 그 방금 푼 단어를 다시 뽑는 원인이었다. 지금은
+# ranking.compute_priority의 elapsed/I 값이 방금 학습한 단어를 자연히 순위 맨 뒤로
+# 미루므로(제외가 아니라 "뒤로 밀림") 별도 제외/리필 규칙이 필요 없다.
 
-# 연속 정답 N회 이상 && 마지막 학습이 이 시간 이내면 "지금은 확실히 아는 단어"로 보고
-# lapse/overdue/today가 아닌 버킷 후보에서 제외한다(ranking.is_known_word).
-_KNOWN_WORD_STREAK_THRESHOLD = 3
-_KNOWN_WORD_RECENCY_HOURS    = 24.0
+# priority 내림차순 상위 몇 배(* count) 범위 안에서 priority 가중 랜덤 샘플링할지.
+# 매 세션 top-N이 고정 반복되는 걸 막으면서도 범위를 count의 배수로만 좁게 잡는다.
+_PRIORITY_TOPN_MULTIPLIER = 2
 
-# 제외 대상이 될 수 있는 버킷 — lapse/overdue/today는 "지금 급한" 단어라 대상에서 뺀다.
-_KNOWN_WORD_EXCLUDABLE_BUCKETS = ('short', 'medium', 'new', 'long')
+# 이번 세션 후보 중 priority가 이 값 이상이면 "복습 시점 도달/경과"로 보고 신규 슬롯
+# 결정의 '급함' 판정(urgent_count)에 센다 — 옛 lapse+overdue+today 합계에 대응.
+_URGENT_PRIORITY_THRESHOLD = 1.0
 
-# short/medium/long 선택 시 "약함 점수 상위 3*quota 안에서 가중 랜덤 샘플링" 배수.
-# 매 세션 top-N이 고정 반복되는 걸 막으면서도, quota 밖의 훨씬 약한 단어가 실수로
-# 밀려나지 않을 만큼 좁은 범위(3배)로만 흔든다.
-_WEAKNESS_TOPN_MULTIPLIER = 3
-
-# DONE 상태(lapse+overdue+today == 0)에서 하루 신규 상한이 소진돼 있어도 세션당 최소
+# DONE 상태(급한 단어가 전혀 없음)에서 하루 신규 상한이 소진돼 있어도 세션당 최소
 # 이만큼은 신규를 허용한다 — "급한 게 없는데 새 단어도 하나도 안 나온다"는 체감을 막는다.
 _DONE_NEW_MIN_QUOTA   = 4
 # DONE 신규 쿼터의 절대 상한 비율(사용자 레벨 가중치와 무관하게 항상 이 비율로 캡).
@@ -138,200 +129,51 @@ def _evaluate_user_level(user_stats: Optional[Dict]) -> str:
 
 
 # ──────────────────────────────────────────────
-# bucket 분류 + lapse 식별
+# 신규(unplanted) 단어 슬롯 결정 — 사용자 상태 기반 동적
 # ──────────────────────────────────────────────
 
-def _split_pool(
-    pool: List[CandidateItem],
-    lapse_ids: Set[int],
-) -> Dict[str, List[CandidateItem]]:
-    """
-    pool을 bucket별로 분류.
-    lapse_ids에 포함된 단어는 원래 bucket과 무관하게 'lapse'로 재분류
-    (단, new는 학습 이력이 없으므로 lapse가 될 수 없음).
-    """
-    buckets: Dict[str, List[CandidateItem]] = {b: [] for b in _BUCKET_PRIORITY}
-    for item in pool:
-        # new 단어는 학습 이력이 없으므로 lapse 대상이 아님
-        if item.bucket != 'new' and item.user_voca_id in lapse_ids:
-            buckets['lapse'].append(item)
-            continue
-        key = item.bucket if item.bucket in buckets else 'new'
-        buckets[key].append(item)
-    return buckets
+def _new_word_weight(user_level: str) -> float:
+    """사용자 레벨별 신규 단어 목표 비율(세션 count 대비)."""
+    if user_level == 'high':
+        return 0.55
+    if user_level == 'low':
+        return 0.10
+    return 0.30  # mid
 
 
-def _extract_known_words(
-    buckets: Dict[str, List[CandidateItem]],
-    now: dt.datetime,
-) -> List[Tuple[CandidateItem, str]]:
-    """
-    "지금 아는 단어"(연속 정답 >= _KNOWN_WORD_STREAK_THRESHOLD && 마지막 학습이
-    _KNOWN_WORD_RECENCY_HOURS 이내)를 lapse/overdue/today를 제외한 버킷에서 분리해
-    낸다. buckets는 in-place로 걸러진 나머지만 남도록 수정되고, 제외된 (item, bucket)
-    쌍은 반환값으로 돌려준다(composer가 세션이 모자랄 때 여기서 다시 채운다).
-    """
-    excluded: List[Tuple[CandidateItem, str]] = []
-    for b in _KNOWN_WORD_EXCLUDABLE_BUCKETS:
-        kept: List[CandidateItem] = []
-        for item in buckets.get(b, []):
-            if is_known_word(
-                item, now,
-                streak_threshold=_KNOWN_WORD_STREAK_THRESHOLD,
-                recency_hours=_KNOWN_WORD_RECENCY_HOURS,
-            ):
-                excluded.append((item, b))
-            else:
-                kept.append(item)
-        buckets[b] = kept
-    return excluded
-
-
-def _rank_bucket(name: str, items: List[CandidateItem], now: dt.datetime) -> List[CandidateItem]:
-    """bucket별 정렬 함수 디스패치."""
-    if name == 'lapse':
-        # 최근 틀린 단어는 retrievability 낮은 순(망각 임박) 우선, 동률은 약함 점수로 tie-break
-        return rank_short_medium(items, now)
-    if name == 'overdue':
-        return rank_overdue(items, now)
-    if name == 'today':
-        return rank_today(items, now)
-    if name in ('short', 'medium', 'long'):
-        # 약함 점수(최근5회·D·lapses·R·recency) 내림차순 — 선택 단계에서 상위 N 안에서
-        # 가중 랜덤 샘플링한다(_compose_recommend 6번 참조).
-        return rank_by_weakness(items, now)
-    if name == 'new':
-        return rank_new(items)
-    return list(items)
-
-
-# ──────────────────────────────────────────────
-# 슬롯 분배 — 사용자 상태 기반 동적
-# ──────────────────────────────────────────────
-
-def _decide_slot_quotas(
-    available: Dict[str, int],
+def _decide_new_quota(
+    available_new: int,
     count: int,
     user_level: str,
     *,
     full_recommend: bool = False,
     new_allowance: Optional[int] = None,
-) -> Dict[str, int]:
+    urgent_count: int = 0,
+) -> int:
     """
-    풀 분포(available)와 사용자 능력(user_level)을 보고
-    각 bucket에서 뽑을 단어 수를 결정한다.
+    이번 세션에서 뽑을 신규(unplanted) 단어 수.
 
-    원칙:
-      1. 위급 망각 위험 단어(lapse + overdue + today)는 가용한 만큼 우선 채운다.
-      2. 부족분이 있으면 사용자 능력에 따라 (new, short, medium) 분배.
-      3. 그래도 부족하면 long 등에서 보충.
+    옛 _decide_slot_quotas의 new bucket 처리를 그대로 축약했다 — bucket이 여러 개일
+    필요가 없어졌으니(복습 대상은 이제 priority 큐 하나) new만 별도로 정한다.
 
-    AI 추천 모드(full_recommend=True)에서만 추가 보정:
-      - new_allowance: 하루 신규 상한 잔량. new bucket을 이 값으로 캡 → 초과분은 복습 슬롯으로.
-      - 신규/단기 floor 예약: overdue 백로그가 커도 매 세션에 신규·단기를
-        레벨별 비율만큼 최소 보장 (overdue가 count의 100%를 먹지 못하게).
-      명시적 선택(자유설정/암기상태 지정 등, full_recommend=False)에서는 사용자 의도
-      그대로 — 위급분을 100%까지 채우는 기존 동작 유지.
+    urgent_count: priority가 _URGENT_PRIORITY_THRESHOLD 이상인 후보 수(옛
+    lapse+overdue+today 합계에 대응) — 0이면 "급한 게 전혀 없는 DONE 상태"로 보고
+    하루 신규 상한이 소진돼 있어도 세션당 최소 _DONE_NEW_MIN_QUOTA개는 허용한다.
     """
-    quotas: Dict[str, int] = {b: 0 for b in _BUCKET_PRIORITY}
-    avail = dict(available)
+    avail = max(0, available_new)
 
-    # 사용자 능력 기반 가중치 (floor 계산과 분배에 공통 사용)
-    if user_level == 'high':
-        weights = {'new': 0.55, 'short': 0.25, 'medium': 0.20}
-    elif user_level == 'low':
-        weights = {'new': 0.10, 'short': 0.55, 'medium': 0.35}
-    else:  # mid
-        weights = {'new': 0.30, 'short': 0.40, 'medium': 0.30}
-
-    # AI 추천 한정: 신규 일일 상한 캡
-    # DONE 상태(급한 단어가 전혀 없음: lapse+overdue+today == 0)에서는 하루 신규 상한이
-    # 이미 소진돼 있어도(new_allowance<=0) 세션당 최소 _DONE_NEW_MIN_QUOTA개는 허용한다 —
-    # "더 돌보러 가기"를 눌렀는데 신규가 0개인 체감을 막기 위한 예외(2026-09).
-    # 하루 누적 카운터(new_introduced_today) 자체는 여기서 건드리지 않는다 — 이 세션에서
-    # 몇 개를 "허용"할지만 완화할 뿐, 상한 정책 자체를 바꾸는 게 아니다.
-    is_done_state = (
-        available.get('lapse', 0) == 0
-        and available.get('overdue', 0) == 0
-        and available.get('today', 0) == 0
-    )
     if full_recommend and new_allowance is not None:
-        if is_done_state:
-            avail['new'] = min(
-                avail.get('new', 0),
+        if urgent_count == 0:
+            avail = min(
+                avail,
                 max(new_allowance, _DONE_NEW_MIN_QUOTA),
                 round(count * _DONE_NEW_QUOTA_RATIO),
             )
         else:
-            avail['new'] = min(avail.get('new', 0), max(0, new_allowance))
+            avail = min(avail, max(0, new_allowance))
 
-    # AI 추천 한정: 신규/단기 floor 예약 (overdue가 다 먹지 못하게)
-    reserve = 0
-    if full_recommend:
-        floor_new = min(avail.get('new', 0), round(count * weights['new']))
-        floor_short = min(avail.get('short', 0), round(count * weights['short']))
-        reserve = floor_new + floor_short
-
-    remaining = count
-
-    # ── 1. lapse(최근 실패, 소수)는 항상 우선 ──
-    take = min(avail.get('lapse', 0), remaining)
-    quotas['lapse'] = take
-    remaining -= take
-
-    # ── 1b. overdue/today는 reserve를 남기고 채움 ──
-    urgent_cap = max(0, remaining - reserve)
-    for b in ('overdue', 'today'):
-        take = min(avail.get(b, 0), urgent_cap)
-        quotas[b] = take
-        urgent_cap -= take
-        remaining -= take
-    if remaining == 0:
-        return quotas
-
-    # 각 카테고리 가용분만큼 가중치대로 할당
-    # 풀에 없는 카테고리는 자동으로 0이 되고 부족분은 다른 곳에서 보충됨
-    raw_alloc: Dict[str, int] = {}
-    for b, w in weights.items():
-        target = round(remaining * w)
-        raw_alloc[b] = min(avail.get(b, 0), target)
-
-    # 반올림 오차 보정 — 합이 remaining과 다를 수 있으므로 우선순위 순 재분배
-    allocated = sum(raw_alloc.values())
-    delta = remaining - allocated
-    if delta != 0:
-        # delta가 양수면 부족 → 추가, 음수면 초과 → 차감
-        # 풀에 여유가 있는 bucket부터 weight 큰 순으로 처리
-        order = sorted(weights.items(), key=lambda x: -x[1])
-        for b, _ in order:
-            if delta == 0:
-                break
-            slack = avail.get(b, 0) - raw_alloc[b] if delta > 0 else raw_alloc[b]
-            if slack <= 0:
-                continue
-            change = min(abs(delta), slack)
-            raw_alloc[b] += change if delta > 0 else -change
-            delta -= change if delta > 0 else -change
-
-    for b, n in raw_alloc.items():
-        quotas[b] = n
-        remaining -= n
-    if remaining < 0:
-        remaining = 0
-
-    # ── 3. 그래도 부족하면 long, 그다음 medium/short/new 순으로 보충 ──
-    if remaining > 0:
-        for b in ('long', 'medium', 'short', 'new', 'today', 'overdue'):
-            slack = avail.get(b, 0) - quotas[b]
-            if slack <= 0:
-                continue
-            take = min(slack, remaining)
-            quotas[b] += take
-            remaining -= take
-            if remaining == 0:
-                break
-
-    return quotas
+    target = round(count * _new_word_weight(user_level))
+    return max(0, min(avail, target, count))
 
 
 # ──────────────────────────────────────────────
@@ -433,78 +275,85 @@ def _compose_recommend(
     new_allowance: Optional[int] = None,
 ) -> Dict[str, Any]:
     """
-    사용자 상태 기반 동적 추천.
+    단일 priority 큐 기반 추천 (2026-09 재설계).
+
+    학습 이력이 있는 모든 단어(bucket != 'new')를 ranking.compute_priority 하나로
+    줄세운다 — "맞힌 단어는 뒤로, 틀린 단어는 앞으로"가 bucket 경계 없이 전체에서
+    성립한다. 신규(unplanted) 단어만 별도로 관리(_decide_new_quota)한다.
+    FSRS 스케줄 계산 자체(ratings/scheduler)는 그대로이며 여기서 바꾸는 건 순서뿐이다.
     """
     now = dt.datetime.utcnow()
     lapse_ids: Set[int] = set(user_stats.get('recent_lapse_voca_ids') or set()) if user_stats else set()
     today_seen: Dict[int, set] = _normalize_today_seen(user_stats)
     weakness_types = _extract_weakness_types(user_stats)
-
-    # 1. bucket 분류 (lapse 재분류 포함)
-    buckets = _split_pool(pool, lapse_ids)
-
-    # 1b. "지금 아는 단어"(연속 정답 3+ && 24h 이내) 제외 — lapse/overdue/today는 대상 제외.
-    # 제외된 항목은 따로 들고 있다가(excluded_known) 세션이 count에 못 미치면 약함 점수
-    # 순으로 다시 채운다(아래 6b) — 빈 세션 방지.
-    excluded_known = _extract_known_words(buckets, now)
-
-    # 2. bucket별 정렬
-    ranked = {b: _rank_bucket(b, items, now) for b, items in buckets.items()}
-
-    # 3. 가용 개수
-    available = {b: len(ranked[b]) for b in _BUCKET_PRIORITY}
-
-    # 4. 사용자 능력 평가
     user_level = _evaluate_user_level(user_stats)
 
-    # 5. 슬롯 분배 결정
-    quotas = _decide_slot_quotas(
-        available, count, user_level,
-        full_recommend=full_recommend,
-        new_allowance=new_allowance,
+    new_items  = [it for it in pool if it.bucket == 'new']
+    rest_items = [it for it in pool if it.bucket != 'new']
+
+    # 1. 단일 priority 산정 — 최근 틀린 단어(lapse_ids)는 큰 가산으로 항상 최상단.
+    priority_by_id: Dict[int, float] = {
+        it.user_voca_id: compute_priority(it, now, is_lapse=it.user_voca_id in lapse_ids)
+        for it in rest_items
+    }
+    rest_sorted = sorted(rest_items, key=lambda it: priority_by_id[it.user_voca_id], reverse=True)
+
+    # '급함'(복습 시점 도달/경과) 후보 수 — 옛 lapse+overdue+today 합계에 대응,
+    # 신규 슬롯 결정(DONE 상태 판정)에만 쓰인다.
+    urgent_count = sum(1 for p in priority_by_id.values() if p >= _URGENT_PRIORITY_THRESHOLD)
+
+    # 2. 신규 단어 슬롯
+    new_quota = _decide_new_quota(
+        len(new_items), count, user_level,
+        full_recommend=full_recommend, new_allowance=new_allowance, urgent_count=urgent_count,
+    )
+    new_ranked = rank_new(new_items)
+    selected_new = new_ranked[:new_quota]
+
+    # 3. 나머지는 priority 큐에서 — 상위 _PRIORITY_TOPN_MULTIPLIER*count 범위 안에서
+    # priority 가중 랜덤 샘플링(top-N 고정 반복 방지).
+    need_from_rest = max(0, count - len(selected_new))
+    topn = rest_sorted[:min(len(rest_sorted), _PRIORITY_TOPN_MULTIPLIER * count)]
+    selected_rest = weighted_sample_without_replacement(
+        topn, now, need_from_rest,
+        weight_fn=lambda it, _now: priority_by_id[it.user_voca_id],
     )
 
-    # 6. 선택 (각 bucket에서 quota만큼)
-    # short/medium/long: 약함 점수 상위 min(len, 3*quota) 안에서 점수 가중 랜덤 샘플링
-    # (top-N 고정 반복 방지). 나머지 bucket은 정렬된 순서 그대로 앞에서 n개.
-    selected_with_bucket: List[Tuple[CandidateItem, str]] = []
-    for b in _BUCKET_PRIORITY:
-        n = quotas.get(b, 0)
-        if n <= 0:
-            continue
-        if b in ('short', 'medium', 'long'):
-            top_pool = ranked[b][:min(len(ranked[b]), _WEAKNESS_TOPN_MULTIPLIER * n)]
-            picked = weighted_sample_without_replacement(top_pool, now, n)
-            for it in picked:
-                selected_with_bucket.append((it, b))
-        else:
-            for it in ranked[b][:n]:
-                selected_with_bucket.append((it, b))
+    selected: List[CandidateItem] = list(selected_new) + list(selected_rest)
 
-    # 6b. 빈 세션 방지 — "지금 아는 단어"로 제외했던 후보를 약함 점수 순으로 다시 채운다.
-    # (기존에도 있던 "전체 후보가 count 미만" 케이스의 0개/부족 응답 처리 경로는 그대로 —
-    #  여기서 다 채우지 못해도 이 함수는 그냥 가진 만큼만 반환한다.)
-    if len(selected_with_bucket) < count and excluded_known:
-        selected_ids = {it.user_voca_id for it, _ in selected_with_bucket}
-        refill_candidates = [
-            pair for pair in excluded_known if pair[0].user_voca_id not in selected_ids
-        ]
-        refill_candidates.sort(key=lambda pair: compute_weakness(pair[0], now), reverse=True)
-        need = count - len(selected_with_bucket)
-        selected_with_bucket.extend(refill_candidates[:need])
+    # 4. 상호 보충 — 한쪽이 부족하면 다른 쪽에서 채운다. "아는 단어 제외" 규칙이 없어져
+    # 후보가 방금 학습한 단어뿐이어도(priority가 낮을 뿐 제외되지 않음) 여기 보충은
+    # 순수히 "요청 count에 못 미치는 pool 크기" 케이스만 대응한다.
+    if len(selected) < count:
+        selected_ids = {it.user_voca_id for it in selected}
+        extra_new = [it for it in new_ranked if it.user_voca_id not in selected_ids]
+        selected += extra_new[:count - len(selected)]
+    if len(selected) < count:
+        selected_ids = {it.user_voca_id for it in selected}
+        extra_rest = [it for it in rest_sorted if it.user_voca_id not in selected_ids]
+        selected += extra_rest[:count - len(selected)]
 
-    # 7. 인터리빙 (음성/형태소 유사 단어 인접 회피)
+    # 5. reason/구성 라벨 — item.bucket을 그대로 쓰되, 최근 틀린 단어는 'lapse'로 재분류
+    # (옛 _split_pool과 동일 의미 — new는 학습 이력이 없어 lapse 대상이 아니다).
+    def _reason_bucket(it: CandidateItem) -> str:
+        if it.bucket != 'new' and it.user_voca_id in lapse_ids:
+            return 'lapse'
+        return it.bucket
+
+    selected_with_bucket: List[Tuple[CandidateItem, str]] = [
+        (it, _reason_bucket(it)) for it in selected
+    ]
+
+    # 6. 인터리빙 (음성/형태소 유사 단어 인접 회피)
     items_only = [it for it, _ in selected_with_bucket]
     interleaved = interleave_avoid_adjacent(items_only, lambda it: it.word)
     # 인터리빙 후 src_bucket 매핑 복원
     bucket_by_id = {it.user_voca_id: src for it, src in selected_with_bucket}
     final_with_bucket = [(it, bucket_by_id[it.user_voca_id]) for it in interleaved]
 
-    # 8. enrich (suggested_question_type, reason)
+    # 7. enrich (suggested_question_type, reason)
     enriched = _enrich_items(final_with_bucket, today_seen, weakness_types)
 
-    # composition은 실제 선택된 결과 기준으로 집계한다(6b 빈 세션 방지 리필로 quotas와
-    # 실제 선택 수가 달라질 수 있음 — quotas 그대로 쓰면 리필된 만큼 누락된다).
     composition: Dict[str, int] = {}
     for _, b in selected_with_bucket:
         composition[b] = composition.get(b, 0) + 1
