@@ -14,6 +14,7 @@ import { warmTts, collectTestTexts, collectTestFullTexts, prepareTtsWithProgress
 import ProgressSplash from '../components/common/ProgressSplash';
 import { useUser } from '../context/UserContext';
 import { useOnboardingUnlock } from '../context/OnboardingUnlockContext';
+import { saveStudyConfig, loadStudyConfig } from '../utils/nextStudy';
 import { getGuestTrial, clearGuestTrial, patchGuest } from '../utils/guestStorage';
 import { getPendingReplantIds } from '../utils/replantPending';
 import { beginStudySession } from '../utils/studySessionGuard';
@@ -640,6 +641,9 @@ const TakeTest = () => {
 
           // 추천 응답의 session_id를 ref에 저장 (정식 세션 ID)
           studySessionRef.current = sessionId ?? null;
+          // 결과 화면 "다음 학습"이 같은 설정으로 새 세션을 열 수 있게 적어 둔다
+          // (이어하기로 들어온 세션은 navigate state 에 data 가 없다 — utils/nextStudy.js)
+          saveStudyConfig(state.testType, state.data);
 
           // 재출제 시스템: 고유 단어 수 확정 (cardMatch는 words 배열 개별 단어 카운트)
           {
@@ -868,6 +872,8 @@ const TakeTest = () => {
             testType: state.testType,
             // 농장 세션 요약(/farm/session-summary) 조회에 필요 — 결과 화면이 이 값으로 조회한다
             sessionId: studySessionRef?.current ?? null,
+            // "다음 학습"(같은 종류의 새 세션)을 만들 설정 — 이어하기 세션은 기기에 적어 둔 값
+            studyConfig: state.data ?? loadStudyConfig(state.testType),
           },
           replace: true,
         });

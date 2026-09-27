@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Circle, X, Flame } from '@phosphor-icons/react';
+import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
+import { Circle, X, Flame, Play } from '@phosphor-icons/react';
 import { useVocabulary } from '../../context/VocabularyContext';
 import { useUser } from '../../context/UserContext';
 import gemImg from '../../assets/images/gem.png';
@@ -26,6 +26,8 @@ import { getSessionFarmSummaryApi } from '../../api/farm';
 import { calendarDaysFromToday } from '../../utils/reviewTiming';
 import StudyTimingTag from '../farm/StudyTimingTag';
 import { getAchievementCriteriaApi } from '../../api/study';
+import { planNextStudy, loadStudyConfig, NEXT_STUDY_COUNTDOWN_MS } from '../../utils/nextStudy';
+import { primeSfx } from '../../utils/audio';
 
 // 업적 이미지 import
 import InviteKing from '../../assets/images/HeyCharacter/InviteKing.png';
@@ -351,6 +353,60 @@ const ResultCtaBar = ({ children, className = '' }) => (
   </div>
 );
 
+/*
+  "다음 학습" — 넷플릭스 '다음화' 버튼처럼 배경이 왼쪽→오른쪽으로 차오르며 남은 초를 센다.
+  다 차면 호출부가 다음 세션을 연다(카운트 자체는 호출부 타이머가 정본이고, 채움은 연출이다).
+
+  면: 카운트 중에는 옅은 핑크(primary-400) 위로 브랜드 핑크(primary-600)가 차오른다 —
+      다 차는 순간 평소 주 버튼과 같은 색이 되어 "눌린 것처럼" 이어진다.
+      카운트가 끝났거나 취소되면 평소 주 버튼(ResultCta)과 같은 면이다.
+  reduced-motion: 채움 없이 평소 면 + 숫자만 줄어든다.
+*/
+const NextStudyCta = ({ counting, remainingSec, durationSec, reducedMotion, onClick, className = '' }) => {
+  const showFill = counting && !reducedMotion;
+  return (
+    <motion.button
+      type="button"
+      onClick={onClick}
+      whileTap={{ scale: 0.97 }}
+      transition={{ type: 'spring', stiffness: 500, damping: 15 }}
+      aria-label={counting ? `다음 학습, ${remainingSec}초 뒤 자동으로 시작` : '다음 학습'}
+      data-testid="next-study-cta"
+      className={`
+        relative overflow-hidden
+        flex items-center justify-center
+        h-[52px] rounded-[12px] text-[16px] font-[700] tracking-[-0.03em]
+        text-layout-white dark:text-layout-black
+        ${showFill ? 'bg-primary-main-400' : 'bg-primary-main-600'}
+        ${className}
+      `}
+    >
+      {showFill ? (
+        <motion.span
+          aria-hidden
+          className='absolute inset-0 origin-left bg-primary-main-600'
+          initial={{ scaleX: 0 }}
+          animate={{ scaleX: 1 }}
+          transition={{ duration: durationSec, ease: 'linear' }}
+        />
+      ) : null}
+      <span className='relative flex items-center gap-[6px]'>
+        <Play size={14} weight="fill" />
+        다음 학습
+        {counting ? (
+          <span className='
+            inline-flex items-center justify-center min-w-[22px] h-[22px] px-[6px] rounded-full
+            text-[13px] font-[700] tabular-nums
+            bg-[rgba(255,255,255,.28)] dark:bg-[rgba(0,0,0,.12)]
+          '>
+            {remainingSec}
+          </span>
+        ) : null}
+      </span>
+    </motion.button>
+  );
+};
+
 // 연속 학습 주간 막대 — 이번 주 월~일.
 //
 // 정본은 백엔드가 주는 `week`(session-summary.streak.week — 월~일 7개, 날짜별 실제
@@ -413,7 +469,8 @@ const StudyResult = () => {
     (다크에서는 배경이 #111111 이라 흰 글자가 맞다.) 배경을 따라가게 한다.
   */
   useStatusBarStyle(isDark ? 'light-content' : 'dark-content');
-  const { recentStudy, updateRecentStudy, isRecentStudyLoading, fetchVocabularySheets, setLastSessionResult, getWord } = useVocabulary();
+  const { recentStudy, updateRecentStudy, isRecentStudyLoading, fetchVocabularySheets, setLastSessionResult, getWord, vocabularySheets } = useVocabulary();
+  const reducedMotion = useReducedMotion();
   const { updateUserHistory } = useUser();
   const { pushNewBottomSheet } = useNewBottomSheetActions();
 
@@ -834,42 +891,110 @@ const StudyResult = () => {
     }
   }, [isRecentStudyLoading]);
 
-  const onClickTestAgain = async () => {
-    // 요소의 순서를 랜덤으로 섞어서 반환
-    // options을 랜덤으로 섞고, 정답의 index(resultIndex)도 새로 계산
-    const tempTestQuestions = recentStudy[testType].study_data
-      .map((question) => {
-        // 기존 정답(원래 options에서 resultIndex로 찾음)
-        const correctAnswer = question.options[question.resultIndex];
-        // options을 랜덤으로 섞음
-        const shuffledOptions = [...question.options].sort(() => Math.random() - 0.5);
-        // 섞인 options에서 정답의 index를 다시 찾음
-        const newResultIndex = shuffledOptions.findIndex(opt => opt.id === correctAnswer.id);
-        return {
-          ...question,
-          isCorrect: null,
-          userResultIndex: null,
-          options: shuffledOptions,
-          resultIndex: newResultIndex,
-        };
-      })
-      .sort(() => Math.random() - 0.5);
-    await updateRecentStudy(testType, {
-      ...recentStudy[testType],
-      status: "learning",
-      progress_index: 0,
-      study_data: tempTestQuestions,
-      updated_at: new Date().toISOString(),
-      created_at: new Date().toISOString(),
-    })
-    navigate('/take-test', {
-      state: {
-        testType: testType
+  /*
+    ── 다음 학습 (넷플릭스 '다음화 자동 재생') ──────────────────────────────
+    방금 끝난 학습과 같은 종류의 새 세션을 연다(무엇을 여는지는 utils/nextStudy.js 주석).
+    예전 "테스트 다시 하기"는 **같은 문제를 섞어서 다시** 푸는 것이었다 — 방금 푼 단어를
+    곧바로 또 보는 건 복습 간격(FSRS)으로도 의미가 적어, 새 추천 세트로 바꿨다.
+
+    카운트다운(8초)은 결과 **마지막 슬라이드**(result)에서만 돈다. 멈추는 경우:
+      · 결과 목록을 스크롤하거나 화면을 터치 — 결과를 살펴보는 중이므로 취소(버튼은 그대로 누를 수 있다)
+      · 앱이 백그라운드로 감(visibilitychange hidden / pagehide) — 취소
+      · "학습 종료" — 즉시 취소 후 홈
+    한 번 취소되면 이 화면에서는 다시 돌지 않는다 — 살펴보던 사람 앞에서 다시 세기 시작하면
+    결국 고르라고 재촉하는 셈이라, 그다음은 사람이 버튼으로 정한다.
+  */
+  const nextPlan = planNextStudy({
+    testType,
+    isGuest,
+    config: state?.studyConfig ?? loadStudyConfig(testType),
+    vocabularySheets,
+  });
+  const isResultScreen = screenList[currentScreenIndex]?.type === 'result';
+  // idle(아직 안 셈) → counting → cancelled / starting
+  const [countdownPhase, setCountdownPhase] = useState('idle');
+  const [remainingSec, setRemainingSec] = useState(Math.ceil(NEXT_STUDY_COUNTDOWN_MS / 1000));
+  const deadlineRef = useRef(0);
+  const startingRef = useRef(false);
+  const counting = countdownPhase === 'counting' && nextPlan.available;
+
+  const cancelCountdown = () => {
+    setCountdownPhase((phase) => (phase === 'counting' || phase === 'idle' ? 'cancelled' : phase));
+  };
+
+  const startNextStudy = async () => {
+    if (startingRef.current || !nextPlan.available) return;
+    startingRef.current = true;
+    setCountdownPhase('starting');
+    // 효과음 unlock — 손으로 누른 경우에만 실제로 걸린다(자동 시작은 제스처가 없어 무해한 호출)
+    primeSfx();
+    try {
+      // 끝난 회차(status end)를 비워야 TakeTest 가 새 세션을 만든다(end 면 아무것도 안 한다)
+      const saved = await updateRecentStudy(testType, {
+        ...(recentStudy?.[testType] ?? {}),
+        progress_index: null,
+        type: testType,
+        status: null,
+        study_data: null,
+        updated_at: null,
+        created_at: null,
+      });
+      if (!saved) throw new Error('recent study reset failed');
+      navigate('/take-test', { state: nextPlan.state, replace: true });
+    } catch (e) {
+      console.error('[StudyResult] 다음 학습 시작 실패:', e);
+      startingRef.current = false;
+      setCountdownPhase('cancelled');
+    }
+  };
+
+  // 마지막 슬라이드에 도착하면 센다 — 앞 슬라이드를 보는 중에는 시작하지 않는다
+  useEffect(() => {
+    if (!isResultScreen || !nextPlan.available || countdownPhase !== 'idle') return;
+    if (typeof document !== 'undefined' && document.visibilityState === 'hidden') {
+      setCountdownPhase('cancelled');
+      return;
+    }
+    deadlineRef.current = Date.now() + NEXT_STUDY_COUNTDOWN_MS;
+    setRemainingSec(Math.ceil(NEXT_STUDY_COUNTDOWN_MS / 1000));
+    setCountdownPhase('counting');
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isResultScreen, nextPlan.available, countdownPhase]);
+
+  useEffect(() => {
+    if (!counting) return undefined;
+    const tick = () => {
+      const left = deadlineRef.current - Date.now();
+      if (left <= 0) {
+        setRemainingSec(0);
+        startNextStudy();
+        return;
       }
-    });
-  }
+      setRemainingSec(Math.ceil(left / 1000));
+    };
+    const id = setInterval(tick, 200);
+    return () => clearInterval(id);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [counting]);
+
+  // 백그라운드로 가면 멈춘다
+  useEffect(() => {
+    if (!counting) return undefined;
+    const onHidden = () => {
+      if (document.visibilityState === 'hidden') cancelCountdown();
+    };
+    const onPageHide = () => cancelCountdown();
+    document.addEventListener('visibilitychange', onHidden);
+    window.addEventListener('pagehide', onPageHide);
+    return () => {
+      document.removeEventListener('visibilitychange', onHidden);
+      window.removeEventListener('pagehide', onPageHide);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [counting]);
 
   const onClickEndStudy = async () => {
+    cancelCountdown();
     // 게스트 첫 학습: 결과 확인 후 온보딩 질문 구간으로 (심은 답안은 guestStorage에 저장됨).
     // 예고 화면(ready)이 아니라 그다음으로 보낸다 — 학습을 마친 사람을 예고로 되돌리면
     // 같은 학습을 다시 하게 된다.
@@ -922,7 +1047,14 @@ const StudyResult = () => {
           </div>
 
           {/* 아래 여백은 떠 있는 버튼 자리(52+18+26=96)보다 조금 넉넉하게 — 마지막 줄이 가리지 않도록 */}
-          <div className='flex flex-col flex-1 overflow-y-auto scrollbar-hide pb-[110px]'>
+          <div
+            data-testid="result-scroll"
+            className={`flex flex-col flex-1 overflow-y-auto scrollbar-hide ${nextPlan.reason ? 'pb-[140px]' : 'pb-[110px]'}`}
+            // 결과를 살펴보기 시작하면(터치·스크롤) 자동 시작을 취소한다
+            onPointerDown={counting ? cancelCountdown : undefined}
+            onScroll={counting ? cancelCountdown : undefined}
+            onWheel={counting ? cancelCountdown : undefined}
+          >
             {/* 프로그레스 서클 영역 — 시안 `.circwrap` padding 34px 0 30px */}
             <div className='flex flex-col items-center justify-center pt-[34px] pb-[30px]'>
               <div className='relative w-[238px] h-[238px] flex items-center justify-center'>
@@ -995,9 +1127,8 @@ const StudyResult = () => {
                 });
                 return flat.map((item, index) => {
                   const meaningsArr = Array.isArray(item.meanings) ? item.meanings : [];
-                  // [정답/오답][단어·뜻][상태] 순서.
-                  // 이 목록에서 먼저 찾는 것은 "무엇을 틀렸나"라 채점 표시가 맨 앞에 온다.
-                  // 상태(작물 그림)는 부가 정보라 끝에 붙는다.
+                  // [상태(작물)][단어·뜻][정답/오답] 순서 — 단어장 단어 목록(WordRow)과 같은 배치다
+                  // (2026-09-27, 예전에는 채점 표시가 왼쪽·작물이 오른쪽이었다).
                   //
                   // 예전에는 cropOfWord가 null이면 암기 상태 텍스트 배지("단기암기" 등)로
                   // 돌아갔다. 그런데 그 null은 "농장 요약을 못 받아서"가 아니라 "이 단어는
@@ -1030,14 +1161,9 @@ const StudyResult = () => {
                           세션이 끝난 뒤라 재출제가 없으므로 오답 단어도 예정일을 보여 준다. */}
                       <StudyTimingTag answered wasCorrect={null} daysToReview={nextReviewDays} pending={false} />
                       <div className='flex items-center gap-[11px]'>
-                        {/* ① 채점 결과 */}
-                        <span className='flex items-center justify-center flex-shrink-0 w-[22px] h-[22px]'>
-                          {item.isCorrect ? (
-                            <Circle size={20} weight="bold" className='text-status-success-500' />
-                          ) : (
-                            <X size={20} weight="bold" className='text-status-error-500' />
-                          )}
-                        </span>
+                        {/* ① 상태 — 작물 그림. 단어장 단어 목록(vocabularySheets/WordRow)과 같은 자리(왼쪽)다.
+                            텍스트 배지 분기는 없앴다(위 crop 계산 주석 참고). */}
+                        <CropImage stage={crop} size={52} align="center" className='flex-shrink-0' />
 
                         {/* ② 단어·뜻 */}
                         <div className='flex flex-col flex-1 gap-[2px] min-w-0'>
@@ -1057,12 +1183,15 @@ const StudyResult = () => {
                           </p>
                         </div>
 
-                        {/* ③ 상태 — 작물 그림으로 통일 (텍스트 배지 분기 제거, 위 crop 계산 주석 참고).
-                            복습 예정일은 카드 우측 상단 태그로 옮겼다(2026-09-26). 태그와 겹치지 않게
-                            그림을 태그 높이만큼 내린다. */}
-                        <div className='flex flex-col items-center flex-shrink-0 mt-[14px]'>
-                          <CropImage stage={crop} size={52} align="center" />
-                        </div>
+                        {/* ③ 채점 결과 — 오른쪽. 우측 상단 복습 예정일 태그(top 12)와 겹치지 않게
+                            태그 높이만큼 내린다. */}
+                        <span className='flex items-center justify-center flex-shrink-0 w-[22px] h-[22px] mt-[14px]'>
+                          {item.isCorrect ? (
+                            <Circle size={20} weight="bold" className='text-status-success-500' />
+                          ) : (
+                            <X size={20} weight="bold" className='text-status-error-500' />
+                          )}
+                        </span>
                       </div>
                     </motion.div>
                   );
@@ -1070,21 +1199,42 @@ const StudyResult = () => {
               })()}
             </div>
           </div>
-          <ResultCtaBar className="absolute bottom-0 left-0 right-0">
-            {testType !== 'quick' && !isGuest && (
-              <ResultCta
-                secondary
-                className="flex-1"
-                label="테스트 다시 하기"
-                onClick={() => { haptic('light'); onClickTestAgain(); }}
-              />
-            )}
-            <ResultCta
-              className="flex-1"
-              label={isGuest ? '계속하기' : '학습 종료'}
-              onClick={() => { haptic('light'); onClickEndStudy(); }}
-            />
-          </ResultCtaBar>
+          {/* 하단 — 왼쪽 "학습 종료", 오른쪽 "다음 학습"(8초 뒤 자동 시작).
+              다음 학습을 열 수 없으면(단어 부족) 이유 한 줄 + "학습 종료"만 주 버튼으로 둔다.
+              게스트는 가입 흐름으로 이어지는 "계속하기" 하나뿐이다. */}
+          <div className='absolute bottom-0 left-0 right-0 bg-layout-white dark:bg-layout-black'>
+            {nextPlan.reason ? (
+              <p className='px-[24px] pt-[14px] -mb-[6px] text-center text-[12px] font-[500] text-layout-gray-300'>
+                {nextPlan.reason}
+              </p>
+            ) : null}
+            <ResultCtaBar>
+              {nextPlan.available ? (
+                <>
+                  <ResultCta
+                    secondary
+                    className="flex-1"
+                    label="학습 종료"
+                    onClick={() => { haptic('light'); onClickEndStudy(); }}
+                  />
+                  <NextStudyCta
+                    className="flex-1"
+                    counting={counting}
+                    remainingSec={remainingSec}
+                    durationSec={NEXT_STUDY_COUNTDOWN_MS / 1000}
+                    reducedMotion={reducedMotion}
+                    onClick={() => { haptic('light'); startNextStudy(); }}
+                  />
+                </>
+              ) : (
+                <ResultCta
+                  className="flex-1"
+                  label={isGuest ? '계속하기' : '학습 종료'}
+                  onClick={() => { haptic('light'); onClickEndStudy(); }}
+                />
+              )}
+            </ResultCtaBar>
+          </div>
         </motion.div>
       );
     }
