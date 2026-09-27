@@ -11,18 +11,17 @@ import { FARM_ANIM_MS, FARM_ANIM_GROW_MS } from '../../utils/studyTiming';
  * 당근 농장 V2 — 채점 후 상태 바. **모든 문제 유형이 이 하나를 쓴다.**
  * 시안 study.html 의 `.fb` / `.fb.up` / `.fb.ng` / `.fb.sm` 규격을 그대로 옮겼다.
  *
- *   [작물 26px] [막대 5px + XP 서브로우] [+N XP]     ← normal(2026-09 XP 개편, 아래 별도 주석)
- *   [작물 18px] [막대 4px] [+N XP]                   ← compact 윗줄
- *   [XP 서브로우]                                    ← compact 아랫줄(2026-09-26 통일)
+ *   [작물 26px(+말풍선)] [막대 18px, 안에 `12 / 50 XP`] [±N XP]   ← normal
+ *   [작물 18px(+말풍선)] [막대 14px, 안에 `12/50 XP`]   [±N XP]   ← compact (크기만 작다)
+ *   (2026-09-27 한 줄로 정리 — 아래 【한 줄 레이아웃】 주석)
  *
  * - 단계명 텍스트를 넣지 않는다(시안 2절). 작물 그림이 이미 그 말이라 같은 말을 두 번 하게 된다.
  *   `.st` 슬롯은 부패 진단(6절)에서만 쓴다.
  * - 진화는 화살표로 이전→이후를 나열하지 않는다. 작물 자리 안에서 그래픽이 전환된다(3절).
  * - 오답은 막대가 **줄어든다**(FSRS 가 안정성을 깎으므로 실제로 멀어진 것이다).
  *   우측 문구는 비운다 — 틀린 단어는 이번 세션에서 바로 다시 나오므로 다음 예정일을 말하면 거짓이 된다.
- * - `compact` 는 카드 매칭용 좁은 형(`.fb.sm`)이다. 다른 구조가 아니라 **같은 조각을 두 줄로 쌓은 것**이라
- *   작물·막대·배지·XP 서브로우(현재/다음 XP·진화 문구)가 normal 과 같은 의미로 모두 있다.
- *   (예전엔 XP 서브로우가 접혀 카드 맞추기에서만 수치·진화 문구가 안 보였다 — 2026-09-26 통일)
+ * - `compact` 는 카드 매칭용 좁은 형(`.fb.sm`)이다. normal 과 **같은 구성**(작물·말풍선·막대 안
+ *   XP·배지)이고 크기만 작다.
  *
  * 【채점 결과 게이지는 값 하나로만 움직인다 — 2026-09 정리】
  * 이전 구현은 진화(단계 상승) 회차에 "이전 작물 + 건너가는 막대"와 "새 작물 + 안착 막대"를
@@ -56,8 +55,7 @@ import { FARM_ANIM_MS, FARM_ANIM_GROW_MS } from '../../utils/studyTiming';
 /**
  * 【2026-09 작물 경험치(XP) 표시 — crop_xp_contract.md §3, 2026-09-26 실기기 피드백 반영】
  *
- *   normal : [작물] [막대 / `12 / 50 XP` · (진화 문구)] [+N XP]
- *   compact: [작물] [막대] [+N XP] / 아랫줄 `12 / 50 XP` · (진화 문구)
+ *   normal·compact: [작물(+진화 말풍선)] [막대 안 `12 / 50 XP`] [+N XP]  (2026-09-27 한 줄)
  *
  * - **복습일·경과 문구는 여기서 뺐다.** "N일 뒤 복습"/"N시간 전에 풀었어요"는 문제 카드
  *   우측 상단(`StudyTimingTag`)이 전담한다. 상태 바는 작물·막대·XP 만 말한다.
@@ -72,6 +70,17 @@ import { FARM_ANIM_MS, FARM_ANIM_GROW_MS } from '../../utils/studyTiming';
  *   정해지지 않은 부모 안의 `flex-basis: 0%` 는 내용 높이(=0, 채움 span 은 absolute)로
  *   풀려 막대 높이가 0 이 됐다 — 숫자만 남고 게이지가 사라진 원인. 막대는 이제
  *   `flex-none w-full` 로 세로 칸에 들어간다(`block` prop).
+ *   (2026-09-27 한 줄 레이아웃으로 바뀌어 세로 칸이 없어졌다 — 지금은 다시 가로 flex-1.)
+ */
+
+/**
+ * 【한 줄 레이아웃 — 2026-09-27 사용자 지시】
+ *   예전: 막대 아래 둘째 줄에 `현재 / 문턱 XP` 와 진화 문구를 따로 적었다(작아서 안 읽혔다).
+ *   지금: `현재 / 문턱 XP` 는 **막대 안**(CropProgressBar `label`, 두 겹 클리핑으로 채움·빈 칸
+ *   어디서나 읽힘), 진화 문구는 **작물에 붙은 말풍선**(absolute — 레이아웃·카드 높이 불변).
+ *   말풍선은 작물 위로 뜨고 왼쪽 끝을 작물에 맞춰 오른쪽으로 펼쳐지므로 카드 왼쪽 모서리에
+ *   잘리지 않는다(카드 맞추기 좁은 칸도 문구 폭 < 칸 폭). 상태 바는 카드 하단 패딩(normal 60px /
+ *   compact 50px) 안에 absolute 로 떠 있어, 말풍선이 그 위로 올라가도 카드 안쪽이다.
  */
 
 /** 진화 스파클 — 새 작물이 솟아오를 때 바깥으로 튀는 세 점 (시안 `.fb .spk`) */
@@ -193,7 +202,7 @@ const FarmStatusBar = ({
     : null;
 
   const size = compact ? 18 : 26;
-  const barH = compact ? 4 : 5;
+  const barH = compact ? 14 : 18;
 
   const reducedMotion = useReducedMotion();
 
@@ -233,7 +242,7 @@ const FarmStatusBar = ({
   // 옆으로 나열하지 않으므로 막대 폭을 잠식하지 않는다. 원으로 감싸지 않는다(2절).
   const cropSlot = (
     <span
-      className="relative z-[1] flex-shrink-0 flex items-center justify-center"
+      className="relative z-[2] flex-shrink-0 flex items-center justify-center"
       style={{ width: size, height: size }}
     >
       {diagnosis ? (
@@ -281,10 +290,58 @@ const FarmStatusBar = ({
         /* 진화하지 않는 회차 — 그림 한 장을 그대로 놓는다 */
         <CropImage stage={cropForImage} health={health} size={size} align="center" />
       )}
+      {growLabel && !pending && (
+        /*
+          진화 말풍선 — 작물 위에 꼬리 달린 말풍선(absolute, 레이아웃 불변). 왼쪽 끝을 작물 왼쪽
+          조금 바깥에 맞추고 오른쪽으로 펼친다 — 꼬리는 작물 가운데를 가리킨다. 작물 그림이 바뀌는
+          순간(GROW_RESET_START)에 작게 튀어나온다.
+        */
+        <motion.span
+          role="status"
+          className={`
+            absolute z-[3] origin-bottom-left pointer-events-none
+            ${compact ? 'bottom-[calc(100%+5px)] left-[-3px]' : 'bottom-[calc(100%+7px)] left-[-4px]'}
+          `}
+          initial={{ opacity: 0, scale: 0.4, y: 4 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          transition={{
+            type: 'spring', stiffness: 520, damping: 18,
+            delay: reducedMotion ? 0 : GROW_FILL_DURATION * GROW_RESET_START,
+          }}
+        >
+          <span
+            aria-hidden
+            className={`
+              absolute rotate-45 bg-primary-main-600
+              ${compact ? 'bottom-[-2.5px] left-[9px] w-[6px] h-[6px]' : 'bottom-[-3.5px] left-[13px] w-[8px] h-[8px]'}
+            `}
+          />
+          <span
+            className={`
+              relative block whitespace-nowrap font-[800] tracking-[-0.02em] leading-none text-white
+              bg-primary-main-600 shadow-[0_2px_8px_rgba(255,112,212,0.35)] dark:shadow-none
+              ${compact ? 'rounded-[6px] px-[5px] py-[3px] text-[9px]' : 'rounded-[8px] px-[8px] py-[5px] text-[11px]'}
+            `}
+          >
+            {growLabel}
+          </span>
+        </motion.span>
+      )}
     </span>
   );
 
-  // 막대 — 세로 칸(normal)에선 반드시 block. flex-1 이면 높이 0 으로 사라진다(위 주석).
+  // 막대 안 글자 — `현재 / 문턱 XP`. compact 는 폭이 좁아(≈60px) 슬래시 앞뒤 공백을 뺀다.
+  // 한 inline span 으로 감싼다 — 막대 안 글자 칸이 flex 라, 조각이 따로 flex 항목이 되면
+  // 앞뒤 공백이 잘려 `3/ 50 XP` 처럼 붙는다.
+  const xpLabel = (
+    <span>
+      <b className="font-[900]">{shownXp}</b>
+      {xpNextVal != null ? (compact ? `/${xpNextVal}` : ` / ${xpNextVal}`) : ''}
+      {' XP'}
+    </span>
+  );
+
+  // 막대 — 한 줄 가로 칸이라 flex-1 로 남은 폭을 다 쓴다.
   const barEl = (
     <CropProgressBar
       pctFrom={barFrom}
@@ -293,36 +350,9 @@ const FarmStatusBar = ({
       tone={tone}
       height={barH}
       pending={pending}
-      block={!compact}
+      label={xpLabel}
+      labelClassName={`font-[700] tracking-[-0.02em] ${compact ? 'text-[8.5px]' : 'text-[10.5px]'}`}
     />
-  );
-
-  // XP 서브로우 — 왼쪽 `현재 / 다음 XP`, 오른쪽 진화 문구. normal·compact 가 같은 내용을 쓴다
-  // (compact 는 글자만 작다). 2026-09-26 통일: 예전 compact 는 이 줄이 없어 카드 맞추기에서만
-  // XP 수치·진화 문구가 안 보였다.
-  const xpRow = (
-    <div
-      className={`
-        flex items-center justify-between gap-[6px] font-[700] tracking-[-0.02em] tabular-nums
-        text-layout-gray-300 dark:text-layout-gray-200
-        ${compact ? 'text-[9.5px] leading-[12px]' : 'text-[10.5px]'}
-      `}
-    >
-      <span className="flex-shrink-0 whitespace-nowrap">
-        <b className="font-[800] text-layout-gray-400 dark:text-layout-gray-100">{shownXp}</b>
-        {xpNextVal != null ? ` / ${xpNextVal} XP` : ' XP'}
-      </span>
-      {growLabel && !pending && (
-        <motion.span
-          className="flex-1 min-w-0 truncate text-right font-[700] text-primary-main-600"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.25, delay: reducedMotion ? 0 : GROW_FILL_DURATION * GROW_RESET_START }}
-        >
-          {growLabel}
-        </motion.span>
-      )}
-    </div>
   );
 
   // 배지 — `+N XP` 핑크 / `−N XP`·`+0 XP` 회색(crop_xp_contract.md §3). pending 만 비운다.
@@ -331,7 +361,7 @@ const FarmStatusBar = ({
     <span
       className={`
         relative z-[1] flex-shrink-0 flex items-center justify-end
-        ${compact ? 'w-[46px]' : 'w-[72px]'}
+        ${compact ? 'w-[44px]' : 'w-[64px]'}
       `}
     >
       {!pending && (
@@ -339,7 +369,7 @@ const FarmStatusBar = ({
           className={`
             inline-flex flex-shrink-0 items-center justify-center whitespace-nowrap tabular-nums
             rounded-full font-[800] tracking-[-0.03em]
-            ${compact ? 'px-[5px] py-[2px] text-[9.5px]' : 'px-[8px] py-[4px] text-[11.5px]'}
+            ${compact ? 'px-[4px] py-[2px] text-[9px]' : 'px-[8px] py-[4px] text-[11.5px]'}
             ${xpBadgePositive
               ? 'bg-primary-main-100 dark:bg-primary-main-dark text-primary-main-600'
               : 'bg-layout-gray-50 dark:bg-layout-gray-dark text-layout-gray-400 dark:text-layout-gray-200'}
@@ -380,32 +410,16 @@ const FarmStatusBar = ({
     );
   }
 
-  /*
-    compact(카드 맞추기) — 칸 폭이 좁아(≈150px) 가운데 칸에 서브로우를 넣으면 숫자가 잘린다.
-    그래서 같은 조각을 두 줄로 쌓는다: 윗줄 [작물][막대][배지], 아랫줄 [현재/다음 XP · 진화 문구].
-    구성 요소·단위·문구·연출 타이밍은 normal 과 같다(크기만 작다).
-  */
-  if (compact) {
-    return (
-      <div className={`flex flex-col gap-[3px] px-[7px] pt-[4px] pb-[4px] ${surface}`}>
-        <div className="flex items-center gap-[5px]">
-          {cropSlot}
-          <div className="relative z-[1] flex flex-1 min-w-0 items-center">{barEl}</div>
-          {badgeSlot}
-        </div>
-        {xpRow}
-      </div>
-    );
-  }
-
-  // normal — [작물 26px] [막대 5px + XP 서브로우] [±N XP]
+  // 한 줄 — [작물(+말풍선)] [숫자 든 막대] [±N XP]. compact 는 크기만 작다.
   return (
-    <div className={`flex items-center py-[7px] px-[12px] gap-[10px] ${surface}`}>
+    <div
+      className={`
+        flex items-center ${surface}
+        ${compact ? 'py-[5px] px-[6px] gap-[4px]' : 'py-[7px] px-[12px] gap-[10px]'}
+      `}
+    >
       {cropSlot}
-      <div className="relative z-[1] flex flex-1 min-w-0 flex-col justify-center gap-[4px]">
-        {barEl}
-        {xpRow}
-      </div>
+      <div className="relative z-[1] flex flex-1 min-w-0 items-center">{barEl}</div>
       {badgeSlot}
     </div>
   );

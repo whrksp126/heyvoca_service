@@ -43,7 +43,7 @@ const clamp = (n) => Math.max(0, Math.min(100, Number(n) || 0));
  * @param {boolean} props.grew    단계가 올랐는지 — true 면 100% → 0% → 새 진행률 연출
  * @param {'primary'|'up'|'ng'} props.tone
  * @param {number|string} props.width  막대 최대 폭 (기본 `'100%'` — 항상 부모 칸 폭 그대로)
- * @param {number} props.height 막대 두께 (기본 5px. 좁은 형 `.fb.sm .tk` 는 4px)
+ * @param {number} props.height 막대 두께 (기본 5px. 글자를 넣는 채점 상태 바는 normal 18px / compact 14px)
  * @param {number} props.delay  채우기 시작을 늦추는 초 — 앞선 연출이 끝난 뒤 차오르게 할 때
  * @param {boolean} props.showGain  오른 구간을 밝게 덧칠할지. 이번에 오른 만큼을 구분해 보여
  *   주는 장치라, 0 에서 새로 채우는 막대(진화 직후 새 단계)에서는 꺼야 한다 —
@@ -55,6 +55,9 @@ const clamp = (n) => Math.max(0, Math.min(100, Number(n) || 0));
  * @param {boolean} props.block  세로(flex-col) 칸에 들어갈 때 true — `flex-1` 대신 `flex-none w-full`.
  *   세로 flex 에서 `flex-1`(flex-basis 0%)은 높이를 0 으로 눌러 막대가 사라진다
  *   (2026-09-26 사지선다·빈칸 상태 바에서 게이지가 안 보이던 원인).
+ * @param {React.ReactNode} props.label  막대 **안**에 가운데 정렬로 넣을 글자(예: `12 / 50 XP`).
+ *   채워진 부분·빈 부분 어디에 걸쳐도 읽히도록 같은 글자를 겹으로 깐다(아래 【막대 안 글자】).
+ * @param {string} props.labelClassName  글자 크기·굵기(호출부가 막대 높이에 맞춰 준다)
  * @param {string} props.className
  */
 const CropProgressBar = ({
@@ -68,6 +71,8 @@ const CropProgressBar = ({
   showGain = true,
   pending = false,
   block = false,
+  label = null,
+  labelClassName = '',
   className = '',
 }) => {
   const from = clamp(pctFrom);
@@ -140,6 +145,26 @@ const CropProgressBar = ({
       : { duration: 0.5, delay, ease: 'easeOut' })
     : { duration: 0.45, delay, ease: 'easeOut' };
 
+  /*
+    【막대 안 글자 — 2026-09-27】 `12 / 50 XP` 를 막대 안에 넣는다. 채움 경계가 글자 한가운데를
+    지나가도 읽히게 **같은 글자를 겹으로** 깐다.
+      1) 바닥 겹: 빈 트랙 위 색(라이트 진회색 / 다크 밝은 회색) — 막대 전체에 깔린다.
+      2) 흰 겹: 진한 채움(분홍·초록·주황) 위에서만 보이도록 clip-path 로 채움 폭만큼 잘라 낸다.
+         clip 은 채움과 **같은 키프레임·같은 transition** 으로 움직인다(진화 리셋·오답 줄어듦 포함)
+         — 따로 계산하면 경계가 채움과 어긋난다.
+      3) 오른 구간(gain, 밝은 분홍/연두) 위 겹: 흰 글자는 연한 배경에서 안 읽히고, 다크 모드
+         바닥 겹(밝은 회색)도 마찬가지라 이 구간만 진회색 글자를 모드 무관하게 깐다.
+         gain 오버레이는 from 에서 시작해 to 까지 자라므로, 진한 채움이 보이는 건 0~from 뿐이다
+         — 그래서 gained 회차의 흰 겹은 from 에 멈춰 있고 이 겹이 from~to 를 맡는다.
+  */
+  const insetRight = (p) => `inset(0% ${100 - p}% 0% 0%)`;
+  const whiteClipAnimate = grew
+    ? (resets
+      ? { clipPath: [from, 100, 100, 0, to].map(insetRight) }
+      : { clipPath: insetRight(100) })
+    : { clipPath: insetRight(gained ? from : to) };
+  const labelBase = `absolute inset-0 flex items-center justify-center whitespace-nowrap leading-none tabular-nums pointer-events-none select-none ${labelClassName}`;
+
   return (
     <span
       className={`relative block ${block ? 'flex-none w-full' : 'flex-1'} rounded-[99px] bg-[#E8E8E8] dark:bg-[#454545] overflow-hidden ${className}`}
@@ -175,6 +200,34 @@ const CropProgressBar = ({
           animate={{ opacity: [0, 0.85, 0.85, 0] }}
           transition={{ duration: 0.8, times: [0, 0.12, 0.55, 1], ease: 'easeOut' }}
         />
+      )}
+      {label != null && (
+        <>
+          <span aria-hidden className={`${labelBase} text-layout-gray-500 dark:text-layout-gray-100`}>
+            {label}
+          </span>
+          <motion.span
+            key={`label-fill-${pending ? 'p' : 'r'}-${grew ? 1 : 0}`}
+            className={`${labelBase} text-white [text-shadow:0_0_2px_rgba(0,0,0,0.28)]`}
+            initial={{ clipPath: insetRight(from) }}
+            animate={whiteClipAnimate}
+            transition={fillTransition}
+          >
+            {label}
+          </motion.span>
+          {gained && (
+            <motion.span
+              key="label-gain"
+              aria-hidden
+              className={`${labelBase} text-layout-gray-500`}
+              initial={{ clipPath: `inset(0% ${100 - from}% 0% ${from}%)` }}
+              animate={{ clipPath: `inset(0% ${100 - to}% 0% ${from}%)` }}
+              transition={{ duration: 0.45, delay, ease: 'easeOut' }}
+            >
+              {label}
+            </motion.span>
+          )}
+        </>
       )}
     </span>
   );
