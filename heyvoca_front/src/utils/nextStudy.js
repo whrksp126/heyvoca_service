@@ -54,36 +54,48 @@ const wordsOfSheets = (vocabularySheets, vocabularySheetId) => {
   return sheets.filter((s) => ids.has(s.id)).flatMap((s) => s.words || []);
 };
 
+/** AI 추천(quick) 계획 — 홈 주 CTA 와 같은 설정. 다른 종류가 설정을 잃었을 때의 기본값이기도 하다. */
+const planQuick = (vocabularySheets) => {
+  const studiable = wordsOfSheets(vocabularySheets, 'all').filter(isWordStudiable);
+  if (studiable.length < MIN_TEST_VOCABULARY_COUNT) {
+    return { available: false, reason: '지금은 더 학습할 단어가 없어요' };
+  }
+  return {
+    available: true,
+    state: {
+      testType: 'quick',
+      data: {
+        questionType: QUICK_QUESTION_TYPES,
+        useRecommendedTypes: true,
+        vocabularySheetId: 'all',
+        memoryState: null,
+        count: Math.min(QUICK_MAX_QUESTIONS, studiable.length),
+      },
+    },
+  };
+};
+
 /**
  * 다음 학습 계획.
- * @returns {{ available: boolean, reason?: string, state?: object }}
+ * @returns {{ available: boolean, reason?: string, state?: object, fallback?: 'quick' }}
  *   state 는 navigate('/take-test', { state }) 에 그대로 넘긴다.
+ *   fallback: 'quick' — 같은 설정을 복원하지 못해(기기에 적어 둔 설정이 없거나 깨짐)
+ *   기본 AI 추천으로 대신 잇는다. 예전에는 이 경우 { available: false, reason: null } 이라
+ *   "다음 학습" 자체가 조용히 사라졌다.
  */
 export const planNextStudy = ({ testType, isGuest, config, vocabularySheets }) => {
   if (isGuest || !testType || testType === 'today') return { available: false, reason: null };
 
-  if (testType === 'quick') {
-    const studiable = wordsOfSheets(vocabularySheets, 'all').filter(isWordStudiable);
-    if (studiable.length < MIN_TEST_VOCABULARY_COUNT) {
-      return { available: false, reason: '지금은 더 학습할 단어가 없어요' };
-    }
-    return {
-      available: true,
-      state: {
-        testType: 'quick',
-        data: {
-          questionType: QUICK_QUESTION_TYPES,
-          useRecommendedTypes: true,
-          vocabularySheetId: 'all',
-          memoryState: null,
-          count: Math.min(QUICK_MAX_QUESTIONS, studiable.length),
-        },
-      },
-    };
-  }
+  if (testType === 'quick') return planQuick(vocabularySheets);
 
   if (testType === 'test' || testType === 'exam') {
-    if (!config) return { available: false, reason: null };
+    const validConfig = config && typeof config === 'object'
+      && config.questionType != null
+      && (Array.isArray(config.questionType) ? config.questionType.length > 0 : true);
+    if (!validConfig) {
+      const quick = planQuick(vocabularySheets);
+      return quick.available ? { ...quick, fallback: 'quick' } : quick;
+    }
     const studiable = wordsOfSheets(vocabularySheets, config.vocabularySheetId).filter(isWordStudiable);
     const stages = Array.isArray(config.memoryState) && config.memoryState.length > 0
       ? config.memoryState

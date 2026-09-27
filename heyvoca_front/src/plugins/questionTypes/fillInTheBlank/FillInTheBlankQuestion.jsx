@@ -577,8 +577,9 @@ const FillInTheBlankQuestion = ({ question, onComplete, onCardMatched, farmByWor
           )}
         </AnimatePresence>
 
-        {/* O/X — 카드 중앙 */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-[3] pointer-events-none">
+        {/* O/X — 빈칸 예문과 같은 중심. 예문은 pt 30 / pb 60 콘텐츠 영역 가운데에 서므로
+            카드 전체 중앙이 아니라 같은 영역(top 30 / bottom 60)의 가운데에 둔다. */}
+        <div className="absolute inset-x-0 top-[30px] bottom-[60px] z-[3] flex items-center justify-center pointer-events-none">
           <AnimatePresence>
             {isCorrect === true && (
               <motion.div

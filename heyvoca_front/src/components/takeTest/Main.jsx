@@ -1588,9 +1588,14 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
                   }}
                 >
 
-                  {/* 일반 유형 클릭(TTS 재생) 시 ripple — 아이콘 없이 카드 중앙에서 확산 */}
+                  {/* 일반 유형 클릭(TTS 재생) 시 ripple — 아이콘 없이 단어 중심에서 확산.
+                      카드는 pt 30 / pb 60 이 비대칭이라 단어는 "콘텐츠 영역" 가운데에 선다.
+                      ripple 을 카드 전체(padding box) 기준으로 두면 중심이 15px 아래로 어긋나므로
+                      같은 콘텐츠 영역(top 30 / bottom 60)과 똑같은 앵커 박스 안에 그린다. */}
                   {showTtsRipple && (
-                    <TtsRipple size={160} duration={speakDuration} className="z-[0]" />
+                    <div aria-hidden className="absolute inset-x-0 top-[30px] bottom-[60px] pointer-events-none">
+                      <TtsRipple size={160} duration={speakDuration} className="z-[0]" />
+                    </div>
                   )}
 
                   {/* 우측 상단 - 채점 전: 최근 학습 시점 / 채점 후: 다음 복습 예정일(오답은 비움).

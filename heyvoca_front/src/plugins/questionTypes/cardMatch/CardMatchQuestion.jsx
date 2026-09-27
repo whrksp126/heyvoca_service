@@ -359,8 +359,13 @@ const CardMatchQuestion = ({ question, testType, onComplete, onCardMatched, farm
                 minSize={12}
                 className={`relative z-[1] font-[800] w-full text-center ${getLeftTextStyle(index)}`}
               />
-              {/* 클릭(TTS 재생) 시 ripple 효과 — 아이콘 없이 카드 중앙에서 확산 */}
-              {isSpeaking && !isResolved && <TtsRipple size={96} duration={speakingDuration} />}
+              {/* 클릭(TTS 재생) 시 ripple 효과 — 아이콘 없이 단어 중심에서 확산.
+                  카드가 pt 24 / pb 50 비대칭이라 단어가 선 콘텐츠 영역과 같은 앵커 박스에 그린다. */}
+              {isSpeaking && !isResolved && (
+                <div aria-hidden className="absolute inset-x-0 top-[24px] bottom-[50px] pointer-events-none">
+                  <TtsRipple size={96} duration={speakingDuration} />
+                </div>
+              )}
 
               {/* 하단 - 채점 후: 농장 상태 바 좁은 형 — 유형 공통(FarmResultBar compact) */}
               <FarmResultBar

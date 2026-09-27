@@ -25,7 +25,7 @@ import { StreakDayMark } from '../farm/StreakDayMark';
 import { getSessionFarmSummaryApi } from '../../api/farm';
 import { calendarDaysFromToday } from '../../utils/reviewTiming';
 import StudyTimingTag from '../farm/StudyTimingTag';
-import { getAchievementCriteriaApi } from '../../api/study';
+import { getAchievementCriteriaApi, updateUserRecentStudyDataApi } from '../../api/study';
 import { planNextStudy, loadStudyConfig, NEXT_STUDY_COUNTDOWN_MS } from '../../utils/nextStudy';
 import { primeSfx } from '../../utils/audio';
 
@@ -371,7 +371,12 @@ const ResultCtaBar = ({ children, className = '' }) => (
   reduced-motion: 링은 줄지 않고 숫자만 줄어든다.
 */
 const RING_R = 9;
-const CountdownRing = ({ remainingSec, durationSec, animate }) => (
+/*
+  from: 이 구간이 시작할 때 남은 비율(1 = 가득). 백그라운드에서 돌아와 이어 셀 때는 1 이 아니다.
+  runSec: from → 0 까지 걸리는 시간(= 남은 시간). running 이 false 면 from 에 멈춰 있는다.
+  구간이 바뀔 때마다 호출부가 key 를 바꿔 새로 마운트한다(framer 가 중간값에서 이어 가지 않게).
+*/
+const CountdownRing = ({ remainingSec, from, runSec, running, animate }) => (
   <span className='relative inline-flex items-center justify-center w-[24px] h-[24px]'>
     <svg aria-hidden className='absolute inset-0 w-full h-full -rotate-90' viewBox='0 0 24 24'>
       <circle cx='12' cy='12' r={RING_R} fill='none' stroke='rgba(255,255,255,.32)' strokeWidth='2' />
@@ -383,9 +388,9 @@ const CountdownRing = ({ remainingSec, durationSec, animate }) => (
         stroke='#FFFFFF'
         strokeWidth='2'
         strokeLinecap='round'
-        initial={{ pathLength: 1 }}
-        animate={{ pathLength: animate ? 0 : 1 }}
-        transition={animate ? { duration: durationSec, ease: 'linear' } : { duration: 0 }}
+        initial={{ pathLength: animate ? from : 1 }}
+        animate={{ pathLength: animate ? (running ? 0 : from) : 1 }}
+        transition={animate && running ? { duration: runSec, ease: 'linear' } : { duration: 0 }}
       />
     </svg>
     <span className='relative text-[11.5px] font-[700] leading-none tabular-nums'>
@@ -394,22 +399,47 @@ const CountdownRing = ({ remainingSec, durationSec, animate }) => (
   </span>
 );
 
-const NextStudyCta = ({ counting, remainingSec, durationSec, reducedMotion, onClick, className = '' }) => (
+/*
+  【2026-09-27 실기기 피드백 2】 링을 탭하면 자동 시작을 **멈춘다**(링이 사라지고 버튼은 평소 모양),
+  버튼의 나머지 부분을 탭하면 바로 시작한다. 버튼 안에 버튼을 두면 HTML 규칙 위반이라,
+  버튼은 하나로 두고 누른 자리가 링(data-countdown-ring) 안인지로 가른다.
+  링은 24px 이라 손가락으로 맞히기 어려워 안쪽 여백으로 누를 자리를 44px 까지 넓힌다
+  (음수 마진으로 레이아웃은 그대로).
+*/
+const NextStudyCta = ({ showRing, ring, reducedMotion, onStart, onStopCountdown, className = '' }) => (
   <motion.button
     type="button"
-    onClick={onClick}
+    onClick={(e) => {
+      if (showRing && e.target?.closest?.('[data-countdown-ring]')) {
+        onStopCountdown();
+        return;
+      }
+      onStart();
+    }}
     whileTap={{ scale: 0.97 }}
     transition={{ type: 'spring', stiffness: 500, damping: 15 }}
-    aria-label={counting ? `다음 학습, ${remainingSec}초 뒤 자동으로 시작` : '다음 학습'}
+    aria-label={showRing ? `다음 학습, ${ring.remainingSec}초 뒤 자동으로 시작` : '다음 학습'}
     data-testid="next-study-cta"
     className={`flex items-center justify-center ${CTA_BASE} ${CTA_PRIMARY_FACE} ${className}`}
   >
     <span className='flex items-center gap-[6px]'>
       <Play size={14} weight="fill" />
       다음 학습
-      {counting ? (
-        <span className='ml-[2px] flex'>
-          <CountdownRing remainingSec={remainingSec} durationSec={durationSec} animate={!reducedMotion} />
+      {showRing ? (
+        <span
+          data-countdown-ring
+          data-testid="next-study-ring"
+          aria-label='자동 시작 멈추기'
+          className='-ml-[8px] -my-[10px] -mr-[10px] flex p-[10px]'
+        >
+          <CountdownRing
+            key={ring.key}
+            remainingSec={ring.remainingSec}
+            from={ring.from}
+            runSec={ring.runSec}
+            running={ring.running}
+            animate={!reducedMotion}
+          />
         </span>
       ) : null}
     </span>
@@ -478,7 +508,7 @@ const StudyResult = () => {
     (다크에서는 배경이 #111111 이라 흰 글자가 맞다.) 배경을 따라가게 한다.
   */
   useStatusBarStyle(isDark ? 'light-content' : 'dark-content');
-  const { recentStudy, updateRecentStudy, isRecentStudyLoading, fetchVocabularySheets, setLastSessionResult, getWord, vocabularySheets } = useVocabulary();
+  const { recentStudy, updateRecentStudyState, isRecentStudyLoading, fetchVocabularySheets, setLastSessionResult, getWord, vocabularySheets } = useVocabulary();
   const reducedMotion = useReducedMotion();
   const { updateUserHistory } = useUser();
   const { pushNewBottomSheet } = useNewBottomSheetActions();
@@ -906,104 +936,262 @@ const StudyResult = () => {
     예전 "테스트 다시 하기"는 **같은 문제를 섞어서 다시** 푸는 것이었다 — 방금 푼 단어를
     곧바로 또 보는 건 복습 간격(FSRS)으로도 의미가 적어, 새 추천 세트로 바꿨다.
 
-    카운트다운(8초)은 결과 **마지막 슬라이드**(result)에서만 돈다. 멈추는 경우:
-      · 결과 목록을 스크롤하거나 화면을 터치 — 결과를 살펴보는 중이므로 취소(버튼은 그대로 누를 수 있다)
-      · 앱이 백그라운드로 감(visibilitychange hidden / pagehide) — 취소
-      · "학습 종료" — 즉시 취소 후 홈
-    한 번 취소되면 이 화면에서는 다시 돌지 않는다 — 살펴보던 사람 앞에서 다시 세기 시작하면
-    결국 고르라고 재촉하는 셈이라, 그다음은 사람이 버튼으로 정한다.
+    카운트다운(8초)은 결과 **마지막 슬라이드**(result)에서만 돈다.
+
+    【2026-09-27 실기기 피드백 — "타이머가 지나갔는데 안 넘어간다"】 규칙을 바꿨다.
+      · 스크롤·휠·손가락 올림(pointerdown)만으로는 멈추지 않는다. 예전에는 결과 목록의
+        pointerdown / scroll / wheel 을 전부 취소로 봤는데, 안드로이드 WebView 는 사용자가
+        의도하지 않아도 스크롤 이벤트를 내는 경우(뷰포트·상태 바 높이 보정, 목록 그림 로드로
+        인한 높이 변화, 화면을 잡고만 있어도 나는 pointerdown)가 있어 조용히 취소됐다.
+      · **명시적인 탭**(누른 자리에서 10px 안에서 떼고, 700ms 안) 만 멈춤으로 본다 —
+        결과 카드의 발음 버튼·단어 탭도 탭이므로 멈춘다. 스크롤 제스처는 브라우저가
+        pointercancel 을 보내거나 이동거리가 커서 탭이 아니다.
+      · 다음 학습 버튼의 링을 탭하면 멈춘다(버튼 나머지 부분은 즉시 시작).
+      · 앱이 백그라운드로 가면(visibilitychange hidden / pagehide) **일시정지**, 돌아오면 남은
+        시간부터 이어 센다. WebView 가 visible 을 놓치는 경우를 대비해 멈춘 동안 1초마다 실제
+        visibilityState 를 다시 본다.
+      · "학습 종료" — 즉시 멈춘 뒤 홈.
+    다 세면 반드시 다음 학습을 연다 — 실패 원인별 처리는 startNextStudy 주석.
+    한 번 멈추면 이 화면에서는 다시 돌지 않는다 — 그다음은 사람이 버튼으로 정한다.
   */
-  const nextPlan = planNextStudy({
+  const livePlan = planNextStudy({
     testType,
     isGuest,
     config: state?.studyConfig ?? loadStudyConfig(testType),
     vocabularySheets,
   });
+  // 카운트를 시작한 순간의 계획을 고정한다 — 세는 중에 단어장 재조회(결과 저장 뒤 fetch)로
+  // vocabularySheets 가 잠깐 비거나 바뀌어도, 약속한 "다음 학습"이 사라지거나 바뀌지 않게.
+  const [frozenPlan, setFrozenPlan] = useState(null);
+  const nextPlan = frozenPlan ?? livePlan;
   const isResultScreen = screenList[currentScreenIndex]?.type === 'result';
-  // idle(아직 안 셈) → counting → cancelled / starting
+  // idle(아직 안 셈) → counting ⇄ paused(백그라운드) → stopped(사용자가 멈춤) / starting / failed
   const [countdownPhase, setCountdownPhase] = useState('idle');
   const [remainingSec, setRemainingSec] = useState(Math.ceil(NEXT_STUDY_COUNTDOWN_MS / 1000));
+  // 링 구간 — 이어 셀 때마다 key 를 바꿔 새로 그린다(from: 시작 비율, runSec: 남은 초)
+  const [ringSeg, setRingSeg] = useState({ key: 0, from: 1, runSec: NEXT_STUDY_COUNTDOWN_MS / 1000 });
+  const [nextNotice, setNextNotice] = useState(null);
   const deadlineRef = useRef(0);
+  const remainingMsRef = useRef(NEXT_STUDY_COUNTDOWN_MS);
+  // 타이머·이벤트 콜백이 읽는 현재 단계 — 단계를 바꾸는 곳에서 state 와 함께 적는다
+  const phaseRef = useRef('idle');
   const startingRef = useRef(false);
+  const recentStudyRef = useRef(recentStudy);
+  const planRef = useRef(nextPlan);
+  const showRing = (countdownPhase === 'counting' || countdownPhase === 'paused') && nextPlan.available;
   const counting = countdownPhase === 'counting' && nextPlan.available;
 
-  const cancelCountdown = () => {
-    setCountdownPhase((phase) => (phase === 'counting' || phase === 'idle' ? 'cancelled' : phase));
+  const debugLog = (...args) => {
+    // 실기기 원인 추적용 — 콘솔(WebView 원격 디버깅)에서 흐름을 볼 수 있게 남긴다
+    console.info('[StudyResult/next]', ...args);
   };
 
-  const startNextStudy = async () => {
-    if (startingRef.current || !nextPlan.available) return;
+  // 사용자가 명시적으로 멈춤 — 한 번 멈추면 다시 돌지 않는다
+  const stopCountdown = (why) => {
+    const phase = phaseRef.current;
+    if (phase !== 'counting' && phase !== 'paused' && phase !== 'idle') return;
+    debugLog('stop', why);
+    phaseRef.current = 'stopped';
+    setCountdownPhase('stopped');
+  };
+
+  const beginSegment = (remainingMs) => {
+    deadlineRef.current = Date.now() + remainingMs;
+    remainingMsRef.current = remainingMs;
+    setRemainingSec(Math.max(1, Math.ceil(remainingMs / 1000)));
+    setRingSeg((prev) => ({ key: prev.key + 1, from: remainingMs / NEXT_STUDY_COUNTDOWN_MS, runSec: remainingMs / 1000 }));
+    phaseRef.current = 'counting';
+    setCountdownPhase('counting');
+  };
+
+  const pauseCountdown = (why) => {
+    if (phaseRef.current !== 'counting') return;
+    const left = Math.max(0, deadlineRef.current - Date.now());
+    remainingMsRef.current = left;
+    debugLog('pause', why, left);
+    setRingSeg((prev) => ({ key: prev.key + 1, from: left / NEXT_STUDY_COUNTDOWN_MS, runSec: left / 1000 }));
+    phaseRef.current = 'paused';
+    setCountdownPhase('paused');
+  };
+
+  /*
+    다음 학습 시작. 자동(카운트 끝)이든 손으로 눌렀든 여기서 조용히 멈추지 않는다.
+      · 계획이 없음(단어 부족 등) → 이유를 버튼 위에 보여 주고 멈춘다(failed).
+        같은 설정을 복원하지 못한 경우는 nextStudy.js 가 이미 AI 추천(quick)으로 바꿔 준다.
+      · 끝난 회차(status end) 비우기가 실패·지연(5초) → 로컬 상태만 비우고 그대로 들어간다.
+        TakeTest 는 status 가 end 가 아니면 새 세션을 만들며 그때 서버에 learning 으로 덮어쓴다.
+        예전에는 여기서 실패하면 cancelled 로 조용히 멈췄다(링만 사라지고 아무 일도 없음).
+      · AI 추천으로 대신 가는데 추천 쪽에 하던 회차(learning)가 있으면 지우지 않고 이어서 연다.
+  */
+  const startNextStudy = async (source = 'manual') => {
+    if (startingRef.current) return;
+    const plan = planRef.current;
+    if (!plan?.available || !plan.state) {
+      debugLog('start: no plan', source, plan?.reason);
+      setNextNotice(plan?.reason || '지금은 다음 학습을 준비하지 못했어요');
+      phaseRef.current = 'failed';
+      setCountdownPhase('failed');
+      return;
+    }
     startingRef.current = true;
+    phaseRef.current = 'starting';
     setCountdownPhase('starting');
+    debugLog('start', source, plan.state.testType, plan.fallback ?? '');
     // 효과음 unlock — 손으로 누른 경우에만 실제로 걸린다(자동 시작은 제스처가 없어 무해한 호출)
     primeSfx();
-    try {
-      // 끝난 회차(status end)를 비워야 TakeTest 가 새 세션을 만든다(end 면 아무것도 안 한다)
-      const saved = await updateRecentStudy(testType, {
-        ...(recentStudy?.[testType] ?? {}),
+    const target = plan.state.testType;
+    const slot = recentStudyRef.current?.[target];
+    const resumeOther = target !== testType && slot?.status === 'learning' && slot?.study_data?.length > 0;
+    if (!resumeOther) {
+      // 끝난 회차(status end)를 비워야 TakeTest 가 새 세션을 만든다(end 면 결과로 되돌려 보낸다)
+      const reset = {
+        ...(slot ?? {}),
         progress_index: null,
-        type: testType,
+        type: target,
         status: null,
         study_data: null,
         updated_at: null,
         created_at: null,
-      });
-      if (!saved) throw new Error('recent study reset failed');
-      navigate('/take-test', { state: nextPlan.state, replace: true });
-    } catch (e) {
-      console.error('[StudyResult] 다음 학습 시작 실패:', e);
-      startingRef.current = false;
-      setCountdownPhase('cancelled');
+      };
+      let saved = null;
+      try {
+        saved = await Promise.race([
+          updateUserRecentStudyDataApi({ curRecentStudy: reset }),
+          new Promise((resolve) => setTimeout(() => resolve('timeout'), 5000)),
+        ]);
+      } catch (e) {
+        saved = null;
+      }
+      if (saved && saved !== 'timeout' && saved.code == 200 && saved.data) {
+        updateRecentStudyState({ [target]: saved.data });
+      } else {
+        console.warn('[StudyResult] 끝난 회차 비우기 실패 — 로컬만 비우고 진행:', saved === 'timeout' ? 'timeout' : saved?.code);
+        updateRecentStudyState({ [target]: reset });
+      }
     }
+    navigate('/take-test', { state: plan.state, replace: true });
   };
+  // 타이머 콜백이 늘 최신 함수·값을 쓰게(렌더 중 ref 쓰기는 React Compiler 가 막으므로 커밋 뒤에 맞춘다)
+  const startRef = useRef(startNextStudy);
+  useEffect(() => {
+    startRef.current = startNextStudy;
+    planRef.current = nextPlan;
+    recentStudyRef.current = recentStudy;
+  });
 
   // 마지막 슬라이드에 도착하면 센다 — 앞 슬라이드를 보는 중에는 시작하지 않는다
   useEffect(() => {
-    if (!isResultScreen || !nextPlan.available || countdownPhase !== 'idle') return;
+    if (!isResultScreen || !livePlan.available || countdownPhase !== 'idle') return;
+    setFrozenPlan(livePlan);
+    if (livePlan.fallback === 'quick') setNextNotice('이전 설정을 찾지 못해 AI 추천으로 이어가요');
     if (typeof document !== 'undefined' && document.visibilityState === 'hidden') {
-      setCountdownPhase('cancelled');
+      // 백그라운드에서 도착 — 처음부터(8초) 멈춰 두었다가 돌아오면 센다
+      remainingMsRef.current = NEXT_STUDY_COUNTDOWN_MS;
+      phaseRef.current = 'paused';
+      setCountdownPhase('paused');
+      debugLog('arrive hidden → paused');
       return;
     }
-    deadlineRef.current = Date.now() + NEXT_STUDY_COUNTDOWN_MS;
-    setRemainingSec(Math.ceil(NEXT_STUDY_COUNTDOWN_MS / 1000));
-    setCountdownPhase('counting');
+    debugLog('begin');
+    beginSegment(NEXT_STUDY_COUNTDOWN_MS);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isResultScreen, nextPlan.available, countdownPhase]);
+  }, [isResultScreen, livePlan.available, countdownPhase]);
 
+  // 세기 — interval(숫자 갱신) + 마감 시각 setTimeout(백업) 둘 다 마감을 확인한다
   useEffect(() => {
     if (!counting) return undefined;
-    const tick = () => {
+    let fired = false;
+    const check = () => {
+      if (fired || phaseRef.current !== 'counting') return;
       const left = deadlineRef.current - Date.now();
       if (left <= 0) {
+        fired = true;
         setRemainingSec(0);
-        startNextStudy();
+        debugLog('deadline reached');
+        startRef.current('auto');
         return;
       }
       setRemainingSec(Math.ceil(left / 1000));
     };
-    const id = setInterval(tick, 200);
-    return () => clearInterval(id);
+    const id = setInterval(check, 200);
+    const to = setTimeout(check, Math.max(0, deadlineRef.current - Date.now()) + 30);
+    return () => { clearInterval(id); clearTimeout(to); };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [counting]);
+  }, [counting, ringSeg.key]);
 
-  // 백그라운드로 가면 멈춘다
+  // 백그라운드 — 일시정지 후 돌아오면 이어서(취소 아님)
   useEffect(() => {
-    if (!counting) return undefined;
-    const onHidden = () => {
-      if (document.visibilityState === 'hidden') cancelCountdown();
+    if (!showRing) return undefined;
+    const resumeIfVisible = (why) => {
+      if (phaseRef.current !== 'paused' || document.visibilityState !== 'visible') return;
+      debugLog('resume', why, remainingMsRef.current);
+      if (remainingMsRef.current <= 0) {
+        startRef.current('auto-resume');
+        return;
+      }
+      beginSegment(remainingMsRef.current);
     };
-    const onPageHide = () => cancelCountdown();
-    document.addEventListener('visibilitychange', onHidden);
+    const onVisibility = () => {
+      if (document.visibilityState === 'hidden') pauseCountdown('visibilitychange');
+      else resumeIfVisible('visibilitychange');
+    };
+    const onPageHide = () => pauseCountdown('pagehide');
+    const onPageShow = () => resumeIfVisible('pageshow');
+    document.addEventListener('visibilitychange', onVisibility);
     window.addEventListener('pagehide', onPageHide);
+    window.addEventListener('pageshow', onPageShow);
+    window.addEventListener('focus', onPageShow);
+    // WebView 가 visible 이벤트를 놓쳐도 멈춘 채로 남지 않게
+    const poll = setInterval(() => resumeIfVisible('poll'), 1000);
     return () => {
-      document.removeEventListener('visibilitychange', onHidden);
+      document.removeEventListener('visibilitychange', onVisibility);
       window.removeEventListener('pagehide', onPageHide);
+      window.removeEventListener('pageshow', onPageShow);
+      window.removeEventListener('focus', onPageShow);
+      clearInterval(poll);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [counting]);
+  }, [showRing]);
+
+  /*
+    명시적 탭 판정 — 결과 화면 전체(하단 버튼 영역 제외)에서.
+    pointerdown 이 이 화면 안에서 시작돼야 한다(앞 슬라이드 "확인" 탭의 나머지 이벤트는 무시).
+    pointerup(10px 안·700ms 안) 또는 click 중 먼저 오는 쪽으로 멈춘다(둘 다 와도 한 번).
+    스크롤로 이어진 제스처는 pointercancel 이 오거나 이동거리가 커서 탭이 아니다.
+  */
+  const tapRef = useRef(null);
+  const TAP_SLOP = 10;
+  const inCtaArea = (e) => !!e.target?.closest?.('[data-result-cta]');
+  const tapHandlers = {
+    onPointerDownCapture: (e) => {
+      if (inCtaArea(e) || (e.pointerType === 'mouse' && e.button !== 0)) { tapRef.current = null; return; }
+      tapRef.current = { id: e.pointerId, x: e.clientX, y: e.clientY, t: Date.now(), moved: false };
+    },
+    onPointerMoveCapture: (e) => {
+      const t = tapRef.current;
+      if (!t || t.id !== e.pointerId) return;
+      if (Math.hypot(e.clientX - t.x, e.clientY - t.y) > TAP_SLOP) t.moved = true;
+    },
+    onPointerCancelCapture: () => { tapRef.current = null; },
+    onScrollCapture: () => { if (tapRef.current) tapRef.current.moved = true; },
+    onPointerUpCapture: (e) => {
+      const t = tapRef.current;
+      if (!t || t.id !== e.pointerId) return;
+      const isTap = !t.moved
+        && Math.hypot(e.clientX - t.x, e.clientY - t.y) <= TAP_SLOP
+        && Date.now() - t.t <= 700;
+      t.done = true;
+      if (isTap) stopCountdown('tap');
+    },
+    onClickCapture: (e) => {
+      const t = tapRef.current;
+      if (!t || inCtaArea(e) || t.moved) return;
+      stopCountdown('click');
+    },
+  };
 
   const onClickEndStudy = async () => {
-    cancelCountdown();
+    stopCountdown('end');
     // 게스트 첫 학습: 결과 확인 후 온보딩 질문 구간으로 (심은 답안은 guestStorage에 저장됨).
     // 예고 화면(ready)이 아니라 그다음으로 보낸다 — 학습을 마친 사람을 예고로 되돌리면
     // 같은 학습을 다시 하게 된다.
@@ -1040,6 +1228,8 @@ const StudyResult = () => {
             duration: 0.5
           }}
           className='relative flex flex-col h-[100dvh] bg-layout-white dark:bg-layout-black'
+          // 결과 화면을 명시적으로 탭하면 자동 시작을 멈춘다(스크롤은 멈추지 않는다) — tapHandlers 주석
+          {...tapHandlers}
         >
           <div style={{ paddingTop: 'var(--status-bar-height)' }}></div>
           <div className='
@@ -1058,11 +1248,7 @@ const StudyResult = () => {
           {/* 아래 여백은 떠 있는 버튼 자리(52+18+26=96)보다 조금 넉넉하게 — 마지막 줄이 가리지 않도록 */}
           <div
             data-testid="result-scroll"
-            className={`relative isolate z-0 flex flex-col flex-1 overflow-y-auto scrollbar-hide ${nextPlan.reason ? 'pb-[140px]' : 'pb-[110px]'}`}
-            // 결과를 살펴보기 시작하면(터치·스크롤) 자동 시작을 취소한다
-            onPointerDown={counting ? cancelCountdown : undefined}
-            onScroll={counting ? cancelCountdown : undefined}
-            onWheel={counting ? cancelCountdown : undefined}
+            className={`relative isolate z-0 flex flex-col flex-1 overflow-y-auto scrollbar-hide ${(nextNotice || nextPlan.reason) ? 'pb-[140px]' : 'pb-[110px]'}`}
           >
             {/* 프로그레스 서클 영역 — 시안 `.circwrap` padding 34px 0 30px */}
             <div className='flex flex-col items-center justify-center pt-[34px] pb-[30px]'>
@@ -1216,11 +1402,11 @@ const StudyResult = () => {
               그래서 태그의 z-2 가 화면 전체 기준으로 올라가 z 가 없던(auto) 이 버튼 영역 위에 그려졌다.
               목록 스크롤 영역은 `isolate` 로 가두고, 버튼 영역은 z-20 으로 확실히 위에 둔다.
               위쪽 20px 페이드는 목록이 버튼 뒤로 '잘려' 보이지 않고 스며들게 한다. */}
-          <div className='absolute bottom-0 left-0 right-0 z-20 bg-layout-white dark:bg-layout-black'>
+          <div data-result-cta className='absolute bottom-0 left-0 right-0 z-20 bg-layout-white dark:bg-layout-black'>
             <div aria-hidden className='pointer-events-none absolute left-0 right-0 bottom-full h-[20px] bg-gradient-to-t from-layout-white dark:from-layout-black to-transparent' />
-            {nextPlan.reason ? (
+            {(nextNotice || nextPlan.reason) ? (
               <p className='px-[24px] pt-[14px] -mb-[6px] text-center text-[12px] font-[500] text-layout-gray-300'>
-                {nextPlan.reason}
+                {nextNotice || nextPlan.reason}
               </p>
             ) : null}
             <ResultCtaBar>
@@ -1234,11 +1420,11 @@ const StudyResult = () => {
                   />
                   <NextStudyCta
                     className="flex-1"
-                    counting={counting}
-                    remainingSec={remainingSec}
-                    durationSec={NEXT_STUDY_COUNTDOWN_MS / 1000}
+                    showRing={showRing}
+                    ring={{ ...ringSeg, remainingSec, running: counting }}
                     reducedMotion={reducedMotion}
-                    onClick={() => { haptic('light'); startNextStudy(); }}
+                    onStart={() => { haptic('light'); startNextStudy('manual'); }}
+                    onStopCountdown={() => { haptic('light'); stopCountdown('ring'); }}
                   />
                 </>
               ) : (
