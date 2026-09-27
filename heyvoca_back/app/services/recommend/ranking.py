@@ -73,6 +73,15 @@ _SAMPLING_WEIGHT_FLOOR = 0.01
 # 다음 세션에 다시 뽑히는 것을 막기 위함(2026-09 버그 수정).
 _RECENT_STUDY_PUSH_BACK_HOURS = 3.0
 
+# compute_weakness 최근 학습 페널티 배수(2026-09 추가). rank_by_weakness의 "최근 3시간 맨
+# 뒤" 규칙은 composer.py의 6b 빈 세션 방지 리필 경로를 타지 않는다 — 그 경로는
+# compute_weakness 내림차순으로만 정렬하므로, 방금(수 분 전) 학습해 stability가 아직 낮은
+# 단어가 (1-R) 항 때문에 가장 취약하게 계산되어 매 세션 그대로 다시 뽑히는 버그가 있었다.
+# _studied_recently(3시간 이내)면 원래 점수에 이 배수를 곱해 다른 모든 비최근 단어보다
+# 확실히 낮아지게 한다(0으로 만들지는 않음 — weighted_sample_without_replacement가 가중치
+# 0 이하로 깨지지 않도록 방어하는 건 그쪽의 _SAMPLING_WEIGHT_FLOOR가 담당).
+_RECENT_STUDY_WEAKNESS_MULTIPLIER = 0.01
+
 
 def _parse_next_review(item: CandidateItem) -> dt.datetime:
     """next_review ISO 문자열 → datetime. 파싱 실패 시 epoch 반환."""
@@ -204,6 +213,14 @@ def compute_weakness(item: CandidateItem, now: dt.datetime) -> float:
 
     recency_penalty는 감점 항이다 — "최근에 이미 본 단어는 순위를 뒤로" 의도
     (2026-09 정정: 최초 구현이 실수로 가산 항이었다).
+
+    최근 학습 페널티(2026-09 추가): _studied_recently(3시간 이내)면 위 점수에
+    _RECENT_STUDY_WEAKNESS_MULTIPLIER(0.01)을 곱해 다른 모든 비최근 단어보다 확실히
+    낮아지게 한다. composer.py의 6b 빈 세션 방지 리필이 이 함수의 내림차순 정렬 결과를
+    그대로 쓰는데, 방금 학습해 stability가 낮은 단어가 (1-R) 항 때문에 최우선으로
+    잡히던 버그를 여기서 막는다. weighted_sample_without_replacement 등 이 함수를 쓰는
+    모든 호출부(가중 샘플링, rank_by_weakness tie-break, composer 리필 정렬)가 일관되게
+    최근 학습 단어를 뒤로 보내게 된다.
     """
     recent_acc = _recent_acc(item.mastery)
     difficulty = _norm_difficulty(_get_difficulty(item))
@@ -218,7 +235,10 @@ def compute_weakness(item: CandidateItem, now: dt.datetime) -> float:
         + _WEAKNESS_W_RETRIEVABILITY * (1.0 - retriev)
         - _WEAKNESS_W_RECENCY * recency
     )
-    return max(0.0, score)
+    score = max(0.0, score)
+    if _studied_recently(item, now):
+        score *= _RECENT_STUDY_WEAKNESS_MULTIPLIER
+    return score
 
 
 def is_known_word(item: CandidateItem, now: dt.datetime, *, streak_threshold: int = 3,
