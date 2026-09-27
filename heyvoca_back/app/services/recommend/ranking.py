@@ -7,8 +7,16 @@ recommend/ranking.py — bucket별 FSRS 기반 정렬 함수.
 약함 점수(weakness score, 2026-09 추가):
   단어별 "최근 5회 정오답·연속 정답·마지막 학습"(mastery, pool.py의 CandidateItem.mastery)과
   FSRS difficulty(D)/lapses/retrievability(R)를 합쳐 "얼마나 못 외운 단어인가"를 0~1로 수치화.
-  short/medium/long 버킷의 1차 정렬 기준이자(rank_by_weakness), overdue/lapse 버킷에서는
-  next_review/retrievability가 동률일 때의 tie-break로 쓰인다.
+  overdue/lapse 버킷에서는 next_review/retrievability가 동률일 때의 tie-break로 쓰이고,
+  short/medium/long 버킷(rank_by_weakness)에서는 tie-break로만 쓰인다(2026-09 정정 — 아래 참조).
+
+short/medium/long 버킷 정렬(rank_by_weakness, 2026-09 정정):
+  1차 기준은 "지금 시점" retrievability(_current_retrievability — last_studied_at 경과 시간
+  + stability로 FSRS 공식을 다시 계산) 오름차순이다. fsrs_state에 저장된 retrievability는
+  마지막 복습 '당시' 스냅샷이라(복습 직후엔 항상 ~1.0) 방금 학습한 단어와 며칠 전 학습한
+  단어를 구분하지 못해서, 그걸 그대로 쓰던 이전 버전은 방금 처음 맞힌 단어가 다음 세션에
+  바로 다시 뽑히는 버그가 있었다. 약함 점수는 tie-break로만 쓰고, 최근 몇 시간 이내 학습한
+  단어는 그 무엇과도 무관하게 정렬 맨 뒤로 보낸다(제외는 아님).
 """
 
 import random
@@ -16,6 +24,7 @@ import datetime as dt
 from typing import List, Optional
 
 from app.services.recommend.pool import CandidateItem
+from app.services.fsrs.core import _retrievability as _fsrs_retrievability
 
 # ──────────────────────────────────────────────
 # 약함 점수(weakness) 가중치 — 각 항목 0~1로 정규화한 뒤 가중합(합계 1.0).
@@ -59,6 +68,11 @@ _NEUTRAL_RECENT_ACC = 0.5
 # 가중 랜덤 샘플링 시 최소 확률을 보장하기 위한 가중치 하한(0점이어도 완전히 배제되지 않게).
 _SAMPLING_WEIGHT_FLOOR = 0.01
 
+# rank_by_weakness: 최근 이 시간(시) 이내에 학습한 단어는 R/약함 점수와 무관하게 정렬 맨 뒤로
+# 보낸다(제외는 아님 — 후보가 이것뿐이면 그래도 반환된다). 방금 복습을 마친 단어가 곧바로
+# 다음 세션에 다시 뽑히는 것을 막기 위함(2026-09 버그 수정).
+_RECENT_STUDY_PUSH_BACK_HOURS = 3.0
+
 
 def _parse_next_review(item: CandidateItem) -> dt.datetime:
     """next_review ISO 문자열 → datetime. 파싱 실패 시 epoch 반환."""
@@ -87,8 +101,43 @@ def _parse_last_studied_at(mastery: dict) -> Optional[dt.datetime]:
 
 
 def _get_retrievability(item: CandidateItem) -> float:
-    """현재 retrievability 값 반환 (0.0~1.0)."""
+    """fsrs_state에 저장된 retrievability 스냅샷 반환 (0.0~1.0).
+
+    주의: 이 값은 "지금"이 아니라 **마지막 복습 시점**에 계산되어 저장된 값이다
+    (core.py의 new_r은 elapsed_days=0으로 계산되므로 복습 직후엔 항상 ~1.0에 가깝다).
+    "지금 까먹었을 가능성"이 필요하면 _current_retrievability를 쓸 것.
+    """
     return float(item.fsrs_state.get("retrievability") or 0.0)
+
+
+def _current_retrievability(item: CandidateItem, now: dt.datetime) -> float:
+    """
+    지금 시점의 retrievability(R) — FSRS 공식(core._retrievability)으로
+    "마지막 학습 이후 경과 시간"을 반영해 새로 계산한다.
+
+    fsrs_state.retrievability는 마지막 복습 '당시' 스냅샷이라(위 _get_retrievability 참조)
+    방금 학습한 단어와 며칠 전 학습한 단어를 구분하지 못한다 — short/medium/long 버킷
+    정렬(rank_by_weakness)은 항상 이 함수로 다시 계산한 값을 쓴다.
+    stability<=0(비정상 데이터)이면 0.0(가장 취약)으로 취급.
+    """
+    stability = _get_stability(item)
+    if stability <= 0:
+        return 0.0
+    last_studied = _parse_last_studied_at(item.mastery)
+    if last_studied is None or now is None:
+        # 학습 이력 시각을 알 수 없으면 stale 스냅샷으로 폴백(완전히 망가진 데이터 방어용).
+        return _get_retrievability(item)
+    elapsed_days = max(0.0, (now - last_studied).total_seconds() / 86400.0)
+    return _fsrs_retrievability(elapsed_days, stability)
+
+
+def _studied_recently(item: CandidateItem, now: dt.datetime, *, hours: float = _RECENT_STUDY_PUSH_BACK_HOURS) -> bool:
+    """마지막 학습이 hours시간 이내인지. rank_by_weakness에서 정렬 맨 뒤로 미루는 데 사용."""
+    last_studied = _parse_last_studied_at(item.mastery)
+    if last_studied is None or now is None:
+        return False
+    elapsed_hours = (now - last_studied).total_seconds() / 3600.0
+    return 0 <= elapsed_hours <= hours
 
 
 def _get_stability(item: CandidateItem) -> float:
@@ -249,12 +298,31 @@ def rank_short_medium(items: List[CandidateItem], now: dt.datetime = None) -> Li
 
 def rank_by_weakness(items: List[CandidateItem], now: dt.datetime = None) -> List[CandidateItem]:
     """
-    short/medium/long 버킷 정렬 — 약함 점수 내림차순(가장 취약한 단어가 앞).
+    short/medium/long 버킷 정렬 (2026-09 정정).
+
+    1차: 지금 시점 retrievability(R, _current_retrievability) 오름차순 —
+         "지금 까먹었을 가능성이 높은 단어"(R 낮음)가 앞.
+    2차(동률 tie-break): 약함 점수(compute_weakness) 내림차순 — 더 취약한 쪽이 앞.
+    최우선 규칙: 최근 _RECENT_STUDY_PUSH_BACK_HOURS시간 이내에 학습한 단어는 R/약함
+         점수와 무관하게 정렬 맨 뒤로 보낸다(제외는 아님 — 후보가 그것뿐이면 그래도 나온다).
+
+    (예전 버전은 fsrs_state에 저장된 "마지막 복습 시점" retrievability 스냅샷을 그대로 써서
+    방금 처음 맞힌 단어(경과 시간 0 → R≈1.0로 저장되지만, 약함 점수 자체에는 recency가 약하게만
+    반영돼 며칠 전 학습한 단어와 거의 동률로 취급됐다)가 다음 세션에 바로 다시 뽑히는 버그가
+    있었다 — _current_retrievability로 항상 지금 시점 R을 재계산해 해결.)
+
     composer.py는 이 정렬 결과의 상위 min(len, 3*quota)만 후보로 삼아 그 안에서
-    점수 가중 랜덤 샘플링을 한다(매 세션 top-N 고정 반복 방지).
+    점수 가중 랜덤 샘플링을 한다(매 세션 top-N 고정 반복 방지). 시그니처/반환 형태는 그대로다.
     """
     now = now or dt.datetime.utcnow()
-    return sorted(items, key=lambda it: compute_weakness(it, now), reverse=True)
+    return sorted(
+        items,
+        key=lambda it: (
+            _studied_recently(it, now),       # False(0) 먼저 → 최근 학습 단어는 True(1)로 맨 뒤
+            _current_retrievability(it, now), # 오름차순 — R 낮을수록(망각 위험) 앞
+            -compute_weakness(it, now),       # tie-break: 약함 점수 내림차순
+        ),
+    )
 
 
 def weighted_sample_without_replacement(
