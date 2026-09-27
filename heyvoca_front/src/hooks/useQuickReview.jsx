@@ -36,7 +36,7 @@ export const useQuickReview = () => {
   const { pushAwaitNewBottomSheet } = useNewBottomSheetActions();
   const { closeNewFullSheet } = useNewFullSheetActions();
 
-  const buildState = (count) => ({
+  const buildState = (count, memoryState = null, taskBucket = null) => ({
     testType: 'quick',
     data: {
       // questionType: 백엔드 추천(suggested_question_type)이 없거나 못 쓸 때의 폴백 풀.
@@ -44,16 +44,32 @@ export const useQuickReview = () => {
       questionType: QUICK_QUESTION_TYPES,
       useRecommendedTypes: true,
       vocabularySheetId: 'all',
-      memoryState: null,
+      memoryState,
       count,
+      // GET /study/recommend?task_bucket=wilted|care — 홈 "오늘 할 일" 카드의 시듦·돌봄
+      // 행 탭 전용. TakeTest.jsx setupTestQuestions → getStudyRecommend 로 그대로 전달된다.
+      taskBucket,
     },
   });
 
   /**
    * @param {object}  opts
-   * @param {boolean} opts.fromFullSheet  풀시트 안에서 부른 경우 — 이동 전에 시트를 닫는다
+   * @param {boolean} opts.fromFullSheet    풀시트 안에서 부른 경우 — 이동 전에 시트를 닫는다
+   * @param {?Array}  opts.memoryState      농장 성장 단계 필터(예: ['unlearned']) — 홈 "오늘 할 일"
+   *                                        카드의 "새 씨앗 심기" 행처럼 특정 단계만 좁혀 시작할 때만 넘긴다.
+   *                                        기본(null)은 필터 없음 — 기존 동작 그대로.
+   * @param {?number} opts.count            문제 수 상한을 직접 정할 때(예: 그 행에 남은 개수).
+   *                                        기본은 전체 단어 수(기존 동작).
+   * @param {?string} opts.taskBucket       'wilted' | 'care' — 홈 "오늘 할 일" 카드의 시듦·돌봄
+   *                                        행 탭 전용 필터(백엔드 /study/recommend?task_bucket=).
+   *                                        기본(null)은 필터 없음 — 기존 동작 그대로.
    */
-  const startQuickReview = async ({ fromFullSheet = false } = {}) => {
+  const startQuickReview = async ({
+    fromFullSheet = false,
+    memoryState = null,
+    count: countOverride,
+    taskBucket = null,
+  } = {}) => {
     vibrate({ duration: 5 });
     // 정답·오답 효과음 unlock 은 **user gesture 의 동기 시점**에 해야 한다.
     // await 뒤로 밀리면 iOS WKWebView 에서 AudioContext 가 열리지 않아 소리가 늦게 난다.
@@ -85,7 +101,7 @@ export const useQuickReview = () => {
       return;
     }
 
-    const count = Math.min(MAX_QUESTIONS, allWords.length);
+    const count = Math.min(MAX_QUESTIONS, countOverride ?? allWords.length);
 
     if (recentStudy?.quick?.status === 'learning') {
       const resume = await pushAwaitNewBottomSheet(
@@ -103,7 +119,7 @@ export const useQuickReview = () => {
       );
       if (resume) {
         if (fromFullSheet) closeNewFullSheet();
-        navigate('/take-test', { state: buildState(count) });
+        navigate('/take-test', { state: buildState(count, memoryState, taskBucket) });
         return;
       }
     }
@@ -119,7 +135,7 @@ export const useQuickReview = () => {
     });
 
     if (fromFullSheet) closeNewFullSheet();
-    navigate('/take-test', { state: buildState(count) });
+    navigate('/take-test', { state: buildState(count, memoryState, taskBucket) });
   };
 
   return { startQuickReview };

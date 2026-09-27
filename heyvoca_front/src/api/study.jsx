@@ -288,12 +288,18 @@ export const getStudyRecommend = async ({
   bookIds = null,
   targetStates = null,
   selection = 'recommended',
+  taskBucket = null,
 }) => {
   const url = `${backendUrl}/study/recommend`;
   const params = {};
 
   params.type = type;
   params.count = count;
+
+  // 홈 "오늘 할 일" 카드의 시듦/돌봄 행 탭 전용 필터 — 생략하면 기존 동작 그대로.
+  if (taskBucket === 'wilted' || taskBucket === 'care') {
+    params.task_bucket = taskBucket;
+  }
 
   // bookIds: 배열 → 콤마 구분 문자열. null → 'all' (생략 시 백엔드 default)
   if (Array.isArray(bookIds) && bookIds.length > 0) {

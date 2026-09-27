@@ -131,6 +131,37 @@ def get_overview():
         return _fail('농장 개요 조회')
 
 
+@farm_bp.route('/today-tasks', methods=['GET'])
+@jwt_required
+def today_tasks():
+    """홈 '오늘 할 일' 카드 + 1주 불꽃 달력 (계약 GET /farm/today-tasks).
+
+    /farm/overview 와 같은 이유로 집계 전에 부패를 다시 계산한다 — 방금 유예가 끝난
+    작물이 빠져 있으면 "썩기 전 N개" 문구와 실제 부패 개수가 어긋난다. 나머지 사전
+    처리(무료 긴급 급수·복귀 미션·연속 정산)는 overview 가 이미 하므로 여기서 다시
+    하지 않는다 — 홈이 두 요청을 같이 부르는 걸 전제로, 중복 쓰기를 늘리지 않는다.
+    """
+    from app import db
+    from app.services.game.farm_v2 import query, watering
+
+    user_id = UUID(g.user_id)
+    now = dt.datetime.utcnow()
+
+    refreshed = True
+    try:
+        watering.compute_rot_state(user_id, now)
+    except Exception:
+        db.session.rollback()
+        refreshed = False
+        _log.warning('오늘 할 일 사전 처리 실패 (부패 재계산)', exc_info=True)
+
+    try:
+        data = query.get_today_tasks(user_id, now, refresh=not refreshed)
+        return jsonify({'code': 200, 'data': data}), 200
+    except Exception:
+        return _fail('오늘 할 일 조회')
+
+
 @farm_bp.route('/plants', methods=['GET'])
 @jwt_required
 def list_plants():

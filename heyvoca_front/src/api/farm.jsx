@@ -40,6 +40,18 @@ export const getFarmPlantsApi = async ({ group, health, limit = 50, cursor } = {
   }
 };
 
+// 홈 "오늘 할 일" 카드 — 썩은 단어/시듦/돌봄/새 씨앗/씨앗 구매 안내 + 1주 불꽃 달력.
+export const getFarmTodayTasksApi = async () => {
+  const url = `${backendUrl}/farm/today-tasks`;
+  const method = 'GET';
+  const fetchData = {};
+  try {
+    return await fetchDataAsync(url, method, fetchData);
+  } catch (error) {
+    console.error('getFarmTodayTasksApi 오류:', error);
+  }
+};
+
 // 홈 아래쪽 "지금 볼 만한 단어" 묶음 (care / rotten / seeds / recent 한 번에)
 export const getFarmHomeFeedApi = async ({ limit = 5 } = {}) => {
   const url = `${backendUrl}/farm/home-feed`;

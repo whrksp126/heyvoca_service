@@ -818,6 +818,11 @@ def get_recommend():
                       무관하게 FSRS state만 본다(default: all)
       selection     : recommended | random                (default: recommended)
       type          : (선택) 통계 라벨용. 알고리즘은 무시  (default: recommend)
+      task_bucket   : (선택) wilted | care — 홈 '오늘 할 일' 카드의 그 줄 단어만 학습.
+                      정의는 `GET /farm/today-tasks` 와 완전히 같다(공유 헬퍼
+                      `farm_v2.query.get_task_bucket_ids`). wilted=WILTED+CRITICAL
+                      (rot_due_at 오름차순), care=날짜 기준 돌봄 중 wilted/critical/
+                      rotten 제외. 생략하면 기존 동작 그대로(하위호환).
 
     응답:
       {
@@ -879,6 +884,10 @@ def get_recommend():
     # type은 통계 라벨로만 사용 (알고리즘 분기 없음)
     type_label = request.args.get('type', 'recommend').lower()
 
+    task_bucket = (request.args.get('task_bucket') or '').strip().lower() or None
+    if task_bucket not in (None, 'wilted', 'care'):
+        return jsonify({'code': 400, 'message': 'task_bucket은 wilted 또는 care만 지원합니다.'}), 400
+
     # ── 사용자 통계 조회 (1쿼리로 묶음) ──
     try:
         user_stats = _fetch_user_stats(user_id)
@@ -909,6 +918,21 @@ def get_recommend():
     except Exception:
         logging.getLogger(__name__).error('농장 썩은단어 필터 실패 (추천은 정상)', exc_info=True)
 
+    # ── task_bucket 필터 — 홈 '오늘 할 일' 카드에서 그 줄만 눌러 들어온 학습. ──
+    # /farm/today-tasks 와 정의가 갈리지 않도록 같은 공유 헬퍼(get_task_bucket_ids)를
+    # 그대로 쓴다. 순서도 그 헬퍼가 정한 우선순위(wilted=rot_due_at 오름차순)를 따른다 —
+    # count가 남은 대상보다 적어 잘릴 때 "썩기 전 것부터"가 지켜져야 한다.
+    if task_bucket:
+        try:
+            from app.services.game.farm_v2.query import get_task_bucket_ids
+            bucket_ids = get_task_bucket_ids(user_id, task_bucket, dt.datetime.utcnow())
+        except Exception:
+            logging.getLogger(__name__).error('오늘 할 일 학습 진입 필터 실패', exc_info=True)
+            bucket_ids = []
+        order = {uv_id: i for i, uv_id in enumerate(bucket_ids)}
+        pool = sorted((it for it in pool if it.user_voca_id in order),
+                     key=lambda it: order[it.user_voca_id])
+
     # ── target_states 필터 (테스트에서 암기 상태 좁히기) ──
     # bucket(new/overdue/today/short/medium/long)이 아니라 crop_stage로 거른다 — bucket의
     # short/medium/long은 "미래에 도래할" 단어에만 붙어서, bucket으로 걸렀다면 오늘 당장
@@ -920,8 +944,10 @@ def get_recommend():
             pool = [it for it in pool if crop_stage(it.fsrs_state) in allowed_stages]
 
     # ── AI 추천 모드 판정 + 신규 일일 cap 산출 ──
-    # 사용자가 암기상태를 명시(target_states)하거나 random이면 그 의도를 그대로 존중 → cap/floor 미적용.
-    full_recommend = (selection == 'recommended' and target_states is None)
+    # 사용자가 암기상태를 명시(target_states)하거나 random이거나 task_bucket으로
+    # 좁혔으면 그 의도를 그대로 존중 → cap/floor 미적용(task_bucket 대상은 애초에
+    # 이미 심어 복습 중이던 단어라 신규 cap 자체가 의미 없다).
+    full_recommend = (selection == 'recommended' and target_states is None and task_bucket is None)
     new_allowance = None
     if full_recommend:
         user_row = db.session.query(User).filter(User.id == user_id).first()

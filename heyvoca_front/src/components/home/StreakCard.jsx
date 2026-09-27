@@ -1,19 +1,16 @@
 // src/components/home/StreakCard.jsx
 //
-// 홈 — 연속 학습 카드 (시안 §6 · §10 "연속 학습 112px").
+// 홈 — 연속 학습 카드 (2026-09-27 확정 목업, scratchpad/home10/IMPL_SPEC.md "1주 불꽃 달력").
 //
-// §6 — 지표 두 개를 나란히 놓던 행을 해체했다. 보석은 히어로 우측 상단 칩으로 올리고
-// (성격이 "얼마 있나"뿐인 재화라 본문 세로 흐름을 차지할 이유가 없다),
-// 연속 학습만 본문 최상단 카드 · 3층으로 남겼다.
-//   1층 헤더 — 불꽃 26px + "12일 연속"(15px/700) + 우측 "최장 24일"(11px/700) + CaretRight
-//   2층 일별 학습량 막대 7칸 — 높이 38px · radius 4. 높이 = 그날 맞힌 개수. 맨 오른쪽이 오늘
-//   3층 요일 라벨 10px/700
-//
-// §6 — 점 7개에서 막대 7개로 바꿨다. 점은 "했다 / 안 했다"밖에 말하지 못하는데,
-// "5개 하고 끝낸 날"과 "40개 몰아친 날"은 전혀 다른 기억이고 그 리듬이 보여야
-// 오늘 어느 정도 할지를 스스로 정한다.
-// 오늘 칸만 트랙을 깔아 둔다 — 나머지 6칸은 결과지만 오늘 칸은 아직 채우는 중이다.
-// 트랙이 보여주는 것은 연속 인정 기준(5개) 대비 진행이다(기획 11.1).
+// 1층 헤더 — 불꽃 24px + "N일 연속"(15px/800) + 우측 "최장 N일"(12px/600) + CaretRight
+//           (기존 §6 헤더와 동일 — 그대로 둔다)
+// 2층 7칸 grid(최근 6일 + 오늘) — 그날 daily_mission_complete/streak_qualified/streak_protected로
+//           채색한다("오늘 할 일 모두" 진한 색 · "일부" 옅은 색 · 보호권 회색+아이콘 · 오늘 미달성은
+//           점선 빈칸). 개수·말풍선은 두지 않는다 — 그날 "오늘 할 일을 다 했는가"만 본다.
+// 이전의 "일별 학습량 막대 7칸"(맞힌 개수 높이)은 이 화면으로 대체됐다 — 오늘 할 일 카드가
+// 이미 "무엇을 얼마나 했는가"를 말하고 있어 여기서는 "그날 다 끝냈는가"만 겹치지 않게 말한다.
+// week 데이터는 /farm/today-tasks(StatsContext.todayTasks.week)에서 받는다 — 이 카드가 원래
+// 쓰던 /farm/streak 응답에는 없는 필드라 두 응답을 같이 본다(아래 주석 참고).
 //
 // §6 — 홈은 "얼마나 해 왔나"만 말한다. "14일 배지까지 2일 남음" 같은 남은 거리 문구는
 // 두지 않는다. 홈에서 눌러야 할 것은 CTA 하나인데 또 하나의 목표가 생기면 시선이 나뉜다.
@@ -36,7 +33,7 @@ import { useLocation } from 'react-router-dom';
 import { CaretRight } from '@phosphor-icons/react';
 import { getStreakApi, startEarnBackApi } from '../../api/farm';
 import { CROP_ASSETS } from '../farm/CropImage';
-import { STREAK_PROTECTED_BG_CLASS } from '../farm/StreakDayMark';
+import { useStats } from '../../context/StatsContext';
 import { useVocabulary } from '../../context/VocabularyContext';
 import { toLocalDateString } from '../../utils/common';
 import { vibrate } from '../../utils/osFunction';
@@ -148,46 +145,29 @@ const StreakCard = ({ registerRefresh } = {}) => {
   const todayCorrect = streak?.today_correct ?? 0;
 
   /**
-   * 최근 7일 — 날짜 오름차순, 맨 오른쪽이 오늘.
+   * 1주 불꽃 달력 — /farm/today-tasks(week)에서 받는다. 오늘 포함 최근 7일, 오래된→오늘 순.
+   * status: 'all'(오늘 할 일 모두) | 'part'(일부) | 'shield'(보호권) | 'none'(빈 날) |
+   *         'today_empty'(오늘, 아직 미달성).
    *
-   * 막대 높이는 "그날 맞힌 개수"다. GET /farm/streak 의 calendar는 이제 correct_cnt를 항상
-   * 내려준다(값이 없던 날은 0 — 사전조회 필드 아님, query.py `correct_counts.get(cursor, 0)`).
-   * `d.correct_cnt ?? d.correct_word_cnt ?? (counted ? required : 0)` 의 `??`는 0을
-   * "값 있음"으로 보므로 보호일도 여기서는 항상 value=0이 된다 — 의도한 동작이다. 보호일은
-   * 실제 개수가 없는 상태라 이 값을 그대로 안 쓰고, 아래 렌더에서 status==='protected'일 때
-   * value를 무시하고 학습일과 같은 높이(100%)로 그린다.
-   *
-   * `status`('studied'|'protected'|'missed'|'future') 는 학습 결과 슬라이드(StudyResult.jsx
-   * `StreakWeek`)와 같은 계약값이다. status가 없는 구버전 응답이면 기존 value>0 기준으로만
-   * 채움을 판정한다(폴백).
+   * 이 카드는 원래 /farm/streak(streak state)만으로 그렸는데, week 판정 기준
+   * (daily_mission_complete·streak_qualified·streak_protected)은 이 응답에 없어
+   * StatsContext.todayTasks 를 함께 본다 — 새 API 호출을 이 컴포넌트가 새로 만들지 않고
+   * 이미 홈이 받아 둔 캐시를 구독하기만 한다(다른 카드들과 같은 방식).
    */
-  const days = useMemo(() => {
-    const calendar = (streak?.calendar ?? [])
-      .slice()
-      .sort((a, b) => (a.date < b.date ? -1 : 1))
-      .slice(-7);
-    return calendar.map((d) => {
+  const { todayTasks } = useStats();
+  const weekCells = useMemo(() => {
+    const week = todayTasks?.week ?? [];
+    return week.map((d) => {
       const isToday = d.date === today;
-      const counted = d.qualified || d.protected;
-      const value = isToday
-        ? todayCorrect
-        : (d.correct_cnt ?? d.correct_word_cnt ?? (counted ? required : 0));
       const date = new Date(`${d.date}T00:00:00`);
       return {
         date: d.date,
         isToday,
-        value,
         status: d.status,
         label: isToday ? '오늘' : (Number.isNaN(date.getTime()) ? '' : DOW[date.getDay()]),
       };
     });
-  }, [streak, today, todayCorrect, required]);
-
-  // §16 ⑤ — 막대 상한은 최근 7일 최댓값이다(시안이 가정한 방식).
-  const peak = useMemo(
-    () => Math.max(required, ...days.map((d) => d.value || 0)),
-    [days, required]
-  );
+  }, [todayTasks, today]);
 
   // §6 "최장 기록 … 누르면 기록 화면" — 농장 방문 달력은 하단 탭을 덮는 풀시트다
   // (home-calendar §3 "풀시트라 하단 탭이 없다"). 진입로는 홈의 이 버튼 하나뿐이다.
@@ -240,9 +220,9 @@ const StreakCard = ({ registerRefresh } = {}) => {
 
   return (
     <div className="
-      rounded-[12px] p-[14px]
-      bg-primary-main-50 dark:bg-primary-main-dark
-      border border-primary-main-200 dark:border-transparent
+      rounded-[12px] p-[18px]
+      bg-layout-white dark:bg-layout-gray-dark
+      border border-farm-line dark:border-transparent
     ">
       {/* 1층 — 불꽃 · 연속 일수 · 최장 기록 */}
       <div className="flex items-center gap-[10px]">
@@ -264,17 +244,17 @@ const StreakCard = ({ registerRefresh } = {}) => {
         <button
           type="button"
           onClick={handleBest}
-          className="flex items-center gap-[3px] text-[11px] font-[700] text-[#B8709F] dark:text-primary-main-400"
+          className="flex items-center gap-[2px] text-[12px] font-[600] text-[#9A9A9A]"
         >
           최장 {best}일
-          <CaretRight size={10} weight="fill" className="text-[#D9A8C8] dark:text-primary-main-400" />
+          <CaretRight size={10} weight="fill" className="text-[#BBBBBB]" />
         </button>
       </div>
 
       {/* 멈춤 알림 행 — 계약 §3 "보호권 이미지 · 보호권 K개가 모자라요 · N시간 안에 채우면
           이어져요 · [지키기] → paused 시트 재오픈" */}
       {paused && pause && (
-        <div className="flex items-center gap-[10px] mt-[12px] px-[11px] py-[10px] rounded-[10px] bg-layout-white dark:bg-layout-black">
+        <div className="flex items-center gap-[10px] mt-[12px] px-[11px] py-[10px] rounded-[10px] bg-layout-gray-50 dark:bg-layout-black">
           <img src={CROP_ASSETS.shield} alt="" draggable={false} className="w-[28px] h-[28px] object-contain select-none shrink-0" />
           <span className="flex-1 min-w-0 text-[12px] leading-[1.45] text-layout-gray-400 dark:text-layout-gray-300">
             <span className="block text-[12.5px] font-[800] text-layout-black dark:text-layout-white">
@@ -294,7 +274,7 @@ const StreakCard = ({ registerRefresh } = {}) => {
 
       {/* 다시 잇기 도전 — 막대 7칸 자리를 대신한다(계약 §3) */}
       {showEarnBack ? (
-        <div className="mt-[12px] p-[12px] rounded-[10px] bg-layout-white dark:bg-layout-black">
+        <div className="mt-[12px] p-[12px] rounded-[10px] bg-layout-gray-50 dark:bg-layout-black">
           {earnBack.status === 'active' ? (
             <>
               <div className="flex items-center gap-[6px] text-[12.5px] font-[800] text-layout-black dark:text-layout-white">
@@ -339,70 +319,66 @@ const StreakCard = ({ registerRefresh } = {}) => {
             </>
           )}
         </div>
-      ) : (
+      ) : weekCells.length === 7 ? (
       <>
-      {/* 2층 — 일별 학습량 막대 7칸. 맨 오른쪽이 오늘 */}
-      <div className="flex items-end gap-[6px] h-[38px] mt-[12px] mb-[5px]">
-        {days.map((d) => {
-          if (d.isToday) {
-            // 오늘 — 옅은 트랙 위에 목표(5개) 대비 채움. 아직 채우는 중이라는 뜻이다
-            const pct = Math.min(100, Math.round((d.value / required) * 100));
-            return (
-              <div
-                key={d.date}
-                className="flex-1 h-full flex items-end rounded-[4px] bg-[#FFE3F5] dark:bg-[rgba(255,255,255,.14)]"
-              >
-                <i
-                  style={{ height: `${Math.max(pct, d.value > 0 ? 10 : 0)}%` }}
-                  className="block w-full rounded-[4px] bg-primary-main-600"
-                />
+      {/* 1주 불꽃 달력 — 오래된→오늘 7칸. "다 했는가"만 색으로 말한다(개수·말풍선 없음) */}
+      <div className="grid grid-cols-7 gap-[6px] mt-[14px]">
+        {weekCells.map((d) => {
+          let cell;
+          if (d.status === 'shield') {
+            cell = (
+              <div className="flex items-center justify-center h-[46px] rounded-[12px] bg-[#F4F4F4] dark:bg-layout-gray-dark">
+                <img src={CROP_ASSETS.shield} alt="보호권" draggable={false} className="w-[22px] h-[22px] object-contain select-none opacity-80" />
               </div>
             );
+          } else if (d.status === 'all') {
+            cell = (
+              <div className="flex items-center justify-center h-[46px] rounded-[12px] bg-[#FFC34D]">
+                <img src={CROP_ASSETS.streak} alt="" draggable={false} className="w-[20px] h-[20px] object-contain select-none" />
+              </div>
+            );
+          } else if (d.status === 'part') {
+            cell = (
+              <div className="flex items-center justify-center h-[46px] rounded-[12px] bg-[#FFEBC2]">
+                <img src={CROP_ASSETS.streak} alt="" draggable={false} className="w-[20px] h-[20px] object-contain select-none" />
+              </div>
+            );
+          } else if (d.status === 'today_empty') {
+            cell = <div className="h-[46px] rounded-[12px] bg-layout-white dark:bg-layout-black border-[1.5px] border-dashed border-[#CFCFCF]" />;
+          } else {
+            // 'none' — 공부 안 한 과거 날의 빈칸
+            cell = <div className="h-[46px] rounded-[12px] bg-[#F4F4F4] dark:bg-layout-gray-dark" />;
           }
-          // 보호권으로 이어진 날은 실제 정답 수(d.value)가 항상 0이다(백엔드 correct_cnt는
-          // 그날 실제로 맞힌 개수라 학습을 안 한 날은 0) — nullish 병합(??)은 0을 "값 있음"
-          // 으로 보므로 이전 코드가 required 대비 peak 비율로 아주 작은 pct를 만들어(예:
-          // required 5 / peak 30 → 17%) 막대가 실드 아이콘에 가려질 만큼 짧아 보였다(버그).
-          // 보호일은 실제 개수를 비교할 대상이 없는 "이어졌다/안 이어졌다"뿐인 상태라 peak
-          // 대비 비율이 아니라 학습일과 동일하게 트랙 최대 높이(100%)로 올린다 — 색만 다르다.
-          const isProtected = d.status === 'protected';
-          const filled = d.status ? d.status === 'studied' : d.value > 0;
-          const pct = isProtected
-            ? 100
-            : (peak > 0 ? Math.round((d.value / peak) * 100) : 0);
           return (
-            <div key={d.date} className="flex-1 h-full flex items-end">
-              {/* 학습한 날 #FF88DC · 최소 높이 4px — 1개만 해도 흔적이 남는다.
-                  빠뜨린 날은 회색이 아니라 연한 핑크다 — 실패로 읽히지 않게.
-                  보호권으로 이어진 날은 학습일과 같은 높이, 색만 결과 슬라이드(StreakDayMark)와
-                  같은 보호권 색(STREAK_PROTECTED_BG_CLASS) */}
-              <i
-                style={{ height: `${pct}%`, minHeight: 4 }}
-                className={`block w-full rounded-[4px] ${
-                  isProtected
-                    ? STREAK_PROTECTED_BG_CLASS
-                    : filled
-                      ? 'bg-primary-main-500'
-                      : 'bg-[#F3DEEC] dark:bg-[rgba(255,255,255,.14)]'
-                }`}
-              />
+            <div key={d.date} className="flex flex-col gap-[6px]">
+              <span className={`text-[11px] text-center ${d.isToday ? 'font-[800] text-layout-black dark:text-layout-white' : 'font-[600] text-[#9A9A9A]'}`}>
+                {d.label}
+              </span>
+              {cell}
             </div>
           );
         })}
       </div>
 
-      {/* 3층 — 요일 라벨. 오늘만 브랜드 핑크 */}
-      <div className="flex gap-[6px] text-[10px] font-[700] tracking-[-0.02em] text-[#B8709F] dark:text-primary-main-400">
-        {days.map((d) => (
-          <span
-            key={d.date}
-            className={`flex-1 text-center ${d.isToday ? 'text-primary-main-600 dark:text-primary-main-500' : ''}`}
-          >
-            {d.label}
-          </span>
-        ))}
+      {/* 범례 — "오늘 할 일 모두" / "일부" */}
+      <div className="flex items-center gap-[12px] mt-[10px] text-[11px] font-[600] text-[#9A9A9A]">
+        <span className="flex items-center gap-[4px]">
+          <i className="w-[12px] h-[12px] rounded-[4px] bg-[#FFC34D]" />
+          오늘 할 일 모두
+        </span>
+        <span className="flex items-center gap-[4px]">
+          <i className="w-[12px] h-[12px] rounded-[4px] bg-[#FFEBC2]" />
+          일부
+        </span>
       </div>
       </>
+      ) : (
+        // week 응답이 아직 없을 때(로딩·구버전 백엔드) — 막대 대신 빈 칸 스켈레톤만 둔다
+        <div className="grid grid-cols-7 gap-[6px] mt-[14px]">
+          {Array.from({ length: 7 }).map((_, i) => (
+            <div key={i} className="h-[46px] rounded-[12px] bg-layout-gray-50 dark:bg-layout-gray-dark animate-pulse" />
+          ))}
+        </div>
       )}
     </div>
   );

@@ -23,7 +23,7 @@ import { useLocation } from 'react-router-dom';
 import { useUser, LEARNING_LANG_CHANGED_EVENT } from './UserContext';
 import { useVocabulary } from './VocabularyContext';
 import { getTodaySummary, getReviewScheduleApi, getTodayMemoryChangesApi } from '../api/study';
-import { getFarmOverviewApi, getFarmHomeFeedApi } from '../api/farm';
+import { getFarmOverviewApi, getFarmHomeFeedApi, getFarmTodayTasksApi } from '../api/farm';
 import { STUDY_DATA_CHANGED_EVENT } from '../utils/studyDataEvents';
 
 // 홈 탭 재진입 · 앱 복귀 때 이보다 오래된 캐시면 다시 받는다
@@ -45,6 +45,7 @@ export const StatsProvider = ({ children }) => {
   const [todayChanges, setTodayChanges] = useState(null);     // { counts, ... }
   const [farmOverview, setFarmOverview] = useState(null);     // { counts, health, today, items, streak, ... }
   const [farmFeed, setFarmFeed] = useState(null);             // { care, rotten, seeds, recent } — 홈 아래 목록
+  const [todayTasks, setTodayTasks] = useState(null);         // { rotten, wilted, care, new_seed, seeds_left, show_buy, items, week, streak } — 홈 "오늘 할 일" 카드 + 1주 불꽃 달력
   const [reviewLoaded, setReviewLoaded] = useState(false);    // 최초 로드 완료 여부(스피너 제어용)
 
   // 마지막 조회 시작 시각 · 그 뒤 서버 학습 기록이 바뀌었는지(아래 주석 1)
@@ -70,20 +71,26 @@ export const StatsProvider = ({ children }) => {
     dirtyRef.current = false;
     lastFetchedAtRef.current = Date.now();
     try {
-      const [summary, schedule, changes, farm, feed] = await Promise.all([
+      // /farm/overview 를 먼저 끝낸다 — 그날의 출석/스트릭 정산이 거기서 일어난다.
+      // /farm/today-tasks 는 정산을 하지 않고 그 결과(오늘 할 일·1주 달력)만 읽으므로
+      // overview 보다 먼저 뜨면 정산 전 상태를 볼 수 있다(백엔드 안내).
+      const farm = await getFarmOverviewApi().catch(() => null);
+      const [summary, schedule, changes, feed, tasks] = await Promise.all([
         getTodaySummary(),
         getReviewScheduleApi(),
         getTodayMemoryChangesApi(),
-        getFarmOverviewApi().catch(() => null),
         // limit 20(서버 상한) — 카드는 여전히 3행만 보여주지만(WordFeedCard VISIBLE_ROWS),
-        // "+n개 더" 전체 목록 시트(recent·care)가 별도 API 없이 이 캐시를 그대로 보여준다.
+        // "+n개 더" 전체 목록 시트(recent)가 별도 API 없이 이 캐시를 그대로 보여준다.
         getFarmHomeFeedApi({ limit: 20 }).catch(() => null),
+        // 홈 "오늘 할 일" 카드 + 1주 불꽃 달력 — 실패해도 나머지 통계는 그대로 갱신된다.
+        getFarmTodayTasksApi().catch(() => null),
       ]);
       if (summary?.code === 200) setTodaySummary(summary.data);
       if (schedule?.code === 200) setReviewSchedule(schedule.data);
       if (changes?.code === 200) setTodayChanges(changes.data);
       if (farm?.code === 200) setFarmOverview(farm.data);
       if (feed?.code === 200) setFarmFeed(feed.data);
+      if (tasks?.code === 200) setTodayTasks(tasks.data);
     } catch (e) {
       console.error('refreshStats 오류:', e);
     } finally {
@@ -112,6 +119,7 @@ export const StatsProvider = ({ children }) => {
       setTodayChanges(null);
       setFarmOverview(null);
       setFarmFeed(null);
+      setTodayTasks(null);
       setReviewLoaded(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -190,6 +198,7 @@ export const StatsProvider = ({ children }) => {
     setTodayChanges(null);
     setFarmOverview(null);
     setFarmFeed(null);
+    setTodayTasks(null);
     setReviewLoaded(false);
     await refreshStatsRef.current();
   }, []);
@@ -210,6 +219,7 @@ export const StatsProvider = ({ children }) => {
     todayChanges,
     farmOverview,
     farmFeed,
+    todayTasks,
     reviewLoaded,
     refreshStats,
     refetchAll,

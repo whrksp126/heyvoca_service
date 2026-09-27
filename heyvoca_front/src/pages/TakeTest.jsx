@@ -336,7 +336,7 @@ const TakeTest = () => {
   // ─── setupTestQuestions ─────────────────────────────────────────────────────
   // 백엔드 /study/recommend로 단어 + 세션을 받아 문제 구성. 응답 형식 오류 시 예외 throw.
   // 반환: { testQuestions, sessionId, composition, compositionStrategy }
-  const setupTestQuestions = async (targetMemoryState, vocabularySheetId, count, testType) => {
+  const setupTestQuestions = async (targetMemoryState, vocabularySheetId, count, testType, taskBucket) => {
     // bookIds 변환: "all" → null, 단일 id → [id], 배열 → 그대로
     let bookIds = null;
     if (vocabularySheetId && vocabularySheetId !== 'all') {
@@ -375,6 +375,7 @@ const TakeTest = () => {
       bookIds,
       targetStates: backendTargetStates,
       selection: selectionType,
+      taskBucket,
     });
 
     if (res?.code !== 200 || !Array.isArray(res.data?.items)) {
@@ -618,7 +619,8 @@ const TakeTest = () => {
             state.data.memoryState,
             state.data.vocabularySheetId,
             state.data.count,
-            state.testType
+            state.testType,
+            state.data.taskBucket
           );
 
           // 재출제 시스템 ref 초기화 (새 세션마다 리셋)

@@ -34,7 +34,7 @@ from uuid import UUID
 
 from sqlalchemy import and_, case, func, or_
 
-from app import db
+from app import cache, db
 from app.models.models import (CheckIn, FarmEvent, FarmEventLog, FarmItem, FarmItemReason,
                                GemLog, GemReason, HealthState, User, UserFarmItemLog,
                                UserFarmMigration, UserFarmSetting, UserStreak,
@@ -528,6 +528,235 @@ def mark_migration_seen(user_id: UUID, now: Optional[dt.datetime] = None) -> dic
         db.session.commit()
         db.session.refresh(row)
     return {'seen': True, 'seen_at': localday.iso_utc(row.seen_at)}
+
+
+# ──────────────────────────────────────────────────────────────
+# GET /farm/today-tasks (홈 개편 — 오늘 할 일 카드 + 1주 불꽃 달력)
+# ──────────────────────────────────────────────────────────────
+
+# 오늘의 "이미 처리한 대상" 스냅샷 TTL. 다음날 자정이 지나면 키 자체가 날짜로 갈리므로
+# 이 TTL 은 순수 청소용이다(2일 — 자정 근처 시간대 오차를 덮을 만큼만 넉넉히).
+_TODAY_SNAPSHOT_TTL = 2 * 24 * 60 * 60
+
+
+def _today_snapshot_key(user_id: UUID, day, category: str) -> str:
+    return f'farm:today_tasks:{user_id}:{day.isoformat()}:{category}'
+
+
+def _merge_today_snapshot(user_id: UUID, day, category: str, live_ids) -> set:
+    """(user, logical day, category) 스냅샷을 읽어 오늘 처음 본 대상과 합집합한다.
+
+    '오늘 원래 이 줄 대상이었던 것' 은 현재 상태만으로는 알 수 없다 — 물을 주면
+    건강 상태가 곧바로 FRESH 로 바뀌어 버리기 때문이다(리뷰 로그의 `state_before` 는
+    이 줄이 요구하는 '건강 상태 전이 시점' 을 항상 남기지는 않는다 — 이미 FRESH 로
+    저장된 채 날짜만 오늘인 돌봄 대상은 정답을 맞혀도 전이 이벤트가 안 남는다).
+    그래서 이 카드 전용으로 Redis 스냅샷을 쓴다: 오늘 처음 조회할 때 그 순간의 대상
+    집합을 저장하고, 이후 조회마다 새로 들어온 대상(예: 오후에 새로 시든 단어)을
+    합집합한다. 캐시가 비어 있어도(콜드 스타트·장애) live_ids 를 그대로 스냅샷으로
+    삼아 최소한 "지금 남은 것"은 절대 놓치지 않는다.
+    """
+    key = _today_snapshot_key(user_id, day, category)
+    existing = None
+    try:
+        existing = cache.get(key)
+    except Exception:
+        _log.warning('오늘 할 일 스냅샷 조회 실패 (%s)', category, exc_info=True)
+    existing = set(existing) if existing else set()
+    merged = existing | set(live_ids)
+    if merged != existing:
+        try:
+            cache.set(key, merged, timeout=_TODAY_SNAPSHOT_TTL)
+        except Exception:
+            _log.warning('오늘 할 일 스냅샷 저장 실패 (%s)', category, exc_info=True)
+    return merged
+
+
+def get_task_bucket_ids(user_id: UUID, bucket: str, now: Optional[dt.datetime] = None,
+                        lang: Optional[str] = None) -> list:
+    """'wilted' | 'care' 대상 user_voca_id 목록(우선순위 순) — **공유 정의**.
+
+    `/farm/today-tasks` 의 같은 이름 줄과 `/study/recommend?task_bucket=` 이 이 함수
+    하나만 참조한다. 두 곳이 각자 계산하면 "오늘 할 일 카드에서 눌렀는데 정작 학습은
+    다른 단어가 나온다"는 어긋남이 생긴다 — 계산은 여기 한 곳, 호출부는 옮기기만.
+
+    wilted: 건강 상태 WILTED·CRITICAL. `rot_due_at` 오름차순(부패 임박 순 — 홈 카드
+            "썩기 전 N개부터" 와 같은 우선순위).
+    care:   `get_care_due_ids`(날짜 기준 정본) 중 wilted/critical/rotten 제외.
+            user_voca_id 오름차순(예정 시각이 컬럼이 아니라 FSRS JSON 안에 있어
+            행마다 파싱해야 하므로, 정렬 신호가 없는 수십~수백 건에 그 비용을 들이지
+            않는다 — 화면도 이 순서를 강요하지 않는다).
+
+    Raises:
+        ValueError — 알 수 없는 bucket
+    """
+    if bucket not in ('wilted', 'care'):
+        raise ValueError(f"알 수 없는 task_bucket 이에요: {bucket!r}")
+
+    now = now or dt.datetime.utcnow()
+    lang = _lang(lang)
+    eff = effective_health_expr(now)
+
+    bad_rows = (
+        db.session.query(UserVoca.id, eff, UserVocaGame.rot_due_at)
+        .select_from(UserVocaGame)
+        .join(UserVoca, UserVoca.id == UserVocaGame.user_voca_id)
+        .filter(UserVocaGame.user_id == user_id, UserVoca.dict_lang == lang,
+                eff.in_([HealthState.WILTED, HealthState.CRITICAL, HealthState.ROTTEN]))
+        .all()
+    )
+    rotten_ids = {uv_id for uv_id, state, _due in bad_rows if state == HealthState.ROTTEN}
+    wilted_rows = [(uv_id, due) for uv_id, state, due in bad_rows if state != HealthState.ROTTEN]
+
+    if bucket == 'wilted':
+        wilted_rows.sort(key=lambda r: (r[1] is None, r[1]))
+        return [uv_id for uv_id, _due in wilted_rows]
+
+    wilted_ids = {uv_id for uv_id, _due in wilted_rows}
+    care_due_ids = get_care_due_ids(user_id, now, lang)
+    remaining = care_due_ids - wilted_ids - rotten_ids
+    return sorted(remaining)
+
+
+def get_today_tasks(user_id: UUID, now: Optional[dt.datetime] = None,
+                    refresh: bool = True, lang: Optional[str] = None) -> dict:
+    """홈 '오늘 할 일' 카드 + 1주 불꽃 달력 (계약 GET /farm/today-tasks).
+
+    행별 total/done 의 핵심 난점 — '오늘 원래 대상이었던 것' 은 현재 건강 상태만으로
+    복원할 수 없다(위 `_merge_today_snapshot` 참고). wilted/care 두 줄만 Redis 스냅샷을
+    쓰고, rotten(부패는 매일 초기화되는 개념이 아니라 '지금 몇 개인가'만 의미가 있다)과
+    new_seed(공유 헬퍼 `get_today_new_done` 가 이미 오늘 학습 로그로 정확히 센다)는
+    스냅샷이 필요 없다.
+
+    행이 서로 겹치지 않게 하는 규칙 — 스냅샷에 있던 대상이 지금은 더 나쁜 줄로
+    옮겨갔다면(시듦→부패, 돌봄→시듦) '끝냄'이 아니라 그 줄에서 조용히 빠진다.
+    그 대상은 새로 옮겨간 줄의 remaining 에 이미 잡힌다(그 줄도 매번 살아있는 대상을
+    스냅샷에 합집합하므로).
+
+    wilted/care 의 "지금 남은 것" 자체는 `get_task_bucket_ids` 하나로만 계산한다 —
+    `/study/recommend?task_bucket=` 이 같은 함수를 쓰므로 두 API 의 정의가 갈리지 않는다.
+    """
+    from app.services.study_day import logical_today
+
+    now = now or dt.datetime.utcnow()
+    if refresh:
+        refresh_health(user_id, now)
+    lang = _lang(lang)
+    today = logical_today(now)
+
+    # ── 1) 부패 — word/rotten_at 표시용으로 별도 조회(공유 헬퍼는 id 집합만 준다) ──
+    eff = effective_health_expr(now)
+    rotten_rows = (
+        db.session.query(UserVoca.id, UserVoca.word, UserVocaGame.rotten_at)
+        .select_from(UserVocaGame)
+        .join(UserVoca, UserVoca.id == UserVocaGame.user_voca_id)
+        .filter(UserVocaGame.user_id == user_id, UserVoca.dict_lang == lang,
+                eff == HealthState.ROTTEN)
+        .all()
+    )
+    rotten_ids = {r[0] for r in rotten_rows}
+
+    # ── 2) 시듦·심한 시듦 / 돌봄 — 공유 헬퍼(recommend 의 task_bucket 과 같은 정의) ──
+    wilted_ids_ordered = get_task_bucket_ids(user_id, 'wilted', now, lang)
+    wilted_remaining_ids = set(wilted_ids_ordered)
+    care_remaining_ids = set(get_task_bucket_ids(user_id, 'care', now, lang))
+
+    # ── 3) 오늘 스냅샷과 합집합 → done = (스냅샷 - 지금 남은 것) 중 더 나빠지지 않은 것 ──
+    wilted_snapshot = _merge_today_snapshot(user_id, today, 'wilted', wilted_remaining_ids)
+    care_snapshot = _merge_today_snapshot(user_id, today, 'care', care_remaining_ids)
+
+    wilted_done_ids = (wilted_snapshot - wilted_remaining_ids) - rotten_ids
+    care_done_ids = (care_snapshot - care_remaining_ids) - wilted_remaining_ids - rotten_ids
+
+    # ── 4) word/stage — wilted remaining·care remaining·양쪽 done 을 한 번에 조회 ──
+    extra_ids = (wilted_remaining_ids | care_remaining_ids | wilted_done_ids | care_done_ids)
+    extra_map = {}
+    if extra_ids:
+        extra_rows = (
+            db.session.query(UserVoca.id, UserVoca.word, UserVocaGame.visual_stage)
+            .join(UserVocaGame, UserVocaGame.user_voca_id == UserVoca.id)
+            .filter(UserVoca.id.in_(extra_ids))
+            .all()
+        )
+        extra_map = {uv_id: (word, stage) for uv_id, word, stage in extra_rows}
+
+    def _crop(stage):
+        return answer.CROP_KEY.get(stage, 'seed')
+
+    rotten_rows = sorted(rotten_rows, key=lambda r: r[2] or dt.datetime.min, reverse=True)
+    rotten_words = [{'id': uv_id, 'word': word or ''} for uv_id, word, _rotten_at in rotten_rows]
+
+    # wilted_ids_ordered 는 이미 rot_due_at 오름차순(공유 헬퍼가 정렬) — 그대로 쓴다.
+    wilted_words = []
+    for uv_id in wilted_ids_ordered:
+        word, stage = extra_map.get(uv_id, ('', None))
+        wilted_words.append({'id': uv_id, 'word': word or '', 'done': False, 'stage': _crop(stage)})
+    for uv_id in wilted_done_ids:
+        word, stage = extra_map.get(uv_id, ('', None))
+        wilted_words.append({'id': uv_id, 'word': word or '', 'done': True, 'stage': _crop(stage)})
+
+    care_words = []
+    for uv_id in sorted(care_remaining_ids):
+        word, stage = extra_map.get(uv_id, ('', None))
+        care_words.append({'id': uv_id, 'word': word or '', 'done': False, 'stage': _crop(stage)})
+    for uv_id in care_done_ids:
+        word, stage = extra_map.get(uv_id, ('', None))
+        care_words.append({'id': uv_id, 'word': word or '', 'done': True, 'stage': _crop(stage)})
+
+    # ── 5) 새 씨앗 — 공유 헬퍼(get_today_new_done)로 done, User.daily_new_limit 로 target ──
+    from app.services.daily_progress import get_today_new_done
+    new_done, _reviews_done = get_today_new_done(user_id)
+    daily_new_limit = db.session.query(User.daily_new_limit).filter(User.id == user_id).scalar()
+    # User.daily_new_limit 컬럼 기본값(20)과 동일 — /user_study_history 의 판정 기준과 맞춘다.
+    daily_new_limit = int(daily_new_limit) if daily_new_limit is not None else 20
+
+    _seed_counts, seed_detail = _stage_counts(user_id, lang)
+    seeds_left = int(seed_detail.get('unplanted') or 0)
+
+    # ── 6) 아이템 / 보석 ──
+    inv = inventory.get_counts(user_id)
+
+    # ── 7) 1주 불꽃 달력 — logical day 기준 오늘 포함 7일 ──
+    days = [today - dt.timedelta(days=i) for i in range(6, -1, -1)]
+    checkin_rows = (
+        db.session.query(CheckIn.attendence_date, CheckIn.daily_mission_complete,
+                         CheckIn.streak_qualified, CheckIn.streak_protected)
+        .filter(CheckIn.user_id == user_id, CheckIn.attendence_date.in_(days))
+        .all()
+    )
+    by_date = {d: (bool(dm), bool(sq), bool(sp)) for d, dm, sq, sp in checkin_rows}
+    week = []
+    for d in days:
+        mission_done, qualified, protected = by_date.get(d, (False, False, False))
+        if mission_done:
+            status = 'all'
+        elif qualified:
+            status = 'part'
+        elif protected:
+            status = 'shield'
+        elif d == today:
+            status = 'today_empty'
+        else:
+            status = 'none'
+        week.append({'date': d.isoformat(), 'status': status})
+
+    # ── 8) 연속 학습 — overview.streak 과 같은 출처(_streak_state) ──
+    streak_state = _streak_state(user_id, now)
+
+    return {
+        'rotten': {'count': len(rotten_ids), 'words': rotten_words},
+        'wilted': {'total': len(wilted_remaining_ids) + len(wilted_done_ids),
+                  'done': len(wilted_done_ids), 'words': wilted_words},
+        'care': {'total': len(care_remaining_ids) + len(care_done_ids),
+                'done': len(care_done_ids), 'words': care_words},
+        'new_seed': {'target': daily_new_limit, 'done': int(new_done)},
+        'seeds_left': seeds_left,
+        'show_buy': seeds_left < daily_new_limit,
+        'items': {'nutrient': int(inv.get(FarmItem.NUTRIENT, 0) or 0),
+                 'shovel': int(inv.get(FarmItem.SHOVEL, 0) or 0)},
+        'week': week,
+        'streak': {'current': streak_state['current'], 'best': streak_state['best']},
+        'language': lang,
+    }
 
 
 # ──────────────────────────────────────────────────────────────

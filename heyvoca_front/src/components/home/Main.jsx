@@ -48,21 +48,17 @@ import { NotifPermissionNewBottomSheet } from '../newBottomSheet/NotifPermission
 import AchievementRewardOverlay from '../overlay/AchievementRewardOverlay';
 
 import FarmHero from '../farm/FarmHero';
-import CropImage from '../farm/CropImage';
 import gemIcon from '../../assets/images/gem.png';
-import RottenListSheet from '../farm/RottenListSheet';
 import WordListSheet from '../farm/WordListSheet';
 import FarmCta, {
-  CRITICAL_CTA_THRESHOLD,
   HOME_STATES,
   HOME_STATE_VIEW,
   resolveHomeState,
 } from './FarmCta';
+import TodayTasksCard from './TodayTasksCard';
 import StreakCard from './StreakCard';
 import GrewTodayCard from './GrewTodayCard';
-import InfoStrip from './InfoStrip';
 import WordFeedCard from './WordFeedCard';
-import { HEALTH_STATES } from '../../utils/crop';
 import { healthMixFromOverview } from '../../utils/farmField';
 import { toLocalDateString } from '../../utils/common';
 import {
@@ -87,18 +83,12 @@ const MEMORY_TO_CROP = {
 
 /* ── 홈 아래 "지금 볼 만한 단어" 우측 상태 문구 ─────────────────────
    단어장·찾기 목록과 **같은 말**을 쓴다. 같은 단어가 화면마다 다른 문구로 불리면
-   사용자는 그게 같은 상태인지 매번 확인해야 한다. */
-const careTone = (item) => {
-  const d = item.days_to_review;
-  if (d === null || d === undefined) return { text: '물 필요', tone: 'today' };
-  if (d < 0) return { text: `${Math.abs(d)}일 지남`, tone: 'late' };
-  if (d === 0) return { text: '오늘 물 필요', tone: 'today' };
-  return { text: `${d}일 뒤`, tone: 'muted' };
-};
-
-const rottenTone = () => ({ text: '되살리기', tone: 'rot' });
+   사용자는 그게 같은 상태인지 매번 확인해야 한다.
+   (2026-09-27 홈 개편 — "지금 물이 필요한 단어"·"되살릴 수 있는 단어" 두 묶음은
+   새 TodayTasksCard(오늘 할 일)가 같은 사실을 더 자세히 말해 뺐다. careTone·rottenTone도
+   그 둘에서만 쓰던 헬퍼라 같이 지운다 — 아래 Main.jsx 정리 주석 참고.)
 // "아직 심지 않은 씨앗"·"최근에 심은 단어"는 더 이상 상태어(안 배움/씨앗)를 안 쓴다 —
-// WordFeedCard 가 tone 을 안 받으면 그 자리에 대표 뜻을 대신 그린다(사용자 목업 승인).
+// WordFeedCard 가 tone 을 안 받으면 그 자리에 대표 뜻을 대신 그린다(사용자 목업 승인). */
 
 const Main = () => {
   "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
@@ -112,28 +102,16 @@ const Main = () => {
 
   // 통계는 StatsContext(라우터 바깥 캐시)에서 구독 — 탭 전환마다 재조회/스피너 없이 캐시값을 즉시 사용,
   // 학습 세션 완료 시에만 조용히 갱신된다.
-  const { todaySummary, farmOverview, todayChanges, farmFeed, refreshStats } = useStats();
+  const { todaySummary, farmOverview, todayChanges, farmFeed, todayTasks, refreshStats } = useStats();
   const todayNewWords = todaySummary?.new_words ?? 0;
   const dailyNewLimit = userProfile?.daily_new_limit ?? 0;
 
   // ── §12 상태 판정 ────────────────────────────────────────────────
   const counts = farmOverview?.counts ?? {};
   const health = farmOverview?.health ?? {};
-  const today = farmOverview?.today ?? {};
   const seedDetail = farmOverview?.seed_detail ?? {};
 
-  const criticalCnt = today.critical_first ?? 0;
   const unplanted = seedDetail.unplanted ?? 0;
-  const rottenCnt = health.rotten ?? 0;
-  // "지금 물이 필요한 단어" 카드의 실제 총량 — 백엔드 home_feed()의 care 피드와 같은
-  // 집합(farm_v2/query.py::get_care_due_ids, **날짜** 기준). 예전에는 건강 상태
-  // (thirsty·wilted·critical, 정확한 시각 경과) 합이라 예정일은 오늘인데 그 시각이 아직
-  // 안 된 단어가 새벽 시간대에 빠져, 단어장 목록의 "돌봄" 합계와 어긋났다.
-  // 구버전 응답(필드 없음) 폴백만 예전 건강 상태 합을 쓴다.
-  const careCnt = today.care_due_cnt
-    ?? ((health.thirsty ?? 0) + (health.wilted ?? 0) + (health.critical ?? 0));
-  const inventory = farmOverview?.items ?? {};
-  const restoreItemCnt = (inventory.SHOVEL ?? 0) + (inventory.NUTRIENT ?? 0);
   const newRemaining = Math.max(0, dailyNewLimit - todayNewWords);
 
   // 밭에 실제로 서는 작물 — **심은 것만** 센다 (기획 5.1).
@@ -152,6 +130,23 @@ const Main = () => {
     ? resolveHomeState(farmOverview, { newRemaining })
     : HOME_STATES.DUE;
   const view = HOME_STATE_VIEW[homeState];
+
+  /*
+    §7 CTA 문구 — "오늘 할 일" 맨 위의 미완료 줄을 따라간다(홈 개편 2026-09-27).
+    썩은 단어는 학습 불가라 CTA 대상이 아니다 — 있어도 기존 상태별 문구를 그대로 쓴다.
+    todayTasks 가 아직 없으면(로딩 전·구버전 백엔드) 기존 view.cta 로 폴백한다.
+  */
+  const ctaLabel = useMemo(() => {
+    if (homeState === HOME_STATES.EMPTY || !todayTasks) return view.cta;
+    if ((todayTasks.rotten?.count ?? 0) > 0) return view.cta;
+    const wiltedLeft = Math.max(0, (todayTasks.wilted?.total ?? 0) - (todayTasks.wilted?.done ?? 0));
+    if (wiltedLeft > 0) return `썩기 전 ${wiltedLeft}개부터 시작`;
+    const careLeft = Math.max(0, (todayTasks.care?.total ?? 0) - (todayTasks.care?.done ?? 0));
+    if (careLeft > 0) return `물 줄 단어 ${careLeft}개 돌보기`;
+    const seedLeft = Math.max(0, (todayTasks.new_seed?.target ?? 0) - (todayTasks.new_seed?.done ?? 0));
+    if (seedLeft > 0) return `새 씨앗 ${seedLeft}개 심기`;
+    return view.cta;
+  }, [homeState, view.cta, todayTasks]);
 
   const gemCnt = farmOverview?.gem_cnt ?? userProfile?.gem_cnt ?? 0;
 
@@ -302,7 +297,7 @@ const Main = () => {
   };
 
   /*
-    홈에서 학습으로 들어가는 모든 자리(주 버튼 · 물주기/심으러 가기 · 스트립)는
+    홈에서 학습으로 들어가는 모든 자리(주 버튼 · 물주기/심으러 가기 · 오늘 할 일 행)는
     **종류를 묻지 않고 바로 AI 추천 학습을 연다.**
     무엇을 할지 정해 주는 것이 이 화면의 일이라, 화면 전체가 이미 오늘 무엇이 급한지를
     말해 놓고 버튼에서 다시 종류를 묻는 건 방금 한 말을 무르는 셈이었다.
@@ -323,35 +318,15 @@ const Main = () => {
     handleTodayStudyButtonClick();
   };
 
-  // §8 — 부패 직전 1~3개일 때만 water 스트립. 4개 이상이면 CTA 가 이미 그 말을 한다
-  const showWaterStrip = criticalCnt > 0 && criticalCnt < CRITICAL_CTA_THRESHOLD;
-  // §1 완료 프레임 — 급한 일이 없어 seed 변형으로 다음 학습거리를 제안한다
-  const showSeedStrip = homeState === HOME_STATES.DONE && unplanted > 0;
-  // §8 amber 변형 — "썩은 작물 N개를 되살릴 수 있어요 · 회복 아이템 보유 시 안내".
-  // 시안 표에 (예약)으로 적힌 변형이지만 배경·문구·조건이 모두 규정돼 있고,
-  // 돌볼 작물(부패) 목록으로 가는 유일한 진입점이라 여기에 둔다(보고 참조).
-  const showAmberStrip = rottenCnt > 0 && restoreItemCnt > 0;
-
-  // 돌볼 작물 목록 — 도구가 모자라면 상점 도구 탭을 그 위에 얹는다.
-  // 상점을 닫으면 고르던 목록이 그대로 남아 선택이 날아가지 않는다.
-  const openToolShop = () => {
-    pushNewFullSheet(StoreNewFullSheet, {
-      initialTab: 'tools',
-      onGoRotten: () => openRottenSheet(),
-      onInventoryChanged: refreshStats,
-    }, { smFull: true, closeOnBackdropClick: true });
-  };
-
-  const openRottenSheet = () => {
-    pushNewFullSheet(RottenListSheet, {
-      onChanged: refreshStats,
-      onOpenShop: openToolShop,
-    }, { smFull: true, closeOnBackdropClick: true });
-  };
+  /*
+    §8 water·amber 스트립("오늘 안에 물이 필요한 작물 N개"·"썩은 작물 N개를 되살릴 수 있어요")은
+    2026-09-27 홈 개편에서 뺐다 — 새 TodayTasksCard(오늘 할 일)의 "시듦 물주기"·"썩은 단어
+    살리기" 행이 정확히 같은 사실을 개수·단어 목록까지 더 자세히 말한다. seed 스트립("새 씨앗
+    N개가 밭에 도착했어요")도 같은 이유로 "새 씨앗 심기" 행과 겹쳐 뺐다.
+  */
 
   /*
     ⑤ "지금 볼 만한 단어" 카드들의 "+n개 더"·헤더 숫자가 여는 전체 목록 시트.
-    RottenListSheet 는 그대로 전용 진입점(보관소)으로 남긴다 — rotten 카드는 새 시트를 쓰지 않는다.
   */
   // 오늘 자란 단어 — todayChanges(promoted+new)를 이미 클라이언트가 다 갖고 있어 API 호출이 없다.
   const openGrownSheet = () => {
@@ -385,55 +360,17 @@ const Main = () => {
     }, { smFull: true, closeOnBackdropClick: true });
   };
 
-  // 지금 물이 필요한 단어 — 헤더의 "물주기" 링크는 뗐다(아래 feedCandidates 참고).
-  // "+n개 더"만 홈 피드 캐시(limit 20)로 목록을 보여준다.
-  const openCareSheet = () => {
-    vibrate({ duration: 5 });
-    pushNewFullSheet(WordListSheet, {
-      title: '지금 물이 필요한 단어',
-      items: feed.care ?? [],
-      emptyText: '지금 물이 필요한 단어가 없어요',
-    }, { smFull: true, closeOnBackdropClick: true });
-  };
-
   /*
     성과 카드 아래에 붙는 "지금 볼 만한 단어".
 
-    시안 §10 이 홈에 놓는 것을 다 적어 두긴 했지만, 그 목록대로만 두면 급한 일이 없는
-    날의 스크롤 영역이 황금 당근 카드 하나로 끝난다 — 개수가 0이면 카드 하나가
-    "0개"만 말하고 화면이 통째로 빈다. §7 이 금지한 건 **진행 지표**(n/m · 퍼센트)이지
-    내용이 아니므로, 지표 대신 단어 자체를 채운다.
-
-    상태에 따라 순서를 바꾸고 **최대 두 묶음만** 그린다. 넷을 다 그리면 이번엔 반대로
-    홈이 목록 화면이 된다. 우선순위는 §12 의 CTA 우선순위와 같은 순서다 —
-    화면 위의 버튼과 아래 목록이 서로 다른 것을 급하다고 말하면 안 된다.
+    2026-09-27 홈 개편 — "지금 물이 필요한 단어"·"되살릴 수 있는 단어" 두 묶음은 뺐다.
+    새 TodayTasksCard(오늘 할 일)의 "오늘 돌봄 물주기"·"시듦 물주기"·"썩은 단어 살리기" 행이
+    같은 사실(개수 + 단어 목록 + 학습/회복 진입)을 이미 더 자세히 말한다 — 카드 두 곳에서
+    같은 단어를 두 번 나열하지 않는다. "아직 심지 않은 씨앗"·"최근에 심은 단어"는 오늘 할 일
+    카드가 다루지 않는 정보(하루 목표가 아니라 보유 전체 · 최근 이력)라 그대로 남긴다.
   */
   const feed = farmFeed ?? {};
   const feedCandidates = [
-    {
-      key: 'care',
-      title: '지금 물이 필요한 단어',
-      items: feed.care ?? [],
-      tone: careTone,
-      // 헤더 "물주기" 링크를 뗐다 — "아직 심지 않은 씨앗"과 같은 구조로, 헤더는 안 눌리는
-      // 총 개수만 남기고 "+n개 더"만 목록 진입점으로 남긴다(사용자 요청).
-      moreLabel: null,
-      onMore: null,
-      totalCount: careCnt,
-      onViewAll: openCareSheet,
-    },
-    {
-      key: 'rotten',
-      title: '되살릴 수 있는 단어',
-      items: feed.rotten ?? [],
-      tone: rottenTone,
-      moreLabel: '보관소',
-      // rotten은 이미 RottenListSheet가 전용 진입점이라 "+n개 더"도 같은 곳으로 보낸다
-      // (새 WordListSheet를 또 만들지 않는다 — ⑤-2 지시사항).
-      onMore: openRottenSheet,
-      totalCount: rottenCnt,
-      onViewAll: openRottenSheet,
-    },
     {
       key: 'seeds',
       title: '아직 심지 않은 씨앗',
@@ -459,25 +396,17 @@ const Main = () => {
     },
   ];
 
-  // 급한 일이 없는 상태에서는 "심을 씨앗"이 먼저다 — 그때의 CTA 도 씨앗을 가리킨다
+  // 급한 일이 없는 상태에서는 "심을 씨앗"이 먼저다 — 그때의 CTA 도 씨앗을 가리킨다.
+  // 'care'·'rotten'은 뺐으니(위 주석) 이제 둘 다 그린다 — slice(0, 2)는 그대로 둬
+  // 앞으로 후보가 다시 늘어도 §7 "최대 두 묶음"을 지키게 한다.
   const feedOrder = (homeState === HOME_STATES.DONE || homeState === HOME_STATES.NEW_SEED)
-    ? ['seeds', 'recent', 'care', 'rotten']
-    : ['care', 'rotten', 'seeds', 'recent'];
+    ? ['seeds', 'recent']
+    : ['recent', 'seeds'];
 
   const feedSections = feedOrder
     .map((key) => feedCandidates.find((c) => c.key === key))
     .filter((section) => section && section.items.length > 0)
     .slice(0, 2);
-
-  /*
-    §8 스트립과 아래 목록이 **같은 것을 두 번 말하지 않게** 한다.
-    "오늘 안에 물이 필요한 작물 3개" 바로 아래에 그 3개를 이름까지 적은 카드가 서면,
-    같은 사실이 두 줄 연속으로 나오고 스트립은 카드가 이미 한 말의 요약이 된다.
-    둘 중 남길 것은 카드다 — 개수만 있는 줄보다 단어가 적힌 목록이 할 일을 더 정확히 말하고,
-    카드의 우측 링크가 스트립이 하던 진입점 노릇도 그대로 한다.
-    카드가 안 뜨는 상태(그 묶음이 비었거나 다른 묶음에 밀렸을 때)에는 스트립이 그대로 선다.
-  */
-  const shownFeedKeys = new Set(feedSections.map((s) => s.key));
 
   return (
     /* §9 단일 배경 — 화면 배경을 한 번만 깔고 히어로 그라디언트의 끝 색을 같은 값으로 맞춘다 */
@@ -569,11 +498,11 @@ const Main = () => {
 
         {/* §12 의 주황 핀("썩기 직전 N")은 내렸다 — QA 2차.
             밭 그림 위에 경고 핀을 띄우면 헤드라인·CTA·팻말과 네 번째로 같은 말을 하면서
-            가장 눈에 띄는 자리를 겁주는 데 쓴다. 부패 직전 안내는 아래 water 스트립
-            ("오늘 안에 물이 필요한 작물 N개")이 이미 맡고 있고, 거기에는 누르면 갈 곳이 있다. */}
+            가장 눈에 띄는 자리를 겁주는 데 쓴다. 부패 직전 안내는 CTA 바로 아래 "오늘 할 일"
+            카드(TodayTasksCard)가 맡고 있고, 거기에는 누르면 갈 곳이 있다. */}
 
         {/* §7 주 CTA — 히어로 하단에 겹쳐 뜬다. 홈에서 유일한 핑크 */}
-        <FarmCta label={view.cta} onClick={handleCtaClick} />
+        <FarmCta label={ctaLabel} onClick={handleCtaClick} />
       </FarmHero>
 
       {/* §9 본문 — 배경을 깔지 않는다. 페이드된 지면이 카드 사이로 비친다.
@@ -589,45 +518,19 @@ const Main = () => {
           pb-[calc(84px+var(--safe-area-bottom))]
         "
       >
-        {/* 연속 학습 — 홈에서 성과를 말하는 유일한 블록. 항상 노출된다(§6 · §10) */}
+        {/* CTA 바로 아래 "오늘 할 일" 카드 — 썩은 단어·시듦·돌봄·새 씨앗을 한 곳에서 말한다.
+            §8 water·amber·seed 스트립은 이 카드로 흡수돼 뺐다(위 변수 선언부 주석 참고). */}
+        <TodayTasksCard />
+
+        {/* 연속 학습 — 1주 불꽃 달력. 홈에서 성과를 말하는 유일한 블록. 항상 노출된다 */}
         <StreakCard registerRefresh={registerStreakRefresh} />
-
-        {/* §8 water 스트립 — 부패 직전이 1~3개일 때만 */}
-        {showWaterStrip && !shownFeedKeys.has('care') && (
-          <InfoStrip
-            variant="water"
-            icon={<CropImage stage="leaf" health={HEALTH_STATES.WILTED} size={40} />}
-            label={`오늘 안에 물이 필요한 작물 ${criticalCnt}개`}
-            onClick={handleTodayStudyButtonClick}
-          />
-        )}
-
-        {/* §8 amber 스트립 — 되살릴 수 있는 썩은 작물이 있고 도구를 가진 사용자에게만 */}
-        {showAmberStrip && !shownFeedKeys.has('rotten') && (
-          <InfoStrip
-            variant="amber"
-            icon={<CropImage stage="leaf" health={HEALTH_STATES.ROTTEN} size={40} />}
-            label={`썩은 작물 ${rottenCnt}개를 되살릴 수 있어요`}
-            onClick={openRottenSheet}
-          />
-        )}
 
         {/* 오늘 자란 단어 — 조건부다(§10). 오늘 자란 것이 없으면 카드를 아예 띄우지 않는다.
             "황금 당근" 카드는 내렸다 — 개수 하나만 적혀 있어 대부분의 날에 "0개"만 말했고,
             황금 당근은 마이페이지 온실에 그대로 있다. */}
         <GrewTodayCard items={grewItems} onViewAll={openGrownSheet} />
 
-        {/* §8 seed 스트립 — 급한 일이 없을 때 다음 학습거리를 제안한다 */}
-        {showSeedStrip && !shownFeedKeys.has('seeds') && (
-          <InfoStrip
-            variant="seed"
-            icon={<CropImage stage="seed" health={HEALTH_STATES.FRESH} size={40} />}
-            label={`새 씨앗 ${unplanted}개가 밭에 도착했어요`}
-            onClick={handleTodayStudyButtonClick}
-          />
-        )}
-
-        {/* 지금 볼 만한 단어 — 상태에 따라 최대 두 묶음 */}
+        {/* 지금 볼 만한 단어 — "아직 심지 않은 씨앗"·"최근에 심은 단어" 최대 두 묶음 */}
         {feedSections.map((section) => (
           <WordFeedCard
             key={section.key}
