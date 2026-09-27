@@ -27,9 +27,10 @@ export const GROW_FILL_TIMES = [0, 0.42, 0.62, 0.7, 1];
 // `#D9A15C` 만 토큰이 없어 시안 값을 그대로 쓴다.
 const TONE = {
   // 평상시 — 진행바와 같은 분홍
-  primary: { fill: 'var(--primary-main-600)', gain: 'var(--primary-main-300)' },
+  // gain(이번에 오른 구간)은 한 단계 옅은 같은 계열 — 300 은 다크 트랙 위에서 동떨어진 색으로 떠 보였다
+  primary: { fill: 'var(--primary-main-600)', gain: 'var(--primary-main-400)' },
   // 진화한 순간에만 초록이 된다
-  up: { fill: 'var(--status-success-600)', gain: 'var(--status-success-300)' },
+  up: { fill: 'var(--status-success-600)', gain: 'var(--status-success-400)' },
   // 오답 — 줄어든다. FSRS 가 안정성을 깎으므로 다음 단계까지의 거리가 실제로 멀어진다
   ng: { fill: '#D9A15C', gain: '#D9A15C' },
 };
@@ -138,7 +139,8 @@ const CropProgressBar = ({
     ? (resets
       ? { width: [`${from}%`, '100%', '100%', '0%', `${to}%`] }
       : { width: '100%' })
-    : { width: `${to}%` };
+    // 오른 회차는 진한 채움이 from 에 머물고, 그 **아래** 깔린 gain 층이 to 까지 늘어난다(아래 【채움 모양】)
+    : { width: `${gained ? from : to}%` };
   const fillTransition = grew
     ? (resets
       ? { duration: GROW_FILL_DURATION, delay, times: GROW_FILL_TIMES, ease: ['easeOut', 'linear', 'easeIn', 'easeOut'] }
@@ -163,38 +165,46 @@ const CropProgressBar = ({
       ? { clipPath: [from, 100, 100, 0, to].map(insetRight) }
       : { clipPath: insetRight(100) })
     : { clipPath: insetRight(gained ? from : to) };
-  const labelBase = `absolute inset-0 flex items-center justify-center whitespace-nowrap leading-none tabular-nums pointer-events-none select-none ${labelClassName}`;
+  /*
+    【채움 모양 — 2026-09-27 실기기 피드백】 둥근 건 **트랙 하나뿐**이다(`rounded-full overflow-hidden`).
+    안의 채움·gain·lost 층은 전부 직사각형이고 트랙이 양 끝을 잘라 준다. 예전엔 채움과 gain 이 각자
+    `rounded-[99px]` 라, 조금 찬 막대(예: 63/210)에서 진한 채움 끝의 반원 뒤에 옅은 gain 의 반원이
+    또 붙어 "동그라미 앞에 동그라미"로 보였다. 지금은 작은 값도 작은 폭 그대로(왼쪽 끝만 트랙 라운드),
+    이전 채움과 오른 구간이 틈 없이 한 막대로 이어진다.
+  */
+  const labelBase =`absolute inset-0 flex items-center justify-center whitespace-nowrap leading-none tabular-nums pointer-events-none select-none ${labelClassName}`;
 
   return (
     <span
       className={`relative block ${block ? 'flex-none w-full' : 'flex-1'} rounded-[99px] bg-[#E8E8E8] dark:bg-[#454545] overflow-hidden ${className}`}
       style={{ maxWidth: width, height }}
     >
+      {gained && (
+        // 이번 학습으로 오른 만큼 — 진한 채움 **아래**에 0 부터 깔아 두고 오른쪽 끝만 늘린다.
+        // 진한 채움이 0~from 을 덮으므로 보이는 건 from~to 뿐이고, 두 층 사이에 이음매가 없다.
+        <motion.span
+          key="gain"
+          className="absolute left-0 top-0 bottom-0"
+          style={{ backgroundColor: color.gain }}
+          initial={{ width: `${from}%` }}
+          animate={{ width: `${to}%` }}
+          transition={{ duration: 0.45, delay, ease: 'easeOut' }}
+        />
+      )}
       <motion.span
         key={`fill-${pending ? 'p' : 'r'}-${grew ? 1 : 0}`}
-        className="absolute left-0 top-0 bottom-0 rounded-[99px]"
+        className="absolute left-0 top-0 bottom-0"
         style={{ backgroundColor: color.fill }}
         initial={{ width: `${from}%` }}
         animate={fillAnimate}
         transition={fillTransition}
       />
-      {gained && (
-        // 이번 학습으로 오른 만큼만 밝게 남긴다 — 그게 '몇 % 올랐는지'다
-        <motion.span
-          key="gain"
-          className="absolute top-0 bottom-0 rounded-[99px]"
-          style={{ backgroundColor: color.gain, left: `${from}%` }}
-          initial={{ width: 0, opacity: 0 }}
-          animate={{ width: `${to - from}%`, opacity: 1 }}
-          transition={{ duration: 0.45, delay, ease: 'easeOut' }}
-        />
-      )}
       {lost && (
         // 줄어든 구간 — 있던 자리에 그대로 서 있다가 사라진다.
         // 같이 짧아지게 하면 채워진 막대와 붙어서 움직여 경계가 안 보인다.
         <motion.span
           key="lost"
-          className="absolute top-0 bottom-0 rounded-[99px]"
+          className="absolute top-0 bottom-0"
           style={{ backgroundColor: color.gain, left: `${to}%`, width: `${from - to}%` }}
           initial={{ opacity: 0 }}
           animate={{ opacity: [0, 0.85, 0.85, 0] }}

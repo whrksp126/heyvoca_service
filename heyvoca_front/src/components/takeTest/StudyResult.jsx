@@ -320,22 +320,28 @@ const buildGuestSignupResult = async () => {
   결과 화면은 온보딩 첫 학습에서 그대로 이어지는 화면이라, 같은 자리의 버튼이 45px·radius 8 로
   달라 보이면 화면이 바뀐 게 아니라 앱이 바뀐 것처럼 읽힌다.
 
-  `secondary` 는 온보딩 선택지(OptionRow)의 미선택 형 — 2px 테두리에 빈 면. 예전의
-  회색 채운 버튼은 분홍 버튼과 무게가 비슷해 어느 쪽이 주된 행동인지 흐렸다.
+  【면 — 2026-09-27 실기기 피드백】
+    주 버튼: 홈 주 CTA(home/FarmCta.jsx)와 같은 세로 핑크 그라데이션 + 상단 안쪽 하이라이트.
+      글자는 모드와 무관하게 흰색이다(홈 CTA 와 같다). 다크에서 바깥 그림자를 쓰지 않는 것도 같다.
+    보조 버튼: 상점 `Btn` sec 톤(purchaseParts.jsx) — 라이트 회색 면 / 다크 gray-dark 면.
+      예전의 "빈 면 + 2px 테두리"는 다크에서 검은 바탕 위 검은 버튼이 되어 거의 안 보였다.
+  두 버튼은 높이·라운드·글자 규격이 같고 색만 다르다.
 */
+const CTA_BASE = 'h-[52px] rounded-[12px] text-[16px] font-[700] tracking-[-0.03em]';
+const CTA_PRIMARY_FACE = `
+  bg-[linear-gradient(180deg,#FF88DC_0%,#FF70D4_100%)] text-layout-white
+  shadow-[inset_0_1px_0_rgba(255,255,255,.34),0_6px_16px_rgba(255,112,212,.28)]
+  dark:shadow-[inset_0_1px_0_rgba(255,255,255,.34)]
+`;
+const CTA_SECONDARY_FACE = 'bg-layout-gray-50 dark:bg-layout-gray-dark text-layout-gray-400 dark:text-layout-gray-200';
+
 const ResultCta = ({ label, onClick, secondary = false, className = '' }) => (
   <motion.button
     type="button"
     onClick={onClick}
     whileTap={{ scale: 0.97 }}
     transition={{ type: 'spring', stiffness: 500, damping: 15 }}
-    className={`
-      h-[52px] rounded-[12px] text-[16px] font-[700] tracking-[-0.03em]
-      ${secondary
-        ? 'border-[2px] border-layout-gray-100 dark:border-layout-gray-dark bg-layout-white dark:bg-layout-black text-layout-gray-300 dark:text-layout-gray-100'
-        : 'bg-primary-main-600 text-layout-white dark:text-layout-black'}
-      ${className}
-    `}
+    className={`${CTA_BASE} ${secondary ? CTA_SECONDARY_FACE : CTA_PRIMARY_FACE} ${className}`}
   >
     {label}
   </motion.button>
@@ -354,58 +360,61 @@ const ResultCtaBar = ({ children, className = '' }) => (
 );
 
 /*
-  "다음 학습" — 넷플릭스 '다음화' 버튼처럼 배경이 왼쪽→오른쪽으로 차오르며 남은 초를 센다.
-  다 차면 호출부가 다음 세션을 연다(카운트 자체는 호출부 타이머가 정본이고, 채움은 연출이다).
+  "다음 학습" — 넷플릭스 '다음화' 자동 재생. 다 세면 호출부가 다음 세션을 연다
+  (카운트 자체는 호출부 타이머가 정본이고, 링은 연출이다).
 
-  면: 카운트 중에는 옅은 핑크(primary-400) 위로 브랜드 핑크(primary-600)가 차오른다 —
-      다 차는 순간 평소 주 버튼과 같은 색이 되어 "눌린 것처럼" 이어진다.
-      카운트가 끝났거나 취소되면 평소 주 버튼(ResultCta)과 같은 면이다.
-  reduced-motion: 채움 없이 평소 면 + 숫자만 줄어든다.
+  【2026-09-27 실기기 피드백】 예전에는 옅은 핑크 면 위로 진한 핑크가 왼쪽→오른쪽으로 차올라
+  버튼이 두 톤으로 뚝 갈라져 보였고, 남은 초는 회색 원 안에 있었다. 지금은 면은 평소 주 버튼
+  (ResultCta) 그대로 한 장이고, 남은 초를 **흰 원형 진행 링**이 감싸 조용히 줄어든다.
+  면 색이 바뀌지 않으므로 카운트가 끝나거나 취소돼도 버튼이 '다른 물건'으로 바뀌지 않는다
+  — 링과 숫자만 사라진다.
+  reduced-motion: 링은 줄지 않고 숫자만 줄어든다.
 */
-const NextStudyCta = ({ counting, remainingSec, durationSec, reducedMotion, onClick, className = '' }) => {
-  const showFill = counting && !reducedMotion;
-  return (
-    <motion.button
-      type="button"
-      onClick={onClick}
-      whileTap={{ scale: 0.97 }}
-      transition={{ type: 'spring', stiffness: 500, damping: 15 }}
-      aria-label={counting ? `다음 학습, ${remainingSec}초 뒤 자동으로 시작` : '다음 학습'}
-      data-testid="next-study-cta"
-      className={`
-        relative overflow-hidden
-        flex items-center justify-center
-        h-[52px] rounded-[12px] text-[16px] font-[700] tracking-[-0.03em]
-        text-layout-white dark:text-layout-black
-        ${showFill ? 'bg-primary-main-400' : 'bg-primary-main-600'}
-        ${className}
-      `}
-    >
-      {showFill ? (
-        <motion.span
-          aria-hidden
-          className='absolute inset-0 origin-left bg-primary-main-600'
-          initial={{ scaleX: 0 }}
-          animate={{ scaleX: 1 }}
-          transition={{ duration: durationSec, ease: 'linear' }}
-        />
+const RING_R = 9;
+const CountdownRing = ({ remainingSec, durationSec, animate }) => (
+  <span className='relative inline-flex items-center justify-center w-[24px] h-[24px]'>
+    <svg aria-hidden className='absolute inset-0 w-full h-full -rotate-90' viewBox='0 0 24 24'>
+      <circle cx='12' cy='12' r={RING_R} fill='none' stroke='rgba(255,255,255,.32)' strokeWidth='2' />
+      <motion.circle
+        cx='12'
+        cy='12'
+        r={RING_R}
+        fill='none'
+        stroke='#FFFFFF'
+        strokeWidth='2'
+        strokeLinecap='round'
+        initial={{ pathLength: 1 }}
+        animate={{ pathLength: animate ? 0 : 1 }}
+        transition={animate ? { duration: durationSec, ease: 'linear' } : { duration: 0 }}
+      />
+    </svg>
+    <span className='relative text-[11.5px] font-[700] leading-none tabular-nums'>
+      {remainingSec}
+    </span>
+  </span>
+);
+
+const NextStudyCta = ({ counting, remainingSec, durationSec, reducedMotion, onClick, className = '' }) => (
+  <motion.button
+    type="button"
+    onClick={onClick}
+    whileTap={{ scale: 0.97 }}
+    transition={{ type: 'spring', stiffness: 500, damping: 15 }}
+    aria-label={counting ? `다음 학습, ${remainingSec}초 뒤 자동으로 시작` : '다음 학습'}
+    data-testid="next-study-cta"
+    className={`flex items-center justify-center ${CTA_BASE} ${CTA_PRIMARY_FACE} ${className}`}
+  >
+    <span className='flex items-center gap-[6px]'>
+      <Play size={14} weight="fill" />
+      다음 학습
+      {counting ? (
+        <span className='ml-[2px] flex'>
+          <CountdownRing remainingSec={remainingSec} durationSec={durationSec} animate={!reducedMotion} />
+        </span>
       ) : null}
-      <span className='relative flex items-center gap-[6px]'>
-        <Play size={14} weight="fill" />
-        다음 학습
-        {counting ? (
-          <span className='
-            inline-flex items-center justify-center min-w-[22px] h-[22px] px-[6px] rounded-full
-            text-[13px] font-[700] tabular-nums
-            bg-[rgba(255,255,255,.28)] dark:bg-[rgba(0,0,0,.12)]
-          '>
-            {remainingSec}
-          </span>
-        ) : null}
-      </span>
-    </motion.button>
-  );
-};
+    </span>
+  </motion.button>
+);
 
 // 연속 학습 주간 막대 — 이번 주 월~일.
 //
@@ -1049,7 +1058,7 @@ const StudyResult = () => {
           {/* 아래 여백은 떠 있는 버튼 자리(52+18+26=96)보다 조금 넉넉하게 — 마지막 줄이 가리지 않도록 */}
           <div
             data-testid="result-scroll"
-            className={`flex flex-col flex-1 overflow-y-auto scrollbar-hide ${nextPlan.reason ? 'pb-[140px]' : 'pb-[110px]'}`}
+            className={`relative isolate z-0 flex flex-col flex-1 overflow-y-auto scrollbar-hide ${nextPlan.reason ? 'pb-[140px]' : 'pb-[110px]'}`}
             // 결과를 살펴보기 시작하면(터치·스크롤) 자동 시작을 취소한다
             onPointerDown={counting ? cancelCountdown : undefined}
             onScroll={counting ? cancelCountdown : undefined}
@@ -1202,7 +1211,13 @@ const StudyResult = () => {
           {/* 하단 — 왼쪽 "학습 종료", 오른쪽 "다음 학습"(8초 뒤 자동 시작).
               다음 학습을 열 수 없으면(단어 부족) 이유 한 줄 + "학습 종료"만 주 버튼으로 둔다.
               게스트는 가입 흐름으로 이어지는 "계속하기" 하나뿐이다. */}
-          <div className='absolute bottom-0 left-0 right-0 bg-layout-white dark:bg-layout-black'>
+          {/* 【z-index】 목록 카드의 복습 예정일 태그(StudyTimingTag)는 `absolute z-[2]` 인데,
+              카드(motion.div)는 애니메이션이 끝나면 transform 이 풀려 쌓임 맥락을 만들지 않는다.
+              그래서 태그의 z-2 가 화면 전체 기준으로 올라가 z 가 없던(auto) 이 버튼 영역 위에 그려졌다.
+              목록 스크롤 영역은 `isolate` 로 가두고, 버튼 영역은 z-20 으로 확실히 위에 둔다.
+              위쪽 20px 페이드는 목록이 버튼 뒤로 '잘려' 보이지 않고 스며들게 한다. */}
+          <div className='absolute bottom-0 left-0 right-0 z-20 bg-layout-white dark:bg-layout-black'>
+            <div aria-hidden className='pointer-events-none absolute left-0 right-0 bottom-full h-[20px] bg-gradient-to-t from-layout-white dark:from-layout-black to-transparent' />
             {nextPlan.reason ? (
               <p className='px-[24px] pt-[14px] -mb-[6px] text-center text-[12px] font-[500] text-layout-gray-300'>
                 {nextPlan.reason}
