@@ -16,6 +16,7 @@ import PullToRefresh from '../common/PullToRefresh';
 import {
   bookStageCounts,
   bookFieldData,
+  bookFieldWords,
   bookDueTodayCount,
   bookWiltedCount,
   bookUnverifiedCount,
@@ -29,10 +30,12 @@ import { HEALTH_STATES } from '../../utils/crop';
 const ITEMS_PER_PAGE = 30;    // 한 번에 로드할 단어 개수
 const SCROLL_THRESHOLD = 200; // 스크롤 끝에서 몇 px 전에 로드할지
 const MAX_RENDERED_ITEMS = 100;
-// 시안 §5 는 58px 였지만 crop_xp_contract.md §3(단어장 단어 목록에 XP 게이지 한 줄 추가)로
-// WordRow 실제 높이가 62px 로 늘었다 — 반드시 WordRow.jsx 와 같은 값이어야 가상 스크롤
-// 행 위치 계산이 실제 행 높이와 어긋나지 않는다.
-const ITEM_HEIGHT = 62;
+// crop_xp_contract.md §3 이 단어장 단어 목록에 XP 게이지 한 줄을 추가해 WordRow 가
+// 58→62px 로 늘었었는데, 실기기 QA 3차로 **단어장 상세에서만** 그 게이지(+ "120/210")를
+// 뺐다(WordRow showXp=false) — 원래 시안 §5 값(58px)으로 되돌아간다. 반드시 WordRow.jsx가
+// showXp=false 일 때 그리는 실제 높이와 같은 값이어야 가상 스크롤 행 위치 계산이 어긋나지
+// 않는다. 이 컴포넌트를 같이 쓰는 StudyResult.jsx는 showXp 기본값(true)이라 62px 그대로다.
+const ITEM_HEIGHT = 58;
 // 목록 위에 얹힌 것들의 높이 합(히어로 341 + 칩줄 72). 윈도우 렌더링이 스크롤 위치를
 // 행 index 로 바꿀 때 이만큼을 먼저 빼야 엉뚱한 구간을 그린다.
 const LIST_OFFSET = 413;
@@ -66,7 +69,6 @@ const WordRowSkeleton = () => (
     <span className="flex-1 min-w-0 flex flex-col gap-[6px]">
       <span className="block h-[14px] w-[60%] rounded-full bg-layout-gray-50 dark:bg-layout-gray-dark" />
       <span className="block h-[11px] w-[40%] rounded-full bg-layout-gray-50 dark:bg-layout-gray-dark" />
-      <span className="block h-[4px] w-[90%] rounded-full bg-layout-gray-50 dark:bg-layout-gray-dark" />
     </span>
   </div>
 );
@@ -121,6 +123,9 @@ const VocabularyWordsNewFullSheet = ({ id }) => {
   const counts = useMemo(() => bookStageCounts(words), [words]);
   // 밭에 실제로 서는 작물 — 아직 학습하지 않은 단어는 빼고 심는다
   const field = useMemo(() => bookFieldData(words), [words]);
+  // 단어 id 기반 결정적 슬롯(plantFieldByWords) — 실기기 QA 3차: 단계별 전용 구역 없이
+  // 섞어 심는다. 이 화면은 이미 단어별 id(vocaIndexId)를 들고 있어 추가 API가 필요 없다.
+  const fieldWords = useMemo(() => bookFieldWords(words), [words]);
   // 아직 한 번도 맞히지 못해 밭에 심기지 않은 단어 — 밭 밖 간판이 센다 (기획 5.1)
   const storedSeeds = useMemo(
     () => (words || []).filter((w) => isUnplanted(w)).length,
@@ -451,7 +456,7 @@ const VocabularyWordsNewFullSheet = ({ id }) => {
         }}
       >
         {/* 이 단어장만의 밭 + 겹쳐 뜬 주 CTA */}
-        <BookFieldHero counts={counts} fieldCounts={field.counts} healthMix={field.healthMix} storedSeeds={storedSeeds}>
+        <BookFieldHero counts={counts} fieldCounts={field.counts} healthMix={field.healthMix} words={fieldWords} storedSeeds={storedSeeds}>
           <motion.button
             type="button"
             onClick={handleStudyClick}
@@ -591,7 +596,7 @@ const VocabularyWordsNewFullSheet = ({ id }) => {
               )}
 
               {displayedWords.map((item) => (
-                <WordRow key={item.id} word={item} onClick={() => handleCardClick(item.id)} />
+                <WordRow key={item.id} word={item} onClick={() => handleCardClick(item.id)} showXp={false} />
               ))}
 
               {visibleRange.end < wordsToShow.length && (

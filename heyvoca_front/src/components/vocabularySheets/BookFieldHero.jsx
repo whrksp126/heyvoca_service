@@ -27,7 +27,7 @@ import { SIGN_ANCHORS } from '../../utils/farmField';
  */
 const SIGN_STAGE = { seed: 'PLANTED_SEED', sprout: 'SPROUT', leaf: 'LEAF', carrot: 'CARROT' };
 
-const BookFieldHero = ({ counts, fieldCounts, healthMix, storedSeeds = 0, children }) => {
+const BookFieldHero = ({ counts, fieldCounts, healthMix, words, storedSeeds = 0, children }) => {
   "use memo";
 
   return (
@@ -43,6 +43,7 @@ const BookFieldHero = ({ counts, fieldCounts, healthMix, storedSeeds = 0, childr
         <FarmField
           counts={fieldCounts || counts}
           healthMix={healthMix}
+          words={words}
           maxSprites={72}
           storedSeeds={storedSeeds}
         >

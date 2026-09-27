@@ -367,6 +367,25 @@ export const bookFieldData = (words, now = new Date()) =>
       .map((word) => ({ crop: wordCropStage(word), health: wordHealth(word, now) })),
   );
 
+/**
+ * 이 단어장의 밭에 실제로 심을 단어 목록 — `plantFieldByWords`(단어 id 기반 결정적 슬롯,
+ * utils/farmField.js)가 받는 형태 `{id, stage, health}`. `bookFieldData`와 같은 필터
+ * (`!isUnplanted`)를 쓰되 id 를 함께 실어 나른다.
+ *
+ * 【실기기 QA 3차 §4】 단어장 목록 카드의 미니 밭·단어장 상세 상단 밭이 홈 히어로처럼
+ * 단계별 전용 구역(quadrant)에 몰아 심어 "새싹끼리 왼쪽에 모인다"는 문제가 그대로
+ * 있었다 — 이 목록은 이미 각 단어의 id(`vocaIndexId`)를 들고 있으니(홈 히어로처럼 별도
+ * API가 필요 없다) `plantFieldByWords`로 바로 바꿀 수 있다.
+ */
+export const bookFieldWords = (words, now = new Date()) =>
+  (words || [])
+    .filter((word) => !isUnplanted(word))
+    .map((word) => ({
+      id: word?.vocaIndexId ?? word?.id,
+      stage: wordCropStage(word),
+      health: wordHealth(word, now),
+    }));
+
 /* 밭 썸네일을 네 장(book-seed/early/mid/done) 중에서 고르던 `bookThumbKey` 는 지웠다.
    시안 §2 가 말하는 "밭 그림으로 상태를 먼저 읽는다"는 그 넷으로는 성립하지 않았다 —
    단어장이 몇 개든 결국 같은 그림 넷 중 하나였다. 지금은 bookFieldData 가 실제로

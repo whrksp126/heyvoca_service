@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { CaretLeft, CaretUp } from '@phosphor-icons/react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
@@ -95,6 +95,25 @@ export const PreviewBookStoreNewFullSheet = ({
   const lastScrollTopRef = useRef(0);
 
   const totalCount = bookStoreVocabularySheet?.words?.length || 0;
+
+  /*
+    이 밭에 심을 자리 — 사기 전이라 전부 같은 씨앗(PLANTED_SEED/FRESH)이라 단계가 섞일
+    일은 없지만, 산 뒤 화면(VocabularyWordsNewFullSheet)과 **같은 자리 규칙**(단어 id 기반
+    결정적 슬롯)을 쓴다. 여기서 쓸 수 있는 유일한 안정적 id 는 `vocaId`(= 사전 Voca.id) —
+    산 뒤에는 UserVoca.id(vocaIndexId)로 바뀌지만 `/vocaIndexs` 응답이 원본을 `vocaId`로
+    그대로 실어 보내므로(voca_indexs.py `build_voca_index_response`), 두 화면이 우연이
+    아니라 같은 값으로 자리를 겹칠 수 있다 — 다만 지금은 산 뒤 화면이 vocaIndexId 기준이라
+    실제로 같은 자리가 되지는 않는다(보고 참조 — 두 화면을 모두 voca_id 기준으로 통일할지는
+    별도 검토 필요).
+  */
+  const previewFieldWords = useMemo(
+    () => (bookStoreVocabularySheet?.words || []).map((w) => ({
+      id: w.vocaId ?? w.id,
+      stage: 'PLANTED_SEED',
+      health: 'FRESH',
+    })),
+    [bookStoreVocabularySheet],
+  );
 
   // ref 업데이트
   useEffect(() => {
@@ -347,7 +366,7 @@ export const PreviewBookStoreNewFullSheet = ({
         ) : (
           <>
             {/* 이 단어장이 열어 줄 밭 — 전부 씨앗이다. 아직 아무것도 심지 않았다 */}
-            <BookFieldHero counts={{ seed: totalCount }} />
+            <BookFieldHero counts={{ seed: totalCount }} words={previewFieldWords} />
 
             {/* 시안 shop §4 가 카드에 넣으라고 한 줄을 여기서도 같은 말로 반복한다.
                 카드에서 읽고 들어온 값이 상세에서 사라지면 같은 상품인지 확신이 안 선다.

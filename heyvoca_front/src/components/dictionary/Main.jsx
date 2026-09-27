@@ -24,7 +24,7 @@ import { resolveVocaBookBackground } from '../../utils/vocaBookColor';
 import { useOnboardingUnlock } from '../../context/OnboardingUnlockContext';
 import CropImage from '../farm/CropImage';
 import { stageDetail, cropLabelDetail } from '../../utils/crop';
-import { isCareDue } from '../../utils/vocaCrop';
+import { isCareDue, daysToReview, isUnplanted } from '../../utils/vocaCrop';
 import useFarmPlants from './useFarmPlants';
 import { useOpenWordDetail } from '../../hooks/useOpenWordDetail';
 import PullToRefresh from '../common/PullToRefresh';
@@ -54,8 +54,16 @@ const STAGE_FILTERS = [
  * 정의(`utils/vocaCrop.js`의 `isCareDue`)를 쓴다. 예전에는 건강 상태(WILTED/CRITICAL)로
  * 셌는데, 부패 유예가 끝나야 WILTED 가 되어 방금 지난 단어는 여기서 0으로 잡히면서
  * 단어장 카드의 "돌봄 N"과 어긋났다.
- */
-const isPlantCareDue = (plant) => isCareDue(plant?.days_to_review, !plant || plant.stage === 'UNPLANTED_SEED');
+ *
+ * 【실기기 QA 3차】 위 정의로 고친 뒤에도 여전히 갈렸다 — 원인은 입력값이었다. 이 함수가
+ * 받던 `plant.days_to_review`는 `/farm/plants`(백엔드 `_plant_item`)가 `ceil_days(due_at-now)`
+ * 로 계산한 **컷오프 없는 순수 경과시간 올림**값이다. 반면 단어장 목록·상세, 그리고 서버의
+ * 정본 `get_care_due_ids`(query.py)는 예정일의 **KST 자정 경계**(`Date.setHours(0,0,0,0)`)로
+ * 가른다 — 자정 근처 몇 시간대(대략 UTC 15~24시, 예정일이 그 사이인 단어)에서 두 계산이
+ * 하루씩 어긋난다. 그래서 이제 `plant`(농장 상태 — 심음 여부·건강만 씀) 대신 `word`
+ * (userDictionary 항목, `/vocaIndexs`의 `fsrs.next_review`)를 받아 단어장과 **완전히 같은
+ * 함수**(`daysToReview`+`isUnplanted`)로 계산한다. */
+const isWordCareDue = (word) => isCareDue(daysToReview(word), isUnplanted(word));
 
 const readRecent = () => {
   try {
@@ -93,18 +101,18 @@ const Highlight = ({ text, query }) => {
 
 /**
  * 오른쪽 다음 복습 문구 — 단어장 화면과 같은 어휘를 쓴다 (시안 find §4).
- * 농장 정보가 아직 없으면 FSRS 예정일로 대신 계산한다 — 자리를 비우면 정렬이 깨진다.
+ *
+ * 일수는 `plant.days_to_review`(서버 `ceil_days`, 컷오프 없는 순수 경과시간 올림)가 아니라
+ * `daysToReview(word)`(단어장·`isWordCareDue`와 같은 KST 자정 경계 계산)를 쓴다 —
+ * 실기기 QA 3차: 이 배지가 예전 값을 쓰면 "돌봄" 칩에는 걸리는데(자정 경계 기준 지남)
+ * 배지는 "1일 뒤"를 보여주는(경과시간 기준 아직 안 지남) 자기모순이 생겼었다.
  */
-const dueBadge = (plant, fsrs) => {
+const dueBadge = (plant, word) => {
   const health = String(plant?.health || '').toUpperCase();
   if (health === 'ROTTEN') return { text: '썩음', kind: 'rot' };
 
-  let days = plant?.days_to_review;
-  if (days === null || days === undefined) {
-    const next = fsrs?.next_review;
-    if (!next) return null;
-    days = Math.ceil((new Date(next).getTime() - Date.now()) / 86400000);
-  }
+  const days = daysToReview(word);
+  if (days === null) return null;
   if (days <= 0) return { text: '오늘 물 필요', kind: health === 'CRITICAL' ? 'late' : 'today' };
   if (days === 1) return { text: '내일', kind: 'normal' };
   return { text: `${days}일 뒤`, kind: 'normal' };
@@ -259,7 +267,7 @@ const Main = () => {
       const detail = plant ? stageDetail(plant.stage) : 'unplanted';
       const key = detail === 'golden' ? 'carrot' : detail;
       if (c[key] !== undefined) c[key] += 1;
-      if (isPlantCareDue(plant)) c.care += 1;
+      if (isWordCareDue(word)) c.care += 1;
     });
     return c;
   }, [sortedWords, plants]);
@@ -267,7 +275,7 @@ const Main = () => {
   const allWords = useMemo(() => {
     if (filter === 'all') return sortedWords;
     if (filter === 'care') {
-      return sortedWords.filter(w => isPlantCareDue(plants[String(w.vocaIndexId)]));
+      return sortedWords.filter(isWordCareDue);
     }
     return sortedWords.filter((w) => {
       const plant = plants[String(w.vocaIndexId)];
@@ -612,7 +620,7 @@ const Main = () => {
             {meaningText}
           </div>
         </div>
-        <DueBadge badge={dueBadge(plant, word.fsrs)} />
+        <DueBadge badge={dueBadge(plant, word)} />
       </div>
     );
   };
@@ -949,7 +957,7 @@ const Main = () => {
               const book = vocaBooks.find(v => String(v.vocaBookId) === String(vb.vocaBookId));
               const bg = resolveVocaBookBackground(book?.color?.background || '#FFF0F9', isDark);
               const stageLabel = cropLabelDetail(plant?.stage ?? 'UNPLANTED_SEED');
-              const badge = dueBadge(plant, myWord?.fsrs);
+              const badge = dueBadge(plant, myWord);
               const sub = i === 0
                 ? `${stageLabel} · 다음 복습 ${badge ? badge.text : '예정 없음'}`
                 : `${stageLabel} · 같은 상태를 함께 써요`;

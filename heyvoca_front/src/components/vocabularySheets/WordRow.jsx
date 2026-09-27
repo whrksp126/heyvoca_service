@@ -16,8 +16,13 @@ import { getReading, shouldShowReading } from '../../utils/jaWord';
  * XP 게이지는 그 판단에 쓰라는 게 아니라(그건 여전히 우측 복습일 몫이다), "얼마나
  * 자랐는지"를 한눈에 보여주는 보조 정보라 얇게(4px) 둔다. 미심은 씨앗(보유 씨앗)은
  * 심지도 않았으니 게이지 자체를 그리지 않는다 — 0/50 을 그리면 이미 심긴 것처럼 읽힌다.
+ *
+ * @param {boolean} [showXp=true] false면 XP 게이지 한 줄 자체를 그리지 않고 행 높이도
+ *   58px로 되돌린다(실기기 QA 3차 — 단어장 상세 목록에서만 뺀다). 이 컴포넌트를 같이 쓰는
+ *   다른 화면(StudyResult.jsx)은 기본값 그대로라 XP 게이지가 계속 보인다.
+ *   높이가 바뀌는 화면은 호출부의 가상 스크롤 ITEM_HEIGHT 도 함께 맞춰야 한다.
  */
-const WordRow = ({ word, onClick }) => {
+const WordRow = ({ word, onClick, showXp = true }) => {
   "use memo";
 
   // 봉투(보유 씨앗)와 흙에 묻힌 씨앗(심은 씨앗)을 가르려면 visual_stage 가 필요하다
@@ -37,11 +42,11 @@ const WordRow = ({ word, onClick }) => {
     <button
       type="button"
       onClick={onClick}
-      className="
-        flex items-center gap-[11px] w-full h-[62px] shrink-0
+      className={`
+        flex items-center gap-[11px] w-full ${showXp ? 'h-[62px]' : 'h-[58px]'} shrink-0
         text-left
         border-b border-[#F4F4F4] dark:border-layout-gray-dark
-      "
+      `}
     >
       <CropImage stage={stage} health={health} size={52} align="center" className="shrink-0" />
 
@@ -64,7 +69,7 @@ const WordRow = ({ word, onClick }) => {
         <span className="block mt-[1px] truncate text-[12px] tracking-[-0.02em] text-layout-gray-400 dark:text-layout-gray-300">
           {meaning}
         </span>
-        {!unplanted && (
+        {showXp && !unplanted && (
           <span className="flex items-center gap-[6px] mt-[4px]">
             <span className="relative flex-1 h-[4px] rounded-[99px] bg-[#E8E8E8] dark:bg-[#454545] overflow-hidden">
               <i

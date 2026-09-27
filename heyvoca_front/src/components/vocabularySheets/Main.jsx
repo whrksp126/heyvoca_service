@@ -21,6 +21,7 @@ import {
   bookStageCounts,
   bookCareCount,
   bookFieldData,
+  bookFieldWords,
   bookBadge,
 } from '../../utils/vocaCrop';
 
@@ -72,6 +73,7 @@ const Main = () => {
       book,
       counts,
       field: bookFieldData(book.words),
+      fieldWords: bookFieldWords(book.words),
       care: bookCareCount(book.words),
       badge: bookBadge(book.words, counts),
       touchedAt: lastTouchedAt(book),
@@ -152,7 +154,7 @@ const Main = () => {
 
       <div className="flex flex-col gap-[10px] px-[16px] pb-[20px]">
         {visible.map(({
-          book, counts, field, badge, isVerified,
+          book, counts, field, fieldWords, badge, isVerified,
         }) => {
           const BadgeIcon = badge ? BADGE_ICON[badge.kind] : null;
 
@@ -177,6 +179,7 @@ const Main = () => {
                 <FarmField
                   counts={field.counts}
                   healthMix={field.healthMix}
+                  words={fieldWords}
                   maxSprites={18}
                   shadows={false}
                   reserveSigns={false}

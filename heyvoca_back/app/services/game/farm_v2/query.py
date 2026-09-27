@@ -38,8 +38,8 @@ from app import cache, db
 from app.models.models import (CheckIn, FarmEvent, FarmEventLog, FarmItem, FarmItemReason,
                                GemLog, GemReason, HealthState, User, UserFarmItemLog,
                                UserFarmMigration, UserFarmSetting, UserStreak,
-                               UserStudyLog, UserStudySession, UserVoca, UserVocaGame,
-                               VisualStage)
+                               UserStudyLog, UserStudySession, UserVoca, UserVocaBook,
+                               UserVocaGame, VisualStage)
 from app.services.game.farm_v2 import answer, comeback, growth, inventory, localday, streak_v2
 from app.services.game.farm_v2 import constants as C
 # `health` 는 아래에서 파라미터 이름으로도 써야 한다(계약의 ?health=). 모듈 쪽에 별칭을 준다.
@@ -635,7 +635,7 @@ def get_today_tasks(user_id: UUID, now: Optional[dt.datetime] = None,
     wilted/care 의 "지금 남은 것" 자체는 `get_task_bucket_ids` 하나로만 계산한다 —
     `/study/recommend?task_bucket=` 이 같은 함수를 쓰므로 두 API 의 정의가 갈리지 않는다.
     """
-    from app.services.study_day import logical_today
+    from app.services.study_day import logical_day_start_utc, logical_today
 
     now = now or dt.datetime.utcnow()
     if refresh:
@@ -712,6 +712,20 @@ def get_today_tasks(user_id: UUID, now: Optional[dt.datetime] = None,
     _seed_counts, seed_detail = _stage_counts(user_id, lang)
     seeds_left = int(seed_detail.get('unplanted') or 0)
 
+    # '새 씨앗 구매' 행이 산 뒤에도 '완료'로 남아야 한다 — seeds_left 만 보면, 서점에서
+    # 단어장을 받은 그 자리에서 씨앗이 늘어 조건(seeds_left < daily_new_limit)이 곧바로
+    # 거짓이 돼 버려 행이 "완료" 배지 없이 그냥 사라진다(사용자에게는 "샀는데 흔적이 없다").
+    # UserVocaBook.bookstore_id 가 서점 출처 판별 컬럼이다 — 사용자가 직접 만든 단어장
+    # (퀴즐렛 업로드/OCR/직접 생성)은 전부 bookstore_id=None 으로 저장한다(voca_books.py,
+    # user_voca_book.py 생성 코드 확인). created_at 을 오늘(logical day) 시작 시각과 비교한다.
+    day_start = logical_day_start_utc(now)
+    buy_done = db.session.query(UserVocaBook.id).filter(
+        UserVocaBook.user_id == user_id,
+        UserVocaBook.bookstore_id.isnot(None),
+        UserVocaBook.language == lang,
+        UserVocaBook.created_at >= day_start,
+    ).first() is not None
+
     # ── 6) 아이템 / 보석 ──
     inv = inventory.get_counts(user_id)
 
@@ -750,7 +764,8 @@ def get_today_tasks(user_id: UUID, now: Optional[dt.datetime] = None,
                 'done': len(care_done_ids), 'words': care_words},
         'new_seed': {'target': daily_new_limit, 'done': int(new_done)},
         'seeds_left': seeds_left,
-        'show_buy': seeds_left < daily_new_limit,
+        'show_buy': (seeds_left < daily_new_limit) or buy_done,
+        'buy_done': buy_done,
         'items': {'nutrient': int(inv.get(FarmItem.NUTRIENT, 0) or 0),
                  'shovel': int(inv.get(FarmItem.SHOVEL, 0) or 0)},
         'week': week,

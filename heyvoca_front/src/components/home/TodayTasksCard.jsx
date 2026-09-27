@@ -231,11 +231,16 @@ const TodayTasksCard = () => {
   const newSeed = todayTasks.new_seed ?? { target: 0, done: 0 };
   const seedsLeft = todayTasks.seeds_left ?? 0;
   const showBuy = !!todayTasks.show_buy;
+  // 오늘 이미 서점에서 단어장을 받았는가(백엔드 안내 — show_buy = 씨앗 부족 OR buy_done).
+  // buy_done 이면 씨앗이 이미 늘었어도(더 살 필요가 없어도) 행은 "완료"로 남겨 오늘 한
+  // 일이 사라지지 않고 보인다 — 새 씨앗 구매 자체가 오늘 할 일 중 하나였기 때문이다.
+  const buyDone = !!todayTasks.buy_done;
   const nutrientCnt = todayTasks.items?.nutrient ?? 0;
   // 오늘 목표(target)는 안 채웠는데 심을 씨앗 재고가 0인 상태 — "새 씨앗 심기"를 열어도
   // unlearned 단어가 없어 학습이 비어서 뜬다(실기기 QA — window.alert '출제 가능한
   // 문제가 없어요'). 이 상태에서는 그 행·CTA 모두 학습이 아니라 서점으로 보낸다.
-  const noSeedsToPlant = seedsLeft <= 0 && newSeed.done < (newSeed.target ?? 0);
+  // buy_done 이면(이미 오늘 샀다) 이 막힘 상태가 아니라 "완료" 취급이라 재정렬하지 않는다.
+  const noSeedsToPlant = !buyDone && seedsLeft <= 0 && newSeed.done < (newSeed.target ?? 0);
 
   const toggle = (key) => setExpanded((prev) => ({ ...prev, [key]: !prev[key] }));
 
@@ -388,8 +393,10 @@ const TodayTasksCard = () => {
     key: 'buy',
     icon: <img src={navStoreIcon} alt="" draggable={false} className="w-[40px] h-[40px] object-contain select-none" />,
     title: '새 씨앗 구매',
-    right: <Pill tone="secondary" onClick={goStore}>서점</Pill>,
-    onRowClick: goStore,
+    faded: buyDone,
+    // 완료 배지는 다른 행과 같은 규격(Progress 가 done>=total 일 때 그리는 배지)을 그대로 쓴다.
+    right: buyDone ? <Progress done={1} total={1} /> : <Pill tone="secondary" onClick={goStore}>서점</Pill>,
+    onRowClick: buyDone ? undefined : goStore,
   } : null;
 
   // 심을 씨앗이 없는 상태(noSeedsToPlant)에서는 '새 씨앗 구매'가 실제로 할 수 있는 일이라
