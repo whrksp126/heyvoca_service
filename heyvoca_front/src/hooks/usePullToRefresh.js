@@ -36,13 +36,20 @@
 // touchcancel: 같은 손가락이 새 touchstart 로 돌아오면 이어받고, CANCEL_SAFETY_MS 안에
 // 아무 입력도 없으면 그때 판정한다(무한 대기 방지용 안전장치일 뿐, 정상 경로가 아니다).
 //
-// 진단: 설정 > "당겨서 새로고침 진단 표시"(localStorage ptr.debug=1)를 켜면 이벤트 타임라인이
-// 화면에 뜬다. 리셋/새로고침에는 항상 reason 이 남는다.
+// 진단: 개발 환경(local/development)에서만 devtools 콘솔에서
+// `localStorage.setItem('ptr.debug','1')` 후 새로고침하면 이벤트 타임라인이 화면 좌상단에
+// 뜬다. prod 빌드에서는 이 값이 있어도 무시한다(설정 화면 토글은 2026-09 제거됨 — prod
+// 실기기 스크린샷에 디버그 UI가 노출된 사고 이후 개발 전용으로 좁혔다). 리셋/새로고침에는
+// 항상 reason 이 남는다.
 
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useMotionValue, animate } from 'framer-motion';
 import { showToast } from '../utils/osFunction';
 import { haptic } from '../lib/feel';
+import { nodeEnv } from '../utils/common';
+
+// 개발 환경(local/development)에서만 진단 오버레이를 허용한다. prod 빌드에서는 항상 false.
+const isDevEnv = () => nodeEnv === 'local' || nodeEnv === 'development';
 
 const clamp = (v, min, max) => Math.min(max, Math.max(min, v));
 
@@ -54,28 +61,13 @@ const DECIDE_SLOP = 6;
 // 손가락 이동 → 당김 거리 감쇠(고무줄 저항)
 const DAMPING = 0.5;
 
-export const PTR_DEBUG_EVENT = 'ptr-debug-change';
-
+// prod 빌드에서는 저장된 값과 무관하게 항상 false — 이미 켜 둔 사용자가 있어도 안 뜬다.
 export const isPtrDebugEnabled = () => {
+  if (!isDevEnv()) return false;
   try {
     return typeof window !== 'undefined' && window.localStorage.getItem('ptr.debug') === '1';
   } catch {
     return false;
-  }
-};
-
-// 설정 화면 토글이 호출한다. 같은 탭에서는 storage 이벤트가 안 오므로 커스텀 이벤트로 즉시 알린다.
-export const setPtrDebugEnabled = (enabled) => {
-  try {
-    if (enabled) window.localStorage.setItem('ptr.debug', '1');
-    else window.localStorage.removeItem('ptr.debug');
-  } catch {
-    // localStorage 사용 불가 환경 — 무시
-  }
-  try {
-    window.dispatchEvent(new CustomEvent(PTR_DEBUG_EVENT, { detail: { enabled } }));
-  } catch {
-    // CustomEvent 미지원 — 무시
   }
 };
 
@@ -115,13 +107,8 @@ export function usePullToRefresh({
     });
   }, []);
 
-  // ── 진단 로그 ──
+  // ── 진단 로그 — 개발 환경에서 devtools로 ptr.debug=1을 켠 경우에만 쌓인다 ──
   const debugEnabledRef = useRef(isPtrDebugEnabled());
-  useEffect(() => {
-    const onDebugChange = (e) => { debugEnabledRef.current = !!e.detail?.enabled; };
-    window.addEventListener(PTR_DEBUG_EVENT, onDebugChange);
-    return () => window.removeEventListener(PTR_DEBUG_EVENT, onDebugChange);
-  }, []);
   const [debugLog, setDebugLog] = useState([]);
   const gestureStartAtRef = useRef(null);
   const logDebug = useCallback((line) => {

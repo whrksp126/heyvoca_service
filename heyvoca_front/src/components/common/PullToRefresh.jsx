@@ -32,7 +32,7 @@
 // 뜬다 — document.body에 createPortal로 그려서, 호출부가 `as={motion.div}`를 쓰든
 // 무엇을 쓰든(그 안에 transform이 걸리든) 전혀 영향받지 않는다.
 import React, {
-  forwardRef, useEffect, useImperativeHandle, useRef, useState,
+  forwardRef, useEffect, useImperativeHandle, useRef,
 } from 'react';
 import { createPortal } from 'react-dom';
 import {
@@ -40,7 +40,7 @@ import {
   useReducedMotion, animate, AnimatePresence,
 } from 'framer-motion';
 import { Check } from '@phosphor-icons/react';
-import { usePullToRefresh, isPtrDebugEnabled, PTR_DEBUG_EVENT } from '../../hooks/usePullToRefresh';
+import { usePullToRefresh, isPtrDebugEnabled } from '../../hooks/usePullToRefresh';
 import { SPRING } from '../../lib/feel';
 
 // 링 지오메트리 — 배경 칩(40px) 안에 30px 링을 둔다.
@@ -226,11 +226,13 @@ const PullToRefreshIndicator = ({ pull, phase, threshold, maxPull }) => {
 };
 
 /**
- * 디버그 오버레이 — `localStorage.setItem('ptr.debug','1')`일 때만 렌더된다(기본 꺼짐).
+ * 디버그 오버레이 — 개발 환경(local/development)에서 devtools로
+ * `localStorage.setItem('ptr.debug','1')`을 켰을 때만 렌더된다(기본 꺼짐, prod 빌드에서는
+ * isPtrDebugEnabled가 항상 false를 반환해 절대 렌더되지 않는다 — 2026-09 prod 실기기
+ * 스크린샷에 노출된 사고 이후 설정 화면 토글을 없애고 개발 전용으로 좁혔다).
  * usePullToRefresh가 남긴 최근 이벤트(최대 20줄, 각 줄 앞에 제스처 시작 후 경과 `+Nms`)를
  * 화면 좌상단에 반투명 박스로 보여준다 — 실기기에서 "왜 풀렸는지"(reset의 reason)를 콘솔
- * 연결 없이 바로 읽기 위한 용도다. 설정 화면(SettingsNewFullSheet)의 "당겨서 새로고침
- * 진단 표시" 토글이 PTR_DEBUG_EVENT를 쏘면 새로고침 없이 즉시 나타나고/사라진다.
+ * 연결 없이 바로 읽기 위한 용도다.
  * 디자인 토큰만 쓴다(하드코딩 색상 금지) — layout-black/white 토큰을 다크와 무관하게
  * 항상 어두운 칩으로 고정해 어느 배경 위에서도 로그 텍스트가 읽히게 한다.
  *
@@ -282,16 +284,11 @@ const PullToRefresh = forwardRef(function PullToRefresh(
     scrollRef, onRefresh, disabled, threshold, maxPull, minShowMs, errorMessage,
   });
 
-  // ptr.debug 플래그 — 마운트 시 한 번 읽어 초기값으로 삼되, 설정 화면 토글이 쏘는
-  // PTR_DEBUG_EVENT를 들어 실시간으로 갱신한다(새로고침 없이 오버레이가 켜지고/꺼진다).
-  // 훅 쪽 debugLog도 같은 플래그로 게이팅돼 있어 플래그가 꺼져 있으면 log는 항상 빈
-  // 배열이라 이 오버레이 자체도 사실상 아무 일도 안 한다.
-  const [debugEnabled, setDebugEnabled] = useState(() => isPtrDebugEnabled());
-  useEffect(() => {
-    const onDebugChange = (e) => setDebugEnabled(!!e.detail?.enabled);
-    window.addEventListener(PTR_DEBUG_EVENT, onDebugChange);
-    return () => window.removeEventListener(PTR_DEBUG_EVENT, onDebugChange);
-  }, []);
+  // ptr.debug 플래그 — 개발 환경에서 devtools로 켠 경우에만 마운트 시점 값을 읽는다.
+  // prod 빌드에서는 isPtrDebugEnabled가 항상 false라 이 오버레이는 절대 렌더되지 않는다
+  // (설정 화면 토글은 제거됨 — usePullToRefresh.js 상단 설명 참고). 훅 쪽 debugLog도 같은
+  // 플래그로 게이팅돼 있어 꺼져 있으면 log는 항상 빈 배열이다.
+  const debugEnabled = isPtrDebugEnabled();
 
   return (
     <Component

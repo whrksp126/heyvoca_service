@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   HandHeart, CircleHalf, Quotes, SpeakerHigh, Bell,
-  Plant, Drop, Flask, FileText, Lock, Info, Sparkle, Bug, Translate,
+  Plant, Drop, Flask, FileText, Lock, Info, Translate,
 } from '@phosphor-icons/react';
 import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
 import { useUser } from '../../context/UserContext';
@@ -9,8 +9,6 @@ import { useTheme } from '../../context/ThemeContext';
 import { useExampleSettings } from '../../context/ExampleSettingsContext';
 import { openExternalUrl, parseAppVersion, isAppVersionAtLeast } from '../../utils/osFunction';
 import { readFarmSettings, isCareNotifyOn } from '../../utils/farmSettings';
-import { haptic, isHapticsEnabled, setHapticsEnabled } from '../../lib/feel';
-import { isPtrDebugEnabled, setPtrDebugEnabled } from '../../hooks/usePullToRefresh';
 import { SheetBar, GroupLabel, SettingRow } from './settingsUi';
 
 // '실험실'(채팅으로 학습 등 네이티브 기능)을 지원하는 최소 앱 버전.
@@ -42,25 +40,8 @@ const SettingsNewFullSheet = () => {
   const { showExamples, showFurigana, setShowFurigana } = useExampleSettings();
   // 후리가나 표시 — 일본어 학습 중일 때만 노출(learningLang 이 아직 없으면 항상 노출)
   const showFuriganaRow = learningLang === undefined || learningLang === 'ja';
-  // 손맛(햅틱) — localStorage 'feel.haptics' 하나로 켜짐/꺼짐만 오간다(lib/feel/haptics.js)
-  const [hapticsOn, setHapticsOn] = useState(() => isHapticsEnabled());
-  const toggleHaptics = () => {
-    const next = !hapticsOn;
-    setHapticsEnabled(next);
-    setHapticsOn(next);
-    if (next) haptic('selection'); // 켜지는 순간에만 — 꺼질 땐 이미 꺼진 상태라 울리지 않는다
-  };
-
-  // 당겨서 새로고침 진단 표시 — localStorage 'ptr.debug' 하나로 오버레이 on/off만 오간다
-  // (hooks/usePullToRefresh.js). 앱(WebView)에서는 localStorage를 직접 못 만지므로 실기기
-  // QA 때 이 토글로만 켤 수 있다. setPtrDebugEnabled가 값을 쓰는 즉시 PTR_DEBUG_EVENT를 쏴서
-  // 이미 화면에 떠 있는 PullToRefresh 오버레이도 새로고침 없이 바로 반응한다.
-  const [ptrDebugOn, setPtrDebugOn] = useState(() => isPtrDebugEnabled());
-  const togglePtrDebug = () => {
-    const next = !ptrDebugOn;
-    setPtrDebugEnabled(next);
-    setPtrDebugOn(next);
-  };
+  // 손맛(햅틱)은 모든 사용자에게 항상 적용된다 — 설정 토글 없음(lib/feel/haptics.js).
+  // 당겨서 새로고침 진단 표시는 개발 전용 디버그였다 — 설정 토글 제거(hooks/usePullToRefresh.js).
 
   const openSheet = (Component) => {
     pushNewFullSheet(Component, {}, { smFull: true, closeOnBackdropClick: true });
@@ -122,20 +103,6 @@ const SettingsNewFullSheet = () => {
           icon={<Bell size={iconSize} />}
           title="푸시 알림"
           onClick={() => openSheet(PushNotificationsNewFullSheet)}
-        />
-        <SettingRow
-          icon={<Sparkle size={iconSize} />}
-          title="손맛"
-          sub="탭·정답·성장 순간의 진동"
-          toggle={hapticsOn}
-          onClick={toggleHaptics}
-        />
-        <SettingRow
-          icon={<Bug size={iconSize} />}
-          title="당겨서 새로고침 진단 표시"
-          sub="화면 좌상단에 제스처 로그를 띄워요"
-          toggle={ptrDebugOn}
-          onClick={togglePtrDebug}
         />
 
         {/* ── 학습 관리 — 새 단어 수만 있던 자리에 복습량이 붙는다 (시안 1절 ③) ── */}

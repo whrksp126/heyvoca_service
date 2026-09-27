@@ -43,8 +43,6 @@
 
 import { vibrate, getDevicePlatform } from '../../utils/osFunction';
 
-const STORAGE_KEY = 'feel.haptics';
-
 // kind → react-native-haptic-feedback 트리거 이름 (앱 브릿지로 그대로 전달됨)
 const HAPTIC_TYPE_MAP = {
   light: 'impactLight',
@@ -71,38 +69,17 @@ const WEB_VIBRATE_PATTERN = {
 const DEBOUNCE_MS = 60;
 const lastFiredAt = {};
 
-/** 사용자가 손맛(햅틱)을 껐는지. 기본값은 켜짐(on). */
-export function isHapticsEnabled() {
-  if (typeof window === 'undefined') return true;
-  try {
-    return window.localStorage.getItem(STORAGE_KEY) !== 'off';
-  } catch {
-    return true;
-  }
-}
-
-/** 마이페이지 설정 토글 등에서 호출 — on/off 를 localStorage 에 저장한다. */
-export function setHapticsEnabled(enabled) {
-  if (typeof window === 'undefined') return;
-  try {
-    window.localStorage.setItem(STORAGE_KEY, enabled ? 'on' : 'off');
-  } catch {
-    // 저장 실패는 무시 — 다음 세션엔 다시 기본값(켜짐)으로 동작
-  }
-}
-
 /**
- * 손맛 진동 하나를 울린다.
- * - 사용자가 껐으면(feel.haptics=off) 아무 일도 하지 않는다.
+ * 손맛 진동 하나를 울린다. 모든 사용자에게 항상 적용한다(설정 토글 없음).
  * - 같은 kind 는 60ms 내 중복 호출을 무시한다(연타 방지).
  * - 앱(WebView) 이면 기존 vibrate() 브릿지에 hapticType 을 실어 보낸다.
- * - 순수 웹이면 navigator.vibrate 패턴으로 폴백한다.
+ * - 순수 웹이면 navigator.vibrate 패턴으로 폴백한다(기기의 시스템 진동/무음 모드는
+ *   OS/브라우저 레벨에서 알아서 존중됨 — 여기서 따로 판단하지 않는다).
  *
  * @param {'light'|'medium'|'heavy'|'success'|'warning'|'error'|'selection'} kind
  */
 export function haptic(kind) {
   if (!HAPTIC_TYPE_MAP[kind]) return;
-  if (!isHapticsEnabled()) return;
 
   const now = Date.now();
   if (now - (lastFiredAt[kind] || 0) < DEBOUNCE_MS) return;

@@ -5,7 +5,7 @@
 //
 //   import { haptic, SPRING, TAP, variants, Pressable, useCountUp } from '@/lib/feel';
 
-export { haptic, isHapticsEnabled, setHapticsEnabled } from './haptics';
+export { haptic } from './haptics';
 export { SPRING, TAP, variants, pickVariant } from './motion';
 export { default as Pressable } from './Pressable';
 export { useCountUp } from './useCountUp';
