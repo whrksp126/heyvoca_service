@@ -28,6 +28,7 @@ from app.utils.example_tagging import tag_example_pair, _tag_batch_gpt, STRONG
 from app.services.fsrs.state import (
     parse_user_voca_data, get_fsrs_state, is_v1, migrate_v1_to_v2, DEFAULT_FSRS_NEW,
 )
+from app.services.admin_book_refs import load_admin_book_texts
 
 
 # 단어(word) 길이 정책: 영단어가 50자를 넘는 경우는 사실상 없으므로,
@@ -593,7 +594,22 @@ def create_voca_book():
                 admin_maps = db.session.query(AdminVocaBookMap).filter(
                     AdminVocaBookMap.book_id == bookstore.admin_voca_book_id
                 ).all()
-                
+
+                # 2026-09 구조 개편: en은 admin_voca_book_map.voca_meanings/voca_examples를
+                # 더 이상 읽지 않고 사전 참조 테이블(admin_voca_book_map_meaning/_example)에서
+                # 배치 조회한다. ja(heyvoca_dict_ja)는 별도 schema라 이 참조 테이블이 없어
+                # 기존 raw JSON 컬럼 경로를 그대로 쓴다.
+                if lang == 'ja':
+                    admin_texts_by_map = {
+                        m.id: {
+                            'meanings': json.loads(m.voca_meanings) if m.voca_meanings else [],
+                            'examples': json.loads(m.voca_examples) if m.voca_examples else [],
+                        }
+                        for m in admin_maps
+                    }
+                else:
+                    admin_texts_by_map = load_admin_book_texts([m.id for m in admin_maps])
+
                 # 1. 기존 UserVoca 조회 — 중복 키 (user_id, dict_lang, word)
                 admin_words = [m.voca.word for m in admin_maps if m.voca]
                 existing_vocas = db.session.query(UserVoca).filter(
@@ -604,13 +620,14 @@ def create_voca_book():
                 user_voca_dict = {uv.word: uv for uv in existing_vocas}
 
                 user_vocas_to_add = []
-                
+
                 # 2. UserVoca 분류
                 for admin_map in admin_maps:
                     if not admin_map.voca: continue
                     word = admin_map.voca.word
-                    meanings = json.loads(admin_map.voca_meanings) if admin_map.voca_meanings else []
-                    examples = json.loads(admin_map.voca_examples) if admin_map.voca_examples else []
+                    admin_texts = admin_texts_by_map.get(admin_map.id, {'meanings': [], 'examples': []})
+                    meanings = admin_texts['meanings']
+                    examples = admin_texts['examples']
 
                     if word in user_voca_dict:
                         uv = user_voca_dict[word]
@@ -620,7 +637,8 @@ def create_voca_book():
                             uv.voca_id = admin_map.voca_id
                         uv.updated_at = datetime.datetime.utcnow()
                     else:
-                        # examples 는 admin_voca_book_map.voca_examples 그대로 — ja 는 reading_tokens 포함
+                        # examples 는 admin_texts_by_map에서 뽑은 사전 텍스트 그대로 —
+                        # ja는 admin_voca_book_map.voca_examples 원본(reading_tokens 포함)을 그대로 쓴다.
                         new_uv = UserVoca(
                             user_id=user_id,
                             voca_id=admin_map.voca_id,
@@ -637,17 +655,20 @@ def create_voca_book():
                     for uv in user_vocas_to_add:
                         user_voca_dict[uv.word] = uv
 
-                # 3. Map 데이터 구성
+                # 3. Map 데이터 구성 — 사용자 DB(UserVocaBookMap)는 지금처럼 JSON 텍스트로 복사한다
+                # (사용자 쪽 저장 포맷은 이번 개편 범위 밖). admin_texts_by_map은 이미 list 형태라
+                # bulk_insert_mappings에 넣을 땐 다시 json.dumps 해야 한다(ORM setter를 거치지 않음).
                 book_maps_data = []
                 for admin_map in admin_maps:
                     if not admin_map.voca: continue
                     word = admin_map.voca.word
                     uv = user_voca_dict[word]
+                    admin_texts = admin_texts_by_map.get(admin_map.id, {'meanings': [], 'examples': []})
                     book_maps_data.append({
                         'user_voca_book_id': voca_book.id,
                         'user_voca_id': uv.id,
-                        'voca_meanings': admin_map.voca_meanings,
-                        'voca_examples': admin_map.voca_examples
+                        'voca_meanings': json.dumps(admin_texts['meanings'], ensure_ascii=False),
+                        'voca_examples': json.dumps(admin_texts['examples'], ensure_ascii=False),
                     })
                 
                 if book_maps_data:

@@ -23,9 +23,21 @@ from app.models.models import (
 from app.utils.db_lock import lock_row
 from app.utils.dict_lang import get_dict_lang
 from app.utils.word_payload import load_ja_word_extras, load_ja_example_tokens, apply_word_fields
+from app.services.admin_book_refs import load_admin_book_texts
 
 # admin 요청의 사전 언어는 `?lang=`(before_request 가 g.dict_lang 설정). 관리자 단어장 language 표시명.
 LANG_DISPLAY = {'en': '영어', 'ja': '일본어'}
+
+
+def _edit_disabled_response():
+    """서점 단어장 뜻/예문 편집 API 공통 비활성화 응답 — 2026-09 구조 개편 중.
+
+    admin_voca_book_map이 텍스트 복사본이 아니라 사전(voca_meaning/voca_example) ID
+    참조로 바뀌어(.claude/rules/db-migration.md), 텍스트를 직접 쓰던 편집 API들은
+    새 저장 로직이 준비될 때까지 423(Locked)로 막는다. app/routes/admin_voca_books.py의
+    동일 이름 헬퍼와 로직이 같다(순환 import 방지를 위해 중복 정의).
+    """
+    return jsonify({'code': 423, 'message': '단어장 편집 기능은 개편 예정입니다.'}), 423
 
 
 def _admin_book_language(requested):
@@ -451,6 +463,11 @@ def remove_word_from_voca_book(voca_book_id, voca_id):
 @admin_bp.route('/admin_voca_book', methods=['POST'])
 @admin_required
 def create_admin_voca_book():
+    """[비활성화] 엑셀 업로드로 AdminVocaBook 생성 — _process_word_into_book이
+    admin_voca_book_map.voca_meanings/voca_examples를 직접 쓰므로 2026-09 구조 개편 중
+    비활성화한다."""
+    return _edit_disabled_response()
+
     try:
         book_nm = request.form.get('book_nm', '').strip()
         language = _admin_book_language(request.form.get('language', ''))
@@ -555,12 +572,22 @@ def get_admin_voca_book_words(admin_voca_book_id):
     ).limit(per_page).all()
 
     extras = load_ja_word_extras([v.id for _, v in word_maps])
+    # 2026-09 구조 개편: en은 admin_voca_book_map_meaning/_example(사전 참조)에서 배치 조회.
+    # ja(heyvoca_dict_ja)는 별도 schema라 이 참조 테이블이 없어 기존 raw JSON 경로를 유지한다.
+    lang = get_dict_lang()
+    texts_by_map = None if lang == 'ja' else load_admin_book_texts([bm.id for bm, _ in word_maps])
     words = []
     for bm, v in word_maps:
+        if lang == 'ja':
+            meanings = json.loads(bm.voca_meanings) if bm.voca_meanings else []
+            examples = json.loads(bm.voca_examples) if bm.voca_examples else []
+        else:
+            texts = texts_by_map.get(bm.id, {'meanings': [], 'examples': []})
+            meanings, examples = texts['meanings'], texts['examples']
         words.append(apply_word_fields({
             'voca_id': v.id, 'map_id': bm.id, 'word': v.word, 'pronunciation': v.pronunciation,
-            'meanings': json.loads(bm.voca_meanings) if bm.voca_meanings else [],
-            'examples': json.loads(bm.voca_examples) if bm.voca_examples else [],
+            'meanings': meanings,
+            'examples': examples,
         }, v.id, extras))
 
     return jsonify({'code': 200, 'data': {
@@ -657,6 +684,11 @@ def _process_word_into_book(word_text, meanings_list, examples_list, book_id):
 @admin_bp.route('/admin_voca_book/from_ai', methods=['POST'])
 @admin_required
 def create_admin_voca_book_from_ai():
+    """[비활성화] JSON으로 AdminVocaBook 생성 — _process_word_into_book이
+    admin_voca_book_map.voca_meanings/voca_examples를 직접 쓰므로 2026-09 구조 개편 중
+    비활성화한다."""
+    return _edit_disabled_response()
+
     try:
         data = request.json or {}
         book_nm = (data.get('book_nm') or '').strip()
@@ -706,6 +738,10 @@ def create_admin_voca_book_from_ai():
 @admin_bp.route('/admin_voca_book/<int:admin_voca_book_id>/word', methods=['POST'])
 @admin_required
 def add_word_to_admin_voca_book(admin_voca_book_id):
+    """[비활성화] admin_voca_book_map.voca_meanings/voca_examples를 직접 쓰므로
+    2026-09 구조 개편 중 비활성화한다."""
+    return _edit_disabled_response()
+
     try:
         data = request.json
         word_text = data.get('word', '').strip()
@@ -1193,7 +1229,10 @@ def tag_examples_from_excel():
 @admin_bp.route('/admin_voca_book/<int:admin_voca_book_id>/save_tagged_examples', methods=['PATCH'])
 @admin_required
 def save_tagged_examples(admin_voca_book_id):
-    """태그된 예문을 DB에 저장"""
+    """[비활성화] 태그된 예문을 admin_voca_book_map.voca_examples에 직접 저장 —
+    2026-09 구조 개편 중 비활성화한다."""
+    return _edit_disabled_response()
+
     try:
         items = (request.json or {}).get('items', [])
         for item in items:

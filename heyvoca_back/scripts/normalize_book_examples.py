@@ -317,7 +317,24 @@ def main():
     )
     parser.add_argument('--apply', action='store_true', help='DB 변경을 커밋한다(기본: dry-run, 롤백만)')
     parser.add_argument('--verbose', action='store_true', help='수동 처리가 필요한 잔여 항목의 전/후 원문 출력')
+    parser.add_argument(
+        '--i-know-this-is-legacy', action='store_true',
+        help='2026-09 구조 개편 이후에도 강제로 실행(voca_meanings/voca_examples는 더 이상 '
+             '읽히지 않는 컬럼이다 — 보통은 쓸 이유가 없다).',
+    )
     args = parser.parse_args()
+
+    if not args.i_know_this_is_legacy:
+        print(
+            '[중단] 2026-09 구조 개편으로 admin_voca_book_map.voca_meanings/voca_examples는\n'
+            '더 이상 어떤 API도 읽지 않는다(정본은 admin_voca_book_map_meaning/_example —\n'
+            '사전 voca_meaning/voca_example을 ID+순서로 참조). 이 스크립트로 그 컬럼을 고쳐도\n'
+            '응답에 반영되지 않으므로 사실상 무의미하다. 뜻/예문을 실제로 고치려면\n'
+            'VocaMeaning/VocaExample(사전) 자체를 수정하거나 scripts/migrate_admin_book_map_refs.py\n'
+            '이관 로직을 참고해 참조 테이블을 직접 갱신할 것. 그래도 이 스크립트가 필요하면\n'
+            '(예: 롤백 대비 JSON 컬럼을 최신 상태로 맞추는 감사 작업) --i-know-this-is-legacy를 주고 재실행.'
+        )
+        return
 
     from app import create_app, db
     from app.models.models import AdminVocaBookMap, VocaExampleMap, VocaExample, Voca

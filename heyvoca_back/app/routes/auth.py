@@ -973,8 +973,10 @@ def level_voca_list():
     try:
         from app.models.models import AdminVocaBook, AdminVocaBookMap, Voca
         from app.utils.dict_lang import use_dict_lang
+        from app.services.admin_book_refs import load_admin_book_texts
 
         # 레벨 단어장(온보딩 소스)은 영어 고정 — 학습 언어가 ja 인 사용자/게스트 ?lang=ja 여도 영어 사전.
+        # 뜻/예문 조회(load_admin_book_texts)는 heyvoca_dict(en) 전용이라 반드시 이 블록 안에서 실행.
         with use_dict_lang('en'):
             # AdminVocaBook 정보 조회
             admin_book = AdminVocaBook.query.get(mapping['id'])
@@ -987,13 +989,16 @@ def level_voca_list():
                 .filter(AdminVocaBookMap.book_id == mapping['id'])\
                 .order_by(AdminVocaBookMap.id.asc())\
                 .all()
-        
+
+            texts_by_map = load_admin_book_texts([amap.id for amap, _ in admin_maps])
+
         voca_list = []
         for amap, voca in admin_maps:
+            texts = texts_by_map.get(amap.id, {'meanings': [], 'examples': []})
             voca_list.append({
                 "origin": voca.word,
-                "meanings": json.loads(amap.voca_meanings) if amap.voca_meanings else [],
-                "examples": json.loads(amap.voca_examples) if amap.voca_examples else [],
+                "meanings": texts['meanings'],
+                "examples": texts['examples'],
                 "voca_id": voca.id
             })
             

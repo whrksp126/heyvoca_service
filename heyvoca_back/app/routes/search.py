@@ -19,6 +19,7 @@ from app.services.word_resolve import (
     word_info_suffix_candidates as _word_info_suffix_candidates,
     resolve_word_info as _resolve_word_info,
 )
+from app.services.admin_book_refs import load_admin_book_texts
 from flask_caching import Cache
 import redis
 from uuid import UUID
@@ -455,19 +456,24 @@ def get_bookstore_detail(bookstoreId):
 
     # 단어 목록 조회 — 사전 schema prefix 필수 (default bind = heyvoca_user)
     # ja 예문(voca_examples JSON)에는 reading_tokens 가 이미 들어 있다(60_make_jlpt_books.py).
+    # en 은 2026-09 구조 개편으로 voca_meanings/voca_examples 컬럼을 더 이상 읽지 않고
+    # admin_voca_book_map_meaning/_example(사전 참조)에서 배치 조회한다(load_admin_book_texts).
+    # ja(heyvoca_dict_ja)는 별도 schema라 이 참조 테이블이 없어 기존 raw JSON 경로를 유지한다.
     S = dict_schema()
     if lang == 'ja':
         ja_cols = ", vj.reading, vj.romaji, vj.jlpt"
         ja_join = f"LEFT JOIN {S}.voca_ja vj ON vj.voca_id = v.id"
+        meaning_example_cols = "CAST(avbm.voca_meanings AS JSON) AS meanings, CAST(avbm.voca_examples AS JSON) AS examples"
     else:
         ja_cols, ja_join = "", ""
+        meaning_example_cols = "NULL AS meanings, NULL AS examples"
     query = text(f"""
         SELECT
             v.id,
+            avbm.id AS map_id,
             v.word AS origin,
             v.pronunciation,
-            CAST(avbm.voca_meanings AS JSON) AS meanings,
-            CAST(avbm.voca_examples AS JSON) AS examples
+            {meaning_example_cols}
             {ja_cols}
         FROM {S}.admin_voca_book_map avbm
         JOIN {S}.voca v ON avbm.voca_id = v.id
@@ -477,16 +483,28 @@ def get_bookstore_detail(bookstoreId):
 
     rows = db.session.execute(query, {'admin_voca_book_id': bookstore.admin_voca_book_id}).fetchall()
 
+    if lang == 'ja':
+        texts_by_map = {
+            row.map_id: {
+                'meanings': json.loads(row.meanings) if row.meanings else [],
+                'examples': json.loads(row.examples) if row.examples else [],
+            }
+            for row in rows
+        }
+    else:
+        texts_by_map = load_admin_book_texts([row.map_id for row in rows])
+
     # 결과 가공
     vocas = []
     for row in rows:
+        texts = texts_by_map.get(row.map_id, {'meanings': [], 'examples': []})
         item = {
             "id": row.id,
             "vocaId": row.id,
             "origin": row.origin,
             "pronunciation": row.pronunciation,
-            "meanings": json.loads(row.meanings) if row.meanings else [],
-            "examples": json.loads(row.examples) if row.examples else []
+            "meanings": texts['meanings'],
+            "examples": texts['examples'],
         }
         extras = ({row.id: {'reading': row.reading, 'romaji': row.romaji, 'jlpt': row.jlpt}}
                   if lang == 'ja' else None)

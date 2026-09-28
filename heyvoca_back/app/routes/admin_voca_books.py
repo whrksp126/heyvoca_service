@@ -35,6 +35,7 @@ from app.utils.dict_lang import get_dict_lang
 from app.utils.word_payload import (
     load_ja_word_extras, load_ja_example_tokens, apply_word_fields, word_lang_fields,
 )
+from app.services.admin_book_refs import load_admin_book_texts
 
 
 def _dict_bind_args():
@@ -64,6 +65,16 @@ def _clamp_int(raw, default, min_val=1, max_val=None):
     if max_val is not None:
         val = min(val, max_val)
     return val
+
+
+def _edit_disabled_response():
+    """서점 단어장 뜻/예문 편집 API 공통 비활성화 응답 — 2026-09 구조 개편 중.
+
+    admin_voca_book_map이 텍스트 복사본이 아니라 사전(voca_meaning/voca_example) ID
+    참조로 바뀌어(.claude/rules/db-migration.md), 텍스트를 직접 쓰던 편집 API들은
+    새 저장 로직이 준비될 때까지 423(Locked)로 막는다.
+    """
+    return jsonify({'code': 423, 'message': '단어장 편집 기능은 개편 예정입니다.'}), 423
 
 
 def _parse_json_field(raw):
@@ -240,8 +251,10 @@ def list_voca_books():
 def get_voca_book(book_id):
     """단어장 상세 + 단어 목록 + bookstore 상태.
 
-    각 단어의 voca_meanings/voca_examples는 JSON 파싱하여 list로 반환.
-    파싱 실패 시 parse_error=true와 raw 필드를 함께 반환해 프론트가 폴백 가능.
+    2026-09 구조 개편: en은 admin_voca_book_map_meaning/_example(사전 참조)에서 뜻/예문을
+    배치 조회한다. ja(heyvoca_dict_ja)는 별도 schema라 이 참조 테이블이 없어 기존
+    voca_meanings/voca_examples raw JSON 파싱 경로를 그대로 쓴다(parse_error/raw_* 포함,
+    프론트 폴백용).
     """
     book = AdminVocaBook.query.filter_by(id=book_id).first()
     if book is None:
@@ -259,13 +272,24 @@ def get_voca_book(book_id):
 
     lang = get_dict_lang()
     extras = load_ja_word_extras([m.voca_id for m in maps], lang)
+    texts_by_map = None if lang == 'ja' else load_admin_book_texts([m.id for m in maps])
 
     words = []
     for m in maps:
-        meanings, m_err = _parse_json_field(m.voca_meanings)
-        examples, e_err = _parse_json_field(m.voca_examples)
-        parse_error = bool(m_err or e_err)
         voca = m.voca
+        if lang == 'ja':
+            meanings, m_err = _parse_json_field(m.voca_meanings)
+            examples, e_err = _parse_json_field(m.voca_examples)
+            parse_error = bool(m_err or e_err)
+            raw_meanings = m.voca_meanings if m_err else None
+            raw_examples = m.voca_examples if e_err else None
+            meanings = meanings if not m_err else []
+            examples = examples if not e_err else []
+        else:
+            texts = texts_by_map.get(m.id, {'meanings': [], 'examples': []})
+            meanings, examples = texts['meanings'], texts['examples']
+            parse_error, raw_meanings, raw_examples = False, None, None
+
         words.append({
             'map_id': m.id,
             'voca_id': m.voca_id,
@@ -275,10 +299,10 @@ def get_voca_book(book_id):
             'voca_level': voca.level if voca else None,
             'is_active': voca.is_active if voca else None,
             'level': m.level,
-            'meanings': meanings if not m_err else [],
-            'examples': examples if not e_err else [],
-            'raw_meanings': m.voca_meanings if m_err else None,
-            'raw_examples': m.voca_examples if e_err else None,
+            'meanings': meanings,
+            'examples': examples,
+            'raw_meanings': raw_meanings,
+            'raw_examples': raw_examples,
             'parse_error': parse_error,
             **word_lang_fields(m.voca_id, extras, lang,
                                fallback_pronunciation=voca.pronunciation if voca else None),
@@ -386,61 +410,14 @@ def _normalize_examples(value):
 @admin_voca_books_bp.route('/<int:book_id>/words/<int:map_id>', methods=['PATCH'])
 @admin_required
 def patch_word(book_id, map_id):
-    """admin_voca_book_map row의 voca_meanings/voca_examples/level 수정.
+    """[비활성화] admin_voca_book_map row의 뜻/예문/level 수정.
 
-    body: { meanings: [...] | "csv", examples: [{origin, meaning}, ...], level: int|null }
+    2026-09 구조 개편으로 admin_voca_book_map은 더 이상 뜻/예문 텍스트를 직접 갖지 않는다
+    (사전 voca_meaning/voca_example을 ID+순서로 참조). 이 편집 API는 새 구조에 맞는 저장
+    로직이 나오기 전까지 비활성화한다. 정본: .claude/rules/db-migration.md,
+    scripts/migrate_admin_book_map_refs.py.
     """
-    m = AdminVocaBookMap.query.filter_by(id=map_id).first()
-    if m is None:
-        return jsonify({'code': 404, 'message': '단어 매핑을 찾을 수 없습니다.'}), 404
-    if m.book_id != book_id:
-        return jsonify({'code': 400, 'message': '단어장과 일치하지 않는 매핑입니다.'}), 400
-
-    payload = request.get_json(silent=True) or {}
-
-    if 'meanings' in payload:
-        meanings = _normalize_meanings(payload.get('meanings'))
-        m.voca_meanings = json.dumps(meanings, ensure_ascii=False)
-    if 'examples' in payload:
-        examples = _normalize_examples(payload.get('examples'))
-        # 저장 시 강조 안 된 예문 자동 태깅 (이미 강조 skip → 1차 → 잔여분 GPT)
-        ms = _normalize_meanings(payload.get('meanings')) if 'meanings' in payload \
-            else json.loads(m.voca_meanings or '[]')
-        apply_emphasis(m.voca.word if m.voca else '', ms, examples, 'origin', 'meaning')
-        m.voca_examples = json.dumps(examples, ensure_ascii=False)
-    if 'level' in payload:
-        lv = payload.get('level')
-        if lv is None or lv == '':
-            m.level = None
-        else:
-            try:
-                m.level = int(lv)
-            except (TypeError, ValueError):
-                return jsonify({'code': 400, 'message': 'level은 정수여야 합니다.'}), 400
-
-    book = AdminVocaBook.query.filter_by(id=book_id).first()
-    if book is not None:
-        book.updated_at = datetime.utcnow()
-
-    try:
-        db.session.commit()
-    except Exception as e:
-        db.session.rollback()
-        logging.getLogger(__name__).error('word 수정 DB 오류', exc_info=True)
-        return jsonify({'code': 500, 'message': '데이터베이스 처리 중 오류가 발생했습니다.'}), 500
-
-    voca = m.voca
-    return jsonify({
-        'code': 200,
-        'data': {
-            'map_id': m.id,
-            'voca_id': m.voca_id,
-            'word': voca.word if voca else None,
-            'level': m.level,
-            'meanings': json.loads(m.voca_meanings or '[]'),
-            'examples': json.loads(m.voca_examples or '[]'),
-        },
-    }), 200
+    return _edit_disabled_response()
 
 
 # ──────────────────────────────────────────────────────────
@@ -450,128 +427,14 @@ def patch_word(book_id, map_id):
 @admin_voca_books_bp.route('/<int:book_id>/words', methods=['POST'])
 @admin_required
 def add_word(book_id):
-    """단어장에 단어 추가.
+    """[비활성화] 단어장에 단어 추가.
 
-    body:
-      { voca_id: int }                                      # 기존 voca를 그대로 매핑
-      또는
-      { word, pronunciation?, verb_forms?, voca_level?,
-        meanings: [...], examples: [...], level: int|null } # word로 조회/생성
-
-    Query:
-      force=true → 같은 word가 이미 있어도 신규 voca 생성
-
-    응답:
-      - 200: 추가됨 (data.map_id, data.voca_id, ...)
-      - 409: 동음이의 후보 다수 (data.candidates) — 사용자 선택 필요
-      - 409: 동일 (voca_id, book_id) 중복
+    2026-09 구조 개편으로 admin_voca_book_map은 더 이상 뜻/예문 텍스트를 직접 갖지 않는다
+    (사전 voca_meaning/voca_example을 ID+순서로 참조). 이 추가 API는 새 구조에 맞는 저장
+    로직이 나오기 전까지 비활성화한다. 정본: .claude/rules/db-migration.md,
+    scripts/migrate_admin_book_map_refs.py.
     """
-    # 단어장 행을 먼저 잠근다(이 트랜잭션의 첫 문장) — 같은 단어장 동시 편집을 한 줄로 세워
-    # 중복 매핑 확인·word_count 재계산이 앞선 편집의 커밋까지 본 값으로 이뤄지게 한다.
-    book = lock_row(AdminVocaBook, AdminVocaBook.id == book_id)
-    if book is None:
-        return jsonify({'code': 404, 'message': '단어장을 찾을 수 없습니다.'}), 404
-
-    payload = request.get_json(silent=True) or {}
-    force = (request.args.get('force') or '').lower() == 'true'
-
-    voca = None
-    voca_id = payload.get('voca_id')
-
-    if voca_id:
-        voca = Voca.query.filter_by(id=int(voca_id)).first()
-        if voca is None:
-            return jsonify({'code': 404, 'message': '단어를 찾을 수 없습니다.'}), 404
-    else:
-        word = (payload.get('word') or '').strip()
-        if not word:
-            return jsonify({'code': 400, 'message': 'voca_id 또는 word가 필요합니다.'}), 400
-
-        # force 가 아니면 잠금 읽기 — 없는 단어면 ix_voca_word 갭 잠금으로, 같은 새 단어를 동시에
-        # 두 번 만들지 못하게 한다(force=true 는 동음이의어를 일부러 새로 만드는 경로라 잠그지 않는다).
-        cq = Voca.query.filter_by(word=word)
-        candidates = (cq if force else cq.with_for_update()).all()
-        if candidates and not force:
-            if len(candidates) >= 1:
-                # 후보가 있으면 사용자에게 선택 기회 제공 (force=true 또는 voca_id 지정으로 재호출)
-                return jsonify({
-                    'code': 409,
-                    'message': '동일한 단어가 이미 사전에 있습니다. 기존 단어를 선택하거나 force=true로 재호출하세요.',
-                    'data': {
-                        'candidates': [
-                            apply_word_fields({
-                                'voca_id': v.id,
-                                'word': v.word,
-                                'pronunciation': v.pronunciation,
-                                'verb_forms': v.verb_forms,
-                                'level': v.level,
-                            }, v.id, load_ja_word_extras([c.id for c in candidates]))
-                            for v in candidates
-                        ],
-                    },
-                }), 409
-
-        # 새 Voca 생성 (후보 없거나 force=true)
-        voca = Voca(
-            word=word,
-            pronunciation=(payload.get('pronunciation') or None),
-        )
-        voca.verb_forms = payload.get('verb_forms') or None
-        voca.level = payload.get('voca_level') or None
-        voca.is_active = True
-        db.session.add(voca)
-        db.session.flush()  # voca.id 확보
-
-    # 중복 매핑 검사
-    dup = AdminVocaBookMap.query.filter_by(book_id=book_id, voca_id=voca.id).first()
-    if dup is not None:
-        return jsonify({
-            'code': 409,
-            'message': '이 단어는 이미 단어장에 포함되어 있습니다.',
-            'data': {'existing_map_id': dup.id},
-        }), 409
-
-    meanings = _normalize_meanings(payload.get('meanings'))
-    examples = _normalize_examples(payload.get('examples'))
-    # 단어 추가 시 강조 안 된 예문 자동 태깅
-    apply_emphasis(voca.word, meanings, examples, 'origin', 'meaning')
-    level = payload.get('level')
-    try:
-        level_int = int(level) if level not in (None, '') else None
-    except (TypeError, ValueError):
-        level_int = None
-
-    new_map = AdminVocaBookMap()
-    new_map.voca_id = voca.id
-    new_map.book_id = book_id
-    new_map.level = level_int
-    new_map.voca_meanings = json.dumps(meanings, ensure_ascii=False)
-    new_map.voca_examples = json.dumps(examples, ensure_ascii=False)
-    db.session.add(new_map)
-
-    try:
-        db.session.flush()
-        _recalc_word_count(book_id)
-        db.session.commit()
-    except Exception as e:
-        db.session.rollback()
-        logging.getLogger(__name__).error('word 추가 DB 오류', exc_info=True)
-        return jsonify({'code': 500, 'message': '데이터베이스 처리 중 오류가 발생했습니다.'}), 500
-
-    return jsonify({
-        'code': 200,
-        'data': apply_word_fields({
-            'map_id': new_map.id,
-            'voca_id': voca.id,
-            'word': voca.word,
-            'pronunciation': voca.pronunciation,
-            'verb_forms': voca.verb_forms,
-            'voca_level': voca.level,
-            'level': new_map.level,
-            'meanings': meanings,
-            'examples': examples,
-        }, voca.id, load_ja_word_extras([voca.id])),
-    }), 200
+    return _edit_disabled_response()
 
 
 # ──────────────────────────────────────────────────────────

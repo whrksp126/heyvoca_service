@@ -235,8 +235,13 @@ LEVEL_META = {
 
 
 def _level_book(level) -> dict:
-    """레벨별 단어장 조회 (AdminVocaBook). 반환: {id,title,color,vocaList:[{origin,meanings,examples,voca_id}]} 또는 None."""
+    """레벨별 단어장 조회 (AdminVocaBook). 반환: {id,title,color,vocaList:[{origin,meanings,examples,voca_id}]} 또는 None.
+
+    항상 english_dict 데코레이터 아래(g.dict_lang='en')에서 호출된다 — heyvoca_dict 전용
+    load_admin_book_texts 를 바로 써도 안전하다.
+    """
     from app.models.models import AdminVocaBook, AdminVocaBookMap, Voca
+    from app.services.admin_book_refs import load_admin_book_texts
 
     book_id = LEVEL_ADMIN_BOOK.get(str(level))
     if not book_id:
@@ -252,10 +257,11 @@ def _level_book(level) -> dict:
         .order_by(AdminVocaBookMap.id.asc())
         .all()
     )
+    texts_by_map = load_admin_book_texts([amap.id for amap, _ in rows])
     voca_list = [{
         'origin': voca.word,
-        'meanings': json.loads(amap.voca_meanings) if amap.voca_meanings else [],
-        'examples': json.loads(amap.voca_examples) if amap.voca_examples else [],
+        'meanings': texts_by_map.get(amap.id, {}).get('meanings', []),
+        'examples': texts_by_map.get(amap.id, {}).get('examples', []),
         'voca_id': voca.id,
     } for amap, voca in rows]
 

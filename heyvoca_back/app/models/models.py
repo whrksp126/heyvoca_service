@@ -1198,12 +1198,49 @@ class AdminVocaBookMap(db.Model):
     voca_id = Column(Integer, ForeignKey('voca.id', ondelete='CASCADE'))
     book_id = Column(Integer, ForeignKey('admin_voca_book.id', ondelete='CASCADE'))
     level = Column(Integer, nullable=True)
+    # 2026-09 구조 개편(migrate_admin_book_map_refs.py) 이후로는 더 이상 읽지 않는다(쓰기 API도
+    # 비활성화됨). 롤백 대비로만 컬럼을 남겨 둔다 — 정본은 meaning_refs/example_refs.
     voca_meanings = Column(TEXT, nullable=True)
     voca_examples = Column(TEXT, nullable=True)
 
     # 관계 정의
     voca = relationship("Voca")
     voca_book = relationship("AdminVocaBook")
+    # 정본(2026-09~): 사전 voca_meaning/voca_example 을 ID+순서로 참조.
+    meaning_refs = relationship(
+        "AdminVocaBookMapMeaning", back_populates="admin_voca_book_map",
+        order_by="AdminVocaBookMapMeaning.ord", cascade="all, delete-orphan",
+    )
+    example_refs = relationship(
+        "AdminVocaBookMapExample", back_populates="admin_voca_book_map",
+        order_by="AdminVocaBookMapExample.ord", cascade="all, delete-orphan",
+    )
+
+
+# 서점 단어장(admin_voca_book_map)-단어뜻 참조. 텍스트 복사본이 아니라 사전 voca_meaning.id +
+# 순서(ord)만 가진다 — 조회 시 VocaMeaning과 join 해 텍스트를 채운다(app/services/admin_book_refs.py).
+# 2026-09 구조 개편(migrate_admin_book_map_refs.py, .claude/rules/db-migration.md 참고).
+class AdminVocaBookMapMeaning(db.Model):
+    __tablename__ = 'admin_voca_book_map_meaning'
+    __bind_key__ = 'dict'
+    map_id = Column(Integer, ForeignKey('admin_voca_book_map.id', ondelete='CASCADE'), primary_key=True)
+    meaning_id = Column(Integer, ForeignKey('voca_meaning.id', ondelete='CASCADE'), primary_key=True)
+    ord = Column(Integer, nullable=False, default=0)
+
+    admin_voca_book_map = relationship("AdminVocaBookMap", back_populates="meaning_refs")
+    meaning = relationship("VocaMeaning")
+
+
+# 서점 단어장(admin_voca_book_map)-예문 참조. voca_example.id + 순서(ord)만 가진다.
+class AdminVocaBookMapExample(db.Model):
+    __tablename__ = 'admin_voca_book_map_example'
+    __bind_key__ = 'dict'
+    map_id = Column(Integer, ForeignKey('admin_voca_book_map.id', ondelete='CASCADE'), primary_key=True)
+    example_id = Column(Integer, ForeignKey('voca_example.id', ondelete='CASCADE'), primary_key=True)
+    ord = Column(Integer, nullable=False, default=0)
+
+    admin_voca_book_map = relationship("AdminVocaBookMap", back_populates="example_refs")
+    example = relationship("VocaExample")
 
 
 class UserVocaBookMap(db.Model):

@@ -288,7 +288,24 @@ def main():
     parser.add_argument('--dry-run', action='store_true', help='DB 변경 없이 집계 결과만 출력(롤백)')
     parser.add_argument('--generated', default=None, help='A 단계에 사용할 신규 예문 JSON 경로')
     parser.add_argument('--max', type=int, default=3, help='B 단계에서 행마다 채울 최대 예문 수 (기본 3)')
+    parser.add_argument(
+        '--i-know-this-is-legacy', action='store_true',
+        help='2026-09 구조 개편 이후에도 강제로 실행. B/C 단계는 이제 어떤 API도 읽지 않는 '
+             'admin_voca_book_map.voca_examples 컬럼을 고치므로 사실상 무의미하다(A 단계 — '
+             'voca_example/voca_example_map 삽입 — 만 필요하면 이 스크립트 대신 사전을 직접 수정할 것).',
+    )
     args = parser.parse_args()
+
+    if not args.i_know_this_is_legacy:
+        print(
+            '[중단] 2026-09 구조 개편으로 admin_voca_book_map.voca_meanings/voca_examples는\n'
+            '더 이상 어떤 API도 읽지 않는다(정본은 admin_voca_book_map_meaning/_example —\n'
+            '사전 voca_meaning/voca_example을 ID+순서로 참조). 이 스크립트의 B/C 단계가 고치는\n'
+            '컬럼은 응답에 반영되지 않는다. 예문을 실제로 채우려면 사전(voca_example/\n'
+            'voca_example_map)에 직접 추가하고 admin_voca_book_map_example로 연결할 것\n'
+            '(scripts/migrate_admin_book_map_refs.py 참고). 그래도 필요하면 --i-know-this-is-legacy.'
+        )
+        return
 
     generated_items = []
     if args.generated:
