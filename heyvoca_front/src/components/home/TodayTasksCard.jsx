@@ -29,29 +29,24 @@ import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
 import { useQuickReview } from '../../hooks/useQuickReview';
 import { vibrate, showToast } from '../../utils/osFunction';
 import { getRottenPlantsApi, recoverPlantsApi } from '../../api/farm';
-import { CROP_ASSETS, CROP_BASELINE, cropAssetByVariant } from '../farm/CropImage';
-import { stageToCrop, healthToVariant } from '../../utils/crop';
+import CropImage, { CROP_ASSETS } from '../farm/CropImage';
+import { stageToCrop } from '../../utils/crop';
 import RottenListSheet from '../farm/RottenListSheet';
 import StoreNewFullSheet from '../newfullsheet/StoreNewFullSheet';
 import navStoreIcon from '../../assets/images/farm/store.png';
-import fieldBaseImg from '../../assets/images/farm/field-base.png';
 
 const VISIBLE_WORDS = 3;
 
-/** 우측 진행 x/y — 목표 달성 시 '완료' 배지(단어장 카드와 같은 규격) */
+/** 우측 진행 x/y — 완료 여부는 왼쪽 체크로 이미 드러나므로 배지 없이 숫자만,
+ *  완료 시 회색으로 낮춘다(개수 자체는 계속 보여준다). */
 const Progress = ({ done, total }) => {
-  if (total > 0 && done >= total) {
-    return (
-      <span className="shrink-0 inline-flex items-center gap-[3px] h-[26px] px-[10px] rounded-full bg-status-success-100 dark:bg-status-success-dark text-status-success-600 text-[12.5px] font-[700]">
-        <Check size={13} weight="bold" />
-        완료
-      </span>
-    );
-  }
+  const isDone = total > 0 && done >= total;
   return (
     <span className="shrink-0 flex items-baseline gap-[1px]">
-      <b className="text-[17px] font-[800] text-layout-black dark:text-layout-white">{done}</b>
-      <span className="text-[14px] font-[700] text-[#AAAAAA]">/{total}</span>
+      <b className={`text-[17px] font-[800] ${isDone ? 'text-[#BBBBBB]' : 'text-layout-black dark:text-layout-white'}`}>
+        {done}
+      </b>
+      <span className={`text-[14px] font-[700] ${isDone ? 'text-[#BBBBBB]' : 'text-[#AAAAAA]'}`}>/{total}</span>
     </span>
   );
 };
@@ -75,12 +70,11 @@ const Pill = ({ tone = 'primary', children, onClick, disabled }) => (
 );
 
 /**
- * 단어 목록 — 앞 3개 + '외 N개' → 눌러서 전체 칩으로 펼침(왼쪽 84px 들여쓰기).
+ * 단어 목록 — 앞 3개 + '외 N개' → 눌러서 전체 칩으로 펼침.
  *
- * 압축 줄(compact)은 Row의 텍스트 칸(sub) 안에, 펼친 칩(expanded)은 Row 바깥 줄(expand)에
- * 각각 따로 얹는다 — 칩 블록의 ml-84px는 "아이콘 칸(72)+간격(12)" 만큼을 카드 **좌측 기준**으로
- * 밀어야 텍스트 칸 시작 위치와 맞는다. sub 안에 그대로 두면 이미 84px 들어간 칸 안에서
- * 다시 84px를 밀어 이중으로 들여써진다.
+ * 압축 줄(compact)과 펼친 칩(expandedBlock) 모두 Row의 텍스트 칸(체크박스 오른쪽, 제목과
+ * 같은 칼럼) 안에 얹는다 — 그래서 별도 들여쓰기(pl) 계산 없이도 타이틀 텍스트 시작선에
+ * 그대로 맞는다.
  */
 const buildWordListParts = (words = [], expanded, onToggle) => {
   if (words.length === 0) return { compact: null, expandedBlock: null };
@@ -112,7 +106,7 @@ const buildWordListParts = (words = [], expanded, onToggle) => {
   );
 
   const expandedBlock = expanded && hiddenCount > 0 ? (
-    <span className="pl-[84px] flex flex-wrap gap-[6px]">
+    <span className="flex flex-wrap gap-[6px]">
       {ordered.map((w) => (
         <span
           key={w.id}
@@ -130,85 +124,75 @@ const buildWordListParts = (words = [], expanded, onToggle) => {
 };
 
 /**
- * 미니 밭 — 고정 좌표 8자리(밭 % 기준)에 그 행의 실제 남은 단어를 성장 단계 그대로,
- * 행의 건강 상태(시듦=wilted, 돌봄=drying) variant로 심는다.
- *
- * FarmField(홈 히어로·단어장 카드)의 확률적 격자 배치는 칸이 촘촘한 작은 폭(72px)에서는
- * 단어 하나하나가 점 수준으로 작아진다(보고 — QA 스크린샷) — 여기서는 그 대신 좌표를
- * 고정해 두고 항목마다 또렷하게 그린다. 끝낸(done) 단어는 심지 않는다.
- *
- * 【박스 크기 — 모든 단계를 같은 px 로 그리면 안 된다】
- * planted 에셋은 512² 캔버스 안에 단계별로 다른 비율(콘텐츠 실측, 알파 바운딩박스)만
- * 차지한다 — 씨앗은 24~26px, 새싹은 92~161px, 이파리는 195~296px, 당근은 240~371px.
- * 예전처럼 전 단계를 20~22px 박스에 넣으면 씨앗은 1px, 새싹은 5px 짜리 점이 된다
- * (QA 스크린샷 — "씨앗은 점 하나, 새싹은 모서리에 걸침"). 그래서 단계마다 다른 박스를
- * 준다 — 씨앗은 봉투가 아니라 **낱알(bare) 그림**(콘텐츠가 planted 대비 3배 이상 크다,
- * CropImage.getCropAsset 의 씨앗 예외와 같은 이유)을 solo=true 로 가져와 34px 로,
- * 나머지는 지금 그대로(planted, solo=false) 26~34px 로 키운다.
- *
- * 바닥선(CROP_BASELINE=440/512)은 그대로 좌표에 맞춘다 — 박스가 커진 만큼 콘텐츠가
- * 흙 마름모 위 가장자리를 넘어가지 않도록 좌표 y 를 전체 +8(퍼센트 포인트) 내렸다.
+ * 행 타이틀 왼쪽 인라인 아이콘 — 22px 고정 박스(체크리스트화 이후, 예전 72×52 아이콘
+ * 칸을 대신한다). 이미지는 object-contain 으로 원본 비율을 유지한다.
  */
-const MINI_FIELD_SPOTS = [
-  [38, 58], [55, 52], [62, 66], [45, 72],
-  [30, 68], [50, 84], [68, 78], [40, 48],
-];
+const RowIcon = ({ children }) => (
+  <span className="shrink-0 w-[22px] h-[22px] flex items-center justify-center">{children}</span>
+);
 
-/** 단계별 박스 px — 위 주석의 알파 바운딩박스 실측을 근거로 잡은 값 */
-const MINI_FIELD_BOX = { seed: 34, sprout: 26, leaf: 20, carrot: 22 };
-
-const MiniField = ({ words = [], health }) => {
-  const variant = healthToVariant(health);
-  const remaining = words.filter((w) => !w.done).slice(0, MINI_FIELD_SPOTS.length);
+/**
+ * 시듦·돌봄 행의 인라인 작물 아이콘 — 미니 밭(72px, 좌표 8자리) 대신 그 행 **첫 단어**의
+ * 성장 단계를 행의 건강 상태(시듦=wilted, 돌봄=drying) variant로 하나만 그린다.
+ * 22px 로는 미니 밭의 점 배치가 다시 안 보이는 점(QA 스크린샷 — "씨앗은 점 하나")이라
+ * 이번엔 단어 하나를 또렷하게 보여주는 쪽을 택했다. CropImage 의 align="center" 가
+ * 단계별 실측 바운딩박스로 정사각형 칸 안에서 가운데 정렬해 준다.
+ */
+const RowCrop = ({ words = [], health }) => {
+  const raw = words[0]?.stage;
+  // 시듦·돌봄 목록의 단어는 전부 이미 심긴 채 자라는 중이다(둘 다 밭에서 물을 준다) —
+  // 하지만 이 응답은 일반 crop 키('seed' 등)만 내려주고, CropImage 는 심은 씨앗(낱알)과
+  // 보유 씨앗(봉투)을 구분하려고 'PLANTED_SEED' 문자열을 따로 요구한다. 그대로 넘기면
+  // 밭에 없는 "미학습 봉투" 그림이 나오므로 seed 단계만 PLANTED_SEED로 정규화한다.
+  const stage = stageToCrop(raw) === 'seed' ? 'PLANTED_SEED' : raw;
   return (
-    <div className="relative w-[72px] aspect-[1200/860] shrink-0">
-      <img src={fieldBaseImg} alt="" draggable={false} className="absolute inset-0 w-full h-full select-none" />
-      {remaining.map((w, i) => {
-        const [x, y] = MINI_FIELD_SPOTS[i];
-        const crop = stageToCrop(w.stage);
-        const size = MINI_FIELD_BOX[crop] ?? MINI_FIELD_BOX.leaf;
-        return (
-          <img
-            key={w.id}
-            src={cropAssetByVariant(w.stage, variant, { solo: crop === 'seed' })}
-            alt=""
-            draggable={false}
-            className="absolute select-none"
-            style={{
-              left: `${x}%`,
-              top: `${y}%`,
-              width: size,
-              height: size,
-              transform: `translate(-50%, -${CROP_BASELINE * 100}%)`,
-            }}
-          />
-        );
-      })}
-    </div>
+    <RowIcon>
+      <CropImage stage={stage} health={health} size={22} align="center" solo />
+    </RowIcon>
   );
 };
 
-/** 행 한 줄 — [아이콘 72×52][제목+단어 목록][우측] · 행 탭(버튼 제외)은 onRowClick */
-const Row = ({ icon, title, titleClassName, sub, expand, right, last, faded, onRowClick }) => (
+/** 완료 표시용 동그라미 체크박스 — 표시 전용(탭 동작 없음). 미완료=빈 원, 완료=채운 원+체크 */
+const CheckCircle = ({ checked }) => (
+  <span
+    className={`shrink-0 mt-[1px] w-[22px] h-[22px] rounded-full flex items-center justify-center ${
+      checked
+        ? 'bg-status-success-600'
+        : 'border-[1.5px] border-layout-gray-200 dark:border-layout-gray-500'
+    }`}
+  >
+    {checked && <Check size={13} weight="bold" className="text-layout-white" />}
+  </span>
+);
+
+/** 인라인 아이콘 폭(22) + 제목과의 간격(6) — 단어 목록을 이 만큼 들여써서 체크박스가
+ *  아니라 "타이틀 텍스트 시작선"에 맞춘다(아이콘이 없는 행도 같은 값으로 통일). */
+const TITLE_TEXT_INDENT = 'pl-[28px]';
+
+/**
+ * 행 한 줄 — [체크박스][제목(+작은 인라인 아이콘)+단어 목록][우측] · 행 탭(버튼 제외)은
+ * onRowClick. 단어 목록(sub·expand)은 체크박스 칸 밖, 제목과 같은 칼럼 안에 두되
+ * TITLE_TEXT_INDENT 만큼 더 들여써서 아이콘이 아니라 타이틀 텍스트 시작선에 맞춘다.
+ */
+const Row = ({ icon, title, titleClassName, sub, expand, right, last, faded, checked, onRowClick }) => (
   <div
     role={onRowClick ? 'button' : undefined}
     tabIndex={onRowClick ? 0 : undefined}
     onClick={onRowClick}
-    className={`flex flex-col gap-[10px] py-[12px] text-left ${last ? '' : 'border-b border-[#F0F0F0] dark:border-[rgba(255,255,255,.08)]'}`}
+    className={`flex gap-[10px] py-[12px] text-left ${last ? '' : 'border-b border-[#F0F0F0] dark:border-[rgba(255,255,255,.08)]'}`}
   >
-    <div className="flex items-center gap-[12px]">
-      <div className={`w-[72px] h-[52px] flex items-center justify-center shrink-0 ${faded ? 'opacity-45' : ''}`}>
+    <CheckCircle checked={checked} />
+    <div className="flex-1 min-w-0 flex flex-col gap-[4px]">
+      <div className={`flex items-center gap-[6px] ${faded ? 'opacity-45' : ''}`}>
         {icon}
-      </div>
-      <div className={`flex-1 min-w-0 flex flex-col gap-[4px] ${faded ? 'opacity-45' : ''}`}>
         <b className={`text-[15px] font-[800] ${titleClassName || 'text-layout-black dark:text-layout-white'}`}>
           {title}
         </b>
-        {sub}
       </div>
-      {right}
+      {sub && <div className={`${TITLE_TEXT_INDENT} ${faded ? 'opacity-45' : ''}`}>{sub}</div>}
+      {expand && <div className={TITLE_TEXT_INDENT}>{expand}</div>}
     </div>
-    {expand}
+    {right}
   </div>
 );
 
@@ -333,10 +317,11 @@ const TodayTasksCard = () => {
     const { compact, expandedBlock } = buildWordListParts(rotten.words, expanded.rotten, () => toggle('rotten'));
     rowDefs.push({
       key: 'rotten',
-      icon: <img src={CROP_ASSETS.nutrient} alt="" draggable={false} className="w-[38px] h-[38px] object-contain select-none" />,
+      icon: <RowIcon><img src={CROP_ASSETS.nutrient} alt="" draggable={false} className="w-[20px] h-[20px] object-contain select-none" /></RowIcon>,
       title: '썩은 단어 살리기',
       sub: compact,
       expand: expandedBlock,
+      checked: false,
       right: <Pill tone="primary" onClick={handleRecover} disabled={recovering}>살리기</Pill>,
       onRowClick: openRottenSheet,
     });
@@ -347,12 +332,13 @@ const TodayTasksCard = () => {
     const { compact, expandedBlock } = buildWordListParts(wilted.words, expanded.wilted, () => toggle('wilted'));
     rowDefs.push({
       key: 'wilted',
-      icon: <MiniField words={wilted.words} health="WILTED" />,
+      icon: <RowCrop words={wilted.words} health="WILTED" />,
       title: '시듦 물주기',
       titleClassName: done ? undefined : 'text-[#C24E0C]',
       sub: compact,
       expand: expandedBlock,
       faded: done,
+      checked: done,
       right: <Progress done={wilted.done} total={wilted.total} />,
       onRowClick: done ? undefined : studyWilted,
     });
@@ -363,11 +349,12 @@ const TodayTasksCard = () => {
     const { compact, expandedBlock } = buildWordListParts(care.words, expanded.care, () => toggle('care'));
     rowDefs.push({
       key: 'care',
-      icon: <MiniField words={care.words} health="THIRSTY" />,
+      icon: <RowCrop words={care.words} health="THIRSTY" />,
       title: '오늘 돌봄 물주기',
       sub: compact,
       expand: expandedBlock,
       faded: done,
+      checked: done,
       right: <Progress done={care.done} total={care.total} />,
       onRowClick: done ? undefined : studyCare,
     });
@@ -381,9 +368,10 @@ const TodayTasksCard = () => {
     const done = newSeed.done >= newSeed.target;
     return {
       key: 'new_seed',
-      icon: <img src={CROP_ASSETS.seedPacket} alt="" draggable={false} className="w-[74px] h-[74px] object-contain select-none" />,
+      icon: <RowIcon><img src={CROP_ASSETS.seedPacket} alt="" draggable={false} className="w-[22px] h-[22px] object-contain select-none" /></RowIcon>,
       title: '새 씨앗 심기',
       faded: done,
+      checked: done,
       right: <Progress done={newSeed.done} total={newSeed.target} />,
       onRowClick: done ? undefined : studyUnlearned,
     };
@@ -391,11 +379,13 @@ const TodayTasksCard = () => {
 
   const buyRow = showBuy ? {
     key: 'buy',
-    icon: <img src={navStoreIcon} alt="" draggable={false} className="w-[40px] h-[40px] object-contain select-none" />,
+    icon: <RowIcon><img src={navStoreIcon} alt="" draggable={false} className="w-[20px] h-[20px] object-contain select-none" /></RowIcon>,
     title: '새 씨앗 구매',
     faded: buyDone,
-    // 완료 배지는 다른 행과 같은 규격(Progress 가 done>=total 일 때 그리는 배지)을 그대로 쓴다.
-    right: buyDone ? <Progress done={1} total={1} /> : <Pill tone="secondary" onClick={goStore}>서점</Pill>,
+    checked: buyDone,
+    // 완료 배지 대신 왼쪽 체크로 완료를 표현한다 — 완료 시 이 행은 셀 수 있는 개수가 없어
+    // 오른쪽을 비운다(다른 행처럼 x/y 를 보여줄 자연스러운 분모가 없다).
+    right: buyDone ? null : <Pill tone="secondary" onClick={goStore}>서점</Pill>,
     onRowClick: buyDone ? undefined : goStore,
   } : null;
 
