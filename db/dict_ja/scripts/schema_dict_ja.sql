@@ -4,7 +4,7 @@
 -- 생성: scripts/50_load_mysql.py 가 이 파일을 읽어 실행한다(스키마명 치환 가능).
 --   직접 실행도 가능: mysql -h 127.0.0.1 -P 3310 -u root -p < scripts/schema_dict_ja.sql
 --
--- [1] 기본 테이블 16개 = heyvoca_dict(영한) 의 SHOW CREATE TABLE 결과를 그대로 복제
+-- [1] 기본 테이블 = heyvoca_dict(영한) 의 SHOW CREATE TABLE 결과를 그대로 복제
 --     (2026-09-24, alembic head 6efb3b1f9711 기준. AUTO_INCREMENT 값만 제거,
 --      CREATE TABLE → CREATE TABLE IF NOT EXISTS). 컬럼·인덱스·FK·CHECK·collation 동일.
 --     영한 스키마가 바뀌면(migrations_dict 새 리비전) 이 절도 다시 뽑아야 한다.
@@ -13,6 +13,14 @@
 --     "테이블 이미 있음" 으로 깨지지 않고 이후 리비전만 적용된다.
 --     (주의: 확장 테이블 *_ja 는 alembic 모델에 없으므로 이 스키마에 대고
 --      `flask db migrate` autogenerate 를 돌리면 DROP 이 생성된다 — 돌리지 말 것.)
+--
+--     2026-09-29 추가: admin_voca_book_map_meaning / admin_voca_book_map_example
+--     (revision fb145745a70c, 서점 단어장 뜻·예문 사전 ID 참조 — .claude/rules/db-migration.md,
+--      app/services/admin_book_refs.py)만 별도로 얹었다. alembic_version 은 의도적으로
+--      6efb3b1f9711 그대로 둔다 — 그 사이 리비전(e7acdea50898, voca_example_puzzle: 영어
+--      전용 문장조립 기능, ja 미사용)은 아직 반영하지 않았으므로 head로 올려 stamp하면
+--      실제 상태와 어긋난다. 나중에 `flask db upgrade --directory migrations_dict`를 이
+--      스키마에 돌릴 계획이면 voca_example_puzzle부터 순서대로 채울 것.
 --
 -- [2] 영한 컬럼의 일한 의미 매핑 (컬럼명은 코드 호환을 위해 그대로 둔다)
 --     voca.word            = 표기 (JMdict 대표 표기, uk 항목이면 가나)
@@ -141,6 +149,26 @@ CREATE TABLE IF NOT EXISTS `admin_voca_book_map` (
   KEY `voca_id` (`voca_id`),
   CONSTRAINT `fk_admin_voca_book_map_book` FOREIGN KEY (`book_id`) REFERENCES `admin_voca_book` (`id`) ON DELETE CASCADE,
   CONSTRAINT `fk_admin_voca_book_map_voca` FOREIGN KEY (`voca_id`) REFERENCES `voca` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS `admin_voca_book_map_meaning` (
+  `map_id` int NOT NULL,
+  `meaning_id` int NOT NULL,
+  `ord` int NOT NULL,
+  PRIMARY KEY (`map_id`,`meaning_id`),
+  KEY `meaning_id` (`meaning_id`),
+  CONSTRAINT `admin_voca_book_map_meaning_ibfk_1` FOREIGN KEY (`map_id`) REFERENCES `admin_voca_book_map` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `admin_voca_book_map_meaning_ibfk_2` FOREIGN KEY (`meaning_id`) REFERENCES `voca_meaning` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS `admin_voca_book_map_example` (
+  `map_id` int NOT NULL,
+  `example_id` int NOT NULL,
+  `ord` int NOT NULL,
+  PRIMARY KEY (`map_id`,`example_id`),
+  KEY `example_id` (`example_id`),
+  CONSTRAINT `admin_voca_book_map_example_ibfk_1` FOREIGN KEY (`example_id`) REFERENCES `voca_example` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `admin_voca_book_map_example_ibfk_2` FOREIGN KEY (`map_id`) REFERENCES `admin_voca_book_map` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS `bookstore` (

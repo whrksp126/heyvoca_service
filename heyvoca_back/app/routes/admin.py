@@ -572,18 +572,14 @@ def get_admin_voca_book_words(admin_voca_book_id):
     ).limit(per_page).all()
 
     extras = load_ja_word_extras([v.id for _, v in word_maps])
-    # 2026-09 구조 개편: en은 admin_voca_book_map_meaning/_example(사전 참조)에서 배치 조회.
-    # ja(heyvoca_dict_ja)는 별도 schema라 이 참조 테이블이 없어 기존 raw JSON 경로를 유지한다.
+    # 2026-09 구조 개편: en/ja 모두 admin_voca_book_map_meaning/_example(사전 참조)에서
+    # 배치 조회한다(load_admin_book_texts, en/ja 공용).
     lang = get_dict_lang()
-    texts_by_map = None if lang == 'ja' else load_admin_book_texts([bm.id for bm, _ in word_maps])
+    texts_by_map = load_admin_book_texts([bm.id for bm, _ in word_maps], lang)
     words = []
     for bm, v in word_maps:
-        if lang == 'ja':
-            meanings = json.loads(bm.voca_meanings) if bm.voca_meanings else []
-            examples = json.loads(bm.voca_examples) if bm.voca_examples else []
-        else:
-            texts = texts_by_map.get(bm.id, {'meanings': [], 'examples': []})
-            meanings, examples = texts['meanings'], texts['examples']
+        texts = texts_by_map.get(bm.id, {'meanings': [], 'examples': []})
+        meanings, examples = texts['meanings'], texts['examples']
         words.append(apply_word_fields({
             'voca_id': v.id, 'map_id': bm.id, 'word': v.word, 'pronunciation': v.pronunciation,
             'meanings': meanings,

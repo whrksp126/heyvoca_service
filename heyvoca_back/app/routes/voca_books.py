@@ -595,20 +595,11 @@ def create_voca_book():
                     AdminVocaBookMap.book_id == bookstore.admin_voca_book_id
                 ).all()
 
-                # 2026-09 구조 개편: en은 admin_voca_book_map.voca_meanings/voca_examples를
+                # 2026-09 구조 개편: en/ja 모두 admin_voca_book_map.voca_meanings/voca_examples를
                 # 더 이상 읽지 않고 사전 참조 테이블(admin_voca_book_map_meaning/_example)에서
-                # 배치 조회한다. ja(heyvoca_dict_ja)는 별도 schema라 이 참조 테이블이 없어
-                # 기존 raw JSON 컬럼 경로를 그대로 쓴다.
-                if lang == 'ja':
-                    admin_texts_by_map = {
-                        m.id: {
-                            'meanings': json.loads(m.voca_meanings) if m.voca_meanings else [],
-                            'examples': json.loads(m.voca_examples) if m.voca_examples else [],
-                        }
-                        for m in admin_maps
-                    }
-                else:
-                    admin_texts_by_map = load_admin_book_texts([m.id for m in admin_maps])
+                # 배치 조회한다(load_admin_book_texts, en/ja 공용). ja의 reading_tokens도 그 안에서
+                # 붙는다.
+                admin_texts_by_map = load_admin_book_texts([m.id for m in admin_maps], lang)
 
                 # 1. 기존 UserVoca 조회 — 중복 키 (user_id, dict_lang, word)
                 admin_words = [m.voca.word for m in admin_maps if m.voca]
@@ -637,8 +628,8 @@ def create_voca_book():
                             uv.voca_id = admin_map.voca_id
                         uv.updated_at = datetime.datetime.utcnow()
                     else:
-                        # examples 는 admin_texts_by_map에서 뽑은 사전 텍스트 그대로 —
-                        # ja는 admin_voca_book_map.voca_examples 원본(reading_tokens 포함)을 그대로 쓴다.
+                        # examples 는 admin_texts_by_map(load_admin_book_texts)에서 뽑은 사전 텍스트
+                        # 그대로 — ja도 reading_tokens 가 이미 포함돼 있다.
                         new_uv = UserVoca(
                             user_id=user_id,
                             voca_id=admin_map.voca_id,

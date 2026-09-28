@@ -251,10 +251,9 @@ def list_voca_books():
 def get_voca_book(book_id):
     """단어장 상세 + 단어 목록 + bookstore 상태.
 
-    2026-09 구조 개편: en은 admin_voca_book_map_meaning/_example(사전 참조)에서 뜻/예문을
-    배치 조회한다. ja(heyvoca_dict_ja)는 별도 schema라 이 참조 테이블이 없어 기존
-    voca_meanings/voca_examples raw JSON 파싱 경로를 그대로 쓴다(parse_error/raw_* 포함,
-    프론트 폴백용).
+    2026-09 구조 개편: en/ja 모두 admin_voca_book_map_meaning/_example(사전 참조)에서
+    뜻/예문을 배치 조회한다(load_admin_book_texts, en/ja 공용 — .claude/rules/db-migration.md).
+    참조가 없는 행(이관 전)은 서비스 내부에서 raw JSON으로 자동 폴백한다.
     """
     book = AdminVocaBook.query.filter_by(id=book_id).first()
     if book is None:
@@ -272,23 +271,14 @@ def get_voca_book(book_id):
 
     lang = get_dict_lang()
     extras = load_ja_word_extras([m.voca_id for m in maps], lang)
-    texts_by_map = None if lang == 'ja' else load_admin_book_texts([m.id for m in maps])
+    texts_by_map = load_admin_book_texts([m.id for m in maps], lang)
 
     words = []
     for m in maps:
         voca = m.voca
-        if lang == 'ja':
-            meanings, m_err = _parse_json_field(m.voca_meanings)
-            examples, e_err = _parse_json_field(m.voca_examples)
-            parse_error = bool(m_err or e_err)
-            raw_meanings = m.voca_meanings if m_err else None
-            raw_examples = m.voca_examples if e_err else None
-            meanings = meanings if not m_err else []
-            examples = examples if not e_err else []
-        else:
-            texts = texts_by_map.get(m.id, {'meanings': [], 'examples': []})
-            meanings, examples = texts['meanings'], texts['examples']
-            parse_error, raw_meanings, raw_examples = False, None, None
+        texts = texts_by_map.get(m.id, {'meanings': [], 'examples': []})
+        meanings, examples = texts['meanings'], texts['examples']
+        parse_error, raw_meanings, raw_examples = False, None, None
 
         words.append({
             'map_id': m.id,
