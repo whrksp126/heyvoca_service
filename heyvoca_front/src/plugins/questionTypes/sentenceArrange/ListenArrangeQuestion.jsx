@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 import { SpeakerHigh } from '@phosphor-icons/react';
+import TtsRipple from '../../../components/common/TtsRipple';
 import { haptic } from '../../../lib/feel';
 import { playSuccessSound, playErrorSound } from '../../../utils/audio';
 import { getTextSound, stripHtmlTags } from '../../../utils/common';
@@ -27,10 +28,12 @@ const ListenArrangeQuestion = ({ question, onComplete, onCardMatched, farmByWord
   const [isAnswered, setIsAnswered] = useState(false);
   const [isCorrect, setIsCorrect] = useState(null);
   const [isSpeaking, setIsSpeaking] = useState(false);
+  const [speakDuration, setSpeakDuration] = useState(null);
   const [speakingTarget, setSpeakingTarget] = useState(null); // 'normal' | 'slow' | null
 
   const startTimeRef = useRef(Date.now());
   const resumeReplayKey = useResumeReplayKey();
+  const reducedMotion = useReducedMotion();
   const advanceGate = useStudyAdvanceGate();
   const wordTtsActiveRef = useRef(false);
   const speakGenRef = useRef(0);
@@ -57,11 +60,12 @@ const ListenArrangeQuestion = ({ question, onComplete, onCardMatched, farmByWord
       advanceGate.ttsEnd();
     }
     setIsSpeaking(true);
+    setSpeakDuration(null);
     setSpeakingTarget(target);
     wordTtsActiveRef.current = true;
     advanceGate.ttsBegin();
     try {
-      await getTextSound(text, lang, null, rate);
+      await getTextSound(text, lang, (d) => { if (gen === speakGenRef.current) setSpeakDuration(d); }, rate);
     } finally {
       if (gen === speakGenRef.current) {
         setIsSpeaking(false);
@@ -158,13 +162,22 @@ const ListenArrangeQuestion = ({ question, onComplete, onCardMatched, farmByWord
             bg-primary-main-50 dark:bg-primary-main-dark
           "
         >
-          <motion.span
-            animate={speakingNormal ? { scale: [1, 1.12, 1] } : { scale: 1 }}
-            transition={speakingNormal ? { duration: 0.6, repeat: Infinity, ease: 'easeInOut' } : {}}
-            className={speakingNormal ? 'text-primary-main-600' : 'text-layout-gray-300'}
-          >
-            <SpeakerHigh size={40} weight="fill" />
-          </motion.span>
+          <span className="relative inline-flex">
+            {speakingNormal && (
+              <TtsRipple
+                size={90}
+                duration={speakDuration}
+                className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-[0] pointer-events-none"
+              />
+            )}
+            <motion.span
+              className={`relative z-[1] ${speakingNormal ? 'text-primary-main-600' : 'text-layout-gray-300'}`}
+              animate={speakingNormal && !reducedMotion ? { scale: [1, 1.12, 1] } : { scale: 1 }}
+              transition={speakingNormal && !reducedMotion ? { duration: 0.6, repeat: Infinity, ease: 'easeInOut' } : {}}
+            >
+              <SpeakerHigh size={40} weight="fill" />
+            </motion.span>
+          </span>
         </motion.button>
 
         <motion.button
@@ -179,14 +192,23 @@ const ListenArrangeQuestion = ({ question, onComplete, onCardMatched, farmByWord
             bg-layout-gray-50 dark:bg-layout-gray-dark
           "
         >
-          <motion.span
-            animate={speakingSlow ? { scale: [1, 1.12, 1] } : { scale: 1 }}
-            transition={speakingSlow ? { duration: 0.6, repeat: Infinity, ease: 'easeInOut' } : {}}
-            className={`relative inline-flex ${speakingSlow ? 'text-layout-black dark:text-layout-white' : 'text-layout-gray-300'}`}
-          >
-            <SpeakerHigh size={40} weight="fill" />
-            <span className="absolute -bottom-[2px] -right-[10px] text-[11px] font-[800] leading-none">0.7</span>
-          </motion.span>
+          <span className="relative inline-flex">
+            {speakingSlow && (
+              <TtsRipple
+                size={90}
+                duration={speakDuration}
+                className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-[0] pointer-events-none"
+              />
+            )}
+            <motion.span
+              className={`relative z-[1] inline-flex ${speakingSlow ? 'text-layout-black dark:text-layout-white' : 'text-layout-gray-300'}`}
+              animate={speakingSlow && !reducedMotion ? { scale: [1, 1.12, 1] } : { scale: 1 }}
+              transition={speakingSlow && !reducedMotion ? { duration: 0.6, repeat: Infinity, ease: 'easeInOut' } : {}}
+            >
+              <SpeakerHigh size={40} weight="fill" />
+              <span className="absolute -bottom-[2px] -right-[10px] text-[11px] font-[800] leading-none">0.7</span>
+            </motion.span>
+          </span>
         </motion.button>
       </div>
 
@@ -195,6 +217,8 @@ const ListenArrangeQuestion = ({ question, onComplete, onCardMatched, farmByWord
         bank={bank}
         prefix={prefix}
         suffix={suffix}
+        accepted={accepted}
+        answerLang={answerLang}
         postAnswerNode={postAnswerNode}
         isAnswered={isAnswered}
         isCorrect={isCorrect}
