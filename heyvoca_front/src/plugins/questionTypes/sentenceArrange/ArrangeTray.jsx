@@ -1,7 +1,7 @@
 import { useRef, useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
-import { Circle, X } from '@phosphor-icons/react';
+import { Circle } from '@phosphor-icons/react';
 import { FarmResultBar } from '../../../components/farm/FarmStatusBar';
 import StudyTimingTag from '../../../components/farm/StudyTimingTag';
 import LiftAboveBar from '../../../components/common/LiftAboveBar';
@@ -493,25 +493,6 @@ const ArrangeTray = ({
                 style={{ willChange: 'transform, opacity' }}
               >
                 <Circle size={150} weight="bold" className="text-status-success-500" />
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </div>
-
-        {/* X — 오답. 예전엔 카드 정중앙을 큰 아이콘으로 덮어 칩 색 피드백을 가렸다 —
-            이제 우측 상단(StudyTimingTag가 오답일 때 비워 두는 자리)에 작게만 표시한다. */}
-        <div className="absolute top-[11px] right-[13px] z-[3] pointer-events-none">
-          <AnimatePresence>
-            {isCorrect === false && (
-              <motion.div
-                key={`wrong-${resumeReplayKey}`}
-                initial={{ scale: 0, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                exit={{ scale: 0, opacity: 0 }}
-                transition={{ type: 'spring', stiffness: 600, damping: 25, duration: 0.3 }}
-                style={{ willChange: 'transform, opacity' }}
-              >
-                <X size={20} weight="bold" className="text-status-error-500" />
               </motion.div>
             )}
           </AnimatePresence>
