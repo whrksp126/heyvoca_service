@@ -150,7 +150,7 @@ const FarmStatusBar = ({
   // 오답이라는 이유만으로 막대 색이 먼저 주황으로 바뀌면 "벌써 줄었다"로 잘못 읽힌다.
   const tone = grew ? 'up' : (isNg && !pending ? 'ng' : 'primary');
 
-  const { xpFrom: xpFromPayload, xpTo } = deriveFarmXp({
+  const { xpFrom: xpFromPayload, xpTo, xpDelta: xpDeltaAuthoritative } = deriveFarmXp({
     stageFrom: prevCropForImage,
     stageTo: cropForImage,
     pctFrom,
@@ -162,25 +162,33 @@ const FarmStatusBar = ({
   });
 
   /*
-    【배지 = 이번 답안으로 얻은 총 XP, 채점 전 표시값 기준 — 2026-09-26】
-    배지는 서버 xp_delta 를 그대로 믿지 않고 `xp_to − (채점 전 화면에 떠 있던 XP)` 로 계산한다.
-    채점 직후엔 pendingFarmPayload(정지 상태)가 먼저 떠 있고, 응답이 오면 **같은 엘리먼트**에서
-    숫자가 그 정지값부터 굴러간다(useCountUp 은 prop 이 바뀌면 현재 표시값에서 출발). 그러니
-    사용자가 본 증가폭은 "정지값 → xp_to" 이고, 배지도 같은 두 숫자에서 나와야 어긋나지 않는다.
-    처음부터 확정값으로 마운트된 경우(게스트·재출제)는 payload 의 xp_from 이 곧 채점 전 값이다.
-    진화 회차도 마찬가지 — 새 단계 floor 로 from 을 자르지 않는다(새싹 190 → 이파리 244 = +54).
-    서버 xp_from 도 같은 정의(이전 단계 기준 채점 전 XP)라 보통은 두 값이 같다(tests/test_crop_xp.py).
+    【배지 = 이번 답안으로 얻은 총 XP, 채점 전 표시값 기준 — 2026-09-26, 2026-09-29 정정】
+    막대 애니메이션은 정지값(`xpBefore`, pendingFarmPayload 가 세운 화면상 시작점)에서
+    이어 굴러간다 — 여기까지는 그대로 둔다(useCountUp 이 prop 변화에 현재 표시값에서 출발).
+    다만 **배지 숫자는** 더 이상 그 정지값으로 직접 빼지 않는다. `xpBefore` 는 pending 단계에서
+    프론트가 `base`(이 단어의 세션 내 이전 payload) 없이 raw stability 만으로 재추정한 값일 수
+    있어(farmOptimistic.js stageBefore), 실제로는 이미 더 높은 단계(예: LEAF)인데 SPROUT 로
+    잘못 추정해 floor 클램프가 덜 걸린 값(195)이 얼어붙는 사고가 있었다 — 서버가 뒤늦게 보내는
+    진짜 xp_to(210, 클램프됨)와 짝이 안 맞아 오답인데도 배지가 `+15 XP`로 떴다(2026-09 prod).
+    배지는 `deriveFarmXp` 가 이미 만들어 둔 정본 델타(`xpDeltaServer` 또는 서버
+    `xp_from`/`xp_to` 쌍 → 없으면 pct 역산 쌍)를 그대로 쓴다 — before·after 를 항상 같은
+    출처(서버 우선, 없으면 xp_of 로 동시에 계산한 쌍)에서 가져오므로 한쪽만 raw 로 남는 일이
+    없다. 진화 회차(새싹 190 → 이파리 244 = +54)도 이 정본 쌍이 그대로 반영한다 — 서버가
+    from 을 새 단계 floor 로 자르지 않고 보내는 한 동일하다(tests/test_crop_xp.py).
   */
   const [xpBefore] = useState(() => (pending ? xpTo : xpFromPayload));
   const xpFrom = xpBefore;
-  const xpDelta = pending ? 0 : xpTo - xpBefore;
+  const xpDelta = pending ? 0 : xpDeltaAuthoritative;
 
   // 막대 — XP 축(위 주석). 진화 리셋은 XP 문턱을 실제로 넘을 때만.
   const barGrew = grew && !sameXpBand(prevCropForImage, cropForImage);
   const barFrom = xpBarPct(grew ? prevCropForImage : cropForImage, xpFrom);
   const barTo = xpBarPct(cropForImage, xpTo);
 
-  const xpBadgeSign = xpDelta > 0 ? '+' : xpDelta < 0 ? '−' : '+';
+  // 델타가 정확히 0(오답이 단계 floor 에 막혀 실제로는 안 변한 경우 등)이면 '+'/'−' 어느
+  // 쪽도 아니다 — 예전엔 이 분기가 기본값 '+'로 떨어져 오답인데 "+0 XP"가 뜨는 사고가 있었다
+  // (2026-09 prod). 배지 자체를 그 경우 렌더하지 않는다(아래 badgeSlot).
+  const xpBadgeSign = xpDelta > 0 ? '+' : '−';
   const xpBadgeAbs = Math.abs(xpDelta);
   // 배지는 "얼마나 늘었는지"만 pink, 나머지(줄었거나 그대로)는 회색 — 계약서 §3.
   const xpBadgePositive = xpDelta > 0;
@@ -361,8 +369,10 @@ const FarmStatusBar = ({
     />
   );
 
-  // 배지 — `+N XP` 핑크 / `−N XP`·`+0 XP` 회색(crop_xp_contract.md §3). pending 만 비운다.
-  // 칸 폭은 고정해 두어 응답이 와서 배지가 생겨도 막대 폭이 흔들리지 않는다.
+  // 배지 — `+N XP` 핑크 / `−N XP` 회색(crop_xp_contract.md §3). pending 이거나 델타가
+  // 정확히 0(오답이 단계 floor 에 막혀 실제로는 안 변한 경우)이면 비운다 — "+0 XP"로 오답에서
+  // 증가한 것처럼 보이면 안 된다(2026-09 prod 버그). 칸 폭은 고정해 두어 배지가 생겨도/
+  // 사라져도 막대 폭이 흔들리지 않는다.
   const badgeSlot = (
     <span
       className={`
@@ -370,7 +380,7 @@ const FarmStatusBar = ({
         ${compact ? 'w-[44px]' : 'w-[64px]'}
       `}
     >
-      {!pending && (
+      {!pending && xpDelta !== 0 && (
         <motion.span
           className={`
             inline-flex flex-shrink-0 items-center justify-center whitespace-nowrap tabular-nums
