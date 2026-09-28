@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
-import { motion, useReducedMotion } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { SpeakerHigh } from '@phosphor-icons/react';
 import TtsRipple from '../../../components/common/TtsRipple';
 import { haptic } from '../../../lib/feel';
@@ -33,10 +33,10 @@ const ListenArrangeQuestion = ({ question, onComplete, onCardMatched, farmByWord
 
   const startTimeRef = useRef(Date.now());
   const resumeReplayKey = useResumeReplayKey();
-  const reducedMotion = useReducedMotion();
   const advanceGate = useStudyAdvanceGate();
   const wordTtsActiveRef = useRef(false);
   const speakGenRef = useRef(0);
+  const wordGapTimeoutRef = useRef(null);
   const onCompleteRef = useRef(onComplete);
   useEffect(() => { onCompleteRef.current = onComplete; });
 
@@ -55,6 +55,10 @@ const ListenArrangeQuestion = ({ question, onComplete, onCardMatched, farmByWord
   const speak = async (text, lang, target, rate = 1) => {
     if (!text) return;
     const gen = ++speakGenRef.current;
+    if (wordGapTimeoutRef.current) {
+      clearTimeout(wordGapTimeoutRef.current);
+      wordGapTimeoutRef.current = null;
+    }
     if (wordTtsActiveRef.current) {
       wordTtsActiveRef.current = false;
       advanceGate.ttsEnd();
@@ -75,6 +79,51 @@ const ListenArrangeQuestion = ({ question, onComplete, onCardMatched, farmByWord
     }
   };
 
+  // 0.7배속 = 문장을 단어 단위로 끊어 한 단어씩 재생 → WORD_GAP_MS 간격 → 다음 단어.
+  // speak()와 같은 gen 카운터를 공유해서(speakGenRef) 다른 재생이 끼어들면 즉시 멈춘다.
+  const WORD_GAP_MS = 350;
+  const speakWordsSlowly = async (text, lang, target, rate) => {
+    const words = text.split(/\s+/).filter(Boolean);
+    if (words.length === 0) return;
+    const gen = ++speakGenRef.current;
+    if (wordGapTimeoutRef.current) {
+      clearTimeout(wordGapTimeoutRef.current);
+      wordGapTimeoutRef.current = null;
+    }
+    if (wordTtsActiveRef.current) {
+      wordTtsActiveRef.current = false;
+      advanceGate.ttsEnd();
+    }
+    setIsSpeaking(true);
+    setSpeakDuration(null);
+    setSpeakingTarget(target);
+    wordTtsActiveRef.current = true;
+    advanceGate.ttsBegin();
+    try {
+      for (let i = 0; i < words.length; i += 1) {
+        if (gen !== speakGenRef.current) return;
+        // eslint-disable-next-line no-await-in-loop
+        await getTextSound(words[i], lang, (d) => { if (gen === speakGenRef.current) setSpeakDuration(d); }, rate);
+        if (gen !== speakGenRef.current) return;
+        if (i < words.length - 1) {
+          // eslint-disable-next-line no-await-in-loop
+          await new Promise((resolve) => {
+            wordGapTimeoutRef.current = setTimeout(() => {
+              wordGapTimeoutRef.current = null;
+              resolve();
+            }, WORD_GAP_MS);
+          });
+        }
+      }
+    } finally {
+      if (gen === speakGenRef.current) {
+        setIsSpeaking(false);
+        wordTtsActiveRef.current = false;
+        advanceGate.ttsEnd();
+      }
+    }
+  };
+
   // 문제 등장 시 보통 속도로 1회 자동 재생.
   useEffect(() => {
     if (plainAnswer) speak(plainAnswer, answerLang, 'normal', 1);
@@ -83,6 +132,10 @@ const ListenArrangeQuestion = ({ question, onComplete, onCardMatched, farmByWord
 
   useEffect(() => () => {
     speakGenRef.current += 1;
+    if (wordGapTimeoutRef.current) {
+      clearTimeout(wordGapTimeoutRef.current);
+      wordGapTimeoutRef.current = null;
+    }
   }, []);
 
   const handlePlayNormal = () => {
@@ -91,7 +144,7 @@ const ListenArrangeQuestion = ({ question, onComplete, onCardMatched, farmByWord
   };
   const handlePlaySlow = () => {
     haptic('light');
-    speak(plainAnswer, answerLang, 'slow', 0.7);
+    speakWordsSlowly(plainAnswer, answerLang, 'slow', 0.7);
   };
 
   const handleSubmit = (userTokens) => {
@@ -170,13 +223,9 @@ const ListenArrangeQuestion = ({ question, onComplete, onCardMatched, farmByWord
                 className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-[0] pointer-events-none"
               />
             )}
-            <motion.span
-              className={`relative z-[1] ${speakingNormal ? 'text-primary-main-600' : 'text-layout-gray-300'}`}
-              animate={speakingNormal && !reducedMotion ? { scale: [1, 1.12, 1] } : { scale: 1 }}
-              transition={speakingNormal && !reducedMotion ? { duration: 0.6, repeat: Infinity, ease: 'easeInOut' } : {}}
-            >
+            <span className={`relative z-[1] ${speakingNormal ? 'text-primary-main-600' : 'text-layout-gray-300'}`}>
               <SpeakerHigh size={40} weight="fill" />
-            </motion.span>
+            </span>
           </span>
         </motion.button>
 
@@ -200,14 +249,10 @@ const ListenArrangeQuestion = ({ question, onComplete, onCardMatched, farmByWord
                 className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-[0] pointer-events-none"
               />
             )}
-            <motion.span
-              className={`relative z-[1] inline-flex ${speakingSlow ? 'text-layout-black dark:text-layout-white' : 'text-layout-gray-300'}`}
-              animate={speakingSlow && !reducedMotion ? { scale: [1, 1.12, 1] } : { scale: 1 }}
-              transition={speakingSlow && !reducedMotion ? { duration: 0.6, repeat: Infinity, ease: 'easeInOut' } : {}}
-            >
+            <span className={`relative z-[1] inline-flex ${speakingSlow ? 'text-layout-black dark:text-layout-white' : 'text-layout-gray-300'}`}>
               <SpeakerHigh size={40} weight="fill" />
               <span className="absolute -bottom-[2px] -right-[10px] text-[11px] font-[800] leading-none">0.7</span>
-            </motion.span>
+            </span>
           </span>
         </motion.button>
       </div>

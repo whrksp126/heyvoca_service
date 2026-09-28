@@ -328,7 +328,7 @@ const FillInTheBlankTypingQuestion = ({ question, onComplete, onCardMatched, far
         />
       </motion.div>
 
-      {/* 확인 — 브랜드색은 시작 CTA·스위치 전용 규칙이라 중립(검정/흰색 채움) 토큰을 쓴다. */}
+      {/* 확인 — 서비스 공용 primary CTA 규칙(분홍 bg-primary-main-600 활성 / 회색 비활성). */}
       <motion.button
         type="button"
         disabled={isAnswered || !value.trim()}
@@ -341,7 +341,7 @@ const FillInTheBlankTypingQuestion = ({ question, onComplete, onCardMatched, far
           text-[16px] font-[700]
           ${isAnswered || !value.trim()
             ? 'bg-layout-gray-200 dark:bg-[#2A2A2A] text-layout-gray-400 dark:text-layout-gray-300'
-            : 'bg-layout-black text-layout-white dark:bg-layout-white dark:text-layout-black'}
+            : 'bg-primary-main-600 text-layout-white dark:text-layout-black'}
         `}
       >
         확인

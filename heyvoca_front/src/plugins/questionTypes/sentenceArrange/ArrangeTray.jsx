@@ -24,8 +24,8 @@ import { diffAgainstAccepted, tokenizeWords } from './arrangeUtils';
        WordInfoBubble)으로 탭하면 사전 말풍선이 뜬다.
     2) 조각 은행 — 흰 바탕 칩. 탭하면 트레이의 다음 빈 슬롯으로 이동(자리는 invisible로
        비워 두어 레이아웃이 흔들리지 않는다). 트레이의 조각을 탭하면 다시 은행으로 돌아간다.
-    3) 확인 버튼(50px) — 조각 1개 이상 놓였을 때만 활성. 브랜드색은 시작 CTA·스위치 전용
-       규칙이라 여기서는 중립색(검정/흰색 채움, dictionary/Main.jsx의 칩 토큰과 동일)을 쓴다.
+    3) 확인 버튼(50px) — 조각 1개 이상 놓였을 때만 활성. 서비스 공용 primary CTA 규칙(분홍
+       bg-primary-main-600 활성 / 회색 비활성)을 그대로 쓴다(2026-09-29 QA 반영).
 
   채점 후에는 사용자가 놓은 조각마다 정오 판정을 칩 색으로 보여준다(맞음=초록, 틀림=빨강+
   취소선, 못 채운 자리=빨강 점선 슬롯) — 듀오링고식 오답 상세 피드백(2026-09-28).
@@ -284,7 +284,7 @@ const ArrangeTray = ({
                     key={`slot-${pos}`}
                     aria-hidden="true"
                     className={`
-                      inline-block align-baseline mx-[4px] my-[2px]
+                      inline-block align-text-bottom mx-[4px] my-[2px]
                       w-[30px] h-0
                       border-b-[3px]
                       ${missing ? 'border-dashed' : ''}
@@ -407,7 +407,7 @@ const ArrangeTray = ({
             text-[16px] font-[700]
             ${disabled || trayOrder.length === 0
               ? 'bg-layout-gray-200 dark:bg-[#2A2A2A] text-layout-gray-400 dark:text-layout-gray-300'
-              : 'bg-layout-black text-layout-white dark:bg-layout-white dark:text-layout-black'}
+              : 'bg-primary-main-600 text-layout-white dark:text-layout-black'}
           `}
         >
           확인

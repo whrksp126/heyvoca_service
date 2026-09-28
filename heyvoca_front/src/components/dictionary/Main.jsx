@@ -910,7 +910,10 @@ const Main = () => {
           )}
 
           {selectedWord.examples?.length > 0 && (
-            <div className="mt-[6px] flex flex-col gap-[7px]">
+            <div className="
+              mt-[6px] flex flex-col gap-[7px]
+              [&_b]:text-primary-main-600 [&_strong]:text-primary-main-600 [&_.target-word]:text-primary-main-600
+            ">
               {selectedWord.examples.map((ex, i) => (
                 <div key={i} className="rounded-[10px] px-[12px] py-[10px] bg-[#FAFAFA] dark:bg-layout-gray-dark">
                   <div className="flex items-start gap-[7px]">

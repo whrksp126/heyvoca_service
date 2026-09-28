@@ -182,19 +182,14 @@ const WordInfoBubble = ({
         {status === 'found' && !results && (
           <div className="flex flex-col gap-[4px]">
             <div className="flex items-center gap-[6px]">
-              <span lang={isJaWord ? 'ja' : undefined} className="text-[15px] font-[700] leading-[1.3] text-layout-black dark:text-layout-white break-keep">
+              <span lang={isJaWord ? 'ja' : undefined} className="min-w-0 flex-1 text-[15px] font-[700] leading-[1.3] text-layout-black dark:text-layout-white break-keep [overflow-wrap:anywhere]">
                 {word}
               </span>
-              {pronunciation && pronunciation !== word && (
-                <span lang={isJaWord ? 'ja' : undefined} className="text-[12px] font-[400] leading-[1.3] text-layout-gray-300 whitespace-nowrap">
-                  {pronunciation}
-                </span>
-              )}
               <button
                 type="button"
                 aria-label="단어 듣기"
                 className={`
-                  flex items-center justify-center flex-shrink-0 ml-auto
+                  flex items-center justify-center flex-shrink-0
                   w-[24px] h-[24px] -mr-[4px] rounded-full
                   transition-colors duration-150
                   ${speaking ? 'text-primary-main-600' : 'text-layout-gray-300'}
@@ -205,13 +200,20 @@ const WordInfoBubble = ({
                 <SpeakerHigh size={16} weight="fill" />
               </button>
             </div>
+            {/* 발음기호 — 길면(예: 유/무성음 조건 표기) 말풍선 밖으로 새지 않도록 줄바꿈 +
+                2줄에서 말줄임한다(가로 폭에 맞춰 제목 줄과 분리된 자기 줄을 쓴다). */}
+            {pronunciation && pronunciation !== word && (
+              <span lang={isJaWord ? 'ja' : undefined} className="block text-[12px] font-[400] leading-[1.35] text-layout-gray-300 break-words [overflow-wrap:anywhere] line-clamp-2">
+                {pronunciation}
+              </span>
+            )}
             {showBaseFormHint && (
-              <span className="text-[12px] font-[400] leading-[1.3] text-layout-gray-300 whitespace-nowrap">
+              <span className="text-[12px] font-[400] leading-[1.3] text-layout-gray-300 break-words [overflow-wrap:anywhere]">
                 「{matchedForm}」의 기본형
               </span>
             )}
             {meanings.length > 0 && (
-              <p className="text-[13px] font-[500] leading-[1.45] text-layout-gray-500 dark:text-layout-gray-200 break-keep">
+              <p className="text-[13px] font-[500] leading-[1.45] text-layout-gray-500 dark:text-layout-gray-200 break-keep [overflow-wrap:anywhere]">
                 {meanings.join(', ')}
               </p>
             )}
