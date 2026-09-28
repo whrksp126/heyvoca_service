@@ -10,7 +10,7 @@ import { useStudyAdvanceGate } from '../../../hooks/useStudyAdvanceGate';
 import { getMemoryStateKeyByStability } from '../../../components/common/MemoryStateChangeBadge';
 import { useResumeReplayKey } from '../../../hooks/useResumeReplayKey';
 import { wordLang } from '../../../utils/lang';
-import { stripTags, isAcceptedOrder, renderHighlightedText } from './arrangeUtils';
+import { stripTags, isAcceptedOrder, renderHighlightedText, tokenizeWords, wrongRefWords } from './arrangeUtils';
 import ArrangeTray from './ArrangeTray';
 
 /*
@@ -28,6 +28,8 @@ const SentenceArrangeQuestion = ({ question, onComplete, onCardMatched, farmByWo
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [speakDuration, setSpeakDuration] = useState(null);
   const [speakingTarget, setSpeakingTarget] = useState(null); // 'shown' | 'answer' | null
+  // 채점 직전 사용자가 배열한 조각 — "정답 문장"에서 틀린 위치의 정답 단어를 강조하는 데 쓴다.
+  const [submittedTokens, setSubmittedTokens] = useState([]);
 
   const startTimeRef = useRef(Date.now());
   const resumeReplayKey = useResumeReplayKey();
@@ -91,6 +93,7 @@ const SentenceArrangeQuestion = ({ question, onComplete, onCardMatched, farmByWo
 
   const handleSubmit = (userTokens) => {
     if (isAnswered) return;
+    setSubmittedTokens(userTokens);
     const correct = isAcceptedOrder(userTokens, accepted);
     const timeTakenMs = Date.now() - startTimeRef.current;
 
@@ -137,12 +140,31 @@ const SentenceArrangeQuestion = ({ question, onComplete, onCardMatched, farmByWo
 
   // 틀렸을 때만 정답 문장을 강조 표시(계약 3-1절 표시 규칙) — 맞았을 때는 사용자가 놓은
   // 조각이 이미 정답이므로 다시 보여줄 필요가 없다.
+  // 오답 상세 피드백(2026-09-28) — 목표 단어 강조(hl)와 별개로, 사용자가 놓은 조각 중
+  // 틀린 위치의 정답 단어를 빨강으로 한 번 더 강조한다(듀오링고식). 단어 단위 매칭이라
+  // 문장에 같은 단어가 두 번 나오면 전부 강조될 수 있음 — 조립 구간이 보통 짧아 실사용상
+  // 드문 경우로 판단해 단순 구현을 택했다.
+  const wrongWords = isCorrect === false ? wrongRefWords(submittedTokens, accepted) : new Set();
   const postAnswerNode = isCorrect === false ? (
     <p className="w-full mt-[16px] pt-[14px] border-t-[1px] border-layout-gray-200 dark:border-[#3A3A3A] text-[15px] leading-[1.7] text-layout-gray-400 dark:text-layout-gray-100 break-keep">
       <span className="block mb-[2px] text-[11px] font-[700] text-layout-gray-300">정답 문장</span>
       {(renderHighlightedText(answerText) ?? []).map((p) => (
-        <span key={p.key} className={p.hl ? 'text-primary-main-600 font-[700]' : undefined}>
-          {p.text}
+        <span key={p.key}>
+          {tokenizeWords(p.text).map((tok, i) => {
+            const isWrong = tok.type === 'word' && wrongWords.has(tok.clean.toLowerCase());
+            if (isWrong) {
+              return (
+                <span key={i} className="text-status-error-600 dark:text-status-error-400 font-[700] underline decoration-2 underline-offset-[3px]">
+                  {tok.text}
+                </span>
+              );
+            }
+            return (
+              <span key={i} className={p.hl ? 'text-primary-main-600 font-[700]' : undefined}>
+                {tok.text}
+              </span>
+            );
+          })}
         </span>
       ))}
     </p>
@@ -195,6 +217,8 @@ const SentenceArrangeQuestion = ({ question, onComplete, onCardMatched, farmByWo
         bank={bank}
         prefix={prefix}
         suffix={suffix}
+        accepted={accepted}
+        answerLang={answerLang}
         postAnswerNode={postAnswerNode}
         isAnswered={isAnswered}
         isCorrect={isCorrect}

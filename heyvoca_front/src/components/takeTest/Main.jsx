@@ -762,7 +762,10 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
         // 최대 2개까지만 이어 읽는다. 단어 발음은 정답 공개 후에만(handleClickExamOption).
         const meaningsToSpeak = currentQuestionDisplayMeanings.slice(0, 2).join(', ');
         if (meaningsToSpeak) speakText(meaningsToSpeak, 'ko', 'meaning');
-      } else if (!['cardMatch', 'cardMatchListening', 'fillInTheBlank'].includes(question.questionType) && question.origin) {
+      // sentenceArrangePartial/sentenceArrange/listenArrange 도 fillInTheBlank와 같은 이유로
+      // 제외한다 — 각 플러그인 컴포넌트가 마운트 시 직접 정답 문장(ko 또는 answer_text)을
+      // 읽는다. 여기서 origin(주제 단어)까지 읽으면 문장 대신 단어만 들리는 버그가 된다(2026-09-28).
+      } else if (!['cardMatch', 'cardMatchListening', 'fillInTheBlank', 'sentenceArrangePartial', 'sentenceArrange', 'listenArrange'].includes(question.questionType) && question.origin) {
         speakText(question.origin, wordLang(question));
       }
 
