@@ -43,6 +43,14 @@ import { diffAgainstAccepted, tokenizeWords } from './arrangeUtils';
 const SLOT_BOX_H = 32;
 const SLOT_CHIP_H = 28;
 const DRAG_THRESHOLD_PX = 6;
+// 드래그 중 대상 슬롯 판정 — 정확히 슬롯 사각형 안에 놓아야만 인식되던 것을 완화한다
+// (2026-09-29 재작업). 포인터에서 가장 가까운 슬롯 "중심"을 찾되, y(줄) 차이에 이 배율을
+// 곱해 거리로 환산 — 같은 줄 안에서는 x가 좀 멀어도 그 줄의 슬롯을 우선 고르고, 줄이
+// 바뀔 만큼 y가 크게 벌어져야만 다른 줄로 넘어간다.
+const NEAREST_SLOT_Y_WEIGHT = 2.5;
+// 카드 경계 밖이라도 이 여유(px)까지는 "카드 안"으로 쳐서 가장 가까운 슬롯을 찾는다 —
+// 손가락이 카드 테두리에 살짝 걸쳐도 취소되지 않게.
+const CARD_HIT_MARGIN_PX = 28;
 
 const ArrangeTray = ({
   bank,
@@ -98,6 +106,15 @@ const ArrangeTray = ({
   const pointerStartRef = useRef(null);
   const dragRef = useRef(null);
   const [dragVisual, setDragVisual] = useState(null);
+  // 트레이 카드(문장 영역) 바깥 상자 — "카드 안 어디에 놓든 가장 가까운 슬롯" 판정의 기준
+  // 사각형. slotRefs는 pos -> 슬롯 바깥 상자 DOM, 매 pointermove마다 실측 좌표로 가장 가까운
+  // 슬롯을 찾는다(레이아웃이 고정 길이라 슬롯 개수가 적어 매번 재계산해도 비용이 작다).
+  const trayCardRef = useRef(null);
+  const slotRefs = useRef({});
+  const registerSlotRef = (pos) => (el) => {
+    if (el) slotRefs.current[pos] = el;
+    else delete slotRefs.current[pos];
+  };
 
   const disabled = isAnswered;
   const userTokens = slots.map((idx) => (idx != null ? bank[idx] : undefined));
@@ -189,6 +206,36 @@ const ArrangeTray = ({
     try { e.currentTarget.setPointerCapture(e.pointerId); } catch { /* 캡처 미지원 브라우저 — 무해 */ }
   };
 
+  // 포인터에서 가장 가까운 슬롯 찾기 — 카드 안(여유 CARD_HIT_MARGIN_PX 포함)일 때만 호출된다.
+  // y 거리에 가중치를 줘서 같은 줄의 슬롯을 우선한다(위 상수 설명 참고).
+  const findNearestSlot = (x, y) => {
+    let bestPos = null;
+    let bestDist = Infinity;
+    Object.entries(slotRefs.current).forEach(([posStr, el]) => {
+      if (!el) return;
+      const rect = el.getBoundingClientRect();
+      const cx = rect.left + rect.width / 2;
+      const cy = rect.top + rect.height / 2;
+      const dx = x - cx;
+      const dy = (y - cy) * NEAREST_SLOT_Y_WEIGHT;
+      const dist = Math.hypot(dx, dy);
+      if (dist < bestDist) {
+        bestDist = dist;
+        bestPos = Number(posStr);
+      }
+    });
+    return bestPos;
+  };
+
+  const isPointInsideTrayCard = (x, y) => {
+    const rect = trayCardRef.current?.getBoundingClientRect();
+    if (!rect) return false;
+    return (
+      x >= rect.left - CARD_HIT_MARGIN_PX && x <= rect.right + CARD_HIT_MARGIN_PX
+      && y >= rect.top - CARD_HIT_MARGIN_PX && y <= rect.bottom + CARD_HIT_MARGIN_PX
+    );
+  };
+
   const handlePointerMove = (e) => {
     const start = pointerStartRef.current;
     if (!start || e.pointerId !== start.pointerId) return;
@@ -211,9 +258,10 @@ const ArrangeTray = ({
       return;
     }
     const el = document.elementFromPoint(e.clientX, e.clientY);
-    const slotEl = el?.closest?.('[data-arrange-slot]');
-    const overSlot = slotEl ? Number(slotEl.getAttribute('data-arrange-slot')) : null;
     const overBank = !!el?.closest?.('[data-arrange-bank]');
+    const overSlot = (!overBank && isPointInsideTrayCard(e.clientX, e.clientY))
+      ? findNearestSlot(e.clientX, e.clientY)
+      : null;
     dragRef.current = {
       ...dragRef.current,
       x: e.clientX - start.offsetX,
@@ -239,9 +287,11 @@ const ArrangeTray = ({
       return;
     }
     if (dragState.overSlot != null) {
+      haptic('light');
       if (start.fromSlot != null) moveSlotToSlot(start.fromSlot, dragState.overSlot);
       else placeBankIntoSlot(start.bankIdx, dragState.overSlot);
     } else if (dragState.overBank && start.fromSlot != null) {
+      haptic('light');
       removeSlotToBank(start.fromSlot);
     }
     // 그 외(트레이/은행 밖 허공에 놓음) — 취소, 상태 변화 없음.
@@ -360,6 +410,7 @@ const ArrangeTray = ({
     <div className="flex flex-col gap-[15px] flex-1 min-h-0">
       {/* 트레이 카드 */}
       <motion.div
+        ref={trayCardRef}
         data-lift-card=""
         className="
           relative
@@ -405,26 +456,28 @@ const ArrangeTray = ({
                   // 슬롯 바깥 상자 — 빈 슬롯 밑줄과 채운 칩을 항상 같은 높이(SLOT_BOX_H)로 감싸고
                   // 아래쪽(items-end)에 붙인다: 밑줄의 border-bottom과 칩의 아래쪽 테두리가
                   // 정확히 같은 y좌표에 온다(2026-09-29) — 칩이 들어와도 상자 높이가 바뀌지
-                  // 않아 레이아웃이 튀지 않는다. data-arrange-slot은 드래그 드롭 판정용.
+                  // 않아 레이아웃이 튀지 않는다. data-arrange-slot/registerSlotRef는 드래그
+                  // 판정(가장 가까운 슬롯 찾기)용 — 작은 사각형 하이라이트 대신 대상 슬롯 자리에
+                  // 드래그 중인 단어의 고스트 칩을 직접 그려서 "여기 놓인다"를 보여준다(2026-09-29 재작업).
                   <span
                     key={`slot-${pos}`}
                     data-arrange-slot={pos}
-                    className={`
-                      inline-flex items-end justify-center
-                      mx-[3px] my-[2px] align-middle
-                      transition-colors duration-100
-                      ${isDragOver ? 'rounded-[8px] bg-primary-main-100 dark:bg-primary-main-dark/60' : ''}
-                    `}
+                    ref={registerSlotRef(pos)}
+                    className="inline-flex items-end justify-center mx-[3px] my-[2px] align-middle"
                     style={{ height: SLOT_BOX_H }}
                   >
                     {filled ? (
-                      <button
+                      <motion.button
+                        key={`chip-${pos}-${bankIdx}`}
                         type="button"
                         disabled={disabled}
                         onPointerDown={(e) => beginPointer(e, { bankIdx, fromSlot: pos })}
                         onPointerMove={handlePointerMove}
                         onPointerUp={handlePointerUp}
                         onPointerCancel={handlePointerCancel}
+                        initial={reducedMotion ? false : { scale: 0.82, opacity: 0.6 }}
+                        animate={{ scale: 1, opacity: 1 }}
+                        transition={{ duration: 0.15, ease: [0.34, 1.56, 0.64, 1] }}
                         className={`
                           inline-flex items-center justify-center
                           px-[9px]
@@ -433,11 +486,33 @@ const ArrangeTray = ({
                           touch-none
                           ${chipStyle}
                           ${isDragSource ? 'opacity-30' : ''}
+                          ${isDragOver
+                            ? '!opacity-40 !border-dashed !border-[1.5px] !border-primary-main-400 dark:!border-primary-main-300'
+                            : ''}
                         `}
                         style={{ height: SLOT_CHIP_H }}
                       >
                         {bank[bankIdx]}
-                      </button>
+                      </motion.button>
+                    ) : isDragOver ? (
+                      // 고스트 칩 — 실제 칩과 같은 크기, 점선 테두리 + 반투명 글자로 "여기 놓인다"를
+                      // 미리 보여준다. 포인터 업 없이도 실시간으로 대상 슬롯이 바뀌며 따라온다.
+                      <span
+                        aria-hidden="true"
+                        className="
+                          inline-flex items-center justify-center
+                          px-[9px]
+                          border-[1.5px] border-dashed
+                          border-primary-main-400 dark:border-primary-main-300
+                          rounded-[6px]
+                          bg-primary-main-50/70 dark:bg-primary-main-dark/30
+                          text-[16px] font-[700]
+                          text-primary-main-500/60 dark:text-primary-main-300/60
+                        "
+                        style={{ height: SLOT_CHIP_H }}
+                      >
+                        {bank[dragVisual.bankIdx]}
+                      </span>
                     ) : (
                       <span
                         aria-hidden="true"
@@ -556,7 +631,9 @@ const ArrangeTray = ({
       </div>
 
       {/* 드래그 중 손가락을 따라다니는 조각 — document.body 포털 + fixed 라 트레이 카드의
-          overflow-hidden 에 잘리지 않는다(2026-09-29). */}
+          overflow-hidden 에 잘리지 않는다(2026-09-29). 포인터다운 시점의 칩 내 오프셋을
+          유지해서(beginPointer의 offsetX/offsetY) 손가락 바로 아래에서 위로 치우치지 않게
+          따라오고, scale 1.05 + 그림자로 살짝 들어올려진 느낌을 준다(2026-09-29 재작업). */}
       {dragVisual && typeof document !== 'undefined' && createPortal(
         <div
           className="
@@ -567,9 +644,16 @@ const ArrangeTray = ({
             bg-layout-white dark:bg-layout-black
             border-primary-main-500
             text-[16px] font-[700] text-layout-black dark:text-layout-white
-            shadow-[0_6px_16px_rgba(0,0,0,0.2)]
+            shadow-[0_10px_20px_rgba(0,0,0,0.25)]
           "
-          style={{ left: dragVisual.x, top: dragVisual.y, height: SLOT_CHIP_H, width: dragVisual.width }}
+          style={{
+            left: dragVisual.x,
+            top: dragVisual.y,
+            height: SLOT_CHIP_H,
+            width: dragVisual.width,
+            transform: 'scale(1.05)',
+            transformOrigin: 'center',
+          }}
         >
           {bank[dragVisual.bankIdx]}
         </div>,
