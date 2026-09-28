@@ -1,11 +1,11 @@
 import { useRef, useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
-import { Circle } from '@phosphor-icons/react';
 import { FarmResultBar } from '../../../components/farm/FarmStatusBar';
 import StudyTimingTag from '../../../components/farm/StudyTimingTag';
 import LiftAboveBar from '../../../components/common/LiftAboveBar';
 import WordInfoBubble from '../../../components/common/WordInfoBubble';
+import ResultMark from '../../../components/common/ResultMark';
 import { getWordInfoApi } from '../../../api/search';
 import { getTextSound } from '../../../utils/common';
 import { haptic } from '../../../lib/feel';
@@ -38,10 +38,21 @@ import { diffAgainstAccepted, tokenizeWords } from './arrangeUtils';
   동일 규칙).
 */
 
+// 칩 공용 크기 — 트레이(슬롯) 칩과 은행(bank) 칩이 완전히 같은 높이·패딩·테두리(아래쪽
+// 두꺼운 3D 테두리 포함)·글자 크기를 쓰도록 한곳에서 정의한다(2026-09-29). 드래그 고스트
+// 칩·드래그 중 떠다니는 칩도 이 상수를 그대로 쓴다.
+const CHIP_H = 46;
+const CHIP_PAD_X = 'px-[16px]';
+const CHIP_BORDER = 'border-[1px] border-b-[3px]';
+const CHIP_RADIUS = 'rounded-[10px]';
+const CHIP_FONT = 'text-[16px] font-[700]';
+const CHIP_BASE_CLASS = `${CHIP_PAD_X} ${CHIP_BORDER} ${CHIP_RADIUS} ${CHIP_FONT}`;
+
 // 슬롯(빈칸/칩) 한 칸의 바깥 상자 높이 — 빈 슬롯 밑줄과 채운 칩의 아래쪽 테두리가 항상 같은
 // y 좌표에 오도록, 둘 다 이 높이의 상자 안에서 아래쪽(items-end)에 붙인다(2026-09-29).
-const SLOT_BOX_H = 32;
-const SLOT_CHIP_H = 28;
+// 칩 높이(CHIP_H)와 맞춰 은행 칩과 동일한 크기로 보이게 한다.
+const SLOT_BOX_H = CHIP_H;
+const SLOT_CHIP_H = CHIP_H;
 const DRAG_THRESHOLD_PX = 6;
 // 드래그 중 대상 슬롯 판정 — 정확히 슬롯 사각형 안에 놓아야만 인식되던 것을 완화한다
 // (2026-09-29 재작업). 포인터에서 가장 가까운 슬롯 "중심"을 찾되, y(줄) 차이에 이 배율을
@@ -435,7 +446,9 @@ const ArrangeTray = ({
         />
         <div className="relative z-[1] flex-1 min-h-0 overflow-y-auto px-[20px] py-[26px] flex items-center">
           <LiftAboveBar active={!!farm} topReserve={28} className="w-full">
-            <p className="w-full text-[19px] font-[700] leading-[1.9] text-layout-black dark:text-layout-white break-keep">
+            {/* 문장 글자 크기(17px)는 칩 글자 크기(16px, CHIP_FONT)와 어울리도록 낮췄다(2026-09-29) —
+                이전 19px는 트레이 칩이 커지면서 고정 단어(prefix/suffix)만 도드라져 보였다. */}
+            <p className="w-full text-[17px] font-[700] leading-[1.9] text-layout-black dark:text-layout-white break-keep">
               {prefix && (
                 <span className="text-layout-gray-300 dark:text-layout-gray-100 font-[600]">
                   {renderFixedWords(prefixTokens, 'p')}{' '}
@@ -480,9 +493,7 @@ const ArrangeTray = ({
                         transition={{ duration: 0.15, ease: [0.34, 1.56, 0.64, 1] }}
                         className={`
                           inline-flex items-center justify-center
-                          px-[9px]
-                          border-[1px]
-                          rounded-[6px]
+                          ${CHIP_BASE_CLASS}
                           touch-none
                           ${chipStyle}
                           ${isDragSource ? 'opacity-30' : ''}
@@ -499,16 +510,14 @@ const ArrangeTray = ({
                       // 미리 보여준다. 포인터 업 없이도 실시간으로 대상 슬롯이 바뀌며 따라온다.
                       <span
                         aria-hidden="true"
-                        className="
+                        className={`
                           inline-flex items-center justify-center
-                          px-[9px]
+                          ${CHIP_PAD_X} ${CHIP_RADIUS} ${CHIP_FONT}
                           border-[1.5px] border-dashed
                           border-primary-main-400 dark:border-primary-main-300
-                          rounded-[6px]
                           bg-primary-main-50/70 dark:bg-primary-main-dark/30
-                          text-[16px] font-[700]
                           text-primary-main-500/60 dark:text-primary-main-300/60
-                        "
+                        `}
                         style={{ height: SLOT_CHIP_H }}
                       >
                         {bank[dragVisual.bankIdx]}
@@ -555,23 +564,13 @@ const ArrangeTray = ({
           )}
         </AnimatePresence>
 
-        {/* O — 정답, 카드 정중앙(기존 유지). */}
-        <div className="absolute inset-0 z-[3] flex items-center justify-center pointer-events-none">
-          <AnimatePresence>
-            {isCorrect === true && (
-              <motion.div
-                key={`correct-${resumeReplayKey}`}
-                initial={{ scale: 0, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                exit={{ scale: 0, opacity: 0 }}
-                transition={{ type: 'spring', stiffness: 600, damping: 25, duration: 0.3 }}
-                style={{ willChange: 'transform, opacity' }}
-              >
-                <Circle size={150} weight="bold" className="text-status-success-500" />
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </div>
+        {/* O/X — 카드 정중앙. 다른 유형과 같은 공용 ResultMark(2026-09-29) — 정답/오답 모두
+            표시하고 약 600ms 후 페이드아웃해 아래 칩 정오답 색·정답 문장이 바로 보인다. */}
+        <ResultMark
+          result={isCorrect}
+          replayKey={resumeReplayKey}
+          className="absolute inset-0 z-[3] flex items-center justify-center"
+        />
 
         <FarmResultBar
           farm={farm}
@@ -597,12 +596,12 @@ const ArrangeTray = ({
               whileTap={!bankUsed[i] ? { scale: 0.92 } : undefined}
               transition={{ type: 'spring', stiffness: 400, damping: 17 }}
               className={`
-                min-h-[46px] px-[16px]
+                min-h-[46px]
                 flex items-center justify-center
                 bg-layout-white dark:bg-layout-black
-                border-[1px] border-b-[3px] border-layout-gray-200 dark:border-[#3A3A3A]
-                rounded-[10px]
-                text-[16px] font-[700] text-layout-black dark:text-layout-white
+                ${CHIP_BASE_CLASS}
+                border-layout-gray-200 dark:border-[#3A3A3A]
+                text-layout-black dark:text-layout-white
                 touch-none
                 ${bankUsed[i] ? 'invisible' : ''}
                 ${dragVisual && dragVisual.fromSlot == null && dragVisual.bankIdx === i ? 'opacity-30' : ''}
@@ -636,16 +635,15 @@ const ArrangeTray = ({
           따라오고, scale 1.05 + 그림자로 살짝 들어올려진 느낌을 준다(2026-09-29 재작업). */}
       {dragVisual && typeof document !== 'undefined' && createPortal(
         <div
-          className="
+          className={`
             fixed z-[1200] pointer-events-none
             inline-flex items-center justify-center
-            px-[9px]
-            border-[1px] rounded-[6px]
+            ${CHIP_BASE_CLASS}
             bg-layout-white dark:bg-layout-black
             border-primary-main-500
-            text-[16px] font-[700] text-layout-black dark:text-layout-white
+            text-layout-black dark:text-layout-white
             shadow-[0_10px_20px_rgba(0,0,0,0.25)]
-          "
+          `}
           style={{
             left: dragVisual.x,
             top: dragVisual.y,

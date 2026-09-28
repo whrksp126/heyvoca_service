@@ -138,6 +138,24 @@ export const xpBarPct = (stage, xp) => {
 };
 
 /**
+ * 단계 내 상대 XP — 상태 바 라벨(`현재 / 문턱 XP`)과 막대(`xpBarPct`)가 같은 축을 쓰게
+ * 한다(2026-09-29 실기기 리포트 수정). 절대 누적 XP(xpOf 등)를 그대로 라벨에 쓰면, 오답으로
+ * stability 가 깎여도 표시 XP 는 "현재 단계 시작점 아래로 안 내려간다"는 규칙(xpOf 상단 주석)
+ * 때문에 floor 에 멈춘 채(예: 새싹 50) 다음 문턱(210)과 나란히 "50 / 210 XP"로 찍힌다 —
+ * 막대는 `xpBarPct`로 이미 단계 내 진행률(0%)을 그리므로 숫자와 막대가 서로 다른 말을 하는
+ * 것처럼 보인다. 이 함수는 그 숫자도 같은 "단계 시작점부터 얼마나 왔는지" 축으로 바꾼다
+ * (`0 / 160 XP`) — `FarmStatusBar`가 쓰는 모든 자리(학습 카드 하단·카드 매칭 등)가 이
+ * 헬퍼 하나로 통일된다.
+ * next 문턱이 없는 최고 단계(GOLDEN)는 `{ current: xp-floor, next: null }`을 돌려준다.
+ */
+export const xpStageRelative = (stage, xp) => {
+  const floor = xpFloor(stage);
+  const next = xpNext(stage);
+  const current = Math.max(0, (Number(xp) || 0) - floor);
+  return { current, next: next == null ? null : next - floor };
+};
+
+/**
  * 두 단계가 같은 XP 구간을 쓰는지. 미보유 씨앗 → 심은 씨앗은 단계는 오르지만 문턱(0→50)이
  * 같아서, 막대가 100% 를 찍고 리셋하면 `0 / 50 → 12 / 50 XP` 와 어긋난 거짓 연출이 된다.
  */

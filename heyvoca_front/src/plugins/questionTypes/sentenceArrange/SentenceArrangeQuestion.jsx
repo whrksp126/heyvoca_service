@@ -12,7 +12,7 @@ import { useResumeReplayKey } from '../../../hooks/useResumeReplayKey';
 import { useKoreanWordLookup } from '../../../hooks/useKoreanWordLookup';
 import { wordLang } from '../../../utils/lang';
 import { tokenizeKoreanWords } from '../../../utils/koreanTokenize';
-import { stripTags, isAcceptedOrder, renderHighlightedText, tokenizeWords, wrongRefWords } from './arrangeUtils';
+import { stripTags, isAcceptedOrder, renderHighlightedText, tokenizeWords, diffAgainstAccepted } from './arrangeUtils';
 import ArrangeTray from './ArrangeTray';
 
 /*
@@ -164,34 +164,51 @@ const SentenceArrangeQuestion = ({ question, onComplete, onCardMatched, farmByWo
   // 틀렸을 때만 정답 문장을 강조 표시(계약 3-1절 표시 규칙) — 맞았을 때는 사용자가 놓은
   // 조각이 이미 정답이므로 다시 보여줄 필요가 없다.
   // 오답 상세 피드백(2026-09-28) — 목표 단어 강조(hl)와 별개로, 사용자가 놓은 조각 중
-  // 틀린 위치의 정답 단어를 빨강으로 한 번 더 강조한다(듀오링고식). 단어 단위 매칭이라
-  // 문장에 같은 단어가 두 번 나오면 전부 강조될 수 있음 — 조립 구간이 보통 짧아 실사용상
-  // 드문 경우로 판단해 단순 구현을 택했다.
-  const wrongWords = isCorrect === false ? wrongRefWords(submittedTokens, accepted) : new Set();
-  const postAnswerNode = isCorrect === false ? (
-    <p className="w-full mt-[16px] pt-[14px] border-t-[1px] border-layout-gray-200 dark:border-[#3A3A3A] text-[15px] leading-[1.7] text-layout-gray-400 dark:text-layout-gray-100 break-keep">
-      <span className="block mb-[2px] text-[11px] font-[700] text-layout-gray-300">정답 문장</span>
-      {(renderHighlightedText(answerText) ?? []).map((p) => (
-        <span key={p.key}>
-          {tokenizeWords(p.text).map((tok, i) => {
-            const isWrong = tok.type === 'word' && wrongWords.has(tok.clean.toLowerCase());
-            if (isWrong) {
+  // 틀린 위치의 정답 단어를 빨강으로 한 번 더 강조한다(듀오링고식).
+  // 위치 기반 매핑(2026-09-29 재작업) — 예전엔 "단어 문자열"로 매칭해서 문장 안에 같은
+  // 단어가 prefix/suffix에도 있으면 전부 강조되는 버그가 있었다(예: 'Keep the noise to
+  // ___ ___ during ___ exam.'에서 앞의 'the'까지 강조). 정답 문장(answerText)은
+  // joinSentence(prefix, ref, suffix) 규칙대로 "prefix + 빈칸 자리 + suffix" 순서로
+  // 조립되므로, prefix의 단어 토큰 개수를 오프셋으로 써서 "빈칸 구간"의 전역 단어 인덱스
+  // 범위([blankStart, blankEnd))만 계산하고, 그 범위 안에서만 correctFlags를 검사한다.
+  // diffAgainstAccepted가 이미 사용자가 맞춘 어순(alt_orders 등)을 기준(ref)으로 고르므로
+  // 그 기준 그대로 위치를 맞춘다. 대소문자·구두점은 tokenizeWords/normTok이 이미 무시한다.
+  const { ref: answerRef, correctFlags } = isCorrect === false
+    ? diffAgainstAccepted(submittedTokens, accepted)
+    : { ref: [], correctFlags: [] };
+  const blankStart = tokenizeWords(prefix).filter((t) => t.type === 'word').length;
+  const blankEnd = blankStart + answerRef.length;
+  const postAnswerNode = isCorrect === false ? (() => {
+    let wordIdx = 0;
+    return (
+      <p className="w-full mt-[16px] pt-[14px] border-t-[1px] border-layout-gray-200 dark:border-[#3A3A3A] text-[15px] leading-[1.7] text-layout-gray-400 dark:text-layout-gray-100 break-keep">
+        <span className="block mb-[2px] text-[11px] font-[700] text-layout-gray-300">정답 문장</span>
+        {(renderHighlightedText(answerText) ?? []).map((p) => (
+          <span key={p.key}>
+            {tokenizeWords(p.text).map((tok, i) => {
+              const isWordTok = tok.type === 'word';
+              const idx = isWordTok ? wordIdx : -1;
+              if (isWordTok) wordIdx += 1;
+              const isWrong = isWordTok && idx >= blankStart && idx < blankEnd
+                && correctFlags[idx - blankStart] === false;
+              if (isWrong) {
+                return (
+                  <span key={i} className="text-status-error-600 dark:text-status-error-400 font-[700] underline decoration-2 underline-offset-[3px]">
+                    {tok.text}
+                  </span>
+                );
+              }
               return (
-                <span key={i} className="text-status-error-600 dark:text-status-error-400 font-[700] underline decoration-2 underline-offset-[3px]">
+                <span key={i} className={p.hl ? 'text-primary-main-600 font-[700]' : undefined}>
                   {tok.text}
                 </span>
               );
-            }
-            return (
-              <span key={i} className={p.hl ? 'text-primary-main-600 font-[700]' : undefined}>
-                {tok.text}
-              </span>
-            );
-          })}
-        </span>
-      ))}
-    </p>
-  ) : null;
+            })}
+          </span>
+        ))}
+      </p>
+    );
+  })() : null;
 
   /*
     위 카드(한국어 해석) 어절 탭 렌더 — fillInTheBlank의 상단 카드와 같은 규칙: 카드 자체가

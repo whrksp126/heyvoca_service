@@ -1,11 +1,12 @@
 import { useState, useRef, useEffect, useLayoutEffect } from 'react';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
-import { Circle, X, SpeakerHigh } from '@phosphor-icons/react';
+import { SpeakerHigh } from '@phosphor-icons/react';
 import { FarmResultBar } from '../../../components/farm/FarmStatusBar';
 import StudyTimingTag from '../../../components/farm/StudyTimingTag';
 import TtsRipple from '../../../components/common/TtsRipple';
 import LiftAboveBar from '../../../components/common/LiftAboveBar';
 import WordInfoBubble from '../../../components/common/WordInfoBubble';
+import ResultMark from '../../../components/common/ResultMark';
 import { getWordInfoApi } from '../../../api/search';
 import { haptic } from '../../../lib/feel';
 import { playSuccessSound, playErrorSound } from '../../../utils/audio';
@@ -536,34 +537,11 @@ const FillInTheBlankTypingQuestion = ({ question, onComplete, onCardMatched, far
           )}
         </AnimatePresence>
 
-        <div className="absolute inset-0 z-[3] flex items-center justify-center pointer-events-none">
-          <AnimatePresence>
-            {isCorrect === true && (
-              <motion.div
-                key={`correct-${resumeReplayKey}`}
-                initial={{ scale: 0, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                exit={{ scale: 0, opacity: 0 }}
-                transition={{ type: 'spring', stiffness: 600, damping: 25, duration: 0.3 }}
-                style={{ willChange: 'transform, opacity' }}
-              >
-                <Circle size={150} weight="bold" className="text-status-success-500" />
-              </motion.div>
-            )}
-            {isCorrect === false && (
-              <motion.div
-                key={`wrong-${resumeReplayKey}`}
-                initial={{ scale: 0, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                exit={{ scale: 0, opacity: 0 }}
-                transition={{ type: 'spring', stiffness: 600, damping: 25, duration: 0.3 }}
-                style={{ willChange: 'transform, opacity' }}
-              >
-                <X size={150} weight="bold" className="text-status-error-500" />
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </div>
+        <ResultMark
+          result={isCorrect}
+          replayKey={resumeReplayKey}
+          className="absolute inset-0 z-[3] flex items-center justify-center"
+        />
 
         <FarmResultBar
           farm={farm}

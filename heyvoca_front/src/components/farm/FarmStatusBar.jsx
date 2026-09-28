@@ -3,7 +3,7 @@ import { motion, useReducedMotion } from 'framer-motion';
 import CropImage, { CROP_ASSETS } from './CropImage';
 import CropProgressBar, { GROW_FILL_DURATION, GROW_FILL_TIMES } from './CropProgressBar';
 import { CROP_STAGES, CROP_LABEL, cropIndex, stageToCrop, withRo, isUnplantedStage } from '../../utils/crop';
-import { deriveFarmXp, xpBarPct, sameXpBand } from '../../utils/cropXp';
+import { deriveFarmXp, xpBarPct, sameXpBand, xpFloor, xpStageRelative } from '../../utils/cropXp';
 import { haptic, pickVariant, useCountUp } from '../../lib/feel';
 import { FARM_ANIM_MS, FARM_ANIM_GROW_MS } from '../../utils/studyTiming';
 
@@ -150,7 +150,7 @@ const FarmStatusBar = ({
   // 오답이라는 이유만으로 막대 색이 먼저 주황으로 바뀌면 "벌써 줄었다"로 잘못 읽힌다.
   const tone = grew ? 'up' : (isNg && !pending ? 'ng' : 'primary');
 
-  const { xpFrom: xpFromPayload, xpTo, xpNext: xpNextVal } = deriveFarmXp({
+  const { xpFrom: xpFromPayload, xpTo } = deriveFarmXp({
     stageFrom: prevCropForImage,
     stageTo: cropForImage,
     pctFrom,
@@ -333,10 +333,16 @@ const FarmStatusBar = ({
   // 막대 안 글자 — `현재 / 문턱 XP`. compact 는 폭이 좁아(≈60px) 슬래시 앞뒤 공백을 뺀다.
   // 한 inline span 으로 감싼다 — 막대 안 글자 칸이 flex 라, 조각이 따로 flex 항목이 되면
   // 앞뒤 공백이 잘려 `3/ 50 XP` 처럼 붙는다.
+  // 단계 내 상대 XP(xpStageRelative, 2026-09-29) — 막대(xpBarPct)와 같은 축으로 통일한다.
+  // shownXp(카운트업 중인 절대 누적 XP)가 아직 새 단계 floor 를 못 넘었으면(진화 리셋
+  // 애니메이션 도중) 이전 단계 창을 기준으로 보여준다 — 그래야 막대가 리셋 전 구간을 채우는
+  // 동안 숫자도 같은 이전 구간 기준으로 읽힌다.
+  const labelStage = shownXp < xpFloor(cropForImage) ? prevCropForImage : cropForImage;
+  const { current: stageRelXp, next: stageRelNext } = xpStageRelative(labelStage, shownXp);
   const xpLabel = (
     <span>
-      <b className="font-[900]">{shownXp}</b>
-      {xpNextVal != null ? (compact ? `/${xpNextVal}` : ` / ${xpNextVal}`) : ''}
+      <b className="font-[900]">{stageRelXp}</b>
+      {stageRelNext != null ? (compact ? `/${stageRelNext}` : ` / ${stageRelNext}`) : ''}
       {' XP'}
     </span>
   );

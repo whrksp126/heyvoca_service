@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { haptic, pickVariant } from '../../lib/feel';
 import { useVocabulary } from '../../context/VocabularyContext';
-import { Circle, X, BookOpenText, SpeakerHigh } from "@phosphor-icons/react";
+import { BookOpenText, SpeakerHigh } from "@phosphor-icons/react";
 import { getTextSound, prefetchTextSound } from '../../utils/common';
 import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 import { ProblemDataNewBottomSheet } from '../newBottomSheet/ProblemDataNewBottomSheet';
@@ -38,6 +38,7 @@ import { wordsOverlap } from '../../utils/meaningConcept';
 import { wordLang, isJa } from '../../utils/lang';
 import { getReading, shouldShowReading } from '../../utils/jaWord';
 import ReadingLine from '../common/ReadingLine';
+import ResultMark from '../common/ResultMark';
 
 
 // 백엔드 memory state 키(short/medium/long) → 프론트 키(leaf/plant/carrot) 정규화
@@ -1808,47 +1809,14 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
                       text-[28px] font-[700] text-layout-black dark:text-layout-white text-center
                     ">
 
-                      <div className="
-                        absolute top-[50%] left-[50%] z-[-1]
-                        translate-x-[-50%] translate-y-[-50%]
-                      ">
-                        <AnimatePresence>
-                          {isCorrect === true && (
-                            <motion.div
-                              key={`correct-${resumeReplayKey}`}
-                              initial={{ scale: 0, opacity: 0 }}
-                              animate={{ scale: 1, opacity: 1 }}
-                              exit={{ scale: 0, opacity: 0 }}
-                              transition={{
-                                type: "spring",
-                                stiffness: 600,
-                                damping: 25,
-                                duration: 0.3
-                              }}
-                              style={{ willChange: 'transform, opacity' }}
-                            >
-                              <Circle size={150} weight="bold" className="text-status-success-500" />
-                            </motion.div>
-                          )}
-                          {isCorrect === false && (
-                            <motion.div
-                              key={`wrong-${resumeReplayKey}`}
-                              initial={{ scale: 0, opacity: 0 }}
-                              animate={{ scale: 1, opacity: 1 }}
-                              exit={{ scale: 0, opacity: 0 }}
-                              transition={{
-                                type: "spring",
-                                stiffness: 600,
-                                damping: 25,
-                                duration: 0.3
-                              }}
-                              style={{ willChange: 'transform, opacity' }}
-                            >
-                              <X size={150} weight="bold" className="text-status-error-500" />
-                            </motion.div>
-                          )}
-                        </AnimatePresence>
-                      </div>
+                      <ResultMark
+                        result={isCorrect}
+                        replayKey={resumeReplayKey}
+                        className="
+                          absolute top-[50%] left-[50%] z-[-1]
+                          translate-x-[-50%] translate-y-[-50%]
+                        "
+                      />
                       {isReverseChoice
                         ? currentQuestionDisplayMeanings.join(', ')
                         : <span lang={isJa(wordLang(testQuestions[progressIndex])) ? 'ja' : undefined}>{testQuestions[progressIndex].origin}</span>}
