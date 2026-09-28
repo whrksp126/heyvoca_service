@@ -1,7 +1,8 @@
 import { useState, useRef, useEffect } from 'react';
-import { motion, useReducedMotion } from 'framer-motion';
+import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { SpeakerHigh } from '@phosphor-icons/react';
 import TtsRipple from '../../../components/common/TtsRipple';
+import WordInfoBubble from '../../../components/common/WordInfoBubble';
 import { haptic } from '../../../lib/feel';
 import { playSuccessSound, playErrorSound } from '../../../utils/audio';
 import { getTextSound, stripHtmlTags } from '../../../utils/common';
@@ -9,7 +10,9 @@ import { getAdvanceDelay } from '../../../utils/studyTiming';
 import { useStudyAdvanceGate } from '../../../hooks/useStudyAdvanceGate';
 import { getMemoryStateKeyByStability } from '../../../components/common/MemoryStateChangeBadge';
 import { useResumeReplayKey } from '../../../hooks/useResumeReplayKey';
+import { useKoreanWordLookup } from '../../../hooks/useKoreanWordLookup';
 import { wordLang } from '../../../utils/lang';
+import { tokenizeKoreanWords } from '../../../utils/koreanTokenize';
 import { stripTags, isAcceptedOrder, renderHighlightedText, tokenizeWords, wrongRefWords } from './arrangeUtils';
 import ArrangeTray from './ArrangeTray';
 
@@ -36,6 +39,9 @@ const SentenceArrangeQuestion = ({ question, onComplete, onCardMatched, farmByWo
   const reducedMotion = useReducedMotion();
   const advanceGate = useStudyAdvanceGate();
   const wordTtsActiveRef = useRef(false);
+  // 위 카드(한국어 해석) 어절 탭 → 역방향 조회 말풍선. TTS는 재생하지 않는다.
+  const koCardRef = useRef(null);
+  const koLookup = useKoreanWordLookup(koCardRef);
   const speakGenRef = useRef(0);
   const onCompleteRef = useRef(onComplete);
   useEffect(() => { onCompleteRef.current = onComplete; });
@@ -170,10 +176,44 @@ const SentenceArrangeQuestion = ({ question, onComplete, onCardMatched, farmByWo
     </p>
   ) : null;
 
+  /*
+    위 카드(한국어 해석) 어절 탭 렌더 — fillInTheBlank의 상단 카드와 같은 규칙: 카드 자체가
+    <button>(전체 탭 = TTS)이라 실제 <button>을 중첩할 수 없어 span+role="button"을 쓴다.
+    탭은 koLookup.handleTap 내부 stopPropagation으로 카드의 TTS 탭과 분리된다.
+  */
+  const koTokens = tokenizeKoreanWords(stripHtmlTags(ko));
+  const renderKoTokens = () => koTokens.map((tok, i) => {
+    if (tok.type !== 'word') return <span key={i}>{tok.text}</span>;
+    const key = `ko-${i}`;
+    const active = koLookup.lookup?.key === key;
+    return (
+      <span
+        key={i}
+        role="button"
+        tabIndex={0}
+        data-ko-lookup-word
+        aria-label={`${tok.clean} 뜻 보기`}
+        aria-expanded={active}
+        className={`
+          inline cursor-pointer rounded-[4px] px-[1px]
+          transition-colors duration-150
+          ${active ? 'underline decoration-dotted decoration-2 underline-offset-[6px] decoration-layout-gray-300 bg-layout-white/70 dark:bg-layout-black/25' : ''}
+        `}
+        onClick={(e) => koLookup.handleTap(e, key, tok.clean)}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); koLookup.handleTap(e, key, tok.clean); }
+        }}
+      >
+        {tok.text}
+      </span>
+    );
+  });
+
   return (
     <div className="flex flex-col gap-[15px] h-full">
-      {/* 위 카드 — 한국어 해석. 카드 전체 탭 = 읽기(TTS) */}
+      {/* 위 카드 — 한국어 해석. 카드 전체 탭 = 읽기(TTS), 어절 탭 = 한국어 역방향 사전 조회 */}
       <motion.button
+        ref={koCardRef}
         type="button"
         aria-label="해석 듣기"
         className="
@@ -207,9 +247,23 @@ const SentenceArrangeQuestion = ({ question, onComplete, onCardMatched, farmByWo
             </motion.span>
           </span>
           <p className="text-[19px] font-[600] leading-[1.6] text-layout-black dark:text-layout-white break-keep">
-            {stripHtmlTags(ko)}
+            {renderKoTokens()}
           </p>
         </div>
+
+        {/* 어절 사전 말풍선 — 카드가 overflow-hidden + relative 라 이 안에 두면 카드 밖으로 안 나간다. */}
+        <AnimatePresence>
+          {koLookup.lookup && (
+            <WordInfoBubble
+              key={koLookup.lookup.key}
+              anchor={koLookup.lookup.anchor}
+              container={koLookup.lookup.container}
+              status={koLookup.lookup.status}
+              results={koLookup.lookup.results}
+              notFoundMessage="사전에서 찾지 못했어요"
+            />
+          )}
+        </AnimatePresence>
       </motion.button>
 
       {/* 아래 — 트레이(회색 카드) + 조각 은행 + 확인 */}

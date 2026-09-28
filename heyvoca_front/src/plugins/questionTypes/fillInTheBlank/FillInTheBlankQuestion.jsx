@@ -14,9 +14,14 @@ import { getAdvanceDelay } from '../../../utils/studyTiming';
 import { useStudyAdvanceGate } from '../../../hooks/useStudyAdvanceGate';
 import { getMemoryStateKeyByStability } from '../../../components/common/MemoryStateChangeBadge';
 import { useResumeReplayKey } from '../../../hooks/useResumeReplayKey';
+import { useKoreanWordLookup } from '../../../hooks/useKoreanWordLookup';
 import { wordLang, isJa } from '../../../utils/lang';
 import { getReading, shouldShowReading } from '../../../utils/jaWord';
 import { useShowFurigana } from '../../../context/ExampleSettingsContext';
+import { tokenizeKoreanParts } from '../../../utils/koreanTokenize';
+// 위 카드 어절 탭 토큰화용 — 이 파일의 renderHighlightedText(JSX 반환, 아래 정의)와 별개로
+// 강조 조각을 데이터로 얻어야 해서 공용 유틸(questionTypes/highlightMarker.js)을 함께 쓴다.
+import { renderHighlightedText as getHighlightParts } from '../highlightMarker';
 
 /*
   빈칸 채우기(fillInTheBlank) — 한 방향뿐이다.
@@ -35,32 +40,11 @@ import { useShowFurigana } from '../../../context/ExampleSettingsContext';
   화면 문법이 달라 보이지 않게.
 */
 
+// 강조 마커(<strong class="target-word">) 정규식 — splitAtBlank(빈칸 앞/뒤 분리)에 쓴다.
+// 강조 표시 자체(part 데이터 + 렌더)는 이제 공용 유틸(questionTypes/highlightMarker.js,
+// getHighlightParts 로 import)을 쓴다 — 위 카드 어절 탭 토큰화와 같은 소스를 쓰기 위함.
 const TARGET_WORD_RE = /<strong\b[^>]*\btarget-word\b[^>]*>([\s\S]*?)<\/strong\s*>/gi;
 const stripTags = (html) => String(html ?? '').replace(/<[^>]*>/g, '');
-
-// 강조 마커 부분만 primary 로 칠하고 나머지 태그는 벗겨 평문으로 그린다.
-const renderHighlightedText = (html) => {
-  if (!html) return null;
-  const parts = [];
-  let lastIndex = 0;
-  let match;
-  const re = new RegExp(TARGET_WORD_RE.source, 'gi');
-  while ((match = re.exec(html)) !== null) {
-    if (match.index > lastIndex) {
-      parts.push(<span key={`t-${lastIndex}`}>{stripTags(html.slice(lastIndex, match.index))}</span>);
-    }
-    parts.push(
-      <span key={`h-${match.index}`} className="text-primary-main-600 font-[700]">
-        {stripTags(match[1])}
-      </span>
-    );
-    lastIndex = re.lastIndex;
-  }
-  if (lastIndex < html.length) {
-    parts.push(<span key={`t-${lastIndex}`}>{stripTags(html.slice(lastIndex))}</span>);
-  }
-  return parts;
-};
 
 // 빈칸 문장을 (앞 / 뒤) 평문으로 나눈다. 공백은 그대로 둔다(빈칸 pill 앞뒤 간격).
 const splitAtBlank = (html) => {
@@ -152,6 +136,10 @@ const FillInTheBlankQuestion = ({ question, onComplete, onCardMatched, farmByWor
   const [lookup, setLookup] = useState(null);
   const lookupReqRef = useRef(0); // 늦게 도착한 이전 단어의 응답이 현재 말풍선을 덮지 않게
   const blankCardRef = useRef(null);
+  // 위 카드(한국어 예문) 어절 탭 → 역방향 조회 말풍선 — 아래 카드의 영어 단어 조회(lookup)와
+  // 별개 상태(결과가 배열이라 훅을 분리했다). TTS는 재생하지 않는다.
+  const shownCardRef = useRef(null);
+  const koLookup = useKoreanWordLookup(shownCardRef);
   const startTimeRef = useRef(Date.now());
   // 백그라운드 복귀 시 정답 링/성장 게이지가 최종 상태로 정적으로 스냅되는 것을 막기 위한
   // 재마운트용 키 (이유는 useResumeReplayKey 주석 참고)
@@ -440,10 +428,48 @@ const FillInTheBlankQuestion = ({ question, onComplete, onCardMatched, farmByWor
   // 위 카드(예문) TtsRipple 노출 — 사지선다 카드와 같은 자리, "보여 주는 예문"을 읽는 동안만.
   const showTtsRipple = isSpeaking && speakingTarget === 'shown';
 
+  /*
+    위 카드(한국어 예문) 어절 탭 렌더 — 강조 마커(hl) 색은 그대로 유지하면서 어절 단위로
+    <span role="button">을 심는다. 카드 자체가 <button>(전체 탭 = TTS)이라 실제 <button>을
+    중첩하면 안 되므로(브라우저가 중첩 button을 깨뜨린다) span+role="button"을 쓴다.
+    탭은 e.stopPropagation()으로 카드의 TTS 탭과 분리된다(koLookup.handleTap 내부에서 처리).
+  */
+  const shownKoTokens = tokenizeKoreanParts(getHighlightParts(shownText));
+  const renderShownKoreanTokens = () => shownKoTokens.map((tok, i) => {
+    if (tok.type !== 'word') {
+      return <span key={i} className={tok.hl ? 'text-primary-main-600 font-[700]' : undefined}>{tok.text}</span>;
+    }
+    const key = `ko-${i}`;
+    const active = koLookup.lookup?.key === key;
+    return (
+      <span
+        key={i}
+        role="button"
+        tabIndex={0}
+        data-ko-lookup-word
+        aria-label={`${tok.clean} 뜻 보기`}
+        aria-expanded={active}
+        className={`
+          inline cursor-pointer rounded-[4px] px-[1px]
+          transition-colors duration-150
+          ${tok.hl ? 'text-primary-main-600 font-[700]' : ''}
+          ${active ? 'underline decoration-dotted decoration-2 underline-offset-[6px] decoration-layout-gray-300 bg-layout-white/70 dark:bg-layout-black/25' : ''}
+        `}
+        onClick={(e) => koLookup.handleTap(e, key, tok.clean)}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); koLookup.handleTap(e, key, tok.clean); }
+        }}
+      >
+        {tok.text}
+      </span>
+    );
+  });
+
   return (
     <div className="flex flex-col gap-[15px] h-full">
-      {/* 위 카드 — 보여 주는 예문. 카드 전체 탭 = 읽기(TTS) */}
+      {/* 위 카드 — 보여 주는 예문. 카드 전체 탭 = 읽기(TTS), 어절 탭 = 한국어 역방향 사전 조회 */}
       <motion.button
+        ref={shownCardRef}
         type="button"
         aria-label="예문 듣기"
         className="
@@ -479,9 +505,23 @@ const FillInTheBlankQuestion = ({ question, onComplete, onCardMatched, farmByWor
             </motion.span>
           </span>
           <p className="text-[19px] font-[600] leading-[1.6] text-layout-black dark:text-layout-white break-keep">
-            {renderHighlightedText(shownText)}
+            {renderShownKoreanTokens()}
           </p>
         </div>
+
+        {/* 어절 사전 말풍선 — 카드가 overflow-hidden + relative 라 이 안에 두면 카드 밖으로 안 나간다. */}
+        <AnimatePresence>
+          {koLookup.lookup && (
+            <WordInfoBubble
+              key={koLookup.lookup.key}
+              anchor={koLookup.lookup.anchor}
+              container={koLookup.lookup.container}
+              status={koLookup.lookup.status}
+              results={koLookup.lookup.results}
+              notFoundMessage="사전에서 찾지 못했어요"
+            />
+          )}
+        </AnimatePresence>
       </motion.button>
 
       {/* 아래 카드 — 빈칸 예문. 카드 자체에는 탭 인터랙션이 없다(정답 유출 방지 + 요청에 따라
