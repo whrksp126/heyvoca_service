@@ -56,6 +56,9 @@ _TAG_RE = re.compile(r'<[^>]+>')
 _JA_STRIP_RE = re.compile(
     r'[\s　.,!?;:：；、。！？·・…"\'“”‘’「」『』（）()\[\]【】\-—―~〜]+'
 )
+_STRONG_RE = re.compile(
+    r'<strong[^>]*class="target-word"[^>]*>(.*?)</strong\s*>', re.IGNORECASE | re.DOTALL
+)
 
 
 def strip_or_empty(s):
@@ -72,19 +75,72 @@ def normalize_ja_text(raw):
     return s
 
 
-def find_match(text, candidates, used_ids, key_fn=strip_or_empty):
+def _extract_strong_text(html):
+    """<strong class="target-word">...</strong> 안쪽 텍스트(태그 제거)를 뽑는다. 없으면 None."""
+    if not html:
+        return None
+    m = _STRONG_RE.search(html)
+    if not m:
+        return None
+    return _TAG_RE.sub('', m.group(1)).strip()
+
+
+def _emphasis_score(cand_forms, tag_text):
+    """<strong> 강조 텍스트가 이 voca(headword/reading/표기 후보들)를 가리킬 가능성 점수."""
+    if not tag_text:
+        return -1
+    tag = tag_text.strip()
+    if not tag:
+        return -1
+    best = 0
+    for c in cand_forms:
+        c = (c or '').strip()
+        if not c:
+            continue
+        if c == tag:
+            best = max(best, 100)
+        elif c in tag or tag in c:
+            best = max(best, 70)
+        else:
+            n = min(2, len(c), len(tag))
+            if n >= 1 and c[:n] == tag[:n]:
+                best = max(best, 20)
+    return best
+
+
+def find_match(text, candidates, used_ids, voca_forms=None, key_fn=strip_or_empty):
     """candidates: list[[id, raw_text]]. 완전일치(strip) 우선, 실패하면 normalize_ja_text 일치.
+    완전/정규화 일치 후보가 여러 개면(강조 대상 단어가 다른 동일 문장 — en의 citizen/have
+    사례와 같은 패턴) <strong class="target-word"> 텍스트가 voca_forms(headword/reading/
+    표기 후보)와 가장 잘 맞는 걸 고른다(동점·판단불가면 조회 순서상 첫 후보 — 애매하면
+    예전 동작 유지, 2026-09-29 en 감사 사고 이후 en 스크립트와 동일 원칙 적용).
     반환: (match_id, matched_raw_text, method) | (None, None, None)."""
     txt = strip_or_empty(text)
-    for cid, ctext in candidates:
-        if cid not in used_ids and strip_or_empty(ctext) == txt:
-            return cid, ctext, 'exact'
+    exact = [(cid, ctext) for cid, ctext in candidates if cid not in used_ids and strip_or_empty(ctext) == txt]
+    if exact:
+        return _pick_best(exact, voca_forms) + ('exact',)
     norm = normalize_ja_text(text)
     if norm:
-        for cid, ctext in candidates:
-            if cid not in used_ids and normalize_ja_text(ctext) == norm:
-                return cid, ctext, 'normalized'
+        normalized = [
+            (cid, ctext) for cid, ctext in candidates
+            if cid not in used_ids and normalize_ja_text(ctext) == norm
+        ]
+        if normalized:
+            return _pick_best(normalized, voca_forms) + ('normalized',)
     return None, None, None
+
+
+def _pick_best(cands, voca_forms):
+    """cands: [(id, raw_text), ...] 동일 매칭 등급 후보. voca_forms 없으면(뜻 매칭 등) 첫 후보."""
+    if len(cands) == 1 or not voca_forms:
+        return cands[0]
+    scored = [(c, _emphasis_score(voca_forms, _extract_strong_text(c[1]))) for c in cands]
+    scored.sort(key=lambda t: -t[1])
+    best_score = scored[0][1]
+    tied = [c for c, sc in scored if sc == best_score]
+    if best_score >= 40 and len(tied) == 1:
+        return tied[0]
+    return cands[0]
 
 
 def main():
@@ -101,7 +157,7 @@ def main():
     from app.utils.dict_lang import set_dict_lang
     from app.models.models import (
         AdminVocaBookMap, AdminVocaBookMapMeaning, AdminVocaBookMapExample,
-        VocaLabel, VocaMeaning, VocaMeaningMap, VocaExample, VocaExampleMap, VocaExampleJa,
+        Voca, VocaJa, VocaLabel, VocaMeaning, VocaMeaningMap, VocaExample, VocaExampleMap, VocaExampleJa,
     )
 
     app = create_app()
@@ -141,6 +197,7 @@ def main():
         meaning_cache = {}   # voca_id -> list[[meaning_id, text]]
         example_cache = {}   # voca_id -> list[[example_id, exam_en]]
         label_cache = {}     # voca_id -> pos or None
+        voca_forms_cache = {}  # voca_id -> [word, reading, kanji_forms.., kana_forms..] (강조 매칭용)
         dry_id_seq = 0
 
         def next_dry_id():
@@ -248,7 +305,24 @@ def main():
                 if not origin and not meaning_txt:
                     continue
 
-                match_id, matched_origin, method = find_match(origin, example_cache[voca_id], used_example_ids)
+                if voca_id not in voca_forms_cache:
+                    v = Voca.query.get(voca_id)
+                    vj = VocaJa.query.get(voca_id)
+                    forms = []
+                    if v:
+                        forms.append(v.word)
+                    if vj:
+                        forms.append(vj.reading)
+                        for kf in (vj.kanji_forms or []):
+                            forms.append(kf.get('text') if isinstance(kf, dict) else kf)
+                        for kf in (vj.kana_forms or []):
+                            forms.append(kf.get('text') if isinstance(kf, dict) else kf)
+                    voca_forms_cache[voca_id] = forms
+
+                match_id, matched_origin, method = find_match(
+                    origin, example_cache[voca_id], used_example_ids,
+                    voca_forms=voca_forms_cache[voca_id],
+                )
 
                 if match_id is None:
                     if args.apply:

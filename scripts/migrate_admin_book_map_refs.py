@@ -23,6 +23,15 @@ admin_voca_book_map(사전 DB, heyvoca_dict)의 voca_meanings/voca_examples JSON
     문장부호 제거 → 공백 1개)가 같은 것을 매칭. 없으면 새 VocaExample을 만들어 연결한다.
     매칭은 됐지만 원문(강조 태그 위치 등)이 다르면 사전 텍스트는 바꾸지 않고
     건수와 표본만 보고한다 — 어느 쪽이 맞는지는 다음 단계에서 사람이 판단한다.
+  - **같은 voca_id에 정규화 문장이 동일한 예문이 여러 개(강조 대상 단어가 서로 다른 경우,
+    예: citizen 예문과 have 예문이 둘 다 "Every citizen has the right to vote."로 겹치는
+    경우) 있으면, 그중 <strong class="target-word"> 안쪽 텍스트가 그 voca.word(또는
+    verb_forms 활용형)와 가장 잘 맞는 후보를 고른다**(_pick_best_example_match).
+    2026-09-28 최초 이관 때는 정규화 일치 후보 중 조회 순서상 처음 걸리는 걸 그냥 썼다가
+    'citizen' 두 번째 예문이 'has'를 강조하는 행(다른 단어의 예문)에 잘못 연결되는 버그가
+    났다(2026-09-29 db/에서 감사 스크립트로 24건 발견·정정, .claude/rules/db-migration.md
+    사전 데이터 감사 참고). 점수가 동률이거나 태그를 못 찾으면 기존과 동일하게 조회 순서상
+    첫 후보를 쓴다(과matching 방지 — 애매하면 예전 동작을 유지).
   - 한 admin_voca_book_map 행 안에서 같은 뜻/예문이 같은 meaning_id/example_id로
     중복 매칭되면(원문 중복) PK(map_id, meaning_id)/(map_id, example_id) 충돌을 피하기
     위해 두 번째부터는 건너뛰고 dup_skipped로 집계한다(표시 순서상 중복 항목 1개 소실 —
@@ -44,13 +53,84 @@ admin_voca_book_map(사전 DB, heyvoca_dict)의 voca_meanings/voca_examples JSON
 import argparse
 import json
 import os
+import re
 import sys
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
+_STRONG_RE = re.compile(
+    r'<strong[^>]*class="target-word"[^>]*>(.*?)</strong\s*>', re.IGNORECASE | re.DOTALL
+)
+_TAG_RE = re.compile(r'<[^>]+>')
+_EN_SUFFIXES = ('ing', 'ies', 'es', 'ed', "'s", 's', 'er', 'est')
+
 
 def strip_or_empty(s):
     return (s or '').strip() if isinstance(s, str) else ''
+
+
+def _extract_strong_text(html):
+    """<strong class="target-word">...</strong> 안쪽 텍스트(태그 제거)를 뽑는다. 없으면 None."""
+    if not html:
+        return None
+    m = _STRONG_RE.search(html)
+    if not m:
+        return None
+    return _TAG_RE.sub('', m.group(1)).strip()
+
+
+def _strip_en_suffix(s):
+    for suf in _EN_SUFFIXES:
+        if s.endswith(suf) and len(s) > len(suf) + 1:
+            return s[: -len(suf)]
+    return s
+
+
+def _emphasis_score(word, verb_forms_json, tag_text):
+    """<strong> 강조 텍스트가 이 voca(word/활용형)를 가리킬 가능성 점수. 클수록 확실."""
+    if not tag_text:
+        return -1
+    tag_norm = re.sub(r"[^a-z0-9' ]", '', tag_text.lower()).strip()
+    if not tag_norm:
+        return -1
+    word_norm = (word or '').lower()
+    forms = {word_norm}
+    if verb_forms_json:
+        try:
+            vf = json.loads(verb_forms_json)
+            for v in vf.values():
+                if isinstance(v, str):
+                    forms.add(v.lower())
+        except Exception:
+            pass
+    if tag_norm in forms:
+        return 100
+    if any(_strip_en_suffix(tag_norm) == _strip_en_suffix(f) for f in forms):
+        return 80
+    word_tokens = word_norm.split()
+    if len(word_tokens) > 1 and all(t in tag_norm.split() for t in word_tokens):
+        return 90
+    if len(word_norm) >= 3 and (word_norm in tag_norm or tag_norm in word_norm):
+        return 40
+    return 0
+
+
+def _pick_best_example_match(unmatched, voca_word, voca_verb_forms):
+    """정규화 문장이 같은 후보(unmatched: [eid, en, enorm], enorm이 모두 norm과 같음) 중
+    강조 대상이 이 voca를 가장 잘 가리키는 걸 고른다. 동점/판단불가면 리스트 첫 항목(기존
+    조회 순서 그대로) — 애매하면 예전 동작 유지."""
+    if len(unmatched) == 1:
+        return unmatched[0]
+    scored = [
+        (cand, _emphasis_score(voca_word, voca_verb_forms, _extract_strong_text(cand[1])))
+        for cand in unmatched
+    ]
+    scored.sort(key=lambda t: -t[1])
+    best_score = scored[0][1]
+    tied = [c for c, sc in scored if sc == best_score]
+    if best_score >= 40 and len(tied) == 1:
+        return tied[0]
+    return unmatched[0]
 
 
 def normalize_meaning_text(raw):
@@ -86,7 +166,7 @@ def main():
     from app import create_app, db
     from app.models.models import (
         AdminVocaBookMap, AdminVocaBookMapMeaning, AdminVocaBookMapExample,
-        VocaLabel, VocaMeaning, VocaMeaningMap, VocaExample, VocaExampleMap,
+        Voca, VocaLabel, VocaMeaning, VocaMeaningMap, VocaExample, VocaExampleMap,
     )
     from app.services.sentence_puzzle import normalize_sentence_text
 
@@ -113,6 +193,7 @@ def main():
             'meanings_dup_skipped': 0,
             'meanings_corrupted_skipped': 0,
             'examples_matched': 0,
+            'examples_matched_ambiguous_resolved': 0,  # 정규화 문장 동일한 후보가 여러 개라 강조 텍스트로 골라낸 건수
             'examples_text_diff': 0,
             'examples_created': 0,
             'examples_dup_skipped': 0,
@@ -122,6 +203,7 @@ def main():
         meaning_cache = {}   # voca_id -> list[[meaning_id, text]]  (mutable list so appends are visible)
         example_cache = {}   # voca_id -> list[[example_id, exam_en, norm]]
         label_cache = {}     # voca_id -> pos or None
+        voca_word_cache = {}  # voca_id -> (word, verb_forms)
         dry_id_seq = 0       # dry-run 전용 음수 placeholder id 생성기(생성 뜻/예문마다 유일)
 
         def next_dry_id():
@@ -235,11 +317,19 @@ def main():
 
                 match_id = None
                 match_dict_origin = None
-                for eid, en, enorm in example_cache[voca_id]:
-                    if eid not in used_example_ids and enorm == norm:
-                        match_id = eid
-                        match_dict_origin = en
-                        break
+                candidates = [
+                    (eid, en, enorm) for eid, en, enorm in example_cache[voca_id]
+                    if eid not in used_example_ids and enorm == norm
+                ]
+                if candidates:
+                    if voca_id not in voca_word_cache:
+                        v = Voca.query.get(voca_id)
+                        voca_word_cache[voca_id] = (v.word, v.verb_forms) if v else (None, None)
+                    voca_word, voca_verb_forms = voca_word_cache[voca_id]
+                    picked = _pick_best_example_match(candidates, voca_word, voca_verb_forms)
+                    match_id, match_dict_origin, _ = picked
+                    if len(candidates) > 1 and match_id != candidates[0][0]:
+                        stats['examples_matched_ambiguous_resolved'] += 1
 
                 if match_id is None:
                     if args.apply:
