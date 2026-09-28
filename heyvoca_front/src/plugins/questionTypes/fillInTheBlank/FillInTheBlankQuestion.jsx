@@ -319,19 +319,17 @@ const FillInTheBlankQuestion = ({ question, onComplete, onCardMatched, farmByWor
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [lookup?.key]);
 
-  // 탭 가능한 단어 토큰 렌더 — 공백/구두점은 평문, 단어는 인라인 버튼
-  // ja 토큰 탭 — TTS 만(말풍선 생략: 일본어 단어 뜻 조회 API 가 아직 없다)
-  const handleJaTokenTap = (e, text) => {
-    e.stopPropagation();
-    haptic('light');
-    closeLookup();
-    speak(text, blankLang, 'lookup');
-  };
-
-  const renderJaTokens = (tokens, area) => tokens.map((tok, i) => {
+  /*
+    탭 가능한 단어 토큰 렌더 — 공백/구두점은 평문, 단어는 인라인 버튼. en/ja 모두
+    handleWordTap(사전 조회 + TTS) 을 그대로 쓴다 — ja 도 word-info API 가 lang(ja) 을
+    자동으로 읽어 일한 사전에서 찾는다(2026-09-28: 이전에는 ja 만 TTS 전용이라 사전이 안 떴다).
+    ja 는 표시만 다르다 — showFurigana 켜져 있고 읽기가 있으면 <ruby> 로 후리가나를 얹는다.
+  */
+  const renderWordTokens = (tokens, area) => tokens.map((tok, i) => {
     const key = `${area}-${i}`;
     if (tok.type !== 'word') return <span key={key}>{tok.text}</span>;
-    const body = showFurigana && tok.reading
+    const active = lookup?.key === key;
+    const body = jaBlank && showFurigana && tok.reading
       ? (
         <>
           <ruby>{tok.base}<rt>{tok.reading}</rt></ruby>
@@ -339,23 +337,6 @@ const FillInTheBlankQuestion = ({ question, onComplete, onCardMatched, farmByWor
         </>
       )
       : tok.text;
-    return (
-      <button
-        key={key}
-        type="button"
-        aria-label={`${tok.clean} 듣기`}
-        className="inline font-[inherit] text-[inherit] leading-[inherit] text-left align-baseline rounded-[4px] focus:outline-none"
-        onClick={(e) => handleJaTokenTap(e, tok.clean)}
-      >
-        {body}
-      </button>
-    );
-  });
-
-  const renderWordTokens = (tokens, area) => (jaBlank ? renderJaTokens(tokens, area) : tokens.map((tok, i) => {
-    if (tok.type !== 'word') return <span key={`${area}-${i}`}>{tok.text}</span>;
-    const key = `${area}-${i}`;
-    const active = lookup?.key === key;
     return (
       <button
         key={key}
@@ -374,10 +355,10 @@ const FillInTheBlankQuestion = ({ question, onComplete, onCardMatched, farmByWor
         `}
         onClick={(e) => handleWordTap(e, key, tok.clean)}
       >
-        {tok.text}
+        {body}
       </button>
     );
-  }));
+  });
 
   // 문제 등장 시 자동 재생 — Main.jsx가 사지선다 등에서 하는 등장 자동재생과 같은 자리.
   // Main.jsx는 fillInTheBlank를 자기 자동재생 대상에서 뺀다(단어를
