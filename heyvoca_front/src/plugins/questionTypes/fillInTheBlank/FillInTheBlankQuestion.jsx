@@ -428,8 +428,10 @@ const FillInTheBlankQuestion = ({ question, onComplete, onCardMatched, farmByWor
     탭은 e.stopPropagation()으로 카드의 TTS 탭과 분리된다(koLookup.handleTap 내부에서 처리).
   */
   const shownKoTokens = tokenizeKoreanParts(getHighlightParts(shownText));
+  // 강조된 목표 어절(tok.hl)은 채점 전에는 탭 비활성 — 조회하면 정답(빈칸에 들어갈 단어)을
+  // 미리 알려주는 셈이라 다른 어절만 조회 가능하게 막고, 채점 후에는 전부 조회 가능하다.
   const renderShownKoreanTokens = () => shownKoTokens.map((tok, i) => {
-    if (tok.type !== 'word') {
+    if (tok.type !== 'word' || (tok.hl && !isAnswered)) {
       return <span key={i} className={tok.hl ? 'text-primary-main-600 font-[700]' : undefined}>{tok.text}</span>;
     }
     const key = `ko-${i}`;

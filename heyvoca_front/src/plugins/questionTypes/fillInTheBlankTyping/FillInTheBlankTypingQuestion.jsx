@@ -5,15 +5,39 @@ import { FarmResultBar } from '../../../components/farm/FarmStatusBar';
 import StudyTimingTag from '../../../components/farm/StudyTimingTag';
 import TtsRipple from '../../../components/common/TtsRipple';
 import LiftAboveBar from '../../../components/common/LiftAboveBar';
+import WordInfoBubble from '../../../components/common/WordInfoBubble';
+import { getWordInfoApi } from '../../../api/search';
 import { haptic } from '../../../lib/feel';
 import { playSuccessSound, playErrorSound } from '../../../utils/audio';
 import { getTextSound, stripHtmlTags } from '../../../utils/common';
 import { useStudyAdvanceGate } from '../../../hooks/useStudyAdvanceGate';
 import { getMemoryStateKeyByStability } from '../../../components/common/MemoryStateChangeBadge';
 import { useResumeReplayKey } from '../../../hooks/useResumeReplayKey';
-import { wordLang } from '../../../utils/lang';
+import { useKoreanWordLookup } from '../../../hooks/useKoreanWordLookup';
+import { tokenizeKoreanParts } from '../../../utils/koreanTokenize';
+import { wordLang, isJa } from '../../../utils/lang';
 import { renderHighlightedText } from '../highlightMarker';
 import { gradeTypingAnswer } from './typoTolerance';
+
+/*
+  빈칸 예문(before/after) 탭 가능한 단어 토큰화 — en/ja 공통. fillInTheBlank의 tokenizeWords와
+  달리 이 문제 유형은 reading_tokens(후리가나)가 payload에 없어 띄어쓰기 대신 유니코드 문자
+  범주(letter/number)로 단어 조각을 묶는다 — 가나·한자도 그대로 한 토큰으로 잡혀 en/ja 모두
+  별도 분기 없이 동작한다. 공백·구두점은 'text'로 그대로 보존해 원문 줄바꿈이 그대로다.
+*/
+const WORD_RUN_RE = /[\p{L}\p{N}''']+/gu;
+const tokenizeBlankWords = (text) => {
+  if (!text) return [];
+  const tokens = [];
+  let last = 0;
+  for (const m of text.matchAll(WORD_RUN_RE)) {
+    if (m.index > last) tokens.push({ type: 'text', text: text.slice(last, m.index) });
+    tokens.push({ type: 'word', text: m[0], clean: m[0] });
+    last = m.index + m[0].length;
+  }
+  if (last < text.length) tokens.push({ type: 'text', text: text.slice(last) });
+  return tokens;
+};
 
 /*
   빈칸 직접 입력(fillInTheBlankTyping) — 계약: SENTENCE_QUESTIONS_CONTRACT.md 3-2절.
@@ -38,7 +62,14 @@ const FillInTheBlankTypingQuestion = ({ question, onComplete, onCardMatched, far
   const [gradeInfo, setGradeInfo] = useState(null); // { typo, reason }
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [speakDuration, setSpeakDuration] = useState(null);
-  const [speakingTarget, setSpeakingTarget] = useState(null); // 'shown' | 'answer' | null
+  const [speakingTarget, setSpeakingTarget] = useState(null); // 'shown' | 'answer' | 'lookup' | null
+  /*
+    단어 말풍선(사전 조회) 상태 — fillInTheBlank와 동일 패턴. 아래 카드(영어/일본어 빈칸 예문)
+    단어 탭 전용. 위 카드(한국어) 어절 탭은 useKoreanWordLookup(koLookup)이 별도로 맡는다.
+  */
+  const [lookup, setLookup] = useState(null);
+  const lookupReqRef = useRef(0);
+  const koLookup = useKoreanWordLookup();
 
   const inputRef = useRef(null);
   // 입력 칸 폭을 실제 입력 글자 폭에 맞추기 위한 숨김 미러 span 측정값(px).
@@ -71,7 +102,12 @@ const FillInTheBlankTypingQuestion = ({ question, onComplete, onCardMatched, far
     blocked_typos: blockedTypos = [],
   } = typing;
   const blankLang = wordLang(question);
+  const jaBlank = isJa(blankLang);
   const { before, after } = splitAtBlankMarker(blankText);
+  const beforeTokens = tokenizeBlankWords(before);
+  const afterTokens = tokenizeBlankWords(after);
+  // 정답 칸(입력/결과 pill)도 채점 후에는 탭 가능하다 — 입력값을 그대로 조회 대상으로 쓴다.
+  const answerClean = value.trim();
 
   const farm = isAnswered ? (farmByWordId?.[question.id] ?? null) : null;
 
@@ -115,6 +151,137 @@ const FillInTheBlankTypingQuestion = ({ question, onComplete, onCardMatched, far
     speakGenRef.current += 1;
   }, []);
 
+  const closeLookup = () => {
+    lookupReqRef.current += 1;
+    setLookup((prev) => (prev ? null : prev));
+  };
+
+  /*
+    아래 카드(영어/일본어 빈칸 예문) 단어 탭 — fillInTheBlank의 handleWordTap과 동일 패턴.
+    입력 칸(빈칸 자리)·문장부호는 tokenizeBlankWords가 애초에 'word' 토큰으로 만들지 않으므로
+    여기서는 별도 제외 처리가 필요 없다. 채점 후에는 정답 pill(answer-*)도 같은 핸들러를 탄다.
+  */
+  const handleWordTap = (e, key, cleanWord) => {
+    e.stopPropagation();
+    if (!cleanWord) return;
+    if (lookup?.key === key) {
+      closeLookup();
+      return;
+    }
+    const wordEl = e.currentTarget;
+    if (!wordEl) return;
+    const wordRect = wordEl.getBoundingClientRect();
+    const anchor = {
+      top: wordRect.top,
+      left: wordRect.left,
+      width: wordRect.width,
+      height: wordRect.height,
+    };
+
+    haptic('light');
+    speak(cleanWord, blankLang, 'lookup');
+
+    const reqId = ++lookupReqRef.current;
+    setLookup({ key, word: cleanWord, anchor, status: 'loading', info: null });
+    getWordInfoApi(cleanWord)
+      .then((info) => {
+        if (reqId !== lookupReqRef.current) return;
+        setLookup((prev) => (prev && prev.key === key
+          ? { ...prev, status: info ? 'found' : 'notFound', info }
+          : prev));
+      })
+      .catch(() => {
+        if (reqId !== lookupReqRef.current) return;
+        setLookup((prev) => (prev && prev.key === key ? { ...prev, status: 'error' } : prev));
+      });
+  };
+
+  // 말풍선 닫기 — 바깥 탭·스크롤(fillInTheBlank와 동일 규칙).
+  useEffect(() => {
+    if (!lookup) return undefined;
+    const onPointerDown = (e) => {
+      const t = e.target;
+      if (!(t instanceof Element)) { closeLookup(); return; }
+      if (t.closest('[data-word-info-bubble]')) return;
+      if (t.closest('[data-lookup-word]')) return;
+      closeLookup();
+    };
+    const onScroll = () => closeLookup();
+    document.addEventListener('pointerdown', onPointerDown, true);
+    window.addEventListener('scroll', onScroll, true);
+    return () => {
+      document.removeEventListener('pointerdown', onPointerDown, true);
+      window.removeEventListener('scroll', onScroll, true);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [lookup?.key]);
+
+  /*
+    탭 가능한 단어 토큰 렌더 — 공백/구두점은 평문, 단어는 인라인 버튼(fillInTheBlank와 동일 규격).
+  */
+  const renderWordTokens = (tokens, area) => tokens.map((tok, i) => {
+    const key = `${area}-${i}`;
+    if (tok.type !== 'word') return <span key={key}>{tok.text}</span>;
+    const active = lookup?.key === key;
+    return (
+      <button
+        key={key}
+        type="button"
+        data-lookup-word
+        aria-label={`${tok.clean} 뜻 보기`}
+        aria-expanded={active}
+        className={`
+          inline font-[inherit] text-[inherit] leading-[inherit] text-left align-baseline
+          rounded-[4px] px-[1px]
+          focus:outline-none
+          transition-colors duration-150
+          ${active
+            ? 'underline decoration-dotted decoration-2 underline-offset-[6px] decoration-layout-gray-300 bg-primary-main-50 dark:bg-primary-main-dark'
+            : ''}
+        `}
+        onClick={(e) => handleWordTap(e, key, tok.clean)}
+      >
+        {tok.text}
+      </button>
+    );
+  });
+
+  /*
+    위 카드(한국어 예문) 어절 탭 렌더 — fillInTheBlank와 동일 패턴 + 정답 유출 방지 규칙 추가:
+    강조된 목표 어절(tok.hl)은 **채점 전에는 탭 비활성**(정답을 알려주는 셈이 되므로) — 채점 후엔
+    다른 어절과 동일하게 조회 가능해진다.
+  */
+  const shownKoTokens = tokenizeKoreanParts(renderHighlightedText(ko) ?? []);
+  const renderShownKoreanTokens = () => shownKoTokens.map((tok, i) => {
+    if (tok.type !== 'word' || (tok.hl && !isAnswered)) {
+      return <span key={i} className={tok.hl ? 'text-primary-main-600 font-[700]' : undefined}>{tok.text}</span>;
+    }
+    const key = `ko-${i}`;
+    const active = koLookup.lookup?.key === key;
+    return (
+      <span
+        key={i}
+        role="button"
+        tabIndex={0}
+        data-ko-lookup-word
+        aria-label={`${tok.clean} 뜻 보기`}
+        aria-expanded={active}
+        className={`
+          inline cursor-pointer rounded-[4px] px-[1px]
+          transition-colors duration-150
+          ${tok.hl ? 'text-primary-main-600 font-[700]' : ''}
+          ${active ? 'underline decoration-dotted decoration-2 underline-offset-[6px] decoration-layout-gray-300 bg-layout-white/70 dark:bg-layout-black/25' : ''}
+        `}
+        onClick={(e) => koLookup.handleTap(e, key, tok.clean)}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); koLookup.handleTap(e, key, tok.clean); }
+        }}
+      >
+        {tok.text}
+      </span>
+    );
+  });
+
   // 값이 바뀔 때마다(IME 조합 중 포함) 미러 span의 실제 렌더 폭을 읽어 입력 칸 폭에 반영.
   // 좌우 패딩 약 12px을 더한다 — 최소 폭은 아래 pill(min-w-[84px])이, 최대 폭은
   // input의 max-w-[50vw]가 각각 그대로 보장한다.
@@ -132,6 +299,9 @@ const FillInTheBlankTypingQuestion = ({ question, onComplete, onCardMatched, far
   const handleSubmit = (e) => {
     e?.preventDefault?.();
     if (isAnswered || !value.trim()) return;
+
+    closeLookup(); // 채점 순간 말풍선은 닫힌다(O/X 와 겹치지 않게, fillInTheBlank와 동일 규칙)
+    koLookup.closeLookup();
 
     const grade = gradeTypingAnswer(value, { answerText, baseForm, blockedTypos });
     const timeTakenMs = Date.now() - startTimeRef.current;
@@ -237,13 +407,22 @@ const FillInTheBlankTypingQuestion = ({ question, onComplete, onCardMatched, far
             </motion.span>
           </motion.button>
           <p className="text-[19px] font-[600] leading-[1.6] text-layout-black dark:text-layout-white break-keep">
-            {(renderHighlightedText(ko) ?? []).map((p) => (
-              <span key={p.key} className={p.hl ? 'text-primary-main-600 font-[700]' : undefined}>
-                {p.text}
-              </span>
-            ))}
+            {renderShownKoreanTokens()}
           </p>
         </div>
+
+        {/* 어절 사전 말풍선 — document.body 포털(WordInfoBubble)이라 카드가 짧아도 잘리지 않는다. */}
+        <AnimatePresence>
+          {koLookup.lookup && (
+            <WordInfoBubble
+              key={koLookup.lookup.key}
+              anchor={koLookup.lookup.anchor}
+              status={koLookup.lookup.status}
+              results={koLookup.lookup.results}
+              notFoundMessage="사전에서 찾지 못했어요"
+            />
+          )}
+        </AnimatePresence>
       </motion.div>
 
       {/* 아래 카드 — 빈칸 예문 + 직접 입력 */}
@@ -272,8 +451,8 @@ const FillInTheBlankTypingQuestion = ({ question, onComplete, onCardMatched, far
         <div className="relative z-[1] flex items-center flex-1 min-h-0 px-[20px] py-[45px]">
           <LiftAboveBar active={!!farm} topReserve={28} className="w-full">
             <form onSubmit={handleSubmit}>
-              <p className="w-full text-[22px] font-[700] leading-[1.8] text-layout-black dark:text-layout-white break-keep">
-                <span>{before}</span>
+              <p lang={jaBlank ? 'ja' : undefined} className={`w-full text-[22px] font-[700] leading-[1.8] text-layout-black dark:text-layout-white ${jaBlank ? 'break-normal' : 'break-keep'}`}>
+                {renderWordTokens(beforeTokens, 'b')}
                 <span
                   className={`
                     relative
@@ -285,7 +464,20 @@ const FillInTheBlankTypingQuestion = ({ question, onComplete, onCardMatched, far
                   `}
                 >
                   {isAnswered ? (
-                    value
+                    // 채점 후 — 정답 자리도 탭하면 사전 말풍선이 뜬다(입력값을 그대로 조회한다).
+                    <button
+                      type="button"
+                      data-lookup-word
+                      aria-label={`${answerClean} 뜻 보기`}
+                      aria-expanded={lookup?.key === 'answer'}
+                      className={`
+                        inline font-[inherit] text-[inherit] leading-[inherit]
+                        focus:outline-none
+                      `}
+                      onClick={(e) => handleWordTap(e, 'answer', answerClean)}
+                    >
+                      {value}
+                    </button>
                   ) : (
                     <>
                       {/* 실제 입력 글자 폭 측정용 숨김 미러 — input과 같은 폰트를 상속받는다. */}
@@ -299,8 +491,9 @@ const FillInTheBlankTypingQuestion = ({ question, onComplete, onCardMatched, far
                       <input
                         ref={inputRef}
                         type="text"
+                        lang={jaBlank ? 'ja' : 'en'}
                         inputMode="text"
-                        autoCapitalize="none"
+                        autoCapitalize="off"
                         autoCorrect="off"
                         autoComplete="off"
                         spellCheck={false}
@@ -317,7 +510,7 @@ const FillInTheBlankTypingQuestion = ({ question, onComplete, onCardMatched, far
                     </>
                   )}
                 </span>
-                <span>{after}</span>
+                {renderWordTokens(afterTokens, 'a')}
               </p>
               {caption && (
                 <p className={`mt-[14px] text-[14px] font-[600] break-keep ${caption.cls}`}>{caption.text}</p>
@@ -325,6 +518,23 @@ const FillInTheBlankTypingQuestion = ({ question, onComplete, onCardMatched, far
             </form>
           </LiftAboveBar>
         </div>
+
+        {/* 단어 뜻 말풍선 — O/X(z-3) 위(z-4). 채점 시 닫히므로 실제로 겹치는 일은 거의 없다. */}
+        <AnimatePresence>
+          {lookup && (
+            <WordInfoBubble
+              key={lookup.key}
+              anchor={lookup.anchor}
+              status={lookup.status}
+              info={lookup.info}
+              speaking={isSpeaking && speakingTarget === 'lookup'}
+              onReplay={() => {
+                haptic('light');
+                speak(lookup.word, blankLang, 'lookup');
+              }}
+            />
+          )}
+        </AnimatePresence>
 
         <div className="absolute inset-0 z-[3] flex items-center justify-center pointer-events-none">
           <AnimatePresence>
