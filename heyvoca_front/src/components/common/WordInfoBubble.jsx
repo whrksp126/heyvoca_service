@@ -21,6 +21,11 @@ import { getReading, shouldShowReading } from '../../utils/jaWord';
   같은 프레임에 위치를 확정한다(첫 렌더는 추정 폭으로 그려 깜빡임이 없다).
 
   status: 'loading' | 'found' | 'notFound' | 'error'
+
+  한국어 예문 카드(어절 탭 → ?from=ko&q= 역방향 조회) 용도로도 재사용한다 — 이때는 `info`
+  대신 `results`(배열, 최대 3개)를 넘긴다. 결과가 여러 개일 수 있어 단일 단어 레이아웃(발음·
+  TTS 버튼) 대신 "단어 + 대표 뜻 1줄" 목록을 그린다(TTS 없음 — 한국어라 발음 재생 대상이 아님).
+  notFoundMessage 로 상태별 안내 문구를 바꿀 수 있다(기본은 영어 단어 조회 문구).
 */
 const EDGE_MARGIN_PX = 12;      // 컨테이너 좌우 여백
 const TAIL_SIZE_PX = 10;        // 꼬리 한 변(회전 전 정사각형)
@@ -32,7 +37,10 @@ const ESTIMATED_WIDTH_PX = 200; // 첫 렌더 추정 폭
 
 const clamp = (v, min, max) => Math.min(Math.max(v, min), max);
 
-const WordInfoBubble = ({ anchor, container, status, info, speaking = false, onReplay }) => {
+const WordInfoBubble = ({
+  anchor, container, status, info, speaking = false, onReplay,
+  results = null, notFoundMessage = '사전에 없는 단어예요',
+}) => {
   const bodyRef = useRef(null);
   const [measuredWidth, setMeasuredWidth] = useState(null);
 
@@ -72,13 +80,19 @@ const WordInfoBubble = ({ anchor, container, status, info, speaking = false, onR
     ? (shouldShowReading({ ...info, origin: word }, 'ja') ? getReading(info) : '')
     : info?.pronunciation;
   const pronunciation = pronunciationRaw ? String(pronunciationRaw).trim() : '';
-  const meanings = Array.isArray(info?.meanings)
-    ? info.meanings
+  const meaningsOf = (item) => (Array.isArray(item?.meanings)
+    ? item.meanings
         .map((m) => (typeof m === 'string' ? m : (m?.meaning ?? m?.text ?? '')))
         .map((m) => String(m ?? '').trim())
         .filter(Boolean)
-        .slice(0, 3)
-    : [];
+    : []);
+  const meanings = meaningsOf(info).slice(0, 3);
+  // 활용형을 탭했을 때(matched_form !== base_form) — 제목은 이미 base_form(voca.word)이라
+  // 그 아래 작게 "「あります」의 기본형" 같은 안내만 덧붙인다.
+  const matchedForm = info?.matched_form ? String(info.matched_form).trim() : '';
+  const baseForm = info?.base_form ? String(info.base_form).trim() : '';
+  const showBaseFormHint = !results && matchedForm && baseForm && matchedForm !== baseForm;
+  const resultList = Array.isArray(results) ? results.slice(0, 3) : [];
 
   return (
     <motion.div
@@ -136,14 +150,36 @@ const WordInfoBubble = ({ anchor, container, status, info, speaking = false, onR
         )}
 
         {status === 'notFound' && (
-          <p className="text-[13px] font-[500] text-layout-gray-300 whitespace-nowrap">사전에 없는 단어예요</p>
+          <p className="text-[13px] font-[500] text-layout-gray-300 whitespace-nowrap">{notFoundMessage}</p>
         )}
 
         {status === 'error' && (
           <p className="text-[13px] font-[500] text-layout-gray-300 whitespace-nowrap">뜻을 불러오지 못했어요</p>
         )}
 
-        {status === 'found' && (
+        {status === 'found' && results && (
+          // 한국어 어절 역방향 조회 — 결과가 여러 개일 수 있어 "단어 + 대표 뜻 1줄" 목록으로 그린다.
+          // TTS 버튼 없음(한국어라 발음 재생 대상이 아님).
+          <div className="flex flex-col">
+            {resultList.map((item, i) => (
+              <div
+                key={item.voca_id ?? item.vocaId ?? `${item.word}-${i}`}
+                className={i > 0 ? 'mt-[6px] pt-[6px] border-t border-layout-gray-100 dark:border-[#3A3A3A]' : ''}
+              >
+                <span className="text-[14px] font-[700] leading-[1.3] text-layout-black dark:text-layout-white break-keep">
+                  {item.word}
+                </span>
+                {meaningsOf(item).slice(0, 1).map((m) => (
+                  <p key={m} className="text-[12px] font-[500] leading-[1.4] text-layout-gray-500 dark:text-layout-gray-200 break-keep">
+                    {m}
+                  </p>
+                ))}
+              </div>
+            ))}
+          </div>
+        )}
+
+        {status === 'found' && !results && (
           <div className="flex flex-col gap-[4px]">
             <div className="flex items-center gap-[6px]">
               <span lang={isJaWord ? 'ja' : undefined} className="text-[15px] font-[700] leading-[1.3] text-layout-black dark:text-layout-white break-keep">
@@ -169,6 +205,11 @@ const WordInfoBubble = ({ anchor, container, status, info, speaking = false, onR
                 <SpeakerHigh size={16} weight="fill" />
               </button>
             </div>
+            {showBaseFormHint && (
+              <span className="text-[12px] font-[400] leading-[1.3] text-layout-gray-300 whitespace-nowrap">
+                「{matchedForm}」의 기본형
+              </span>
+            )}
             {meanings.length > 0 && (
               <p className="text-[13px] font-[500] leading-[1.45] text-layout-gray-500 dark:text-layout-gray-200 break-keep">
                 {meanings.join(', ')}

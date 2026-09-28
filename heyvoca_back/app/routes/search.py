@@ -18,7 +18,9 @@ from app.services.word_resolve import (
     lookup_voca_exact as _lookup_voca_exact,
     word_info_suffix_candidates as _word_info_suffix_candidates,
     resolve_word_info as _resolve_word_info,
+    resolve_word_info_detailed as _resolve_word_info_detailed,
 )
+from app.services.ko_reverse_lookup import search_by_korean_meaning as _search_by_korean_meaning
 from app.services.admin_book_refs import load_admin_book_texts
 from flask_caching import Cache
 import redis
@@ -585,6 +587,11 @@ def _voca_meanings(voca_id, limit=_WORD_INFO_MAX_MEANINGS):
 @search_bp.route('/word-info', methods=['GET'])
 @jwt_required
 def word_info():
+    # 한국어 뜻 -> 단어 역방향 조회(예: ?q=계단을&from=ko). 기존 word(표기) 조회와
+    # 경로를 공유해 인증/블루프린트 등록을 그대로 재사용한다.
+    if request.args.get('from') == 'ko':
+        return _word_info_from_korean()
+
     raw_word = request.args.get('word', '')
     cleaned = _clean_word_token(raw_word)
     if not cleaned:
@@ -600,8 +607,10 @@ def word_info():
     if cached:
         return jsonify({'code': 200, 'data': cached}), 200
 
-    # ja 는 word_resolve 가 영어 lemma/접미사 규칙 대신 표기/읽기 정확 일치로 찾는다.
-    voca = _resolve_word_info(raw_word)
+    # ja 는 word_resolve 가 영어 lemma/접미사 규칙 대신 표기/읽기 정확 일치 → 활용형
+    # 역활용(deinflection) 순으로 찾는다. matched_form(탭한 표기)/base_form(사전 기본형)도
+    # 함께 받아 둘이 다르면(활용형이었으면) 응답에 실어 프론트가 "~의 기본형" 표시를 할 수 있게 한다.
+    voca, matched_form, base_form = _resolve_word_info_detailed(raw_word)
     if not voca:
         return jsonify({'code': 200, 'data': None}), 200
 
@@ -612,9 +621,50 @@ def word_info():
         'meanings': _voca_meanings(voca.id),
         'voca_id': voca.id,
         'vocaId': voca.id,
+        'matched_form': matched_form,
+        'base_form': base_form,
     }
     extras = load_ja_word_extras([voca.id], lang) if lang == 'ja' else None
     apply_word_fields(data, voca.id, extras, lang)
     app_cache.set(cache_key, data, timeout=_WORD_INFO_CACHE_TTL)
 
+    return jsonify({'code': 200, 'data': data}), 200
+
+
+## 한국어 뜻 -> 단어 역방향 조회 (예문 단어 탭 팝업 보조 — /word-info?from=ko&q=<한국어>)
+def _word_info_from_korean():
+    raw_q = request.args.get('q') or request.args.get('word', '')
+    q = (raw_q or '').strip()
+    if not q or len(q) > 30:
+        return jsonify({'code': 200, 'data': []}), 200
+
+    lang = get_dict_lang()
+    cache_key = f'search:wordinfo:ko:{lang}:{q}'
+    cached = app_cache.get(cache_key)
+    if cached is not None:
+        return jsonify({'code': 200, 'data': cached}), 200
+
+    voca_ids = _search_by_korean_meaning(q, lang=lang, limit=3)
+    if not voca_ids:
+        app_cache.set(cache_key, [], timeout=_WORD_INFO_CACHE_TTL)
+        return jsonify({'code': 200, 'data': []}), 200
+
+    extras = load_ja_word_extras(voca_ids, lang) if lang == 'ja' else None
+    data = []
+    for voca_id in voca_ids:
+        voca = db.session.query(Voca).filter(Voca.id == voca_id).first()
+        if not voca:
+            continue
+        item = {
+            'query': q,
+            'word': voca.word,
+            'pronunciation': voca.pronunciation,
+            'meanings': _voca_meanings(voca.id),
+            'voca_id': voca.id,
+            'vocaId': voca.id,
+        }
+        apply_word_fields(item, voca.id, extras, lang)
+        data.append(item)
+
+    app_cache.set(cache_key, data, timeout=_WORD_INFO_CACHE_TTL)
     return jsonify({'code': 200, 'data': data}), 200

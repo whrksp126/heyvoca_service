@@ -36,3 +36,29 @@ export const getWordInfoApi = async (word) => {
   wordInfoCache.set(cacheKey, data);
   return data;
 };
+
+/*
+  한국어 뜻(어절) -> 단어 역방향 조회 — 문장 만들기/빈칸 채우기 위쪽 한국어 예문 카드 속
+  어절을 탭했을 때 쓰는 말풍선용. GET /search/word-info?from=ko&q=<한국어 토큰>
+  응답: { code: 200, data: [ {query, word, pronunciation, meanings: [...], voca_id}, ... ] }
+  (최대 3개, 없으면 빈 배열 — null이 아님, 단일 조회 getWordInfoApi와 다르다)
+
+  캐시 키에 학습 언어 포함 — getWordInfoApi와 같은 모듈 레벨 Map을 공유해도 무방하지만
+  키 접두사(ko:)로 구분해 단일 조회 캐시와 충돌하지 않게 한다.
+*/
+export const getWordInfoFromKoreanApi = async (q) => {
+  const lang = getActiveLearningLang();
+  const key = String(q ?? '').trim();
+  if (!key) return [];
+  const cacheKey = `ko:${lang}:${key}`;
+  if (wordInfoCache.has(cacheKey)) return wordInfoCache.get(cacheKey);
+
+  const url = `${backendUrl}/search/word-info`;
+  const result = await fetchDataAsync(url, 'GET', { from: 'ko', q: encodeURIComponent(key) });
+  if (!result || result.code !== 200) {
+    throw new Error('getWordInfoFromKoreanApi 실패');
+  }
+  const data = Array.isArray(result.data) ? result.data : [];
+  wordInfoCache.set(cacheKey, data);
+  return data;
+};
