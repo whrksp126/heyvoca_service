@@ -6,7 +6,6 @@ import WordInfoBubble from '../../../components/common/WordInfoBubble';
 import { haptic } from '../../../lib/feel';
 import { playSuccessSound, playErrorSound } from '../../../utils/audio';
 import { getTextSound, stripHtmlTags } from '../../../utils/common';
-import { getAdvanceDelay } from '../../../utils/studyTiming';
 import { useStudyAdvanceGate } from '../../../hooks/useStudyAdvanceGate';
 import { getMemoryStateKeyByStability } from '../../../components/common/MemoryStateChangeBadge';
 import { useResumeReplayKey } from '../../../hooks/useResumeReplayKey';
@@ -40,8 +39,11 @@ const SentenceArrangeQuestion = ({ question, onComplete, onCardMatched, farmByWo
   const advanceGate = useStudyAdvanceGate();
   const wordTtsActiveRef = useRef(false);
   // 위 카드(한국어 해석) 어절 탭 → 역방향 조회 말풍선. TTS는 재생하지 않는다.
-  const koCardRef = useRef(null);
-  const koLookup = useKoreanWordLookup(koCardRef);
+  const koLookup = useKoreanWordLookup();
+  // 채점 후 "다음" 버튼을 누를 때 진행할 콜백 — 채점 순간(handleSubmit)에 캡처해 둔다(2026-09-29,
+  // 예전엔 advanceGate.arm으로 자동 진행했지만 출력형 문제는 결과를 사용자가 직접 확인하고
+  // 넘겨야 한다). 로그 전송·재출제(onCardMatched)는 여전히 채점 즉시 처리 — 진행만 수동이다.
+  const nextRef = useRef(null);
   const speakGenRef = useRef(0);
   const onCompleteRef = useRef(onComplete);
   useEffect(() => { onCompleteRef.current = onComplete; });
@@ -136,10 +138,15 @@ const SentenceArrangeQuestion = ({ question, onComplete, onCardMatched, farmByWo
     const plainAnswer = stripTags(answerText);
     if (plainAnswer) speak(plainAnswer, answerLang, 'answer');
 
-    advanceGate.arm({
-      minDelayMs: getAdvanceDelay(correct),
-      onAdvance: () => onCompleteRef.current?.([result], { processed: processedNow }),
-    });
+    // 자동으로 넘어가지 않는다(2026-09-29) — 결과(칩 정오답·정답 문장·XP)를 보여준 채로
+    // 대기하다가 사용자가 "다음" 버튼을 눌러야 진행한다. onCardMatched는 이미 위에서
+    // 채점 즉시 처리했다(진행 바·로그 전송·재출제 타이밍은 기존과 동일).
+    nextRef.current = () => onCompleteRef.current?.([result], { processed: processedNow });
+  };
+
+  const handleNext = () => {
+    haptic('light');
+    nextRef.current?.();
   };
 
   const showTtsRipple = isSpeaking && speakingTarget === 'shown';
@@ -211,11 +218,9 @@ const SentenceArrangeQuestion = ({ question, onComplete, onCardMatched, farmByWo
 
   return (
     <div className="flex flex-col gap-[15px] h-full">
-      {/* 위 카드 — 한국어 해석. 카드 전체 탭 = 읽기(TTS), 어절 탭 = 한국어 역방향 사전 조회 */}
-      <motion.button
-        ref={koCardRef}
-        type="button"
-        aria-label="해석 듣기"
+      {/* 위 카드 — 한국어 해석. 카드 자체는 탭 동작 없음 — 왼쪽 스피커 아이콘을 눌러야
+          읽는다(2026-09-29, 예전엔 카드 전체 탭 = TTS 였다). 어절 탭 = 한국어 역방향 사전 조회. */}
+      <motion.div
         className="
           relative overflow-hidden
           w-full px-[20px] py-[18px]
@@ -224,13 +229,18 @@ const SentenceArrangeQuestion = ({ question, onComplete, onCardMatched, farmByWo
         "
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
-        whileTap={{ scale: 0.96 }}
         transition={{ duration: 0.2, ease: [0.4, 0, 0.2, 1] }}
         style={{ willChange: 'transform, opacity' }}
-        onClick={handleCardClick}
       >
         <div className="relative z-[1] flex items-start gap-[12px]">
-          <span className="relative flex-shrink-0 mt-[3px]">
+          <motion.button
+            type="button"
+            aria-label="해석 듣기"
+            whileTap={{ scale: 0.9 }}
+            transition={{ duration: 0.15 }}
+            className="relative flex-shrink-0 mt-[3px]"
+            onClick={handleCardClick}
+          >
             {showTtsRipple && (
               <TtsRipple
                 size={90}
@@ -245,26 +255,25 @@ const SentenceArrangeQuestion = ({ question, onComplete, onCardMatched, farmByWo
             >
               <SpeakerHigh size={22} weight="fill" />
             </motion.span>
-          </span>
+          </motion.button>
           <p className="text-[19px] font-[600] leading-[1.6] text-layout-black dark:text-layout-white break-keep">
             {renderKoTokens()}
           </p>
         </div>
 
-        {/* 어절 사전 말풍선 — 카드가 overflow-hidden + relative 라 이 안에 두면 카드 밖으로 안 나간다. */}
+        {/* 어절 사전 말풍선 — document.body 포털(WordInfoBubble)이라 카드가 짧아도 잘리지 않는다. */}
         <AnimatePresence>
           {koLookup.lookup && (
             <WordInfoBubble
               key={koLookup.lookup.key}
               anchor={koLookup.lookup.anchor}
-              container={koLookup.lookup.container}
               status={koLookup.lookup.status}
               results={koLookup.lookup.results}
               notFoundMessage="사전에서 찾지 못했어요"
             />
           )}
         </AnimatePresence>
-      </motion.button>
+      </motion.div>
 
       {/* 아래 — 트레이(회색 카드) + 조각 은행 + 확인 */}
       <ArrangeTray
@@ -281,6 +290,8 @@ const SentenceArrangeQuestion = ({ question, onComplete, onCardMatched, farmByWo
         resumeReplayKey={resumeReplayKey}
         advanceGate={advanceGate}
         onSubmit={handleSubmit}
+        onPiecePlaced={(word) => speak(word, answerLang)}
+        onNext={handleNext}
       />
     </div>
   );

@@ -8,7 +8,6 @@ import LiftAboveBar from '../../../components/common/LiftAboveBar';
 import { haptic } from '../../../lib/feel';
 import { playSuccessSound, playErrorSound } from '../../../utils/audio';
 import { getTextSound, stripHtmlTags } from '../../../utils/common';
-import { getAdvanceDelay } from '../../../utils/studyTiming';
 import { useStudyAdvanceGate } from '../../../hooks/useStudyAdvanceGate';
 import { getMemoryStateKeyByStability } from '../../../components/common/MemoryStateChangeBadge';
 import { useResumeReplayKey } from '../../../hooks/useResumeReplayKey';
@@ -55,6 +54,9 @@ const FillInTheBlankTypingQuestion = ({ question, onComplete, onCardMatched, far
   const speakGenRef = useRef(0);
   const onCompleteRef = useRef(onComplete);
   useEffect(() => { onCompleteRef.current = onComplete; });
+  // 채점 후 "다음" 버튼을 누를 때 진행할 콜백(2026-09-29) — 출력형 문제는 자동으로 안 넘어가고
+  // 사용자가 직접 눌러야 진행한다.
+  const nextRef = useRef(null);
 
   const prevStateKeyRef = useRef(
     getMemoryStateKeyByStability(question.fsrs?.stability ?? 0, question.fsrs?.state ?? null)
@@ -168,10 +170,14 @@ const FillInTheBlankTypingQuestion = ({ question, onComplete, onCardMatched, far
 
     speak(answerText, blankLang, 'answer');
 
-    advanceGate.arm({
-      minDelayMs: getAdvanceDelay(grade.isCorrect),
-      onAdvance: () => onCompleteRef.current?.([result], { processed: processedNow }),
-    });
+    // 자동으로 넘어가지 않는다(2026-09-29) — 결과를 보여준 채로 대기하다가 사용자가 "다음"을
+    // 눌러야 진행한다. onCardMatched는 이미 채점 즉시 처리했다(로그 전송·재출제 타이밍 동일).
+    nextRef.current = () => onCompleteRef.current?.([result], { processed: processedNow });
+  };
+
+  const handleNext = () => {
+    haptic('light');
+    nextRef.current?.();
   };
 
   const showTtsRipple = isSpeaking && speakingTarget === 'shown';
@@ -192,10 +198,9 @@ const FillInTheBlankTypingQuestion = ({ question, onComplete, onCardMatched, far
 
   return (
     <div className="flex flex-col gap-[15px] h-full">
-      {/* 위 카드 — 한국어 예문(강조). 카드 전체 탭 = 읽기(TTS) */}
-      <motion.button
-        type="button"
-        aria-label="예문 듣기"
+      {/* 위 카드 — 한국어 예문(강조). 카드 자체는 탭 동작 없음 — 왼쪽 스피커 아이콘을 눌러야
+          읽는다(2026-09-29, 예전엔 카드 전체 탭 = TTS 였다). */}
+      <motion.div
         className="
           relative overflow-hidden
           w-full px-[20px] py-[18px]
@@ -204,13 +209,18 @@ const FillInTheBlankTypingQuestion = ({ question, onComplete, onCardMatched, far
         "
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
-        whileTap={{ scale: 0.96 }}
         transition={{ duration: 0.2, ease: [0.4, 0, 0.2, 1] }}
         style={{ willChange: 'transform, opacity' }}
-        onClick={handleCardClick}
       >
         <div className="relative z-[1] flex items-start gap-[12px]">
-          <span className="relative flex-shrink-0 mt-[3px]">
+          <motion.button
+            type="button"
+            aria-label="예문 듣기"
+            whileTap={{ scale: 0.9 }}
+            transition={{ duration: 0.15 }}
+            className="relative flex-shrink-0 mt-[3px]"
+            onClick={handleCardClick}
+          >
             {showTtsRipple && (
               <TtsRipple
                 size={90}
@@ -225,7 +235,7 @@ const FillInTheBlankTypingQuestion = ({ question, onComplete, onCardMatched, far
             >
               <SpeakerHigh size={22} weight="fill" />
             </motion.span>
-          </span>
+          </motion.button>
           <p className="text-[19px] font-[600] leading-[1.6] text-layout-black dark:text-layout-white break-keep">
             {(renderHighlightedText(ko) ?? []).map((p) => (
               <span key={p.key} className={p.hl ? 'text-primary-main-600 font-[700]' : undefined}>
@@ -234,7 +244,7 @@ const FillInTheBlankTypingQuestion = ({ question, onComplete, onCardMatched, far
             ))}
           </p>
         </div>
-      </motion.button>
+      </motion.div>
 
       {/* 아래 카드 — 빈칸 예문 + 직접 입력 */}
       <motion.div
@@ -353,23 +363,25 @@ const FillInTheBlankTypingQuestion = ({ question, onComplete, onCardMatched, far
         />
       </motion.div>
 
-      {/* 확인 — 서비스 공용 primary CTA 규칙(분홍 bg-primary-main-600 활성 / 회색 비활성). */}
+      {/* 확인/다음 — 서비스 공용 primary CTA 규칙(분홍 bg-primary-main-600 활성 / 회색 비활성).
+          채점 후에는 자동으로 넘어가지 않고 "다음"으로 바뀐다(2026-09-29) — 사용자가 결과를
+          직접 확인하고 눌러야 진행한다. */}
       <motion.button
         type="button"
-        disabled={isAnswered || !value.trim()}
-        whileTap={!isAnswered && value.trim() ? { scale: 0.97 } : undefined}
+        disabled={!isAnswered && !value.trim()}
+        whileTap={isAnswered || value.trim() ? { scale: 0.97 } : undefined}
         transition={{ type: 'spring', stiffness: 400, damping: 17 }}
-        onClick={handleSubmit}
+        onClick={isAnswered ? handleNext : handleSubmit}
         className={`
           flex-shrink-0
           h-[50px] rounded-[12px]
           text-[16px] font-[700]
-          ${isAnswered || !value.trim()
+          ${!isAnswered && !value.trim()
             ? 'bg-layout-gray-200 dark:bg-[#2A2A2A] text-layout-gray-400 dark:text-layout-gray-300'
-            : 'bg-primary-main-600 text-layout-white dark:text-layout-black'}
+            : 'bg-primary-main-600 text-layout-white'}
         `}
       >
-        확인
+        {isAnswered ? '다음' : '확인'}
       </motion.button>
     </div>
   );

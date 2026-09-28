@@ -8,10 +8,11 @@ import { haptic } from '../lib/feel';
   getWordInfoApi)과 달리 결과가 배열(최대 3개)이라 info 대신 results 를 들고 있다가
   WordInfoBubble(results prop)에 그대로 넘긴다. 한국어라 TTS 는 재생하지 않는다.
 
-  cardRef: 말풍선의 기준 컨테이너(카드) DOM ref — WordInfoBubble 의 anchor/container 좌표는
-  이 요소 기준으로 계산한다(카드는 relative + overflow-hidden).
+  WordInfoBubble 는 document.body 포털 + position:fixed 로 그리므로(2026-09-29, 카드
+  overflow-hidden 에 잘리는 문제 수정), anchor 는 탭한 어절의 뷰포트 기준
+  getBoundingClientRect() 를 그대로 쓴다 — 카드 DOM ref 가 더 이상 필요 없다.
 */
-export const useKoreanWordLookup = (cardRef) => {
+export const useKoreanWordLookup = () => {
   const [lookup, setLookup] = useState(null);
   const reqRef = useRef(0);
 
@@ -26,24 +27,20 @@ export const useKoreanWordLookup = (cardRef) => {
       closeLookup();
       return;
     }
-    const cardEl = cardRef.current;
     const wordEl = e.currentTarget;
-    if (!cardEl || !wordEl) return;
-    const cardRect = cardEl.getBoundingClientRect();
+    if (!wordEl) return;
     const wordRect = wordEl.getBoundingClientRect();
-    const scale = cardEl.offsetWidth ? (cardRect.width / cardEl.offsetWidth) || 1 : 1;
     const anchor = {
-      top: (wordRect.top - cardRect.top) / scale,
-      left: (wordRect.left - cardRect.left) / scale,
-      width: wordRect.width / scale,
-      height: wordRect.height / scale,
+      top: wordRect.top,
+      left: wordRect.left,
+      width: wordRect.width,
+      height: wordRect.height,
     };
-    const container = { width: cardEl.offsetWidth, height: cardEl.offsetHeight };
 
     haptic('light');
 
     const reqId = ++reqRef.current;
-    setLookup({ key, anchor, container, status: 'loading', results: null });
+    setLookup({ key, anchor, status: 'loading', results: null });
     getWordInfoFromKoreanApi(word)
       .then((results) => {
         if (reqId !== reqRef.current) return;

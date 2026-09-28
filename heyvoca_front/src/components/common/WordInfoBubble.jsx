@@ -1,4 +1,5 @@
 import { useLayoutEffect, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { motion } from 'framer-motion';
 import { SpeakerHigh } from '@phosphor-icons/react';
 import { getReading, shouldShowReading } from '../../utils/jaWord';
@@ -6,14 +7,19 @@ import { getReading, shouldShowReading } from '../../utils/jaWord';
 /*
   단어 사전 말풍선 — 예문 속 영어 단어를 탭하면 그 단어 아래(또는 위)에 뜬다(듀오링고 방식).
 
-  위치 계산은 부모가 넘긴 값만으로 한다(이 컴포넌트는 DOM 을 조회하지 않는다).
-  - anchor:    탭한 단어 버튼의 사각형 — **컨테이너(부모 카드) 기준** 좌표 { top, left, width, height }
-  - container: 컨테이너 크기 { width, height } — 카드는 relative + overflow-hidden 이라
-               말풍선이 카드 밖으로 나가면 잘리므로 여기 안에 가두어야 한다.
+  document.body 에 포털로 그린다(2026-09-29) — 예전엔 부모 카드(relative + overflow-hidden)
+  안에 절대 배치해서, 카드가 짧으면(위쪽 한국어 예문 카드 등) 말풍선 위쪽이 카드 밖으로
+  못 나가고 잘렸다. 포털 + position:fixed 로 뷰포트 기준에 그리면 어떤 카드에서 열어도
+  잘리지 않는다.
+
+  위치 계산은 부모가 넘긴 anchor(탭한 단어 버튼의 **뷰포트 기준** getBoundingClientRect,
+  { top, left, width, height })만으로 한다 — 카드 좌표계 변환이 필요 없다.
 
   배치 규칙
-  1. 기본은 단어 **아래**. 단어 아래쪽에 말풍선 자리(BUBBLE_ROOM_PX)가 없으면 **위**에 둔다.
-  2. 가로는 단어 중앙에 맞추되 컨테이너 안쪽 EDGE_MARGIN_PX 를 남기고 clamp 한다.
+  1. 기본은 단어 **아래**. 아래쪽에 말풍선 자리(BUBBLE_ROOM_PX)가 없으면 **위**에 둔다.
+     위쪽도 부족하면(예: 화면 맨 위 근처) 공간이 더 넓은 쪽을 쓴다 — 가장자리에서 잘리는
+     대신 뒤집는다.
+  2. 가로는 단어 중앙에 맞추되 화면 안쪽 EDGE_MARGIN_PX 를 남기고 clamp 한다.
   3. 꼬리(삼각형)는 말풍선이 clamp 로 밀렸어도 항상 단어 중앙을 가리킨다
      (꼬리 x 는 말풍선 안쪽으로만 clamp — 모서리 radius 를 침범하지 않게).
 
@@ -27,7 +33,7 @@ import { getReading, shouldShowReading } from '../../utils/jaWord';
   TTS 버튼) 대신 "단어 + 대표 뜻 1줄" 목록을 그린다(TTS 없음 — 한국어라 발음 재생 대상이 아님).
   notFoundMessage 로 상태별 안내 문구를 바꿀 수 있다(기본은 영어 단어 조회 문구).
 */
-const EDGE_MARGIN_PX = 12;      // 컨테이너 좌우 여백
+const EDGE_MARGIN_PX = 12;      // 화면 좌우 여백
 const TAIL_SIZE_PX = 10;        // 꼬리 한 변(회전 전 정사각형)
 const TAIL_GAP_PX = 8;          // 단어와 말풍선 본체 사이 간격(꼬리 높이 ≈ 7px + 여유)
 const BUBBLE_ROOM_PX = 120;     // 아래에 이만큼 없으면 위로 올린다
@@ -38,7 +44,7 @@ const ESTIMATED_WIDTH_PX = 200; // 첫 렌더 추정 폭
 const clamp = (v, min, max) => Math.min(Math.max(v, min), max);
 
 const WordInfoBubble = ({
-  anchor, container, status, info, speaking = false, onReplay,
+  anchor, status, info, speaking = false, onReplay,
   results = null, notFoundMessage = '사전에 없는 단어예요',
 }) => {
   const bodyRef = useRef(null);
@@ -52,25 +58,30 @@ const WordInfoBubble = ({
   });
 
   const width = measuredWidth ?? ESTIMATED_WIDTH_PX;
-  const containerW = container?.width ?? 0;
-  const containerH = container?.height ?? 0;
+  const viewportW = typeof window !== 'undefined' ? window.innerWidth : 0;
+  const viewportH = typeof window !== 'undefined' ? window.innerHeight : 0;
   const wordCenterX = (anchor?.left ?? 0) + (anchor?.width ?? 0) / 2;
-  const wordBottom = (anchor?.top ?? 0) + (anchor?.height ?? 0);
+  const wordTop = anchor?.top ?? 0;
+  const wordBottom = wordTop + (anchor?.height ?? 0);
 
-  // 1. 위/아래 — 단어 아래 남은 공간이 부족하면 위에 둔다
-  const placeBelow = containerH - wordBottom - TAIL_GAP_PX >= BUBBLE_ROOM_PX;
+  // 1. 위/아래 — 단어 아래 남은 공간이 부족하면 위에 둔다. 위쪽도 부족하면(화면 맨 위 근처)
+  //    잘리는 대신 공간이 더 넓은 쪽으로 뒤집는다.
+  const spaceBelow = viewportH - wordBottom - TAIL_GAP_PX;
+  const spaceAbove = wordTop - TAIL_GAP_PX;
+  const placeBelow = spaceBelow >= BUBBLE_ROOM_PX || spaceBelow >= spaceAbove;
 
-  // 2. 가로 clamp — 컨테이너가 말풍선보다 좁으면 왼쪽 여백 기준으로 붙인다
-  const maxLeft = Math.max(EDGE_MARGIN_PX, containerW - EDGE_MARGIN_PX - width);
+  // 2. 가로 clamp — 화면이 말풍선보다 좁으면 왼쪽 여백 기준으로 붙인다
+  const maxLeft = Math.max(EDGE_MARGIN_PX, viewportW - EDGE_MARGIN_PX - width);
   const left = clamp(wordCenterX - width / 2, EDGE_MARGIN_PX, maxLeft);
 
   // 3. 꼬리는 항상 단어 중앙 — 말풍선 안쪽(모서리 radius 밖)으로만 clamp
   const tailX = clamp(wordCenterX - left, EDGE_MARGIN_PX + TAIL_SIZE_PX / 2, Math.max(EDGE_MARGIN_PX + TAIL_SIZE_PX / 2, width - EDGE_MARGIN_PX - TAIL_SIZE_PX / 2));
 
-  // 위치 스타일 — 계산값이라 Tailwind 클래스로 표현할 수 없어 style 로 넘긴다(여기만).
+  // 위치 스타일 — position:fixed 라 뷰포트 기준 값을 그대로 쓴다(계산값이라 Tailwind 클래스로
+  // 표현할 수 없어 style 로 넘긴다 — 여기만).
   const positionStyle = placeBelow
-    ? { top: wordBottom + TAIL_GAP_PX, left }
-    : { bottom: containerH - (anchor?.top ?? 0) + TAIL_GAP_PX, left };
+    ? { position: 'fixed', top: wordBottom + TAIL_GAP_PX, left }
+    : { position: 'fixed', bottom: viewportH - wordTop + TAIL_GAP_PX, left };
 
   const word = info?.word ?? info?.query ?? '';
   // ja 단어는 발음 자리에 읽기(reading)를 둔다(romaji 는 표시하지 않음)
@@ -94,12 +105,14 @@ const WordInfoBubble = ({
   const showBaseFormHint = !results && matchedForm && baseForm && matchedForm !== baseForm;
   const resultList = Array.isArray(results) ? results.slice(0, 3) : [];
 
-  return (
+  if (typeof document === 'undefined') return null;
+
+  return createPortal(
     <motion.div
       role="dialog"
       aria-label="단어 뜻"
       data-word-info-bubble
-      className="absolute z-[4] pointer-events-auto"
+      className="z-[1200] pointer-events-auto"
       style={positionStyle}
       initial={{ opacity: 0, y: placeBelow ? 4 : -4, scale: 0.96 }}
       animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -220,7 +233,8 @@ const WordInfoBubble = ({
           </div>
         )}
       </div>
-    </motion.div>
+    </motion.div>,
+    document.body,
   );
 };
 

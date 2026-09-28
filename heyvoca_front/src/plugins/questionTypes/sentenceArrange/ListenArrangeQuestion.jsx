@@ -5,7 +5,6 @@ import TtsRipple from '../../../components/common/TtsRipple';
 import { haptic } from '../../../lib/feel';
 import { playSuccessSound, playErrorSound } from '../../../utils/audio';
 import { getTextSound, stripHtmlTags } from '../../../utils/common';
-import { getAdvanceDelay } from '../../../utils/studyTiming';
 import { useStudyAdvanceGate } from '../../../hooks/useStudyAdvanceGate';
 import { getMemoryStateKeyByStability } from '../../../components/common/MemoryStateChangeBadge';
 import { useResumeReplayKey } from '../../../hooks/useResumeReplayKey';
@@ -39,6 +38,9 @@ const ListenArrangeQuestion = ({ question, onComplete, onCardMatched, farmByWord
   const wordGapTimeoutRef = useRef(null);
   const onCompleteRef = useRef(onComplete);
   useEffect(() => { onCompleteRef.current = onComplete; });
+  // 채점 후 "다음" 버튼을 누를 때 진행할 콜백(2026-09-29) — SentenceArrangeQuestion과 동일 규칙,
+  // 출력형 문제는 자동으로 안 넘어가고 사용자가 직접 눌러야 진행한다.
+  const nextRef = useRef(null);
 
   const prevStateKeyRef = useRef(
     getMemoryStateKeyByStability(question.fsrs?.stability ?? 0, question.fsrs?.state ?? null)
@@ -81,7 +83,7 @@ const ListenArrangeQuestion = ({ question, onComplete, onCardMatched, farmByWord
 
   // 0.7배속 = 문장을 단어 단위로 끊어 한 단어씩 재생 → WORD_GAP_MS 간격 → 다음 단어.
   // speak()와 같은 gen 카운터를 공유해서(speakGenRef) 다른 재생이 끼어들면 즉시 멈춘다.
-  const WORD_GAP_MS = 350;
+  const WORD_GAP_MS = 175;
   const speakWordsSlowly = async (text, lang, target, rate) => {
     const words = text.split(/\s+/).filter(Boolean);
     if (words.length === 0) return;
@@ -181,10 +183,14 @@ const ListenArrangeQuestion = ({ question, onComplete, onCardMatched, farmByWord
     const processedNow = typeof onCardMatched === 'function';
     if (processedNow) onCardMatched(result);
 
-    advanceGate.arm({
-      minDelayMs: getAdvanceDelay(correct),
-      onAdvance: () => onCompleteRef.current?.([result], { processed: processedNow }),
-    });
+    // 자동으로 넘어가지 않는다(2026-09-29) — 결과를 보여준 채로 대기하다가 사용자가 "다음"을
+    // 눌러야 진행한다. onCardMatched는 이미 채점 즉시 처리했다(로그 전송·재출제 타이밍 동일).
+    nextRef.current = () => onCompleteRef.current?.([result], { processed: processedNow });
+  };
+
+  const handleNext = () => {
+    haptic('light');
+    nextRef.current?.();
   };
 
   // 채점 후: 정오답과 무관하게 한국어 해석 공개(원문은 이미 오디오로 들었다 — 문장 만들기와
@@ -272,6 +278,8 @@ const ListenArrangeQuestion = ({ question, onComplete, onCardMatched, farmByWord
         resumeReplayKey={resumeReplayKey}
         advanceGate={advanceGate}
         onSubmit={handleSubmit}
+        onPiecePlaced={(word) => speak(word, answerLang, null, 1)}
+        onNext={handleNext}
       />
     </div>
   );

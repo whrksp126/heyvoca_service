@@ -135,11 +135,9 @@ const FillInTheBlankQuestion = ({ question, onComplete, onCardMatched, farmByWor
   */
   const [lookup, setLookup] = useState(null);
   const lookupReqRef = useRef(0); // 늦게 도착한 이전 단어의 응답이 현재 말풍선을 덮지 않게
-  const blankCardRef = useRef(null);
   // 위 카드(한국어 예문) 어절 탭 → 역방향 조회 말풍선 — 아래 카드의 영어 단어 조회(lookup)와
   // 별개 상태(결과가 배열이라 훅을 분리했다). TTS는 재생하지 않는다.
-  const shownCardRef = useRef(null);
-  const koLookup = useKoreanWordLookup(shownCardRef);
+  const koLookup = useKoreanWordLookup();
   const startTimeRef = useRef(Date.now());
   // 백그라운드 복귀 시 정답 링/성장 게이지가 최종 상태로 정적으로 스냅되는 것을 막기 위한
   // 재마운트용 키 (이유는 useResumeReplayKey 주석 참고)
@@ -244,10 +242,9 @@ const FillInTheBlankQuestion = ({ question, onComplete, onCardMatched, farmByWor
 
   /*
     영어 예문 단어 탭 — 단어를 읽고 말풍선을 연다. 같은 단어를 다시 탭하면 닫힌다.
-    위치는 단어 버튼과 아래 카드의 getBoundingClientRect 차이로 구한다(카드는 relative +
-    overflow-hidden 이라 말풍선은 카드 안 좌표계에 놓인다). 카드 자체에는 탭 인터랙션이 없지만,
-    상위로 이벤트가 번지지 않게 stopPropagation은 유지한다. scale 나눗셈은 만약을 대비한
-    방어 코드(카드가 변형되는 경우가 없어도 무해하다).
+    말풍선은 document.body 포털 + position:fixed 로 그려서(WordInfoBubble, 2026-09-29) anchor 는
+    탭한 단어의 뷰포트 기준 getBoundingClientRect() 를 그대로 쓴다 — 카드 좌표계 변환이 필요
+    없다. 카드 자체에는 탭 인터랙션이 없지만, 상위로 이벤트가 번지지 않게 stopPropagation은 유지한다.
   */
   const handleWordTap = (e, key, cleanWord) => {
     e.stopPropagation();
@@ -255,25 +252,21 @@ const FillInTheBlankQuestion = ({ question, onComplete, onCardMatched, farmByWor
       closeLookup();
       return;
     }
-    const cardEl = blankCardRef.current;
     const wordEl = e.currentTarget;
-    if (!cardEl || !wordEl) return;
-    const cardRect = cardEl.getBoundingClientRect();
+    if (!wordEl) return;
     const wordRect = wordEl.getBoundingClientRect();
-    const scale = cardEl.offsetWidth ? (cardRect.width / cardEl.offsetWidth) || 1 : 1;
     const anchor = {
-      top: (wordRect.top - cardRect.top) / scale,
-      left: (wordRect.left - cardRect.left) / scale,
-      width: wordRect.width / scale,
-      height: wordRect.height / scale,
+      top: wordRect.top,
+      left: wordRect.left,
+      width: wordRect.width,
+      height: wordRect.height,
     };
-    const container = { width: cardEl.offsetWidth, height: cardEl.offsetHeight };
 
     haptic('light');
     speak(cleanWord, blankLang, 'lookup');
 
     const reqId = ++lookupReqRef.current;
-    setLookup({ key, word: cleanWord, anchor, container, status: 'loading', info: null });
+    setLookup({ key, word: cleanWord, anchor, status: 'loading', info: null });
     getWordInfoApi(cleanWord)
       .then((info) => {
         if (reqId !== lookupReqRef.current) return;
@@ -467,11 +460,9 @@ const FillInTheBlankQuestion = ({ question, onComplete, onCardMatched, farmByWor
 
   return (
     <div className="flex flex-col gap-[15px] h-full">
-      {/* 위 카드 — 보여 주는 예문. 카드 전체 탭 = 읽기(TTS), 어절 탭 = 한국어 역방향 사전 조회 */}
-      <motion.button
-        ref={shownCardRef}
-        type="button"
-        aria-label="예문 듣기"
+      {/* 위 카드 — 보여 주는 예문. 카드 자체는 탭 동작 없음 — 왼쪽 스피커 아이콘을 눌러야
+          읽는다(2026-09-29, 예전엔 카드 전체 탭 = TTS 였다). 어절 탭 = 한국어 역방향 사전 조회. */}
+      <motion.div
         className="
           relative overflow-hidden
           w-full px-[20px] py-[18px]
@@ -480,15 +471,20 @@ const FillInTheBlankQuestion = ({ question, onComplete, onCardMatched, farmByWor
         "
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
-        whileTap={{ scale: 0.96 }}
         transition={{ duration: 0.2, ease: [0.4, 0, 0.2, 1] }}
         style={{ willChange: 'transform, opacity' }}
-        onClick={handleCardClick}
       >
         <div className="relative z-[1] flex items-start gap-[12px]">
           {/* 스피커 아이콘 — 텍스트 왼쪽. 평소엔 회색, 읽는 동안 primary + 맥동.
               ripple 은 이 아이콘과 같은 앵커(relative span)에 겹쳐 그려 파동 중심이 아이콘과 일치하게 한다. */}
-          <span className="relative flex-shrink-0 mt-[3px]">
+          <motion.button
+            type="button"
+            aria-label="예문 듣기"
+            whileTap={{ scale: 0.9 }}
+            transition={{ duration: 0.15 }}
+            className="relative flex-shrink-0 mt-[3px]"
+            onClick={handleCardClick}
+          >
             {showTtsRipple && (
               <TtsRipple
                 size={90}
@@ -503,33 +499,31 @@ const FillInTheBlankQuestion = ({ question, onComplete, onCardMatched, farmByWor
             >
               <SpeakerHigh size={22} weight="fill" />
             </motion.span>
-          </span>
+          </motion.button>
           <p className="text-[19px] font-[600] leading-[1.6] text-layout-black dark:text-layout-white break-keep">
             {renderShownKoreanTokens()}
           </p>
         </div>
 
-        {/* 어절 사전 말풍선 — 카드가 overflow-hidden + relative 라 이 안에 두면 카드 밖으로 안 나간다. */}
+        {/* 어절 사전 말풍선 — document.body 포털(WordInfoBubble)이라 카드가 짧아도 잘리지 않는다. */}
         <AnimatePresence>
           {koLookup.lookup && (
             <WordInfoBubble
               key={koLookup.lookup.key}
               anchor={koLookup.lookup.anchor}
-              container={koLookup.lookup.container}
               status={koLookup.lookup.status}
               results={koLookup.lookup.results}
               notFoundMessage="사전에서 찾지 못했어요"
             />
           )}
         </AnimatePresence>
-      </motion.button>
+      </motion.div>
 
       {/* 아래 카드 — 빈칸 예문. 카드 자체에는 탭 인터랙션이 없다(정답 유출 방지 + 요청에 따라
           누름 효과도 없앰) — role/aria/onClick/whileTap 을 아예 붙이지 않는다.
           <button> 이 아니라 div 인 이유: 안에 <p>·농장 상태 바(블록 요소)가 들어가
           button 의 phrasing-content 제약을 어긴다. O/X 는 pointer-events-none 이라 탭을 막지 않는다. */}
       <motion.div
-        ref={blankCardRef}
         data-lift-card=""
         className="
           relative
@@ -592,7 +586,6 @@ const FillInTheBlankQuestion = ({ question, onComplete, onCardMatched, farmByWor
             <WordInfoBubble
               key={lookup.key}
               anchor={lookup.anchor}
-              container={lookup.container}
               status={lookup.status}
               info={lookup.info}
               speaking={isSpeaking && speakingTarget === 'lookup'}
