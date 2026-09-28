@@ -871,8 +871,11 @@ const StudyResult = () => {
       }
 
       /*
-        시안 순서표에 없는 기존 슬라이드 — 콤보(AI 추천 전용)와 출석.
-        출석은 연속 학습과 겹치지만 출석왕 업적이 attend 를 쓰고 있어 지우지 않았다(시안 §4 콜아웃).
+        시안 순서표에 없는 기존 슬라이드 — 콤보(AI 추천 전용).
+        출석(토끼 + "오늘도 출석 완료!") 슬라이드는 2026-09-28 제거 — ⑩ 연속 학습(farmStreak)
+        슬라이드와 같은 사실("오늘 학습해서 출석/연속 기록이 이어졌다")을 중복으로 알렸다.
+        result.attend 자체(서버 출석 처리·보석 지급)는 그대로 두고, 화면에만 안 그린다
+        (출석왕 업적은 result.goals 로 따로 온다 — 여기 안 지워도 영향 없음).
 
         콤보 슬라이드는 '이 세션에서 최고 기록을 실제로 갱신했을 때만' 보여준다(동률 제외).
         comboSummary.bestUpdated 는 Main.jsx 의 isComboRecordEvent(핵심 판정: 백엔드
@@ -883,12 +886,6 @@ const StudyResult = () => {
         screens.push({
           type: 'combo',
           data: comboSummary,
-        });
-      }
-      if (result.attend) {
-        screens.push({
-          type: 'attend',
-          data: {}
         });
       }
 
