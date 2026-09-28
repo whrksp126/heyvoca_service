@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useLayoutEffect } from 'react';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { Circle, X, SpeakerHigh } from '@phosphor-icons/react';
 import { FarmResultBar } from '../../../components/farm/FarmStatusBar';
@@ -42,6 +42,11 @@ const FillInTheBlankTypingQuestion = ({ question, onComplete, onCardMatched, far
   const [speakingTarget, setSpeakingTarget] = useState(null); // 'shown' | 'answer' | null
 
   const inputRef = useRef(null);
+  // 입력 칸 폭을 실제 입력 글자 폭에 맞추기 위한 숨김 미러 span 측정값(px).
+  // size 속성(문자 수 기반 근사치)은 한글/볼드 폰트에서 실제 폭과 크게 어긋나
+  // 칸이 글자보다 훨씬 넓어 보이는 문제가 있었다(2026-09-29).
+  const measureRef = useRef(null);
+  const [inputWidth, setInputWidth] = useState(null);
   const startTimeRef = useRef(Date.now());
   const resumeReplayKey = useResumeReplayKey();
   const reducedMotion = useReducedMotion();
@@ -107,6 +112,15 @@ const FillInTheBlankTypingQuestion = ({ question, onComplete, onCardMatched, far
   useEffect(() => () => {
     speakGenRef.current += 1;
   }, []);
+
+  // 값이 바뀔 때마다(IME 조합 중 포함) 미러 span의 실제 렌더 폭을 읽어 입력 칸 폭에 반영.
+  // 좌우 패딩 약 12px을 더한다 — 최소 폭은 아래 pill(min-w-[84px])이, 최대 폭은
+  // input의 max-w-[50vw]가 각각 그대로 보장한다.
+  useLayoutEffect(() => {
+    if (measureRef.current) {
+      setInputWidth(measureRef.current.offsetWidth + 12);
+    }
+  }, [value]);
 
   const handleCardClick = () => {
     haptic('light');
@@ -252,6 +266,7 @@ const FillInTheBlankTypingQuestion = ({ question, onComplete, onCardMatched, far
                 <span>{before}</span>
                 <span
                   className={`
+                    relative
                     inline-flex items-center justify-center align-middle
                     min-w-[84px] px-[10px] mx-[2px]
                     rounded-[8px] border-[1px]
@@ -262,24 +277,34 @@ const FillInTheBlankTypingQuestion = ({ question, onComplete, onCardMatched, far
                   {isAnswered ? (
                     value
                   ) : (
-                    <input
-                      ref={inputRef}
-                      type="text"
-                      inputMode="text"
-                      autoCapitalize="none"
-                      autoCorrect="off"
-                      autoComplete="off"
-                      spellCheck={false}
-                      enterKeyHint="done"
-                      value={value}
-                      onChange={(e) => setValue(e.target.value)}
-                      size={Math.max(4, value.length + 2)}
-                      className="
-                        bg-transparent outline-none text-center
-                        text-layout-black dark:text-layout-white
-                        max-w-[50vw]
-                      "
-                    />
+                    <>
+                      {/* 실제 입력 글자 폭 측정용 숨김 미러 — input과 같은 폰트를 상속받는다. */}
+                      <span
+                        ref={measureRef}
+                        aria-hidden="true"
+                        className="absolute invisible whitespace-pre pointer-events-none"
+                      >
+                        {value}
+                      </span>
+                      <input
+                        ref={inputRef}
+                        type="text"
+                        inputMode="text"
+                        autoCapitalize="none"
+                        autoCorrect="off"
+                        autoComplete="off"
+                        spellCheck={false}
+                        enterKeyHint="done"
+                        value={value}
+                        onChange={(e) => setValue(e.target.value)}
+                        style={inputWidth != null ? { width: `${inputWidth}px` } : undefined}
+                        className="
+                          bg-transparent outline-none text-center
+                          text-layout-black dark:text-layout-white
+                          max-w-[50vw]
+                        "
+                      />
+                    </>
                   )}
                 </span>
                 <span>{after}</span>
