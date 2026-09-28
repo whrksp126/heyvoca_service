@@ -185,14 +185,26 @@ const TakeTest = () => {
     const resolveType = (type) => (skipListening ? mapSkippedQuestionType(type) : type);
 
     // 백엔드가 이 단어에 제안한 suggested_question_type을 "지금 이 화면에서 실제로 쓸 수 있는지"
-    // 검증한다 — 추천 모드가 아니거나, 제안 자체가 없거나, 프론트 플러그인이 비활성(enabled:false,
-    // 예: fillInTheBlank)이면 폴백(호출부의 randomType/fallbackType)으로 넘긴다.
+    // 검증한다.
+    // 버그 수정(2026-09): 출제형 4종(sentenceArrange/sentenceArrangePartial/listenArrange/
+    // fillInTheBlankTyping)은 서버가 word.suggestedQuestionType과 **정확히 같은** 유형에만
+    // question_payload를 실어 준다(plugins/questionTypes/index.js buildArrangeQuestions·
+    // buildTypingQuestions). 직접 유형 선택(추천 아님) 모드에서 이 값을 계속 무시하고
+    // questionTypesArr 안에서 프론트가 따로 무작위로 유형을 고르면, 그 무작위 선택이
+    // 서버가 실어 준 payload의 유형과 거의 항상 어긋나 setupQuestions가 매번 빈 배열을
+    // 반환하고 매 단어가 (선택하지 않은) multipleChoice로 로컬 폴백됐다 — "문장 만들기+빈칸
+    // 입력만 골랐는데 사지선다가 나온다" 버그의 원인. 직접 선택 모드에서도 백엔드가 준 제안을
+    // 따르되(서버가 이미 question_types 파라미터로 이 단어가 실제로 쓸 수 있는 유형 중에서만
+    // 배정했다 — SENTENCE_QUESTIONS_CONTRACT.md 7절), 방어적으로 questionTypesArr(사용자가
+    // 고른 유형) 안에 있는 값인지 한 번 더 검증한다 — 아니면(백엔드 완전 폴백 등) 무시하고
+    // null(호출부의 randomType/fallbackType 경로)로 넘긴다. 프론트 플러그인이 비활성
+    // (enabled:false, 예: fillInTheBlank)이어도 마찬가지.
     const resolveSuggestedType = (word) => {
-      if (!isRecommendedMode) return null;
       const suggested = word?.suggestedQuestionType;
       if (!suggested) return null;
       const plugin = getQuestionType(suggested);
       if (plugin && plugin.enabled === false) return null;
+      if (!isRecommendedMode && !questionTypesArr.includes(suggested)) return null;
       return suggested;
     };
 

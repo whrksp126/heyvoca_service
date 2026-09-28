@@ -275,16 +275,18 @@ def _assign_restricted_question_type(
     (2026-09 — "설정 시트에서 유형을 직접 고르면 그 유형만 나와야 한다").
 
     1. allowed_types 중 이 단어가 실제로 쓸 수 있는 것만 후보로 좁힌다.
-    2. 후보가 하나도 없으면(그 단어가 지정된 유형을 하나도 못 씀 — 예: puzzle 데이터
-       없는 단어에 조립형만 지정) 완전 폴백으로 기존 전체 유형 가중치 배정
-       (_assign_suggested_question_type)을 그대로 쓴다. tier와 무관하게 항상 이 폴백이다.
+    2. 후보가 하나도 없으면 None을 반환한다(2026-09 버그 수정 — 예전엔 여기서 기존
+       전체 유형 가중치 배정(_assign_suggested_question_type)으로 완전 폴백해 사용자가
+       고르지 않은 유형(사지선다 등)이 섞여 나왔다. compose()가 이제 allowed_types를
+       하나도 못 쓰는 단어를 후보 풀 단계에서 이미 걸러내므로 이 분기는 정상 경로에서는
+       도달하지 않는다 — 도달하더라도 선택 밖 유형을 배정하지 않는 안전망).
     3. 후보가 있으면: 약점 유형 우선(후보 안에서) → avoid 뺀 후보 가중 랜덤
        (_QUESTION_TYPE_WEIGHTS) → avoid 전부 회피 시 무시하고 후보 전체로 다시.
     """
     avoid = avoid_types or set()
     candidates = [qt for qt in allowed_types if _item_can_use_question_type(item, qt)]
     if not candidates:
-        return _assign_suggested_question_type(item, weakness_types, avoid_types)
+        return None
 
     for wt in weakness_types:
         if wt in candidates and wt not in avoid:
@@ -647,7 +649,9 @@ def compose(
                        중 각 단어가 쓸 수 있는 것으로만 배정한다(여러 개면 기존
                        가중치·연속 회피 로직 재사용). 이 경로에서는 tier_target/
                        tier_shown이 항상 None — UserVoca의 tier 상태를 건드리지 않는다.
-                       하나도 못 쓰는 단어는 기존 전체 유형 가중치 배정으로 폴백한다.
+                       하나도 못 쓰는 단어는 아예 이번 세션 후보에서 제외한다(2026-09
+                       수정 — 예전엔 전체 유형 가중치로 폴백해 선택하지 않은 유형이
+                       섞여 나오는 버그가 있었다).
 
     Returns:
         {
@@ -671,6 +675,24 @@ def compose(
             'enriched_items': [],
             'user_level':     'mid',
         }
+
+    if allowed_types:
+        # 버그 수정(2026-09): "설정 시트에서 유형을 직접 고르면 그 유형만 나와야 한다"를
+        # 배정(enrich) 단계가 아니라 후보 선정 단계에서부터 보장한다. allowed_types 중
+        # 단 하나도 못 쓰는 단어(예: puzzle 데이터 없는 단어에 "문장 만들기"만 지정)는
+        # 아예 이번 세션 후보에서 뺀다 — _assign_restricted_question_type의 "완전 폴백"
+        # (전체 유형 가중치 배정, 사지선다 포함)에 맡기지 않는다. 프론트는
+        # word.suggestedQuestionType과 정확히 같은 유형에만 서버 question_payload를 쓸 수
+        # 있어(출제형 4종), 완전 폴백으로 배정된 다른 유형은 결국 프론트에서 다시
+        # multipleChoice로 떨어져 "선택하지 않은 유형이 나온다"는 버그로 이어졌다.
+        pool = [it for it in pool if any(_item_can_use_question_type(it, qt) for qt in allowed_types)]
+        if not pool:
+            return {
+                'composition':    {},
+                'items':          [],
+                'enriched_items': [],
+                'user_level':     'mid',
+            }
 
     if selection == 'random':
         return _compose_random(pool, count, allowed_types=allowed_types)
