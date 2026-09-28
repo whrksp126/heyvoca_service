@@ -34,6 +34,12 @@ const ListenArrangeQuestion = ({ question, onComplete, onCardMatched, farmByWord
   const resumeReplayKey = useResumeReplayKey();
   const advanceGate = useStudyAdvanceGate();
   const wordTtsActiveRef = useRef(false);
+  // 문장 재생(보통 속도 'normal' / 0.7배속 단어별 'slow') 중인지 — 조각을 슬롯에 놓을 때
+  // (onPiecePlaced) 이 값이 true면 단어 TTS를 재생하지도, 문장 재생을 끊지도 않는다
+  // (2026-09-29 추가 요청). getTextSound가 끝나는 시점(정상 종료)에 false, 다른 speak() 호출에
+  // 가로채이거나(중단) 언마운트되어도 false로 되돌아간다. 조각 단어 TTS 자체(target=null)는
+  // 이 ref를 true로 만들지 않는다.
+  const isSentencePlayingRef = useRef(false);
   const speakGenRef = useRef(0);
   const wordGapTimeoutRef = useRef(null);
   const onCompleteRef = useRef(onComplete);
@@ -70,6 +76,8 @@ const ListenArrangeQuestion = ({ question, onComplete, onCardMatched, farmByWord
     setSpeakingTarget(target);
     wordTtsActiveRef.current = true;
     advanceGate.ttsBegin();
+    const isSentence = target === 'normal' || target === 'slow';
+    if (isSentence) isSentencePlayingRef.current = true;
     try {
       await getTextSound(text, lang, (d) => { if (gen === speakGenRef.current) setSpeakDuration(d); }, rate);
     } finally {
@@ -78,6 +86,7 @@ const ListenArrangeQuestion = ({ question, onComplete, onCardMatched, farmByWord
         wordTtsActiveRef.current = false;
         advanceGate.ttsEnd();
       }
+      if (isSentence && gen === speakGenRef.current) isSentencePlayingRef.current = false;
     }
   };
 
@@ -101,6 +110,8 @@ const ListenArrangeQuestion = ({ question, onComplete, onCardMatched, farmByWord
     setSpeakingTarget(target);
     wordTtsActiveRef.current = true;
     advanceGate.ttsBegin();
+    const isSentence = target === 'normal' || target === 'slow';
+    if (isSentence) isSentencePlayingRef.current = true;
     try {
       for (let i = 0; i < words.length; i += 1) {
         if (gen !== speakGenRef.current) return;
@@ -123,6 +134,7 @@ const ListenArrangeQuestion = ({ question, onComplete, onCardMatched, farmByWord
         wordTtsActiveRef.current = false;
         advanceGate.ttsEnd();
       }
+      if (isSentence && gen === speakGenRef.current) isSentencePlayingRef.current = false;
     }
   };
 
@@ -138,6 +150,7 @@ const ListenArrangeQuestion = ({ question, onComplete, onCardMatched, farmByWord
       clearTimeout(wordGapTimeoutRef.current);
       wordGapTimeoutRef.current = null;
     }
+    isSentencePlayingRef.current = false;
   }, []);
 
   const handlePlayNormal = () => {
@@ -278,7 +291,12 @@ const ListenArrangeQuestion = ({ question, onComplete, onCardMatched, farmByWord
         resumeReplayKey={resumeReplayKey}
         advanceGate={advanceGate}
         onSubmit={handleSubmit}
-        onPiecePlaced={(word) => speak(word, answerLang, null, 1)}
+        onPiecePlaced={(word) => {
+          // 문장 재생(보통/0.7배속) 중이면 단어 TTS를 건너뛴다 — 문장 재생을 끊지도 않는다.
+          // 재생 중이 아닐 때만 방금 놓은 조각을 읽는다.
+          if (isSentencePlayingRef.current) return;
+          speak(word, answerLang, null, 1);
+        }}
         onNext={handleNext}
       />
     </div>

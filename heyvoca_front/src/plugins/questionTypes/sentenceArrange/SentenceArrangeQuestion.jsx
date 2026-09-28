@@ -38,6 +38,12 @@ const SentenceArrangeQuestion = ({ question, onComplete, onCardMatched, farmByWo
   const reducedMotion = useReducedMotion();
   const advanceGate = useStudyAdvanceGate();
   const wordTtsActiveRef = useRef(false);
+  // 문장(위 카드 한국어 해석 'shown' / 채점 후 정답 문장 'answer') 재생 중인지 — 조각을 슬롯에
+  // 놓을 때(onPiecePlaced) 이 값이 true면 단어 TTS를 재생하지도, 문장 재생을 끊지도 않는다
+  // (2026-09-29 추가 요청). getTextSound가 끝나는 시점(정상 종료)에 false, 다른 speak() 호출에
+  // 가로채이거나(중단) 언마운트되어도 false로 되돌아간다. 조각 단어 TTS 자체(target 없음)는
+  // 이 ref를 true로 만들지 않는다.
+  const isSentencePlayingRef = useRef(false);
   // 위 카드(한국어 해석) 어절 탭 → 역방향 조회 말풍선. TTS는 재생하지 않는다.
   const koLookup = useKoreanWordLookup();
   // 채점 후 "다음" 버튼을 누를 때 진행할 콜백 — 채점 순간(handleSubmit)에 캡처해 둔다(2026-09-29,
@@ -72,6 +78,8 @@ const SentenceArrangeQuestion = ({ question, onComplete, onCardMatched, farmByWo
       wordTtsActiveRef.current = true;
       advanceGate.ttsBegin();
     }
+    const isSentence = target === 'shown' || target === 'answer';
+    if (isSentence) isSentencePlayingRef.current = true;
     try {
       await getTextSound(text, lang, (d) => { if (gen === speakGenRef.current) setSpeakDuration(d); });
     } finally {
@@ -80,6 +88,7 @@ const SentenceArrangeQuestion = ({ question, onComplete, onCardMatched, farmByWo
         wordTtsActiveRef.current = false;
         advanceGate.ttsEnd();
       }
+      if (isSentence && gen === speakGenRef.current) isSentencePlayingRef.current = false;
     }
   };
 
@@ -92,6 +101,7 @@ const SentenceArrangeQuestion = ({ question, onComplete, onCardMatched, farmByWo
 
   useEffect(() => () => {
     speakGenRef.current += 1;
+    isSentencePlayingRef.current = false;
   }, []);
 
   const handleCardClick = () => {
@@ -290,7 +300,12 @@ const SentenceArrangeQuestion = ({ question, onComplete, onCardMatched, farmByWo
         resumeReplayKey={resumeReplayKey}
         advanceGate={advanceGate}
         onSubmit={handleSubmit}
-        onPiecePlaced={(word) => speak(word, answerLang)}
+        onPiecePlaced={(word) => {
+          // 문장 재생(한국어 해석 'shown' 카드/정답 문장 'answer') 중이면 단어 TTS를 건너뛴다 —
+          // 문장 재생을 끊지도 않는다. 재생 중이 아닐 때만 방금 놓은 조각을 읽는다.
+          if (isSentencePlayingRef.current) return;
+          speak(word, answerLang);
+        }}
         onNext={handleNext}
       />
     </div>
