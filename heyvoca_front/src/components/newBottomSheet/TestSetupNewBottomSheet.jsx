@@ -13,7 +13,7 @@ import { MEMORY_STAGE_ORDER, wordMemoryStage, memoryStageCounts, isWordStudiable
 import { vibrate } from '../../utils/osFunction';
 import SetupTile from '../common/SetupTile';
 import MemoryStageSelector from '../common/MemoryStageSelector';
-import { McqGlyph, CardMatchGlyph, BlankGlyph } from '../common/QuestionTypeGlyphs';
+import { McqGlyph, CardMatchGlyph, BlankGlyph, ArrangeGlyph, TypingGlyph } from '../common/QuestionTypeGlyphs';
 import { Toggle } from '../newfullsheet/settingsUi';
 
 /*
@@ -490,22 +490,44 @@ export const TestSetupNewBottomSheet = ({ onCancel, onSet, maxVocabularyCount, v
           title="문제 유형"
           note={isFillSelected && fillCandidateCount < allWords.length ? `빈칸 채우기: 학습할 수 있는 ${allWords.length}개 중 ${fillCandidateCount}개 출제 가능` : undefined}
         >
-          <div className="flex gap-[8px]">
-            {[
-              { value: 'multipleChoice', label: '사지선다', Glyph: McqGlyph },
-              { value: 'cardMatch', label: '카드 맞추기', Glyph: CardMatchGlyph },
-              { value: 'fillInTheBlank', label: '빈칸 채우기', Glyph: BlankGlyph },
-            ].map(({ value, label, Glyph }) => (
-              <SetupTile
-                key={value}
-                selected={selectedFamilies.includes(value)}
-                onClick={() => toggleFamily(value)}
-                className="h-[104px]"
-              >
-                <Glyph size={44} lang={learningLang} />
-                <span className="text-[14px] font-[700] break-keep group-data-[selected=true]:text-layout-black dark:group-data-[selected=true]:text-layout-white">{label}</span>
-              </SetupTile>
-            ))}
+          <div className="flex flex-col gap-[8px]">
+            <div className="flex gap-[8px]">
+              {[
+                { value: 'multipleChoice', label: '사지선다', Glyph: McqGlyph },
+                { value: 'cardMatch', label: '카드 맞추기', Glyph: CardMatchGlyph },
+                { value: 'fillInTheBlank', label: '빈칸 채우기', Glyph: BlankGlyph },
+              ].map(({ value, label, Glyph }) => (
+                <SetupTile
+                  key={value}
+                  selected={selectedFamilies.includes(value)}
+                  onClick={() => toggleFamily(value)}
+                  className="h-[104px]"
+                >
+                  <Glyph size={44} lang={learningLang} />
+                  <span className="text-[14px] font-[700] break-keep group-data-[selected=true]:text-layout-black dark:group-data-[selected=true]:text-layout-white">{label}</span>
+                </SetupTile>
+              ))}
+            </div>
+            {/* 출제형 4종(2026-09) — 3칸 줄과 같은 타일을 새 줄에 둔다(5칸을 한 줄에 욱여넣으면
+                아이콘·라벨이 너무 좁아진다). */}
+            <div className="flex gap-[8px]">
+              {[
+                { value: 'sentenceArrange', label: '문장 만들기', Glyph: ArrangeGlyph },
+                { value: 'fillInTheBlankTyping', label: '빈칸 입력', Glyph: TypingGlyph },
+              ].map(({ value, label, Glyph }) => (
+                <SetupTile
+                  key={value}
+                  selected={selectedFamilies.includes(value)}
+                  onClick={() => toggleFamily(value)}
+                  className="h-[104px]"
+                >
+                  <Glyph size={44} lang={learningLang} />
+                  <span className="text-[14px] font-[700] break-keep group-data-[selected=true]:text-layout-black dark:group-data-[selected=true]:text-layout-white">{label}</span>
+                </SetupTile>
+              ))}
+              {/* 빈 자리 1칸 — 위 3타일 줄과 폭(1/3씩)이 어긋나지 않게 자리만 채운다(비대칭 방지) */}
+              <div className="flex-1" aria-hidden />
+            </div>
           </div>
         </Section>
 
@@ -535,8 +557,9 @@ export const TestSetupNewBottomSheet = ({ onCancel, onSet, maxVocabularyCount, v
           </Section>
         )}
 
-        {/* 6. 듣기 — 스위치 한 줄. 사지선다·카드 맞추기를 골랐을 때만(빈칸 채우기는 듣기 변형이 없다) */}
-        {(selectedFamilies.includes('multipleChoice') || selectedFamilies.includes('cardMatch')) && (
+        {/* 6. 듣기 — 스위치 한 줄. 사지선다·카드 맞추기·문장 만들기를 골랐을 때만
+            (빈칸 채우기·빈칸 입력은 듣기 변형이 없다). 문장 만들기 + 듣기 = 듣고 받아쓰기(listenArrange). */}
+        {(selectedFamilies.includes('multipleChoice') || selectedFamilies.includes('cardMatch') || selectedFamilies.includes('sentenceArrange')) && (
           <Section title="듣기">
             <div
               className="

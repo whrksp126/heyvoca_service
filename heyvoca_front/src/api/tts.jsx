@@ -62,9 +62,21 @@ export const collectTestTexts = (questions) => {
   const out = [];
   if (!Array.isArray(questions)) return out;
   for (const q of questions) {
-    if (q?.questionType === 'fillInTheBlank') {
-      const shown = stripHtmlTags(q.shownText);
+    if (q?.questionType === 'fillInTheBlank' || q?.questionType === 'fillInTheBlankTyping') {
+      const shown = stripHtmlTags(q.questionType === 'fillInTheBlank' ? q.shownText : q.typing?.ko);
       if (shown) out.push({ text: shown, language: 'ko' });
+      continue;
+    }
+    if (q?.questionType === 'sentenceArrangePartial' || q?.questionType === 'sentenceArrange') {
+      // 문장 만들기 — 등장 시 위 카드(한국어 해석)를 자동재생한다(계약 3-1절).
+      const shown = stripHtmlTags(q.arrange?.ko);
+      if (shown) out.push({ text: shown, language: 'ko' });
+      continue;
+    }
+    if (q?.questionType === 'listenArrange') {
+      // 듣고 받아쓰기 — 등장 시 영어 음성(answer_text)을 보통 속도로 자동재생한다.
+      const answer = stripHtmlTags(q.arrange?.answer_text);
+      if (answer) out.push({ text: answer, language: wordLang(q) });
       continue;
     }
     if (q?.origin) out.push({ text: q.origin, language: wordLang(q) });
@@ -160,6 +172,22 @@ export const collectTestFullTexts = (questions) => {
           seenWords.add(key);
           out.push({ text: w, language: qLang });
         }
+      }
+    }
+    if (q?.questionType === 'fillInTheBlankTyping' && q.typing) {
+      const ko = stripHtmlTags(q.typing.ko);
+      if (ko) out.push({ text: ko, language: 'ko' });
+      if (q.typing.answer_text) out.push({ text: q.typing.answer_text, language: qLang });
+    }
+    if (['sentenceArrangePartial', 'sentenceArrange', 'listenArrange'].includes(q?.questionType) && q.arrange) {
+      const ko = stripHtmlTags(q.arrange.ko);
+      if (ko) out.push({ text: ko, language: 'ko' });
+      const answer = stripHtmlTags(q.arrange.answer_text);
+      if (answer) out.push({ text: answer, language: qLang });
+      // 은행 조각도 미리 데워 둔다 — 채점 후(정답 문장 재생) 지연 없이, 그리고 향후 조각 탭
+      // TTS(현재 미구현이지만 캐시는 미리 채워도 무해)에도 쓸 수 있게.
+      if (Array.isArray(q.arrange.bank)) {
+        q.arrange.bank.forEach((tok) => { if (tok) out.push({ text: tok, language: qLang }); });
       }
     }
     pushWord(q, qLang);

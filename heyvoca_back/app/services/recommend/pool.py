@@ -52,6 +52,13 @@ class CandidateItem:
     normalized_meanings: list = field(default_factory=list)
     # 단어 언어('en'|'ja') — UserVoca.dict_lang
     dict_lang:         str = 'en'
+    # examples와 순서/길이가 같은 리스트 — 각 원소는 voca_example_puzzle 매칭 결과(dict) 또는
+    # None(매칭 안 됨/조립형 4종 출제 불가). 2026-09 "출제형 문제 1단계", en 전용(ja는 항상 []).
+    example_puzzles:   list = field(default_factory=list)
+    # 자동 출제 tier 진행 상태 — UserVoca.tier_target/tier_shown/tier_correct 정본을 그대로
+    # 담는다(2026-09 2차 보완). {'tier_target':int,'tier_shown':int,'was_correct':bool} 또는
+    # 기록이 없으면 None. composer._compute_target_tier가 다음 tier_target 계산에 쓴다.
+    tier_state:        Optional[dict] = None
 
 
 def _classify_bucket(fsrs_state: dict, today: dt.date) -> str:
@@ -168,6 +175,15 @@ def _load_pool_raw(user_id: UUID, book_ids_filter: Optional[list], lang: str = '
             word = uv.word or ""
             bucket = _classify_bucket(fsrs_state, today)
 
+            # 자동 출제 tier 진행 상태 — UserVoca 컬럼이 정본(2026-09 2차 보완).
+            tier_state = None
+            if uv.tier_target is not None:
+                tier_state = {
+                    'tier_target': uv.tier_target,
+                    'tier_shown':  uv.tier_shown,
+                    'was_correct': bool(uv.tier_correct),
+                }
+
             raw_items.append(dict(
                 user_voca_id=uv.id,
                 user_voca_book_id=vb.id,
@@ -180,15 +196,35 @@ def _load_pool_raw(user_id: UUID, book_ids_filter: Optional[list], lang: str = '
                 word_length=len(word),
                 mastery=mastery,
                 voca_id=uv.voca_id,
+                tier_state=tier_state,
             ))
 
     # 유사 뜻(concept) 배치 조회 — voca_id 집합을 한 번에 모아 단일 쿼리로 조회(N+1 방지).
     from app.services.meaning_concept import load_dict_meaning_concepts, attach_concept_ids, normalized_meanings_for_word
     concept_lookup = load_dict_meaning_concepts(r['voca_id'] for r in raw_items)
 
+    # 예문 조각 조립 문제(voca_example_puzzle) 배치 조회 — en 전용(2026-09 "출제형 문제
+    # 1단계" 범위). 후보 풀의 모든 예문 origin 텍스트를 정규화·해시해 한 번에 조회한다.
+    puzzle_lookup: dict = {}
+    if lang == 'en':
+        from app.services.sentence_puzzle import sentence_hash, load_puzzles_by_hashes
+        from app.utils.example_tagging import example_origin_text
+        all_hashes = set()
+        for r in raw_items:
+            for ex in r['examples'] or []:
+                origin = example_origin_text(ex)
+                if origin:
+                    all_hashes.add(sentence_hash(origin))
+        puzzle_lookup = load_puzzles_by_hashes(all_hashes)
+
     items: list[CandidateItem] = []
     for r in raw_items:
         meaning_concepts, concept_ids = attach_concept_ids(r['voca_id'], r['meanings'], concept_lookup)
+        example_puzzles = []
+        if lang == 'en':
+            for ex in r['examples'] or []:
+                origin = example_origin_text(ex)
+                example_puzzles.append(puzzle_lookup.get(sentence_hash(origin)) if origin else None)
         items.append(CandidateItem(
             user_voca_id=r['user_voca_id'],
             user_voca_book_id=r['user_voca_book_id'],
@@ -204,6 +240,8 @@ def _load_pool_raw(user_id: UUID, book_ids_filter: Optional[list], lang: str = '
             concept_ids=concept_ids,
             normalized_meanings=normalized_meanings_for_word(r['meanings']),
             dict_lang=lang,
+            example_puzzles=example_puzzles,
+            tier_state=r['tier_state'],
         ))
 
     return items

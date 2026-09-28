@@ -10,6 +10,15 @@ question_type 상수 — 백엔드 여러 곳(추천 composer, /study/log 화이
   - components/takeTest/Main.jsx        (question_type: question.questionType 로 그대로 전송)
   - pages/TakeTest.jsx                  ('multipleChoiceDiagnosis' — "다시 심기 진단" 전용,
     추천 알고리즘(composer)이 배정하지 않고 그 화면에서 직접 부여한다)
+
+2026-09 "출제형 문제 1단계" 추가 — 문장 조각 조립/타이핑 4종. 계약 문서:
+  heyvoca_service/docs/SENTENCE_QUESTIONS_CONTRACT.md
+  - sentenceArrangePartial : 한글 해석 보고 목표 단어 주변 3~5조각만 조립(난이도 3)
+  - sentenceArrange        : 한글 해석 보고 문장 전체(또는 뒷부분 최대 7조각) 조립(난이도 4)
+  - listenArrange          : 영어 음성 듣고 조립, 원문 어순만 정답(난이도 4)
+  - fillInTheBlankTyping   : 빈칸 채우기와 같은 예문, 타이핑으로 정답 입력(난이도 5)
+  이 4종은 사전 테이블 voca_example_puzzle(dict) 데이터가 있는 단어에서만 출제 가능하다
+  (app/services/recommend/composer.py::_item_can_use_question_type).
 """
 
 # 추천 알고리즘(app/services/recommend/composer.py)이 단어에 배정할 수 있는 유형.
@@ -20,7 +29,46 @@ RECOMMENDABLE_QUESTION_TYPES = (
     'fillInTheBlank',
     'cardMatch',
     'cardMatchListening',
+    'sentenceArrangePartial',
+    'sentenceArrange',
+    'listenArrange',
+    'fillInTheBlankTyping',
 )
+
+# 난이도 오르내리기(자동 출제, composer._compose_recommend full_recommend 경로) 전용 —
+# 문제 유형 → 난이도 tier(1~5). tier가 없는 유형(사용자 직접 선택 전용 등)은 매핑에서 제외.
+QUESTION_TYPE_TIER = {
+    'multipleChoice':          1,
+    'cardMatch':                1,
+    'reverseMultipleChoice':   2,
+    'multipleChoiceListening': 2,
+    'cardMatchListening':      2,
+    'fillInTheBlank':          3,
+    'sentenceArrangePartial':  3,
+    'sentenceArrange':         4,
+    'listenArrange':           4,
+    'fillInTheBlankTyping':    5,
+}
+
+# tier → 그 tier에 속한 유형 목록 (QUESTION_TYPE_TIER의 역인덱스, 순서 고정).
+TIER_QUESTION_TYPES = {
+    1: ('multipleChoice', 'cardMatch'),
+    2: ('reverseMultipleChoice', 'multipleChoiceListening', 'cardMatchListening'),
+    3: ('fillInTheBlank', 'sentenceArrangePartial'),
+    4: ('sentenceArrange', 'listenArrange'),
+    5: ('fillInTheBlankTyping',),
+}
+
+MAX_TIER = 5
+
+# 작물 단계(app/services/recommend/stage.py::crop_stage) → 그 단계가 여는 최고 난이도.
+CROP_STAGE_MAX_TIER = {
+    'unlearned': 1,
+    'seed':      2,
+    'sprout':    3,
+    'leaf':      4,
+    'carrot':    5,
+}
 
 # 추천 알고리즘 밖에서 프론트가 직접 부여해 보낼 수 있는 유형(추천 후보에는 없음).
 _NON_RECOMMENDABLE_QUESTION_TYPES = (

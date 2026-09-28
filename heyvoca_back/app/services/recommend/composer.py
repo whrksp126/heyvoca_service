@@ -31,7 +31,10 @@ from app.services.recommend.ranking import (
 )
 from app.utils.interleave import interleave_avoid_adjacent
 from app.utils.example_tagging import example_has_target_tag, example_origin_text, example_meaning_text
-from app.constants.question_types import RECOMMENDABLE_QUESTION_TYPES
+from app.constants.question_types import (
+    RECOMMENDABLE_QUESTION_TYPES, QUESTION_TYPE_TIER, TIER_QUESTION_TYPES, CROP_STAGE_MAX_TIER,
+)
+from app.services.recommend.stage import crop_stage as _crop_stage
 
 # ──────────────────────────────────────────────
 # 상수
@@ -72,6 +75,14 @@ _ALL_QUESTION_TYPES = list(RECOMMENDABLE_QUESTION_TYPES)
 # fillInTheBlankReverse는 프론트에서 드롭되어(2026-09) 추천 후보/가중치에서 제외했다
 # (ALLOWED_QUESTION_TYPES에는 과거 로그 호환을 위해 남아 있음). cardMatch(10)/
 # cardMatchListening(5)는 세트 단위 특성상 노출 체감이 더 크게 느껴져 낮게 유지한다. 합계 100.
+#
+# 2026-09 "출제형 문제 1단계" 추가분(sentenceArrangePartial/sentenceArrange/listenArrange/
+# fillInTheBlankTyping) — 이 가중치 테이블은 full_recommend=False 경로(target_states로
+# 암기상태를 좁힌 "빠른 복습" 등)에서만 쓰인다. full_recommend=True(AI 추천) 경로는
+# _assign_tiered_question_type 의 tier 기반 배정으로 대체되어 이 가중치를 쓰지 않는다
+# (README: 난이도 오르내리기 규칙은 계약 문서 SENTENCE_QUESTIONS_CONTRACT.md 참고).
+# 새 4종은 puzzle 데이터가 있는 단어에서만 실제로 후보가 되므로(_item_can_use_question_type)
+# 노출 빈도는 가중치보다 자연히 낮다 — 상대적으로 낮은 값으로 추가한다.
 _QUESTION_TYPE_WEIGHTS: Dict[str, int] = {
     'multipleChoice':          25,
     'reverseMultipleChoice':   25,
@@ -79,6 +90,10 @@ _QUESTION_TYPE_WEIGHTS: Dict[str, int] = {
     'fillInTheBlank':          20,
     'cardMatch':               10,
     'cardMatchListening':      5,
+    'sentenceArrangePartial':  6,
+    'sentenceArrange':         5,
+    'listenArrange':           3,
+    'fillInTheBlankTyping':    3,
 }
 
 # ──────────────────────────────────────────────
@@ -196,6 +211,16 @@ def _item_can_use_question_type(item: CandidateItem, qtype: str) -> bool:
         return has_meanings and any(
             example_has_target_tag(example_meaning_text(ex)) for ex in (item.examples or [])
         )
+    if qtype == 'fillInTheBlankTyping':
+        # fillInTheBlank(사지선다)와 요구 조건이 같다 — 강조 태그가 있는 영어 예문 필요.
+        return any(
+            example_has_target_tag(example_origin_text(ex)) for ex in (item.examples or [])
+        )
+    if qtype in ('sentenceArrangePartial', 'sentenceArrange', 'listenArrange'):
+        # 사전 테이블 voca_example_puzzle 매칭 결과(pool.py가 채운 example_puzzles)가
+        # 하나라도 usable해야 한다. en 전용 — ja는 example_puzzles가 항상 비어 있다.
+        from app.services.sentence_puzzle import puzzle_usable
+        return any(puzzle_usable(p) for p in (item.example_puzzles or []))
     return has_meanings or has_examples
 
 
@@ -240,25 +265,188 @@ def _assign_suggested_question_type(
     return _weighted_type_choice(fallback_candidates)
 
 
+def _assign_restricted_question_type(
+    item: CandidateItem,
+    allowed_types: List[str],
+    weakness_types: List[str],
+    avoid_types: Optional[set],
+) -> Optional[str]:
+    """`question_types` 쿼리 파라미터로 유형을 특정 집합으로 좁힌 경우의 배정
+    (2026-09 — "설정 시트에서 유형을 직접 고르면 그 유형만 나와야 한다").
+
+    1. allowed_types 중 이 단어가 실제로 쓸 수 있는 것만 후보로 좁힌다.
+    2. 후보가 하나도 없으면(그 단어가 지정된 유형을 하나도 못 씀 — 예: puzzle 데이터
+       없는 단어에 조립형만 지정) 완전 폴백으로 기존 전체 유형 가중치 배정
+       (_assign_suggested_question_type)을 그대로 쓴다. tier와 무관하게 항상 이 폴백이다.
+    3. 후보가 있으면: 약점 유형 우선(후보 안에서) → avoid 뺀 후보 가중 랜덤
+       (_QUESTION_TYPE_WEIGHTS) → avoid 전부 회피 시 무시하고 후보 전체로 다시.
+    """
+    avoid = avoid_types or set()
+    candidates = [qt for qt in allowed_types if _item_can_use_question_type(item, qt)]
+    if not candidates:
+        return _assign_suggested_question_type(item, weakness_types, avoid_types)
+
+    for wt in weakness_types:
+        if wt in candidates and wt not in avoid:
+            return wt
+
+    not_avoided = [qt for qt in candidates if qt not in avoid]
+    chosen = _weighted_type_choice(not_avoided)
+    if chosen:
+        return chosen
+
+    # avoid를 전부 회피하면 후보가 하나도 안 남을 수 있다 — avoid 무시하고 다시 시도
+    return _weighted_type_choice(candidates)
+
+
+# ──────────────────────────────────────────────
+# 난이도(tier) 기반 유형 배정 — AI 추천(full_recommend=True) 전용 (2026-09)
+# ──────────────────────────────────────────────
+#
+# 계약/규칙 정본: heyvoca_service/docs/SENTENCE_QUESTIONS_CONTRACT.md
+#
+# item.tier_state: {'tier_target': int, 'tier_shown': int|None, 'was_correct': bool} 또는
+# None(기록 없음). 정본은 UserVoca.tier_target/tier_shown/tier_correct 컬럼(사용자 DB) —
+# pool.py가 매 요청 로드 시 그대로 담아준다. 2026-09 2차 보완: 예전에는 최근 7일
+# UserStudyLog 윈도우에서 근사했는데, FSRS 간격상 상급 단어(carrot 등)는 복습 주기가
+# 7일을 훌쩍 넘겨 "항상 처음 보는 단어"로 리셋되고 tier가 사실상 오르지 않는 버그가
+# 있었다. UserVoca 컬럼은 로그 조회 없이 매번 최신값을 준다.
+
+_TIER_EASIER_PROB = 0.30  # "정해진 난이도"보다 쉬운 tier에서 뽑을 확률
+
+
+def _max_tier_for_item(item: CandidateItem) -> int:
+    return CROP_STAGE_MAX_TIER.get(_crop_stage(item.fsrs_state), 1)
+
+
+def _compute_target_tier(tier_state: Optional[dict], max_tier: int) -> int:
+    """단어별 "정해진 난이도" 계산.
+
+    - 기록이 없으면(처음) max_tier-1(최소 1).
+    - 마지막 결과가 정답이고 보여준 tier == 정해진 tier면 +1.
+    - 정답이지만 더 쉬운 tier를 보여줬으면 유지.
+    - 오답이면 -1.
+    - [1, max_tier]로 자른다(작물 단계가 승격되면 이전 세션의 target이 max_tier를 넘던
+      값도 여기서 자연히 다시 잘린다).
+    """
+    if not tier_state or tier_state.get('tier_target') is None:
+        return max(1, max_tier - 1)
+    last_target = tier_state['tier_target']
+    last_shown = tier_state.get('tier_shown')
+    if last_shown is None:
+        last_shown = last_target
+    if tier_state.get('was_correct'):
+        target = last_target + 1 if last_shown >= last_target else last_target
+    else:
+        target = last_target - 1
+    return max(1, min(target, max_tier))
+
+
+def _pick_shown_tier(target_tier: int) -> int:
+    """70%는 target_tier 그대로, 30%는 그보다 쉬운 tier에서 균등 무작위."""
+    if target_tier > 1 and random.random() < _TIER_EASIER_PROB:
+        return random.randint(1, target_tier - 1)
+    return target_tier
+
+
+def _pick_type_at_tier(
+    item: CandidateItem, tier: int, weakness_types: List[str], avoid: set,
+) -> Optional[str]:
+    """tier 안에서 이 단어가 지원하는 유형 중 하나를 고른다.
+    약점 유형 우선 → avoid를 뺀 후보 중 균등 무작위(같은 tier 안에서는 가중치를 두지
+    않아 자연히 유형이 번갈아 나온다) → avoid 무시 폴백.
+    """
+    candidates = [qt for qt in TIER_QUESTION_TYPES.get(tier, ()) if _item_can_use_question_type(item, qt)]
+    if not candidates:
+        return None
+    for wt in weakness_types:
+        if wt in candidates and wt not in avoid:
+            return wt
+    not_avoided = [qt for qt in candidates if qt not in avoid]
+    return random.choice(not_avoided or candidates)
+
+
+def _assign_tiered_question_type(
+    item: CandidateItem,
+    weakness_types: List[str],
+    avoid_types: Optional[set],
+) -> Tuple[Optional[str], int, Optional[int]]:
+    """반환: (suggested_question_type, tier_target, tier_shown).
+
+    해당 단어가 shown_tier의 어떤 유형도 못 쓰면(예: puzzle 데이터 없음) 가장 가까운
+    낮은 tier로 내려가며 재시도한다("해당 단어가 그 유형을 못 쓰면 가장 가까운 낮은
+    난이도로"). tier 1까지도 못 쓰면(이례적 — meanings/examples가 전혀 없는 단어)
+    None을 반환한다.
+    """
+    avoid = avoid_types or set()
+    max_tier = _max_tier_for_item(item)
+    target_tier = _compute_target_tier(item.tier_state, max_tier)
+    shown_tier = _pick_shown_tier(target_tier)
+
+    tier = shown_tier
+    chosen = None
+    while tier >= 1:
+        chosen = _pick_type_at_tier(item, tier, weakness_types, avoid)
+        if chosen:
+            break
+        tier -= 1
+
+    if chosen is None:
+        # avoid를 전부 회피하면 후보가 하나도 안 남을 수 있다 — avoid 무시하고 다시 시도
+        tier = shown_tier
+        while tier >= 1:
+            chosen = _pick_type_at_tier(item, tier, weakness_types, set())
+            if chosen:
+                break
+            tier -= 1
+
+    return chosen, target_tier, (tier if chosen else None)
+
+
 def _enrich_items(
     items_with_bucket: List[Tuple[CandidateItem, str]],
     today_seen: Dict[int, set],
     weakness_types: List[str],
+    *,
+    full_recommend: bool = False,
+    allowed_types: Optional[List[str]] = None,
 ) -> List[Dict[str, Any]]:
     """
     각 아이템에 suggested_question_type, reason을 부여한다.
     items_with_bucket: [(item, original_bucket), ...] — original_bucket은 reason 결정용
+
+    우선순위:
+      1. allowed_types(=`/study/recommend?question_types=` 지정, 2026-09)가 있으면
+         tier 로직을 완전히 건너뛰고 _assign_restricted_question_type을 쓴다 —
+         "설정 시트에서 유형을 직접 고르면 그 유형만 나와야 한다". tier_target/
+         tier_shown은 항상 None(UserVoca의 tier 상태를 건드리지 않음).
+      2. full_recommend=True(AI 추천)면 tier 기반 배정(_assign_tiered_question_type,
+         단어별 tier 상태는 item.tier_state — pool.py가 UserVoca 컬럼에서 로드)을 쓰고
+         결과 항목에 tier_target/tier_shown을 함께 채운다.
+      3. 그 외(암기상태를 좁힌 "빠른 복습" 등)는 기존 가중치 배정을 그대로 쓰고
+         tier_target/tier_shown은 None으로 둔다.
     """
     result = []
     for item, src_bucket in items_with_bucket:
         avoid = today_seen.get(item.user_voca_id, set())
-        suggested = _assign_suggested_question_type(item, weakness_types, avoid)
+        tier_target = None
+        tier_shown = None
+        if allowed_types:
+            suggested = _assign_restricted_question_type(item, allowed_types, weakness_types, avoid)
+        elif full_recommend:
+            suggested, tier_target, tier_shown = _assign_tiered_question_type(
+                item, weakness_types, avoid,
+            )
+        else:
+            suggested = _assign_suggested_question_type(item, weakness_types, avoid)
         reason = _BUCKET_REASON.get(src_bucket, '')
         result.append({
             '_item': item,
             'src_bucket': src_bucket,                # lapse 재분류 반영
             'suggested_question_type': suggested,
             'reason': reason,
+            'tier_target': tier_target,
+            'tier_shown': tier_shown,
         })
     return result
 
@@ -273,6 +461,7 @@ def _compose_recommend(
     user_stats: Optional[Dict],
     full_recommend: bool = False,
     new_allowance: Optional[int] = None,
+    allowed_types: Optional[List[str]] = None,
 ) -> Dict[str, Any]:
     """
     단일 priority 큐 기반 추천 (2026-09 재설계).
@@ -352,7 +541,10 @@ def _compose_recommend(
     final_with_bucket = [(it, bucket_by_id[it.user_voca_id]) for it in interleaved]
 
     # 7. enrich (suggested_question_type, reason)
-    enriched = _enrich_items(final_with_bucket, today_seen, weakness_types)
+    enriched = _enrich_items(
+        final_with_bucket, today_seen, weakness_types,
+        full_recommend=full_recommend, allowed_types=allowed_types,
+    )
 
     composition: Dict[str, int] = {}
     for _, b in selected_with_bucket:
@@ -366,15 +558,26 @@ def _compose_recommend(
     }
 
 
-def _compose_random(pool: List[CandidateItem], count: int) -> Dict[str, Any]:
+def _compose_random(
+    pool: List[CandidateItem], count: int, allowed_types: Optional[List[str]] = None,
+) -> Dict[str, Any]:
     """
     추천 알고리즘을 거치지 않는 단순 랜덤 추출.
+
+    allowed_types(`question_types` 쿼리 파라미터)가 있으면 그 유형 안에서 배정한다
+    (2026-09) — random 선택 모드에서도 "직접 고른 유형만" 규칙은 동일하게 지킨다.
     """
     shuffled = list(pool)
     random.shuffle(shuffled)
     selected = shuffled[:count]
     enriched = [
-        {'_item': it, 'src_bucket': it.bucket, 'suggested_question_type': None, 'reason': ''}
+        {
+            '_item': it, 'src_bucket': it.bucket,
+            'suggested_question_type': (
+                _assign_restricted_question_type(it, allowed_types, [], set()) if allowed_types else None
+            ),
+            'reason': '', 'tier_target': None, 'tier_shown': None,
+        }
         for it in selected
     ]
     composition: Dict[str, int] = {}
@@ -428,16 +631,23 @@ def compose(
     user_stats: Optional[Dict] = None,
     full_recommend: bool = False,
     new_allowance: Optional[int] = None,
+    allowed_types: Optional[List[str]] = None,
 ) -> Dict[str, Any]:
     """
     pool에서 count개를 골라 세션을 구성해 반환한다.
 
     Args:
-        pool:       CandidateItem 리스트 (build_candidate_pool 반환값)
-        count:      선택할 단어 수 (1~50)
-        selection:  'recommended' | 'random'
-        user_stats: 사용자 통계 dict (recent_7d_correct_rate, weakness_types,
-                    today_seen, recent_lapse_voca_ids 등)
+        pool:          CandidateItem 리스트 (build_candidate_pool 반환값)
+        count:         선택할 단어 수 (1~50)
+        selection:     'recommended' | 'random'
+        user_stats:    사용자 통계 dict (recent_7d_correct_rate, weakness_types,
+                       today_seen, recent_lapse_voca_ids 등)
+        allowed_types: (선택) `/study/recommend?question_types=` 로 지정된 문제 유형
+                       목록(2026-09). 있으면 tier 로직을 완전히 건너뛰고 이 유형들
+                       중 각 단어가 쓸 수 있는 것으로만 배정한다(여러 개면 기존
+                       가중치·연속 회피 로직 재사용). 이 경로에서는 tier_target/
+                       tier_shown이 항상 None — UserVoca의 tier 상태를 건드리지 않는다.
+                       하나도 못 쓰는 단어는 기존 전체 유형 가중치 배정으로 폴백한다.
 
     Returns:
         {
@@ -463,5 +673,5 @@ def compose(
         }
 
     if selection == 'random':
-        return _compose_random(pool, count)
-    return _compose_recommend(pool, count, user_stats, full_recommend, new_allowance)
+        return _compose_random(pool, count, allowed_types=allowed_types)
+    return _compose_recommend(pool, count, user_stats, full_recommend, new_allowance, allowed_types=allowed_types)

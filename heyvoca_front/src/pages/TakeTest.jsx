@@ -3,7 +3,8 @@ import Main from '../components/takeTest/Main';
 import Header from '../components/takeTest/Header';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useVocabulary } from '../context/VocabularyContext';
-import { getQuestionType, isFillInTheBlankType } from '../plugins/questionTypes';
+import { getQuestionType, isFillInTheBlankType, isSingleWordPluginType, isSentenceQuestionType } from '../plugins/questionTypes';
+import { mapRecommendItemToWord } from '../utils/studyRecommendMapping';
 import { isListeningSkipActive, mapSkippedQuestionType } from '../utils/listeningSkip';
 import { useNewBottomSheetActions } from '../context/NewBottomSheetContext';
 import { MEMORY_STATES } from '../utils/common';
@@ -28,6 +29,20 @@ const PREPARE_MAX_WAIT_MS = 8000;
 // 진입 게이트로 "대기"할 앞쪽 문제 수. 전체를 기다리면 너무 오래 걸리므로, 처음 몇 문제의
 // 자동재생 단어만 확실히 준비되면 진입하고 나머지는 백그라운드로 이어서 캐싱한다.
 const GATE_PRIORITY_QUESTIONS = 3;
+
+// 설정 시트(navigate state.data)가 "AI 추천 유형"을 쓰는지, "직접 고른 유형"을 쓰는지 판정 —
+// buildTestQuestions(로컬 유형 분배)와 setupTestQuestions(/study/recommend 요청 파라미터
+// 구성) 양쪽에서 같은 기준을 써야 한다(계약 7절 — 안 그러면 서버는 추천 모드로 알고
+// 응답했는데 프론트만 "직접 선택"으로 착각해 tier/questionPayload 해석이 어긋난다).
+// useRecommendedTypes — quick(홈 물주기/빠른 복습) 전용 플래그. quick은 questionType에
+// "폴백용 후보 배열"(QUICK_QUESTION_TYPES)을 넘기면서 동시에 백엔드 suggested_question_type을
+// 우선 쓰길 원하므로, questionType 배열 자체에 'recommended' 문자열을 섞는(=유효하지 않은
+// 타입으로 오염시키는) 대신 별도 플래그로 분리했다.
+const isRecommendedModeData = (data) =>
+  !!data?.useRecommendedTypes ||
+  !data?.questionType ||
+  data.questionType === 'recommended' ||
+  (Array.isArray(data.questionType) && data.questionType.includes('recommended'));
 
 const TakeTest = () => {
   "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
@@ -162,17 +177,8 @@ const TakeTest = () => {
       ? state.data.questionType
       : [state.data.questionType];
 
-    // Phase 2.2: 사용자가 명시적으로 유형을 선택했는지 판단
-    // questionType이 'recommended' 이거나 배열에 포함되면 백엔드 추천 우선 사용.
-    // useRecommendedTypes — quick(홈 물주기/빠른 복습) 전용 플래그. quick은 questionType에
-    // "폴백용 후보 배열"(QUICK_QUESTION_TYPES)을 넘기면서 동시에 백엔드 suggested_question_type을
-    // 우선 쓰길 원하므로, questionType 배열 자체에 'recommended' 문자열을 섞는(=유효하지 않은
-    // 타입으로 오염시키는) 대신 별도 플래그로 분리했다.
-    const isRecommendedMode =
-      !!state.data.useRecommendedTypes ||
-      !state.data.questionType ||
-      state.data.questionType === 'recommended' ||
-      (Array.isArray(state.data.questionType) && state.data.questionType.includes('recommended'));
+    // Phase 2.2: 사용자가 명시적으로 유형을 선택했는지 판단(판정 기준: 위 isRecommendedModeData).
+    const isRecommendedMode = isRecommendedModeData(state.data);
 
     // "듣기 문제 건너뛰기"가 활성이면 듣기 유형을 일반 유형으로 변환해 출제
     const skipListening = isListeningSkipActive();
@@ -254,15 +260,15 @@ const TakeTest = () => {
         return createMultipleChoiceQuestion(word, targetType);
       }
 
-      // 단일 단어 플러그인(빈칸 채우기): 단일 단어로 시도, 자격 예문이 없으면 multipleChoice 폴백
+      // 단일 단어 플러그인(빈칸 채우기 + 출제형 4종): 단일 단어로 시도, 자격 예문/서버 payload가
+      // 없으면 multipleChoice 폴백.
       // 주의: 폴백 시 questionType은 반드시 'multipleChoice'로 고정해야 한다.
-      //       fallbackType이 빈칸 채우기 id 인 채로 createMultipleChoiceQuestion에
-      //       넘기면 options가 word 객체 배열인 빈칸 채우기 문제가 생성되어
-      //       FillInTheBlankQuestion 컴포넌트에서 렌더 오류가 발생한다.
-      if (isFillInTheBlankType(targetType)) {
+      //       fallbackType이 이 플러그인 id 인 채로 createMultipleChoiceQuestion에
+      //       넘기면 options가 word 객체 배열인 문제가 생성되어 렌더 오류가 발생한다.
+      if (isSingleWordPluginType(targetType)) {
         const generated = plugin.setupQuestions([word], allWords);
         if (generated.length > 0) return generated[0];
-        // 폴백: 항상 multipleChoice (options가 word 객체 배열인 빈칸 채우기 생성 방지)
+        // 폴백: 항상 multipleChoice (options가 word 객체 배열인 문제 생성 방지)
         return createMultipleChoiceQuestion(word, 'multipleChoice');
       }
 
@@ -273,8 +279,9 @@ const TakeTest = () => {
     if (questionTypesArr.length === 1 && !isRecommendedMode) {
       const singleType = resolveType(questionTypesArr[0]);
       const plugin = getQuestionType(singleType);
-      // 빈칸 채우기 단독 선택: 자격 예문이 없는 단어를 통째로 버리지 않고 단어별로 사지선다 폴백
-      if (isFillInTheBlankType(singleType)) {
+      // 단일 단어 플러그인 단독 선택: 자격 예문/서버 payload가 없는 단어를 통째로 버리지 않고
+      // 단어별로 사지선다 폴백
+      if (isSingleWordPluginType(singleType)) {
         return wordsWithSheetId.map(word => buildSingleWordQuestion(word, singleType));
       }
       if (plugin?.setupQuestions) {
@@ -370,6 +377,15 @@ const TakeTest = () => {
 
     const selectionType = state.data?.selectionType ?? 'recommended';
 
+    // 설정 시트로 유형을 직접 고른 테스트(AI 추천이 아닌 경우)만 question_types를 실어 보낸다
+    // (계약 7절) — 자동 추천(tier) 경로는 절대 보내지 않는다. 보내면 서버가 tier 로직을
+    // 완전히 건너뛰어 tier_target/tier_shown이 항상 null로 나오기 때문이다.
+    const isRecommendedMode = isRecommendedModeData(state.data);
+    const directQuestionTypes = isRecommendedMode
+      ? null
+      : (Array.isArray(state.data.questionType) ? state.data.questionType : [state.data.questionType])
+        .filter(Boolean);
+
     const res = await getStudyRecommend({
       type: testType,
       count,
@@ -377,6 +393,7 @@ const TakeTest = () => {
       targetStates: backendTargetStates,
       selection: selectionType,
       taskBucket,
+      questionTypes: directQuestionTypes,
     });
 
     if (res?.code !== 200 || !Array.isArray(res.data?.items)) {
@@ -395,30 +412,9 @@ const TakeTest = () => {
     // 예약 id 로 표시한다. 서버가 표시를 내려주면 아래 두 줄만 지우면 된다.
     const pendingReplant = getPendingReplantIds();
 
-    const selectedWords = res.data.items.map(item => ({
-      id: item.user_voca_id,
-      vocaIndexId: item.user_voca_id,
-      vocabularySheetId: item.user_voca_book_id,
-      origin: item.word,
-      meanings: item.meanings ?? [],
-      examples: item.examples ?? [],
-      // 일본어 연동(INTEGRATION_SPEC 4절 단어 공통 필드) — language 가 TTS·표시 언어를 정한다.
-      // 빈 값은 싣지 않는다(wordLang 이 현재 학습 언어로 폴백).
-      ...(item.language ? { language: item.language } : {}),
-      ...(item.reading ? { reading: item.reading } : {}),
-      ...(item.romaji ? { romaji: item.romaji } : {}),
-      ...(item.jlpt ? { jlpt: item.jlpt } : {}),
-      ...(item.pronunciation ? { pronunciation: item.pronunciation } : {}),
-      // 오답 선택지에서 "뜻이 같거나 유사한 단어"를 제외하는 데 쓰는 개념 그룹 정보
-      // (utils/meaningConcept.js 단일 소스 — meanings와 유실 없이 함께 실어 나른다)
-      concept_ids: item.concept_ids ?? [],
-      meaning_concepts: item.meaning_concepts ?? [],
-      fsrs: item.fsrs,
-      priorityBucket: item.priority_bucket,
-      suggestedQuestionType: item.suggested_question_type ?? null,
-      reason: item.reason ?? null,
-      // 서버가 표시를 내려주면 그쪽이 정본이다
-      isDiagnosis: item.pending_action === 'REPLANT' || pendingReplant.has(String(item.user_voca_id)),
+    const selectedWords = res.data.items.map(item => mapRecommendItemToWord(item, {
+      // 서버가 표시를 내려주면 그쪽이 정본이다(mapRecommendItemToWord가 이미 pending_action도 본다)
+      isDiagnosis: pendingReplant.has(String(item.user_voca_id)),
     }));
 
     // 추천 응답 fsrs 에는 last_review·reps 가 없다 — 사전에서 채워야 "N일 전 학습"이 맞게 나온다
@@ -560,6 +556,16 @@ const TakeTest = () => {
           if (isFillInTheBlankType(q.questionType)) {
             return Array.isArray(q.options) && q.options.length === 4
               && typeof q.blankText === 'string' && typeof q.resultIndex === 'number';
+          }
+          // 출제형 4종(조립·타이핑) 캐시 — 조립형은 arrange.bank 배열, 타이핑은
+          // typing.answer_text 문자열이 있어야 렌더 가능. 재출제(requeue-easier)로 받은
+          // 문제는 이 모양을 그대로 갖고 있어야 새로고침/백그라운드 복귀 후에도 안전하다.
+          if (isSentenceQuestionType(q.questionType)) {
+            if (q.questionType === 'fillInTheBlankTyping') {
+              return typeof q.typing?.answer_text === 'string' && q.typing.answer_text.length > 0;
+            }
+            return Array.isArray(q.arrange?.bank) && q.arrange.bank.length > 0
+              && Array.isArray(q.arrange?.accepted);
           }
           return true;
         });

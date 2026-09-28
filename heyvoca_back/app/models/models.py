@@ -304,6 +304,37 @@ class VocaExample(db.Model):
                       primaryjoin="VocaExample.id == foreign(VocaExampleJa.example_id)")
 
 
+# 예문 조각 조립 문제 데이터 (2026-09 "출제형 문제 1단계").
+# sentenceArrangePartial/sentenceArrange/listenArrange/fillInTheBlankTyping 4종의 원재료.
+# example_id는 voca_example.id를 가리키지만 같은 dict schema 안에서도 이 테이블은 데이터
+# 생성 스크립트(scripts/import_example_puzzles.py)가 단독으로 채우는 파생 테이블이라 FK는
+# 걸지 않는다(voca_example 행이 갱신 재생성돼도 이 테이블의 upsert 흐름을 막지 않기 위함).
+# 정본: heyvoca_service/docs/SENTENCE_QUESTIONS_CONTRACT.md
+class VocaExamplePuzzle(db.Model):
+    __tablename__ = 'voca_example_puzzle'
+    __bind_key__ = 'dict'
+
+    example_id = Column(Integer, primary_key=True, autoincrement=False,
+                        comment='voca_example.id 참조(FK 없음 — 파생 테이블, 규칙상 명시 FK 생략)')
+    sentence_hash = Column(String(64), nullable=False, index=True,
+                           comment='정규화(태그 제거·소문자·문장부호 제거·공백 1개)한 영어 평문의 sha256 — '
+                                   '사용자 단어장에 복사된 예문을 문장 텍스트로 매칭하기 위함')
+    tokens = Column(JSON, nullable=False, comment='문장부호를 뺀 조각 리스트, 원문 어순')
+    target_idx = Column(JSON, nullable=False, comment='목표 단어에 해당하는 tokens 인덱스 리스트')
+    first_form = Column(String(64), nullable=True,
+                        comment='tokens[0]의 문장 중간 표기(소문자화 등) — 조각 뱅크 표시용')
+    alt_orders = Column(JSON, nullable=True,
+                        comment='허용 어순 리스트 — 각 원소는 tokens와 같은 길이의 재배열(조각 리스트)')
+    distractors = Column(JSON, nullable=True, comment='의미 방해 조각 리스트 (sentenceArrange* 오답 보기용)')
+    listen_distractors = Column(JSON, nullable=True, comment='소리 방해 조각 리스트 (listenArrange 오답 보기용)')
+    skip_reason = Column(String(64), nullable=True,
+                         comment='있으면 이 example은 조립형 4종 출제 후보에서 제외')
+    updated_at = Column(DateTime, nullable=False, default=datetime.utcnow, onupdate=datetime.utcnow)
+
+    def __repr__(self):
+        return f"<VocaExamplePuzzle(example_id={self.example_id}, skip_reason={self.skip_reason!r})>"
+
+
 # ── 일한(heyvoca_dict_ja) 확장 테이블 ─────────────────────────────────────
 # heyvoca_dict(영한)에는 없는 테이블이다. info['ja_only']=True 로 표시해
 # migrations_dict autogenerate·scripts/verify_schema.py 가 제외한다.
@@ -1206,6 +1237,16 @@ class UserVoca(db.Model):
     # voca_id 가 어느 사전(heyvoca_dict / heyvoca_dict_ja)을 가리키는지. 중복 키 = (user_id, dict_lang, word)
     dict_lang = Column(String(8), nullable=False, default='en', server_default='en')
 
+    # 2026-09 "출제형 문제 1단계" — 자동 출제(AI 추천) 난이도(tier) 진행 상태.
+    # UserStudyLog.tier_target/tier_shown은 기록용(과거 이력)일 뿐이고, 다음 tier_target
+    # 계산의 정본은 여기다 — FSRS 간격상 상급 단어는 복습 주기가 며칠~몇 주로 벌어져
+    # 최근 로그 윈도우로는 "항상 처음 보는 단어"로 잘못 리셋되는 문제가 있었다
+    # (app/services/recommend/composer.py::_compute_target_tier 참고).
+    # /study/log가 매번 갱신하고, /study/recommend(pool.py)가 매번 읽는다.
+    tier_target  = Column(Integer, nullable=True, comment='이 단어의 마지막 "정해진 난이도"(1~5)')
+    tier_shown   = Column(Integer, nullable=True, comment='마지막으로 실제 보여준 난이도(1~5)')
+    tier_correct = Column(Boolean, nullable=True, comment='마지막 tier 문제의 정답 여부')
+
     __table_args__ = (
         Index('ix_user_voca_user_dict_lang', 'user_id', 'dict_lang'),
     )
@@ -1307,7 +1348,7 @@ class UserStudyLog(db.Model):
                                comment='user_voca_book.id 참조 (파티션 테이블 FK 불가)')
     session_id       = Column(BinaryUUID, nullable=False, comment='user_study_session.id 참조 (FK 없음)')
     test_type        = Column(String(16), nullable=False, comment='test|exam|today|quick')
-    question_type    = Column(String(32), nullable=False, comment='multipleChoice|multipleChoiceListening|reverseMultipleChoice|fillInTheBlank|fillInTheBlankReverse|cardMatch|cardMatchListening|multipleChoiceDiagnosis (단일 소스: app/constants/question_types.py ALLOWED_QUESTION_TYPES)')
+    question_type    = Column(String(32), nullable=False, comment='multipleChoice|multipleChoiceListening|reverseMultipleChoice|fillInTheBlank|fillInTheBlankReverse|cardMatch|cardMatchListening|sentenceArrangePartial|sentenceArrange|listenArrange|fillInTheBlankTyping|multipleChoiceDiagnosis (단일 소스: app/constants/question_types.py ALLOWED_QUESTION_TYPES)')
     was_correct      = Column(Boolean, nullable=False)
     q_score          = Column(Integer,     nullable=False, comment='SM2 점수: 0/3/4/5')
     rating           = Column(Integer,     nullable=True,  comment='FSRS: 1=Again,2=Hard,3=Good,4=Easy (Phase 1.2부터 채움)')
@@ -1318,6 +1359,13 @@ class UserStudyLog(db.Model):
     created_at       = Column(DateTime, nullable=False, default=datetime.utcnow)
     dict_lang        = Column(String(8), nullable=False, default='en', server_default='en',
                               comment='voca_id 사전 언어 en|ja (통계 필터)')
+    tier_target      = Column(Integer, nullable=True,
+                              comment='이 단어의 "정해진 난이도"(1~5, 자동 출제 tier). '
+                                      '단일 소스: app/constants/question_types.py QUESTION_TYPE_TIER. '
+                                      '2026-09 추가, 그 이전 로그는 NULL(레거시).')
+    tier_shown       = Column(Integer, nullable=True,
+                              comment='실제로 보여준 문제의 난이도(1~5) — tier_target과 달라질 수 있음'
+                                      '(30% 확률로 더 쉬운 tier를 섞어 보여줌). 2026-09 추가.')
 
     # 관계 정의 (session_id에 FK가 없으므로 primaryjoin/foreign 명시)
     session = relationship(
@@ -1330,9 +1378,12 @@ class UserStudyLog(db.Model):
                  was_correct, q_score, time_taken_ms,
                  voca_id=None, user_voca_book_id=None,
                  rating=None, word_length=None,
-                 state_before=None, state_after=None, dict_lang=None):
+                 state_before=None, state_after=None, dict_lang=None,
+                 tier_target=None, tier_shown=None):
         if dict_lang is not None:
             self.dict_lang = dict_lang
+        self.tier_target       = tier_target
+        self.tier_shown        = tier_shown
         self.user_id           = user_id
         self.user_voca_id      = user_voca_id
         self.voca_id           = voca_id
@@ -1363,7 +1414,7 @@ class UserQuestionTypeStat(db.Model):
     id               = Column(Integer, primary_key=True, autoincrement=True)
     user_id          = Column(BinaryUUID, ForeignKey('user.id'), nullable=False, index=True)
     question_type    = Column(String(32), nullable=False,
-                              comment='multipleChoice|multipleChoiceListening|reverseMultipleChoice|fillInTheBlank|fillInTheBlankReverse|cardMatch|cardMatchListening|multipleChoiceDiagnosis (단일 소스: app/constants/question_types.py ALLOWED_QUESTION_TYPES)')
+                              comment='multipleChoice|multipleChoiceListening|reverseMultipleChoice|fillInTheBlank|fillInTheBlankReverse|cardMatch|cardMatchListening|sentenceArrangePartial|sentenceArrange|listenArrange|fillInTheBlankTyping|multipleChoiceDiagnosis (단일 소스: app/constants/question_types.py ALLOWED_QUESTION_TYPES)')
     total_count      = Column(Integer, nullable=False, default=0)
     correct_count    = Column(Integer, nullable=False, default=0)
     avg_time_taken_ms = Column(Integer, nullable=False, default=0,

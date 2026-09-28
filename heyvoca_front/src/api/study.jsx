@@ -289,6 +289,7 @@ export const getStudyRecommend = async ({
   targetStates = null,
   selection = 'recommended',
   taskBucket = null,
+  questionTypes = null,
 }) => {
   const url = `${backendUrl}/study/recommend`;
   const params = {};
@@ -321,6 +322,30 @@ export const getStudyRecommend = async ({
 
   params.selection = selection;
 
+  // question_types(계약 7절) — 설정 시트로 유형을 직접 고른 테스트만 보낸다. 자동 추천(tier)
+  // 경로는 절대 보내면 안 된다(보내는 순간 서버가 tier 로직을 건너뛰어 tier_target/tier_shown이
+  // 항상 null이 된다) — 그 판정은 호출부(pages/TakeTest.jsx)가 한다, 여기서는 값이 오면 그대로 싣는다.
+  if (Array.isArray(questionTypes) && questionTypes.length > 0) {
+    params.question_types = questionTypes.join(',');
+  }
+
   const result = await fetchDataAsync(url, 'GET', params);
   return result;
+};
+
+// GET /study/requeue-easier — 세션 안 오답 재출제(계약 6절). 조립/타이핑류는 서버가 조각을
+// 새로 섞고 payload를 다시 조립해야 해서, 로컬로 만들지 않고 이 엔드포인트를 쓴다.
+// 응답 data는 /study/recommend의 items[] 원소 하나와 같은 모양(tier_target은 항상 null).
+// 재출제할 문제가 없으면(404) code:404를 그대로 반환한다 — 호출부가 다음 단어로 넘어간다.
+export const getRequeueEasierApi = async ({ userVocaId, fromTier, excludeTypes }) => {
+  const url = `${backendUrl}/study/requeue-easier`;
+  const params = { user_voca_id: userVocaId };
+  if (typeof fromTier === 'number' && Number.isFinite(fromTier)) params.from_tier = fromTier;
+  if (Array.isArray(excludeTypes) && excludeTypes.length > 0) params.exclude_types = excludeTypes.join(',');
+  try {
+    return await fetchDataAsync(url, 'GET', params);
+  } catch (error) {
+    console.error('getRequeueEasierApi 오류:', error);
+    return null;
+  }
 };

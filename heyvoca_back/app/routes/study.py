@@ -11,7 +11,9 @@ from app import db
 from app.models.models import UserStudySession, UserStudyLog, UserVoca, UserQuestionTypeStat, User
 from app.utils.jwt_utils import jwt_required
 from app.utils.db_lock import begin_user_tx
-from app.constants.question_types import ALLOWED_QUESTION_TYPES
+from app.constants.question_types import (
+    ALLOWED_QUESTION_TYPES, CROP_STAGE_MAX_TIER, RECOMMENDABLE_QUESTION_TYPES,
+)
 from app.utils.dict_lang import get_dict_lang
 from app.services.ja_fields import (
     load_ja_word_info, load_ja_example_tokens, word_fields, examples_with_tokens,
@@ -32,6 +34,76 @@ from app.services.fsrs.thresholds import (  # noqa: E402
     STABILITY_SHORT as _STABILITY_SHORT,
     STABILITY_MEDIUM as _STABILITY_MEDIUM,
 )
+
+
+def _build_sentence_question_payload(item, qtype: str) -> dict:
+    """sentenceArrangePartial/sentenceArrange/listenArrange/fillInTheBlankTyping 전용
+    payload. 해당 유형이 아니거나 puzzle/예문이 없으면 {}.
+
+    계약: heyvoca_service/docs/SENTENCE_QUESTIONS_CONTRACT.md
+    """
+    if qtype == 'fillInTheBlankTyping':
+        from app.services.fill_blank_typing import build_typing_payload
+        payload = build_typing_payload(item.word, item.examples)
+        return {'typing': payload} if payload else {}
+
+    if qtype not in ('sentenceArrangePartial', 'sentenceArrange', 'listenArrange'):
+        return {}
+
+    from app.services.sentence_puzzle import puzzle_usable, build_arrange_payload
+    from app.utils.example_tagging import example_origin_text, example_meaning_text
+
+    mode = {'sentenceArrangePartial': 'partial', 'sentenceArrange': 'full', 'listenArrange': 'listen'}[qtype]
+    examples = item.examples or []
+    puzzles = item.example_puzzles or []
+    for i, ex in enumerate(examples):
+        puzzle = puzzles[i] if i < len(puzzles) else None
+        if not puzzle_usable(puzzle):
+            continue
+        payload = build_arrange_payload(
+            puzzle, mode=mode,
+            example_origin=example_origin_text(ex),
+            example_meaning=example_meaning_text(ex),
+        )
+        if payload:
+            return {'arrange': payload}
+    return {}
+
+
+def _serialize_recommend_item(item, *, suggested_question_type, tier_target, tier_shown,
+                               reason, priority_bucket, lang, ja_info, ja_tokens) -> dict:
+    """/study/recommend 문항 하나 + /study/requeue-easier 응답을 만드는 공용 직렬화.
+
+    두 엔드포인트가 같은 모양(계약: SENTENCE_QUESTIONS_CONTRACT.md)을 내야 어긋나지 않는다.
+    """
+    fsrs = item.fsrs_state or {}
+    return {
+        'user_voca_id':            item.user_voca_id,
+        'user_voca_book_id':       str(item.user_voca_book_id) if item.user_voca_book_id else None,
+        'voca_id':                 item.voca_id,
+        'word':                    item.word,
+        **word_fields(lang, item.voca_id, ja_info),
+        'meanings':                item.meanings,
+        'concept_ids':             item.concept_ids,
+        'meaning_concepts':        item.meaning_concepts,
+        'examples':                examples_with_tokens(lang, item.voca_id, item.examples, ja_tokens),
+        'fsrs': {
+            'state':          fsrs.get('state', 'new'),
+            'stability':      fsrs.get('stability', 0.0),
+            'difficulty':     fsrs.get('difficulty', 0.0),
+            'retrievability': fsrs.get('retrievability', 0.0),
+            'next_review':    fsrs.get('next_review'),
+            'last_review':    fsrs.get('last_review'),
+            'reps':           fsrs.get('reps', 0),
+            'lapses':         fsrs.get('lapses', 0),
+        },
+        'priority_bucket':         priority_bucket,
+        'suggested_question_type': suggested_question_type,
+        'reason':                  reason,
+        'tier_target':             tier_target,
+        'tier_shown':              tier_shown,
+        'question_payload':        _build_sentence_question_payload(item, suggested_question_type),
+    }
 
 
 def _clamp_limit(raw, default=20):
@@ -215,6 +287,14 @@ def post_study_log():
     question_type   = req.get('question_type', 'multipleChoice')
     was_correct     = req.get('was_correct')
     time_taken_ms   = req.get('time_taken_ms', 0)
+    # 2026-09 "출제형 문제 1단계" — 난이도 tier 기록(계약: SENTENCE_QUESTIONS_CONTRACT.md).
+    # 둘 다 optional(구버전 프론트/기존 유형은 안 보낼 수 있음) — 1~5 밖 값은 무시.
+    tier_target_raw = req.get('tier_target')
+    tier_shown_raw  = req.get('tier_shown')
+    tier_target = tier_target_raw if isinstance(tier_target_raw, int) and 1 <= tier_target_raw <= 5 else None
+    tier_shown  = tier_shown_raw if isinstance(tier_shown_raw, int) and 1 <= tier_shown_raw <= 5 else None
+    # fillInTheBlankTyping 오타 허용 정답 — FSRS 자동 평가를 Hard(2)로 고정한다.
+    typo = bool(req.get('typo', False))
 
     if not session_id_str or user_voca_id is None or was_correct is None:
         return jsonify({'code': 400, 'message': 'session_id, user_voca_id, was_correct는 필수입니다.'}), 400
@@ -358,6 +438,8 @@ def post_study_log():
         int(time_taken_ms),
         word_length=word_length,
         fsrs_difficulty=float(fsrs_difficulty) if fsrs_difficulty is not None else None,
+        question_type=question_type,
+        typo=typo,
     )
     fsrs_state_after = fsrs_review(
         fsrs_state_before,
@@ -377,6 +459,16 @@ def post_study_log():
 
     user_voca.data       = serialize_user_voca_data(payload)
     user_voca.updated_at = dt.datetime.utcnow()
+
+    # ── tier 진행 상태 정본 갱신(2026-09 2차 보완) ──
+    # tier_target/tier_shown이 둘 다 있는 요청(자동 추천 경로)만 갱신한다. 설정 시트로
+    # 유형을 직접 고른 테스트나 requeue-easier 응답(tier_target=null)처럼 tier 진행에
+    # 포함되지 않는 답변은 마지막 tier 상태를 건드리지 않는다 — 이미 잠그고 쓰는 이
+    # 행에 필드만 더 얹는 것이라 추가 쿼리·추가 락 없음(mastery와 동일 패턴).
+    if tier_target is not None and tier_shown is not None:
+        user_voca.tier_target  = tier_target
+        user_voca.tier_shown   = tier_shown
+        user_voca.tier_correct = bool(was_correct)
 
     # ── UserStudyLog INSERT ──
     q_score = rating_to_q_score(rating)
@@ -399,6 +491,8 @@ def post_study_log():
         # 통계 필터용 사전 언어. 요청 언어(get_dict_lang())가 아니라 단어 자체의 언어를 쓴다 —
         # 세션 도중 학습 언어를 바꾼 뒤 이전 언어 단어 로그가 늦게 도착해도 올바르게 분류된다.
         dict_lang=user_voca.dict_lang or get_dict_lang(),
+        tier_target=tier_target,
+        tier_shown=tier_shown,
     )
     db.session.add(log)
 
@@ -854,6 +948,14 @@ def get_recommend():
                       `farm_v2.query.get_task_bucket_ids`). wilted=WILTED+CRITICAL
                       (rot_due_at 오름차순), care=날짜 기준 돌봄 중 wilted/critical/
                       rotten 제외. 생략하면 기존 동작 그대로(하위호환).
+      question_types: (선택) 콤마 구분 question_type id 목록(2026-09, 계약:
+                      SENTENCE_QUESTIONS_CONTRACT.md 9절). 설정 시트에서 유형을 직접
+                      고른 테스트용 — 지정되면 tier 로직을 완전히 건너뛰고 각 단어가
+                      이 목록 중 쓸 수 있는 유형으로만 배정한다(여러 개면 기존
+                      가중치·연속 회피). 하나도 못 쓰는 단어는 기존 전체 유형 가중치
+                      배정으로 폴백. 이 경로에서는 응답의 tier_target/tier_shown이
+                      항상 null(UserVoca의 tier 상태를 건드리지 않음). 모르는 값은
+                      무시, 남는 게 없으면 파라미터를 안 준 것과 동일(default: 없음).
 
     응답:
       {
@@ -918,6 +1020,15 @@ def get_recommend():
     task_bucket = (request.args.get('task_bucket') or '').strip().lower() or None
     if task_bucket not in (None, 'wilted', 'care'):
         return jsonify({'code': 400, 'message': 'task_bucket은 wilted 또는 care만 지원합니다.'}), 400
+
+    # question_types: 설정 시트에서 유형을 직접 고른 테스트(2026-09) — 지정되면
+    # tier 로직을 완전히 건너뛰고 이 유형들 중 각 단어가 쓸 수 있는 것으로만 배정한다
+    # (composer.compose의 allowed_types, SENTENCE_QUESTIONS_CONTRACT.md 9절 참고).
+    # 모르는 값은 조용히 무시하고, 남는 게 하나도 없으면 파라미터를 안 준 것과 동일하게
+    # 취급한다(기존 동작 그대로).
+    question_types_raw = request.args.get('question_types', '')
+    requested_types = [t.strip() for t in question_types_raw.split(',') if t.strip()]
+    allowed_types = [t for t in requested_types if t in RECOMMENDABLE_QUESTION_TYPES] or None
 
     # ── 사용자 통계 조회 (1쿼리로 묶음) ──
     try:
@@ -994,6 +1105,7 @@ def get_recommend():
     result = compose(
         pool, count, selection=selection, user_stats=user_stats,
         full_recommend=full_recommend, new_allowance=new_allowance,
+        allowed_types=allowed_types,
     )
     composition:    dict = result['composition']
     enriched_items: list = result['enriched_items']
@@ -1020,39 +1132,19 @@ def get_recommend():
     selected_voca_ids = [e['_item'].voca_id for e in enriched_items]
     ja_info   = load_ja_word_info(selected_voca_ids) if lang == 'ja' else {}
     ja_tokens = load_ja_example_tokens(selected_voca_ids) if lang == 'ja' else {}
-    items_response = []
-    for enriched in enriched_items:
-        item = enriched['_item']
-        fsrs = item.fsrs_state or {}
-        # priority_bucket은 composer가 lapse로 재분류한 결과(src_bucket)를 사용한다.
-        items_response.append({
-            'user_voca_id':            item.user_voca_id,
-            'user_voca_book_id':       str(item.user_voca_book_id) if item.user_voca_book_id else None,
-            'voca_id':                 item.voca_id,
-            'word':                    item.word,
-            # 공통 필드: language (+ ja 면 reading/romaji/jlpt/pronunciation)
-            **word_fields(lang, item.voca_id, ja_info),
-            'meanings':                item.meanings,
-            # 단어 단위 distinct concept_id 목록(같은/유사 뜻 그룹, 사전 미연결 단어는 [])
-            'concept_ids':             item.concept_ids,
-            # meanings와 순서/길이가 같은 concept_id 배열 — 뜻 하나하나의 그룹이 필요할 때 사용
-            'meaning_concepts':        item.meaning_concepts,
-            # ja 예문엔 reading_tokens(후리가나) 부착
-            'examples':                examples_with_tokens(lang, item.voca_id, item.examples, ja_tokens),
-            'fsrs': {
-                'state':          fsrs.get('state', 'new'),
-                'stability':      fsrs.get('stability', 0.0),
-                'difficulty':     fsrs.get('difficulty', 0.0),
-                'retrievability': fsrs.get('retrievability', 0.0),
-                'next_review':    fsrs.get('next_review'),
-                'last_review':    fsrs.get('last_review'),
-                'reps':           fsrs.get('reps', 0),
-                'lapses':         fsrs.get('lapses', 0),
-            },
-            'priority_bucket':         enriched.get('src_bucket', item.bucket),
-            'suggested_question_type': enriched['suggested_question_type'],
-            'reason':                  enriched['reason'],
-        })
+    items_response = [
+        _serialize_recommend_item(
+            enriched['_item'],
+            suggested_question_type=enriched['suggested_question_type'],
+            tier_target=enriched.get('tier_target'),
+            tier_shown=enriched.get('tier_shown'),
+            reason=enriched['reason'],
+            # priority_bucket은 composer가 lapse로 재분류한 결과(src_bucket)를 사용한다.
+            priority_bucket=enriched.get('src_bucket', enriched['_item'].bucket),
+            lang=lang, ja_info=ja_info, ja_tokens=ja_tokens,
+        )
+        for enriched in enriched_items
+    ]
 
     return jsonify({
         'code': 200,
@@ -1062,6 +1154,82 @@ def get_recommend():
             'items':       items_response,
         },
     }), 200
+
+
+@study_bp.route('/requeue-easier', methods=['GET'])
+@jwt_required
+def requeue_easier():
+    """GET /study/requeue-easier — 세션 안 오답 재출제.
+
+    방금 실패한 문제의 tier(from_tier)보다 한 단계 쉬운 tier에서, 이번 세션에서 이미
+    시도한 유형(exclude_types)을 피해 같은 단어의 새 문제를 만들어 돌려준다. 프론트가
+    로컬에서 문제를 새로 조립할 필요 없이(특히 arrange/typing류는 서버 조립 payload가
+    필요) 이 엔드포인트 하나로 재출제할 수 있다. 계약: SENTENCE_QUESTIONS_CONTRACT.md.
+
+    쿼리 파라미터:
+      user_voca_id   : 필수
+      from_tier      : (선택) 방금 보여준 tier(1~5). 없으면 그 단어의 최고 tier-1에서 시작.
+      exclude_types  : (선택) 콤마 구분 question_type — 이번 세션에서 이미 실패한 유형들.
+
+    응답: { "code":200, "data": {...} } — data는 /study/recommend items[] 원소와 동일한 모양.
+    puzzle/보기 부족 등으로 재출제 불가면 404.
+    """
+    from app.services.recommend.pool import build_candidate_pool
+    from app.services.recommend.stage import crop_stage
+    from app.services.recommend.composer import _pick_type_at_tier
+
+    user_id = UUID(g.user_id)
+
+    try:
+        user_voca_id = int(request.args.get('user_voca_id'))
+    except (TypeError, ValueError):
+        return jsonify({'code': 400, 'message': 'user_voca_id는 필수입니다.'}), 400
+
+    try:
+        from_tier = int(request.args.get('from_tier', 0))
+    except (TypeError, ValueError):
+        from_tier = 0
+
+    exclude_types = {t.strip() for t in (request.args.get('exclude_types') or '').split(',') if t.strip()}
+
+    try:
+        pool = build_candidate_pool(user_id, None)
+    except Exception:
+        logging.getLogger(__name__).error('requeue-easier 풀 빌드 오류', exc_info=True)
+        return jsonify({'code': 500, 'message': '서버 오류가 발생했습니다.'}), 500
+
+    item = next((it for it in pool if it.user_voca_id == user_voca_id), None)
+    if item is None:
+        return jsonify({'code': 404, 'message': '단어를 찾을 수 없습니다.'}), 404
+
+    max_tier = CROP_STAGE_MAX_TIER.get(crop_stage(item.fsrs_state), 1)
+    start_tier = (from_tier - 1) if from_tier > 0 else max(1, max_tier - 1)
+    start_tier = max(1, min(start_tier, max_tier))
+
+    tier = start_tier
+    chosen = None
+    while tier >= 1:
+        chosen = _pick_type_at_tier(item, tier, [], exclude_types)
+        if chosen:
+            break
+        tier -= 1
+    if chosen is None:
+        return jsonify({'code': 404, 'message': '재출제 가능한 문제 유형이 없습니다.'}), 404
+
+    lang = get_dict_lang()
+    ja_info   = load_ja_word_info([item.voca_id]) if lang == 'ja' else {}
+    ja_tokens = load_ja_example_tokens([item.voca_id]) if lang == 'ja' else {}
+
+    data = _serialize_recommend_item(
+        item,
+        suggested_question_type=chosen,
+        tier_target=None,   # 재출제는 자동 tier 진행에 영향 주지 않음(같은 세션 내 임시 재시도)
+        tier_shown=tier,
+        reason='',
+        priority_bucket=item.bucket,
+        lang=lang, ja_info=ja_info, ja_tokens=ja_tokens,
+    )
+    return jsonify({'code': 200, 'data': data}), 200
 
 
 def _build_mcq_options(correct: str, distractor_pool: list, k: int = 3,

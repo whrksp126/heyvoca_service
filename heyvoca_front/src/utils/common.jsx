@@ -370,7 +370,10 @@ export const prefetchTtsList = async (items, concurrency = 4, onProgress = null)
 // 캐시 미스(비로그인 등)면 url이 없으므로 조용히 종료한다.
 // onMeta: 오디오 메타데이터 로드 시 실제 재생 길이(초)를 전달하는 콜백(선택).
 //         ripple 등 시각 효과를 실제 재생 시간에 동기화하는 데 사용한다.
-export const getTextSound = async (text, lang, onMeta) => {
+// rate: 재생 배속(선택, 기본 1). 듣고 받아쓰기(listenArrange)의 "0.7배속 다시 듣기" 전용 —
+//       sharedAudio 는 앱 전체가 공유하는 단일 인스턴스라, 다음 호출이 rate를 명시하지 않으면
+//       항상 1로 되돌려 다른 화면(예: 사지선다 듣기)이 느려진 채로 남지 않게 한다.
+export const getTextSound = async (text, lang, onMeta, rate = 1) => {
   // 오디오 unlock은 전역 gesture 리스너(_tryUnlockAudio)가 실제 첫 탭에서 처리한다.
   // 여기서(대개 gesture 밖에서 호출됨) prime하면 one-shot unlock을 헛되이 소모해
   // 자동재생이 영영 무음이 되므로, 여기서는 prime을 호출하지 않는다.
@@ -416,6 +419,7 @@ export const getTextSound = async (text, lang, onMeta) => {
 
     if (!sharedAudio) sharedAudio = new Audio();
     sharedAudio.src = audioUrl;
+    sharedAudio.playbackRate = Number.isFinite(rate) && rate > 0 ? rate : 1;
 
     // 오디오 재생 완료까지 기다리는 Promise 반환
     return new Promise((resolve) => {
@@ -444,7 +448,10 @@ export const getTextSound = async (text, lang, onMeta) => {
             try { onMeta(dur); } catch { /* 콜백 오류는 재생에 영향 주지 않음 */ }
           }
           if (watchdog) clearTimeout(watchdog);
-          watchdog = setTimeout(cleanup, (dur + 0.4) * 1000);
+          // playbackRate(0.7배속 등)만큼 실제 재생 시간이 늘어나므로 나눠서 계산한다 —
+          // 안 그러면 느린 재생이 끝나기 전에 워치독이 먼저 잘라먹는다.
+          const effectiveRate = sharedAudio.playbackRate || 1;
+          watchdog = setTimeout(cleanup, (dur / effectiveRate + 0.4) * 1000);
         }
       };
 

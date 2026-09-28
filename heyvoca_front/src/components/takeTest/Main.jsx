@@ -17,9 +17,10 @@ import MemoryStateChangeBadge, {
   getMemoryStateKeyByStability,
 } from "../common/MemoryStateChangeBadge";
 import { playSuccessSound, playErrorSound } from '../../utils/audio';
-import { getQuestionType, isFillInTheBlankType } from '../../plugins/questionTypes';
+import { getQuestionType, isSingleWordPluginType } from '../../plugins/questionTypes';
 import { getDisplayMeanings } from '../../utils/displayMeanings';
-import { logStudyQuestion } from '../../api/study';
+import { logStudyQuestion, getRequeueEasierApi } from '../../api/study';
+import { mapRecommendItemToWord } from '../../utils/studyRecommendMapping';
 import { getAdvanceDelay } from '../../utils/studyTiming';
 import { useStudyAdvanceGate } from '../../hooks/useStudyAdvanceGate';
 import { optimisticFarmPayload, pendingFarmPayload } from '../../utils/farmOptimistic';
@@ -154,7 +155,11 @@ const collectSessionWordPool = (questions) => {
 // 카드매칭 word 객체(오답)를 사지선다(multipleChoice) question으로 변환.
 // 오답 보기(distractor)는 같은 세션(다른 문제/다른 카드매칭 세트 포함)의 다른 단어 뜻을 재사용한다
 // (allWords 풀에 API로 다시 접근하지 않고, 이미 로드된 testQuestions에서 충분히 구할 수 있음).
-const buildMultipleChoiceFromWord = (word, pool) => {
+// questionType 기본값 'multipleChoice' — requeue-easier(계약 6절)가 이 단어에 mcq 계열
+// (multipleChoice/multipleChoiceListening/reverseMultipleChoice)을 배정했을 때도, 또는
+// (실사용 가능성은 낮지만) cardMatch류를 배정했는데 단일 단어라 세트를 못 만들 때도 이 함수로
+// mcq 폴백을 만든다 — buildQuestionForType 참고.
+const buildMultipleChoiceFromWord = (word, pool, questionType = 'multipleChoice') => {
   const wordId = word.vocaIndexId ?? word.id;
   const distractorCandidates = (pool ?? []).filter(w => {
     const wid = w.vocaIndexId ?? w.id;
@@ -177,10 +182,31 @@ const buildMultipleChoiceFromWord = (word, pool) => {
     ...word,
     options,
     resultIndex: resultIndex >= 0 ? resultIndex : 0,
-    questionType: 'multipleChoice',
+    questionType,
     isCorrect: null,
     userResultIndex: null,
   };
+};
+
+// requeue-easier(계약 6절) 응답을 실제 렌더 가능한 question 객체로 만든다.
+// word는 mapRecommendItemToWord로 이미 변환된 상태(questionPayload/suggestedQuestionType 포함) —
+// type은 그 응답의 suggested_question_type을 그대로 받는다(서버가 정한 값, 로컬에서 다시 고르지 않음).
+const buildQuestionForType = (word, type, pool) => {
+  // cardMatch류는 세트(2개 이상)가 있어야 렌더된다 — 재출제는 항상 단어 하나뿐이라 세트를
+  // 만들 수 없으므로 사지선다(듣기 여부만 유지)로 대체한다.
+  if (type === 'cardMatch' || type === 'cardMatchListening') {
+    return buildMultipleChoiceFromWord(word, pool, type === 'cardMatchListening' ? 'multipleChoiceListening' : 'multipleChoice');
+  }
+  const plugin = getQuestionType(type);
+  if (plugin?.setupQuestions) {
+    // 빈칸 채우기·출제형 4종 — setupQuestions가 word.questionPayload(또는 예문 강조 마커)
+    // 유무로 스스로 판단한다. 못 만들면(서버가 그 유형을 배정했는데 payload가 비정상) mcq 폴백.
+    const generated = plugin.setupQuestions([word], pool);
+    if (generated.length > 0) return generated[0];
+    return buildMultipleChoiceFromWord(word, pool, 'multipleChoice');
+  }
+  // multipleChoice / multipleChoiceListening / reverseMultipleChoice
+  return buildMultipleChoiceFromWord(word, pool, type);
 };
 
 const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex, setPendingUpdateSheetIds, setPendingUpdateWords, testType, studySessionRef, pendingLogPromisesRef, loggedVocaIdsRef, retryCountMapRef, passedVocaIdsRef, totalUniqueVocaCountRef, cardRetryEnqueuedRef, guestMode }) => {
@@ -385,6 +411,73 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
     });
     retryEnqueueCounterRef.current += 1;
     return true;
+  };
+
+  // 단어별로 이번 세션에서 이미 실패한 유형(계약 6절 exclude_types) — 같은 유형이 requeue-easier로
+  // 반복 배정되는 것을 막는다. Main.jsx 생애주기 동안만 유효하면 충분해 prop이 아닌 로컬 ref.
+  const retryExcludeTypesRef = useRef(new Map());
+
+  /*
+    자동 추천 세션(tierShown이 있는 문제)의 오답 재출제 — 계약 6절 GET /study/requeue-easier.
+    조립/타이핑류는 서버가 조각을 새로 섞고 payload를 다시 조립해야 해서 로컬로 만들 수 없고,
+    그 외 유형(사지선다·카드매칭)도 "한 칸 쉬운 tier"를 프론트가 알 방법이 없어 이 엔드포인트로
+    통일한다. 실패(네트워크 오류·404 — 더 쉬운 tier에 이 단어가 쓸 유형이 없음)하면 조용히
+    포기한다(다음 단어로 진행) — enqueueRetry의 "그대로 재출제"로 되돌리지 않는다. 계약이
+    "이 경우 프론트는 다음 단어로 넘어가면 된다"고 명시했기 때문이다.
+  */
+  const requeueEasier = async (question) => {
+    const vocaId = question.vocaIndexId ?? question.id;
+    if (vocaId == null) return false;
+
+    const retryMap = retryCountMapRef?.current;
+    const prevCount = retryMap?.get(vocaId) ?? 0;
+    const MAX_RETRY = 10;
+    if (retryMap && prevCount >= MAX_RETRY) return false;
+
+    const excludeSet = retryExcludeTypesRef.current.get(vocaId) ?? new Set();
+    excludeSet.add(question.questionType);
+    retryExcludeTypesRef.current.set(vocaId, excludeSet);
+
+    const res = await getRequeueEasierApi({
+      userVocaId: vocaId,
+      fromTier: typeof question.tierShown === 'number' ? question.tierShown : undefined,
+      excludeTypes: [...excludeSet],
+    });
+    if (res?.code !== 200 || !res.data) return false;
+
+    retryMap?.set(vocaId, prevCount + 1);
+
+    const pool = collectSessionWordPool(testQuestions);
+    const word = mapRecommendItemToWord(res.data);
+    const retryQuestion = buildQuestionForType(word, res.data.suggested_question_type, pool);
+    retryQuestion.isRetry = true;
+    retryQuestion.isCorrect = null;
+    retryQuestion.userResultIndex = null;
+    // requeue-easier 응답은 tier_target이 항상 null(계약 6절 — 자동 tier 진행에 영향 없음).
+    retryQuestion.tierTarget = null;
+    retryQuestion.tierShown = res.data.tier_shown ?? null;
+
+    setTestQuestions((prev) => {
+      const next = [...prev];
+      next.splice(next.length, 0, retryQuestion);
+      return next;
+    });
+    retryEnqueueCounterRef.current += 1;
+    return true;
+  };
+
+  // 오답 문제 재출제 — 자동 추천 세션(tierShown 有)이면 서버 requeue-easier로, 아니면(설정
+  // 시트로 유형을 직접 고른 테스트) 기존처럼 같은 유형을 로컬에서 다시 만든다.
+  // 반환값은 항상 boolean(동기) — requeue-easier는 비동기라 즉시 true/false를 알 수 없으므로,
+  // 낙관적으로 true를 반환하고(대부분 성공) 실패 시 뒤늦게 재출제 카운터를 되돌리지 않는다
+  // (세션 종료 판정은 passedVocaIdsRef 기준이 1차이고, 이 값은 안전망일 뿐이라 근사치로 충분하다 —
+  // handlePluginComplete/setUpdateRecentStudyStateAndStatus 주석 참고).
+  const enqueueRetryAuto = (currentIdx, question) => {
+    if (typeof question.tierShown === 'number') {
+      requeueEasier(question);
+      return true;
+    }
+    return enqueueRetry(currentIdx, question);
   };
 
   // ── 콤보: 학습 진입 시 현재 상태 로드 ──
@@ -971,7 +1064,9 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
     // 낙관적 UI: 답변 직후 즉시 임시 fsrs + 암기상태 변경 알림
     applyOptimisticGrade(progressIndex, isCorrectAnswer);
 
-    // 첫 시도만 /study/log 로깅 (재출제는 스킵)
+    // 첫 시도만 /study/log 로깅 (재출제는 스킵). tier_target/tier_shown은 /study/recommend가
+    // 이 문항에 실어 준 값을 그대로 되돌려 보낸다(계약 4절) — 설정 시트로 유형을 직접 고른
+    // 테스트 등 값이 없던 문항은 null로 보내면 서버가 조용히 무시한다.
     logIfFirstAttempt(question, {
       session_id: studySessionRef?.current,
       user_voca_id: question.vocaIndexId ?? question.id,
@@ -980,6 +1075,8 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
       was_correct: isCorrectAnswer,
       time_taken_ms: timeTakenMs,
       client_now: new Date().toISOString(),
+      tier_target: question.tierTarget ?? null,
+      tier_shown: question.tierShown ?? null,
     });
 
     // 게스트 온보딩 로컬 콤보 — 첫 시도만 반영 (재출제는 스트릭에 영향 없음)
@@ -995,10 +1092,10 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
       question.isCorrect = isCorrectAnswer;
     }
 
-    // 재출제 큐 삽입 (오답인 경우)
+    // 재출제 큐 삽입 (오답인 경우) — 자동 추천 세션이면 requeue-easier(계약 6절), 아니면 기존 로컬 재출제.
     lastRetryEnqueuedRef.current = false;
     if (!isCorrectAnswer) {
-      lastRetryEnqueuedRef.current = enqueueRetry(progressIndex, question);
+      lastRetryEnqueuedRef.current = enqueueRetryAuto(progressIndex, question);
     }
 
     setIsAnswered(true);
@@ -1218,7 +1315,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
   // 변환해 enqueueRetry로 큐 맨 끝에 재출제한다(맞출 때까지 반복, 통과 처리하지 않음).
   // loggedVocaIdsRef로 중복 로깅 방지, cardRetryEnqueuedRef로 동일 단어의 중복 재출제
   // (카드 즉시 콜백 onCardMatched + 세트 완료 콜백 onComplete 이중 호출) 방지.
-  const processCardWord = ({ sheetId, wordId, updateData, isCorrect: wordIsCorrect, timeTakenMs }, currentQuestion, setWords, questionType) => {
+  const processCardWord = ({ sheetId, wordId, updateData, isCorrect: wordIsCorrect, timeTakenMs, typo }, currentQuestion, setWords, questionType) => {
     if (wordId == null) return;
     updateWordState(sheetId, wordId, updateData);
     setPendingUpdateSheetIds(prev => new Set(prev.add(sheetId)));
@@ -1232,10 +1329,14 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
       target = setWords.find(w => w.id === wordId);
       if (target) target.isCorrect = wordIsCorrect ?? target.isCorrect;
     }
-    // 단일 단어 플러그인(빈칸 채우기 두 방향) — 문제 객체 자체가 단어를 스프레드한 것이라
+    // 단일 단어 플러그인(빈칸 채우기 + 출제형 4종) — 문제 객체 자체가 단어를 스프레드한 것이라
     // words[] 가 없다. fsrs 기준값과 재출제용 단어 객체를 문제 자신에서 얻는다.
     const isSingleWordQuestion = !Array.isArray(setWords) && currentQuestion?.id === wordId;
     const fsrsBefore = target?.fsrs ?? (isSingleWordQuestion ? currentQuestion?.fsrs : undefined);
+    // tier_target/tier_shown(계약 4·5절) — cardMatch는 words[] 안의 단어별로, 단일 단어
+    // 플러그인은 문제 자신(currentQuestion)에 붙어 있다(둘 다 mapRecommendItemToWord 출처).
+    const tierTarget = target?.tierTarget ?? (isSingleWordQuestion ? currentQuestion?.tierTarget : null) ?? null;
+    const tierShown = target?.tierShown ?? (isSingleWordQuestion ? currentQuestion?.tierShown : null) ?? null;
 
     // 게스트 온보딩 로컬 콤보 — 첫 시도만 반영. 카드매칭은 항상 첫 시도(오답 카드는 사지선다로
     // 재출제되어 이 경로를 다시 타지 않음)지만, 빈칸 채우기는 같은 유형으로 재출제되어 다시 온다.
@@ -1288,6 +1389,10 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
         was_correct: !!wordIsCorrect,
         time_taken_ms: typeof timeTakenMs === 'number' ? timeTakenMs : 5000,
         client_now: new Date().toISOString(),
+        tier_target: tierTarget,
+        tier_shown: tierShown,
+        // fillInTheBlankTyping 오타 허용 정답(계약 3-2·4절) — 그 외 유형은 항상 false.
+        typo: !!typo,
       };
 
       // pendingLogPromisesRef에는 실제 전송 시점과 무관하게(큐잉되더라도) 즉시 등록해야
@@ -1319,14 +1424,21 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
       return;
     }
 
-    // 오답 단일 단어 문제(빈칸 채우기): **같은 유형**으로 다시 만들어(예문·선택지 새로 섞음) 큐 끝에
-    // 재출제한다. 카드와 달리 콜백이 onComplete 하나라 이중 호출이 없으므로 cardRetryEnqueuedRef
-    // 가드를 타지 않는다 — 재출제에서 또 틀리면 다시 재출제(상한은 enqueueRetry 의 MAX_RETRY).
+    // 오답 단일 단어 문제(빈칸 채우기 + 출제형 4종): 자동 추천 세션(tierShown 有)이면
+    // requeue-easier(계약 6절)로 한 칸 쉬운 유형을 받아 재출제 — 조립/타이핑류는 서버가 조각을
+    // 새로 섞어야 해서 로컬로는 다시 만들 수 없다. 아니면(설정 시트로 유형을 직접 고른 테스트)
+    // 기존처럼 **같은 유형**으로 다시 만든다(예문·선택지 새로 섞음). 카드와 달리 콜백이
+    // onComplete 하나라 이중 호출이 없으므로 cardRetryEnqueuedRef 가드를 타지 않는다 —
+    // 재출제에서 또 틀리면 다시 재출제(상한은 enqueueRetry/requeueEasier의 MAX_RETRY).
     // 같은 유형으로 못 만들면(예문이 사라진 비정상 캐시 등) 사지선다로 폴백한다.
-    if (isSingleWordQuestion && isFillInTheBlankType(questionType)) {
+    if (isSingleWordQuestion && isSingleWordPluginType(questionType)) {
+      if (typeof currentQuestion?.tierShown === 'number') {
+        requeueEasier(currentQuestion);
+        return;
+      }
       // 문제 전용 필드를 벗겨 순수 단어 객체로 되돌린 뒤 다시 출제한다
       const wordObj = { ...currentQuestion };
-      ['options', 'resultIndex', 'shownText', 'blankText', 'blankFill',
+      ['options', 'resultIndex', 'shownText', 'blankText', 'blankFill', 'arrange', 'typing',
         'questionType', 'isCorrect', 'userResultIndex', 'isRetry'].forEach(k => { delete wordObj[k]; });
       const pool = collectSessionWordPool(testQuestions);
       const regenerated = getQuestionType(questionType)?.setupQuestions?.([wordObj], pool) ?? [];

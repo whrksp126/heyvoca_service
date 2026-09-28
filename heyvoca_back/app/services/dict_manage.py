@@ -59,14 +59,15 @@ LOCAL_ARCHIVE_KEEP = int(os.getenv('DICT_LOCAL_ARCHIVE_KEEP', '3'))
 
 # 발행 대상 테이블(사전 전체) — bookstore 포함
 TRACKED_TABLES = [
-    'voca', 'voca_meaning', 'voca_example',
+    'voca', 'voca_meaning', 'voca_example', 'voca_example_puzzle',
     'voca_book', 'admin_voca_book', 'bookstore', 'bookstore_category',
     'daily_sentence',
     'voca_book_map', 'voca_meaning_map', 'voca_example_map', 'admin_voca_book_map',
     'voca_meaning_concept',
     'dict_meta',
 ]
-COUNT_TABLES = ['voca', 'voca_meaning', 'voca_example', 'voca_book', 'bookstore']
+COUNT_TABLES = ['voca', 'voca_meaning', 'voca_example', 'voca_example_puzzle',
+                'voca_book', 'bookstore']
 COUNT_TABLES_JA = ['voca', 'voca_meaning', 'voca_example', 'voca_ja',
                    'bookstore', 'admin_voca_book', 'admin_voca_book_map']
 

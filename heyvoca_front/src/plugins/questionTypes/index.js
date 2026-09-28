@@ -1,6 +1,9 @@
 import CardMatchQuestion from './cardMatch/CardMatchQuestion';
 import CardMatchListeningQuestion from './cardMatch/CardMatchListeningQuestion';
 import FillInTheBlankQuestion from './fillInTheBlank/FillInTheBlankQuestion';
+import SentenceArrangeQuestion from './sentenceArrange/SentenceArrangeQuestion';
+import ListenArrangeQuestion from './sentenceArrange/ListenArrangeQuestion';
+import FillInTheBlankTypingQuestion from './fillInTheBlankTyping/FillInTheBlankTypingQuestion';
 import { wordsOverlap } from '../../utils/meaningConcept';
 import { wordLang, isJa } from '../../utils/lang';
 
@@ -164,6 +167,44 @@ const buildChunksAvoidingMeaningClash = (words, maxSize = 4) => {
 };
 
 /*
+  출제형 문제 1단계 — 문장 조립·타이핑 4종(sentenceArrangePartial/sentenceArrange/listenArrange/
+  fillInTheBlankTyping). 계약: heyvoca_service/docs/SENTENCE_QUESTIONS_CONTRACT.md.
+
+  기존 빈칸 채우기와 달리 이 4종은 **프론트가 직접 문제를 조립하지 않는다** — 서버가
+  puzzle 데이터를 섞고 방해 조각을 샘플링해 완성된 payload(question_payload)를
+  /study/recommend 응답에 실어 준다. 그래서 setupQuestions는 로컬 생성이 아니라
+  "이 단어에 이 유형의 서버 payload가 이미 붙어 있으면 문제로 승격, 없으면 건너뛴다"만 한다
+  (건너뛴 단어는 호출부가 기존 fillInTheBlank와 같은 규칙으로 multipleChoice로 폴백한다).
+
+  word.suggestedQuestionType / word.questionPayload는 pages/TakeTest.jsx의
+  mapRecommendItemToWord가 /study/recommend(또는 /study/requeue-easier) 응답에서 그대로
+  옮겨 붙인 값이다 — 로컬 유형 선택 테스트(설정 시트로 직접 고른 경우)에서도 이 단어가
+  마침 서버 추천에서 이 유형으로 배정된 경우에만 조립형 payload를 쓸 수 있다(자동 추천과
+  동일한 근거 데이터를 재사용하는 것이지, 직접 선택이 서버 배정을 강제하지는 않는다).
+*/
+const buildArrangeQuestions = (questionType) => (selectedWords) => {
+  const out = [];
+  for (const word of selectedWords ?? []) {
+    if (word?.suggestedQuestionType !== questionType) continue;
+    const arrange = word.questionPayload?.arrange;
+    if (!arrange) continue;
+    out.push({ ...word, questionType, arrange, isCorrect: null, userResultIndex: null });
+  }
+  return out;
+};
+
+const buildTypingQuestions = (selectedWords) => {
+  const out = [];
+  for (const word of selectedWords ?? []) {
+    if (word?.suggestedQuestionType !== 'fillInTheBlankTyping') continue;
+    const typing = word.questionPayload?.typing;
+    if (!typing) continue;
+    out.push({ ...word, questionType: 'fillInTheBlankTyping', typing, isCorrect: null, userResultIndex: null });
+  }
+  return out;
+};
+
+/*
   문제 유형 플러그인 메타데이터
   - family:    '사지선다' | '카드 맞추기' | '빈칸 채우기' 묶음 — 자유 설정 테스트 시트의 [문제 유형] 칩
   - direction: 'en2ko'(영어를 보고 뜻/한국어를 고름) | 'ko2en'(뜻/한국어를 보고 영어를 고름) | null(양쪽 동시)
@@ -255,6 +296,52 @@ export const QUESTION_TYPE_PLUGINS = [
       }));
     },
   },
+  {
+    // 문장 만들기(부분 조립) — 한글 해석을 보고 목표 단어 주변 3~5조각만 조립(앞뒤는 고정 텍스트).
+    // sentenceArrange(전체 조립)와 같은 family — 설정 시트에서는 "문장 만들기" 한 타일로 묶인다.
+    id: 'sentenceArrangePartial',
+    label: '문장 만들기(부분)',
+    enabled: true,
+    family: 'sentenceArrange',
+    direction: null,
+    listening: false,
+    component: SentenceArrangeQuestion,
+    setupQuestions: buildArrangeQuestions('sentenceArrangePartial'),
+  },
+  {
+    // 문장 만들기(전체 조립) — 문장 전체 또는 뒷부분 최대 7조각을 조립.
+    id: 'sentenceArrange',
+    label: '문장 만들기',
+    enabled: true,
+    family: 'sentenceArrange',
+    direction: null,
+    listening: false,
+    component: SentenceArrangeQuestion,
+    setupQuestions: buildArrangeQuestions('sentenceArrange'),
+  },
+  {
+    // 듣고 받아쓰기 — 영어 음성을 듣고 조립(원문 어순만 정답). "문장 만들기" family의 듣기 변형
+    // — 설정 시트의 [듣기 문제 포함] 토글이 켜졌을 때만 선택지에 포함된다(카드 맞추기와 같은 방식).
+    id: 'listenArrange',
+    label: '듣고 받아쓰기',
+    enabled: true,
+    family: 'sentenceArrange',
+    direction: null,
+    listening: true,
+    component: ListenArrangeQuestion,
+    setupQuestions: buildArrangeQuestions('listenArrange'),
+  },
+  {
+    // 빈칸 직접 입력 — 기존 빈칸 채우기와 같은 예문, 사지선다 대신 타이핑으로 정답 입력.
+    id: 'fillInTheBlankTyping',
+    label: '빈칸 입력',
+    enabled: true,
+    family: 'fillInTheBlankTyping',
+    direction: null,
+    listening: false,
+    component: FillInTheBlankTypingQuestion,
+    setupQuestions: buildTypingQuestions,
+  },
 ];
 
 export const getQuestionType = (id) => QUESTION_TYPE_PLUGINS.find(p => p.id === id);
@@ -264,6 +351,20 @@ export const FILL_IN_THE_BLANK_TYPES = QUESTION_TYPE_PLUGINS
   .filter(p => p.family === 'fillInTheBlank')
   .map(p => p.id);
 export const isFillInTheBlankType = (id) => FILL_IN_THE_BLANK_TYPES.includes(id);
+
+// 단일 단어 플러그인 전체(카드 세트가 아닌 유형) — 빈칸 채우기 + 출제형 4종(조립·타이핑).
+// TakeTest.jsx/Main.jsx가 "이 유형은 단어 하나로 재구성/재출제할 수 있는가"를 물을 때 쓴다
+// (family가 'cardMatch'가 아니고 setupQuestions가 있으면 자동으로 여기 포함된다 — 새 유형을
+// 추가할 때 이 배열에 id를 직접 나열하지 않아도 되게 하기 위함).
+export const SINGLE_WORD_PLUGIN_TYPES = QUESTION_TYPE_PLUGINS
+  .filter(p => typeof p.setupQuestions === 'function' && p.family !== 'cardMatch')
+  .map(p => p.id);
+export const isSingleWordPluginType = (id) => SINGLE_WORD_PLUGIN_TYPES.includes(id);
+
+// 출제형 4종(서버 payload 기반 — 로컬 setupQuestions가 word.questionPayload 유무로 스스로
+// 판단한다) 판별. Main.jsx의 로그 페이로드(typo 필드 등) 분기에 쓴다.
+export const SENTENCE_QUESTION_TYPES = ['sentenceArrangePartial', 'sentenceArrange', 'listenArrange', 'fillInTheBlankTyping'];
+export const isSentenceQuestionType = (id) => SENTENCE_QUESTION_TYPES.includes(id);
 
 // "AI 추천 학습"(quick — 홈 물주기·빠른 복습) 진입 시 쓰는 유형 후보 풀.
 // enabled 플러그인에서 파생해 새 유형을 여기 배열에 추가하면 자동으로 quick에도 반영된다
