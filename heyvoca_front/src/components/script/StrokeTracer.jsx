@@ -14,6 +14,18 @@
 // compound(요음, 예: きゃ)는 두 글자를 겹치지 않게 배치만 해서 애니메이션으로 보여주고
 // 인터랙티브 트레이싱은 생략한다(단일 글자 좌표계가 아니라 정밀 판정이 의미 없다) —
 // "다음" 버튼은 항상 눌러서 넘어갈 수 있다.
+//
+// 【2026-09-29 QA 4차 — 듀오링고 방식 가이드 + 연속 획 허용】
+//   · 아직 안 그은 현재 획은 번호 대신 분홍 점선(화살촉 포함)으로 경로를 미리 보여주고,
+//     시작점은 숫자 배지 대신 화살표(→) 배지로 바꿨다. 배경에는 아주 옅은 가로·세로
+//     십자 가이드를 깔아 중심을 잡기 쉽게 한다.
+//   · 필체에 따라 한 번의 손가락 제스처로 이어지는 획(예: B의 2·3획 곡선)을 그리면,
+//     그 궤적 하나로 몇 번째 획까지 커버리지 기준을 통과하는지 앞으로 계속 확인해
+//     통과하는 데까지 한꺼번에 분홍으로 확정한다(finalizeStroke 참고). 반대로 한 획을
+//     두 번에 나눠 그으면(첫 조각이 기준 미달) 기존처럼 다시 긋게 한다 — 판정 기준
+//     자체(PASS_RATIO/TOLERANCE_RATIO)는 그대로다.
+//   · 알파벳은 대문자·소문자를 별도 스텝으로 받는다(caseVariant). 소문자일 때는 caseVariant
+//     배지와 함께, 4선 중 가운데 2선(민줄·엑스하이트)에 해당하는 옅은 기준선을 깐다.
 
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { motion, useAnimationControls } from 'framer-motion';
@@ -23,7 +35,13 @@ import ResultMark from '../common/ResultMark';
 
 const GUIDE_COLOR = '#B9B2A6';
 const GUIDE_OPACITY = 0.3;
-const ACTIVE_GUIDE_OPACITY = 0.55;
+const ACTIVE_GUIDE_OPACITY = 0.85;
+const CROSSHAIR_OPACITY = 0.16;
+const BASELINE_OPACITY = 0.18;
+// 소문자 기준선 위치 — viewBox 높이 대비 비율(strokes/alphabet.json 소문자 글자가 대략
+// 이 범위 안에서 그려진다: 엑스하이트 ≈ 0.478, 베이스라인 ≈ 0.826).
+const LOWER_MEAN_LINE_RATIO = 0.478;
+const LOWER_BASE_LINE_RATIO = 0.826;
 const DRAW_DURATION = 0.5;
 const DRAW_GAP = 0.18;
 // 판정 기준 — "너무 엄격하지 않게": 표본점의 45%만 궤적 근처를 지나가면 통과.
@@ -70,12 +88,15 @@ const evaluateStroke = (guideEl, points, vbW, vbH) => {
   return { passed: ratio >= PASS_RATIO, ratio };
 };
 
-const StrokeTracer = ({ entries, compound = false, replayKey, onDone }) => {
+const StrokeTracer = ({ entries, compound = false, caseVariant = null, replayKey, onDone }) => {
   "use memo";
 
   const primary = entries?.[0];
   const viewBox = primary?.viewBox || '0 0 109 109';
   const [, , vbW, vbH] = viewBox.split(/\s+/).map(Number);
+  // 화살촉 마커 id — 이 컴포넌트 인스턴스마다 고유해야 한다(같은 페이지에 다른 인스턴스가
+  // 남아 있을 때 id 충돌로 화살표가 안 그려지는 걸 방지).
+  const arrowMarkerId = useMemo(() => `stroke-arrow-${Math.random().toString(36).slice(2)}`, []);
 
   const [phase, setPhase] = useState('demo'); // 'demo' | 'trace' | 'result' | 'compoundDone'
   const [activeStrokeIndex, setActiveStrokeIndex] = useState(0);
@@ -175,9 +196,15 @@ const StrokeTracer = ({ entries, compound = false, replayKey, onDone }) => {
     setTimeout(() => setRetryHint(false), 900);
   };
 
-  // 방금 뗀 획을 판정 — 통과하면 그 획을 분홍으로 확정하고 다음 획으로, 실패하면 궤적만
+  // 방금 뗀 획(들)을 판정 — 통과하면 그 획을 분홍으로 확정하고 다음 획으로, 실패하면 궤적만
   // 지우고 같은 획을 다시 그리게 한다. pointerup에서 항상 호출되어 currentPoints를 비운다
   // (예전 버그: pointerup에서 아무것도 안 지워서 미완성 궤적이 화면에 남았다).
+  //
+  // 연속 획 허용(2026-09-29 QA 4차) — 방금 그은 궤적 하나로 지금 획부터 시작해 몇 번째
+  // 획까지 커버리지 기준(evaluateStroke)을 통과하는지 앞으로 계속 확인한다. 필체상 두 획을
+  // 한 번에 이어 그은 경우 같은 궤적이 다음 획의 표본점도 자연스레 덮으므로, 통과하는 데까지
+  // 한꺼번에 다음 획으로 넘긴다. 반대로 한 획을 두 번에 나눠 그은 경우는 첫 조각 자체가
+  // 지금 획 하나도 통과 못 해 consumedCount가 0인 기존 재시도 분기 그대로다.
   const finalizeStroke = () => {
     const points = pointsRef.current;
     pointsRef.current = [];
@@ -185,16 +212,22 @@ const StrokeTracer = ({ entries, compound = false, replayKey, onDone }) => {
 
     if (phase !== 'trace' || points.length < 2) return; // 실수로 살짝 스친 탭은 무시
 
-    const guideEl = guidePathRefs.current[activeStrokeIndex];
-    const { passed } = evaluateStroke(guideEl, points, vbW, vbH);
+    let consumedCount = 0;
+    for (let i = activeStrokeIndex; i < strokes.length; i++) {
+      const guideEl = guidePathRefs.current[i];
+      const { passed } = evaluateStroke(guideEl, points, vbW, vbH);
+      if (!passed) break;
+      consumedCount += 1;
+    }
 
-    if (passed) {
+    if (consumedCount > 0) {
       haptic('success');
-      if (activeStrokeIndex + 1 >= strokes.length) {
+      const nextIndex = activeStrokeIndex + consumedCount;
+      if (nextIndex >= strokes.length) {
         playSuccessSound(); // 글자를 다 썼을 때 — 학습하기 정답과 같은 효과음
         setPhase('result');
       } else {
-        setActiveStrokeIndex((i) => i + 1);
+        setActiveStrokeIndex(nextIndex);
       }
     } else {
       haptic('light');
@@ -302,6 +335,26 @@ const StrokeTracer = ({ entries, compound = false, replayKey, onDone }) => {
             </div>
           )}
 
+          {/* 대문자/소문자 구분 배지 — 썸네일 반대쪽(우상단). 알파벳 따라 쓰기에서만 뜬다
+              (2026-09-29 QA 4차 — 대/소문자가 이제 서로 다른 스텝이라 지금 뭘 쓰는지 보여준다). */}
+          {caseVariant && (
+            <div
+              aria-hidden
+              className="
+                absolute top-[8px] right-[8px] z-[1]
+                h-[22px] px-[9px] rounded-full
+                flex items-center
+                bg-layout-white/90 dark:bg-layout-black/80
+                border border-border dark:border-border-dark
+                pointer-events-none
+              "
+            >
+              <span className="text-[11px] font-[700] text-layout-gray-400 dark:text-layout-gray-100">
+                {caseVariant === 'lower' ? '소문자' : '대문자'}
+              </span>
+            </div>
+          )}
+
           <svg
             ref={svgRef}
             viewBox={viewBox}
@@ -311,8 +364,38 @@ const StrokeTracer = ({ entries, compound = false, replayKey, onDone }) => {
             onPointerUp={handlePointerUp}
             onPointerCancel={handlePointerUp}
           >
+            <defs>
+              {/* 현재 획 가이드 끝에 붙는 화살촉 — 경로 진행 방향으로 자동 정렬된다. */}
+              <marker
+                id={arrowMarkerId}
+                viewBox="0 0 10 10"
+                refX="7"
+                refY="5"
+                markerWidth="5.5"
+                markerHeight="5.5"
+                orient="auto-start-reverse"
+              >
+                <path d="M0,0 L10,5 L0,10 z" fill="var(--primary-main-600)" />
+              </marker>
+            </defs>
+
+            {/* 배경 십자 가이드 — 아주 옅게, 중심 잡기용. 판정과는 무관(장식). */}
+            <g aria-hidden pointerEvents="none" opacity={CROSSHAIR_OPACITY}>
+              <line x1={vbW / 2} y1={0} x2={vbW / 2} y2={vbH} stroke={GUIDE_COLOR} strokeWidth={vbW * 0.006} strokeDasharray={`${vbW * 0.014} ${vbW * 0.02}`} />
+              <line x1={0} y1={vbH / 2} x2={vbW} y2={vbH / 2} stroke={GUIDE_COLOR} strokeWidth={vbW * 0.006} strokeDasharray={`${vbW * 0.014} ${vbW * 0.02}`} />
+            </g>
+
+            {/* 소문자 기준선(민줄·엑스하이트) — 알파벳 소문자일 때만, 아주 옅게. */}
+            {caseVariant === 'lower' && (
+              <g aria-hidden pointerEvents="none" opacity={BASELINE_OPACITY}>
+                <line x1={0} y1={vbH * LOWER_MEAN_LINE_RATIO} x2={vbW} y2={vbH * LOWER_MEAN_LINE_RATIO} stroke={GUIDE_COLOR} strokeWidth={vbW * 0.006} />
+                <line x1={0} y1={vbH * LOWER_BASE_LINE_RATIO} x2={vbW} y2={vbH * LOWER_BASE_LINE_RATIO} stroke={GUIDE_COLOR} strokeWidth={vbW * 0.006} />
+              </g>
+            )}
+
             {/* 윤곽 — 트레이싱 판정에도 쓰는 기준 path라 ref를 그대로 남긴다.
-                통과한 획(index < activeStrokeIndex)은 분홍으로 확정 표시. */}
+                통과한 획(index < activeStrokeIndex)은 분홍으로 확정 표시. 아직 안 그은
+                현재 획(isActiveTarget)은 듀오링고 방식 점선 화살표로 경로를 미리 보여준다. */}
             {!compound && strokes.map((d, i) => {
               const done = phase === 'result' || i < activeStrokeIndex;
               const isActiveTarget = phase === 'trace' && i === activeStrokeIndex;
@@ -322,10 +405,12 @@ const StrokeTracer = ({ entries, compound = false, replayKey, onDone }) => {
                   ref={(el) => { guidePathRefs.current[i] = el; }}
                   d={d}
                   fill="none"
-                  stroke={done ? 'var(--primary-main-600)' : GUIDE_COLOR}
+                  stroke={done || isActiveTarget ? 'var(--primary-main-600)' : GUIDE_COLOR}
                   strokeWidth={vbW * (done ? 0.05 : 0.045)}
                   strokeLinecap="round"
                   strokeLinejoin="round"
+                  strokeDasharray={isActiveTarget ? `${vbW * 0.018} ${vbW * 0.032}` : undefined}
+                  markerEnd={isActiveTarget ? `url(#${arrowMarkerId})` : undefined}
                   opacity={done ? 1 : (isActiveTarget ? ACTIVE_GUIDE_OPACITY : GUIDE_OPACITY)}
                 />
               );
@@ -388,7 +473,7 @@ const StrokeTracer = ({ entries, compound = false, replayKey, onDone }) => {
               />
             )}
 
-            {/* 다음에 그을 획의 시작점 — 작은 점 + 번호 */}
+            {/* 다음에 그을 획의 시작점 — 듀오링고 방식 동그란 화살표 배지(숫자 대신 → 아이콘). */}
             {phase === 'trace' && startPoint && (
               <g pointerEvents="none">
                 <circle cx={startPoint.x} cy={startPoint.y} r={startMarkerR} className="fill-primary-main-600" opacity={0.9} />
@@ -397,11 +482,11 @@ const StrokeTracer = ({ entries, compound = false, replayKey, onDone }) => {
                   y={startPoint.y}
                   dy={startMarkerR * 0.35}
                   textAnchor="middle"
-                  fontSize={startMarkerR * 1.5}
+                  fontSize={startMarkerR * 1.4}
                   fontWeight="700"
                   fill="#fff"
                 >
-                  {activeStrokeIndex + 1}
+                  →
                 </text>
               </g>
             )}

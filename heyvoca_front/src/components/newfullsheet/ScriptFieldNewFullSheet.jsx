@@ -63,8 +63,23 @@ const ScriptFieldNewFullSheet = () => {
   const totalMastered = masteredCount(items);
   const totalDue = dueItems(items);
 
-  // 세션이 끝나고 이 화면으로 돌아올 때 호출 — 진행도만 다시 받아온다(pop은 세션 쪽에서 한다).
-  const refreshProgress = useCallback(() => setRefreshKey((k) => k + 1), []);
+  // 세션이 끝나고 이 화면으로 돌아올 때 호출 — 진행도를 반영한다(pop은 세션 쪽에서 한다).
+  // updatedItems가 있으면(세션이 /script/log·/script/skip 응답을 기다린 뒤 넘겨준 갱신된
+  // level 등) 재조회 없이 로컬 상태에 바로 병합해 즉시 반영한다 — 응답이 없거나(네트워크
+  // 실패 등) 비어 있으면 안전하게 전체 재조회(refreshKey)로 폴백한다.
+  const refreshProgress = useCallback((updatedItems) => {
+    if (Array.isArray(updatedItems) && updatedItems.length > 0) {
+      setItems((prev) => {
+        const byChar = new Map(prev.map((it) => [it.char, it]));
+        updatedItems.forEach((u) => {
+          if (u?.char) byChar.set(u.char, { ...byChar.get(u.char), ...u });
+        });
+        return prev.map((it) => byChar.get(it.char) ?? it);
+      });
+      return;
+    }
+    setRefreshKey((k) => k + 1);
+  }, []);
 
   const goSession = (chars, mode, label) => {
     if (!chars || chars.length === 0) return;

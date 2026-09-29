@@ -52,20 +52,32 @@ export const scriptTtsLang = (script) => (script === 'alphabet' ? 'en' : 'ja');
  * 있는 항목(특히 A)이 있어, 26자 전부 영어 알파벳 이름의 표준 표기(Ay/Bee/See...)를
  * alphabet.json 에 미리 채워 뒀다 — 모든 TTS 보이스가 흔들림 없이 "글자 이름"으로 읽는다.
  *
- * 가나: 대부분은 글자 그 자체(단일/요음 2글자 문자열)로도 안정적으로 읽힌다 — 요음
- * (きゃ 등)은 이미 유효한 모라 2글자 조합이라 그대로 둬도 된다. speak 오버라이드가 필요한
- * 항목만 hiragana.json/katakana.json 에 넣었다:
+ * 가나: 단독 글자 음성은 실제 소리 구간이 0.14~0.25초뿐이라(앞뒤 무음 포함 파일 길이는
+ * 1.87초) "틱" 하고 끊기듯 들린다(2026-09-29 실기기 QA — objectstore mp3 실측). 장음 부호
+ * (ー)를 붙이면 0.28~0.34초로 늘어나 또렷해져서, 기본형은 여기서 "글자+ー"로 만든다
+ * (あー/いー/かー/きゃー…). 개별 항목의 speak 오버라이드(hiragana.json/katakana.json)가
+ * 있으면 그 글자 대신 오버라이드 글자를 기준으로 장음을 붙인다:
  *   - ぢ/づ, ヂ/ヅ → 현대 일본어에서 じ/ず, ジ/ズ 와 발음이 같다(4단 동음화) → speak을
- *     그 동음 글자로 지정해 그대로 발음하게 한다.
- *   - を → 조사로 쓰일 때도 「오」로만 발음된다(역사적 철자, wo 아님) → speak: "お".
- *     ヲ(가타카나)도 같은 음운적 이유로 speak: "オ".
+ *     그 동음 글자로 지정 → "じー"/"ずー"로 재생된다.
+ *   - を → 조사로 쓰일 때도 「오」로만 발음된다(역사적 철자, wo 아님) → speak: "お" →
+ *     "おー". ヲ(가타카나)도 같은 이유로 speak: "オ" → "オー".
  *   - は/へ → 히라가나 단독 は/へ는 "조사"로 오인돼 일부 TTS가 わ/え(조사일 때의 발음)로
- *     읽을 위험이 있다(문장 안 명사+は 패턴 휴리스틱). 조사 규칙이 적용되지 않는 가타카나
- *     동음(ハ/ヘ)으로 speak을 지정해 항상 글자 그대로의 소리(ha/he)로 읽게 한다.
- *   - ん/ン → 모음 없는 단독 비음이라 무음/뭉개짐으로 재생될 수 있어, 길게 늘인 가타카나
- *     "ンー"로 speak을 지정해 발화 길이를 확보한다.
+ *     읽을 위험이 있다 → 조사 규칙이 적용되지 않는 가타카나 동음(ハ/ヘ)으로 speak을 지정
+ *     → "ハー"/"ヘー".
+ *   - ん/ン → speak이 이미 "ンー"(장음 포함)로 지정돼 있어 아래에서 다시 늘이지 않는다
+ *     (이미 ー로 끝나는 speak은 그대로 쓴다).
+ *   - っ/ッ(촉음) → 그 자체로 다음 글자를 위해 숨을 막는 무음 표기라 장음을 붙이면
+ *     부자연스럽다 — 예외로 두고 늘이지 않는다.
+ * 알파벳은 이 장음 규칙과 무관 — alphabet.json의 speak을 그대로 쓴다.
  */
-export const scriptSpokenText = (script, item) => item?.speak || item?.char;
+const NO_LENGTHEN_KANA = new Set(['っ', 'ッ']);
+export const scriptSpokenText = (script, item) => {
+  if (!item) return '';
+  if (script === 'alphabet') return item.speak || item.char;
+  const base = item.speak || item.char || '';
+  if (!base || base.endsWith('ー') || NO_LENGTHEN_KANA.has(item.char)) return base;
+  return `${base}ー`;
+};
 
 // 재생 실패(캐시 미스·resolve/다운로드 실패)를 1회 재시도한 뒤 재생한다.
 // getTextSound 자체는 실패를 조용히 삼키므로, prefetchTextSound의 성공 여부(objectURL 반환)로

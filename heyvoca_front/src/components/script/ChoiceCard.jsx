@@ -7,7 +7,7 @@
 //                (2026-09-29: 채점 후 옵션 아래에 붙던 한글 발음 작은 글자는 제거).
 // 정오답 스타일은 TakeTest Main.jsx의 선택지 버튼 규격을 그대로 따른다.
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import { SpeakerHigh } from '@phosphor-icons/react';
 import { haptic } from '../../lib/feel';
@@ -20,37 +20,52 @@ import { playSuccessSound, playErrorSound } from '../../utils/audio';
 // 정오답 버튼 규격은 components/takeTest/Main.jsx의 사지선다 옵션 버튼과 동일 클래스를 쓴다
 // (h-50 · border-[1px] rounded-[10px] · text-[14px] font-[700]) — 학습 화면과 다른 화면처럼
 // 보이지 않게 한다(2026-09-29 실기기 QA: "선택지가 얇은 외곽선만 있는 작은 박스"로 보임).
-const ChoiceCard = ({ step, answered, selectedIndex, onSelect }) => {
+const ChoiceCard = ({ step, answered, selectedIndex, onSelect, onSettled }) => {
   "use memo";
 
   const { script, item, options, answerIndex, type } = step;
   const isListen = type === 'listenPick';
   const [speaking, setSpeaking] = useState(false);
   const [duration, setDuration] = useState(null);
+  // 재생 중복 가드 — 듣기 자동재생(마운트 시)과 채점 후 정답 재생이 겹쳐 걸릴 일은
+  // 없지만(순서가 다르다), 자동 트리거끼리 아주 짧은 간격으로 겹치면 speaking이 꺼졌다
+  // 켜졌다 반복해 스피커 아이콘이 깜빡여 보였다(2026-09-29 QA 4차). 이미 재생 중이면
+  // 자동 트리거는 새로 걸지 않는다 — 사용자가 직접 카드를 탭해 다시 듣는 것은 그대로
+  // 허용한다(getTextSound가 이전 재생을 자연스럽게 끊고 이어받는다).
+  const playingRef = useRef(false);
 
   const play = async () => {
     haptic('light');
+    playingRef.current = true;
     setSpeaking(true);
     setDuration(null);
     try {
       await speakScriptItem(script, item, setDuration);
     } finally {
+      playingRef.current = false;
       setSpeaking(false);
     }
   };
 
   useEffect(() => {
-    if (isListen) play();
+    if (isListen && !playingRef.current) play();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [step.id]);
 
   // 채점 순간 — 학습하기(TakeTest)와 같은 정오답 효과음·햅틱, 이어서 정답 글자 발음을 들려준다.
+  // 재생이 끝나면(성공/실패 무관) onSettled로 부모에 알린다 — 부모는 그 시점부터 일정 시간
+  // 뒤에만 다음 슬라이드로 넘어간다(2026-09-29 QA 4차: 고정 지연만으로는 재생이 끝나기 전에
+  // 다음 슬라이드가 넘어가 듣기 자동재생과 소리가 겹쳤다).
   useEffect(() => {
     if (!answered) return undefined;
     const correct = selectedIndex === answerIndex;
     if (correct) { haptic('success'); playSuccessSound(); } else { haptic('error'); playErrorSound(); }
-    const t = setTimeout(() => { play(); }, 450);
-    return () => clearTimeout(t);
+    let cancelled = false;
+    const t = setTimeout(() => {
+      if (playingRef.current) { onSettled?.(); return; }
+      play().finally(() => { if (!cancelled) onSettled?.(); });
+    }, 450);
+    return () => { cancelled = true; clearTimeout(t); };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [answered]);
 

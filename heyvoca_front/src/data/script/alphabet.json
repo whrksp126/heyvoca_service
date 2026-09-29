@@ -1,7 +1,7 @@
 [
   {
     "char": "A",
-    "speak": "Ay",
+    "speak": "The letter A.",
     "lower": "a",
     "name_hangul": "에이",
     "sound_hangul": "애",
@@ -15,7 +15,7 @@
   },
   {
     "char": "B",
-    "speak": "Bee",
+    "speak": "The letter B.",
     "lower": "b",
     "name_hangul": "비",
     "sound_hangul": "브",
@@ -31,7 +31,7 @@
   },
   {
     "char": "C",
-    "speak": "See",
+    "speak": "The letter C.",
     "lower": "c",
     "name_hangul": "씨",
     "sound_hangul": "크",
@@ -47,7 +47,7 @@
   },
   {
     "char": "D",
-    "speak": "Dee",
+    "speak": "The letter D.",
     "lower": "d",
     "name_hangul": "디",
     "sound_hangul": "드",
@@ -63,7 +63,7 @@
   },
   {
     "char": "E",
-    "speak": "Ee",
+    "speak": "The letter E.",
     "lower": "e",
     "name_hangul": "이",
     "sound_hangul": "에",
@@ -79,7 +79,7 @@
   },
   {
     "char": "F",
-    "speak": "Eff",
+    "speak": "The letter F.",
     "lower": "f",
     "name_hangul": "에프",
     "sound_hangul": "프",
@@ -95,7 +95,7 @@
   },
   {
     "char": "G",
-    "speak": "Jee",
+    "speak": "The letter G.",
     "lower": "g",
     "name_hangul": "지",
     "sound_hangul": "그",
@@ -111,7 +111,7 @@
   },
   {
     "char": "H",
-    "speak": "Aitch",
+    "speak": "The letter H.",
     "lower": "h",
     "name_hangul": "에이치",
     "sound_hangul": "흐",
@@ -125,7 +125,7 @@
   },
   {
     "char": "I",
-    "speak": "Eye",
+    "speak": "The letter I.",
     "lower": "i",
     "name_hangul": "아이",
     "sound_hangul": "이",
@@ -141,7 +141,7 @@
   },
   {
     "char": "J",
-    "speak": "Jay",
+    "speak": "The letter J.",
     "lower": "j",
     "name_hangul": "제이",
     "sound_hangul": "쥐",
@@ -157,7 +157,7 @@
   },
   {
     "char": "K",
-    "speak": "Kay",
+    "speak": "The letter K.",
     "lower": "k",
     "name_hangul": "케이",
     "sound_hangul": "크",
@@ -171,7 +171,7 @@
   },
   {
     "char": "L",
-    "speak": "El",
+    "speak": "The letter L.",
     "lower": "l",
     "name_hangul": "엘",
     "sound_hangul": "을",
@@ -185,7 +185,7 @@
   },
   {
     "char": "M",
-    "speak": "Em",
+    "speak": "The letter M.",
     "lower": "m",
     "name_hangul": "엠",
     "sound_hangul": "므",
@@ -201,7 +201,7 @@
   },
   {
     "char": "N",
-    "speak": "En",
+    "speak": "The letter N.",
     "lower": "n",
     "name_hangul": "엔",
     "sound_hangul": "느",
@@ -217,7 +217,7 @@
   },
   {
     "char": "O",
-    "speak": "Oh",
+    "speak": "The letter O.",
     "lower": "o",
     "name_hangul": "오",
     "sound_hangul": "오",
@@ -233,7 +233,7 @@
   },
   {
     "char": "P",
-    "speak": "Pee",
+    "speak": "The letter P.",
     "lower": "p",
     "name_hangul": "피",
     "sound_hangul": "프",
@@ -249,7 +249,7 @@
   },
   {
     "char": "Q",
-    "speak": "Cue",
+    "speak": "The letter Q.",
     "lower": "q",
     "name_hangul": "큐",
     "sound_hangul": "크우",
@@ -265,7 +265,7 @@
   },
   {
     "char": "R",
-    "speak": "Ar",
+    "speak": "The letter R.",
     "lower": "r",
     "name_hangul": "알",
     "sound_hangul": "르",
@@ -281,7 +281,7 @@
   },
   {
     "char": "S",
-    "speak": "Ess",
+    "speak": "The letter S.",
     "lower": "s",
     "name_hangul": "에스",
     "sound_hangul": "스",
@@ -295,7 +295,7 @@
   },
   {
     "char": "T",
-    "speak": "Tee",
+    "speak": "The letter T.",
     "lower": "t",
     "name_hangul": "티",
     "sound_hangul": "트",
@@ -309,7 +309,7 @@
   },
   {
     "char": "U",
-    "speak": "You",
+    "speak": "The letter U.",
     "lower": "u",
     "name_hangul": "유",
     "sound_hangul": "어",
@@ -325,7 +325,7 @@
   },
   {
     "char": "V",
-    "speak": "Vee",
+    "speak": "The letter V.",
     "lower": "v",
     "name_hangul": "브이",
     "sound_hangul": "브",
@@ -341,7 +341,7 @@
   },
   {
     "char": "W",
-    "speak": "Double-u",
+    "speak": "The letter W.",
     "lower": "w",
     "name_hangul": "더블유",
     "sound_hangul": "워",
@@ -355,7 +355,7 @@
   },
   {
     "char": "X",
-    "speak": "Ex",
+    "speak": "The letter X.",
     "lower": "x",
     "name_hangul": "엑스",
     "sound_hangul": "크스",
@@ -369,7 +369,7 @@
   },
   {
     "char": "Y",
-    "speak": "Why",
+    "speak": "The letter Y.",
     "lower": "y",
     "name_hangul": "와이",
     "sound_hangul": "이",
@@ -383,7 +383,7 @@
   },
   {
     "char": "Z",
-    "speak": "Zee",
+    "speak": "The letter Z.",
     "lower": "z",
     "name_hangul": "지",
     "sound_hangul": "즈",
