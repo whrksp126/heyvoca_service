@@ -252,9 +252,10 @@ const TodayTasksCard = () => {
   // usePlantSession이 "만나기(카드) → 테스트" 두 화면을 이 5단어·세션으로 그대로 이어준다.
   const studyPlant = () => {
     const remaining = Math.max(0, (newSeed.target ?? 0) - (newSeed.done ?? 0));
-    if (remaining <= 0) return;
     // 심을 씨앗 재고가 없으면 학습을 열지 않는다 — goStore()가 그 자체로 서점 이동이다.
     if (noSeedsToPlant) { goStore(); return; }
+    // 오늘 목표를 채운 뒤에도 '심기'로 더 심을 수 있다(서버 한도 무시 force).
+    if (remaining <= 0) { startPlantSession({ count: 5, force: true }); return; }
     startPlantSession({ count: Math.min(5, remaining) });
   };
 
@@ -340,10 +341,14 @@ const TodayTasksCard = () => {
       checked: done,
       // 목표 미달이면 진행 숫자 대신 Pill('심기') — 다른 행과 달리 이 행은 탭할 수 있다는
       // 걸 우측에서도 바로 보여준다(살리기 Pill과 같은 규격). 달성 시엔 기존처럼 x/y.
-      right: done
-        ? <Progress done={newSeed.done} total={newSeed.target} />
-        : <Pill tone="primary" onClick={studyPlant}>심기</Pill>,
-      onRowClick: done ? undefined : studyPlant,
+      // 우측은 항상 진행 x/y + '심기' Pill — 목표를 채운 뒤에도 더 심을 수 있어야 한다(2026-09-29 QA).
+      right: (
+        <span className="shrink-0 flex items-center gap-[10px]">
+          <Progress done={newSeed.done} total={newSeed.target} />
+          <Pill tone="primary" onClick={studyPlant}>심기</Pill>
+        </span>
+      ),
+      onRowClick: studyPlant,
     };
   })() : null;
 

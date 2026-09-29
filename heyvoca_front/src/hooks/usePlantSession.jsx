@@ -34,8 +34,9 @@ export const usePlantSession = () => {
    * @param {object} opts
    * @param {?number} opts.count  이번에 심을 단어 수 상한(예: 오늘 남은 새 씨앗 수).
    *                              기본은 최대 5개.
+   * @param {?boolean} opts.force 오늘 목표를 이미 채웠어도 더 심기(서버 한도 무시).
    */
-  const startPlantSession = async ({ count } = {}) => {
+  const startPlantSession = async ({ count, force = false } = {}) => {
     vibrate({ duration: 5 });
     primeSfx();
 
@@ -48,7 +49,7 @@ export const usePlantSession = () => {
     }
 
     const n = Math.max(1, Math.min(MAX_PLANT_COUNT, count ?? MAX_PLANT_COUNT));
-    const res = await getStudyRecommend({ type: 'plant', mode: 'plant', count: n });
+    const res = await getStudyRecommend({ type: 'plant', mode: 'plant', count: n, force });
     const items = res?.code === 200 && Array.isArray(res.data?.items) ? res.data.items : [];
 
     if (items.length === 0) {
