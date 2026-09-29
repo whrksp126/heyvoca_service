@@ -1,20 +1,40 @@
 // src/components/script/ScriptCell.jsx — 격자(밭) 한 칸. 글자 + 숙달 단계 표시.
 // level 0: 빈 흙 · 1: 씨앗 · 2: 새싹 · 3-4: 이파리 · 5: 수확(당근) — CropImage 소형 재사용.
+// 탭하면 그 글자를 소리 내 읽어준다(세션 IntroCard와 같은 텍스트/언어 규칙: scriptSpokenText·scriptTtsLang).
 
-import React from 'react';
+import React, { useState } from 'react';
 import CropImage from '../farm/CropImage';
-import { levelToCropStage, isMastered } from '../../utils/scriptData';
+import { levelToCropStage, isMastered, scriptTtsLang, scriptSpokenText } from '../../utils/scriptData';
+import { getTextSound } from '../../utils/common';
+import { vibrate } from '../../utils/osFunction';
 
-const ScriptCell = ({ item, size = 44 }) => {
+const ScriptCell = ({ item, script, size = 44 }) => {
   "use memo";
   const stage = levelToCropStage(item.level);
   const mastered = isMastered(item.level);
+  const [playing, setPlaying] = useState(false);
+
+  const handleTap = async (e) => {
+    e.stopPropagation();
+    if (playing) return;
+    vibrate({ duration: 5 });
+    setPlaying(true);
+    try {
+      await getTextSound(scriptSpokenText(script, item), scriptTtsLang(script));
+    } finally {
+      setPlaying(false);
+    }
+  };
 
   return (
-    <div
+    <button
+      type="button"
+      onClick={handleTap}
+      aria-label={`${item.char} 발음 듣기`}
       className={`
         relative flex flex-col items-center justify-center gap-[1px]
         rounded-[10px] shrink-0
+        transition-transform active:scale-90
         ${mastered
           ? 'bg-status-success-100 dark:bg-status-success-dark'
           : 'bg-layout-gray-50 dark:bg-layout-gray-dark'}
@@ -26,10 +46,15 @@ const ScriptCell = ({ item, size = 44 }) => {
           <CropImage stage={stage} health="FRESH" solo size={14} align="center" />
         </div>
       )}
-      <span className="text-[16px] font-[700] text-layout-black dark:text-layout-white">
+      <span
+        className={`
+          text-[16px] font-[700]
+          ${playing ? 'text-primary-main-600' : 'text-layout-black dark:text-layout-white'}
+        `}
+      >
         {item.char}
       </span>
-    </div>
+    </button>
   );
 };
 

@@ -1,30 +1,40 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Check, Translate } from '@phosphor-icons/react';
 import { useNavigate } from 'react-router-dom';
 import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 import { useUser } from '../../context/UserContext';
 import { vibrate, showToast } from '../../utils/osFunction';
-import { SUPPORTED_LEARNING_LANGS, LANG_LABEL } from '../../utils/lang';
+import { SUPPORTED_LEARNING_LANGS, LANG_LABEL, LANG_GLYPH } from '../../utils/lang';
 import { getScriptProgressApi } from '../../api/script';
 import { ConfirmNewBottomSheet } from './ConfirmNewBottomSheet';
+import SetupTile from '../common/SetupTile';
 
 // 일본어로 처음 전환할 때 "글자부터 익혀 볼래요?" 권유는 딱 1회만 — 과하지 않게.
 const JA_SCRIPT_PROMPT_KEY = 'heyvoca_script_prompt_ja_shown';
 
+/** 언어 타일의 글자 배지 — TestSetupNewBottomSheet의 방향 배지와 같은 규격
+ *  (currentColor 테두리라 타일 선택색을 그대로 따른다). */
+const LangBadge = ({ children }) => (
+  <span className="flex items-center justify-center w-[40px] h-[30px] rounded-[8px] border-[1.5px] border-current text-[15px] font-[800]">
+    {children}
+  </span>
+);
+
 /**
  * 학습 언어 전환 — 홈 왼쪽 위 언어 칩(실험실 "다른 언어 학습하기" 켜짐)에서 연다.
  *
- * 행 규격은 VocabularyBookMenuNewBottomSheet 와 같다(아이콘 사각 30px · 제목 14.5px/700).
- * 현재 언어 행에만 체크를 단다. 고르면 서버에 저장(setLearningLang) → 단어장·통계·농장이
- * 새 언어 기준으로 재조회된다. 이모지·국기는 쓰지 않는다(디자인 규칙).
+ * 규격은 설정 계열 시트(StudySetupNewBottomSheet · TestSetupNewBottomSheet)와 같다 —
+ * 제목 중앙 18px/700 · 선택 타일(SetupTile, 체크 배지) · 하단 취소/확인 2버튼.
+ * 고르는 즉시 바뀌지 않고 '확인'을 눌러야 전환된다(다른 설정 시트와 동일한 흐름).
+ * 이모지·국기는 쓰지 않는다(디자인 규칙) — 언어 표지는 한 글자 배지(Aa/あ)로 대신한다.
  */
 export const LearningLangNewBottomSheet = () => {
   "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
 
   const { popNewBottomSheet, pushAwaitNewBottomSheet } = useNewBottomSheetActions();
   const { learningLang, setLearningLang } = useUser();
-  const [pendingLang, setPendingLang] = useState(null);
+  const [selectedLang, setSelectedLang] = useState(learningLang);
+  const [applying, setApplying] = useState(false);
   const navigate = useNavigate();
 
   // 가나 진행이 전혀 없을 때만 1회 권유 — 실패해도(네트워크 등) 그냥 넘어간다(권유일 뿐).
@@ -51,79 +61,85 @@ export const LearningLangNewBottomSheet = () => {
     } catch (e) { /* 권유일 뿐 — 조용히 무시 */ }
   };
 
-  const handleSelect = async (lang) => {
-    if (pendingLang) return;
+  const handleConfirm = async () => {
+    if (applying) return;
     vibrate({ duration: 5 });
-    if (lang === learningLang) {
+    if (selectedLang === learningLang) {
       popNewBottomSheet();
       return;
     }
-    setPendingLang(lang);
-    const ok = await setLearningLang(lang);
-    setPendingLang(null);
+    setApplying(true);
+    const ok = await setLearningLang(selectedLang);
+    setApplying(false);
     if (!ok) {
       showToast('학습 언어를 바꾸지 못했어요. 다시 시도해주세요.');
       return;
     }
     popNewBottomSheet();
-    showToast(`${LANG_LABEL[lang]} 학습으로 전환했어요`);
-    if (lang === 'ja') maybePromptScriptField();
+    showToast(`${LANG_LABEL[selectedLang]} 학습으로 전환했어요`);
+    if (selectedLang === 'ja') maybePromptScriptField();
   };
 
   return (
-    <div className="flex flex-col px-[20px] pt-[18px] pb-[20px]">
-      <h1 className="text-[16px] font-[700] tracking-[-0.03em] text-layout-black dark:text-layout-white">
-        학습 언어
-      </h1>
+    <div className="relative">
+      <div className="
+        flex flex-col gap-[20px]
+        max-h-[calc(90vh-47px)]
+        pt-[20px] px-[20px] pb-[115px]
+        overflow-y-auto
+      ">
+        <h1 className="text-[18px] font-[700] text-center text-layout-black dark:text-layout-white">
+          학습 언어
+        </h1>
 
-      <div className="mt-[10px]">
-        {SUPPORTED_LEARNING_LANGS.map((lang, idx) => {
-          const isCurrent = lang === learningLang;
-          const isPending = lang === pendingLang;
-          return (
-            <motion.button
+        <div className="flex gap-[8px]">
+          {SUPPORTED_LEARNING_LANGS.map((lang) => (
+            <SetupTile
               key={lang}
-              type="button"
-              onClick={() => handleSelect(lang)}
-              disabled={!!pendingLang}
-              whileTap={{ scale: 0.99, backgroundColor: 'rgba(0,0,0,0.03)' }}
-              className={`
-                flex items-center gap-[11px] w-full py-[12px] text-left rounded-[8px]
-                disabled:opacity-60
-                ${idx > 0 ? 'border-t border-[#F4F4F4] dark:border-[rgba(255,255,255,.07)]' : ''}
-              `}
+              role="radio"
+              selected={selectedLang === lang}
+              onClick={() => { if (!applying) setSelectedLang(lang); }}
+              className="h-[96px]"
             >
-              <span
-                className={`
-                  w-[30px] h-[30px] shrink-0 rounded-[9px] flex items-center justify-center
-                  ${isCurrent
-                    ? 'bg-primary-main-100 dark:bg-primary-main-dark text-primary-main-600'
-                    : 'bg-layout-gray-50 dark:bg-[#2A2A2A] text-layout-gray-400'}
-                `}
-              >
-                <Translate size={16} weight="bold" />
-              </span>
-
-              <span
-                className={`
-                  flex-1 min-w-0 text-[14.5px] font-[700] tracking-[-0.03em]
-                  ${isCurrent ? 'text-primary-main-600' : 'text-layout-black dark:text-layout-white'}
-                `}
-              >
+              <LangBadge>{LANG_GLYPH[lang]}</LangBadge>
+              <span className="text-[14px] font-[700] group-data-[selected=true]:text-layout-black dark:group-data-[selected=true]:text-layout-white">
                 {LANG_LABEL[lang]}
-                {isPending && (
-                  <small className="ml-[6px] text-[11.5px] font-[500] tracking-[-0.02em] text-layout-gray-300">
-                    바꾸는 중…
-                  </small>
-                )}
               </span>
+            </SetupTile>
+          ))}
+        </div>
+      </div>
 
-              {isCurrent && (
-                <Check size={18} weight="fill" className="shrink-0 text-primary-main-600" />
-              )}
-            </motion.button>
-          );
-        })}
+      <div className="
+        absolute bottom-0 left-0 right-0
+        flex items-center justify-between gap-[15px]
+        p-[20px]
+      ">
+        <motion.button
+          className="
+            flex-1
+            h-[52px]
+            rounded-[12px]
+            text-[16px] font-[700] tracking-[-0.03em]
+            border-[2px] border-border dark:border-border-dark bg-layout-white dark:bg-layout-black text-layout-gray-400 dark:text-layout-gray-100"
+          onClick={() => { vibrate({ duration: 5 }); popNewBottomSheet(); }}
+          whileTap={{ scale: 0.95 }}
+          transition={{ type: "spring", stiffness: 500, damping: 15 }}
+        >취소</motion.button>
+        <motion.button
+          className="
+            flex-1
+            h-[52px]
+            rounded-[12px]
+            bg-primary-main-600
+            text-layout-white dark:text-layout-black text-[16px] font-[700] tracking-[-0.03em]
+            disabled:opacity-60
+          "
+          onClick={handleConfirm}
+          disabled={applying}
+          whileTap={{ scale: 0.95 }}
+          transition={{ type: "spring", stiffness: 500, damping: 15 }}
+        >{applying ? '바꾸는 중…' : '확인'}</motion.button>
       </div>
     </div>
   );

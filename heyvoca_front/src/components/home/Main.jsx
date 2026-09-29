@@ -36,7 +36,6 @@ import { vibrate, checkNotificationPermissionGranted, isAppVersionAtLeast } from
 import { useStats } from '../../context/StatsContext';
 import { prefetchLabSettings } from '../../api/lab';
 import useLabFeatures from '../../hooks/useLabFeatures';
-import { Translate } from '@phosphor-icons/react';
 import { LANG_LABEL, DEFAULT_LEARNING_LANG } from '../../utils/lang';
 import { LearningLangNewBottomSheet } from '../newBottomSheet/LearningLangNewBottomSheet';
 import { useQuickReview } from '../../hooks/useQuickReview';
@@ -494,15 +493,14 @@ const Main = () => {
             aria-label={`학습 언어: ${LANG_LABEL[learningLang]}`}
             className="
               absolute top-[max(48px,calc(var(--status-bar-height)+4px))] left-[16px] z-[20]
-              inline-flex items-center gap-[6px]
-              h-[36px] pl-[10px] pr-[12px] rounded-full
+              inline-flex items-center
+              h-[36px] px-[12px] rounded-full
               bg-layout-white/90 dark:bg-layout-gray-dark/90 backdrop-blur-[8px]
               shadow-[0_2px_8px_rgba(96,80,52,.16)] dark:shadow-[0_2px_8px_rgba(0,0,0,.4)]
               text-[14px] font-[700] tracking-[-0.02em]
               text-layout-black dark:text-layout-white
             "
           >
-            <Translate size={18} weight="bold" className="text-primary-main-600" />
             {LANG_LABEL[learningLang]}
           </button>
         )}

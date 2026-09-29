@@ -152,6 +152,7 @@ const ScriptSession = () => {
 
   return (
     <div className="flex flex-col h-screen bg-layout-white dark:bg-layout-black">
+      <div style={{ paddingTop: 'var(--status-bar-height)' }}></div>
       <div
         data-page-header
         className="relative flex items-end justify-center w-full h-[55px] px-[16px] py-[14px] bg-layout-white dark:bg-layout-black"

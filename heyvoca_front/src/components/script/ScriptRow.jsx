@@ -7,7 +7,7 @@ import { haptic } from '../../lib/feel';
 import ScriptCell from './ScriptCell';
 import { isMastered } from '../../utils/scriptData';
 
-const ScriptRow = ({ label, items, dueItems, onLearn, onReview, onSkip }) => {
+const ScriptRow = ({ script, label, items, dueItems, onLearn, onReview, onSkip }) => {
   "use memo";
   const allMastered = items.every((it) => isMastered(it.level));
   const anyStarted = items.some((it) => (it.level || 0) > 0);
@@ -48,7 +48,7 @@ const ScriptRow = ({ label, items, dueItems, onLearn, onReview, onSkip }) => {
 
       <div className="flex flex-wrap gap-[6px]">
         {items.map((it) => (
-          <ScriptCell key={it.char} item={it} />
+          <ScriptCell key={it.char} item={it} script={script} />
         ))}
       </div>
 
