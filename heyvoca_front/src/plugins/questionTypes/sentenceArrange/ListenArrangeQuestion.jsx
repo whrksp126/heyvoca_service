@@ -283,6 +283,7 @@ const ListenArrangeQuestion = ({ question, onComplete, onCardMatched, farmByWord
         suffix={suffix}
         accepted={accepted}
         answerLang={answerLang}
+        answerText={answerText}
         postAnswerNode={postAnswerNode}
         isAnswered={isAnswered}
         isCorrect={isCorrect}

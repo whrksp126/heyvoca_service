@@ -394,6 +394,7 @@ const SentenceArrangeQuestion = ({ question, onComplete, onCardMatched, farmByWo
         suffix={suffix}
         accepted={accepted}
         answerLang={answerLang}
+        answerText={answerText}
         postAnswerNode={postAnswerNode}
         isAnswered={isAnswered}
         isCorrect={isCorrect}

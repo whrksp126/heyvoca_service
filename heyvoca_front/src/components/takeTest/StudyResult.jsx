@@ -980,8 +980,7 @@ const StudyResult = () => {
     자동 시작)을 켜지 않는다 — 2026-09-29 QA. 사용자가 직접 고른 설정(단어장·단계·유형·개수)을
     매번 확인 없이 자동으로 또 돌리면 의도와 다른 세트가 계속 이어질 수 있다. 일반 추천 학습
     ('quick' — 홈 주 CTA)만 넷플릭스 '다음화'처럼 자동으로 이어간다.
-    "다음 학습" 버튼 자체(수동 클릭)는 자유 설정 테스트에서도 그대로 남는다 — 아래에서
-    막는 건 자동 시작 useEffect 하나뿐이다.
+    "다음 학습" 버튼 자체도 두지 않는다(같은 날 QA) — 하단은 "학습 종료" 하나뿐이다.
   */
   const isFreeTest = testType === 'test' || testType === 'exam';
   // idle(아직 안 셈) → counting ⇄ paused(백그라운드) → stopped(사용자가 멈춤) / starting / failed
@@ -1423,7 +1422,7 @@ const StudyResult = () => {
               위쪽 20px 페이드는 목록이 버튼 뒤로 '잘려' 보이지 않고 스며들게 한다. */}
           <div data-result-cta className='absolute bottom-0 left-0 right-0 z-20 bg-layout-white dark:bg-layout-black'>
             <div aria-hidden className='pointer-events-none absolute left-0 right-0 bottom-full h-[20px] bg-gradient-to-t from-layout-white dark:from-layout-black to-transparent' />
-            {(nextNotice || nextPlan.reason) ? (
+            {!isFreeTest && (nextNotice || nextPlan.reason) ? (
               <p className='px-[24px] pt-[14px] -mb-[6px] text-center text-[12px] font-[500] text-layout-gray-300'>
                 {nextNotice || nextPlan.reason}
               </p>
@@ -1435,7 +1434,7 @@ const StudyResult = () => {
               onStop={() => { haptic('light'); stopCountdown('notice'); }}
             />
             <ResultCtaBar>
-              {nextPlan.available ? (
+              {nextPlan.available && !isFreeTest ? (
                 <>
                   <ResultCta
                     secondary

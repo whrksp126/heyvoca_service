@@ -65,80 +65,116 @@ export const CardMatchGlyph = ({ className = '', size = 44 }) => (
   </svg>
 );
 
-/** 빈칸 채우기(고르기) — 문장 중간 빈칸 + 보기 칩 3개, 가운데 칩이 빈칸으로 올라가는 화살표 */
+/*
+  빈칸 채우기(fillInTheBlank) — 2026-09-29 재작업. 실제 화면(FillInTheBlankQuestion)은
+  "문장 속 빈칸 하나" + "세로로 쌓인 보기 버튼 목록"이다(가로 칩 3개가 아니라 폭 넓은 버튼이
+  위아래로 쌓인 형태). 문장 만들기와 실루엣이 겹치던 원인 두 가지 — ① 빈칸이 여러 개처럼
+  보이는 점, ② 보기를 가로 칩 3개로 그려 조립 타일처럼 보이던 점 — 을 없앤다: 빈칸은 문장
+  줄에 "딱 하나"만 두고, 그 아래엔 넓고 납작한 보기 막대 2개를 세로로 쌓아(둘째는 테두리만)
+  실제 세로 버튼 목록임을 분명히 한다. 화살표는 그중 선택된(채워진) 막대 하나만 가리켜
+  "여러 후보 중 하나로 이 빈칸을 채운다"는 관계를 유지한다.
+*/
 export const BlankGlyph = ({ className = '', size = 44 }) => (
   <svg {...base(size, className)}>
-    <rect x="4" y="7" width="9" height="5" rx="2.5" fill="currentColor" opacity="0.55" />
-    <rect x="15" y="5.5" width="13" height="7.5" rx="2.2" stroke="currentColor" strokeWidth="1.5" strokeDasharray="2.4 2.2" />
-    <rect x="30" y="7" width="10" height="5" rx="2.5" fill="currentColor" opacity="0.55" />
+    {/* 문장 — 빈칸은 이 줄에 하나뿐 */}
+    <rect x="3" y="8" width="7" height="5" rx="2.5" fill="currentColor" opacity="0.5" />
+    <rect x="11" y="8" width="4" height="5" rx="2.5" fill="currentColor" opacity="0.5" />
+    <rect x="17" y="6" width="13" height="9" rx="2.4" stroke="currentColor" strokeWidth="1.6" strokeDasharray="2.4 2.2" />
+    <rect x="32" y="8" width="9" height="5" rx="2.5" fill="currentColor" opacity="0.5" />
 
-    <rect x="4" y="31" width="10" height="7" rx="3.5" stroke="currentColor" strokeWidth="1.3" opacity="0.55" />
-    <rect x="17" y="31" width="11" height="7" rx="3.5" fill="currentColor" />
-    <rect x="30" y="31" width="10" height="7" rx="3.5" stroke="currentColor" strokeWidth="1.3" opacity="0.55" />
+    {/* 빈칸 → 선택된 보기로 이어지는 화살표(그 보기 하나만 가리킨다) */}
+    <path d="M22 21.6 L22 16.4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+    <path d="M19.3 19.3 L22 16 L24.7 19.3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
 
-    <path d="M22.5 30.5 C 22 25.5, 21.5 19, 21.3 15" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
-    <path d="M18.6 18.3 L21.3 14.3 L24 18.3" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+    {/* 보기 막대 2개 — 세로로 쌓인 폭 넓은 버튼(가로 칩 아님). 위(선택됨)만 채운다 */}
+    <rect x="5" y="23" width="34" height="7" rx="3.5" fill="currentColor" />
+    <rect x="5" y="32.5" width="34" height="7" rx="3.5" stroke="currentColor" strokeWidth="1.3" opacity="0.5" />
   </svg>
 );
 
 /*
-  문장 만들기(sentenceArrange) — 2026-09-29 QA로 다시 그렸다. 예전엔 흩어진 조각 3개가
-  화살표를 거쳐 완성된 막대 문장으로 바뀌는 추상적인 그림이라 "무슨 문제인지 모르겠다"는
-  지적을 받았다. 지금은 실제 화면 그대로: 위에 문장(회색 낱말 선들) 중앙에 점선/밑줄 빈칸이
-  있고, 아래 선택지 칩 중 하나(가운데, 채워진 칩)가 화살표를 따라 그 빈칸으로 올라가
-  채워지는 순간을 그린다. BlankGlyph(빈칸 채우기·고르기)와 구도는 비슷하지만 빈칸을
-  박스가 아니라 밑줄+슬롯 눈금으로, 선택지를 폭 넓은 보기줄이 아니라 조립 칩(살짝 기운
-  타일)으로 그려 두 유형을 구분한다.
+  문장 만들기(sentenceArrange) — 2026-09-29 재작업. 실제 화면(ArrangeTray)은 문장 자리에
+  "여러 칸(슬롯)"이 나란히 있고, 앞쪽은 이미 조각(칩)으로 채워졌고 다음 빈 칸만 밑줄로
+  비어 있는 모습 + 아래 남은 조각 은행이다. 빈칸 채우기(칸 1개 + 세로 버튼 목록)와
+  실루엣이 겹치지 않도록: 화살표를 없애고, 슬롯을 여러 개 나란히 이어 그려 "조립 중"인
+  느낌을 낸다. 은행 조각은 살짝 기운 낱개 칩으로 남겨 "아직 놓지 않은 조각"임을 드러낸다.
 */
 export const ArrangeGlyph = ({ className = '', size = 44 }) => (
   <svg {...base(size, className)}>
-    {/* 문장 — 빈칸 앞뒤 낱말 */}
-    <rect x="3" y="8" width="8" height="5" rx="2.5" fill="currentColor" opacity="0.5" />
-    <rect x="12" y="8" width="4" height="5" rx="2.5" fill="currentColor" opacity="0.5" />
-    <rect x="31" y="8" width="9" height="5" rx="2.5" fill="currentColor" opacity="0.5" />
+    {/* 문장 앞부분(고정 텍스트) */}
+    <rect x="3" y="8" width="6" height="5" rx="2.5" fill="currentColor" opacity="0.5" />
 
-    {/* 빈칸 — 밑줄 슬롯(양끝 눈금 + 점선 밑줄) */}
-    <path d="M18 10.5v4" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" opacity="0.6" />
-    <path d="M28 10.5v4" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" opacity="0.6" />
-    <path d="M18 14.2h10" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeDasharray="2 2.2" />
+    {/* 슬롯 3칸이 나란히 — 앞 두 칸은 이미 채운 칩, 마지막 칸만 다음에 채울 빈 밑줄 */}
+    <rect x="11" y="6.4" width="8.4" height="7.6" rx="2" fill="currentColor" />
+    <rect x="20.8" y="6.4" width="8.4" height="7.6" rx="2" fill="currentColor" opacity="0.72" />
+    <path d="M30.6 13.2h8" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeDasharray="2 2.2" />
 
-    {/* 빈칸으로 올라가는 화살표 */}
-    <path d="M22.5 30 C 22 25, 21.8 19, 22 15.2" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
-    <path d="M19.2 18.3 L22 14.6 L24.8 18.3" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+    {/* 문장 끝 마침표 */}
+    <circle cx="40.6" cy="12.7" r="1.1" fill="currentColor" opacity="0.5" />
 
-    {/* 선택지 칩 3개 — 가운데(선택됨)만 채우고, 조립 타일임을 드러내려 좌우는 살짝 기울인다 */}
-    <rect x="4" y="31" width="10" height="7" rx="3.5" stroke="currentColor" strokeWidth="1.3" opacity="0.55" transform="rotate(-6 9 34.5)" />
-    <rect x="17" y="31" width="11" height="7" rx="3.5" fill="currentColor" />
-    <rect x="30" y="31" width="10" height="7" rx="3.5" stroke="currentColor" strokeWidth="1.3" opacity="0.55" transform="rotate(6 35 34.5)" />
+    {/* 아래 조각 은행 — 아직 놓지 않은 낱개 칩 2개, 살짝 기울여 "은행"임을 드러낸다 */}
+    <rect x="6" y="26" width="13" height="7" rx="3.5" stroke="currentColor" strokeWidth="1.3" opacity="0.55" transform="rotate(-6 12.5 29.5)" />
+    <rect x="25" y="26" width="13" height="7" rx="3.5" stroke="currentColor" strokeWidth="1.3" opacity="0.55" transform="rotate(5 31.5 29.5)" />
+
+    {/* 확인 버튼 자리 — 슬롯을 다 채워야 활성화되는 하단 CTA */}
+    <rect x="4" y="37" width="36" height="4.4" rx="2.2" fill="currentColor" opacity="0.28" />
   </svg>
 );
 
-/** 듣고 받아쓰기 — 스피커(음파) + 아래 조각 3개(가운데가 이미 배열된 정답 자리) */
+/*
+  듣고 배열(listenArrange) — 문장 만들기와 같은 화면(ArrangeTray)을 스피커로 듣고 채우는
+  변형이다. 문장 앞부분 고정 텍스트 대신 스피커(음파)를 두고, 슬롯 3칸 + 은행 구도는
+  ArrangeGlyph와 그대로 맞춘다(같은 유형 계열임을 한눈에 알 수 있게).
+*/
 export const ListenArrangeGlyph = ({ className = '', size = 44 }) => (
   <svg {...base(size, className)}>
-    <rect x="9" y="15" width="5" height="8" rx="1.2" fill="currentColor" />
-    <path d="M14 15 L21 9.5 L21 28.5 L14 23 Z" fill="currentColor" />
-    <path d="M25 13.5a8 8 0 0 1 0 11" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
-    <path d="M22.6 16.8a4 4 0 0 1 0 4.4" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
+    {/* 스피커(음파) — ArrangeGlyph의 고정 텍스트 자리를 대신한다 */}
+    <rect x="2" y="9.4" width="3" height="4.2" rx="1" fill="currentColor" />
+    <path d="M5 9.4 L9.2 6.2 L9.2 16.6 L5 13.6 Z" fill="currentColor" />
+    <path d="M11.6 7.6a5.4 5.4 0 0 1 0 8" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
+    <path d="M9.9 9.5a2.8 2.8 0 0 1 0 4.2" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
 
-    <rect x="4" y="32" width="10" height="6" rx="2" stroke="currentColor" strokeWidth="1.3" opacity="0.55" transform="rotate(-6 9 35)" />
-    <rect x="17" y="33" width="10" height="6" rx="2" fill="currentColor" />
-    <rect x="30" y="32" width="10" height="6" rx="2" stroke="currentColor" strokeWidth="1.3" opacity="0.55" transform="rotate(6 35 35)" />
+    {/* 슬롯 3칸 — ArrangeGlyph와 동일 구도(앞 두 칸 채움 + 마지막 칸 빈 밑줄) */}
+    <rect x="16" y="6.4" width="8.4" height="7.6" rx="2" fill="currentColor" />
+    <rect x="25.8" y="6.4" width="8.4" height="7.6" rx="2" fill="currentColor" opacity="0.72" />
+    <path d="M35.6 13.2h5.4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeDasharray="2 2.2" />
+
+    {/* 아래 조각 은행 */}
+    <rect x="6" y="26" width="13" height="7" rx="3.5" stroke="currentColor" strokeWidth="1.3" opacity="0.55" transform="rotate(-6 12.5 29.5)" />
+    <rect x="25" y="26" width="13" height="7" rx="3.5" stroke="currentColor" strokeWidth="1.3" opacity="0.55" transform="rotate(5 31.5 29.5)" />
+
+    <rect x="4" y="37" width="36" height="4.4" rx="2.2" fill="currentColor" opacity="0.28" />
   </svg>
 );
 
-/** 빈칸 직접 입력 — 문장 중간 입력칸(커서 깜빡임) + 아래 미니 키보드(글자키 4 + 스페이스바) */
+/*
+  빈칸 직접 입력(fillInTheBlankTyping) — 2026-09-29 재작업. 선택지가 아예 없다(키보드로
+  타이핑)는 차이를 분명히 하려고, 아래를 칩 줄이 아니라 누가 봐도 "키보드"인 형태로 바꿨다 —
+  둥근 사각 틀로 전체를 감싸고 그 안에 촘촘한 미니 키 2행 + 넓은 스페이스바를 넣는다.
+  위 빈칸은 점선 상자가 아니라 실선 입력칸 + 이미 두 글자를 타이핑한 자리(작은 획 2개) +
+  깜빡이는 커서(I-beam)로 "직접 입력 중"임을 드러낸다.
+*/
 export const TypingGlyph = ({ className = '', size = 44 }) => (
   <svg {...base(size, className)}>
-    <rect x="4" y="7" width="9" height="5" rx="2.5" fill="currentColor" opacity="0.55" />
-    <rect x="15" y="5.5" width="13" height="7.5" rx="2.2" stroke="currentColor" strokeWidth="1.5" />
-    <path d="M21.5 7.3v3.9" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
-    <rect x="30" y="7" width="10" height="5" rx="2.5" fill="currentColor" opacity="0.55" />
+    {/* 문장 — 실선 입력칸 하나(빈칸 채우기의 점선 상자와 구분) */}
+    <rect x="3" y="8" width="7" height="5" rx="2.5" fill="currentColor" opacity="0.5" />
+    <rect x="15" y="5.5" width="14" height="7.5" rx="2.2" stroke="currentColor" strokeWidth="1.5" />
+    {/* 이미 타이핑한 글자 자리 2개 + 깜빡이는 커서 */}
+    <path d="M18 8v3.5" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" opacity="0.45" />
+    <path d="M20.6 8v3.5" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" opacity="0.45" />
+    <path d="M23.6 7.3v4.9" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" />
+    <rect x="31" y="8" width="10" height="5" rx="2.5" fill="currentColor" opacity="0.5" />
 
-    <rect x="5" y="26.5" width="7.4" height="6" rx="1.6" stroke="currentColor" strokeWidth="1.2" opacity="0.6" />
-    <rect x="14.3" y="26.5" width="7.4" height="6" rx="1.6" stroke="currentColor" strokeWidth="1.2" opacity="0.6" />
-    <rect x="23.6" y="26.5" width="7.4" height="6" rx="1.6" stroke="currentColor" strokeWidth="1.2" opacity="0.6" />
-    <rect x="32.9" y="26.5" width="6.1" height="6" rx="1.6" stroke="currentColor" strokeWidth="1.2" opacity="0.6" />
-    <rect x="5" y="34.5" width="34" height="6" rx="2.4" fill="currentColor" />
+    {/* 키보드 틀 — 칩과 다르게 하나의 사각 프레임 안에 작은 키 격자를 촘촘히 담는다 */}
+    <rect x="3" y="23.5" width="38" height="17.5" rx="3.2" stroke="currentColor" strokeWidth="1.3" opacity="0.7" />
+    {/* 1행 · 2행 — 작고 촘촘한 미니 키 6개씩(가로 칩과 달리 rx 작고 간격 좁음) */}
+    {[0, 1, 2, 3, 4, 5].map((i) => (
+      <rect key={`r1-${i}`} x={5.3 + i * 5.7} y="26.3" width="4.9" height="3.4" rx="0.8" stroke="currentColor" strokeWidth="1" opacity="0.55" />
+    ))}
+    {[0, 1, 2, 3, 4, 5].map((i) => (
+      <rect key={`r2-${i}`} x={5.3 + i * 5.7} y="30.7" width="4.9" height="3.4" rx="0.8" stroke="currentColor" strokeWidth="1" opacity="0.55" />
+    ))}
+    {/* 스페이스바 — 넓은 단일 키, 채워서 강조 */}
+    <rect x="6.3" y="35.5" width="31.4" height="3.6" rx="1.5" fill="currentColor" />
   </svg>
 );

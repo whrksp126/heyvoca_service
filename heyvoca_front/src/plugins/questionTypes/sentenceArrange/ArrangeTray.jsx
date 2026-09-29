@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect } from 'react';
+import { useRef, useState, useEffect, useMemo } from 'react';
 import { createPortal } from 'react-dom';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { FarmResultBar } from '../../../components/farm/FarmStatusBar';
@@ -9,7 +9,28 @@ import ResultMark from '../../../components/common/ResultMark';
 import { getWordInfoApi } from '../../../api/search';
 import { getTextSound } from '../../../utils/common';
 import { haptic } from '../../../lib/feel';
-import { diffAgainstAccepted, tokenizeWords } from './arrangeUtils';
+import { diffAgainstAccepted, tokenizeWords, stripTags } from './arrangeUtils';
+
+/*
+  구두점 복원(2026-09-29) — bank/prefix/suffix는 서버가 "문장 중간 표기"로 정규화해서
+  내려주는 조각이라 콤마·마침표 등 구두점이 전부 빠져 있다(계약 3-1절). 유일하게 구두점이
+  살아있는 곳은 answer_text(원문 전체) 뿐이라, 그 문장을 낱말 단위로 다시 쪼개서
+  "낱말 순서 i번째의 앞/뒤 구두점"만 뽑아 온다. 대소문자는 건드리지 않는다(단어 표시는
+  여전히 bank/prefix/suffix의 clean 텍스트를 쓰고, 구두점만 앞뒤에 얹는다) — 목표 단어
+  첫 글자 대문자가 정답 힌트가 되는 규칙을 그대로 유지하기 위함.
+  prefix 낱말 수만큼 오프셋을 두면 그 뒤로 슬롯(조립 구간) 낱말들이, 슬롯 개수만큼 더
+  오프셋을 두면 suffix 낱말들이 이어진다 — 최종 문장이 prefix+슬롯+suffix 순서로 원문과
+  1:1 대응한다는 계약(§3-1 표시 규칙)을 그대로 이용한 매핑이다.
+*/
+const EDGE_LEADING_RE = /^[^A-Za-z0-9']+/;
+const EDGE_TRAILING_RE = /[^A-Za-z0-9']+$/;
+const answerWordEdgePunct = (answerText) => {
+  const words = tokenizeWords(stripTags(answerText)).filter((t) => t.type === 'word');
+  return words.map((t) => ({
+    leading: (t.text.match(EDGE_LEADING_RE) || [''])[0],
+    trailing: (t.text.match(EDGE_TRAILING_RE) || [''])[0],
+  }));
+};
 
 /*
   문장 조립형 3종(sentenceArrangePartial/sentenceArrange/listenArrange) 공용 "아래 화면" —
@@ -72,6 +93,9 @@ const ArrangeTray = ({
   accepted = [],
   // prefix/suffix 단어 탭 시 사전 조회·TTS에 쓸 언어 — 부모가 wordLang(question) 그대로 넘긴다.
   answerLang = 'en',
+  // 원문 전체(구두점 포함, <strong> 태그 있음) — 부모가 arrange.answer_text 그대로 넘긴다.
+  // 이 트레이가 표시용 구두점을 복원하는 유일한 소스(위 answerWordEdgePunct 주석 참고).
+  answerText = '',
   // 채점 후 트레이 카드 하단에 덧붙일 내용 — 유형마다 다르다:
   //   문장 만들기: 틀렸을 때만 정답 문장(강조 포함)
   //   듣고 받아쓰기: 정오답과 무관하게 한국어 해석
@@ -135,6 +159,11 @@ const ArrangeTray = ({
 
   const prefixTokens = tokenizeWords(prefix);
   const suffixTokens = tokenizeWords(suffix);
+  // 원문 낱말 순서 인덱스 — prefix 낱말 수만큼 오프셋을 두면 그 뒤가 슬롯(조립 구간),
+  // 슬롯 개수(expectedLen)만큼 더 두면 그 뒤가 suffix (위 파일 상단 주석 참고).
+  const answerPunct = useMemo(() => answerWordEdgePunct(answerText), [answerText]);
+  const prefixWordCount = useMemo(() => prefixTokens.filter((t) => t.type === 'word').length, [prefixTokens]);
+  const suffixWordOffset = prefixWordCount + expectedLen;
 
   // ─── 슬롯 조작(배치·교체·이동·제거) — 탭과 드래그 드롭 모두 이 함수들로 귀결된다 ───────────
 
@@ -390,32 +419,39 @@ const ArrangeTray = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [lookup?.key]);
 
-  const renderFixedWords = (tokens, area) => tokens.map((tok, i) => {
-    const key = `${area}-${i}`;
-    if (tok.type !== 'word') return <span key={key}>{tok.text}</span>;
-    const active = lookup?.key === key;
-    return (
-      <button
-        key={key}
-        type="button"
-        data-lookup-word
-        aria-label={`${tok.clean} 뜻 보기`}
-        aria-expanded={active}
-        className={`
-          inline font-[inherit] text-[inherit] leading-[inherit] text-left align-baseline
-          rounded-[4px] px-[1px]
-          focus:outline-none
-          transition-colors duration-150
-          ${active
-            ? 'underline decoration-dotted decoration-2 underline-offset-[6px] decoration-layout-gray-300 bg-primary-main-50 dark:bg-primary-main-dark'
-            : ''}
-        `}
-        onClick={(e) => handleWordTap(e, key, tok.clean)}
-      >
-        {tok.text}
-      </button>
-    );
-  });
+  // wordOffset — 이 tokens 배열의 첫 낱말이 원문(answer_text) 전체에서 몇 번째 낱말인지.
+  // prefix는 0, suffix는 suffixWordOffset(=prefix 낱말 수 + 슬롯 개수)부터 시작한다.
+  const renderFixedWords = (tokens, area, wordOffset) => {
+    let wordIdx = 0;
+    return tokens.map((tok, i) => {
+      const key = `${area}-${i}`;
+      if (tok.type !== 'word') return <span key={key}>{tok.text}</span>;
+      const punct = answerPunct[wordOffset + wordIdx];
+      wordIdx += 1;
+      const active = lookup?.key === key;
+      return (
+        <button
+          key={key}
+          type="button"
+          data-lookup-word
+          aria-label={`${tok.clean} 뜻 보기`}
+          aria-expanded={active}
+          className={`
+            inline font-[inherit] text-[inherit] leading-[inherit] text-left align-baseline
+            rounded-[4px] px-[1px]
+            focus:outline-none
+            transition-colors duration-150
+            ${active
+              ? 'underline decoration-dotted decoration-2 underline-offset-[6px] decoration-layout-gray-300 bg-primary-main-50 dark:bg-primary-main-dark'
+              : ''}
+          `}
+          onClick={(e) => handleWordTap(e, key, tok.clean)}
+        >
+          {punct?.leading}{tok.clean}{punct?.trailing}
+        </button>
+      );
+    });
+  };
 
   return (
     <div className="flex flex-col gap-[15px] flex-1 min-h-0">
@@ -451,7 +487,7 @@ const ArrangeTray = ({
             <p className="w-full text-[17px] font-[700] leading-[1.9] text-layout-black dark:text-layout-white break-keep">
               {prefix && (
                 <span className="text-layout-gray-300 dark:text-layout-gray-100 font-[600]">
-                  {renderFixedWords(prefixTokens, 'p')}{' '}
+                  {renderFixedWords(prefixTokens, 'p', 0)}{' '}
                 </span>
               )}
               {slots.map((bankIdx, pos) => {
@@ -465,29 +501,45 @@ const ArrangeTray = ({
                   : flag === false
                     ? 'bg-status-error-100 dark:bg-status-error-dark border-status-error-500 text-status-error-600 dark:text-status-error-300'
                     : 'bg-layout-white dark:bg-layout-black border-layout-gray-200 dark:border-[#3A3A3A] text-layout-black dark:text-layout-white';
+                // 이 슬롯이 원문에서 몇 번째 낱말인지(prefixWordCount + pos) → 그 낱말의 앞/뒤
+                // 구두점만 얻어 슬롯 밖(칩/밑줄과 별개)에 고정 텍스트로 붙인다(2026-09-29).
+                const slotPunct = answerPunct[prefixWordCount + pos] || {};
                 return (
-                  // 슬롯 바깥 상자 — 빈 슬롯 밑줄과 채운 칩을 항상 같은 높이(SLOT_BOX_H)로 감싸고
-                  // 아래쪽(items-end)에 붙인다: 밑줄의 border-bottom과 칩의 아래쪽 테두리가
-                  // 정확히 같은 y좌표에 온다(2026-09-29) — 칩이 들어와도 상자 높이가 바뀌지
-                  // 않아 레이아웃이 튀지 않는다. data-arrange-slot/registerSlotRef는 드래그
-                  // 판정(가장 가까운 슬롯 찾기)용 — 작은 사각형 하이라이트 대신 대상 슬롯 자리에
-                  // 드래그 중인 단어의 고스트 칩을 직접 그려서 "여기 놓인다"를 보여준다(2026-09-29 재작업).
-                  <span
-                    key={`slot-${pos}`}
-                    data-arrange-slot={pos}
-                    ref={registerSlotRef(pos)}
-                    className="inline-flex items-end justify-center mx-[3px] my-[2px] align-middle"
-                    style={{ height: SLOT_BOX_H }}
-                  >
+                  // display:contents 래퍼 — 구두점(leading/trailing)을 슬롯 바깥에 형제로 붙이되
+                  // 문장의 inline 흐름 자체는 그대로 유지한다(래퍼 자신은 박스를 만들지 않음).
+                  <span key={`slot-wrap-${pos}`} style={{ display: 'contents' }}>
+                    {slotPunct.leading && <span aria-hidden="true">{slotPunct.leading}</span>}
+                    {/* 슬롯 바깥 상자 — 빈 슬롯 밑줄과 채운 칩을 항상 같은 높이(SLOT_BOX_H)로 감싸고
+                        아래쪽(items-end)에 붙인다: 밑줄의 border-bottom과 칩의 아래쪽 테두리가
+                        정확히 같은 y좌표에 온다(2026-09-29) — 칩이 들어와도 상자 높이가 바뀌지
+                        않아 레이아웃이 튀지 않는다. data-arrange-slot/registerSlotRef는 드래그
+                        판정(가장 가까운 슬롯 찾기)용 — 작은 사각형 하이라이트 대신 대상 슬롯 자리에
+                        드래그 중인 단어의 고스트 칩을 직접 그려서 "여기 놓인다"를 보여준다(2026-09-29 재작업). */}
+                    <span
+                      data-arrange-slot={pos}
+                      ref={registerSlotRef(pos)}
+                      className="inline-flex items-end justify-center mx-[3px] my-[2px] align-middle"
+                      style={{ height: SLOT_BOX_H }}
+                    >
                     {filled ? (
                       <motion.button
                         key={`chip-${pos}-${bankIdx}`}
                         type="button"
-                        disabled={disabled}
+                        // 네이티브 disabled 를 걸면 채점 후 click 이벤트 자체가 발생하지 않아
+                        // 사전 말풍선을 열 수 없다(2026-09-29) — 항상 클릭 가능하게 열어 두고,
+                        // 채점 전 배치/교체/빼기는 pointer 핸들러의 disabled 가드가 그대로 막는다.
+                        disabled={false}
                         onPointerDown={(e) => beginPointer(e, { bankIdx, fromSlot: pos })}
                         onPointerMove={handlePointerMove}
                         onPointerUp={handlePointerUp}
                         onPointerCancel={handlePointerCancel}
+                        onClick={(e) => {
+                          // pointerup 뒤에 따라오는 네이티브 click — 채점 전에는 pointer 핸들러가
+                          // 이미 탭/드래그(배치·교체·빼기)를 처리했으므로 여기서는 아무 것도 하지
+                          // 않는다. 채점 후에만 일반 단어 탭과 동일하게 사전 말풍선을 연다.
+                          if (!disabled) return;
+                          handleWordTap(e, `chip-${pos}`, bank[bankIdx]);
+                        }}
                         initial={reducedMotion ? false : { scale: 0.82, opacity: 0.6 }}
                         animate={{ scale: 1, opacity: 1 }}
                         transition={{ duration: 0.15, ease: [0.34, 1.56, 0.64, 1] }}
@@ -534,12 +586,14 @@ const ArrangeTray = ({
                         `}
                       />
                     )}
+                    </span>
+                    {slotPunct.trailing && <span aria-hidden="true">{slotPunct.trailing}</span>}
                   </span>
                 );
               })}
               {suffix && (
                 <span className="text-layout-gray-300 dark:text-layout-gray-100 font-[600]">
-                  {' '}{renderFixedWords(suffixTokens, 's')}
+                  {' '}{renderFixedWords(suffixTokens, 's', suffixWordOffset)}
                 </span>
               )}
             </p>
