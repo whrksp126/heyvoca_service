@@ -24,6 +24,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Check } from '@phosphor-icons/react';
+import { motion } from 'framer-motion';
+import { haptic, SPRING, TAP } from '../../lib/feel';
 import { useStats } from '../../context/StatsContext';
 import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
 import { useQuickReview } from '../../hooks/useQuickReview';
@@ -341,13 +343,8 @@ const TodayTasksCard = () => {
       checked: done,
       // 목표 미달이면 진행 숫자 대신 Pill('심기') — 다른 행과 달리 이 행은 탭할 수 있다는
       // 걸 우측에서도 바로 보여준다(살리기 Pill과 같은 규격). 달성 시엔 기존처럼 x/y.
-      // 우측은 항상 진행 x/y + '심기' Pill — 목표를 채운 뒤에도 더 심을 수 있어야 한다(2026-09-29 QA).
-      right: (
-        <span className="shrink-0 flex items-center gap-[10px]">
-          <Progress done={newSeed.done} total={newSeed.target} />
-          <Pill tone="primary" onClick={studyPlant}>심기</Pill>
-        </span>
-      ),
+      // 우측은 진행 x/y 만 — 심기 버튼은 목록 아래 큰 버튼(아래 plantButton)이 맡는다(2026-09-29 QA).
+      right: <Progress done={newSeed.done} total={newSeed.target} />,
       onRowClick: studyPlant,
     };
   })() : null;
@@ -383,6 +380,27 @@ const TodayTasksCard = () => {
           <Row key={row.key} {...row} last={idx === rowDefs.length - 1} />
         ))}
       </div>
+      {/* 새 씨앗 심기 — 목록 아래 넓은 버튼. 홈 주 CTA(FarmCta)와 같은 면·글자 규격이되,
+          카드 안이라 바깥 그림자는 쓰지 않는다. 목표를 채운 뒤에도 더 심을 수 있다. */}
+      {newSeedRow && !noSeedsToPlant && (
+        <motion.button
+          type="button"
+          onClick={studyPlant}
+          whileTap={{ scale: TAP.scale }}
+          transition={SPRING.snappy}
+          onTapStart={() => haptic('light')}
+          className="
+            flex items-center justify-center
+            w-full h-[52px] mt-[6px] mb-[12px] rounded-[12px]
+            bg-[linear-gradient(180deg,#FF88DC_0%,#FF70D4_100%)]
+            shadow-[inset_0_1px_0_rgba(255,255,255,.34)]
+          "
+        >
+          <span className="text-layout-white text-[16px] font-[700] leading-[1.2] tracking-[-0.02em]">
+            새 씨앗 심기
+          </span>
+        </motion.button>
+      )}
     </div>
   );
 };

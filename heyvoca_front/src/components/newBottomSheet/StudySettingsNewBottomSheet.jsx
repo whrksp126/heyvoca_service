@@ -41,7 +41,7 @@ const PlaybackOrderItem = ({ item, onLongPressStart, onLongPressEnd }) => {
             border-[1px] rounded-[8px] select-none touch-none
             ${item.count <= 0
               ? 'border-layout-gray-200 text-layout-gray-200'
-              : 'border-primary-main-600 text-primary-main-600'
+              : 'border-layout-gray-200 dark:border-[#3A3A3A] text-layout-black dark:text-layout-white'
             }
           `}
           onPointerDown={(e) => { e.stopPropagation(); onLongPressStart(item.id, -1); }}
@@ -53,7 +53,7 @@ const PlaybackOrderItem = ({ item, onLongPressStart, onLongPressEnd }) => {
           <Minus size={14} />
         </motion.button>
 
-        <span className="w-[24px] text-center text-[16px] font-[700] text-primary-main-600">
+        <span className="w-[24px] text-center text-[16px] font-[700] text-layout-black dark:text-layout-white">
           {item.count}
         </span>
 
@@ -63,7 +63,7 @@ const PlaybackOrderItem = ({ item, onLongPressStart, onLongPressEnd }) => {
             border-[1px] rounded-[8px] select-none touch-none
             ${item.count >= 9
               ? 'border-layout-gray-200 text-layout-gray-200'
-              : 'border-primary-main-600 text-primary-main-600'
+              : 'border-layout-gray-200 dark:border-[#3A3A3A] text-layout-black dark:text-layout-white'
             }
           `}
           onPointerDown={(e) => { e.stopPropagation(); onLongPressStart(item.id, 1); }}
@@ -177,15 +177,15 @@ export const StudySettingsNewBottomSheet = ({ onCancel, onSet, initialSettings }
                   w-full h-[45px] px-[15px]
                   rounded-[8px] border-[1px]
                   ${isVisible
-                    ? 'border-primary-main-600 text-primary-main-600'
-                    : 'border-layout-gray-200 text-layout-gray-200'
+                    ? 'border-layout-gray-200 dark:border-[#3A3A3A] text-layout-black dark:text-layout-white'
+                    : 'border-layout-gray-200 dark:border-[#3A3A3A] text-layout-gray-300'
                   }
                 `}
                 whileTap={{ scale: 0.97 }}
               >
                 <span className="text-[16px] font-[700] line-height-[19px]">{label}</span>
                 {isVisible
-                  ? <Eye size={18} weight="fill" />
+                  ? <Eye size={18} weight="fill" className="text-primary-main-600" />
                   : <EyeSlash size={18} />
                 }
               </motion.button>

@@ -210,9 +210,38 @@ const StudyMain = ({ words, plantSession }) => {
       const meaningsList = currentWord.meanings || [];
       const examplesList = currentWord.examples || [];
 
-      for (const item of playbackOrder) {
+      const EX_PAIR = ['exampleSentences', 'exampleMeanings'];
+      const playExampleLine = async (id, i) => {
+        const ex = examplesList[i] || {};
+        if (id === 'exampleSentences') {
+          await playOne(id, i, stripTags(ex.origin || ex.sentence || ''), wordLang(currentWord));
+        } else {
+          await playOne(id, i, stripTags(ex.meaning || ex.translation || ''), 'ko');
+        }
+      };
+
+      for (let oi = 0; oi < playbackOrder.length; oi++) {
+        const item = playbackOrder[oi];
         if (playbackCancelRef.current) return;
         if (item.count === 0) continue;
+
+        // 예문 문장·예문 뜻이 순서상 붙어 있으면 예문마다 짝지어 읽는다
+        // (예문1 → 예문1 뜻 → 예문2 → 예문2 뜻). 따로 떨어져 있으면 아래 기존 방식.
+        const nextItem = playbackOrder[oi + 1];
+        if (EX_PAIR.includes(item.id) && nextItem && EX_PAIR.includes(nextItem.id)
+            && nextItem.id !== item.id && nextItem.count > 0) {
+          for (let i = 0; i < examplesList.length; i++) {
+            for (const part of [item, nextItem]) {
+              for (let cycle = 0; cycle < part.count; cycle++) {
+                if (playbackCancelRef.current) return;
+                // eslint-disable-next-line no-await-in-loop
+                await playExampleLine(part.id, i);
+              }
+            }
+          }
+          oi += 1;
+          continue;
+        }
 
         // count = 한 항목을 몇 사이클 반복할지. 한 사이클은 해당 항목의 모든 라인 1회 순회.
         for (let cycle = 0; cycle < item.count; cycle++) {
