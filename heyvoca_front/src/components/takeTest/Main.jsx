@@ -17,7 +17,7 @@ import MemoryStateChangeBadge, {
   getMemoryStateKeyByStability,
 } from "../common/MemoryStateChangeBadge";
 import { playSuccessSound, playErrorSound } from '../../utils/audio';
-import { getQuestionType, isSingleWordPluginType, isSentenceQuestionType } from '../../plugins/questionTypes';
+import { getQuestionType, isSingleWordPluginType, isSentenceQuestionType, isNoGradeQuestionType } from '../../plugins/questionTypes';
 import { getDisplayMeanings } from '../../utils/displayMeanings';
 import { logStudyQuestion, getRequeueEasierApi } from '../../api/study';
 import { mapRecommendItemToWord } from '../../utils/studyRecommendMapping';
@@ -222,6 +222,16 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
     응답이 영영 오지 않으므로 숨긴다(showFarmBar 참고).
   */
   const isPlantMode = testType === 'plant';
+  /*
+    글자 학습(script) — plant와 마찬가지로 **같은 vocaId(글자)가 세션 안에서 여러 단계
+    (①만나기·②보고 고르기·③듣고 고르기·④따라 쓰기…)로 반복 등장한다**(2026-09-30, 글자
+    하나 = 단어 하나). plant와 다른 점은 로깅뿐이다 — script는 각 단계를 일반 단어처럼
+    즉시 /study/log로 채점한다(isPlantMode 분기를 타지 않는다). 하지만 "이 글자가 한 단계라도
+    통과됐다고 세션을 끝내면 안 된다"는 사실은 plant와 똑같으므로, 세션 종료 판정(큐 소진
+    기준)과 재출제 삽입 위치(그 글자 블록 안)는 plant와 같은 규칙을 공유한다 — 아래
+    isMultiStepMode.
+  */
+  const isMultiStepMode = isPlantMode || testType === 'script';
   const recordPlantAttempt = (vocaId, wasCorrect) => {
     if (vocaId == null || !plantAttemptsRef?.current) return;
     const prev = plantAttemptsRef.current.has(vocaId) ? plantAttemptsRef.current.get(vocaId) : true;
@@ -419,16 +429,18 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
       };
     }
 
-    // 큐 삽입 위치 — plant(새 씨앗 심기)는 그 단어 블록 안(남은 단계 뒤, 다음 단어로
-    // 넘어가기 전)에 다시 나오게 한다(2026-09-29 실기기 피드백). buildPlantTestQuestions가
-    // 한 단어의 모든 단계(①~⑥)를 배열에서 연속으로 배치하므로, currentIdx 다음부터
-    // "같은 vocaId가 연속으로 이어지는 구간"의 끝(=다음 단어가 시작되는 자리, 또는 배열
-    // 끝)을 찾아 그 자리에 끼워 넣는다. 그 외 세션(자유 설정 테스트 등)은 기존처럼
+    // 큐 삽입 위치 — plant(새 씨앗 심기)·script(글자 학습)는 그 단어/글자 블록 안(남은
+    // 단계 뒤, 다음 단어로 넘어가기 전)에 다시 나오게 한다(2026-09-29 실기기 피드백,
+    // isMultiStepMode). buildPlantTestQuestions·buildScriptLearnQuestions가 한 단어의 모든
+    // 단계를 배열에서 연속으로 배치하므로, currentIdx 다음부터 "같은 vocaId가 연속으로
+    // 이어지는 구간"의 끝(=다음 단어가 시작되는 자리, 또는 배열 끝)을 찾아 그 자리에 끼워
+    // 넣는다(script 무작위 테스트형처럼 애초에 연속 구간이 없으면 바로 다음 자리에 들어간다
+    // — 그것도 "다시 물어볼 자리"로 적절하다). 그 외 세션(자유 설정 테스트 등)은 기존처럼
     // 큐 맨 마지막에 넣는다(재출제분은 신규 문제를 다 푼 뒤 마지막에 등장).
     setTestQuestions((prev) => {
       const next = [...prev];
       let insertAt = next.length;
-      if (isPlantMode) {
+      if (isMultiStepMode) {
         let end = currentIdx + 1;
         while (end < next.length && (next[end].vocaIndexId ?? next[end].id) === vocaId) end++;
         insertAt = end;
@@ -1249,16 +1261,17 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
     //     이 클로저가 보는 testQuestions.length는 삽입 전 값이다.
     //     lastRetryEnqueuedRef.current가 true이면 큐에 +1이 삽입됐으므로 보정한다.
     //   — 이 경로에서도 isSessionDone=true 처리되어 결과 화면으로 이동한다.
-    // plant(새 씨앗 심기)는 1차 판정을 쓰지 않는다 — 같은 단어가 최대 6단계(같은 vocaId)로
-    // 여러 번 나오므로, 그중 아무 단계 하나만 맞혀도 "통과"로 잡혀 나머지 단계(빈칸 채우기·
-    // 문장 만들기 등)를 건너뛰고 세션이 조기 종료되는 버그가 된다. 큐를 끝까지(재출제 포함)
-    // 소진했을 때만 끝난 것으로 본다.
+    // plant(새 씨앗 심기)·script(글자 학습)는 1차 판정을 쓰지 않는다(isMultiStepMode) —
+    // 같은 단어/글자가 여러 단계(같은 vocaId)로 반복 등장하므로, 그중 아무 단계 하나만
+    // 맞혀도 "통과"로 잡혀 나머지 단계(빈칸 채우기·문장 만들기·듣고 고르기·따라 쓰기 등)를
+    // 건너뛰고 세션이 조기 종료되는 버그가 된다. 큐를 끝까지(재출제 포함) 소진했을 때만
+    // 끝난 것으로 본다.
     const currentPassedCount = passedVocaIdsRef?.current?.size ?? 0;
     const targetCount = totalUniqueVocaCountRef?.current || testQuestions.length;
     const nextIndex = progressIndex + 1;
     const adjustedQueueLen = testQuestions.length + (lastRetryEnqueuedRef.current ? 1 : 0);
     const isQueueExhausted = nextIndex >= adjustedQueueLen;
-    const isSessionDone = isPlantMode ? isQueueExhausted : (currentPassedCount >= targetCount || isQueueExhausted);
+    const isSessionDone = isMultiStepMode ? isQueueExhausted : (currentPassedCount >= targetCount || isQueueExhausted);
 
     updateRecentStudyState({
       [testType]: {
@@ -1556,10 +1569,10 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
     //   새로 재출제된 게 있다면(retriesEnqueuedThisCall) 그만큼 큐 길이를 보정해
     //   재출제 슬라이드가 추가되기 전에 세션이 끝나버리지 않도록 한다.
     const isQueueExhausted = nextIndex >= (testQuestions.length + retriesEnqueuedThisCall);
-    // plant는 위 setUpdateRecentStudyStateAndStatus와 같은 이유로 1차 판정(통과 고유
-    // 단어 수)을 쓰지 않는다 — 같은 단어가 여러 단계(같은 vocaId)로 반복 등장해 조기
-    // 종료로 이어지기 때문. 큐 소진만으로 판단한다.
-    const isSessionDone = isPlantMode ? isQueueExhausted : (currentPassedCount >= targetCount || isQueueExhausted);
+    // plant·script는 위 setUpdateRecentStudyStateAndStatus와 같은 이유(isMultiStepMode)로
+    // 1차 판정(통과 고유 단어 수)을 쓰지 않는다 — 같은 단어/글자가 여러 단계(같은 vocaId)로
+    // 반복 등장해 조기 종료로 이어지기 때문. 큐 소진만으로 판단한다.
+    const isSessionDone = isMultiStepMode ? isQueueExhausted : (currentPassedCount >= targetCount || isQueueExhausted);
 
     updateRecentStudyState({
       [testType]: {
@@ -1582,12 +1595,13 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
     }
   };
 
-  // ① "만나기"(wordIntro) 슬라이드 완료 — plant 전용, 채점 없음(2026-09-29).
-  // processCardWord/markVocaPassed/logIfFirstAttempt를 전혀 타지 않는다 — 이 슬라이드는
-  // 정오답이 없고, 결과 화면 집계에서도 제외된다(pages/TakeTest.jsx resultQuestions 필터).
+  // 채점 없는 "정보 전달" 슬라이드 완료 — wordIntro(plant ①만나기)·scriptIntro(글자 ①만나기)
+  // 공통(NO_GRADE_QUESTION_TYPES, plugins/questionTypes/index.js). processCardWord/
+  // markVocaPassed/logIfFirstAttempt를 전혀 타지 않는다 — 이 슬라이드는 정오답이 없고,
+  // 결과 화면 집계에서도 제외된다(pages/TakeTest.jsx resultQuestions 필터).
   // 큐 순서로만 다음으로 넘어간다(이 단어의 나머지 단계가 항상 뒤따르므로 큐 소진도
   // 사실상 발생하지 않는다 — 방어적으로만 처리).
-  const handleWordIntroNext = () => {
+  const handleNoGradeNext = () => {
     const nextIndex = progressIndex + 1;
     const isSessionDone = nextIndex >= testQuestions.length;
 
@@ -1613,7 +1627,8 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
   };
 
   // 슬라이드 전환 variants/transition은 utils/studySlideMotion.js 단일 소스(2026-09-29 —
-  // 글자 세션(ScriptSessionNewFullSheet)도 같은 값을 import해 써서 전환이 어긋나지 않게 한다).
+  // 글자 학습 문제 유형 플러그인(plugins/questionTypes/script/*)도 같은 값을 써서
+  // 전환이 어긋나지 않게 한다).
   const slideVariants = SLIDE_VARIANTS;
 
   // 성능 최적화를 위한 transition 설정
@@ -1683,11 +1698,11 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
 
   if (currentPlugin?.component) {
     const PluginComponent = currentPlugin.component;
-    // ①만나기(wordIntro)는 채점이 없다 — 일반 플러그인 완료 콜백(handlePluginComplete,
+    // 채점 없는 슬라이드(wordIntro·scriptIntro)는 일반 플러그인 완료 콜백(handlePluginComplete,
     // processCardWord/markVocaPassed/로깅을 태운다)이 아니라 전용 핸들러로 그냥 다음
-    // 슬라이드로만 넘어간다(위 handleWordIntroNext 주석 참고).
-    const isWordIntro = testQuestions[progressIndex]?.questionType === 'wordIntro';
-    const pluginOnComplete = isWordIntro ? handleWordIntroNext : handlePluginComplete;
+    // 슬라이드로만 넘어간다(위 handleNoGradeNext 주석 참고).
+    const isNoGrade = isNoGradeQuestionType(testQuestions[progressIndex]?.questionType);
+    const pluginOnComplete = isNoGrade ? handleNoGradeNext : handlePluginComplete;
     return (
       <motion.div
         className="

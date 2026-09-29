@@ -3,8 +3,9 @@ import Main from '../components/takeTest/Main';
 import Header from '../components/takeTest/Header';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useVocabulary } from '../context/VocabularyContext';
-import { getQuestionType, isFillInTheBlankType, isSingleWordPluginType, isSentenceQuestionType } from '../plugins/questionTypes';
+import { getQuestionType, isFillInTheBlankType, isSingleWordPluginType, isSentenceQuestionType, isNoGradeQuestionType } from '../plugins/questionTypes';
 import { mapRecommendItemToWord } from '../utils/studyRecommendMapping';
+import { buildScriptTestQuestions } from '../utils/scriptQuestions';
 import { isListeningSkipActive, mapSkippedQuestionType } from '../utils/listeningSkip';
 import { useNewBottomSheetActions } from '../context/NewBottomSheetContext';
 import { MEMORY_STATES } from '../utils/common';
@@ -451,6 +452,22 @@ const TakeTest = () => {
       };
     }
 
+    // ── 글자(문자 학습) ──────────────────────────────────────────────────────
+    // 학습장 "글자" 탭(components/script/ScriptFieldBody.jsx)이 GET /script/session으로
+    // 이미 이번 줄/복습 대상 글자 + session_id를 받아 뒀다(plant와 같은 자리 — usePlantSession
+    // 주석 참고). 여기서 또 부르지 않고 그대로 이어 쓴다. words는 utils/scriptData.js
+    // mapScriptSessionItem으로 매핑된 "글자=단어" 모양이다.
+    if (testType === 'script' && Array.isArray(state.data?.words) && state.data.words.length > 0) {
+      const { script, mode } = state.data;
+      const testQuestions = buildScriptTestQuestions(script, state.data.words, mode);
+      return {
+        testQuestions,
+        sessionId: state.data.sessionId ?? null,
+        composition: null,
+        compositionStrategy: null,
+      };
+    }
+
     // bookIds 변환: "all" → null, 단일 id → [id], 배열 → 그대로
     let bookIds = null;
     if (vocabularySheetId && vocabularySheetId !== 'all') {
@@ -786,15 +803,16 @@ const TakeTest = () => {
             totalUniqueVocaCountRef.current = uniqueIds.size || tempTestQuestions.length;
           }
 
-          // plant(새 씨앗 심기) — 백엔드 RecentStudyType enum에 'plant'가 없어(TEST/EXAM/
-          // TODAY/QUICK만 존재) 서버에 그대로 보내면 500이 나 "최근 학습 데이터를 추가하는데
-          // 실패했습니다" 네이티브 알림이 뜬다(버그 원인). enum에 값을 추가하려면 DB
-          // 마이그레이션(ALTER TABLE … MODIFY type ENUM(...))이 필요해 이 작업 범위를 넘어서므로,
-          // plant는 서버 왕복 없이 로컬 상태로만 이 세션의 진행(단어 단위 진행 판단·"세션 끝"
-          // 신호)을 추적한다 — 앱을 완전히 종료하면 이어하기는 안 되고 새로 시작한다.
-          if (state.testType === 'plant') {
+          // plant(새 씨앗 심기)·script(글자 학습) — 백엔드 RecentStudyType enum에 이 값들이
+          // 없어(TEST/EXAM/TODAY/QUICK만 존재) 서버에 그대로 보내면 500이 나 "최근 학습
+          // 데이터를 추가하는데 실패했습니다" 네이티브 알림이 뜬다(버그 원인, plant에서 먼저
+          // 발견됨). enum에 값을 추가하려면 DB 마이그레이션(ALTER TABLE … MODIFY type
+          // ENUM(...))이 필요해 이 작업 범위를 넘어서므로, 둘 다 서버 왕복 없이 로컬 상태로만
+          // 이 세션의 진행(단어/글자 단위 진행 판단·"세션 끝" 신호)을 추적한다 — 앱을 완전히
+          // 종료하면 이어하기는 안 되고 새로 시작한다.
+          if (state.testType === 'plant' || state.testType === 'script') {
             updateRecentStudyState({
-              plant: {
+              [state.testType]: {
                 ...recentStudy[state.testType],
                 progress_index: 0,
                 status: "learning",
@@ -1041,13 +1059,15 @@ const TakeTest = () => {
         await updateVocabularySheetAndRecentStudyData();
         // 결과 화면: 재출제 문제(isRetry=true)는 제외하고 고유 단어 기준 첫 시도만 전달
         // (재출제로 맞춘 걸 정답으로 뒤집지 않기 위해 첫 등장 순서 기준). plant의 ①만나기
-        // (wordIntro)는 채점이 없는 슬라이드라 먼저 제외한다 — 안 그러면 단어당 첫 등장이
-        // 항상 wordIntro라 그게 seenIds에 먼저 찍히고, 실제 채점된 단계(사지선다 등)가
-        // "이미 본 단어"로 걸러져 결과 목록에서 통째로 빠진다.
+        // (wordIntro)·글자 학습의 ①만나기(scriptIntro)는 채점이 없는 슬라이드라 먼저
+        // 제외한다(NO_GRADE_QUESTION_TYPES) — 안 그러면 단어/글자당 첫 등장이 항상 그
+        // 슬라이드라 seenIds에 먼저 찍히고, 실제 채점된 단계(사지선다 등)가 "이미 본 단어"로
+        // 걸러져 결과 목록에서 통째로 빠진다. 글자는 같은 글자가 여러 유형(scriptSeePick/
+        // scriptListenPick/scriptTrace)으로 반복 등장하므로 여기서도 첫 등장 하나만 남는다.
         const seenIds = new Set();
         const resultQuestions = testQuestions.filter(q => {
           if (q.isRetry) return false; // 재출제 문제 제외
-          if (q.questionType === 'wordIntro') return false; // 채점 없는 슬라이드 제외
+          if (isNoGradeQuestionType(q.questionType)) return false; // 채점 없는 슬라이드 제외
           // cardMatch 세트는 words 기준 중복 없으면 포함
           if (Array.isArray(q.words)) return true;
           const id = q.vocaIndexId ?? q.id;
@@ -1090,13 +1110,13 @@ const TakeTest = () => {
         }));
       }
 
-      // 2. 학습 기록(RecentStudy) 업데이트 — plant(새 씨앗 심기)는 서버에 쓰지 않는다.
-      // 백엔드 RecentStudyType enum에 'plant'가 없어(TEST/EXAM/TODAY/QUICK만 존재) 그대로
-      // 보내면 500이 나 "최근 학습 데이터를 추가하는데 실패했습니다" 네이티브 알림이 뜬다
-      // (아래 세션 생성 시점의 같은 분기 주석 참고). plant는 recentStudy를 세션 중 로컬
-      // 상태로만 쓰고(단어 단위 진행 판단용) 서버에는 절대 쓰지 않는다 — 앱을 완전히
-      // 종료하면 이어하기는 안 되고 새로 시작한다(기획 확인, 보고 참고).
-      if (state.testType !== 'plant') {
+      // 2. 학습 기록(RecentStudy) 업데이트 — plant(새 씨앗 심기)·script(글자 학습)는 서버에
+      // 쓰지 않는다. 백엔드 RecentStudyType enum에 이 값들이 없어(TEST/EXAM/TODAY/QUICK만
+      // 존재) 그대로 보내면 500이 나 "최근 학습 데이터를 추가하는데 실패했습니다" 네이티브
+      // 알림이 뜬다(아래 세션 생성 시점의 같은 분기 주석 참고). 둘 다 recentStudy를 세션 중
+      // 로컬 상태로만 쓰고(단어/글자 단위 진행 판단용) 서버에는 절대 쓰지 않는다 — 앱을
+      // 완전히 종료하면 이어하기는 안 되고 새로 시작한다(기획 확인, 보고 참고).
+      if (state.testType !== 'plant' && state.testType !== 'script') {
         await updateRecentStudyServer(state.testType);
       }
 

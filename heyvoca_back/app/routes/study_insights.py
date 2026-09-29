@@ -10,6 +10,7 @@ from app.models.models import UserStudyLog, UserVoca, UserVocaGame, VisualStage,
 from app.services.game.farm_v2 import growth as farm_growth
 from app.services.game.farm_v2 import xp as farm_xp
 from app.utils.jwt_utils import jwt_required
+from app.utils.script_scope import script_user_voca_ids_subquery
 # 분류 기준은 study.py 단일 소스를 import (중복 정의 금지 — 임계값 변경 시 자동 추종)
 from app.routes.study import _classify_memory_state, _STABILITY_SHORT, _STABILITY_MEDIUM
 
@@ -307,9 +308,12 @@ def today_changes():
     if order:
         # 같은 user_voca_id 라도 학습 언어(dict_lang)가 다르면 다른 단어다 —
         # UserVoca.dict_lang 으로 현재 학습 언어만 남긴다(구 UserStudyLog 필터와 동치).
+        # 글자 밭(book_kind='script') 단어는 '오늘 자란 단어' 위젯에도 절대 섞이지 않는다.
+        script_ids = script_user_voca_ids_subquery(user_id)
         for uv_id, word, meanings, voca_id in (
             db.session.query(UserVoca.id, UserVoca.word, UserVoca.voca_meanings, UserVoca.voca_id)
-            .filter(UserVoca.user_id == user_id, UserVoca.dict_lang == lang, UserVoca.id.in_(order))
+            .filter(UserVoca.user_id == user_id, UserVoca.dict_lang == lang, UserVoca.id.in_(order),
+                    ~UserVoca.id.in_(script_ids))
             .all()
         ):
             words[uv_id] = (word or '', _first_meaning(meanings))

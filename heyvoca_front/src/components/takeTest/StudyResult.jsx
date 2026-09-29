@@ -982,10 +982,11 @@ const StudyResult = () => {
     ('quick' — 홈 주 CTA)만 넷플릭스 '다음화'처럼 자동으로 이어간다.
     "다음 학습" 버튼 자체도 두지 않는다(같은 날 QA) — 하단은 "학습 종료" 하나뿐이다.
   */
-  // plant(새 씨앗 심기)도 자유 설정 테스트와 같은 취급 — 자동 다음 학습·다음 학습 버튼 없음
-  // (다음에 심을 단어는 홈 "오늘 할 일" 카드에서 다시 고른다. planNextStudy도 'plant'을
-  // 인식하지 못해 이미 available:false를 반환하지만, 여기 명시해 두 판정이 갈리지 않게 한다).
-  const isFreeTest = testType === 'test' || testType === 'exam' || testType === 'plant';
+  // plant(새 씨앗 심기)·script(글자 학습)도 자유 설정 테스트와 같은 취급 — 자동 다음 학습·
+  // 다음 학습 버튼 없음(다음에 심을 단어/배울 줄은 각각 홈 "오늘 할 일" 카드·학습장 "글자"
+  // 탭에서 다시 고른다. planNextStudy도 이 값들을 인식하지 못해 이미 available:false를
+  // 반환하지만, 여기 명시해 두 판정이 갈리지 않게 한다).
+  const isFreeTest = testType === 'test' || testType === 'exam' || testType === 'plant' || testType === 'script';
   // idle(아직 안 셈) → counting ⇄ paused(백그라운드) → stopped(사용자가 멈춤) / starting / failed
   const [countdownPhase, setCountdownPhase] = useState('idle');
   const [remainingSec, setRemainingSec] = useState(Math.ceil(NEXT_STUDY_COUNTDOWN_MS / 1000));
@@ -1374,8 +1375,12 @@ const StudyResult = () => {
                     >
                       {/* 우측 상단 — 다음 복습 예정일("9일 뒤 복습"). 학습 화면 문제 카드의
                           StudyTimingTag 와 같은 컴포넌트·같은 위치 규칙(top 12 / right 14)이다.
-                          세션이 끝난 뒤라 재출제가 없으므로 오답 단어도 예정일을 보여 준다. */}
-                      <StudyTimingTag answered wasCorrect={null} daysToReview={nextReviewDays} pending={false} />
+                          세션이 끝난 뒤라 재출제가 없으므로 오답 단어도 예정일을 보여 준다.
+                          글자(testType='script')는 복습 예정일 개념이 없다(사용자 결정
+                          2026-09-30 — 작물 성장(XP·단계)만 있음) — 이 태그를 아예 숨긴다. */}
+                      {testType !== 'script' && (
+                        <StudyTimingTag answered wasCorrect={null} daysToReview={nextReviewDays} pending={false} />
+                      )}
                       <div className='flex items-center gap-[11px]'>
                         {/* ① 상태 — 작물 그림. 단어장 단어 목록(vocabularySheets/WordRow)과 같은 자리(왼쪽)다.
                             텍스트 배지 분기는 없앴다(위 crop 계산 주석 참고). */}

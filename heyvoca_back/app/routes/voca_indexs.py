@@ -16,6 +16,7 @@ from app.utils.dict_lang import get_dict_lang
 from app.utils.word_payload import (
     UserWordEnricher, payload_voca_id, validate_dict_voca_ids, check_payload_language,
 )
+from app.utils.script_scope import script_user_voca_ids_subquery
 
 
 def _is_purchased_book_id(user_id, voca_book_id):
@@ -159,11 +160,15 @@ def get_voca_indexs():
     # N+1 문제 해결을 위해 book_maps와 연관된 user_voca_book을 함께 로드
     # 현재 학습 언어(dict_lang) 단어만
     lang = get_dict_lang()
+    # 글자 밭(book_kind='script') 단어는 이 전체 단어 목록에 절대 섞이지 않는다 —
+    # 학습장 '글자' 탭 안에서만 노출된다(app/routes/script.py).
+    script_ids = script_user_voca_ids_subquery(user_id)
     user_vocas = db.session.query(UserVoca).options(
         joinedload(UserVoca.book_maps).joinedload(UserVocaBookMap.user_voca_book)
     ).filter(
         UserVoca.user_id == user_id,
         UserVoca.dict_lang == lang,
+        ~UserVoca.id.in_(script_ids),
     ).all()
 
     # ── 농장 상태(당근 농장 V2) ──

@@ -2,10 +2,12 @@
 //
 // 학습형 세션 슬라이드 전환 규격 — 원래 components/takeTest/Main.jsx 안에 로컬 상수로만
 // 있던 값을 단일 소스로 옮겼다(2026-09-29 QA: 글자 세션이 학습하기와 다른 전환을 써서
-// 이질감이 있다는 피드백 — TakeTest·글자 세션(components/newfullsheet/
-// ScriptSessionNewFullSheet.jsx) 둘 다 이 파일을 import 해서 같은 값을 쓴다).
-// 두 세션 모두 문제가 앞으로만 진행되므로 direction은 항상 1로 호출한다(뒤로 가는
-// 슬라이드는 없음 — direction<0 분기는 나중에 뒤로가기를 지원할 때를 대비해 남겨둔다).
+// 이질감이 있다는 피드백). 2026-09-30부터 글자 학습은 별도 화면이 아니라 학습하기
+// (TakeTest) 안의 문제 유형 플러그인(plugins/questionTypes/script/*)이라 이 값을 쓰는 곳은
+// Main.jsx 하나뿐이지만, 플러그인이 카드 등장 모션(CARD_ENTER_*)에서 여전히 이 파일을
+// 공유해서 쓴다.
+// 문제는 항상 앞으로만 진행되므로 direction은 항상 1로 호출한다(뒤로 가는 슬라이드는
+// 없음 — direction<0 분기는 나중에 뒤로가기를 지원할 때를 대비해 남겨둔다).
 
 export const SLIDE_VARIANTS = {
   enter: (direction) => ({

@@ -1,11 +1,17 @@
 // src/components/script/ChoiceCard.jsx
 //
-// 글자 밭 세션 — 사지선다 카드 두 종류를 한 컴포넌트로 그린다.
+// 글자 학습 ② 보고 고르기 / ③ 듣고 고르기 카드. 학습하기(TakeTest) 문제 유형 플러그인
+// (plugins/questionTypes/script/ScriptChoiceQuestion.jsx)이 감싸 쓴다.
 //   seePick    — 글자를 보고 소리(한글 발음·로마자)를 고른다. 옵션 안에 한글 발음(크게)·
 //                로마자(작게, 회색)를 세로로 묶어 보여준다.
 //   listenPick — 소리를 듣고 글자를 고른다(혼동쌍 포함). 옵션 글자를 크게 보여준다
 //                (2026-09-29: 채점 후 옵션 아래에 붙던 한글 발음 작은 글자는 제거).
-// 정오답 스타일은 TakeTest Main.jsx의 선택지 버튼 규격을 그대로 따른다.
+// 정오답 스타일·농장 상태 바(XP)는 TakeTest Main.jsx의 사지선다 카드 규격을 그대로 따른다
+// (2026-09-30 — "학습하기 안에서 전부 동일하게" 결정). 단, 글자는 사용자 결정(2026-09-30
+// 추가)으로 복습 예정일·시듦/썩음 개념이 없다 — 문제 카드 우측 상단의 시점 문구
+// (StudyTimingTag, "N일 뒤 복습"/"N일 전 학습")는 두지 않는다. 농장 상태 바(XP 막대·델타)는
+// 그대로 쓰되, 항상 건강한(healthy) 작물 그림만 보여준다(farm.health는 상위 플러그인
+// (ScriptChoiceQuestion)이 넘기기 전에 이미 'FRESH'로 정규화해 둔다).
 
 import React, { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
@@ -13,7 +19,9 @@ import { SpeakerHigh } from '@phosphor-icons/react';
 import { haptic } from '../../lib/feel';
 import ResultMark from '../common/ResultMark';
 import TtsRipple from '../common/TtsRipple';
-import { optionMainSub } from '../../utils/scriptSession';
+import LiftAboveBar from '../common/LiftAboveBar';
+import { FarmResultBar } from '../farm/FarmStatusBar';
+import { optionMainSub } from '../../utils/scriptQuestions';
 import { speakScriptItem } from '../../utils/scriptData';
 import { playSuccessSound, playErrorSound } from '../../utils/audio';
 import { CARD_ENTER_INITIAL, CARD_ENTER_ANIMATE, CARD_ENTER_TRANSITION } from '../../utils/studySlideMotion';
@@ -21,7 +29,10 @@ import { CARD_ENTER_INITIAL, CARD_ENTER_ANIMATE, CARD_ENTER_TRANSITION } from '.
 // 정오답 버튼 규격은 components/takeTest/Main.jsx의 사지선다 옵션 버튼과 동일 클래스를 쓴다
 // (h-50 · border-[1px] rounded-[10px] · text-[14px] font-[700]) — 학습 화면과 다른 화면처럼
 // 보이지 않게 한다(2026-09-29 실기기 QA: "선택지가 얇은 외곽선만 있는 작은 박스"로 보임).
-const ChoiceCard = ({ step, answered, selectedIndex, onSelect, onSettled }) => {
+const ChoiceCard = ({
+  step, answered, selectedIndex, onSelect, onSettled,
+  farm = null, onFarmAnimStart, onFarmSettled,
+}) => {
   "use memo";
 
   const { script, item, options, answerIndex, type } = step;
@@ -89,6 +100,7 @@ const ChoiceCard = ({ step, answered, selectedIndex, onSelect, onSettled }) => {
           모두 채운다. 옛 h-[150px] 고정값이 "화면 하단이 텅 비어 보이는" 원인이었다) + 같은
           등장 모션(살짝 커지며 나타남, 2026-09-29 QA 5차). */}
       <motion.div
+        data-lift-card=""
         role={isListen ? 'button' : undefined}
         onClick={isListen ? playCard : undefined}
         initial={CARD_ENTER_INITIAL}
@@ -107,6 +119,7 @@ const ChoiceCard = ({ step, answered, selectedIndex, onSelect, onSettled }) => {
             <TtsRipple size={110} duration={duration} />
           </div>
         )}
+        <LiftAboveBar active={!!farm} topReserve={28} className="relative z-[1] w-full flex justify-center">
         {isListen ? (
           <motion.div
             animate={speaking ? { scale: [1, 1.12, 1] } : { scale: 1 }}
@@ -119,6 +132,7 @@ const ChoiceCard = ({ step, answered, selectedIndex, onSelect, onSettled }) => {
             {item.char}
           </h2>
         )}
+        </LiftAboveBar>
 
         {/* TakeTest Main.jsx의 ResultMark와 같은 크기(기본 150)·같은 중앙 배치 규격 —
             2026-09-29 실기기 QA: 110px는 TakeTest보다 작아 다른 화면처럼 보였다. */}
@@ -129,6 +143,14 @@ const ChoiceCard = ({ step, answered, selectedIndex, onSelect, onSettled }) => {
             pointer-events-none absolute top-[50%] left-[50%] z-[2]
             translate-x-[-50%] translate-y-[-50%]
           "
+        />
+
+        {/* 하단 - 채점 후: 농장 상태 바 — 유형 공통(FarmResultBar). 연출 끝 신호로 전환 게이트를 푼다. */}
+        <FarmResultBar
+          farm={farm}
+          replayKey={step.id}
+          onAnimStart={onFarmAnimStart}
+          onSettled={onFarmSettled}
         />
       </motion.div>
 

@@ -45,6 +45,7 @@ from app.services.game.farm_v2 import constants as C
 # `health` 는 아래에서 파라미터 이름으로도 써야 한다(계약의 ?health=). 모듈 쪽에 별칭을 준다.
 from app.services.game.farm_v2 import health as health_calc
 from app.utils.dict_lang import get_dict_lang, normalize_lang
+from app.utils.script_scope import script_user_voca_ids_subquery
 
 _log = logging.getLogger(__name__)
 
@@ -118,12 +119,17 @@ def effective_health_expr(now: dt.datetime):
 
 
 def count_rotten(user_id: UUID, now: dt.datetime) -> int:
-    """부패 개수 1건 조회. 복귀 미션이 스냅샷을 뜰 때도 같은 정의를 쓰게 하려고 공개한다."""
+    """부패 개수 1건 조회. 복귀 미션이 스냅샷을 뜰 때도 같은 정의를 쓰게 하려고 공개한다.
+
+    글자 밭(book_kind='script')은 제외한다 — 농장 화면·복귀 미션은 일반 단어만 본다.
+    """
     expr = effective_health_expr(now)
+    script_ids = script_user_voca_ids_subquery(user_id)
     return int(
         db.session.query(func.count())
         .select_from(UserVocaGame)
-        .filter(UserVocaGame.user_id == user_id, expr == HealthState.ROTTEN)
+        .filter(UserVocaGame.user_id == user_id, expr == HealthState.ROTTEN,
+                ~UserVocaGame.user_voca_id.in_(script_ids))
         .scalar() or 0
     )
 
@@ -252,11 +258,14 @@ def get_care_due_ids(user_id: UUID, now: Optional[dt.datetime] = None, lang: Opt
 
     # UserVoca 를 기준으로 LEFT JOIN — 게임 행이 없는(한 번도 안 심은) 단어도 한 번에 읽어
     # 아래 순수 함수에서 거른다(추가 쿼리 없음).
+    # 글자 밭(book_kind='script')은 제외 — 돌봄 카운트·목록은 일반 단어만 본다.
+    script_ids = script_user_voca_ids_subquery(user_id)
     rows = (
         db.session.query(UserVocaGame.user_voca_id, UserVocaGame.visual_stage, UserVoca.id, UserVoca.data)
         .select_from(UserVoca)
         .outerjoin(UserVocaGame, UserVocaGame.user_voca_id == UserVoca.id)
-        .filter(UserVoca.user_id == user_id, UserVoca.dict_lang == _lang(lang))
+        .filter(UserVoca.user_id == user_id, UserVoca.dict_lang == _lang(lang),
+                ~UserVoca.id.in_(script_ids))
         .all()
     )
     return care_due_ids_from_rows(rows, now)
@@ -371,10 +380,13 @@ def _stage_counts(user_id: UUID, lang: str = 'en') -> tuple:
     황금만 따로 빼면 4그룹 합이 전체 단어 수와 어긋나 "내 단어가 어디 갔지"가 된다.
     씨앗 상세와 같은 구조다 — 그룹은 4개, 세부는 그 안의 내역.
     """
+    # 글자 밭(book_kind='script')은 제외 — 홈 4그룹 카운트는 일반 단어만 본다.
+    script_ids = script_user_voca_ids_subquery(user_id)
     rows = (
         db.session.query(UserVocaGame.visual_stage, func.count())
         .join(UserVoca, UserVoca.id == UserVocaGame.user_voca_id)
-        .filter(UserVocaGame.user_id == user_id, UserVoca.dict_lang == lang)
+        .filter(UserVocaGame.user_id == user_id, UserVoca.dict_lang == lang,
+                ~UserVoca.id.in_(script_ids))
         .group_by(UserVocaGame.visual_stage)
         .all()
     )
@@ -398,7 +410,8 @@ def _stage_counts(user_id: UUID, lang: str = 'en') -> tuple:
     # 세지 않으면 단어장에는 단어가 있는데 농장은 비어 보인다.
     total_voca = int(
         db.session.query(func.count(UserVoca.id))
-        .filter(UserVoca.user_id == user_id, UserVoca.dict_lang == lang)
+        .filter(UserVoca.user_id == user_id, UserVoca.dict_lang == lang,
+                ~UserVoca.id.in_(script_ids))
         .scalar() or 0
     )
     missing = max(0, total_voca - total_games)
@@ -408,12 +421,17 @@ def _stage_counts(user_id: UUID, lang: str = 'en') -> tuple:
 
 
 def _health_counts(user_id: UUID, now: dt.datetime, lang: str = 'en') -> dict:
-    """건강 상태 집계. GOLDEN 행은 계약의 5개 키 어디에도 넣지 않는다."""
+    """건강 상태 집계. GOLDEN 행은 계약의 5개 키 어디에도 넣지 않는다.
+
+    글자 밭(book_kind='script')은 제외한다.
+    """
     expr = effective_health_expr(now)
+    script_ids = script_user_voca_ids_subquery(user_id)
     rows = (
         db.session.query(expr, func.count())
         .join(UserVoca, UserVoca.id == UserVocaGame.user_voca_id)
-        .filter(UserVocaGame.user_id == user_id, UserVoca.dict_lang == lang)
+        .filter(UserVocaGame.user_id == user_id, UserVoca.dict_lang == lang,
+                ~UserVoca.id.in_(script_ids))
         .group_by(expr)
         .all()
     )
@@ -602,13 +620,16 @@ def get_task_bucket_ids(user_id: UUID, bucket: str, now: Optional[dt.datetime] =
     now = now or dt.datetime.utcnow()
     lang = _lang(lang)
     eff = effective_health_expr(now)
+    # 글자 밭(book_kind='script')은 제외 — '오늘 할 일' 시듦/돌봄 줄은 일반 단어만 본다.
+    script_ids = script_user_voca_ids_subquery(user_id)
 
     bad_rows = (
         db.session.query(UserVoca.id, eff, UserVocaGame.rot_due_at)
         .select_from(UserVocaGame)
         .join(UserVoca, UserVoca.id == UserVocaGame.user_voca_id)
         .filter(UserVocaGame.user_id == user_id, UserVoca.dict_lang == lang,
-                eff.in_([HealthState.WILTED, HealthState.CRITICAL, HealthState.ROTTEN]))
+                eff.in_([HealthState.WILTED, HealthState.CRITICAL, HealthState.ROTTEN]),
+                ~UserVoca.id.in_(script_ids))
         .all()
     )
     rotten_ids = {uv_id for uv_id, state, _due in bad_rows if state == HealthState.ROTTEN}
@@ -651,13 +672,15 @@ def get_today_tasks(user_id: UUID, now: Optional[dt.datetime] = None,
     today = logical_today(now)
 
     # ── 1) 부패 — word/rotten_at 표시용으로 별도 조회(공유 헬퍼는 id 집합만 준다) ──
+    # 글자 밭(book_kind='script')은 제외 — '오늘 할 일' 카드는 일반 단어만 본다.
     eff = effective_health_expr(now)
+    script_ids = script_user_voca_ids_subquery(user_id)
     rotten_rows = (
         db.session.query(UserVoca.id, UserVoca.word, UserVocaGame.rotten_at)
         .select_from(UserVocaGame)
         .join(UserVoca, UserVoca.id == UserVocaGame.user_voca_id)
         .filter(UserVocaGame.user_id == user_id, UserVoca.dict_lang == lang,
-                eff == HealthState.ROTTEN)
+                eff == HealthState.ROTTEN, ~UserVoca.id.in_(script_ids))
         .all()
     )
     rotten_ids = {r[0] for r in rotten_rows}
@@ -817,13 +840,16 @@ def get_hero_plants(user_id: UUID, now: Optional[dt.datetime] = None,
     lang = _lang(lang)
     limit = max(1, min(int(limit or 96), 96))
     eff = effective_health_expr(now)
+    # 글자 밭(book_kind='script')은 제외 — 히어로 밭은 일반 단어만 심는다.
+    script_ids = script_user_voca_ids_subquery(user_id)
 
     rows = (
         db.session.query(UserVoca.id, UserVocaGame.visual_stage, eff)
         .select_from(UserVocaGame)
         .join(UserVoca, UserVoca.id == UserVocaGame.user_voca_id)
         .filter(UserVocaGame.user_id == user_id, UserVoca.dict_lang == lang,
-                UserVocaGame.visual_stage != VisualStage.UNPLANTED_SEED)
+                UserVocaGame.visual_stage != VisualStage.UNPLANTED_SEED,
+                ~UserVoca.id.in_(script_ids))
         .all()
     )
 
@@ -864,11 +890,14 @@ def list_plants(user_id: UUID, now: Optional[dt.datetime] = None,
     # 학습해야 생기므로, 게임 행을 기준으로 조인하면 아직 심지 않은 보유 씨앗이 목록에서
     # 통째로 빠진다. 실측으로 단어 514개 중 145개만 나왔다 — 밭의 대부분을 차지하는
     # 씨앗이 사라지는 셈이라 홈의 카운트(514)와도 어긋났다.
+    # 글자 밭(book_kind='script')은 제외 — 작물 목록은 일반 단어만 본다.
+    script_ids = script_user_voca_ids_subquery(user_id)
     q = (
         db.session.query(UserVocaGame, UserVoca)
         .select_from(UserVoca)
         .outerjoin(UserVocaGame, UserVocaGame.user_voca_id == UserVoca.id)
-        .filter(UserVoca.user_id == user_id, UserVoca.dict_lang == lang)
+        .filter(UserVoca.user_id == user_id, UserVoca.dict_lang == lang,
+                ~UserVoca.id.in_(script_ids))
     )
 
     if group:
@@ -932,13 +961,16 @@ def home_feed(user_id: UUID, now: Optional[dt.datetime] = None,
     now = now or dt.datetime.utcnow()
     limit = max(1, min(int(limit or 5), 20))
     lang = _lang(lang)   # 현재 학습 언어 단어만
+    # 글자 밭(book_kind='script')은 제외 — 홈 아래쪽 "지금 볼 만한 단어"는 일반 단어만.
+    script_ids = script_user_voca_ids_subquery(user_id)
 
     def rows(build):
         q = build(
             db.session.query(UserVocaGame, UserVoca)
             .select_from(UserVoca)
             .outerjoin(UserVocaGame, UserVocaGame.user_voca_id == UserVoca.id)
-            .filter(UserVoca.user_id == user_id, UserVoca.dict_lang == lang)
+            .filter(UserVoca.user_id == user_id, UserVoca.dict_lang == lang,
+                    ~UserVoca.id.in_(script_ids))
         )
         pairs = [(_plant_item(game, uv, now), uv) for game, uv in q.limit(limit).all()]
         _attach_ja_reading(pairs, lang)

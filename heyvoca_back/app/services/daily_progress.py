@@ -10,6 +10,7 @@ from uuid import UUID
 from app import db
 from app.models.models import UserStudyLog
 from app.utils.dict_lang import get_dict_lang
+from app.utils.script_scope import script_user_voca_ids_subquery
 
 
 def get_today_new_done(user_id: UUID) -> tuple:
@@ -19,11 +20,15 @@ def get_today_new_done(user_id: UUID) -> tuple:
     - state_before가 new/없음인 로그의 distinct user_voca_id → 신규.
     - 오늘 학습한 단어 중 신규가 아닌 것 → 복습 완료.
 
+    글자 밭(book_kind='script') 학습 로그는 제외한다 — '오늘 새 씨앗 N개' 데일리
+    미션·홈 카드는 일반 단어 기준이라, 글자를 세면 글자만 풀어도 미션이 채워진다.
+
     Returns:
         (new_done: int, reviews_done: int)
     """
     from app.services.study_day import logical_day_start_utc
     day_start_utc = logical_day_start_utc()
+    script_ids = script_user_voca_ids_subquery(user_id)
 
     rows = (
         db.session.query(UserStudyLog.user_voca_id, UserStudyLog.state_before)
@@ -32,6 +37,7 @@ def get_today_new_done(user_id: UUID) -> tuple:
             # 현재 학습 언어 기준(today-summary 와 동일). 풀(get_review_due)도 언어 한정.
             UserStudyLog.dict_lang == get_dict_lang(),
             UserStudyLog.created_at >= day_start_utc,
+            ~UserStudyLog.user_voca_id.in_(script_ids),
         )
         .all()
     )

@@ -26,9 +26,12 @@ def get_user_voca_book_list():
 
     # 현재 학습 언어(learning_lang) 단어장만
     lang = get_dict_lang()
+    # 글자 밭(book_kind='script') 단어장은 이 목록에 절대 섞이지 않는다 — 학습장 '글자'
+    # 탭 안에서만 노출된다(app/routes/script.py).
     user_voca_book_list = db.session.query(UserVocaBook)\
                                 .filter(UserVocaBook.user_id == user_id,
-                                        UserVocaBook.language == lang).all()
+                                        UserVocaBook.language == lang,
+                                        UserVocaBook.book_kind != 'script').all()
     print("###user_voca_book_list : ",user_voca_book_list)
     
     data = []

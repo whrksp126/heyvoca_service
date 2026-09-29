@@ -109,7 +109,12 @@ def _load_pool_raw(user_id: UUID, book_ids_filter: Optional[list], lang: str = '
 
     query = db.session.query(UserVocaBook).options(
         joinedload(UserVocaBook.voca_maps).joinedload(UserVocaBookMap.user_voca)
-    ).filter(UserVocaBook.user_id == user_id, UserVocaBook.language == lang)
+    ).filter(
+        UserVocaBook.user_id == user_id, UserVocaBook.language == lang,
+        # 글자 밭(app/routes/script.py)은 복습·추천 풀에서 완전히 분리한다 — 학습은
+        # /script/session이 따로 담당하고, 여기 섞이면 일반 단어 추천에 글자가 낀다.
+        UserVocaBook.book_kind != 'script',
+    )
 
     if book_ids_filter:
         # UUID 타입 일치를 위해 UUID 객체로 변환 후 필터

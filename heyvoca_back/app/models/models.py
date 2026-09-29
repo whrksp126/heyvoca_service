@@ -499,14 +499,23 @@ class UserVocaBook(db.Model):
     updated_at = Column(DateTime, nullable=True, default=None)
     # 단어장 언어('en'|'ja'). 새 단어장은 current_user.learning_lang 을 기록.
     language = Column(String(8), nullable=False, default='en', server_default='en', index=True)
-    
+    # 'normal'(일반 단어장) | 'script'(글자 밭 — 히라가나/가타카나/알파벳). 2026-09 추가.
+    # 농장·추천·통계 등 '단어' 집계는 반드시 이 컬럼으로 script 단어장을 제외해야 한다
+    # (app/utils/script_scope.py 참고). 기본값 'normal' — 기존 행은 이행 없이 그대로 정상 단어장.
+    book_kind = Column(String(16), nullable=False, default='normal', server_default='normal', index=True)
+    # book_kind='script' 일 때만 값이 있다 — 'hiragana'|'katakana'|'alphabet'.
+    script_key = Column(String(16), nullable=True)
+
     voca_maps = relationship("UserVocaBookMap", back_populates="user_voca_book", cascade="all, delete-orphan")
 
 
     def __init__(self, user_id, bookstore_id, color, name, total_word_cnt, memorized_word_cnt, voca_list, updated_at,
-                 language=None):
+                 language=None, book_kind=None, script_key=None):
         if language is not None:
             self.language = language
+        if book_kind is not None:
+            self.book_kind = book_kind
+        self.script_key = script_key
         self.user_id = user_id
         self.bookstore_id = bookstore_id
         self.color = color

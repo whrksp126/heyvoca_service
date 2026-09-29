@@ -412,11 +412,14 @@ def get_voca_books():
     lang = get_dict_lang()
 
     # N+1 문제 해결을 위해 UserVocaBookMap과 UserVoca를 함께 로드
+    # 글자 밭(book_kind='script') 단어장은 이 목록에 절대 섞이지 않는다 — 학습장 '글자'
+    # 탭 안에서만 노출된다(app/routes/script.py).
     voca_books = db.session.query(UserVocaBook).options(
         joinedload(UserVocaBook.voca_maps).joinedload(UserVocaBookMap.user_voca)
     ).filter(
         UserVocaBook.user_id == user_id,
         UserVocaBook.language == lang,
+        UserVocaBook.book_kind != 'script',
     ).all()
 
     # 사전 부가 정보(ja 읽기/JLPT/후리가나)는 전체 단어장의 voca_id 를 모아 한 번에 조회

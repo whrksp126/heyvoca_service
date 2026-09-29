@@ -1,0 +1,1204 @@
+{
+  "hiragana": [
+    {
+      "char": "あ",
+      "romaji": "a",
+      "hangul": "아"
+    },
+    {
+      "char": "い",
+      "romaji": "i",
+      "hangul": "이"
+    },
+    {
+      "char": "う",
+      "romaji": "u",
+      "hangul": "우"
+    },
+    {
+      "char": "え",
+      "romaji": "e",
+      "hangul": "에"
+    },
+    {
+      "char": "お",
+      "romaji": "o",
+      "hangul": "오"
+    },
+    {
+      "char": "か",
+      "romaji": "ka",
+      "hangul": "카"
+    },
+    {
+      "char": "き",
+      "romaji": "ki",
+      "hangul": "키"
+    },
+    {
+      "char": "く",
+      "romaji": "ku",
+      "hangul": "쿠"
+    },
+    {
+      "char": "け",
+      "romaji": "ke",
+      "hangul": "케"
+    },
+    {
+      "char": "こ",
+      "romaji": "ko",
+      "hangul": "코"
+    },
+    {
+      "char": "さ",
+      "romaji": "sa",
+      "hangul": "사"
+    },
+    {
+      "char": "し",
+      "romaji": "shi",
+      "hangul": "시"
+    },
+    {
+      "char": "す",
+      "romaji": "su",
+      "hangul": "스"
+    },
+    {
+      "char": "せ",
+      "romaji": "se",
+      "hangul": "세"
+    },
+    {
+      "char": "そ",
+      "romaji": "so",
+      "hangul": "소"
+    },
+    {
+      "char": "た",
+      "romaji": "ta",
+      "hangul": "타"
+    },
+    {
+      "char": "ち",
+      "romaji": "chi",
+      "hangul": "치"
+    },
+    {
+      "char": "つ",
+      "romaji": "tsu",
+      "hangul": "츠"
+    },
+    {
+      "char": "て",
+      "romaji": "te",
+      "hangul": "테"
+    },
+    {
+      "char": "と",
+      "romaji": "to",
+      "hangul": "토"
+    },
+    {
+      "char": "な",
+      "romaji": "na",
+      "hangul": "나"
+    },
+    {
+      "char": "に",
+      "romaji": "ni",
+      "hangul": "니"
+    },
+    {
+      "char": "ぬ",
+      "romaji": "nu",
+      "hangul": "누"
+    },
+    {
+      "char": "ね",
+      "romaji": "ne",
+      "hangul": "네"
+    },
+    {
+      "char": "の",
+      "romaji": "no",
+      "hangul": "노"
+    },
+    {
+      "char": "は",
+      "romaji": "ha",
+      "hangul": "하"
+    },
+    {
+      "char": "ひ",
+      "romaji": "hi",
+      "hangul": "히"
+    },
+    {
+      "char": "ふ",
+      "romaji": "fu",
+      "hangul": "후"
+    },
+    {
+      "char": "へ",
+      "romaji": "he",
+      "hangul": "헤"
+    },
+    {
+      "char": "ほ",
+      "romaji": "ho",
+      "hangul": "호"
+    },
+    {
+      "char": "ま",
+      "romaji": "ma",
+      "hangul": "마"
+    },
+    {
+      "char": "み",
+      "romaji": "mi",
+      "hangul": "미"
+    },
+    {
+      "char": "む",
+      "romaji": "mu",
+      "hangul": "무"
+    },
+    {
+      "char": "め",
+      "romaji": "me",
+      "hangul": "메"
+    },
+    {
+      "char": "も",
+      "romaji": "mo",
+      "hangul": "모"
+    },
+    {
+      "char": "や",
+      "romaji": "ya",
+      "hangul": "야"
+    },
+    {
+      "char": "ゆ",
+      "romaji": "yu",
+      "hangul": "유"
+    },
+    {
+      "char": "よ",
+      "romaji": "yo",
+      "hangul": "요"
+    },
+    {
+      "char": "ら",
+      "romaji": "ra",
+      "hangul": "라"
+    },
+    {
+      "char": "り",
+      "romaji": "ri",
+      "hangul": "리"
+    },
+    {
+      "char": "る",
+      "romaji": "ru",
+      "hangul": "루"
+    },
+    {
+      "char": "れ",
+      "romaji": "re",
+      "hangul": "레"
+    },
+    {
+      "char": "ろ",
+      "romaji": "ro",
+      "hangul": "로"
+    },
+    {
+      "char": "わ",
+      "romaji": "wa",
+      "hangul": "와"
+    },
+    {
+      "char": "を",
+      "romaji": "wo",
+      "hangul": "오"
+    },
+    {
+      "char": "ん",
+      "romaji": "n",
+      "hangul": "응"
+    },
+    {
+      "char": "が",
+      "romaji": "ga",
+      "hangul": "가"
+    },
+    {
+      "char": "ぎ",
+      "romaji": "gi",
+      "hangul": "기"
+    },
+    {
+      "char": "ぐ",
+      "romaji": "gu",
+      "hangul": "구"
+    },
+    {
+      "char": "げ",
+      "romaji": "ge",
+      "hangul": "게"
+    },
+    {
+      "char": "ご",
+      "romaji": "go",
+      "hangul": "고"
+    },
+    {
+      "char": "ざ",
+      "romaji": "za",
+      "hangul": "자"
+    },
+    {
+      "char": "じ",
+      "romaji": "ji",
+      "hangul": "지"
+    },
+    {
+      "char": "ず",
+      "romaji": "zu",
+      "hangul": "즈"
+    },
+    {
+      "char": "ぜ",
+      "romaji": "ze",
+      "hangul": "제"
+    },
+    {
+      "char": "ぞ",
+      "romaji": "zo",
+      "hangul": "조"
+    },
+    {
+      "char": "だ",
+      "romaji": "da",
+      "hangul": "다"
+    },
+    {
+      "char": "ぢ",
+      "romaji": "ji",
+      "hangul": "지"
+    },
+    {
+      "char": "づ",
+      "romaji": "zu",
+      "hangul": "즈"
+    },
+    {
+      "char": "で",
+      "romaji": "de",
+      "hangul": "데"
+    },
+    {
+      "char": "ど",
+      "romaji": "do",
+      "hangul": "도"
+    },
+    {
+      "char": "ば",
+      "romaji": "ba",
+      "hangul": "바"
+    },
+    {
+      "char": "び",
+      "romaji": "bi",
+      "hangul": "비"
+    },
+    {
+      "char": "ぶ",
+      "romaji": "bu",
+      "hangul": "부"
+    },
+    {
+      "char": "べ",
+      "romaji": "be",
+      "hangul": "베"
+    },
+    {
+      "char": "ぼ",
+      "romaji": "bo",
+      "hangul": "보"
+    },
+    {
+      "char": "ぱ",
+      "romaji": "pa",
+      "hangul": "파"
+    },
+    {
+      "char": "ぴ",
+      "romaji": "pi",
+      "hangul": "피"
+    },
+    {
+      "char": "ぷ",
+      "romaji": "pu",
+      "hangul": "푸"
+    },
+    {
+      "char": "ぺ",
+      "romaji": "pe",
+      "hangul": "페"
+    },
+    {
+      "char": "ぽ",
+      "romaji": "po",
+      "hangul": "포"
+    },
+    {
+      "char": "きゃ",
+      "romaji": "kya",
+      "hangul": "캬"
+    },
+    {
+      "char": "きゅ",
+      "romaji": "kyu",
+      "hangul": "큐"
+    },
+    {
+      "char": "きょ",
+      "romaji": "kyo",
+      "hangul": "교"
+    },
+    {
+      "char": "ぎゃ",
+      "romaji": "gya",
+      "hangul": "갸"
+    },
+    {
+      "char": "ぎゅ",
+      "romaji": "gyu",
+      "hangul": "규"
+    },
+    {
+      "char": "ぎょ",
+      "romaji": "gyo",
+      "hangul": "교"
+    },
+    {
+      "char": "しゃ",
+      "romaji": "sha",
+      "hangul": "샤"
+    },
+    {
+      "char": "しゅ",
+      "romaji": "shu",
+      "hangul": "슈"
+    },
+    {
+      "char": "しょ",
+      "romaji": "sho",
+      "hangul": "쇼"
+    },
+    {
+      "char": "じゃ",
+      "romaji": "ja",
+      "hangul": "자"
+    },
+    {
+      "char": "じゅ",
+      "romaji": "ju",
+      "hangul": "주"
+    },
+    {
+      "char": "じょ",
+      "romaji": "jo",
+      "hangul": "조"
+    },
+    {
+      "char": "ちゃ",
+      "romaji": "cha",
+      "hangul": "챠"
+    },
+    {
+      "char": "ちゅ",
+      "romaji": "chu",
+      "hangul": "츄"
+    },
+    {
+      "char": "ちょ",
+      "romaji": "cho",
+      "hangul": "쵸"
+    },
+    {
+      "char": "にゃ",
+      "romaji": "nya",
+      "hangul": "냐"
+    },
+    {
+      "char": "にゅ",
+      "romaji": "nyu",
+      "hangul": "뉴"
+    },
+    {
+      "char": "にょ",
+      "romaji": "nyo",
+      "hangul": "뇨"
+    },
+    {
+      "char": "ひゃ",
+      "romaji": "hya",
+      "hangul": "햐"
+    },
+    {
+      "char": "ひゅ",
+      "romaji": "hyu",
+      "hangul": "휴"
+    },
+    {
+      "char": "ひょ",
+      "romaji": "hyo",
+      "hangul": "효"
+    },
+    {
+      "char": "びゃ",
+      "romaji": "bya",
+      "hangul": "뱌"
+    },
+    {
+      "char": "びゅ",
+      "romaji": "byu",
+      "hangul": "뷰"
+    },
+    {
+      "char": "びょ",
+      "romaji": "byo",
+      "hangul": "뵤"
+    },
+    {
+      "char": "ぴゃ",
+      "romaji": "pya",
+      "hangul": "퍄"
+    },
+    {
+      "char": "ぴゅ",
+      "romaji": "pyu",
+      "hangul": "퓨"
+    },
+    {
+      "char": "ぴょ",
+      "romaji": "pyo",
+      "hangul": "표"
+    },
+    {
+      "char": "みゃ",
+      "romaji": "mya",
+      "hangul": "먀"
+    },
+    {
+      "char": "みゅ",
+      "romaji": "myu",
+      "hangul": "뮤"
+    },
+    {
+      "char": "みょ",
+      "romaji": "myo",
+      "hangul": "묘"
+    },
+    {
+      "char": "りゃ",
+      "romaji": "rya",
+      "hangul": "랴"
+    },
+    {
+      "char": "りゅ",
+      "romaji": "ryu",
+      "hangul": "류"
+    },
+    {
+      "char": "りょ",
+      "romaji": "ryo",
+      "hangul": "료"
+    }
+  ],
+  "katakana": [
+    {
+      "char": "ア",
+      "romaji": "a",
+      "hangul": "아"
+    },
+    {
+      "char": "イ",
+      "romaji": "i",
+      "hangul": "이"
+    },
+    {
+      "char": "ウ",
+      "romaji": "u",
+      "hangul": "우"
+    },
+    {
+      "char": "エ",
+      "romaji": "e",
+      "hangul": "에"
+    },
+    {
+      "char": "オ",
+      "romaji": "o",
+      "hangul": "오"
+    },
+    {
+      "char": "カ",
+      "romaji": "ka",
+      "hangul": "카"
+    },
+    {
+      "char": "キ",
+      "romaji": "ki",
+      "hangul": "키"
+    },
+    {
+      "char": "ク",
+      "romaji": "ku",
+      "hangul": "쿠"
+    },
+    {
+      "char": "ケ",
+      "romaji": "ke",
+      "hangul": "케"
+    },
+    {
+      "char": "コ",
+      "romaji": "ko",
+      "hangul": "코"
+    },
+    {
+      "char": "サ",
+      "romaji": "sa",
+      "hangul": "사"
+    },
+    {
+      "char": "シ",
+      "romaji": "shi",
+      "hangul": "시"
+    },
+    {
+      "char": "ス",
+      "romaji": "su",
+      "hangul": "스"
+    },
+    {
+      "char": "セ",
+      "romaji": "se",
+      "hangul": "세"
+    },
+    {
+      "char": "ソ",
+      "romaji": "so",
+      "hangul": "소"
+    },
+    {
+      "char": "タ",
+      "romaji": "ta",
+      "hangul": "타"
+    },
+    {
+      "char": "チ",
+      "romaji": "chi",
+      "hangul": "치"
+    },
+    {
+      "char": "ツ",
+      "romaji": "tsu",
+      "hangul": "츠"
+    },
+    {
+      "char": "テ",
+      "romaji": "te",
+      "hangul": "테"
+    },
+    {
+      "char": "ト",
+      "romaji": "to",
+      "hangul": "토"
+    },
+    {
+      "char": "ナ",
+      "romaji": "na",
+      "hangul": "나"
+    },
+    {
+      "char": "ニ",
+      "romaji": "ni",
+      "hangul": "니"
+    },
+    {
+      "char": "ヌ",
+      "romaji": "nu",
+      "hangul": "누"
+    },
+    {
+      "char": "ネ",
+      "romaji": "ne",
+      "hangul": "네"
+    },
+    {
+      "char": "ノ",
+      "romaji": "no",
+      "hangul": "노"
+    },
+    {
+      "char": "ハ",
+      "romaji": "ha",
+      "hangul": "하"
+    },
+    {
+      "char": "ヒ",
+      "romaji": "hi",
+      "hangul": "히"
+    },
+    {
+      "char": "フ",
+      "romaji": "fu",
+      "hangul": "후"
+    },
+    {
+      "char": "ヘ",
+      "romaji": "he",
+      "hangul": "헤"
+    },
+    {
+      "char": "ホ",
+      "romaji": "ho",
+      "hangul": "호"
+    },
+    {
+      "char": "マ",
+      "romaji": "ma",
+      "hangul": "마"
+    },
+    {
+      "char": "ミ",
+      "romaji": "mi",
+      "hangul": "미"
+    },
+    {
+      "char": "ム",
+      "romaji": "mu",
+      "hangul": "무"
+    },
+    {
+      "char": "メ",
+      "romaji": "me",
+      "hangul": "메"
+    },
+    {
+      "char": "モ",
+      "romaji": "mo",
+      "hangul": "모"
+    },
+    {
+      "char": "ヤ",
+      "romaji": "ya",
+      "hangul": "야"
+    },
+    {
+      "char": "ユ",
+      "romaji": "yu",
+      "hangul": "유"
+    },
+    {
+      "char": "ヨ",
+      "romaji": "yo",
+      "hangul": "요"
+    },
+    {
+      "char": "ラ",
+      "romaji": "ra",
+      "hangul": "라"
+    },
+    {
+      "char": "リ",
+      "romaji": "ri",
+      "hangul": "리"
+    },
+    {
+      "char": "ル",
+      "romaji": "ru",
+      "hangul": "루"
+    },
+    {
+      "char": "レ",
+      "romaji": "re",
+      "hangul": "레"
+    },
+    {
+      "char": "ロ",
+      "romaji": "ro",
+      "hangul": "로"
+    },
+    {
+      "char": "ワ",
+      "romaji": "wa",
+      "hangul": "와"
+    },
+    {
+      "char": "ヲ",
+      "romaji": "wo",
+      "hangul": "오"
+    },
+    {
+      "char": "ン",
+      "romaji": "n",
+      "hangul": "응"
+    },
+    {
+      "char": "ガ",
+      "romaji": "ga",
+      "hangul": "가"
+    },
+    {
+      "char": "ギ",
+      "romaji": "gi",
+      "hangul": "기"
+    },
+    {
+      "char": "グ",
+      "romaji": "gu",
+      "hangul": "구"
+    },
+    {
+      "char": "ゲ",
+      "romaji": "ge",
+      "hangul": "게"
+    },
+    {
+      "char": "ゴ",
+      "romaji": "go",
+      "hangul": "고"
+    },
+    {
+      "char": "ザ",
+      "romaji": "za",
+      "hangul": "자"
+    },
+    {
+      "char": "ジ",
+      "romaji": "ji",
+      "hangul": "지"
+    },
+    {
+      "char": "ズ",
+      "romaji": "zu",
+      "hangul": "즈"
+    },
+    {
+      "char": "ゼ",
+      "romaji": "ze",
+      "hangul": "제"
+    },
+    {
+      "char": "ゾ",
+      "romaji": "zo",
+      "hangul": "조"
+    },
+    {
+      "char": "ダ",
+      "romaji": "da",
+      "hangul": "다"
+    },
+    {
+      "char": "ヂ",
+      "romaji": "ji",
+      "hangul": "지"
+    },
+    {
+      "char": "ヅ",
+      "romaji": "zu",
+      "hangul": "즈"
+    },
+    {
+      "char": "デ",
+      "romaji": "de",
+      "hangul": "데"
+    },
+    {
+      "char": "ド",
+      "romaji": "do",
+      "hangul": "도"
+    },
+    {
+      "char": "バ",
+      "romaji": "ba",
+      "hangul": "바"
+    },
+    {
+      "char": "ビ",
+      "romaji": "bi",
+      "hangul": "비"
+    },
+    {
+      "char": "ブ",
+      "romaji": "bu",
+      "hangul": "부"
+    },
+    {
+      "char": "ベ",
+      "romaji": "be",
+      "hangul": "베"
+    },
+    {
+      "char": "ボ",
+      "romaji": "bo",
+      "hangul": "보"
+    },
+    {
+      "char": "パ",
+      "romaji": "pa",
+      "hangul": "파"
+    },
+    {
+      "char": "ピ",
+      "romaji": "pi",
+      "hangul": "피"
+    },
+    {
+      "char": "プ",
+      "romaji": "pu",
+      "hangul": "푸"
+    },
+    {
+      "char": "ペ",
+      "romaji": "pe",
+      "hangul": "페"
+    },
+    {
+      "char": "ポ",
+      "romaji": "po",
+      "hangul": "포"
+    },
+    {
+      "char": "キャ",
+      "romaji": "kya",
+      "hangul": "캬"
+    },
+    {
+      "char": "キュ",
+      "romaji": "kyu",
+      "hangul": "큐"
+    },
+    {
+      "char": "キョ",
+      "romaji": "kyo",
+      "hangul": "교"
+    },
+    {
+      "char": "ギャ",
+      "romaji": "gya",
+      "hangul": "갸"
+    },
+    {
+      "char": "ギュ",
+      "romaji": "gyu",
+      "hangul": "규"
+    },
+    {
+      "char": "ギョ",
+      "romaji": "gyo",
+      "hangul": "교"
+    },
+    {
+      "char": "シャ",
+      "romaji": "sha",
+      "hangul": "샤"
+    },
+    {
+      "char": "シュ",
+      "romaji": "shu",
+      "hangul": "슈"
+    },
+    {
+      "char": "ショ",
+      "romaji": "sho",
+      "hangul": "쇼"
+    },
+    {
+      "char": "ジャ",
+      "romaji": "ja",
+      "hangul": "자"
+    },
+    {
+      "char": "ジュ",
+      "romaji": "ju",
+      "hangul": "주"
+    },
+    {
+      "char": "ジョ",
+      "romaji": "jo",
+      "hangul": "조"
+    },
+    {
+      "char": "チャ",
+      "romaji": "cha",
+      "hangul": "챠"
+    },
+    {
+      "char": "チュ",
+      "romaji": "chu",
+      "hangul": "츄"
+    },
+    {
+      "char": "チョ",
+      "romaji": "cho",
+      "hangul": "쵸"
+    },
+    {
+      "char": "ニャ",
+      "romaji": "nya",
+      "hangul": "냐"
+    },
+    {
+      "char": "ニュ",
+      "romaji": "nyu",
+      "hangul": "뉴"
+    },
+    {
+      "char": "ニョ",
+      "romaji": "nyo",
+      "hangul": "뇨"
+    },
+    {
+      "char": "ヒャ",
+      "romaji": "hya",
+      "hangul": "햐"
+    },
+    {
+      "char": "ヒュ",
+      "romaji": "hyu",
+      "hangul": "휴"
+    },
+    {
+      "char": "ヒョ",
+      "romaji": "hyo",
+      "hangul": "효"
+    },
+    {
+      "char": "ビャ",
+      "romaji": "bya",
+      "hangul": "뱌"
+    },
+    {
+      "char": "ビュ",
+      "romaji": "byu",
+      "hangul": "뷰"
+    },
+    {
+      "char": "ビョ",
+      "romaji": "byo",
+      "hangul": "뵤"
+    },
+    {
+      "char": "ピャ",
+      "romaji": "pya",
+      "hangul": "퍄"
+    },
+    {
+      "char": "ピュ",
+      "romaji": "pyu",
+      "hangul": "퓨"
+    },
+    {
+      "char": "ピョ",
+      "romaji": "pyo",
+      "hangul": "표"
+    },
+    {
+      "char": "ミャ",
+      "romaji": "mya",
+      "hangul": "먀"
+    },
+    {
+      "char": "ミュ",
+      "romaji": "myu",
+      "hangul": "뮤"
+    },
+    {
+      "char": "ミョ",
+      "romaji": "myo",
+      "hangul": "묘"
+    },
+    {
+      "char": "リャ",
+      "romaji": "rya",
+      "hangul": "랴"
+    },
+    {
+      "char": "リュ",
+      "romaji": "ryu",
+      "hangul": "류"
+    },
+    {
+      "char": "リョ",
+      "romaji": "ryo",
+      "hangul": "료"
+    }
+  ],
+  "alphabet": [
+    {
+      "char": "A",
+      "lower": "a",
+      "name_hangul": "에이",
+      "sound_hangul": "애"
+    },
+    {
+      "char": "B",
+      "lower": "b",
+      "name_hangul": "비",
+      "sound_hangul": "브"
+    },
+    {
+      "char": "C",
+      "lower": "c",
+      "name_hangul": "씨",
+      "sound_hangul": "크"
+    },
+    {
+      "char": "D",
+      "lower": "d",
+      "name_hangul": "디",
+      "sound_hangul": "드"
+    },
+    {
+      "char": "E",
+      "lower": "e",
+      "name_hangul": "이",
+      "sound_hangul": "에"
+    },
+    {
+      "char": "F",
+      "lower": "f",
+      "name_hangul": "에프",
+      "sound_hangul": "프"
+    },
+    {
+      "char": "G",
+      "lower": "g",
+      "name_hangul": "지",
+      "sound_hangul": "그"
+    },
+    {
+      "char": "H",
+      "lower": "h",
+      "name_hangul": "에이치",
+      "sound_hangul": "흐"
+    },
+    {
+      "char": "I",
+      "lower": "i",
+      "name_hangul": "아이",
+      "sound_hangul": "이"
+    },
+    {
+      "char": "J",
+      "lower": "j",
+      "name_hangul": "제이",
+      "sound_hangul": "쥐"
+    },
+    {
+      "char": "K",
+      "lower": "k",
+      "name_hangul": "케이",
+      "sound_hangul": "크"
+    },
+    {
+      "char": "L",
+      "lower": "l",
+      "name_hangul": "엘",
+      "sound_hangul": "을"
+    },
+    {
+      "char": "M",
+      "lower": "m",
+      "name_hangul": "엠",
+      "sound_hangul": "므"
+    },
+    {
+      "char": "N",
+      "lower": "n",
+      "name_hangul": "엔",
+      "sound_hangul": "느"
+    },
+    {
+      "char": "O",
+      "lower": "o",
+      "name_hangul": "오",
+      "sound_hangul": "오"
+    },
+    {
+      "char": "P",
+      "lower": "p",
+      "name_hangul": "피",
+      "sound_hangul": "프"
+    },
+    {
+      "char": "Q",
+      "lower": "q",
+      "name_hangul": "큐",
+      "sound_hangul": "크우"
+    },
+    {
+      "char": "R",
+      "lower": "r",
+      "name_hangul": "알",
+      "sound_hangul": "르"
+    },
+    {
+      "char": "S",
+      "lower": "s",
+      "name_hangul": "에스",
+      "sound_hangul": "스"
+    },
+    {
+      "char": "T",
+      "lower": "t",
+      "name_hangul": "티",
+      "sound_hangul": "트"
+    },
+    {
+      "char": "U",
+      "lower": "u",
+      "name_hangul": "유",
+      "sound_hangul": "어"
+    },
+    {
+      "char": "V",
+      "lower": "v",
+      "name_hangul": "브이",
+      "sound_hangul": "브"
+    },
+    {
+      "char": "W",
+      "lower": "w",
+      "name_hangul": "더블유",
+      "sound_hangul": "워"
+    },
+    {
+      "char": "X",
+      "lower": "x",
+      "name_hangul": "엑스",
+      "sound_hangul": "크스"
+    },
+    {
+      "char": "Y",
+      "lower": "y",
+      "name_hangul": "와이",
+      "sound_hangul": "이"
+    },
+    {
+      "char": "Z",
+      "lower": "z",
+      "name_hangul": "지",
+      "sound_hangul": "즈"
+    }
+  ]
+}

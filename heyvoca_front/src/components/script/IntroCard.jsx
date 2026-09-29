@@ -5,8 +5,9 @@
 // 세로 묶음 + 스피커(우), 구분선 아래 예시 단어(단어·읽기·뜻 + 스피커), 그 아래 헷갈리는
 // 글자 비교(confusables를 글자+한글 발음 작은 타일로, 탭하면 소리). 획순 정보는 여기서
 // 다루지 않는다(따라 쓰기 슬라이드의 몫). 등장 시 소리를 1회 자동 재생하고, 각 스피커를
-// 탭하면 다시 듣는다. 채점 없음(정오답 집계에서 제외 — utils/scriptSession.js
-// summarizeResults 참고).
+// 탭하면 다시 듣는다. 채점 없음 — 학습하기(TakeTest)에서는 이 화면을 plugins/questionTypes/
+// script/ScriptIntroQuestion.jsx가 감싸 쓰고, questionType='scriptIntro'는
+// NO_GRADE_QUESTION_TYPES(plugins/questionTypes/index.js)라 정오답 집계에서 제외된다.
 
 import React, { useEffect } from 'react';
 import { motion } from 'framer-motion';

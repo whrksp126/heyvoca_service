@@ -5,8 +5,12 @@ import SentenceArrangeQuestion from './sentenceArrange/SentenceArrangeQuestion';
 import ListenArrangeQuestion from './sentenceArrange/ListenArrangeQuestion';
 import FillInTheBlankTypingQuestion from './fillInTheBlankTyping/FillInTheBlankTypingQuestion';
 import WordIntroQuestion from './wordIntro/WordIntroQuestion';
+import ScriptIntroQuestion from './script/ScriptIntroQuestion';
+import ScriptChoiceQuestion from './script/ScriptChoiceQuestion';
+import ScriptTraceQuestion from './script/ScriptTraceQuestion';
 import { wordsOverlap } from '../../utils/meaningConcept';
 import { wordLang, isJa } from '../../utils/lang';
+import { buildScriptChoiceQuestion } from '../../utils/scriptQuestions';
 
 // ─── 강조 마커(<strong class="target-word">…</strong>) 유틸 ─────────────────────
 const TARGET_WORD_RE = /<strong\b[^>]*\btarget-word\b[^>]*>([\s\S]*?)<\/strong\s*>/i;
@@ -369,9 +373,80 @@ export const QUESTION_TYPE_PLUGINS = [
     component: WordIntroQuestion,
     setupQuestions: null,
   },
+  /*
+    글자(문자 학습) 4종 — 2026-09-30. 학습장 "글자" 탭(components/script/ScriptFieldBody.jsx)이
+    학습하기(TakeTest, testType='script') 안에서 돌리는 전용 유형들이다. wordIntro와 마찬가지로
+    enabled:false — 설정 시트 유형 목록·AI 추천(QUICK_QUESTION_TYPES)에는 노출되지 않고,
+    pages/TakeTest.jsx의 buildScriptTestQuestions(utils/scriptQuestions.js)가 직접 배열을 만든다.
+    글자 하나 = 단어 하나 — id/vocaIndexId는 그 글자의 user_voca_id다(백엔드가 글자장을
+    일반 단어장처럼 취급). 기록은 다른 단어 유형과 같은 /study/log 경로를 그대로 쓴다.
+  */
+  {
+    // ① 만나기 — 채점 없음(NO_GRADE_QUESTION_TYPES). UI는 components/script/IntroCard.jsx 재사용.
+    id: 'scriptIntro',
+    label: '글자 만나기',
+    enabled: false,
+    family: 'script',
+    direction: null,
+    listening: false,
+    guideTitle: '글자를 익혀요',
+    component: ScriptIntroQuestion,
+    setupQuestions: null,
+  },
+  {
+    // ② 글자를 보고 발음(한글 발음·로마자)을 고른다.
+    id: 'scriptSeePick',
+    label: '글자 보고 발음 고르기',
+    enabled: false,
+    family: 'script',
+    direction: null,
+    listening: false,
+    guideTitle: '알맞은 발음을 고르세요',
+    component: ScriptChoiceQuestion,
+    // 재출제(오답 시 같은 유형으로 다시 만들기) 경로가 이 함수의 존재로 이 유형을
+    // isSingleWordPluginType으로 인식한다 — 없으면 Main.jsx가 사지선다(meanings 기반)
+    // 폴백을 시도하다 렌더가 깨진다(글자에는 meanings가 없다).
+    setupQuestions: (selectedWords, allWords) => {
+      const pool = (allWords && allWords.length > 0) ? allWords : selectedWords;
+      return selectedWords.map((w) => buildScriptChoiceQuestion(w, pool, 'scriptSeePick'));
+    },
+  },
+  {
+    // ③ 소리를 듣고 글자를 고른다(혼동쌍 포함).
+    id: 'scriptListenPick',
+    label: '소리 듣고 글자 고르기',
+    enabled: false,
+    family: 'script',
+    direction: null,
+    listening: false,
+    guideTitle: '듣고 알맞은 글자를 고르세요',
+    component: ScriptChoiceQuestion,
+    setupQuestions: (selectedWords, allWords) => {
+      const pool = (allWords && allWords.length > 0) ? allWords : selectedWords;
+      return selectedWords.map((w) => buildScriptChoiceQuestion(w, pool, 'scriptListenPick'));
+    },
+  },
+  {
+    // ④ 따라 쓰기 — 알파벳은 대문자·소문자 각각. 판정 없음(항상 정답), 완료 시 자동으로 다음.
+    id: 'scriptTrace',
+    label: '따라 쓰기',
+    enabled: false,
+    family: 'script',
+    direction: null,
+    listening: false,
+    guideTitle: '따라 써 보세요',
+    component: ScriptTraceQuestion,
+    setupQuestions: null,
+  },
 ];
 
 export const getQuestionType = (id) => QUESTION_TYPE_PLUGINS.find(p => p.id === id);
+
+// 채점 없이 그냥 다음으로 넘어가는 "정보 전달" 슬라이드 — Main.jsx가 onComplete를 전용
+// 핸들러(정오답 집계·재출제·로깅을 전혀 타지 않는 handleNoGradeNext)로 바꿔 넘기고,
+// pages/TakeTest.jsx가 결과 화면 집계에서 제외할 때 이 배열 하나를 공유한다.
+export const NO_GRADE_QUESTION_TYPES = ['wordIntro', 'scriptIntro'];
+export const isNoGradeQuestionType = (id) => NO_GRADE_QUESTION_TYPES.includes(id);
 
 // 빈칸 채우기 계열(단일 단어 플러그인) 판별 — Main/TakeTest 의 분기에서 id 를 나열하지 않게.
 export const FILL_IN_THE_BLANK_TYPES = QUESTION_TYPE_PLUGINS

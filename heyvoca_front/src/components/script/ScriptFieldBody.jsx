@@ -1,45 +1,42 @@
 // src/components/script/ScriptFieldBody.jsx
 //
-// 글자(문자 학습) 그리드 — 학습장의 "글자" 탭 본문(2026-09-29). 예전에는 이 내용 전체가
-// 공용 풀시트 components/newfullsheet/ScriptFieldNewFullSheet.jsx였다. 진입로가 홈 카드와
-// 학습 언어 전환 권유 둘뿐이라 "글자 밭"이라는 별도 공간보다 학습장 안의 탭 하나로 두는 편이
-// 자연스러워 이 화면으로 옮기며 헤더(뒤로가기·제목)를 뗐다 — 탭 자체가 이미 "지금 보고
-// 있는 화면"을 말해 준다.
+// 글자(문자 학습) 그리드 — 학습장의 "글자" 탭 본문. 2026-09-30 개편: 글자 학습 세션을 더는
+// 별도 풀시트(예전 ScriptSessionNewFullSheet)로 돌리지 않고, 학습하기(TakeTest, testType=
+// 'script') 안에서 일반 단어 학습과 똑같은 화면(진행바·O/X·농장 상태 바·재출제·결과 화면)으로
+// 돌린다 — 글자 하나 = 단어 하나로 취급해 FSRS·작물 성장이 단어와 동일하게 굴러간다.
 //
-// 세션(ScriptSessionNewFullSheet)은 여전히 풀시트로 push한다 — 학습/복습/따라쓰기는
-// 탭 안에 넣기엔 무거운 전용 화면이라 그대로 둔다. 세션이 끝나면 onComplete로 이 컴포넌트의
-// 로컬 상태를 갱신한 뒤 popNewFullSheet로 이 탭으로 돌아온다(탭은 그대로 마운트돼 있다).
+// 진행도는 GET /script/progress(계약: heyvoca_back 동시 구현)가 단어와 같은 visual_stage
+// 문자열을 내려줘서, 이 그리드와 학습 결과 화면(StudyResult.jsx)이 같은 CropImage 규칙을 쓴다.
 
 import React, {
-  useEffect, useMemo, useState, useCallback,
+  useEffect, useMemo, useRef, useState, useCallback,
 } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useUser } from '../../context/UserContext';
-import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
-import { getScriptProgressApi } from '../../api/script';
+import { ensureScriptApi, getScriptSessionApi } from '../../api/script';
 import {
   SCRIPT_LABEL,
   scriptsForLearningLang,
   groupByRow,
   mergeProgress,
-  dueItems,
+  mapScriptSessionItem,
+  practicableItems,
   masteredCount,
   rowLabel,
 } from '../../utils/scriptData';
 import ScriptRow from './ScriptRow';
-import ScriptSessionNewFullSheet from '../newfullsheet/ScriptSessionNewFullSheet';
-import { vibrate } from '../../utils/osFunction';
+import { vibrate, showToast } from '../../utils/osFunction';
 
-// 스크립트별(히라가나/가타카나/알파벳 등) 진행도 메모리 캐시 — 모듈 스코프라 이 컴포넌트가
-// 다시 마운트돼도(예: 다른 탭에 갔다가 돌아옴) 살아 있다. 지금은 Main.jsx가 이 컴포넌트를
-// 언마운트하지 않지만, 그래도 두 겹으로 방어해 둔다 — 탭 전환 자체가 재조회를 부르지
-// 않아야 "즉시" 전환된다(2026-09-29 QA). 갱신 시점은 딱 둘: 세션 완료(refreshProgress)와
-// 학습 언어 변경(아래 learningLang effect가 통째로 비운다) 뿐이다.
+// 스크립트별(히라가나/가타카나/알파벳 등) 진행도 메모리 캐시 — 모듈 스코프. 이 컴포넌트는
+// TabShell이 항상 마운트해 두므로(components/TabShell.jsx) /take-test를 오가도 리마운트되지
+// 않는다 — 캐시 무효화는 아래 awaitingReturnRef + location 이펙트가 명시적으로 처리한다.
 const scriptProgressCache = new Map(); // script -> items[]
 
 const ScriptFieldBody = () => {
   "use memo";
 
-  const { pushNewFullSheet } = useNewFullSheetActions();
+  const navigate = useNavigate();
+  const location = useLocation();
   const { learningLang } = useUser();
 
   const availableScripts = useMemo(() => scriptsForLearningLang(learningLang), [learningLang]);
@@ -47,22 +44,33 @@ const ScriptFieldBody = () => {
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [refreshKey, setRefreshKey] = useState(0);
+  const [starting, setStarting] = useState(false);
+  // 이 탭(학습장 "글자")은 TabShell이 항상 마운트해 둔다(components/TabShell.jsx) —
+  // /take-test로 갔다가 돌아와도 이 컴포넌트는 언마운트·재마운트되지 않는다. 그래서
+  // goSession이 세션을 시작하기 직전에 이 플래그를 세워 두고, /vocabulary-sheets로
+  // 되돌아온 순간(location.pathname 변화 — TabShell처럼 숨겨져 있어도 useLocation은
+  // 갱신된다)을 감지해 진행도를 다시 불러온다. 이게 없으면 방금 학습한 글자의 작물이
+  // 그리드에 반영되지 않은 채 남는다.
+  const awaitingReturnRef = useRef(false);
+
+  useEffect(() => {
+    if (location.pathname !== '/vocabulary-sheets') return;
+    if (!awaitingReturnRef.current) return;
+    awaitingReturnRef.current = false;
+    scriptProgressCache.clear();
+    setRefreshKey((k) => k + 1);
+  }, [location.pathname]);
 
   useEffect(() => {
     setActiveScript(availableScripts[0]);
   }, [availableScripts]);
 
-  // 학습 언어가 바뀌면(알파벳 ↔ 히라가나/가타카나) 캐시를 통째로 비운다 — 스크립트 키가
-  // 언어별로 겹치지는 않지만, "언어 변경 시에만 갱신"이라는 규칙을 명확히 지키기 위한
-  // 방어적 초기화다.
+  // 학습 언어가 바뀌면(알파벳 ↔ 히라가나/가타카나) 캐시를 통째로 비운다.
   useEffect(() => {
     scriptProgressCache.clear();
   }, [learningLang]);
 
   useEffect(() => {
-    // 이 스크립트가 이미 캐시에 있으면 네트워크 왕복 없이 즉시 보여준다 — 히라가나↔가타카나,
-    // 학습장 단어장↔글자 탭을 오갈 때 "즉시" 전환되는 핵심(2026-09-29 QA). refreshProgress의
-    // 폴백 경로가 지금 스크립트의 캐시를 지운 다음에만 여기서 실제로 다시 불러온다.
     const cached = scriptProgressCache.get(activeScript);
     if (cached) {
       setItems(cached);
@@ -72,7 +80,9 @@ const ScriptFieldBody = () => {
     let cancelled = false;
     const load = async () => {
       setLoading(true);
-      const res = await getScriptProgressApi(activeScript);
+      // ensure — 글자장이 없으면 생성(멱등), 있으면 progress와 같은 모양을 그대로 돌려준다.
+      // 매번 이 하나만 불러도 안전 + 추가 왕복 없이 첫 진입에서도 바로 그리드가 채워진다.
+      const res = await ensureScriptApi(activeScript);
       if (cancelled) return;
       const progressItems = res?.code === 200 ? res.data?.items : [];
       const merged = mergeProgress(activeScript, progressItems);
@@ -82,48 +92,51 @@ const ScriptFieldBody = () => {
     };
     load();
     return () => { cancelled = true; };
-    // refreshKey — refreshProgress 폴백 경로가 캐시를 지운 뒤 여기로 다시 들어오게 하는 트리거
   }, [activeScript, refreshKey]);
 
   const rows = useMemo(() => groupByRow(items), [items]);
   const totalMastered = masteredCount(items);
-  const totalDue = dueItems(items);
+  const totalPracticable = practicableItems(items);
 
-  // 언어별 소제목 — 일본어는 "히라가나 · 가타카나", 영어는 "알파벳"
   const subtitle = useMemo(
     () => availableScripts.map((s) => SCRIPT_LABEL[s]).join(' · '),
     [availableScripts]
   );
 
-  // 세션이 끝나고 이 화면으로 돌아올 때 호출 — 진행도를 반영한다(pop은 세션 쪽에서 한다).
-  // updatedItems가 있으면(세션이 /script/log·/script/skip 응답을 기다린 뒤 넘겨준 갱신된
-  // level 등) 재조회 없이 로컬 상태에 바로 병합해 즉시 반영한다 — 응답이 없거나(네트워크
-  // 실패 등) 비어 있으면 안전하게 전체 재조회(refreshKey)로 폴백한다.
-  const refreshProgress = useCallback((updatedItems) => {
-    if (Array.isArray(updatedItems) && updatedItems.length > 0) {
-      setItems((prev) => {
-        const byChar = new Map(prev.map((it) => [it.char, it]));
-        updatedItems.forEach((u) => {
-          if (u?.char) byChar.set(u.char, { ...byChar.get(u.char), ...u });
-        });
-        const merged = prev.map((it) => byChar.get(it.char) ?? it);
-        scriptProgressCache.set(activeScript, merged); // 세션 완료 — 캐시도 같이 갱신
-        return merged;
+  const goSession = useCallback(async (rowItems, mode, label) => {
+    if (starting || !rowItems || rowItems.length === 0) return;
+    setStarting(true);
+    try {
+      // 세션 조회 모드(서버 힌트) — '이미 알아요' 확인도 이미 배운 셈 치고 복습과 같은
+      // 문제 구성으로 묻는다(2026-09-30 결정: 전용 배치 승인 엔드포인트 없이 /study/log
+      // 정답 기록으로 대체). 문제 배열의 실제 모양(만나기 포함 여부 등)은 클라이언트가
+      // utils/scriptQuestions.js buildScriptTestQuestions(원래 mode)로 따로 정한다.
+      const sessionMode = mode === 'learn' ? 'learn' : 'review';
+      const chars = rowItems.map((it) => it.char);
+      const res = await getScriptSessionApi(activeScript, sessionMode, chars);
+      if (res?.code !== 200 || !Array.isArray(res.data?.items) || res.data.items.length === 0) {
+        showToast('지금은 시작할 수 없어요. 잠시 후 다시 시도해주세요');
+        return;
+      }
+      const words = res.data.items.map((item) => mapScriptSessionItem(activeScript, item));
+      // 돌아왔을 때 반드시 재조회하도록 — 위 location 이펙트가 처리한다(이 탭은 언마운트되지 않는다).
+      awaitingReturnRef.current = true;
+      navigate('/take-test', {
+        state: {
+          testType: 'script',
+          data: {
+            script: activeScript,
+            mode,
+            rowLabel: label,
+            sessionId: res.data.session_id ?? null,
+            words,
+          },
+        },
       });
-      return;
+    } finally {
+      setStarting(false);
     }
-    scriptProgressCache.delete(activeScript); // 폴백 재조회 대상 스크립트만 캐시 무효화
-    setRefreshKey((k) => k + 1);
-  }, [activeScript]);
-
-  const goSession = (chars, mode, label) => {
-    if (!chars || chars.length === 0) return;
-    pushNewFullSheet(
-      ScriptSessionNewFullSheet,
-      { script: activeScript, chars, pool: items, mode, rowLabel: label, onComplete: refreshProgress },
-      { smFull: true, closeOnBackdropClick: false }
-    );
-  };
+  }, [activeScript, navigate, starting]);
 
   return (
     <div className="h-full overflow-y-auto px-[20px] pb-[32px]">
@@ -136,14 +149,15 @@ const ScriptFieldBody = () => {
         </span>
       </div>
 
-      {totalDue.length > 0 && (
+      {totalPracticable.length > 0 && (
         <div className="flex justify-end mt-[8px]">
           <button
             type="button"
-            onClick={() => goSession(totalDue, 'review', '복습')}
-            className="h-[30px] px-[12px] rounded-full text-[12.5px] font-[700] bg-primary-main-100 dark:bg-primary-main-dark text-primary-main-600"
+            disabled={starting}
+            onClick={() => goSession(totalPracticable, 'review', '연습')}
+            className="h-[30px] px-[12px] rounded-full text-[12.5px] font-[700] bg-primary-main-100 dark:bg-primary-main-dark text-primary-main-600 disabled:opacity-60"
           >
-            복습하기 {totalDue.length}
+            연습하기
           </button>
         </div>
       )}
@@ -175,9 +189,9 @@ const ScriptFieldBody = () => {
             script={activeScript}
             label={rowLabel(activeScript, rowKey, rowItems)}
             items={rowItems}
-            dueItems={dueItems(rowItems)}
+            practicableItems={practicableItems(rowItems)}
             onLearn={() => goSession(rowItems, 'learn', rowLabel(activeScript, rowKey, rowItems))}
-            onReview={() => goSession(dueItems(rowItems), 'review', rowLabel(activeScript, rowKey, rowItems))}
+            onPractice={() => goSession(practicableItems(rowItems), 'review', rowLabel(activeScript, rowKey, rowItems))}
             onSkip={() => goSession(rowItems, 'skip', rowLabel(activeScript, rowKey, rowItems))}
           />
         ))}

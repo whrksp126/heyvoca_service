@@ -70,7 +70,14 @@ const VocaBooksTab = () => {
   }, [fetchVocabularySheets, fetchRecentStudy]);
 
   // 카드마다 필요한 파생값을 한 번만 계산한다 — 목록·칩·배지가 같은 수를 봐야 한다
-  const books = useMemo(() => vocabularySheets.map((book) => {
+  // 글자(문자 학습) 단어장은 이 목록에 보이면 안 된다(2026-09-30) — 학습하기(TakeTest,
+  // testType='script')가 내부적으로 일반 단어장처럼 취급해 진행도를 쌓지만, 사용자에게는
+  // 학습장 "글자" 탭(components/script/ScriptFieldBody.jsx)에서만 보여야 한다. 백엔드가
+  // book_kind 필드로 표시해 주면 그걸로 거른다(필드가 없으면 지금처럼 전부 보인다 —
+  // 백엔드가 아직 글자장을 별도로 표시하지 않는 환경에서도 안전).
+  const books = useMemo(() => vocabularySheets
+    .filter((book) => book?.book_kind !== 'script' && book?.bookKind !== 'script')
+    .map((book) => {
     const counts = bookStageCounts(book.words);
     return {
       book,

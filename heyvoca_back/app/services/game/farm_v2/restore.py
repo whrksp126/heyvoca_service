@@ -33,6 +33,7 @@ from app.services.fsrs.state import (DEFAULT_FSRS_NEW, get_fsrs_state,
                                      serialize_user_voca_data, set_fsrs_state)
 from app.services.game.farm_v2 import events, growth, health, inventory, localday
 from app.utils.db_lock import begin_user_tx, lock_user
+from app.utils.script_scope import script_user_voca_ids_subquery
 
 # 예약 취소 창 (기획 7.2 확인 문구 → 오조작 되돌리기용).
 # 짧게 두는 이유는 이 창이 "실수로 눌렀다"를 위한 것이지 "생각해 보고 무르기"가 아니어서다.
@@ -255,13 +256,16 @@ def list_rotten(user_id: UUID, limit: int = 50, cursor: Optional[int] = None) ->
     # 현재 학습 언어 단어만(되살리기 학습도 그 언어 풀에서 진행되므로)
     from app.utils.dict_lang import get_dict_lang
     lang = get_dict_lang()
+    # 글자 밭(book_kind='script')은 제외 — 부패 보관소는 일반 단어만 본다.
+    script_ids = script_user_voca_ids_subquery(user_id)
 
     base = (
         db.session.query(UserVocaGame, UserVoca.word, UserVoca.voca_meanings)
         .join(UserVoca, UserVoca.id == UserVocaGame.user_voca_id)
         .filter(UserVocaGame.user_id == user_id,
                 UserVoca.dict_lang == lang,
-                UserVocaGame.health_state == HealthState.ROTTEN)
+                UserVocaGame.health_state == HealthState.ROTTEN,
+                ~UserVoca.id.in_(script_ids))
     )
     if cursor:
         base = base.filter(UserVocaGame.user_voca_id > int(cursor))
@@ -273,7 +277,8 @@ def list_rotten(user_id: UUID, limit: int = 50, cursor: Optional[int] = None) ->
         .join(UserVoca, UserVoca.id == UserVocaGame.user_voca_id)
         .filter(UserVocaGame.user_id == user_id,
                 UserVoca.dict_lang == lang,
-                UserVocaGame.health_state == HealthState.ROTTEN)
+                UserVocaGame.health_state == HealthState.ROTTEN,
+                ~UserVoca.id.in_(script_ids))
         .scalar()
     ) or 0
 

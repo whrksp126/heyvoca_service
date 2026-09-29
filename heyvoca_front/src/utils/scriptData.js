@@ -11,6 +11,7 @@ import hiraganaStrokes from '../data/script/strokes/hiragana.json';
 import katakanaStrokes from '../data/script/strokes/katakana.json';
 import alphabetStrokes from '../data/script/strokes/alphabet.json';
 import { getTextSound, prefetchTextSound, prefetchTtsList } from './common';
+import { stageToCrop } from './crop';
 
 export const SCRIPT_TYPES = {
   HIRAGANA: 'hiragana',
@@ -39,6 +40,16 @@ const STROKE_DATA = {
   katakana: katakanaStrokes,
   alphabet: alphabetStrokes,
 };
+
+// script -> Map(char -> 정적 데이터 항목). 세션 응답(문자만 옴)에 정적 데이터를 붙일 때 쓴다.
+const STATIC_BY_CHAR = {};
+const staticMapFor = (script) => {
+  if (!STATIC_BY_CHAR[script]) {
+    STATIC_BY_CHAR[script] = new Map((RAW_DATA[script] || []).map((it) => [it.char, it]));
+  }
+  return STATIC_BY_CHAR[script];
+};
+export const getStaticChar = (script, char) => staticMapFor(script).get(char) || null;
 
 /** 문자의 TTS 재생 언어. 가나는 ja, 알파벳은 en. */
 export const scriptTtsLang = (script) => (script === 'alphabet' ? 'en' : 'ja');
@@ -145,22 +156,28 @@ export const groupByRow = (items) => {
   return order.map((rowKey) => ({ rowKey, items: map.get(rowKey) }));
 };
 
-/** 숙달 단계(0-5) → 화면에 쓸 작물 표시 정보. CropImage가 받는 crop 키를 그대로 돌려준다.
- *  0: 빈 흙(작물 없음) · 1: 씨앗 · 2: 새싹 · 3-4: 이파리 · 5: 수확(당근). */
-export const levelToCropStage = (level) => {
-  const lv = Number(level) || 0;
-  if (lv <= 0) return null;
-  if (lv === 1) return 'PLANTED_SEED';
-  if (lv === 2) return 'sprout';
-  if (lv <= 4) return 'leaf';
-  return 'carrot';
+/*
+  숙달 단계 — 2026-09-30부터 백엔드가 단어와 같은 visual_stage 문자열(PLANTED_SEED/SPROUT/
+  LEAF/CARROT 등)을 GET /script/progress·/script/session 응답에 직접 실어 준다(items[].stage).
+  예전에는 프론트가 임의의 level(0-5) 정수를 5단계 crop 키로 자체 매핑했는데(levelToCropStage),
+  그 매핑이 학습 결과 화면(StudyResult.jsx cropOfWord — farm 세션 요약의 visual_stage 기준)과
+  서로 다른 규칙이라 같은 글자인데 격자와 결과 화면의 작물 그림이 어긋나는 문제가 있었다.
+  지금은 두 화면 다 CropImage에 stage(visual_stage)를 그대로 넘긴다 — utils/crop.js
+  stageToCrop 하나만 거치므로 항상 같은 그림이 나온다.
+*/
+export const isMastered = (stage) => stageToCrop(stage) === 'carrot';
+
+/** 심긴 적이 있는지(서버 stage 기준) — "처음 배우는 줄" 판정·연습하기 대상용.
+ *  /script/progress 는 fsrs 를 내려주지 않으므로(글자는 복습일 개념 없음) stage 로만 판정한다. */
+export const isStarted = (item) => {
+  const st = item?.stage;
+  if (st) return st !== 'UNPLANTED_SEED';
+  return !!item?.fsrs && (Number(item.fsrs.reps) > 0 || (item.fsrs.state && item.fsrs.state !== 'new'));
 };
 
-export const isMastered = (level) => (Number(level) || 0) >= 5;
-
 /**
- * 정적 데이터 + 서버 진행도(items: [{char, level, correct_cnt, wrong_cnt, last_studied_at,
- * next_review_at}])를 합친다. 진행도가 없는 글자는 level 0으로 취급.
+ * 정적 데이터 + 서버 진행도(items: [{char, user_voca_id, stage, health, xp,
+ * fsrs:{state,next_review,last_review}, due}])를 합친다. 진행도가 없는 글자는 미학습으로 취급.
  */
 export const mergeProgress = (script, progressItems) => {
   const raw = RAW_DATA[script] || [];
@@ -169,20 +186,49 @@ export const mergeProgress = (script, progressItems) => {
     const p = byChar.get(item.char);
     return {
       ...item,
-      level: p?.level ?? 0,
-      correct_cnt: p?.correct_cnt ?? 0,
-      wrong_cnt: p?.wrong_cnt ?? 0,
-      last_studied_at: p?.last_studied_at ?? null,
-      next_review_at: p?.next_review_at ?? null,
+      user_voca_id: p?.user_voca_id ?? null,
+      book_id: p?.book_id ?? null,
+      stage: p?.stage ?? null,
+      health: p?.health ?? null,
+      xp: p?.xp ?? 0,
+      fsrs: p?.fsrs ?? null,
+      due: !!p?.due,
     };
   });
 };
 
-/** 지금 시각 기준 복습 예정(next_review_at ≤ now)이면서 한 번이라도 학습한(level>0) 글자. */
-export const dueItems = (mergedItems, now = new Date()) =>
-  mergedItems.filter((it) => it.level > 0 && it.next_review_at && new Date(it.next_review_at) <= now);
+/*
+  글자는 복습 예정일 개념이 없다(사용자 결정 2026-09-30 — 작물 성장(XP·단계)만 있고
+  시듦/썩음·복습일 알림은 없음). "복습하기 N"(서버 due 플래그 기준) 대신 "연습하기"를
+  둔다 — 이미 한 번이라도 배운 글자가 있으면 항상 누를 수 있고, 개수를 세지 않는다.
+  실제로 어떤 글자를 우선 물을지는 GET /script/session?mode=review 가 숙달 낮은 글자를
+  우선하도록 서버가 정한다(클라이언트는 "이미 시작한 글자 전체"만 후보로 넘긴다).
+*/
+export const practicableItems = (mergedItems) => (mergedItems || []).filter((it) => isStarted(it));
 
-export const masteredCount = (mergedItems) => mergedItems.filter((it) => isMastered(it.level)).length;
+export const masteredCount = (mergedItems) => (mergedItems || []).filter((it) => isMastered(it.stage)).length;
+
+/**
+ * 정적 글자 하나 — GET /script/session(=/study/recommend와 같은 모양) 응답 item(user_voca_id,
+ * word=글자, meanings, fsrs …)을 학습하기(TakeTest) 가 쓰는 "word" 모양으로 바꾼다.
+ * item.* 은 기존 components/script/IntroCard·ChoiceCard·TraceCard가 그대로 기대하는
+ * 정적 데이터 모양(hangul/romaji/confusables/example/compound/lower/…)이라 그대로 중첩해 둔다.
+ */
+export const mapScriptSessionItem = (script, serverItem) => {
+  const staticItem = getStaticChar(script, serverItem.word) || { char: serverItem.word };
+  return {
+    id: serverItem.user_voca_id,
+    vocaIndexId: serverItem.user_voca_id,
+    vocabularySheetId: serverItem.user_voca_book_id ?? null,
+    origin: serverItem.word,
+    char: serverItem.word,
+    script,
+    meanings: [],
+    fsrs: serverItem.fsrs ?? null,
+    language: scriptTtsLang(script),
+    item: staticItem,
+  };
+};
 
 /** strokeKey(단일 글자) 또는 compound([base, small])로 획 데이터를 찾는다. */
 export const getStrokeEntry = (script, item) => {
