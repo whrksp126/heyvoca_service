@@ -1,43 +1,46 @@
 // src/components/script/ScriptCompleteScreen.jsx
 //
-// 글자 밭 세션 완료 화면 — 경험치·보상 연출 없이 맞힌 글자만 담백하게 보여준다
-// (기존 학습 결과 화면과 같은 톤의 상태색·아이콘만 재사용).
+// 글자 밭 세션 완료 화면 — 토끼 마스코트(당근 농장 공용 에셋) + 행 이름·글자 수가 들어간
+// 동적 헤드라인("あ행 5글자를 심었어요") + 글자 칸 줄(익힌 글자=새싹, 틀린 글자=씨앗).
+// 경험치·보상 연출은 없다(기존 학습 결과 화면과 같은 담백한 톤 유지).
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Check, X } from '@phosphor-icons/react';
 import { haptic } from '../../lib/feel';
+import CropImage, { CROP_ASSETS } from '../farm/CropImage';
 
-const ScriptCompleteScreen = ({ results, onFinish }) => {
+const ScriptCompleteScreen = ({ results, rowLabel, onFinish }) => {
   "use memo";
   const correctCount = results.filter((r) => r.correct).length;
+  const total = results.length;
 
   return (
     <motion.div
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
-      className="flex flex-col items-center gap-[22px] px-[24px] pt-[40px] pb-[24px] h-full"
+      className="flex flex-col items-center gap-[20px] px-[24px] pt-[32px] pb-[24px] h-full"
     >
+      <img
+        src={CROP_ASSETS.mascotSolo}
+        alt=""
+        draggable={false}
+        className="w-[112px] h-[112px] object-contain select-none"
+      />
+
       <div className="flex flex-col items-center gap-[6px]">
-        <h2 className="text-[22px] font-[800] text-layout-black dark:text-layout-white">학습 완료!</h2>
-        <p className="text-[14px] font-[600] text-layout-gray-400">
-          {results.length}개 중 {correctCount}개를 맞혔어요
+        <h2 className="text-[20px] font-[800] text-center text-layout-black dark:text-layout-white">
+          {rowLabel ? `${rowLabel} ` : ''}{total}글자를 심었어요
+        </h2>
+        <p className="text-[13px] font-[600] text-layout-gray-400">
+          {total}개 중 {correctCount}개를 맞혔어요
         </p>
       </div>
 
-      <div className="flex flex-wrap justify-center gap-[8px] w-full max-w-[320px]">
+      <div className="flex flex-wrap justify-center gap-x-[14px] gap-y-[16px] w-full max-w-[320px]">
         {results.map((r) => (
-          <div
-            key={r.char}
-            className={`
-              flex items-center gap-[4px] h-[38px] pl-[10px] pr-[12px] rounded-full
-              ${r.correct
-                ? 'bg-status-success-100 dark:bg-status-success-dark text-status-success-600'
-                : 'bg-status-error-100 dark:bg-status-error-dark text-status-error-600'}
-            `}
-          >
-            {r.correct ? <Check size={13} weight="bold" /> : <X size={13} weight="bold" />}
-            <span className="text-[16px] font-[700]">{r.char}</span>
+          <div key={r.char} className="flex flex-col items-center gap-[4px] w-[52px]">
+            <CropImage stage={r.correct ? 'sprout' : 'seed'} size={40} align="center" />
+            <span className="text-[13px] font-[700] text-layout-black dark:text-layout-white">{r.char}</span>
           </div>
         ))}
       </div>
@@ -51,7 +54,7 @@ const ScriptCompleteScreen = ({ results, onFinish }) => {
           text-layout-white text-[16px] font-[700]
         "
       >
-        완료
+        확인
       </button>
     </motion.div>
   );

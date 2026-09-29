@@ -4,6 +4,8 @@
 // 한다. 세션 자체가 3~5분짜리 경량 화면이라 별도 플러그인 레지스트리 없이 이 한 파일에서
 // 스텝 배열을 만든다.
 
+import { resolveConfusables } from './scriptData';
+
 const shuffle = (arr) => {
   const a = [...arr];
   for (let i = a.length - 1; i > 0; i--) {
@@ -18,6 +20,13 @@ export const optionLabel = (script, item) => {
   if (!item) return '';
   if (script === 'alphabet') return `${item.name_hangul} · ${item.sound_hangul}`;
   return item.note ? item.hangul : `${item.hangul} · ${item.romaji}`;
+};
+
+/** 선택지 버튼 안 두 줄(한글 발음 크게 + 로마자 작게)로 쓸 { main, sub } — ChoiceCard B안. */
+export const optionMainSub = (script, item) => {
+  if (!item) return { main: '', sub: '' };
+  if (script === 'alphabet') return { main: item.name_hangul, sub: item.sound_hangul };
+  return { main: item.hangul, sub: item.note ? '' : item.romaji };
 };
 
 /** 오답 선택지 구성 — 혼동쌍(confusables)을 우선 채우고, 모자라면 풀에서 무작위 보충. */
@@ -47,12 +56,13 @@ const buildChoiceStep = (script, item, pool, kind, idSuffix = '') => {
   };
 };
 
-const buildIntroStep = (script, item) => ({
+const buildIntroStep = (script, item, pool = []) => ({
   id: `intro-${item.char}`,
   type: 'intro',
   script,
   char: item.char,
   item,
+  confusables: resolveConfusables(script, item, pool),
 });
 
 const buildTraceStep = (script, item) => ({
@@ -70,7 +80,7 @@ const buildTraceStep = (script, item) => ({
 export const buildLearnSteps = (script, chars, pool) => {
   const steps = [];
   for (const item of chars) {
-    steps.push(buildIntroStep(script, item));
+    steps.push(buildIntroStep(script, item, pool));
     steps.push(buildChoiceStep(script, item, pool, 'seePick', 'learn'));
     steps.push(buildChoiceStep(script, item, pool, 'listenPick', 'learn'));
     steps.push(buildTraceStep(script, item));

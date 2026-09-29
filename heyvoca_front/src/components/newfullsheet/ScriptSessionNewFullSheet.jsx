@@ -148,6 +148,7 @@ const ScriptSessionNewFullSheet = ({ script, chars = [], pool = [], mode = 'lear
         <div style={{ paddingTop: 'var(--status-bar-height)' }}></div>
         <ScriptCompleteScreen
           results={results}
+          rowLabel={rowLabel}
           onFinish={() => { onComplete?.(); popNewFullSheet(); }}
         />
       </div>

@@ -228,7 +228,7 @@ const StrokeTracer = ({ entries, compound = false, onDone }) => {
     finalizeStroke();
   };
 
-  // 처음부터 다시 — "지우기"는 지금 획만이 아니라 전체 시도를 리셋한다.
+  // 처음부터 다시 — 지금 획만이 아니라 전체 시도를 리셋한다.
   const resetAll = () => {
     haptic('light');
     activePointerIdRef.current = null;
@@ -258,6 +258,40 @@ const StrokeTracer = ({ entries, compound = false, onDone }) => {
             overflow-hidden touch-none select-none
           "
         >
+          {/* 획순 미리보기 썸네일 — 캔버스 좌상단. 전체 글자 가이드 위에 지금 획만 강조해
+              보여준다(진행 중인 획을 잊었을 때 다시 훑어볼 참고용, 큰 데모 애니메이션과는 별개). */}
+          {!compound && (phase === 'trace' || phase === 'result') && strokes.length > 0 && (
+            <div
+              aria-hidden
+              className="
+                absolute top-[8px] left-[8px] z-[1]
+                w-[42px] h-[42px] p-[5px] rounded-[8px]
+                bg-layout-white/90 dark:bg-layout-black/80
+                border border-border dark:border-border-dark
+                pointer-events-none
+              "
+            >
+              <svg viewBox={viewBox} className="w-full h-full">
+                {strokes.map((d, i) => {
+                  const done = phase === 'result' || i < activeStrokeIndex;
+                  const isActive = phase === 'trace' && i === activeStrokeIndex;
+                  return (
+                    <path
+                      key={`thumb-${i}`}
+                      d={d}
+                      fill="none"
+                      stroke={done || isActive ? 'var(--primary-main-600)' : GUIDE_COLOR}
+                      strokeWidth={vbW * (isActive ? 0.09 : 0.07)}
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      opacity={done ? 0.55 : (isActive ? 1 : 0.4)}
+                    />
+                  );
+                })}
+              </svg>
+            </div>
+          )}
+
           <svg
             ref={svgRef}
             viewBox={viewBox}
@@ -368,16 +402,6 @@ const StrokeTracer = ({ entries, compound = false, onDone }) => {
               획순을 잘 보세요
             </span>
           )}
-          {phase === 'trace' && (
-            <span className="
-              absolute top-[10px] left-0 right-0 text-center text-[12px] font-[700]
-              text-layout-gray-400 dark:text-layout-gray-100
-            ">
-              <span className="bg-layout-white/85 dark:bg-layout-gray-dark/85 rounded-full px-[10px] py-[3px]">
-                총 {strokes.length}획 · 지금 {activeStrokeIndex + 1}획째
-              </span>
-            </span>
-          )}
           {phase === 'trace' && retryHint && (
             <motion.span
               initial={{ opacity: 0, y: 4 }}
@@ -390,6 +414,38 @@ const StrokeTracer = ({ entries, compound = false, onDone }) => {
           )}
         </motion.div>
       </div>
+
+      {/* 획 칩 줄 — 완료(분홍)/지금 그리는 중(강조)/대기(회색) */}
+      {!compound && (phase === 'trace' || phase === 'result') && strokes.length > 0 && (
+        <div className="flex flex-wrap justify-center gap-[6px] flex-shrink-0">
+          {strokes.map((_, i) => {
+            const done = phase === 'result' || i < activeStrokeIndex;
+            const current = phase === 'trace' && i === activeStrokeIndex;
+            return (
+              <span
+                key={`chip-${i}`}
+                className={`
+                  flex items-center gap-[3px] px-[10px] py-[5px] rounded-full
+                  text-[12px] font-[700]
+                  ${done ? 'bg-primary-main-100 dark:bg-primary-main-dark text-primary-main-600' : ''}
+                  ${current ? 'bg-primary-main-600 text-layout-white' : ''}
+                  ${!done && !current ? 'bg-layout-gray-100 dark:bg-layout-gray-dark text-layout-gray-300' : ''}
+                `}
+              >
+                {done && <Check size={11} weight="bold" />}
+                {i + 1}획{current ? ' 긋는 중' : ''}
+              </span>
+            );
+          })}
+        </div>
+      )}
+
+      {/* 팁 한 줄 — 글자별 팁 데이터가 없어 일반 팁 하나로 충분히 대체한다 */}
+      {!compound && phase === 'trace' && (
+        <p className="text-center text-[12px] font-[600] text-layout-gray-400 flex-shrink-0">
+          표시된 점에서 시작해요
+        </p>
+      )}
 
       {phase === 'result' && (
         <div className="flex items-center justify-center gap-[6px] flex-shrink-0 text-[15px] font-[700] text-status-success-600">
@@ -413,7 +469,7 @@ const StrokeTracer = ({ entries, compound = false, onDone }) => {
             "
             whileTap={{ scale: 0.97 }}
           >
-            지우기
+            처음부터
           </motion.button>
           <motion.button
             type="button"

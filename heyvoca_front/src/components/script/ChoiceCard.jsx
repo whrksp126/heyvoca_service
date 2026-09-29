@@ -1,8 +1,10 @@
 // src/components/script/ChoiceCard.jsx
 //
 // 글자 밭 세션 — 사지선다 카드 두 종류를 한 컴포넌트로 그린다.
-//   seePick    — 글자를 보고 소리(한글 발음·로마자)를 고른다.
-//   listenPick — 소리를 듣고 글자를 고른다(혼동쌍 포함).
+//   seePick    — 글자를 보고 소리(한글 발음·로마자)를 고른다. 옵션 안에 한글 발음(크게)·
+//                로마자(작게, 회색)를 세로로 묶어 보여준다.
+//   listenPick — 소리를 듣고 글자를 고른다(혼동쌍 포함). 옵션 글자를 크게 보여주고,
+//                채점 후에는 각 옵션 아래에 한글 발음을 작게 덧표시한다.
 // 정오답 스타일은 TakeTest Main.jsx의 선택지 버튼 규격을 그대로 따른다.
 
 import React, { useEffect, useState } from 'react';
@@ -11,7 +13,7 @@ import { SpeakerHigh } from '@phosphor-icons/react';
 import { haptic } from '../../lib/feel';
 import ResultMark from '../common/ResultMark';
 import TtsRipple from '../common/TtsRipple';
-import { optionLabel } from '../../utils/scriptSession';
+import { optionMainSub } from '../../utils/scriptSession';
 import { speakScriptItem } from '../../utils/scriptData';
 
 // 정오답 버튼 규격은 components/takeTest/Main.jsx의 사지선다 옵션 버튼과 동일 클래스를 쓴다
@@ -96,6 +98,7 @@ const ChoiceCard = ({ step, answered, selectedIndex, onSelect }) => {
           } else if (index === selectedIndex) {
             style = 'border-primary-main-600 bg-primary-main-50 dark:bg-primary-main-dark text-layout-black dark:text-layout-white';
           }
+          const { main, sub } = optionMainSub(script, opt);
           return (
             <motion.button
               key={`${opt.char}-${index}`}
@@ -105,14 +108,28 @@ const ChoiceCard = ({ step, answered, selectedIndex, onSelect }) => {
               onClick={() => { haptic('light'); onSelect(index); }}
               className={`
                 relative flex items-center justify-center
-                w-full h-[50px] px-[20px]
+                w-full h-[54px] px-[20px]
                 border-[1px] rounded-[10px]
-                text-[14px] font-[700] text-center
-                ${isListen ? 'text-[24px]' : ''}
                 ${style}
               `}
             >
-              {isListen ? opt.char : optionLabel(script, opt)}
+              {isListen ? (
+                <div className="flex flex-col items-center gap-[2px]">
+                  <span className="text-[26px] font-[800] leading-none">{opt.char}</span>
+                  {answered && (
+                    <span className="text-[11px] font-[600] leading-none text-layout-gray-400">
+                      {script === 'alphabet' ? opt.name_hangul : opt.hangul}
+                    </span>
+                  )}
+                </div>
+              ) : (
+                <div className="flex flex-col items-center gap-[2px]">
+                  <span className="text-[17px] font-[700] leading-none">{main}</span>
+                  {sub && (
+                    <span className="text-[12px] font-[600] leading-none text-layout-gray-400">{sub}</span>
+                  )}
+                </div>
+              )}
             </motion.button>
           );
         })}
