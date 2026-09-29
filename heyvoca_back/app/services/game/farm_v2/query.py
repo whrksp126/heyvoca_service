@@ -539,12 +539,12 @@ def mark_migration_seen(user_id: UUID, now: Optional[dt.datetime] = None) -> dic
 _TODAY_SNAPSHOT_TTL = 2 * 24 * 60 * 60
 
 
-def _today_snapshot_key(user_id: UUID, day, category: str) -> str:
-    return f'farm:today_tasks:{user_id}:{day.isoformat()}:{category}'
+def _today_snapshot_key(user_id: UUID, day, category: str, lang: str) -> str:
+    return f'farm:today_tasks:{user_id}:{day.isoformat()}:{lang}:{category}'
 
 
-def _merge_today_snapshot(user_id: UUID, day, category: str, live_ids) -> set:
-    """(user, logical day, category) 스냅샷을 읽어 오늘 처음 본 대상과 합집합한다.
+def _merge_today_snapshot(user_id: UUID, day, category: str, live_ids, lang: str) -> set:
+    """(user, logical day, lang, category) 스냅샷을 읽어 오늘 처음 본 대상과 합집합한다.
 
     '오늘 원래 이 줄 대상이었던 것' 은 현재 상태만으로는 알 수 없다 — 물을 주면
     건강 상태가 곧바로 FRESH 로 바뀌어 버리기 때문이다(리뷰 로그의 `state_before` 는
@@ -554,8 +554,15 @@ def _merge_today_snapshot(user_id: UUID, day, category: str, live_ids) -> set:
     집합을 저장하고, 이후 조회마다 새로 들어온 대상(예: 오후에 새로 시든 단어)을
     합집합한다. 캐시가 비어 있어도(콜드 스타트·장애) live_ids 를 그대로 스냅샷으로
     삼아 최소한 "지금 남은 것"은 절대 놓치지 않는다.
+
+    **키에 언어를 반드시 포함한다.** live_ids(오늘 조회 시점의 대상)는 항상 그 요청의
+    학습 언어(`lang`)로 좁혀 계산되는데(get_task_bucket_ids 등), 언어를 빼고 하나의
+    키에 합집합하면 사용자가 하루 안에 언어를 바꿔 학습할 때 다른 언어의 user_voca_id
+    가 이 언어의 스냅샷에 섞여 들어간다. 그 섞인 id 들은 지금(lang) 쪽 remaining 에는
+    없으니 전부 '끝냄(done)'으로 잘못 세어져 total/done 이 실제 남은 개수(예: 8)보다
+    크게(예: 33) 부풀었다(2026-09 실기기 신고 — ja 학습인데 care 33/41, 단어장·CTA는 8).
     """
-    key = _today_snapshot_key(user_id, day, category)
+    key = _today_snapshot_key(user_id, day, category, lang)
     existing = None
     try:
         existing = cache.get(key)
@@ -661,8 +668,8 @@ def get_today_tasks(user_id: UUID, now: Optional[dt.datetime] = None,
     care_remaining_ids = set(get_task_bucket_ids(user_id, 'care', now, lang))
 
     # ── 3) 오늘 스냅샷과 합집합 → done = (스냅샷 - 지금 남은 것) 중 더 나빠지지 않은 것 ──
-    wilted_snapshot = _merge_today_snapshot(user_id, today, 'wilted', wilted_remaining_ids)
-    care_snapshot = _merge_today_snapshot(user_id, today, 'care', care_remaining_ids)
+    wilted_snapshot = _merge_today_snapshot(user_id, today, 'wilted', wilted_remaining_ids, lang)
+    care_snapshot = _merge_today_snapshot(user_id, today, 'care', care_remaining_ids, lang)
 
     wilted_done_ids = (wilted_snapshot - wilted_remaining_ids) - rotten_ids
     care_done_ids = (care_snapshot - care_remaining_ids) - wilted_remaining_ids - rotten_ids
