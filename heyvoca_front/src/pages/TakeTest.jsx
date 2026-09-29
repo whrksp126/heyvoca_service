@@ -1008,24 +1008,27 @@ const TakeTest = () => {
           });
           return;
         }
-        // plant(새 씨앗 심기) — 문제마다 /study/log를 보내지 않았다(Main.jsx). 세션이
+        // plant(새 씨앗 심기)·script(글자 학습) — 문제마다 /study/log를 보내지 않았다(Main.jsx isMultiStepMode). 세션이
         // 끝난 지금, 단어당 1회씩 일괄 전송한다. isCorrect = 그 단어가 세션 안 모든 문제를
         // 첫 시도에 맞혔는지(plantAttemptsRef가 Main.jsx에서 이미 AND로 접어 둔 값).
         // 중간 이탈(status !== 'end')이면 이 분기 자체를 안 타므로 아무것도 기록되지 않는다.
-        if (state.testType === 'plant' && studySessionRef?.current && plantAttemptsRef.current.size > 0) {
+        if ((state.testType === 'plant' || state.testType === 'script') && studySessionRef?.current && plantAttemptsRef.current.size > 0) {
           const entries = [...plantAttemptsRef.current.entries()];
           const results = await Promise.allSettled(entries.map(([vocaId, wasCorrect]) => {
             // wordIntro(①만나기)는 채점 없는 슬라이드라 questionType이 그 값이면 안 된다 —
             // 단어 블록의 첫 항목이 항상 wordIntro이므로, 이걸 빼지 않으면 find()가 그것부터
             // 찾아 서버에 잘못된 question_type을 보낸다.
-            const q = testQuestions.find(qq => (qq.vocaIndexId ?? qq.id) === vocaId && !qq.isRetry && qq.questionType !== 'wordIntro');
+            const q = testQuestions.find(qq => (qq.vocaIndexId ?? qq.id) === vocaId && !qq.isRetry && !isNoGradeQuestionType(qq.questionType));
             return logStudyQuestion({
               session_id: studySessionRef.current,
               user_voca_id: vocaId,
               user_voca_book_id: q?.vocabularySheetId ?? null,
               question_type: q?.questionType ?? 'multipleChoice',
               was_correct: wasCorrect,
-              time_taken_ms: 5000,
+              // 글자는 1글자라 서버 기대 시간(1.5s+0.12s×글자수+0.2s×난이도, ratings.py)이 1.6~3.6s다.
+              // 5s를 보내면 새 글자·배운 글자 모두 늘 Hard로 깎인다(2026-09-30 prod あ: rating 2,
+              // 12XP) — 전부 첫 시도에 맞힌 글자는 Good 이상이 되도록 1.2s로 보낸다.
+              time_taken_ms: state.testType === 'script' ? 1200 : 5000,
               client_now: new Date().toISOString(),
             }).then((logRes) => ({ vocaId, logRes }));
           }));
@@ -1037,7 +1040,7 @@ const TakeTest = () => {
             // 결과 목록 "다음 복습 예정일"용 — 방금 받은 정본 fsrs로 채운다(고유 단어당
             // 첫 등장 문제 하나에만 적어도 결과 화면 dedup 로직이 그 항목을 쓴다). wordIntro는
             // 결과 화면에서 제외되는 슬라이드라 여기 붙이면 화면에 안 보이므로 제외한다.
-            const idx = testQuestions.findIndex(qq => (qq.vocaIndexId ?? qq.id) === vocaId && !qq.isRetry && qq.questionType !== 'wordIntro');
+            const idx = testQuestions.findIndex(qq => (qq.vocaIndexId ?? qq.id) === vocaId && !qq.isRetry && !isNoGradeQuestionType(qq.questionType));
             if (idx !== -1) testQuestions[idx].fsrs = fsrs;
           }
         }

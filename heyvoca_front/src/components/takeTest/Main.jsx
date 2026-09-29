@@ -225,11 +225,11 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
   /*
     글자 학습(script) — plant와 마찬가지로 **같은 vocaId(글자)가 세션 안에서 여러 단계
     (①만나기·②보고 고르기·③듣고 고르기·④따라 쓰기…)로 반복 등장한다**(2026-09-30, 글자
-    하나 = 단어 하나). plant와 다른 점은 로깅뿐이다 — script는 각 단계를 일반 단어처럼
-    즉시 /study/log로 채점한다(isPlantMode 분기를 타지 않는다). 하지만 "이 글자가 한 단계라도
-    통과됐다고 세션을 끝내면 안 된다"는 사실은 plant와 똑같으므로, 세션 종료 판정(큐 소진
-    기준)과 재출제 삽입 위치(그 글자 블록 안)는 plant와 같은 규칙을 공유한다 — 아래
-    isMultiStepMode.
+    하나 = 단어 하나). 그래서 로깅·세션 종료 판정·재출제 삽입 위치·농장 상태 바 숨김까지
+    plant와 같은 규칙을 쓴다 — 아래 isMultiStepMode. 서버는 (session, 단어)당 FSRS를 한 번만
+    적용하므로(study.py 중복 가드) 슬라이드마다 즉시 로깅하면 첫 슬라이드 1건만 반영되고,
+    나머지 슬라이드의 상태 바 상승은 저장되지 않는 낙관 표시가 된다(2026-09-30 실기기:
+    진행 중엔 XP가 계속 올랐는데 격자엔 12XP만 남음). 세션 종료 시 글자당 1회 일괄 전송.
   */
   const isMultiStepMode = isPlantMode || testType === 'script';
   const recordPlantAttempt = (vocaId, wasCorrect) => {
@@ -633,7 +633,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
     // 1회 전역 가드)를 타면 두 번째 블록부터 전부 스킵된다. 여기서는 그 가드를 쓰지 않고
     // "이 문제(블록) 자체가 재출제가 아닌 첫 시도인지"만 보고 AND로 접어 기록한다 —
     // 실제 서버 전송은 세션 종료 시 TakeTest.jsx가 단어당 1회로 일괄한다.
-    if (isPlantMode) {
+    if (isMultiStepMode) {
       if (!question.isRetry) recordPlantAttempt(vocaId, payload.was_correct);
       return;
     }
@@ -750,7 +750,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
   const notifyRetryCorrect = (vocaId, questionType) => {
     // plant — 첫 시도를 아예 서버에 보내지 않으므로(logIfFirstAttempt 위 분기) "재출제
     // 정답"을 알릴 첫 시도 로그 자체가 없다. 세션 종료 일괄 전송이 최종 정오답을 담는다.
-    if (isPlantMode) return;
+    if (isMultiStepMode) return;
     if (!studySessionRef?.current || vocaId == null) return;
     if (retryCorrectNotifiedRef.current.has(vocaId)) return;
     retryCorrectNotifiedRef.current.add(vocaId);
@@ -1414,7 +1414,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
       로 채점 전 값에 멈춰 세워 두고, sendCardLog 응답이 도착했을 때 그 값 하나로만
       움직인다. 게스트·이미 로깅된 카드처럼 응답이 안 오는 자리만 낙관값을 바로 쓴다.
     */
-    if (isPlantMode) {
+    if (isMultiStepMode) {
       // plant — 카드마다 /study/log 를 보내지 않는다. 이 카드(블록)가 재출제가 아닌
       // 첫 시도일 때만 AND 로 접어 기록한다(logIfFirstAttempt 쪽 주석 참고). 농장 상태
       // 바(cardFarmByWordId)는 만들지 않는다 — 응답이 영영 안 오므로 그대로 두면 정지
@@ -1676,7 +1676,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
   // plant — 문제별 서버 응답(farm payload)에 의존하는 표시라 세션 종료 전까지 응답 자체가
   // 없다. applyOptimisticGrade 가 세워 둔 낙관값이 있어도 이 화면에서는 늘 숨긴다.
   const showFarmBar =
-    !isPlantMode &&
+    !isMultiStepMode &&
     isCorrect !== null &&
     !!farmStatus &&
     farmStatus.qIndex === progressIndex &&

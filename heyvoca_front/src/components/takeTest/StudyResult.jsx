@@ -1221,6 +1221,12 @@ const StudyResult = () => {
       navigate('/onboarding', { state: { step: 'channel' }, replace: true });
       return;
     }
+    // 글자 학습은 학습장 '글자' 탭에서만 들어온다 — 홈이 아니라 그 탭으로 돌려보낸다
+    // (결과 화면은 /take-test를 replace로 대체해 history가 짧을 수 있어 -1 대신 명시 경로).
+    if (testType === 'script') {
+      navigate('/vocabulary-sheets', { state: { tab: 'script' }, replace: true });
+      return;
+    }
     navigate('/home');
   }
 
