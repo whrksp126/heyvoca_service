@@ -38,6 +38,7 @@ import { prefetchLabSettings } from '../../api/lab';
 import useLabFeatures from '../../hooks/useLabFeatures';
 import { LANG_LABEL, DEFAULT_LEARNING_LANG } from '../../utils/lang';
 import { LearningLangNewBottomSheet } from '../newBottomSheet/LearningLangNewBottomSheet';
+import LangFlagIcon from '../common/LangFlagIcon';
 import { useQuickReview } from '../../hooks/useQuickReview';
 import { usePlantSession } from '../../hooks/usePlantSession';
 import PullToRefresh from '../common/PullToRefresh';
@@ -499,8 +500,12 @@ const Main = () => {
               shadow-[0_2px_8px_rgba(96,80,52,.16)] dark:shadow-[0_2px_8px_rgba(0,0,0,.4)]
               text-[14px] font-[700] tracking-[-0.02em]
               text-layout-black dark:text-layout-white
+              gap-[6px]
             "
           >
+            <span className="flex items-center justify-center w-[18px] h-[14px] rounded-[4px] overflow-hidden ring-1 ring-inset ring-black/5 dark:ring-white/10 flex-shrink-0">
+              <LangFlagIcon lang={learningLang} size={18} />
+            </span>
             {LANG_LABEL[learningLang]}
           </button>
         )}
