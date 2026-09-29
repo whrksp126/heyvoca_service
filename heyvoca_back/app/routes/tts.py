@@ -199,6 +199,14 @@ def _wait_for_prewarm(object_key):
     return False
 
 
+import re as _re
+_KANA_ONLY_RE = _re.compile(r'[\u3041-\u3096\u30A1-\u30FAー]{1,3}')
+_ALPHABET_SPEAK = {
+    'ay', 'bee', 'see', 'dee', 'ee', 'ef', 'eff', 'gee', 'jee', 'aitch', 'eye', 'jay', 'kay', 'el', 'em',
+    'en', 'oh', 'pee', 'cue', 'ar', 'ess', 'tee', 'you', 'vee', 'double-u', 'ex', 'why', 'zee',
+}
+
+
 def _exists_in_dict(norm_text, language, user_id=None):
     """생성 남용 방지용 사전 실재 검증(best-effort).
 
@@ -214,7 +222,13 @@ def _exists_in_dict(norm_text, language, user_id=None):
     표제어·읽기·사전 예문 원문 정확 일치 + (로그인 시) 사용자 ja 단어/예문 원문 일치.
     """
     if language == 'ja':
+        # 글자 밭(가나 학습) — 가나만으로 된 3자 이하(한 글자·요음·장음 보정)는 사전과 무관하게 허용
+        if _KANA_ONLY_RE.fullmatch(norm_text or ''):
+            return True
         return _exists_in_dict_ja(norm_text, user_id)
+    if language == 'en' and (norm_text or '').lower() in _ALPHABET_SPEAK:
+        # 글자 밭(알파벳) — 글자 이름 발음용 텍스트(Ay, Bee …)
+        return True
     if ' ' in norm_text:
         return True
     ck = f'tts:dictok:{language}:{norm_text}'
