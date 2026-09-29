@@ -10,6 +10,8 @@ import Class from './pages/Class';
 import TakeTest from './pages/TakeTest';
 import StudyResult from './components/takeTest/StudyResult';
 import Study from './pages/Study';
+import ScriptField from './pages/ScriptField';
+import ScriptSession from './pages/ScriptSession';
 import TabShell from './components/TabShell';
 
 // import { BottomSheetProvider } from './context/BottomSheetContext';
@@ -69,6 +71,8 @@ const AppLayout = () => {
         <Route path="/take-test" element={<TakeTest />} />
         <Route path="/take-test/result" element={<StudyResult />} />
         <Route path="/study" element={<Study />} />
+        <Route path="/script" element={<ScriptField />} />
+        <Route path="/script/session" element={<ScriptSession />} />
 
         <Route path="/mypage" element={null} />
 

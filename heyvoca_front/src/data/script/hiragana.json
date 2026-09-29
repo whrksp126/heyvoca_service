@@ -1,0 +1,1588 @@
+[
+  {
+    "char": "あ",
+    "romaji": "a",
+    "hangul": "아",
+    "note": null,
+    "row": "a",
+    "group": "basic",
+    "confusables": [
+      "お"
+    ],
+    "example": {
+      "word": "あさ",
+      "reading": "아사",
+      "meaning": "아침"
+    },
+    "strokeKey": "あ"
+  },
+  {
+    "char": "い",
+    "romaji": "i",
+    "hangul": "이",
+    "note": null,
+    "row": "a",
+    "group": "basic",
+    "confusables": [
+      "り"
+    ],
+    "example": {
+      "word": "いえ",
+      "reading": "이에",
+      "meaning": "집"
+    },
+    "strokeKey": "い"
+  },
+  {
+    "char": "う",
+    "romaji": "u",
+    "hangul": "우",
+    "note": null,
+    "row": "a",
+    "group": "basic",
+    "confusables": [],
+    "example": {
+      "word": "うみ",
+      "reading": "우미",
+      "meaning": "바다"
+    },
+    "strokeKey": "う"
+  },
+  {
+    "char": "え",
+    "romaji": "e",
+    "hangul": "에",
+    "note": null,
+    "row": "a",
+    "group": "basic",
+    "confusables": [],
+    "example": {
+      "word": "えき",
+      "reading": "에키",
+      "meaning": "역"
+    },
+    "strokeKey": "え"
+  },
+  {
+    "char": "お",
+    "romaji": "o",
+    "hangul": "오",
+    "note": null,
+    "row": "a",
+    "group": "basic",
+    "confusables": [
+      "あ"
+    ],
+    "example": {
+      "word": "おかね",
+      "reading": "오카네",
+      "meaning": "돈"
+    },
+    "strokeKey": "お"
+  },
+  {
+    "char": "か",
+    "romaji": "ka",
+    "hangul": "카",
+    "note": null,
+    "row": "ka",
+    "group": "basic",
+    "confusables": [],
+    "example": {
+      "word": "かさ",
+      "reading": "카사",
+      "meaning": "우산"
+    },
+    "strokeKey": "か"
+  },
+  {
+    "char": "き",
+    "romaji": "ki",
+    "hangul": "키",
+    "note": null,
+    "row": "ka",
+    "group": "basic",
+    "confusables": [
+      "さ",
+      "ち"
+    ],
+    "example": {
+      "word": "きって",
+      "reading": "킷테",
+      "meaning": "우표"
+    },
+    "strokeKey": "き"
+  },
+  {
+    "char": "く",
+    "romaji": "ku",
+    "hangul": "쿠",
+    "note": null,
+    "row": "ka",
+    "group": "basic",
+    "confusables": [],
+    "example": {
+      "word": "くも",
+      "reading": "쿠모",
+      "meaning": "구름"
+    },
+    "strokeKey": "く"
+  },
+  {
+    "char": "け",
+    "romaji": "ke",
+    "hangul": "케",
+    "note": null,
+    "row": "ka",
+    "group": "basic",
+    "confusables": [],
+    "example": {
+      "word": "けいと",
+      "reading": "케이토",
+      "meaning": "털실"
+    },
+    "strokeKey": "け"
+  },
+  {
+    "char": "こ",
+    "romaji": "ko",
+    "hangul": "코",
+    "note": null,
+    "row": "ka",
+    "group": "basic",
+    "confusables": [],
+    "example": {
+      "word": "こども",
+      "reading": "코도모",
+      "meaning": "아이"
+    },
+    "strokeKey": "こ"
+  },
+  {
+    "char": "さ",
+    "romaji": "sa",
+    "hangul": "사",
+    "note": null,
+    "row": "sa",
+    "group": "basic",
+    "confusables": [
+      "ち",
+      "き"
+    ],
+    "example": {
+      "word": "さかな",
+      "reading": "사카나",
+      "meaning": "물고기"
+    },
+    "strokeKey": "さ"
+  },
+  {
+    "char": "し",
+    "romaji": "shi",
+    "hangul": "시",
+    "note": null,
+    "row": "sa",
+    "group": "basic",
+    "confusables": [],
+    "example": {
+      "word": "しろ",
+      "reading": "시로",
+      "meaning": "성/흰색"
+    },
+    "strokeKey": "し"
+  },
+  {
+    "char": "す",
+    "romaji": "su",
+    "hangul": "스",
+    "note": null,
+    "row": "sa",
+    "group": "basic",
+    "confusables": [],
+    "example": {
+      "word": "すいか",
+      "reading": "스이카",
+      "meaning": "수박"
+    },
+    "strokeKey": "す"
+  },
+  {
+    "char": "せ",
+    "romaji": "se",
+    "hangul": "세",
+    "note": null,
+    "row": "sa",
+    "group": "basic",
+    "confusables": [],
+    "example": {
+      "word": "せかい",
+      "reading": "세카이",
+      "meaning": "세계"
+    },
+    "strokeKey": "せ"
+  },
+  {
+    "char": "そ",
+    "romaji": "so",
+    "hangul": "소",
+    "note": null,
+    "row": "sa",
+    "group": "basic",
+    "confusables": [],
+    "example": {
+      "word": "そら",
+      "reading": "소라",
+      "meaning": "하늘"
+    },
+    "strokeKey": "そ"
+  },
+  {
+    "char": "た",
+    "romaji": "ta",
+    "hangul": "타",
+    "note": null,
+    "row": "ta",
+    "group": "basic",
+    "confusables": [],
+    "example": {
+      "word": "たまご",
+      "reading": "타마고",
+      "meaning": "계란"
+    },
+    "strokeKey": "た"
+  },
+  {
+    "char": "ち",
+    "romaji": "chi",
+    "hangul": "치",
+    "note": null,
+    "row": "ta",
+    "group": "basic",
+    "confusables": [
+      "さ",
+      "き"
+    ],
+    "example": {
+      "word": "ちず",
+      "reading": "치즈",
+      "meaning": "지도"
+    },
+    "strokeKey": "ち"
+  },
+  {
+    "char": "つ",
+    "romaji": "tsu",
+    "hangul": "츠",
+    "note": "로마자는 tsu지만 한글로는 '츠'에 가깝게 발음",
+    "row": "ta",
+    "group": "basic",
+    "confusables": [],
+    "example": {
+      "word": "つき",
+      "reading": "츠키",
+      "meaning": "달"
+    },
+    "strokeKey": "つ"
+  },
+  {
+    "char": "て",
+    "romaji": "te",
+    "hangul": "테",
+    "note": null,
+    "row": "ta",
+    "group": "basic",
+    "confusables": [],
+    "example": {
+      "word": "てがみ",
+      "reading": "테가미",
+      "meaning": "편지"
+    },
+    "strokeKey": "て"
+  },
+  {
+    "char": "と",
+    "romaji": "to",
+    "hangul": "토",
+    "note": null,
+    "row": "ta",
+    "group": "basic",
+    "confusables": [],
+    "example": {
+      "word": "とけい",
+      "reading": "토케이",
+      "meaning": "시계"
+    },
+    "strokeKey": "と"
+  },
+  {
+    "char": "な",
+    "romaji": "na",
+    "hangul": "나",
+    "note": null,
+    "row": "na",
+    "group": "basic",
+    "confusables": [],
+    "example": {
+      "word": "なつ",
+      "reading": "나츠",
+      "meaning": "여름"
+    },
+    "strokeKey": "な"
+  },
+  {
+    "char": "に",
+    "romaji": "ni",
+    "hangul": "니",
+    "note": null,
+    "row": "na",
+    "group": "basic",
+    "confusables": [],
+    "example": {
+      "word": "にわ",
+      "reading": "니와",
+      "meaning": "정원"
+    },
+    "strokeKey": "に"
+  },
+  {
+    "char": "ぬ",
+    "romaji": "nu",
+    "hangul": "누",
+    "note": null,
+    "row": "na",
+    "group": "basic",
+    "confusables": [
+      "め"
+    ],
+    "example": {
+      "word": "ぬの",
+      "reading": "누노",
+      "meaning": "천"
+    },
+    "strokeKey": "ぬ"
+  },
+  {
+    "char": "ね",
+    "romaji": "ne",
+    "hangul": "네",
+    "note": null,
+    "row": "na",
+    "group": "basic",
+    "confusables": [
+      "わ",
+      "れ"
+    ],
+    "example": {
+      "word": "ねこ",
+      "reading": "네코",
+      "meaning": "고양이"
+    },
+    "strokeKey": "ね"
+  },
+  {
+    "char": "の",
+    "romaji": "no",
+    "hangul": "노",
+    "note": null,
+    "row": "na",
+    "group": "basic",
+    "confusables": [],
+    "example": {
+      "word": "のり",
+      "reading": "노리",
+      "meaning": "김"
+    },
+    "strokeKey": "の"
+  },
+  {
+    "char": "は",
+    "romaji": "ha",
+    "hangul": "하",
+    "note": null,
+    "row": "ha",
+    "group": "basic",
+    "confusables": [
+      "ほ"
+    ],
+    "example": {
+      "word": "はな",
+      "reading": "하나",
+      "meaning": "꽃"
+    },
+    "strokeKey": "は"
+  },
+  {
+    "char": "ひ",
+    "romaji": "hi",
+    "hangul": "히",
+    "note": null,
+    "row": "ha",
+    "group": "basic",
+    "confusables": [],
+    "example": {
+      "word": "ひと",
+      "reading": "히토",
+      "meaning": "사람"
+    },
+    "strokeKey": "ひ"
+  },
+  {
+    "char": "ふ",
+    "romaji": "fu",
+    "hangul": "후",
+    "note": "로마자는 fu지만 '흐'와 '후' 사이 소리",
+    "row": "ha",
+    "group": "basic",
+    "confusables": [],
+    "example": {
+      "word": "ふね",
+      "reading": "후네",
+      "meaning": "배"
+    },
+    "strokeKey": "ふ"
+  },
+  {
+    "char": "へ",
+    "romaji": "he",
+    "hangul": "헤",
+    "note": null,
+    "row": "ha",
+    "group": "basic",
+    "confusables": [],
+    "example": {
+      "word": "へや",
+      "reading": "헤야",
+      "meaning": "방"
+    },
+    "strokeKey": "へ"
+  },
+  {
+    "char": "ほ",
+    "romaji": "ho",
+    "hangul": "호",
+    "note": null,
+    "row": "ha",
+    "group": "basic",
+    "confusables": [
+      "は"
+    ],
+    "example": {
+      "word": "ほし",
+      "reading": "호시",
+      "meaning": "별"
+    },
+    "strokeKey": "ほ"
+  },
+  {
+    "char": "ま",
+    "romaji": "ma",
+    "hangul": "마",
+    "note": null,
+    "row": "ma",
+    "group": "basic",
+    "confusables": [
+      "も"
+    ],
+    "example": {
+      "word": "まち",
+      "reading": "마치",
+      "meaning": "동네"
+    },
+    "strokeKey": "ま"
+  },
+  {
+    "char": "み",
+    "romaji": "mi",
+    "hangul": "미",
+    "note": null,
+    "row": "ma",
+    "group": "basic",
+    "confusables": [],
+    "example": {
+      "word": "みず",
+      "reading": "미즈",
+      "meaning": "물"
+    },
+    "strokeKey": "み"
+  },
+  {
+    "char": "む",
+    "romaji": "mu",
+    "hangul": "무",
+    "note": null,
+    "row": "ma",
+    "group": "basic",
+    "confusables": [],
+    "example": {
+      "word": "むし",
+      "reading": "무시",
+      "meaning": "벌레"
+    },
+    "strokeKey": "む"
+  },
+  {
+    "char": "め",
+    "romaji": "me",
+    "hangul": "메",
+    "note": null,
+    "row": "ma",
+    "group": "basic",
+    "confusables": [
+      "ぬ"
+    ],
+    "example": {
+      "word": "めがね",
+      "reading": "메가네",
+      "meaning": "안경"
+    },
+    "strokeKey": "め"
+  },
+  {
+    "char": "も",
+    "romaji": "mo",
+    "hangul": "모",
+    "note": null,
+    "row": "ma",
+    "group": "basic",
+    "confusables": [
+      "ま"
+    ],
+    "example": {
+      "word": "もも",
+      "reading": "모모",
+      "meaning": "복숭아"
+    },
+    "strokeKey": "も"
+  },
+  {
+    "char": "や",
+    "romaji": "ya",
+    "hangul": "야",
+    "note": null,
+    "row": "ya",
+    "group": "basic",
+    "confusables": [],
+    "example": {
+      "word": "やま",
+      "reading": "야마",
+      "meaning": "산"
+    },
+    "strokeKey": "や"
+  },
+  {
+    "char": "ゆ",
+    "romaji": "yu",
+    "hangul": "유",
+    "note": null,
+    "row": "ya",
+    "group": "basic",
+    "confusables": [],
+    "example": {
+      "word": "ゆき",
+      "reading": "유키",
+      "meaning": "눈"
+    },
+    "strokeKey": "ゆ"
+  },
+  {
+    "char": "よ",
+    "romaji": "yo",
+    "hangul": "요",
+    "note": null,
+    "row": "ya",
+    "group": "basic",
+    "confusables": [],
+    "example": {
+      "word": "よる",
+      "reading": "요루",
+      "meaning": "밤"
+    },
+    "strokeKey": "よ"
+  },
+  {
+    "char": "ら",
+    "romaji": "ra",
+    "hangul": "라",
+    "note": null,
+    "row": "ra",
+    "group": "basic",
+    "confusables": [],
+    "example": {
+      "word": "らいねん",
+      "reading": "라이넨",
+      "meaning": "내년"
+    },
+    "strokeKey": "ら"
+  },
+  {
+    "char": "り",
+    "romaji": "ri",
+    "hangul": "리",
+    "note": null,
+    "row": "ra",
+    "group": "basic",
+    "confusables": [
+      "い"
+    ],
+    "example": {
+      "word": "りんご",
+      "reading": "린고",
+      "meaning": "사과"
+    },
+    "strokeKey": "り"
+  },
+  {
+    "char": "る",
+    "romaji": "ru",
+    "hangul": "루",
+    "note": null,
+    "row": "ra",
+    "group": "basic",
+    "confusables": [
+      "ろ"
+    ],
+    "example": {
+      "word": "るす",
+      "reading": "루스",
+      "meaning": "외출중"
+    },
+    "strokeKey": "る"
+  },
+  {
+    "char": "れ",
+    "romaji": "re",
+    "hangul": "레",
+    "note": null,
+    "row": "ra",
+    "group": "basic",
+    "confusables": [
+      "わ",
+      "ね"
+    ],
+    "example": {
+      "word": "れきし",
+      "reading": "레키시",
+      "meaning": "역사"
+    },
+    "strokeKey": "れ"
+  },
+  {
+    "char": "ろ",
+    "romaji": "ro",
+    "hangul": "로",
+    "note": null,
+    "row": "ra",
+    "group": "basic",
+    "confusables": [
+      "る"
+    ],
+    "example": {
+      "word": "ろく",
+      "reading": "로쿠",
+      "meaning": "육(6)"
+    },
+    "strokeKey": "ろ"
+  },
+  {
+    "char": "わ",
+    "romaji": "wa",
+    "hangul": "와",
+    "note": null,
+    "row": "wa",
+    "group": "basic",
+    "confusables": [
+      "ね",
+      "れ"
+    ],
+    "example": {
+      "word": "わたし",
+      "reading": "와타시",
+      "meaning": "나"
+    },
+    "strokeKey": "わ"
+  },
+  {
+    "char": "を",
+    "romaji": "wo",
+    "hangul": "오",
+    "note": "'오'(お)와 똑같이 발음(조사 を)",
+    "row": "wa",
+    "group": "basic",
+    "confusables": [],
+    "example": null,
+    "strokeKey": "を"
+  },
+  {
+    "char": "ん",
+    "romaji": "n",
+    "hangul": "응",
+    "note": "단독 받침 'ㄴ/ㅇ' 소리, 뒤 글자에 따라 달라짐",
+    "row": "n",
+    "group": "basic",
+    "confusables": [],
+    "example": null,
+    "strokeKey": "ん"
+  },
+  {
+    "char": "が",
+    "romaji": "ga",
+    "hangul": "가",
+    "note": null,
+    "row": "ga",
+    "group": "dakuten",
+    "confusables": [],
+    "example": {
+      "word": "がっこう",
+      "reading": "각코-",
+      "meaning": "학교"
+    },
+    "strokeKey": "が"
+  },
+  {
+    "char": "ぎ",
+    "romaji": "gi",
+    "hangul": "기",
+    "note": null,
+    "row": "ga",
+    "group": "dakuten",
+    "confusables": [],
+    "example": {
+      "word": "ぎんこう",
+      "reading": "긴코-",
+      "meaning": "은행"
+    },
+    "strokeKey": "ぎ"
+  },
+  {
+    "char": "ぐ",
+    "romaji": "gu",
+    "hangul": "구",
+    "note": null,
+    "row": "ga",
+    "group": "dakuten",
+    "confusables": [],
+    "example": {
+      "word": "ぐあい",
+      "reading": "구아이",
+      "meaning": "상태"
+    },
+    "strokeKey": "ぐ"
+  },
+  {
+    "char": "げ",
+    "romaji": "ge",
+    "hangul": "게",
+    "note": null,
+    "row": "ga",
+    "group": "dakuten",
+    "confusables": [],
+    "example": {
+      "word": "げんき",
+      "reading": "겐키",
+      "meaning": "건강함"
+    },
+    "strokeKey": "げ"
+  },
+  {
+    "char": "ご",
+    "romaji": "go",
+    "hangul": "고",
+    "note": null,
+    "row": "ga",
+    "group": "dakuten",
+    "confusables": [],
+    "example": {
+      "word": "ごはん",
+      "reading": "고한",
+      "meaning": "밥"
+    },
+    "strokeKey": "ご"
+  },
+  {
+    "char": "ざ",
+    "romaji": "za",
+    "hangul": "자",
+    "note": null,
+    "row": "za",
+    "group": "dakuten",
+    "confusables": [],
+    "example": {
+      "word": "ざっし",
+      "reading": "잣시",
+      "meaning": "잡지"
+    },
+    "strokeKey": "ざ"
+  },
+  {
+    "char": "じ",
+    "romaji": "ji",
+    "hangul": "지",
+    "note": null,
+    "row": "za",
+    "group": "dakuten",
+    "confusables": [],
+    "example": {
+      "word": "じかん",
+      "reading": "지칸",
+      "meaning": "시간"
+    },
+    "strokeKey": "じ"
+  },
+  {
+    "char": "ず",
+    "romaji": "zu",
+    "hangul": "즈",
+    "note": null,
+    "row": "za",
+    "group": "dakuten",
+    "confusables": [],
+    "example": {
+      "word": "ずっと",
+      "reading": "줏토",
+      "meaning": "계속"
+    },
+    "strokeKey": "ず"
+  },
+  {
+    "char": "ぜ",
+    "romaji": "ze",
+    "hangul": "제",
+    "note": null,
+    "row": "za",
+    "group": "dakuten",
+    "confusables": [],
+    "example": {
+      "word": "ぜんぶ",
+      "reading": "젠부",
+      "meaning": "전부"
+    },
+    "strokeKey": "ぜ"
+  },
+  {
+    "char": "ぞ",
+    "romaji": "zo",
+    "hangul": "조",
+    "note": null,
+    "row": "za",
+    "group": "dakuten",
+    "confusables": [],
+    "example": {
+      "word": "ぞう",
+      "reading": "조-",
+      "meaning": "코끼리"
+    },
+    "strokeKey": "ぞ"
+  },
+  {
+    "char": "だ",
+    "romaji": "da",
+    "hangul": "다",
+    "note": null,
+    "row": "da",
+    "group": "dakuten",
+    "confusables": [],
+    "example": {
+      "word": "だいがく",
+      "reading": "다이가쿠",
+      "meaning": "대학교"
+    },
+    "strokeKey": "だ"
+  },
+  {
+    "char": "ぢ",
+    "romaji": "ji",
+    "hangul": "지",
+    "note": "じ와 발음이 같음",
+    "row": "da",
+    "group": "dakuten",
+    "confusables": [],
+    "example": null,
+    "strokeKey": "ぢ"
+  },
+  {
+    "char": "づ",
+    "romaji": "zu",
+    "hangul": "즈",
+    "note": "ず와 발음이 같음",
+    "row": "da",
+    "group": "dakuten",
+    "confusables": [],
+    "example": null,
+    "strokeKey": "づ"
+  },
+  {
+    "char": "で",
+    "romaji": "de",
+    "hangul": "데",
+    "note": null,
+    "row": "da",
+    "group": "dakuten",
+    "confusables": [],
+    "example": {
+      "word": "でんき",
+      "reading": "덴키",
+      "meaning": "전기"
+    },
+    "strokeKey": "で"
+  },
+  {
+    "char": "ど",
+    "romaji": "do",
+    "hangul": "도",
+    "note": null,
+    "row": "da",
+    "group": "dakuten",
+    "confusables": [],
+    "example": {
+      "word": "どうぶつ",
+      "reading": "도-부츠",
+      "meaning": "동물"
+    },
+    "strokeKey": "ど"
+  },
+  {
+    "char": "ば",
+    "romaji": "ba",
+    "hangul": "바",
+    "note": null,
+    "row": "ba",
+    "group": "dakuten",
+    "confusables": [],
+    "example": {
+      "word": "ばしょ",
+      "reading": "바쇼",
+      "meaning": "장소"
+    },
+    "strokeKey": "ば"
+  },
+  {
+    "char": "び",
+    "romaji": "bi",
+    "hangul": "비",
+    "note": null,
+    "row": "ba",
+    "group": "dakuten",
+    "confusables": [],
+    "example": {
+      "word": "びじゅつ",
+      "reading": "비주츠",
+      "meaning": "미술"
+    },
+    "strokeKey": "び"
+  },
+  {
+    "char": "ぶ",
+    "romaji": "bu",
+    "hangul": "부",
+    "note": null,
+    "row": "ba",
+    "group": "dakuten",
+    "confusables": [],
+    "example": {
+      "word": "ぶた",
+      "reading": "부타",
+      "meaning": "돼지"
+    },
+    "strokeKey": "ぶ"
+  },
+  {
+    "char": "べ",
+    "romaji": "be",
+    "hangul": "베",
+    "note": null,
+    "row": "ba",
+    "group": "dakuten",
+    "confusables": [],
+    "example": {
+      "word": "べんきょう",
+      "reading": "벤쿄-",
+      "meaning": "공부"
+    },
+    "strokeKey": "べ"
+  },
+  {
+    "char": "ぼ",
+    "romaji": "bo",
+    "hangul": "보",
+    "note": null,
+    "row": "ba",
+    "group": "dakuten",
+    "confusables": [],
+    "example": {
+      "word": "ぼうし",
+      "reading": "보-시",
+      "meaning": "모자"
+    },
+    "strokeKey": "ぼ"
+  },
+  {
+    "char": "ぱ",
+    "romaji": "pa",
+    "hangul": "파",
+    "note": null,
+    "row": "pa",
+    "group": "dakuten",
+    "confusables": [],
+    "example": {
+      "word": "ぱん",
+      "reading": "팡",
+      "meaning": "빵"
+    },
+    "strokeKey": "ぱ"
+  },
+  {
+    "char": "ぴ",
+    "romaji": "pi",
+    "hangul": "피",
+    "note": null,
+    "row": "pa",
+    "group": "dakuten",
+    "confusables": [],
+    "example": {
+      "word": "ぴあの",
+      "reading": "피아노",
+      "meaning": "피아노"
+    },
+    "strokeKey": "ぴ"
+  },
+  {
+    "char": "ぷ",
+    "romaji": "pu",
+    "hangul": "푸",
+    "note": null,
+    "row": "pa",
+    "group": "dakuten",
+    "confusables": [],
+    "example": {
+      "word": "ぷーる",
+      "reading": "푸-루",
+      "meaning": "수영장"
+    },
+    "strokeKey": "ぷ"
+  },
+  {
+    "char": "ぺ",
+    "romaji": "pe",
+    "hangul": "페",
+    "note": null,
+    "row": "pa",
+    "group": "dakuten",
+    "confusables": [],
+    "example": {
+      "word": "ぺん",
+      "reading": "펜",
+      "meaning": "펜"
+    },
+    "strokeKey": "ぺ"
+  },
+  {
+    "char": "ぽ",
+    "romaji": "po",
+    "hangul": "포",
+    "note": null,
+    "row": "pa",
+    "group": "dakuten",
+    "confusables": [],
+    "example": {
+      "word": "ぽけっと",
+      "reading": "포켓토",
+      "meaning": "주머니"
+    },
+    "strokeKey": "ぽ"
+  },
+  {
+    "char": "きゃ",
+    "romaji": "kya",
+    "hangul": "캬",
+    "note": null,
+    "row": "kya",
+    "group": "yoon",
+    "confusables": [],
+    "example": null,
+    "strokeKey": null,
+    "compound": [
+      "き",
+      "ゃ"
+    ]
+  },
+  {
+    "char": "きゅ",
+    "romaji": "kyu",
+    "hangul": "큐",
+    "note": null,
+    "row": "kya",
+    "group": "yoon",
+    "confusables": [],
+    "example": null,
+    "strokeKey": null,
+    "compound": [
+      "き",
+      "ゅ"
+    ]
+  },
+  {
+    "char": "きょ",
+    "romaji": "kyo",
+    "hangul": "교",
+    "note": null,
+    "row": "kya",
+    "group": "yoon",
+    "confusables": [],
+    "example": null,
+    "strokeKey": null,
+    "compound": [
+      "き",
+      "ょ"
+    ]
+  },
+  {
+    "char": "ぎゃ",
+    "romaji": "gya",
+    "hangul": "갸",
+    "note": null,
+    "row": "gya",
+    "group": "yoon",
+    "confusables": [],
+    "example": null,
+    "strokeKey": null,
+    "compound": [
+      "ぎ",
+      "ゃ"
+    ]
+  },
+  {
+    "char": "ぎゅ",
+    "romaji": "gyu",
+    "hangul": "규",
+    "note": null,
+    "row": "gya",
+    "group": "yoon",
+    "confusables": [],
+    "example": null,
+    "strokeKey": null,
+    "compound": [
+      "ぎ",
+      "ゅ"
+    ]
+  },
+  {
+    "char": "ぎょ",
+    "romaji": "gyo",
+    "hangul": "교",
+    "note": null,
+    "row": "gya",
+    "group": "yoon",
+    "confusables": [],
+    "example": null,
+    "strokeKey": null,
+    "compound": [
+      "ぎ",
+      "ょ"
+    ]
+  },
+  {
+    "char": "しゃ",
+    "romaji": "sha",
+    "hangul": "샤",
+    "note": null,
+    "row": "sha",
+    "group": "yoon",
+    "confusables": [],
+    "example": null,
+    "strokeKey": null,
+    "compound": [
+      "し",
+      "ゃ"
+    ]
+  },
+  {
+    "char": "しゅ",
+    "romaji": "shu",
+    "hangul": "슈",
+    "note": null,
+    "row": "sha",
+    "group": "yoon",
+    "confusables": [],
+    "example": null,
+    "strokeKey": null,
+    "compound": [
+      "し",
+      "ゅ"
+    ]
+  },
+  {
+    "char": "しょ",
+    "romaji": "sho",
+    "hangul": "쇼",
+    "note": null,
+    "row": "sha",
+    "group": "yoon",
+    "confusables": [],
+    "example": null,
+    "strokeKey": null,
+    "compound": [
+      "し",
+      "ょ"
+    ]
+  },
+  {
+    "char": "じゃ",
+    "romaji": "ja",
+    "hangul": "자",
+    "note": null,
+    "row": "ja",
+    "group": "yoon",
+    "confusables": [],
+    "example": null,
+    "strokeKey": null,
+    "compound": [
+      "じ",
+      "ゃ"
+    ]
+  },
+  {
+    "char": "じゅ",
+    "romaji": "ju",
+    "hangul": "주",
+    "note": null,
+    "row": "ja",
+    "group": "yoon",
+    "confusables": [],
+    "example": null,
+    "strokeKey": null,
+    "compound": [
+      "じ",
+      "ゅ"
+    ]
+  },
+  {
+    "char": "じょ",
+    "romaji": "jo",
+    "hangul": "조",
+    "note": null,
+    "row": "ja",
+    "group": "yoon",
+    "confusables": [],
+    "example": null,
+    "strokeKey": null,
+    "compound": [
+      "じ",
+      "ょ"
+    ]
+  },
+  {
+    "char": "ちゃ",
+    "romaji": "cha",
+    "hangul": "챠",
+    "note": null,
+    "row": "cha",
+    "group": "yoon",
+    "confusables": [],
+    "example": null,
+    "strokeKey": null,
+    "compound": [
+      "ち",
+      "ゃ"
+    ]
+  },
+  {
+    "char": "ちゅ",
+    "romaji": "chu",
+    "hangul": "츄",
+    "note": null,
+    "row": "cha",
+    "group": "yoon",
+    "confusables": [],
+    "example": null,
+    "strokeKey": null,
+    "compound": [
+      "ち",
+      "ゅ"
+    ]
+  },
+  {
+    "char": "ちょ",
+    "romaji": "cho",
+    "hangul": "쵸",
+    "note": null,
+    "row": "cha",
+    "group": "yoon",
+    "confusables": [],
+    "example": null,
+    "strokeKey": null,
+    "compound": [
+      "ち",
+      "ょ"
+    ]
+  },
+  {
+    "char": "にゃ",
+    "romaji": "nya",
+    "hangul": "냐",
+    "note": null,
+    "row": "nya",
+    "group": "yoon",
+    "confusables": [],
+    "example": null,
+    "strokeKey": null,
+    "compound": [
+      "に",
+      "ゃ"
+    ]
+  },
+  {
+    "char": "にゅ",
+    "romaji": "nyu",
+    "hangul": "뉴",
+    "note": null,
+    "row": "nya",
+    "group": "yoon",
+    "confusables": [],
+    "example": null,
+    "strokeKey": null,
+    "compound": [
+      "に",
+      "ゅ"
+    ]
+  },
+  {
+    "char": "にょ",
+    "romaji": "nyo",
+    "hangul": "뇨",
+    "note": null,
+    "row": "nya",
+    "group": "yoon",
+    "confusables": [],
+    "example": null,
+    "strokeKey": null,
+    "compound": [
+      "に",
+      "ょ"
+    ]
+  },
+  {
+    "char": "ひゃ",
+    "romaji": "hya",
+    "hangul": "햐",
+    "note": null,
+    "row": "hya",
+    "group": "yoon",
+    "confusables": [],
+    "example": null,
+    "strokeKey": null,
+    "compound": [
+      "ひ",
+      "ゃ"
+    ]
+  },
+  {
+    "char": "ひゅ",
+    "romaji": "hyu",
+    "hangul": "휴",
+    "note": null,
+    "row": "hya",
+    "group": "yoon",
+    "confusables": [],
+    "example": null,
+    "strokeKey": null,
+    "compound": [
+      "ひ",
+      "ゅ"
+    ]
+  },
+  {
+    "char": "ひょ",
+    "romaji": "hyo",
+    "hangul": "효",
+    "note": null,
+    "row": "hya",
+    "group": "yoon",
+    "confusables": [],
+    "example": null,
+    "strokeKey": null,
+    "compound": [
+      "ひ",
+      "ょ"
+    ]
+  },
+  {
+    "char": "びゃ",
+    "romaji": "bya",
+    "hangul": "뱌",
+    "note": null,
+    "row": "bya",
+    "group": "yoon",
+    "confusables": [],
+    "example": null,
+    "strokeKey": null,
+    "compound": [
+      "び",
+      "ゃ"
+    ]
+  },
+  {
+    "char": "びゅ",
+    "romaji": "byu",
+    "hangul": "뷰",
+    "note": null,
+    "row": "bya",
+    "group": "yoon",
+    "confusables": [],
+    "example": null,
+    "strokeKey": null,
+    "compound": [
+      "び",
+      "ゅ"
+    ]
+  },
+  {
+    "char": "びょ",
+    "romaji": "byo",
+    "hangul": "뵤",
+    "note": null,
+    "row": "bya",
+    "group": "yoon",
+    "confusables": [],
+    "example": null,
+    "strokeKey": null,
+    "compound": [
+      "び",
+      "ょ"
+    ]
+  },
+  {
+    "char": "ぴゃ",
+    "romaji": "pya",
+    "hangul": "퍄",
+    "note": null,
+    "row": "pya",
+    "group": "yoon",
+    "confusables": [],
+    "example": null,
+    "strokeKey": null,
+    "compound": [
+      "ぴ",
+      "ゃ"
+    ]
+  },
+  {
+    "char": "ぴゅ",
+    "romaji": "pyu",
+    "hangul": "퓨",
+    "note": null,
+    "row": "pya",
+    "group": "yoon",
+    "confusables": [],
+    "example": null,
+    "strokeKey": null,
+    "compound": [
+      "ぴ",
+      "ゅ"
+    ]
+  },
+  {
+    "char": "ぴょ",
+    "romaji": "pyo",
+    "hangul": "표",
+    "note": null,
+    "row": "pya",
+    "group": "yoon",
+    "confusables": [],
+    "example": null,
+    "strokeKey": null,
+    "compound": [
+      "ぴ",
+      "ょ"
+    ]
+  },
+  {
+    "char": "みゃ",
+    "romaji": "mya",
+    "hangul": "먀",
+    "note": null,
+    "row": "mya",
+    "group": "yoon",
+    "confusables": [],
+    "example": null,
+    "strokeKey": null,
+    "compound": [
+      "み",
+      "ゃ"
+    ]
+  },
+  {
+    "char": "みゅ",
+    "romaji": "myu",
+    "hangul": "뮤",
+    "note": null,
+    "row": "mya",
+    "group": "yoon",
+    "confusables": [],
+    "example": null,
+    "strokeKey": null,
+    "compound": [
+      "み",
+      "ゅ"
+    ]
+  },
+  {
+    "char": "みょ",
+    "romaji": "myo",
+    "hangul": "묘",
+    "note": null,
+    "row": "mya",
+    "group": "yoon",
+    "confusables": [],
+    "example": null,
+    "strokeKey": null,
+    "compound": [
+      "み",
+      "ょ"
+    ]
+  },
+  {
+    "char": "りゃ",
+    "romaji": "rya",
+    "hangul": "랴",
+    "note": null,
+    "row": "rya",
+    "group": "yoon",
+    "confusables": [],
+    "example": null,
+    "strokeKey": null,
+    "compound": [
+      "り",
+      "ゃ"
+    ]
+  },
+  {
+    "char": "りゅ",
+    "romaji": "ryu",
+    "hangul": "류",
+    "note": null,
+    "row": "rya",
+    "group": "yoon",
+    "confusables": [],
+    "example": null,
+    "strokeKey": null,
+    "compound": [
+      "り",
+      "ゅ"
+    ]
+  },
+  {
+    "char": "りょ",
+    "romaji": "ryo",
+    "hangul": "료",
+    "note": null,
+    "row": "rya",
+    "group": "yoon",
+    "confusables": [],
+    "example": null,
+    "strokeKey": null,
+    "compound": [
+      "り",
+      "ょ"
+    ]
+  }
+]

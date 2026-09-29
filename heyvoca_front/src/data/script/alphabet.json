@@ -1,0 +1,372 @@
+[
+  {
+    "char": "A",
+    "lower": "a",
+    "name_hangul": "에이",
+    "sound_hangul": "애",
+    "ipa": "/æ/",
+    "row": "row1",
+    "confusables": [],
+    "example": {
+      "word": "apple",
+      "meaning": "사과"
+    }
+  },
+  {
+    "char": "B",
+    "lower": "b",
+    "name_hangul": "비",
+    "sound_hangul": "브",
+    "ipa": "/b/",
+    "row": "row1",
+    "confusables": [
+      "D"
+    ],
+    "example": {
+      "word": "ball",
+      "meaning": "공"
+    }
+  },
+  {
+    "char": "C",
+    "lower": "c",
+    "name_hangul": "씨",
+    "sound_hangul": "크",
+    "ipa": "/k/",
+    "row": "row1",
+    "confusables": [
+      "G"
+    ],
+    "example": {
+      "word": "cat",
+      "meaning": "고양이"
+    }
+  },
+  {
+    "char": "D",
+    "lower": "d",
+    "name_hangul": "디",
+    "sound_hangul": "드",
+    "ipa": "/d/",
+    "row": "row1",
+    "confusables": [
+      "B"
+    ],
+    "example": {
+      "word": "dog",
+      "meaning": "개"
+    }
+  },
+  {
+    "char": "E",
+    "lower": "e",
+    "name_hangul": "이",
+    "sound_hangul": "에",
+    "ipa": "/ɛ/",
+    "row": "row1",
+    "confusables": [
+      "F"
+    ],
+    "example": {
+      "word": "egg",
+      "meaning": "계란"
+    }
+  },
+  {
+    "char": "F",
+    "lower": "f",
+    "name_hangul": "에프",
+    "sound_hangul": "프",
+    "ipa": "/f/",
+    "row": "row2",
+    "confusables": [
+      "E"
+    ],
+    "example": {
+      "word": "fish",
+      "meaning": "물고기"
+    }
+  },
+  {
+    "char": "G",
+    "lower": "g",
+    "name_hangul": "지",
+    "sound_hangul": "그",
+    "ipa": "/g/",
+    "row": "row2",
+    "confusables": [
+      "C"
+    ],
+    "example": {
+      "word": "grape",
+      "meaning": "포도"
+    }
+  },
+  {
+    "char": "H",
+    "lower": "h",
+    "name_hangul": "에이치",
+    "sound_hangul": "흐",
+    "ipa": "/h/",
+    "row": "row2",
+    "confusables": [],
+    "example": {
+      "word": "hat",
+      "meaning": "모자"
+    }
+  },
+  {
+    "char": "I",
+    "lower": "i",
+    "name_hangul": "아이",
+    "sound_hangul": "이",
+    "ipa": "/ɪ/",
+    "row": "row2",
+    "confusables": [
+      "J"
+    ],
+    "example": {
+      "word": "ink",
+      "meaning": "잉크"
+    }
+  },
+  {
+    "char": "J",
+    "lower": "j",
+    "name_hangul": "제이",
+    "sound_hangul": "쥐",
+    "ipa": "/dʒ/",
+    "row": "row2",
+    "confusables": [
+      "I"
+    ],
+    "example": {
+      "word": "juice",
+      "meaning": "주스"
+    }
+  },
+  {
+    "char": "K",
+    "lower": "k",
+    "name_hangul": "케이",
+    "sound_hangul": "크",
+    "ipa": "/k/",
+    "row": "row3",
+    "confusables": [],
+    "example": {
+      "word": "kite",
+      "meaning": "연"
+    }
+  },
+  {
+    "char": "L",
+    "lower": "l",
+    "name_hangul": "엘",
+    "sound_hangul": "을",
+    "ipa": "/l/",
+    "row": "row3",
+    "confusables": [],
+    "example": {
+      "word": "lion",
+      "meaning": "사자"
+    }
+  },
+  {
+    "char": "M",
+    "lower": "m",
+    "name_hangul": "엠",
+    "sound_hangul": "므",
+    "ipa": "/m/",
+    "row": "row3",
+    "confusables": [
+      "N"
+    ],
+    "example": {
+      "word": "monkey",
+      "meaning": "원숭이"
+    }
+  },
+  {
+    "char": "N",
+    "lower": "n",
+    "name_hangul": "엔",
+    "sound_hangul": "느",
+    "ipa": "/n/",
+    "row": "row3",
+    "confusables": [
+      "M"
+    ],
+    "example": {
+      "word": "nose",
+      "meaning": "코"
+    }
+  },
+  {
+    "char": "O",
+    "lower": "o",
+    "name_hangul": "오",
+    "sound_hangul": "오",
+    "ipa": "/ɒ/",
+    "row": "row3",
+    "confusables": [
+      "Q"
+    ],
+    "example": {
+      "word": "octopus",
+      "meaning": "문어"
+    }
+  },
+  {
+    "char": "P",
+    "lower": "p",
+    "name_hangul": "피",
+    "sound_hangul": "프",
+    "ipa": "/p/",
+    "row": "row4",
+    "confusables": [
+      "R"
+    ],
+    "example": {
+      "word": "pig",
+      "meaning": "돼지"
+    }
+  },
+  {
+    "char": "Q",
+    "lower": "q",
+    "name_hangul": "큐",
+    "sound_hangul": "크우",
+    "ipa": "/kw/",
+    "row": "row4",
+    "confusables": [
+      "O"
+    ],
+    "example": {
+      "word": "queen",
+      "meaning": "여왕"
+    }
+  },
+  {
+    "char": "R",
+    "lower": "r",
+    "name_hangul": "알",
+    "sound_hangul": "르",
+    "ipa": "/r/",
+    "row": "row4",
+    "confusables": [
+      "P"
+    ],
+    "example": {
+      "word": "rabbit",
+      "meaning": "토끼"
+    }
+  },
+  {
+    "char": "S",
+    "lower": "s",
+    "name_hangul": "에스",
+    "sound_hangul": "스",
+    "ipa": "/s/",
+    "row": "row4",
+    "confusables": [],
+    "example": {
+      "word": "sun",
+      "meaning": "태양"
+    }
+  },
+  {
+    "char": "T",
+    "lower": "t",
+    "name_hangul": "티",
+    "sound_hangul": "트",
+    "ipa": "/t/",
+    "row": "row4",
+    "confusables": [],
+    "example": {
+      "word": "tiger",
+      "meaning": "호랑이"
+    }
+  },
+  {
+    "char": "U",
+    "lower": "u",
+    "name_hangul": "유",
+    "sound_hangul": "어",
+    "ipa": "/ʌ/",
+    "row": "row5",
+    "confusables": [
+      "V"
+    ],
+    "example": {
+      "word": "umbrella",
+      "meaning": "우산"
+    }
+  },
+  {
+    "char": "V",
+    "lower": "v",
+    "name_hangul": "브이",
+    "sound_hangul": "브",
+    "ipa": "/v/",
+    "row": "row5",
+    "confusables": [
+      "U"
+    ],
+    "example": {
+      "word": "violin",
+      "meaning": "바이올린"
+    }
+  },
+  {
+    "char": "W",
+    "lower": "w",
+    "name_hangul": "더블유",
+    "sound_hangul": "워",
+    "ipa": "/w/",
+    "row": "row5",
+    "confusables": [],
+    "example": {
+      "word": "watermelon",
+      "meaning": "수박"
+    }
+  },
+  {
+    "char": "X",
+    "lower": "x",
+    "name_hangul": "엑스",
+    "sound_hangul": "크스",
+    "ipa": "/ks/",
+    "row": "row5",
+    "confusables": [],
+    "example": {
+      "word": "box",
+      "meaning": "상자"
+    }
+  },
+  {
+    "char": "Y",
+    "lower": "y",
+    "name_hangul": "와이",
+    "sound_hangul": "이",
+    "ipa": "/j/",
+    "row": "row5",
+    "confusables": [],
+    "example": {
+      "word": "yo-yo",
+      "meaning": "요요"
+    }
+  },
+  {
+    "char": "Z",
+    "lower": "z",
+    "name_hangul": "지",
+    "sound_hangul": "즈",
+    "ipa": "/z/",
+    "row": "row5",
+    "confusables": [],
+    "example": {
+      "word": "zebra",
+      "meaning": "얼룩말"
+    }
+  }
+]

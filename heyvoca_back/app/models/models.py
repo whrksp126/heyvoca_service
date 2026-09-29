@@ -1496,6 +1496,45 @@ class UserOnboardingMission(db.Model):
 ### 온보딩 행동 기반 미션 완료 기록 ###
 
 
+### 글자 밭 — 사용자별 문자(히라가나/가타카나/알파벳) 숙달 ###
+class UserScriptProgress(db.Model):
+    """글자 밭 학습 진행도.
+
+    문자 데이터셋(어떤 글자가 있는지, 표시 순서 등)은 프론트 정적 JSON이 정본이다.
+    서버는 사용자별 숙달 레벨(0~5)과 간격 반복 스케줄(next_review_at)만 들고 있는다.
+    간격 테이블(레벨→다음 복습까지 일수)은 app/routes/script.py 가 단일 소스다.
+    """
+    __tablename__ = 'user_script_progress'
+    __table_args__ = (
+        UniqueConstraint('user_id', 'script', 'char', name='uq_user_script_char'),
+        Index('ix_user_script_progress_user_script', 'user_id', 'script'),
+    )
+
+    id              = Column(Integer, primary_key=True, autoincrement=True)
+    user_id         = Column(BinaryUUID, ForeignKey('user.id'), nullable=False)
+    script          = Column(String(16), nullable=False, comment='hiragana|katakana|alphabet')
+    char            = Column(String(8), nullable=False)
+    level           = Column(Integer, nullable=False, default=0, server_default='0')
+    correct_cnt     = Column(Integer, nullable=False, default=0, server_default='0')
+    wrong_cnt       = Column(Integer, nullable=False, default=0, server_default='0')
+    last_studied_at = Column(DateTime, nullable=True)
+    next_review_at  = Column(DateTime, nullable=True)
+    created_at      = Column(DateTime, nullable=False, default=datetime.utcnow)
+    updated_at      = Column(DateTime, nullable=False, default=datetime.utcnow, onupdate=datetime.utcnow)
+
+    def __init__(self, user_id, script, char, level=0, correct_cnt=0, wrong_cnt=0,
+                 last_studied_at=None, next_review_at=None):
+        self.user_id = user_id
+        self.script = script
+        self.char = char
+        self.level = level
+        self.correct_cnt = correct_cnt
+        self.wrong_cnt = wrong_cnt
+        self.last_studied_at = last_studied_at
+        self.next_review_at = next_review_at
+### 글자 밭 ###
+
+
 ### 사전 메타 (dict_sync.py가 현재 적용된 dump의 sha256 저장) ###
 class DictMeta(db.Model):
     __tablename__ = 'dict_meta'

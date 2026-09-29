@@ -1,10 +1,16 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Check, Translate } from '@phosphor-icons/react';
+import { useNavigate } from 'react-router-dom';
 import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 import { useUser } from '../../context/UserContext';
 import { vibrate, showToast } from '../../utils/osFunction';
 import { SUPPORTED_LEARNING_LANGS, LANG_LABEL } from '../../utils/lang';
+import { getScriptProgressApi } from '../../api/script';
+import { ConfirmNewBottomSheet } from './ConfirmNewBottomSheet';
+
+// 일본어로 처음 전환할 때 "글자부터 익혀 볼래요?" 권유는 딱 1회만 — 과하지 않게.
+const JA_SCRIPT_PROMPT_KEY = 'heyvoca_script_prompt_ja_shown';
 
 /**
  * 학습 언어 전환 — 홈 왼쪽 위 언어 칩(실험실 "다른 언어 학습하기" 켜짐)에서 연다.
@@ -16,9 +22,34 @@ import { SUPPORTED_LEARNING_LANGS, LANG_LABEL } from '../../utils/lang';
 export const LearningLangNewBottomSheet = () => {
   "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
 
-  const { popNewBottomSheet } = useNewBottomSheetActions();
+  const { popNewBottomSheet, pushAwaitNewBottomSheet } = useNewBottomSheetActions();
   const { learningLang, setLearningLang } = useUser();
   const [pendingLang, setPendingLang] = useState(null);
+  const navigate = useNavigate();
+
+  // 가나 진행이 전혀 없을 때만 1회 권유 — 실패해도(네트워크 등) 그냥 넘어간다(권유일 뿐).
+  const maybePromptScriptField = async () => {
+    try {
+      if (localStorage.getItem(JA_SCRIPT_PROMPT_KEY) === '1') return;
+      localStorage.setItem(JA_SCRIPT_PROMPT_KEY, '1');
+      const res = await getScriptProgressApi('hiragana');
+      const items = res?.code === 200 ? (res.data?.items || []) : [];
+      const anyStarted = items.some((it) => (it.level || 0) > 0);
+      if (anyStarted) return;
+      setTimeout(async () => {
+        const go = await pushAwaitNewBottomSheet(
+          ConfirmNewBottomSheet,
+          {
+            title: '글자부터 익혀 볼래요?',
+            subTitle: '히라가나·가타카나 읽기부터 천천히 시작할 수 있어요',
+            btns: { confirm: '글자 밭 가기', cancel: '나중에' },
+          },
+          { isBackdropClickClosable: true, isDragToCloseEnabled: true }
+        );
+        if (go) navigate('/script');
+      }, 500);
+    } catch (e) { /* 권유일 뿐 — 조용히 무시 */ }
+  };
 
   const handleSelect = async (lang) => {
     if (pendingLang) return;
@@ -36,6 +67,7 @@ export const LearningLangNewBottomSheet = () => {
     }
     popNewBottomSheet();
     showToast(`${LANG_LABEL[lang]} 학습으로 전환했어요`);
+    if (lang === 'ja') maybePromptScriptField();
   };
 
   return (
