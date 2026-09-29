@@ -396,6 +396,7 @@
   },
   {
     "char": "は",
+    "speak": "ハ",
     "romaji": "ha",
     "hangul": "하",
     "note": null,
@@ -443,6 +444,7 @@
   },
   {
     "char": "へ",
+    "speak": "ヘ",
     "romaji": "he",
     "hangul": "헤",
     "note": null,
@@ -703,6 +705,7 @@
   },
   {
     "char": "を",
+    "speak": "お",
     "romaji": "wo",
     "hangul": "오",
     "note": "'오'(お)와 똑같이 발음(조사 を)",
@@ -714,6 +717,7 @@
   },
   {
     "char": "ん",
+    "speak": "ンー",
     "romaji": "n",
     "hangul": "응",
     "note": "단독 받침 'ㄴ/ㅇ' 소리, 뒤 글자에 따라 달라짐",
@@ -890,6 +894,7 @@
   },
   {
     "char": "ぢ",
+    "speak": "じ",
     "romaji": "ji",
     "hangul": "지",
     "note": "じ와 발음이 같음",
@@ -901,6 +906,7 @@
   },
   {
     "char": "づ",
+    "speak": "ず",
     "romaji": "zu",
     "hangul": "즈",
     "note": "ず와 발음이 같음",

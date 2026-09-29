@@ -4,11 +4,12 @@
 // 무겁게 진행률을 보여주지 않고 짧은 한 줄 초대만 한다.
 
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 import { CaretRight, Translate } from '@phosphor-icons/react';
 import { motion } from 'framer-motion';
 import { haptic, SPRING, TAP } from '../../lib/feel';
 import { useUser } from '../../context/UserContext';
+import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
+import ScriptFieldNewFullSheet from '../newfullsheet/ScriptFieldNewFullSheet';
 
 const COPY = {
   ja: { title: '글자 밭', subtitle: '히라가나·가타카나부터 천천히 읽어봐요' },
@@ -17,8 +18,8 @@ const COPY = {
 
 const ScriptFieldEntryCard = () => {
   "use memo";
-  const navigate = useNavigate();
   const { learningLang } = useUser();
+  const { pushNewFullSheet } = useNewFullSheetActions();
   const copy = COPY[learningLang] || COPY.en;
 
   return (
@@ -27,7 +28,9 @@ const ScriptFieldEntryCard = () => {
       whileTap={{ scale: TAP.scale }}
       transition={SPRING.snappy}
       onTapStart={() => haptic('light')}
-      onClick={() => { navigate('/script'); }}
+      onClick={() => {
+        pushNewFullSheet(ScriptFieldNewFullSheet, {}, { smFull: true, closeOnBackdropClick: true });
+      }}
       className="
         flex items-center gap-[12px] w-full
         rounded-[12px] p-[16px] text-left

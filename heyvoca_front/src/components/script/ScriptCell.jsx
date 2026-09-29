@@ -1,11 +1,10 @@
 // src/components/script/ScriptCell.jsx — 격자(밭) 한 칸. 글자 + 숙달 단계 표시.
 // level 0: 빈 흙 · 1: 씨앗 · 2: 새싹 · 3-4: 이파리 · 5: 수확(당근) — CropImage 소형 재사용.
-// 탭하면 그 글자를 소리 내 읽어준다(세션 IntroCard와 같은 텍스트/언어 규칙: scriptSpokenText·scriptTtsLang).
+// 탭하면 그 글자를 소리 내 읽어준다(세션 IntroCard·ChoiceCard와 같은 speakScriptItem 규칙).
 
 import React, { useState } from 'react';
 import CropImage from '../farm/CropImage';
-import { levelToCropStage, isMastered, scriptTtsLang, scriptSpokenText } from '../../utils/scriptData';
-import { getTextSound } from '../../utils/common';
+import { levelToCropStage, isMastered, speakScriptItem } from '../../utils/scriptData';
 import { vibrate } from '../../utils/osFunction';
 
 const ScriptCell = ({ item, script, size = 44 }) => {
@@ -20,7 +19,7 @@ const ScriptCell = ({ item, script, size = 44 }) => {
     vibrate({ duration: 5 });
     setPlaying(true);
     try {
-      await getTextSound(scriptSpokenText(script, item), scriptTtsLang(script));
+      await speakScriptItem(script, item);
     } finally {
       setPlaying(false);
     }

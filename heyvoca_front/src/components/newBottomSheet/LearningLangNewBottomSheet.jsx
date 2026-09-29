@@ -1,22 +1,24 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { useNavigate } from 'react-router-dom';
 import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
+import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
 import { useUser } from '../../context/UserContext';
 import { vibrate, showToast } from '../../utils/osFunction';
-import { SUPPORTED_LEARNING_LANGS, LANG_LABEL, LANG_GLYPH } from '../../utils/lang';
+import { SUPPORTED_LEARNING_LANGS, LANG_LABEL } from '../../utils/lang';
 import { getScriptProgressApi } from '../../api/script';
 import { ConfirmNewBottomSheet } from './ConfirmNewBottomSheet';
 import SetupTile from '../common/SetupTile';
+import LangFlagIcon from '../common/LangFlagIcon';
+import ScriptFieldNewFullSheet from '../newfullsheet/ScriptFieldNewFullSheet';
 
 // 일본어로 처음 전환할 때 "글자부터 익혀 볼래요?" 권유는 딱 1회만 — 과하지 않게.
 const JA_SCRIPT_PROMPT_KEY = 'heyvoca_script_prompt_ja_shown';
 
-/** 언어 타일의 글자 배지 — TestSetupNewBottomSheet의 방향 배지와 같은 규격
- *  (currentColor 테두리라 타일 선택색을 그대로 따른다). */
-const LangBadge = ({ children }) => (
-  <span className="flex items-center justify-center w-[40px] h-[30px] rounded-[8px] border-[1.5px] border-current text-[15px] font-[800]">
-    {children}
+/** 언어 타일의 국기 배지 — 실사 이모지 대신 단순화한 플랫 SVG(LangFlagIcon). 선택 여부는
+ *  타일 자체(SetupTile)의 테두리·체크 배지가 표시하므로 배지는 항상 같은 톤으로 둔다. */
+const LangBadge = ({ lang }) => (
+  <span className="flex items-center justify-center w-[40px] h-[30px] rounded-[8px] overflow-hidden ring-1 ring-inset ring-black/5 dark:ring-white/10">
+    <LangFlagIcon lang={lang} size={40} />
   </span>
 );
 
@@ -26,16 +28,18 @@ const LangBadge = ({ children }) => (
  * 규격은 설정 계열 시트(StudySetupNewBottomSheet · TestSetupNewBottomSheet)와 같다 —
  * 제목 중앙 18px/700 · 선택 타일(SetupTile, 체크 배지) · 하단 취소/확인 2버튼.
  * 고르는 즉시 바뀌지 않고 '확인'을 눌러야 전환된다(다른 설정 시트와 동일한 흐름).
- * 이모지·국기는 쓰지 않는다(디자인 규칙) — 언어 표지는 한 글자 배지(Aa/あ)로 대신한다.
+ * 언어 표지는 국기 SVG(LangFlagIcon)로 표시한다(2026-09-29) — 실사 이모지·외부 이미지는
+ * 여전히 금지지만, 단순화한 플랫 SVG 국기는 다른 언어 학습 앱들의 관용적 표현이라 예외로 둔다.
+ * 다른 화면(TestSetupNewBottomSheet 방향 배지 등)의 한 글자 배지(Aa/あ, LANG_GLYPH)는 그대로 유지.
  */
 export const LearningLangNewBottomSheet = () => {
   "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
 
   const { popNewBottomSheet, pushAwaitNewBottomSheet } = useNewBottomSheetActions();
+  const { pushNewFullSheet } = useNewFullSheetActions();
   const { learningLang, setLearningLang } = useUser();
   const [selectedLang, setSelectedLang] = useState(learningLang);
   const [applying, setApplying] = useState(false);
-  const navigate = useNavigate();
 
   // 가나 진행이 전혀 없을 때만 1회 권유 — 실패해도(네트워크 등) 그냥 넘어간다(권유일 뿐).
   const maybePromptScriptField = async () => {
@@ -56,7 +60,7 @@ export const LearningLangNewBottomSheet = () => {
           },
           { isBackdropClickClosable: true, isDragToCloseEnabled: true }
         );
-        if (go) navigate('/script');
+        if (go) pushNewFullSheet(ScriptFieldNewFullSheet, {}, { smFull: true, closeOnBackdropClick: true });
       }, 500);
     } catch (e) { /* 권유일 뿐 — 조용히 무시 */ }
   };
@@ -101,7 +105,7 @@ export const LearningLangNewBottomSheet = () => {
               onClick={() => { if (!applying) setSelectedLang(lang); }}
               className="h-[96px]"
             >
-              <LangBadge>{LANG_GLYPH[lang]}</LangBadge>
+              <LangBadge lang={lang} />
               <span className="text-[14px] font-[700] group-data-[selected=true]:text-layout-black dark:group-data-[selected=true]:text-layout-white">
                 {LANG_LABEL[lang]}
               </span>

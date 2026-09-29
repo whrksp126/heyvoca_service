@@ -10,8 +10,6 @@ import Class from './pages/Class';
 import TakeTest from './pages/TakeTest';
 import StudyResult from './components/takeTest/StudyResult';
 import Study from './pages/Study';
-import ScriptField from './pages/ScriptField';
-import ScriptSession from './pages/ScriptSession';
 import TabShell from './components/TabShell';
 
 // import { BottomSheetProvider } from './context/BottomSheetContext';
@@ -71,8 +69,12 @@ const AppLayout = () => {
         <Route path="/take-test" element={<TakeTest />} />
         <Route path="/take-test/result" element={<StudyResult />} />
         <Route path="/study" element={<Study />} />
-        <Route path="/script" element={<ScriptField />} />
-        <Route path="/script/session" element={<ScriptSession />} />
+        {/* 글자 밭(문자 학습)은 페이지 라우트가 아니라 공용 풀시트(ScriptFieldNewFullSheet)로
+            연다(2026-09-29) — 페이지 라우트였을 때는 안드로이드 하드웨어 뒤로가기가
+            히스토리 없이 그대로 앱을 종료시켰다. 옛 딥링크(/script)가 남아 있을 수 있어
+            홈으로만 넘긴다. */}
+        <Route path="/script" element={<Navigate to="/home" replace />} />
+        <Route path="/script/session" element={<Navigate to="/home" replace />} />
 
         <Route path="/mypage" element={null} />
 

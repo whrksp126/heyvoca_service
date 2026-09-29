@@ -1,15 +1,21 @@
-// src/pages/ScriptField.jsx
+// src/components/newfullsheet/ScriptFieldNewFullSheet.jsx
 //
-// 글자 밭 — 문자(가나/알파벳) 학습 그리드. 학습 언어가 ja면 히라가나/가타카나 탭,
-// en이면 알파벳 하나만 보여준다(기획서 "글자 밭" §화면1).
-// 필수 기능이 아니라 "권유 + 건너뛰기" 톤 — 상단에 무거운 진행바 대신 담백한 요약만 둔다.
+// 글자 밭 — 문자(가나/알파벳) 학습 그리드. 원래 /script 페이지 라우트였으나, 딥링크 없이
+// 항상 홈 진입 카드·일본어 전환 권유에서만 열리는 화면이라 페이지 라우트로 남기면 안드로이드
+// 하드웨어 뒤로가기가 라우트 히스토리가 비었을 때 앱을 그대로 종료시키는 문제가 있었다
+// (2026-09-29 QA). 다른 풀시트(StudyNewFullSheet 등)와 같은 공용 풀시트 시스템으로 옮겨
+// 뒤로가기 처리를 window.onBackPressed의 newFullSheet 스택 우선 처리에 맡긴다
+// (utils/osFunction.jsx onBackPressed 참고 — 오버라이드 불필요).
+//
+// 세션(ScriptSessionNewFullSheet)은 이 시트 위에 push되고, 세션이 끝나면
+// onSessionComplete로 진행도 재조회를 요청한 뒤 popNewFullSheet로 이 화면으로 돌아온다.
 
-import React, { useEffect, useMemo, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import React, { useEffect, useMemo, useState, useCallback } from 'react';
 import { CaretLeft } from '@phosphor-icons/react';
-import { useUser } from '../context/UserContext';
-import { vibrate } from '../utils/osFunction';
-import { getScriptProgressApi } from '../api/script';
+import { useUser } from '../../context/UserContext';
+import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
+import { vibrate } from '../../utils/osFunction';
+import { getScriptProgressApi } from '../../api/script';
 import {
   SCRIPT_LABEL,
   scriptsForLearningLang,
@@ -18,20 +24,21 @@ import {
   dueItems,
   masteredCount,
   rowLabel,
-} from '../utils/scriptData';
-import ScriptRow from '../components/script/ScriptRow';
+} from '../../utils/scriptData';
+import ScriptRow from '../script/ScriptRow';
+import ScriptSessionNewFullSheet from './ScriptSessionNewFullSheet';
 
-const ScriptField = () => {
+const ScriptFieldNewFullSheet = () => {
   "use memo";
 
-  const navigate = useNavigate();
-  const { state } = useLocation();
+  const { popNewFullSheet, pushNewFullSheet } = useNewFullSheetActions();
   const { learningLang } = useUser();
 
   const availableScripts = useMemo(() => scriptsForLearningLang(learningLang), [learningLang]);
   const [activeScript, setActiveScript] = useState(availableScripts[0]);
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [refreshKey, setRefreshKey] = useState(0);
 
   useEffect(() => {
     setActiveScript(availableScripts[0]);
@@ -49,22 +56,27 @@ const ScriptField = () => {
     };
     load();
     return () => { cancelled = true; };
-    // state?.refresh — 세션에서 돌아왔을 때 같은 탭이라도 다시 조회
-  }, [activeScript, state?.refresh]);
+    // refreshKey — 세션에서 돌아왔을 때 같은 탭이라도 다시 조회
+  }, [activeScript, refreshKey]);
 
   const rows = useMemo(() => groupByRow(items), [items]);
   const totalMastered = masteredCount(items);
   const totalDue = dueItems(items);
 
+  // 세션이 끝나고 이 화면으로 돌아올 때 호출 — 진행도만 다시 받아온다(pop은 세션 쪽에서 한다).
+  const refreshProgress = useCallback(() => setRefreshKey((k) => k + 1), []);
+
   const goSession = (chars, mode, label) => {
     if (!chars || chars.length === 0) return;
-    navigate('/script/session', {
-      state: { script: activeScript, chars, pool: items, mode, rowLabel: label },
-    });
+    pushNewFullSheet(
+      ScriptSessionNewFullSheet,
+      { script: activeScript, chars, pool: items, mode, rowLabel: label, onComplete: refreshProgress },
+      { smFull: true, closeOnBackdropClick: false }
+    );
   };
 
   return (
-    <div className="flex flex-col h-screen bg-layout-white dark:bg-layout-black">
+    <div className="flex flex-col h-full w-full bg-layout-white dark:bg-layout-black">
       <div style={{ paddingTop: 'var(--status-bar-height)' }}></div>
       <div
         data-page-header
@@ -73,7 +85,7 @@ const ScriptField = () => {
         <div className="absolute left-[10px] bottom-[13px] flex items-center justify-center">
           <button
             type="button"
-            onClick={() => { vibrate({ duration: 5 }); navigate(-1); }}
+            onClick={() => { vibrate({ duration: 5 }); popNewFullSheet(); }}
             className="text-layout-gray-200 dark:text-layout-white rounded-[8px]"
           >
             <CaretLeft size={24} />
@@ -145,4 +157,4 @@ const ScriptField = () => {
   );
 };
 
-export default ScriptField;
+export default ScriptFieldNewFullSheet;

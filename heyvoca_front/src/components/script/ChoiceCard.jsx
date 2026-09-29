@@ -9,18 +9,19 @@ import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { SpeakerHigh } from '@phosphor-icons/react';
 import { haptic } from '../../lib/feel';
-import { getTextSound } from '../../utils/common';
 import ResultMark from '../common/ResultMark';
 import TtsRipple from '../common/TtsRipple';
 import { optionLabel } from '../../utils/scriptSession';
-import { scriptTtsLang } from '../../utils/scriptData';
+import { speakScriptItem } from '../../utils/scriptData';
 
+// 정오답 버튼 규격은 components/takeTest/Main.jsx의 사지선다 옵션 버튼과 동일 클래스를 쓴다
+// (h-50 · border-[1px] rounded-[10px] · text-[14px] font-[700]) — 학습 화면과 다른 화면처럼
+// 보이지 않게 한다(2026-09-29 실기기 QA: "선택지가 얇은 외곽선만 있는 작은 박스"로 보임).
 const ChoiceCard = ({ step, answered, selectedIndex, onSelect }) => {
   "use memo";
 
   const { script, item, options, answerIndex, type } = step;
   const isListen = type === 'listenPick';
-  const lang = scriptTtsLang(script);
   const [speaking, setSpeaking] = useState(false);
   const [duration, setDuration] = useState(null);
 
@@ -29,7 +30,7 @@ const ChoiceCard = ({ step, answered, selectedIndex, onSelect }) => {
     setSpeaking(true);
     setDuration(null);
     try {
-      await getTextSound(item.char, lang, setDuration);
+      await speakScriptItem(script, item, setDuration);
     } finally {
       setSpeaking(false);
     }
@@ -41,13 +42,15 @@ const ChoiceCard = ({ step, answered, selectedIndex, onSelect }) => {
   }, [step.id]);
 
   return (
-    <div className="flex flex-col gap-[16px] w-full">
+    <div className="flex flex-col gap-[16px] w-full h-full">
+      {/* 문제 카드 — TakeTest Main.jsx의 사지선다 카드와 같은 규격(flex-1로 남는 세로 공간을
+          모두 채운다. 옛 h-[150px] 고정값이 "화면 하단이 텅 비어 보이는" 원인이었다). */}
       <div
         role={isListen ? 'button' : undefined}
         onClick={isListen ? play : undefined}
         className="
-          relative flex items-center justify-center
-          w-full h-[150px] rounded-[12px]
+          relative flex items-center justify-center flex-1 min-h-0
+          w-full py-[45px] rounded-[12px]
           bg-layout-gray-50 dark:bg-layout-gray-dark
           cursor-pointer
         "
@@ -62,16 +65,26 @@ const ChoiceCard = ({ step, answered, selectedIndex, onSelect }) => {
             animate={speaking ? { scale: [1, 1.12, 1] } : { scale: 1 }}
             transition={speaking ? { duration: 0.6, repeat: Infinity, ease: 'easeInOut' } : {}}
           >
-            <SpeakerHigh size={56} weight="fill" className={speaking ? 'text-primary-main-600' : 'text-layout-gray-300'} />
+            <SpeakerHigh size={64} weight="fill" className={speaking ? 'text-primary-main-600' : 'text-layout-gray-300'} />
           </motion.div>
         ) : (
-          <h2 className="relative z-[1] text-[44px] font-[700] text-layout-black dark:text-layout-white">
+          <h2 className="relative z-[1] text-[52px] font-[700] text-layout-black dark:text-layout-white">
             {item.char}
           </h2>
         )}
+
+        <ResultMark
+          result={answered ? selectedIndex === answerIndex : null}
+          replayKey={step.id}
+          size={110}
+          className="
+            pointer-events-none absolute top-[50%] left-[50%] z-[2]
+            translate-x-[-50%] translate-y-[-50%]
+          "
+        />
       </div>
 
-      <div className="flex flex-col gap-[10px]">
+      <div className="flex-shrink-0 flex flex-col gap-[10px]">
         {options.map((opt, index) => {
           let style = 'border-layout-gray-200 text-layout-black dark:text-layout-white';
           if (answered) {
@@ -92,9 +105,9 @@ const ChoiceCard = ({ step, answered, selectedIndex, onSelect }) => {
               onClick={() => { haptic('light'); onSelect(index); }}
               className={`
                 relative flex items-center justify-center
-                w-full h-[50px] px-[16px]
+                w-full h-[50px] px-[20px]
                 border-[1px] rounded-[10px]
-                text-[15px] font-[700] text-center
+                text-[14px] font-[700] text-center
                 ${isListen ? 'text-[24px]' : ''}
                 ${style}
               `}
@@ -104,16 +117,6 @@ const ChoiceCard = ({ step, answered, selectedIndex, onSelect }) => {
           );
         })}
       </div>
-
-      <ResultMark
-        result={answered ? selectedIndex === answerIndex : null}
-        replayKey={step.id}
-        size={90}
-        className="
-          pointer-events-none fixed top-[42%] left-[50%]
-          translate-x-[-50%] translate-y-[-50%] z-[30]
-        "
-      />
     </div>
   );
 };
