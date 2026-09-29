@@ -1648,9 +1648,19 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
     : (testQuestions[progressIndex]?.questionType !== 'multipleChoiceListening' && isSpeaking && !isAnswered);
 
   // 플러그인 컴포넌트가 있으면 동적 렌더링 (cardMatch 등)
-  // 진행률 바: 통과 고유 단어 수 / 전체 고유 단어 수
-  // totalUniqueCount는 세션 시작 시 확정된 값 (재출제 문제가 추가돼도 분모는 고정)
-  const totalWordCount = totalUniqueCount;
+  // 진행률 바: 일반 세션은 "통과 고유 단어 수 / 전체 고유 단어 수"
+  // (totalUniqueCount는 세션 시작 시 확정된 값 — 재출제 문제가 추가돼도 분모는 고정).
+  //
+  // multi-step 세션(plant 새 씨앗 심기·script 글자 학습)은 같은 vocaId(단어/글자)가
+  // 여러 슬라이드(만나기→보고 고르기→듣고 고르기→따라 쓰기…)로 이어진다. 이 경우 위
+  // "통과 고유 단어 수" 기준을 쓰면 첫 슬라이드 하나만 맞혀도 그 단어가 "통과"로 잡혀
+  // 분자가 꽉 차버린다(두 번째 슬라이드부터 바가 가득 차고 '1/1'로 보이는 버그).
+  // 그래서 이 모드에서는 슬라이드 기준으로 바꾼다 — 분자는 채점 없는 슬라이드(만나기 등)
+  // 포함해 "지금까지 끝낸 슬라이드 수"(progressIndex, 0-based 완료 개수와 일치),
+  // 분모는 "전체 슬라이드 수"(testQuestions.length) — 오답 재출제로 큐에 슬라이드가
+  // 추가되면(enqueueRetry) 분모도 자연스럽게 늘어난다(줄어들지 않음).
+  const totalWordCount = isMultiStepMode ? testQuestions.length : totalUniqueCount;
+  const displayPassedCount = isMultiStepMode ? Math.min(progressIndex, totalWordCount) : passedCount;
 
   const currentPlugin = getQuestionType(testQuestions[progressIndex]?.questionType);
 
@@ -1728,7 +1738,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
           <motion.div
             className={`h-[100%] rounded-[50px] ${progressFillClass}`}
             initial={{ width: "0%" }}
-            animate={{ width: `${Math.floor(passedCount / totalWordCount * 100)}%` }}
+            animate={{ width: `${Math.floor(displayPassedCount / totalWordCount * 100)}%` }}
             transition={PROGRESS_FILL_TRANSITION}
             style={{ willChange: 'width' }}
           />
@@ -1736,7 +1746,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
             absolute right-[10px] top-[50%] translate-y-[-50%]
             text-[#7b7b7b] text-[10px] font-semibold tracking-[-0.2px]
           ">
-            {passedCount}/{totalWordCount}
+            {displayPassedCount}/{totalWordCount}
           </span>
         </motion.div>
         <div className="relative flex flex-1 min-h-0 overflow-hidden">
@@ -1797,7 +1807,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
           `}
           initial={{ width: "0%" }}
           animate={{
-            width: `${Math.floor(passedCount / totalWordCount * 100)}%`
+            width: `${Math.floor(displayPassedCount / totalWordCount * 100)}%`
           }}
           transition={PROGRESS_FILL_TRANSITION}
           style={{ willChange: 'width' }}
@@ -1806,7 +1816,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
           absolute right-[10px] top-[50%] translate-y-[-50%]
           text-[#7b7b7b] text-[10px] font-semibold tracking-[-0.2px]
         ">
-          {passedCount}/{totalWordCount}
+          {displayPassedCount}/{totalWordCount}
         </span>
       </motion.div>
 
