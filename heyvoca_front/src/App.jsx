@@ -69,12 +69,13 @@ const AppLayout = () => {
         <Route path="/take-test" element={<TakeTest />} />
         <Route path="/take-test/result" element={<StudyResult />} />
         <Route path="/study" element={<Study />} />
-        {/* 글자 밭(문자 학습)은 페이지 라우트가 아니라 공용 풀시트(ScriptFieldNewFullSheet)로
+        {/* 글자(문자 학습)는 페이지 라우트가 아니라 학습장(/vocabulary-sheets)의 "글자" 탭으로
             연다(2026-09-29) — 페이지 라우트였을 때는 안드로이드 하드웨어 뒤로가기가
             히스토리 없이 그대로 앱을 종료시켰다. 옛 딥링크(/script)가 남아 있을 수 있어
-            홈으로만 넘긴다. */}
-        <Route path="/script" element={<Navigate to="/home" replace />} />
-        <Route path="/script/session" element={<Navigate to="/home" replace />} />
+            학습장으로 넘긴다(탭은 기본값 "단어장"으로 열린다 — 딥링크만으로 "글자" 탭을
+            지정할 근거가 없어 무리하지 않는다). */}
+        <Route path="/script" element={<Navigate to="/vocabulary-sheets" replace />} />
+        <Route path="/script/session" element={<Navigate to="/vocabulary-sheets" replace />} />
 
         <Route path="/mypage" element={null} />
 

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
-import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
 import { useUser } from '../../context/UserContext';
 import { vibrate, showToast } from '../../utils/osFunction';
 import { SUPPORTED_LEARNING_LANGS, LANG_LABEL } from '../../utils/lang';
@@ -9,7 +9,7 @@ import { getScriptProgressApi } from '../../api/script';
 import { ConfirmNewBottomSheet } from './ConfirmNewBottomSheet';
 import SetupTile from '../common/SetupTile';
 import LangFlagIcon from '../common/LangFlagIcon';
-import ScriptFieldNewFullSheet from '../newfullsheet/ScriptFieldNewFullSheet';
+import { setStoredVocaSheetsTab } from '../../utils/vocaSheetsTab';
 
 // 일본어로 처음 전환할 때 "글자부터 익혀 볼래요?" 권유는 딱 1회만 — 과하지 않게.
 const JA_SCRIPT_PROMPT_KEY = 'heyvoca_script_prompt_ja_shown';
@@ -36,7 +36,7 @@ export const LearningLangNewBottomSheet = () => {
   "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
 
   const { popNewBottomSheet, pushAwaitNewBottomSheet } = useNewBottomSheetActions();
-  const { pushNewFullSheet } = useNewFullSheetActions();
+  const navigate = useNavigate();
   const { learningLang, setLearningLang } = useUser();
   const [selectedLang, setSelectedLang] = useState(learningLang);
   const [applying, setApplying] = useState(false);
@@ -56,11 +56,18 @@ export const LearningLangNewBottomSheet = () => {
           {
             title: '글자부터 익혀 볼래요?',
             subTitle: '히라가나·가타카나 읽기부터 천천히 시작할 수 있어요',
-            btns: { confirm: '글자 밭 가기', cancel: '나중에' },
+            btns: { confirm: '글자 탭 가기', cancel: '나중에' },
           },
           { isBackdropClickClosable: true, isDragToCloseEnabled: true }
         );
-        if (go) pushNewFullSheet(ScriptFieldNewFullSheet, {}, { smFull: true, closeOnBackdropClick: true });
+        // 학습장 탭 두 번째("단어장" 옆 "글자")로 이동 — 예전에는 전용 풀시트
+        // (ScriptFieldNewFullSheet)를 띄웠지만, 그 화면이 학습장의 탭 하나로 들어갔다
+        // (2026-09-29). 탭 선택은 navigate의 location.state로 전달한다
+        // (components/vocabularySheets/Main.jsx가 읽어 적용).
+        if (go) {
+          setStoredVocaSheetsTab('script');
+          navigate('/vocabulary-sheets', { state: { tab: 'script' } });
+        }
       }, 500);
     } catch (e) { /* 권유일 뿐 — 조용히 무시 */ }
   };

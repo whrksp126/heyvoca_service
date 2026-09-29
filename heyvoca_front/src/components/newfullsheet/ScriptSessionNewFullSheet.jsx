@@ -1,15 +1,16 @@
 // src/components/newfullsheet/ScriptSessionNewFullSheet.jsx
 //
-// 글자 밭 — 학습/복습/'이미 알아요' 확인 세션. TakeTest 헤더·진행바·문제 카드·사지선다·
+// 글자(문자 학습) — 학습/복습/'이미 알아요' 확인 세션. TakeTest 헤더·진행바·문제 카드·사지선다·
 // ResultMark·하단 전폭 CTA 규격을 그대로 따르되, 재출제·콤보·FSRS 같은 정식 학습 로직은
-// 없다(기획서: "TakeTest에 억지로 끼우지 않아도 됨"). ScriptFieldNewFullSheet 위에 push되고,
-// 뒤로가기는 popNewFullSheet 하나로 끝난다 — window.onBackPressed를 직접 건드리지 않아도
-// utils/osFunction.jsx의 전역 핸들러가 newFullSheet 스택을 먼저 확인해 꺼 주므로,
-// 예전 페이지 라우트 버전에서 있었던 "세션 중 하드웨어 뒤로가기 → 앱 종료" 문제가 없다.
+// 없다(기획서: "TakeTest에 억지로 끼우지 않아도 됨"). 학습장 "글자" 탭(components/script/
+// ScriptFieldBody.jsx) 위에 push되고, 뒤로가기는 popNewFullSheet 하나로 끝난다 —
+// window.onBackPressed를 직접 건드리지 않아도 utils/osFunction.jsx의 전역 핸들러가
+// newFullSheet 스택을 먼저 확인해 꺼 주므로, 예전 페이지 라우트 버전에서 있었던
+// "세션 중 하드웨어 뒤로가기 → 앱 종료" 문제가 없다.
 //
 // props: { script, chars:[item,...], pool:[item,...], mode:'learn'|'review'|'skip', rowLabel,
-//          onComplete } — onComplete은 세션이 끝나고 ScriptFieldNewFullSheet로 돌아갈 때
-//          진행도를 다시 받아오라는 신호(pop은 이 컴포넌트가 한다).
+//          onComplete } — onComplete은 세션이 끝나고 "글자" 탭으로 돌아갈 때 진행도를
+//          다시 받아오라는 신호(pop은 이 컴포넌트가 한다).
 
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
@@ -243,7 +244,7 @@ const ScriptSessionNewFullSheet = ({ script, chars = [], pool = [], mode = 'lear
         </div>
         <div className="px-[44px]">
           <h2 className="text-[18px] font-[700] leading-[21px] text-center text-layout-black dark:text-layout-white">
-            {STEP_TITLES[currentStep.type] || '글자 밭'}
+            {STEP_TITLES[currentStep.type] || '글자'}
           </h2>
         </div>
       </div>

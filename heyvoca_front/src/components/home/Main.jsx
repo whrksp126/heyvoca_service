@@ -60,7 +60,6 @@ import TodayTasksCard from './TodayTasksCard';
 import StreakCard from './StreakCard';
 import GrewTodayCard from './GrewTodayCard';
 import WordFeedCard from './WordFeedCard';
-import ScriptFieldEntryCard from './ScriptFieldEntryCard';
 import { healthMixFromOverview } from '../../utils/farmField';
 import { toLocalDateString } from '../../utils/common';
 import {
@@ -549,9 +548,6 @@ const Main = () => {
         {/* CTA 바로 아래 "오늘 할 일" 카드 — 썩은 단어·시듦·돌봄·새 씨앗을 한 곳에서 말한다.
             §8 water·amber·seed 스트립은 이 카드로 흡수돼 뺐다(위 변수 선언부 주석 참고). */}
         <TodayTasksCard />
-
-        {/* 글자 밭 — 필수 아님(권유 톤). 오늘 할 일 바로 아래에 짧은 초대 카드 하나만 둔다. */}
-        <ScriptFieldEntryCard />
 
         {/* 연속 학습 — 1주 불꽃 달력. 홈에서 성과를 말하는 유일한 블록. 항상 노출된다 */}
         <StreakCard registerRefresh={registerStreakRefresh} />
