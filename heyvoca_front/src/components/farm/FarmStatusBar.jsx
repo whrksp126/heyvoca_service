@@ -185,10 +185,12 @@ const FarmStatusBar = ({
   const barFrom = xpBarPct(grew ? prevCropForImage : cropForImage, xpFrom);
   const barTo = xpBarPct(cropForImage, xpTo);
 
-  // 델타가 정확히 0(오답이 단계 floor 에 막혀 실제로는 안 변한 경우 등)이면 '+'/'−' 어느
-  // 쪽도 아니다 — 예전엔 이 분기가 기본값 '+'로 떨어져 오답인데 "+0 XP"가 뜨는 사고가 있었다
-  // (2026-09 prod). 배지 자체를 그 경우 렌더하지 않는다(아래 badgeSlot).
-  const xpBadgeSign = xpDelta > 0 ? '+' : '−';
+  // 델타가 정확히 0(오답이 단계 floor 에 막혀 실제로는 안 변한 경우, 최근 학습한 단어를
+  // 다시 풀 때 등)이면 '+'/'−' 어느 쪽도 아니다 — 예전엔 이 분기가 기본값 '+'로 떨어져
+  // 오답인데 "+0 XP"가 뜨는 사고가 있었다(2026-09 prod). 부호를 비워 "0 XP"로만 표시한다.
+  // (2026-09-29 실기기 QA) 배지 자체를 숨기면 하단 상태 바가 텅 비어 보인다는 피드백으로
+  // 아래 badgeSlot은 델타가 0이어도 중립(회색) 톤으로 칩을 계속 그린다 — 숨기지 않는다.
+  const xpBadgeSign = xpDelta > 0 ? '+' : xpDelta < 0 ? '−' : (isNg ? '' : '+'); // 0 이면 정답 '+0', 오답 '0'
   const xpBadgeAbs = Math.abs(xpDelta);
   // 배지는 "얼마나 늘었는지"만 pink, 나머지(줄었거나 그대로)는 회색 — 계약서 §3.
   const xpBadgePositive = xpDelta > 0;
@@ -369,10 +371,13 @@ const FarmStatusBar = ({
     />
   );
 
-  // 배지 — `+N XP` 핑크 / `−N XP` 회색(crop_xp_contract.md §3). pending 이거나 델타가
-  // 정확히 0(오답이 단계 floor 에 막혀 실제로는 안 변한 경우)이면 비운다 — "+0 XP"로 오답에서
-  // 증가한 것처럼 보이면 안 된다(2026-09 prod 버그). 칸 폭은 고정해 두어 배지가 생겨도/
-  // 사라져도 막대 폭이 흔들리지 않는다.
+  // 배지 — `+N XP` 핑크 / `−N XP` 회색 / `0 XP` 회색(crop_xp_contract.md §3, 2026-09-29 정정).
+  // pending(서버 응답 대기) 동안만 비운다 — 아직 아무 값도 확정되지 않았기 때문이다.
+  // 델타가 정확히 0(최근 학습한 단어를 다시 풀 때, 오답이 단계 floor 에 막힌 경우 등)이어도
+  // 칩 자체는 계속 그린다 — 예전엔 이 경우 칩을 숨겨서 문제 카드 하단이 텅 비어 보였다
+  // (2026-09-29 실기기 QA). 부호는 xpBadgeSign이 이미 비워 뒀으니 "0 XP"로만 읽힌다 —
+  // "+0 XP"로 오답에서 증가한 것처럼 보이는 사고(2026-09 prod)는 그대로 막는다.
+  // 칸 폭은 고정해 두어 배지 유무와 무관하게 막대 폭이 흔들리지 않는다.
   const badgeSlot = (
     <span
       className={`
@@ -380,7 +385,7 @@ const FarmStatusBar = ({
         ${compact ? 'w-[44px]' : 'w-[64px]'}
       `}
     >
-      {!pending && xpDelta !== 0 && (
+      {!pending && (
         <motion.span
           className={`
             inline-flex flex-shrink-0 items-center justify-center whitespace-nowrap tabular-nums

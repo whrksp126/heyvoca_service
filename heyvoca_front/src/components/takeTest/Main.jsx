@@ -17,7 +17,7 @@ import MemoryStateChangeBadge, {
   getMemoryStateKeyByStability,
 } from "../common/MemoryStateChangeBadge";
 import { playSuccessSound, playErrorSound } from '../../utils/audio';
-import { getQuestionType, isSingleWordPluginType } from '../../plugins/questionTypes';
+import { getQuestionType, isSingleWordPluginType, isSentenceQuestionType } from '../../plugins/questionTypes';
 import { getDisplayMeanings } from '../../utils/displayMeanings';
 import { logStudyQuestion, getRequeueEasierApi } from '../../api/study';
 import { mapRecommendItemToWord } from '../../utils/studyRecommendMapping';
@@ -1488,8 +1488,13 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
     // onComplete 하나라 이중 호출이 없으므로 cardRetryEnqueuedRef 가드를 타지 않는다 —
     // 재출제에서 또 틀리면 다시 재출제(상한은 enqueueRetry/requeueEasier의 MAX_RETRY).
     // 같은 유형으로 못 만들면(예문이 사라진 비정상 캐시 등) 사지선다로 폴백한다.
+    //
+    // 출제형 4종(sentenceArrange/sentenceArrangePartial/listenArrange/fillInTheBlankTyping)은
+    // 예외(2026-09-29 실기기 QA) — "더 쉬운 유형으로 강등"이 아니라 **같은 유형·같은 문제**로
+    // 그대로 재출제한다(난이도/목적이 다른 콘텐츠라 강등이 어색함). requeueEasier를 아예 호출하지
+    // 않고, 아래 로컬 재구성(같은 questionPayload 재사용)으로 곧장 떨어진다.
     if (isSingleWordQuestion && isSingleWordPluginType(questionType)) {
-      if (typeof currentQuestion?.tierShown === 'number') {
+      if (typeof currentQuestion?.tierShown === 'number' && !isSentenceQuestionType(questionType)) {
         requeueEasier(currentQuestion);
         return;
       }
