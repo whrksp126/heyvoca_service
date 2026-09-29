@@ -48,6 +48,9 @@ const DRAW_GAP = 0.18;
 const PASS_RATIO = 0.45;
 const TOLERANCE_RATIO = 0.16; // viewBox 최대 변 길이 대비 허용 반경
 const SAMPLE_COUNT = 16;
+// 연속 획 허용(이어 긋기) 시, 다음 획으로 넘길 최소 기준 — 지금 획을 그은 구간 "이후"
+// 궤적이 다음 획 길이의 이만큼은 실제로 그어져야 인정한다(짧게 스친 정도로는 불인정).
+const CONTINUATION_LENGTH_RATIO = 0.6;
 
 const pointsToPathD = (points) => {
   if (!points || points.length === 0) return '';
@@ -86,6 +89,35 @@ const evaluateStroke = (guideEl, points, vbW, vbH) => {
   }
   const ratio = covered / (SAMPLE_COUNT + 1);
   return { passed: ratio >= PASS_RATIO, ratio };
+};
+
+/** points 중 guideEl(가이드 획)의 표본점을 덮는 "마지막" 인덱스를 구한다 — 연속 획 판정
+ *  (2026-09-29 QA 5차)에서 지금 획을 그리는 데 쓰인 구간과 다음 획 구간을 가르는 경계로
+ *  쓴다. 못 찾으면 -1. */
+const coverageEndIndex = (guideEl, points, vbW, vbH) => {
+  if (!guideEl || !points || points.length === 0) return -1;
+  const len = guideEl.getTotalLength();
+  if (!len) return -1;
+  const tolerance = Math.max(vbW, vbH) * TOLERANCE_RATIO;
+  let lastIndex = -1;
+  for (let i = 0; i <= SAMPLE_COUNT; i++) {
+    const cp = guideEl.getPointAtLength((len * i) / SAMPLE_COUNT);
+    for (let pi = 0; pi < points.length; pi++) {
+      if (pi <= lastIndex) continue;
+      if (Math.hypot(points[pi].x - cp.x, points[pi].y - cp.y) <= tolerance) lastIndex = pi;
+    }
+  }
+  return lastIndex;
+};
+
+/** 점들을 잇는 총 이동 거리 — 궤적 한 구간이 실제로 얼마나 "길게" 그어졌는지의 근사치. */
+const polylineLength = (points) => {
+  if (!points || points.length < 2) return 0;
+  let total = 0;
+  for (let i = 1; i < points.length; i++) {
+    total += Math.hypot(points[i].x - points[i - 1].x, points[i].y - points[i - 1].y);
+  }
+  return total;
 };
 
 const StrokeTracer = ({ entries, compound = false, caseVariant = null, replayKey, onDone }) => {
@@ -200,11 +232,14 @@ const StrokeTracer = ({ entries, compound = false, caseVariant = null, replayKey
   // 지우고 같은 획을 다시 그리게 한다. pointerup에서 항상 호출되어 currentPoints를 비운다
   // (예전 버그: pointerup에서 아무것도 안 지워서 미완성 궤적이 화면에 남았다).
   //
-  // 연속 획 허용(2026-09-29 QA 4차) — 방금 그은 궤적 하나로 지금 획부터 시작해 몇 번째
-  // 획까지 커버리지 기준(evaluateStroke)을 통과하는지 앞으로 계속 확인한다. 필체상 두 획을
-  // 한 번에 이어 그은 경우 같은 궤적이 다음 획의 표본점도 자연스레 덮으므로, 통과하는 데까지
-  // 한꺼번에 다음 획으로 넘긴다. 반대로 한 획을 두 번에 나눠 그은 경우는 첫 조각 자체가
-  // 지금 획 하나도 통과 못 해 consumedCount가 0인 기존 재시도 분기 그대로다.
+  // 연속 획 허용(2026-09-29 QA 4차, 기준 강화 QA 5차) — 방금 그은 궤적 하나로 지금 획부터
+  // 시작해 몇 번째 획까지 이어서 인정할지 확인한다. 예전에는 전체 궤적을 다음 획 판정에도
+  // 그대로 재사용해서, 서로 떨어진 두 획(예: い의 두 획) 중 하나만 그어도 근처 tolerance
+  // 안에 있으면 둘 다 통과해 버렸다. 지금은 획 k를 통과시킨 뒤 "그 구간을 덮은 마지막
+  // 궤적 인덱스"(coverageEndIndex) 이후의 점만 남겨 k+1 판정에 쓰고, 그 나머지 구간이
+  // k+1 획 길이의 60%(CONTINUATION_LENGTH_RATIO) 이상 되어야만 이어서 인정한다 —
+  // 한 획을 두 번에 나눠 그은 경우(첫 조각이 기준 미달)는 기존처럼 consumedCount 0으로
+  // 재시도 분기를 탄다.
   const finalizeStroke = () => {
     const points = pointsRef.current;
     pointsRef.current = [];
@@ -213,11 +248,23 @@ const StrokeTracer = ({ entries, compound = false, caseVariant = null, replayKey
     if (phase !== 'trace' || points.length < 2) return; // 실수로 살짝 스친 탭은 무시
 
     let consumedCount = 0;
+    let remainingPoints = points;
     for (let i = activeStrokeIndex; i < strokes.length; i++) {
       const guideEl = guidePathRefs.current[i];
-      const { passed } = evaluateStroke(guideEl, points, vbW, vbH);
+      if (!guideEl || remainingPoints.length < 2) break;
+      const { passed } = evaluateStroke(guideEl, remainingPoints, vbW, vbH);
       if (!passed) break;
       consumedCount += 1;
+
+      const nextGuideEl = guidePathRefs.current[i + 1];
+      if (!nextGuideEl) break; // 마지막 획까지 통과 — 더 볼 다음 획 없음
+
+      const endIdx = coverageEndIndex(guideEl, remainingPoints, vbW, vbH);
+      const rest = endIdx >= 0 ? remainingPoints.slice(endIdx) : [];
+      const nextGuideLen = nextGuideEl.getTotalLength();
+      const restLen = polylineLength(rest);
+      if (!nextGuideLen || restLen < nextGuideLen * CONTINUATION_LENGTH_RATIO) break;
+      remainingPoints = rest;
     }
 
     if (consumedCount > 0) {
@@ -365,17 +412,22 @@ const StrokeTracer = ({ entries, compound = false, caseVariant = null, replayKey
             onPointerCancel={handlePointerUp}
           >
             <defs>
-              {/* 현재 획 가이드 끝에 붙는 화살촉 — 경로 진행 방향으로 자동 정렬된다. */}
+              {/* 현재 획 안쪽 점선 끝에 붙는 화살촉 — 경로 진행 방향으로 자동 정렬된다.
+                  markerUnits="userSpaceOnUse"로 고정 크기를 줘야 한다(2026-09-29 QA 5차) —
+                  기본값(strokeWidth)을 쓰면 화살촉 크기가 그 위에 그리는 선의 굵기에
+                  비례해서, 얇은 점선 대신 두꺼운 가이드 자체에 그렸을 때 거대한 삼각형으로
+                  뭉쳐 보였다. 크기는 가이드 굵기 정도로만(작고 날렵하게). */}
               <marker
                 id={arrowMarkerId}
                 viewBox="0 0 10 10"
-                refX="7"
+                refX="8.5"
                 refY="5"
-                markerWidth="5.5"
-                markerHeight="5.5"
+                markerWidth={vbW * 0.05}
+                markerHeight={vbW * 0.05}
+                markerUnits="userSpaceOnUse"
                 orient="auto-start-reverse"
               >
-                <path d="M0,0 L10,5 L0,10 z" fill="var(--primary-main-600)" />
+                <path d="M0,1.4 L9,5 L0,8.6 z" fill="#FFFFFF" />
               </marker>
             </defs>
 
@@ -393,9 +445,13 @@ const StrokeTracer = ({ entries, compound = false, caseVariant = null, replayKey
               </g>
             )}
 
-            {/* 윤곽 — 트레이싱 판정에도 쓰는 기준 path라 ref를 그대로 남긴다.
-                통과한 획(index < activeStrokeIndex)은 분홍으로 확정 표시. 아직 안 그은
-                현재 획(isActiveTarget)은 듀오링고 방식 점선 화살표로 경로를 미리 보여준다. */}
+            {/* 윤곽 — 트레이싱 판정에도 쓰는 기준 path라 ref를 그대로 남긴다. 항상 실선
+                두께로만 그린다(점선·화살촉은 아래 오버레이가 따로 맡는다 — 2026-09-29
+                QA 5차: 예전엔 이 굵은 판정용 path 자체에 strokeDasharray + markerEnd를
+                얹어서, 두꺼운 strokeWidth 때문에 대시가 구슬처럼 뭉치고 화살촉도 거대해
+                보였다). 통과한 획(index < activeStrokeIndex)만 분홍으로 확정 표시하고,
+                아직 안 그은 현재 획(isActiveTarget)은 가이드 자체는 회색인 채로 살짝
+                진하게만 강조한다 — 분홍 점선은 바로 아래 얇은 오버레이가 그 위에 겹친다. */}
             {!compound && strokes.map((d, i) => {
               const done = phase === 'result' || i < activeStrokeIndex;
               const isActiveTarget = phase === 'trace' && i === activeStrokeIndex;
@@ -405,16 +461,33 @@ const StrokeTracer = ({ entries, compound = false, caseVariant = null, replayKey
                   ref={(el) => { guidePathRefs.current[i] = el; }}
                   d={d}
                   fill="none"
-                  stroke={done || isActiveTarget ? 'var(--primary-main-600)' : GUIDE_COLOR}
+                  stroke={done ? 'var(--primary-main-600)' : GUIDE_COLOR}
                   strokeWidth={vbW * (done ? 0.05 : 0.045)}
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  strokeDasharray={isActiveTarget ? `${vbW * 0.018} ${vbW * 0.032}` : undefined}
-                  markerEnd={isActiveTarget ? `url(#${arrowMarkerId})` : undefined}
                   opacity={done ? 1 : (isActiveTarget ? ACTIVE_GUIDE_OPACITY : GUIDE_OPACITY)}
                 />
               );
             })}
+
+            {/* 현재 획 안쪽 중앙의 얇은 점선 + 화살촉 — 듀오링고 방식(2026-09-29 QA 5차).
+                굵은 회색 가이드 위에 가이드 굵기의 약 1/4인 흰 점선을 같은 경로(d)로
+                겹쳐 그려 진행 방향을 보여준다. 같은 d를 쓰므로 가이드 path와 좌표가
+                항상 정확히 일치한다. */}
+            {!compound && phase === 'trace' && strokes[activeStrokeIndex] && (
+              <path
+                d={strokes[activeStrokeIndex]}
+                fill="none"
+                stroke="#FFFFFF"
+                strokeWidth={vbW * 0.012}
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeDasharray={`${vbW * 0.014} ${vbW * 0.022}`}
+                markerEnd={`url(#${arrowMarkerId})`}
+                opacity={0.95}
+                pointerEvents="none"
+              />
+            )}
 
             {/* 획순 애니메이션 — demo 단계에서만 재생 */}
             {!compound && phase === 'demo' && strokes.map((d, i) => (

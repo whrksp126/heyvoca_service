@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { vibrate } from '../../utils/osFunction';
 import { getStoredVocaSheetsTab, setStoredVocaSheetsTab } from '../../utils/vocaSheetsTab';
+import SegmentTabBar from '../common/SegmentTabBar';
 import VocaBooksTab from './VocaBooksTab';
 import ScriptFieldBody from '../script/ScriptFieldBody';
 
@@ -47,29 +48,31 @@ const Main = () => {
 
   return (
     <div className="flex flex-col h-[calc(100vh-var(--current-header-height)-var(--current-bottom-nav-height)-var(--status-bar-height))]">
-      {/* 세그먼트 — 상점 탭과 같은 규격(mx-[16px] 트랙 + rounded-[8px] 알약) */}
-      <div className="shrink-0 mt-[10px] mx-[16px] mb-[10px] h-[36px] flex p-[3px] rounded-[10px] bg-layout-gray-50 dark:bg-layout-gray-dark">
-        {TABS.map((tab) => {
-          const on = tab.key === activeTab;
-          return (
-            <button
-              key={tab.key}
-              type="button"
-              onClick={() => handleSelectTab(tab.key)}
-              className={`flex-1 flex items-center justify-center rounded-[8px] text-[13px] font-[700] tracking-[-0.03em] ${
-                on
-                  ? 'bg-layout-white dark:bg-primary-main-dark text-layout-black dark:text-layout-white shadow-[0_1px_3px_rgba(0,0,0,0.12)] dark:shadow-none'
-                  : 'text-layout-gray-400 dark:text-layout-gray-300'
-              }`}
-            >
-              {tab.label}
-            </button>
-          );
-        })}
-      </div>
+      {/* 세그먼트 — 상점 탭과 규격을 공유하는 공용 컴포넌트(SegmentTabBar) */}
+      <SegmentTabBar tabs={TABS} activeKey={activeTab} onSelect={handleSelectTab} />
 
-      <div className="flex-1 min-h-0">
-        {activeTab === 'books' ? <VocaBooksTab /> : <ScriptFieldBody />}
+      {/*
+        두 탭을 항상 같이 마운트해 두고 "보이는 것만 바꾼다" — TabShell(바텀 네비 5탭)과 같은
+        패턴이다(2026-09-29 QA). 예전에는 activeTab에 따라 조건부 렌더링해서 탭을 오갈 때마다
+        VocaBooksTab·ScriptFieldBody가 매번 새로 마운트됐고, 특히 ScriptFieldBody는 마운트마다
+        /script/progress를 다시 불렀다 — 전환이 느리고 스크롤 위치도 날아갔다. display:none
+        대신 fixed+invisible로 숨기는 이유도 TabShell과 같다: 문서 흐름에서 완전히 빼서
+        비활성 탭이 학습장 화면 위를 덮거나 터치를 가로채지 않게 하면서, display:none과 달리
+        레이아웃이 사라지지 않아 안의 스크롤 위치가 유지된다.
+      */}
+      <div className="flex-1 min-h-0 relative">
+        <div
+          className={activeTab === 'books' ? 'h-full' : 'fixed inset-0 z-[-1] invisible pointer-events-none'}
+          aria-hidden={activeTab === 'books' ? undefined : true}
+        >
+          <VocaBooksTab />
+        </div>
+        <div
+          className={activeTab === 'script' ? 'h-full' : 'fixed inset-0 z-[-1] invisible pointer-events-none'}
+          aria-hidden={activeTab === 'script' ? undefined : true}
+        >
+          <ScriptFieldBody />
+        </div>
       </div>
     </div>
   );

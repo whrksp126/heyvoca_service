@@ -29,6 +29,13 @@ import ScriptRow from './ScriptRow';
 import ScriptSessionNewFullSheet from '../newfullsheet/ScriptSessionNewFullSheet';
 import { vibrate } from '../../utils/osFunction';
 
+// 스크립트별(히라가나/가타카나/알파벳 등) 진행도 메모리 캐시 — 모듈 스코프라 이 컴포넌트가
+// 다시 마운트돼도(예: 다른 탭에 갔다가 돌아옴) 살아 있다. 지금은 Main.jsx가 이 컴포넌트를
+// 언마운트하지 않지만, 그래도 두 겹으로 방어해 둔다 — 탭 전환 자체가 재조회를 부르지
+// 않아야 "즉시" 전환된다(2026-09-29 QA). 갱신 시점은 딱 둘: 세션 완료(refreshProgress)와
+// 학습 언어 변경(아래 learningLang effect가 통째로 비운다) 뿐이다.
+const scriptProgressCache = new Map(); // script -> items[]
+
 const ScriptFieldBody = () => {
   "use memo";
 
@@ -45,19 +52,37 @@ const ScriptFieldBody = () => {
     setActiveScript(availableScripts[0]);
   }, [availableScripts]);
 
+  // 학습 언어가 바뀌면(알파벳 ↔ 히라가나/가타카나) 캐시를 통째로 비운다 — 스크립트 키가
+  // 언어별로 겹치지는 않지만, "언어 변경 시에만 갱신"이라는 규칙을 명확히 지키기 위한
+  // 방어적 초기화다.
   useEffect(() => {
+    scriptProgressCache.clear();
+  }, [learningLang]);
+
+  useEffect(() => {
+    // 이 스크립트가 이미 캐시에 있으면 네트워크 왕복 없이 즉시 보여준다 — 히라가나↔가타카나,
+    // 학습장 단어장↔글자 탭을 오갈 때 "즉시" 전환되는 핵심(2026-09-29 QA). refreshProgress의
+    // 폴백 경로가 지금 스크립트의 캐시를 지운 다음에만 여기서 실제로 다시 불러온다.
+    const cached = scriptProgressCache.get(activeScript);
+    if (cached) {
+      setItems(cached);
+      setLoading(false);
+      return undefined;
+    }
     let cancelled = false;
     const load = async () => {
       setLoading(true);
       const res = await getScriptProgressApi(activeScript);
       if (cancelled) return;
       const progressItems = res?.code === 200 ? res.data?.items : [];
-      setItems(mergeProgress(activeScript, progressItems));
+      const merged = mergeProgress(activeScript, progressItems);
+      scriptProgressCache.set(activeScript, merged);
+      setItems(merged);
       setLoading(false);
     };
     load();
     return () => { cancelled = true; };
-    // refreshKey — 세션에서 돌아왔을 때 같은 탭이라도 다시 조회
+    // refreshKey — refreshProgress 폴백 경로가 캐시를 지운 뒤 여기로 다시 들어오게 하는 트리거
   }, [activeScript, refreshKey]);
 
   const rows = useMemo(() => groupByRow(items), [items]);
@@ -81,12 +106,15 @@ const ScriptFieldBody = () => {
         updatedItems.forEach((u) => {
           if (u?.char) byChar.set(u.char, { ...byChar.get(u.char), ...u });
         });
-        return prev.map((it) => byChar.get(it.char) ?? it);
+        const merged = prev.map((it) => byChar.get(it.char) ?? it);
+        scriptProgressCache.set(activeScript, merged); // 세션 완료 — 캐시도 같이 갱신
+        return merged;
       });
       return;
     }
+    scriptProgressCache.delete(activeScript); // 폴백 재조회 대상 스크립트만 캐시 무효화
     setRefreshKey((k) => k + 1);
-  }, []);
+  }, [activeScript]);
 
   const goSession = (chars, mode, label) => {
     if (!chars || chars.length === 0) return;

@@ -21,6 +21,7 @@ import { getFarmItemsApi, getFarmShopApi } from '../../api/farm';
 import { getBookStoreDetailApi } from '../../api/bookStore';
 import { FARM_ITEM_ASSETS } from '../farm/CropImage';
 import PullToRefresh from '../common/PullToRefresh';
+import SegmentTabBar from '../common/SegmentTabBar';
 import {
   resolveVocaBookBackground, resolveVocaBookAccentColor, resolveVocaBookSubColor,
 } from '../../utils/vocaBookColor';
@@ -312,8 +313,11 @@ const StoreNewFullSheet = ({ initialTab = 'books', onInventoryChanged, onGoRotte
       <div style={{ paddingTop: 'var(--status-bar-height)' }}></div>
 
       {/* 상단 바 — 타이틀은 가운데, 보석 칩은 우측 고정 (시안 §3)
-          바텀 네비의 상점 탭으로 들어온 경우(asPage)에는 돌아갈 곳이 없어 뒤로가기를 두지 않는다 */}
-      <div data-page-header className="relative flex items-center justify-center h-[52px] shrink-0 px-[16px]">
+          바텀 네비의 상점 탭으로 들어온 경우(asPage)에는 돌아갈 곳이 없어 뒤로가기를 두지 않는다.
+          높이는 h-[var(--current-header-height)] — 학습장 헤더(components/vocabularySheets/
+          Header.jsx)와 같은 CSS 변수를 써야 두 화면을 번갈아 봐도 헤더 높이가 안 움직인다
+          (2026-09-29 QA — 예전엔 여기만 h-[52px]로 고정해 학습장(55px)과 3px 어긋났다). */}
+      <div data-page-header className="relative flex items-center justify-center h-[var(--current-header-height)] shrink-0 px-[16px]">
         {!asPage && (
         <motion.button
           type="button"
@@ -334,26 +338,14 @@ const StoreNewFullSheet = ({ initialTab = 'books', onInventoryChanged, onGoRotte
         </div>
       </div>
 
-      {/* 세그먼트 */}
-      <div className="mx-[16px] mb-[14px] h-[36px] shrink-0 flex p-[3px] rounded-[10px] bg-layout-gray-50 dark:bg-layout-gray-dark">
-        {TABS.map((tab) => {
-          const on = tab.key === activeTab;
-          return (
-            <button
-              key={tab.key}
-              type="button"
-              onClick={() => { vibrate({ duration: 5 }); setActiveTab(tab.key); }}
-              className={`flex-1 flex items-center justify-center rounded-[8px] text-[13px] font-[700] tracking-[-0.03em] ${
-                on
-                  ? 'bg-layout-white dark:bg-primary-main-dark text-layout-black dark:text-layout-white shadow-[0_1px_3px_rgba(0,0,0,0.12)] dark:shadow-none'
-                  : 'text-layout-gray-400 dark:text-layout-gray-300'
-              }`}
-            >
-              {tab.label}
-            </button>
-          );
-        })}
-      </div>
+      {/* 세그먼트 — 학습장 탭(components/vocabularySheets/Main.jsx)과 규격을 공유하는
+          공용 컴포넌트(SegmentTabBar). mb-[14px]로 학습장(mb-[10px])보다 4px 더 남기고
+          mt도 안 줬던 예전 차이는 SegmentTabBar 안에 규격을 고정하며 없앴다. */}
+      <SegmentTabBar
+        tabs={TABS}
+        activeKey={activeTab}
+        onSelect={(key) => { vibrate({ duration: 5 }); setActiveTab(key); }}
+      />
 
       <PullToRefresh
         onRefresh={handlePullToRefresh}
