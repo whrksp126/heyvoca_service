@@ -3,6 +3,7 @@ import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { SpeakerHigh } from '@phosphor-icons/react';
 import TtsRipple from '../../../components/common/TtsRipple';
 import WordInfoBubble from '../../../components/common/WordInfoBubble';
+import { getWordInfoApi } from '../../../api/search';
 import { haptic } from '../../../lib/feel';
 import { playSuccessSound, playErrorSound } from '../../../utils/audio';
 import { getTextSound, stripHtmlTags } from '../../../utils/common';
@@ -46,6 +47,12 @@ const SentenceArrangeQuestion = ({ question, onComplete, onCardMatched, farmByWo
   const isSentencePlayingRef = useRef(false);
   // 위 카드(한국어 해석) 어절 탭 → 역방향 조회 말풍선. TTS는 재생하지 않는다.
   const koLookup = useKoreanWordLookup();
+  // 채점 후 "정답 문장" 단어 탭 → 사전 조회 말풍선(2026-09-29). 이 유형은 응용 확인이라
+  // 목표 단어를 포인트 컬러로 강조하지 않는 대신, 문장의 모든 단어를 탭하면 fillInTheBlank와
+  // 같은 WordInfoBubble(영어 사전)로 뜻을 보여 준다. ArrangeTray의 prefix/suffix 단어 조회
+  // (data-lookup-word)와는 별개 상태 — 이 컴포넌트가 그리는 "정답 문장" 영역 전용이다.
+  const [answerLookup, setAnswerLookup] = useState(null);
+  const answerLookupReqRef = useRef(0);
   // 채점 후 "다음" 버튼을 누를 때 진행할 콜백 — 채점 순간(handleSubmit)에 캡처해 둔다(2026-09-29,
   // 예전엔 advanceGate.arm으로 자동 진행했지만 출력형 문제는 결과를 사용자가 직접 확인하고
   // 넘겨야 한다). 로그 전송·재출제(onCardMatched)는 여전히 채점 즉시 처리 — 진행만 수동이다.
@@ -159,6 +166,69 @@ const SentenceArrangeQuestion = ({ question, onComplete, onCardMatched, farmByWo
     nextRef.current?.();
   };
 
+  const closeAnswerLookup = () => {
+    answerLookupReqRef.current += 1;
+    setAnswerLookup((prev) => (prev ? null : prev));
+  };
+
+  // "정답 문장" 단어 탭 — fillInTheBlank/ArrangeTray의 handleWordTap과 같은 규칙(사전 조회 +
+  // 단어 TTS). speak()의 'lookup' 타겟은 게이트를 잡지 않는다 — 정답 문장이 재생 중이었다면
+  // (target='answer') speak() 진입부의 공용 선점 처리가 그 게이트만 끊고, 탭한 단어를 새로 읽는다.
+  const handleAnswerWordTap = (e, key, cleanWord) => {
+    e.stopPropagation();
+    if (!cleanWord) return;
+    if (answerLookup?.key === key) {
+      closeAnswerLookup();
+      return;
+    }
+    const wordEl = e.currentTarget;
+    if (!wordEl) return;
+    const wordRect = wordEl.getBoundingClientRect();
+    const anchor = {
+      top: wordRect.top,
+      left: wordRect.left,
+      width: wordRect.width,
+      height: wordRect.height,
+    };
+
+    haptic('light');
+    speak(cleanWord, answerLang, 'lookup');
+
+    const reqId = ++answerLookupReqRef.current;
+    setAnswerLookup({ key, word: cleanWord, anchor, status: 'loading', info: null });
+    getWordInfoApi(cleanWord)
+      .then((info) => {
+        if (reqId !== answerLookupReqRef.current) return;
+        setAnswerLookup((prev) => (prev && prev.key === key
+          ? { ...prev, status: info ? 'found' : 'notFound', info }
+          : prev));
+      })
+      .catch(() => {
+        if (reqId !== answerLookupReqRef.current) return;
+        setAnswerLookup((prev) => (prev && prev.key === key ? { ...prev, status: 'error' } : prev));
+      });
+  };
+
+  // 말풍선 닫기 — 바깥 탭·스크롤(FillInTheBlankQuestion/ArrangeTray와 동일 규칙).
+  useEffect(() => {
+    if (!answerLookup) return undefined;
+    const onPointerDown = (e) => {
+      const t = e.target;
+      if (!(t instanceof Element)) { closeAnswerLookup(); return; }
+      if (t.closest('[data-word-info-bubble]')) return;
+      if (t.closest('[data-answer-lookup-word]')) return;
+      closeAnswerLookup();
+    };
+    const onScroll = () => closeAnswerLookup();
+    document.addEventListener('pointerdown', onPointerDown, true);
+    window.addEventListener('scroll', onScroll, true);
+    return () => {
+      document.removeEventListener('pointerdown', onPointerDown, true);
+      window.removeEventListener('scroll', onScroll, true);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [answerLookup?.key]);
+
   const showTtsRipple = isSpeaking && speakingTarget === 'shown';
 
   // 틀렸을 때만 정답 문장을 강조 표시(계약 3-1절 표시 규칙) — 맞았을 때는 사용자가 놓은
@@ -178,6 +248,10 @@ const SentenceArrangeQuestion = ({ question, onComplete, onCardMatched, farmByWo
     : { ref: [], correctFlags: [] };
   const blankStart = tokenizeWords(prefix).filter((t) => t.type === 'word').length;
   const blankEnd = blankStart + answerRef.length;
+  // "정답 문장"은 응용 확인용이라 목표 단어를 포인트 컬러(분홍)로 강조하지 않는다(2026-09-29) —
+  // p.hl(강조 마커) 색은 더 이상 쓰지 않는다. 대신 문장의 모든 단어를 탭하면 fillInTheBlank와
+  // 같은 방식(handleAnswerWordTap + WordInfoBubble)으로 사전 말풍선이 뜬다. 사용자가 틀린
+  // 위치의 정답 단어(빨강 밑줄)는 그대로 유지한다.
   const postAnswerNode = isCorrect === false ? (() => {
     let wordIdx = 0;
     return (
@@ -189,19 +263,30 @@ const SentenceArrangeQuestion = ({ question, onComplete, onCardMatched, farmByWo
               const isWordTok = tok.type === 'word';
               const idx = isWordTok ? wordIdx : -1;
               if (isWordTok) wordIdx += 1;
-              const isWrong = isWordTok && idx >= blankStart && idx < blankEnd
+              if (!isWordTok) return <span key={i}>{tok.text}</span>;
+              const isWrong = idx >= blankStart && idx < blankEnd
                 && correctFlags[idx - blankStart] === false;
-              if (isWrong) {
-                return (
-                  <span key={i} className="text-status-error-600 dark:text-status-error-400 font-[700] underline decoration-2 underline-offset-[3px]">
-                    {tok.text}
-                  </span>
-                );
-              }
+              const key = `ans-${idx}`;
+              const active = answerLookup?.key === key;
               return (
-                <span key={i} className={p.hl ? 'text-primary-main-600 font-[700]' : undefined}>
+                <button
+                  key={i}
+                  type="button"
+                  data-answer-lookup-word
+                  aria-label={`${tok.clean} 뜻 보기`}
+                  aria-expanded={active}
+                  className={`
+                    inline font-[inherit] text-[inherit] leading-[inherit] text-left align-baseline
+                    rounded-[4px] px-[1px]
+                    focus:outline-none
+                    transition-colors duration-150
+                    ${isWrong ? 'text-status-error-600 dark:text-status-error-400 font-[700] underline decoration-2 underline-offset-[3px]' : ''}
+                    ${active ? 'bg-primary-main-50 dark:bg-primary-main-dark' : ''}
+                  `}
+                  onClick={(e) => handleAnswerWordTap(e, key, tok.clean)}
+                >
                   {tok.text}
-                </span>
+                </button>
               );
             })}
           </span>
@@ -325,6 +410,24 @@ const SentenceArrangeQuestion = ({ question, onComplete, onCardMatched, farmByWo
         }}
         onNext={handleNext}
       />
+
+      {/* "정답 문장" 단어 뜻 말풍선 — document.body 포털(WordInfoBubble)이라 트레이 카드의
+          overflow-hidden에 잘리지 않는다. */}
+      <AnimatePresence>
+        {answerLookup && (
+          <WordInfoBubble
+            key={answerLookup.key}
+            anchor={answerLookup.anchor}
+            status={answerLookup.status}
+            info={answerLookup.info}
+            speaking={isSpeaking && speakingTarget === 'lookup'}
+            onReplay={() => {
+              haptic('light');
+              speak(answerLookup.word, answerLang, 'lookup');
+            }}
+          />
+        )}
+      </AnimatePresence>
     </div>
   );
 };

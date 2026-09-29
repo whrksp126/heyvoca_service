@@ -29,11 +29,8 @@ import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
 import { useQuickReview } from '../../hooks/useQuickReview';
 import { vibrate, showToast } from '../../utils/osFunction';
 import { getRottenPlantsApi, recoverPlantsApi } from '../../api/farm';
-import CropImage, { CROP_ASSETS } from '../farm/CropImage';
-import { stageToCrop } from '../../utils/crop';
 import RottenListSheet from '../farm/RottenListSheet';
 import StoreNewFullSheet from '../newfullsheet/StoreNewFullSheet';
-import navStoreIcon from '../../assets/images/farm/store.png';
 
 const VISIBLE_WORDS = 3;
 
@@ -123,35 +120,6 @@ const buildWordListParts = (words = [], expanded, onToggle) => {
   return { compact, expandedBlock };
 };
 
-/**
- * 행 타이틀 왼쪽 인라인 아이콘 — 22px 고정 박스(체크리스트화 이후, 예전 72×52 아이콘
- * 칸을 대신한다). 이미지는 object-contain 으로 원본 비율을 유지한다.
- */
-const RowIcon = ({ children }) => (
-  <span className="shrink-0 w-[22px] h-[22px] flex items-center justify-center">{children}</span>
-);
-
-/**
- * 시듦·돌봄 행의 인라인 작물 아이콘 — 미니 밭(72px, 좌표 8자리) 대신 그 행 **첫 단어**의
- * 성장 단계를 행의 건강 상태(시듦=wilted, 돌봄=drying) variant로 하나만 그린다.
- * 22px 로는 미니 밭의 점 배치가 다시 안 보이는 점(QA 스크린샷 — "씨앗은 점 하나")이라
- * 이번엔 단어 하나를 또렷하게 보여주는 쪽을 택했다. CropImage 의 align="center" 가
- * 단계별 실측 바운딩박스로 정사각형 칸 안에서 가운데 정렬해 준다.
- */
-const RowCrop = ({ words = [], health }) => {
-  const raw = words[0]?.stage;
-  // 시듦·돌봄 목록의 단어는 전부 이미 심긴 채 자라는 중이다(둘 다 밭에서 물을 준다) —
-  // 하지만 이 응답은 일반 crop 키('seed' 등)만 내려주고, CropImage 는 심은 씨앗(낱알)과
-  // 보유 씨앗(봉투)을 구분하려고 'PLANTED_SEED' 문자열을 따로 요구한다. 그대로 넘기면
-  // 밭에 없는 "미학습 봉투" 그림이 나오므로 seed 단계만 PLANTED_SEED로 정규화한다.
-  const stage = stageToCrop(raw) === 'seed' ? 'PLANTED_SEED' : raw;
-  return (
-    <RowIcon>
-      <CropImage stage={stage} health={health} size={22} align="center" solo />
-    </RowIcon>
-  );
-};
-
 /** 완료 표시용 동그라미 체크박스 — 표시 전용(탭 동작 없음). 미완료=빈 원, 완료=채운 원+체크 */
 const CheckCircle = ({ checked }) => (
   <span
@@ -165,16 +133,19 @@ const CheckCircle = ({ checked }) => (
   </span>
 );
 
-/** 인라인 아이콘 폭(22) + 제목과의 간격(6) — 단어 목록을 이 만큼 들여써서 체크박스가
- *  아니라 "타이틀 텍스트 시작선"에 맞춘다(아이콘이 없는 행도 같은 값으로 통일). */
-const TITLE_TEXT_INDENT = 'pl-[28px]';
+/*
+  단어 목록(sub·expand) 들여쓰기 — 2026-09-29 QA로 제목 왼쪽 인라인 아이콘(새싹·씨앗봉투 등)을
+  뺐다. 아이콘이 있을 때는 그 폭(22)+간격(6)만큼 sub 를 들여써 "타이틀 텍스트 시작선"에
+  맞췄지만, 이제 제목이 칼럼 맨 앞에서 시작하므로 들여쓰기 없이 그대로 맞춰야 제목과 같은
+  시작선에 정렬된다.
+*/
+const TITLE_TEXT_INDENT = '';
 
 /**
- * 행 한 줄 — [체크박스][제목(+작은 인라인 아이콘)+단어 목록][우측] · 행 탭(버튼 제외)은
- * onRowClick. 단어 목록(sub·expand)은 체크박스 칸 밖, 제목과 같은 칼럼 안에 두되
- * TITLE_TEXT_INDENT 만큼 더 들여써서 아이콘이 아니라 타이틀 텍스트 시작선에 맞춘다.
+ * 행 한 줄 — [체크박스][제목+단어 목록][우측] · 행 탭(버튼 제외)은 onRowClick.
+ * 단어 목록(sub·expand)은 체크박스 칸 밖, 제목과 같은 칼럼 안에서 제목과 같은 시작선에 맞춘다.
  */
-const Row = ({ icon, title, titleClassName, sub, expand, right, last, faded, checked, onRowClick }) => (
+const Row = ({ title, titleClassName, sub, expand, right, last, faded, checked, onRowClick }) => (
   <div
     role={onRowClick ? 'button' : undefined}
     tabIndex={onRowClick ? 0 : undefined}
@@ -183,8 +154,7 @@ const Row = ({ icon, title, titleClassName, sub, expand, right, last, faded, che
   >
     <CheckCircle checked={checked} />
     <div className="flex-1 min-w-0 flex flex-col gap-[4px]">
-      <div className={`flex items-center gap-[6px] ${faded ? 'opacity-45' : ''}`}>
-        {icon}
+      <div className={faded ? 'opacity-45' : ''}>
         <b className={`text-[15px] font-[800] ${titleClassName || 'text-layout-black dark:text-layout-white'}`}>
           {title}
         </b>
@@ -317,7 +287,6 @@ const TodayTasksCard = () => {
     const { compact, expandedBlock } = buildWordListParts(rotten.words, expanded.rotten, () => toggle('rotten'));
     rowDefs.push({
       key: 'rotten',
-      icon: <RowIcon><img src={CROP_ASSETS.nutrient} alt="" draggable={false} className="w-[20px] h-[20px] object-contain select-none" /></RowIcon>,
       title: '썩은 단어 살리기',
       sub: compact,
       expand: expandedBlock,
@@ -332,7 +301,6 @@ const TodayTasksCard = () => {
     const { compact, expandedBlock } = buildWordListParts(wilted.words, expanded.wilted, () => toggle('wilted'));
     rowDefs.push({
       key: 'wilted',
-      icon: <RowCrop words={wilted.words} health="WILTED" />,
       title: '시듦 물주기',
       titleClassName: done ? undefined : 'text-[#C24E0C]',
       sub: compact,
@@ -349,7 +317,6 @@ const TodayTasksCard = () => {
     const { compact, expandedBlock } = buildWordListParts(care.words, expanded.care, () => toggle('care'));
     rowDefs.push({
       key: 'care',
-      icon: <RowCrop words={care.words} health="THIRSTY" />,
       title: '오늘 돌봄 물주기',
       sub: compact,
       expand: expandedBlock,
@@ -368,7 +335,6 @@ const TodayTasksCard = () => {
     const done = newSeed.done >= newSeed.target;
     return {
       key: 'new_seed',
-      icon: <RowIcon><img src={CROP_ASSETS.seedPacket} alt="" draggable={false} className="w-[22px] h-[22px] object-contain select-none" /></RowIcon>,
       title: '새 씨앗 심기',
       faded: done,
       checked: done,
@@ -379,7 +345,6 @@ const TodayTasksCard = () => {
 
   const buyRow = showBuy ? {
     key: 'buy',
-    icon: <RowIcon><img src={navStoreIcon} alt="" draggable={false} className="w-[20px] h-[20px] object-contain select-none" /></RowIcon>,
     title: '새 씨앗 구매',
     faded: buyDone,
     checked: buyDone,

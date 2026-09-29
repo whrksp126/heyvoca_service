@@ -219,6 +219,8 @@ export const QUESTION_TYPE_PLUGINS = [
     family: 'multipleChoice',
     direction: 'en2ko',
     listening: false,
+    // 상단 헤더 안내 문구(components/takeTest/Header.jsx) — 없으면 "테스트" 폴백.
+    guideTitle: '알맞은 뜻을 선택하세요',
     component: null,       // Main.jsx 기존 코드로 처리
     setupQuestions: null,  // TakeTest.jsx 기존 코드로 처리
   },
@@ -229,6 +231,7 @@ export const QUESTION_TYPE_PLUGINS = [
     family: 'multipleChoice',
     direction: 'en2ko',
     listening: true,
+    guideTitle: '듣고 알맞은 뜻을 선택하세요',
     component: null,
     setupQuestions: null,
   },
@@ -243,6 +246,7 @@ export const QUESTION_TYPE_PLUGINS = [
     family: 'multipleChoice',
     direction: 'ko2en',
     listening: false,
+    guideTitle: '알맞은 단어를 선택하세요',
     component: null,
     setupQuestions: null,
   },
@@ -255,6 +259,7 @@ export const QUESTION_TYPE_PLUGINS = [
     family: 'fillInTheBlank',
     direction: null,
     listening: false,
+    guideTitle: '빈칸에 알맞은 단어를 선택하세요',
     component: FillInTheBlankQuestion,
     setupQuestions: (selectedWords, allWords) => buildFillInTheBlankQuestions(selectedWords, allWords),
   },
@@ -265,6 +270,7 @@ export const QUESTION_TYPE_PLUGINS = [
     family: 'cardMatch',
     direction: null,
     listening: false,
+    guideTitle: '같은 뜻끼리 짝지어 보세요',
     component: CardMatchQuestion,
     setupQuestions: (selectedWords) => {
       const chunks = buildChunksAvoidingMeaningClash(selectedWords, 4);
@@ -284,6 +290,7 @@ export const QUESTION_TYPE_PLUGINS = [
     family: 'cardMatch',
     direction: null,
     listening: true,
+    guideTitle: '듣고 같은 카드를 짝지어 보세요',
     component: CardMatchListeningQuestion,
     setupQuestions: (selectedWords) => {
       const chunks = buildChunksAvoidingMeaningClash(selectedWords, 4);
@@ -305,6 +312,7 @@ export const QUESTION_TYPE_PLUGINS = [
     family: 'sentenceArrange',
     direction: null,
     listening: false,
+    guideTitle: '문장을 완성하세요',
     component: SentenceArrangeQuestion,
     setupQuestions: buildArrangeQuestions('sentenceArrangePartial'),
   },
@@ -316,6 +324,7 @@ export const QUESTION_TYPE_PLUGINS = [
     family: 'sentenceArrange',
     direction: null,
     listening: false,
+    guideTitle: '문장을 완성하세요',
     component: SentenceArrangeQuestion,
     setupQuestions: buildArrangeQuestions('sentenceArrange'),
   },
@@ -328,6 +337,7 @@ export const QUESTION_TYPE_PLUGINS = [
     family: 'sentenceArrange',
     direction: null,
     listening: true,
+    guideTitle: '듣고 문장을 만드세요',
     component: ListenArrangeQuestion,
     setupQuestions: buildArrangeQuestions('listenArrange'),
   },
@@ -339,6 +349,7 @@ export const QUESTION_TYPE_PLUGINS = [
     family: 'fillInTheBlankTyping',
     direction: null,
     listening: false,
+    guideTitle: '빈칸에 단어를 입력하세요',
     component: FillInTheBlankTypingQuestion,
     setupQuestions: buildTypingQuestions,
   },

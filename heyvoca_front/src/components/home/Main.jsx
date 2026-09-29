@@ -373,24 +373,17 @@ const Main = () => {
     }, { smFull: true, closeOnBackdropClick: true });
   };
 
-  // 최근에 심은 단어 — 전용 페이징 API가 없어 홈 피드 캐시(limit 20)를 그대로 보여준다.
-  const openRecentSheet = () => {
-    vibrate({ duration: 5 });
-    pushNewFullSheet(WordListSheet, {
-      title: '최근에 심은 단어',
-      items: feed.recent ?? [],
-      emptyText: '최근에 심은 단어가 없어요',
-    }, { smFull: true, closeOnBackdropClick: true });
-  };
-
   /*
     성과 카드 아래에 붙는 "지금 볼 만한 단어".
 
     2026-09-27 홈 개편 — "지금 물이 필요한 단어"·"되살릴 수 있는 단어" 두 묶음은 뺐다.
     새 TodayTasksCard(오늘 할 일)의 "오늘 돌봄 물주기"·"시듦 물주기"·"썩은 단어 살리기" 행이
     같은 사실(개수 + 단어 목록 + 학습/회복 진입)을 이미 더 자세히 말한다 — 카드 두 곳에서
-    같은 단어를 두 번 나열하지 않는다. "아직 심지 않은 씨앗"·"최근에 심은 단어"는 오늘 할 일
-    카드가 다루지 않는 정보(하루 목표가 아니라 보유 전체 · 최근 이력)라 그대로 남긴다.
+    같은 단어를 두 번 나열하지 않는다. "아직 심지 않은 씨앗"은 오늘 할 일 카드가 다루지 않는
+    정보(하루 목표가 아니라 보유 전체)라 그대로 남긴다.
+
+    "최근에 심은 단어"는 2026-09-29 QA로 제거 — "오늘 자란 단어" 카드(그 씨앗도 심은 순간
+    'seed' 단계로 포함된다)와 사실이 겹쳐 같은 단어를 두 번 보여주는 카드였다.
   */
   const feed = farmFeed ?? {};
   const feedCandidates = [
@@ -406,25 +399,11 @@ const Main = () => {
       totalCount: unplanted,
       onViewAll: openSeedsSheet,
     },
-    {
-      key: 'recent',
-      title: '최근에 심은 단어',
-      items: feed.recent ?? [],
-      // 상태어(씨앗) 제거 → 뜻으로, 좌측 작물 아이콘도 뺀다(showCrop=false, 사용자 요청).
-      // onMore가 없어 헤더는 숫자만 있고 안 눌린다 — "+n개 더"만 시트를 연다.
-      showCrop: false,
-      moreLabel: null,
-      onMore: null,
-      onViewAll: openRecentSheet,
-    },
   ];
 
-  // 급한 일이 없는 상태에서는 "심을 씨앗"이 먼저다 — 그때의 CTA 도 씨앗을 가리킨다.
-  // 'care'·'rotten'은 뺐으니(위 주석) 이제 둘 다 그린다 — slice(0, 2)는 그대로 둬
+  // 'care'·'rotten'·'recent'는 뺐으니(위 주석) 지금은 'seeds' 하나뿐이다. slice(0, 2)는 그대로 둬
   // 앞으로 후보가 다시 늘어도 §7 "최대 두 묶음"을 지키게 한다.
-  const feedOrder = (homeState === HOME_STATES.DONE || homeState === HOME_STATES.NEW_SEED)
-    ? ['seeds', 'recent']
-    : ['recent', 'seeds'];
+  const feedOrder = ['seeds'];
 
   const feedSections = feedOrder
     .map((key) => feedCandidates.find((c) => c.key === key))
@@ -554,7 +533,7 @@ const Main = () => {
             황금 당근은 마이페이지 온실에 그대로 있다. */}
         <GrewTodayCard items={grewItems} onViewAll={openGrownSheet} />
 
-        {/* 지금 볼 만한 단어 — "아직 심지 않은 씨앗"·"최근에 심은 단어" 최대 두 묶음 */}
+        {/* 지금 볼 만한 단어 — "아직 심지 않은 씨앗" ("최근에 심은 단어"는 2026-09-29 제거) */}
         {feedSections.map((section) => (
           <WordFeedCard
             key={section.key}

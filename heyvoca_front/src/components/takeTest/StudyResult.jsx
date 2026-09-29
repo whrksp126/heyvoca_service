@@ -889,13 +889,9 @@ const StudyResult = () => {
         });
       }
 
-      // ⑪ 데일리 목표 — 복습과 신규를 모두 끝낸 날
-      if (result.daily_mission_complete) {
-        screens.push({
-          type: 'dailyMission',
-          data: {}
-        });
-      }
+      // ⑪ 데일리 목표 슬라이드(토끼 + "오늘 농장을 다 돌봤어요!")는 2026-09-29 QA로 제거 —
+      // ⑩ 연속 학습(farmStreak) 슬라이드와 같은 "오늘 학습을 끝냈다"는 사실을 중복으로 알렸다.
+      // result.daily_mission_complete 자체(서버 데일리 미션 처리·보석 지급)는 그대로 두고 화면에만 안 그린다.
 
       // ⑫ 업적 — 달성마다 한 장
       if (result.goals && result.goals.length > 0) {
@@ -979,6 +975,15 @@ const StudyResult = () => {
   const [frozenPlan, setFrozenPlan] = useState(null);
   const nextPlan = frozenPlan ?? livePlan;
   const isResultScreen = screenList[currentScreenIndex]?.type === 'result';
+  /*
+    자유 설정 테스트(학습 탭 'test' · 단어장 상세 'exam')는 "자동 다음 학습 진행"(카운트다운 →
+    자동 시작)을 켜지 않는다 — 2026-09-29 QA. 사용자가 직접 고른 설정(단어장·단계·유형·개수)을
+    매번 확인 없이 자동으로 또 돌리면 의도와 다른 세트가 계속 이어질 수 있다. 일반 추천 학습
+    ('quick' — 홈 주 CTA)만 넷플릭스 '다음화'처럼 자동으로 이어간다.
+    "다음 학습" 버튼 자체(수동 클릭)는 자유 설정 테스트에서도 그대로 남는다 — 아래에서
+    막는 건 자동 시작 useEffect 하나뿐이다.
+  */
+  const isFreeTest = testType === 'test' || testType === 'exam';
   // idle(아직 안 셈) → counting ⇄ paused(백그라운드) → stopped(사용자가 멈춤) / starting / failed
   const [countdownPhase, setCountdownPhase] = useState('idle');
   const [remainingSec, setRemainingSec] = useState(Math.ceil(NEXT_STUDY_COUNTDOWN_MS / 1000));
@@ -1095,7 +1100,7 @@ const StudyResult = () => {
 
   // 마지막 슬라이드에 도착하면 센다 — 앞 슬라이드를 보는 중에는 시작하지 않는다
   useEffect(() => {
-    if (!isResultScreen || !livePlan.available || countdownPhase !== 'idle') return;
+    if (!isResultScreen || !livePlan.available || countdownPhase !== 'idle' || isFreeTest) return;
     setFrozenPlan(livePlan);
     if (livePlan.fallback === 'quick') setNextNotice('이전 설정을 찾지 못해 AI 추천으로 이어가요');
     if (typeof document !== 'undefined' && document.visibilityState === 'hidden') {
@@ -1649,14 +1654,6 @@ const StudyResult = () => {
             오늘도 <strong className='text-primary-main-600'>출석 완료</strong>!
           </motion.p>
         </div>
-      );
-    } else if (currentScreen.type === 'dailyMission') {
-      // ⑪ 데일리 목표 — 복습과 신규를 모두 끝낸 날
-      content = (
-        <FarmAwardSlide
-          art={<FarmArt src={CROP_ASSETS.mascotWatering} alt="데일리 목표 완료" />}
-          line={<>오늘 농장을 <strong className='text-primary-main-600'>다 돌봤어요!</strong></>}
-        />
       );
     } else if (currentScreen.type === 'combo') {
       // 콤보 달성 (AI 추천 테스트) — 이 슬라이드는 최고 기록을 갱신했을 때만 만들어진다(위 push 조건 참고).

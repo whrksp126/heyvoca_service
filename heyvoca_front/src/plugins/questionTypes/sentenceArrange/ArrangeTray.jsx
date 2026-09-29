@@ -463,7 +463,7 @@ const ArrangeTray = ({
                 const chipStyle = flag === true
                   ? 'bg-status-success-100 dark:bg-status-success-dark border-status-success-500 text-status-success-700 dark:text-status-success-300'
                   : flag === false
-                    ? 'bg-status-error-100 dark:bg-status-error-dark border-status-error-500 text-status-error-600 dark:text-status-error-300 line-through'
+                    ? 'bg-status-error-100 dark:bg-status-error-dark border-status-error-500 text-status-error-600 dark:text-status-error-300'
                     : 'bg-layout-white dark:bg-layout-black border-layout-gray-200 dark:border-[#3A3A3A] text-layout-black dark:text-layout-white';
                 return (
                   // 슬롯 바깥 상자 — 빈 슬롯 밑줄과 채운 칩을 항상 같은 높이(SLOT_BOX_H)로 감싸고
