@@ -5,6 +5,12 @@
 // 'script') 안에서 일반 단어 학습과 똑같은 화면(진행바·O/X·농장 상태 바·재출제·결과 화면)으로
 // 돌린다 — 글자 하나 = 단어 하나로 취급해 FSRS·작물 성장이 단어와 동일하게 굴러간다.
 //
+// 2026-09-30 재개편(듀오링고 문자 탭 방식): 줄 단위 "이 줄 배우기"·"이미 알아요" 진입점을
+// 없앴다. 행 헤더는 이제 라벨만 표시하고(ScriptRow), 학습/연습은 칸(ScriptCell) 하나를
+// 탭해 여는 상세 시트(ScriptCharDetailNewBottomSheet)에서 그 글자 하나로 시작한다. 이미
+// 심은 글자가 있으면 상단에 전폭 "글자 연습하기" 버튼도 둔다(mode=review, 서버가 XP 낮은
+// 글자를 우선 골라 준다).
+//
 // 진행도는 GET /script/progress(계약: heyvoca_back 동시 구현)가 단어와 같은 visual_stage
 // 문자열을 내려줘서, 이 그리드와 학습 결과 화면(StudyResult.jsx)이 같은 CropImage 규칙을 쓴다.
 
@@ -20,6 +26,7 @@ import {
   groupByRow,
   mergeProgress,
   mapScriptSessionItem,
+  buildDistractorPool,
   practicableItems,
   masteredCount,
   rowLabel,
@@ -47,7 +54,7 @@ const ScriptFieldBody = () => {
   const [starting, setStarting] = useState(false);
   // 이 탭(학습장 "글자")은 TabShell이 항상 마운트해 둔다(components/TabShell.jsx) —
   // /take-test로 갔다가 돌아와도 이 컴포넌트는 언마운트·재마운트되지 않는다. 그래서
-  // goSession이 세션을 시작하기 직전에 이 플래그를 세워 두고, /vocabulary-sheets로
+  // startSession이 세션을 시작하기 직전에 이 플래그를 세워 두고, /vocabulary-sheets로
   // 되돌아온 순간(location.pathname 변화 — TabShell처럼 숨겨져 있어도 useLocation은
   // 갱신된다)을 감지해 진행도를 다시 불러온다. 이게 없으면 방금 학습한 글자의 작물이
   // 그리드에 반영되지 않은 채 남는다.
@@ -103,22 +110,24 @@ const ScriptFieldBody = () => {
     [availableScripts]
   );
 
-  const goSession = useCallback(async (rowItems, mode, label) => {
-    if (starting || !rowItems || rowItems.length === 0) return;
+  // targetItems: 세션에 담을 글자(들) — 칸 하나(단일 배우기/연습하기)이거나 심은 글자
+  // 전체(상단 "글자 연습하기"). mode: 'learn' | 'review'.
+  const startSession = useCallback(async (targetItems, mode, label) => {
+    if (starting || !targetItems || targetItems.length === 0) return;
     setStarting(true);
     try {
-      // 세션 조회 모드(서버 힌트) — '이미 알아요' 확인도 이미 배운 셈 치고 복습과 같은
-      // 문제 구성으로 묻는다(2026-09-30 결정: 전용 배치 승인 엔드포인트 없이 /study/log
-      // 정답 기록으로 대체). 문제 배열의 실제 모양(만나기 포함 여부 등)은 클라이언트가
-      // utils/scriptQuestions.js buildScriptTestQuestions(원래 mode)로 따로 정한다.
       const sessionMode = mode === 'learn' ? 'learn' : 'review';
-      const chars = rowItems.map((it) => it.char);
+      const chars = targetItems.map((it) => it.char);
       const res = await getScriptSessionApi(activeScript, sessionMode, chars);
       if (res?.code !== 200 || !Array.isArray(res.data?.items) || res.data.items.length === 0) {
         showToast('지금은 시작할 수 없어요. 잠시 후 다시 시도해주세요');
         return;
       }
       const words = res.data.items.map((item) => mapScriptSessionItem(activeScript, item));
+      // 오답 후보 풀 — 칸 하나짜리 세션(글자 1개)이 대부분이라 words 자신으로는 사지선다를
+      // 채울 수 없다. 이 스크립트의 전체 글자 목록(items)을 풀로 함께 실어 보낸다
+      // (utils/scriptQuestions.js buildScriptTestQuestions가 words 대신 이 pool로 오답을 뽑는다).
+      const pool = buildDistractorPool(activeScript, items);
       // 돌아왔을 때 반드시 재조회하도록 — 위 location 이펙트가 처리한다(이 탭은 언마운트되지 않는다).
       awaitingReturnRef.current = true;
       navigate('/take-test', {
@@ -130,13 +139,14 @@ const ScriptFieldBody = () => {
             rowLabel: label,
             sessionId: res.data.session_id ?? null,
             words,
+            pool,
           },
         },
       });
     } finally {
       setStarting(false);
     }
-  }, [activeScript, navigate, starting]);
+  }, [activeScript, items, navigate, starting]);
 
   return (
     <div className="h-full overflow-y-auto px-[20px] pb-[32px]">
@@ -150,16 +160,19 @@ const ScriptFieldBody = () => {
       </div>
 
       {totalPracticable.length > 0 && (
-        <div className="flex justify-end mt-[8px]">
-          <button
-            type="button"
-            disabled={starting}
-            onClick={() => goSession(totalPracticable, 'review', '연습')}
-            className="h-[30px] px-[12px] rounded-full text-[12.5px] font-[700] bg-primary-main-100 dark:bg-primary-main-dark text-primary-main-600 disabled:opacity-60"
-          >
-            연습하기
-          </button>
-        </div>
+        <button
+          type="button"
+          disabled={starting}
+          onClick={() => startSession(totalPracticable, 'review', '글자 연습')}
+          className="
+            w-full h-[46px] mt-[12px] rounded-[12px]
+            text-[14.5px] font-[800] tracking-[-0.02em]
+            bg-primary-main-100 dark:bg-primary-main-dark text-primary-main-600
+            disabled:opacity-60
+          "
+        >
+          글자 연습하기
+        </button>
       )}
 
       {availableScripts.length > 1 && (
@@ -189,10 +202,7 @@ const ScriptFieldBody = () => {
             script={activeScript}
             label={rowLabel(activeScript, rowKey, rowItems)}
             items={rowItems}
-            practicableItems={practicableItems(rowItems)}
-            onLearn={() => goSession(rowItems, 'learn', rowLabel(activeScript, rowKey, rowItems))}
-            onPractice={() => goSession(practicableItems(rowItems), 'review', rowLabel(activeScript, rowKey, rowItems))}
-            onSkip={() => goSession(rowItems, 'skip', rowLabel(activeScript, rowKey, rowItems))}
+            onStart={startSession}
           />
         ))}
       </div>

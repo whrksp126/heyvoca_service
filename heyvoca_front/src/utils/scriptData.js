@@ -230,6 +230,18 @@ export const mapScriptSessionItem = (script, serverItem) => {
   };
 };
 
+/**
+ * 오답 후보 풀(utils/scriptQuestions.js buildScriptChoiceQuestion 등이 기대하는 { char, item }
+ * 래퍼 모양) — 이 스크립트의 전체 글자 목록(mergeProgress 결과)을 그대로 넘긴다.
+ *
+ * 2026-09-30 듀오링고식 탭 학습으로 개편하며 세션이 글자 하나(단일 칸 "배우기"/"연습하기")
+ * 만 담는 경우가 흔해졌다 — 그 하나짜리 words 배열을 그대로 오답 풀로 쓰면 사지선다가
+ * 정답 하나뿐인 문제가 된다. 항상 이 스크립트 전체를 풀로 넘겨 어떤 세션 크기에서도
+ * 그럴듯한 오답 3개(우선 confusables, 모자라면 무작위)를 채울 수 있게 한다.
+ */
+export const buildDistractorPool = (script, mergedItems) =>
+  (mergedItems || []).map((it) => ({ char: it.char, item: it }));
+
 /** strokeKey(단일 글자) 또는 compound([base, small])로 획 데이터를 찾는다. */
 export const getStrokeEntry = (script, item) => {
   const table = STROKE_DATA[script] || {};

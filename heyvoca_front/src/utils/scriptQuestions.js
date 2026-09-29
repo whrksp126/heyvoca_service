@@ -84,10 +84,14 @@ export const isFreshRow = (words) =>
   ));
 
 /**
- * 학습(줄 배우기) — 처음 배우는 줄이면 글자마다
+ * 학습("배우기") — 처음 배우는 글자(들)면 글자마다
  * [만나기 → 보고 고르기 → 듣고 고르기 → 따라 쓰기(알파벳은 대/소문자 각각)]를 순서대로
- * 이어 붙이고, 마지막에 최대 5문제짜리 확인 문제를 덧붙인다. 이미 한 번이라도 배운 줄을
- * "다시 배우기"로 들어오면 만나기 없이 무작위 테스트형으로 바로 들어간다.
+ * 이어 붙인다. 2026-09-30부터 칸 하나를 탭해 그 글자 하나만 배우는 것이 기본 진입점이라
+ * (components/newBottomSheet/ScriptCharDetailNewBottomSheet.jsx) words는 대개 1개다 —
+ * 글자가 하나뿐이면 이미 두 번(보고/듣고 고르기) 물었으니 마지막 확인 문제를 또 붙이지
+ * 않는다(반복해서 같은 글자 하나만 다시 묻는 건 어색하다). 여러 글자를 한 번에 배우는
+ * 경우(예: 이전 세션이 남긴 words)에는 최대 5문제짜리 확인 문제를 덧붙인다. 이미 한 번이라도
+ * 배운 글자를 "다시 배우기"로 들어오면 만나기 없이 무작위 테스트형으로 바로 들어간다.
  */
 export const buildScriptLearnQuestions = (script, words, pool) => {
   if (!isFreshRow(words)) return buildScriptRandomQuestions(script, words, pool);
@@ -98,19 +102,21 @@ export const buildScriptLearnQuestions = (script, words, pool) => {
     out.push(buildScriptChoiceQuestion(word, pool, 'scriptListenPick'));
     traceVariantsFor(script).forEach((variant) => out.push(buildScriptTraceQuestion(word, variant)));
   }
-  const checkCount = Math.min(words.length, 5);
-  const checkItems = shuffle(words).slice(0, checkCount);
-  checkItems.forEach((word, idx) => {
-    const kind = idx % 2 === 0 ? 'scriptSeePick' : 'scriptListenPick';
-    out.push(buildScriptChoiceQuestion(word, pool, kind));
-  });
+  if (words.length > 1) {
+    const checkCount = Math.min(words.length, 5);
+    const checkItems = shuffle(words).slice(0, checkCount);
+    checkItems.forEach((word, idx) => {
+      const kind = idx % 2 === 0 ? 'scriptSeePick' : 'scriptListenPick';
+      out.push(buildScriptChoiceQuestion(word, pool, kind));
+    });
+  }
   return out;
 };
 
 /**
  * 무작위 테스트형 — 만나기 없이 보고 고르기·듣고 고르기·따라 쓰기를 글자·유형 모두 랜덤
- * 순서로 배치한다(같은 글자·같은 유형이 바로 연속되지 않도록 그리디 스왑). 복습·다시 배우기·
- * '이미 알아요' 확인 공통.
+ * 순서로 배치한다(같은 글자·같은 유형이 바로 연속되지 않도록 그리디 스왑). 복습·다시 배우기
+ * 공통("연습하기" — ScriptCharDetailNewBottomSheet, 학습장 상단 "글자 연습하기").
  */
 export const buildScriptRandomQuestions = (script, words, pool) => {
   const combos = words.flatMap((word) => {
@@ -140,17 +146,15 @@ export const buildScriptRandomQuestions = (script, words, pool) => {
 /** 복습 — 무작위 테스트형 그대로. */
 export const buildScriptReviewQuestions = (script, words, pool) => buildScriptRandomQuestions(script, words, pool);
 
-/** '이미 알아요' 확인 — 무작위 테스트형에서 최대 5문제만 뽑는다(짧은 확인용). */
-export const buildScriptSkipQuestions = (script, words, pool) => {
-  const all = buildScriptRandomQuestions(script, words, pool);
-  return all.slice(0, Math.min(5, all.length));
-};
-
-/** mode('learn'|'review'|'skip')에 따라 문제 배열을 구성한다. 풀(오답 후보)은 이 세션의
- *  글자 전체(words) — 서버가 이미 줄/복습 대상으로 한정해 보냈으므로 그대로 쓴다. */
-export const buildScriptTestQuestions = (script, words, mode) => {
-  const pool = words;
-  if (mode === 'review') return buildScriptReviewQuestions(script, words, pool);
-  if (mode === 'skip') return buildScriptSkipQuestions(script, words, pool);
-  return buildScriptLearnQuestions(script, words, pool);
+/**
+ * mode('learn'|'review')에 따라 문제 배열을 구성한다.
+ *
+ * 풀(오답 후보)은 기본으로 이 세션의 글자들(words) 자신이지만, 칸 하나짜리 세션(글자 1개)
+ * 처럼 words만으로는 사지선다를 채울 수 없는 경우 호출부가 별도 pool(대개
+ * utils/scriptData.js buildDistractorPool로 만든 스크립트 전체 목록)을 넘긴다.
+ */
+export const buildScriptTestQuestions = (script, words, mode, pool) => {
+  const distractorPool = Array.isArray(pool) && pool.length > 0 ? pool : words;
+  if (mode === 'review') return buildScriptReviewQuestions(script, words, distractorPool);
+  return buildScriptLearnQuestions(script, words, distractorPool);
 };
