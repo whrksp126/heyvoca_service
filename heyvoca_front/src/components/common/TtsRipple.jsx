@@ -18,11 +18,16 @@ import { motion } from 'framer-motion';
  * @param {number} size       최대 지름(px)
  * @param {number} duration   실제 TTS 재생 길이(초). 유효하지 않으면 렌더하지 않음.
  * @param {string} className  추가 클래스(z-index 등)
+ * @param {boolean} loop      true 면 duration 과 무관하게 LOOP_PERIOD 주기로 계속 반복한다 —
+ *                            재생 중 내내 파동이 보여야 하는 곳(듣고 배열 스피커 카드) 전용.
+ *                            부모가 재생이 끝나면 언마운트해서 멈춘다.
  */
 const RINGS = [0.3, 0.55]; // 두 동심원의 시작 scale (안쪽/바깥쪽)
 
-const TtsRipple = ({ size = 96, duration, className = '' }) => {
-  if (!(Number.isFinite(duration) && duration > 0)) return null;
+const LOOP_PERIOD = 1.2;
+
+const TtsRipple = ({ size = 96, duration, className = '', loop = false }) => {
+  if (!loop && !(Number.isFinite(duration) && duration > 0)) return null;
 
   return (
     <>
@@ -34,7 +39,9 @@ const TtsRipple = ({ size = 96, duration, className = '' }) => {
           style={{ width: size, height: size }}
           initial={{ scale: startScale, opacity: 0, x: '-50%', y: '-50%' }}
           animate={{ scale: [startScale, 1], opacity: [0, 0.55, 0], x: '-50%', y: '-50%' }}
-          transition={{ duration, ease: 'easeOut' }}
+          transition={loop
+            ? { duration: LOOP_PERIOD, ease: 'easeOut', repeat: Infinity, delay: i * (LOOP_PERIOD / 2) }
+            : { duration, ease: 'easeOut' }}
         />
       ))}
     </>

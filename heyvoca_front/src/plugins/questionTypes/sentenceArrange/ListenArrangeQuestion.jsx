@@ -92,7 +92,7 @@ const ListenArrangeQuestion = ({ question, onComplete, onCardMatched, farmByWord
 
   // 0.7배속 = 문장을 단어 단위로 끊어 한 단어씩 재생 → WORD_GAP_MS 간격 → 다음 단어.
   // speak()와 같은 gen 카운터를 공유해서(speakGenRef) 다른 재생이 끼어들면 즉시 멈춘다.
-  const WORD_GAP_MS = 175;
+  const WORD_GAP_MS = 70;
   const speakWordsSlowly = async (text, lang, target, rate) => {
     const words = text.split(/\s+/).filter(Boolean);
     if (words.length === 0) return;
@@ -238,7 +238,7 @@ const ListenArrangeQuestion = ({ question, onComplete, onCardMatched, farmByWord
             {speakingNormal && (
               <TtsRipple
                 size={90}
-                duration={speakDuration}
+                loop
                 className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-[0] pointer-events-none"
               />
             )}
@@ -264,7 +264,7 @@ const ListenArrangeQuestion = ({ question, onComplete, onCardMatched, farmByWord
             {speakingSlow && (
               <TtsRipple
                 size={90}
-                duration={speakDuration}
+                loop
                 className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-[0] pointer-events-none"
               />
             )}
