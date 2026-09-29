@@ -289,9 +289,9 @@ const TakeTest = () => {
       if (isSingleWordPluginType(targetType)) {
         // 서버 payload 기반 유형은 suggested 유형과 같을 때만 만들어지므로, plant 응답의
         // 유형별 payload(questionPayloads)로 그 단계용 단어를 만들어 넘긴다.
-        const payload = word.questionPayloads?.[type];
+        const payload = word.questionPayloads?.[targetType];
         const stepWord = payload && Object.keys(payload).length > 0
-          ? { ...word, suggestedQuestionType: type, questionPayload: payload }
+          ? { ...word, suggestedQuestionType: targetType, questionPayload: payload }
           : word;
         const generated = plugin.setupQuestions([stepWord], allWords);
         if (generated.length > 0) return generated[0];
