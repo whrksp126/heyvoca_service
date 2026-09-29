@@ -19,6 +19,7 @@ import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { motion, useAnimationControls } from 'framer-motion';
 import { Check } from '@phosphor-icons/react';
 import { haptic } from '../../lib/feel';
+import { playSuccessSound } from '../../utils/audio';
 
 const GUIDE_COLOR = '#B9B2A6';
 const GUIDE_OPACITY = 0.3;
@@ -186,6 +187,7 @@ const StrokeTracer = ({ entries, compound = false, onDone }) => {
     if (passed) {
       haptic('success');
       if (activeStrokeIndex + 1 >= strokes.length) {
+        playSuccessSound(); // 글자를 다 썼을 때 — 학습하기 정답과 같은 효과음
         setPhase('result');
       } else {
         setActiveStrokeIndex((i) => i + 1);

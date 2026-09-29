@@ -15,6 +15,7 @@ import ResultMark from '../common/ResultMark';
 import TtsRipple from '../common/TtsRipple';
 import { optionMainSub } from '../../utils/scriptSession';
 import { speakScriptItem } from '../../utils/scriptData';
+import { playSuccessSound, playErrorSound } from '../../utils/audio';
 
 // 정오답 버튼 규격은 components/takeTest/Main.jsx의 사지선다 옵션 버튼과 동일 클래스를 쓴다
 // (h-50 · border-[1px] rounded-[10px] · text-[14px] font-[700]) — 학습 화면과 다른 화면처럼
@@ -42,6 +43,16 @@ const ChoiceCard = ({ step, answered, selectedIndex, onSelect }) => {
     if (isListen) play();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [step.id]);
+
+  // 채점 순간 — 학습하기(TakeTest)와 같은 정오답 효과음·햅틱, 이어서 정답 글자 발음을 들려준다.
+  useEffect(() => {
+    if (!answered) return undefined;
+    const correct = selectedIndex === answerIndex;
+    if (correct) { haptic('success'); playSuccessSound(); } else { haptic('error'); playErrorSound(); }
+    const t = setTimeout(() => { play(); }, 450);
+    return () => clearTimeout(t);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [answered]);
 
   return (
     <div className="flex flex-col gap-[16px] w-full h-full">
