@@ -1405,8 +1405,10 @@ const StudyResult = () => {
                         </div>
 
                         {/* ③ 채점 결과 — 오른쪽. 우측 상단 복습 예정일 태그(top 12)와 겹치지 않게
-                            태그 높이만큼 내린다. */}
-                        <span className='flex items-center justify-center flex-shrink-0 w-[22px] h-[22px] mt-[14px]'>
+                            태그가 실제로 떠 있을 때만(글자 세션은 태그 자체를 숨긴다 — 위 testType
+                            분기) 그 높이만큼 내린다. 태그가 없는데도 내리면 O/X만 카드 세로 중앙에서
+                            아래로 쏠려 보인다(2026-09-30 실기기 QA). */}
+                        <span className={`flex items-center justify-center flex-shrink-0 w-[22px] h-[22px] ${testType !== 'script' ? 'mt-[14px]' : ''}`}>
                           {item.isCorrect ? (
                             <Circle size={20} weight="bold" className='text-status-success-500' />
                           ) : (

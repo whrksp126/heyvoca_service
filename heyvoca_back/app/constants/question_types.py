@@ -71,8 +71,16 @@ CROP_STAGE_MAX_TIER = {
 }
 
 # 추천 알고리즘 밖에서 프론트가 직접 부여해 보낼 수 있는 유형(추천 후보에는 없음).
+# script* 3종(2026-09-30 글자 밭) — heyvoca_front utils/scriptQuestions.js가 만드는
+# scriptSeePick/scriptListenPick/scriptTrace. scriptIntro는 NO_GRADE_QUESTION_TYPES라
+# /study/log 자체를 타지 않아 여기 없다. 이 목록에 없으면 /study/log가 400으로 거부해
+# 글자 학습이 FSRS·농장 성장에 전혀 반영되지 않는다(모든 글자가 영원히 UNPLANTED_SEED로
+# 남는 버그의 원인 — 2026-09-30 실기기 QA).
 _NON_RECOMMENDABLE_QUESTION_TYPES = (
     'multipleChoiceDiagnosis',
+    'scriptSeePick',
+    'scriptListenPick',
+    'scriptTrace',
 )
 
 # 프론트에서 드롭되어 더 이상 출제되지 않지만, 과거 /study/log 기록에 남아 있어

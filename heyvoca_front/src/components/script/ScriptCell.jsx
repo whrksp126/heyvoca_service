@@ -21,7 +21,7 @@ import { vibrate } from '../../utils/osFunction';
 import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 import ScriptCharDetailNewBottomSheet from '../newBottomSheet/ScriptCharDetailNewBottomSheet';
 
-const ScriptCell = ({ item, script, onStart, minHeight = 64 }) => {
+const ScriptCell = ({ item, script, onStart, minHeight = 52 }) => {
   "use memo";
   const stage = item.stage;
   const mastered = isMastered(item.stage);
@@ -61,11 +61,14 @@ const ScriptCell = ({ item, script, onStart, minHeight = 64 }) => {
       >
         {item.char}
       </span>
-      {/* 학습 카드 하단 농장 상태 바의 축소판 — 왼쪽 작물, 옆에 단계 내 XP 막대 */}
+      {/* 학습 카드 하단 농장 상태 바의 축소판 — 왼쪽 작물, 옆에 단계 내 XP 막대.
+          2026-09-30 실기기 QA: 작물이 12px 라 너무 작고 칸 아래 여백(mt-[6px])이 넓어
+          칸 전체가 길쭉해 보였다 — 작물을 18px 로 키우고 막대와 items-center 로 세로
+          가운데 정렬을 유지한 채, 위 간격만 좁혀 글자–작물줄 간격을 줄인다. */}
       {stage && (
-        <div className="flex items-center gap-[3px] w-full px-[6px] mt-[6px]">
+        <div className="flex items-center gap-[4px] w-full px-[6px] mt-[3px]">
           <span className="shrink-0 inline-flex">
-            <CropImage stage={stage} health="FRESH" solo size={12} align="center" />
+            <CropImage stage={stage} health="FRESH" solo size={18} align="center" />
           </span>
           <span className="flex-1 h-[4px] rounded-full overflow-hidden bg-layout-gray-200 dark:bg-[#3A3A3A]">
             <span

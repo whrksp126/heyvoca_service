@@ -35,7 +35,11 @@ import ResultMark from '../common/ResultMark';
 
 const GUIDE_COLOR = '#B9B2A6';
 const GUIDE_OPACITY = 0.3;
-const ACTIVE_GUIDE_OPACITY = 0.85;
+// 2026-09-30 실기기 QA(2b) — 예전엔 0.85 라 지금 차례인 획만 가이드가 확 짙어져, 그 획이
+// 캔버스 위/아래 어느 쪽에 있느냐에 따라 캔버스가 두 톤으로 갈라진 것처럼 보였다(가나·
+// 대문자에서도 재현 — 소문자 기준선과는 무관, 이 값 하나가 원인). 흰 점선 오버레이가
+// 이미 "지금 획"을 충분히 표시하므로 가이드 자체의 강조는 줄인다.
+const ACTIVE_GUIDE_OPACITY = 0.45;
 const CROSSHAIR_OPACITY = 0.16;
 const BASELINE_OPACITY = 0.18;
 // 소문자 기준선 위치 — viewBox 높이 대비 비율(strokes/alphabet.json 소문자 글자가 대략
@@ -430,17 +434,20 @@ const StrokeTracer = ({ entries, compound = false, caseVariant = null, replayKey
                   기본값(strokeWidth)을 쓰면 화살촉 크기가 그 위에 그리는 선의 굵기에
                   비례해서, 얇은 점선 대신 두꺼운 가이드 자체에 그렸을 때 거대한 삼각형으로
                   뭉쳐 보였다. 크기는 가이드 굵기 정도로만(작고 날렵하게). */}
+              {/* 2026-09-30 QA(2c) — 화살촉이 뭉툭했다. 더 작고 날렵한 열린 쉐브론(선으로만
+                  그린 ">")으로 바꾸고, refX를 path 끝(10)보다 안쪽(7)에 둬 촉이 가이드 끝을
+                  넘어서지 않고 살짝 안으로 들어와 앉게 한다. */}
               <marker
                 id={arrowMarkerId}
                 viewBox="0 0 10 10"
-                refX="8.5"
+                refX="7"
                 refY="5"
-                markerWidth={vbW * 0.05}
-                markerHeight={vbW * 0.05}
+                markerWidth={vbW * 0.032}
+                markerHeight={vbW * 0.032}
                 markerUnits="userSpaceOnUse"
-                orient="auto-start-reverse"
+                orient="auto"
               >
-                <path d="M0,1.4 L9,5 L0,8.6 z" fill="#FFFFFF" />
+                <path d="M3,2 L7,5 L3,8" fill="none" stroke="#FFFFFF" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
               </marker>
             </defs>
 
@@ -492,17 +499,24 @@ const StrokeTracer = ({ entries, compound = false, caseVariant = null, replayKey
                 d={strokes[activeStrokeIndex]}
                 fill="none"
                 stroke="#FFFFFF"
-                strokeWidth={vbW * 0.012}
+                /* 2026-09-30 QA(2c) — 가이드 굵기(0.045)의 약 1/6로 더 얇게. */
+                strokeWidth={vbW * 0.0075}
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                strokeDasharray={`${vbW * 0.014} ${vbW * 0.022}`}
+                strokeDasharray={`${vbW * 0.01} ${vbW * 0.018}`}
                 markerEnd={`url(#${arrowMarkerId})`}
                 opacity={0.95}
                 pointerEvents="none"
               />
             )}
 
-            {/* 획순 애니메이션 — demo 단계에서만 재생 */}
+            {/* 획순 애니메이션 — demo 단계에서만 재생.
+                2026-09-30 QA(2a) — 예전엔 opacity를 처음부터 1로 둬서, 아직 차례가 안 된
+                모든 획이 pathLength:0 상태로 동시에 마운트됐다. SVG는 길이 0 + round
+                linecap인 path를 작은 채운 원(점)으로 그리므로, 자기 차례가 오기 전까지
+                모든 미래 획의 시작점에 분홍 점이 함께 떠 있는 것처럼 보였다("아직 차례가
+                아닌 획의 시작점에 분홍 점" 버그). opacity를 0에서 시작해 그 획의 delay가
+                끝나는 순간에만 켜지게 해서, 자기 차례가 되기 전에는 완전히 안 보이게 한다. */}
             {!compound && phase === 'demo' && strokes.map((d, i) => (
               <motion.path
                 key={`demo-${i}`}
@@ -512,9 +526,12 @@ const StrokeTracer = ({ entries, compound = false, caseVariant = null, replayKey
                 strokeWidth={vbW * 0.045}
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                initial={{ pathLength: 0, opacity: 1 }}
-                animate={{ pathLength: 1 }}
-                transition={{ duration: DRAW_DURATION, delay: i * (DRAW_DURATION + DRAW_GAP), ease: 'easeInOut' }}
+                initial={{ pathLength: 0, opacity: 0 }}
+                animate={{ pathLength: 1, opacity: 1 }}
+                transition={{
+                  pathLength: { duration: DRAW_DURATION, delay: i * (DRAW_DURATION + DRAW_GAP), ease: 'easeInOut' },
+                  opacity: { duration: 0.01, delay: i * (DRAW_DURATION + DRAW_GAP) },
+                }}
               />
             ))}
 
