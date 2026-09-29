@@ -19,6 +19,15 @@ import { useOnboardingUnlock } from '../../context/OnboardingUnlockContext';
 import { useUser } from '../../context/UserContext';
 import { haptic, Pressable } from '../../lib/feel';
 import { AppHistory } from '../../utils/appHistory';
+import { renderHighlightedText, stripTags } from '../../plugins/questionTypes/highlightMarker';
+
+// 예문의 강조 마커(<strong class="target-word">)를 굵게 그리고 태그는 숨긴다
+// (심기 세션처럼 /study/recommend 에서 온 예문은 마커가 그대로 실려 온다).
+const HighlightedExample = ({ html }) => {
+  const parts = renderHighlightedText(html);
+  if (!parts) return null;
+  return parts.map((p) => (p.hl ? <b key={p.key} className="font-[800]">{p.text}</b> : <span key={p.key}>{p.text}</span>));
+};
 
 // 학습 진입 전 TTS 준비(prefetch) 튜닝값.
 // - PREPARE_PRIORITY_COUNT: 전체 준비가 늦어질 때 최소한으로 보장할 앞쪽 카드 수.
@@ -220,14 +229,14 @@ const StudyMain = ({ words, plantSession }) => {
             for (let i = 0; i < examplesList.length; i++) {
               if (playbackCancelRef.current) return;
               const ex = examplesList[i] || {};
-              const text = ex.origin || ex.sentence || '';
+              const text = stripTags(ex.origin || ex.sentence || '');
               await playOne('exampleSentences', i, text, wordLang(currentWord));
             }
           } else if (item.id === 'exampleMeanings') {
             for (let i = 0; i < examplesList.length; i++) {
               if (playbackCancelRef.current) return;
               const ex = examplesList[i] || {};
-              const text = ex.meaning || ex.translation || '';
+              const text = stripTags(ex.meaning || ex.translation || '');
               await playOne('exampleMeanings', i, text, 'ko');
             }
           }
@@ -675,14 +684,14 @@ const StudyMain = ({ words, plantSession }) => {
                                 />
                               ) : (
                                 <span className={`text-[14px] font-[400] flex-1 ${isOriginActive ? 'text-primary-main-600' : 'text-layout-black dark:text-layout-white'}`}>
-                                  {exOrigin}
+                                  <HighlightedExample html={exOrigin} />
                                 </span>
                               )}
                               <SpeakerButton
                                 active={isOriginActive}
                                 duration={playDuration}
                                 reducedMotion={reducedMotion}
-                                onClick={() => handleSpeakerClick('exampleSentences', idx, exOrigin, wordLang(word))}
+                                onClick={() => handleSpeakerClick('exampleSentences', idx, stripTags(exOrigin), wordLang(word))}
                                 className="mt-[2px]"
                               />
                             </div>
@@ -696,13 +705,13 @@ const StudyMain = ({ words, plantSession }) => {
                           isVisible('exampleMeanings') ? (
                             <div className="flex items-start justify-between gap-[8px]">
                               <span className={`text-[13px] font-[400] flex-1 ${isMeaningActive ? 'text-primary-main-600' : 'text-layout-gray-500 dark:text-layout-gray-50'}`}>
-                                {exMeaning}
+                                <HighlightedExample html={exMeaning} />
                               </span>
                               <SpeakerButton
                                 active={isMeaningActive}
                                 duration={playDuration}
                                 reducedMotion={reducedMotion}
-                                onClick={() => handleSpeakerClick('exampleMeanings', idx, exMeaning, 'ko')}
+                                onClick={() => handleSpeakerClick('exampleMeanings', idx, stripTags(exMeaning), 'ko')}
                                 className="mt-[2px]"
                               />
                             </div>

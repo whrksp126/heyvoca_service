@@ -144,8 +144,9 @@ export const collectTestFullTexts = (questions) => {
     for (const ex of (w.examples || [])) {
       const src = ex?.origin || ex?.sentence;
       const ko = ex?.meaning || ex?.translation;
-      if (src) out.push({ text: src, language: lang });
-      if (ko) out.push({ text: ko, language: 'ko' });
+      // 강조 마커(<strong …>)가 실린 예문도 있으니 재생과 같은 평문으로 prefetch 한다
+      if (src) out.push({ text: String(src).replace(/<[^>]*>/g, ''), language: lang });
+      if (ko) out.push({ text: String(ko).replace(/<[^>]*>/g, ''), language: 'ko' });
     }
   };
   if (!Array.isArray(questions)) return out;
@@ -210,8 +211,9 @@ export const collectStudyTexts = (words) => {
     for (const ex of (w?.examples || [])) {
       const src = ex?.origin || ex?.sentence;
       const ko = ex?.meaning || ex?.translation;
-      if (src) out.push({ text: src, language: lang });
-      if (ko) out.push({ text: ko, language: 'ko' });
+      // 강조 마커(<strong …>)가 실린 예문도 있으니 재생과 같은 평문으로 prefetch 한다
+      if (src) out.push({ text: String(src).replace(/<[^>]*>/g, ''), language: lang });
+      if (ko) out.push({ text: String(ko).replace(/<[^>]*>/g, ''), language: 'ko' });
     }
   }
   return out;
