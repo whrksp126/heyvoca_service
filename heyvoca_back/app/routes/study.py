@@ -1,6 +1,7 @@
 import json
 import logging
 import random
+import re
 import datetime as dt
 from uuid import UUID, uuid4
 
@@ -23,6 +24,10 @@ study_bp = Blueprint('study', __name__, url_prefix='/study')
 
 _MAX_LIMIT = 500
 
+# /study/log example_hash 검증 — app.services.sentence_puzzle.sentence_hash()가 만드는
+# sha256 hex digest 모양(64자리 소문자 hex)과 일치해야 한다.
+_EXAMPLE_HASH_RE = re.compile(r'^[0-9a-f]{64}$')
+
 # 채팅 학습(네이티브 ChatStudyScreen)이 question.language 로 일본어를 다룰 수 있는 최소 앱 버전.
 # 미달(또는 버전 판별 불가)이면 ja 모드에서 세션을 주지 않고 업데이트를 안내한다.
 CHAT_JA_MIN_APP_VERSION = '1.1.1'
@@ -36,42 +41,78 @@ from app.services.fsrs.thresholds import (  # noqa: E402
 )
 
 
-def _build_sentence_question_payload(item, qtype: str) -> dict:
-    """sentenceArrangePartial/sentenceArrange/listenArrange/fillInTheBlankTyping 전용
-    payload. 해당 유형이 아니거나 puzzle/예문이 없으면 {}.
+def _build_sentence_question_payload(item, qtype: str, ctx=None) -> dict:
+    """fillInTheBlank/fillInTheBlankTyping/sentenceArrangePartial/sentenceArrange/
+    listenArrange 전용 payload. 해당 유형이 아니거나 예문이 없으면 {}.
 
-    계약: heyvoca_service/docs/SENTENCE_QUESTIONS_CONTRACT.md
+    계약: heyvoca_service/docs/FRESH_SENTENCE_CONTRACT.md (선택 로직) +
+    heyvoca_service/docs/SENTENCE_QUESTIONS_CONTRACT.md (조립/타이핑 payload 모양).
+
+    범위: 영어(item.dict_lang == 'en')만 "매번 새 문장"(example_select.choose_example)을
+    탄다. 일본어는 기존 동작 그대로(ctx 무시) — fillInTheBlankTyping만 옛 방식(item.examples
+    첫 태그 있는 예문)으로 만들고, 조립 3종/새 fillInTheBlank payload는 애초에 ja가
+    voca_example_puzzle을 안 써서(example_puzzles 항상 []) 해당 없음.
     """
-    if qtype == 'fillInTheBlankTyping':
-        from app.services.fill_blank_typing import build_typing_payload
-        payload = build_typing_payload(item.word, item.examples)
-        return {'typing': payload} if payload else {}
-
-    if qtype not in ('sentenceArrangePartial', 'sentenceArrange', 'listenArrange'):
+    if item.dict_lang != 'en':
+        if qtype == 'fillInTheBlankTyping':
+            from app.services.fill_blank_typing import build_typing_payload
+            payload = build_typing_payload(item.word, item.examples)
+            return {'typing': payload} if payload else {}
         return {}
 
-    from app.services.sentence_puzzle import puzzle_usable, build_arrange_payload
-    from app.utils.example_tagging import example_origin_text, example_meaning_text
+    if qtype not in ('fillInTheBlank', 'fillInTheBlankTyping',
+                      'sentenceArrangePartial', 'sentenceArrange', 'listenArrange'):
+        return {}
+    if ctx is None:
+        return {}
+
+    from app.services.example_select import choose_example
+
+    if qtype == 'fillInTheBlank':
+        ex = choose_example(item, qtype, ctx)
+        if not ex:
+            return {}
+        return {
+            'example':      {'origin': ex['origin'], 'meaning': ex['meaning']},
+            'example_hash': ex['hash'],
+        }
+
+    if qtype == 'fillInTheBlankTyping':
+        from app.services.fill_blank_typing import build_typing_payload_for_example
+        ex = choose_example(item, qtype, ctx)
+        if not ex:
+            return {}
+        payload = build_typing_payload_for_example(item.word, ex)
+        return {'typing': payload, 'example_hash': ex['hash']} if payload else {}
+
+    from app.services.sentence_puzzle import build_arrange_payload
 
     mode = {'sentenceArrangePartial': 'partial', 'sentenceArrange': 'full', 'listenArrange': 'listen'}[qtype]
-    examples = item.examples or []
-    puzzles = item.example_puzzles or []
-    for i, ex in enumerate(examples):
-        puzzle = puzzles[i] if i < len(puzzles) else None
-        if not puzzle_usable(puzzle):
-            continue
-        payload = build_arrange_payload(
-            puzzle, mode=mode,
-            example_origin=example_origin_text(ex),
-            example_meaning=example_meaning_text(ex),
-        )
-        if payload:
-            return {'arrange': payload}
-    return {}
+    ex = choose_example(item, qtype, ctx)
+    if not ex:
+        return {}
+    payload = build_arrange_payload(
+        ex['puzzle'], mode=mode, example_origin=ex['origin'], example_meaning=ex['meaning'],
+    )
+    return {'arrange': payload, 'example_hash': ex['hash']} if payload else {}
+
+
+def _build_selection_ctx(user_id, items, lang: str):
+    """items(en) 대상 "매번 새 문장" SelectionContext 빌드. ja면 None(ctx 자체를 안 씀).
+
+    호출부(recommend/requeue-easier)가 실제로 응답에 실을 item들만 넘겨야 한다 —
+    전체 풀이 아니라 이번 응답 분량(<=50개)이라 쿼리 비용이 작다.
+    """
+    if lang != 'en' or not items:
+        return None
+    from app.services.example_select import build_selection_context
+    user_level_id = db.session.query(User.level_id).filter(User.id == user_id).scalar()
+    voca_ids = [it.user_voca_id for it in items]
+    return build_selection_context(user_id, voca_ids, user_level_id=user_level_id, lang='en')
 
 
 def _serialize_recommend_item(item, *, suggested_question_type, tier_target, tier_shown,
-                               reason, priority_bucket, lang, ja_info, ja_tokens) -> dict:
+                               reason, priority_bucket, lang, ja_info, ja_tokens, ctx=None) -> dict:
     """/study/recommend 문항 하나 + /study/requeue-easier 응답을 만드는 공용 직렬화.
 
     두 엔드포인트가 같은 모양(계약: SENTENCE_QUESTIONS_CONTRACT.md)을 내야 어긋나지 않는다.
@@ -102,7 +143,7 @@ def _serialize_recommend_item(item, *, suggested_question_type, tier_target, tie
         'reason':                  reason,
         'tier_target':             tier_target,
         'tier_shown':              tier_shown,
-        'question_payload':        _build_sentence_question_payload(item, suggested_question_type),
+        'question_payload':        _build_sentence_question_payload(item, suggested_question_type, ctx),
     }
 
 
@@ -295,6 +336,13 @@ def post_study_log():
     tier_shown  = tier_shown_raw if isinstance(tier_shown_raw, int) and 1 <= tier_shown_raw <= 5 else None
     # fillInTheBlankTyping 오타 허용 정답 — FSRS 자동 평가를 Hard(2)로 고정한다.
     typo = bool(req.get('typo', False))
+    # "매번 새 문장"(2026-09-30) — 이 문제에 쓰인 예문의 sentence_hash. optional(구버전
+    # 앱/문장 없는 유형은 안 보냄), 64자리 hex가 아니면 조용히 무시(NULL 저장).
+    example_hash_raw = req.get('example_hash')
+    example_hash = (
+        example_hash_raw if isinstance(example_hash_raw, str) and _EXAMPLE_HASH_RE.match(example_hash_raw)
+        else None
+    )
 
     if not session_id_str or user_voca_id is None or was_correct is None:
         return jsonify({'code': 400, 'message': 'session_id, user_voca_id, was_correct는 필수입니다.'}), 400
@@ -493,6 +541,7 @@ def post_study_log():
         dict_lang=user_voca.dict_lang or get_dict_lang(),
         tier_target=tier_target,
         tier_shown=tier_shown,
+        example_hash=example_hash,
     )
     db.session.add(log)
 
@@ -1187,6 +1236,10 @@ def get_recommend():
     selected_voca_ids = [e['_item'].voca_id for e in enriched_items]
     ja_info   = load_ja_word_info(selected_voca_ids) if lang == 'ja' else {}
     ja_tokens = load_ja_example_tokens(selected_voca_ids) if lang == 'ja' else {}
+    # "매번 새 문장"(2026-09-30) 선택 컨텍스트 — 이번 응답에 실제로 나갈 단어들만으로
+    # 한 번 빌드해 모든 item·모든 문제 유형에서 공유한다(used_hashes가 응답 전체에서
+    # 누적돼야 plant의 여러 유형이 서로 다른 문장을 고른다). en 전용.
+    ctx = _build_selection_ctx(user_id, [e['_item'] for e in enriched_items], lang)
     items_response = [
         _serialize_recommend_item(
             enriched['_item'],
@@ -1196,17 +1249,17 @@ def get_recommend():
             reason=enriched['reason'],
             # priority_bucket은 composer가 lapse로 재분류한 결과(src_bucket)를 사용한다.
             priority_bucket=enriched.get('src_bucket', enriched['_item'].bucket),
-            lang=lang, ja_info=ja_info, ja_tokens=ja_tokens,
+            lang=lang, ja_info=ja_info, ja_tokens=ja_tokens, ctx=ctx,
         )
         for enriched in enriched_items
     ]
     # 새 씨앗 심기 세션은 한 단어를 여러 유형으로 연달아 푼다 — suggested 유형 하나만의
-    # question_payload 로는 빈칸 입력·문장 만들기 단계가 대부분 비므로 두 유형 payload 를 모두 싣는다.
+    # question_payload 로는 빈칸 입력·문장 만들기 단계가 대부분 비므로 세 유형 payload 를 모두 싣는다.
     if mode == 'plant':
         for resp, enriched in zip(items_response, enriched_items):
             resp['question_payloads'] = {
-                t: _build_sentence_question_payload(enriched['_item'], t)
-                for t in ('fillInTheBlankTyping', 'sentenceArrange')
+                t: _build_sentence_question_payload(enriched['_item'], t, ctx)
+                for t in ('fillInTheBlank', 'fillInTheBlankTyping', 'sentenceArrange')
             }
 
     return jsonify({
@@ -1282,6 +1335,7 @@ def requeue_easier():
     lang = get_dict_lang()
     ja_info   = load_ja_word_info([item.voca_id]) if lang == 'ja' else {}
     ja_tokens = load_ja_example_tokens([item.voca_id]) if lang == 'ja' else {}
+    ctx = _build_selection_ctx(user_id, [item], lang)
 
     data = _serialize_recommend_item(
         item,
@@ -1290,7 +1344,7 @@ def requeue_easier():
         tier_shown=tier,
         reason='',
         priority_bucket=item.bucket,
-        lang=lang, ja_info=ja_info, ja_tokens=ja_tokens,
+        lang=lang, ja_info=ja_info, ja_tokens=ja_tokens, ctx=ctx,
     )
     return jsonify({'code': 200, 'data': data}), 200
 

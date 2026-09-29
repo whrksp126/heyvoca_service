@@ -70,6 +70,11 @@ const shuffleArray = (array) => {
 };
 
 // 빈칸 채우기 문제 빌더. 자격 예문이 없는 단어는 건너뛴다(호출부가 사지선다로 폴백).
+//
+// 계약(FRESH_SENTENCE_CONTRACT §5): 서버가 word.questionPayload.example(suggestedQuestionType
+// === 'fillInTheBlank'일 때, plant 단계 payload 포함)을 이미 골라 내려주면 그 예문을 그대로
+// 쓴다(최근성·수준·아는 단어 점수를 서버가 매겨 골랐으므로 프론트가 다시 고르지 않는다).
+// 없으면(설정 시트 직접 선택 테스트 등 서버 payload가 없는 경로) 기존 로컬 랜덤 선택 그대로.
 const buildFillInTheBlankQuestions = (selectedWords, allWords) => {
   const dir = FILL_RULE;
   const questionType = 'fillInTheBlank';
@@ -77,23 +82,37 @@ const buildFillInTheBlankQuestions = (selectedWords, allWords) => {
   const questions = [];
 
   for (const word of selectedWords ?? []) {
-    const candidates = qualifyingExamples(word);
-    if (candidates.length === 0) continue;
+    const serverExample = word?.suggestedQuestionType === 'fillInTheBlank'
+      ? word.questionPayload?.example
+      : null;
+    const useServerExample = !!serverExample && dir.qualifies(serverExample);
+
+    let example;
+    let exampleHash = null;
+    if (useServerExample) {
+      example = serverExample;
+      exampleHash = word.questionPayload?.example_hash ?? null;
+    } else {
+      const candidates = qualifyingExamples(word);
+      if (candidates.length === 0) continue;
+
+      // 짧은 예문은 빈칸을 뚫으면 단서가 한두 단어만 남는다("I feel cold." → "I feel ___.").
+      // 사전 쪽은 긴 예문으로 보강했지만, 한 단어에 긴 예문과 짧은 예문이 같이 남아 있을 수
+      // 있어 출제에서도 긴 쪽(4단어 이상)을 우선 고른다. 전부 짧으면 그대로 쓴다.
+      // 일본어는 띄어쓰기가 없어 단어 수 대신 문자 수(공백 제외 8자 이상)로 판정한다.
+      const ja = isJa(wordLang(word));
+      const longEnough = candidates.filter((ex) => {
+        const plain = stripTags(exampleEn(ex)).trim();
+        return ja
+          ? plain.replace(/\s+/g, '').length >= 8
+          : plain.split(/\s+/).length >= 4;
+      });
+      example = shuffleArray(longEnough.length > 0 ? longEnough : candidates)[0];
+    }
+
     const correctText = dir.optionText(word);
     if (!correctText) continue;
 
-    // 짧은 예문은 빈칸을 뚫으면 단서가 한두 단어만 남는다("I feel cold." → "I feel ___.").
-    // 사전 쪽은 긴 예문으로 보강했지만, 한 단어에 긴 예문과 짧은 예문이 같이 남아 있을 수
-    // 있어 출제에서도 긴 쪽(4단어 이상)을 우선 고른다. 전부 짧으면 그대로 쓴다.
-    // 일본어는 띄어쓰기가 없어 단어 수 대신 문자 수(공백 제외 8자 이상)로 판정한다.
-    const ja = isJa(wordLang(word));
-    const longEnough = candidates.filter((ex) => {
-      const plain = stripTags(exampleEn(ex)).trim();
-      return ja
-        ? plain.replace(/\s+/g, '').length >= 8
-        : plain.split(/\s+/).length >= 4;
-    });
-    const example = shuffleArray(longEnough.length > 0 ? longEnough : candidates)[0];
     const blankText = dir.blank(example);
     const shownText = dir.shown(example);
     const blankFill = extractTargetWord(blankText);
@@ -131,6 +150,9 @@ const buildFillInTheBlankQuestions = (selectedWords, allWords) => {
       resultIndex: options.indexOf(correctText),
       isCorrect: null,
       userResultIndex: null,
+      // 서버가 고른 예문일 때만 존재 — /study/log 전송부(components/takeTest/Main.jsx)가
+      // 있으면 example_hash로 함께 보낸다(계약 4·5절).
+      exampleHash,
     });
   }
   return questions;
@@ -193,7 +215,15 @@ const buildArrangeQuestions = (questionType) => (selectedWords) => {
     if (word?.suggestedQuestionType !== questionType) continue;
     const arrange = word.questionPayload?.arrange;
     if (!arrange) continue;
-    out.push({ ...word, questionType, arrange, isCorrect: null, userResultIndex: null });
+    // FRESH_SENTENCE_CONTRACT §4 — 조립형 payload에도 example_hash가 함께 온다.
+    out.push({
+      ...word,
+      questionType,
+      arrange,
+      isCorrect: null,
+      userResultIndex: null,
+      exampleHash: word.questionPayload?.example_hash ?? null,
+    });
   }
   return out;
 };
@@ -204,7 +234,14 @@ const buildTypingQuestions = (selectedWords) => {
     if (word?.suggestedQuestionType !== 'fillInTheBlankTyping') continue;
     const typing = word.questionPayload?.typing;
     if (!typing) continue;
-    out.push({ ...word, questionType: 'fillInTheBlankTyping', typing, isCorrect: null, userResultIndex: null });
+    out.push({
+      ...word,
+      questionType: 'fillInTheBlankTyping',
+      typing,
+      isCorrect: null,
+      userResultIndex: null,
+      exampleHash: word.questionPayload?.example_hash ?? null,
+    });
   }
   return out;
 };

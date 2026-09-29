@@ -1065,6 +1065,8 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
       was_correct: isCorrectAnswer,
       time_taken_ms: timeTakenSec * 1000,
       client_now: new Date().toISOString(),
+      // 문제에 쓰인 예문(FRESH_SENTENCE_CONTRACT §4·5) — 없으면 보내지 않는다.
+      ...(question.exampleHash ? { example_hash: question.exampleHash } : {}),
     });
 
     // 게스트 온보딩 로컬 콤보 — 첫 시도만 반영 (재출제는 스트릭에 영향 없음)
@@ -1134,6 +1136,8 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
       client_now: new Date().toISOString(),
       tier_target: question.tierTarget ?? null,
       tier_shown: question.tierShown ?? null,
+      // 문제에 쓰인 예문(FRESH_SENTENCE_CONTRACT §4·5) — 없으면 보내지 않는다.
+      ...(question.exampleHash ? { example_hash: question.exampleHash } : {}),
     });
 
     // 게스트 온보딩 로컬 콤보 — 첫 시도만 반영 (재출제는 스트릭에 영향 없음)
@@ -1399,6 +1403,8 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
     // 플러그인은 문제 자신(currentQuestion)에 붙어 있다(둘 다 mapRecommendItemToWord 출처).
     const tierTarget = target?.tierTarget ?? (isSingleWordQuestion ? currentQuestion?.tierTarget : null) ?? null;
     const tierShown = target?.tierShown ?? (isSingleWordQuestion ? currentQuestion?.tierShown : null) ?? null;
+    // 문제에 쓰인 예문(FRESH_SENTENCE_CONTRACT §4·5) — cardMatch는 뜻/카드 매칭이라 해당 없음(target에 없음).
+    const exampleHash = target?.exampleHash ?? (isSingleWordQuestion ? currentQuestion?.exampleHash : null) ?? null;
 
     // 게스트 온보딩 로컬 콤보 — 첫 시도만 반영. 카드매칭은 항상 첫 시도(오답 카드는 사지선다로
     // 재출제되어 이 경로를 다시 타지 않음)지만, 빈칸 채우기는 같은 유형으로 재출제되어 다시 온다.
@@ -1463,6 +1469,8 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
           tier_shown: tierShown,
           // fillInTheBlankTyping 오타 허용 정답(계약 3-2·4절) — 그 외 유형은 항상 false.
           typo: !!typo,
+          // 문제에 쓰인 예문(FRESH_SENTENCE_CONTRACT §4·5) — 없으면 보내지 않는다.
+          ...(exampleHash ? { example_hash: exampleHash } : {}),
         };
 
         // pendingLogPromisesRef에는 실제 전송 시점과 무관하게(큐잉되더라도) 즉시 등록해야

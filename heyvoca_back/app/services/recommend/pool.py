@@ -19,7 +19,10 @@ from typing import Optional
 from uuid import UUID
 
 from app import db, cache
-from app.models.models import UserVocaBook, UserVocaBookMap, UserVoca
+from app.models.models import (
+    UserVocaBook, UserVocaBookMap, UserVoca, UserStudyLog,
+    VocaExampleMap, VocaExample, VocaExampleMeta,
+)
 from app.utils.dict_lang import get_dict_lang, normalize_lang
 from sqlalchemy.orm import joinedload
 
@@ -55,6 +58,12 @@ class CandidateItem:
     # examples와 순서/길이가 같은 리스트 — 각 원소는 voca_example_puzzle 매칭 결과(dict) 또는
     # None(매칭 안 됨/조립형 4종 출제 불가). 2026-09 "출제형 문제 1단계", en 전용(ja는 항상 []).
     example_puzzles:   list = field(default_factory=list)
+    # "매번 새 문장"(2026-09-30, FRESH_SENTENCE_CONTRACT.md §2) — 문장형 문제(fillInTheBlank*,
+    # sentenceArrange*, listenArrange) 후보 예문 풀. 사용자 복사본(examples) ∪ 사전 예문
+    # (voca_example_map → voca_example, target 태그+한국어 있는 것만), sentence_hash로 중복
+    # 제거(사용자 복사본 우선). 각 원소: {'origin','meaning','hash','puzzle','meta','source'}.
+    # en 전용(ja는 항상 []). app/services/example_select.py 가 이 필드를 선택 후보로 쓴다.
+    example_pool:      list = field(default_factory=list)
     # 자동 출제 tier 진행 상태 — UserVoca.tier_target/tier_shown/tier_correct 정본을 그대로
     # 담는다(2026-09 2차 보완). {'tier_target':int,'tier_shown':int,'was_correct':bool} 또는
     # 기록이 없으면 None. composer._compute_target_tier가 다음 tier_target 계산에 쓴다.
@@ -210,11 +219,59 @@ def _load_pool_raw(user_id: UUID, book_ids_filter: Optional[list], lang: str = '
 
     # 예문 조각 조립 문제(voca_example_puzzle) 배치 조회 — en 전용(2026-09 "출제형 문제
     # 1단계" 범위). 후보 풀의 모든 예문 origin 텍스트를 정규화·해시해 한 번에 조회한다.
+    #
+    # "매번 새 문장"(2026-09-30, FRESH_SENTENCE_CONTRACT.md §2) — 같은 배치에서 사전
+    # 예문(voca_example_map → voca_example)도 voca_id 집합으로 한 번에 조회해 사용자
+    # 복사본과 합친 후보 풀(example_pool)을 만든다. puzzle 조회 대상 hash 집합도 사전
+    # 예문분까지 넓혀 한 쿼리로 같이 처리한다(N+1 방지).
     puzzle_lookup: dict = {}
+    dict_examples_by_voca_id: dict = {}
+    meta_by_hash: dict = {}
     if lang == 'en':
         from app.services.sentence_puzzle import sentence_hash, load_puzzles_by_hashes
-        from app.utils.example_tagging import example_origin_text
-        all_hashes = set()
+        from app.utils.example_tagging import example_origin_text, example_has_target_tag
+
+        voca_ids_all = sorted({r['voca_id'] for r in raw_items if r['voca_id'] is not None})
+
+        # 사전 예문 배치 조회 — voca_example_map ⋈ voca_example, target 태그 있고
+        # 한국어가 비어 있지 않은 것만 후보로 남긴다(계약 §2).
+        dict_example_rows = []
+        if voca_ids_all:
+            dict_example_rows = (
+                db.session.query(VocaExampleMap.voca_id, VocaExample.id,
+                                  VocaExample.exam_en, VocaExample.exam_ko)
+                .join(VocaExample, VocaExampleMap.example_id == VocaExample.id)
+                .filter(VocaExampleMap.voca_id.in_(voca_ids_all))
+                .all()
+            )
+
+        dict_example_hash_by_id: dict = {}
+        for voca_id, example_id, exam_en, exam_ko in dict_example_rows:
+            if not exam_en or not exam_ko or not example_has_target_tag(exam_en):
+                continue
+            h = sentence_hash(exam_en)
+            dict_example_hash_by_id[example_id] = h
+            dict_examples_by_voca_id.setdefault(voca_id, []).append({
+                'origin': exam_en, 'meaning': exam_ko, 'hash': h,
+                'source': 'dict', 'example_id': example_id,
+            })
+
+        # voca_example_meta 배치 조회 — 위에서 살아남은 사전 예문의 example_id만.
+        meta_by_example_id: dict = {}
+        if dict_example_hash_by_id:
+            meta_rows = (
+                db.session.query(VocaExampleMeta)
+                .filter(VocaExampleMeta.example_id.in_(dict_example_hash_by_id.keys()))
+                .all()
+            )
+            for row in meta_rows:
+                meta_by_example_id[row.example_id] = {'level': row.level, 'words': row.words or []}
+        for example_id, h in dict_example_hash_by_id.items():
+            meta = meta_by_example_id.get(example_id)
+            if meta is not None:
+                meta_by_hash[h] = meta
+
+        all_hashes = set(dict_example_hash_by_id.values())
         for r in raw_items:
             for ex in r['examples'] or []:
                 origin = example_origin_text(ex)
@@ -226,10 +283,45 @@ def _load_pool_raw(user_id: UUID, book_ids_filter: Optional[list], lang: str = '
     for r in raw_items:
         meaning_concepts, concept_ids = attach_concept_ids(r['voca_id'], r['meanings'], concept_lookup)
         example_puzzles = []
+        example_pool: list = []
         if lang == 'en':
+            from app.services.sentence_puzzle import sentence_hash
+            from app.utils.example_tagging import example_origin_text, example_meaning_text
+
             for ex in r['examples'] or []:
                 origin = example_origin_text(ex)
                 example_puzzles.append(puzzle_lookup.get(sentence_hash(origin)) if origin else None)
+
+            pool_by_hash: dict = {}
+            for ex in r['examples'] or []:
+                origin = example_origin_text(ex)
+                if not origin:
+                    continue
+                h = sentence_hash(origin)
+                if h in pool_by_hash:
+                    continue
+                pool_by_hash[h] = {
+                    'origin':  origin,
+                    'meaning': example_meaning_text(ex),
+                    'hash':    h,
+                    'source':  'user',
+                    'puzzle':  puzzle_lookup.get(h),
+                    'meta':    meta_by_hash.get(h),
+                }
+            for dex in dict_examples_by_voca_id.get(r['voca_id'], []):
+                h = dex['hash']
+                if h in pool_by_hash:
+                    continue  # 사용자가 고친 문장 보존 — 사용자 복사본 우선
+                pool_by_hash[h] = {
+                    'origin':  dex['origin'],
+                    'meaning': dex['meaning'],
+                    'hash':    h,
+                    'source':  'dict',
+                    'puzzle':  puzzle_lookup.get(h),
+                    'meta':    meta_by_hash.get(h),
+                }
+            example_pool = list(pool_by_hash.values())
+
         items.append(CandidateItem(
             user_voca_id=r['user_voca_id'],
             user_voca_book_id=r['user_voca_book_id'],
@@ -246,6 +338,7 @@ def _load_pool_raw(user_id: UUID, book_ids_filter: Optional[list], lang: str = '
             normalized_meanings=normalized_meanings_for_word(r['meanings']),
             dict_lang=lang,
             example_puzzles=example_puzzles,
+            example_pool=example_pool,
             tier_state=r['tier_state'],
         ))
 
@@ -316,3 +409,82 @@ def invalidate_pool_cache(user_id) -> None:
     except Exception:
         # 캐시 무효화 실패는 비치명적 — 자연 만료(30초)에 의존
         pass
+
+
+# ──────────────────────────────────────────────
+# "매번 새 문장" 선택 컨텍스트 조회 (2026-09-30, FRESH_SENTENCE_CONTRACT.md §2)
+#
+# 아래 두 함수는 pool 캐시(TTL 30초)에 넣지 않고 매 요청 신선하게 조회한다 —
+# 최근 학습 기록/아는 단어 집합은 study/log 직후 즉시 달라져야 하는 값이라
+# 30초 캐시에 얹으면 "방금 배운 단어인데 여전히 모르는 단어로 취급" 같은
+# 짧은 지연 불일치가 생긴다. 호출 비용은 세션에 실제로 뽑힌 단어 수(<=50)
+# 기준이라 요청당 1~2쿼리로 가볍다.
+# ──────────────────────────────────────────────
+
+def load_recent_example_hashes(user_id, user_voca_ids, window_days: int = 30) -> dict:
+    """최근 window_days일 내 각 user_voca_id가 실제로 본 문장 hash → 마지막으로 본 시각.
+
+    Returns:
+        {user_voca_id: {sentence_hash: datetime(마지막으로 본 시각)}}
+    사용자·단어 소유 검증은 호출부가 이미 pool 단계에서 했다고 가정(추가 필터 없음).
+    """
+    if isinstance(user_id, str):
+        user_id = UUID(user_id)
+    ids = sorted({int(v) for v in (user_voca_ids or []) if v is not None})
+    if not ids:
+        return {}
+
+    from sqlalchemy import func
+    cutoff = dt.datetime.utcnow() - dt.timedelta(days=window_days)
+
+    rows = (
+        db.session.query(
+            UserStudyLog.user_voca_id,
+            UserStudyLog.example_hash,
+            func.max(UserStudyLog.created_at),
+        )
+        .filter(
+            UserStudyLog.user_id == user_id,
+            UserStudyLog.user_voca_id.in_(ids),
+            UserStudyLog.example_hash.isnot(None),
+            UserStudyLog.created_at >= cutoff,
+        )
+        .group_by(UserStudyLog.user_voca_id, UserStudyLog.example_hash)
+        .all()
+    )
+    result: dict = {}
+    for user_voca_id, example_hash, last_seen in rows:
+        result.setdefault(user_voca_id, {})[example_hash] = last_seen
+    return result
+
+
+def load_known_words(user_id, lang: str = 'en') -> set:
+    """이 사용자의 학습 언어별 UserVoca 중 한 번 이상 학습한(FSRS reps >= 1) 단어의
+    원형(소문자) 집합.
+
+    voca_example_meta.words가 이미 목표 단어 구간·기능어·아주 흔한 단어를 뺀
+    원형 리스트라, 여기서는 별도 lemmatize 없이 UserVoca.word를 그대로 소문자화한다
+    (사전 표제어 자체가 활용형이 아닌 원형이므로 words와 형태가 맞는다).
+    """
+    if isinstance(user_id, str):
+        user_id = UUID(user_id)
+    lang = normalize_lang(lang) or 'en'
+
+    from app.services.fsrs.state import parse_user_voca_data, is_v1, migrate_v1_to_v2, get_fsrs_state
+
+    rows = (
+        db.session.query(UserVoca.word, UserVoca.data)
+        .filter(UserVoca.user_id == user_id, UserVoca.dict_lang == lang)
+        .all()
+    )
+    known: set = set()
+    for word, data in rows:
+        if not word:
+            continue
+        payload = parse_user_voca_data(data)
+        if is_v1(payload):
+            payload = migrate_v1_to_v2(payload)
+        fsrs = get_fsrs_state(payload) or {}
+        if int(fsrs.get('reps') or 0) >= 1:
+            known.add(word.strip().lower())
+    return known

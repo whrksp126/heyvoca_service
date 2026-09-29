@@ -4,7 +4,7 @@ from sqlalchemy import ForeignKey, Enum, UniqueConstraint, Index, PrimaryKeyCons
 from sqlalchemy.schema import Column
 from sqlalchemy.types import String, Integer, Date, DateTime, Boolean, Text, BigInteger, Date, TEXT, Float, JSON
 
-from sqlalchemy.dialects.mysql import BINARY, LONGTEXT
+from sqlalchemy.dialects.mysql import BINARY, LONGTEXT, TINYINT, SMALLINT
 from sqlalchemy.types import TypeDecorator
 from sqlalchemy.orm import relationship
 
@@ -333,6 +333,29 @@ class VocaExamplePuzzle(db.Model):
 
     def __repr__(self):
         return f"<VocaExamplePuzzle(example_id={self.example_id}, skip_reason={self.skip_reason!r})>"
+
+
+# 예문 메타(난이도/아는 단어 판정용) — "매번 새 문장" 계약(2026-09-30).
+# voca_example_puzzle 처럼 FK 없는 파생 테이블(voca_example 행이 갱신 재생성돼도
+# upsert 흐름을 막지 않기 위함). 채우는 스크립트: scripts/build_example_meta.py(기존
+# 예문) / scripts/import_generated_examples.py(신규 생성 예문, level=생성 시 지정값).
+# 정본: heyvoca_service/docs/FRESH_SENTENCE_CONTRACT.md §1
+class VocaExampleMeta(db.Model):
+    __tablename__ = 'voca_example_meta'
+    __bind_key__ = 'dict'
+
+    example_id = Column(Integer, primary_key=True, autoincrement=False,
+                        comment='voca_example.id 참조(FK 없음 — 파생 테이블, 규칙상 명시 FK 생략)')
+    level = Column(TINYINT, nullable=False, comment='1 초급 / 2 중급 / 3 상급')
+    word_count = Column(SMALLINT, nullable=False, comment='태그 제거 영어 평문 단어 수')
+    rare_count = Column(SMALLINT, nullable=False,
+                        comment='목표 단어를 뺀 내용어 중 빈도 낮은(zipf < 3.5 또는 미상) 단어 수')
+    words = Column(JSON, nullable=False,
+                   comment='목표 단어 구간과 기능어를 뺀 내용어의 원형(소문자) 리스트 — "아는 단어" 비율 계산용')
+    source = Column(String(32), nullable=False, comment="dict(기존) / gen20260930(이번 생성) 등 생성 배치 표식")
+
+    def __repr__(self):
+        return f"<VocaExampleMeta(example_id={self.example_id}, level={self.level}, source={self.source!r})>"
 
 
 # ── 일한(heyvoca_dict_ja) 확장 테이블 ─────────────────────────────────────
@@ -1379,6 +1402,9 @@ class UserStudyLog(db.Model):
         Index('ix_usl_user_voca',    'user_id', 'user_voca_id'),
         Index('ix_usl_session',      'session_id'),
         Index('ix_usl_user_dict_lang', 'user_id', 'dict_lang'),
+        # "매번 새 문장"(2026-09-30) — 단어별 최근 본 문장 hash 조회용. 조합 순서는
+        # 조회 패턴(user_id, user_voca_id in (...) 최근 30일)에 맞춘다.
+        Index('ix_usl_user_voca_created', 'user_id', 'user_voca_id', 'created_at'),
     )
 
     # PrimaryKeyConstraint로 복합 PK 정의하므로 primary_key=True 제거,
@@ -1412,6 +1438,10 @@ class UserStudyLog(db.Model):
     tier_shown       = Column(Integer, nullable=True,
                               comment='실제로 보여준 문제의 난이도(1~5) — tier_target과 달라질 수 있음'
                                       '(30% 확률로 더 쉬운 tier를 섞어 보여줌). 2026-09 추가.')
+    example_hash     = Column(String(64), nullable=True,
+                              comment='이 문제에 쓰인 예문의 sentence_hash(app/services/sentence_puzzle.py). '
+                                      '문장형 문제만 값이 있고, 없으면 NULL(구버전 앱/문장 없는 유형). '
+                                      '2026-09-30 "매번 새 문장" 계약 — 최근 본 문장 회피 판정에 사용.')
 
     # 관계 정의 (session_id에 FK가 없으므로 primaryjoin/foreign 명시)
     session = relationship(
@@ -1425,11 +1455,12 @@ class UserStudyLog(db.Model):
                  voca_id=None, user_voca_book_id=None,
                  rating=None, word_length=None,
                  state_before=None, state_after=None, dict_lang=None,
-                 tier_target=None, tier_shown=None):
+                 tier_target=None, tier_shown=None, example_hash=None):
         if dict_lang is not None:
             self.dict_lang = dict_lang
         self.tier_target       = tier_target
         self.tier_shown        = tier_shown
+        self.example_hash      = example_hash
         self.user_id           = user_id
         self.user_voca_id      = user_voca_id
         self.voca_id           = voca_id

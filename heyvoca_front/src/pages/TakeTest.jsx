@@ -1038,6 +1038,16 @@ const TakeTest = () => {
             // 단어 블록의 첫 항목이 항상 wordIntro이므로, 이걸 빼지 않으면 find()가 그것부터
             // 찾아 서버에 잘못된 question_type을 보낸다.
             const q = testQuestions.find(qq => (qq.vocaIndexId ?? qq.id) === vocaId && !qq.isRetry && !isNoGradeQuestionType(qq.questionType));
+            // 예문 hash(FRESH_SENTENCE_CONTRACT §4·5) — plant만, 이 단어 블록의 **마지막**
+            // 문장 유형(fillInTheBlank 포함) 문제에 쓰인 예문을 보낸다(script는 해당 없음).
+            const exampleHash = state.testType === 'plant'
+              ? [...testQuestions].reverse().find(qq => (
+                  (qq.vocaIndexId ?? qq.id) === vocaId
+                  && !qq.isRetry
+                  && (isFillInTheBlankType(qq.questionType) || isSentenceQuestionType(qq.questionType))
+                  && qq.exampleHash
+                ))?.exampleHash ?? null
+              : null;
             return logStudyQuestion({
               session_id: studySessionRef.current,
               user_voca_id: vocaId,
@@ -1049,6 +1059,7 @@ const TakeTest = () => {
               // 12XP) — 전부 첫 시도에 맞힌 글자는 Good 이상이 되도록 1.2s로 보낸다.
               time_taken_ms: state.testType === 'script' ? 1200 : 5000,
               client_now: new Date().toISOString(),
+              ...(exampleHash ? { example_hash: exampleHash } : {}),
             }).then((logRes) => ({ vocaId, logRes }));
           }));
           for (const r of results) {
