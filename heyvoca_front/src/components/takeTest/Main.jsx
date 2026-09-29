@@ -39,6 +39,7 @@ import { wordLang, isJa } from '../../utils/lang';
 import { getReading, shouldShowReading } from '../../utils/jaWord';
 import ReadingLine from '../common/ReadingLine';
 import ResultMark from '../common/ResultMark';
+import { SLIDE_VARIANTS, SLIDE_TRANSITION, PROGRESS_FILL_TRANSITION, CARD_ENTER_INITIAL, CARD_ENTER_ANIMATE, CARD_ENTER_TRANSITION } from '../../utils/studySlideMotion';
 
 
 // 백엔드 memory state 키(short/medium/long) → 프론트 키(leaf/plant/carrot) 정규화
@@ -1611,20 +1612,9 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
     }
   };
 
-  const slideVariants = {
-    enter: (direction) => ({
-      x: direction > 0 ? '100%' : '-100%',
-      opacity: 0
-    }),
-    center: {
-      x: 0,
-      opacity: 1
-    },
-    exit: (direction) => ({
-      x: direction < 0 ? '100%' : '-100%',
-      opacity: 0
-    })
-  };
+  // 슬라이드 전환 variants/transition은 utils/studySlideMotion.js 단일 소스(2026-09-29 —
+  // 글자 세션(ScriptSessionNewFullSheet)도 같은 값을 import해 써서 전환이 어긋나지 않게 한다).
+  const slideVariants = SLIDE_VARIANTS;
 
   // 성능 최적화를 위한 transition 설정
   const optimizedTransition = {
@@ -1724,7 +1714,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
             className={`h-[100%] rounded-[50px] ${progressFillClass}`}
             initial={{ width: "0%" }}
             animate={{ width: `${Math.floor(passedCount / totalWordCount * 100)}%` }}
-            transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
+            transition={PROGRESS_FILL_TRANSITION}
             style={{ willChange: 'width' }}
           />
           <span className="
@@ -1743,7 +1733,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
               initial="enter"
               animate="center"
               exit="exit"
-              transition={{ duration: 0.25, ease: [0.4, 0, 0.2, 1] }}
+              transition={SLIDE_TRANSITION}
               style={{ willChange: 'transform, opacity' }}
               className="w-full h-full absolute"
             >
@@ -1794,7 +1784,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
           animate={{
             width: `${Math.floor(passedCount / totalWordCount * 100)}%`
           }}
-          transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
+          transition={PROGRESS_FILL_TRANSITION}
           style={{ willChange: 'width' }}
         />
         <span className="
@@ -1814,10 +1804,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
             initial="enter"
             animate="center"
             exit="exit"
-            transition={{
-              duration: 0.25,
-              ease: [0.4, 0, 0.2, 1]
-            }}
+            transition={SLIDE_TRANSITION}
             style={{ willChange: 'transform, opacity' }}
             className="flex flex-col gap-[15px] w-full h-full absolute"
           >
@@ -1842,10 +1829,10 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
                     bg-layout-gray-50 dark:bg-layout-gray-dark
                     cursor-pointer
                   `}
-                  initial={{ opacity: 0, scale: 0.95 }}
-                  animate={{ opacity: 1, scale: 1 }}
+                  initial={CARD_ENTER_INITIAL}
+                  animate={CARD_ENTER_ANIMATE}
                   whileTap={{ scale: 0.96 }}
-                  transition={{ duration: 0.2, ease: [0.4, 0, 0.2, 1] }}
+                  transition={CARD_ENTER_TRANSITION}
                   style={{ willChange: 'transform, opacity' }}
                   onClick={() => {
                     haptic('light');

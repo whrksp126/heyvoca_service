@@ -16,6 +16,7 @@ import TtsRipple from '../common/TtsRipple';
 import { optionMainSub } from '../../utils/scriptSession';
 import { speakScriptItem } from '../../utils/scriptData';
 import { playSuccessSound, playErrorSound } from '../../utils/audio';
+import { CARD_ENTER_INITIAL, CARD_ENTER_ANIMATE, CARD_ENTER_TRANSITION } from '../../utils/studySlideMotion';
 
 // 정오답 버튼 규격은 components/takeTest/Main.jsx의 사지선다 옵션 버튼과 동일 클래스를 쓴다
 // (h-50 · border-[1px] rounded-[10px] · text-[14px] font-[700]) — 학습 화면과 다른 화면처럼
@@ -27,14 +28,14 @@ const ChoiceCard = ({ step, answered, selectedIndex, onSelect, onSettled }) => {
   const isListen = type === 'listenPick';
   const [speaking, setSpeaking] = useState(false);
   const [duration, setDuration] = useState(null);
-  // 재생 중복 가드 — 듣기 자동재생(마운트 시)과 채점 후 정답 재생이 겹쳐 걸릴 일은
-  // 없지만(순서가 다르다), 자동 트리거끼리 아주 짧은 간격으로 겹치면 speaking이 꺼졌다
-  // 켜졌다 반복해 스피커 아이콘이 깜빡여 보였다(2026-09-29 QA 4차). 이미 재생 중이면
-  // 자동 트리거는 새로 걸지 않는다 — 사용자가 직접 카드를 탭해 다시 듣는 것은 그대로
-  // 허용한다(getTextSound가 이전 재생을 자연스럽게 끊고 이어받는다).
+  // 재생 중복 가드 — 듣기 자동재생(마운트 시)·사용자 탭·채점 후 정답 재생이 모두 같은
+  // playingRef를 공유한다(순서상 겹칠 일은 없지만 자동 트리거끼리 아주 짧은 간격으로
+  // 겹치면 카드 효과가 꺼졌다 켜졌다 반복해 보였다 — 2026-09-29 QA 4차).
   const playingRef = useRef(false);
 
-  const play = async () => {
+  // 카드 재생(스피커 활성·TtsRipple 파동·펄스 등 카드 효과 포함) — "사용자가 카드를 눌렀을
+  // 때"와 "문제 등장 자동재생 때"만 쓴다(2026-09-29 QA 5차).
+  const playCard = async () => {
     haptic('light');
     playingRef.current = true;
     setSpeaking(true);
@@ -47,15 +48,28 @@ const ChoiceCard = ({ step, answered, selectedIndex, onSelect, onSettled }) => {
     }
   };
 
+  // 채점 후 정답 발음 재생 — 카드 효과(스피커 활성·리플·펄스)는 전혀 켜지 않고 소리만
+  // 낸다(2026-09-29 QA 5차: 채점 후에도 카드가 다시 "재생 중"처럼 보여 위 문제 카드를
+  // 다시 누르는 것처럼 혼동됐다는 피드백 — 정답 확인은 아래 선택지의 초록 강조로 충분하다).
+  const playSilent = async () => {
+    playingRef.current = true;
+    try {
+      await speakScriptItem(script, item);
+    } finally {
+      playingRef.current = false;
+    }
+  };
+
   useEffect(() => {
-    if (isListen && !playingRef.current) play();
+    if (isListen && !playingRef.current) playCard();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [step.id]);
 
-  // 채점 순간 — 학습하기(TakeTest)와 같은 정오답 효과음·햅틱, 이어서 정답 글자 발음을 들려준다.
-  // 재생이 끝나면(성공/실패 무관) onSettled로 부모에 알린다 — 부모는 그 시점부터 일정 시간
-  // 뒤에만 다음 슬라이드로 넘어간다(2026-09-29 QA 4차: 고정 지연만으로는 재생이 끝나기 전에
-  // 다음 슬라이드가 넘어가 듣기 자동재생과 소리가 겹쳤다).
+  // 채점 순간 — 학습하기(TakeTest)와 같은 정오답 효과음·햅틱, 이어서 정답 글자 발음을 소리로만
+  // 들려준다(카드 효과 없음, 위 playSilent 참고). 재생이 끝나면(성공/실패 무관) onSettled로
+  // 부모에 알린다 — 부모는 그 시점부터 일정 시간 뒤에만 다음 슬라이드로 넘어간다(2026-09-29
+  // QA 4차: 고정 지연만으로는 재생이 끝나기 전에 다음 슬라이드가 넘어가 듣기 자동재생과
+  // 소리가 겹쳤다).
   useEffect(() => {
     if (!answered) return undefined;
     const correct = selectedIndex === answerIndex;
@@ -63,7 +77,7 @@ const ChoiceCard = ({ step, answered, selectedIndex, onSelect, onSettled }) => {
     let cancelled = false;
     const t = setTimeout(() => {
       if (playingRef.current) { onSettled?.(); return; }
-      play().finally(() => { if (!cancelled) onSettled?.(); });
+      playSilent().finally(() => { if (!cancelled) onSettled?.(); });
     }, 450);
     return () => { cancelled = true; clearTimeout(t); };
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -72,10 +86,15 @@ const ChoiceCard = ({ step, answered, selectedIndex, onSelect, onSettled }) => {
   return (
     <div className="flex flex-col gap-[16px] w-full h-full">
       {/* 문제 카드 — TakeTest Main.jsx의 사지선다 카드와 같은 규격(flex-1로 남는 세로 공간을
-          모두 채운다. 옛 h-[150px] 고정값이 "화면 하단이 텅 비어 보이는" 원인이었다). */}
-      <div
+          모두 채운다. 옛 h-[150px] 고정값이 "화면 하단이 텅 비어 보이는" 원인이었다) + 같은
+          등장 모션(살짝 커지며 나타남, 2026-09-29 QA 5차). */}
+      <motion.div
         role={isListen ? 'button' : undefined}
-        onClick={isListen ? play : undefined}
+        onClick={isListen ? playCard : undefined}
+        initial={CARD_ENTER_INITIAL}
+        animate={CARD_ENTER_ANIMATE}
+        whileTap={isListen ? { scale: 0.96 } : undefined}
+        transition={CARD_ENTER_TRANSITION}
         className="
           relative flex items-center justify-center flex-1 min-h-0
           w-full py-[45px] rounded-[12px]
@@ -111,7 +130,7 @@ const ChoiceCard = ({ step, answered, selectedIndex, onSelect, onSettled }) => {
             translate-x-[-50%] translate-y-[-50%]
           "
         />
-      </div>
+      </motion.div>
 
       <div className="flex-shrink-0 flex flex-col gap-[10px]">
         {options.map((opt, index) => {

@@ -26,6 +26,7 @@ import ScriptCompleteScreen from '../script/ScriptCompleteScreen';
 import { buildLearnSteps, buildReviewSteps, buildSkipCheckSteps, summarizeResults } from '../../utils/scriptSession';
 import { logScriptResultsApi, skipScriptCharsApi } from '../../api/script';
 import { prefetchScriptSession } from '../../utils/scriptData';
+import { SLIDE_VARIANTS, SLIDE_TRANSITION, PROGRESS_FILL_TRANSITION } from '../../utils/studySlideMotion';
 
 // 헤더 제목 — 슬라이드 종류별 안내 문구(2026-09-29 실기기 QA: "あ행 배우기"라는 고정
 // 타이틀 대신, 지금 뭘 하는 화면인지 슬라이드마다 알려 달라는 피드백). 줄 완료 화면
@@ -249,15 +250,15 @@ const ScriptSessionNewFullSheet = ({ script, chars = [], pool = [], mode = 'lear
         </div>
       </div>
 
-      {/* 콘텐츠 영역 — TakeTest Main.jsx와 같은 규격(진행바 h-16 + flex-1 카드 영역)으로
-          채워서 화면이 위로 몰리지 않고 아래까지 꽉 차게 한다. */}
-      <div className="flex flex-col flex-1 min-h-0 px-[16px] pt-[14px] pb-[20px]">
+      {/* 콘텐츠 영역 — TakeTest Main.jsx와 같은 규격(진행바 h-16 + flex-1 카드 영역 + 상단
+          여백 pt-[5px])으로 채워서 화면이 위로 몰리지 않고 아래까지 꽉 차게 한다. */}
+      <div className="flex flex-col flex-1 min-h-0 px-[16px] pt-[5px] pb-[20px]">
         <div className="relative w-full h-[16px] mb-[15px] rounded-[50px] bg-primary-main-100 dark:bg-layout-gray-dark overflow-hidden flex-shrink-0">
           <motion.div
             className="h-full rounded-[50px] bg-primary-main-600"
             initial={{ width: '0%' }}
             animate={{ width: `${progressPercent}%` }}
-            transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
+            transition={PROGRESS_FILL_TRANSITION}
           />
           <span className="absolute right-[10px] top-[50%] translate-y-[-50%] text-[#7b7b7b] text-[10px] font-semibold tracking-[-0.2px]">
             {stepIndex}/{steps.length}
@@ -268,11 +269,13 @@ const ScriptSessionNewFullSheet = ({ script, chars = [], pool = [], mode = 'lear
           <AnimatePresence initial={false} mode="popLayout">
             <motion.div
               key={currentStep.id}
+              custom={1}
+              variants={SLIDE_VARIANTS}
+              initial="enter"
+              animate="center"
+              exit="exit"
+              transition={SLIDE_TRANSITION}
               className="absolute inset-0 flex flex-col"
-              initial={{ opacity: 0, x: 16 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -16 }}
-              transition={{ duration: 0.2 }}
             >
               {currentStep.type === 'intro' && (
                 <IntroCard key={currentStep.id} step={currentStep} onNext={handleIntroNext} />

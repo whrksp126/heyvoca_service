@@ -51,6 +51,11 @@ const SAMPLE_COUNT = 16;
 // 연속 획 허용(이어 긋기) 시, 다음 획으로 넘길 최소 기준 — 지금 획을 그은 구간 "이후"
 // 궤적이 다음 획 길이의 이만큼은 실제로 그어져야 인정한다(짧게 스친 정도로는 불인정).
 const CONTINUATION_LENGTH_RATIO = 0.6;
+// 모든 획을 통과한 뒤(phase='result') 자동으로 다음 슬라이드로 넘어가기까지 두는 시간 —
+// 다른 문제 유형과 같은 원칙(2026-09-29 QA 5차): ResultMark(HOLD 600ms + FADE 200ms
+// ≈ 800ms)가 사라질 즈음에 넘어간다. "처음부터"/"다음" 버튼을 계속 보여주는 대신, 그리는
+// 중(phase='trace')에만 "처음부터"를 보여주고 완료 후엔 버튼을 모두 숨긴다.
+const RESULT_AUTO_ADVANCE_MS = 1200;
 
 const pointsToPathD = (points) => {
   if (!points || points.length === 0) return '';
@@ -135,8 +140,9 @@ const StrokeTracer = ({ entries, compound = false, caseVariant = null, replayKey
   const [currentPoints, setCurrentPoints] = useState([]); // 지금 그리고 있는 획 하나(렌더용)
   const [retryHint, setRetryHint] = useState(false);
   const [startPoint, setStartPoint] = useState(null); // 다음에 그을 획의 시작점(svg 좌표)
-  // "다음"을 눌러 세션이 이 스텝을 떠나기 시작했음을 표시 — ChoiceCard와 같은 이유로
-  // ResultMark가 퇴장 애니메이션 도중 다시 뜨는 걸 막는다(handleNext 참고).
+  // 자동 진행(아래 RESULT_AUTO_ADVANCE_MS effect)이 시작되어 세션이 이 스텝을 떠나기
+  // 시작했음을 표시 — ChoiceCard와 같은 이유로 ResultMark가 퇴장 애니메이션 도중 다시
+  // 뜨는 걸 막는다.
   const [advancing, setAdvancing] = useState(false);
 
   const svgRef = useRef(null);
@@ -325,15 +331,22 @@ const StrokeTracer = ({ entries, compound = false, caseVariant = null, replayKey
     setPhase('trace');
   };
 
-  const handleNext = () => {
-    if (phase !== 'result') return;
-    haptic('light');
-    // ResultMark 계산을 먼저 꺼서(별도 렌더 커밋) 세션이 다음 스텝으로 넘어가며 이 카드를
-    // 퇴장시킬 때 "마지막 props"가 이미 결과 없음 상태이게 한다 — ChoiceCard의 O/X 깜빡임
-    // 버그와 같은 원인(퇴장 애니메이션 중 리렌더/리마운트)에 대한 방어.
-    setAdvancing(true);
-    requestAnimationFrame(() => onDone?.());
-  };
+  // 모든 획을 통과하면(phase='result') 확인 버튼 없이 다른 문제 유형처럼 일정 시간 뒤
+  // 자동으로 다음 슬라이드로 넘어간다(2026-09-29 QA 5차). phase가 바뀌면(예: 사용자가
+  // "처음부터"를 눌러 다시 trace로 돌아가는 경우는 없지만 방어적으로) 예약을 취소한다.
+  useEffect(() => {
+    if (phase !== 'result') return undefined;
+    const t = setTimeout(() => {
+      haptic('light');
+      // ResultMark 계산을 먼저 꺼서(별도 렌더 커밋) 세션이 다음 스텝으로 넘어가며 이 카드를
+      // 퇴장시킬 때 "마지막 props"가 이미 결과 없음 상태이게 한다 — ChoiceCard의 O/X 깜빡임
+      // 버그와 같은 원인(퇴장 애니메이션 중 리렌더/리마운트)에 대한 방어.
+      setAdvancing(true);
+      requestAnimationFrame(() => onDone?.());
+    }, RESULT_AUTO_ADVANCE_MS);
+    return () => clearTimeout(t);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [phase]);
 
   const startMarkerR = vbW * 0.032;
 
@@ -568,7 +581,8 @@ const StrokeTracer = ({ entries, compound = false, caseVariant = null, replayKey
           {/* 채점 표현 — 다른 학습 문제 유형과 같은 공용 ResultMark(O)를 캔버스 중앙에
               잠깐 띄운다(2026-09-29: 고정 텍스트 '✓ 잘 썼어요' 대신). advancing이 true면
               이 스텝을 떠나는 중이라는 뜻이라 result를 null로 눌러 재생을 막는다
-              (handleNext 주석 — ChoiceCard의 O/X 깜빡임 버그와 같은 방어). */}
+              (위 RESULT_AUTO_ADVANCE_MS effect 주석 — ChoiceCard의 O/X 깜빡임 버그와 같은
+              방어). */}
           <ResultMark
             result={phase === 'result' && !advancing ? true : null}
             replayKey={replayKey}
@@ -600,13 +614,16 @@ const StrokeTracer = ({ entries, compound = false, caseVariant = null, replayKey
           번호 시작점 + 좌상단 획순 썸네일로 충분하고, 채점 표현은 위 ResultMark(O) 하나로
           다른 문제 유형과 통일한다. */}
 
-      {(phase === 'trace' || phase === 'result') && (
+      {/* 그리는 중(phase='trace')에만 "처음부터"를 보여준다 — "다음" 버튼은 없다(2026-09-29
+          QA 5차). 모든 획을 통과하면(phase='result') 버튼을 전부 숨기고 위 useEffect가
+          RESULT_AUTO_ADVANCE_MS 뒤 자동으로 다음 슬라이드로 넘어간다. */}
+      {phase === 'trace' && (
         <div className="flex items-center gap-[12px] w-full flex-shrink-0">
           <motion.button
             type="button"
             onClick={resetAll}
             className="
-              flex-1 h-[52px] rounded-[12px]
+              w-full h-[52px] rounded-[12px]
               flex items-center justify-center gap-[6px]
               border-[2px] border-border dark:border-border-dark
               bg-layout-white dark:bg-layout-black
@@ -616,21 +633,6 @@ const StrokeTracer = ({ entries, compound = false, caseVariant = null, replayKey
             whileTap={{ scale: 0.97 }}
           >
             처음부터
-          </motion.button>
-          <motion.button
-            type="button"
-            onClick={handleNext}
-            disabled={phase !== 'result'}
-            className={`
-              flex-1 h-[52px] rounded-[12px]
-              text-[15px] font-[700] tracking-[-0.03em]
-              ${phase !== 'result'
-                ? 'bg-layout-gray-200 dark:bg-[#2A2A2A] text-layout-gray-400 dark:text-layout-gray-300'
-                : 'bg-primary-main-600 text-layout-white'}
-            `}
-            whileTap={phase === 'result' ? { scale: 0.97 } : undefined}
-          >
-            다음
           </motion.button>
         </div>
       )}

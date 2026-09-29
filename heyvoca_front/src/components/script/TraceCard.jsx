@@ -6,6 +6,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import StrokeTracer from './StrokeTracer';
 import { getStrokeEntry, getAlphabetStrokeEntries } from '../../utils/scriptData';
+import { CARD_ENTER_INITIAL, CARD_ENTER_ANIMATE, CARD_ENTER_TRANSITION } from '../../utils/studySlideMotion';
 
 const TraceCard = ({ step, onDone }) => {
   "use memo";
@@ -17,7 +18,13 @@ const TraceCard = ({ step, onDone }) => {
     : getStrokeEntry(script, item);
 
   return (
-    <div className="flex flex-col gap-[10px] w-full h-full">
+    // TakeTest Main.jsx 문제 카드와 같은 등장 모션(살짝 커지며 나타남, 2026-09-29 QA 5차).
+    <motion.div
+      initial={CARD_ENTER_INITIAL}
+      animate={CARD_ENTER_ANIMATE}
+      transition={CARD_ENTER_TRANSITION}
+      className="flex flex-col gap-[10px] w-full h-full"
+    >
       {entries.length > 0 ? (
         <StrokeTracer
           entries={entries}
@@ -41,7 +48,7 @@ const TraceCard = ({ step, onDone }) => {
           </motion.button>
         </div>
       )}
-    </div>
+    </motion.div>
   );
 };
 
