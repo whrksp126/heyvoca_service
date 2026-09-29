@@ -6,7 +6,7 @@ from uuid import UUID
 from flask import Blueprint, jsonify, g, request
 
 from app import db
-from app.models.models import UserStudyLog, UserVoca, UserVocaGame, VisualStage
+from app.models.models import UserStudyLog, UserVoca, UserVocaGame, VisualStage, FarmEvent, FarmEventLog
 from app.services.game.farm_v2 import growth as farm_growth
 from app.services.game.farm_v2 import xp as farm_xp
 from app.utils.jwt_utils import jwt_required
@@ -218,21 +218,35 @@ def word_timeline(user_voca_id):
 @insights_bp.route('/today-changes', methods=['GET'])
 @jwt_required
 def today_changes():
-    """홈 '오늘의 기억 변화' 위젯 — 오늘(logical day) 승급/신규 단어 집계.
+    """홈 '오늘의 기억 변화'(= "오늘 자란 단어") 위젯 — 오늘(logical day) 승급/신규 단어 집계.
 
-    단어별로 오늘 첫 로그의 state_before → 마지막 로그의 state_after를 비교해
-    하루 단위 순변화만 계산한다 (세션 내 오르내림은 상쇄).
+    2026-09-29 버그 수정 전에는 UserStudyLog.state_before/after(FSRS 안정성 구간
+    unlearned/short/medium/long)의 경계를 넘었을 때만 "승급"으로 잡았다. 하지만 홈 화면이
+    실제로 그리는 건 농장 v2 작물 단계(visual_stage: PLANTED_SEED/SPROUT/LEAF/CARROT/GOLDEN,
+    문턱은 growth.next_stage — XP 50/210/600/1800)라, 같은 FSRS 구간 안에서 씨앗→새싹처럼
+    작물 단계만 오른 경우를 하나도 못 잡았다(하루에 여러 번 학습해도 그런 승급이 흔하다).
+
+    그래서 소스를 FarmEventLog(기획 16.2 "상태가 실제로 바뀐 순간만 남긴다")로 바꿨다 —
+    /farm/session-summary의 grown/word_stages와 같은 패턴이다. SEED_PLANTED/SPROUTED/
+    STAGE_UP/GOLDEN_ACHIEVED 는 오직 growth.next_stage 가 실제로 단계를 올렸을 때만
+    answer.py(_apply_stage_up/_apply_golden)가 남기므로, 이 로그에 있는 건 전부 상승이다
+    (FSRS 구간처럼 별도 rank 비교가 필요 없다).
+
+    단어별로 오늘 최초 이벤트의 from_state → 최종 이벤트의 to_state로 하루 단위 순변화만
+    계산한다(세션 내 오르내림은 없다 — 성장은 내려가지 않는다, 기획 5.2). 오늘 SEED_PLANTED가
+    있으면(=오늘 새로 심음) "new"로, 그 외 승급은 "promoted"로 분류한다 — 같은 단어가 오늘
+    심고 새싹까지 갔어도 new 한 건에 최종 단계만 담는다(중복 금지).
 
     응답 data:
       {
         "promoted": [{"user_voca_id","word","meaning","from","to","stage"}, ...],  # 기존 단어 승급
         "new":      [{"user_voca_id","word","meaning","from","to","stage"}, ...],  # 오늘 첫 학습 진입
-        "counts":   {"promoted": n, "new": n, "by_state": {"short":n,"medium":n,"long":n}}
+        "counts":   {"promoted": n, "new": n, "by_state": {"SPROUT":n,"LEAF":n,...}}
       }
 
-    `stage` 는 농장의 실제 visual_stage 리터럴(예 PLANTED_SEED/SPROUT)이다. FSRS 구간
-    (unlearned/short/...)만으로 화면이 작물을 근사하면, 심은 씨앗도 아직 안 심은 봉투로
-    잘못 그려지는 문제가 있었다(session-summary의 word_stages와 같은 이유).
+    `from`/`to`/`stage` 는 모두 농장의 실제 visual_stage 리터럴(예 PLANTED_SEED/SPROUT)이다
+    — FSRS 구간(unlearned/short/...) 키가 아니다. 프론트(Main.jsx grewItems)는 `stage`가
+    있으면 그걸 우선 쓰므로 그대로 호환된다.
     """
     from app.services.study_day import logical_day_start_utc
     # 대표 뜻 추출과 stage 조회는 farm_v2.query 의 구현을 재사용한다(문자열/딕셔너리 배열
@@ -247,47 +261,60 @@ def today_changes():
     day_start_utc = logical_day_start_utc()
     lang = get_dict_lang()
 
-    rows = (
+    STAGE_EVENTS = (
+        FarmEvent.SEED_PLANTED, FarmEvent.SPROUTED, FarmEvent.STAGE_UP, FarmEvent.GOLDEN_ACHIEVED,
+    )
+
+    logs = (
         db.session.query(
-            UserStudyLog.user_voca_id,
-            UserStudyLog.state_before,
-            UserStudyLog.state_after,
-            UserStudyLog.created_at,
+            FarmEventLog.user_voca_id,
+            FarmEventLog.event,
+            FarmEventLog.from_state,
+            FarmEventLog.to_state,
         )
         .filter(
-            UserStudyLog.user_id == user_id,
-            UserStudyLog.dict_lang == lang,   # 현재 학습 언어의 변화만
-            UserStudyLog.created_at >= day_start_utc,
+            FarmEventLog.user_id == user_id,
+            FarmEventLog.event.in_(STAGE_EVENTS),
+            FarmEventLog.created_at >= day_start_utc,
         )
-        .order_by(UserStudyLog.created_at.asc())
+        .order_by(FarmEventLog.created_at.asc(), FarmEventLog.id.asc())
         .all()
     )
 
-    # user_voca_id별 오늘 첫 before / 마지막 after
-    day_states = {}
-    for vid, before, after, _ in rows:
+    # 오늘 최초로 등장한 순서를 유지한다(응답 순서 = 실제 오른 순서).
+    order = []
+    seen = set()
+    planted_ids = set()
+    grown = {}   # vid -> {'from_stage', 'to_stage'} — SEED_PLANTED 이후의 단계 상승만
+    for vid, event, from_state, to_state in logs:
         if vid is None:
             continue
-        if vid not in day_states:
-            day_states[vid] = {'from': _classify_json(before)}
-        day_states[vid]['to'] = _classify_json(after)
-
-    changed_ids = [
-        vid for vid, st in day_states.items()
-        if _STATE_RANK.get(st['to'], 0) > _STATE_RANK.get(st['from'], 0)
-    ]
+        if vid not in seen:
+            seen.add(vid)
+            order.append(vid)
+        if event == FarmEvent.SEED_PLANTED:
+            planted_ids.add(vid)
+            continue
+        prev = grown.get(vid)
+        grown[vid] = {
+            'from_stage': prev['from_stage'] if prev else (from_state or VisualStage.PLANTED_SEED),
+            'to_stage': to_state or VisualStage.PLANTED_SEED,
+        }
 
     words = {}
     voca_ids = {}
     stage_map = {}
-    if changed_ids:
+    if order:
+        # 같은 user_voca_id 라도 학습 언어(dict_lang)가 다르면 다른 단어다 —
+        # UserVoca.dict_lang 으로 현재 학습 언어만 남긴다(구 UserStudyLog 필터와 동치).
         for uv_id, word, meanings, voca_id in (
             db.session.query(UserVoca.id, UserVoca.word, UserVoca.voca_meanings, UserVoca.voca_id)
-            .filter(UserVoca.user_id == user_id, UserVoca.id.in_(changed_ids))
+            .filter(UserVoca.user_id == user_id, UserVoca.dict_lang == lang, UserVoca.id.in_(order))
             .all()
         ):
             words[uv_id] = (word or '', _first_meaning(meanings))
             voca_ids[uv_id] = voca_id
+        changed_ids = [vid for vid in order if vid in words]
         # IN 절 1회 — 단어 수만큼 왕복하지 않는다. 조회 실패해도 목록 자체는 내려줘야
         # 하므로 stage 만 빈 값으로 방어한다(session-summary의 word_stages 방어와 동일 패턴).
         try:
@@ -295,30 +322,39 @@ def today_changes():
         except Exception:
             db.session.rollback()
             stage_map = {}
+    else:
+        changed_ids = []
 
     ja_info = load_ja_word_info(voca_ids.values()) if lang == 'ja' else {}
 
     promoted, new_words = [], []
     by_state = {}
     for vid in changed_ids:
-        st = day_states[vid]
         word, meaning = words.get(vid) or ('', '')
+        is_new = vid in planted_ids
+        if is_new:
+            from_stage = VisualStage.UNPLANTED_SEED
+            to_stage = grown.get(vid, {}).get('to_stage') or VisualStage.PLANTED_SEED
+        else:
+            grown_info = grown.get(vid) or {}
+            from_stage = grown_info.get('from_stage') or VisualStage.PLANTED_SEED
+            to_stage = grown_info.get('to_stage') or from_stage
         entry = {
             'user_voca_id': vid,
             'word': word,
             'meaning': meaning,
-            'from': st['from'],
-            'to': st['to'],
-            'stage': stage_map.get(vid, VisualStage.UNPLANTED_SEED),
+            'from': from_stage,
+            'to': to_stage,
+            'stage': stage_map.get(vid, to_stage),
             'language': lang,
         }
         if lang == 'ja':
             entry['reading'] = (ja_info.get(voca_ids.get(vid)) or {}).get('reading')
-        if st['from'] == 'unlearned':
+        if is_new:
             new_words.append(entry)
         else:
             promoted.append(entry)
-        by_state[st['to']] = by_state.get(st['to'], 0) + 1
+        by_state[to_stage] = by_state.get(to_stage, 0) + 1
 
     return jsonify({
         'code': 200,
