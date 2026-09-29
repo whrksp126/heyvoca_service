@@ -16,11 +16,12 @@
 import React, { useState } from 'react';
 import CropImage from '../farm/CropImage';
 import { isMastered, speakScriptItem } from '../../utils/scriptData';
+import { xpBarPct } from '../../utils/cropXp';
 import { vibrate } from '../../utils/osFunction';
 import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 import ScriptCharDetailNewBottomSheet from '../newBottomSheet/ScriptCharDetailNewBottomSheet';
 
-const ScriptCell = ({ item, script, onStart, minHeight = 48 }) => {
+const ScriptCell = ({ item, script, onStart, minHeight = 64 }) => {
   "use memo";
   const stage = item.stage;
   const mastered = isMastered(item.stage);
@@ -52,19 +53,28 @@ const ScriptCell = ({ item, script, onStart, minHeight = 48 }) => {
       `}
       style={{ minHeight }}
     >
-      {stage && (
-        <div className="absolute top-[1px] right-[1px]">
-          <CropImage stage={stage} health="FRESH" solo size={14} align="center" />
-        </div>
-      )}
       <span
         className={`
-          text-[16px] font-[700]
+          text-[16px] font-[700] leading-none
           ${playing ? 'text-primary-main-600' : 'text-layout-black dark:text-layout-white'}
         `}
       >
         {item.char}
       </span>
+      {/* 학습 카드 하단 농장 상태 바의 축소판 — 왼쪽 작물, 옆에 단계 내 XP 막대 */}
+      {stage && (
+        <div className="flex items-center gap-[3px] w-full px-[6px] mt-[6px]">
+          <span className="shrink-0 inline-flex">
+            <CropImage stage={stage} health="FRESH" solo size={12} align="center" />
+          </span>
+          <span className="flex-1 h-[4px] rounded-full overflow-hidden bg-layout-gray-200 dark:bg-[#3A3A3A]">
+            <span
+              className="block h-full rounded-full bg-primary-main-600"
+              style={{ width: `${xpBarPct(stage, item.xp)}%` }}
+            />
+          </span>
+        </div>
+      )}
     </button>
   );
 };
