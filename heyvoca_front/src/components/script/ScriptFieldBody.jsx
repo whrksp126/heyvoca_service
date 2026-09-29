@@ -8,8 +8,8 @@
 // 2026-09-30 재개편(듀오링고 문자 탭 방식): 줄 단위 "이 줄 배우기"·"이미 알아요" 진입점을
 // 없앴다. 행 헤더는 이제 라벨만 표시하고(ScriptRow), 학습/연습은 칸(ScriptCell) 하나를
 // 탭해 여는 상세 시트(ScriptCharDetailNewBottomSheet)에서 그 글자 하나로 시작한다. 이미
-// 심은 글자가 있으면 상단에 전폭 "글자 연습하기" 버튼도 둔다(mode=review, 서버가 XP 낮은
-// 글자를 우선 골라 준다).
+// 상단에는 홈 주 CTA와 같은 전폭 버튼을 둔다 — 안 배운 글자가 남았으면 격자 순서대로 다음
+// 글자 배우기, 다 배웠으면 "글자 연습하기"(mode=review, 서버가 XP 낮은 글자를 우선).
 //
 // 진행도는 GET /script/progress(계약: heyvoca_back 동시 구현)가 단어와 같은 visual_stage
 // 문자열을 내려줘서, 이 그리드와 학습 결과 화면(StudyResult.jsx)이 같은 CropImage 규칙을 쓴다.
@@ -29,7 +29,10 @@ import {
   buildDistractorPool,
   practicableItems,
   masteredCount,
+  isStarted,
 } from '../../utils/scriptData';
+import { motion } from 'framer-motion';
+import { haptic, SPRING, TAP } from '../../lib/feel';
 import ScriptRow from './ScriptRow';
 import { vibrate, showToast } from '../../utils/osFunction';
 
@@ -103,6 +106,22 @@ const ScriptFieldBody = () => {
   const groups = useMemo(() => buildScriptGroups(activeScript, items), [activeScript, items]);
   const totalMastered = masteredCount(items);
   const totalPracticable = practicableItems(items);
+  // 상단 학습 버튼(2026-09-30 실기기 피드백 — "순차적으로, 알아서"): 아직 안 배운 글자가
+  // 있으면 격자 순서대로 다음 두 글자를 배우고(두 글자면 마지막에 확인 문제가 붙는다),
+  // 전부 배웠으면 연습(mode=review, 서버가 XP 낮은 글자부터)으로 넘어간다.
+  const NEXT_LEARN_COUNT = 2;
+  const nextLearnItems = useMemo(
+    () => items.filter((it) => !isStarted(it)).slice(0, NEXT_LEARN_COUNT),
+    [items]
+  );
+  const mainAction = nextLearnItems.length > 0
+    ? {
+      label: `${nextLearnItems.map((it) => it.char).join(' · ')} 배우기`,
+      run: () => startSession(nextLearnItems, 'learn', '다음 글자'),
+    }
+    : totalPracticable.length > 0
+      ? { label: '글자 연습하기', run: () => startSession(totalPracticable, 'review', '글자 연습') }
+      : null;
 
   const subtitle = useMemo(
     () => availableScripts.map((s) => SCRIPT_LABEL[s]).join(' · '),
@@ -158,20 +177,28 @@ const ScriptFieldBody = () => {
         </span>
       </div>
 
-      {totalPracticable.length > 0 && (
-        <button
+      {mainAction && (
+        /* 홈 주 CTA(components/home/FarmCta.jsx)와 같은 버튼 — 56px·핑크 그라디언트·흰 글자.
+           히어로 위에 뜬 버튼이 아니라서 바깥 번짐 그림자는 빼고 안쪽 하이라이트만 둔다. */
+        <motion.button
           type="button"
           disabled={starting}
-          onClick={() => startSession(totalPracticable, 'review', '글자 연습')}
+          onClick={mainAction.run}
+          whileTap={{ scale: TAP.scale }}
+          transition={SPRING.snappy}
+          onTapStart={() => haptic('light')}
           className="
-            w-full h-[46px] mt-[12px] rounded-[12px]
-            text-[14.5px] font-[800] tracking-[-0.02em]
-            bg-primary-main-100 dark:bg-primary-main-dark text-primary-main-600
+            flex items-center justify-center
+            w-full h-[56px] mt-[12px] rounded-[12px]
+            bg-[linear-gradient(180deg,#FF88DC_0%,#FF70D4_100%)]
+            shadow-[inset_0_1px_0_rgba(255,255,255,.34)]
             disabled:opacity-60
           "
         >
-          글자 연습하기
-        </button>
+          <span className="text-layout-white text-[17px] font-[700] leading-[1.2] tracking-[-0.02em]">
+            {mainAction.label}
+          </span>
+        </motion.button>
       )}
 
       {availableScripts.length > 1 && (

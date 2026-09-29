@@ -115,6 +115,10 @@ const TakeTest = () => {
   // 가드한다. loading 플래그가 이후에 다시 토글돼도(백그라운드 복귀 포함) 이미 진행 중인
   // 세션 상태(testQuestions/progressIndex/각종 ref)는 절대 덮어쓰지 않는다.
   const hasInitializedTestRef = useRef(false);
+  // plant·script 새 세션 진입 시 지난 세션의 로컬 recentStudy("end")가 남아 있으면, 새 문제를
+  // 세우기 전까지 결과 화면 이동 이펙트가 그 옛 "end"에 반응하지 않도록 막는다(initializeTest의
+  // isStaleLocalSession 주석). 새 세션 상태를 쓴 직후 false로 푼다.
+  const ignoreStaleEndRef = useRef(null);
 
   // 이 화면이 떠 있는 동안(게스트 맛보기 포함) "학습 세션 활성" 상태를 전역에 알린다.
   // buildVersion.js가 이 신호를 보고 백그라운드 복귀 시 페이지를 reload하지 않도록 막는다
@@ -674,11 +678,21 @@ const TakeTest = () => {
       // 아직 로딩 중이 아니면 지금부터 실제 초기화를 진행한다 — 이 시점부터 "초기화 완료"로
       // 표시해 이후 이 effect가 다시 실행되더라도(아래 dep 배열 참고) 더는 아무 일도 하지 않는다.
       hasInitializedTestRef.current = true;
-      if (recentStudy && recentStudy[state.testType] && recentStudy[state.testType].status === "end") {
+      // plant·script는 recentStudy를 서버에 쓰지 않고 로컬 상태로만 쓴다(아래 세션 생성 분기
+      // 주석). 그래서 지난 세션의 "end"/"learning"이 앱을 끄기 전까지 그대로 남아, 같은 종류의
+      // 새 세션을 열면 곧장 지난 결과 화면으로 가거나 지난 문제를 이어 풀었다(2026-09-30
+      // 실기기: 글자 연습하기 두 번째 클릭 → 바로 결과 화면). 런처가 새로 받아 온 session_id와
+      // 저장된 세션이 다르면 저장분을 무시하고 새로 만든다.
+      const isLocalOnlyType = state.testType === 'plant' || state.testType === 'script';
+      const isStaleLocalSession = isLocalOnlyType
+        && Array.isArray(state.data?.words) && state.data.words.length > 0
+        && (recentStudy?.[state.testType]?.session_id ?? null) !== (state.data?.sessionId ?? null);
+      ignoreStaleEndRef.current = isStaleLocalSession;
+      if (!isStaleLocalSession && recentStudy && recentStudy[state.testType] && recentStudy[state.testType].status === "end") {
         setIsTestQuestionsSetting(false);
         return;
       }
-      if (recentStudy && recentStudy[state.testType] && recentStudy[state.testType].status === "learning" && recentStudy[state.testType].study_data?.length > 0) {
+      if (!isStaleLocalSession && recentStudy && recentStudy[state.testType] && recentStudy[state.testType].status === "learning" && recentStudy[state.testType].study_data?.length > 0) {
         const studyData = recentStudy[state.testType].study_data;
         // cardMatch/cardMatchListening 질문에 words 배열이 없으면 잘못된 캐시 → 재생성.
         // 빈칸 채우기는 문자열 선택지 4개 + 빈칸 문장 + resultIndex 가 있어야 한다
@@ -820,11 +834,13 @@ const TakeTest = () => {
                 progress_index: 0,
                 status: "learning",
                 type: state.testType,
+                session_id: state.data?.sessionId ?? null,
                 study_data: tempTestQuestions,
                 updated_at: new Date().toISOString(),
                 created_at: new Date().toISOString(),
               },
             });
+            ignoreStaleEndRef.current = false;
           } else {
             await updateRecentStudy(state.testType, {
               ...recentStudy[state.testType],
@@ -961,6 +977,9 @@ const TakeTest = () => {
   //
   useEffect(() => {
     const handleUpdateAndNavigate = async () => {
+      if (ignoreStaleEndRef.current !== false && (state.testType === 'plant' || state.testType === 'script')
+        && Array.isArray(state.data?.words) && state.data.words.length > 0
+        && (recentStudy?.[state.testType]?.session_id ?? null) !== (state.data?.sessionId ?? null)) return;
       if (recentStudy && recentStudy[state.testType] && recentStudy[state.testType].status === "end") {
         // 게스트 맛보기 종료 → 서버 동기화 없이 답안만 챙겨 온보딩 보상으로
         if (isGuestMode) {
@@ -1143,7 +1162,7 @@ const TakeTest = () => {
     const prog = isPreparingTts ? prepareProgress : 0.06;
     return <ProgressSplash progress={prog} message={message} />;
   } else {
-    if (recentStudy[state.testType]?.status === "end") {
+    if (recentStudy[state.testType]?.status === "end" && ignoreStaleEndRef.current !== true) {
       // 학습 종료 → 결과 페이지로 navigate 진행 중. 깜빡임 방지를 위해 빈 화면 유지.
       return null;
     }
