@@ -131,29 +131,80 @@ export const prefetchScriptSession = (script, chars) => {
   return prefetchTtsList(list, 4);
 };
 
-/** 행(row) 표시 라벨 — 히라가나/가타카나는 "○행", 알파벳은 "A – E" 범위. */
-export const rowLabel = (script, rowKey, items) => {
-  if (!items || items.length === 0) return rowKey;
-  if (script === 'alphabet') {
-    const first = items[0].char;
-    const last = items[items.length - 1].char;
-    return first === last ? first : `${first} – ${last}`;
-  }
-  return `${items[0].char}행`;
+/*
+  격자(그리드) 구성 — 2026-09-30 듀오링고 문자표 스타일 개편.
+  예전엔 "○행" 제목 + 그 아래 글자들을 줄마다 구분선으로 나눠 그렸다(groupByRow/rowLabel).
+  지금은 하나로 이어진 격자를 묶음(기본/탁음·반탁음/요음) 단위로만 나눈다 — 묶음 제목만
+  보이고, 행 사이 제목·구분선은 없다.
+
+  히라가나/가타카나 data/script/*.json 의 item.row 는 오십음도 행 키(a/ka/…/n, 탁음
+  ga/za/da/ba/pa, 요음 kya/gya/…/rya)다. 기본(basic) 묶음은 5열 격자에서 열이 모음
+  (あいうえお) 순서와 일치해야 하는데, や행(や・ゆ・よ 3개)·わ행(わ・を 2개)·ん행(1개)은
+  실제 글자 수가 5개보다 적어 "빈 칸"이 생긴다 — BASIC_ROW_COLUMNS 가 그 빈 칸의 위치를
+  정의한다(null로 채워 칸 크기는 유지하되 탭은 되지 않게 한다).
+*/
+const BASIC_ROW_COLUMNS = {
+  ya: [0, 2, 4], // や・(빈칸)・ゆ・(빈칸)・よ
+  wa: [0, 4], // わ・(빈칸)・(빈칸)・(빈칸)・を
+  n: [0], // ん만, 나머지 4칸은 빈칸
 };
 
-/** 정적 데이터를 row 순서를 유지한 채 { rowKey, items: [...] } 배열로 묶는다. */
-export const groupByRow = (items) => {
-  const order = [];
-  const map = new Map();
-  for (const it of items) {
-    if (!map.has(it.row)) {
-      map.set(it.row, []);
-      order.push(it.row);
-    }
-    map.get(it.row).push(it);
+const KANA_GROUP_DEFS = [
+  {
+    key: 'basic',
+    label: '기본',
+    columns: 5,
+    rows: ['a', 'ka', 'sa', 'ta', 'na', 'ha', 'ma', 'ya', 'ra', 'wa', 'n'],
+  },
+  {
+    key: 'dakuten',
+    label: '탁음 · 반탁음',
+    columns: 5,
+    rows: ['ga', 'za', 'da', 'ba', 'pa'],
+  },
+  {
+    key: 'yoon',
+    label: '요음',
+    columns: 3,
+    rows: ['kya', 'gya', 'sha', 'ja', 'cha', 'nya', 'hya', 'bya', 'pya', 'mya', 'rya'],
+  },
+];
+
+/**
+ * 격자 묶음 배열을 만든다 — [{ key, label, columns, cells: [item|null, ...] }].
+ * - 히라가나/가타카나: KANA_GROUP_DEFS 순서대로 묶음을 만들고, 기본 묶음의 や/わ/ん행은
+ *   BASIC_ROW_COLUMNS 로 열을 맞춘 뒤 빈 칸을 null로 채운다(다른 행은 이미 5칸을 꽉 채우므로
+ *   그대로 이어 붙인다 — 탁음 5행×5칸, 요음은 행 하나가 곧 3칸 한 줄).
+ * - 알파벳: 묶음 제목 없이 전체 26자를 한 묶음으로 이어 붙인다(row 순서 그대로 이미 5개씩).
+ * cells의 null은 "보이지 않는 자리 채움"(칸 크기 유지, 탭 불가) — ScriptCell 대신 렌더링하는
+ * 쪽(components/script/ScriptRow.jsx)에서 null이면 빈 div를 그린다.
+ */
+export const buildScriptGroups = (script, mergedItems) => {
+  if (script === 'alphabet') {
+    return [{ key: 'all', label: null, columns: 5, cells: [...(mergedItems || [])] }];
   }
-  return order.map((rowKey) => ({ rowKey, items: map.get(rowKey) }));
+
+  const byRow = new Map();
+  (mergedItems || []).forEach((it) => {
+    if (!byRow.has(it.row)) byRow.set(it.row, []);
+    byRow.get(it.row).push(it);
+  });
+
+  return KANA_GROUP_DEFS.map((group) => {
+    const cells = [];
+    group.rows.forEach((rowKey) => {
+      const rowItems = byRow.get(rowKey) || [];
+      const columnMap = group.key === 'basic' ? BASIC_ROW_COLUMNS[rowKey] : null;
+      if (columnMap) {
+        const slots = new Array(group.columns).fill(null);
+        columnMap.forEach((col, idx) => { slots[col] = rowItems[idx] || null; });
+        cells.push(...slots);
+      } else {
+        cells.push(...rowItems);
+      }
+    });
+    return { key: group.key, label: group.label, columns: group.columns, cells };
+  });
 };
 
 /*

@@ -23,13 +23,12 @@ import { ensureScriptApi, getScriptSessionApi } from '../../api/script';
 import {
   SCRIPT_LABEL,
   scriptsForLearningLang,
-  groupByRow,
+  buildScriptGroups,
   mergeProgress,
   mapScriptSessionItem,
   buildDistractorPool,
   practicableItems,
   masteredCount,
-  rowLabel,
 } from '../../utils/scriptData';
 import ScriptRow from './ScriptRow';
 import { vibrate, showToast } from '../../utils/osFunction';
@@ -101,7 +100,7 @@ const ScriptFieldBody = () => {
     return () => { cancelled = true; };
   }, [activeScript, refreshKey]);
 
-  const rows = useMemo(() => groupByRow(items), [items]);
+  const groups = useMemo(() => buildScriptGroups(activeScript, items), [activeScript, items]);
   const totalMastered = masteredCount(items);
   const totalPracticable = practicableItems(items);
 
@@ -196,12 +195,14 @@ const ScriptFieldBody = () => {
       )}
 
       <div className="flex flex-col mt-[6px]">
-        {!loading && rows.map(({ rowKey, items: rowItems }) => (
+        {!loading && groups.map((group, idx) => (
           <ScriptRow
-            key={rowKey}
+            key={group.key}
             script={activeScript}
-            label={rowLabel(activeScript, rowKey, rowItems)}
-            items={rowItems}
+            label={group.label}
+            columns={group.columns}
+            items={group.cells}
+            showVowelHeader={idx === 0 && activeScript !== 'alphabet'}
             onStart={startSession}
           />
         ))}

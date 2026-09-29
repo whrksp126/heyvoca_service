@@ -9,6 +9,10 @@
 // (ScriptCharDetailNewBottomSheet)를 연다 — 듀오링고 문자 탭처럼 칸 하나하나가 곧 학습
 // 진입점이다(2026-09-30 개편, "이 줄 배우기"·"이미 알아요" 폐지). 실제 학습/연습 세션
 // 시작은 상위(components/script/ScriptFieldBody.jsx)의 startSession을 그대로 받아 쓴다.
+//
+// 2026-09-30 재개편(이어진 격자): 칸이 더 이상 고정 픽셀 크기가 아니라 부모 CSS grid의
+// 열 너비를 그대로 채운다(w-full) — 화면 폭에 맞게 균등 분할되도록. 세로 높이만
+// minHeight로 고정해 예전 44px보다 작아지지 않게 한다.
 import React, { useState } from 'react';
 import CropImage from '../farm/CropImage';
 import { isMastered, speakScriptItem } from '../../utils/scriptData';
@@ -16,7 +20,7 @@ import { vibrate } from '../../utils/osFunction';
 import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 import ScriptCharDetailNewBottomSheet from '../newBottomSheet/ScriptCharDetailNewBottomSheet';
 
-const ScriptCell = ({ item, script, onStart, size = 44 }) => {
+const ScriptCell = ({ item, script, onStart, minHeight = 48 }) => {
   "use memo";
   const stage = item.stage;
   const mastered = isMastered(item.stage);
@@ -39,14 +43,14 @@ const ScriptCell = ({ item, script, onStart, size = 44 }) => {
       onClick={handleTap}
       aria-label={`${item.char} 발음 듣기 · 상세 보기`}
       className={`
-        relative flex flex-col items-center justify-center gap-[1px]
-        rounded-[10px] shrink-0
+        relative flex flex-col w-full items-center justify-center gap-[1px]
+        rounded-[10px]
         transition-transform active:scale-90
         ${mastered
           ? 'bg-status-success-100 dark:bg-status-success-dark'
           : 'bg-layout-gray-50 dark:bg-layout-gray-dark'}
       `}
-      style={{ width: size, height: size }}
+      style={{ minHeight }}
     >
       {stage && (
         <div className="absolute top-[1px] right-[1px]">
