@@ -26,10 +26,14 @@ import { buildLearnSteps, buildReviewSteps, buildSkipCheckSteps, summarizeResult
 import { logScriptResultsApi, skipScriptCharsApi } from '../../api/script';
 import { prefetchScriptSession } from '../../utils/scriptData';
 
-const TITLE_BY_MODE = {
-  learn: (rowLabel) => `${rowLabel || ''} 배우기`.trim(),
-  review: () => '복습하기',
-  skip: () => '이미 알아요 확인',
+// 헤더 제목 — 슬라이드 종류별 안내 문구(2026-09-29 실기기 QA: "あ행 배우기"라는 고정
+// 타이틀 대신, 지금 뭘 하는 화면인지 슬라이드마다 알려 달라는 피드백). 줄 완료 화면
+// (ScriptCompleteScreen)은 이 헤더 자체를 쓰지 않으므로 여기 포함하지 않는다.
+const STEP_TITLES = {
+  intro: '글자를 익혀요',
+  seePick: '알맞은 발음을 고르세요',
+  listenPick: '소리를 듣고 글자를 고르세요',
+  trace: '따라 써 보세요',
 };
 
 const ADVANCE_DELAY_MS = 850;
@@ -54,6 +58,7 @@ const ScriptSessionNewFullSheet = ({ script, chars = [], pool = [], mode = 'lear
   const [collectedAnswers, setCollectedAnswers] = useState([]);
   const [finished, setFinished] = useState(false);
   const advanceTimerRef = useRef(null);
+  const advanceRafRef = useRef(null);
 
   useEffect(() => {
     if (steps.length === 0) popNewFullSheet();
@@ -70,6 +75,7 @@ const ScriptSessionNewFullSheet = ({ script, chars = [], pool = [], mode = 'lear
 
   useEffect(() => () => {
     if (advanceTimerRef.current) clearTimeout(advanceTimerRef.current);
+    if (advanceRafRef.current) cancelAnimationFrame(advanceRafRef.current);
     stopCurrentSound();
   }, []);
 
@@ -77,8 +83,6 @@ const ScriptSessionNewFullSheet = ({ script, chars = [], pool = [], mode = 'lear
 
   const goNext = (record) => {
     setCollectedAnswers((prev) => (record ? [...prev, record] : prev));
-    setAnswered(false);
-    setSelectedIndex(null);
     if (stepIndex + 1 >= steps.length) {
       setFinished(true);
       return;
@@ -93,7 +97,19 @@ const ScriptSessionNewFullSheet = ({ script, chars = [], pool = [], mode = 'lear
     setAnswered(true);
     haptic(correct ? 'success' : 'error');
     const record = { ...currentStep, correct };
-    advanceTimerRef.current = setTimeout(() => goNext(record), ADVANCE_DELAY_MS);
+    advanceTimerRef.current = setTimeout(() => {
+      // 스텝을 넘기기 전에 answered/selectedIndex를 먼저 끄고 그 렌더를 한 프레임 따로
+      // 커밋한 뒤에야 stepIndex를 바꾼다(2026-09-29 실기기 QA: O/X 깜빡임 버그).
+      // AnimatePresence(mode="wait")가 이 스텝의 motion.div를 퇴장시킬 때 "마지막으로
+      // 살아있던" props를 기준으로 삼는데, answered=true인 채로 같은 배치에서 stepIndex까지
+      // 바꾸면 그 "마지막 props"가 answered=true로 남아버려 — 퇴장 애니메이션 도중
+      // 리렌더/리마운트가 한 번 더 일어나면 ResultMark가 result!==null로 다시 마운트되어
+      // O/X가 잠깐 재생됐다 사라진다. 여기서 한 프레임 먼저 answered=false를 커밋해 두면
+      // 퇴장 시점의 "마지막 props"가 이미 answered=false라 재발할 여지가 없다.
+      setAnswered(false);
+      setSelectedIndex(null);
+      advanceRafRef.current = requestAnimationFrame(() => goNext(record));
+    }, ADVANCE_DELAY_MS);
   };
 
   const handleTraceDone = () => goNext(null);
@@ -179,7 +195,7 @@ const ScriptSessionNewFullSheet = ({ script, chars = [], pool = [], mode = 'lear
         </div>
         <div className="px-[44px]">
           <h2 className="text-[18px] font-[700] leading-[21px] text-center text-layout-black dark:text-layout-white">
-            {TITLE_BY_MODE[mode]?.(rowLabel) || '글자 밭'}
+            {STEP_TITLES[currentStep.type] || '글자 밭'}
           </h2>
         </div>
       </div>
@@ -210,10 +226,11 @@ const ScriptSessionNewFullSheet = ({ script, chars = [], pool = [], mode = 'lear
               transition={{ duration: 0.2 }}
             >
               {currentStep.type === 'intro' && (
-                <IntroCard step={currentStep} onNext={handleIntroNext} />
+                <IntroCard key={currentStep.id} step={currentStep} onNext={handleIntroNext} />
               )}
               {(currentStep.type === 'seePick' || currentStep.type === 'listenPick') && (
                 <ChoiceCard
+                  key={currentStep.id}
                   step={currentStep}
                   answered={answered}
                   selectedIndex={selectedIndex}
@@ -221,7 +238,7 @@ const ScriptSessionNewFullSheet = ({ script, chars = [], pool = [], mode = 'lear
                 />
               )}
               {currentStep.type === 'trace' && (
-                <TraceCard step={currentStep} onDone={handleTraceDone} />
+                <TraceCard key={currentStep.id} step={currentStep} onDone={handleTraceDone} />
               )}
             </motion.div>
           </AnimatePresence>

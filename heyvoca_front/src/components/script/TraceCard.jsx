@@ -14,9 +14,8 @@ const TraceCard = ({ step, onDone }) => {
 
   return (
     <div className="flex flex-col gap-[10px] w-full h-full">
-      <span className="flex-shrink-0 text-[13px] font-[700] text-layout-gray-400 text-center">따라 써 보세요</span>
       {entries.length > 0 ? (
-        <StrokeTracer entries={entries} compound={compound} onDone={onDone} />
+        <StrokeTracer entries={entries} compound={compound} replayKey={step.id} onDone={onDone} />
       ) : (
         <div className="flex flex-col items-center justify-center gap-[18px] flex-1 min-h-0 rounded-[12px] bg-layout-gray-50 dark:bg-layout-gray-dark">
           <span className="text-[72px] font-[700] text-layout-black dark:text-layout-white">{item.char}</span>

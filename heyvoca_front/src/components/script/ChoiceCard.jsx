@@ -3,8 +3,8 @@
 // 글자 밭 세션 — 사지선다 카드 두 종류를 한 컴포넌트로 그린다.
 //   seePick    — 글자를 보고 소리(한글 발음·로마자)를 고른다. 옵션 안에 한글 발음(크게)·
 //                로마자(작게, 회색)를 세로로 묶어 보여준다.
-//   listenPick — 소리를 듣고 글자를 고른다(혼동쌍 포함). 옵션 글자를 크게 보여주고,
-//                채점 후에는 각 옵션 아래에 한글 발음을 작게 덧표시한다.
+//   listenPick — 소리를 듣고 글자를 고른다(혼동쌍 포함). 옵션 글자를 크게 보여준다
+//                (2026-09-29: 채점 후 옵션 아래에 붙던 한글 발음 작은 글자는 제거).
 // 정오답 스타일은 TakeTest Main.jsx의 선택지 버튼 규격을 그대로 따른다.
 
 import React, { useEffect, useState } from 'react';
@@ -86,10 +86,11 @@ const ChoiceCard = ({ step, answered, selectedIndex, onSelect }) => {
           </h2>
         )}
 
+        {/* TakeTest Main.jsx의 ResultMark와 같은 크기(기본 150)·같은 중앙 배치 규격 —
+            2026-09-29 실기기 QA: 110px는 TakeTest보다 작아 다른 화면처럼 보였다. */}
         <ResultMark
           result={answered ? selectedIndex === answerIndex : null}
           replayKey={step.id}
-          size={110}
           className="
             pointer-events-none absolute top-[50%] left-[50%] z-[2]
             translate-x-[-50%] translate-y-[-50%]
@@ -125,14 +126,7 @@ const ChoiceCard = ({ step, answered, selectedIndex, onSelect }) => {
               `}
             >
               {isListen ? (
-                <div className="flex flex-col items-center gap-[2px]">
-                  <span className="text-[26px] font-[800] leading-none">{opt.char}</span>
-                  {answered && (
-                    <span className="text-[11px] font-[600] leading-none text-layout-gray-400">
-                      {script === 'alphabet' ? opt.name_hangul : opt.hangul}
-                    </span>
-                  )}
-                </div>
+                <span className="text-[26px] font-[800] leading-none">{opt.char}</span>
               ) : (
                 <div className="flex flex-col items-center gap-[2px]">
                   <span className="text-[17px] font-[700] leading-none">{main}</span>

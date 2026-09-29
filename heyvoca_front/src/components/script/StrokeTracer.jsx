@@ -17,9 +17,9 @@
 
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { motion, useAnimationControls } from 'framer-motion';
-import { Check } from '@phosphor-icons/react';
 import { haptic } from '../../lib/feel';
 import { playSuccessSound } from '../../utils/audio';
+import ResultMark from '../common/ResultMark';
 
 const GUIDE_COLOR = '#B9B2A6';
 const GUIDE_OPACITY = 0.3;
@@ -70,7 +70,7 @@ const evaluateStroke = (guideEl, points, vbW, vbH) => {
   return { passed: ratio >= PASS_RATIO, ratio };
 };
 
-const StrokeTracer = ({ entries, compound = false, onDone }) => {
+const StrokeTracer = ({ entries, compound = false, replayKey, onDone }) => {
   "use memo";
 
   const primary = entries?.[0];
@@ -82,6 +82,9 @@ const StrokeTracer = ({ entries, compound = false, onDone }) => {
   const [currentPoints, setCurrentPoints] = useState([]); // 지금 그리고 있는 획 하나(렌더용)
   const [retryHint, setRetryHint] = useState(false);
   const [startPoint, setStartPoint] = useState(null); // 다음에 그을 획의 시작점(svg 좌표)
+  // "다음"을 눌러 세션이 이 스텝을 떠나기 시작했음을 표시 — ChoiceCard와 같은 이유로
+  // ResultMark가 퇴장 애니메이션 도중 다시 뜨는 걸 막는다(handleNext 참고).
+  const [advancing, setAdvancing] = useState(false);
 
   const svgRef = useRef(null);
   const guidePathRefs = useRef([]);
@@ -108,6 +111,7 @@ const StrokeTracer = ({ entries, compound = false, onDone }) => {
     pointsRef.current = [];
     activePointerIdRef.current = null;
     setRetryHint(false);
+    setAdvancing(false);
     const t = setTimeout(() => setPhase(compound ? 'compoundDone' : 'trace'), demoTotalMs);
     return () => clearTimeout(t);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -244,7 +248,11 @@ const StrokeTracer = ({ entries, compound = false, onDone }) => {
   const handleNext = () => {
     if (phase !== 'result') return;
     haptic('light');
-    onDone?.();
+    // ResultMark 계산을 먼저 꺼서(별도 렌더 커밋) 세션이 다음 스텝으로 넘어가며 이 카드를
+    // 퇴장시킬 때 "마지막 props"가 이미 결과 없음 상태이게 한다 — ChoiceCard의 O/X 깜빡임
+    // 버그와 같은 원인(퇴장 애니메이션 중 리렌더/리마운트)에 대한 방어.
+    setAdvancing(true);
+    requestAnimationFrame(() => onDone?.());
   };
 
   const startMarkerR = vbW * 0.032;
@@ -399,6 +407,19 @@ const StrokeTracer = ({ entries, compound = false, onDone }) => {
             )}
           </svg>
 
+          {/* 채점 표현 — 다른 학습 문제 유형과 같은 공용 ResultMark(O)를 캔버스 중앙에
+              잠깐 띄운다(2026-09-29: 고정 텍스트 '✓ 잘 썼어요' 대신). advancing이 true면
+              이 스텝을 떠나는 중이라는 뜻이라 result를 null로 눌러 재생을 막는다
+              (handleNext 주석 — ChoiceCard의 O/X 깜빡임 버그와 같은 방어). */}
+          <ResultMark
+            result={phase === 'result' && !advancing ? true : null}
+            replayKey={replayKey}
+            className="
+              pointer-events-none absolute top-[50%] left-[50%] z-[2]
+              translate-x-[-50%] translate-y-[-50%]
+            "
+          />
+
           {phase === 'demo' && (
             <span className="absolute bottom-[10px] left-0 right-0 text-center text-[12px] font-[600] text-layout-gray-300">
               획순을 잘 보세요
@@ -417,44 +438,9 @@ const StrokeTracer = ({ entries, compound = false, onDone }) => {
         </motion.div>
       </div>
 
-      {/* 획 칩 줄 — 완료(분홍)/지금 그리는 중(강조)/대기(회색) */}
-      {!compound && (phase === 'trace' || phase === 'result') && strokes.length > 0 && (
-        <div className="flex flex-wrap justify-center gap-[6px] flex-shrink-0">
-          {strokes.map((_, i) => {
-            const done = phase === 'result' || i < activeStrokeIndex;
-            const current = phase === 'trace' && i === activeStrokeIndex;
-            return (
-              <span
-                key={`chip-${i}`}
-                className={`
-                  flex items-center gap-[3px] px-[10px] py-[5px] rounded-full
-                  text-[12px] font-[700]
-                  ${done ? 'bg-primary-main-100 dark:bg-primary-main-dark text-primary-main-600' : ''}
-                  ${current ? 'bg-primary-main-600 text-layout-white' : ''}
-                  ${!done && !current ? 'bg-layout-gray-100 dark:bg-layout-gray-dark text-layout-gray-300' : ''}
-                `}
-              >
-                {done && <Check size={11} weight="bold" />}
-                {i + 1}획{current ? ' 긋는 중' : ''}
-              </span>
-            );
-          })}
-        </div>
-      )}
-
-      {/* 팁 한 줄 — 글자별 팁 데이터가 없어 일반 팁 하나로 충분히 대체한다 */}
-      {!compound && phase === 'trace' && (
-        <p className="text-center text-[12px] font-[600] text-layout-gray-400 flex-shrink-0">
-          표시된 점에서 시작해요
-        </p>
-      )}
-
-      {phase === 'result' && (
-        <div className="flex items-center justify-center gap-[6px] flex-shrink-0 text-[15px] font-[700] text-status-success-600">
-          <Check size={17} weight="bold" />
-          잘 썼어요
-        </div>
-      )}
+      {/* 획 칩 줄·팁 줄·"잘 썼어요" 문구는 제거했다(2026-09-29 실기기 QA) — 캔버스 안의
+          번호 시작점 + 좌상단 획순 썸네일로 충분하고, 채점 표현은 위 ResultMark(O) 하나로
+          다른 문제 유형과 통일한다. */}
 
       {(phase === 'trace' || phase === 'result') && (
         <div className="flex items-center gap-[12px] w-full flex-shrink-0">
