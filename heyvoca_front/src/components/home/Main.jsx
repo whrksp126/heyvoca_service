@@ -40,6 +40,7 @@ import { Translate } from '@phosphor-icons/react';
 import { LANG_LABEL, DEFAULT_LEARNING_LANG } from '../../utils/lang';
 import { LearningLangNewBottomSheet } from '../newBottomSheet/LearningLangNewBottomSheet';
 import { useQuickReview } from '../../hooks/useQuickReview';
+import { usePlantSession } from '../../hooks/usePlantSession';
 import PullToRefresh from '../common/PullToRefresh';
 
 import StoreNewFullSheet from '../newfullsheet/StoreNewFullSheet';
@@ -156,7 +157,16 @@ const Main = () => {
     서점으로 보내야 해서, 둘을 따로 계산하면 어긋날 위험이 있어 하나로 묶었다.
   */
   const ctaInfo = useMemo(() => {
-    if (homeState === HOME_STATES.EMPTY || !todayTasks) return { label: view.cta, kind: 'default' };
+    if (homeState === HOME_STATES.EMPTY) return { label: view.cta, kind: 'default' };
+    if (!todayTasks) {
+      // todayTasks(오늘 할 일)가 아직 로딩 전 — NEW_SEED(할 일 없고 신규 목표만 남음)일 땐
+      // view.cta 문구가 이미 "새 씨앗 심으러 가기"다. 그 문구로 복습(review)을 열면 심을
+      // 단어가 없으니 리뷰 대상도 없다 — 미리 심기로 보낸다(아래 todayTasks 로딩 후 분기와 같은 값).
+      if (homeState === HOME_STATES.NEW_SEED) {
+        return { label: view.cta, kind: 'study', mode: 'plant', count: 5 };
+      }
+      return { label: view.cta, kind: 'default' };
+    }
     if ((todayTasks.rotten?.count ?? 0) > 0) return { label: view.cta, kind: 'default' };
     const wiltedLeft = Math.max(0, (todayTasks.wilted?.total ?? 0) - (todayTasks.wilted?.done ?? 0));
     if (wiltedLeft > 0) return { label: `썩기 전 ${wiltedLeft}개부터 시작`, kind: 'study' };
@@ -166,7 +176,9 @@ const Main = () => {
     if (seedLeft > 0) {
       const seedsLeft = todayTasks.seeds_left ?? 0;
       if (seedsLeft <= 0) return { label: '서점에서 새 단어장 고르기', kind: 'store' };
-      return { label: `새 씨앗 ${seedLeft}개 심기`, kind: 'study' };
+      // 새 단어는 2026-09-29부터 복습과 분리된 전용 세션(usePlantSession)이다 —
+      // mode:'plant'가 있으면 handleCtaClick이 startQuickReview 대신 그쪽을 연다.
+      return { label: `새 씨앗 ${seedLeft}개 심기`, kind: 'study', mode: 'plant', count: Math.min(5, seedLeft) };
     }
     return { label: view.cta, kind: 'default' };
   }, [homeState, view.cta, todayTasks]);
@@ -232,6 +244,7 @@ const Main = () => {
   // Actions만 구독하므로 state 변경 시 리렌더링 안 됨
   const { pushNewFullSheet } = useNewFullSheetActions();
   const { startQuickReview } = useQuickReview();
+  const { startPlantSession } = usePlantSession();
   const { pushNewBottomSheet } = useNewBottomSheetActions();
 
   // 당겨서 새로고침 — StreakCard는 /farm/streak를 자체 상태로 들고 있어(streak 값이 이 컴포넌트에
@@ -331,10 +344,16 @@ const Main = () => {
   };
 
   // §12 — 버튼 모습은 다섯 상태 모두 같고 글자만 바뀐다. 가는 곳만 상태(ctaInfo.kind)를 따른다.
+  // ctaInfo.mode === 'plant' — "새 씨앗 N개 심기" 문구일 때만 복습(startQuickReview) 대신
+  // 심기 세션(usePlantSession)을 연다. 새 단어는 여기서만 시작한다(2026-09-29).
   const handleCtaClick = () => {
     if (homeState === HOME_STATES.EMPTY || ctaInfo.kind === 'store') {
       vibrate({ duration: 5 });
       navigate('/book-store');
+      return;
+    }
+    if (ctaInfo.mode === 'plant') {
+      startPlantSession({ count: ctaInfo.count });
       return;
     }
     // 학습 진입의 햅틱은 startQuickReview 가 준다 — 여기서 또 주면 두 번 울린다
@@ -369,7 +388,9 @@ const Main = () => {
       paged: true,
       emptyText: '아직 심지 않은 씨앗이 없어요',
       ctaLabel: '씨앗 심으러 가기',
-      onCta: handleTodayStudyButtonClick,
+      // "심으러 가기"는 문자 그대로 새 단어를 심는 동작이라 복습(startQuickReview)이 아니라
+      // 심기 세션(usePlantSession)을 연다 — 새 단어는 여기서만 시작한다(2026-09-29).
+      onCta: () => startPlantSession({ count: Math.min(5, unplanted || 5) }),
     }, { smFull: true, closeOnBackdropClick: true });
   };
 

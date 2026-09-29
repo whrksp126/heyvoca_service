@@ -63,7 +63,7 @@ const meaningParts = (item) => {
 };
 
 
-const StudyMain = ({ words }) => {
+const StudyMain = ({ words, plantSession }) => {
   "use memo";
 
   const navigate = useNavigate();
@@ -416,6 +416,26 @@ const StudyMain = ({ words }) => {
   const handleEnd = () => {
     stopPlayback();
     haptic('success');
+
+    // plant(새 씨앗 심기) "만나기" 완료 → 같은 단어·세션으로 ② 테스트를 바로 연다.
+    // 일반 학습(뒤로가기)과 달리 여기서는 완료 신호(M5)를 보내지 않는다 — plant는
+    // 아직 학습이 끝난 게 아니라 테스트로 이어지는 중간 지점이다.
+    if (plantSession) {
+      navigate('/take-test', {
+        state: {
+          testType: 'plant',
+          data: {
+            words: plantSession.words,
+            sessionId: plantSession.sessionId,
+            vocabularySheetId: 'all',
+            count: plantSession.words.length,
+          },
+        },
+        replace: true,
+      });
+      return;
+    }
+
     // 온보딩 M5(집중 반복 학습) 완료 신호 — 로그인 사용자에서만, 세션당 1회.
     // /study 경로는 로그인 사용자만 도달(게스트 온보딩 체험은 /take-test guestMode 흐름 별도).
     if (isLogin && !missionSignaledRef.current) {

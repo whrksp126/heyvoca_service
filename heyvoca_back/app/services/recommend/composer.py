@@ -560,6 +560,42 @@ def _compose_recommend(
     }
 
 
+def compose_plant(
+    new_items: List[CandidateItem],
+    count: int,
+    user_stats: Optional[Dict] = None,
+    allowed_types: Optional[List[str]] = None,
+) -> Dict[str, Any]:
+    """'새 씨앗 심기' 전용 세션 구성(2026-09) — 아직 안 심은 새 단어만.
+
+    복습 전용(priority 큐)과 완전히 분리된 경로다. new_ranked(=rank_new, 기존
+    AI 추천의 신규 슬롯이 새 단어를 고르는 순서 그대로 — 현재는 균등 랜덤 셔플)에서
+    앞에서부터 count개를 그대로 뽑는다. tier/priority 큐 로직은 타지 않는다(신규
+    단어는 학습 이력이 없어 대상이 아님).
+
+    호출자(`GET /study/recommend?mode=plant`)가 오늘 남은 새 씨앗 한도만큼으로
+    count를 미리 clamp해서 넘긴다 — 여기서는 한도를 다시 보지 않는다.
+    """
+    if allowed_types:
+        new_items = [it for it in new_items if any(_item_can_use_question_type(it, qt) for qt in allowed_types)]
+    ranked = rank_new(new_items)
+    selected = ranked[:max(0, count)]
+
+    today_seen = _normalize_today_seen(user_stats)
+    weakness_types = _extract_weakness_types(user_stats)
+    items_with_bucket: List[Tuple[CandidateItem, str]] = [(it, 'new') for it in selected]
+    enriched = _enrich_items(
+        items_with_bucket, today_seen, weakness_types,
+        full_recommend=False, allowed_types=allowed_types,
+    )
+    return {
+        'composition':    {'new': len(selected)} if selected else {},
+        'items':          selected,
+        'enriched_items': enriched,
+        'user_level':     'mid',
+    }
+
+
 def _compose_random(
     pool: List[CandidateItem], count: int, allowed_types: Optional[List[str]] = None,
 ) -> Dict[str, Any]:

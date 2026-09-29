@@ -282,6 +282,9 @@ export const getTodayMemoryChangesApi = async () => {
 // ─── 추천 API ───────────────────────────────────────────────────────────────
 // GET /study/recommend — 단어 추천 (세션 구성 + session_id 동시 반환)
 // 응답: { code: 200, data: { session_id, composition, items } }
+// mode — 새 단어(plant) 전용 세션 분리 계약(2026-09-29): 'review'(기본, 심은 단어만) |
+// 'plant'(안 심은 새 단어만, count는 오늘 남은 새 씨앗 한도 적용). force=true면 plant의
+// 한도 검사를 건너뛴다(호출부가 명시적으로 강제할 때만).
 export const getStudyRecommend = async ({
   type = 'daily',
   count = 20,
@@ -290,12 +293,21 @@ export const getStudyRecommend = async ({
   selection = 'recommended',
   taskBucket = null,
   questionTypes = null,
+  mode = null,
+  force = false,
 }) => {
   const url = `${backendUrl}/study/recommend`;
   const params = {};
 
   params.type = type;
   params.count = count;
+
+  if (mode === 'review' || mode === 'plant') {
+    params.mode = mode;
+  }
+  if (mode === 'plant' && force) {
+    params.force = 1;
+  }
 
   // 홈 "오늘 할 일" 카드의 시듦/돌봄 행 탭 전용 필터 — 생략하면 기존 동작 그대로.
   if (taskBucket === 'wilted' || taskBucket === 'care') {

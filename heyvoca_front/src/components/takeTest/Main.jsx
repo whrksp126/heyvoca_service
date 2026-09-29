@@ -210,8 +210,22 @@ const buildQuestionForType = (word, type, pool) => {
   return buildMultipleChoiceFromWord(word, pool, type);
 };
 
-const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex, setPendingUpdateSheetIds, setPendingUpdateWords, testType, studySessionRef, pendingLogPromisesRef, loggedVocaIdsRef, retryCountMapRef, passedVocaIdsRef, totalUniqueVocaCountRef, cardRetryEnqueuedRef, guestMode }) => {
+const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex, setPendingUpdateSheetIds, setPendingUpdateWords, testType, studySessionRef, pendingLogPromisesRef, loggedVocaIdsRef, retryCountMapRef, passedVocaIdsRef, totalUniqueVocaCountRef, cardRetryEnqueuedRef, guestMode, plantAttemptsRef }) => {
   "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
+
+  /*
+    plant(새 씨앗 심기) — 새 단어 전용 세션(2026-09-29). 문제마다 /study/log 를 보내지 않고
+    (재출제 재시도 정답 통지도 마찬가지), 단어별 "세션 내 모든 첫 시도가 정답이었는지"만
+    plantAttemptsRef 에 AND 로 접어 두면 TakeTest.jsx 가 세션 종료 시 단어당 1회씩 일괄
+    전송한다. 문제 카드의 농장 상태 바 등 "그 문제에 대한 서버 응답"에 의존하는 표시는
+    응답이 영영 오지 않으므로 숨긴다(showFarmBar 참고).
+  */
+  const isPlantMode = testType === 'plant';
+  const recordPlantAttempt = (vocaId, wasCorrect) => {
+    if (vocaId == null || !plantAttemptsRef?.current) return;
+    const prev = plantAttemptsRef.current.has(vocaId) ? plantAttemptsRef.current.get(vocaId) : true;
+    plantAttemptsRef.current.set(vocaId, prev && !!wasCorrect);
+  };
 
   const [isCorrect, setIsCorrect] = useState(null);
   const [userSelected, setUserSelected] = useState(null);
@@ -590,8 +604,16 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
   // isRetry=true인 재출제 문제는 로깅 스킵
   const logIfFirstAttempt = (question, payload) => {
     if (!studySessionRef?.current) return;
-    if (!loggedVocaIdsRef?.current) return;
     const vocaId = question.vocaIndexId ?? question.id;
+    // plant — 같은 단어가 블록마다(최대 5회) 다시 등장하므로 아래 loggedVocaIdsRef(단어당
+    // 1회 전역 가드)를 타면 두 번째 블록부터 전부 스킵된다. 여기서는 그 가드를 쓰지 않고
+    // "이 문제(블록) 자체가 재출제가 아닌 첫 시도인지"만 보고 AND로 접어 기록한다 —
+    // 실제 서버 전송은 세션 종료 시 TakeTest.jsx가 단어당 1회로 일괄한다.
+    if (isPlantMode) {
+      if (!question.isRetry) recordPlantAttempt(vocaId, payload.was_correct);
+      return;
+    }
+    if (!loggedVocaIdsRef?.current) return;
     if (question.isRetry || loggedVocaIdsRef.current.has(vocaId)) {
       // 재출제 시도 — 로깅 스킵
       return;
@@ -702,6 +724,9 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
   // 정상 흐름에서는 중복이 없지만, 카드 즉시 콜백/세트 완료 콜백 이중 호출 같은 방어용).
   const retryCorrectNotifiedRef = useRef(new Set());
   const notifyRetryCorrect = (vocaId, questionType) => {
+    // plant — 첫 시도를 아예 서버에 보내지 않으므로(logIfFirstAttempt 위 분기) "재출제
+    // 정답"을 알릴 첫 시도 로그 자체가 없다. 세션 종료 일괄 전송이 최종 정오답을 담는다.
+    if (isPlantMode) return;
     if (!studySessionRef?.current || vocaId == null) return;
     if (retryCorrectNotifiedRef.current.has(vocaId)) return;
     retryCorrectNotifiedRef.current.add(vocaId);
@@ -1358,62 +1383,71 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
       로 채점 전 값에 멈춰 세워 두고, sendCardLog 응답이 도착했을 때 그 값 하나로만
       움직인다. 게스트·이미 로깅된 카드처럼 응답이 안 오는 자리만 낙관값을 바로 쓴다.
     */
-    const optimistic = computeOptimisticFsrs(fsrsBefore, !!wordIsCorrect);
-    const buildOptimisticCardFarm = (base) => optimisticFarmPayload({
-      base,
-      fsrsBefore,
-      fsrsAfter: optimistic,
-      wasCorrect: !!wordIsCorrect,
-      isRetry: !!currentQuestion?.isRetry && !guestMode,
-      daysToReview: daysUntilReview(optimistic?.next_review),
-    });
-    // sendCardLog 가 실제로 호출될 조건(아래 if)과 정확히 같아야 한다 — 다르면
-    // 정지 화면이 영영 안 풀리거나, 낙관값을 두 번 쓰는 경우가 생긴다.
-    const willReceiveServerFarm = studySessionRef?.current != null
-      && !!loggedVocaIdsRef?.current
-      && !loggedVocaIdsRef.current.has(wordId);
-
-    if (willReceiveServerFarm) {
-      setCardFarmByWordId(prev => ({
-        ...prev,
-        [wordId]: pendingFarmPayload({ base: prev[wordId], fsrsBefore, wasCorrect: !!wordIsCorrect }),
-      }));
-      farmFallbackRef.current[wordId] = () => {
-        setCardFarmByWordId(prev => ({ ...prev, [wordId]: buildOptimisticCardFarm(prev[wordId]) }));
-      };
+    if (isPlantMode) {
+      // plant — 카드마다 /study/log 를 보내지 않는다. 이 카드(블록)가 재출제가 아닌
+      // 첫 시도일 때만 AND 로 접어 기록한다(logIfFirstAttempt 쪽 주석 참고). 농장 상태
+      // 바(cardFarmByWordId)는 만들지 않는다 — 응답이 영영 안 오므로 그대로 두면 정지
+      // 상태로 남는데, plant 는 그 표시 자체를 쓰지 않는다(플러그인 컴포넌트가
+      // farmByWordId 없으면 알아서 숨긴다).
+      if (!currentQuestion?.isRetry) recordPlantAttempt(wordId, !!wordIsCorrect);
     } else {
-      setCardFarmByWordId(prev => ({ ...prev, [wordId]: buildOptimisticCardFarm(prev[wordId]) }));
-    }
+      const optimistic = computeOptimisticFsrs(fsrsBefore, !!wordIsCorrect);
+      const buildOptimisticCardFarm = (base) => optimisticFarmPayload({
+        base,
+        fsrsBefore,
+        fsrsAfter: optimistic,
+        wasCorrect: !!wordIsCorrect,
+        isRetry: !!currentQuestion?.isRetry && !guestMode,
+        daysToReview: daysUntilReview(optimistic?.next_review),
+      });
+      // sendCardLog 가 실제로 호출될 조건(아래 if)과 정확히 같아야 한다 — 다르면
+      // 정지 화면이 영영 안 풀리거나, 낙관값을 두 번 쓰는 경우가 생긴다.
+      const willReceiveServerFarm = studySessionRef?.current != null
+        && !!loggedVocaIdsRef?.current
+        && !loggedVocaIdsRef.current.has(wordId);
 
-    if (willReceiveServerFarm) {
-      loggedVocaIdsRef.current.add(wordId);
-      const payload = {
-        session_id: studySessionRef.current,
-        user_voca_id: wordId,
-        user_voca_book_id: sheetId ?? null,
-        question_type: questionType,
-        was_correct: !!wordIsCorrect,
-        time_taken_ms: typeof timeTakenMs === 'number' ? timeTakenMs : 5000,
-        client_now: new Date().toISOString(),
-        tier_target: tierTarget,
-        tier_shown: tierShown,
-        // fillInTheBlankTyping 오타 허용 정답(계약 3-2·4절) — 그 외 유형은 항상 false.
-        typo: !!typo,
-      };
-
-      // pendingLogPromisesRef에는 실제 전송 시점과 무관하게(큐잉되더라도) 즉시 등록해야
-      // 세션 종료 시(updateVocabularySheetAndRecentStudyData) 큐에 남은 로그까지 기다릴 수 있다.
-      let resolvePending;
-      const pendingPromise = new Promise((resolve) => { resolvePending = resolve; });
-      if (pendingLogPromisesRef) pendingLogPromisesRef.current.push(pendingPromise);
-
-      const job = () => sendCardLog(payload, { sheetId, wordId, currentQuestion, setWords }).finally(resolvePending);
-
-      if (comboPopupOpenRef.current) {
-        // 콤보 보존 팝업 응답 대기 중 — 이 카드 로그는 큐에 쌓아두고 팝업이 닫힌 뒤 전송
-        pendingCardLogQueueRef.current.push(job);
+      if (willReceiveServerFarm) {
+        setCardFarmByWordId(prev => ({
+          ...prev,
+          [wordId]: pendingFarmPayload({ base: prev[wordId], fsrsBefore, wasCorrect: !!wordIsCorrect }),
+        }));
+        farmFallbackRef.current[wordId] = () => {
+          setCardFarmByWordId(prev => ({ ...prev, [wordId]: buildOptimisticCardFarm(prev[wordId]) }));
+        };
       } else {
-        job();
+        setCardFarmByWordId(prev => ({ ...prev, [wordId]: buildOptimisticCardFarm(prev[wordId]) }));
+      }
+
+      if (willReceiveServerFarm) {
+        loggedVocaIdsRef.current.add(wordId);
+        const payload = {
+          session_id: studySessionRef.current,
+          user_voca_id: wordId,
+          user_voca_book_id: sheetId ?? null,
+          question_type: questionType,
+          was_correct: !!wordIsCorrect,
+          time_taken_ms: typeof timeTakenMs === 'number' ? timeTakenMs : 5000,
+          client_now: new Date().toISOString(),
+          tier_target: tierTarget,
+          tier_shown: tierShown,
+          // fillInTheBlankTyping 오타 허용 정답(계약 3-2·4절) — 그 외 유형은 항상 false.
+          typo: !!typo,
+        };
+
+        // pendingLogPromisesRef에는 실제 전송 시점과 무관하게(큐잉되더라도) 즉시 등록해야
+        // 세션 종료 시(updateVocabularySheetAndRecentStudyData) 큐에 남은 로그까지 기다릴 수 있다.
+        let resolvePending;
+        const pendingPromise = new Promise((resolve) => { resolvePending = resolve; });
+        if (pendingLogPromisesRef) pendingLogPromisesRef.current.push(pendingPromise);
+
+        const job = () => sendCardLog(payload, { sheetId, wordId, currentQuestion, setWords }).finally(resolvePending);
+
+        if (comboPopupOpenRef.current) {
+          // 콤보 보존 팝업 응답 대기 중 — 이 카드 로그는 큐에 쌓아두고 팝업이 닫힌 뒤 전송
+          pendingCardLogQueueRef.current.push(job);
+        } else {
+          job();
+        }
       }
     }
 
@@ -1569,7 +1603,10 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
   // "채점했고 그 문제의 값인가"만 본다. 폴백 UI 는 없다.
   const currentVocaId =
     testQuestions[progressIndex]?.vocaIndexId ?? testQuestions[progressIndex]?.id;
+  // plant — 문제별 서버 응답(farm payload)에 의존하는 표시라 세션 종료 전까지 응답 자체가
+  // 없다. applyOptimisticGrade 가 세워 둔 낙관값이 있어도 이 화면에서는 늘 숨긴다.
   const showFarmBar =
+    !isPlantMode &&
     isCorrect !== null &&
     !!farmStatus &&
     farmStatus.qIndex === progressIndex &&

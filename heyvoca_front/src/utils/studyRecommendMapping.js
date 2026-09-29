@@ -28,6 +28,8 @@ export const mapRecommendItemToWord = (item, { isDiagnosis = false } = {}) => ({
   suggestedQuestionType: item.suggested_question_type ?? null,
   // 출제형 4종 전용 — 서버가 이미 조립한 payload(arrange/typing). 없으면 {}(계약 2절).
   questionPayload: item.question_payload ?? null,
+  // plant(새 씨앗 심기) 전용 — 유형별 payload({fillInTheBlankTyping, sentenceArrange})
+  questionPayloads: item.question_payloads ?? null,
   // 난이도 tier(계약 5절) — 설정 시트로 유형을 직접 고른 테스트에서는 항상 null.
   tierTarget: item.tier_target ?? null,
   tierShown: item.tier_shown ?? null,

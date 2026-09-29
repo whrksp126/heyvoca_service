@@ -27,6 +27,7 @@ import { Check } from '@phosphor-icons/react';
 import { useStats } from '../../context/StatsContext';
 import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
 import { useQuickReview } from '../../hooks/useQuickReview';
+import { usePlantSession } from '../../hooks/usePlantSession';
 import { vibrate, showToast } from '../../utils/osFunction';
 import { getRottenPlantsApi, recoverPlantsApi } from '../../api/farm';
 import RottenListSheet from '../farm/RottenListSheet';
@@ -173,6 +174,7 @@ const TodayTasksCard = () => {
   const { todayTasks, refreshStats } = useStats();
   const { pushNewFullSheet } = useNewFullSheetActions();
   const { startQuickReview } = useQuickReview();
+  const { startPlantSession } = usePlantSession();
 
   const [expanded, setExpanded] = useState({ rotten: false, wilted: false, care: false });
   const [recovering, setRecovering] = useState(false);
@@ -246,16 +248,14 @@ const TodayTasksCard = () => {
     }
   };
 
-  // 새 씨앗 심기 — memoryState를 unlearned로 좁힌 유일하게 정확한 필터 진입.
-  // useQuickReview 를 그대로 쓴다 — "하던 물주기가 남아 있어요, 이어서 하시겠어요?" 재개
-  // 확인을 이 행에서만 건너뛰면(직접 navigate) 진행 중이던 회차를 되묻지도 않고 덮어써
-  // 버린다(QA 지적) — 기존 진입(홈 주 CTA)과 같은 확인을 그대로 탄다.
-  const studyUnlearned = () => {
+  // 새 씨앗 심기 — 2026-09-29부로 복습(useQuickReview)과 분리된 전용 세션이다.
+  // usePlantSession이 "만나기(카드) → 테스트" 두 화면을 이 5단어·세션으로 그대로 이어준다.
+  const studyPlant = () => {
     const remaining = Math.max(0, (newSeed.target ?? 0) - (newSeed.done ?? 0));
     if (remaining <= 0) return;
     // 심을 씨앗 재고가 없으면 학습을 열지 않는다 — goStore()가 그 자체로 서점 이동이다.
     if (noSeedsToPlant) { goStore(); return; }
-    startQuickReview({ memoryState: ['unlearned'], count: remaining });
+    startPlantSession({ count: Math.min(5, remaining) });
   };
 
   // 시듦·돌봄 — 백엔드 /study/recommend?task_bucket=wilted|care 로 그 행 단어만 좁힌다
@@ -338,8 +338,12 @@ const TodayTasksCard = () => {
       title: '새 씨앗 심기',
       faded: done,
       checked: done,
-      right: <Progress done={newSeed.done} total={newSeed.target} />,
-      onRowClick: done ? undefined : studyUnlearned,
+      // 목표 미달이면 진행 숫자 대신 Pill('심기') — 다른 행과 달리 이 행은 탭할 수 있다는
+      // 걸 우측에서도 바로 보여준다(살리기 Pill과 같은 규격). 달성 시엔 기존처럼 x/y.
+      right: done
+        ? <Progress done={newSeed.done} total={newSeed.target} />
+        : <Pill tone="primary" onClick={studyPlant}>심기</Pill>,
+      onRowClick: done ? undefined : studyPlant,
     };
   })() : null;
 

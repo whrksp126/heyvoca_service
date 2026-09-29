@@ -956,8 +956,23 @@ def get_recommend():
                       배정으로 폴백. 이 경로에서는 응답의 tier_target/tier_shown이
                       항상 null(UserVoca의 tier 상태를 건드리지 않음). 모르는 값은
                       무시, 남는 게 없으면 파라미터를 안 준 것과 동일(default: 없음).
+      mode          : (선택, 2026-09 "새 씨앗 심기 분리") review | plant. 다른
+                      파라미터(task_bucket, allowed_types 등)와 공존 가능.
+                        - review: 신규(unplanted) 단어 0개 — 이미 심은 단어만
+                          추천한다(pool에서 bucket='new'를 미리 제거). 대상이
+                          부족하면 부족한 대로 반환하고 새 단어로 채우지 않는다.
+                        - plant: 아직 안 심은 새 단어만 count개(compose_plant —
+                          new_ranked 순서 그대로, priority/tier 큐 없음). 오늘
+                          남은 새 씨앗 수(daily_new_limit − 오늘 심은 수,
+                          `GET /farm/today-tasks`의 new_seed와 같은 계산 공유,
+                          `app.services.daily_progress.get_today_new_done`)를
+                          넘지 않게 count를 min 처리한다. force=1이면 이 한도를
+                          무시한다(사용자가 명시적으로 '심기'를 누른 경우).
+                      생략하면(default: 없음) 기존 동작 그대로(하위호환).
+      force         : (선택) mode=plant에서만 의미 있음. 1|true|yes면 오늘 남은
+                      새 씨앗 한도를 무시(default: 미지정=한도 적용).
 
-    응답:
+    응답 (mode 무관하게 항목 모양은 동일 — 프론트가 같은 매퍼를 쓴다):
       {
         "code": 200,
         "data": {
@@ -983,7 +998,7 @@ def get_recommend():
       }
     """
     from app.services.recommend.pool import build_candidate_pool
-    from app.services.recommend.composer import compose
+    from app.services.recommend.composer import compose, compose_plant
 
     user_id = UUID(g.user_id)
 
@@ -993,6 +1008,18 @@ def get_recommend():
     except (TypeError, ValueError):
         count = 20
     count = max(1, min(count, 50))
+
+    # mode: 2026-09 "새 씨앗 심기 분리" — 지정하지 않으면 기존 동작 그대로(하위 호환).
+    #   review : 신규(unplanted) 단어 0개 — 이미 심은 단어만 추천. 대상이 부족해도
+    #            새 단어로 채우지 않는다(pool에서 bucket='new'를 미리 제거).
+    #   plant  : 아직 안 심은 새 단어만 count개 — 새 씨앗 심기 전용 세션(compose_plant).
+    mode = (request.args.get('mode') or '').strip().lower() or None
+    if mode not in (None, 'review', 'plant'):
+        return jsonify({'code': 400, 'message': 'mode는 review 또는 plant만 지원합니다.'}), 400
+
+    # force: mode=plant에서 오늘 남은 새 씨앗 한도를 무시할지(사용자가 명시적으로
+    # '심기'를 눌렀을 때 프론트가 보낸다). mode=plant가 아니면 의미 없음.
+    force = (request.args.get('force') or '').strip().lower() in ('1', 'true', 'yes')
 
     book_ids_raw = request.args.get('book_ids', 'all')
     if book_ids_raw.lower() == 'all' or not book_ids_raw:
@@ -1043,6 +1070,12 @@ def get_recommend():
         logging.getLogger(__name__).error('후보 풀 빌드 오류', exc_info=True)
         return jsonify({'code': 500, 'message': '서버 오류가 발생했습니다.'}), 500
 
+    # ── mode=review: 신규(unplanted) 단어를 후보에서 완전히 뺀다 ──
+    # 이후의 rotten/task_bucket/target_states 필터·compose() 어디를 타도 bucket='new'가
+    # 하나도 없으니 새 단어로 채워질 일이 없다(부족하면 부족한 대로 반환).
+    if mode == 'review':
+        pool = [it for it in pool if it.bucket != 'new']
+
     # ── 당근 농장: 썩은 단어는 되살리기 전까지 **모든 모드에서** 제외한다. ──
     # 제품 결정(2026-09): AI 추천·자유 설정 테스트·빠른 학습 어디서도 썩은 단어는
     # 출제하지 않는다. 되살리기(물주기/회복제) 전까지 학습 불가가 기획 6.1 의 정의다.
@@ -1085,28 +1118,50 @@ def get_recommend():
         if allowed_stages:
             pool = [it for it in pool if crop_stage(it.fsrs_state) in allowed_stages]
 
-    # ── AI 추천 모드 판정 + 신규 일일 cap 산출 ──
-    # 사용자가 암기상태를 명시(target_states)하거나 random이거나 task_bucket으로
-    # 좁혔으면 그 의도를 그대로 존중 → cap/floor 미적용(task_bucket 대상은 애초에
-    # 이미 심어 복습 중이던 단어라 신규 cap 자체가 의미 없다).
-    full_recommend = (selection == 'recommended' and target_states is None and task_bucket is None)
-    new_allowance = None
-    if full_recommend:
-        user_row = db.session.query(User).filter(User.id == user_id).first()
-        daily_limit = getattr(user_row, 'daily_new_limit', 20) if user_row else 20
-        if daily_limit is None:
-            daily_limit = 20
-        if daily_limit > 0:
-            new_today = (user_stats or {}).get('new_introduced_today', 0)
-            new_allowance = max(0, daily_limit - new_today)
-        # daily_limit <= 0 → 무제한 → new_allowance=None
+    if mode == 'plant':
+        # ── mode=plant: 아직 안 심은 새 단어만 — 오늘 남은 새 씨앗 한도로 count를 clamp ──
+        # (`GET /farm/today-tasks`의 new_seed 와 같은 계산: daily_new_limit − 오늘 심은 수.
+        # force=1이면 사용자가 명시적으로 '심기'를 눌렀다고 보고 한도를 무시한다.)
+        new_items_pool = [it for it in pool if it.bucket == 'new']
+        if not force:
+            from app.services.daily_progress import get_today_new_done
+            user_row = db.session.query(User).filter(User.id == user_id).first()
+            daily_limit = getattr(user_row, 'daily_new_limit', 20) if user_row else 20
+            if daily_limit is None:
+                daily_limit = 20
+            if daily_limit > 0:
+                new_done_today, _reviews_done = get_today_new_done(user_id)
+                remaining_allowance = max(0, daily_limit - new_done_today)
+                count = min(count, remaining_allowance)
+            # daily_limit <= 0 → 무제한 → count 그대로
 
-    # ── 세션 구성 ──
-    result = compose(
-        pool, count, selection=selection, user_stats=user_stats,
-        full_recommend=full_recommend, new_allowance=new_allowance,
-        allowed_types=allowed_types,
-    )
+        result = compose_plant(
+            new_items_pool, count, user_stats=user_stats, allowed_types=allowed_types,
+        )
+    else:
+        # ── AI 추천 모드 판정 + 신규 일일 cap 산출 ──
+        # 사용자가 암기상태를 명시(target_states)하거나 random이거나 task_bucket으로
+        # 좁혔으면 그 의도를 그대로 존중 → cap/floor 미적용(task_bucket 대상은 애초에
+        # 이미 심어 복습 중이던 단어라 신규 cap 자체가 의미 없다). mode=review도 pool에서
+        # 이미 bucket='new'를 제거했으니 이 cap과 무관하게 새 단어는 0개로 유지된다.
+        full_recommend = (selection == 'recommended' and target_states is None and task_bucket is None)
+        new_allowance = None
+        if full_recommend:
+            user_row = db.session.query(User).filter(User.id == user_id).first()
+            daily_limit = getattr(user_row, 'daily_new_limit', 20) if user_row else 20
+            if daily_limit is None:
+                daily_limit = 20
+            if daily_limit > 0:
+                new_today = (user_stats or {}).get('new_introduced_today', 0)
+                new_allowance = max(0, daily_limit - new_today)
+            # daily_limit <= 0 → 무제한 → new_allowance=None
+
+        # ── 세션 구성 ──
+        result = compose(
+            pool, count, selection=selection, user_stats=user_stats,
+            full_recommend=full_recommend, new_allowance=new_allowance,
+            allowed_types=allowed_types,
+        )
     composition:    dict = result['composition']
     enriched_items: list = result['enriched_items']
 
@@ -1145,6 +1200,14 @@ def get_recommend():
         )
         for enriched in enriched_items
     ]
+    # 새 씨앗 심기 세션은 한 단어를 여러 유형으로 연달아 푼다 — suggested 유형 하나만의
+    # question_payload 로는 빈칸 입력·문장 만들기 단계가 대부분 비므로 두 유형 payload 를 모두 싣는다.
+    if mode == 'plant':
+        for resp, enriched in zip(items_response, enriched_items):
+            resp['question_payloads'] = {
+                t: _build_sentence_question_payload(enriched['_item'], t)
+                for t in ('fillInTheBlankTyping', 'sentenceArrange')
+            }
 
     return jsonify({
         'code': 200,

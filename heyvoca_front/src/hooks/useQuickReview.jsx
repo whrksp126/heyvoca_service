@@ -24,6 +24,13 @@ import { isWordStudiable } from '../utils/vocaCrop';
   전제 조건은 둘뿐이다.
     · 전체 단어가 4개 미만이면 출제가 안 된다 → 상점으로 안내
     · 진행 중이던 회차가 있으면 이어서 할지 묻는다
+
+  2026-09-29 — 새 단어 학습 분리: 이 훅(testType 'quick')이 여는 세션은 이제 항상
+  **복습 전용**이다(GET /study/recommend?mode=review, 심은 단어만). mode 파라미터는
+  여기가 아니라 pages/TakeTest.jsx의 setupTestQuestions 한 곳에서만 붙인다(testType이
+  'plant'가 아니면 무조건 mode='review') — 이 훅을 부르는 모든 자리(홈 CTA·"오늘 할 일"
+  시듦/돌봄 행·단어장 상세 등)가 자동으로 복습만 하게 된다. 새 단어는 오직
+  hooks/usePlantSession.jsx(홈 "오늘 할 일" 카드의 "새 씨앗 심기" 등)에서만 시작한다.
 */
 
 // 출제 최소 단어 수 — 4지선다 보기를 채우지 못하면 문제를 만들 수 없다

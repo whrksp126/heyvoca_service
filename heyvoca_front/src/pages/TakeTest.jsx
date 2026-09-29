@@ -11,7 +11,7 @@ import { MEMORY_STATES } from '../utils/common';
 import { ConfirmNewBottomSheet } from '../components/newBottomSheet/ConfirmNewBottomSheet';
 import { AlertNewBottomSheet } from '../components/newBottomSheet/AlertNewBottomSheet';
 import { AppHistory } from '../utils/appHistory';
-import { getStudyRecommend, finishStudySession, predictReviews } from '../api/study';
+import { getStudyRecommend, finishStudySession, predictReviews, logStudyQuestion } from '../api/study';
 import { warmTts, collectTestTexts, collectTestFullTexts, prepareTtsWithProgress } from '../api/tts';
 import ProgressSplash from '../components/common/ProgressSplash';
 import { useUser } from '../context/UserContext';
@@ -74,6 +74,10 @@ const TakeTest = () => {
   const studySessionRef = useRef(null);
   // 진행 중인 /study/log Promise 큐 — 결과 화면/홈 카운터 갱신 전에 모두 await
   const pendingLogPromisesRef = useRef([]);
+  // plant(새 씨앗 심기) 전용 — 단어별 "세션 내 모든 첫 시도가 정답이었는지"(Main.jsx가
+  // 문제마다 채워 넣는다. /study/log는 문제마다 보내지 않고, 세션이 끝날 때(아래
+  // handleUpdateAndNavigate) 이 값을 읽어 단어당 1회씩 일괄 전송한다.
+  const plantAttemptsRef = useRef(new Map());
 
   // ─── 재출제 시스템용 ref ───────────────────────────────────────────────────
   // 세션에서 /study/log를 이미 보낸 user_voca_id 집합 (첫 시도 1회만 로깅 보장)
@@ -278,7 +282,13 @@ const TakeTest = () => {
       //       fallbackType이 이 플러그인 id 인 채로 createMultipleChoiceQuestion에
       //       넘기면 options가 word 객체 배열인 문제가 생성되어 렌더 오류가 발생한다.
       if (isSingleWordPluginType(targetType)) {
-        const generated = plugin.setupQuestions([word], allWords);
+        // 서버 payload 기반 유형은 suggested 유형과 같을 때만 만들어지므로, plant 응답의
+        // 유형별 payload(questionPayloads)로 그 단계용 단어를 만들어 넘긴다.
+        const payload = word.questionPayloads?.[type];
+        const stepWord = payload && Object.keys(payload).length > 0
+          ? { ...word, suggestedQuestionType: type, questionPayload: payload }
+          : word;
+        const generated = plugin.setupQuestions([stepWord], allWords);
         if (generated.length > 0) return generated[0];
         // 폴백: 항상 multipleChoice (options가 word 객체 배열인 문제 생성 방지)
         return createMultipleChoiceQuestion(word, 'multipleChoice');
@@ -353,10 +363,82 @@ const TakeTest = () => {
     return allQuestions;
   };
 
+  // ─── plant(새 씨앗 심기) 전용 문제 구성 ───────────────────────────────────────
+  // 새 단어 학습은 "만나기(카드) → 테스트" 세션으로 분리된다(2026-09-29). 테스트 단계는
+  // 자동 추천처럼 단어별로 유형 하나씩 배정하는 게 아니라, 정해진 5단계 블록을 전부
+  // 지나가게 한다 — 영→한 사지선다 → 한→영 사지선다 → 빈칸 채우기 → 빈칸 입력 → 문장 만들기.
+  // 블록 안에서는 5단어를 섞어 번갈아 낸다. 그 단어가 그 유형을 만들 수 없으면(예문 없음,
+  // 서버가 이 단어에 그 유형의 payload를 안 실어줌 등 — 플러그인 setupQuestions의 기존
+  // 판단 그대로) mcq로 대체하지 않고 그 단계만 건너뛴다.
+  // 사지선다 오답 선택지는 buildTestQuestions.createMultipleChoiceQuestion과 같은 규칙
+  // (뜻이 겹치는 단어는 배제)이지만, 저 함수는 buildTestQuestions 내부 클로저라 재사용할 수
+  // 없어 여기 따로 둔다.
+  const PLANT_BLOCK_TYPES = ['multipleChoice', 'reverseMultipleChoice', 'fillInTheBlank', 'fillInTheBlankTyping', 'sentenceArrange'];
+
+  const buildPlantMcq = (word, allWords, questionType) => {
+    const wordKey = (w) => w.id ?? w.vocaIndexId;
+    const otherWords = (allWords ?? []).filter(w => wordKey(w) !== wordKey(word));
+    const nonOverlapping = otherWords.filter(w => !wordsOverlap(word, w));
+    let randomOptions = shuffleArray(nonOverlapping).slice(0, 3);
+    if (randomOptions.length < 3) {
+      const usedKeys = new Set(randomOptions.map(wordKey));
+      const fillers = shuffleArray(otherWords.filter(w => !usedKeys.has(wordKey(w))))
+        .slice(0, 3 - randomOptions.length);
+      randomOptions = [...randomOptions, ...fillers];
+    }
+    const options = shuffleArray([word, ...randomOptions]);
+    const resultIndex = options.findIndex(w => wordKey(w) === wordKey(word));
+    return { ...word, options, resultIndex, questionType, isCorrect: null, userResultIndex: null };
+  };
+
+  const buildPlantTestQuestions = (selectedWords, allWords) => {
+    const out = [];
+    for (const type of PLANT_BLOCK_TYPES) {
+      const order = shuffleArray(selectedWords);
+      for (const word of order) {
+        if (type === 'multipleChoice' || type === 'reverseMultipleChoice') {
+          out.push(buildPlantMcq(word, allWords, type));
+          continue;
+        }
+        const plugin = getQuestionType(type);
+        if (!plugin?.setupQuestions) continue;
+        // 서버 payload 기반 유형은 suggested 유형과 같을 때만 만들어지므로, plant 응답의
+        // 유형별 payload(questionPayloads)로 그 단계용 단어를 만들어 넘긴다.
+        const payload = word.questionPayloads?.[type];
+        const stepWord = payload && Object.keys(payload).length > 0
+          ? { ...word, suggestedQuestionType: type, questionPayload: payload }
+          : word;
+        const generated = plugin.setupQuestions([stepWord], allWords);
+        if (generated.length > 0) out.push(generated[0]);
+        // 못 만들면(예문/서버 payload 없음) 그 단계만 건너뛴다 — mcq 대체 없음.
+      }
+    }
+    return out;
+  };
+
   // ─── setupTestQuestions ─────────────────────────────────────────────────────
   // 백엔드 /study/recommend로 단어 + 세션을 받아 문제 구성. 응답 형식 오류 시 예외 throw.
   // 반환: { testQuestions, sessionId, composition, compositionStrategy }
   const setupTestQuestions = async (targetMemoryState, vocabularySheetId, count, testType, taskBucket) => {
+    // ── plant(새 씨앗 심기) ──────────────────────────────────────────────────
+    // "만나기" 단계(usePlantSession → StudyMain)가 GET /study/recommend?mode=plant를
+    // 이미 한 번 호출해 5단어 + session_id를 확보해 뒀다. 여기서 또 부르면(오늘 남은 새
+    // 씨앗 한도를 두 번 쓰거나, 카드에서 본 단어와 다른 단어가 나올 위험) 두 단계가 서로
+    // 다른 단어를 보게 된다 — 같은 단어 목록을 그대로 이어 쓴다.
+    if (testType === 'plant' && Array.isArray(state.data?.words) && state.data.words.length > 0) {
+      const selectedWords = state.data.words;
+      attachStudyHistory(selectedWords, userDictionary);
+      let allWords = buildAllWordsPool('all');
+      if (allWords.length === 0) allWords = selectedWords;
+      const testQuestions = buildPlantTestQuestions(selectedWords, allWords);
+      return {
+        testQuestions,
+        sessionId: state.data.sessionId ?? null,
+        composition: null,
+        compositionStrategy: null,
+      };
+    }
+
     // bookIds 변환: "all" → null, 단일 id → [id], 배열 → 그대로
     let bookIds = null;
     if (vocabularySheetId && vocabularySheetId !== 'all') {
@@ -398,6 +480,12 @@ const TakeTest = () => {
       : (Array.isArray(state.data.questionType) ? state.data.questionType : [state.data.questionType])
         .filter(Boolean);
 
+    // 새 단어 학습 분리(2026-09-29) — 이 함수를 부르는 모든 곳(quick·자유 설정 테스트·단어장
+    // 상세 테스트)은 항상 복습 전용(mode=review, 심은 단어만)이다. 새 단어는 오직 'plant'
+    // 세션(아래 buildPlantTestQuestions 분기)에서만 나온다 — mode 분기를 여기 한 곳에만 두면
+    // useQuickReview.jsx/utils/nextStudy.js처럼 이 함수를 호출하는 쪼재는 따로 손댈 필요가 없다.
+    const mode = testType === 'plant' ? 'plant' : 'review';
+
     const res = await getStudyRecommend({
       type: testType,
       count,
@@ -406,6 +494,8 @@ const TakeTest = () => {
       selection: selectionType,
       taskBucket,
       questionTypes: directQuestionTypes,
+      mode,
+      force: !!state.data?.force,
     });
 
     if (res?.code !== 200 || !Array.isArray(res.data?.items)) {
@@ -865,6 +955,36 @@ const TakeTest = () => {
           });
           return;
         }
+        // plant(새 씨앗 심기) — 문제마다 /study/log를 보내지 않았다(Main.jsx). 세션이
+        // 끝난 지금, 단어당 1회씩 일괄 전송한다. isCorrect = 그 단어가 세션 안 모든 문제를
+        // 첫 시도에 맞혔는지(plantAttemptsRef가 Main.jsx에서 이미 AND로 접어 둔 값).
+        // 중간 이탈(status !== 'end')이면 이 분기 자체를 안 타므로 아무것도 기록되지 않는다.
+        if (state.testType === 'plant' && studySessionRef?.current && plantAttemptsRef.current.size > 0) {
+          const entries = [...plantAttemptsRef.current.entries()];
+          const results = await Promise.allSettled(entries.map(([vocaId, wasCorrect]) => {
+            const q = testQuestions.find(qq => (qq.vocaIndexId ?? qq.id) === vocaId && !qq.isRetry);
+            return logStudyQuestion({
+              session_id: studySessionRef.current,
+              user_voca_id: vocaId,
+              user_voca_book_id: q?.vocabularySheetId ?? null,
+              question_type: q?.questionType ?? 'multipleChoice',
+              was_correct: wasCorrect,
+              time_taken_ms: 5000,
+              client_now: new Date().toISOString(),
+            }).then((logRes) => ({ vocaId, logRes }));
+          }));
+          for (const r of results) {
+            if (r.status !== 'fulfilled') continue;
+            const { vocaId, logRes } = r.value;
+            const fsrs = logRes?.data?.fsrs;
+            if (!fsrs) continue;
+            // 결과 목록 "다음 복습 예정일"용 — 방금 받은 정본 fsrs로 채운다(고유 단어당
+            // 첫 등장 문제 하나에만 적어도 결과 화면 dedup 로직이 그 항목을 쓴다).
+            const idx = testQuestions.findIndex(qq => (qq.vocaIndexId ?? qq.id) === vocaId && !qq.isRetry);
+            if (idx !== -1) testQuestions[idx].fsrs = fsrs;
+          }
+        }
+
         // 학습 세션 종료 (fire-and-forget)
         if (studySessionRef?.current) {
           finishStudySession(studySessionRef.current)
@@ -985,6 +1105,7 @@ const TakeTest = () => {
           totalUniqueVocaCountRef={totalUniqueVocaCountRef}
           cardRetryEnqueuedRef={cardRetryEnqueuedRef}
           guestMode={isGuestMode}
+          plantAttemptsRef={plantAttemptsRef}
         />
       </div>
     );

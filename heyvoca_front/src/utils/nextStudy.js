@@ -10,6 +10,12 @@
     test   (학습 탭 자유 설정 테스트)   → 같은 단어장·단계·유형·개수로 새 문제(백엔드 추천을 새로 받는다).
     exam   (단어장 상세 자유 설정 테스트) → 위와 같다. 대상 단어장이 하나로 고정돼 있다.
     today  (게스트 온보딩 맛보기)       → 없음. 결과 다음은 가입 흐름이다.
+    plant  (새 씨앗 심기)              → 없음(위 isFreeTest와 같은 취급, StudyResult.jsx 참고).
+                                          다음에 심을 단어는 홈 "오늘 할 일" 카드에서 다시 고른다.
+
+  2026-09-29 — quick/test/exam이 여는 세션은 모두 복습 전용(mode=review)이다. mode는
+  pages/TakeTest.jsx의 setupTestQuestions 한 곳에서만 testType으로 결정하므로, 여기서
+  만드는 state(quick/test/exam)는 손대지 않아도 자동으로 복습만 한다.
 
   같은 설정을 다시 쓰려면 그 설정(TakeTest 의 state.data)을 알아야 하는데,
   이어하기로 들어온 세션은 navigate state 에 data 가 없다(LearningInfo → onSet 은 testType 만 넘긴다).
