@@ -364,16 +364,18 @@ const TakeTest = () => {
   };
 
   // ─── plant(새 씨앗 심기) 전용 문제 구성 ───────────────────────────────────────
-  // 새 단어 학습은 "만나기(카드) → 테스트" 세션으로 분리된다(2026-09-29). 테스트 단계는
-  // 자동 추천처럼 단어별로 유형 하나씩 배정하는 게 아니라, 정해진 5단계 블록을 전부
-  // 지나가게 한다 — 영→한 사지선다 → 한→영 사지선다 → 빈칸 채우기 → 빈칸 입력 → 문장 만들기.
-  // 블록 안에서는 5단어를 섞어 번갈아 낸다. 그 단어가 그 유형을 만들 수 없으면(예문 없음,
-  // 서버가 이 단어에 그 유형의 payload를 안 실어줌 등 — 플러그인 setupQuestions의 기존
-  // 판단 그대로) mcq로 대체하지 않고 그 단계만 건너뛴다.
+  // 새 단어 학습은 **단어 단위**로 진행된다(2026-09-29 실기기 피드백 반영). 한 단어를
+  // ① 만나기(wordIntro, 채점 없음) → ② 영→한 사지선다 → ③ 한→영 사지선다 → ④ 빈칸 채우기
+  // → ⑤ 빈칸 입력 → ⑥ 문장 만들기 순으로 끝까지 진행한 뒤에야 다음 단어로 넘어간다
+  // (예전엔 유형별 블록으로 5단어를 번갈아 냈는데, 실기기 사용자가 "이 방식이 아니라 한
+  // 단어를 끝까지"라고 명시적으로 요청했다). 단어 순서는 한 번만 섞고, 그 순서 그대로
+  // 각 단어의 6단계를 이어 붙인다. 그 단어가 그 유형을 만들 수 없으면(예문 없음, 서버가
+  // 이 단어에 그 유형의 payload를 안 실어줌 등 — 플러그인 setupQuestions의 기존 판단
+  // 그대로) mcq로 대체하지 않고 그 단계만 건너뛴다.
   // 사지선다 오답 선택지는 buildTestQuestions.createMultipleChoiceQuestion과 같은 규칙
   // (뜻이 겹치는 단어는 배제)이지만, 저 함수는 buildTestQuestions 내부 클로저라 재사용할 수
   // 없어 여기 따로 둔다.
-  const PLANT_BLOCK_TYPES = ['multipleChoice', 'reverseMultipleChoice', 'fillInTheBlank', 'fillInTheBlankTyping', 'sentenceArrange'];
+  const PLANT_STEP_TYPES = ['multipleChoice', 'reverseMultipleChoice', 'fillInTheBlank', 'fillInTheBlankTyping', 'sentenceArrange'];
 
   const buildPlantMcq = (word, allWords, questionType) => {
     const wordKey = (w) => w.id ?? w.vocaIndexId;
@@ -391,11 +393,21 @@ const TakeTest = () => {
     return { ...word, options, resultIndex, questionType, isCorrect: null, userResultIndex: null };
   };
 
+  // ① 만나기 슬라이드 — 채점 없음(Main.jsx가 questionType==='wordIntro'일 때 별도
+  // 완료 핸들러로 바꿔치기해 정오답/통과 집계를 전혀 타지 않게 한다).
+  const buildPlantIntroQuestion = (word) => ({
+    ...word,
+    questionType: 'wordIntro',
+    isCorrect: null,
+    userResultIndex: null,
+  });
+
   const buildPlantTestQuestions = (selectedWords, allWords) => {
     const out = [];
-    for (const type of PLANT_BLOCK_TYPES) {
-      const order = shuffleArray(selectedWords);
-      for (const word of order) {
+    const order = shuffleArray(selectedWords); // 단어 순서는 한 번만 섞는다 — 블록 내부는 이 순서를 유지.
+    for (const word of order) {
+      out.push(buildPlantIntroQuestion(word));
+      for (const type of PLANT_STEP_TYPES) {
         if (type === 'multipleChoice' || type === 'reverseMultipleChoice') {
           out.push(buildPlantMcq(word, allWords, type));
           continue;
@@ -774,15 +786,35 @@ const TakeTest = () => {
             totalUniqueVocaCountRef.current = uniqueIds.size || tempTestQuestions.length;
           }
 
-          await updateRecentStudy(state.testType, {
-            ...recentStudy[state.testType],
-            progress_index: 0,
-            status: "learning",
-            type: state.testType,
-            study_data: tempTestQuestions,
-            updated_at: new Date().toISOString(),
-            created_at: new Date().toISOString(),
-          });
+          // plant(새 씨앗 심기) — 백엔드 RecentStudyType enum에 'plant'가 없어(TEST/EXAM/
+          // TODAY/QUICK만 존재) 서버에 그대로 보내면 500이 나 "최근 학습 데이터를 추가하는데
+          // 실패했습니다" 네이티브 알림이 뜬다(버그 원인). enum에 값을 추가하려면 DB
+          // 마이그레이션(ALTER TABLE … MODIFY type ENUM(...))이 필요해 이 작업 범위를 넘어서므로,
+          // plant는 서버 왕복 없이 로컬 상태로만 이 세션의 진행(단어 단위 진행 판단·"세션 끝"
+          // 신호)을 추적한다 — 앱을 완전히 종료하면 이어하기는 안 되고 새로 시작한다.
+          if (state.testType === 'plant') {
+            updateRecentStudyState({
+              plant: {
+                ...recentStudy[state.testType],
+                progress_index: 0,
+                status: "learning",
+                type: state.testType,
+                study_data: tempTestQuestions,
+                updated_at: new Date().toISOString(),
+                created_at: new Date().toISOString(),
+              },
+            });
+          } else {
+            await updateRecentStudy(state.testType, {
+              ...recentStudy[state.testType],
+              progress_index: 0,
+              status: "learning",
+              type: state.testType,
+              study_data: tempTestQuestions,
+              updated_at: new Date().toISOString(),
+              created_at: new Date().toISOString(),
+            });
+          }
 
           setTestQuestions(tempTestQuestions);
           // 발음(TTS) 준비 완료까지 준비 화면을 보여준 뒤 학습으로 진입.
@@ -962,7 +994,10 @@ const TakeTest = () => {
         if (state.testType === 'plant' && studySessionRef?.current && plantAttemptsRef.current.size > 0) {
           const entries = [...plantAttemptsRef.current.entries()];
           const results = await Promise.allSettled(entries.map(([vocaId, wasCorrect]) => {
-            const q = testQuestions.find(qq => (qq.vocaIndexId ?? qq.id) === vocaId && !qq.isRetry);
+            // wordIntro(①만나기)는 채점 없는 슬라이드라 questionType이 그 값이면 안 된다 —
+            // 단어 블록의 첫 항목이 항상 wordIntro이므로, 이걸 빼지 않으면 find()가 그것부터
+            // 찾아 서버에 잘못된 question_type을 보낸다.
+            const q = testQuestions.find(qq => (qq.vocaIndexId ?? qq.id) === vocaId && !qq.isRetry && qq.questionType !== 'wordIntro');
             return logStudyQuestion({
               session_id: studySessionRef.current,
               user_voca_id: vocaId,
@@ -979,8 +1014,9 @@ const TakeTest = () => {
             const fsrs = logRes?.data?.fsrs;
             if (!fsrs) continue;
             // 결과 목록 "다음 복습 예정일"용 — 방금 받은 정본 fsrs로 채운다(고유 단어당
-            // 첫 등장 문제 하나에만 적어도 결과 화면 dedup 로직이 그 항목을 쓴다).
-            const idx = testQuestions.findIndex(qq => (qq.vocaIndexId ?? qq.id) === vocaId && !qq.isRetry);
+            // 첫 등장 문제 하나에만 적어도 결과 화면 dedup 로직이 그 항목을 쓴다). wordIntro는
+            // 결과 화면에서 제외되는 슬라이드라 여기 붙이면 화면에 안 보이므로 제외한다.
+            const idx = testQuestions.findIndex(qq => (qq.vocaIndexId ?? qq.id) === vocaId && !qq.isRetry && qq.questionType !== 'wordIntro');
             if (idx !== -1) testQuestions[idx].fsrs = fsrs;
           }
         }
@@ -1004,10 +1040,14 @@ const TakeTest = () => {
         }
         await updateVocabularySheetAndRecentStudyData();
         // 결과 화면: 재출제 문제(isRetry=true)는 제외하고 고유 단어 기준 첫 시도만 전달
-        // (재출제로 맞춘 걸 정답으로 뒤집지 않기 위해 첫 등장 순서 기준)
+        // (재출제로 맞춘 걸 정답으로 뒤집지 않기 위해 첫 등장 순서 기준). plant의 ①만나기
+        // (wordIntro)는 채점이 없는 슬라이드라 먼저 제외한다 — 안 그러면 단어당 첫 등장이
+        // 항상 wordIntro라 그게 seenIds에 먼저 찍히고, 실제 채점된 단계(사지선다 등)가
+        // "이미 본 단어"로 걸러져 결과 목록에서 통째로 빠진다.
         const seenIds = new Set();
         const resultQuestions = testQuestions.filter(q => {
           if (q.isRetry) return false; // 재출제 문제 제외
+          if (q.questionType === 'wordIntro') return false; // 채점 없는 슬라이드 제외
           // cardMatch 세트는 words 기준 중복 없으면 포함
           if (Array.isArray(q.words)) return true;
           const id = q.vocaIndexId ?? q.id;
@@ -1050,8 +1090,15 @@ const TakeTest = () => {
         }));
       }
 
-      // 2. 학습 기록(RecentStudy) 업데이트
-      await updateRecentStudyServer(state.testType);
+      // 2. 학습 기록(RecentStudy) 업데이트 — plant(새 씨앗 심기)는 서버에 쓰지 않는다.
+      // 백엔드 RecentStudyType enum에 'plant'가 없어(TEST/EXAM/TODAY/QUICK만 존재) 그대로
+      // 보내면 500이 나 "최근 학습 데이터를 추가하는데 실패했습니다" 네이티브 알림이 뜬다
+      // (아래 세션 생성 시점의 같은 분기 주석 참고). plant는 recentStudy를 세션 중 로컬
+      // 상태로만 쓰고(단어 단위 진행 판단용) 서버에는 절대 쓰지 않는다 — 앱을 완전히
+      // 종료하면 이어하기는 안 되고 새로 시작한다(기획 확인, 보고 참고).
+      if (state.testType !== 'plant') {
+        await updateRecentStudyServer(state.testType);
+      }
 
       // 3. 최신 단어장 데이터 다시 가져오기
       await fetchVocabularySheets();

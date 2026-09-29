@@ -4,6 +4,7 @@ import FillInTheBlankQuestion from './fillInTheBlank/FillInTheBlankQuestion';
 import SentenceArrangeQuestion from './sentenceArrange/SentenceArrangeQuestion';
 import ListenArrangeQuestion from './sentenceArrange/ListenArrangeQuestion';
 import FillInTheBlankTypingQuestion from './fillInTheBlankTyping/FillInTheBlankTypingQuestion';
+import WordIntroQuestion from './wordIntro/WordIntroQuestion';
 import { wordsOverlap } from '../../utils/meaningConcept';
 import { wordLang, isJa } from '../../utils/lang';
 
@@ -352,6 +353,21 @@ export const QUESTION_TYPE_PLUGINS = [
     guideTitle: '빈칸에 단어를 입력하세요',
     component: FillInTheBlankTypingQuestion,
     setupQuestions: buildTypingQuestions,
+  },
+  {
+    // ① "만나기" 슬라이드 — 새 씨앗 심기(plant) 세션 전용, 채점 없음(2026-09-29).
+    // enabled:false — 자유 설정 테스트 시트 유형 목록·AI 추천(QUICK_QUESTION_TYPES)에는
+    // 노출되지 않는다. setupQuestions도 없다 — pages/TakeTest.jsx의 buildPlantTestQuestions가
+    // 단어당 1개씩 직접 만들어 배열 맨 앞에 넣는다(일반 추천 파이프라인에서는 절대 안 만들어짐).
+    id: 'wordIntro',
+    label: '단어 만나기',
+    enabled: false,
+    family: 'wordIntro',
+    direction: null,
+    listening: false,
+    guideTitle: '단어를 익혀요',
+    component: WordIntroQuestion,
+    setupQuestions: null,
   },
 ];
 

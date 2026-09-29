@@ -418,10 +418,21 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
       };
     }
 
-    // 큐의 맨 마지막에 삽입 (재출제분은 모든 신규 문제를 다 푼 뒤 마지막에 등장)
+    // 큐 삽입 위치 — plant(새 씨앗 심기)는 그 단어 블록 안(남은 단계 뒤, 다음 단어로
+    // 넘어가기 전)에 다시 나오게 한다(2026-09-29 실기기 피드백). buildPlantTestQuestions가
+    // 한 단어의 모든 단계(①~⑥)를 배열에서 연속으로 배치하므로, currentIdx 다음부터
+    // "같은 vocaId가 연속으로 이어지는 구간"의 끝(=다음 단어가 시작되는 자리, 또는 배열
+    // 끝)을 찾아 그 자리에 끼워 넣는다. 그 외 세션(자유 설정 테스트 등)은 기존처럼
+    // 큐 맨 마지막에 넣는다(재출제분은 신규 문제를 다 푼 뒤 마지막에 등장).
     setTestQuestions((prev) => {
       const next = [...prev];
-      next.splice(next.length, 0, retryQuestion);
+      let insertAt = next.length;
+      if (isPlantMode) {
+        let end = currentIdx + 1;
+        while (end < next.length && (next[end].vocaIndexId ?? next[end].id) === vocaId) end++;
+        insertAt = end;
+      }
+      next.splice(insertAt, 0, retryQuestion);
       return next;
     });
     retryEnqueueCounterRef.current += 1;
@@ -792,8 +803,10 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
       // fillInTheBlank와 같은 이유로 제외한다 — 각 플러그인 컴포넌트가 마운트 시 직접
       // 정답 문장(ko 또는 answer_text)을 읽는다. 여기서 origin(주제 단어)까지 읽으면
       // 문장 대신 단어만 들리는 버그가 된다(2026-09-28). fillInTheBlankTyping은 정답
-      // 단어(예: graduation)를 미리 읽어 버리는 버그였다(2026-09-29).
-      } else if (!['cardMatch', 'cardMatchListening', 'fillInTheBlank', 'fillInTheBlankTyping', 'sentenceArrangePartial', 'sentenceArrange', 'listenArrange'].includes(question.questionType) && question.origin) {
+      // 단어(예: graduation)를 미리 읽어 버리는 버그였다(2026-09-29). wordIntro(①만나기)도
+      // 같은 이유로 제외 — WordIntroQuestion이 마운트 시 자기만의 순서(단어→뜻→예문)로
+      // 직접 재생한다. 여기서 또 origin을 읽으면 단어가 두 번 겹쳐 재생된다.
+      } else if (!['cardMatch', 'cardMatchListening', 'fillInTheBlank', 'fillInTheBlankTyping', 'sentenceArrangePartial', 'sentenceArrange', 'listenArrange', 'wordIntro'].includes(question.questionType) && question.origin) {
         speakText(question.origin, wordLang(question));
       }
 
@@ -1235,12 +1248,16 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
     //     이 클로저가 보는 testQuestions.length는 삽입 전 값이다.
     //     lastRetryEnqueuedRef.current가 true이면 큐에 +1이 삽입됐으므로 보정한다.
     //   — 이 경로에서도 isSessionDone=true 처리되어 결과 화면으로 이동한다.
+    // plant(새 씨앗 심기)는 1차 판정을 쓰지 않는다 — 같은 단어가 최대 6단계(같은 vocaId)로
+    // 여러 번 나오므로, 그중 아무 단계 하나만 맞혀도 "통과"로 잡혀 나머지 단계(빈칸 채우기·
+    // 문장 만들기 등)를 건너뛰고 세션이 조기 종료되는 버그가 된다. 큐를 끝까지(재출제 포함)
+    // 소진했을 때만 끝난 것으로 본다.
     const currentPassedCount = passedVocaIdsRef?.current?.size ?? 0;
     const targetCount = totalUniqueVocaCountRef?.current || testQuestions.length;
     const nextIndex = progressIndex + 1;
     const adjustedQueueLen = testQuestions.length + (lastRetryEnqueuedRef.current ? 1 : 0);
     const isQueueExhausted = nextIndex >= adjustedQueueLen;
-    const isSessionDone = currentPassedCount >= targetCount || isQueueExhausted;
+    const isSessionDone = isPlantMode ? isQueueExhausted : (currentPassedCount >= targetCount || isQueueExhausted);
 
     updateRecentStudyState({
       [testType]: {
@@ -1533,7 +1550,40 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
     //   새로 재출제된 게 있다면(retriesEnqueuedThisCall) 그만큼 큐 길이를 보정해
     //   재출제 슬라이드가 추가되기 전에 세션이 끝나버리지 않도록 한다.
     const isQueueExhausted = nextIndex >= (testQuestions.length + retriesEnqueuedThisCall);
-    const isSessionDone = currentPassedCount >= targetCount || isQueueExhausted;
+    // plant는 위 setUpdateRecentStudyStateAndStatus와 같은 이유로 1차 판정(통과 고유
+    // 단어 수)을 쓰지 않는다 — 같은 단어가 여러 단계(같은 vocaId)로 반복 등장해 조기
+    // 종료로 이어지기 때문. 큐 소진만으로 판단한다.
+    const isSessionDone = isPlantMode ? isQueueExhausted : (currentPassedCount >= targetCount || isQueueExhausted);
+
+    updateRecentStudyState({
+      [testType]: {
+        ...recentStudy[testType],
+        progress_index: isSessionDone ? null : nextIndex,
+        status: isSessionDone ? "end" : "learning",
+        study_data: testQuestions,
+        updated_at: new Date().toISOString(),
+      }
+    });
+
+    if (!isSessionDone) {
+      setProgressIndex(nextIndex);
+      setIsCorrect(null);
+      setUserSelected(null);
+      setIsAnswered(false);
+      setIsStay(false);
+      setUpdateType(null);
+      setMemoryStateChange(null);
+    }
+  };
+
+  // ① "만나기"(wordIntro) 슬라이드 완료 — plant 전용, 채점 없음(2026-09-29).
+  // processCardWord/markVocaPassed/logIfFirstAttempt를 전혀 타지 않는다 — 이 슬라이드는
+  // 정오답이 없고, 결과 화면 집계에서도 제외된다(pages/TakeTest.jsx resultQuestions 필터).
+  // 큐 순서로만 다음으로 넘어간다(이 단어의 나머지 단계가 항상 뒤따르므로 큐 소진도
+  // 사실상 발생하지 않는다 — 방어적으로만 처리).
+  const handleWordIntroNext = () => {
+    const nextIndex = progressIndex + 1;
+    const isSessionDone = nextIndex >= testQuestions.length;
 
     updateRecentStudyState({
       [testType]: {
@@ -1638,6 +1688,11 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
 
   if (currentPlugin?.component) {
     const PluginComponent = currentPlugin.component;
+    // ①만나기(wordIntro)는 채점이 없다 — 일반 플러그인 완료 콜백(handlePluginComplete,
+    // processCardWord/markVocaPassed/로깅을 태운다)이 아니라 전용 핸들러로 그냥 다음
+    // 슬라이드로만 넘어간다(위 handleWordIntroNext 주석 참고).
+    const isWordIntro = testQuestions[progressIndex]?.questionType === 'wordIntro';
+    const pluginOnComplete = isWordIntro ? handleWordIntroNext : handlePluginComplete;
     return (
       <motion.div
         className="
@@ -1690,7 +1745,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
               <PluginComponent
                 question={testQuestions[progressIndex]}
                 testType={testType}
-                onComplete={handlePluginComplete}
+                onComplete={pluginOnComplete}
                 onCardMatched={handleCardMatched}
                 farmByWordId={cardFarmByWordId}
               />
