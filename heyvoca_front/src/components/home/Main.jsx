@@ -61,7 +61,6 @@ import StreakCard from './StreakCard';
 import GrewTodayCard from './GrewTodayCard';
 import WordFeedCard from './WordFeedCard';
 import { healthMixFromOverview } from '../../utils/farmField';
-import { toLocalDateString } from '../../utils/common';
 import {
   buildGreetingContext,
   resolveGreetingSituation,
@@ -103,7 +102,7 @@ const Main = () => {
 
   // 통계는 StatsContext(라우터 바깥 캐시)에서 구독 — 탭 전환마다 재조회/스피너 없이 캐시값을 즉시 사용,
   // 학습 세션 완료 시에만 조용히 갱신된다.
-  const { todaySummary, farmOverview, todayChanges, farmFeed, todayTasks, heroPlants, refreshStats } = useStats();
+  const { todaySummary, farmOverview, todayChanges, farmFeed, todayTasks, heroPlants, todayKey, refreshStats } = useStats();
   const todayNewWords = todaySummary?.new_words ?? 0;
   const dailyNewLimit = userProfile?.daily_new_limit ?? 0;
 
@@ -226,12 +225,14 @@ const Main = () => {
     "밭이 비어 있어요"가 한 프레임 스치게 된다 — 위 homeState 기본값(HOME_STATES.DUE)과
     같은 이유로, 조회 전에는 상황 판정을 하지 않고 중립 문구를 깔아 둔다.
   */
+  // todayKey(KST 날짜)를 deps 에 둔다 — buildGreetingContext 의 now(요일 등)가 렌더 시점 값이라,
+  // 상태가 안 바뀌면 자정 뒤에도 어제 요일로 굳는다(2026-10-02).
   const greetingCtx = useMemo(
     () => buildGreetingContext(farmOverview, { grewTodayCount: grewItems.length }),
-    [farmOverview, grewItems]
+    [farmOverview, grewItems, todayKey]
   );
   const greetingSituation = farmOverview ? resolveGreetingSituation(greetingCtx) : null;
-  const greetingDateKey = toLocalDateString(new Date());
+  const greetingDateKey = todayKey;
   const greeting = useMemo(() => {
     if (!greetingSituation) return { line1: ' 오늘도', line2: '농장을 둘러봐요' };
     return pickGreetingVariant(greetingSituation, greetingCtx);

@@ -152,8 +152,18 @@ const StreakCard = ({ registerRefresh } = {}) => {
    * StatsContext.todayTasks 를 함께 본다 — 새 API 호출을 이 컴포넌트가 새로 만들지 않고
    * 이미 홈이 받아 둔 캐시를 구독하기만 한다(다른 카드들과 같은 방식).
    */
-  const { todayTasks } = useStats();
-  const weekCells = useMemo(() => buildWeekCells(todayTasks?.week), [todayTasks]);
+  // todayKey(KST 날짜) — 자정이 지나면 바뀐다. 이 값이 deps 에 없으면 week 데이터가 그대로인 동안
+  // "오늘" 칸·요일 라벨이 어제 기준으로 굳는다(2026-10-02). buildWeekCells 도 KST 오늘을 쓴다.
+  const { todayTasks, todayKey } = useStats();
+  const weekCells = useMemo(() => buildWeekCells(todayTasks?.week), [todayTasks, todayKey]);
+
+  // 날짜가 바뀌면 연속 학습 상태(오늘 정답 수·정산 알림)도 새로 받는다 — 최초 마운트는 건너뛴다
+  const prevTodayKeyRef = useRef(todayKey);
+  useEffect(() => {
+    if (prevTodayKeyRef.current === todayKey) return;
+    prevTodayKeyRef.current = todayKey;
+    loadStreak(true);
+  }, [todayKey, loadStreak]);
 
   // §6 "최장 기록 … 누르면 기록 화면" — 농장 방문 달력은 하단 탭을 덮는 풀시트다
   // (home-calendar §3 "풀시트라 하단 탭이 없다"). 진입로는 홈의 이 버튼 하나뿐이다.

@@ -5,11 +5,11 @@ due 판정(recommend/pool.py)과 '오늘 학습' 집계(routes/study.py)가
 
 환경변수:
   APP_TZ              기준 타임존 (IANA 이름, 기본 'Asia/Seoul')
-  APP_DAY_CUTOFF_HOUR 하루 시작 시각(로컬 시, 0~23, 기본 4)
-                      → 00:00~03:59 학습은 전날로 집계 (늦은 밤 학습자 배려)
+  APP_DAY_CUTOFF_HOUR 하루 시작 시각(로컬 시, 0~23, 기본 0)
+                      기본 0 = 사용자 국가(KST) 자정 기준(2026-10 QA: 자정 이후에도
+                      홈이 어제를 '오늘'로 표시하던 문제). 새벽 컷오프가 필요하면 env 로만 올린다.
 
-예) cutoff=4, KST 기준:
-  '월요일' 학습일 = 월 04:00(KST) ~ 화 03:59(KST)
+예) cutoff=0, KST 기준: '월요일' 학습일 = 월 00:00 ~ 월 23:59 (KST)
 """
 
 import os
@@ -18,7 +18,7 @@ import datetime as dt
 import pytz
 
 _DEFAULT_TZ = 'Asia/Seoul'
-_DEFAULT_CUTOFF_HOUR = 4
+_DEFAULT_CUTOFF_HOUR = 0
 
 
 def _get_tz():

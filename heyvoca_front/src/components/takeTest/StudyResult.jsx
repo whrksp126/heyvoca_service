@@ -772,10 +772,14 @@ const StudyResult = () => {
       }
 
       // ② 씨앗 심기 — 어떤 단어를 심었는지까지 보여준다
-      if (plantedList.length > 0) {
-        screens.push({ type: 'farmPlanted', data: { items: plantedList } });
-      } else if (newWordCount > 0) {
-        screens.push({ type: 'farmPlanted', data: { items: newWordRows } });
+      // 새 씨앗 심기(plant)는 마지막 결과 화면이 "새로 심은 씨앗" 목록을 직접 보여주므로
+      // 같은 목록을 두 번 띄우지 않는다(아래 result 화면 참고).
+      if (testType !== 'plant') {
+        if (plantedList.length > 0) {
+          screens.push({ type: 'farmPlanted', data: { items: plantedList } });
+        } else if (newWordCount > 0) {
+          screens.push({ type: 'farmPlanted', data: { items: newWordRows } });
+        }
       }
 
       // ③ 새싹 발아 — 시간이 지난 뒤 스스로 기억해낸 단어
@@ -904,9 +908,28 @@ const StudyResult = () => {
       }
 
       // ⑬ 최종 결과 (항상 마지막)
+      // plant(새 씨앗 심기)는 채점 결과(점수·정답 수·O/X)를 보여주지 않는다 — 새로 심은
+      // 씨앗 목록만 담는다. 서버 세션 요약(farm.planted)을 받았다면 그것이 정본(오답만 있던
+      // 단어는 심기지 않는다), 못 받았으면(요약 조회 실패) 이번 세션 단어 전체로 대신한다.
+      let plantRows = null;
+      if (testType === 'plant') {
+        const seen = new Set();
+        const sessionWordRows = [];
+        testQuestions.forEach((q) => {
+          const id = q.vocaIndexId ?? q.id;
+          if (id == null || seen.has(id)) return;
+          seen.add(id);
+          sessionWordRows.push({
+            user_voca_id: id,
+            word: q.origin,
+            meaning: Array.isArray(q.meanings) ? q.meanings.join(', ') : '',
+          });
+        });
+        plantRows = farm ? plantedList : sessionWordRows;
+      }
       screens.push({
         type: 'result',
-        data: {}
+        data: { plantRows }
       });
 
       setScreenList(screens);
@@ -1278,6 +1301,40 @@ const StudyResult = () => {
             data-testid="result-scroll"
             className={`relative isolate z-0 flex flex-col flex-1 overflow-y-auto scrollbar-hide ${showRing ? 'pb-[160px]' : (nextNotice || nextPlan.reason) ? 'pb-[140px]' : 'pb-[110px]'}`}
           >
+            {currentScreen.data?.plantRows ? (
+              /* 새 씨앗 심기 결과 — 채점(점수·정답 수·O/X) 없이 새로 심은 씨앗만 보여준다 */
+              <div className='flex flex-col items-center gap-[15px] px-[20px] pt-[34px] pb-[30px]'>
+                <FarmCropArt stage="PLANTED_SEED" alt="새로 심은 씨앗" />
+                <motion.p
+                  className='text-[16px] font-[700] text-center leading-[1.45]'
+                  initial={{ y: 20, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  transition={{ delay: 0.3, duration: 0.5 }}
+                >
+                  {currentScreen.data.plantRows.length > 0
+                    ? <>새로 심은 씨앗 <strong className='text-primary-main-600'>{currentScreen.data.plantRows.length}개</strong></>
+                    : <>이번에는 심은 씨앗이 없어요</>}
+                </motion.p>
+                <motion.div
+                  className='flex flex-col gap-[8px] w-full'
+                  initial={{ y: 20, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  transition={{ delay: 0.5, duration: 0.4 }}
+                >
+                  {currentScreen.data.plantRows.map((row) => (
+                    <FarmGrowRow
+                      key={row.user_voca_id}
+                      crop="PLANTED_SEED"
+                      word={row.word}
+                      meaning={row.meaning}
+                      meta={metaOfRow(row)}
+                      right="새로 심었어요"
+                    />
+                  ))}
+                </motion.div>
+              </div>
+            ) : (
+            <>
             {/* 프로그레스 서클 영역 — 시안 `.circwrap` padding 34px 0 30px */}
             <div className='flex flex-col items-center justify-center pt-[34px] pb-[30px]'>
               <div className='relative w-[238px] h-[238px] flex items-center justify-center'>
@@ -1427,6 +1484,8 @@ const StudyResult = () => {
                 });
               })()}
             </div>
+            </>
+            )}
           </div>
           {/* 하단 — 왼쪽 "학습 종료", 오른쪽 "다음 학습"(8초 뒤 자동 시작).
               다음 학습을 열 수 없으면(단어 부족) 이유 한 줄 + "학습 종료"만 주 버튼으로 둔다.

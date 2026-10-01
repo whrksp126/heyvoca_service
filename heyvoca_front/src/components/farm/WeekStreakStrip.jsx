@@ -1,6 +1,6 @@
 import React from 'react';
 import { CROP_ASSETS } from './CropImage';
-import { toLocalDateString } from '../../utils/common';
+import { getKstToday } from '../../utils/kstDate';
 
 /*
   1주 불꽃 달력 — 최근 6일 + 오늘, 오래된→오늘 7칸.
@@ -22,7 +22,8 @@ const DOW = ['일', '월', '화', '수', '목', '금', '토'];
 
 /** today-tasks.week(원본, {date, status} 배열) → 화면이 그리는 cell 배열. */
 export const buildWeekCells = (week, now = new Date()) => {
-  const today = toLocalDateString(now);
+  // 서버 week.date 는 KST 날짜다 — 기기 시간대가 아니라 KST 기준 오늘과 비교한다(utils/kstDate.js)
+  const today = getKstToday(now);
   return (week || []).map((d) => {
     const isToday = d.date === today;
     const date = new Date(`${d.date}T00:00:00`);

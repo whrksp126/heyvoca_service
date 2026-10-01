@@ -25,6 +25,7 @@ import { useVocabulary } from './VocabularyContext';
 import { getTodaySummary, getReviewScheduleApi, getTodayMemoryChangesApi } from '../api/study';
 import { getFarmOverviewApi, getFarmHomeFeedApi, getFarmTodayTasksApi, getFarmHeroPlantsApi } from '../api/farm';
 import { STUDY_DATA_CHANGED_EVENT } from '../utils/studyDataEvents';
+import { getKstToday, msUntilNextKstMidnight } from '../utils/kstDate';
 
 // 홈 탭 재진입 · 앱 복귀 때 이보다 오래된 캐시면 다시 받는다
 const STALE_MS = 30 * 1000;
@@ -32,6 +33,9 @@ const STALE_MS = 30 * 1000;
 const DIRTY_DEBOUNCE_MS = 600;
 
 const isStudyRoute = (pathname) => (pathname || '').startsWith('/take-test');
+
+// 마지막 조회 이후 KST 날짜가 바뀌었는지는 컴포넌트 안(fetchedDateKeyRef)에서 판정한다 —
+// 아래 StatsProvider 안에서 isDateChanged 로 정의한다.
 
 const StatsContext = createContext(null);
 
@@ -48,6 +52,12 @@ export const StatsProvider = ({ children }) => {
   const [todayTasks, setTodayTasks] = useState(null);         // { rotten, wilted, care, new_seed, seeds_left, show_buy, items, week, streak } — 홈 "오늘 할 일" 카드 + 1주 불꽃 달력
   const [heroPlants, setHeroPlants] = useState(null);         // [{id, stage, health}] — 홈 히어로 밭 배치(단어 id 기반 결정적 슬롯, 2026-09-27 QA 2·3차 §D). GET /farm/hero-plants — 서버가 이미 최대 96개 안정 표본으로 샘플링해 준다(미학습 제외)
   const [reviewLoaded, setReviewLoaded] = useState(false);    // 최초 로드 완료 여부(스피너 제어용)
+  // KST 기준 "오늘" 날짜 키 — 자정이 지나면 갱신된다(2026-10-02). 홈의 요일·"오늘" 칸·인사말처럼
+  // 렌더 때 new Date()로 오늘을 계산하던 곳이 이 값을 구독해, 상태가 안 바뀌어 어제 값으로
+  // 굳는 일이 없게 한다. 날짜가 바뀌면 refreshStats 가 모든 통계를 강제로 다시 받는다.
+  const [todayKey, setTodayKey] = useState(() => getKstToday());
+  // 마지막으로 통계를 받은 시점의 KST 날짜 — 이 값과 지금 날짜가 다르면 캐시는 "어제 것"이다
+  const fetchedDateKeyRef = useRef(getKstToday());
 
   // 마지막 조회 시작 시각 · 그 뒤 서버 학습 기록이 바뀌었는지(아래 주석 1)
   const lastFetchedAtRef = useRef(0);
@@ -60,6 +70,10 @@ export const StatsProvider = ({ children }) => {
   // 네 통계를 한 번에 조회. 성공 항목만 갱신(기존 캐시 보존).
   // 농장 요약은 .catch 로 개별 격리한다 — 농장 API 가 실패해도 기존 세 통계의 동작이 바뀌면 안 된다.
   const refreshStats = useCallback(async () => {
+    // 날짜 키는 조회 중 합류(아래 inFlight)와 무관하게 먼저 맞춘다 — 날짜 라벨은 즉시 고쳐진다
+    const nowKey = getKstToday();
+    fetchedDateKeyRef.current = nowKey;
+    setTodayKey(nowKey);
     /*
       이미 조회 중이면 **버리지 않고 뒤에 한 번 더** 돈다.
       예전에는 그냥 return 이었는데, 그러면 "조회가 떠 있는 사이에 서버 데이터가 바뀐" 경우
@@ -112,6 +126,8 @@ export const StatsProvider = ({ children }) => {
   // 정의 시점에는 아직 값이 없다(TDZ).
   const refreshStatsRef = useRef(refreshStats);
   refreshStatsRef.current = refreshStats;
+
+  const isDateChanged = () => getKstToday() !== fetchedDateKeyRef.current;
 
   // 로그인 시 최초 1회 + 학습 세션 완료(lastSessionResult.completedAt 변경) 시 조용히 갱신.
   // 로그아웃 시 캐시 초기화.
@@ -171,6 +187,11 @@ export const StatsProvider = ({ children }) => {
     prevPathRef.current = pathname;
     if (!isLogin || !isLoginChecked || prev === pathname) return;
     if (isStudyRoute(pathname)) return;
+    // 날짜가 바뀌었으면 어느 화면으로 돌아오든 즉시(홈 복귀 포함) — 오늘 값이 전부 어제 것이다
+    if (isDateChanged()) {
+      refreshStatsRef.current();
+      return;
+    }
     if (dirtyRef.current) {
       refreshDirtyRef.current();
       return;
@@ -186,15 +207,37 @@ export const StatsProvider = ({ children }) => {
     const onVisibilityChange = () => {
       if (document.visibilityState !== 'visible') return;
       if (isStudyRoute(pathnameRef.current)) return;
-      if (dirtyRef.current) {
+      if (isDateChanged()) {
+        // 자정을 넘겼다 — 오늘 할 일·요약·달력은 전부 어제 값이므로 낡음/STALE 판정과 무관하게 즉시
+        refreshStatsRef.current();
+      } else if (dirtyRef.current) {
         refreshDirtyRef.current();
       } else if (Date.now() - lastFetchedAtRef.current > STALE_MS) {
         refreshStatsRef.current();
       }
     };
     document.addEventListener('visibilitychange', onVisibilityChange);
-    return () => document.removeEventListener('visibilitychange', onVisibilityChange);
+    // WebView 는 포그라운드 복귀 때 visibilitychange 를 놓치는 경우가 있어 focus/pageshow 도 같이 본다
+    window.addEventListener('focus', onVisibilityChange);
+    window.addEventListener('pageshow', onVisibilityChange);
+    return () => {
+      document.removeEventListener('visibilitychange', onVisibilityChange);
+      window.removeEventListener('focus', onVisibilityChange);
+      window.removeEventListener('pageshow', onVisibilityChange);
+    };
   }, [isLogin]);
+
+  // 앱이 켜진 채로 자정을 맞는 경우 — 다음 KST 자정 직후에 한 번 날짜를 확인해 다시 받는다.
+  // (학습 화면에 있으면 건너뛰고, 학습을 벗어나는 순간 위 경로 효과가 날짜 변경을 본다.)
+  useEffect(() => {
+    if (!isLogin) return undefined;
+    const timer = setTimeout(() => {
+      if (document.visibilityState !== 'visible') return; // 백그라운드면 복귀 때 위 핸들러가 처리
+      if (isStudyRoute(pathnameRef.current)) return;
+      if (isDateChanged()) refreshStatsRef.current();
+    }, msUntilNextKstMidnight() + 1000);
+    return () => clearTimeout(timer);
+  }, [isLogin, todayKey]);
 
   // 학습 언어 전환 등으로 통계·홈 피드·농장 요약을 전부 다시 받아야 할 때.
   // 이전 언어 수치가 남아 보이지 않도록 캐시를 먼저 비우고(스피너 상태) 새로 조회한다.
@@ -229,6 +272,7 @@ export const StatsProvider = ({ children }) => {
     todayTasks,
     heroPlants,
     reviewLoaded,
+    todayKey,
     refreshStats,
     refetchAll,
   };

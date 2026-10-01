@@ -771,6 +771,12 @@ def get_today_tasks(user_id: UUID, now: Optional[dt.datetime] = None,
     week = []
     for d in days:
         mission_done, qualified, protected = by_date.get(d, (False, False, False))
+        # 오늘은 카드 줄이 전부 끝났으면(새 씨앗 목표 달성 + 시듦·돌봄 남은 것 0) CheckIn 플래그가
+        # 아직 안 서 있어도 '모두 완료'로 본다 — 카드와 달력이 같은 사실을 다르게 말하지 않게.
+        if (d == today and not mission_done and new_done > 0
+                and (new_done >= daily_new_limit if daily_new_limit > 0 else True)
+                and not wilted_remaining_ids and not care_remaining_ids):
+            mission_done = True
         if mission_done:
             status = 'all'
         elif qualified:

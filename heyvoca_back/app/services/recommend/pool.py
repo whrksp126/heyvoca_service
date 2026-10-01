@@ -265,7 +265,11 @@ def _load_pool_raw(user_id: UUID, book_ids_filter: Optional[list], lang: str = '
                 .all()
             )
             for row in meta_rows:
-                meta_by_example_id[row.example_id] = {'level': row.level, 'words': row.words or []}
+                meta_by_example_id[row.example_id] = {
+                    'level': row.level, 'words': row.words or [],
+                    # plant(새 씨앗 심기) 쉬운 예문 우선 선택용(example_select)
+                    'word_count': row.word_count, 'rare_count': row.rare_count,
+                }
         for example_id, h in dict_example_hash_by_id.items():
             meta = meta_by_example_id.get(example_id)
             if meta is not None:

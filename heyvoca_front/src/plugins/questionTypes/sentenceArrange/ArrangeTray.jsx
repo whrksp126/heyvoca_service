@@ -83,6 +83,13 @@ const NEAREST_SLOT_Y_WEIGHT = 2.5;
 // 카드 경계 밖이라도 이 여유(px)까지는 "카드 안"으로 쳐서 가장 가까운 슬롯을 찾는다 —
 // 손가락이 카드 테두리에 살짝 걸쳐도 취소되지 않게.
 const CARD_HIT_MARGIN_PX = 28;
+// 조각 은행 구역 판정 여유 — 은행 위에 놓아 칩을 빼는 동작을 관대하게 인식한다(트레이 여유보다
+// 우선 판정). 판정 사각형은 전부 드래그 확정 시점에 한 번 캐시한다(2026-10-02, 아래 주석).
+const BANK_HIT_MARGIN_PX = 12;
+// 놓은 뒤 고스트가 목적지(슬롯/원래 자리)로 미끄러져 들어가는 시간(ms). 길지 않게.
+const SETTLE_MS = 140;
+// 빈 슬롯 밑줄 너비 — 칩이 들어올 때 줄바꿈 위치가 덜 흔들리도록 조금 넉넉히 잡는다.
+const EMPTY_SLOT_W = 'w-[48px]';
 
 const ArrangeTray = ({
   bank,
@@ -140,7 +147,16 @@ const ArrangeTray = ({
   // 어떤 슬롯/은행 위인지 찾는다(별도 라이브러리 없이 순수 pointer events로 구현).
   const pointerStartRef = useRef(null);
   const dragRef = useRef(null);
+  // dragVisual 은 "렌더에 필요한 값"(어느 슬롯/은행 위인지, 원본 칩, 폭)만 담는다 — 손가락 좌표는
+  // 넣지 않는다. 좌표는 ghostPosRef + DOM transform 직접 갱신으로만 흘려서(리렌더 0회/move)
+  // 드래그 중 깜빡임·reflow 를 없앤다(2026-10-02). overSlot/overBank 가 바뀔 때만 리렌더.
   const [dragVisual, setDragVisual] = useState(null);
+  const ghostElRef = useRef(null);
+  const ghostPosRef = useRef({ x: 0, y: 0, scale: 1.05, animate: false });
+  const settlingRef = useRef(false);
+  const settleTimerRef = useRef(null);
+  const bankWrapRef = useRef(null);
+  const bankChipRefs = useRef({});
   // 트레이 카드(문장 영역) 바깥 상자 — "카드 안 어디에 놓든 가장 가까운 슬롯" 판정의 기준
   // 사각형. slotRefs는 pos -> 슬롯 바깥 상자 DOM, 매 pointermove마다 실측 좌표로 가장 가까운
   // 슬롯을 찾는다(레이아웃이 고정 길이라 슬롯 개수가 적어 매번 재계산해도 비용이 작다).
@@ -150,6 +166,8 @@ const ArrangeTray = ({
     if (el) slotRefs.current[pos] = el;
     else delete slotRefs.current[pos];
   };
+
+  useEffect(() => () => { if (settleTimerRef.current) clearTimeout(settleTimerRef.current); }, []);
 
   const disabled = isAnswered;
   const userTokens = slots.map((idx) => (idx != null ? bank[idx] : undefined));
@@ -229,7 +247,7 @@ const ArrangeTray = ({
   // ─── 드래그(pointer events) — 뱅크 칩/트레이 칩 공용. 짧은 탭은 기존 tap 동작으로 위임 ───────
 
   const beginPointer = (e, { bankIdx, fromSlot }) => {
-    if (disabled) return;
+    if (disabled || settlingRef.current) return;
     if (fromSlot == null && bankUsed[bankIdx]) return;
     const rect = e.currentTarget.getBoundingClientRect();
     pointerStartRef.current = {
@@ -239,6 +257,8 @@ const ArrangeTray = ({
       fromSlot,
       offsetX: e.clientX - rect.left,
       offsetY: e.clientY - rect.top,
+      rectLeft: rect.left,
+      rectTop: rect.top,
       width: rect.width,
       height: rect.height,
       pointerId: e.pointerId,
@@ -246,19 +266,24 @@ const ArrangeTray = ({
     try { e.currentTarget.setPointerCapture(e.pointerId); } catch { /* 캡처 미지원 브라우저 — 무해 */ }
   };
 
-  // 포인터에서 가장 가까운 슬롯 찾기 — 카드 안(여유 CARD_HIT_MARGIN_PX 포함)일 때만 호출된다.
-  // y 거리에 가중치를 줘서 같은 줄의 슬롯을 우선한다(위 상수 설명 참고).
-  const findNearestSlot = (x, y) => {
+  // 고스트 위치 반영 — React 상태가 아니라 DOM transform 을 직접 바꾼다(reflow 없음, compositor 전용).
+  const applyGhostPos = (el) => {
+    if (!el) return;
+    const { x, y, scale, animate } = ghostPosRef.current;
+    el.style.transition = animate ? `transform ${SETTLE_MS}ms cubic-bezier(0.2, 0.8, 0.2, 1)` : 'none';
+    el.style.transform = `translate3d(${x}px, ${y}px, 0) scale(${scale})`;
+  };
+
+  // 포인터에서 가장 가까운 슬롯 찾기 — 드래그 확정 시점에 캐시한 사각형(rects.slotRects)만 쓴다.
+  // 드래그 중에는 레이아웃이 변하지 않으므로(고스트는 transform, 하이라이트는 absolute) 캐시가
+  // 항상 유효하고, 판정 대상이 움직여 깜빡이는 일이 없다. y 거리에 가중치를 줘서 같은 줄 우선.
+  const findNearestSlot = (slotRects, x, y) => {
     let bestPos = null;
     let bestDist = Infinity;
-    Object.entries(slotRefs.current).forEach(([posStr, el]) => {
-      if (!el) return;
-      const rect = el.getBoundingClientRect();
+    Object.entries(slotRects).forEach(([posStr, rect]) => {
       const cx = rect.left + rect.width / 2;
       const cy = rect.top + rect.height / 2;
-      const dx = x - cx;
-      const dy = (y - cy) * NEAREST_SLOT_Y_WEIGHT;
-      const dist = Math.hypot(dx, dy);
+      const dist = Math.hypot(x - cx, (y - cy) * NEAREST_SLOT_Y_WEIGHT);
       if (dist < bestDist) {
         bestDist = dist;
         bestPos = Number(posStr);
@@ -267,81 +292,126 @@ const ArrangeTray = ({
     return bestPos;
   };
 
-  const isPointInsideTrayCard = (x, y) => {
-    const rect = trayCardRef.current?.getBoundingClientRect();
-    if (!rect) return false;
-    return (
-      x >= rect.left - CARD_HIT_MARGIN_PX && x <= rect.right + CARD_HIT_MARGIN_PX
-      && y >= rect.top - CARD_HIT_MARGIN_PX && y <= rect.bottom + CARD_HIT_MARGIN_PX
-    );
-  };
+  const isPointInRect = (rect, x, y, margin) => !!rect
+    && x >= rect.left - margin && x <= rect.right + margin
+    && y >= rect.top - margin && y <= rect.bottom + margin;
 
   const handlePointerMove = (e) => {
     const start = pointerStartRef.current;
     if (!start || e.pointerId !== start.pointerId) return;
     const dx = e.clientX - start.x;
     const dy = e.clientY - start.y;
+    const gx = e.clientX - start.offsetX;
+    const gy = e.clientY - start.offsetY;
     if (!dragRef.current) {
       if (Math.hypot(dx, dy) < DRAG_THRESHOLD_PX) return;
-      // 임계값을 넘은 순간 "드래그"로 확정 — 스크롤 방지는 draggable 요소의 touch-none(CSS)이 맡는다.
+      // 임계값을 넘은 순간 "드래그"로 확정 + 판정 사각형 캐시(슬롯·트레이·은행).
+      const slotRects = {};
+      Object.entries(slotRefs.current).forEach(([pos, el]) => {
+        if (el) slotRects[pos] = el.getBoundingClientRect();
+      });
       dragRef.current = {
         bankIdx: start.bankIdx,
         fromSlot: start.fromSlot,
-        x: e.clientX - start.offsetX,
-        y: e.clientY - start.offsetY,
         width: start.width,
+        height: start.height,
+        slotRects,
+        trayRect: trayCardRef.current?.getBoundingClientRect() ?? null,
+        bankRect: bankWrapRef.current?.getBoundingClientRect() ?? null,
         overSlot: null,
         overBank: false,
       };
+      ghostPosRef.current = { x: gx, y: gy, scale: 1.05, animate: false };
       haptic('light');
-      setDragVisual(dragRef.current);
+      setDragVisual({
+        bankIdx: start.bankIdx,
+        fromSlot: start.fromSlot,
+        width: start.width,
+        overSlot: null,
+        overBank: false,
+        settling: false,
+      });
       return;
     }
-    const el = document.elementFromPoint(e.clientX, e.clientY);
-    const overBank = !!el?.closest?.('[data-arrange-bank]');
-    const overSlot = (!overBank && isPointInsideTrayCard(e.clientX, e.clientY))
-      ? findNearestSlot(e.clientX, e.clientY)
+    const d = dragRef.current;
+    ghostPosRef.current = { x: gx, y: gy, scale: 1.05, animate: false };
+    applyGhostPos(ghostElRef.current);
+    const overBank = isPointInRect(d.bankRect, e.clientX, e.clientY, BANK_HIT_MARGIN_PX);
+    const overSlot = (!overBank && isPointInRect(d.trayRect, e.clientX, e.clientY, CARD_HIT_MARGIN_PX))
+      ? findNearestSlot(d.slotRects, e.clientX, e.clientY)
       : null;
-    dragRef.current = {
-      ...dragRef.current,
-      x: e.clientX - start.offsetX,
-      y: e.clientY - start.offsetY,
-      overSlot,
-      overBank,
-    };
-    setDragVisual(dragRef.current);
+    if (overSlot !== d.overSlot || overBank !== d.overBank) {
+      d.overSlot = overSlot;
+      d.overBank = overBank;
+      setDragVisual((prev) => (prev ? { ...prev, overSlot, overBank } : prev));
+    }
   };
 
   const finishPointer = (e, { cancel = false } = {}) => {
     const start = pointerStartRef.current;
     if (!start || e.pointerId !== start.pointerId) return;
     pointerStartRef.current = null;
-    const dragState = dragRef.current;
+    const d = dragRef.current;
     dragRef.current = null;
-    setDragVisual(null);
-    if (cancel) return;
-    if (!dragState) {
+    if (!d) {
+      setDragVisual(null);
+      if (cancel) return;
       // 이동 없이 뗐다 — 기존 탭 동작.
       if (start.fromSlot != null) tapTray(start.fromSlot);
       else tapBank(start.bankIdx);
       return;
     }
-    if (dragState.overSlot != null) {
-      haptic('light');
-      if (start.fromSlot != null) moveSlotToSlot(start.fromSlot, dragState.overSlot);
-      else placeBankIntoSlot(start.bankIdx, dragState.overSlot);
-    } else if (dragState.overBank && start.fromSlot != null) {
-      haptic('light');
-      removeSlotToBank(start.fromSlot);
+
+    // 목적지 결정 — 슬롯 위: 그 슬롯 중앙 / 은행 위(슬롯 칩): 원래 은행 자리 / 그 외: 출발 자리로 복귀.
+    let commit = null;
+    let tx = start.rectLeft;
+    let ty = start.rectTop;
+    if (!cancel && d.overSlot != null) {
+      const r = d.slotRects[d.overSlot];
+      if (r) {
+        tx = r.left + r.width / 2 - d.width / 2;
+        ty = r.top + r.height / 2 - d.height / 2;
+      }
+      commit = () => {
+        haptic('light');
+        if (start.fromSlot != null) moveSlotToSlot(start.fromSlot, d.overSlot);
+        else placeBankIntoSlot(start.bankIdx, d.overSlot);
+      };
+    } else if (!cancel && d.overBank && start.fromSlot != null) {
+      const r = bankChipRefs.current[start.bankIdx]?.getBoundingClientRect();
+      if (r) {
+        tx = r.left + r.width / 2 - d.width / 2;
+        ty = r.top + r.height / 2 - d.height / 2;
+      }
+      commit = () => {
+        haptic('light');
+        removeSlotToBank(start.fromSlot);
+      };
     }
-    // 그 외(트레이/은행 밖 허공에 놓음) — 취소, 상태 변화 없음.
+    // 그 외(허공에 놓음/취소) — 출발 자리로 되돌아가며 상태 변화 없음.
+
+    if (reducedMotion) {
+      setDragVisual(null);
+      commit?.();
+      return;
+    }
+    settlingRef.current = true;
+    ghostPosRef.current = { x: tx, y: ty, scale: 1, animate: true };
+    applyGhostPos(ghostElRef.current);
+    setDragVisual((prev) => (prev ? { ...prev, settling: true } : prev));
+    settleTimerRef.current = setTimeout(() => {
+      settleTimerRef.current = null;
+      settlingRef.current = false;
+      commit?.();
+      setDragVisual(null);
+    }, SETTLE_MS);
   };
 
   const handlePointerUp = (e) => finishPointer(e);
   const handlePointerCancel = (e) => finishPointer(e, { cancel: true });
 
   const handleConfirm = () => {
-    if (disabled || !allFilled) return;
+    if (disabled || !allFilled || settlingRef.current) return;
     haptic('light');
     onSubmit(slots.map((i) => bank[i]));
   };
@@ -533,6 +603,7 @@ const ArrangeTray = ({
                         onPointerMove={handlePointerMove}
                         onPointerUp={handlePointerUp}
                         onPointerCancel={handlePointerCancel}
+                        onContextMenu={(e) => e.preventDefault()}
                         onClick={(e) => {
                           // pointerup 뒤에 따라오는 네이티브 click — 채점 전에는 pointer 핸들러가
                           // 이미 탭/드래그(배치·교체·빼기)를 처리했으므로 여기서는 아무 것도 하지
@@ -540,51 +611,45 @@ const ArrangeTray = ({
                           if (!disabled) return;
                           handleWordTap(e, `chip-${pos}`, bank[bankIdx]);
                         }}
-                        initial={reducedMotion ? false : { scale: 0.82, opacity: 0.6 }}
-                        animate={{ scale: 1, opacity: 1 }}
-                        transition={{ duration: 0.15, ease: [0.34, 1.56, 0.64, 1] }}
+                        // 고스트가 이미 그 자리로 미끄러져 들어온 뒤 확정되므로 팝인 애니메이션은
+                        // 두지 않는다(겹쳐 보이면 깜빡임) — 레이아웃·크기 변화 없이 바로 나타난다.
                         className={`
                           inline-flex items-center justify-center
                           ${CHIP_BASE_CLASS}
-                          touch-none
+                          touch-none select-none [-webkit-touch-callout:none] [-webkit-user-select:none]
                           ${chipStyle}
                           ${isDragSource ? 'opacity-30' : ''}
-                          ${isDragOver
-                            ? '!opacity-40 !border-dashed !border-[1.5px] !border-primary-main-400 dark:!border-primary-main-300'
-                            : ''}
+                          ${isDragOver ? 'ring-2 ring-primary-main-400 dark:ring-primary-main-300' : ''}
                         `}
                         style={{ height: SLOT_CHIP_H }}
                       >
                         {bank[bankIdx]}
                       </motion.button>
-                    ) : isDragOver ? (
-                      // 고스트 칩 — 실제 칩과 같은 크기, 점선 테두리 + 반투명 글자로 "여기 놓인다"를
-                      // 미리 보여준다. 포인터 업 없이도 실시간으로 대상 슬롯이 바뀌며 따라온다.
-                      <span
-                        aria-hidden="true"
-                        className={`
-                          inline-flex items-center justify-center
-                          ${CHIP_PAD_X} ${CHIP_RADIUS} ${CHIP_FONT}
-                          border-[1.5px] border-dashed
-                          border-primary-main-400 dark:border-primary-main-300
-                          bg-primary-main-50/70 dark:bg-primary-main-dark/30
-                          text-primary-main-500/60 dark:text-primary-main-300/60
-                        `}
-                        style={{ height: SLOT_CHIP_H }}
-                      >
-                        {bank[dragVisual.bankIdx]}
-                      </span>
                     ) : (
                       <span
                         aria-hidden="true"
                         className={`
-                          block w-[30px] h-0
+                          relative block ${EMPTY_SLOT_W} h-0
                           border-b-[3px]
                           ${isNext
                             ? `border-primary-main-400 dark:border-primary-main-300 ${reducedMotion ? '' : 'animate-pulse'}`
                             : 'border-layout-gray-300 dark:border-[#4A4A4A]'}
+                          ${isDragOver ? '!border-primary-main-500 dark:!border-primary-main-300' : ''}
                         `}
-                      />
+                      >
+                        {/* 드롭 대상 표시 — absolute 오버레이라 슬롯 크기/줄바꿈에 영향 0. */}
+                        {isDragOver && (
+                          <span
+                            className="
+                              absolute left-[-4px] right-[-4px] bottom-[-3px]
+                              rounded-[10px] border-[1.5px] border-dashed
+                              border-primary-main-400 dark:border-primary-main-300
+                              bg-primary-main-50/70 dark:bg-primary-main-dark/30
+                            "
+                            style={{ height: SLOT_CHIP_H }}
+                          />
+                        )}
+                      </span>
                     )}
                     </span>
                     {slotPunct.trailing && <span aria-hidden="true">{slotPunct.trailing}</span>}
@@ -637,12 +702,14 @@ const ArrangeTray = ({
       {/* 조각 은행 + 확인/다음 */}
       <div className="flex-shrink-0 flex flex-col gap-[10px]">
         {/* data-arrange-bank — 채워진 칩을 이 구역으로 끌어오면 슬롯에서 빼서 은행으로 되돌린다. */}
-        <div data-arrange-bank="" className="flex flex-wrap justify-center gap-[8px]">
+        <div ref={bankWrapRef} data-arrange-bank="" className="flex flex-wrap justify-center gap-[8px]">
           {bank.map((token, i) => (
             <motion.button
               key={i}
+              ref={(el) => { if (el) bankChipRefs.current[i] = el; else delete bankChipRefs.current[i]; }}
               type="button"
               disabled={disabled || bankUsed[i]}
+              onContextMenu={(e) => e.preventDefault()}
               onPointerDown={(e) => beginPointer(e, { bankIdx: i, fromSlot: null })}
               onPointerMove={handlePointerMove}
               onPointerUp={handlePointerUp}
@@ -656,7 +723,7 @@ const ArrangeTray = ({
                 ${CHIP_BASE_CLASS}
                 border-layout-gray-200 dark:border-[#3A3A3A]
                 text-layout-black dark:text-layout-white
-                touch-none
+                touch-none select-none [-webkit-touch-callout:none] [-webkit-user-select:none]
                 ${bankUsed[i] ? 'invisible' : ''}
                 ${dragVisual && dragVisual.fromSlot == null && dragVisual.bankIdx === i ? 'opacity-30' : ''}
               `}
@@ -689,23 +756,18 @@ const ArrangeTray = ({
           따라오고, scale 1.05 + 그림자로 살짝 들어올려진 느낌을 준다(2026-09-29 재작업). */}
       {dragVisual && typeof document !== 'undefined' && createPortal(
         <div
+          ref={(el) => { ghostElRef.current = el; applyGhostPos(el); }}
+          aria-hidden="true"
           className={`
-            fixed z-[1200] pointer-events-none
+            fixed left-0 top-0 z-[1200] pointer-events-none touch-none will-change-transform
             inline-flex items-center justify-center
             ${CHIP_BASE_CLASS}
             bg-layout-white dark:bg-layout-black
             border-primary-main-500
             text-layout-black dark:text-layout-white
-            shadow-[0_10px_20px_rgba(0,0,0,0.25)]
+            ${dragVisual.settling ? 'shadow-[0_2px_4px_rgba(0,0,0,0.12)]' : 'shadow-[0_10px_20px_rgba(0,0,0,0.25)]'}
           `}
-          style={{
-            left: dragVisual.x,
-            top: dragVisual.y,
-            height: SLOT_CHIP_H,
-            width: dragVisual.width,
-            transform: 'scale(1.05)',
-            transformOrigin: 'center',
-          }}
+          style={{ height: SLOT_CHIP_H, width: dragVisual.width }}
         >
           {bank[dragVisual.bankIdx]}
         </div>,

@@ -18,8 +18,10 @@ import { primeSfx } from '../utils/audio';
 
   흐름: GET /study/recommend?mode=plant 로 최대 5단어 + session_id 를 한 번만 받아 곧장
   ② 테스트(TakeTest testType='plant')로 보낸다. ① "만나기"는 더 이상 별도 화면(/study)이
-  아니라 TakeTest 안의 첫 슬라이드(wordIntro, 단어마다 그 단어 블록의 맨 앞)다 — 화면
-  전환 없이 한 세션 안에서 단어별로 "만나기 → 문제 5종"을 끝까지 진행한다.
+  아니라 TakeTest 안의 슬라이드(wordIntro, 단어마다 그 단어 블록의 맨 앞)다.
+  2026-10-02 — 단어마다 만나기 뒤에 영→한/한→영/빈칸 채우기/빈칸 입력 중 임의 2~3개만 내고,
+  문장 만들기는 맨 끝 안내 슬라이드 뒤 2~3문제, 오답 재학습도 맨 끝에서 안내 슬라이드와 함께
+  나온다(구성은 pages/TakeTest.jsx buildPlantTestQuestions, 재출제 삽입은 components/takeTest/Main.jsx).
 
   중간 이탈 재개는 세션 중(같은 앱 인스턴스) recentStudy.plant 로컬 상태로만 판단한다 —
   plant는 서버 RecentStudy에 쓰지 않는다(RecentStudyType enum에 값이 없어 500이 나던

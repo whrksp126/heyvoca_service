@@ -163,6 +163,7 @@ def build_arrange_payload(
     mode: str,          # 'partial' | 'full' | 'listen'
     example_origin: str = '',
     example_meaning: str = '',
+    easy: bool = False,   # plant: 방해 조각 1~2개, partial 창 3~4
 ) -> Optional[dict]:
     """sentenceArrangePartial(partial) / sentenceArrange(full) / listenArrange(listen)
     공통 조립 payload 빌더.
@@ -188,7 +189,7 @@ def build_arrange_payload(
     n = len(tokens)
 
     if mode == 'partial':
-        size = min(n, random.choice([3, 4, 5]))
+        size = min(n, random.choice([3, 4] if easy else [3, 4, 5]))
         start, end = _select_window(tokens, target_idx, size)
         distractor_pool = puzzle.get('distractors') or []
         distractor_k = 1 if random.random() < 0.5 else 2
@@ -199,7 +200,7 @@ def build_arrange_payload(
         else:
             start, end = _select_window(tokens, target_idx, 7)
         distractor_pool = puzzle.get('distractors') or []
-        distractor_k = random.choice([2, 3])
+        distractor_k = random.choice([1, 2] if easy else [2, 3])
         alt_orders_full = puzzle.get('alt_orders') or []
     elif mode == 'listen':
         if n <= 8:
@@ -207,7 +208,7 @@ def build_arrange_payload(
         else:
             start, end = _select_window(tokens, target_idx, 7)
         distractor_pool = puzzle.get('listen_distractors') or []
-        distractor_k = random.choice([2, 3])
+        distractor_k = random.choice([1, 2] if easy else [2, 3])
         alt_orders_full = []  # listenArrange는 원문 어순만 정답
     else:
         raise ValueError(f'알 수 없는 mode: {mode}')

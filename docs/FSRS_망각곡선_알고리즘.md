@@ -233,7 +233,7 @@ D_new = w[7]·D0(4) + (1-w[7])·(D - w[6]·(rating-3)·(10-D)/9)
 |------|--------|------|
 | `RATINGS_USE_TIME_CALIBRATION` | true | off → 5/10초 단순 컷오프 rating |
 | `FSRS_SOFT_LAPSE` | true | off → 표준 FSRS lapse |
-| `APP_TZ` / `APP_DAY_CUTOFF_HOUR` | Asia/Seoul / 4 | 학습일 경계 |
+| `APP_TZ` / `APP_DAY_CUTOFF_HOUR` | Asia/Seoul / 0 | 학습일 경계 |
 
 ## E. 파일 맵
 

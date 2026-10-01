@@ -80,3 +80,21 @@ def get_review_due(user_id: UUID) -> int:
         return 0
 
     return sum(1 for it in pool if it.bucket in ('overdue', 'today'))
+
+
+def get_card_review_remaining(user_id: UUID) -> int:
+    """홈 '오늘 할 일' 카드의 복습 줄(시듦·돌봄) 남은 대상 수 — 데일리 미션 복습 충족 판정용.
+
+    `/farm/today-tasks` 와 `/study/recommend?task_bucket=` 이 쓰는 공유 헬퍼
+    (get_task_bucket_ids)를 그대로 호출하므로 카드의 '남은 것'과 정의가 갈리지 않는다.
+    조회 실패 시 0(미션 판정이 영원히 막히지 않게 보수적으로 폴백).
+    """
+    import datetime as dt
+    from app.services.game.farm_v2.query import get_task_bucket_ids
+    try:
+        now = dt.datetime.utcnow()
+        wilted = get_task_bucket_ids(user_id, 'wilted', now)
+        care = get_task_bucket_ids(user_id, 'care', now)
+        return len(set(wilted) | set(care))
+    except Exception:
+        return 0

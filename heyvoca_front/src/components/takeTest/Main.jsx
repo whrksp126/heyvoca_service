@@ -17,7 +17,7 @@ import MemoryStateChangeBadge, {
   getMemoryStateKeyByStability,
 } from "../common/MemoryStateChangeBadge";
 import { playSuccessSound, playErrorSound } from '../../utils/audio';
-import { getQuestionType, isSingleWordPluginType, isSentenceQuestionType, isNoGradeQuestionType } from '../../plugins/questionTypes';
+import { getQuestionType, isSingleWordPluginType, isSentenceQuestionType, isNoGradeQuestionType, isArrangeQuestionType, PHASE_NOTICE_TYPE } from '../../plugins/questionTypes';
 import { getDisplayMeanings } from '../../utils/displayMeanings';
 import { logStudyQuestion, getRequeueEasierApi } from '../../api/study';
 import { mapRecommendItemToWord } from '../../utils/studyRecommendMapping';
@@ -238,6 +238,10 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
     plantAttemptsRef.current.set(vocaId, prev && !!wasCorrect);
   };
 
+  // 구간 안내 슬라이드(문장 만들기 안내·오답 복습 안내)가 큐에 있는 세션 — 진행률을 슬라이드
+  // 기준으로 세고, 세션 종료를 큐 소진으로만 판정한다(안내 슬라이드는 문제로 세지 않는다).
+  const hasPhaseFlow = (testQuestions ?? []).some((q) => q?.questionType === PHASE_NOTICE_TYPE);
+
   const [isCorrect, setIsCorrect] = useState(null);
   const [userSelected, setUserSelected] = useState(null);
   // 백그라운드→포그라운드 복귀 시 1씩 증가 — 정답 링/성장 게이지가 framer-motion의
@@ -390,6 +394,27 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
   const navigate = useNavigate();
 
   // ─── 재출제 유틸 ─────────────────────────────────────────────────────────────
+  // 재출제 문제를 큐 맨 끝에 붙인다. 이 큐에 "틀린 문제를 복습해봐요" 안내(phaseNotice, kind
+  // 'retry')가 아직 없으면 재출제 바로 앞에 한 번 끼운다 — 재출제는 항상 맨 끝에만 붙으므로
+  // 안내는 첫 재출제와 함께 생기고 이후 재출제는 그 뒤에 이어진다. 게스트 맛보기는 자체 안내
+  // 문구가 있어 안내 슬라이드를 끼우지 않는다. 순수 함수(상태 업데이터 안에서 호출된다).
+  const appendRetryAtEnd = (prev, retryQuestion) => {
+    const next = [...prev];
+    const hasRetryNotice = next.some((q) => q.questionType === PHASE_NOTICE_TYPE && q.kind === 'retry');
+    if (!hasRetryNotice && !guestMode) {
+      next.push({
+        id: null,
+        vocaIndexId: null,
+        questionType: PHASE_NOTICE_TYPE,
+        kind: 'retry',
+        isCorrect: null,
+        userResultIndex: null,
+      });
+    }
+    next.push(retryQuestion);
+    return next;
+  };
+
   // 오답 문제를 큐의 맨 마지막에 재삽입 (마지막 슬라이드로 재출제)
   // 재출제용 문제는 options를 셔플해서 새 객체로 생성
   const enqueueRetry = (currentIdx, question) => {
@@ -429,24 +454,22 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
       };
     }
 
-    // 큐 삽입 위치 — plant(새 씨앗 심기)·script(글자 학습)는 그 단어/글자 블록 안(남은
-    // 단계 뒤, 다음 단어로 넘어가기 전)에 다시 나오게 한다(2026-09-29 실기기 피드백,
-    // isMultiStepMode). buildPlantTestQuestions·buildScriptLearnQuestions가 한 단어의 모든
-    // 단계를 배열에서 연속으로 배치하므로, currentIdx 다음부터 "같은 vocaId가 연속으로
-    // 이어지는 구간"의 끝(=다음 단어가 시작되는 자리, 또는 배열 끝)을 찾아 그 자리에 끼워
-    // 넣는다(script 무작위 테스트형처럼 애초에 연속 구간이 없으면 바로 다음 자리에 들어간다
-    // — 그것도 "다시 물어볼 자리"로 적절하다). 그 외 세션(자유 설정 테스트 등)은 기존처럼
-    // 큐 맨 마지막에 넣는다(재출제분은 신규 문제를 다 푼 뒤 마지막에 등장).
+    // 큐 삽입 위치 — 글자 학습(script)은 그 글자 블록 안(남은 단계 뒤, 다음 글자로 넘어가기
+    // 전)에 다시 나오게 한다(isMultiStepMode && !isPlantMode). buildScriptLearnQuestions가 한
+    // 글자의 모든 단계를 배열에서 연속으로 배치하므로, currentIdx 다음부터 "같은 vocaId가
+    // 연속으로 이어지는 구간"의 끝(=다음 글자가 시작되는 자리, 또는 배열 끝)에 끼워 넣는다.
+    // 그 외(일반 학습·plant)는 **맨 끝 구간**에서만 하나씩 다시 나온다(2026-10-02 QA — 예전
+    // plant는 그 단어 슬라이드 직후에 나왔다). 첫 재출제가 들어갈 때 그 앞에 "틀린 문제를
+    // 복습해봐요" 안내 슬라이드를 한 번만 끼운다(appendRetryAtEnd).
     setTestQuestions((prev) => {
-      const next = [...prev];
-      let insertAt = next.length;
-      if (isMultiStepMode) {
+      if (isMultiStepMode && !isPlantMode) {
+        const next = [...prev];
         let end = currentIdx + 1;
         while (end < next.length && (next[end].vocaIndexId ?? next[end].id) === vocaId) end++;
-        insertAt = end;
+        next.splice(end, 0, retryQuestion);
+        return next;
       }
-      next.splice(insertAt, 0, retryQuestion);
-      return next;
+      return appendRetryAtEnd(prev, retryQuestion);
     });
     retryEnqueueCounterRef.current += 1;
     return true;
@@ -496,11 +519,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
     retryQuestion.tierTarget = null;
     retryQuestion.tierShown = res.data.tier_shown ?? null;
 
-    setTestQuestions((prev) => {
-      const next = [...prev];
-      next.splice(next.length, 0, retryQuestion);
-      return next;
-    });
+    setTestQuestions((prev) => appendRetryAtEnd(prev, retryQuestion));
     retryEnqueueCounterRef.current += 1;
     return true;
   };
@@ -819,7 +838,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
       // 단어(예: graduation)를 미리 읽어 버리는 버그였다(2026-09-29). wordIntro(①만나기)도
       // 같은 이유로 제외 — WordIntroQuestion이 마운트 시 자기만의 순서(단어→뜻→예문)로
       // 직접 재생한다. 여기서 또 origin을 읽으면 단어가 두 번 겹쳐 재생된다.
-      } else if (!['cardMatch', 'cardMatchListening', 'fillInTheBlank', 'fillInTheBlankTyping', 'sentenceArrangePartial', 'sentenceArrange', 'listenArrange', 'wordIntro'].includes(question.questionType) && question.origin) {
+      } else if (!['cardMatch', 'cardMatchListening', 'fillInTheBlank', 'fillInTheBlankTyping', 'sentenceArrangePartial', 'sentenceArrange', 'listenArrange', 'wordIntro', PHASE_NOTICE_TYPE].includes(question.questionType) && question.origin) {
         speakText(question.origin, wordLang(question));
       }
 
@@ -1275,7 +1294,9 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
     const nextIndex = progressIndex + 1;
     const adjustedQueueLen = testQuestions.length + (lastRetryEnqueuedRef.current ? 1 : 0);
     const isQueueExhausted = nextIndex >= adjustedQueueLen;
-    const isSessionDone = isMultiStepMode ? isQueueExhausted : (currentPassedCount >= targetCount || isQueueExhausted);
+    // 구간 안내(문장 만들기·오답 복습)가 있는 세션은 같은 단어가 문장 구간·재출제로 다시 나오므로
+    // "통과 고유 단어 수" 판정을 쓰지 않고 큐를 끝까지 소진했을 때만 끝난 것으로 본다.
+    const isSessionDone = (isMultiStepMode || hasPhaseFlow) ? isQueueExhausted : (currentPassedCount >= targetCount || isQueueExhausted);
 
     updateRecentStudyState({
       [testType]: {
@@ -1406,9 +1427,25 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
     // 문제에 쓰인 예문(FRESH_SENTENCE_CONTRACT §4·5) — cardMatch는 뜻/카드 매칭이라 해당 없음(target에 없음).
     const exampleHash = target?.exampleHash ?? (isSingleWordQuestion ? currentQuestion?.exampleHash : null) ?? null;
 
+    /*
+      문장 만들기(조립형 3종)는 암기 상태와의 연관을 최소화한다(2026-10-02 QA) — **오답이어도
+      단어 상태(FSRS·작물·시듦·XP·콤보)에 페널티를 주지 않는다.** 서버 /study/log 는
+      was_correct=false 를 받으면 FSRS lapse·콤보 리셋을 만들므로, 오답은 로그 자체를 보내지
+      않는다(농장 상태 바·낙관 fsrs 표시도 만들지 않는다). 정답일 때만 평소 경로로 기록한다 —
+      그 단어를 이 세션에서 아직 기록하지 않았다면(loggedVocaIdsRef) 재출제(isRetry) 정답도
+      첫 기록으로 인정한다. plant 는 세션 일괄 기록(plantAttemptsRef)에서 이 유형을 아예 뺀다.
+    */
+    const isArrangeQ = isArrangeQuestionType(questionType);
+    const skipGrading = isArrangeQ && !wordIsCorrect;
+    if (skipGrading && currentQuestion) {
+      // 컴포넌트가 낙관값(stability 0.5)으로 적어 둔 "다음 상태"를 되돌린다 — 결과 화면
+      // '암기 상태 하락' 집계에 이 오답이 잡히지 않게.
+      currentQuestion.nextMemoryStateKey = currentQuestion.prevMemoryStateKey ?? currentQuestion.nextMemoryStateKey;
+    }
+
     // 게스트 온보딩 로컬 콤보 — 첫 시도만 반영. 카드매칭은 항상 첫 시도(오답 카드는 사지선다로
     // 재출제되어 이 경로를 다시 타지 않음)지만, 빈칸 채우기는 같은 유형으로 재출제되어 다시 온다.
-    if (!currentQuestion?.isRetry) bumpLocalCombo(!!wordIsCorrect);
+    if (!currentQuestion?.isRetry && !skipGrading) bumpLocalCombo(!!wordIsCorrect);
 
     /*
       카드별 농장 상태 바 — 카드는 카드(단어)마다 따로 붙는다. 구버전 UI 폴백을 없앴기
@@ -1426,8 +1463,8 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
       // 바(cardFarmByWordId)는 만들지 않는다 — 응답이 영영 안 오므로 그대로 두면 정지
       // 상태로 남는데, plant 는 그 표시 자체를 쓰지 않는다(플러그인 컴포넌트가
       // farmByWordId 없으면 알아서 숨긴다).
-      if (!currentQuestion?.isRetry) recordPlantAttempt(wordId, !!wordIsCorrect);
-    } else {
+      if (!currentQuestion?.isRetry && !isArrangeQ) recordPlantAttempt(wordId, !!wordIsCorrect);
+    } else if (!skipGrading) {
       const optimistic = computeOptimisticFsrs(fsrsBefore, !!wordIsCorrect);
       const buildOptimisticCardFarm = (base) => optimisticFarmPayload({
         base,
@@ -1494,7 +1531,8 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
     // notifyRetryCorrect 주석 참고. cardMatch/cardMatchListening 재출제는 사지선다로
     // 변환돼 이 경로로 다시 오지 않으므로(handleClickExamOption 쪽에서 처리) 여기선
     // 사실상 fillInTheBlank류 재출제에만 해당한다.
-    if (wordIsCorrect && currentQuestion?.isRetry) {
+    // (문장 만들기는 위에서 정답 시 직접 /study/log 로 기록했으므로 재출제 정답 통지를 따로 보내지 않는다)
+    if (wordIsCorrect && currentQuestion?.isRetry && !isArrangeQ) {
       notifyRetryCorrect(wordId, questionType);
     }
 
@@ -1580,7 +1618,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
     // plant·script는 위 setUpdateRecentStudyStateAndStatus와 같은 이유(isMultiStepMode)로
     // 1차 판정(통과 고유 단어 수)을 쓰지 않는다 — 같은 단어/글자가 여러 단계(같은 vocaId)로
     // 반복 등장해 조기 종료로 이어지기 때문. 큐 소진만으로 판단한다.
-    const isSessionDone = isMultiStepMode ? isQueueExhausted : (currentPassedCount >= targetCount || isQueueExhausted);
+    const isSessionDone = (isMultiStepMode || hasPhaseFlow) ? isQueueExhausted : (currentPassedCount >= targetCount || isQueueExhausted);
 
     updateRecentStudyState({
       [testType]: {
@@ -1667,8 +1705,17 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
   // 포함해 "지금까지 끝낸 슬라이드 수"(progressIndex, 0-based 완료 개수와 일치),
   // 분모는 "전체 슬라이드 수"(testQuestions.length) — 오답 재출제로 큐에 슬라이드가
   // 추가되면(enqueueRetry) 분모도 자연스럽게 늘어난다(줄어들지 않음).
-  const totalWordCount = isMultiStepMode ? testQuestions.length : totalUniqueCount;
-  const displayPassedCount = isMultiStepMode ? Math.min(progressIndex, totalWordCount) : passedCount;
+  // 구간 안내 슬라이드(phaseNotice)는 문제로 세지 않는다 — 분자·분모 모두에서 뺀다.
+  // 안내가 있는 일반 학습도 같은 슬라이드 기준으로 센다(문장 구간·재출제가 단어를 다시 풀게
+  // 하므로 "통과 고유 단어 수" 기준이면 문장 구간 전에 이미 꽉 찬다).
+  const isNoticeQ = (q) => q?.questionType === PHASE_NOTICE_TYPE;
+  const useSlideProgress = isMultiStepMode || hasPhaseFlow;
+  const totalWordCount = useSlideProgress
+    ? Math.max(1, testQuestions.filter((q) => !isNoticeQ(q)).length)
+    : totalUniqueCount;
+  const displayPassedCount = useSlideProgress
+    ? Math.min(testQuestions.slice(0, progressIndex).filter((q) => !isNoticeQ(q)).length, totalWordCount)
+    : passedCount;
 
   const currentPlugin = getQuestionType(testQuestions[progressIndex]?.questionType);
 

@@ -62,10 +62,12 @@ class SelectionContext:
     now:           dt.datetime = field(default_factory=dt.datetime.utcnow)
     used_hashes:   set = field(default_factory=set)       # 이번 응답에서 이미 선택된 hash
     rng:           Optional[random.Random] = None
+    # 새 씨앗 심기(mode=plant) 전용 — 쉬운 예문(짧고 수준 1, 희귀어 적음)을 우선 고른다.
+    easy:          bool = False
 
 
 def build_selection_context(user_id, user_voca_ids, *, user_level_id=None, lang='en',
-                             now=None, rng=None) -> SelectionContext:
+                             now=None, rng=None, easy=False) -> SelectionContext:
     """pool.py의 배치 조회 두 개를 묶어 SelectionContext를 만드는 편의 함수.
 
     study.py 등 호출부는 세션 구성(compose) 직후, 실제로 뽑힌 user_voca_id들만으로
@@ -81,6 +83,7 @@ def build_selection_context(user_id, user_voca_ids, *, user_level_id=None, lang=
         user_level_id=user_level_id,
         now=now or dt.datetime.utcnow(),
         rng=rng,
+        easy=easy,
     )
 
 
@@ -145,6 +148,54 @@ def _score(ex: dict, item, question_type: str, ctx: SelectionContext, target_lev
     return score
 
 
+# ── plant(쉬운 예문 우선) ───────────────────────────────────────────────
+# 난이도 = 단어 수 + 3*희귀어 수 + 5*(level-1). 낮을수록 쉽다. 아래 상한 이하가 '쉬운 후보군'이고,
+# 한 후보도 없으면 가장 쉬운 몇 개로 완화한다. 후보군 안에서는 점수 근사치(_EASY_JITTER) 이내를
+# 전부 같은 후보로 보고 무작위로 뽑아 매번 같은 문장으로 고정되지 않게 한다.
+_EASY_MAX_WORDS_TEXT = 9      # 빈칸/빈칸 입력
+_EASY_MAX_WORDS_ARRANGE = 8   # 조각 조립(조각 수) — build_arrange_payload full 모드가 통째로 내는 상한과 같다
+_EASY_MAX_RARE = 1
+_EASY_JITTER = 3.0
+_EASY_FALLBACK_K = 3
+
+
+def _word_count(ex: dict, question_type: str) -> int:
+    if question_type in _ARRANGE_TYPES:
+        toks = (ex.get('puzzle') or {}).get('tokens') or []
+        if toks:
+            return len(toks)
+    meta = ex.get('meta') or {}
+    if meta.get('word_count'):
+        return int(meta['word_count'])
+    from app.services.sentence_puzzle import normalize_sentence_text
+    return len(normalize_sentence_text(ex.get('origin')).split())
+
+
+def _difficulty(ex: dict, question_type: str) -> float:
+    meta = ex.get('meta') or {}
+    level = meta.get('level') or 1
+    rare = meta.get('rare_count') or 0
+    return _word_count(ex, question_type) + 3 * rare + 5 * (level - 1)
+
+
+def _is_easy(ex: dict, question_type: str) -> bool:
+    meta = ex.get('meta') or {}
+    limit = _EASY_MAX_WORDS_ARRANGE if question_type in _ARRANGE_TYPES else _EASY_MAX_WORDS_TEXT
+    if _word_count(ex, question_type) > limit:
+        return False
+    if (meta.get('rare_count') or 0) > _EASY_MAX_RARE:
+        return False
+    return (meta.get('level') or 1) <= 1
+
+
+def _easy_subset(candidates: list, question_type: str) -> list:
+    easy = [ex for ex in candidates if _is_easy(ex, question_type)]
+    if easy:
+        return easy
+    ranked = sorted(candidates, key=lambda ex: _difficulty(ex, question_type))
+    return ranked[:_EASY_FALLBACK_K]
+
+
 def choose_example(item, question_type: str, ctx: SelectionContext) -> Optional[dict]:
     """item.example_pool에서 question_type에 맞는 예문 하나를 고른다.
 
@@ -158,10 +209,15 @@ def choose_example(item, question_type: str, ctx: SelectionContext) -> Optional[
     if not candidates:
         return None
 
-    target_level = _target_level_for_item(item, ctx.user_level_id)
+    if ctx.easy:
+        candidates = _easy_subset(candidates, question_type)
+        target_level = 1
+    else:
+        target_level = _target_level_for_item(item, ctx.user_level_id)
     scored = [(_score(ex, item, question_type, ctx, target_level), ex) for ex in candidates]
     min_score = min(s for s, _ in scored)
-    best = [ex for s, ex in scored if abs(s - min_score) < 1e-9]
+    tol = _EASY_JITTER if ctx.easy else 1e-9
+    best = [ex for s, ex in scored if s - min_score < tol]
 
     rng = ctx.rng or random
     chosen = rng.choice(best)

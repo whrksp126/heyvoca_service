@@ -93,11 +93,31 @@ def _build_sentence_question_payload(item, qtype: str, ctx=None) -> dict:
         return {}
     payload = build_arrange_payload(
         ex['puzzle'], mode=mode, example_origin=ex['origin'], example_meaning=ex['meaning'],
+        easy=bool(getattr(ctx, 'easy', False)),
     )
     return {'arrange': payload, 'example_hash': ex['hash']} if payload else {}
 
 
-def _build_selection_ctx(user_id, items, lang: str):
+_ARRANGE_TYPES = ('sentenceArrangePartial', 'sentenceArrange', 'listenArrange')
+
+
+def _ensure_min_arrange(enriched_items: list, minimum: int) -> None:
+    """조립형이 minimum 개 미만이면 puzzle 이 usable 한 다른 단어를 sentenceArrange 로 전환(제자리 수정)."""
+    import random
+    from app.services.recommend.composer import _item_can_use_question_type
+    have = sum(1 for e in enriched_items if e.get('suggested_question_type') in _ARRANGE_TYPES)
+    need = minimum - have
+    if need <= 0:
+        return
+    cands = [e for e in enriched_items
+             if e.get('suggested_question_type') not in _ARRANGE_TYPES
+             and _item_can_use_question_type(e['_item'], 'sentenceArrange')]
+    random.shuffle(cands)
+    for e in cands[:need]:
+        e['suggested_question_type'] = 'sentenceArrange'
+
+
+def _build_selection_ctx(user_id, items, lang: str, easy: bool = False):
     """items(en) 대상 "매번 새 문장" SelectionContext 빌드. ja면 None(ctx 자체를 안 씀).
 
     호출부(recommend/requeue-easier)가 실제로 응답에 실을 item들만 넘겨야 한다 —
@@ -108,7 +128,7 @@ def _build_selection_ctx(user_id, items, lang: str):
     from app.services.example_select import build_selection_context
     user_level_id = db.session.query(User.level_id).filter(User.id == user_id).scalar()
     voca_ids = [it.user_voca_id for it in items]
-    return build_selection_context(user_id, voca_ids, user_level_id=user_level_id, lang='en')
+    return build_selection_context(user_id, voca_ids, user_level_id=user_level_id, lang='en', easy=easy)
 
 
 def _serialize_recommend_item(item, *, suggested_question_type, tier_target, tier_shown,
@@ -1214,6 +1234,14 @@ def get_recommend():
     composition:    dict = result['composition']
     enriched_items: list = result['enriched_items']
 
+    # ── 일반 학습: 문장 만들기(조립형) 최소 3문제 보장 ──
+    # 프론트(TakeTest.composeSentencePhase)는 서버가 조립형을 배정한 문제만 맨 끝 '문장 만들기'
+    # 구간(3문제)으로 모으고, 조립 payload 는 서버만 만들 수 있다. 자동 추천이 우연히 3개
+    # 미만으로 배정하면 구간이 안 채워지므로, 조각 데이터가 있는 단어를 골라 조립형으로 바꿔
+    # question_payload 를 싣는다(응답 크기 보호: 최대 3개). 유형을 직접 고른 요청·plant 제외.
+    if mode != 'plant' and not allowed_types:
+        _ensure_min_arrange(enriched_items, 3)
+
     # ── UserStudySession INSERT ──
     book_ids_for_session = [str(b) for b in book_ids] if book_ids else ['all']
     session_obj = UserStudySession(
@@ -1239,7 +1267,7 @@ def get_recommend():
     # "매번 새 문장"(2026-09-30) 선택 컨텍스트 — 이번 응답에 실제로 나갈 단어들만으로
     # 한 번 빌드해 모든 item·모든 문제 유형에서 공유한다(used_hashes가 응답 전체에서
     # 누적돼야 plant의 여러 유형이 서로 다른 문장을 고른다). en 전용.
-    ctx = _build_selection_ctx(user_id, [e['_item'] for e in enriched_items], lang)
+    ctx = _build_selection_ctx(user_id, [e['_item'] for e in enriched_items], lang, easy=(mode == 'plant'))
     items_response = [
         _serialize_recommend_item(
             enriched['_item'],

@@ -9,7 +9,7 @@ from app.models.models import User, DailySentence, UserGoals, CheckIn, Goals, Go
 from app.utils.db_lock import begin_user_tx, require_user_tx, retry_on_deadlock
 from app.utils.gem import change_gem, start_user_tx
 from app.services.study_day import logical_today
-from app.services.daily_progress import get_today_new_done, get_review_due
+from app.services.daily_progress import get_today_new_done, get_review_due, get_card_review_remaining
 from datetime import datetime, timedelta, date
 import calendar
 from sqlalchemy import func, and_
@@ -416,7 +416,7 @@ def api_user_study_history():
       오늘(logical day) 첫 학습이면 attend_newly=True → 출석왕 진행 + 보석 +1.
 
     데일리 미션 완료(daily_mission_complete):
-      오늘 신규 목표(daily_new_limit) 달성 AND 복습 잔여(review_due) == 0
+      오늘 신규 목표(daily_new_limit) 달성 AND 홈 카드 복습 줄(시듦·돌봄) 남은 것 == 0
       → mission_newly=True 이면 끈기왕 판정 + 보석 +1.
 
     암기왕: 이 엔드포인트에서는 더 이상 트리거하지 않음 (콤보 기준으로 전환, combo.py 처리).
@@ -515,7 +515,10 @@ def api_user_study_history():
         review_met = True
     else:
         new_met = (new_done >= daily_new_limit) if daily_new_limit > 0 else (new_done > 0)
-        review_met = (review_due == 0)
+        # 복습 충족은 홈 '오늘 할 일' 카드(시듦·돌봄 줄)와 같은 정의로 본다. 예전에는 추천 풀의
+        # overdue/today(4시 컷오프·글자밭/부패 혼재)를 써서, 카드는 전부 끝났는데 미션만
+        # 미완료로 남아 1주 불꽃 달력 '오늘'이 진한 칸이 되지 않았다.
+        review_met = (get_card_review_remaining(user_id) == 0)
     mission_met = new_met and review_met
 
     # 이번 세션에 처음으로 미션을 달성한 경우만 처리

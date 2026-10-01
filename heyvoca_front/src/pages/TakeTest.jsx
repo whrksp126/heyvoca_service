@@ -3,7 +3,7 @@ import Main from '../components/takeTest/Main';
 import Header from '../components/takeTest/Header';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useVocabulary } from '../context/VocabularyContext';
-import { getQuestionType, isFillInTheBlankType, isSingleWordPluginType, isSentenceQuestionType, isNoGradeQuestionType } from '../plugins/questionTypes';
+import { getQuestionType, isFillInTheBlankType, isSingleWordPluginType, isSentenceQuestionType, isNoGradeQuestionType, isArrangeQuestionType, PHASE_NOTICE_TYPE } from '../plugins/questionTypes';
 import { mapRecommendItemToWord } from '../utils/studyRecommendMapping';
 import { buildScriptTestQuestions } from '../utils/scriptQuestions';
 import { isListeningSkipActive, mapSkippedQuestionType } from '../utils/listeningSkip';
@@ -369,18 +369,19 @@ const TakeTest = () => {
   };
 
   // ─── plant(새 씨앗 심기) 전용 문제 구성 ───────────────────────────────────────
-  // 새 단어 학습은 **단어 단위**로 진행된다(2026-09-29 실기기 피드백 반영). 한 단어를
-  // ① 만나기(wordIntro, 채점 없음) → ② 영→한 사지선다 → ③ 한→영 사지선다 → ④ 빈칸 채우기
-  // → ⑤ 빈칸 입력 → ⑥ 문장 만들기 순으로 끝까지 진행한 뒤에야 다음 단어로 넘어간다
-  // (예전엔 유형별 블록으로 5단어를 번갈아 냈는데, 실기기 사용자가 "이 방식이 아니라 한
-  // 단어를 끝까지"라고 명시적으로 요청했다). 단어 순서는 한 번만 섞고, 그 순서 그대로
-  // 각 단어의 6단계를 이어 붙인다. 그 단어가 그 유형을 만들 수 없으면(예문 없음, 서버가
-  // 이 단어에 그 유형의 payload를 안 실어줌 등 — 플러그인 setupQuestions의 기존 판단
-  // 그대로) mcq로 대체하지 않고 그 단계만 건너뛴다.
-  // 사지선다 오답 선택지는 buildTestQuestions.createMultipleChoiceQuestion과 같은 규칙
-  // (뜻이 겹치는 단어는 배제)이지만, 저 함수는 buildTestQuestions 내부 클로저라 재사용할 수
-  // 없어 여기 따로 둔다.
-  const PLANT_STEP_TYPES = ['multipleChoice', 'reverseMultipleChoice', 'fillInTheBlank', 'fillInTheBlankTyping', 'sentenceArrange'];
+  // 2026-10-02 QA — 매 단어가 같은 6단계(만나기→영한→한영→빈칸채우기→빈칸입력→문장만들기)로
+  // 반복돼 "새로 배우는 느낌"이 없었다. 지금은 가볍고 덜 반복적으로:
+  //   · 단어 순서는 한 번 섞고, 단어마다 ① 만나기(wordIntro, 채점 없음) 뒤에 영→한/한→영/
+  //     빈칸 채우기/빈칸 입력 중 **임의 순서·임의 2~3개**만 낸다(그 단어가 못 만드는 유형 —
+  //     예문·서버 payload 없음 — 은 후보에서 빠지고, 사지선다 2종은 항상 가능하다).
+  //   · 문장 만들기는 단어별로 끼우지 않는다. 모든 단어가 끝난 맨 뒤에 안내 슬라이드
+  //     ("실전 문장으로 학습해봐요") + 2~3문제만 낸다(서버가 sentenceArrange payload를 실어 준 단어
+  //     중 무작위). 서버 payload는 단어당 1개(후보 목록 아님)라 쉬운 예문 정렬은 서버 몫이다.
+  //   · 오답 재학습은 단어 블록 안이 아니라 맨 끝(Main.jsx enqueueRetry)에서 "틀린 문제를
+  //     복습해봐요" 안내와 함께 나온다.
+  // 사지선다 오답 선택지는 buildTestQuestions.createMultipleChoiceQuestion과 같은 규칙(뜻이 겹치는
+  // 단어는 배제)이지만, 저 함수는 buildTestQuestions 내부 클로저라 재사용할 수 없어 여기 따로 둔다.
+  const PLANT_PICK_TYPES = ['multipleChoice', 'reverseMultipleChoice', 'fillInTheBlank', 'fillInTheBlankTyping'];
 
   const buildPlantMcq = (word, allWords, questionType) => {
     const wordKey = (w) => w.id ?? w.vocaIndexId;
@@ -394,7 +395,7 @@ const TakeTest = () => {
       randomOptions = [...randomOptions, ...fillers];
     }
     const options = shuffleArray([word, ...randomOptions]);
-    const resultIndex = options.findIndex(w => wordKey(w) === wordKey(word));
+    const resultIndex = options.findIndex(o => wordKey(o) === wordKey(word));
     return { ...word, options, resultIndex, questionType, isCorrect: null, userResultIndex: null };
   };
 
@@ -407,30 +408,75 @@ const TakeTest = () => {
     userResultIndex: null,
   });
 
+  // 구간 안내 슬라이드(채점 없음) — kind: 'sentence' | 'retry'. id는 null — 단어 id를 쓰는
+  // 곳(풀 수집·고유 단어 집계·복습 예측·결과 목록)이 이 슬라이드를 단어로 오인하지 않게 한다.
+  const buildPhaseNotice = (kind) => ({
+    id: null,
+    vocaIndexId: null,
+    questionType: PHASE_NOTICE_TYPE,
+    kind,
+    isCorrect: null,
+    userResultIndex: null,
+  });
+
+  // 한 단어의 한 유형 문제 — 만들 수 없으면(예문/서버 payload 없음) null.
+  const buildPlantStepQuestion = (word, allWords, type) => {
+    if (type === 'multipleChoice' || type === 'reverseMultipleChoice') {
+      return buildPlantMcq(word, allWords, type);
+    }
+    const plugin = getQuestionType(type);
+    if (!plugin?.setupQuestions) return null;
+    // 서버 payload 기반 유형은 suggested 유형과 같을 때만 만들어지므로, plant 응답의
+    // 유형별 payload(questionPayloads)로 그 단계용 단어를 만들어 넘긴다.
+    const payload = word.questionPayloads?.[type];
+    const stepWord = payload && Object.keys(payload).length > 0
+      ? { ...word, suggestedQuestionType: type, questionPayload: payload }
+      : word;
+    const generated = plugin.setupQuestions([stepWord], allWords);
+    return generated.length > 0 ? generated[0] : null;
+  };
+
   const buildPlantTestQuestions = (selectedWords, allWords) => {
     const out = [];
-    const order = shuffleArray(selectedWords); // 단어 순서는 한 번만 섞는다 — 블록 내부는 이 순서를 유지.
+    const order = shuffleArray(selectedWords); // 단어 순서는 한 번만 섞는다
     for (const word of order) {
       out.push(buildPlantIntroQuestion(word));
-      for (const type of PLANT_STEP_TYPES) {
-        if (type === 'multipleChoice' || type === 'reverseMultipleChoice') {
-          out.push(buildPlantMcq(word, allWords, type));
-          continue;
-        }
-        const plugin = getQuestionType(type);
-        if (!plugin?.setupQuestions) continue;
-        // 서버 payload 기반 유형은 suggested 유형과 같을 때만 만들어지므로, plant 응답의
-        // 유형별 payload(questionPayloads)로 그 단계용 단어를 만들어 넘긴다.
-        const payload = word.questionPayloads?.[type];
-        const stepWord = payload && Object.keys(payload).length > 0
-          ? { ...word, suggestedQuestionType: type, questionPayload: payload }
-          : word;
-        const generated = plugin.setupQuestions([stepWord], allWords);
-        if (generated.length > 0) out.push(generated[0]);
-        // 못 만들면(예문/서버 payload 없음) 그 단계만 건너뛴다 — mcq 대체 없음.
-      }
+      const candidates = PLANT_PICK_TYPES
+        .map((type) => buildPlantStepQuestion(word, allWords, type))
+        .filter(Boolean);
+      const take = Math.min(candidates.length, 2 + Math.floor(Math.random() * 2)); // 2~3개
+      out.push(...shuffleArray(candidates).slice(0, take));
+    }
+    // 문장 만들기 — 맨 끝 안내 + 2~3문제(서버 payload가 있는 단어만, 단어 순서 무작위)
+    const sentenceQs = shuffleArray(order)
+      .map((word) => buildPlantStepQuestion(word, allWords, 'sentenceArrange'))
+      .filter(Boolean);
+    const sentenceCount = Math.min(sentenceQs.length, 2 + Math.floor(Math.random() * 2));
+    if (sentenceCount > 0) {
+      out.push(buildPhaseNotice('sentence'), ...sentenceQs.slice(0, sentenceCount));
     }
     return out;
+  };
+
+  // ─── 일반 학습(AI 추천 등) — 문장 만들기 구간 구성 ─────────────────────────────
+  // 2026-10-02 QA — 순서: 일반 문제 전부 → 안내("실전 문장으로 학습해봐요") → 문장 만들기
+  // 3문제 고정 → (틀린 문제가 있으면 Main.jsx가 맨 끝에 "틀린 문제를 복습해봐요" 안내 + 재출제).
+  // 문장 만들기(조립형 3종) 문제는 서버 payload가 있는 단어에만 만들 수 있어(프론트가 조립하지
+  // 못한다), 서버가 그 유형을 배정해 준 문제를 앞에서 빼 맨 끝으로 모은다. 3개를 넘으면 무작위
+  // 3개만 남기고 나머지는 사지선다로 되돌린다. 3개에 못 미치면 있는 만큼만 낸다(0개면 구간 없음).
+  const SENTENCE_PHASE_COUNT = 3;
+  const composeSentencePhase = (questions, allWords) => {
+    const arrange = questions.filter((q) => isArrangeQuestionType(q.questionType));
+    if (arrange.length === 0) return questions;
+    const rest = questions.filter((q) => !isArrangeQuestionType(q.questionType));
+    const picked = shuffleArray(arrange);
+    const keep = picked.slice(0, SENTENCE_PHASE_COUNT);
+    const overflow = picked.slice(SENTENCE_PHASE_COUNT).map((q) => {
+      const word = { ...q };
+      ['arrange', 'questionType', 'isCorrect', 'userResultIndex', 'options', 'resultIndex'].forEach((k) => { delete word[k]; });
+      return buildPlantMcq(word, allWords, 'multipleChoice');
+    });
+    return [...shuffleArray([...rest, ...overflow]), buildPhaseNotice('sentence'), ...keep];
   };
 
   // ─── setupTestQuestions ─────────────────────────────────────────────────────
@@ -563,7 +609,12 @@ const TakeTest = () => {
       allWords = selectedWords;
     }
 
-    const testQuestions = buildTestQuestions(selectedWords, allWords, vocabularySheetId);
+    let testQuestions = buildTestQuestions(selectedWords, allWords, vocabularySheetId);
+    // AI 추천(유형을 직접 고르지 않은) 학습만 문장 만들기를 맨 끝 구간으로 모은다 —
+    // 설정 시트로 유형을 직접 고른 테스트는 사용자가 고른 구성을 그대로 둔다.
+    if (isRecommendedMode) {
+      testQuestions = composeSentencePhase(testQuestions, allWords);
+    }
 
     return { testQuestions, sessionId, composition, compositionStrategy };
   };
