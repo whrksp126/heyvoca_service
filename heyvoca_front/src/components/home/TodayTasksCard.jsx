@@ -261,20 +261,10 @@ const TodayTasksCard = () => {
     startPlantSession({ count: Math.min(5, remaining) });
   };
 
-  // 시듦·돌봄 — 백엔드 /study/recommend?task_bucket=wilted|care 로 그 행 단어만 좁힌다
-  // (/farm/today-tasks 와 같은 공유 판정 헬퍼(get_task_bucket_ids)를 쓰므로 이 카드가 세는
-  // 개수와 실제로 나오는 문제 대상이 일치한다). '이어서 하기' 재개 확인은 useQuickReview가
-  // 그대로 맡는다.
-  const studyWilted = () => {
-    const remaining = Math.max(0, (wilted.total ?? 0) - (wilted.done ?? 0));
-    if (remaining <= 0) return;
-    startQuickReview({ taskBucket: 'wilted', count: remaining });
-  };
-
+  // 농장 돌보기 — 시듦·오늘 돌봄을 우선 복습한다(서버 추천이 같은 판정 헬퍼로 우선 배정하고,
+  // 끝낸 만큼 위 줄의 x/y 가 자동으로 채워진다). '이어서 하기' 재개 확인은 useQuickReview 몫.
   const studyCare = () => {
-    const remaining = Math.max(0, (care.total ?? 0) - (care.done ?? 0));
-    if (remaining <= 0) return;
-    startQuickReview({ taskBucket: 'care', count: remaining });
+    startQuickReview();
   };
 
   const goStore = () => {
@@ -295,7 +285,6 @@ const TodayTasksCard = () => {
       expand: expandedBlock,
       checked: false,
       right: <Pill tone="primary" onClick={handleRecover} disabled={recovering}>살리기</Pill>,
-      onRowClick: openRottenSheet,
     });
   }
 
@@ -311,7 +300,6 @@ const TodayTasksCard = () => {
       faded: done,
       checked: done,
       right: <Progress done={wilted.done} total={wilted.total} />,
-      onRowClick: done ? undefined : studyWilted,
     });
   }
 
@@ -326,7 +314,6 @@ const TodayTasksCard = () => {
       faded: done,
       checked: done,
       right: <Progress done={care.done} total={care.total} />,
-      onRowClick: done ? undefined : studyCare,
     });
   }
 
@@ -345,7 +332,6 @@ const TodayTasksCard = () => {
       // 걸 우측에서도 바로 보여준다(살리기 Pill과 같은 규격). 달성 시엔 기존처럼 x/y.
       // 우측은 진행 x/y 만 — 심기 버튼은 목록 아래 큰 버튼(아래 plantButton)이 맡는다(2026-09-29 QA).
       right: <Progress done={newSeed.done} total={newSeed.target} />,
-      onRowClick: studyPlant,
     };
   })() : null;
 
@@ -380,6 +366,26 @@ const TodayTasksCard = () => {
           <Row key={row.key} {...row} last={idx === rowDefs.length - 1} />
         ))}
       </div>
+      {/* 농장 돌보기 — 시듦·돌봄 줄이 있을 때만. 줄은 정보만 보여주고 학습은 이 버튼과 아래
+          '새 씨앗 심기' 두 개로만 시작한다(2026-10-02). */}
+      {(wilted.total > 0 || care.total > 0) && (
+        <motion.button
+          type="button"
+          onClick={studyCare}
+          whileTap={{ scale: TAP.scale }}
+          transition={SPRING.snappy}
+          onTapStart={() => haptic('light')}
+          className="
+            flex items-center justify-center
+            w-full h-[52px] mt-[6px] mb-[6px] rounded-[12px]
+            bg-primary-main-100 dark:bg-primary-main-dark
+          "
+        >
+          <span className="text-primary-main-600 text-[16px] font-[700] leading-[1.2] tracking-[-0.02em]">
+            농장 돌보기
+          </span>
+        </motion.button>
+      )}
       {/* 새 씨앗 심기 — 목록 아래 넓은 버튼. 홈 주 CTA(FarmCta)와 같은 면·글자 규격이되,
           카드 안이라 바깥 그림자는 쓰지 않는다. 목표를 채운 뒤에도 더 심을 수 있다. */}
       {newSeedRow && !noSeedsToPlant && (

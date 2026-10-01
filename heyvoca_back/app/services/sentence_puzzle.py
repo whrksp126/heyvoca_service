@@ -163,7 +163,7 @@ def build_arrange_payload(
     mode: str,          # 'partial' | 'full' | 'listen'
     example_origin: str = '',
     example_meaning: str = '',
-    easy: bool = False,   # plant: 방해 조각 1~2개, partial 창 3~4
+    easy: bool = False,   # plant: 방해 조각 1~2개, partial 창 3~4(비-easy는 3~4 + 드물게 5)
 ) -> Optional[dict]:
     """sentenceArrangePartial(partial) / sentenceArrange(full) / listenArrange(listen)
     공통 조립 payload 빌더.
@@ -189,7 +189,14 @@ def build_arrange_payload(
     n = len(tokens)
 
     if mode == 'partial':
-        size = min(n, random.choice([3, 4] if easy else [3, 4, 5]))
+        # 빈칸(윈도우) 규칙: 핵심 단어(target)를 반드시 포함, 보통 3~4개, 드물게(약 10%) 최대 5개.
+        # easy(plant)는 3~4 고정. 문장이 3조각 미만이면 가능한 만큼(=n). 프론트 Partial은
+        # prefix/suffix 단일 문자열만 읽으므로 빈칸은 연속 창이어야 한다(비연속 미지원).
+        if easy:
+            size = random.choice([3, 4])
+        else:
+            size = random.choices([3, 4, 5], weights=[4, 4, 1])[0]
+        size = min(n, size)
         start, end = _select_window(tokens, target_idx, size)
         distractor_pool = puzzle.get('distractors') or []
         distractor_k = 1 if random.random() < 0.5 else 2

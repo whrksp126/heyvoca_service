@@ -263,12 +263,15 @@ class _ScriptSessionItem:
     __slots__ = (
         'user_voca_id', 'user_voca_book_id', 'voca_id', 'word', 'meanings',
         'concept_ids', 'meaning_concepts', 'examples', 'example_puzzles', 'fsrs_state',
+        'dict_lang',
     )
 
     def __init__(self, uv, book_id, fsrs_state):
         self.user_voca_id = uv.id
         self.user_voca_book_id = book_id
         self.voca_id = None
+        # study._build_sentence_question_payload 가 item.dict_lang 을 읽는다(없으면 AttributeError→500).
+        self.dict_lang = getattr(uv, 'dict_lang', None) or 'en'
         self.word = uv.word
         try:
             self.meanings = json.loads(uv.voca_meanings) if uv.voca_meanings else []

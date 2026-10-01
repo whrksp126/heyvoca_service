@@ -206,6 +206,10 @@ def choose_example(item, question_type: str, ctx: SelectionContext) -> Optional[
     """
     pool = item.example_pool or []
     candidates = [ex for ex in pool if _eligible(ex, question_type) and ex.get('hash') not in ctx.used_hashes]
+    if ctx.easy and question_type in _ARRANGE_TYPES:
+        # plant 문장 만들기: 신규 단어이므로 사용자 보유 단어장 복사본이 아니라 우리 사전의
+        # 쉬운 예문(+조각 데이터가 있는 것)만. 없으면 후보 없음 → payload 생략.
+        candidates = [ex for ex in candidates if ex.get('source') == 'dict']
     if not candidates:
         return None
 

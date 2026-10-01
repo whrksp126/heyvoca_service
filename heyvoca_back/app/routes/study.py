@@ -114,7 +114,15 @@ def _ensure_min_arrange(enriched_items: list, minimum: int) -> None:
              and _item_can_use_question_type(e['_item'], 'sentenceArrange')]
     random.shuffle(cands)
     for e in cands[:need]:
-        e['suggested_question_type'] = 'sentenceArrange'
+        e['suggested_question_type'] = 'sentenceArrangePartial'
+
+
+def _prefer_partial_arrange(enriched_items: list) -> None:
+    """문장 만들기는 전체 조립(sentenceArrange)보다 부분 빈칸(sentenceArrangePartial)을 우선한다(제자리 수정).
+    두 유형은 같은 puzzle 자격을 쓰므로 안전하게 치환 가능."""
+    for e in enriched_items:
+        if e.get('suggested_question_type') == 'sentenceArrange':
+            e['suggested_question_type'] = 'sentenceArrangePartial'
 
 
 def _build_selection_ctx(user_id, items, lang: str, easy: bool = False):
@@ -1239,6 +1247,8 @@ def get_recommend():
     # 구간(3문제)으로 모으고, 조립 payload 는 서버만 만들 수 있다. 자동 추천이 우연히 3개
     # 미만으로 배정하면 구간이 안 채워지므로, 조각 데이터가 있는 단어를 골라 조립형으로 바꿔
     # question_payload 를 싣는다(응답 크기 보호: 최대 3개). 유형을 직접 고른 요청·plant 제외.
+    if not allowed_types:
+        _prefer_partial_arrange(enriched_items)
     if mode != 'plant' and not allowed_types:
         _ensure_min_arrange(enriched_items, 3)
 
@@ -1268,6 +1278,16 @@ def get_recommend():
     # 한 번 빌드해 모든 item·모든 문제 유형에서 공유한다(used_hashes가 응답 전체에서
     # 누적돼야 plant의 여러 유형이 서로 다른 문장을 고른다). en 전용.
     ctx = _build_selection_ctx(user_id, [e['_item'] for e in enriched_items], lang, easy=(mode == 'plant'))
+    if mode == 'plant':
+        # plant 의 조립형은 사전 쉬운 예문+조각만 쓴다 — 없는 단어가 조립형으로 배정되면 payload 가
+        # 비므로 보편 유형(사지선다)으로 돌린다.
+        from app.services.sentence_puzzle import puzzle_usable as _puzzle_ok
+        for e in enriched_items:
+            if e.get('suggested_question_type') in _ARRANGE_TYPES and not any(
+                ex.get('source') == 'dict' and ex.get('puzzle') and _puzzle_ok(ex['puzzle'])
+                for ex in (e['_item'].example_pool or [])
+            ):
+                e['suggested_question_type'] = 'multipleChoice'
     items_response = [
         _serialize_recommend_item(
             enriched['_item'],
@@ -1285,10 +1305,18 @@ def get_recommend():
     # question_payload 로는 빈칸 입력·문장 만들기 단계가 대부분 비므로 세 유형 payload 를 모두 싣는다.
     if mode == 'plant':
         for resp, enriched in zip(items_response, enriched_items):
-            resp['question_payloads'] = {
+            qp = {
                 t: _build_sentence_question_payload(enriched['_item'], t, ctx)
-                for t in ('fillInTheBlank', 'fillInTheBlankTyping', 'sentenceArrange')
+                for t in ('fillInTheBlank', 'fillInTheBlankTyping')
             }
+            # 문장 만들기: Partial 우선, 사전 쉬운 예문+조각이 없으면 키 생략
+            # (다른 유형과 문장이 겹치지 않도록 ctx.used_hashes 공유)
+            for t in ('sentenceArrangePartial', 'sentenceArrange'):
+                arr = _build_sentence_question_payload(enriched['_item'], t, ctx)
+                if arr:
+                    qp[t] = arr
+                    break
+            resp['question_payloads'] = qp
 
     return jsonify({
         'code': 200,
@@ -1365,6 +1393,8 @@ def requeue_easier():
     ja_tokens = load_ja_example_tokens([item.voca_id]) if lang == 'ja' else {}
     ctx = _build_selection_ctx(user_id, [item], lang)
 
+    if chosen == 'sentenceArrange':
+        chosen = 'sentenceArrangePartial'  # 문장 만들기는 부분 빈칸 우선
     data = _serialize_recommend_item(
         item,
         suggested_question_type=chosen,

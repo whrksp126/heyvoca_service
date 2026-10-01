@@ -381,8 +381,7 @@ const TakeTest = () => {
   //     복습해봐요" 안내와 함께 나온다.
   // 사지선다 오답 선택지는 buildTestQuestions.createMultipleChoiceQuestion과 같은 규칙(뜻이 겹치는
   // 단어는 배제)이지만, 저 함수는 buildTestQuestions 내부 클로저라 재사용할 수 없어 여기 따로 둔다.
-  const PLANT_PICK_TYPES = ['multipleChoice', 'reverseMultipleChoice', 'fillInTheBlank', 'fillInTheBlankTyping'];
-
+  
   const buildPlantMcq = (word, allWords, questionType) => {
     const wordKey = (w) => w.id ?? w.vocaIndexId;
     const otherWords = (allWords ?? []).filter(w => wordKey(w) !== wordKey(word));
@@ -421,7 +420,7 @@ const TakeTest = () => {
 
   // 한 단어의 한 유형 문제 — 만들 수 없으면(예문/서버 payload 없음) null.
   const buildPlantStepQuestion = (word, allWords, type) => {
-    if (type === 'multipleChoice' || type === 'reverseMultipleChoice') {
+    if (type === 'multipleChoice' || type === 'reverseMultipleChoice' || type === 'multipleChoiceListening') {
       return buildPlantMcq(word, allWords, type);
     }
     const plugin = getQuestionType(type);
@@ -436,20 +435,67 @@ const TakeTest = () => {
     return generated.length > 0 ? generated[0] : null;
   };
 
+  // 2026-10-02 재구성 — 순서: ① 모든 단어의 만나기(wordIntro) 한 장씩 → ② 일반 학습 콘텐츠를
+  // 단어들에 무작위 배분(사지선다·듣기·역방향·빈칸 채우기·빈칸 입력·카드 맞추기·듣기 카드 맞추기,
+  // 단어당 2~3개) → ③ 안내 + 문장 만들기(서버 payload 있을 때만, 2~3문제) → ④ 오답 재학습(Main.jsx).
+  // 카드 맞추기류는 세트(2~4단어)가 필요하므로 그 칸에 배정된 단어들을 모아 플러그인 setupQuestions로
+  // 조립하고, 세트를 못 이루는 나머지 단어는 사지선다로 대체한다.
+  const PLANT_SINGLE_TYPES = ['multipleChoice', 'reverseMultipleChoice', 'multipleChoiceListening', 'fillInTheBlank', 'fillInTheBlankTyping'];
+  const PLANT_SET_TYPES = ['cardMatch', 'cardMatchListening'];
+  const PLANT_SENTENCE_TYPES = ['sentenceArrangePartial', 'sentenceArrange'];
+
   const buildPlantTestQuestions = (selectedWords, allWords) => {
-    const out = [];
+    const skipListening = isListeningSkipActive();
+    const resolve = (t) => (skipListening ? mapSkippedQuestionType(t) : t);
     const order = shuffleArray(selectedWords); // 단어 순서는 한 번만 섞는다
+    const out = order.map(buildPlantIntroQuestion);
+
+    const content = [];
+    const setBuckets = { cardMatch: [], cardMatchListening: [] };
     for (const word of order) {
-      out.push(buildPlantIntroQuestion(word));
-      const candidates = PLANT_PICK_TYPES
-        .map((type) => buildPlantStepQuestion(word, allWords, type))
-        .filter(Boolean);
-      const take = Math.min(candidates.length, 2 + Math.floor(Math.random() * 2)); // 2~3개
-      out.push(...shuffleArray(candidates).slice(0, take));
+      const singles = [];
+      for (const t of PLANT_SINGLE_TYPES) {
+        const type = resolve(t);
+        const q = buildPlantStepQuestion(word, allWords, type);
+        if (q) singles.push(q);
+      }
+      // 듣기 건너뛰기로 같은 유형이 겹치면 한 번만
+      const seen = new Set();
+      const uniqueSingles = singles.filter((q) => (seen.has(q.questionType) ? false : (seen.add(q.questionType), true)));
+      const slots = [
+        ...uniqueSingles.map((q) => ({ kind: 'single', q })),
+        ...PLANT_SET_TYPES.map((t) => resolve(t)).filter((t, i, arr) => arr.indexOf(t) === i)
+          .map((t) => ({ kind: 'set', type: t })),
+      ];
+      const take = Math.min(slots.length, 2 + Math.floor(Math.random() * 2)); // 2~3개
+      for (const slot of shuffleArray(slots).slice(0, take)) {
+        if (slot.kind === 'single') content.push(slot.q);
+        else setBuckets[slot.type]?.push(word);
+      }
     }
-    // 문장 만들기 — 맨 끝 안내 + 2~3문제(서버 payload가 있는 단어만, 단어 순서 무작위)
+    for (const type of PLANT_SET_TYPES) {
+      const words = setBuckets[type];
+      if (!words || words.length === 0) continue;
+      const plugin = getQuestionType(type);
+      const sets = words.length >= 2 && plugin?.setupQuestions ? plugin.setupQuestions(words, allWords) : [];
+      content.push(...sets);
+      // 세트에 들어가지 못한 단어는 사지선다로 대체
+      const used = new Set(sets.flatMap((st) => (st.words ?? []).map((w) => w.id ?? w.vocaIndexId)));
+      for (const w of words) {
+        if (!used.has(w.id ?? w.vocaIndexId)) content.push(buildPlantMcq(w, allWords, resolve('multipleChoice')));
+      }
+    }
+    out.push(...shuffleArray(content));
+
+    // 문장 만들기 — 안내 + 2~3문제(서버 payload가 있는 단어만, 부분 조립 우선·없으면 전체 조립)
     const sentenceQs = shuffleArray(order)
-      .map((word) => buildPlantStepQuestion(word, allWords, 'sentenceArrange'))
+      .map((word) => {
+        for (const t of PLANT_SENTENCE_TYPES) {
+          const q = buildPlantStepQuestion(word, allWords, t);
+          if (q) return q;
+        }
+        return null;
+      })
       .filter(Boolean);
     const sentenceCount = Math.min(sentenceQs.length, 2 + Math.floor(Math.random() * 2));
     if (sentenceCount > 0) {

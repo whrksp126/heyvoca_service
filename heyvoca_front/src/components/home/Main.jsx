@@ -102,7 +102,7 @@ const Main = () => {
 
   // 통계는 StatsContext(라우터 바깥 캐시)에서 구독 — 탭 전환마다 재조회/스피너 없이 캐시값을 즉시 사용,
   // 학습 세션 완료 시에만 조용히 갱신된다.
-  const { todaySummary, farmOverview, todayChanges, farmFeed, todayTasks, heroPlants, todayKey, refreshStats } = useStats();
+  const { todaySummary, farmOverview, todayChanges, farmFeed, heroPlants, todayKey, refreshStats } = useStats();
   const todayNewWords = todaySummary?.new_words ?? 0;
   const dailyNewLimit = userProfile?.daily_new_limit ?? 0;
 
@@ -155,32 +155,13 @@ const Main = () => {
     unlearned 단어가 없어 "출제 가능한 문제가 없어요"만 뜬다. 그 상태는 문구도 동작도
     서점으로 보내야 해서, 둘을 따로 계산하면 어긋날 위험이 있어 하나로 묶었다.
   */
-  const ctaInfo = useMemo(() => {
-    if (homeState === HOME_STATES.EMPTY) return { label: view.cta, kind: 'default' };
-    if (!todayTasks) {
-      // todayTasks(오늘 할 일)가 아직 로딩 전 — NEW_SEED(할 일 없고 신규 목표만 남음)일 땐
-      // view.cta 문구가 이미 "새 씨앗 심으러 가기"다. 그 문구로 복습(review)을 열면 심을
-      // 단어가 없으니 리뷰 대상도 없다 — 미리 심기로 보낸다(아래 todayTasks 로딩 후 분기와 같은 값).
-      if (homeState === HOME_STATES.NEW_SEED) {
-        return { label: view.cta, kind: 'study', mode: 'plant', count: 5 };
-      }
-      return { label: view.cta, kind: 'default' };
-    }
-    if ((todayTasks.rotten?.count ?? 0) > 0) return { label: view.cta, kind: 'default' };
-    const wiltedLeft = Math.max(0, (todayTasks.wilted?.total ?? 0) - (todayTasks.wilted?.done ?? 0));
-    if (wiltedLeft > 0) return { label: `썩기 전 ${wiltedLeft}개부터 시작`, kind: 'study' };
-    const careLeft = Math.max(0, (todayTasks.care?.total ?? 0) - (todayTasks.care?.done ?? 0));
-    if (careLeft > 0) return { label: `물 줄 단어 ${careLeft}개 돌보기`, kind: 'study' };
-    const seedLeft = Math.max(0, (todayTasks.new_seed?.target ?? 0) - (todayTasks.new_seed?.done ?? 0));
-    if (seedLeft > 0) {
-      const seedsLeft = todayTasks.seeds_left ?? 0;
-      if (seedsLeft <= 0) return { label: '서점에서 새 단어장 고르기', kind: 'store' };
-      // 새 단어는 2026-09-29부터 복습과 분리된 전용 세션(usePlantSession)이다 —
-      // mode:'plant'가 있으면 handleCtaClick이 startQuickReview 대신 그쪽을 연다.
-      return { label: `새 씨앗 ${seedLeft}개 심기`, kind: 'study', mode: 'plant', count: Math.min(5, seedLeft) };
-    }
-    return { label: view.cta, kind: 'default' };
-  }, [homeState, view.cta, todayTasks]);
+  // 2026-10-02 — 주 CTA 문구는 항상 '농장 돌보기'로 고정하고, 동작은 복습 전용이다
+  // (새 씨앗 심기는 오늘 할 일 카드의 '새 씨앗 심기' 버튼만 연다). 심을 밭이 아예 없는
+  // EMPTY 상태만 서점으로 보낸다.
+  const ctaInfo = useMemo(() => ({
+    label: '농장 돌보기',
+    kind: homeState === HOME_STATES.EMPTY ? 'store' : 'study',
+  }), [homeState]);
 
   const gemCnt = farmOverview?.gem_cnt ?? userProfile?.gem_cnt ?? 0;
 
@@ -351,10 +332,6 @@ const Main = () => {
     if (homeState === HOME_STATES.EMPTY || ctaInfo.kind === 'store') {
       vibrate({ duration: 5 });
       navigate('/book-store');
-      return;
-    }
-    if (ctaInfo.mode === 'plant') {
-      startPlantSession({ count: ctaInfo.count });
       return;
     }
     // 학습 진입의 햅틱은 startQuickReview 가 준다 — 여기서 또 주면 두 번 울린다
