@@ -122,7 +122,7 @@ def _demote_arrange_to_general(enriched_items: list) -> list:
         elif (e.get('tier_shown') or 0) >= 4:
             prefs = ('fillInTheBlankTyping', 'fillInTheBlank')
         else:
-            # 티어3 조립형 → 빈칸 채우기/빈칸 입력 반반(입력형이 tier5 에서만 나와 거의 안 보이던 문제 보완)
+            # 티어3 조립형 → 빈칸 채우기/빈칸 입력 반반(입력형이 고난도 tier 에만 나와 거의 안 보이던 문제 보완)
             prefs = (('fillInTheBlank', 'fillInTheBlankTyping') if random.random() < 0.5
                      else ('fillInTheBlankTyping', 'fillInTheBlank'))
         e['suggested_question_type'] = next((q for q in prefs if can(item, q)), 'multipleChoice')

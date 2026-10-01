@@ -16,7 +16,8 @@ question_type 상수 — 백엔드 여러 곳(추천 composer, /study/log 화이
   - sentenceArrangePartial : 한글 해석 보고 목표 단어 주변 3~5조각만 조립(난이도 3)
   - sentenceArrange        : 한글 해석 보고 문장 전체(또는 뒷부분 최대 7조각) 조립(난이도 4)
   - listenArrange          : 영어 음성 듣고 조립, 원문 어순만 정답(난이도 4)
-  - fillInTheBlankTyping   : 빈칸 채우기와 같은 예문, 타이핑으로 정답 입력(난이도 5)
+  - fillInTheBlankTyping   : 빈칸 채우기와 같은 예문, 타이핑으로 정답 입력(난이도 4~5 — tier 4 에서
+                             sentenceArrange/listenArrange 와 균등 혼합(약 1/3), tier 5 에서는 단독)
   이 4종은 사전 테이블 voca_example_puzzle(dict) 데이터가 있는 단어에서만 출제 가능하다
   (app/services/recommend/composer.py::_item_can_use_question_type).
 """
@@ -47,15 +48,17 @@ QUESTION_TYPE_TIER = {
     'sentenceArrangePartial':  3,
     'sentenceArrange':         4,
     'listenArrange':           4,
-    'fillInTheBlankTyping':    5,
+    'fillInTheBlankTyping':    4,   # 대표 tier. tier 5 에도 노출(TIER_QUESTION_TYPES[5] 참고)
 }
 
-# tier → 그 tier에 속한 유형 목록 (QUESTION_TYPE_TIER의 역인덱스, 순서 고정).
+# tier → 그 tier에서 출제 가능한 유형 목록(순서 고정). QUESTION_TYPE_TIER의 역인덱스 + 예외 1건:
+# fillInTheBlankTyping 은 대표 tier 4 이면서 tier 5 에도 들어간다(2026-10 tier 4 부터 노출).
+# tier 4 는 같은 tier 안 균등 무작위라 typing 비중 약 1/3(puzzle 없는 단어는 typing 만 후보).
 TIER_QUESTION_TYPES = {
     1: ('multipleChoice', 'cardMatch'),
     2: ('reverseMultipleChoice', 'multipleChoiceListening', 'cardMatchListening'),
     3: ('fillInTheBlank', 'sentenceArrangePartial'),
-    4: ('sentenceArrange', 'listenArrange'),
+    4: ('sentenceArrange', 'listenArrange', 'fillInTheBlankTyping'),
     5: ('fillInTheBlankTyping',),
 }
 

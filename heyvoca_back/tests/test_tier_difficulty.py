@@ -56,6 +56,10 @@ TAGGED_EXAMPLE = {
 # ──────────────────────────────────────────────
 
 class TestTierConstants:
+    def test_typing_in_tier4_and_tier5(self):
+        assert 'fillInTheBlankTyping' in TIER_QUESTION_TYPES[4]
+        assert 'fillInTheBlankTyping' in TIER_QUESTION_TYPES[5]
+
     def test_every_recommendable_type_has_a_tier(self):
         for qt in RECOMMENDABLE_QUESTION_TYPES:
             assert qt in QUESTION_TYPE_TIER, f'{qt}에 tier가 없음'
@@ -65,7 +69,11 @@ class TestTierConstants:
         for qt, tier in QUESTION_TYPE_TIER.items():
             rebuilt.setdefault(tier, []).append(qt)
         for tier, types in TIER_QUESTION_TYPES.items():
-            assert set(types) == set(rebuilt.get(tier, [])), f'tier {tier} 불일치'
+            # fillInTheBlankTyping 은 대표 tier(4) 외에 tier 5 에도 노출되는 유일한 예외
+            expected = set(rebuilt.get(tier, []))
+            if tier == 5:
+                expected.add('fillInTheBlankTyping')
+            assert set(types) == expected, f'tier {tier} 불일치'
 
     def test_crop_stage_max_tier_covers_all_stages(self):
         from app.services.recommend.stage import CROP_STAGES

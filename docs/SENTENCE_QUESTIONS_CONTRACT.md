@@ -18,7 +18,7 @@
 | `sentenceArrangePartial` | 3 | 한글 해석을 보고 목표 단어 주변 3~5조각만 조립(앞뒤는 고정 텍스트) |
 | `sentenceArrange` | 4 | 한글 해석을 보고 문장 전체(8조각 이하) 또는 목표 단어 중심 최대 7조각을 조립 |
 | `listenArrange` | 4 | 영어 음성을 듣고 조립. **원문 어순만 정답**(대체 어순 불허) |
-| `fillInTheBlankTyping` | 5 | 기존 `fillInTheBlank`와 같은 예문, 사지선다 대신 타이핑으로 정답 입력 |
+| `fillInTheBlankTyping` | 4~5 | 기존 `fillInTheBlank`와 같은 예문, 사지선다 대신 타이핑으로 정답 입력 |
 
 이 4종은 **puzzle 데이터가 있는 단어에서만 출제된다.** 데이터가 없으면 추천 알고리즘이
 자동으로 더 낮은 tier의 다른 유형으로 대체한다(3절 참고) — 프론트가 이 사실을 신경 쓸
@@ -160,8 +160,8 @@ POST /study/log
 | 1 | `multipleChoice`, `cardMatch` |
 | 2 | `reverseMultipleChoice`, `multipleChoiceListening`, `cardMatchListening` |
 | 3 | `fillInTheBlank`, `sentenceArrangePartial` |
-| 4 | `sentenceArrange`, `listenArrange` |
-| 5 | `fillInTheBlankTyping` |
+| 4 | `sentenceArrange`, `listenArrange`, `fillInTheBlankTyping` (균등 혼합, typing 약 1/3) |
+| 5 | `fillInTheBlankTyping` (단독) |
 
 **작물 단계가 여는 최고 tier** (`CROP_STAGE_MAX_TIER`): unlearned=1, seed=2, sprout=3,
 leaf=4, carrot=5.
