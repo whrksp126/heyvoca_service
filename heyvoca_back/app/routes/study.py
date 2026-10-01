@@ -101,20 +101,64 @@ def _build_sentence_question_payload(item, qtype: str, ctx=None) -> dict:
 _ARRANGE_TYPES = ('sentenceArrangePartial', 'sentenceArrange', 'listenArrange')
 
 
-def _ensure_min_arrange(enriched_items: list, minimum: int) -> None:
-    """조립형이 minimum 개 미만이면 puzzle 이 usable 한 다른 단어를 sentenceArrange 로 전환(제자리 수정)."""
+def _demote_arrange_to_general(enriched_items: list) -> list:
+    """일반 모드: 조립형 suggested 를 비조립형 일반 유형으로 바꾼다(제자리 수정).
+
+    모든 단어가 먼저 일반 콘텐츠를 풀고, 문장 만들기는 별도 필드(sentence_arrange)로 추가된다.
+    반환: 원래 조립형이던 enriched 목록(sentence_arrange 우선 선정 대상, 원래 유형을 '_was_arrange' 에 기록).
+    대체: listenArrange→multipleChoiceListening, 그 외(티어 3/4 조립형)→
+    fillInTheBlankTyping(티어4 이상) / fillInTheBlank → 모두 못 쓰면 multipleChoice.
+    """
     import random
-    from app.services.recommend.composer import _item_can_use_question_type
-    have = sum(1 for e in enriched_items if e.get('suggested_question_type') in _ARRANGE_TYPES)
-    need = minimum - have
-    if need <= 0:
-        return
-    cands = [e for e in enriched_items
-             if e.get('suggested_question_type') not in _ARRANGE_TYPES
-             and _item_can_use_question_type(e['_item'], 'sentenceArrange')]
-    random.shuffle(cands)
-    for e in cands[:need]:
-        e['suggested_question_type'] = 'sentenceArrangePartial'
+    from app.services.recommend.composer import _item_can_use_question_type as can
+    former = []
+    for e in enriched_items:
+        t = e.get('suggested_question_type')
+        if t not in _ARRANGE_TYPES:
+            continue
+        item = e['_item']
+        if t == 'listenArrange':
+            prefs = ('multipleChoiceListening', 'fillInTheBlank')
+        elif (e.get('tier_shown') or 0) >= 4:
+            prefs = ('fillInTheBlankTyping', 'fillInTheBlank')
+        else:
+            # 티어3 조립형 → 빈칸 채우기/빈칸 입력 반반(입력형이 tier5 에서만 나와 거의 안 보이던 문제 보완)
+            prefs = (('fillInTheBlank', 'fillInTheBlankTyping') if random.random() < 0.5
+                     else ('fillInTheBlankTyping', 'fillInTheBlank'))
+        e['suggested_question_type'] = next((q for q in prefs if can(item, q)), 'multipleChoice')
+        e['_was_arrange'] = t
+        former.append(e)
+    return former
+
+
+def _select_sentence_arrange(enriched_items: list, former: list, ctx, minimum: int = 3, maximum: int = 4) -> dict:
+    """문장 만들기를 붙일 단어 선정 + payload 생성. 반환: {user_voca_id: {question_type, question_payload}}.
+
+    예전에 조립형으로 배정되던 단어(former) 우선, 부족하면 조각이 usable 한 단어를 무작위로 채워
+    최소 minimum 개를 보장(payload 가 실제로 만들어진 것만 센다). 최대 maximum 개.
+    """
+    import random
+    from app.services.recommend.composer import _item_can_use_question_type as can
+    if ctx is None:
+        return {}
+    former_ids = {id(e) for e in former}
+    first = [e for e in former if can(e['_item'], 'sentenceArrange')]
+    random.shuffle(first)
+    rest = [e for e in enriched_items if id(e) not in former_ids and can(e['_item'], 'sentenceArrange')]
+    random.shuffle(rest)
+    target = min(maximum, max(minimum, len(first)))
+    out = {}
+    for e in first + rest:
+        if len(out) >= target:
+            break
+        was = e.get('_was_arrange')
+        order = ('listenArrange',) if was == 'listenArrange' else ()
+        for t in order + ('sentenceArrangePartial', 'sentenceArrange'):
+            pl = _build_sentence_question_payload(e['_item'], t, ctx)
+            if pl:
+                out[e['_item'].user_voca_id] = {'question_type': t, 'question_payload': pl}
+                break
+    return out
 
 
 def _prefer_partial_arrange(enriched_items: list) -> None:
@@ -1242,15 +1286,13 @@ def get_recommend():
     composition:    dict = result['composition']
     enriched_items: list = result['enriched_items']
 
-    # ── 일반 학습: 문장 만들기(조립형) 최소 3문제 보장 ──
-    # 프론트(TakeTest.composeSentencePhase)는 서버가 조립형을 배정한 문제만 맨 끝 '문장 만들기'
-    # 구간(3문제)으로 모으고, 조립 payload 는 서버만 만들 수 있다. 자동 추천이 우연히 3개
-    # 미만으로 배정하면 구간이 안 채워지므로, 조각 데이터가 있는 단어를 골라 조립형으로 바꿔
-    # question_payload 를 싣는다(응답 크기 보호: 최대 3개). 유형을 직접 고른 요청·plant 제외.
-    if not allowed_types:
-        _prefer_partial_arrange(enriched_items)
-    if mode != 'plant' and not allowed_types:
-        _ensure_min_arrange(enriched_items, 3)
+    # ── 일반 학습: 조립형 suggested 제거 → 별도 sentence_arrange 필드(아래 응답 구성) ──
+    # 모든 단어가 먼저 일반 콘텐츠를 풀고, 일부(3~4개)만 문장 만들기를 추가로 한다.
+    # 유형 직접 지정(allowed_types)·plant 는 기존 동작 유지.
+    former_arrange = []
+    general_mode = mode != 'plant' and not allowed_types
+    if general_mode:
+        former_arrange = _demote_arrange_to_general(enriched_items)
 
     # ── UserStudySession INSERT ──
     book_ids_for_session = [str(b) for b in book_ids] if book_ids else ['all']
@@ -1301,6 +1343,12 @@ def get_recommend():
         )
         for enriched in enriched_items
     ]
+    if general_mode:
+        sa_map = _select_sentence_arrange(enriched_items, former_arrange, ctx)
+        for resp in items_response:
+            sa = sa_map.get(resp['user_voca_id'])
+            if sa:
+                resp['sentence_arrange'] = sa
     # 새 씨앗 심기 세션은 한 단어를 여러 유형으로 연달아 푼다 — suggested 유형 하나만의
     # question_payload 로는 빈칸 입력·문장 만들기 단계가 대부분 비므로 세 유형 payload 를 모두 싣는다.
     if mode == 'plant':

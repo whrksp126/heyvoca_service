@@ -511,7 +511,33 @@ const TakeTest = () => {
   // 못한다), 서버가 그 유형을 배정해 준 문제를 앞에서 빼 맨 끝으로 모은다. 3개를 넘으면 무작위
   // 3개만 남기고 나머지는 사지선다로 되돌린다. 3개에 못 미치면 있는 만큼만 낸다(0개면 구간 없음).
   const SENTENCE_PHASE_COUNT = 3;
-  const composeSentencePhase = (questions, allWords) => {
+  // 2026-10-02 — 서버가 일부 item 에 별도 필드 sentence_arrange({question_type, question_payload})를
+  // 내려주면(모든 item 의 suggested_question_type 은 일반 콘텐츠) 일반 문제는 그대로 두고, 그 item 들로
+  // 만든 문장 만들기 문제만 맨 뒤 구간에 붙인다. 같은 단어가 두 구간에 나오지만 /study/log 는
+  // loggedVocaIdsRef(단어당 1회)·오답 무페널티(Main.jsx)로, 진행률은 고유 id Set 으로 센다.
+  // isSentenceExtra 표시가 붙은 문제는 Main 이 '통과 처리(진행률)'를 하지 않는다.
+  const buildSentenceArrangeQuestions = (words) => {
+    const out = [];
+    for (const word of words ?? []) {
+      const sa = word?.sentenceArrange;
+      const type = sa?.question_type;
+      const payload = sa?.question_payload;
+      if (!type || !isArrangeQuestionType(type) || !payload?.arrange) continue;
+      const plugin = getQuestionType(type);
+      if (!plugin?.setupQuestions) continue;
+      const stepWord = { ...word, suggestedQuestionType: type, questionPayload: payload };
+      const generated = plugin.setupQuestions([stepWord], []);
+      if (generated.length > 0) out.push({ ...generated[0], isSentenceExtra: true });
+    }
+    return out;
+  };
+
+  const composeSentencePhase = (questions, allWords, selectedWords) => {
+    const extra = buildSentenceArrangeQuestions(selectedWords);
+    if (extra.length > 0) {
+      const base = questions.filter((q) => !isArrangeQuestionType(q.questionType));
+      return [...base, buildPhaseNotice('sentence'), ...shuffleArray(extra).slice(0, 4)];
+    }
     const arrange = questions.filter((q) => isArrangeQuestionType(q.questionType));
     if (arrange.length === 0) return questions;
     const rest = questions.filter((q) => !isArrangeQuestionType(q.questionType));
@@ -659,7 +685,7 @@ const TakeTest = () => {
     // AI 추천(유형을 직접 고르지 않은) 학습만 문장 만들기를 맨 끝 구간으로 모은다 —
     // 설정 시트로 유형을 직접 고른 테스트는 사용자가 고른 구성을 그대로 둔다.
     if (isRecommendedMode) {
-      testQuestions = composeSentencePhase(testQuestions, allWords);
+      testQuestions = composeSentencePhase(testQuestions, allWords, selectedWords);
     }
 
     return { testQuestions, sessionId, composition, compositionStrategy };

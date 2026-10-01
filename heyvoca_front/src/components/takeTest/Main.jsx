@@ -1537,7 +1537,8 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
     }
 
     if (wordIsCorrect) {
-      markVocaPassed(wordId);
+      // 일반 구간과 별도로 붙은 문장 만들기(isSentenceExtra)는 진행률(통과 집합)에 관여하지 않는다.
+      if (!currentQuestion?.isSentenceExtra) markVocaPassed(wordId);
       return;
     }
 

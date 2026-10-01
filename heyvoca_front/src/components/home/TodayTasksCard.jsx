@@ -28,7 +28,6 @@ import { motion } from 'framer-motion';
 import { haptic, SPRING, TAP } from '../../lib/feel';
 import { useStats } from '../../context/StatsContext';
 import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
-import { useQuickReview } from '../../hooks/useQuickReview';
 import { usePlantSession } from '../../hooks/usePlantSession';
 import { vibrate, showToast } from '../../utils/osFunction';
 import { getRottenPlantsApi, recoverPlantsApi } from '../../api/farm';
@@ -175,7 +174,6 @@ const TodayTasksCard = () => {
   const navigate = useNavigate();
   const { todayTasks, refreshStats } = useStats();
   const { pushNewFullSheet } = useNewFullSheetActions();
-  const { startQuickReview } = useQuickReview();
   const { startPlantSession } = usePlantSession();
 
   const [expanded, setExpanded] = useState({ rotten: false, wilted: false, care: false });
@@ -259,12 +257,6 @@ const TodayTasksCard = () => {
     // 오늘 목표를 채운 뒤에도 '심기'로 더 심을 수 있다(서버 한도 무시 force).
     if (remaining <= 0) { startPlantSession({ count: 5, force: true }); return; }
     startPlantSession({ count: Math.min(5, remaining) });
-  };
-
-  // 농장 돌보기 — 시듦·오늘 돌봄을 우선 복습한다(서버 추천이 같은 판정 헬퍼로 우선 배정하고,
-  // 끝낸 만큼 위 줄의 x/y 가 자동으로 채워진다). '이어서 하기' 재개 확인은 useQuickReview 몫.
-  const studyCare = () => {
-    startQuickReview();
   };
 
   const goStore = () => {
@@ -366,26 +358,6 @@ const TodayTasksCard = () => {
           <Row key={row.key} {...row} last={idx === rowDefs.length - 1} />
         ))}
       </div>
-      {/* 농장 돌보기 — 시듦·돌봄 줄이 있을 때만. 줄은 정보만 보여주고 학습은 이 버튼과 아래
-          '새 씨앗 심기' 두 개로만 시작한다(2026-10-02). */}
-      {(wilted.total > 0 || care.total > 0) && (
-        <motion.button
-          type="button"
-          onClick={studyCare}
-          whileTap={{ scale: TAP.scale }}
-          transition={SPRING.snappy}
-          onTapStart={() => haptic('light')}
-          className="
-            flex items-center justify-center
-            w-full h-[52px] mt-[6px] mb-[6px] rounded-[12px]
-            bg-primary-main-100 dark:bg-primary-main-dark
-          "
-        >
-          <span className="text-primary-main-600 text-[16px] font-[700] leading-[1.2] tracking-[-0.02em]">
-            농장 돌보기
-          </span>
-        </motion.button>
-      )}
       {/* 새 씨앗 심기 — 목록 아래 넓은 버튼. 홈 주 CTA(FarmCta)와 같은 면·글자 규격이되,
           카드 안이라 바깥 그림자는 쓰지 않는다. 목표를 채운 뒤에도 더 심을 수 있다. */}
       {newSeedRow && !noSeedsToPlant && (
