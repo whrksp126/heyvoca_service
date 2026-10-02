@@ -473,17 +473,40 @@ const TakeTest = () => {
         else setBuckets[slot.type]?.push(word);
       }
     }
-    for (const type of PLANT_SET_TYPES) {
-      const words = setBuckets[type];
-      if (!words || words.length === 0) continue;
+    // 카드 맞추기류는 세트(2~4단어)가 필요하다. 무작위 배분만으로는 칸마다 1~2단어뿐이라 세트가 거의
+    // 안 만들어지고 사지선다로 대체돼 "카드 맞추기가 안 나온다"가 됐다(2026-10-02 QA 실측: 5단어 세션
+    // 평균 0.6세트). 그래서 ① 두 세트 유형이 모두 비면 한쪽에 2~4단어를 배정하고(듣기 건너뛰기면
+    // resolve가 일반 cardMatch 한 종류로 합친다), ② 단어가 1개뿐인 칸은 같은 세션의 다른 심기 단어를
+    // 더해 최소 2단어로 채운다. 보강 단어는 어차피 이 세션의 심기 단어라 /study/log(plantAttemptsRef의
+    // 첫 시도 AND 집계)에 정상적으로 한 단어당 1회로 접힌다 — 사전 풀의 외부 단어를 섞지 않는다.
+    // (심기 단어가 1개뿐이면 세트를 만들 수 없어 사지선다로 대체한다.)
+    const setTypes = PLANT_SET_TYPES.map((t) => resolve(t)).filter((t, i, arr) => arr.indexOf(t) === i);
+    const wordId = (w) => w.id ?? w.vocaIndexId;
+    if (order.length >= 2 && setTypes.every((t) => (setBuckets[t] ?? []).length === 0)) {
+      const t = setTypes[Math.floor(Math.random() * setTypes.length)];
+      setBuckets[t] = shuffleArray(order).slice(0, Math.min(order.length, 2 + Math.floor(Math.random() * 3)));
+    }
+    for (const type of setTypes) {
+      let words = setBuckets[type] ?? [];
+      if (words.length === 0) continue;
+      if (words.length === 1 && order.length >= 2) {
+        const have = new Set(words.map(wordId));
+        const extra = shuffleArray(order.filter((w) => !have.has(wordId(w))))
+          .slice(0, 1 + Math.floor(Math.random() * 2)); // 1~2단어 더 → 총 2~3단어
+        words = [...words, ...extra];
+      }
       const plugin = getQuestionType(type);
       const sets = words.length >= 2 && plugin?.setupQuestions ? plugin.setupQuestions(words, allWords) : [];
       content.push(...sets);
-      // 세트에 들어가지 못한 단어는 사지선다로 대체
-      const used = new Set(sets.flatMap((st) => (st.words ?? []).map((w) => w.id ?? w.vocaIndexId)));
+      // 세트에 들어가지 못한 단어(뜻이 겹쳐 짝을 못 이루는 등)는 사지선다로 대체
+      const used = new Set(sets.flatMap((st) => (st.words ?? []).map(wordId)));
       for (const w of words) {
-        if (!used.has(w.id ?? w.vocaIndexId)) content.push(buildPlantMcq(w, allWords, resolve('multipleChoice')));
+        if (!used.has(wordId(w))) content.push(buildPlantMcq(w, allWords, resolve('multipleChoice')));
       }
+    }
+    // 듣기 사지선다도 한 번은 보장 — 듣기 건너뛰기가 꺼져 있는데 무작위로 0개였다면 한 단어에 끼운다.
+    if (!skipListening && !content.some((q) => q.questionType === 'multipleChoiceListening')) {
+      content.push(buildPlantMcq(order[Math.floor(Math.random() * order.length)], allWords, 'multipleChoiceListening'));
     }
     out.push(...shuffleArray(content));
 
@@ -1155,7 +1178,10 @@ const TakeTest = () => {
         // 첫 시도에 맞혔는지(plantAttemptsRef가 Main.jsx에서 이미 AND로 접어 둔 값).
         // 중간 이탈(status !== 'end')이면 이 분기 자체를 안 타므로 아무것도 기록되지 않는다.
         if ((state.testType === 'plant' || state.testType === 'script') && studySessionRef?.current && plantAttemptsRef.current.size > 0) {
-          const entries = [...plantAttemptsRef.current.entries()];
+          // plant 는 단어의 1차 문제를 다 끝낸 순간 Main.jsx 가 이미 단어당 1회 전송했다(loggedVocaIdsRef 표시) —
+          // 여기서는 아직 안 보낸 단어(전송 실패·복원 등)와 script 만 보낸다.
+          const entries = [...plantAttemptsRef.current.entries()]
+            .filter(([vocaId]) => !(state.testType === 'plant' && loggedVocaIdsRef.current.has(vocaId)));
           const results = await Promise.allSettled(entries.map(([vocaId, wasCorrect]) => {
             // wordIntro(①만나기)는 채점 없는 슬라이드라 questionType이 그 값이면 안 된다 —
             // 단어 블록의 첫 항목이 항상 wordIntro이므로, 이걸 빼지 않으면 find()가 그것부터

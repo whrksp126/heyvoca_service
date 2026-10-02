@@ -17,9 +17,9 @@ import MemoryStateChangeBadge, {
   getMemoryStateKeyByStability,
 } from "../common/MemoryStateChangeBadge";
 import { playSuccessSound, playErrorSound } from '../../utils/audio';
-import { getQuestionType, isSingleWordPluginType, isSentenceQuestionType, isNoGradeQuestionType, isArrangeQuestionType, PHASE_NOTICE_TYPE } from '../../plugins/questionTypes';
+import { getQuestionType, isSingleWordPluginType, isFillInTheBlankType, isSentenceQuestionType, isNoGradeQuestionType, isArrangeQuestionType, PHASE_NOTICE_TYPE } from '../../plugins/questionTypes';
 import { getDisplayMeanings } from '../../utils/displayMeanings';
-import { logStudyQuestion, getRequeueEasierApi } from '../../api/study';
+import { logStudyQuestion, getRequeueEasierApi, exampleSeenApi } from '../../api/study';
 import { mapRecommendItemToWord } from '../../utils/studyRecommendMapping';
 import { getAdvanceDelay } from '../../utils/studyTiming';
 import { useStudyAdvanceGate } from '../../hooks/useStudyAdvanceGate';
@@ -643,6 +643,78 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
     }
   };
 
+  // 본 예문 노출 기록 전송 — 실패·지연이 학습 흐름에 영향 없게 fire-and-forget, 종료 시 await 되도록 등록만 한다.
+  const sendExampleSeen = (items) => {
+    if (guestMode || !studySessionRef?.current) return;
+    const list = (items ?? []).filter((it) => it?.user_voca_id != null && it?.example_hash);
+    if (list.length === 0) return;
+    const p = exampleSeenApi(list).catch(() => null);
+    if (pendingLogPromisesRef) pendingLogPromisesRef.current.push(p);
+  };
+
+  /*
+    plant — 단어의 1차 출제 문제(재출제·만나기·안내 제외)를 **모두** 끝낸 순간 그 단어의 /study/log 를
+    즉시 보낸다(단어당 1회, loggedVocaIdsRef 가 "이미 보냄" 표시 — plant 는 이 ref 를 다른 용도로 안 쓴다).
+    중간 이탈해도 이미 끝낸 단어는 심어져 다음 심기에 또 나오지 않는다. 세션 종료 일괄 전송
+    (TakeTest.jsx)은 이 ref 에 있는 단어를 건너뛴다. was_correct 는 기존 규칙 그대로
+    plantAttemptsRef(첫 시도 AND, 문장 만들기·재출제 제외)다. 문제 하나의 완료는 "큐 인덱스"로 센다 —
+    카드 세트는 단어마다, 재출제는 맨 끝에만 삽입되므로 1차 문제의 인덱스는 변하지 않는다.
+  */
+  const plantDoneIdxRef = useRef(new Map());
+  const plantQuestionDone = (vocaId, questionIndex) => {
+    if (!isPlantMode || vocaId == null || !studySessionRef?.current || guestMode) return;
+    if (loggedVocaIdsRef?.current?.has(vocaId)) return;
+    const done = plantDoneIdxRef.current.get(vocaId) ?? new Set();
+    done.add(questionIndex);
+    plantDoneIdxRef.current.set(vocaId, done);
+    const primary = [];
+    testQuestions.forEach((q, i) => {
+      if (!q || q.isRetry || isNoGradeQuestionType(q.questionType) || q.questionType === PHASE_NOTICE_TYPE) return;
+      const has = Array.isArray(q.words) ? q.words.some((w) => w.id === vocaId) : (q.vocaIndexId ?? q.id) === vocaId;
+      if (has) primary.push({ q, i });
+    });
+    if (primary.length === 0 || !primary.every(({ i }) => done.has(i))) return;
+    if (!plantAttemptsRef?.current?.has(vocaId)) return;
+    loggedVocaIdsRef.current.add(vocaId);
+
+    const wasCorrect = plantAttemptsRef.current.get(vocaId);
+    const firstGraded = primary.find(({ q }) => !Array.isArray(q.words)) ?? primary[0];
+    const sentenceQs = primary.map(({ q }) => q).filter((q) => (
+      !Array.isArray(q.words) && q.exampleHash
+      && (isFillInTheBlankType(q.questionType) || isSentenceQuestionType(q.questionType))
+    ));
+    const exampleHash = sentenceQs.length > 0 ? sentenceQs[sentenceQs.length - 1].exampleHash : null;
+    const p = logStudyQuestion({
+      session_id: studySessionRef.current,
+      user_voca_id: vocaId,
+      user_voca_book_id: firstGraded.q.vocabularySheetId ?? null,
+      question_type: Array.isArray(firstGraded.q.words) ? 'multipleChoice' : firstGraded.q.questionType,
+      was_correct: wasCorrect,
+      time_taken_ms: 5000,
+      client_now: new Date().toISOString(),
+      ...(exampleHash ? { example_hash: exampleHash } : {}),
+    }).then((logRes) => {
+      // 결과 목록 "다음 복습 예정일"용 정본 fsrs — 세션 종료 일괄 전송과 같은 자리에 붙인다.
+      const fsrs = logRes?.data?.fsrs;
+      if (fsrs) {
+        const target = testQuestions.find((qq) => !qq.isRetry && !Array.isArray(qq.words)
+          && (qq.vocaIndexId ?? qq.id) === vocaId && !isNoGradeQuestionType(qq.questionType));
+        if (target) target.fsrs = fsrs;
+      }
+    }).catch((e) => {
+      // 실패하면 종료 일괄 전송이 다시 시도하도록 "보냄" 표시를 되돌린다
+      loggedVocaIdsRef.current.delete(vocaId);
+      console.warn('[plant] 단어 즉시 /study/log 실패:', e);
+    });
+    if (pendingLogPromisesRef) pendingLogPromisesRef.current.push(p);
+
+    // 이 단어가 본 예문(빈칸·타이핑·문장 만들기 1차 문제 전부)을 한 번에 배치 전송 — 문장 만들기를
+    // 틀려 /study/log 에 안 실리는 예문도 여기서 노출 기록된다(서버는 멱등).
+    const seen = [...new Set(sentenceQs.map((q) => q.exampleHash))];
+    const arrangeSeen = primary.map(({ q }) => q).filter((q) => !Array.isArray(q.words) && q.exampleHash && isArrangeQuestionType(q.questionType)).map((q) => q.exampleHash);
+    sendExampleSeen([...new Set([...seen, ...arrangeSeen])].map((h) => ({ user_voca_id: vocaId, example_hash: h })));
+  };
+
   // 첫 시도 1회만 /study/log를 보내는 래퍼
   // isRetry=true인 재출제 문제는 로깅 스킵
   const logIfFirstAttempt = (question, payload) => {
@@ -653,7 +725,10 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
     // "이 문제(블록) 자체가 재출제가 아닌 첫 시도인지"만 보고 AND로 접어 기록한다 —
     // 실제 서버 전송은 세션 종료 시 TakeTest.jsx가 단어당 1회로 일괄한다.
     if (isMultiStepMode) {
-      if (!question.isRetry) recordPlantAttempt(vocaId, payload.was_correct);
+      if (!question.isRetry) {
+        recordPlantAttempt(vocaId, payload.was_correct);
+        plantQuestionDone(vocaId, progressIndex);
+      }
       return;
     }
     if (!loggedVocaIdsRef?.current) return;
@@ -1437,6 +1512,11 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
     */
     const isArrangeQ = isArrangeQuestionType(questionType);
     const skipGrading = isArrangeQ && !wordIsCorrect;
+    // 일반 학습 — 조립형은 오답이면 /study/log 를 안 보내므로(skipGrading) 본 예문 기록이 빠진다.
+    // 정답·오답 모두 가벼운 노출 기록(FSRS 무영향)을 보낸다. plant 는 단어 완료 시 plantQuestionDone 이 배치 전송한다.
+    if (isArrangeQ && !isMultiStepMode && !currentQuestion?.isRetry) {
+      sendExampleSeen([{ user_voca_id: wordId, example_hash: exampleHash }]);
+    }
     if (skipGrading && currentQuestion) {
       // 컴포넌트가 낙관값(stability 0.5)으로 적어 둔 "다음 상태"를 되돌린다 — 결과 화면
       // '암기 상태 하락' 집계에 이 오답이 잡히지 않게.
@@ -1464,6 +1544,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
       // 상태로 남는데, plant 는 그 표시 자체를 쓰지 않는다(플러그인 컴포넌트가
       // farmByWordId 없으면 알아서 숨긴다).
       if (!currentQuestion?.isRetry && !isArrangeQ) recordPlantAttempt(wordId, !!wordIsCorrect);
+      if (!currentQuestion?.isRetry) plantQuestionDone(wordId, progressIndex);
     } else if (!skipGrading) {
       const optimistic = computeOptimisticFsrs(fsrsBefore, !!wordIsCorrect);
       const buildOptimisticCardFarm = (base) => optimisticFarmPayload({

@@ -459,6 +459,27 @@ def load_recent_example_hashes(user_id, user_voca_ids, window_days: int = 30) ->
     result: dict = {}
     for user_voca_id, example_hash, last_seen in rows:
         result.setdefault(user_voca_id, {})[example_hash] = last_seen
+
+    # POST /study/example-seen 가벼운 노출 기록(오답이라 /study/log 가 없는 문장 등)을 합친다.
+    from app.models.models import UserExampleSeen
+    seen_rows = (
+        db.session.query(
+            UserExampleSeen.user_voca_id,
+            UserExampleSeen.example_hash,
+            func.max(UserExampleSeen.seen_at),
+        )
+        .filter(
+            UserExampleSeen.user_id == user_id,
+            UserExampleSeen.user_voca_id.in_(ids),
+            UserExampleSeen.seen_at >= cutoff,
+        )
+        .group_by(UserExampleSeen.user_voca_id, UserExampleSeen.example_hash)
+        .all()
+    )
+    for user_voca_id, example_hash, last_seen in seen_rows:
+        cur = result.setdefault(user_voca_id, {})
+        if example_hash not in cur or cur[example_hash] < last_seen:
+            cur[example_hash] = last_seen
     return result
 
 

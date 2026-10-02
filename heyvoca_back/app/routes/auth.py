@@ -1303,6 +1303,8 @@ def withdraw():
             #      UserStudySession.user_id는 실제 FK라 삭제 안 하면 500 유발.
             #      UserStudyLog는 파티션 테이블이라 FK는 없지만(session_id 등), 개인정보 정리 차원에서 함께 삭제.
             db.session.query(UserStudyLog).filter(UserStudyLog.user_id == user_id).delete()
+            from app.models.models import UserExampleSeen
+            db.session.query(UserExampleSeen).filter(UserExampleSeen.user_id == user_id).delete()
             db.session.query(UserStudySession).filter(UserStudySession.user_id == user_id).delete()
 
             # 8-2. UserQuestionTypeStat 삭제 (문제 유형별 정답률 집계, 실제 FK)

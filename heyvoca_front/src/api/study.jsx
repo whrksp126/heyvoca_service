@@ -142,6 +142,22 @@ export const logStudyQuestion = async (payload) => {
   }
 };
 
+// 본 예문 노출 기록(FSRS·XP·콤보 무영향) — 조립형 문제를 틀려 /study/log 를 안 보내는 경우 등에 쓴다.
+// POST /study/example-seen  body { items:[{ user_voca_id, example_hash }] }(최대 100개)
+// 응답 { code:200, data:{ recorded:N } }. 실패해도 학습 흐름에 영향 없게 항상 resolve(null).
+export const exampleSeenApi = async (items) => {
+  const list = (Array.isArray(items) ? items : [])
+    .filter((it) => it && it.user_voca_id != null && it.example_hash)
+    .slice(0, 100);
+  if (list.length === 0) return null;
+  try {
+    return await fetchDataAsync(`${backendUrl}/study/example-seen`, 'POST', { items: list });
+  } catch (error) {
+    console.warn('exampleSeenApi 오류:', error);
+    return null;
+  }
+};
+
 // 오늘(KST) 처음 학습한 새 단어 수(누적) 조회
 // GET /study/today-summary → { code:200, data:{ new_words } }
 export const getTodaySummary = async () => {

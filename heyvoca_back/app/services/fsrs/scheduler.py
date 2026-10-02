@@ -88,6 +88,7 @@ def review(
     *,
     lapse_history: Optional[List[bool]] = None,
     prior_correct_rate: Optional[float] = None,
+    plant_first: bool = False,
 ) -> dict:
     """
     FSRS-5 복습 처리.
@@ -119,7 +120,7 @@ def review(
     stability_before = float(state.get('stability') or 0.0)
 
     # 표준 FSRS 계산
-    fsrs_result = _fsrs_review(state, rating, now, params)
+    fsrs_result = _fsrs_review(state, rating, now, params, plant_first=plant_first)
 
     # 소프트 lapse 적용 (rating=AGAIN 이고 이미 stability가 있는 경우만)
     if rating == AGAIN and _use_soft_lapse() and stability_before > 0:

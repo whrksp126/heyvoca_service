@@ -157,6 +157,11 @@ _EASY_MAX_WORDS_ARRANGE = 8   # 조각 조립(조각 수) — build_arrange_payl
 _EASY_MAX_RARE = 1
 _EASY_JITTER = 3.0
 _EASY_FALLBACK_K = 3
+# plant(새 씨앗 심기) 문장 만들기는 더 엄격: 조각 ≤7, level 1, 희귀어 0. 이 기준을 못 맞추면
+# 어려운 문장으로 폴백하지 않고 후보 없음(None)으로 돌려 그 단어의 문장 만들기를 뺀다.
+_PLANT_ARRANGE_MAX_WORDS = 7
+# 단어별 '최근 본 예문' 회피 개수 — 이 안의 hash 는 다른 후보가 하나라도 있으면 아예 제외한다.
+RECENT_AVOID_N = 5
 
 
 def _word_count(ex: dict, question_type: str) -> int:
@@ -188,6 +193,22 @@ def _is_easy(ex: dict, question_type: str) -> bool:
     return (meta.get('level') or 1) <= 1
 
 
+def _is_plant_arrange_ok(ex: dict) -> bool:
+    meta = ex.get('meta') or {}
+    return (
+        _word_count(ex, 'sentenceArrangePartial') <= _PLANT_ARRANGE_MAX_WORDS
+        and (meta.get('rare_count') or 0) == 0
+        and (meta.get('level') or 1) <= 1
+    )
+
+
+def _recent_top_n(item, ctx: SelectionContext, n: int = RECENT_AVOID_N) -> set:
+    """이 단어에서 가장 최근에 본 예문 hash n개."""
+    seen = ctx.recent_seen.get(item.user_voca_id) or {}
+    ranked = sorted(seen.items(), key=lambda kv: kv[1], reverse=True)
+    return {h for h, _ in ranked[:n]}
+
+
 def _easy_subset(candidates: list, question_type: str) -> list:
     easy = [ex for ex in candidates if _is_easy(ex, question_type)]
     if easy:
@@ -206,21 +227,35 @@ def choose_example(item, question_type: str, ctx: SelectionContext) -> Optional[
     """
     pool = item.example_pool or []
     candidates = [ex for ex in pool if _eligible(ex, question_type) and ex.get('hash') not in ctx.used_hashes]
-    if ctx.easy and question_type in _ARRANGE_TYPES:
+    is_arrange = question_type in _ARRANGE_TYPES
+    if ctx.easy and is_arrange:
         # plant 문장 만들기: 신규 단어이므로 사용자 보유 단어장 복사본이 아니라 우리 사전의
-        # 쉬운 예문(+조각 데이터가 있는 것)만. 없으면 후보 없음 → payload 생략.
-        candidates = [ex for ex in candidates if ex.get('source') == 'dict']
+        # 쉬운 예문(+조각 데이터가 있는 것)만. 엄격 기준(조각 ≤7·level 1·희귀어 0)을 못 맞추면
+        # 후보 없음 → payload 생략(어려운 문장으로 폴백 금지).
+        candidates = [ex for ex in candidates if ex.get('source') == 'dict' and _is_plant_arrange_ok(ex)]
     if not candidates:
         return None
 
+    # 최근 본 예문(단어별 최근 N개)은 다른 후보가 있는 한 제외 — 없으면 아래 recency 벌점이 순서를 정한다.
+    recent = _recent_top_n(item, ctx)
+    if recent:
+        fresh = [ex for ex in candidates if ex.get('hash') not in recent]
+        if fresh:
+            candidates = fresh
+
     if ctx.easy:
+        if not is_arrange:
+            candidates = _easy_subset(candidates, question_type)
+        target_level = 1
+    elif is_arrange:
+        # 일반 학습의 문장 만들기도 쉬운 예문 우선(없으면 가장 쉬운 몇 개로 완화).
         candidates = _easy_subset(candidates, question_type)
         target_level = 1
     else:
         target_level = _target_level_for_item(item, ctx.user_level_id)
     scored = [(_score(ex, item, question_type, ctx, target_level), ex) for ex in candidates]
     min_score = min(s for s, _ in scored)
-    tol = _EASY_JITTER if ctx.easy else 1e-9
+    tol = _EASY_JITTER if (ctx.easy or is_arrange) else 1e-9
     best = [ex for s, ex in scored if s - min_score < tol]
 
     rng = ctx.rng or random

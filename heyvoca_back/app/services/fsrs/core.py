@@ -118,9 +118,13 @@ def fsrs_review(
     rating: int,
     now: datetime,
     params: Optional[List[float]] = None,
+    plant_first: bool = False,
 ) -> dict:
     """
     FSRS-5 단일 복습 처리.
+
+    plant_first: 새 씨앗 심기 세션의 첫 학습이면 True — new 상태 오답(Again)도 '심은 것'으로
+        확정한다(Again 초기 stability 로 review 상태 졸업, 정답이 아니므로 낮은 기억 상태로 시작).
 
     Args:
         state: 현재 FSRS state dict (get_fsrs_state()가 반환하는 형태)
@@ -158,7 +162,7 @@ def fsrs_review(
 
     # 상태에 따른 처리
     if current_state == STATE_NEW or s == 0:
-        if rating == AGAIN:
+        if rating == AGAIN and not plant_first:
             # 미학습(new) 단어를 최초 학습 중 오답 — "아무것도 학습되지 않은 것"으로
             # 취급해 미학습 상태를 그대로 유지한다 (learning으로 승격시키지 않음).
             # UI에서 "단기암기"로 잘못 표시되는 것을 방지하기 위함.
@@ -175,7 +179,8 @@ def fsrs_review(
                 "next_review":    None,
                 "params_version": "default-v1",
             }
-        # 첫 학습 정답(Hard/Good/Easy) — 복습 단계로 졸업
+        # 첫 학습 정답(Hard/Good/Easy) — 복습 단계로 졸업. plant_first 의 Again 도 같은 경로:
+        # _init_stability/_init_difficulty 가 Again 값(w[0], 최고 난이도)으로 초기화한다.
         new_s = _init_stability(w, rating)
         new_d = _init_difficulty(w, rating)
         new_state = STATE_REVIEW

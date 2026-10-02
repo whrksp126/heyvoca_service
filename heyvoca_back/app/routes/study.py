@@ -567,6 +567,9 @@ def post_study_log():
         now,
         lapse_history=lapse_history,
         prior_correct_rate=prior_correct_rate,
+        # 새 씨앗 심기 세션(test_type='plant')에서 처음 푼 새 단어는 오답이어도 '심은 씨앗'으로
+        # 확정한다 — 안 그러면 new 로 남아 다음 plant 후보에 같은 단어가 또 나온다(2026-10 QA).
+        plant_first=(session_obj.test_type == 'plant'),
     )
 
     memory_state_after = _classify_memory_state(fsrs_state_after)
@@ -691,6 +694,61 @@ def post_study_log():
             'streak': (game_payload or {}).get('streak'),
         },
     }), 200
+
+
+@study_bp.route('/example-seen', methods=['POST'])
+@jwt_required
+def post_example_seen():
+    """POST /study/example-seen — '본 예문' 가벼운 노출 기록(배치).
+
+    FSRS·XP·콤보·스트릭·일일 신규 카운트에 아무 영향이 없다(user_example_seen 한 테이블에만 INSERT).
+    문장 만들기 오답처럼 /study/log 를 안 보내는 경로에서도 최근 본 문장 회피가 동작하게 한다.
+
+    요청: {"items": [{"user_voca_id": 123, "example_hash": "<64hex>"}, ...]}  (최대 100개)
+    응답: {"code":200, "data": {"recorded": n}}  — 내 단어가 아니거나 hash 형식이 틀린 항목은 조용히 무시.
+    """
+    user_id = UUID(g.user_id)
+    req = request.get_json(silent=True) or {}
+    raw = req.get('items')
+    if not isinstance(raw, list):
+        return jsonify({'code': 400, 'message': 'items 배열이 필요합니다.'}), 400
+    pairs = []
+    seen_pairs = set()
+    for it in raw[:100]:
+        if not isinstance(it, dict):
+            continue
+        uvid, h = it.get('user_voca_id'), it.get('example_hash')
+        if isinstance(uvid, bool) or not isinstance(uvid, int):
+            continue
+        if not isinstance(h, str) or not _EXAMPLE_HASH_RE.match(h):
+            continue
+        if (uvid, h) in seen_pairs:
+            continue
+        seen_pairs.add((uvid, h))
+        pairs.append((uvid, h))
+    if not pairs:
+        return jsonify({'code': 200, 'data': {'recorded': 0}}), 200
+
+    from app.models.models import UserExampleSeen
+    try:
+        owned = {r[0] for r in db.session.query(UserVoca.id).filter(
+            UserVoca.user_id == user_id, UserVoca.id.in_({p[0] for p in pairs})).all()}
+        now = dt.datetime.utcnow()
+        rows = [UserExampleSeen(user_id=user_id, user_voca_id=u, example_hash=h, seen_at=now)
+                for u, h in pairs if u in owned]
+        if rows:
+            db.session.add_all(rows)
+            # 테이블이 무한히 자라지 않게 윈도우(30일)보다 충분히 오래된 이 사용자 행은 정리한다.
+            db.session.query(UserExampleSeen).filter(
+                UserExampleSeen.user_id == user_id,
+                UserExampleSeen.seen_at < now - dt.timedelta(days=60),
+            ).delete(synchronize_session=False)
+        db.session.commit()
+    except Exception:
+        db.session.rollback()
+        logging.getLogger(__name__).error('example-seen 저장 오류', exc_info=True)
+        return jsonify({'code': 500, 'message': '저장에 실패했습니다.'}), 500
+    return jsonify({'code': 200, 'data': {'recorded': len(rows)}}), 200
 
 
 @study_bp.route('/today-summary', methods=['GET'])
@@ -1324,9 +1382,11 @@ def get_recommend():
         # plant 의 조립형은 사전 쉬운 예문+조각만 쓴다 — 없는 단어가 조립형으로 배정되면 payload 가
         # 비므로 보편 유형(사지선다)으로 돌린다.
         from app.services.sentence_puzzle import puzzle_usable as _puzzle_ok
+        from app.services.example_select import _is_plant_arrange_ok
         for e in enriched_items:
             if e.get('suggested_question_type') in _ARRANGE_TYPES and not any(
                 ex.get('source') == 'dict' and ex.get('puzzle') and _puzzle_ok(ex['puzzle'])
+                and _is_plant_arrange_ok(ex)
                 for ex in (e['_item'].example_pool or [])
             ):
                 e['suggested_question_type'] = 'multipleChoice'
@@ -1353,17 +1413,18 @@ def get_recommend():
     # question_payload 로는 빈칸 입력·문장 만들기 단계가 대부분 비므로 세 유형 payload 를 모두 싣는다.
     if mode == 'plant':
         for resp, enriched in zip(items_response, enriched_items):
-            qp = {
-                t: _build_sentence_question_payload(enriched['_item'], t, ctx)
-                for t in ('fillInTheBlank', 'fillInTheBlankTyping')
-            }
-            # 문장 만들기: Partial 우선, 사전 쉬운 예문+조각이 없으면 키 생략
-            # (다른 유형과 문장이 겹치지 않도록 ctx.used_hashes 공유)
+            # 문장 만들기를 먼저 뽑는다 — 후보가 가장 적고(사전+조각+엄격 기준) 빈칸 유형이 쉬운
+            # 예문을 먼저 가져가면 문장 만들기가 어려운 문장만 남는다(2026-10 실측: 평균 8.2→개선).
+            # Partial 우선, 엄격 기준을 맞는 사전 예문이 없으면 키 생략(폴백 없음).
+            # 다른 유형과 문장이 겹치지 않도록 ctx.used_hashes 공유.
+            qp = {}
             for t in ('sentenceArrangePartial', 'sentenceArrange'):
                 arr = _build_sentence_question_payload(enriched['_item'], t, ctx)
                 if arr:
                     qp[t] = arr
                     break
+            for t in ('fillInTheBlank', 'fillInTheBlankTyping'):
+                qp[t] = _build_sentence_question_payload(enriched['_item'], t, ctx)
             resp['question_payloads'] = qp
 
     return jsonify({

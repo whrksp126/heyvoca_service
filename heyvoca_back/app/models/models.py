@@ -1386,6 +1386,26 @@ class UserStudySession(db.Model):
         self.is_onboarding   = is_onboarding
 
 
+class UserExampleSeen(db.Model):
+    """'본 예문' 가벼운 노출 기록 — FSRS·XP·콤보·통계에 영향 없음(2026-10).
+
+    문장 만들기 오답 등 /study/log 를 안 보내는 경로에서도 "이 단어에서 이 문장을 봤다"를
+    남겨 최근 본 문장 회피(example_select)가 동작하게 한다. POST /study/example-seen 이 쓰고
+    pool.load_recent_example_hashes 가 user_study_log.example_hash 와 합쳐 읽는다.
+    FK 없음(study_log 와 같은 방식) — 탈퇴 시 auth.py 에서 user_id 로 삭제.
+    """
+    __tablename__ = 'user_example_seen'
+    __table_args__ = (
+        Index('ix_ues_user_voca_seen', 'user_id', 'user_voca_id', 'seen_at'),
+    )
+
+    id           = Column(BigInteger, primary_key=True, autoincrement=True)
+    user_id      = Column(BinaryUUID, nullable=False, comment='user.id 참조 (FK 없음)')
+    user_voca_id = Column(Integer, nullable=False, comment='user_voca.id 참조 (FK 없음)')
+    example_hash = Column(String(64), nullable=False, comment='본 예문의 sentence_hash')
+    seen_at      = Column(DateTime, nullable=False, default=datetime.utcnow)
+
+
 class UserStudyLog(db.Model):
     """단어 1회 응답 로그. SM2 q_score + FSRS rating 병기 (Phase 1.2부터 rating 채움).
 
