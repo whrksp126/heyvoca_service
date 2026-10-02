@@ -552,24 +552,32 @@ def post_study_log():
     except Exception:
         pass  # 조회 실패 시 폴백 (소프트 lapse 미적용)
 
+    # ── 새 씨앗 심기(test_type='plant') 는 정오답과 무관하게 정답 1회로 처리 ──
+    # 심기 세션은 틀려도 끝까지 정답을 맞춰야 종료되므로(2026-10 합의), 서버가 강제한다.
+    # 클라이언트가 was_correct=false 를 보내도 안전 — 이후 로그·세션 카운터·mastery·
+    # 콤보·XP·농장 전이가 모두 이 값(정답)을 쓴다. rating 은 시간 무관하게 Good 고정.
+    is_plant = (session_obj.test_type == 'plant')
+    if is_plant:
+        was_correct = True
+
     # ── FSRS 계산 ──
-    rating = derive_rating(
-        bool(was_correct),
-        int(time_taken_ms),
-        word_length=word_length,
-        fsrs_difficulty=float(fsrs_difficulty) if fsrs_difficulty is not None else None,
-        question_type=question_type,
-        typo=typo,
-    )
+    if is_plant:
+        rating = 3  # GOOD
+    else:
+        rating = derive_rating(
+            bool(was_correct),
+            int(time_taken_ms),
+            word_length=word_length,
+            fsrs_difficulty=float(fsrs_difficulty) if fsrs_difficulty is not None else None,
+            question_type=question_type,
+            typo=typo,
+        )
     fsrs_state_after = fsrs_review(
         fsrs_state_before,
         rating,
         now,
         lapse_history=lapse_history,
         prior_correct_rate=prior_correct_rate,
-        # 새 씨앗 심기 세션(test_type='plant')에서 처음 푼 새 단어는 오답이어도 '심은 씨앗'으로
-        # 확정한다 — 안 그러면 new 로 남아 다음 plant 후보에 같은 단어가 또 나온다(2026-10 QA).
-        plant_first=(session_obj.test_type == 'plant'),
     )
 
     memory_state_after = _classify_memory_state(fsrs_state_after)

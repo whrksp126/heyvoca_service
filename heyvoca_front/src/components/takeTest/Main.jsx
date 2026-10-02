@@ -243,6 +243,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
   const hasPhaseFlow = (testQuestions ?? []).some((q) => q?.questionType === PHASE_NOTICE_TYPE);
 
   const [isCorrect, setIsCorrect] = useState(null);
+  const [isFinishing, setIsFinishing] = useState(false); // 마지막 슬라이드 후 진행바 100% 연출 중
   const [userSelected, setUserSelected] = useState(null);
   // 백그라운드→포그라운드 복귀 시 1씩 증가 — 정답 링/성장 게이지가 framer-motion의
   // "경과 실시간 기반 애니메이션 스냅" 버그로 최종 상태에 정적으로 멈춰 보이는 것을 막기 위해
@@ -689,7 +690,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
       user_voca_id: vocaId,
       user_voca_book_id: firstGraded.q.vocabularySheetId ?? null,
       question_type: Array.isArray(firstGraded.q.words) ? 'multipleChoice' : firstGraded.q.questionType,
-      was_correct: wasCorrect,
+      was_correct: true, // plant 는 서버가 항상 정답으로 처리 — 정오답은 결과 화면 표시용(plantAttemptsRef)으로만 남긴다
       time_taken_ms: 5000,
       client_now: new Date().toISOString(),
       ...(exampleHash ? { example_hash: exampleHash } : {}),
@@ -1320,6 +1321,18 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
     );
   }
 
+  // 마지막 슬라이드 채점 직후 진행바가 100%로 꽉 찬 다음(PROGRESS_FILL_TRANSITION 0.3s + 여유) 결과로 넘긴다.
+  // 종료가 아니면 즉시 반영한다.
+  const FINISH_DELAY_MS = 550;
+  const commitStudyState = (isSessionDone, nextState) => {
+    if (!isSessionDone) {
+      updateRecentStudyState(nextState);
+      return;
+    }
+    setIsFinishing(true);
+    setTimeout(() => updateRecentStudyState(nextState), FINISH_DELAY_MS);
+  };
+
   // React Compiler가 자동으로 useCallback 처리
   // 문제 완료 시 처리 (multipleChoice 수동 넘기기 경로)
   const setUpdateRecentStudyStateAndStatus = () => {
@@ -1373,7 +1386,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
     // "통과 고유 단어 수" 판정을 쓰지 않고 큐를 끝까지 소진했을 때만 끝난 것으로 본다.
     const isSessionDone = (isMultiStepMode || hasPhaseFlow) ? isQueueExhausted : (currentPassedCount >= targetCount || isQueueExhausted);
 
-    updateRecentStudyState({
+    commitStudyState(isSessionDone, {
       [testType]: {
         ...recentStudy[testType],
         progress_index: isSessionDone ? null : nextIndex,
@@ -1702,7 +1715,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
     // 반복 등장해 조기 종료로 이어지기 때문. 큐 소진만으로 판단한다.
     const isSessionDone = (isMultiStepMode || hasPhaseFlow) ? isQueueExhausted : (currentPassedCount >= targetCount || isQueueExhausted);
 
-    updateRecentStudyState({
+    commitStudyState(isSessionDone, {
       [testType]: {
         ...recentStudy[testType],
         progress_index: isSessionDone ? null : nextIndex,
@@ -1733,7 +1746,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
     const nextIndex = progressIndex + 1;
     const isSessionDone = nextIndex >= testQuestions.length;
 
-    updateRecentStudyState({
+    commitStudyState(isSessionDone, {
       [testType]: {
         ...recentStudy[testType],
         progress_index: isSessionDone ? null : nextIndex,
@@ -1792,12 +1805,24 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
   // 하므로 "통과 고유 단어 수" 기준이면 문장 구간 전에 이미 꽉 찬다).
   const isNoticeQ = (q) => q?.questionType === PHASE_NOTICE_TYPE;
   const useSlideProgress = isMultiStepMode || hasPhaseFlow;
+  // 분모 = 이번 학습의 "원래 슬라이드 수"(재출제·안내 제외) — 오답 재출제가 큐에 붙어도 늘지 않는다.
+  // 분자 = 이미 지나간 슬라이드 중 정답으로 통과한 수(비채점 슬라이드는 지나가면 통과로 센다).
+  // 첫 시도에 틀린 원본은 세지 않고, 재출제를 맞혔을 때 1로 센다 — 그래서 절대 줄지 않는다.
   const totalWordCount = useSlideProgress
-    ? Math.max(1, testQuestions.filter((q) => !isNoticeQ(q)).length)
+    ? Math.max(1, testQuestions.filter((q) => !isNoticeQ(q) && !q.isRetry).length)
     : totalUniqueCount;
-  const displayPassedCount = useSlideProgress
-    ? Math.min(testQuestions.slice(0, progressIndex).filter((q) => !isNoticeQ(q)).length, totalWordCount)
-    : passedCount;
+  const displayPassedCount = isFinishing
+    ? totalWordCount
+    : useSlideProgress
+      ? Math.min(
+          testQuestions.slice(0, progressIndex).filter((q) => {
+            if (isNoticeQ(q)) return false;
+            if (q.isRetry) return q.isCorrect === true;
+            return q.isCorrect !== false;
+          }).length,
+          totalWordCount
+        )
+      : Math.min(passedCount, totalWordCount);
 
   const currentPlugin = getQuestionType(testQuestions[progressIndex]?.questionType);
 

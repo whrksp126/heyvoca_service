@@ -771,16 +771,8 @@ const StudyResult = () => {
         screens.push({ type: 'farmGrown', data: { items: improvedRows } });
       }
 
-      // ② 씨앗 심기 — 어떤 단어를 심었는지까지 보여준다
-      // 새 씨앗 심기(plant)는 마지막 결과 화면이 "새로 심은 씨앗" 목록을 직접 보여주므로
-      // 같은 목록을 두 번 띄우지 않는다(아래 result 화면 참고).
-      if (testType !== 'plant') {
-        if (plantedList.length > 0) {
-          screens.push({ type: 'farmPlanted', data: { items: plantedList } });
-        } else if (newWordCount > 0) {
-          screens.push({ type: 'farmPlanted', data: { items: newWordRows } });
-        }
-      }
+      // ② 씨앗 심기 — 새 씨앗 심기(plant)는 마지막 결과 화면이 "새로 심은 씨앗" 목록을 직접 보여준다.
+      //    농장 돌보기·일반 학습 등 그 외 세션에서는 새 단어가 섞여 있어도 심기 슬라이드를 띄우지 않는다.
 
       // ③ 새싹 발아 — 시간이 지난 뒤 스스로 기억해낸 단어
       if (sproutedList.length > 0) {

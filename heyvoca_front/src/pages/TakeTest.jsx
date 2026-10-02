@@ -1202,7 +1202,7 @@ const TakeTest = () => {
               user_voca_id: vocaId,
               user_voca_book_id: q?.vocabularySheetId ?? null,
               question_type: q?.questionType ?? 'multipleChoice',
-              was_correct: wasCorrect,
+              was_correct: state.testType === 'plant' ? true : wasCorrect, // plant 는 서버가 항상 정답 처리
               // 글자는 1글자라 서버 기대 시간(1.5s+0.12s×글자수+0.2s×난이도, ratings.py)이 1.6~3.6s다.
               // 5s를 보내면 새 글자·배운 글자 모두 늘 Hard로 깎인다(2026-09-30 prod あ: rating 2,
               // 12XP) — 전부 첫 시도에 맞힌 글자는 Good 이상이 되도록 1.2s로 보낸다.

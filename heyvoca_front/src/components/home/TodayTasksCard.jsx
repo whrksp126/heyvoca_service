@@ -11,7 +11,8 @@
 //   2 시듦 물주기 — 제목만 강조색(#C24E0C)
 //   3 오늘 돌봄 물주기
 //   4 새 씨앗 심기 — memoryState=['unlearned']로 좁힌 AI 추천 학습.
-//   5 새 씨앗 구매 — seeds_left < daily_new_limit 일 때만(show_buy).
+//   (새 씨앗 구매 줄은 제거 — 심을 씨앗이 없으면 '새 씨앗 심기' 버튼이 비활성 스타일이 되고
+//    누르면 서점 이동 안내 시트가 뜬다.)
 //
 // 행 탭(버튼 영역 제외)은 그 행 단어만 학습 시작한다.
 //   시듦 → GET /study/recommend?task_bucket=wilted, 돌봄 → task_bucket=care.
@@ -28,6 +29,8 @@ import { motion } from 'framer-motion';
 import { haptic, SPRING, TAP } from '../../lib/feel';
 import { useStats } from '../../context/StatsContext';
 import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
+import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
+import { ConfirmNewBottomSheet } from '../newBottomSheet/ConfirmNewBottomSheet';
 import { usePlantSession } from '../../hooks/usePlantSession';
 import { vibrate, showToast } from '../../utils/osFunction';
 import { getRottenPlantsApi, recoverPlantsApi } from '../../api/farm';
@@ -175,6 +178,7 @@ const TodayTasksCard = () => {
   const { todayTasks, refreshStats } = useStats();
   const { pushNewFullSheet } = useNewFullSheetActions();
   const { startPlantSession } = usePlantSession();
+  const { pushAwaitNewBottomSheet } = useNewBottomSheetActions();
 
   const [expanded, setExpanded] = useState({ rotten: false, wilted: false, care: false });
   const [recovering, setRecovering] = useState(false);
@@ -192,11 +196,9 @@ const TodayTasksCard = () => {
   // 일이 사라지지 않고 보인다 — 새 씨앗 구매 자체가 오늘 할 일 중 하나였기 때문이다.
   const buyDone = !!todayTasks.buy_done;
   const nutrientCnt = todayTasks.items?.nutrient ?? 0;
-  // 오늘 목표(target)는 안 채웠는데 심을 씨앗 재고가 0인 상태 — "새 씨앗 심기"를 열어도
-  // unlearned 단어가 없어 학습이 비어서 뜬다(실기기 QA — window.alert '출제 가능한
-  // 문제가 없어요'). 이 상태에서는 그 행·CTA 모두 학습이 아니라 서점으로 보낸다.
-  // buy_done 이면(이미 오늘 샀다) 이 막힘 상태가 아니라 "완료" 취급이라 재정렬하지 않는다.
-  const noSeedsToPlant = !buyDone && seedsLeft <= 0 && newSeed.done < (newSeed.target ?? 0);
+  // 심을 씨앗이 없는 상태 — 오늘 목표를 못 채웠는데 보유 씨앗이 0이거나 모자란다(show_buy,
+  // 오늘 이미 서점에서 받았다면 제외). 버튼은 시각만 비활성이고 눌러서 안내 시트를 연다.
+  const cannotPlant = newSeed.done < (newSeed.target ?? 0) && (seedsLeft <= 0 || (showBuy && !buyDone));
 
   const toggle = (key) => setExpanded((prev) => ({ ...prev, [key]: !prev[key] }));
 
@@ -253,10 +255,24 @@ const TodayTasksCard = () => {
   const studyPlant = () => {
     const remaining = Math.max(0, (newSeed.target ?? 0) - (newSeed.done ?? 0));
     // 심을 씨앗 재고가 없으면 학습을 열지 않는다 — goStore()가 그 자체로 서점 이동이다.
-    if (noSeedsToPlant) { goStore(); return; }
+    if (cannotPlant) { openNoSeedSheet(); return; }
     // 오늘 목표를 채운 뒤에도 '심기'로 더 심을 수 있다(서버 한도 무시 force).
     if (remaining <= 0) { startPlantSession({ count: 5, force: true }); return; }
     startPlantSession({ count: Math.min(5, remaining) });
+  };
+
+  const openNoSeedSheet = async () => {
+    vibrate({ duration: 5 });
+    const goToStore = await pushAwaitNewBottomSheet(
+      ConfirmNewBottomSheet,
+      {
+        title: '심을 씨앗이 없어요',
+        subTitle: '서점에서 새 단어장을 담아오세요',
+        btns: { cancel: '닫기', confirm: '서점 가기' },
+      },
+      { isBackdropClickClosable: true, isDragToCloseEnabled: true }
+    );
+    if (goToStore) goStore();
   };
 
   const goStore = () => {
@@ -327,26 +343,7 @@ const TodayTasksCard = () => {
     };
   })() : null;
 
-  const buyRow = showBuy ? {
-    key: 'buy',
-    title: '새 씨앗 구매',
-    faded: buyDone,
-    checked: buyDone,
-    // 완료 배지 대신 왼쪽 체크로 완료를 표현한다 — 완료 시 이 행은 셀 수 있는 개수가 없어
-    // 오른쪽을 비운다(다른 행처럼 x/y 를 보여줄 자연스러운 분모가 없다).
-    right: buyDone ? null : <Pill tone="secondary" onClick={goStore}>서점</Pill>,
-    onRowClick: buyDone ? undefined : goStore,
-  } : null;
-
-  // 심을 씨앗이 없는 상태(noSeedsToPlant)에서는 '새 씨앗 구매'가 실제로 할 수 있는 일이라
-  // 위로 올린다 — 못 여는 '새 씨앗 심기'가 먼저 보이면 눌러도 안 되는 행이 눈에 먼저 띈다.
-  if (noSeedsToPlant) {
-    if (buyRow) rowDefs.push(buyRow);
-    if (newSeedRow) rowDefs.push(newSeedRow);
-  } else {
-    if (newSeedRow) rowDefs.push(newSeedRow);
-    if (buyRow) rowDefs.push(buyRow);
-  }
+  if (newSeedRow) rowDefs.push(newSeedRow);
 
   if (rowDefs.length === 0) return null;
 
@@ -360,21 +357,23 @@ const TodayTasksCard = () => {
       </div>
       {/* 새 씨앗 심기 — 목록 아래 넓은 버튼. 홈 주 CTA(FarmCta)와 같은 면·글자 규격이되,
           카드 안이라 바깥 그림자는 쓰지 않는다. 목표를 채운 뒤에도 더 심을 수 있다. */}
-      {newSeedRow && !noSeedsToPlant && (
+      {newSeedRow && (
         <motion.button
           type="button"
           onClick={studyPlant}
           whileTap={{ scale: TAP.scale }}
           transition={SPRING.snappy}
           onTapStart={() => haptic('light')}
-          className="
+          aria-disabled={cannotPlant}
+          className={`
             flex items-center justify-center
             w-full h-[52px] mt-[6px] mb-[12px] rounded-[12px]
-            bg-[linear-gradient(180deg,#FF88DC_0%,#FF70D4_100%)]
-            shadow-[inset_0_1px_0_rgba(255,255,255,.34)]
-          "
+            ${cannotPlant
+              ? 'bg-layout-gray-100 dark:bg-layout-gray-dark'
+              : 'bg-[linear-gradient(180deg,#FF88DC_0%,#FF70D4_100%)] shadow-[inset_0_1px_0_rgba(255,255,255,.34)]'}
+          `}
         >
-          <span className="text-layout-white text-[16px] font-[700] leading-[1.2] tracking-[-0.02em]">
+          <span className={`${cannotPlant ? 'text-layout-gray-200 dark:text-layout-gray-400' : 'text-layout-white'} text-[16px] font-[700] leading-[1.2] tracking-[-0.02em]`}>
             새 씨앗 심기
           </span>
         </motion.button>
