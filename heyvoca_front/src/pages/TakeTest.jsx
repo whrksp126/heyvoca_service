@@ -496,7 +496,12 @@ const TakeTest = () => {
         words = [...words, ...extra];
       }
       const plugin = getQuestionType(type);
-      const sets = words.length >= 2 && plugin?.setupQuestions ? plugin.setupQuestions(words, allWords) : [];
+      const sets = words.length >= 2 && plugin?.setupQuestions ? plugin.setupQuestions(
+        // 같은 심기 단어가 cardMatch·cardMatchListening 두 세트에 모두 들어갈 수 있다 — 세트 플러그인은
+        // 단어 객체를 복제 없이 words[] 에 넣고 채점 시 w.isCorrect 를 제자리 변경하므로, 복제하지 않으면
+        // 한 세트의 정답이 다른 세트(진행바 단위)에 미리 true 로 보인다. 세트별로 얕게 복제한다
+        // (저장·복원은 JSON 이라 원래 분리돼 있다. 단어 id 로만 식별하므로 정체성 의존 코드 없음).
+        words.map((w) => ({ ...w })), allWords) : [];
       content.push(...sets);
       // 세트에 들어가지 못한 단어(뜻이 겹쳐 짝을 못 이루는 등)는 사지선다로 대체
       const used = new Set(sets.flatMap((st) => (st.words ?? []).map(wordId)));

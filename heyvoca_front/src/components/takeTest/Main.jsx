@@ -39,6 +39,7 @@ import { wordLang, isJa } from '../../utils/lang';
 import { getReading, shouldShowReading } from '../../utils/jaWord';
 import ReadingLine from '../common/ReadingLine';
 import ResultMark from '../common/ResultMark';
+import { computeStudyProgress } from '../../utils/studyProgress';
 import { SLIDE_VARIANTS, SLIDE_TRANSITION, PROGRESS_FILL_TRANSITION, CARD_ENTER_INITIAL, CARD_ENTER_ANIMATE, CARD_ENTER_TRANSITION } from '../../utils/studySlideMotion';
 
 
@@ -257,6 +258,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
   // 시딩되어 있으므로(TakeTest.jsx 복원 로직 참고), 그 값으로 초기화해야 진행 바가
   // 0%부터 다시 차오르지 않고 실제 진행률을 곧바로 보여준다.
   const [passedCount, setPassedCount] = useState(() => passedVocaIdsRef?.current?.size ?? 0);
+  const [, setProgressTick] = useState(0);
   const [isAnswered, setIsAnswered] = useState(false);
   const [isStay, setIsStay] = useState(false);
   const [isFetching, setIsFetching] = useState(false);
@@ -1507,6 +1509,9 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
     // 단일 단어 플러그인(빈칸 채우기 + 출제형 4종) — 문제 객체 자체가 단어를 스프레드한 것이라
     // words[] 가 없다. fsrs 기준값과 재출제용 단어 객체를 문제 자신에서 얻는다.
     const isSingleWordQuestion = !Array.isArray(setWords) && currentQuestion?.id === wordId;
+    // 진행바(utils/studyProgress.js)가 채점 순간 이 단위를 채우도록 정오답을 즉시 기록한다 —
+    // 값은 세트 완료 콜백(handlePluginComplete)이 나중에 쓰는 results.every 와 같다(단일 결과).
+    if (isSingleWordQuestion && currentQuestion) currentQuestion.isCorrect = !!wordIsCorrect;
     const fsrsBefore = target?.fsrs ?? (isSingleWordQuestion ? currentQuestion?.fsrs : undefined);
     // tier_target/tier_shown(계약 4·5절) — cardMatch는 words[] 안의 단어별로, 단일 단어
     // 플러그인은 문제 자신(currentQuestion)에 붙어 있다(둘 다 mapRecommendItemToWord 출처).
@@ -1682,6 +1687,8 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
     if (!result || result.wordId == null) return;
     const currentQuestion = testQuestions[progressIndex];
     processCardWord(result, currentQuestion, currentQuestion?.words, currentQuestion?.questionType);
+    // words[].isCorrect 는 제자리 변경이라 리렌더 트리거가 따로 필요하다(진행바 즉시 반영).
+    setProgressTick((t) => t + 1);
   };
 
   // opts.processed — 플러그인이 채점 순간 onCardMatched 로 모든 단어를 이미 처리했다는 표시.
@@ -1789,40 +1796,14 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
     : (testQuestions[progressIndex]?.questionType !== 'multipleChoiceListening' && isSpeaking && !isAnswered);
 
   // 플러그인 컴포넌트가 있으면 동적 렌더링 (cardMatch 등)
-  // 진행률 바: 일반 세션은 "통과 고유 단어 수 / 전체 고유 단어 수"
-  // (totalUniqueCount는 세션 시작 시 확정된 값 — 재출제 문제가 추가돼도 분모는 고정).
-  //
-  // multi-step 세션(plant 새 씨앗 심기·script 글자 학습)은 같은 vocaId(단어/글자)가
-  // 여러 슬라이드(만나기→보고 고르기→듣고 고르기→따라 쓰기…)로 이어진다. 이 경우 위
-  // "통과 고유 단어 수" 기준을 쓰면 첫 슬라이드 하나만 맞혀도 그 단어가 "통과"로 잡혀
-  // 분자가 꽉 차버린다(두 번째 슬라이드부터 바가 가득 차고 '1/1'로 보이는 버그).
-  // 그래서 이 모드에서는 슬라이드 기준으로 바꾼다 — 분자는 채점 없는 슬라이드(만나기 등)
-  // 포함해 "지금까지 끝낸 슬라이드 수"(progressIndex, 0-based 완료 개수와 일치),
-  // 분모는 "전체 슬라이드 수"(testQuestions.length) — 오답 재출제로 큐에 슬라이드가
-  // 추가되면(enqueueRetry) 분모도 자연스럽게 늘어난다(줄어들지 않음).
-  // 구간 안내 슬라이드(phaseNotice)는 문제로 세지 않는다 — 분자·분모 모두에서 뺀다.
-  // 안내가 있는 일반 학습도 같은 슬라이드 기준으로 센다(문장 구간·재출제가 단어를 다시 풀게
-  // 하므로 "통과 고유 단어 수" 기준이면 문장 구간 전에 이미 꽉 찬다).
-  const isNoticeQ = (q) => q?.questionType === PHASE_NOTICE_TYPE;
-  const useSlideProgress = isMultiStepMode || hasPhaseFlow;
-  // 분모 = 이번 학습의 "원래 슬라이드 수"(재출제·안내 제외) — 오답 재출제가 큐에 붙어도 늘지 않는다.
-  // 분자 = 이미 지나간 슬라이드 중 정답으로 통과한 수(비채점 슬라이드는 지나가면 통과로 센다).
-  // 첫 시도에 틀린 원본은 세지 않고, 재출제를 맞혔을 때 1로 센다 — 그래서 절대 줄지 않는다.
-  const totalWordCount = useSlideProgress
-    ? Math.max(1, testQuestions.filter((q) => !isNoticeQ(q) && !q.isRetry).length)
-    : totalUniqueCount;
-  const displayPassedCount = isFinishing
-    ? totalWordCount
-    : useSlideProgress
-      ? Math.min(
-          testQuestions.slice(0, progressIndex).filter((q) => {
-            if (isNoticeQ(q)) return false;
-            if (q.isRetry) return q.isCorrect === true;
-            return q.isCorrect !== false;
-          }).length,
-          totalWordCount
-        )
-      : Math.min(passedCount, totalWordCount);
+  // 진행바(듀오링고 방식, 모든 세션 유형 공통) — 계산은 utils/studyProgress.js 순수 함수.
+  // 분모 = 학습 시작 시 정해진 채점 단위 수(단일 문제 1, 카드 맞추기류는 세트 단어 수 / 비채점
+  // 슬라이드·재출제 제외). 분자 = 채점 순간 정답으로 채워진 단위 수(오답은 그대로, 재출제 정답 시 채움).
+  // testQuestions 의 isCorrect 에서 매 렌더 재계산하므로 복원·재마운트에도 그대로 복구된다.
+  // 세션 종료 판정(passedVocaIdsRef·큐 소진)과는 무관한 표시 전용 값이다.
+  const studyProgress = computeStudyProgress(testQuestions);
+  const totalWordCount = Math.max(1, studyProgress.total);
+  const displayPassedCount = isFinishing ? totalWordCount : Math.min(studyProgress.done, totalWordCount);
 
   const currentPlugin = getQuestionType(testQuestions[progressIndex]?.questionType);
 
