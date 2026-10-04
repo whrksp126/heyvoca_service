@@ -7,7 +7,7 @@ import { useUser } from '../../context/UserContext';
 import gemImg from '../../assets/images/gem.png';
 import ResultItemBackground01 from '../../assets/images/ResultItemBackground01.svg';
 import ResultItemBackground02 from '../../assets/images/ResultItemBackground02.svg';
-import { haptic } from '../../lib/feel';
+import { haptic, feel, useCountUp, ShineSweep, SPRING } from '../../lib/feel';
 import { warmTts } from '../../api/tts';
 import SpeakerButton from '../common/SpeakerButton';
 import { wordLang, isJa } from '../../utils/lang';
@@ -22,7 +22,8 @@ import { stageToCrop, FARM_ITEMS, FARM_ITEM_LABEL } from '../../utils/crop';
 import WeekStreakStrip, { buildWeekCells } from '../farm/WeekStreakStrip';
 
 // 아이템 이름은 utils/crop.js 의 FARM_ITEM_LABEL 하나로 통일돼 있다(시안 §1⑤ "새심기 삽").
-import { getSessionFarmSummaryApi, getFarmTodayTasksApi } from '../../api/farm';
+import { getFarmTodayTasksApi } from '../../api/farm';
+import { fetchSessionFarmSummary } from '../../utils/sessionSummaryPrefetch';
 import { calendarDaysFromToday } from '../../utils/reviewTiming';
 import StudyTimingTag from '../farm/StudyTimingTag';
 import { getAchievementCriteriaApi, updateUserRecentStudyDataApi } from '../../api/study';
@@ -497,6 +498,169 @@ const NextStudyNotice = ({ show, remainingSec, onStop, reducedMotion }) => (
 const STATE_RANK = { unlearned: 0, leaf: 1, plant: 2, carrot: 3 };
 const STATE_TO_CROP = { unlearned: 'seed', leaf: 'sprout', plant: 'leaf', carrot: 'carrot' };
 
+
+/*
+  ── 결과 통계 카드 연출 ──────────────────────────────────────────────
+  카드가 약 350ms 간격으로 하나씩 스프링으로 튀어나오고 숫자가 0에서 카운트업, 카드마다
+  빛줄기 + feel('select'). 전부 나오면 onDone() — 하단 버튼이 그때 활성화된다.
+  화면 아무 곳이나 탭하면(skipRef) 남은 카드를 한꺼번에 보여 주고 바로 onDone().
+  새 지표는 만들지 않는다 — 이 화면에 원래 있던 값(정답률·정답 수·오답 수)만 쓴다.
+*/
+const REVEAL_GAP_MS = 350;
+const REVEAL_FIRST_MS = 250;
+const REVEAL_SETTLE_MS = 600;   // 마지막 카드의 카운트업이 끝나길 기다리는 시간
+
+const useStaggerReveal = ({ count, gapMs, firstMs = REVEAL_FIRST_MS, onDone, skipRef }) => {
+  const [shown, setShown] = useState(0);
+  const doneRef = useRef(false);
+  const onDoneRef = useRef(onDone);
+  useEffect(() => { onDoneRef.current = onDone; });
+  useEffect(() => {
+    let timer = null;
+    let i = 0;
+    const finish = () => {
+      if (doneRef.current) return;
+      doneRef.current = true;
+      onDoneRef.current?.();
+    };
+    const tick = () => {
+      i += 1;
+      setShown(i);
+      timer = setTimeout(i < count ? tick : finish, i < count ? gapMs : REVEAL_SETTLE_MS);
+    };
+    if (count <= 0) finish();
+    else timer = setTimeout(tick, firstMs);
+    if (skipRef) {
+      skipRef.current = () => {
+        clearTimeout(timer);
+        setShown(count);
+        finish();
+      };
+    }
+    return () => {
+      clearTimeout(timer);
+      if (skipRef) skipRef.current = null;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  return shown;
+};
+
+const TONE = {
+  primary: { box: 'bg-primary-main-50 dark:bg-primary-main-dark', text: 'text-primary-main-600' },
+  success: { box: 'bg-status-success-100 dark:bg-status-success-dark', text: 'text-status-success-600' },
+  error: { box: 'bg-status-error-50 dark:bg-status-error-dark', text: 'text-status-error-600' },
+};
+
+// 카드 한 장 — 마운트되는 순간이 "튀어나오는" 순간이다(소리·진동·빛줄기·카운트업이 같은 틱에 시작).
+const RevealStatCard = ({ label, value, suffix = '', total = null, tone = 'primary', reducedMotion }) => {
+  const t = TONE[tone] ?? TONE.primary;
+  const display = useCountUp(value, { from: 0, duration: 0.6 });
+  useEffect(() => { feel('select'); }, []);
+  return (
+    <motion.div
+      className={`relative overflow-hidden flex flex-col items-center justify-center gap-[4px] py-[18px] rounded-[14px] ${t.box}`}
+      initial={reducedMotion ? { opacity: 0 } : { opacity: 0, scale: 0.6, y: 24, rotateX: -50 }}
+      animate={reducedMotion ? { opacity: 1 } : { opacity: 1, scale: 1, y: 0, rotateX: 0, transition: SPRING.bouncy }}
+    >
+      <ShineSweep play={!reducedMotion} delay={0.1} />
+      <span className='text-[12px] font-[700] text-layout-gray-400 dark:text-layout-gray-100'>{label}</span>
+      <span className={`flex items-baseline ${t.text}`}>
+        <span className='text-[28px] font-[800] leading-[1.1] tabular-nums'>{display}</span>
+        <span className='text-[14px] font-[700]'>{suffix}</span>
+        {total != null && <span className='text-[13px] font-[500] text-layout-gray-300'>/{total}</span>}
+      </span>
+    </motion.div>
+  );
+};
+
+const ResultStatCards = ({ cards, reducedMotion, onDone, skipRef }) => {
+  const shown = useStaggerReveal({ count: cards.length, gapMs: REVEAL_GAP_MS, onDone, skipRef });
+  return (
+    <div className='grid grid-cols-3 gap-[10px] px-[20px] pt-[34px] pb-[26px] min-h-[130px] [perspective:600px]'>
+      {cards.map((c, i) => (
+        <div key={c.label} className='min-h-[88px]'>
+          {i < shown && <RevealStatCard {...c} reducedMotion={reducedMotion} />}
+        </div>
+      ))}
+    </div>
+  );
+};
+
+// plant 결과 — '새로 심은 씨앗 N개' 카운트업 + 목록 항목이 차례로 등장
+const PlantReveal = ({ rows, metaOfRow, reducedMotion, onDone, skipRef }) => {
+  const n = rows.length;
+  // 항목이 많아도 전체 등장은 약 1.5초 안에 끝나게 간격을 줄인다
+  const rowGap = n > 0 ? Math.max(40, Math.min(140, Math.floor(1500 / n))) : 0;
+  const [cardShown, setCardShown] = useState(false);
+  const rowSkipRef = useRef(null);
+  const shownRows = useStaggerReveal({
+    count: n,
+    gapMs: rowGap,
+    firstMs: REVEAL_FIRST_MS + 500,
+    onDone,
+    skipRef: rowSkipRef,
+  });
+  useEffect(() => {
+    const t = setTimeout(() => setCardShown(true), REVEAL_FIRST_MS);
+    if (skipRef) {
+      skipRef.current = () => { clearTimeout(t); setCardShown(true); rowSkipRef.current?.(); };
+    }
+    return () => { clearTimeout(t); if (skipRef) skipRef.current = null; };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  return (
+    <div className='flex flex-col items-center gap-[15px] px-[20px] pt-[34px] pb-[30px]'>
+      <FarmCropArt stage="PLANTED_SEED" alt="새로 심은 씨앗" />
+      {n > 0 ? (
+        <div className='w-full min-h-[88px]'>
+          {cardShown && <PlantCountCard value={n} reducedMotion={reducedMotion} />}
+        </div>
+      ) : (
+        <p className='text-[16px] font-[700] text-center leading-[1.45]'>이번에는 심은 씨앗이 없어요</p>
+      )}
+      <div className='flex flex-col gap-[8px] w-full'>
+        {rows.map((row, i) => (
+          i < shownRows ? (
+            <motion.div
+              key={row.user_voca_id}
+              initial={reducedMotion ? { opacity: 0 } : { opacity: 0, y: 18, scale: 0.96 }}
+              animate={reducedMotion ? { opacity: 1 } : { opacity: 1, y: 0, scale: 1, transition: SPRING.soft }}
+            >
+              <FarmGrowRow
+                crop="PLANTED_SEED"
+                word={row.word}
+                meaning={row.meaning}
+                meta={metaOfRow(row)}
+                right="새로 심었어요"
+              />
+            </motion.div>
+          ) : null
+        ))}
+      </div>
+    </div>
+  );
+};
+
+const PlantCountCard = ({ value, reducedMotion }) => {
+  const display = useCountUp(value, { from: 0, duration: 0.6 });
+  useEffect(() => { feel('select'); }, []);
+  return (
+    <motion.div
+      className={`relative overflow-hidden flex items-center justify-center gap-[8px] py-[20px] rounded-[14px] ${TONE.primary.box}`}
+      initial={reducedMotion ? { opacity: 0 } : { opacity: 0, scale: 0.7, y: 20 }}
+      animate={reducedMotion ? { opacity: 1 } : { opacity: 1, scale: 1, y: 0, transition: SPRING.bouncy }}
+    >
+      <ShineSweep play={!reducedMotion} delay={0.1} />
+      <span className='text-[15px] font-[700] text-layout-gray-400 dark:text-layout-gray-100'>새로 심은 씨앗</span>
+      <span className='text-primary-main-600'>
+        <span className='text-[30px] font-[800] tabular-nums'>{display}</span>
+        <span className='text-[16px] font-[700]'>개</span>
+      </span>
+    </motion.div>
+  );
+};
+
 const StudyResult = () => {
   "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
 
@@ -568,6 +732,9 @@ const StudyResult = () => {
   const isGuest = !!state?.guestMode;
 
   const [currentScreenIndex, setCurrentScreenIndex] = useState(0);
+  // 결과 화면 통계 카드가 모두 나왔는지 — 하단 버튼(활성화)과 자동 '다음 학습' 카운트다운이 이때 시작한다.
+  const [statsDone, setStatsDone] = useState(false);
+  const statsSkipRef = useRef(null);
   const [resultData, setResultData] = useState(null);
   const [screenList, setScreenList] = useState([]); // 표시할 화면 리스트
   // 당근 농장 V2 세션 요약 (심은 씨앗 / 자란 작물 / 되살린 작물 / 아이템 / 연속 학습일)
@@ -700,7 +867,7 @@ const StudyResult = () => {
       const sessionId = state?.sessionId ?? state?.session_id ?? comboSummary?.sessionId ?? null;
       let farm = null;
       if (!isGuest && sessionId) {
-        const farmRes = await getSessionFarmSummaryApi(sessionId);
+        const farmRes = await fetchSessionFarmSummary(sessionId);
         if (farmRes?.code === 200) {
           farm = farmRes.data ?? null;
           setFarmSummary(farm);
@@ -945,6 +1112,11 @@ const StudyResult = () => {
     const type = screenList[currentScreenIndex]?.type;
     if (['farmGrown', 'farmGolden', 'farmRescued', 'farmStreak'].includes(type)) {
       haptic('success');
+    } else if (['gem', 'farmItem', 'achievement', 'combo'].includes(type)) {
+      // 보상류 슬라이드 진입 — 큐가 없던 자리를 손맛 큐로 통일(슬라이드 자체의 등장 연출은 각 슬라이드가 가진다)
+      feel('bonus');
+    } else if (['farmSprouted', 'farmPlanted'].includes(type)) {
+      feel('progress');
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentScreenIndex, screenList]);
@@ -1118,7 +1290,7 @@ const StudyResult = () => {
 
   // 마지막 슬라이드에 도착하면 센다 — 앞 슬라이드를 보는 중에는 시작하지 않는다
   useEffect(() => {
-    if (!isResultScreen || !livePlan.available || countdownPhase !== 'idle' || isFreeTest) return;
+    if (!isResultScreen || !statsDone || !livePlan.available || countdownPhase !== 'idle' || isFreeTest) return;
     setFrozenPlan(livePlan);
     if (livePlan.fallback === 'quick') setNextNotice('이전 설정을 찾지 못해 AI 추천으로 이어가요');
     if (typeof document !== 'undefined' && document.visibilityState === 'hidden') {
@@ -1132,7 +1304,7 @@ const StudyResult = () => {
     debugLog('begin');
     beginSegment(NEXT_STUDY_COUNTDOWN_MS);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isResultScreen, livePlan.available, countdownPhase]);
+  }, [isResultScreen, statsDone, livePlan.available, countdownPhase]);
 
   // 세기 — interval(숫자 갱신) + 마감 시각 setTimeout(백업) 둘 다 마감을 확인한다
   useEffect(() => {
@@ -1221,6 +1393,8 @@ const StudyResult = () => {
       if (isTap) stopCountdown('tap');
     },
     onClickCapture: (e) => {
+      // 통계 카드 연출 중 화면을 탭하면 남은 카드를 바로 보여 준다(하단 버튼 영역은 제외)
+      if (!inCtaArea(e)) statsSkipRef.current?.();
       const t = tapRef.current;
       if (!t || inCtaArea(e) || t.moved) return;
       stopCountdown('click');
@@ -1295,92 +1469,26 @@ const StudyResult = () => {
           >
             {currentScreen.data?.plantRows ? (
               /* 새 씨앗 심기 결과 — 채점(점수·정답 수·O/X) 없이 새로 심은 씨앗만 보여준다 */
-              <div className='flex flex-col items-center gap-[15px] px-[20px] pt-[34px] pb-[30px]'>
-                <FarmCropArt stage="PLANTED_SEED" alt="새로 심은 씨앗" />
-                <motion.p
-                  className='text-[16px] font-[700] text-center leading-[1.45]'
-                  initial={{ y: 20, opacity: 0 }}
-                  animate={{ y: 0, opacity: 1 }}
-                  transition={{ delay: 0.3, duration: 0.5 }}
-                >
-                  {currentScreen.data.plantRows.length > 0
-                    ? <>새로 심은 씨앗 <strong className='text-primary-main-600'>{currentScreen.data.plantRows.length}개</strong></>
-                    : <>이번에는 심은 씨앗이 없어요</>}
-                </motion.p>
-                <motion.div
-                  className='flex flex-col gap-[8px] w-full'
-                  initial={{ y: 20, opacity: 0 }}
-                  animate={{ y: 0, opacity: 1 }}
-                  transition={{ delay: 0.5, duration: 0.4 }}
-                >
-                  {currentScreen.data.plantRows.map((row) => (
-                    <FarmGrowRow
-                      key={row.user_voca_id}
-                      crop="PLANTED_SEED"
-                      word={row.word}
-                      meaning={row.meaning}
-                      meta={metaOfRow(row)}
-                      right="새로 심었어요"
-                    />
-                  ))}
-                </motion.div>
-              </div>
+              <PlantReveal
+                rows={currentScreen.data.plantRows}
+                metaOfRow={metaOfRow}
+                reducedMotion={reducedMotion}
+                onDone={() => setStatsDone(true)}
+                skipRef={statsSkipRef}
+              />
             ) : (
             <>
-            {/* 프로그레스 서클 영역 — 시안 `.circwrap` padding 34px 0 30px */}
-            <div className='flex flex-col items-center justify-center pt-[34px] pb-[30px]'>
-              <div className='relative w-[238px] h-[238px] flex items-center justify-center'>
-                {/* SVG 영역: 반시계 방향을 위해 scaleY(-1)과 rotate(-90) 적용 */}
-                <svg
-                  className='absolute w-full h-full transform -rotate-90 -scale-y-100'
-                  viewBox="0 0 238 238"
-                >
-                  {/* 안쪽 배경 회색 원 (프로그레스 바가 지나갈 길) */}
-                  <circle
-                    cx="119"
-                    cy="119"
-                    r="104.8"
-                    fill="none"
-                    stroke={isDark ? 'var(--layout-gray-dark)' : 'var(--layout-gray-50)'}
-                    strokeWidth="28.4"
-                  />
-                  {/* 실제 핑크색 프로그레스 바 (반시계 방향으로 채워짐) */}
-                  {correctQuestions > 0 && (
-                    <motion.circle
-                      cx="119"
-                      cy="119"
-                      r="104.8"
-                      fill="none"
-                      stroke="var(--primary-main-600)"
-                      strokeWidth="28.4"
-                      strokeLinecap="round"
-                      initial={{ pathLength: 0 }}
-                      animate={{ pathLength: correctQuestions / totalQuestions }}
-                      transition={{ duration: 1.5, ease: "easeOut" }}
-                    />
-                  )}
-                </svg>
-                {/* 중앙 텍스트 */}
-                <div className='flex flex-col items-center justify-center z-10'>
-                  <motion.div
-                    initial={{ opacity: 0, scale: 0.5 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ delay: 0.5, duration: 0.5 }}
-                    className='text-[36px] font-[700] text-primary-main-600'
-                  >
-                    {score}점
-                  </motion.div>
-                  <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 1, duration: 0.5 }}
-                  >
-                    <span className='text-[14px] font-[700] text-primary-main-600'>{correctQuestions}</span>
-                    <span className='text-[14px] font-[400] text-layout-gray-200'>/{totalQuestions}</span>
-                  </motion.div>
-                </div>
-              </div>
-            </div>
+            {/* 통계 카드 — 정답률 / 맞힌 단어 / 틀린 단어(이 화면에 원래 있던 값만) */}
+            <ResultStatCards
+              reducedMotion={reducedMotion}
+              onDone={() => setStatsDone(true)}
+              skipRef={statsSkipRef}
+              cards={[
+                { label: '정답률', value: Number.isFinite(score) ? score : 0, suffix: '%', tone: 'primary' },
+                { label: '맞힌 단어', value: correctQuestions, suffix: '개', total: totalQuestions, tone: 'success' },
+                { label: '틀린 단어', value: Math.max(0, totalQuestions - correctQuestions), suffix: '개', tone: 'error' },
+              ]}
+            />
 
             {/* 단어 목록 영역 */}
             <div className='flex flex-col gap-[10px] px-[20px]'>
@@ -1418,7 +1526,7 @@ const StudyResult = () => {
                       key={`${item.id ?? 'q'}-${index}`}
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 1.2 + (index * 0.1) }}
+                      transition={{ delay: 1.5 + Math.min(index, 12) * 0.06 }}
                       onClick={() => handleOpenWordDetail(item)}
                       className={`
                         relative
@@ -1487,7 +1595,11 @@ const StudyResult = () => {
               그래서 태그의 z-2 가 화면 전체 기준으로 올라가 z 가 없던(auto) 이 버튼 영역 위에 그려졌다.
               목록 스크롤 영역은 `isolate` 로 가두고, 버튼 영역은 z-20 으로 확실히 위에 둔다.
               위쪽 20px 페이드는 목록이 버튼 뒤로 '잘려' 보이지 않고 스며들게 한다. */}
-          <div data-result-cta className='absolute bottom-0 left-0 right-0 z-20 bg-layout-white dark:bg-layout-black'>
+          <div
+            data-result-cta
+            aria-disabled={!statsDone}
+            className={`absolute bottom-0 left-0 right-0 z-20 bg-layout-white dark:bg-layout-black transition-opacity duration-300 ${statsDone ? 'opacity-100' : 'opacity-40 pointer-events-none'}`}
+          >
             <div aria-hidden className='pointer-events-none absolute left-0 right-0 bottom-full h-[20px] bg-gradient-to-t from-layout-white dark:from-layout-black to-transparent' />
             {!isFreeTest && (nextNotice || nextPlan.reason) ? (
               <p className='px-[24px] pt-[14px] -mb-[6px] text-center text-[12px] font-[500] text-layout-gray-300'>

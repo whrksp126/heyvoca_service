@@ -27,7 +27,7 @@ const MILESTONE_SHOW_MS = 900;
  * 【손맛】 콤보가 오르는 순간 feel('combo', {n}) — 음이 반음씩 올라가고 진동이 강해진다.
  *  feel() 이 돌려주는 startInMs(정답 큐가 아직 울리는 중이면 그 뒤로 밀린 시작 시각)만큼 팝업
  *  연출도 늦춰 소리·진동·글자가 같은 순간에 뜬다.
- *  5의 배수(5·10·15…)에서는 화면 중앙에 큰 '콤보 xN' 글자가 짧게(900ms) 뜬다 — pointer-events-none 이라
+ *  15 이상의 5의 배수(15·20…)에서는 화면 중앙에 큰 '콤보 xN' 글자가 짧게(900ms) 뜬다 — pointer-events-none 이라
  *  다음 문제 진입·터치를 막지 않는다. (body 포털: 조상의 transform 이 fixed 기준을 바꾸지 않게)
  *
  * @param {boolean} isRecord — 이번 판이 기존 최고 기록을 갱신 중인지(Main.jsx
@@ -59,7 +59,8 @@ const ComboBar = ({ combo, isRecord = false }) => {
       if (timerRef.current) clearTimeout(timerRef.current);
       timerRef.current = setTimeout(() => setShow(false), 800 + startInMs);
 
-      if (current % COMBO_MILESTONE_STEP === 0) {
+      // 5·10 은 Main 의 전체 화면 인터루드(StudyInterlude)가 맡는다 — 중앙 글자는 15·20… 에서만.
+      if (current % COMBO_MILESTONE_STEP === 0 && current > 10) {
         setMilestone(current);
         if (milestoneTimerRef.current) clearTimeout(milestoneTimerRef.current);
         milestoneTimerRef.current = setTimeout(() => setMilestone(null), MILESTONE_SHOW_MS + startInMs);

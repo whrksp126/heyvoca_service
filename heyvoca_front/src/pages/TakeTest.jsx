@@ -1,5 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Main from '../components/takeTest/Main';
+import { CompleteCut, COMPLETE_CUT_MS } from '../components/takeTest/StudyInterlude';
+import { prefetchSessionFarmSummary } from '../utils/sessionSummaryPrefetch';
 import Header from '../components/takeTest/Header';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useVocabulary } from '../context/VocabularyContext';
@@ -119,6 +121,18 @@ const TakeTest = () => {
   // 세우기 전까지 결과 화면 이동 이펙트가 그 옛 "end"에 반응하지 않도록 막는다(initializeTest의
   // isStaleLocalSession 주석). 새 세션 상태를 쓴 직후 false로 푼다.
   const ignoreStaleEndRef = useRef(null);
+  // 학습 완료 컷('학습 완료' 1.1초) — 종료가 감지되면 시작 시각 기준으로 한 번만 만든다.
+  // 결과 이동은 (데이터 준비 끝) 과 (컷 끝) 중 늦은 쪽에 한다. 컷을 탭하면 컷 쪽 대기만 앞당긴다.
+  const completeCutRef = useRef(null);
+  const getCompleteCut = () => {
+    if (!completeCutRef.current) {
+      let resolveFn = () => {};
+      const promise = new Promise((resolve) => { resolveFn = resolve; });
+      const timer = setTimeout(resolveFn, COMPLETE_CUT_MS);
+      completeCutRef.current = { promise, skip: () => { clearTimeout(timer); resolveFn(); } };
+    }
+    return completeCutRef.current;
+  };
 
   // 이 화면이 떠 있는 동안(게스트 맛보기 포함) "학습 세션 활성" 상태를 전역에 알린다.
   // buildVersion.js가 이 신호를 보고 백그라운드 복귀 시 페이지를 reload하지 않도록 막는다
@@ -1132,6 +1146,7 @@ const TakeTest = () => {
         && Array.isArray(state.data?.words) && state.data.words.length > 0
         && (recentStudy?.[state.testType]?.session_id ?? null) !== (state.data?.sessionId ?? null)) return;
       if (recentStudy && recentStudy[state.testType] && recentStudy[state.testType].status === "end") {
+        const completeCut = getCompleteCut();
         // 게스트 맛보기 종료 → 서버 동기화 없이 답안만 챙겨 온보딩 보상으로
         if (isGuestMode) {
           /*
@@ -1172,6 +1187,7 @@ const TakeTest = () => {
             seenIds.add(id);
             return true;
           });
+          await completeCut.promise;
           navigate('/take-test/result', {
             state: { testQuestions: resultQuestions, testType: state.testType, guestMode: true },
             replace: true,
@@ -1229,9 +1245,10 @@ const TakeTest = () => {
           }
         }
 
+        let finishStudyP = Promise.resolve();
         // 학습 세션 종료 (fire-and-forget)
         if (studySessionRef?.current) {
-          finishStudySession(studySessionRef.current)
+          finishStudyP = finishStudySession(studySessionRef.current)
             .catch(e => console.warn('[FSRS] finishStudySession 실패:', e));
         }
         // 온보딩 미션 완료 신호 — M1(AI 추천 테스트)·M5(집중 반복 학습)·M6(자유 설정 테스트).
@@ -1265,6 +1282,13 @@ const TakeTest = () => {
           seenIds.add(id);
           return true;
         });
+        // 결과 화면이 곧 읽을 세션 요약을 컷 동안 미리 받아 둔다(세션 종료 처리 뒤 — 순서는 예전과 같다).
+        // 컷을 기다리는 쪽(navigate)은 이 선조회를 기다리지 않는다.
+        if (studySessionRef?.current) {
+          const sid = studySessionRef.current;
+          finishStudyP.then(() => prefetchSessionFarmSummary(sid));
+        }
+        await completeCut.promise;
         navigate("/take-test/result", {
           state: {
             testQuestions: resultQuestions,
@@ -1328,8 +1352,15 @@ const TakeTest = () => {
     return <ProgressSplash progress={prog} message={message} />;
   } else {
     if (recentStudy[state.testType]?.status === "end" && ignoreStaleEndRef.current !== true) {
-      // 학습 종료 → 결과 페이지로 navigate 진행 중. 깜빡임 방지를 위해 빈 화면 유지.
-      return null;
+      // 학습 종료 → 결과 페이지로 navigate 진행 중. 빈 화면 대신 '학습 완료' 한 컷(탭하면 건너뜀)을 보여준다.
+      // 결과 데이터 준비는 이 컷 동안 병렬로 진행된다(handleUpdateAndNavigate).
+      if (ignoreStaleEndRef.current !== false && (state?.testType === 'plant' || state?.testType === 'script')) return null;
+      return (
+        <CompleteCut
+          label={state?.testType === 'plant' ? '심기 완료' : '학습 완료'}
+          onDone={() => completeCutRef.current?.skip()}
+        />
+      );
     }
 
     return (

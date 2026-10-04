@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { CaretLeft, HandTap } from '@phosphor-icons/react';
+import { CaretLeft, HandTap, FilmSlate } from '@phosphor-icons/react';
 import { motion } from 'framer-motion';
 import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
 import { parseAppVersion, getDevicePlatform } from '../../utils/osFunction';
@@ -8,6 +8,7 @@ import {
   SFX_DURATION_MS, getHapticPattern, validatePattern, PATTERN_DURATION_MS,
   Pressable,
 } from '../../lib/feel';
+import { ComboInterlude, CompleteCut } from '../takeTest/StudyInterlude';
 
 // 손맛 테스트(마이페이지 > 설정 > 실험실) — 모든 큐를 눌러 재생해 보고, 진동 오프셋(ms)으로
 // 소리와 진동의 엇박을 실기기에서 직접 맞춘다. 맞춘 값을 알려 주면 lib/feel/cue.js 의
@@ -42,6 +43,9 @@ const FeelTestNewFullSheet = () => {
   const [offset, setOffset] = useState(() => getHapticOffsetMs());
   const [snap, setSnap] = useState(() => getFeelTimingSnapshot());
   const [lastPlayed, setLastPlayed] = useState(null);
+  // 학습 중 전체 화면 연출 미리 보기 — { kind: 'interlude' | 'complete', n?, key }
+  const [preview, setPreview] = useState(null);
+  const [interludeToggle, setInterludeToggle] = useState(false);
 
   const platform = getDevicePlatform() === 'android' ? 'android' : 'ios';
   const appInfo = parseAppVersion();
@@ -99,6 +103,33 @@ const FeelTestNewFullSheet = () => {
             <Row label="진동 지연 합계" value={`${totalDelay}ms${totalDelay < 0 ? ' (음수 → 소리를 늦춤)' : ''}`} />
             {lastPlayed && <Row label="마지막 재생" value={lastPlayed} />}
           </div>
+        </section>
+
+        {/* 전체 화면 연출 미리 보기 */}
+        <section className="px-[20px] pt-[20px]">
+          <h2 className="text-[14px] font-[700] text-layout-black dark:text-layout-white mb-[6px]">전체 화면 연출 미리 보기</h2>
+          <div className="flex gap-[8px]">
+            <Pressable
+              onClick={() => {
+                setInterludeToggle((v) => !v);
+                setPreview({ kind: 'interlude', n: interludeToggle ? 10 : 5, key: Date.now() });
+              }}
+              className="flex flex-1 items-center justify-center gap-[6px] h-[44px] rounded-[10px] bg-layout-gray-50 dark:bg-layout-gray-dark text-[14px] font-[600] text-layout-black dark:text-layout-white"
+            >
+              <FilmSlate weight="fill" className="text-[18px] text-primary-main-600" />
+              콤보 인터루드 (x{interludeToggle ? 10 : 5})
+            </Pressable>
+            <Pressable
+              onClick={() => setPreview({ kind: 'complete', key: Date.now() })}
+              className="flex flex-1 items-center justify-center gap-[6px] h-[44px] rounded-[10px] bg-layout-gray-50 dark:bg-layout-gray-dark text-[14px] font-[600] text-layout-black dark:text-layout-white"
+            >
+              <FilmSlate weight="fill" className="text-[18px] text-primary-main-600" />
+              학습 완료 컷
+            </Pressable>
+          </div>
+          <p className="mt-[8px] text-[12px] leading-[1.5] text-layout-gray-300">
+            인터루드는 1.6초, 완료 컷은 1.1초 뒤 자동으로 닫히고 탭하면 바로 닫혀요. 소리·진동은 실제 학습과 같은 큐(bonus·complete)를 써요.
+          </p>
         </section>
 
         {/* 오프셋 슬라이더 */}
@@ -166,6 +197,13 @@ const FeelTestNewFullSheet = () => {
           </ul>
         </section>
       </div>
+
+      {preview?.kind === 'interlude' && (
+        <ComboInterlude key={preview.key} n={preview.n} milestone={preview.n} onDone={() => setPreview(null)} />
+      )}
+      {preview?.kind === 'complete' && (
+        <CompleteCut key={preview.key} label="학습 완료" onDone={() => setPreview(null)} />
+      )}
     </div>
   );
 };

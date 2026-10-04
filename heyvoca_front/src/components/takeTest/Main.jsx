@@ -26,6 +26,7 @@ import { optimisticFarmPayload, pendingFarmPayload } from '../../utils/farmOptim
 import { getComboApi, protectComboApi, forfeitComboApi } from '../../api/game';
 import ComboBar, { getComboFillClass } from './ComboBar';
 import StudyProgressBar from './StudyProgressBar';
+import { ComboInterlude } from './StudyInterlude';
 import { ComboProtectNewBottomSheet } from '../newBottomSheet/ComboProtectNewBottomSheet';
 import { useUser } from '../../context/UserContext';
 import FarmStatusBar, { FarmResultBar } from '../farm/FarmStatusBar';
@@ -307,6 +308,18 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
   const comboSessionRef = useRef({ maxCombo: 0, bestUpdated: false, best: 0 });
   const comboPopupOpenRef = useRef(false);
   /*
+    콤보 마일스톤(5·10) 인터루드 — 연출만(보상 없음). 정답 직후 콤보가 5·10 에 닿으면
+    pendingInterludeRef 에 "어느 문제(atIndex)에서 닿았는지"를 적어 두고, 그 문제가 다음으로
+    넘어가는 순간(advanceWithInterlude)에 한 번 꺼내 쓴다. 다음 문제는 인터루드가 끝난 뒤에야
+    마운트되므로(progressIndex 를 그때 올린다) 자동 음성·타이머·포커스가 인터루드 중에 시작하지 않는다.
+    세션당 마일스톤 하나에 한 번(최대 2회). 마지막 문제·안내 슬라이드 앞에서는 생략한다.
+  */
+  const [interlude, setInterlude] = useState(null); // { n, milestone }
+  const pendingInterludeRef = useRef(null);        // { n, milestone, atIndex }
+  const shownMilestonesRef = useRef(new Set());
+  const interludeNextRef = useRef(null);
+  const prevComboCurrentRef = useRef(null);
+  /*
     현재 진행 중인 콤보 판(스트릭)이 기존 최고 기록을 갱신 중인지 추적.
 
     AT_RISK 로 전환되는 순간(오답)엔 combo.py apply_answer 가 current_combo 를 이미 0으로
@@ -587,6 +600,44 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
     s.current = payload.streak ?? s.current;
     s.qualifiedNow = s.qualifiedNow || !!payload.qualified_now;
     persistStreakSummary();
+  };
+
+  // 콤보가 5·10 을 처음 넘는 순간을 기록(최초 값은 기준선일 뿐 트리거하지 않는다)
+  const comboCurrent = combo?.current ?? null;
+  useEffect(() => {
+    if (comboCurrent === null) return;
+    const prev = prevComboCurrentRef.current;
+    prevComboCurrentRef.current = comboCurrent;
+    if (prev === null || comboCurrent <= prev) return;
+    const crossed = [10, 5].find((m) => prev < m && comboCurrent >= m && !shownMilestonesRef.current.has(m));
+    if (crossed) pendingInterludeRef.current = { n: comboCurrent, milestone: crossed, atIndex: progressIndex };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [comboCurrent]);
+
+  // 다음 문제로 넘어가는 지점 공통 — 인터루드가 걸려 있으면 그것을 먼저 보여주고 applyNext 를 미룬다.
+  // applyNext 는 setProgressIndex + 문제 상태 초기화를 담은 클로저(세션 종료가 아닐 때만 부른다).
+  const advanceWithInterlude = (nextIndex, applyNext) => {
+    const pending = pendingInterludeRef.current;
+    pendingInterludeRef.current = null;
+    const nextQ = testQuestions[nextIndex];
+    const canShow = pending
+      && pending.atIndex === progressIndex
+      && !shownMilestonesRef.current.has(pending.milestone)
+      && !interlude
+      && nextQ?.questionType !== PHASE_NOTICE_TYPE;
+    if (!canShow) {
+      applyNext();
+      return;
+    }
+    shownMilestonesRef.current.add(pending.milestone);
+    interludeNextRef.current = applyNext;
+    setInterlude({ n: pending.n, milestone: pending.milestone });
+  };
+  const handleInterludeDone = () => {
+    const fn = interludeNextRef.current;
+    interludeNextRef.current = null;
+    setInterlude(null);
+    fn?.();
   };
 
   // /study/log 응답의 combo payload 처리 — 상태 갱신 + 위기 시 보호 팝업
@@ -1399,13 +1450,15 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
       }
     });
     if (!isSessionDone) {
-      setProgressIndex(nextIndex);
-      setIsCorrect(null);
-      setUserSelected(null);
-      setIsAnswered(false);
-      setIsStay(false);
-      setUpdateType(null);
-      setMemoryStateChange(null);
+      advanceWithInterlude(nextIndex, () => {
+        setProgressIndex(nextIndex);
+        setIsCorrect(null);
+        setUserSelected(null);
+        setIsAnswered(false);
+        setIsStay(false);
+        setUpdateType(null);
+        setMemoryStateChange(null);
+      });
     }
   };
 
@@ -1734,13 +1787,15 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
     });
 
     if (!isSessionDone) {
-      setProgressIndex(nextIndex);
-      setIsCorrect(null);
-      setUserSelected(null);
-      setIsAnswered(false);
-      setIsStay(false);
-      setUpdateType(null);
-      setMemoryStateChange(null);
+      advanceWithInterlude(nextIndex, () => {
+        setProgressIndex(nextIndex);
+        setIsCorrect(null);
+        setUserSelected(null);
+        setIsAnswered(false);
+        setIsStay(false);
+        setUpdateType(null);
+        setMemoryStateChange(null);
+      });
     }
   };
 
@@ -1869,6 +1924,11 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
     </div>
   ) : null;
 
+  // 콤보 마일스톤 인터루드(전체 화면 포털) — 두 렌더 경로 공통
+  const interludeEl = interlude ? (
+    <ComboInterlude n={interlude.n} milestone={interlude.milestone} onDone={handleInterludeDone} />
+  ) : null;
+
   if (currentPlugin?.component) {
     const PluginComponent = currentPlugin.component;
     // 채점 없는 슬라이드(wordIntro·scriptIntro)는 일반 플러그인 완료 콜백(handlePluginComplete,
@@ -1890,6 +1950,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
         style={{ willChange: 'transform, opacity' }}
       >
         {isComboMode && <ComboBar combo={combo} isRecord={comboRunIsRecordRef.current} />}
+        {interludeEl}
         <StudyProgressBar
           displayPassedCount={displayPassedCount}
           totalWordCount={totalWordCount}
@@ -1938,6 +1999,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
       style={{ willChange: 'transform, opacity' }}
     >
       {isComboMode && <ComboBar combo={combo} isRecord={comboRunIsRecordRef.current} />}
+        {interludeEl}
       <StudyProgressBar
         displayPassedCount={displayPassedCount}
         totalWordCount={totalWordCount}
