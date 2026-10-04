@@ -2,8 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { SpeakerHigh } from '@phosphor-icons/react';
 import { getTextSound } from '../../../utils/common';
-import { haptic } from '../../../lib/feel';
-import { playSuccessSound, playErrorSound } from '../../../utils/audio';
+import { feel } from '../../../lib/feel';
 import TtsRipple from '../../../components/common/TtsRipple';
 import LiftAboveBar from '../../../components/common/LiftAboveBar';
 import MemoryStateChangeBadge, {
@@ -196,8 +195,8 @@ const CardMatchListeningQuestion = ({ question, testType, onComplete, onCardMatc
     };
 
     if (isMatch) {
-      haptic('success');
-      playSuccessSound();
+      // 맞춘 쌍은 같은 틱에 소리·진동·튀는 연출(아래 flashAnim)이 함께 시작한다.
+      feel('match');
       resolveWordState(leftWord, true, newAttempts);
       // 카드가 풀린 **그 순간** 부모에 알린다. 800ms 뒤에 알리면 그동안 구버전 표시가
       // 먼저 떴다가 농장 상태 바로 바뀌어, 채점 결과가 두 번 다른 모습으로 나타난다.
@@ -211,8 +210,7 @@ const CardMatchListeningQuestion = ({ question, testType, onComplete, onCardMatc
 
       }, CARD_FLASH_MS);
     } else {
-      haptic('error');
-      playErrorSound();
+      feel('wrong');
       resolveWordState(leftWord, false, newAttempts);
       notifyResolved();   // 정답 분기와 같은 이유 — 표시가 두 번 바뀌지 않게 즉시 알린다
       setWrongFlashLeftWordIds(prev => new Set([...prev, leftWord.id]));
@@ -315,6 +313,18 @@ const CardMatchListeningQuestion = ({ question, testType, onComplete, onCardMatc
     return 'text-layout-black dark:text-layout-white';
   };
 
+  // 맞춘 쌍은 동시에 통 튀고(소리 2번째 음 시점에 최대), 틀린 쌍은 좌우로 흔들린다.
+  const flashAnim = (id, wrongSet) => {
+    if (correctFlashWordIds.has(id)) return { scale: [1, 1.08, 1] };
+    if (wrongSet.has(id)) return { x: [0, -6, 6, -4, 4, 0] };
+    return undefined;
+  };
+  const flashTransition = (id, wrongSet) => {
+    if (correctFlashWordIds.has(id)) return { duration: 0.3, times: [0, 0.37, 1], ease: 'easeOut' };
+    if (wrongSet.has(id)) return { duration: 0.35, ease: 'easeInOut' };
+    return { type: 'spring', stiffness: 400, damping: 17 };
+  };
+
   return (
     <div className="grid grid-cols-2 gap-[10px] w-full h-full">
       {/* 좌측: 스피커 (채점 후 단어 텍스트 공개) */}
@@ -350,8 +360,10 @@ const CardMatchListeningQuestion = ({ question, testType, onComplete, onCardMatc
               onClick={() => handleLeftClick(index)}
               disabled={isResolved || isAnimating}
               whileTap={!isResolved && !isAnimating ? { scale: 0.95 } : {}}
-              onTapStart={!isResolved && !isAnimating ? () => haptic('light') : undefined}
-              transition={{ type: 'spring', stiffness: 400, damping: 17 }}
+              // 짝의 두 번째 탭은 곧바로 채점(match/wrong)이므로 톡은 첫 선택에서만 낸다.
+              onTapStart={!isResolved && !isAnimating && selectedRight === null ? () => feel('tap') : undefined}
+              animate={flashAnim(word.id, wrongFlashLeftWordIds)}
+              transition={flashTransition(word.id, wrongFlashLeftWordIds)}
             >
               {/* 우측 상단 - 매칭 전: 최근 학습 시점 / 매칭 후: 다음 복습 예정일(오답은 비움).
                   카드 매칭은 단어 카드(왼쪽 열)가 곧 이 단어의 "문제 카드"라 각 단어 카드의
@@ -430,8 +442,9 @@ const CardMatchListeningQuestion = ({ question, testType, onComplete, onCardMatc
               onClick={() => handleRightClick(index)}
               disabled={isMatchResolved || isFlashingWrong}
               whileTap={!isMatchResolved && !isFlashingWrong ? { scale: 0.95 } : {}}
-              onTapStart={!isMatchResolved && !isFlashingWrong ? () => haptic('light') : undefined}
-              transition={{ type: 'spring', stiffness: 400, damping: 17 }}
+              onTapStart={!isMatchResolved && !isFlashingWrong && selectedLeft === null ? () => feel('tap') : undefined}
+              animate={flashAnim(word.id, wrongFlashRightWordIds)}
+              transition={flashTransition(word.id, wrongFlashRightWordIds)}
             >
               <span className={`text-[14px] font-[600] ${getRightTextStyle(index)} text-center leading-snug break-keep`}>
                 {displayMeanings}

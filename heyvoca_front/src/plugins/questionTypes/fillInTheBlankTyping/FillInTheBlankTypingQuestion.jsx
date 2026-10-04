@@ -8,8 +8,7 @@ import LiftAboveBar from '../../../components/common/LiftAboveBar';
 import WordInfoBubble from '../../../components/common/WordInfoBubble';
 import ResultMark from '../../../components/common/ResultMark';
 import { getWordInfoApi } from '../../../api/search';
-import { haptic } from '../../../lib/feel';
-import { playSuccessSound, playErrorSound } from '../../../utils/audio';
+import { feel, pickVariant, ShineSweep, PerfectBadge } from '../../../lib/feel';
 import { getTextSound, stripHtmlTags } from '../../../utils/common';
 import { useStudyAdvanceGate } from '../../../hooks/useStudyAdvanceGate';
 import { getMemoryStateKeyByStability } from '../../../components/common/MemoryStateChangeBadge';
@@ -60,6 +59,7 @@ const FillInTheBlankTypingQuestion = ({ question, onComplete, onCardMatched, far
   const [value, setValue] = useState('');
   const [isAnswered, setIsAnswered] = useState(false);
   const [isCorrect, setIsCorrect] = useState(null);
+  const [isPerfect, setIsPerfect] = useState(false); // 한 번에(오타 없이) 맞힘 → '완벽해요'
   const [gradeInfo, setGradeInfo] = useState(null); // { typo, reason }
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [speakDuration, setSpeakDuration] = useState(null);
@@ -179,7 +179,7 @@ const FillInTheBlankTypingQuestion = ({ question, onComplete, onCardMatched, far
       height: wordRect.height,
     };
 
-    haptic('light');
+    feel('tap');
     speak(cleanWord, blankLang, 'lookup');
 
     const reqId = ++lookupReqRef.current;
@@ -293,7 +293,7 @@ const FillInTheBlankTypingQuestion = ({ question, onComplete, onCardMatched, far
   }, [value]);
 
   const handleCardClick = () => {
-    haptic('light');
+    feel('tap');
     speakShown();
   };
 
@@ -307,13 +307,10 @@ const FillInTheBlankTypingQuestion = ({ question, onComplete, onCardMatched, far
     const grade = gradeTypingAnswer(value, { answerText, baseForm, blockedTypos });
     const timeTakenMs = Date.now() - startTimeRef.current;
 
-    if (grade.isCorrect) {
-      haptic('success');
-      playSuccessSound();
-    } else {
-      haptic('error');
-      playErrorSound();
-    }
+    // 소리·진동·시각(아래 setState)을 같은 틱에. 오타 허용 정답·재출제는 perfect 가 아니다.
+    const perfect = grade.isCorrect && !grade.typo && !question.isRetry;
+    feel(perfect ? 'perfect' : (grade.isCorrect ? 'correct' : 'wrong'));
+    setIsPerfect(perfect);
 
     question.isCorrect = grade.isCorrect;
 
@@ -347,7 +344,7 @@ const FillInTheBlankTypingQuestion = ({ question, onComplete, onCardMatched, far
   };
 
   const handleNext = () => {
-    haptic('light');
+    feel('tap');
     nextRef.current?.();
   };
 
@@ -454,16 +451,22 @@ const FillInTheBlankTypingQuestion = ({ question, onComplete, onCardMatched, far
             <form onSubmit={handleSubmit}>
               <p lang={jaBlank ? 'ja' : undefined} className={`w-full text-[22px] font-[700] leading-[1.8] text-layout-black dark:text-layout-white ${jaBlank ? 'break-normal' : 'break-keep'}`}>
                 {renderWordTokens(beforeTokens, 'b')}
-                <span
+                <motion.span
+                  // 채점 순간: 정답은 통 튀고 빛줄기가 지나가며, 오답은 좌우로 흔들린다(채점 큐와 같은 틱).
+                  animate={isAnswered
+                    ? (isCorrect ? pickVariant('correctPop', reducedMotion).animate : pickVariant('shake', reducedMotion).animate)
+                    : undefined}
                   className={`
-                    relative
+                    relative overflow-hidden
                     inline-flex items-center justify-center align-middle
                     min-w-[84px] px-[10px] mx-[2px]
                     rounded-[8px] border-[1px]
                     h-[40px] text-[17px] font-[700]
+                    transition-colors duration-150
                     ${pillStyle}
                   `}
                 >
+                  <ShineSweep play={isAnswered && isCorrect === true} />
                   {isAnswered ? (
                     // 채점 후 — 정답 자리도 탭하면 사전 말풍선이 뜬다(입력값을 그대로 조회한다).
                     <button
@@ -500,7 +503,11 @@ const FillInTheBlankTypingQuestion = ({ question, onComplete, onCardMatched, far
                         spellCheck={false}
                         enterKeyHint="done"
                         value={value}
-                        onChange={(e) => setValue(e.target.value)}
+                        onChange={(e) => {
+                          // 키 입력 — 글자 수가 달라질 때마다 가벼운 톡(IME 조합 중 같은 길이 갱신은 제외)
+                          if (e.target.value.length !== value.length) feel('tap');
+                          setValue(e.target.value);
+                        }}
                         style={inputWidth != null ? { width: `${inputWidth}px` } : undefined}
                         className="
                           bg-transparent outline-none text-center
@@ -510,7 +517,7 @@ const FillInTheBlankTypingQuestion = ({ question, onComplete, onCardMatched, far
                       />
                     </>
                   )}
-                </span>
+                </motion.span>
                 {renderWordTokens(afterTokens, 'a')}
               </p>
               {caption && (
@@ -530,12 +537,14 @@ const FillInTheBlankTypingQuestion = ({ question, onComplete, onCardMatched, far
               info={lookup.info}
               speaking={isSpeaking && speakingTarget === 'lookup'}
               onReplay={() => {
-                haptic('light');
+                feel('tap');
                 speak(lookup.word, blankLang, 'lookup');
               }}
             />
           )}
         </AnimatePresence>
+
+        <PerfectBadge show={isPerfect && isAnswered} />
 
         <ResultMark
           result={isCorrect}
@@ -558,12 +567,15 @@ const FillInTheBlankTypingQuestion = ({ question, onComplete, onCardMatched, far
         type="button"
         disabled={!isAnswered && !value.trim()}
         whileTap={isAnswered || value.trim() ? { scale: 0.97 } : undefined}
+        // 입력이 생겨 비활성→활성으로 바뀌는 순간 색이 켜지며 살짝 튄다.
+        animate={(!isAnswered && value.trim()) ? pickVariant('correctPop', reducedMotion).animate : undefined}
         transition={{ type: 'spring', stiffness: 400, damping: 17 }}
         onClick={isAnswered ? handleNext : handleSubmit}
         className={`
           flex-shrink-0
           h-[50px] rounded-[12px]
           text-[16px] font-[700]
+          transition-colors duration-150
           ${!isAnswered && !value.trim()
             ? 'bg-layout-gray-200 dark:bg-[#2A2A2A] text-layout-gray-400 dark:text-layout-gray-300'
             : 'bg-primary-main-600 text-layout-white'}

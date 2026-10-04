@@ -27,6 +27,10 @@ const ensureCtx = () => {
   return audioCtx;
 };
 
+// 합성 효과음(lib/feel/sfx.js)이 같은 AudioContext 를 공유하도록 내보낸다.
+// primeSfx 가 만든(그리고 gesture 에서 unlock 한) 컨텍스트와 동일해야 iOS 에서 소리가 난다.
+export const getAudioCtx = () => ensureCtx();
+
 // mp3 → ArrayBuffer → decodeAudioData → AudioBuffer 캐시. gesture와 무관하게 미리 받아둔다.
 const decodeAll = () => {
   const ctx = ensureCtx();

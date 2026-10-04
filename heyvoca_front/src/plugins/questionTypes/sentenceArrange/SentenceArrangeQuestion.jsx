@@ -4,8 +4,7 @@ import { SpeakerHigh } from '@phosphor-icons/react';
 import TtsRipple from '../../../components/common/TtsRipple';
 import WordInfoBubble from '../../../components/common/WordInfoBubble';
 import { getWordInfoApi } from '../../../api/search';
-import { haptic } from '../../../lib/feel';
-import { playSuccessSound, playErrorSound } from '../../../utils/audio';
+import { feel } from '../../../lib/feel';
 import { getTextSound, stripHtmlTags } from '../../../utils/common';
 import { useStudyAdvanceGate } from '../../../hooks/useStudyAdvanceGate';
 import { getMemoryStateKeyByStability } from '../../../components/common/MemoryStateChangeBadge';
@@ -28,6 +27,7 @@ import ArrangeTray from './ArrangeTray';
 const SentenceArrangeQuestion = ({ question, onComplete, onCardMatched, farmByWordId }) => {
   const [isAnswered, setIsAnswered] = useState(false);
   const [isCorrect, setIsCorrect] = useState(null);
+  const [isPerfect, setIsPerfect] = useState(false); // 한 번에 맞힘 → '완벽해요'
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [speakDuration, setSpeakDuration] = useState(null);
   const [speakingTarget, setSpeakingTarget] = useState(null); // 'shown' | 'answer' | null
@@ -112,7 +112,7 @@ const SentenceArrangeQuestion = ({ question, onComplete, onCardMatched, farmByWo
   }, []);
 
   const handleCardClick = () => {
-    haptic('light');
+    feel('tap');
     speakShown();
   };
 
@@ -122,13 +122,10 @@ const SentenceArrangeQuestion = ({ question, onComplete, onCardMatched, farmByWo
     const correct = isAcceptedOrder(userTokens, accepted);
     const timeTakenMs = Date.now() - startTimeRef.current;
 
-    if (correct) {
-      haptic('success');
-      playSuccessSound();
-    } else {
-      haptic('error');
-      playErrorSound();
-    }
+    // 소리·진동·시각(아래 setState)을 같은 틱에. 재출제(isRetry)가 아닌 첫 시도 정답이면 perfect.
+    const perfect = correct && !question.isRetry;
+    feel(perfect ? 'perfect' : (correct ? 'correct' : 'wrong'));
+    setIsPerfect(perfect);
 
     question.isCorrect = correct;
 
@@ -162,7 +159,7 @@ const SentenceArrangeQuestion = ({ question, onComplete, onCardMatched, farmByWo
   };
 
   const handleNext = () => {
-    haptic('light');
+    feel('tap');
     nextRef.current?.();
   };
 
@@ -191,7 +188,7 @@ const SentenceArrangeQuestion = ({ question, onComplete, onCardMatched, farmByWo
       height: wordRect.height,
     };
 
-    haptic('light');
+    feel('tap');
     speak(cleanWord, answerLang, 'lookup');
 
     const reqId = ++answerLookupReqRef.current;
@@ -398,6 +395,7 @@ const SentenceArrangeQuestion = ({ question, onComplete, onCardMatched, farmByWo
         postAnswerNode={postAnswerNode}
         isAnswered={isAnswered}
         isCorrect={isCorrect}
+        perfect={isPerfect}
         question={question}
         farm={farm}
         resumeReplayKey={resumeReplayKey}
@@ -423,7 +421,7 @@ const SentenceArrangeQuestion = ({ question, onComplete, onCardMatched, farmByWo
             info={answerLookup.info}
             speaking={isSpeaking && speakingTarget === 'lookup'}
             onReplay={() => {
-              haptic('light');
+              feel('tap');
               speak(answerLookup.word, answerLang, 'lookup');
             }}
           />

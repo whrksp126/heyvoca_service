@@ -8,8 +8,7 @@ import LiftAboveBar from '../../../components/common/LiftAboveBar';
 import WordInfoBubble from '../../../components/common/WordInfoBubble';
 import ResultMark from '../../../components/common/ResultMark';
 import { getWordInfoApi } from '../../../api/search';
-import { haptic, pickVariant } from '../../../lib/feel';
-import { playSuccessSound, playErrorSound } from '../../../utils/audio';
+import { feel, pickVariant, ShineSweep } from '../../../lib/feel';
 import { getTextSound, stripHtmlTags } from '../../../utils/common';
 import { getAdvanceDelay } from '../../../utils/studyTiming';
 import { useStudyAdvanceGate } from '../../../hooks/useStudyAdvanceGate';
@@ -232,7 +231,7 @@ const FillInTheBlankQuestion = ({ question, onComplete, onCardMatched, farmByWor
   };
 
   const handleCardClick = () => {
-    haptic('light');
+    feel('tap');
     speakShown();
   };
 
@@ -263,7 +262,7 @@ const FillInTheBlankQuestion = ({ question, onComplete, onCardMatched, farmByWor
       height: wordRect.height,
     };
 
-    haptic('light');
+    feel('tap');
     speak(cleanWord, blankLang, 'lookup');
 
     const reqId = ++lookupReqRef.current;
@@ -360,13 +359,8 @@ const FillInTheBlankQuestion = ({ question, onComplete, onCardMatched, farmByWor
     const correct = index === resultIndex;
     const timeTakenMs = Date.now() - startTimeRef.current;
 
-    if (correct) {
-      haptic('success');
-      playSuccessSound();
-    } else {
-      haptic('error');
-      playErrorSound();
-    }
+    // 소리·진동·시각(아래 setState)을 같은 틱에 — feel() 이 오디오를 예약하고 진동 지연을 맞춘다.
+    feel(correct ? 'correct' : 'wrong');
 
     // FSRS 업데이트는 백엔드 /study/log 에서 처리(Main.processCardWord)
     question.isCorrect = correct;
@@ -593,7 +587,7 @@ const FillInTheBlankQuestion = ({ question, onComplete, onCardMatched, farmByWor
               info={lookup.info}
               speaking={isSpeaking && speakingTarget === 'lookup'}
               onReplay={() => {
-                haptic('light');
+                feel('tap');
                 speak(lookup.word, blankLang, 'lookup');
               }}
             />
@@ -632,11 +626,11 @@ const FillInTheBlankQuestion = ({ question, onComplete, onCardMatched, farmByWor
               key={index}
               whileTap={{ scale: 0.92, transition: { type: 'spring', stiffness: 400, damping: 17 } }}
               // 오답으로 확정되는 순간에만 흔들린다 — 매 렌더 재생되지 않도록 animate 값 자체를 조건부로 둔다.
-              animate={isWrongSelected ? pickVariant('shake', reducedMotion).animate : undefined}
-              onClick={() => {
-                haptic('light');
-                handleOptionClick(index);
-              }}
+              animate={isWrongSelected
+                ? pickVariant('shake', reducedMotion).animate
+                : (isCorrect === true && selectedIndex === index ? pickVariant('correctPop', reducedMotion).animate : undefined)}
+              // 선택지 탭은 곧바로 채점이라 '톡' 대신 채점 큐(correct/wrong)가 그 순간을 맡는다.
+              onClick={() => handleOptionClick(index)}
               disabled={isAnswered}
               style={{ willChange: 'transform' }}
               className={`
@@ -653,9 +647,11 @@ const FillInTheBlankQuestion = ({ question, onComplete, onCardMatched, farmByWor
                 [display:-webkit-box]
                 [-webkit-line-clamp:2]
                 [-webkit-box-orient:vertical]
+                transition-colors duration-150
                 ${btnStyle}
               `}
             >
+              <ShineSweep play={isCorrect === true && selectedIndex === index} />
               {option}
               {/* ja: 채점 후 정답 선택지에 읽기(히라가나) — 채점 전엔 힌트가 되므로 숨김.
                   선택지 문자열은 정답 = 문제 단어(question.origin)라 읽기는 question 에서 얻는다. */}

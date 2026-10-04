@@ -16,14 +16,13 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import { SpeakerHigh } from '@phosphor-icons/react';
-import { haptic } from '../../lib/feel';
+import { feel } from '../../lib/feel';
 import ResultMark from '../common/ResultMark';
 import TtsRipple from '../common/TtsRipple';
 import LiftAboveBar from '../common/LiftAboveBar';
 import { FarmResultBar } from '../farm/FarmStatusBar';
 import { optionMainSub } from '../../utils/scriptQuestions';
 import { speakScriptItem } from '../../utils/scriptData';
-import { playSuccessSound, playErrorSound } from '../../utils/audio';
 import { CARD_ENTER_INITIAL, CARD_ENTER_ANIMATE, CARD_ENTER_TRANSITION } from '../../utils/studySlideMotion';
 
 // 정오답 버튼 규격은 components/takeTest/Main.jsx의 사지선다 옵션 버튼과 동일 클래스를 쓴다
@@ -47,7 +46,7 @@ const ChoiceCard = ({
   // 카드 재생(스피커 활성·TtsRipple 파동·펄스 등 카드 효과 포함) — "사용자가 카드를 눌렀을
   // 때"와 "문제 등장 자동재생 때"만 쓴다(2026-09-29 QA 5차).
   const playCard = async () => {
-    haptic('light');
+    feel('tap');
     playingRef.current = true;
     setSpeaking(true);
     setDuration(null);
@@ -84,7 +83,7 @@ const ChoiceCard = ({
   useEffect(() => {
     if (!answered) return undefined;
     const correct = selectedIndex === answerIndex;
-    if (correct) { haptic('success'); playSuccessSound(); } else { haptic('error'); playErrorSound(); }
+    // 채점 소리·진동은 선택 순간(onClick)에 feel() 로 이미 발사했다 — 지연된 effect 에서 따로 내지 않는다.
     let cancelled = false;
     const t = setTimeout(() => {
       if (playingRef.current) { onSettled?.(); return; }
@@ -173,7 +172,7 @@ const ChoiceCard = ({
               type="button"
               disabled={answered}
               whileTap={{ scale: 0.96 }}
-              onClick={() => { haptic('light'); onSelect(index); }}
+              onClick={() => { feel(index === answerIndex ? 'correct' : 'wrong'); onSelect(index); }}
               className={`
                 relative flex items-center justify-center
                 w-full h-[54px] px-[20px]

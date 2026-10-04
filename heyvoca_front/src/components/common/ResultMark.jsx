@@ -1,6 +1,7 @@
-import { memo, useEffect, useState } from 'react';
+import { memo, useEffect, useMemo, useState } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import { Circle, X } from '@phosphor-icons/react';
+import { Burst, pickCorrectPhrase } from '../../lib/feel';
 
 // 채점 결과 큰 O/X 마크 — 모든 학습 문제 유형(사지선다·듣기 사지선다·역방향·빈칸 채우기·
 // 빈칸 직접 입력·문장 만들기·받아쓰기) 공용. 기존 스프링 등장 애니메이션으로 확대되며
@@ -25,6 +26,11 @@ import { Circle, X } from '@phosphor-icons/react';
 // 몇 번을 리렌더해도(형제 상태가 바뀌어도) 이 애니메이션은 이미 진행 중인 하나의 타임라인일
 // 뿐이라 다시 트리거될 여지가 없다.
 //
+// 【손맛(feel) — 2026-10 추가】 정답이면 O 아래에 안내 문구 칩('잘했어요' 등, 무작위)이 아래에서
+// 스프링으로 튀어 오르고 토큰 색 파편이 흩어진다(Burst). 문제 화면에 별도 하단 채점 패널이 없어
+// 이 O/X 자리가 곧 채점 안내 영역이다. 전체가 위 단일 타임라인 안(같은 motion.div)에 있어 다른
+// 상태가 바뀌어도 재생이 흔들리지 않는다. 타이밍은 채점 큐(correct)의 강한 2번째 음(≈115ms)에 맞춘다.
+//
 // props:
 //   result   — true(정답) / false(오답) / null(표시 안 함)
 //   replayKey — 재개(resume) 등으로 같은 result 값을 다시 재생해야 할 때 바뀌는 값
@@ -43,6 +49,9 @@ const ResultMark = memo(({ result, replayKey, size = 150, className = '' }) => {
   const [activeResult, setActiveResult] = useState(result);
   const [activeKey, setActiveKey] = useState(replayKey);
   const [done, setDone] = useState(result === null);
+  // 정답 문구 — 채점 인스턴스(결과·replayKey)가 바뀔 때만 새로 고른다(리렌더로 문구가 바뀌지 않게).
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const phrase = useMemo(() => pickCorrectPhrase(), [activeResult, activeKey]);
 
   useEffect(() => {
     if (result === null) return;
@@ -73,6 +82,7 @@ const ResultMark = memo(({ result, replayKey, size = 150, className = '' }) => {
   return (
     <div className={`pointer-events-none ${className}`}>
       <motion.div
+        className="relative"
         key={`${activeResult}-${activeKey}`}
         initial={{ scale: 0, opacity: 0 }}
         animate={{ scale: 1, opacity: [0, 1, 1, 0] }}
@@ -87,6 +97,28 @@ const ResultMark = memo(({ result, replayKey, size = 150, className = '' }) => {
         onAnimationComplete={() => setDone(true)}
       >
         <Icon size={size} weight="bold" className={colorClass} />
+        {activeResult && size >= 100 && (
+          <>
+            {!reducedMotion && <Burst play delay={0.08} radius={Math.round(size * 0.42)} />}
+            <span className="absolute left-1/2 bottom-[4px] -translate-x-1/2">
+              <motion.span
+                className="
+                  block whitespace-nowrap
+                  px-[14px] py-[5px] rounded-[20px]
+                  bg-status-success-500 text-layout-white
+                  text-[14px] font-[800]
+                "
+                initial={{ y: reducedMotion ? 0 : 22, scale: reducedMotion ? 1 : 0.7, opacity: 0 }}
+                animate={{ y: 0, scale: 1, opacity: 1 }}
+                transition={reducedMotion
+                  ? { duration: 0.1 }
+                  : { type: 'spring', stiffness: 420, damping: 15, delay: 0.06 }}
+              >
+                {phrase}
+              </motion.span>
+            </span>
+          </>
+        )}
       </motion.div>
     </div>
   );

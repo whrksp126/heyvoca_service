@@ -42,6 +42,9 @@
 // ─────────────────────────────────────────────────────────────────────────
 
 import { vibrate, getDevicePlatform } from '../../utils/osFunction';
+import postMessageManager from '../../utils/postMessageManager';
+import { getHapticPattern, KIND_FALLBACK, eventsToWebPattern } from './hapticPatterns';
+import { canUseNative } from '../../utils/nativeBridge';
 
 // kind → react-native-haptic-feedback 트리거 이름 (앱 브릿지로 그대로 전달됨)
 const HAPTIC_TYPE_MAP = {
@@ -96,6 +99,77 @@ export function haptic(kind) {
 
   if (typeof navigator === 'undefined' || !('vibrate' in navigator)) return;
   navigator.vibrate(WEB_VIBRATE_PATTERN[kind]);
+}
+
+// ─────────────────────────────────────────────────────────────────────────
+// 커스텀 패턴 — 앱 1.1.2 부터 `haptic_pattern` / `haptic_warmup` 브릿지가 생긴다(응답 없음).
+//   {type:'haptic_pattern', props:{events, delayMs, cancelPrevious}}
+//     events 1~32개·총 길이 ≤3000ms·구간 비중첩(어기면 앱이 통째로 무시), delayMs 0~500 은 앱이 모든
+//     이벤트 time 에 더해 **네이티브 시간축**에서 지연시킨다(JS 타이머 아님),
+//     cancelPrevious 는 이전 패턴을 끊는다 — iOS 는 stop 이 엔진을 내려 다음 재생이 늦어지므로
+//     **기본 false**, 길게 울리는 complete 를 끊어야 할 때처럼 꼭 필요한 큐에서만 true.
+//   {type:'haptic_warmup'} (props 없음) — 햅틱 엔진 예열. 학습 화면 진입 시 1회.
+// 지원 여부는 utils/nativeBridge.js 의 NATIVE_HANDLER_MIN_VERSION 표(haptic_pattern: 1.1.2)로 판정한다.
+// 미만 앱은 이 메시지를 모르므로(보내면 무반응) 보내지 않고 기존 kind 매핑으로 폴백한다.
+// ─────────────────────────────────────────────────────────────────────────
+const isAppWebView = () => typeof window !== 'undefined'
+  && getDevicePlatform() !== 'web'
+  && !!window.ReactNativeWebView;
+
+/** 이 앱이 커스텀 진동 패턴 브릿지를 갖고 있는가(1.1.2+). 순수 웹/구버전은 false. */
+export function supportsHapticPattern() {
+  return isAppWebView() && canUseNative('haptic_pattern');
+}
+
+let warmedUp = false;
+/** 햅틱 엔진 예열 — 지원 앱에서만, 페이지 수명 동안 1회. */
+export function hapticWarmup() {
+  if (warmedUp || !supportsHapticPattern() || !canUseNative('haptic_warmup')) return;
+  warmedUp = true;
+  postMessageManager.sendMessageToReactNative('haptic_warmup');
+}
+
+const PATTERN_DEBOUNCE_MS = 40;
+const patternLastAt = {};
+const MAX_NATIVE_DELAY_MS = 500;
+
+/**
+ * 이름 붙은 진동 패턴을 울린다.
+ * @param {string} name  hapticPatterns.js 의 패턴 이름
+ * @param {{delayMs?:number, n?:number, cancelPrevious?:boolean}} opts
+ *   delayMs 는 소리와 맞추기 위한 시작 지연(cue.js 가 계산). n 은 combo 세기.
+ */
+export function hapticPattern(name, { delayMs = 0, n, cancelPrevious = false } = {}) {
+  const platform = getDevicePlatform() === 'android' ? 'android' : 'ios';
+  const events = getHapticPattern(name, { n, platform });
+  if (!events) return;
+
+  const now = Date.now();
+  if (now - (patternLastAt[name] || 0) < PATTERN_DEBOUNCE_MS) return;
+  patternLastAt[name] = now;
+
+  const delay = Math.max(0, Math.round(delayMs));
+
+  if (supportsHapticPattern()) {
+    postMessageManager.sendMessageToReactNative('haptic_pattern', {
+      events,
+      delayMs: Math.min(delay, MAX_NATIVE_DELAY_MS),
+      cancelPrevious,
+    });
+    return;
+  }
+
+  const run = () => {
+    if (isAppWebView()) {
+      // 구버전 앱 — 가장 가까운 기존 kind. 기존 haptic() 의 60ms 디바운스를 그대로 탄다.
+      const kind = KIND_FALLBACK[name];
+      if (kind) haptic(kind);
+      return;
+    }
+    if (typeof navigator === 'undefined' || !('vibrate' in navigator)) return;
+    navigator.vibrate(eventsToWebPattern(events));
+  };
+  if (delay > 4) setTimeout(run, delay); else run();
 }
 
 export default haptic;

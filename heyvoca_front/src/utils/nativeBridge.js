@@ -61,6 +61,10 @@ export const NATIVE_HANDLER_MIN_VERSION = {
   // 1.1.1 — openImagePicker 가 props.lang 을 읽어 일본어 스크립트(가나·한자)로 인식.
   //  (가상 키: 핸들러는 openImagePicker 그대로, 'lang 지원 여부' 판정 전용)
   openImagePickerLang: '1.1.1',
+  // 1.1.2 — 커스텀 진동 패턴(손맛 시스템). 둘 다 응답 없는 fire-and-forget 메시지.
+  //  구버전 앱은 모르는 메시지를 console.log 로 흘려버리므로 이 표로 선차단하고 기존 vibrate 로 폴백한다.
+  haptic_pattern: '1.1.2',
+  haptic_warmup: '1.1.2',
 };
 
 /** 요청 실패 사유 — 호출부는 이 코드로 분기해 폴백을 고른다. */

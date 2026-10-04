@@ -8,7 +8,7 @@ import WordInfoBubble from '../../../components/common/WordInfoBubble';
 import ResultMark from '../../../components/common/ResultMark';
 import { getWordInfoApi } from '../../../api/search';
 import { getTextSound } from '../../../utils/common';
-import { haptic } from '../../../lib/feel';
+import { feel, pickVariant, ShineSweep, PerfectBadge } from '../../../lib/feel';
 import { diffAgainstAccepted, tokenizeWords, stripTags } from './arrangeUtils';
 
 /*
@@ -110,6 +110,7 @@ const ArrangeTray = ({
   postAnswerNode,
   isAnswered,
   isCorrect,
+  perfect = false, // 한 번에 맞힘 → '완벽해요' 배지(채점 큐 perfect 는 호출부가 발사)
   question,
   farm,
   resumeReplayKey,
@@ -234,13 +235,13 @@ const ArrangeTray = ({
     if (disabled || bankUsed[i]) return;
     const target = slots.findIndex((s) => s == null);
     if (target === -1) return;
-    haptic('light');
+    feel('select'); // 조각이 자리에 들어가며 확정되는 순간
     placeBankIntoSlot(i, target);
   };
 
   const tapTray = (pos) => {
     if (disabled || slots[pos] == null) return;
-    haptic('light');
+    feel('select');
     removeSlotToBank(pos);
   };
 
@@ -264,6 +265,7 @@ const ArrangeTray = ({
       pointerId: e.pointerId,
     };
     try { e.currentTarget.setPointerCapture(e.pointerId); } catch { /* 캡처 미지원 브라우저 — 무해 */ }
+    feel('tap'); // 눌림 — 손가락이 닿은 순간. 확정(select)은 자리에 놓일 때.
   };
 
   // 고스트 위치 반영 — React 상태가 아니라 DOM transform 을 직접 바꾼다(reflow 없음, compositor 전용).
@@ -322,7 +324,6 @@ const ArrangeTray = ({
         overBank: false,
       };
       ghostPosRef.current = { x: gx, y: gy, scale: 1.05, animate: false };
-      haptic('light');
       setDragVisual({
         bankIdx: start.bankIdx,
         fromSlot: start.fromSlot,
@@ -373,7 +374,7 @@ const ArrangeTray = ({
         ty = r.top + r.height / 2 - d.height / 2;
       }
       commit = () => {
-        haptic('light');
+        feel('select');
         if (start.fromSlot != null) moveSlotToSlot(start.fromSlot, d.overSlot);
         else placeBankIntoSlot(start.bankIdx, d.overSlot);
       };
@@ -384,7 +385,7 @@ const ArrangeTray = ({
         ty = r.top + r.height / 2 - d.height / 2;
       }
       commit = () => {
-        haptic('light');
+        feel('select');
         removeSlotToBank(start.fromSlot);
       };
     }
@@ -412,7 +413,7 @@ const ArrangeTray = ({
 
   const handleConfirm = () => {
     if (disabled || !allFilled || settlingRef.current) return;
-    haptic('light');
+    // 확인 탭 = 곧바로 채점 → 채점 큐(correct/wrong/perfect)가 그 순간을 맡는다.
     onSubmit(slots.map((i) => bank[i]));
   };
 
@@ -451,7 +452,7 @@ const ArrangeTray = ({
       height: wordRect.height,
     };
 
-    haptic('light');
+    feel('tap');
     speakWord(cleanWord);
 
     const reqId = ++lookupReqRef.current;
@@ -612,9 +613,15 @@ const ArrangeTray = ({
                           handleWordTap(e, `chip-${pos}`, bank[bankIdx]);
                         }}
                         // 고스트가 이미 그 자리로 미끄러져 들어온 뒤 확정되므로 팝인 애니메이션은
-                        // 두지 않는다(겹쳐 보이면 깜빡임) — 레이아웃·크기 변화 없이 바로 나타난다.
+                        // 두지 않는다(겹쳐 보이면 깜빡임). 채점 순간에만 정답 칩은 통 튀고(빛줄기),
+                        // 오답 칩은 흔들린다 — 채점 큐와 같은 틱에 시작.
+                        animate={flag === true
+                          ? pickVariant('correctPop', reducedMotion).animate
+                          : (flag === false ? pickVariant('shake', reducedMotion).animate : undefined)}
                         className={`
+                          relative overflow-hidden
                           inline-flex items-center justify-center
+                          transition-colors duration-150
                           ${CHIP_BASE_CLASS}
                           touch-none select-none [-webkit-touch-callout:none] [-webkit-user-select:none]
                           ${chipStyle}
@@ -623,6 +630,7 @@ const ArrangeTray = ({
                         `}
                         style={{ height: SLOT_CHIP_H }}
                       >
+                        <ShineSweep play={flag === true} />
                         {bank[bankIdx]}
                       </motion.button>
                     ) : (
@@ -676,7 +684,7 @@ const ArrangeTray = ({
               info={lookup.info}
               speaking={isSpeaking}
               onReplay={() => {
-                haptic('light');
+                feel('tap');
                 speakWord(lookup.word);
               }}
             />
@@ -685,6 +693,8 @@ const ArrangeTray = ({
 
         {/* O/X — 카드 정중앙. 다른 유형과 같은 공용 ResultMark(2026-09-29) — 정답/오답 모두
             표시하고 약 600ms 후 페이드아웃해 아래 칩 정오답 색·정답 문장이 바로 보인다. */}
+        <PerfectBadge show={perfect && isAnswered} />
+
         <ResultMark
           result={isCorrect}
           replayKey={resumeReplayKey}
@@ -736,11 +746,14 @@ const ArrangeTray = ({
           type="button"
           disabled={isAnswered ? false : !allFilled}
           whileTap={(isAnswered || allFilled) ? { scale: 0.97 } : undefined}
+          // 답이 다 채워져 활성으로 바뀌는 순간 색이 켜지며 살짝 튄다(비활성→활성 전환 연출).
+          animate={(!isAnswered && allFilled) ? pickVariant('correctPop', reducedMotion).animate : undefined}
           transition={{ type: 'spring', stiffness: 400, damping: 17 }}
           onClick={isAnswered ? onNext : handleConfirm}
           className={`
             h-[50px] rounded-[12px]
             text-[16px] font-[700]
+            transition-colors duration-150
             ${(!isAnswered && !allFilled)
               ? 'bg-layout-gray-200 dark:bg-[#2A2A2A] text-layout-gray-400 dark:text-layout-gray-300'
               : 'bg-primary-main-600 text-layout-white'}

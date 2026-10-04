@@ -1,9 +1,9 @@
 import { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
-import { haptic, pickVariant } from '../../lib/feel';
+import { feel, hapticWarmup, pickVariant, ShineSweep } from '../../lib/feel';
 import { useVocabulary } from '../../context/VocabularyContext';
-import { BookOpenText, SpeakerHigh } from "@phosphor-icons/react";
+import { BookOpenText, SpeakerHigh, ArrowCounterClockwise } from "@phosphor-icons/react";
 import { getTextSound, prefetchTextSound } from '../../utils/common';
 import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 import { ProblemDataNewBottomSheet } from '../newBottomSheet/ProblemDataNewBottomSheet';
@@ -16,7 +16,6 @@ import MemoryStateChangeBadge, {
   MEMORY_STATE_RANK as STATE_RANK,
   getMemoryStateKeyByStability,
 } from "../common/MemoryStateChangeBadge";
-import { playSuccessSound, playErrorSound } from '../../utils/audio';
 import { getQuestionType, isSingleWordPluginType, isFillInTheBlankType, isSentenceQuestionType, isNoGradeQuestionType, isArrangeQuestionType, PHASE_NOTICE_TYPE } from '../../plugins/questionTypes';
 import { getDisplayMeanings } from '../../utils/displayMeanings';
 import { logStudyQuestion, getRequeueEasierApi, exampleSeenApi } from '../../api/study';
@@ -25,7 +24,8 @@ import { getAdvanceDelay } from '../../utils/studyTiming';
 import { useStudyAdvanceGate } from '../../hooks/useStudyAdvanceGate';
 import { optimisticFarmPayload, pendingFarmPayload } from '../../utils/farmOptimistic';
 import { getComboApi, protectComboApi, forfeitComboApi } from '../../api/game';
-import ComboBar from './ComboBar';
+import ComboBar, { getComboFillClass } from './ComboBar';
+import StudyProgressBar from './StudyProgressBar';
 import { ComboProtectNewBottomSheet } from '../newBottomSheet/ComboProtectNewBottomSheet';
 import { useUser } from '../../context/UserContext';
 import FarmStatusBar, { FarmResultBar } from '../farm/FarmStatusBar';
@@ -40,7 +40,7 @@ import { getReading, shouldShowReading } from '../../utils/jaWord';
 import ReadingLine from '../common/ReadingLine';
 import ResultMark from '../common/ResultMark';
 import { computeStudyProgress } from '../../utils/studyProgress';
-import { SLIDE_VARIANTS, SLIDE_TRANSITION, PROGRESS_FILL_TRANSITION, CARD_ENTER_INITIAL, CARD_ENTER_ANIMATE, CARD_ENTER_TRANSITION } from '../../utils/studySlideMotion';
+import { SLIDE_VARIANTS, SLIDE_TRANSITION, CARD_ENTER_INITIAL, CARD_ENTER_ANIMATE, CARD_ENTER_TRANSITION } from '../../utils/studySlideMotion';
 
 
 // 백엔드 memory state 키(short/medium/long) → 프론트 키(leaf/plant/carrot) 정규화
@@ -297,6 +297,9 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
   const [updateType, setUpdateType] = useState(null); // SM-2 업데이트 타입
   const startTimeRef = useRef(null);
   const endTimeRef = useRef(null);
+
+  // 학습 화면 진입 시 햅틱 엔진 예열(앱 1.1.2+, 페이지당 1회) — 첫 진동이 늦게 울리는 것을 막는다.
+  useEffect(() => { hapticWarmup(); }, []);
 
   // ── 전역 콤보 (AI 추천 테스트 전용) ──
   const { userProfile, setUserProfile } = useUser();
@@ -1130,8 +1133,8 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
     const isCorrectAnswer = resultIndex === userSelected;
     let q = 0;
     if (isCorrectAnswer) {
-      haptic('success');
-      playSuccessSound();
+      // 소리·진동·시각을 같은 틱에 — feel() 직후 같은 핸들러에서 setIsCorrect 로 시각을 바꾼다.
+      feel('correct');
       setIsCorrect(true);
       question.isCorrect = true;
       question.userResultIndex = userSelected;
@@ -1142,8 +1145,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
       // 결과 화면으로 넘어간다(오답은 여기서 호출되지 않으므로 재출제 규칙과 충돌하지 않는다).
       markVocaPassed(question.vocaIndexId ?? question.id);
     } else {
-      haptic('error');
-      playErrorSound();
+      feel('wrong');
       setIsCorrect(false);
       question.isCorrect = false;
       question.userResultIndex = userSelected;
@@ -1200,8 +1202,8 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
     const isCorrectAnswer = resultIndex === index;
     let q = 0;
     if (isCorrectAnswer) {
-      haptic('success');
-      playSuccessSound();
+      // 소리·진동·시각을 같은 틱에 — feel() 직후 같은 핸들러에서 setIsCorrect 로 시각을 바꾼다.
+      feel('correct');
       setIsCorrect(true);
       question.isCorrect = true;
       question.userResultIndex = index;
@@ -1209,8 +1211,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
       // 진행 바는 "정답 처리된 이 순간" 채운다 — 아래 markVocaPassed 호출 참고(handleClickNext와 동일 규칙).
       markVocaPassed(question.vocaIndexId ?? question.id);
     } else {
-      haptic('error');
-      playErrorSound();
+      feel('wrong');
       setIsCorrect(false);
       question.isCorrect = false;
       question.userResultIndex = index;
@@ -1809,7 +1810,26 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
 
   // 부패 진단(시안 6절) — 진행바가 주황이 되고, 채점 전부터 삽 pill 이 붙는다.
   const isDiagnosis = isDiagnosisQuestion(testQuestions[progressIndex]);
-  const progressFillClass = isDiagnosis ? 'bg-crop-carrot' : 'bg-primary-main-600';
+  // 콤보 마일스톤(5·10)에서 진행바 색 단계 전환 — 진단(부패) 모드의 주황이 우선.
+  const progressFillClass = isDiagnosis
+    ? 'bg-crop-carrot'
+    : (isComboMode ? getComboFillClass(combo?.current ?? 0) : 'bg-primary-main-600');
+
+  // 오답 재출제로 다시 나온 문제 — 진행바 아래에 '이전 오답' 딱지(작은 라벨). 표시 전용.
+  const retryTag = testQuestions[progressIndex]?.isRetry ? (
+    <div className="flex-shrink-0 flex items-center -mt-[6px] mb-[8px]">
+      <span className="
+        inline-flex items-center gap-[4px]
+        px-[8px] py-[2px] rounded-[20px]
+        bg-status-error-100 dark:bg-status-error-dark
+        text-status-error-600 dark:text-status-error-300
+        text-[11px] font-[700]
+      ">
+        <ArrowCounterClockwise weight="bold" className="text-[12px]" />
+        이전 오답
+      </span>
+    </div>
+  ) : null;
 
   // 농장 상태 바 노출 여부 — 지금 보고 있는 문제의 payload 일 때만 띄운다(응답 지연 대비).
   // 채점하면 applyOptimisticGrade 가 낙관값이라도 반드시 세우므로 이 조건은 사실상
@@ -1834,7 +1854,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
     <div className="flex-shrink-0 flex justify-center pt-[10px]">
       <motion.button
         type="button"
-        onClick={() => { haptic('light'); handleSkipListening(); }}
+        onClick={() => { feel('tap'); handleSkipListening(); }}
         whileTap={{ scale: 0.95 }}
         transition={{ type: 'spring', stiffness: 400, damping: 17 }}
         className="
@@ -1870,28 +1890,12 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
         style={{ willChange: 'transform, opacity' }}
       >
         {isComboMode && <ComboBar combo={combo} isRecord={comboRunIsRecordRef.current} />}
-        <motion.div className="
-          relative
-          w-full h-[16px]
-          mb-[15px]
-          rounded-[50px]
-          bg-primary-main-100 dark:bg-layout-gray-dark
-          overflow-hidden
-        ">
-          <motion.div
-            className={`h-[100%] rounded-[50px] ${progressFillClass}`}
-            initial={{ width: "0%" }}
-            animate={{ width: `${Math.floor(displayPassedCount / totalWordCount * 100)}%` }}
-            transition={PROGRESS_FILL_TRANSITION}
-            style={{ willChange: 'width' }}
-          />
-          <span className="
-            absolute right-[10px] top-[50%] translate-y-[-50%]
-            text-[#7b7b7b] text-[10px] font-semibold tracking-[-0.2px]
-          ">
-            {displayPassedCount}/{totalWordCount}
-          </span>
-        </motion.div>
+        <StudyProgressBar
+          displayPassedCount={displayPassedCount}
+          totalWordCount={totalWordCount}
+          fillClass={progressFillClass}
+        />
+        {retryTag}
         <div className="relative flex flex-1 min-h-0 overflow-hidden">
           <AnimatePresence initial={false} mode="popLayout">
             <motion.div
@@ -1934,34 +1938,12 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
       style={{ willChange: 'transform, opacity' }}
     >
       {isComboMode && <ComboBar combo={combo} isRecord={comboRunIsRecordRef.current} />}
-      <motion.div className="
-        relative
-        w-full h-[16px]
-        mb-[15px]
-        rounded-[50px]
-        bg-primary-main-100 dark:bg-layout-gray-dark
-        overflow-hidden
-      ">
-        <motion.div
-          className={`
-            h-[100%]
-            rounded-[50px]
-            ${progressFillClass}
-          `}
-          initial={{ width: "0%" }}
-          animate={{
-            width: `${Math.floor(displayPassedCount / totalWordCount * 100)}%`
-          }}
-          transition={PROGRESS_FILL_TRANSITION}
-          style={{ willChange: 'width' }}
-        />
-        <span className="
-          absolute right-[10px] top-[50%] translate-y-[-50%]
-          text-[#7b7b7b] text-[10px] font-semibold tracking-[-0.2px]
-        ">
-          {displayPassedCount}/{totalWordCount}
-        </span>
-      </motion.div>
+      <StudyProgressBar
+        displayPassedCount={displayPassedCount}
+        totalWordCount={totalWordCount}
+        fillClass={progressFillClass}
+      />
+      {retryTag}
 
       <div className="relative middle flex flex-1 min-h-0 overflow-hidden">
         <AnimatePresence initial={false} mode="popLayout">
@@ -2003,7 +1985,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
                   transition={CARD_ENTER_TRANSITION}
                   style={{ willChange: 'transform, opacity' }}
                   onClick={() => {
-                    haptic('light');
+                    feel('tap');
                     handleClickTTS();
                   }}
                 >
@@ -2122,7 +2104,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
                     <motion.button
                       onClick={(e) => {
                         e.stopPropagation();
-                        haptic('light');
+                        feel('tap');
                         handleClickProblemHintData();
                       }}
                       whileHover={{
@@ -2179,11 +2161,11 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
                         }}
                         // 오답으로 확정되는 순간에만(isWrongSelected 가 false→true 로 바뀌는
                         // 그 렌더) 흔들린다 — 매 렌더 재생되지 않도록 animate 값 자체를 조건부로 둔다.
-                        animate={isWrongSelected ? pickVariant('shake', reducedMotion).animate : undefined}
-                        onClick={() => {
-                          haptic('light');
-                          handleOptionClick(index, option);
-                        }}
+                        animate={isWrongSelected
+                          ? pickVariant('shake', reducedMotion).animate
+                          : (isCorrect === true && userSelected === index ? pickVariant('correctPop', reducedMotion).animate : undefined)}
+                        // 탭 = 곧바로 채점 → 톡 대신 채점 큐(correct/wrong)가 그 순간을 맡는다(handleClickExamOption).
+                        onClick={() => handleOptionClick(index, option)}
                         disabled={isAnswered}
                         style={{ willChange: 'transform' }}
                         className={`
@@ -2200,9 +2182,11 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
                           [display:-webkit-box]
                           [-webkit-line-clamp:2]
                           [-webkit-box-orient:vertical]
+                          transition-colors duration-150
                           ${btnStyle}
                         `}
                       >
+                        <ShineSweep play={isCorrect === true && userSelected === index} />
                         {isReverseChoice ? option.origin : option.displayMeanings.join(", ")}
                       </motion.button>
                     )

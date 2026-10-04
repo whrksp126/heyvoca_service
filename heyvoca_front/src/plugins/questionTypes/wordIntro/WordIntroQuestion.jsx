@@ -4,7 +4,7 @@ import WordMeetCard from '../../../components/study/WordMeetCard';
 import { getTextSound, stopCurrentSound } from '../../../utils/common';
 import { wordLang } from '../../../utils/lang';
 import { stripTags } from '../highlightMarker';
-import { haptic } from '../../../lib/feel';
+import { feel } from '../../../lib/feel';
 
 /*
   ① "만나기" 슬라이드(wordIntro) — 새 씨앗 심기(plant) 세션 전용, 채점 없음(2026-09-29).
@@ -121,7 +121,7 @@ const WordIntroQuestion = ({ question, onComplete }) => {
 
   // 개별 라인 스피커 탭 — 자동 재생 시퀀스를 멈추고 그 라인만 재생(StudyMain과 동일 규칙).
   const handleSpeakerClick = (itemId, index, text, lang) => {
-    haptic('light');
+    feel('tap');
     const isSameLine = playingItemId === itemId && playingItemIndex === index;
     stopSequence();
     stopCurrentSound();
@@ -137,7 +137,7 @@ const WordIntroQuestion = ({ question, onComplete }) => {
   };
 
   const handleNext = () => {
-    haptic('light');
+    feel('tap');
     stopSequence();
     stopCurrentSound();
     onComplete();

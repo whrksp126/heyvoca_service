@@ -11,6 +11,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { SPRING, TAP } from './motion';
 import { haptic } from './haptics';
+import { feel } from './cue';
 
 const Pressable = React.forwardRef(function Pressable(
   {
@@ -18,6 +19,7 @@ const Pressable = React.forwardRef(function Pressable(
     className = '',
     disabled = false,
     hapticKind = 'light',
+    cue = null, // 지정하면 haptic 대신 feel(cue)(소리+진동 동기 발사)
     onTapStart,
     whileTap: whileTapOverride,
     transition: transitionOverride,
@@ -36,7 +38,7 @@ const Pressable = React.forwardRef(function Pressable(
       whileTap={disabled ? undefined : (whileTapOverride ?? { scale: TAP.scale })}
       transition={transitionOverride ?? SPRING.snappy}
       onTapStart={disabled ? undefined : (event, info) => {
-        haptic(hapticKind);
+        if (cue) feel(cue); else haptic(hapticKind);
         onTapStart?.(event, info);
       }}
       {...props}

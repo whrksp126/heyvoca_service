@@ -29,8 +29,7 @@
 
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { motion, useAnimationControls } from 'framer-motion';
-import { haptic } from '../../lib/feel';
-import { playSuccessSound } from '../../utils/audio';
+import { feel } from '../../lib/feel';
 import ResultMark from '../common/ResultMark';
 
 const GUIDE_COLOR = '#B9B2A6';
@@ -278,16 +277,16 @@ const StrokeTracer = ({ entries, compound = false, caseVariant = null, replayKey
     }
 
     if (consumedCount > 0) {
-      haptic('success');
       const nextIndex = activeStrokeIndex + consumedCount;
       if (nextIndex >= strokes.length) {
-        playSuccessSound(); // 글자를 다 썼을 때 — 학습하기 정답과 같은 효과음
+        feel('correct'); // 글자를 다 썼을 때 — 학습하기 정답과 같은 큐
         setPhase('result');
       } else {
+        feel('match'); // 획 하나 통과
         setActiveStrokeIndex(nextIndex);
       }
     } else {
-      haptic('light');
+      feel('wrong');
       triggerShakeHint();
     }
   };
@@ -326,7 +325,7 @@ const StrokeTracer = ({ entries, compound = false, caseVariant = null, replayKey
 
   // 처음부터 다시 — 지금 획만이 아니라 전체 시도를 리셋한다.
   const resetAll = () => {
-    haptic('light');
+    feel('tap');
     activePointerIdRef.current = null;
     pointsRef.current = [];
     setCurrentPoints([]);
@@ -341,7 +340,6 @@ const StrokeTracer = ({ entries, compound = false, caseVariant = null, replayKey
   useEffect(() => {
     if (phase !== 'result') return undefined;
     const t = setTimeout(() => {
-      haptic('light');
       // ResultMark 계산을 먼저 꺼서(별도 렌더 커밋) 세션이 다음 스텝으로 넘어가며 이 카드를
       // 퇴장시킬 때 "마지막 props"가 이미 결과 없음 상태이게 한다 — ChoiceCard의 O/X 깜빡임
       // 버그와 같은 원인(퇴장 애니메이션 중 리렌더/리마운트)에 대한 방어.
@@ -657,7 +655,7 @@ const StrokeTracer = ({ entries, compound = false, caseVariant = null, replayKey
       {phase === 'compoundDone' && (
         <motion.button
           type="button"
-          onClick={() => { haptic('light'); onDone?.(); }}
+          onClick={() => { feel('tap'); onDone?.(); }}
           className="flex-shrink-0 h-[52px] rounded-[12px] text-[16px] font-[700] tracking-[-0.03em] bg-primary-main-600 text-layout-white"
           whileTap={{ scale: 0.97 }}
         >

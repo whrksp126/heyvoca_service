@@ -42,6 +42,15 @@ export const variants = {
     animate: { x: [0, -2, 2, 0], transition: { duration: 0.2, ease: 'easeInOut' } },
   },
 
+  // 정답 칩/카드 — 소리의 "강한 두 번째 음"(리드 25ms + 90ms ≈ 115ms)에 스케일이 최대가 되도록
+  // times 로 정점 위치를 맞춘다(0.37 × 0.3s ≈ 110ms). 소리·진동과 같은 틱에 시작한다.
+  correctPop: {
+    animate: { scale: [1, 1.06, 1], transition: { duration: 0.3, times: [0, 0.37, 1], ease: 'easeOut' } },
+  },
+  correctPopReduced: {
+    animate: { scale: [1, 1.02, 1], transition: { duration: 0.2, ease: 'easeOut' } },
+  },
+
   // 강조 펄스 — 값이 바뀐 순간 한 번 커졌다 돌아옴 (탭바 아이콘, 게이지 시작 등)
   pulse: {
     animate: { scale: [1, 1.18, 1], transition: SPRING.bouncy },
@@ -53,7 +62,7 @@ export const variants = {
 
 /**
  * reducedMotion 여부에 따라 variants 의 기본판/축소판을 골라준다.
- * @param {'popIn'|'shake'|'pulse'} name
+ * @param {'popIn'|'shake'|'pulse'|'correctPop'} name
  * @param {boolean} reducedMotion - framer-motion useReducedMotion() 의 반환값
  */
 export function pickVariant(name, reducedMotion) {

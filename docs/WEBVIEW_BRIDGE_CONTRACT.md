@@ -102,6 +102,32 @@ git show <commit>:android/app/build.gradle | grep versionName
 이 방법으로 뽑은 값은 기존에 손으로 유지되던 상수 2개(`NOTIF_PERMISSION_MIN_APP_VERSION='1.0.3'`,
 `LAB_MIN_APP_VERSION='1.1.0'`)와 정확히 일치했다 — 방법이 교차검증된 셈이다.
 
+### 새 핸들러 기록 (앱 쪽 구현 완료, 웹 표 반영 대기)
+
+`nativeBridge.js` 의 `NATIVE_HANDLER_MIN_VERSION` 에 아래를 추가해야 한다(웹 소스는 이 문서 작업에서 건드리지 않음).
+버전은 실측이 아니라 **다음 앱 릴리스 번호**(릴리스 스크립트가 올림)로 적었다 — 1.1.2 빌드가 스토어에 나가기 전까지는 구버전 앱에서 무반응이니 웹이 `canUseNative` 로 선차단할 것.
+
+| type | 최소 앱 버전 | 응답 | 비고 |
+|---|---|---|---|
+| `haptic_pattern` | 1.1.2 | 없음(fire-and-forget) | 아래 계약 |
+| `haptic_warmup` | 1.1.2 | 없음 | iOS 햅틱 엔진 예열. 학습 화면 진입 시 1회 보내면 첫 진동 지연 제거 |
+
+`haptic_pattern` 계약:
+
+```ts
+{ type: 'haptic_pattern',
+  props: { events: HapticEvent[],   // 1~32개
+           delayMs?: number,        // 0~500, 패턴 전체를 뒤로 민다(네이티브 시간축)
+           cancelPrevious?: boolean } }
+HapticEvent = { time: ms, type?: 'transient'|'continuous', duration?: ms, intensity?: 0~1, sharpness?: 0~1 }
+```
+
+- 앱은 규격 위반(배열 아님/0개/33개 이상/time 비수치/총 길이 > 3000ms)이면 **통째로 조용히 무시**한다. 개별 값은 clamp(time 0~3000, duration 1~3000, intensity·sharpness 0~1). intensity 0 이벤트는 버려진다.
+- 총 길이 = max(time+duration) (delayMs 제외). transient 의 duration 기본값은 20ms.
+- **Android 는 sharpness 무시**, continuous 도 상수 진폭이다(라이브러리가 createWaveform 만 사용). 약→강 램프는 짧은 continuous 여러 개(예: 30~50ms 계단)로 표현할 것. 겹치는 이벤트는 겹치지 않고 순차 재생된다.
+- iOS 는 Core Haptics(전 기능). 시스템 진동 설정 존중(Android 무음 모드면 무진동).
+- 미지원 기기/예외는 무시. 기존 `vibrate` 는 1.1.1 이하에서 꺼져 있었고(HAPTIC_ENABLED=false), 1.1.2 부터 다시 켜진다.
+
 ## 아직 남은 것
 
 - **백엔드가 클라이언트 버전을 전혀 모른다** — 요청 헤더에도 DB 에도 없다. 그래서 "구버전 앱 사용자가
