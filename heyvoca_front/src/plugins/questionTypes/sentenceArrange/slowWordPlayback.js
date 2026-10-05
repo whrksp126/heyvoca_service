@@ -3,6 +3,7 @@
 // 문장 전체를 playbackRate 0.7 로 틀면 단어 사이 간격이 사라져 잘 안 들리고, 단어별로 순서대로
 // getTextSound 를 부르면 단어마다 네트워크·로딩이 붙어 간격이 너무 길다. 그래서 문제 진입 시
 // 단어별 TTS(기존 prefetchTextSound → /tts/resolve 캐시 경로)를 미리 받아 Web Audio 버퍼로 디코드해 두고,
+// 느림은 배속이 아니라 단어 간격만으로 만든다(AudioBufferSource 의 playbackRate 는 음높이까지 내려 다른 목소리처럼 들린다).
 // 재생 때는 각 버퍼의 앞뒤 무음을 잘라 AudioContext 시간으로 한 번에 스케줄한다(타이머 지터 없음).
 //
 // 캐시 단위: 서버는 정규화한 텍스트(공백 정리·NFC, 대소문자 구분)의 sha256 을 키로 쓴다. 그래서 단어는
@@ -10,7 +11,6 @@
 import { getAudioCtx } from '../../../utils/audio';
 import { prefetchTextSound, registerSoundPreempt } from '../../../utils/common';
 
-const RATE = 0.78;          // 단어별 재생 배속
 const GAP_SEC = 0.24;       // 단어 사이 고정 간격(실시간 기준)
 const PAD_HEAD_SEC = 0.008; // 트림 후 앞쪽 여유
 const PAD_TAIL_SEC = 0.02;  // 트림 후 뒤쪽 여유
@@ -112,10 +112,9 @@ export const playSlowWords = (loaded) => new Promise((resolve) => {
   loaded.seq.forEach((w) => {
     const item = loaded.map.get(w);
     if (!item) return;
-    const real = item.durSec / RATE;
+    const real = item.durSec; // 배속 없음(음높이 유지) — 느림은 단어 사이 간격으로만 만든다
     const src = ctx.createBufferSource();
     src.buffer = item.buffer;
-    src.playbackRate.value = RATE;
     const gain = ctx.createGain();
     gain.gain.setValueAtTime(0, t);
     gain.gain.linearRampToValueAtTime(1, t + FADE_SEC);

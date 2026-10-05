@@ -1,4 +1,5 @@
 import { SUPPORTED_TTS_LANGS } from './lang';
+import { getAudioCtx } from './audio';
 
 export const backendUrl = import.meta.env.VITE_BACKEND_URL;
 export const nodeEnv = import.meta.env.VITE_ENV;
@@ -381,6 +382,82 @@ const runPreemptHooks = () => {
   soundPreemptHooks.forEach((fn) => { try { fn(); } catch (e) { /* noop */ } });
 };
 
+// ── Web Audio 기반 TTS 재생 ───────────────────────────────────────────
+const IS_IOS = typeof navigator !== 'undefined'
+  && (/iP(hone|ad|od)/.test(navigator.userAgent)
+    || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1));
+const STALL_CHECK_MS = 550;
+const TTS_DECODED_MAX = 60;
+const ttsDecoded = new Map(); // key -> AudioBuffer (FIFO)
+
+const setPreservesPitch = (el) => {
+  try {
+    el.preservesPitch = true;
+    el.webkitPreservesPitch = true;
+    el.mozPreservesPitch = true;
+  } catch (e) { /* noop */ }
+};
+
+const decodeTtsBuffer = async (ctx, audioUrl, key) => {
+  if (ttsDecoded.has(key)) return ttsDecoded.get(key);
+  const resp = await fetch(audioUrl); // objectURL(blob) — 네트워크 없음
+  const ab = await resp.arrayBuffer();
+  const buf = await new Promise((resolve, reject) => {
+    try {
+      const ret = ctx.decodeAudioData(ab, resolve, reject);
+      if (ret && typeof ret.then === 'function') ret.then(resolve, reject);
+    } catch (e) { reject(e); }
+  });
+  if (ttsDecoded.size >= TTS_DECODED_MAX) ttsDecoded.delete(ttsDecoded.keys().next().value);
+  ttsDecoded.set(key, buf);
+  return buf;
+};
+
+// 공유 AudioContext 로 재생. 성공적으로 시작해 끝(또는 중단)나면 true 로 resolve,
+// 컨텍스트 사용 불가/디코드 실패면 null(→ 호출부가 HTMLAudio 폴백).
+const playViaWebAudio = async (audioUrl, key, rate, onMeta, requestId) => {
+  const ctx = getAudioCtx();
+  if (!ctx) return null;
+  try {
+    if (ctx.state !== 'running') {
+      await Promise.race([
+        ctx.resume().catch(() => {}),
+        new Promise((r) => setTimeout(r, 300)),
+      ]);
+      if (ctx.state !== 'running') return null;
+    }
+    const buf = await decodeTtsBuffer(ctx, audioUrl, key);
+    if (requestId !== currentRequestId) return true; // 더 새 요청이 있음 — 조용히 종료
+    if (typeof onMeta === 'function') {
+      try { onMeta(buf.duration); } catch { /* noop */ }
+    }
+    return await new Promise((resolve) => {
+      const src = ctx.createBufferSource();
+      src.buffer = buf;
+      src.playbackRate.value = rate;
+      src.connect(ctx.destination);
+      let timer = null;
+      const cleanup = () => {
+        if (timer) { clearTimeout(timer); timer = null; }
+        src.onended = null;
+        try { src.stop(); } catch (e) { /* noop */ }
+        try { src.disconnect(); } catch (e) { /* noop */ }
+        if (currentCleanup === cleanup) currentCleanup = null;
+        if (currentAudioResolve === resolve) currentAudioResolve = null;
+        resolve(true);
+      };
+      src.onended = cleanup;
+      timer = setTimeout(cleanup, (buf.duration / rate + 0.5) * 1000); // onended 누락 대비
+      currentCleanup = cleanup;
+      currentAudioResolve = resolve;
+      src.start(0);
+    });
+  } catch (e) {
+    console.warn('Web Audio TTS 재생 실패:', e);
+    return null;
+  }
+};
+
 export const getTextSound = async (text, lang, onMeta, rate = 1) => {
   runPreemptHooks();
   // 오디오 unlock은 전역 gesture 리스너(_tryUnlockAudio)가 실제 첫 탭에서 처리한다.
@@ -426,21 +503,36 @@ export const getTextSound = async (text, lang, onMeta, rate = 1) => {
       return;
     }
 
+    const playRate = Number.isFinite(rate) && rate > 0 ? rate : 1;
+
+    // 1순위: Web Audio(공유 AudioContext). Android WebView 에서 HTMLMediaElement 재생이 세션 도중
+    // 통째로 멈추는(currentTime 정지) 사례가 있어 기본 경로로 쓴다. iOS 는 무음 스위치 정책 때문에
+    // HTMLAudio 를 먼저 쓰고, 멈추면 Web Audio 로 폴백한다.
+    // 느린 재생(rate != 1)은 Web Audio 가 음높이를 같이 낮추므로 HTMLAudio(preservesPitch)를 유지한다.
+    if (!IS_IOS && playRate === 1) {
+      const played = await playViaWebAudio(audioUrl, key, 1, onMeta, requestId);
+      if (played !== null) return;
+      if (requestId !== currentRequestId) return;
+    }
+
     if (!sharedAudio) sharedAudio = new Audio();
     sharedAudio.src = audioUrl;
-    sharedAudio.playbackRate = Number.isFinite(rate) && rate > 0 ? rate : 1;
+    sharedAudio.playbackRate = playRate;
+    setPreservesPitch(sharedAudio);
 
     // 오디오 재생 완료까지 기다리는 Promise 반환
     return new Promise((resolve) => {
       currentAudioResolve = resolve;
 
       let watchdog = null;
+      let stallTimer = null;
 
       const cleanup = () => {
         sharedAudio.removeEventListener('ended', cleanup);
         sharedAudio.removeEventListener('error', cleanup);
         sharedAudio.removeEventListener('loadedmetadata', scheduleWatchdog);
         if (watchdog) { clearTimeout(watchdog); watchdog = null; }
+        if (stallTimer) { clearTimeout(stallTimer); stallTimer = null; }
         if (currentCleanup === cleanup) currentCleanup = null;
         if (currentAudioResolve === resolve) {
           currentAudioResolve = null;
@@ -471,7 +563,26 @@ export const getTextSound = async (text, lang, onMeta, rate = 1) => {
       sharedAudio.addEventListener('loadedmetadata', scheduleWatchdog);
       scheduleWatchdog(); // 메타데이터가 이미 로드된 경우 대비
 
-      sharedAudio.play().catch(err => {
+      sharedAudio.play().then(() => {
+        // 정지 감지: play() 는 성공하는데 currentTime 이 흐르지 않는 WebView 증상 → 같은 blob 을 Web Audio 로 재생.
+        stallTimer = setTimeout(async () => {
+          stallTimer = null;
+          if (requestId !== currentRequestId || currentCleanup !== cleanup) return;
+          if (sharedAudio.ended || sharedAudio.currentTime > 0.05) return;
+          try { sharedAudio.pause(); } catch (e) { /* noop */ }
+          console.warn('HTMLAudio 재생 정지 감지 → Web Audio 폴백');
+          // HTMLAudio 쪽 리스너·워치독만 걷고, 호출자 Promise 는 폴백 재생이 끝날 때 resolve 한다.
+          sharedAudio.removeEventListener('ended', cleanup);
+          sharedAudio.removeEventListener('error', cleanup);
+          sharedAudio.removeEventListener('loadedmetadata', scheduleWatchdog);
+          if (watchdog) { clearTimeout(watchdog); watchdog = null; }
+          currentCleanup = null;
+          currentAudioResolve = null;
+          // 중지(stopCurrentSound)가 폴백 재생을 끊을 수 있도록 playViaWebAudio 가 cleanup 슬롯을 점유한다.
+          await playViaWebAudio(audioUrl, key, playRate, onMeta, requestId);
+          resolve();
+        }, STALL_CHECK_MS);
+      }).catch(err => {
         console.error('오디오 재생 실패:', err);
         cleanup();
       });
