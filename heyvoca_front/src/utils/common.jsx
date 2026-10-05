@@ -382,6 +382,15 @@ const runPreemptHooks = () => {
   soundPreemptHooks.forEach((fn) => { try { fn(); } catch (e) { /* noop */ } });
 };
 
+// 세션 시작 버튼 등 사용자 제스처의 동기 스택에서 호출 — 공유 AudioContext 를 깨워 둔다.
+// 이후 라우트 전환·await 뒤(제스처 밖)에서 시작하는 첫 자동 재생이 suspended 로 무음이 되는 걸 막는다.
+export const unlockTtsAudio = () => {
+  try {
+    const ctx = getAudioCtx();
+    if (ctx && ctx.state !== 'running') ctx.resume().catch(() => { /* noop */ });
+  } catch (e) { /* noop */ }
+};
+
 // ── Web Audio 기반 TTS 재생 ───────────────────────────────────────────
 const IS_IOS = typeof navigator !== 'undefined'
   && (/iP(hone|ad|od)/.test(navigator.userAgent)
@@ -422,7 +431,7 @@ const playViaWebAudio = async (audioUrl, key, rate, onMeta, requestId) => {
     if (ctx.state !== 'running') {
       await Promise.race([
         ctx.resume().catch(() => {}),
-        new Promise((r) => setTimeout(r, 300)),
+        new Promise((r) => setTimeout(r, 900)),
       ]);
       if (ctx.state !== 'running') return null;
     }

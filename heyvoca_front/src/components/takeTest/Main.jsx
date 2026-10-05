@@ -4,7 +4,8 @@ import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { feel, hapticWarmup, pickVariant, ShineSweep } from '../../lib/feel';
 import { useVocabulary } from '../../context/VocabularyContext';
 import { BookOpenText, SpeakerHigh } from "@phosphor-icons/react";
-import { getTextSound, prefetchTextSound } from '../../utils/common';
+import { getTextSound, prefetchTextSound, prefetchTtsList } from '../../utils/common';
+import { wordIntroSoundItems } from '../../plugins/questionTypes/wordIntro/WordIntroQuestion';
 import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 import { ProblemDataNewBottomSheet } from '../newBottomSheet/ProblemDataNewBottomSheet';
 import SkipListeningNewBottomSheet from '../newBottomSheet/SkipListeningNewBottomSheet';
@@ -1006,9 +1007,12 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
       }
 
       // 다음 1~2문제의 음성을 미리 받아 blob 캐시에 채워둔다 → 전환 시 즉시 재생.
+      // 만나기 카드는 현재 카드부터(첫 카드 포함) 단어·뜻·예문 줄 전체를 받아 둔다.
+      if (question.questionType === 'wordIntro') prefetchTtsList(wordIntroSoundItems(question), 4);
       for (let d = 1; d <= 2; d++) {
         const nq = testQuestions[progressIndex + d];
         if (!nq) break;
+        if (nq.questionType === 'wordIntro') prefetchTtsList(wordIntroSoundItems(nq), 4);
         if (nq.origin) prefetchTextSound(nq.origin, wordLang(nq));
         if (Array.isArray(nq.words)) {
           nq.words.forEach(w => { if (w?.origin) prefetchTextSound(w.origin, wordLang(w, wordLang(nq))); });

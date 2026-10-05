@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import WordMeetCard from '../../../components/study/WordMeetCard';
-import { getTextSound, stopCurrentSound } from '../../../utils/common';
+import { getTextSound, stopCurrentSound, prefetchTtsList } from '../../../utils/common';
 import { wordLang } from '../../../utils/lang';
 import { stripTags } from '../highlightMarker';
 import { feel } from '../../../lib/feel';
@@ -25,6 +25,33 @@ const meaningText = (item) => {
   return item ?? '';
 };
 
+const WORD_TO_MEANING_GAP_MS = 300;
+const RETRY_DELAY_MS = 250;
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+
+// 이 카드가 읽을 (텍스트, 언어) 목록 — 재생 순서와 같다. 프리로드(prefetchTtsList)용.
+// 세션 시작 제스처(usePlantSession)·직전 카드(takeTest/Main)에서도 불러 첫 재생의
+// fetch+decode 지연을 없앤다.
+export const wordIntroSoundItems = (question, { withExamples = true } = {}) => {
+  if (!question) return [];
+  const lang = wordLang(question);
+  const items = [];
+  if (question.origin) items.push({ text: question.origin, language: lang });
+  (question.meanings || []).forEach((m) => {
+    const t = meaningText(m);
+    if (t) items.push({ text: t, language: 'ko' });
+  });
+  if (withExamples) {
+    (question.examples || []).forEach((ex) => {
+      const o = stripTags(ex?.origin || ex?.sentence || '');
+      const m = stripTags(ex?.meaning || ex?.translation || '');
+      if (o) items.push({ text: o, language: lang });
+      if (m) items.push({ text: m, language: 'ko' });
+    });
+  }
+  return items;
+};
+
 const WordIntroQuestion = ({ question, onComplete }) => {
   "use memo";
 
@@ -36,14 +63,16 @@ const WordIntroQuestion = ({ question, onComplete }) => {
   // 자동 재생 취소 플래그 — 언마운트/개별 스피커 탭 시 true로 세워 시퀀스를 멈춘다.
   const cancelRef = useRef(false);
   const resolveRef = useRef(null);
+  const runIdRef = useRef(0);
 
   const playOne = useCallback((itemId, index, text, lang) => {
-    if (!text) return Promise.resolve();
+    if (!text) return Promise.resolve(true);
     setPlayingItemId(itemId);
     setPlayingItemIndex(index);
     setPlayDuration(null);
     return new Promise((resolve) => {
       let settled = false;
+      let started = false; // 실제 재생이 시작됐는지(onMeta 호출 = 디코드/메타 로드 성공)
       let audioDone = false;
       let minDone = false;
       let minTimer = null;
@@ -52,13 +81,14 @@ const WordIntroQuestion = ({ question, onComplete }) => {
         settled = true;
         if (minTimer) { clearTimeout(minTimer); minTimer = null; }
         if (resolveRef.current === forceSettle) resolveRef.current = null;
-        resolve();
+        resolve(started);
       };
       const forceSettle = () => finish();
       const maybeFinish = () => { if (audioDone && minDone) finish(); };
       resolveRef.current = forceSettle;
       minTimer = setTimeout(() => { minDone = true; maybeFinish(); }, MIN_LINE_DWELL_MS);
       Promise.resolve(getTextSound(text, lang, (d) => {
+        started = true;
         if (!cancelRef.current) setPlayDuration(d);
       })).then(
         () => { audioDone = true; maybeFinish(); },
@@ -78,32 +108,51 @@ const WordIntroQuestion = ({ question, onComplete }) => {
   // 마운트 시 1회 자동 재생: 단어 → 뜻 → 예문1 원문 → 예문1 뜻 → 예문2 원문 → 예문2 뜻…
   useEffect(() => {
     cancelRef.current = false;
+    const runId = ++runIdRef.current;
+    const cancelled = () => cancelRef.current || runIdRef.current !== runId;
     const meanings = question?.meanings || [];
     const examples = question?.examples || [];
     const lang = wordLang(question);
 
+    // 이 카드의 모든 줄을 미리 받아 둔다(이미 받은 건 캐시·inflight 재사용) — 줄 사이 지연 제거.
+    prefetchTtsList(wordIntroSoundItems(question), 4);
+
+    // 한 줄 재생. 소리가 실제로 시작되지 않았으면(AudioContext 미깨움, 다른 호출에 선점 등) 한 번 재시도.
+    const playLine = async (itemId, index, text, l) => {
+      let ok = await playOne(itemId, index, text, l);
+      if (!ok && !cancelled()) {
+        await sleep(RETRY_DELAY_MS);
+        if (cancelled()) return;
+        await playOne(itemId, index, text, l);
+      }
+    };
+
     const run = async () => {
-      if (cancelRef.current) return;
-      await playOne('word', null, question?.origin || '', lang);
+      if (cancelled()) return;
+      await playLine('word', null, question?.origin || '', lang);
       for (let i = 0; i < meanings.length; i++) {
-        if (cancelRef.current) return;
-        await playOne('meanings', i, meaningText(meanings[i]), 'ko');
+        if (cancelled()) return;
+        if (i === 0) {
+          await sleep(WORD_TO_MEANING_GAP_MS); // 단어 → (짧은 간격) → 뜻
+          if (cancelled()) return;
+        }
+        await playLine('meanings', i, meaningText(meanings[i]), 'ko');
       }
       for (let i = 0; i < examples.length; i++) {
-        if (cancelRef.current) return;
+        if (cancelled()) return;
         const ex = examples[i] || {};
         const origin = stripTags(ex.origin || ex.sentence || '');
         if (origin) {
-          if (cancelRef.current) return;
-          await playOne('exampleSentences', i, origin, lang);
+          if (cancelled()) return;
+          await playLine('exampleSentences', i, origin, lang);
         }
         const meaning = stripTags(ex.meaning || ex.translation || '');
         if (meaning) {
-          if (cancelRef.current) return;
-          await playOne('exampleMeanings', i, meaning, 'ko');
+          if (cancelled()) return;
+          await playLine('exampleMeanings', i, meaning, 'ko');
         }
       }
-      if (!cancelRef.current) {
+      if (!cancelled()) {
         setPlayingItemId(null);
         setPlayingItemIndex(null);
         setPlayDuration(null);

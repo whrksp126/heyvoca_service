@@ -7,6 +7,8 @@ import { getStudyRecommend } from '../api/study';
 import { mapRecommendItemToWord } from '../utils/studyRecommendMapping';
 import { vibrate } from '../utils/osFunction';
 import { primeSfx } from '../utils/audio';
+import { unlockTtsAudio, prefetchTtsList } from '../utils/common';
+import { wordIntroSoundItems } from '../plugins/questionTypes/wordIntro/WordIntroQuestion';
 
 /*
   새 단어 학습("씨앗 심기") 전용 진입 — 2026-09-29 결정, 같은 날 실기기 피드백으로 흐름 변경.
@@ -45,6 +47,7 @@ export const usePlantSession = () => {
   const startPlantSession = async ({ count, force = false } = {}) => {
     vibrate({ duration: 5 });
     primeSfx();
+    unlockTtsAudio(); // 제스처 안에서 AudioContext resume — 첫 카드 자동 재생이 무음이 되지 않게
 
     // 이미 진행 중(같은 앱 인스턴스)인 심기 세션이 있으면 새로 뽑지 않고 그대로 이어간다 —
     // TakeTest.jsx가 recentStudy['plant']의 study_data(로컬 상태, 서버에는 없음)로 복원한다.
@@ -76,6 +79,11 @@ export const usePlantSession = () => {
     }
 
     const words = items.map((item) => mapRecommendItemToWord(item));
+    // 첫 카드의 단어·뜻(·예문)을 먼저, 나머지 카드는 단어·뜻만 백그라운드로 미리 받아 둔다.
+    prefetchTtsList(
+      words.flatMap((w, i) => wordIntroSoundItems(w, { withExamples: i === 0 })),
+      4,
+    );
     // "만나기" 화면(/study) 없이 곧장 테스트로 — ①만나기는 TakeTest 안의 첫 슬라이드다.
     navigate('/take-test', {
       state: {
