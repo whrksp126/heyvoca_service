@@ -6,7 +6,7 @@ import { parseAppVersion, getDevicePlatform } from '../../utils/osFunction';
 import {
   feel, getFeelTimingSnapshot, getHapticOffsetMs, setHapticOffsetMs,
   SFX_DURATION_MS, getHapticPattern, validateForVariant,
-  Pressable, haptic, KIND_TO_CUE, requestHapticCaps, resolveHapticVariant,
+  Pressable, haptic, KIND_TO_CUE, requestHapticCaps, resolveHapticVariant, getHapticCapsSource,
   getHapticStrengthPercent, setHapticStrengthPercent, getHapticMode, setHapticMode,
   STRENGTH_MIN, STRENGTH_MAX,
 } from '../../lib/feel';
@@ -344,6 +344,10 @@ const FeelTestNewFullSheet = () => {
                 : `${caps.platform} · API ${caps.apiLevel} · 진폭제어 ${caps.hasAmplitudeControl ? '예' : '아니오'} · 프리베이크 ${caps.supportsPrebaked ? '예' : '아니오'}`}
             />
             <Row label="재생 방식" value={VARIANT_LABEL[variant]} />
+            <Row
+              label="변형·caps 출처"
+              value={`${variant} · ${{ persisted: '영속(저장값)', live: '실시간', unknown: '미확인(기본 waveform)' }[getHapticCapsSource()]}`}
+            />
             <Row label="오디오 출력 지연" value={`${snap.outputLatencyMs.toFixed(1)}ms · ${snap.outputLatencySource}`} />
             <Row label="오디오 리드" value={`${snap.leadMs}ms`} />
             <Row label="브릿지 지연 추정" value={`${snap.bridgeMs}ms`} />

@@ -41,7 +41,7 @@
 //   selection  탭바 전환, 결과 화면 슬라이드 전환처럼 "여러 개 중 하나로 바뀜"
 // ─────────────────────────────────────────────────────────────────────────
 
-import { vibrate, getDevicePlatform, setVibrateInterceptor } from '../../utils/osFunction';
+import { vibrate, getDevicePlatform, setVibrateInterceptor, parseAppVersion } from '../../utils/osFunction';
 import { feel } from './cue';
 import postMessageManager from '../../utils/postMessageManager';
 import { getHapticPattern, KIND_FALLBACK, eventsToWebPattern } from './hapticPatterns';
@@ -169,7 +169,7 @@ export function requestHapticCaps(timeoutMs = 1500) {
       done = true;
       clearTimeout(timer);
       off();
-      if (v) cachedCaps = v; // 손맛 테스트에서 조회해도 이후 feel() 이 같은 재생 방식을 쓰게 한다
+      if (v) setCaps(v, 'live'); // 어디서 조회해도 이후 feel() 이 같은 재생 방식을 쓰게 한다(+영속)
       resolve(v);
     };
     const timer = setTimeout(() => finish(null), timeoutMs);
@@ -178,15 +178,48 @@ export function requestHapticCaps(timeoutMs = 1500) {
   });
 }
 
-// 학습 화면 진입 시 1회 조회해 캐시한다(hapticWarmup 이 호출). 회신 전·실패 시 null → effect 패턴이 기본
-// (앱이 미지원이면 자체 폴백). Android 에서 supportsPrebaked===false 면 hapticPattern 이 waveform 변형을 보낸다.
+// caps 캐시. 앱 시작(모듈 로드) 때 한 번 조회하고, 결과를 localStorage(feel.hapticCaps)에 앱 버전과 함께 영속해
+// 다음 실행부터는 첫 진동부터 올바른 재생 방식을 쓴다. 영속값은 이번 실행의 실시간 회신이 오면 덮어쓴다.
+// 출처: 'persisted'(저장값) | 'live'(이번 실행 실시간 회신) | 'unknown'(아직 모름 → Android 는 약한 waveform 기본).
+const CAPS_KEY = 'feel.hapticCaps';
+const capsAppVersion = () => parseAppVersion()?.version || 'unknown';
 let cachedCaps = null;
-let capsRequested = false;
+let capsSource = 'unknown';
+let capsInFlight = false;
+let capsLastTryAt = 0;
+
+function loadPersistedCaps() {
+  try {
+    const o = JSON.parse(localStorage.getItem(CAPS_KEY) || 'null');
+    // 앱 버전이 다르면(앱 업데이트/기기 이전) 버린다 — 실시간 회신이 새로 채운다
+    if (o && o.v === capsAppVersion() && o.caps && typeof o.caps === 'object') return o.caps;
+  } catch (e) { /* noop */ }
+  return null;
+}
+function setCaps(v, source) {
+  cachedCaps = v;
+  capsSource = source;
+  if (source === 'live') {
+    try { localStorage.setItem(CAPS_KEY, JSON.stringify({ v: capsAppVersion(), caps: v })); } catch (e) { /* noop */ }
+  }
+}
+if (supportsHapticPattern()) {
+  const p = loadPersistedCaps();
+  if (p) setCaps(p, 'persisted');
+}
+
 export function getCachedHapticCaps() { return cachedCaps; }
+/** 'persisted' | 'live' | 'unknown' — 손맛 테스트 '현재 측정값' 표시용 */
+export function getHapticCapsSource() { return capsSource; }
+
+/** caps 실시간 조회를 시작한다. 이미 live 이거나 조회 중이면 무시. 실패(null)해도 나중에 다시 시도할 수 있다(5초 간격). */
 export function ensureHapticCaps() {
-  if (capsRequested || !supportsHapticPattern()) return;
-  capsRequested = true;
-  requestHapticCaps().then((v) => { if (v) cachedCaps = v; });
+  if (capsInFlight || capsSource === 'live' || !supportsHapticPattern()) return;
+  const now = Date.now();
+  if (now - capsLastTryAt < 5000) return;
+  capsLastTryAt = now;
+  capsInFlight = true;
+  requestHapticCaps().then((v) => { if (v) setCaps(v, 'live'); }).finally(() => { capsInFlight = false; });
 }
 
 // osFunction.vibrate() 직접 호출부(채점 지점의 vibrate({type}) · vibrate({duration:5}) 류)도 1.1.2+ 앱에서는
@@ -220,8 +253,11 @@ export function resolveHapticVariant(caps = cachedCaps) {
   const mode = getHapticMode();
   if (mode === 'waveform') return 'android-waveform';
   if (mode === 'prebaked') return 'android';
-  if (caps?.hasAmplitudeControl) return 'android-waveform';
-  if (caps && caps.supportsPrebaked === false) return 'android-waveform';
+  // caps 를 아직 모르면 약한 waveform 으로 시작(강한 프리베이크는 세기 조절 불가). 진폭 제어가 안 되는
+  // 기기는 caps 수신 후 프리베이크로 전환된다.
+  if (!caps) return 'android-waveform';
+  if (caps.hasAmplitudeControl) return 'android-waveform';
+  if (caps.supportsPrebaked === false) return 'android-waveform';
   return 'android';
 }
 
@@ -233,6 +269,7 @@ export function resolveHapticVariant(caps = cachedCaps) {
  *   events 를 주면 그 이벤트를 그대로(세기만 적용) 울린다 — 편집기 미리 듣기용. force 는 디바운스 무시 + 이전 패턴 끊기.
  */
 export function hapticPattern(name, { delayMs = 0, n, cancelPrevious = false, events: given, force = false } = {}) {
+  if (!cachedCaps || capsSource !== 'live') ensureHapticCaps(); // 시작 시 조회가 실패했으면 재시도(5초 간격)
   const base = given || getHapticPattern(name, { n, platform: resolveHapticVariant() });
   if (!base || base.length === 0) return;
   const events = applyStrength(base);
@@ -266,5 +303,9 @@ export function hapticPattern(name, { delayMs = 0, n, cancelPrevious = false, ev
   };
   if (delay > 4) setTimeout(run, delay); else run();
 }
+
+
+// 앱 시작 시 caps 조회(첫 사용자 입력 전). 이후 hapticPattern 이 실패 시 재시도한다.
+ensureHapticCaps();
 
 export default haptic;

@@ -18,8 +18,10 @@ import RecoverConfirmNewBottomSheet from '../newBottomSheet/RecoverConfirmNewBot
 import { addPendingReplantIds, removePendingReplantIds } from '../../utils/replantPending';
 
 const PAGE_SIZE = 20;
-/** 기획 7.4 — 한 번에 몰아치지 않는다. 오늘 가볍게 돌볼 기본 묶음 */
-const GENTLE_PICK = 10;
+const TOOLS = [
+  { key: 'NUTRIENT', name: '영양 회복제', verb: '사용하기', img: CROP_ASSETS.nutrient, hint: '시든 작물을 되살려요' },
+  { key: 'SHOVEL', name: '새심기 삽', verb: '사용하기', img: CROP_ASSETS.shovel, hint: '처음부터 다시 심어요' },
+];
 /** 되돌리기 기본 창 — 서버 CANCEL_WINDOW_SECONDS 와 같은 값 */
 const UNDO_WINDOW_MS = 10000;
 
@@ -57,6 +59,7 @@ const RottenListSheet = ({ onChanged, onOpenShop }) => {
   const [loading, setLoading] = useState(true);
   const [busy, setBusy] = useState(false);
   const [notice, setNotice] = useState('');
+  const [tool, setTool] = useState('NUTRIENT');
   const [selected, setSelected] = useState(() => new Set());
   const [owned, setOwned] = useState({ SHOVEL: 0, NUTRIENT: 0, SHIELD: 0 });
   // 다시 심기 되돌리기 — 첫 진단이 시작되기 전(cancel_until) 까지만 (기획 7.2)
@@ -127,11 +130,6 @@ const RottenListSheet = ({ onChanged, onOpenShop }) => {
     });
   };
 
-  const pickGentle = () => {
-    vibrate({ duration: 5 });
-    setSelected(new Set(items.slice(0, GENTLE_PICK).map((it) => it.user_voca_id)));
-  };
-
   const pickAll = () => {
     vibrate({ duration: 5 });
     setSelected(new Set(items.map((it) => it.user_voca_id)));
@@ -146,6 +144,13 @@ const RottenListSheet = ({ onChanged, onOpenShop }) => {
     .map((it) => it.user_voca_id)
     .filter((id) => selected.has(id));
   const selectedCount = selectedIds.length;
+  const allSelected = items.length > 0 && selectedCount === items.length;
+  const toolDef = TOOLS.find((t) => t.key === tool);
+  const ownedCnt = owned[tool] ?? 0;
+  const need = selectedCount;
+  const shortage = need > 0 && ownedCnt < need;
+  const canUse = need > 0 && !shortage && !busy;
+  const handleUse = () => (tool === 'NUTRIENT' ? handleRecover() : handleReplant());
 
   /** 성공한 id 를 목록에서 걷어내고 선택도 비운다 */
   const dropDone = (doneIds) => {
@@ -304,54 +309,64 @@ const RottenListSheet = ({ onChanged, onOpenShop }) => {
       </div>
 
       <div className="flex-1 overflow-y-auto">
-        {/* 인사 — 개수 대신 오늘 할 만큼을 먼저 말한다 (기획 7.4) */}
-        <div className="flex items-center gap-[12px] px-[16px] pt-[16px] pb-[14px]">
-          <img
-            src={CROP_ASSETS.mascotWatering}
-            alt=""
-            draggable={false}
-            className="w-[56px] h-[56px] object-contain select-none flex-shrink-0"
-          />
-          <div className="min-w-0">
-            <p className="text-[14px] font-[700] text-layout-black dark:text-layout-white leading-[1.45]">
-              농장은 그대로 보관해두었어요.
-            </p>
-            <p className="text-[12.5px] font-[400] text-layout-gray-400 dark:text-layout-gray-200 leading-[1.5] mt-[2px]">
-              오늘은 {GENTLE_PICK}개만 가볍게 돌봐볼까요?
-              <br />
-              지금까지 자란 단계와 학습 기록은 그대로 남아 있어요.
-            </p>
-          </div>
+        {/* 아이템 선택 — 영양 회복제 / 새심기 삽 중 하나를 고른다 */}
+        <div className="flex gap-[9px] px-[16px] pt-[16px] pb-[12px]">
+          {TOOLS.map((t) => {
+            const on = tool === t.key;
+            const cnt = owned[t.key] ?? 0;
+            const lack = cnt === 0 || selectedCount > cnt;
+            return (
+              <div
+                key={t.key}
+                role="button"
+                tabIndex={0}
+                onClick={() => { vibrate({ duration: 5 }); setTool(t.key); }}
+                onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') setTool(t.key); }}
+                className={`
+                  flex-1 min-w-0 flex flex-col items-center gap-[4px] px-[8px] py-[12px] rounded-[12px] border-[1.5px] cursor-pointer
+                  ${on
+                    ? 'border-primary-main-600 bg-primary-main-100 dark:bg-primary-main-dark'
+                    : 'border-border dark:border-border-dark'}
+                `}
+              >
+                <img src={t.img} alt="" className="w-[34px] h-[34px] object-contain" />
+                <span className="text-[13px] font-[800] text-layout-black dark:text-layout-white whitespace-nowrap">
+                  {t.name}
+                </span>
+                <span className="text-[11px] font-[700] text-primary-main-600">
+                  보유 {cnt}개
+                </span>
+                <span className="text-[11.5px] font-[400] text-layout-gray-400 dark:text-layout-gray-200 text-center leading-[1.4]">
+                  {t.hint}
+                </span>
+                {lack && (
+                  <button
+                    type="button"
+                    onClick={(e) => { e.stopPropagation(); vibrate({ duration: 5 }); onOpenShop?.(t.key); }}
+                    className="mt-[2px] h-[30px] px-[11px] rounded-full bg-primary-main-600 text-layout-white text-[12.5px] font-[700] whitespace-nowrap"
+                  >
+                    추가 구매
+                  </button>
+                )}
+              </div>
+            );
+          })}
         </div>
 
-        {/* 고르기 도우미 */}
-        <div className="flex gap-[6px] px-[16px] pb-[10px] overflow-x-auto scrollbar-hide">
+        {/* 전체 선택 토글 + 개수 */}
+        <div className="flex items-center justify-between px-[16px] pb-[10px]">
           <motion.button
             type="button"
-            onClick={pickGentle}
+            onClick={allSelected ? clearPick : pickAll}
             whileTap={{ scale: 0.96 }}
-            className="flex-shrink-0 h-[30px] px-[11px] rounded-full bg-primary-main-100 dark:bg-primary-main-dark text-primary-main-600 text-[12.5px] font-[700] whitespace-nowrap"
+            disabled={items.length === 0}
+            className="h-[30px] px-[11px] rounded-full bg-primary-main-100 dark:bg-primary-main-dark text-primary-main-600 text-[12.5px] font-[700] whitespace-nowrap disabled:opacity-40"
           >
-            오늘 {GENTLE_PICK}개 고르기
+            {allSelected ? '선택 해제' : '모두 선택'}
           </motion.button>
-          <motion.button
-            type="button"
-            onClick={pickAll}
-            whileTap={{ scale: 0.96 }}
-            className="flex-shrink-0 h-[30px] px-[11px] rounded-full bg-layout-gray-50 dark:bg-layout-gray-dark text-layout-gray-400 dark:text-layout-gray-200 text-[12.5px] font-[700] whitespace-nowrap"
-          >
-            지금 보이는 작물 모두 선택
-          </motion.button>
-          {selectedCount > 0 && (
-            <motion.button
-              type="button"
-              onClick={clearPick}
-              whileTap={{ scale: 0.96 }}
-              className="flex-shrink-0 h-[30px] px-[11px] rounded-full bg-layout-gray-50 dark:bg-layout-gray-dark text-layout-gray-400 dark:text-layout-gray-200 text-[12.5px] font-[700] whitespace-nowrap"
-            >
-              선택 해제
-            </motion.button>
-          )}
+          <span className="text-[12.5px] font-[700] text-layout-gray-400 dark:text-layout-gray-200">
+            선택 {selectedCount} / 전체 {items.length}
+          </span>
         </div>
 
         {notice && (
@@ -454,52 +469,25 @@ const RottenListSheet = ({ onChanged, onOpenShop }) => {
         </div>
       )}
 
-      {/* 하단 액션 — 삽과 회복제는 대등한 선택지라 나란히 놓는다 (기획 7.1) */}
+      {/* 하단 고정 — 위에서 고른 아이템을 선택한 작물에 쓴다 (기획 7.1) */}
       {items.length > 0 && (
         <div className="flex-shrink-0 border-t border-border dark:border-border-dark bg-layout-white dark:bg-layout-black px-[16px] pt-[12px]">
-          <p className="text-center text-[12px] font-[400] text-layout-gray-300 mb-[10px]">
-            {selectedCount > 0 ? `${selectedCount}개 선택했어요` : '돌볼 작물을 골라 주세요'}
-          </p>
-          <div className="flex gap-[9px]">
-            <motion.button
-              type="button"
-              onClick={handleRecover}
-              whileTap={selectedCount > 0 && !busy ? { scale: 0.97 } : undefined}
-              disabled={selectedCount === 0 || busy}
-              className="
-                flex-1 flex flex-col items-center gap-[4px]
-                py-[11px] rounded-[12px] border-[1.5px] border-primary-main-300
-                disabled:opacity-40
-              "
-            >
-              <img src={CROP_ASSETS.nutrient} alt="" className="w-[34px] h-[34px] object-contain" />
-              <span className="text-[13px] font-[800] text-layout-black dark:text-layout-white">
-                영양 회복제로 살리기
-              </span>
-              <span className="text-[11px] font-[700] text-primary-main-600">
-                보유 {owned.NUTRIENT}개
-              </span>
-            </motion.button>
-            <motion.button
-              type="button"
-              onClick={handleReplant}
-              whileTap={selectedCount > 0 && !busy ? { scale: 0.97 } : undefined}
-              disabled={selectedCount === 0 || busy}
-              className="
-                flex-1 flex flex-col items-center gap-[4px]
-                py-[11px] rounded-[12px] border-[1.5px] border-primary-main-300
-                disabled:opacity-40
-              "
-            >
-              <img src={CROP_ASSETS.shovel} alt="" className="w-[34px] h-[34px] object-contain" />
-              <span className="text-[13px] font-[800] text-layout-black dark:text-layout-white">
-                삽으로 다시 심기
-              </span>
-              <span className="text-[11px] font-[700] text-primary-main-600">
-                보유 {owned.SHOVEL}개
-              </span>
-            </motion.button>
-          </div>
+          {shortage && (
+            <p className="text-center text-[12px] font-[400] text-layout-gray-300 mb-[8px]">
+              {toolDef.name}가 {need - ownedCnt}개 모자라요. 추가 구매하면 사용할 수 있어요.
+            </p>
+          )}
+          <motion.button
+            type="button"
+            onClick={handleUse}
+            whileTap={canUse ? { scale: 0.98 } : undefined}
+            disabled={!canUse}
+            className="w-full h-[52px] rounded-[12px] bg-primary-main-600 text-layout-white text-[16px] font-[700] disabled:opacity-40"
+          >
+            {selectedCount === 0
+              ? '돌볼 작물을 골라 주세요'
+              : `${toolDef.name} ${selectedCount}개 ${toolDef.verb}`}
+          </motion.button>
           <div style={{ height: 'calc(var(--safe-area-bottom) + 12px)' }} />
         </div>
       )}
