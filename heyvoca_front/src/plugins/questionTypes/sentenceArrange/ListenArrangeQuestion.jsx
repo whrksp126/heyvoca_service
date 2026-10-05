@@ -180,32 +180,34 @@ const ListenArrangeQuestion = ({ question, onComplete, onCardMatched, farmByWord
     <div className="w-full mt-[16px]">
       {isCorrect === false && plainAnswer && (
         <div className="relative w-full pt-[14px] border-t-[1px] border-layout-gray-200 dark:border-[#3A3A3A]">
-          <motion.button
-            type="button"
-            aria-label="정답 문장 듣기"
-            whileTap={{ scale: 0.9 }}
-            transition={{ duration: 0.15 }}
-            className="absolute right-0 top-[14px] z-[1]"
-            onClick={() => {
-              feel('tap');
-              speak(plainAnswer, answerLang, 'answer', 1);
-            }}
-          >
-            {answerPlaying && (
-              <TtsRipple
-                size={70}
-                duration={speakDuration}
-                className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-[0] pointer-events-none"
-              />
-            )}
-            <span className={`relative z-[1] block transition-colors duration-200 ${answerPlaying ? 'text-primary-main-600' : 'text-layout-gray-300'}`}>
-              <SpeakerHigh size={22} weight="fill" />
-            </span>
-          </motion.button>
-          <p className="w-full pr-[32px] text-[15px] leading-[1.7] text-layout-gray-400 dark:text-layout-gray-100 break-keep">
-            <span className="block mb-[2px] text-[11px] font-[700] text-layout-gray-300">정답 문장</span>
-            {plainAnswer}
-          </p>
+          <span className="block mb-[2px] text-[11px] font-[700] leading-[1.7] text-layout-gray-300">정답 문장</span>
+          <div className="flex items-start gap-[8px] w-full">
+            <motion.button
+              type="button"
+              aria-label="정답 문장 듣기"
+              whileTap={{ scale: 0.9 }}
+              transition={{ duration: 0.15 }}
+              className="relative shrink-0 flex items-center justify-center w-[28px] h-[25.5px]"
+              onClick={() => {
+                feel('tap');
+                speak(plainAnswer, answerLang, 'answer', 1);
+              }}
+            >
+              {answerPlaying && (
+                <TtsRipple
+                  size={70}
+                  duration={speakDuration}
+                  className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-[0] pointer-events-none"
+                />
+              )}
+              <span className={`relative z-[1] block transition-colors duration-200 ${answerPlaying ? 'text-primary-main-600' : 'text-layout-gray-300'}`}>
+                <SpeakerHigh size={22} weight="fill" />
+              </span>
+            </motion.button>
+            <p className="relative z-[1] flex-1 min-w-0 text-[15px] leading-[1.7] text-layout-gray-400 dark:text-layout-gray-100 break-keep">
+              {plainAnswer}
+            </p>
+          </div>
         </div>
       )}
       <p className={`w-full pt-[14px] ${isCorrect === false && plainAnswer ? '' : 'border-t-[1px] border-layout-gray-200 dark:border-[#3A3A3A]'} text-[15px] leading-[1.7] text-layout-gray-400 dark:text-layout-gray-100 break-keep`}>

@@ -114,7 +114,7 @@ const nowMs = () => (typeof performance !== 'undefined' ? performance.now() : Da
  * 소리 + 진동을 같은 순간에 발사한다.
  * @param {'tap'|'select'|'correct'|'wrong'|'match'|'combo'|'perfect'|'progress'|'bonus'|'complete'} cue
  * @param {{n?:number, events?:object[], sound?:boolean, vibe?:boolean, force?:boolean}} opts
- *   n = 콤보 수(combo 전용). 손맛 테스트 편집기용: events = 임시 진동 패턴, sound/vibe = false 로 끔, force = 디바운스·겹침 대기 무시
+ *   n = 콤보 수(combo 전용). 손맛 테스트 편집기용: events = 임시 진동 패턴, sound/vibe = false 로 끔, force = 디바운스·겹침 대기 무시, debounceMs = 이 큐의 디바운스 구간 덮어쓰기(카드 맞추기 연속 짝용)
  * @returns {{fired:boolean, startInMs:number}} startInMs = 호출 시점부터 소리(=진동)가 시작되기까지.
  *   호출부가 애니메이션 임팩트를 이 값만큼 지연시키고 싶을 때 쓴다(0 이상).
  */
@@ -124,7 +124,7 @@ export function feel(cue, opts = {}) {
   if (typeof document !== 'undefined' && document.hidden) return none;
 
   const t = nowMs();
-  if (!opts.force && t - (lastAt[cue] || -1e9) < (DEBOUNCE_MS[cue] ?? 60)) return none;
+  if (!opts.force && t - (lastAt[cue] || -1e9) < (opts.debounceMs ?? DEBOUNCE_MS[cue] ?? 60)) return none;
 
   // 진행바 반짝임은 정답 큐와 겹치면 소리·진동을 생략한다(시각만 호출부가 처리).
   if (!opts.force && cue === 'progress' && t - (lastAt.correct || -1e9) < 350) return none;

@@ -196,7 +196,7 @@ const CardMatchListeningQuestion = ({ question, testType, onComplete, onCardMatc
 
     if (isMatch) {
       // 맞춘 쌍은 같은 틱에 소리·진동·튀는 연출(아래 flashAnim)이 함께 시작한다.
-      feel('match');
+      feel('correct', { debounceMs: 40 });
       resolveWordState(leftWord, true, newAttempts);
       // 카드가 풀린 **그 순간** 부모에 알린다. 800ms 뒤에 알리면 그동안 구버전 표시가
       // 먼저 떴다가 농장 상태 바로 바뀌어, 채점 결과가 두 번 다른 모습으로 나타난다.

@@ -253,32 +253,33 @@ const SentenceArrangeQuestion = ({ question, onComplete, onCardMatched, farmByWo
     let wordIdx = 0;
     return (
       <div className="w-full mt-[16px] pt-[14px] border-t-[1px] border-layout-gray-200 dark:border-[#3A3A3A] relative">
-      {/* 정답 문장 듣기 — 다른 유형의 예문 스피커 버튼과 같은 규격(SpeakerHigh 22 fill, 재생 중 primary + 리플) */}
-      <motion.button
-        type="button"
-        aria-label="정답 문장 듣기"
-        whileTap={{ scale: 0.9 }}
-        transition={{ duration: 0.15 }}
-        className="absolute right-0 top-[14px] z-[1]"
-        onClick={() => {
-          feel('tap');
-          const plain = stripTags(answerText);
-          if (plain) speak(plain, answerLang, 'answer');
-        }}
-      >
-        {isSpeaking && speakingTarget === 'answer' && (
-          <TtsRipple
-            size={70}
-            duration={speakDuration}
-            className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-[0] pointer-events-none"
-          />
-        )}
-        <span className={`relative z-[1] block transition-colors duration-200 ${isSpeaking && speakingTarget === 'answer' ? 'text-primary-main-600' : 'text-layout-gray-300'}`}>
-          <SpeakerHigh size={22} weight="fill" />
-        </span>
-      </motion.button>
-      <p className="w-full pr-[32px] text-[15px] leading-[1.7] text-layout-gray-400 dark:text-layout-gray-100 break-keep">
-        <span className="block mb-[2px] text-[11px] font-[700] text-layout-gray-300">정답 문장</span>
+      <span className="block mb-[2px] text-[11px] font-[700] leading-[1.7] text-layout-gray-300">정답 문장</span>
+      <div className="flex items-start gap-[8px] w-full">
+        {/* 정답 문장 듣기 — 본문 바로 왼쪽, 첫 줄 높이에 맞춰 상단 정렬(재생 중 primary + 리플) */}
+        <motion.button
+          type="button"
+          aria-label="정답 문장 듣기"
+          whileTap={{ scale: 0.9 }}
+          transition={{ duration: 0.15 }}
+          className="relative shrink-0 flex items-center justify-center w-[28px] h-[25.5px]"
+          onClick={() => {
+            feel('tap');
+            const plain = stripTags(answerText);
+            if (plain) speak(plain, answerLang, 'answer');
+          }}
+        >
+          {isSpeaking && speakingTarget === 'answer' && (
+            <TtsRipple
+              size={70}
+              duration={speakDuration}
+              className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-[0] pointer-events-none"
+            />
+          )}
+          <span className={`relative z-[1] block transition-colors duration-200 ${isSpeaking && speakingTarget === 'answer' ? 'text-primary-main-600' : 'text-layout-gray-300'}`}>
+            <SpeakerHigh size={22} weight="fill" />
+          </span>
+        </motion.button>
+        <p className="relative z-[1] flex-1 min-w-0 text-[15px] leading-[1.7] text-layout-gray-400 dark:text-layout-gray-100 break-keep">
         {(renderHighlightedText(answerText) ?? []).map((p) => (
           <span key={p.key}>
             {tokenizeWords(p.text).map((tok, i) => {
@@ -313,7 +314,8 @@ const SentenceArrangeQuestion = ({ question, onComplete, onCardMatched, farmByWo
             })}
           </span>
         ))}
-      </p>
+        </p>
+      </div>
       </div>
     );
   })() : null;
