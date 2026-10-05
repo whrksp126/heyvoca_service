@@ -956,19 +956,10 @@ const StudyResult = () => {
 
       // ⑤⑥⑦ 농장 아이템 — 종류마다 한 장. 한 화면에 모아 두면 영수증이 된다(시안 §3).
       //     삽은 여러 개일 때만 어느 단어에서 왔는지, 보호권은 항상 주간 지급분이라고 적는다.
-      const leafWords = grownAll
-        .filter(g => stageToCrop(g.to_stage ?? g.crop) === 'leaf')
-        .map(g => g.word)
-        .filter(Boolean);
       [FARM_ITEMS.SHOVEL, FARM_ITEMS.NUTRIENT, FARM_ITEMS.SHIELD].forEach((itemKey) => {
         const qty = farmRewards?.[itemKey] ?? 0;
         if (qty <= 0) return;
-        let why = null;
-        if (itemKey === FARM_ITEMS.SHOVEL && qty > 1 && leafWords.length > 0) {
-          why = `${leafWords.join(' · ')} 이 이파리가 됐어요`;
-        } else if (itemKey === FARM_ITEMS.SHIELD) {
-          why = '이번 주 지급분이에요';
-        }
+        const why = itemKey === FARM_ITEMS.SHIELD ? '이번 주 지급분이에요' : null;
         screens.push({ type: 'farmItem', data: { itemKey, qty, why } });
       });
 

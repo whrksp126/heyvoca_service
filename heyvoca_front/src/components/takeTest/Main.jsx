@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { feel, hapticWarmup, pickVariant, ShineSweep } from '../../lib/feel';
 import { useVocabulary } from '../../context/VocabularyContext';
-import { BookOpenText, SpeakerHigh, ArrowCounterClockwise } from "@phosphor-icons/react";
+import { BookOpenText, SpeakerHigh } from "@phosphor-icons/react";
 import { getTextSound, prefetchTextSound } from '../../utils/common';
 import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 import { ProblemDataNewBottomSheet } from '../newBottomSheet/ProblemDataNewBottomSheet';
@@ -1870,22 +1870,6 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
     ? 'bg-crop-carrot'
     : (isComboMode ? getComboFillClass(combo?.current ?? 0) : 'bg-primary-main-600');
 
-  // 오답 재출제로 다시 나온 문제 — 진행바 아래에 '이전 오답' 딱지(작은 라벨). 표시 전용.
-  const retryTag = testQuestions[progressIndex]?.isRetry ? (
-    <div className="flex-shrink-0 flex items-center -mt-[6px] mb-[8px]">
-      <span className="
-        inline-flex items-center gap-[4px]
-        px-[8px] py-[2px] rounded-[20px]
-        bg-status-error-100 dark:bg-status-error-dark
-        text-status-error-600 dark:text-status-error-300
-        text-[11px] font-[700]
-      ">
-        <ArrowCounterClockwise weight="bold" className="text-[12px]" />
-        이전 오답
-      </span>
-    </div>
-  ) : null;
-
   // 농장 상태 바 노출 여부 — 지금 보고 있는 문제의 payload 일 때만 띄운다(응답 지연 대비).
   // 채점하면 applyOptimisticGrade 가 낙관값이라도 반드시 세우므로 이 조건은 사실상
   // "채점했고 그 문제의 값인가"만 본다. 폴백 UI 는 없다.
@@ -1956,8 +1940,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
           totalWordCount={totalWordCount}
           fillClass={progressFillClass}
         />
-        {retryTag}
-        <div className="relative flex flex-1 min-h-0 overflow-hidden">
+          <div className="relative flex flex-1 min-h-0 overflow-hidden">
           <AnimatePresence initial={false} mode="popLayout">
             <motion.div
               key={progressIndex}
@@ -2005,7 +1988,6 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
         totalWordCount={totalWordCount}
         fillClass={progressFillClass}
       />
-      {retryTag}
 
       <div className="relative middle flex flex-1 min-h-0 overflow-hidden">
         <AnimatePresence initial={false} mode="popLayout">
@@ -2070,6 +2052,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
                     farm={showFarmBar ? farmStatus : null}
                     wasCorrect={isCorrect}
                     nextReviewIso={testQuestions[progressIndex]?.displayNextReview ?? null}
+                    isRetry={!!testQuestions[progressIndex]?.isRetry}
                   />
 
                   {/* 상단 중앙 - 암기 상태 배지 (채점 전에는 숨김)

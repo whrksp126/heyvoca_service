@@ -2,7 +2,7 @@
 //
 // 학습 중 전체 화면 연출 두 가지(연출만 — 보상 지급·서버 호출 없음).
 //   ComboInterlude  콤보 마일스톤(5·10) 직후 문제 사이에 끼는 1.6초 인터루드. 작물이 튀어 들어오고
-//                   파편이 터지며 '콤보 xN' 이 찍힌다. 탭하면 즉시 건너뛴다.
+//                   파편이 터지며 '콤보 N' pill 이 뜬다. 탭하면 즉시 건너뛴다.
 //   CompleteCut     세션이 끝난 뒤 결과 화면으로 가기 전 1.1초 '학습 완료' 한 컷(사선 띠 배경).
 // 둘 다 body 포털 + fixed 로 그려 조상 transform 의 영향을 받지 않는다.
 // prefers-reduced-motion 이면 페이드만(소리·진동은 유지).
@@ -78,27 +78,27 @@ export const ComboInterlude = ({ n, milestone = 5, onDone, durationMs = COMBO_IN
             : { scale: 1, opacity: 1, y: 0, transition: { ...SPRING.bouncy, delay: 0.05 } }}
         >
           <CropImage stage={CROP_BY_MILESTONE[milestone] ?? 'leaf'} size={200} align="center" alt="" />
-          {!reducedMotion && (
-            <>
-              <Burst play count={8} radius={130} delay={0.2} />
-              <Burst play count={8} radius={90} delay={0.5} />
-            </>
-          )}
+          {!reducedMotion && <Burst play count={8} radius={120} delay={0.2} />}
         </motion.div>
 
         <motion.div
-          className="mt-[12px] flex items-center gap-[8px] text-secondary-yellow-500 dark:text-secondary-yellow-400"
-          initial={{ scale: reducedMotion ? 1 : 0.4, opacity: 0 }}
+          className="
+            mt-[16px] flex items-center gap-[8px]
+            px-[20px] py-[10px] rounded-[20px]
+            bg-primary-main-50 dark:bg-primary-main-dark
+            text-primary-main-600 dark:text-primary-main-300
+          "
+          initial={{ scale: reducedMotion ? 1 : 0.7, opacity: 0 }}
           animate={reducedMotion
             ? { opacity: 1 }
             : { scale: 1, opacity: 1, transition: { ...SPRING.bouncy, delay: 0.3 } }}
         >
-          <Flame weight="fill" className="text-[48px]" />
-          <span className="text-[44px] font-[900] tracking-[-0.02em]">콤보 x{n}</span>
+          <Flame weight="fill" className="text-[26px]" />
+          <span className="text-[24px] font-[700] tracking-[-0.02em]">콤보 {n}</span>
         </motion.div>
 
         <motion.p
-          className="mt-[10px] text-[16px] font-[700] text-layout-gray-400 dark:text-layout-gray-100"
+          className="mt-[12px] text-[15px] font-[600] text-layout-gray-400 dark:text-layout-gray-100"
           initial={{ opacity: 0, y: reducedMotion ? 0 : 12 }}
           animate={{ opacity: 1, y: 0, transition: { delay: 0.5, duration: 0.3 } }}
         >

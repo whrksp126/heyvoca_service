@@ -550,11 +550,14 @@ const ArrangeTray = ({
           stage={question.farmStage}
           farm={farm}
           wasCorrect={isCorrect}
+          isRetry={!!question.isRetry}
         />
         <div className="relative z-[1] flex-1 min-h-0 overflow-y-auto px-[20px] py-[26px] flex items-center">
           <LiftAboveBar active={!!farm} topReserve={28} className="w-full">
             {/* 문장 글자 크기(17px)는 칩 글자 크기(16px, CHIP_FONT)와 어울리도록 낮췄다(2026-09-29) —
                 이전 19px는 트레이 칩이 커지면서 고정 단어(prefix/suffix)만 도드라져 보였다. */}
+            <div className="relative w-full">
+            <PerfectBadge show={perfect && isAnswered} />
             <p className="w-full text-[17px] font-[700] leading-[1.9] text-layout-black dark:text-layout-white break-keep">
               {prefix && (
                 <span className="text-layout-gray-300 dark:text-layout-gray-100 font-[600]">
@@ -670,6 +673,7 @@ const ArrangeTray = ({
                 </span>
               )}
             </p>
+            </div>
             {isAnswered && postAnswerNode}
           </LiftAboveBar>
         </div>
@@ -693,8 +697,6 @@ const ArrangeTray = ({
 
         {/* O/X — 카드 정중앙. 다른 유형과 같은 공용 ResultMark(2026-09-29) — 정답/오답 모두
             표시하고 약 600ms 후 페이드아웃해 아래 칩 정오답 색·정답 문장이 바로 보인다. */}
-        <PerfectBadge show={perfect && isAnswered} />
-
         <ResultMark
           result={isCorrect}
           replayKey={resumeReplayKey}

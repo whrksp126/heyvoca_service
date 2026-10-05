@@ -14,10 +14,10 @@
 //
 // 【플랫폼 차이 — 변형(ios/android)을 따로 둔다】
 //   iOS(CoreHaptics)  : intensity·sharpness 둘 다 반영 → sharpness 로 '톡'과 '묵직함'을 구분.
-//   Android(진폭 waveform): **sharpness 무시**, continuous 는 상수 진폭. 그래서
-//     - '약→강' 램프는 30~50ms continuous 계단을 intensity 를 올려가며 이어 붙이고
-//     - '묵직한 턱'은 높은 intensity + 긴 duration(40~60ms), '가벼운 톡'은 낮은 intensity + 짧은 duration(10~20ms)
-//   로 구분한다.
+//   Android: sharpness 무시. 이벤트의 `effect`(프리베이크)를 우선하고, 없으면 waveform 폴백.
+//
+// 【Android 설계】 이 기기류는 진폭 제어가 안 돼 모든 진동이 최대 세기로 울린다 → duration 으로 세기를 흉내 내지 않고
+//   시스템 프리베이크 효과(tick/click/heavyClick)를 쓴다. 진동 횟수·총 길이도 최소화했다(progress 는 없음).
 //
 // 각 패턴의 time 은 sfx.js 의 음 시작 시각과 1:1 로 맞춰져 있다(소리 음 ↔ 진동 톡).
 // 패턴 길이(PATTERN_DURATION_MS)는 대응 효과음 길이(SFX_DURATION_MS)와 비슷하게 유지한다.
@@ -25,83 +25,81 @@
 const T = (time, intensity, sharpness, duration = 12) => ({ time, type: 'transient', duration, intensity, sharpness });
 const C = (time, duration, intensity, sharpness) => ({ time, type: 'continuous', duration, intensity, sharpness });
 
+// Android 프리베이크 효과 이벤트 — 앱이 `effect` 를 지원하면 시스템 효과(VibrationEffect.EFFECT_*)로 재생하고,
+// 모르는 앱(effect 무시)은 같은 이벤트의 waveform(intensity·duration)으로 재생한다. 그래서 waveform 폴백도
+// 뭉개지지 않게 duration 을 짧게 잡는다(톡 8~12ms, 강 18~25ms, 여운 없음).
+//   effect: 'tick' | 'click' | 'heavyClick' | 'doubleClick'
+// duration 은 [time, time+duration) 비중첩 검사용 근사 길이(tick≈10, click≈16, heavyClick≈24, doubleClick≈60).
+// 앱 계약: effect 이벤트 사이는 60ms 이상(진동기 하나 — 새 진동이 진행 중인 진동을 끊는다), 한 패턴에 effect 와
+// waveform 이벤트를 섞지 않는다(Android 변형은 effect 만으로 구성), doubleClick 은 OS 고정 길이 2연타.
+// 프리베이크 미지원 기기(supportsPrebaked=false)는 platform:'android-waveform' 으로 effect 를 뗀 짧은 waveform 변형을 쓴다.
+const E = (time, effect, intensity, duration) => ({
+  time, type: 'transient', duration, intensity, sharpness: 0.8, effect,
+});
+const TICK = (time) => E(time, 'tick', 0.3, 10);
+const CLICK = (time, i = 0.55) => E(time, 'click', i, 16);
+const HEAVY = (time) => E(time, 'heavyClick', 1, 24);
+
 const clamp01 = (v) => Math.max(0, Math.min(1, v));
 const comboK = (n = 2) => clamp01((Math.min(Math.max(n, 2), 14) - 2) / 12); // 0~1
 
-// Android 용 계단 램프 — [from, from+steps*stepMs) 구간을 intensity i0→i1 로 올려가며 채운다.
-const stepRamp = (from, steps, stepMs, i0, i1) => Array.from({ length: steps }, (_, s) => (
-  C(from + s * stepMs, stepMs, clamp01(i0 + ((i1 - i0) * s) / Math.max(steps - 1, 1)), 0.5)
-));
-
 const PATTERNS = {
-  // 아주 가벼운 톡
+  // 아주 약한 톡 (선택지 탭마다 울려도 가장 약한 tick)
   tap: {
-    ios: () => [T(0, 0.35, 0.6)],
-    android: () => [T(0, 0.3, 0.6, 10)],
+    ios: () => [T(0, 0.25, 0.8)],
+    android: () => [TICK(0)],
   },
   // 또렷한 톡
   select: {
-    ios: () => [T(0, 0.6, 0.85)],
-    android: () => [T(0, 0.55, 0.85, 14)],
+    ios: () => [T(0, 0.45, 0.9)],
+    android: () => [CLICK(0)],
   },
-  // 약하다가 세게 — 약한 톡 → 90ms 뒤 강한 톡(= 두 번째 음) + 짧은 여운
+  // 약하다가 세게 — tick → 90ms → click (= 소리 두 음)
   correct: {
-    ios: () => [T(0, 0.3, 0.5), T(90, 0.95, 0.8), C(110, 110, 0.2, 0.3)],
-    android: () => [T(0, 0.28, 0.5, 10), T(90, 1, 0.8, 26), C(120, 90, 0.2, 0.3)],
+    ios: () => [T(0, 0.25, 0.7), T(90, 0.8, 0.9)],
+    android: () => [TICK(0), CLICK(90, 0.8)],
   },
-  // 턱 때리듯 묵직하게 — 강한 저-sharpness 톡 + 짧은 continuous 여운
+  // 한 번 묵직하게, 여운 없음
   wrong: {
-    ios: () => [T(0, 1, 0.15, 20), C(30, 130, 0.45, 0.1), C(180, 100, 0.18, 0.05)],
-    android: () => [C(0, 55, 1, 0.1), C(60, 70, 0.5, 0.1), C(135, 100, 0.2, 0.1)],
+    ios: () => [T(0, 0.85, 0.3, 20), C(30, 70, 0.25, 0.2)],
+    android: () => [HEAVY(0)],
   },
-  // 가벼운 더블 탭
+  // 가벼운 더블 탭(소리 두 음)
   match: {
-    ios: () => [T(0, 0.45, 0.7), T(55, 0.6, 0.8)],
-    android: () => [T(0, 0.4, 0.7, 10), T(55, 0.55, 0.8, 14)],
+    ios: () => [T(0, 0.35, 0.85), T(70, 0.5, 0.9)],
+    android: () => [TICK(0), TICK(70)],
   },
-  // 짧은 상승 램프(0~90ms) 후 톡 — 콤보가 높을수록 강하게
+  // tick … click — 콤보가 높을수록 두 번째가 세진다
   combo: {
     ios: ({ n } = {}) => {
       const k = comboK(n);
-      return [
-        C(0, 90, 0.2 + k * 0.25, 0.4),
-        T(90, clamp01(0.6 + k * 0.4), clamp01(0.7 + k * 0.2)),
-        C(110, 110, 0.12 + k * 0.2, 0.3),
-      ];
+      return [T(0, 0.25 + k * 0.15, 0.8), T(90, clamp01(0.5 + k * 0.4), 0.9)];
     },
     android: ({ n } = {}) => {
       const k = comboK(n);
-      return [
-        ...stepRamp(0, 3, 30, 0.18 + k * 0.2, 0.4 + k * 0.3),
-        T(90, clamp01(0.65 + k * 0.35), 0.8, 20 + Math.round(k * 12)),
-        C(125, 90, 0.12 + k * 0.18, 0.3),
-      ];
+      return [TICK(0), k > 0.6 ? HEAVY(90) : CLICK(90, 0.55 + k * 0.4)];
     },
   },
-  // 3연타 상승
+  // tick · tick · click 상승
   perfect: {
-    ios: () => [T(0, 0.5, 0.7), T(90, 0.75, 0.8), T(180, 1, 0.9), C(200, 160, 0.25, 0.3)],
-    android: () => [T(0, 0.45, 0.7, 12), T(90, 0.7, 0.8, 16), T(180, 1, 0.9, 28), C(215, 120, 0.22, 0.3)],
+    ios: () => [T(0, 0.35, 0.8), T(90, 0.55, 0.85), T(180, 0.85, 0.9)],
+    android: () => [TICK(0), TICK(90), CLICK(180, 0.8)],
   },
-  // 거의 안 느껴질 정도
+  // 진동 없음 — 소리·시각만. (iOS 는 거의 느껴지지 않는 한 번)
   progress: {
-    ios: () => [T(0, 0.12, 0.3)],
-    android: () => [T(0, 0.12, 0.3, 8)],
+    ios: () => [T(0, 0.1, 0.5)],
+    android: () => null,
   },
-  // 리듬 있는 축하 시퀀스(1초 이내)
+  // tick tick tick click 리듬
   bonus: {
-    ios: () => [T(0, 0.5, 0.7), T(80, 0.6, 0.75), T(160, 0.75, 0.8), T(240, 1, 0.9), C(260, 240, 0.3, 0.3)],
-    android: () => [T(0, 0.45, 0.7, 12), T(80, 0.55, 0.75, 14), T(160, 0.7, 0.8, 18), T(240, 1, 0.9, 30), C(280, 200, 0.25, 0.3)],
+    ios: () => [T(0, 0.35, 0.8), T(80, 0.45, 0.85), T(160, 0.55, 0.85), T(240, 0.85, 0.9)],
+    android: () => [TICK(0), TICK(80), TICK(160), CLICK(240, 0.8)],
   },
   complete: {
     ios: () => [
-      T(0, 0.5, 0.7), T(110, 0.6, 0.75), T(220, 0.75, 0.8), T(330, 1, 0.9),
-      C(350, 200, 0.35, 0.3), T(560, 0.5, 0.6), T(720, 0.4, 0.5),
+      T(0, 0.35, 0.8), T(110, 0.45, 0.85), T(220, 0.55, 0.85), T(330, 0.85, 0.9), T(560, 0.35, 0.7),
     ],
-    android: () => [
-      T(0, 0.45, 0.7, 12), T(110, 0.55, 0.75, 14), T(220, 0.7, 0.8, 18), T(330, 1, 0.9, 30),
-      C(370, 170, 0.3, 0.3), T(560, 0.45, 0.6, 14), T(720, 0.35, 0.5, 12),
-    ],
+    android: () => [TICK(0), TICK(110), TICK(220), CLICK(330, 0.85), TICK(560)],
   },
 };
 
@@ -109,13 +107,20 @@ export const HAPTIC_NAMES = Object.keys(PATTERNS);
 
 /**
  * 패턴 이벤트 배열 반환(없는 이름이면 null).
- * @param {{n?:number, platform?:'ios'|'android'}} opts  n=콤보 수(combo 세기), platform=변형 선택(기본 ios)
+ * @param {{n?:number, platform?:'ios'|'android'|'android-waveform'}} opts  n=콤보 수(combo 세기), platform=변형 선택(기본 ios)
  */
 export function getHapticPattern(name, opts = {}) {
   const entry = PATTERNS[name];
   if (!entry) return null;
+  if (opts.platform === 'android-waveform') {
+    const ev = entry.android(opts);
+    if (!ev) return null;
+    // effect 필드 제거 + 짧은 duration(톡 8, 중 14, 강 24)
+    const DUR = { tick: 8, click: 14, heavyClick: 24, doubleClick: 14 };
+    return ev.map(({ effect, ...rest }) => ({ ...rest, duration: DUR[effect] ?? rest.duration }));
+  }
   const make = opts.platform === 'android' ? entry.android : entry.ios;
-  return make(opts);
+  return make(opts) || null;
 }
 
 /** 패턴 전체 길이(ms) */

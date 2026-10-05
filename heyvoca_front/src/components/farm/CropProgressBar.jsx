@@ -46,6 +46,7 @@ const clamp = (n) => Math.max(0, Math.min(100, Number(n) || 0));
  * @param {number|string} props.width  막대 최대 폭 (기본 `'100%'` — 항상 부모 칸 폭 그대로)
  * @param {number} props.height 막대 두께 (기본 5px. 글자를 넣는 채점 상태 바는 normal 18px / compact 14px)
  * @param {number} props.delay  채우기 시작을 늦추는 초 — 앞선 연출이 끝난 뒤 차오르게 할 때
+ * @param {number} props.fillDuration  단순 채움/줄어듦 길이(초, 기본 0.45) — 두 단계 이상 연속 진화처럼 구간별로 속도를 줄여야 할 때
  * @param {boolean} props.showGain  오른 구간을 밝게 덧칠할지. 이번에 오른 만큼을 구분해 보여
  *   주는 장치라, 0 에서 새로 채우는 막대(진화 직후 새 단계)에서는 꺼야 한다 —
  *   그 경우 막대 전체가 '오른 구간'이 되어 통째로 밝은 색이 되고, 다른 회차의 같은 막대와
@@ -69,6 +70,7 @@ const CropProgressBar = ({
   width = '100%',
   height = 5,
   delay = 0,
+  fillDuration = 0.45,
   showGain = true,
   pending = false,
   block = false,
@@ -145,7 +147,7 @@ const CropProgressBar = ({
     ? (resets
       ? { duration: GROW_FILL_DURATION, delay, times: GROW_FILL_TIMES, ease: ['easeOut', 'linear', 'easeIn', 'easeOut'] }
       : { duration: 0.5, delay, ease: 'easeOut' })
-    : { duration: 0.45, delay, ease: 'easeOut' };
+    : { duration: fillDuration, delay, ease: 'easeOut' };
 
   /*
     【막대 안 글자 — 2026-09-27】 `12 / 50 XP` 를 막대 안에 넣는다. 채움 경계가 글자 한가운데를

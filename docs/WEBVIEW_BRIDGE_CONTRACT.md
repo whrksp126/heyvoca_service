@@ -110,6 +110,7 @@ git show <commit>:android/app/build.gradle | grep versionName
 | type | 최소 앱 버전 | 응답 | 비고 |
 |---|---|---|---|
 | `haptic_pattern` | 1.1.2 | 없음(fire-and-forget) | 아래 계약 |
+| `haptic_caps` | 1.1.2 | `{type:'haptic_caps', data:{platform:'android'\|'ios', apiLevel:number, hasAmplitudeControl:boolean, supportsPrebaked:boolean}}` | 기기 햅틱 능력 조회. 요청은 `{type:'haptic_caps'}` (props 없음). Android: apiLevel=SDK_INT, hasAmplitudeControl=Vibrator.hasAmplitudeControl(), supportsPrebaked=API>=29 && 진동기 있음. iOS: apiLevel=iOS 메이저, hasAmplitudeControl=true, supportsPrebaked=false |
 | `haptic_warmup` | 1.1.2 | 없음 | iOS 햅틱 엔진 예열. 학습 화면 진입 시 1회 보내면 첫 진동 지연 제거 |
 
 `haptic_pattern` 계약:
@@ -119,12 +120,15 @@ git show <commit>:android/app/build.gradle | grep versionName
   props: { events: HapticEvent[],   // 1~32개
            delayMs?: number,        // 0~500, 패턴 전체를 뒤로 민다(네이티브 시간축)
            cancelPrevious?: boolean } }
-HapticEvent = { time: ms, type?: 'transient'|'continuous', duration?: ms, intensity?: 0~1, sharpness?: 0~1 }
+HapticEvent = { time: ms, type?: 'transient'|'continuous', duration?: ms, intensity?: 0~1, sharpness?: 0~1,
+                effect?: 'tick'|'click'|'heavyClick'|'doubleClick' }
 ```
 
 - 앱은 규격 위반(배열 아님/0개/33개 이상/time 비수치/총 길이 > 3000ms)이면 **통째로 조용히 무시**한다. 개별 값은 clamp(time 0~3000, duration 1~3000, intensity·sharpness 0~1). intensity 0 이벤트는 버려진다.
 - 총 길이 = max(time+duration) (delayMs 제외). transient 의 duration 기본값은 20ms.
 - **Android 는 sharpness 무시**, continuous 도 상수 진폭이다(라이브러리가 createWaveform 만 사용). 약→강 램프는 짧은 continuous 여러 개(예: 30~50ms 계단)로 표현할 것. 겹치는 이벤트는 겹치지 않고 순차 재생된다.
+- **`effect`(1.1.2, Android 전용)**: 있으면 그 이벤트를 시스템 프리베이크 효과(`VibrationEffect.createPredefined` EFFECT_TICK/CLICK/HEAVY_CLICK/DOUBLE_CLICK, API 29+)로 재생한다. 제조사가 튜닝한 또렷한 햅틱이라 진폭 제어가 없는 구형 삼성에서도 세기·질감이 살아난다. 이때 `duration`/`intensity`/`sharpness` 는 해당 이벤트에서 무시되고(효과 길이는 OS 고정), `time`(+`delayMs`)만 쓰인다. effect 이벤트는 앱 네이티브 모듈이 Handler(uptimeMillis)로 예약해 각 시각에 재생(JS 타이머 아님). effect 없는 이벤트는 기존대로 waveform. API 29 미만·모듈 없음이면 effect 이벤트도 waveform(transient)으로 폴백. **iOS 는 effect 를 무시**하고 intensity/sharpness 로 재생하므로 iOS 용 값은 그대로 채워 보낼 것.
+- 주의: 안드로이드 진동기는 하나라 새 vibrate 호출이 진행 중인 진동을 대체한다. 효과끼리·효과와 waveform 을 가깝게(효과 길이 ≈ 10~50ms 이내) 붙이면 앞 진동이 잘릴 수 있으니 효과 간격은 넉넉히(권장 ≥ 60ms) 둘 것. `doubleClick` 은 효과 하나가 두 번 울리는 것이다.
 - iOS 는 Core Haptics(전 기능). 시스템 진동 설정 존중(Android 무음 모드면 무진동).
 - 미지원 기기/예외는 무시. 기존 `vibrate` 는 1.1.1 이하에서 꺼져 있었고(HAPTIC_ENABLED=false), 1.1.2 부터 다시 켜진다.
 

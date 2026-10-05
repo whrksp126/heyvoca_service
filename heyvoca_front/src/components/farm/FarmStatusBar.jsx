@@ -1,10 +1,10 @@
 import { useEffect, useRef, useState } from 'react';
-import { motion, useReducedMotion } from 'framer-motion';
+import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import CropImage, { CROP_ASSETS } from './CropImage';
 import CropProgressBar, { GROW_FILL_DURATION, GROW_FILL_TIMES } from './CropProgressBar';
 import { CROP_STAGES, CROP_LABEL, cropIndex, stageToCrop, withRo, isUnplantedStage } from '../../utils/crop';
 import { deriveFarmXp, xpBarPct, sameXpBand, xpFloor, xpStageRelative } from '../../utils/cropXp';
-import { haptic, pickVariant, useCountUp } from '../../lib/feel';
+import { haptic, feel, pickVariant, useCountUp } from '../../lib/feel';
 import { FARM_ANIM_MS, FARM_ANIM_GROW_MS } from '../../utils/studyTiming';
 
 /**
@@ -95,6 +95,18 @@ const SPARKS = [
 const [, , GROW_RESET_START, GROW_RESET_END] = GROW_FILL_TIMES;
 const ICON_SWAP_TIMES = [0, GROW_RESET_START, GROW_RESET_END, 1];
 
+/*
+  【두 단계 이상 연속 진화 — 2026-10 실기기 QA】 한 번에 큰 XP(예 +530)가 들어와 단계를 둘 이상 건너뛰면
+  예전 연출(이전 진행률 → 100% → 0% → 최종 진행률)은 **중간 단계 구간을 통째로 건너뛰어** 첫 진화가
+  게이지 채움 없이 뚝 끊겨 넘어갔다. 지금은 구간별로 순차 재생한다:
+    현재 단계 게이지를 끝까지 채움 → 진화(작물 교체 + feel 큐) → 다음 단계 게이지를 0 에서 채움 → … → 최종 값에서 정지.
+  문턱값은 cropXp.js 의 xpFloor/xpNext(= 50/210/600/1800)를 그대로 쓴다. 전체 길이는 구간 수와 무관하게
+  MULTI_GROW_TOTAL_S 로 고정하고 구간당 길이를 나눠 쓴다(다음 문제 전환 게이트가 이 길이 뒤에 700ms 머문다).
+  단계 하나만 오르는 흔한 회차는 위의 기존 키프레임 연출(GROW_FILL_*)을 그대로 쓴다.
+*/
+const MULTI_GROW_TOTAL_S = 1.5;
+const MULTI_FILL_RATIO = 0.7; // 구간 길이 중 게이지가 차오르는 비율(나머지는 가득 찬 채 머물다 진화)
+
 
 const FarmStatusBar = ({
   crop,
@@ -144,6 +156,15 @@ const FarmStatusBar = ({
   */
   const cropForImage = stage || crop || cropKey;
   const prevCropForImage = stageFrom || cropFrom || prevCrop;
+
+  // 연속 진화 — 건너뛴 작물 단계 수(2 이상이면 구간별 순차 재생). 정지(pending)·진단 중엔 쓰지 않는다.
+  const bandKeys = CROP_STAGES.slice(cropIndex(prevCropForImage), cropIndex(cropForImage) + 1);
+  const bandSteps = Math.max(0, bandKeys.length - 1);
+  const multi = grew && !pending && !diagnosis && bandSteps >= 2;
+  const segS = MULTI_GROW_TOTAL_S / (bandSteps + 1);
+  const [phase, setPhase] = useState(0);
+  const phaseCrop = !multi ? cropForImage
+    : (phase <= 0 ? prevCropForImage : (phase >= bandSteps ? cropForImage : bandKeys[phase]));
 
   const isNg = diagnosis || wasCorrect === false;
   // 정지 상태(pending)는 톤도 '이전 상태' 그대로다 — 아직 아무것도 움직이지 않았는데
@@ -197,8 +218,13 @@ const FarmStatusBar = ({
 
   // 숫자 카운트업 — 막대와 같은 시간 동안 굴러간다. 정지(pending) 동안은 from===to 라
   // 멈춰 있다가, 응답이 오면 같은 엘리먼트에서 이어서 굴러간다.
-  const countDuration = barGrew ? GROW_FILL_DURATION : 0.45;
-  const shownXp = useCountUp(xpTo, { from: xpFrom, duration: countDuration });
+  const countDuration = multi ? MULTI_GROW_TOTAL_S : (barGrew ? GROW_FILL_DURATION : 0.45);
+  // 연속 진화는 구간마다 목표를 그 구간 끝(= 다음 단계 문턱)으로 잡아 숫자도 게이지와 같이 굴러간다.
+  const countTarget = multi && phase < bandSteps ? xpFloor(bandKeys[phase + 1]) : xpTo;
+  const shownXp = useCountUp(countTarget, {
+    from: xpFrom,
+    duration: multi ? segS * MULTI_FILL_RATIO : countDuration,
+  });
   const shownDelta = useCountUp(pending ? 0 : xpBadgeAbs, { from: 0, duration: countDuration, delay: 0.1 });
 
   /*
@@ -219,11 +245,23 @@ const FarmStatusBar = ({
   // 진화한 순간에만 햅틱을 한 번 준다 (채점 햅틱은 문제 화면이 이미 준다).
   const buzzedRef = useRef(false);
   useEffect(() => {
-    if (grew && !buzzedRef.current) {
+    if (grew && !multi && !buzzedRef.current) {
       buzzedRef.current = true;
       haptic('medium');
     }
-  }, [grew]);
+  }, [grew, multi]);
+
+  // 연속 진화 — 구간이 바뀌는 시각마다 phase 를 올리고 진화 큐(소리·진동)를 울린다.
+  useEffect(() => {
+    if (!multi) return undefined;
+    const timers = Array.from({ length: bandSteps }, (_, i) => setTimeout(() => {
+      setPhase(i + 1);
+      feel('match');
+      haptic('medium');
+    }, (i + 1) * segS * 1000));
+    return () => timers.forEach(clearTimeout);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [multi, bandSteps]);
 
   /*
     연출 시작·끝 신호 — 다음 슬라이드 전환 게이트(hooks/useStudyAdvanceGate.js)가 쓴다.
@@ -240,9 +278,10 @@ const FarmStatusBar = ({
   useEffect(() => {
     if (pending || diagnosis) return undefined;
     onAnimStartRef.current?.();
-    const t = setTimeout(() => onSettledRef.current?.(), grew ? FARM_ANIM_GROW_MS : FARM_ANIM_MS);
+    const settleMs = multi ? Math.round(MULTI_GROW_TOTAL_S * 1000) + 100 : (grew ? FARM_ANIM_GROW_MS : FARM_ANIM_MS);
+    const t = setTimeout(() => onSettledRef.current?.(), settleMs);
     return () => clearTimeout(t);
-  }, [pending, grew, diagnosis]);
+  }, [pending, grew, diagnosis, multi]);
 
   const radius = compact ? 'rounded-[8px]' : 'rounded-[11px]';
 
@@ -263,6 +302,35 @@ const FarmStatusBar = ({
           className="object-contain select-none"
           style={{ width: size, height: size }}
         />
+      ) : multi ? (
+        <>
+          {/* 연속 진화 — 구간이 바뀔 때마다 이전 작물은 작아지며 사라지고 새 작물이 튀어오른다 */}
+          <AnimatePresence initial={false}>
+            <motion.span
+              key={`crop-phase-${phase}`}
+              className="absolute inset-0 flex items-center justify-center"
+              initial={{ opacity: 0, scale: 0.4 }}
+              animate={{ opacity: 1, scale: [0.4, 1.18, 1] }}
+              exit={{ opacity: 0, scale: 0.7, transition: { duration: 0.12 } }}
+              transition={{ duration: 0.28, ease: 'easeOut' }}
+            >
+              <CropImage stage={phaseCrop} health={health} size={size} align="center" alt="" />
+            </motion.span>
+          </AnimatePresence>
+          {phase > 0 && (
+            <span key={`spk-${phase}`} className={`absolute ${compact ? 'inset-[-5px]' : 'inset-[-7px]'} pointer-events-none`}>
+              {SPARKS.map((spark, i) => (
+                <motion.i
+                  key={i}
+                  className={`absolute rounded-full bg-status-success-500 ${spark.className}`}
+                  initial={{ scale: 0, opacity: 0 }}
+                  animate={{ scale: [0, 1, 0.6], opacity: [0, spark.peak, 0] }}
+                  transition={{ duration: 0.32, delay: i * 0.02, ease: 'easeOut' }}
+                />
+              ))}
+            </span>
+          )}
+        </>
       ) : grew ? (
         <>
           {/* 이전 작물 — 막대가 리셋되는 순간(GROW_RESET_START~END)에 사라진다 */}
@@ -316,7 +384,7 @@ const FarmStatusBar = ({
           animate={{ opacity: 1, scale: 1, y: 0 }}
           transition={{
             type: 'spring', stiffness: 520, damping: 18,
-            delay: reducedMotion ? 0 : GROW_FILL_DURATION * GROW_RESET_START,
+            delay: reducedMotion ? 0 : (multi ? segS * bandSteps : GROW_FILL_DURATION * GROW_RESET_START),
           }}
         >
           <span
@@ -347,7 +415,7 @@ const FarmStatusBar = ({
   // shownXp(카운트업 중인 절대 누적 XP)가 아직 새 단계 floor 를 못 넘었으면(진화 리셋
   // 애니메이션 도중) 이전 단계 창을 기준으로 보여준다 — 그래야 막대가 리셋 전 구간을 채우는
   // 동안 숫자도 같은 이전 구간 기준으로 읽힌다.
-  const labelStage = shownXp < xpFloor(cropForImage) ? prevCropForImage : cropForImage;
+  const labelStage = multi ? phaseCrop : (shownXp < xpFloor(cropForImage) ? prevCropForImage : cropForImage);
   const { current: stageRelXp, next: stageRelNext } = xpStageRelative(labelStage, shownXp);
   const xpLabel = (
     <span>
@@ -360,9 +428,12 @@ const FarmStatusBar = ({
   // 막대 — 한 줄 가로 칸이라 flex-1 로 남은 폭을 다 쓴다.
   const barEl = (
     <CropProgressBar
-      pctFrom={barFrom}
-      pctTo={barTo}
-      grew={barGrew}
+      key={multi ? `multi-${phase}` : undefined}
+      pctFrom={multi ? (phase === 0 ? barFrom : 0) : barFrom}
+      pctTo={multi ? (phase < bandSteps ? 100 : barTo) : barTo}
+      grew={multi ? false : barGrew}
+      showGain={!multi}
+      fillDuration={multi ? segS * MULTI_FILL_RATIO : undefined}
       tone={tone}
       height={barH}
       pending={pending}

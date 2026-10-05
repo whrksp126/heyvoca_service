@@ -40,7 +40,7 @@ const StudyProgressBar = ({ displayPassedCount, totalWordCount, fillClass }) => 
         bg-primary-main-100 dark:bg-layout-gray-dark
         overflow-hidden
       "
-      animate={sparkKey > 0 && !reducedMotion ? { scaleY: [1, 1.25, 1] } : undefined}
+      animate={sparkKey > 0 && !reducedMotion ? { scaleY: [1, 1.12, 1] } : undefined}
       transition={{ duration: 0.25, ease: 'easeOut' }}
     >
       <motion.div
@@ -51,7 +51,7 @@ const StudyProgressBar = ({ displayPassedCount, totalWordCount, fillClass }) => 
         onAnimationComplete={handleFillComplete}
         style={{ willChange: 'width' }}
       >
-        {sparkKey > 0 && <ShineSweep key={sparkKey} play delay={0} duration={0.5} />}
+        {sparkKey > 0 && <ShineSweep key={sparkKey} play delay={0} duration={0.6} />}
       </motion.div>
       <span className="
         absolute right-[10px] top-[50%] translate-y-[-50%]

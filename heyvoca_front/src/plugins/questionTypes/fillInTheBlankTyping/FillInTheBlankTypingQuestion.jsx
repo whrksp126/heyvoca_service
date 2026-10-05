@@ -445,10 +445,12 @@ const FillInTheBlankTypingQuestion = ({ question, onComplete, onCardMatched, far
           stage={question.farmStage}
           farm={farm}
           wasCorrect={isCorrect}
+          isRetry={!!question.isRetry}
         />
         <div className="relative z-[1] flex items-center flex-1 min-h-0 px-[20px] py-[45px]">
           <LiftAboveBar active={!!farm} topReserve={28} className="w-full">
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} className="relative">
+            <PerfectBadge show={isPerfect && isAnswered} />
               <p lang={jaBlank ? 'ja' : undefined} className={`w-full text-[22px] font-[700] leading-[1.8] text-layout-black dark:text-layout-white ${jaBlank ? 'break-normal' : 'break-keep'}`}>
                 {renderWordTokens(beforeTokens, 'b')}
                 <motion.span
@@ -543,8 +545,6 @@ const FillInTheBlankTypingQuestion = ({ question, onComplete, onCardMatched, far
             />
           )}
         </AnimatePresence>
-
-        <PerfectBadge show={isPerfect && isAnswered} />
 
         <ResultMark
           result={isCorrect}

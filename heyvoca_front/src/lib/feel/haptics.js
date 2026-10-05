@@ -127,6 +127,42 @@ export function hapticWarmup() {
   if (warmedUp || !supportsHapticPattern() || !canUseNative('haptic_warmup')) return;
   warmedUp = true;
   postMessageManager.sendMessageToReactNative('haptic_warmup');
+  ensureHapticCaps();
+}
+
+/**
+ * 앱 햅틱 능력 조회 — {type:'haptic_caps'} 요청 → {type:'haptic_caps', data:{platform, apiLevel,
+ * hasAmplitudeControl, supportsPrebaked}} 회신. 구버전 앱/웹은 회신이 없으므로 타임아웃(1.5초)에 null.
+ * 손맛 테스트 화면 표시 전용.
+ * @returns {Promise<null|{platform:string, apiLevel:number, hasAmplitudeControl:boolean, supportsPrebaked:boolean}>}
+ */
+export function requestHapticCaps(timeoutMs = 1500) {
+  return new Promise((resolve) => {
+    if (!isAppWebView()) { resolve(null); return; }
+    let done = false;
+    let off = () => {};
+    const finish = (v) => {
+      if (done) return;
+      done = true;
+      clearTimeout(timer);
+      off();
+      resolve(v);
+    };
+    const timer = setTimeout(() => finish(null), timeoutMs);
+    off = postMessageManager.waitFor('haptic_caps', (msg) => finish(msg?.data ?? null));
+    if (!postMessageManager.sendMessageToReactNative('haptic_caps')) finish(null);
+  });
+}
+
+// 학습 화면 진입 시 1회 조회해 캐시한다(hapticWarmup 이 호출). 회신 전·실패 시 null → effect 패턴이 기본
+// (앱이 미지원이면 자체 폴백). Android 에서 supportsPrebaked===false 면 hapticPattern 이 waveform 변형을 보낸다.
+let cachedCaps = null;
+let capsRequested = false;
+export function getCachedHapticCaps() { return cachedCaps; }
+export function ensureHapticCaps() {
+  if (capsRequested || !supportsHapticPattern()) return;
+  capsRequested = true;
+  requestHapticCaps().then((v) => { if (v) cachedCaps = v; });
 }
 
 const PATTERN_DEBOUNCE_MS = 40;
@@ -140,7 +176,8 @@ const MAX_NATIVE_DELAY_MS = 500;
  *   delayMs 는 소리와 맞추기 위한 시작 지연(cue.js 가 계산). n 은 combo 세기.
  */
 export function hapticPattern(name, { delayMs = 0, n, cancelPrevious = false } = {}) {
-  const platform = getDevicePlatform() === 'android' ? 'android' : 'ios';
+  let platform = getDevicePlatform() === 'android' ? 'android' : 'ios';
+  if (platform === 'android' && cachedCaps && cachedCaps.supportsPrebaked === false) platform = 'android-waveform';
   const events = getHapticPattern(name, { n, platform });
   if (!events) return;
 

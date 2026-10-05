@@ -8,7 +8,7 @@
 // 행 5개, 고정 순서. 0인 행은 숨긴다.
 //   1 썩은 단어 살리기 — 영양 회복제 충분하면 즉시 전부 회복, 부족하면 RottenListSheet(기존
 //     보관소 진입점)를 그대로 연다 — 회복제/삽 선택은 거기 이미 있다(중복 구현하지 않는다).
-//   2 시듦 물주기 — 제목만 강조색(#C24E0C)
+//   2 시듦 물주기
 //   3 오늘 돌봄 물주기
 //   4 새 씨앗 심기 — memoryState=['unlearned']로 좁힌 AI 추천 학습.
 //   (새 씨앗 구매 줄은 제거 — 심을 씨앗이 없으면 '새 씨앗 심기' 버튼이 비활성 스타일이 되고
@@ -302,7 +302,6 @@ const TodayTasksCard = () => {
     rowDefs.push({
       key: 'wilted',
       title: '시듦 물주기',
-      titleClassName: done ? undefined : 'text-[#C24E0C]',
       sub: compact,
       expand: expandedBlock,
       faded: done,

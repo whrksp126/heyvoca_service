@@ -5,14 +5,15 @@ import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { feel, pickVariant, SPRING } from '../../lib/feel';
 
 /**
- * 콤보 마일스톤 단계 — 진행바 색을 단계별로 바꾼다(기존 토큰 안에서 primary → secondary-yellow).
- *   0~4: primary(기본) / 5~9: yellow-400 / 10+: yellow-600
+ * 콤보 마일스톤 단계 — 진행바는 브랜드 primary 계열을 유지하고 색을 갈아끼우는 대신 같은 계열 안에서
+ * 끝부분이 옅게 빛나는 그라디언트로 미묘하게 강조한다.
+ *   0~4: primary-600 단색(기본) / 5~9: 600→400 / 10+: 600→500→300(끝이 더 밝게)
  * Main.jsx 가 진행바 채움 색을 고를 때 쓴다(진단 모드의 crop-carrot 가 우선).
  */
 export const COMBO_MILESTONE_STEP = 5;
 export const getComboFillClass = (current = 0) => {
-  if (current >= 10) return 'bg-secondary-yellow-600';
-  if (current >= COMBO_MILESTONE_STEP) return 'bg-secondary-yellow-400';
+  if (current >= 10) return 'bg-gradient-to-r from-primary-main-600 via-primary-main-500 to-primary-main-300';
+  if (current >= COMBO_MILESTONE_STEP) return 'bg-gradient-to-r from-primary-main-600 to-primary-main-400';
   return 'bg-primary-main-600';
 };
 
@@ -27,7 +28,7 @@ const MILESTONE_SHOW_MS = 900;
  * 【손맛】 콤보가 오르는 순간 feel('combo', {n}) — 음이 반음씩 올라가고 진동이 강해진다.
  *  feel() 이 돌려주는 startInMs(정답 큐가 아직 울리는 중이면 그 뒤로 밀린 시작 시각)만큼 팝업
  *  연출도 늦춰 소리·진동·글자가 같은 순간에 뜬다.
- *  15 이상의 5의 배수(15·20…)에서는 화면 중앙에 큰 '콤보 xN' 글자가 짧게(900ms) 뜬다 — pointer-events-none 이라
+ *  15 이상의 5의 배수(15·20…)에서는 화면 중앙에 작은 '콤보 N' pill 이 짧게(900ms) 뜬다 — pointer-events-none 이라
  *  다음 문제 진입·터치를 막지 않는다. (body 포털: 조상의 transform 이 fixed 기준을 바꾸지 않게)
  *
  * @param {boolean} isRecord — 이번 판이 기존 최고 기록을 갱신 중인지(Main.jsx
@@ -91,8 +92,8 @@ const ComboBar = ({ combo, isRecord = false }) => {
             exit={popIn.exit}
             className="absolute bottom-[2px] right-[2px] z-[6] flex items-center gap-[3px] text-primary-main-600 whitespace-nowrap"
           >
-            <Flame weight="fill" className="text-[14px]" />
-            <span className="text-[13px] font-[800]">{current}콤보!</span>
+            <Flame weight="fill" className="text-[13px]" />
+            <span className="text-[12px] font-[700] tracking-[-0.02em]">{current}콤보</span>
           </motion.div>
         )}
       </AnimatePresence>
@@ -109,14 +110,19 @@ const ComboBar = ({ combo, isRecord = false }) => {
               exit={{ opacity: 0, transition: { duration: 0.2 } }}
             >
               <motion.div
-                className="flex items-center gap-[8px] text-secondary-yellow-500 dark:text-secondary-yellow-400"
-                initial={{ scale: reducedMotion ? 1 : 0.4 }}
+                className="
+                  flex items-center gap-[6px]
+                  px-[16px] py-[8px] rounded-[20px]
+                  bg-primary-main-50 dark:bg-primary-main-dark
+                  text-primary-main-600 dark:text-primary-main-300
+                "
+                initial={{ scale: reducedMotion ? 1 : 0.6 }}
                 animate={reducedMotion
                   ? { scale: 1 }
                   : { scale: 1, transition: { ...SPRING.bouncy, delay: startDelay } }}
               >
-                <Flame weight="fill" className="text-[52px]" />
-                <span className="text-[44px] font-[900] tracking-[-0.02em]">콤보 x{milestone}</span>
+                <Flame weight="fill" className="text-[22px]" />
+                <span className="text-[20px] font-[700] tracking-[-0.02em]">콤보 {milestone}</span>
               </motion.div>
             </motion.div>
           )}

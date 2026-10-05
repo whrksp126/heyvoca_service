@@ -545,6 +545,7 @@ const FillInTheBlankQuestion = ({ question, onComplete, onCardMatched, farmByWor
           stage={question.farmStage}
           farm={farm}
           wasCorrect={isCorrect}
+          isRetry={!!question.isRetry}
         />
         {/* padding 위아래 대칭(45px) — 예문·O/X 가 카드 실제 정중앙에 선다(2026-09-27, 사지선다와 같은 규칙).
             위 45 는 우측 상단 시점 문구 자리도 겸한다. 채점 후 상태 바가 예문 아래 끝에 닿으면

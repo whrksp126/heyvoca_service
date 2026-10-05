@@ -1,37 +1,39 @@
 // src/lib/feel/PerfectBadge.jsx
 //
-// '완벽해요' 배지 — 직접 입력·문장 만들기를 한 번에 맞혔을 때 정답 위에 도장처럼 찍힌다.
-// 부모는 relative 여야 한다(카드). 임팩트(스케일 1 도달)는 perfect 소리의 3번째 음(≈205ms)에 맞춘다.
+// '완벽해요' 배지 — 직접 입력·문장 만들기를 한 번에 맞혔을 때 답 영역 바로 위 중앙에 수평 pill 로 살짝
+// 떠오르며 나타났다 사라진다(기존 라벨 pill 규격: 둥근 pill + 토큰 색 + 아이콘·텍스트).
+// 부모는 `relative` 인 답 영역 래퍼여야 한다. 래퍼 위쪽(bottom-full)에 absolute 로 얹히므로 다른 요소를
+// 가리거나 밀지 않는다. 등장 타이밍은 perfect 소리의 3번째 음(≈180ms)에 맞춘다.
 import React from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
-import { SealCheck } from '@phosphor-icons/react';
+import { Sparkle } from '@phosphor-icons/react';
 
 const PerfectBadge = ({ show = false, className = '' }) => {
   const reducedMotion = useReducedMotion();
   if (!show) return null;
   return (
-    <motion.div
+    <div
       aria-label="완벽해요"
-      className={`
-        pointer-events-none absolute left-1/2 top-[10px] z-[4] -translate-x-1/2
-        flex items-center gap-[4px]
-        px-[10px] py-[4px] rounded-[20px] border-[1.5px]
-        border-secondary-yellow-400 bg-secondary-yellow-100 dark:bg-secondary-yellow-dark
-        text-secondary-yellow-600 dark:text-secondary-yellow-300
-        text-[13px] font-[800] whitespace-nowrap
-        ${className}
-      `}
-      initial={{ scale: reducedMotion ? 1 : 2.4, opacity: 0, rotate: reducedMotion ? 0 : -10 }}
-      animate={reducedMotion
-        ? { opacity: 1 }
-        : { scale: [2.4, 1, 1.1, 1], opacity: [0, 1, 1, 1], rotate: [-10, -4, -4, -4] }}
-      transition={reducedMotion
-        ? { duration: 0.15 }
-        : { duration: 0.42, delay: 0.06, times: [0, 0.4, 0.68, 1], ease: 'easeOut' }}
+      className={`pointer-events-none absolute inset-x-0 bottom-full z-[4] mb-[6px] flex justify-center ${className}`}
     >
-      <SealCheck weight="fill" className="text-[16px]" />
-      완벽해요
-    </motion.div>
+      <motion.div
+        className="
+          inline-flex items-center gap-[4px]
+          px-[10px] py-[3px] rounded-[20px]
+          bg-primary-main-50 dark:bg-primary-main-dark
+          text-primary-main-600 dark:text-primary-main-300
+          text-[12px] font-[700] whitespace-nowrap
+        "
+        initial={{ opacity: 0, y: reducedMotion ? 0 : 6 }}
+        animate={reducedMotion
+          ? { opacity: [0, 1, 1, 0] }
+          : { opacity: [0, 1, 1, 0], y: [6, 0, 0, -6] }}
+        transition={{ duration: 1.7, delay: 0.18, times: [0, 0.12, 0.8, 1], ease: 'easeOut' }}
+      >
+        <Sparkle weight="fill" className="text-[13px]" />
+        완벽해요
+      </motion.div>
+    </div>
   );
 };
 

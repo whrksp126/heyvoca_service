@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { CaretLeft, HandTap, FilmSlate } from '@phosphor-icons/react';
 import { motion } from 'framer-motion';
 import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
@@ -6,7 +6,7 @@ import { parseAppVersion, getDevicePlatform } from '../../utils/osFunction';
 import {
   feel, getFeelTimingSnapshot, getHapticOffsetMs, setHapticOffsetMs,
   SFX_DURATION_MS, getHapticPattern, validatePattern, PATTERN_DURATION_MS,
-  Pressable,
+  Pressable, requestHapticCaps,
 } from '../../lib/feel';
 import { ComboInterlude, CompleteCut } from '../takeTest/StudyInterlude';
 
@@ -14,18 +14,18 @@ import { ComboInterlude, CompleteCut } from '../takeTest/StudyInterlude';
 // 소리와 진동의 엇박을 실기기에서 직접 맞춘다. 맞춘 값을 알려 주면 lib/feel/cue.js 의
 // FEEL_TIMING.PLATFORM_OFFSET_MS 상수에 반영한다. 오프셋은 이 기기 localStorage(feel.hapticOffsetMs)에 저장된다.
 const CUE_LIST = [
-  { cue: 'tap', label: '탭', desc: '아주 짧은 클릭 + 가벼운 톡' },
-  { cue: 'select', label: '선택', desc: '선택 확정, 또렷한 톡' },
-  { cue: 'correct', label: '정답', desc: '밝은 2음 상승, 약하다 세게' },
-  { cue: 'wrong', label: '오답', desc: '낮고 둔한 하강, 묵직한 턱' },
-  { cue: 'match', label: '카드 짝 맞음', desc: '짧고 경쾌, 가벼운 더블 탭' },
-  { cue: 'combo', n: 2, label: '콤보 2', desc: '음이 반음씩 올라가고 진동이 강해짐' },
+  { cue: 'tap', label: '탭', desc: '작은 나무 톡 + 가장 약한 tick' },
+  { cue: 'select', label: '선택', desc: '물방울 뽁 + click' },
+  { cue: 'correct', label: '정답', desc: '마림바 2음 상승, tick 후 click' },
+  { cue: 'wrong', label: '오답', desc: '낮고 부드러운 뿌웅, heavyClick 1회' },
+  { cue: 'match', label: '카드 짝 맞음', desc: '맑은 딩딩, tick 2회' },
+  { cue: 'combo', n: 2, label: '콤보 2', desc: '펜타토닉을 따라 한 음씩 올라감' },
   { cue: 'combo', n: 5, label: '콤보 5' },
   { cue: 'combo', n: 10, label: '콤보 10' },
   { cue: 'combo', n: 14, label: '콤보 14(상한)' },
-  { cue: 'perfect', label: '완벽해요', desc: '3연타 상승' },
+  { cue: 'perfect', label: '완벽해요', desc: '반짝이는 3음, tick tick click' },
   { cue: 'progress', label: '진행바 채움', desc: '아주 작게' },
-  { cue: 'bonus', label: '보너스', desc: '리듬 있는 축하' },
+  { cue: 'bonus', label: '보너스', desc: '통통 튀는 4음' },
   { cue: 'complete', label: '완료', desc: '짧은 팡파르' },
 ];
 
@@ -46,6 +46,14 @@ const FeelTestNewFullSheet = () => {
   // 학습 중 전체 화면 연출 미리 보기 — { kind: 'interlude' | 'complete', n?, key }
   const [preview, setPreview] = useState(null);
   const [interludeToggle, setInterludeToggle] = useState(false);
+
+  // undefined = 조회 중, null = 회신 없음(구버전 앱/웹)
+  const [caps, setCaps] = useState(undefined);
+  useEffect(() => {
+    let alive = true;
+    requestHapticCaps().then((v) => { if (alive) setCaps(v); });
+    return () => { alive = false; };
+  }, []);
 
   const platform = getDevicePlatform() === 'android' ? 'android' : 'ios';
   const appInfo = parseAppVersion();
@@ -95,6 +103,11 @@ const FeelTestNewFullSheet = () => {
           <div className="rounded-[12px] bg-layout-gray-50 dark:bg-layout-gray-dark px-[16px] py-[8px]">
             <Row label="플랫폼" value={`${snap.platform}${appInfo ? ` · 앱 ${appInfo.version}${appInfo.build ? ` (${appInfo.build})` : ''}` : ' · 앱 아님(웹)'}`} />
             <Row label="진동 패턴 지원" value={snap.patternSupported ? '예 (haptic_pattern, 앱 1.1.2+)' : '아니오 (기존 진동/웹 폴백)'} />
+            <Row
+              label="진동 능력(haptic_caps)"
+              value={caps === undefined ? '조회 중' : caps === null ? '회신 없음 (웹 또는 앱 미지원)'
+                : `${caps.platform} · API ${caps.apiLevel} · 진폭제어 ${caps.hasAmplitudeControl ? '예' : '아니오'} · 프리베이크 ${caps.supportsPrebaked ? '예' : '아니오'}`}
+            />
             <Row label="오디오 출력 지연" value={`${snap.outputLatencyMs.toFixed(1)}ms · ${snap.outputLatencySource}`} />
             <Row label="오디오 리드" value={`${snap.leadMs}ms`} />
             <Row label="브릿지 지연 추정" value={`${snap.bridgeMs}ms`} />
@@ -169,7 +182,7 @@ const FeelTestNewFullSheet = () => {
           <ul className="w-full m-0 p-0 list-none">
             {CUE_LIST.map((item) => {
               const events = getHapticPattern(item.cue, { n: item.n, platform });
-              const errs = validatePattern(events);
+              const errs = events ? validatePattern(events) : [];
               return (
                 <li key={`${item.cue}-${item.n ?? ''}`} className="border-b border-[#ddd] dark:border-border-dark">
                   <Pressable
@@ -187,8 +200,8 @@ const FeelTestNewFullSheet = () => {
                     </span>
                     <span className="flex flex-col items-end shrink-0 text-[11px] text-layout-gray-300">
                       <span>소리 {SFX_DURATION_MS[item.cue]}ms</span>
-                      <span>진동 {PATTERN_DURATION_MS[item.cue]}ms</span>
-                      <span className={errs.length ? 'text-status-error-600' : ''}>{errs.length ? `규격 위반 ${errs.length}` : '규격 OK'}</span>
+                      <span>진동 {events ? `${PATTERN_DURATION_MS[item.cue]}ms` : '없음'}</span>
+                      <span className={errs.length ? 'text-status-error-600' : ''}>{!events ? '-' : errs.length ? `규격 위반 ${errs.length}` : '규격 OK'}</span>
                     </span>
                   </Pressable>
                 </li>
