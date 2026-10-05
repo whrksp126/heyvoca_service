@@ -29,6 +29,21 @@ export const SFX_DURATION_MS = {
   complete: 850,
 };
 
+// 큐별 소리 음 시작 시각(ms) — 아래 CUES 의 각 음 `t + d` 와 같은 값. 편집기 그래프의 세로 눈금선에 쓴다.
+// (CUES 의 음 시각을 바꾸면 여기도 같이 고칠 것)
+export const SFX_NOTE_STARTS_MS = {
+  tap: [0],
+  select: [0],
+  correct: [0, 90],
+  wrong: [0, 120],
+  match: [0, 70],
+  combo: [0, 90],
+  perfect: [0, 90, 180],
+  progress: [0],
+  bonus: [0, 80, 160, 240],
+  complete: [0, 110, 220, 330],
+};
+
 const midiToFreq = (m) => 440 * Math.pow(2, (m - 69) / 12);
 
 // 메이저 펜타토닉(C D E G A) MIDI. 스케일 인덱스 → 음.

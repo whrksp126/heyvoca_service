@@ -113,7 +113,8 @@ const nowMs = () => (typeof performance !== 'undefined' ? performance.now() : Da
 /**
  * 소리 + 진동을 같은 순간에 발사한다.
  * @param {'tap'|'select'|'correct'|'wrong'|'match'|'combo'|'perfect'|'progress'|'bonus'|'complete'} cue
- * @param {{n?:number}} opts  n = 콤보 수(combo 전용)
+ * @param {{n?:number, events?:object[], sound?:boolean, vibe?:boolean, force?:boolean}} opts
+ *   n = 콤보 수(combo 전용). 손맛 테스트 편집기용: events = 임시 진동 패턴, sound/vibe = false 로 끔, force = 디바운스·겹침 대기 무시
  * @returns {{fired:boolean, startInMs:number}} startInMs = 호출 시점부터 소리(=진동)가 시작되기까지.
  *   호출부가 애니메이션 임팩트를 이 값만큼 지연시키고 싶을 때 쓴다(0 이상).
  */
@@ -123,10 +124,10 @@ export function feel(cue, opts = {}) {
   if (typeof document !== 'undefined' && document.hidden) return none;
 
   const t = nowMs();
-  if (t - (lastAt[cue] || -1e9) < (DEBOUNCE_MS[cue] ?? 60)) return none;
+  if (!opts.force && t - (lastAt[cue] || -1e9) < (DEBOUNCE_MS[cue] ?? 60)) return none;
 
   // 진행바 반짝임은 정답 큐와 겹치면 소리·진동을 생략한다(시각만 호출부가 처리).
-  if (cue === 'progress' && t - (lastAt.correct || -1e9) < 350) return none;
+  if (!opts.force && cue === 'progress' && t - (lastAt.correct || -1e9) < 350) return none;
 
   lastAt[cue] = t;
   const key = platformKey();
@@ -134,7 +135,7 @@ export function feel(cue, opts = {}) {
 
   // 시작 지연: 리드 + (겹침 대기)
   let queueShift = 0;
-  if (QUEUEABLE.has(cue) && busyUntil > t) {
+  if (!opts.force && QUEUEABLE.has(cue) && busyUntil > t) {
     queueShift = Math.min(busyUntil - t, MAX_QUEUE_SHIFT_MS);
   }
 
@@ -149,7 +150,9 @@ export function feel(cue, opts = {}) {
   const audioLead = FEEL_TIMING.LEAD_MS + audioShift + queueShift;
 
   let soundOk = false;
-  if (ctx) {
+  if (opts.sound === false) {
+    soundOk = true; // 소리 끔 — 폴백 mp3 도 울리지 않는다
+  } else if (ctx) {
     soundOk = playSfx(cue, { when: ctx.currentTime + audioLead / 1000, n: opts.n });
   }
   if (!soundOk) {
@@ -158,7 +161,7 @@ export function feel(cue, opts = {}) {
     else if (cue === 'wrong') playErrorSound();
   }
 
-  hapticPattern(cue, { delayMs: hapticDelay, n: opts.n });
+  if (opts.vibe !== false) hapticPattern(cue, { delayMs: hapticDelay, n: opts.n, events: opts.events, force: opts.force });
 
   busyUntil = t + audioLead + SFX_DURATION_MS[cue];
   return { fired: true, startInMs: audioLead };

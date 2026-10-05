@@ -45,6 +45,7 @@ import { vibrate, getDevicePlatform } from '../../utils/osFunction';
 import postMessageManager from '../../utils/postMessageManager';
 import { getHapticPattern, KIND_FALLBACK, eventsToWebPattern } from './hapticPatterns';
 import { canUseNative } from '../../utils/nativeBridge';
+import { getHapticMode, applyStrength } from './hapticSettings';
 
 // kind → react-native-haptic-feedback 트리거 이름 (앱 브릿지로 그대로 전달됨)
 const HAPTIC_TYPE_MAP = {
@@ -146,6 +147,7 @@ export function requestHapticCaps(timeoutMs = 1500) {
       done = true;
       clearTimeout(timer);
       off();
+      if (v) cachedCaps = v; // 손맛 테스트에서 조회해도 이후 feel() 이 같은 재생 방식을 쓰게 한다
       resolve(v);
     };
     const timer = setTimeout(() => finish(null), timeoutMs);
@@ -170,20 +172,37 @@ const patternLastAt = {};
 const MAX_NATIVE_DELAY_MS = 500;
 
 /**
- * 이름 붙은 진동 패턴을 울린다.
- * @param {string} name  hapticPatterns.js 의 패턴 이름
- * @param {{delayMs?:number, n?:number, cancelPrevious?:boolean}} opts
- *   delayMs 는 소리와 맞추기 위한 시작 지연(cue.js 가 계산). n 은 combo 세기.
+ * 지금 쓸 패턴 변형 — 'ios' | 'android'(프리베이크 effect) | 'android-waveform'(진폭 제어).
+ * Android 기본(auto)은 진폭 제어가 되면 waveform, 아니면 프리베이크. 프리베이크 미지원이면 항상 waveform.
+ * 손맛 테스트의 재생 방식(feel.hapticMode)이 auto 가 아니면 그 값을 강제한다.
  */
-export function hapticPattern(name, { delayMs = 0, n, cancelPrevious = false } = {}) {
-  let platform = getDevicePlatform() === 'android' ? 'android' : 'ios';
-  if (platform === 'android' && cachedCaps && cachedCaps.supportsPrebaked === false) platform = 'android-waveform';
-  const events = getHapticPattern(name, { n, platform });
-  if (!events) return;
+export function resolveHapticVariant(caps = cachedCaps) {
+  if (getDevicePlatform() !== 'android') return 'ios';
+  const mode = getHapticMode();
+  if (mode === 'waveform') return 'android-waveform';
+  if (mode === 'prebaked') return 'android';
+  if (caps?.hasAmplitudeControl) return 'android-waveform';
+  if (caps && caps.supportsPrebaked === false) return 'android-waveform';
+  return 'android';
+}
+
+/**
+ * 이름 붙은 진동 패턴을 울린다. 저장된 오버라이드·전역 세기가 여기서 반영된다.
+ * @param {string} name  hapticPatterns.js 의 패턴 이름
+ * @param {{delayMs?:number, n?:number, cancelPrevious?:boolean, events?:object[], force?:boolean}} opts
+ *   delayMs 는 소리와 맞추기 위한 시작 지연(cue.js 가 계산). n 은 combo 세기.
+ *   events 를 주면 그 이벤트를 그대로(세기만 적용) 울린다 — 편집기 미리 듣기용. force 는 디바운스 무시 + 이전 패턴 끊기.
+ */
+export function hapticPattern(name, { delayMs = 0, n, cancelPrevious = false, events: given, force = false } = {}) {
+  const base = given || getHapticPattern(name, { n, platform: resolveHapticVariant() });
+  if (!base || base.length === 0) return;
+  const events = applyStrength(base);
 
   const now = Date.now();
-  if (now - (patternLastAt[name] || 0) < PATTERN_DEBOUNCE_MS) return;
-  patternLastAt[name] = now;
+  if (!force) {
+    if (now - (patternLastAt[name] || 0) < PATTERN_DEBOUNCE_MS) return;
+    patternLastAt[name] = now;
+  }
 
   const delay = Math.max(0, Math.round(delayMs));
 
@@ -191,7 +210,7 @@ export function hapticPattern(name, { delayMs = 0, n, cancelPrevious = false } =
     postMessageManager.sendMessageToReactNative('haptic_pattern', {
       events,
       delayMs: Math.min(delay, MAX_NATIVE_DELAY_MS),
-      cancelPrevious,
+      cancelPrevious: force || cancelPrevious,
     });
     return;
   }

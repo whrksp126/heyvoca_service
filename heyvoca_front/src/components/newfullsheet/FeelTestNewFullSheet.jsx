@@ -1,14 +1,32 @@
-import React, { useState, useEffect } from 'react';
-import { CaretLeft, HandTap, FilmSlate } from '@phosphor-icons/react';
+import React, { useState, useEffect, lazy, Suspense } from 'react';
+import { CaretLeft, CaretDown, CaretRight, HandTap, FilmSlate, Minus, Plus, ChartBar } from '@phosphor-icons/react';
 import { motion } from 'framer-motion';
 import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
 import { parseAppVersion, getDevicePlatform } from '../../utils/osFunction';
 import {
   feel, getFeelTimingSnapshot, getHapticOffsetMs, setHapticOffsetMs,
-  SFX_DURATION_MS, getHapticPattern, validatePattern, PATTERN_DURATION_MS,
-  Pressable, requestHapticCaps,
+  SFX_DURATION_MS, getHapticPattern, validateForVariant,
+  Pressable, requestHapticCaps, resolveHapticVariant,
+  getHapticStrengthPercent, setHapticStrengthPercent, getHapticMode, setHapticMode,
+  STRENGTH_MIN, STRENGTH_MAX,
 } from '../../lib/feel';
 import { ComboInterlude, CompleteCut } from '../takeTest/StudyInterlude';
+
+// 패턴 그래프 편집기·설정 입출력은 실험실 전용이라 학습 화면 번들에 넣지 않는다(lazy).
+const HapticCueEditor = lazy(() => import('./feelTest/HapticCueEditor'));
+const HapticSettingsIO = lazy(() => import('./feelTest/HapticSettingsIO'));
+
+const MODE_OPTIONS = [
+  { key: 'auto', label: '자동' },
+  { key: 'waveform', label: 'waveform' },
+  { key: 'prebaked', label: '프리베이크' },
+];
+const AUTOPLAY_OPTIONS = [
+  { key: 'both', label: '소리+진동' },
+  { key: 'vibe', label: '진동만' },
+  { key: 'off', label: '끔' },
+];
+const VARIANT_LABEL = { ios: 'iOS · Core Haptics', android: 'Android · 프리베이크 effect', 'android-waveform': 'Android · waveform(진폭 제어)' };
 
 // 손맛 테스트(마이페이지 > 설정 > 실험실) — 모든 큐를 눌러 재생해 보고, 진동 오프셋(ms)으로
 // 소리와 진동의 엇박을 실기기에서 직접 맞춘다. 맞춘 값을 알려 주면 lib/feel/cue.js 의
@@ -29,10 +47,49 @@ const CUE_LIST = [
   { cue: 'complete', label: '완료', desc: '짧은 팡파르' },
 ];
 
+const patternEnd = (events) => events.reduce((m, e) => Math.max(m, e.time + e.duration), 0);
+
 const Row = ({ label, value }) => (
   <div className="flex items-start justify-between gap-[12px] py-[6px]">
     <span className="text-[13px] text-layout-gray-300">{label}</span>
     <span className="text-[13px] font-[600] text-layout-black dark:text-layout-white text-right break-all">{value}</span>
+  </div>
+);
+
+const Section = ({ title, open, onToggle, right, children }) => (
+  <section className="pt-[12px]">
+    <button
+      type="button"
+      onClick={onToggle}
+      className="flex items-center justify-between w-full px-[20px] py-[8px] text-left"
+      aria-expanded={open}
+    >
+      <span className="flex items-center gap-[6px] text-[14px] font-[700] text-layout-black dark:text-layout-white">
+        {open ? <CaretDown size={16} weight="bold" /> : <CaretRight size={16} weight="bold" />}
+        {title}
+      </span>
+      {right}
+    </button>
+    {open && children}
+  </section>
+);
+
+const Seg = ({ options, value, onChange }) => (
+  <div className="flex gap-[6px]">
+    {options.map((o) => (
+      <button
+        key={o.key}
+        type="button"
+        onClick={() => onChange(o.key)}
+        className={`flex-1 h-[36px] rounded-[10px] text-[13px] font-[600] ${
+          value === o.key
+            ? 'bg-primary-main-600 text-layout-white'
+            : 'bg-layout-gray-50 dark:bg-layout-gray-dark text-layout-black dark:text-layout-white'
+        }`}
+      >
+        {o.label}
+      </button>
+    ))}
   </div>
 );
 
@@ -55,7 +112,16 @@ const FeelTestNewFullSheet = () => {
     return () => { alive = false; };
   }, []);
 
-  const platform = getDevicePlatform() === 'android' ? 'android' : 'ios';
+  const [open, setOpen] = useState({ strength: true, cues: true });
+  const toggle = (k) => setOpen((o) => ({ ...o, [k]: !o[k] }));
+  const [strength, setStrength] = useState(() => getHapticStrengthPercent());
+  const [mode, setMode] = useState(() => getHapticMode());
+  const [autoPlay, setAutoPlay] = useState('both');
+  const [editing, setEditing] = useState(null); // 펼친 큐 키
+  const [editVersion, setEditVersion] = useState(0); // 가져오기/전체 초기화 후 편집기를 다시 불러온다
+
+  // 지금 쓰는 재생 방식(플랫폼 + 자동/강제). mode 는 렌더 갱신용으로 읽는다.
+  const variant = mode ? resolveHapticVariant(caps) : 'ios';
   const appInfo = parseAppVersion();
 
   const play = (item) => {
@@ -63,6 +129,17 @@ const FeelTestNewFullSheet = () => {
     feel(item.cue, { n: item.n });
     setLastPlayed(`${item.label}`);
     setSnap(getFeelTimingSnapshot());
+  };
+
+  const changeStrength = (value) => {
+    setStrength(setHapticStrengthPercent(value));
+  };
+  // 세기를 바꾼 직후 느껴 보게 — 진동만, 선택 큐(디바운스 무시)
+  const feelStrength = () => feel('select', { sound: false, force: true });
+
+  const changeMode = (m) => {
+    setMode(setHapticMode(m));
+    setEditVersion((v) => v + 1);
   };
 
   const changeOffset = (value) => {
@@ -97,10 +174,154 @@ const FeelTestNewFullSheet = () => {
       </div>
 
       <div className="flex-1 overflow-y-auto pb-[40px]">
+        {/* 진동 세기 · 재생 방식 */}
+        <Section
+          title="진동 세기 · 재생 방식"
+          open={open.strength}
+          onToggle={() => toggle('strength')}
+          right={<span className="text-[14px] font-[700] text-primary-main-600">{strength}%</span>}
+        >
+          <div className="px-[20px] pb-[8px]">
+            <div className="flex items-center gap-[6px]">
+              <button
+                type="button"
+                onClick={() => { changeStrength(strength - 1); feelStrength(); }}
+                className="flex items-center justify-center w-[40px] h-[40px] rounded-[10px] bg-layout-gray-50 dark:bg-layout-gray-dark text-layout-black dark:text-layout-white shrink-0"
+                aria-label="진동 세기 1% 줄이기"
+              >
+                <Minus size={18} weight="bold" />
+              </button>
+              <input
+                type="range"
+                min={STRENGTH_MIN}
+                max={STRENGTH_MAX}
+                step={1}
+                value={strength}
+                onChange={(e) => changeStrength(e.target.value)}
+                onPointerUp={feelStrength}
+                onKeyUp={feelStrength}
+                className="flex-1 min-w-0 accent-primary-main-600"
+                aria-label="진동 세기(%)"
+              />
+              <button
+                type="button"
+                onClick={() => { changeStrength(strength + 1); feelStrength(); }}
+                className="flex items-center justify-center w-[40px] h-[40px] rounded-[10px] bg-layout-gray-50 dark:bg-layout-gray-dark text-layout-black dark:text-layout-white shrink-0"
+                aria-label="진동 세기 1% 늘리기"
+              >
+                <Plus size={18} weight="bold" />
+              </button>
+            </div>
+            <div className="flex items-center justify-between text-[11px] text-layout-gray-300">
+              <span>0% (아주 약하게)</span>
+              <span>200% (아주 강하게)</span>
+            </div>
+            <p className="mt-[6px] text-[12px] leading-[1.5] text-layout-gray-300">
+              모든 큐의 세기에 곱해요(결과는 1~100%로 제한). 슬라이더를 놓거나 ± 를 누르면 진동만 한 번 울려요.
+              프리베이크 방식은 세기를 바꿀 수 없어요.
+            </p>
+            <Pressable
+              onClick={() => { changeStrength(100); feelStrength(); }}
+              className="mt-[6px] h-[36px] px-[14px] rounded-[10px] bg-layout-gray-50 dark:bg-layout-gray-dark text-[13px] font-[600] text-layout-black dark:text-layout-white"
+            >
+              100%로 되돌리기
+            </Pressable>
+
+            <h3 className="mt-[16px] mb-[6px] text-[13px] font-[700] text-layout-black dark:text-layout-white">재생 방식 (Android)</h3>
+            <Seg options={MODE_OPTIONS} value={mode} onChange={changeMode} />
+            <p className="mt-[6px] text-[12px] leading-[1.5] text-layout-gray-300">
+              자동은 진폭 제어가 되는 기기면 waveform, 아니면 프리베이크예요. 지금 쓰는 방식: <span className="font-[700]">{VARIANT_LABEL[variant]}</span>
+              {getDevicePlatform() !== 'android' && ' (Android 가 아니면 이 선택은 무시돼요)'}
+            </p>
+
+            <h3 className="mt-[16px] mb-[6px] text-[13px] font-[700] text-layout-black dark:text-layout-white">패턴 편집 후 손을 뗄 때 자동 재생</h3>
+            <Seg options={AUTOPLAY_OPTIONS} value={autoPlay} onChange={setAutoPlay} />
+          </div>
+        </Section>
+
+        {/* 큐 재생 + 패턴 편집 */}
+        <Section title="큐 재생 · 패턴 편집" open={open.cues} onToggle={() => toggle('cues')}>
+          <p className="px-[20px] pb-[6px] text-[12px] leading-[1.5] text-layout-gray-300">
+            행을 누르면 재생, 오른쪽 그래프 버튼을 누르면 패턴 그래프 편집기가 펼쳐져요. 편집 대상은 현재 재생 방식({VARIANT_LABEL[variant]})이에요.
+          </p>
+          <ul className="w-full m-0 p-0 list-none">
+            {CUE_LIST.map((item) => {
+              const rowKey = `${item.cue}-${item.n ?? ''}`;
+              const events = getHapticPattern(item.cue, { n: item.n, platform: variant });
+              const errs = events ? validateForVariant(events, variant) : [];
+              const isOpen = editing === rowKey;
+              return (
+                <li key={rowKey} className="border-b border-[#ddd] dark:border-border-dark">
+                  <div className="flex items-center">
+                    <Pressable
+                      onClick={() => play(item)}
+                      className="flex flex-1 min-w-0 items-center justify-between pl-[20px] pr-[8px] py-[14px] text-left"
+                    >
+                      <span className="flex items-center gap-[12px] pr-[12px]">
+                        <HandTap weight="fill" className="text-[20px] text-primary-main-600 shrink-0" />
+                        <span className="flex flex-col gap-[2px]">
+                          <span className="text-[15px] font-[700] text-layout-black dark:text-layout-white">
+                            {item.label} <span className="text-[12px] font-[500] text-layout-gray-300">{item.cue}</span>
+                          </span>
+                          {item.desc && <span className="text-[12px] text-layout-gray-300 leading-tight">{item.desc}</span>}
+                        </span>
+                      </span>
+                      <span className="flex flex-col items-end shrink-0 text-[11px] text-layout-gray-300">
+                        <span>소리 {SFX_DURATION_MS[item.cue]}ms</span>
+                        <span>진동 {events ? `${patternEnd(events)}ms` : '없음'}</span>
+                        <span className={errs.length ? 'text-status-error-600' : ''}>{!events ? '-' : errs.length ? `규격 위반 ${errs.length}` : '규격 OK'}</span>
+                      </span>
+                    </Pressable>
+                    <button
+                      type="button"
+                      onClick={() => setEditing(isOpen ? null : rowKey)}
+                      className={`flex items-center justify-center w-[44px] h-[44px] mr-[12px] rounded-[10px] shrink-0 ${
+                        isOpen ? 'bg-primary-main-600 text-layout-white' : 'bg-layout-gray-50 dark:bg-layout-gray-dark text-layout-black dark:text-layout-white'
+                      }`}
+                      aria-label={`${item.label} 패턴 편집`}
+                      aria-expanded={isOpen}
+                    >
+                      <ChartBar size={20} />
+                    </button>
+                  </div>
+                  {isOpen && (
+                    <Suspense fallback={<p className="px-[20px] pb-[12px] text-[12px] text-layout-gray-300">편집기 불러오는 중</p>}>
+                      <HapticCueEditor
+                        key={`${variant}-${rowKey}-${editVersion}`}
+                        cue={item.cue}
+                        n={item.n}
+                        variant={variant}
+                        autoPlay={autoPlay}
+                      />
+                    </Suspense>
+                  )}
+                </li>
+              );
+            })}
+          </ul>
+        </Section>
+
+        {/* 설정 내보내기 / 가져오기 */}
+        <Section title="설정 내보내기 · 가져오기" open={!!open.io} onToggle={() => toggle('io')}>
+          <p className="px-[20px] pb-[6px] text-[12px] leading-[1.5] text-layout-gray-300">
+            전역 세기·재생 방식·오프셋·편집한 모든 패턴을 JSON 으로 복사해 개발자에게 전달하면 기본값으로 반영할 수 있어요.
+          </p>
+          <Suspense fallback={null}>
+            <HapticSettingsIO
+              onChanged={() => {
+                setStrength(getHapticStrengthPercent());
+                setMode(getHapticMode());
+                setOffset(getHapticOffsetMs());
+                setSnap(getFeelTimingSnapshot());
+                setEditVersion((v) => v + 1);
+              }}
+            />
+          </Suspense>
+        </Section>
+
         {/* 현재 측정값 */}
-        <section className="px-[20px] pt-[20px]">
-          <h2 className="text-[14px] font-[700] text-layout-black dark:text-layout-white mb-[6px]">현재 측정값</h2>
-          <div className="rounded-[12px] bg-layout-gray-50 dark:bg-layout-gray-dark px-[16px] py-[8px]">
+        <Section title="현재 측정값" open={!!open.snap} onToggle={() => toggle('snap')}>
+          <div className="mx-[20px] rounded-[12px] bg-layout-gray-50 dark:bg-layout-gray-dark px-[16px] py-[8px]">
             <Row label="플랫폼" value={`${snap.platform}${appInfo ? ` · 앱 ${appInfo.version}${appInfo.build ? ` (${appInfo.build})` : ''}` : ' · 앱 아님(웹)'}`} />
             <Row label="진동 패턴 지원" value={snap.patternSupported ? '예 (haptic_pattern, 앱 1.1.2+)' : '아니오 (기존 진동/웹 폴백)'} />
             <Row
@@ -108,6 +329,7 @@ const FeelTestNewFullSheet = () => {
               value={caps === undefined ? '조회 중' : caps === null ? '회신 없음 (웹 또는 앱 미지원)'
                 : `${caps.platform} · API ${caps.apiLevel} · 진폭제어 ${caps.hasAmplitudeControl ? '예' : '아니오'} · 프리베이크 ${caps.supportsPrebaked ? '예' : '아니오'}`}
             />
+            <Row label="재생 방식" value={VARIANT_LABEL[variant]} />
             <Row label="오디오 출력 지연" value={`${snap.outputLatencyMs.toFixed(1)}ms · ${snap.outputLatencySource}`} />
             <Row label="오디오 리드" value={`${snap.leadMs}ms`} />
             <Row label="브릿지 지연 추정" value={`${snap.bridgeMs}ms`} />
@@ -116,99 +338,69 @@ const FeelTestNewFullSheet = () => {
             <Row label="진동 지연 합계" value={`${totalDelay}ms${totalDelay < 0 ? ' (음수 → 소리를 늦춤)' : ''}`} />
             {lastPlayed && <Row label="마지막 재생" value={lastPlayed} />}
           </div>
-        </section>
+        </Section>
 
         {/* 전체 화면 연출 미리 보기 */}
-        <section className="px-[20px] pt-[20px]">
-          <h2 className="text-[14px] font-[700] text-layout-black dark:text-layout-white mb-[6px]">전체 화면 연출 미리 보기</h2>
-          <div className="flex gap-[8px]">
-            <Pressable
-              onClick={() => {
-                setInterludeToggle((v) => !v);
-                setPreview({ kind: 'interlude', n: interludeToggle ? 10 : 5, key: Date.now() });
-              }}
-              className="flex flex-1 items-center justify-center gap-[6px] h-[44px] rounded-[10px] bg-layout-gray-50 dark:bg-layout-gray-dark text-[14px] font-[600] text-layout-black dark:text-layout-white"
-            >
-              <FilmSlate weight="fill" className="text-[18px] text-primary-main-600" />
-              콤보 인터루드 (x{interludeToggle ? 10 : 5})
-            </Pressable>
-            <Pressable
-              onClick={() => setPreview({ kind: 'complete', key: Date.now() })}
-              className="flex flex-1 items-center justify-center gap-[6px] h-[44px] rounded-[10px] bg-layout-gray-50 dark:bg-layout-gray-dark text-[14px] font-[600] text-layout-black dark:text-layout-white"
-            >
-              <FilmSlate weight="fill" className="text-[18px] text-primary-main-600" />
-              학습 완료 컷
-            </Pressable>
+        <Section title="전체 화면 연출 미리 보기" open={!!open.preview} onToggle={() => toggle('preview')}>
+          <div className="px-[20px]">
+            <div className="flex gap-[8px]">
+              <Pressable
+                onClick={() => {
+                  setInterludeToggle((v) => !v);
+                  setPreview({ kind: 'interlude', n: interludeToggle ? 10 : 5, key: Date.now() });
+                }}
+                className="flex flex-1 items-center justify-center gap-[6px] h-[44px] rounded-[10px] bg-layout-gray-50 dark:bg-layout-gray-dark text-[14px] font-[600] text-layout-black dark:text-layout-white"
+              >
+                <FilmSlate weight="fill" className="text-[18px] text-primary-main-600" />
+                콤보 인터루드 (x{interludeToggle ? 10 : 5})
+              </Pressable>
+              <Pressable
+                onClick={() => setPreview({ kind: 'complete', key: Date.now() })}
+                className="flex flex-1 items-center justify-center gap-[6px] h-[44px] rounded-[10px] bg-layout-gray-50 dark:bg-layout-gray-dark text-[14px] font-[600] text-layout-black dark:text-layout-white"
+              >
+                <FilmSlate weight="fill" className="text-[18px] text-primary-main-600" />
+                학습 완료 컷
+              </Pressable>
+            </div>
+            <p className="mt-[8px] text-[12px] leading-[1.5] text-layout-gray-300">
+              인터루드는 1.6초, 완료 컷은 1.1초 뒤 자동으로 닫히고 탭하면 바로 닫혀요. 소리·진동은 실제 학습과 같은 큐(bonus·complete)를 써요.
+            </p>
           </div>
-          <p className="mt-[8px] text-[12px] leading-[1.5] text-layout-gray-300">
-            인터루드는 1.6초, 완료 컷은 1.1초 뒤 자동으로 닫히고 탭하면 바로 닫혀요. 소리·진동은 실제 학습과 같은 큐(bonus·complete)를 써요.
-          </p>
-        </section>
+        </Section>
 
         {/* 오프셋 슬라이더 */}
-        <section className="px-[20px] pt-[20px]">
-          <div className="flex items-center justify-between mb-[6px]">
-            <h2 className="text-[14px] font-[700] text-layout-black dark:text-layout-white">진동 오프셋</h2>
-            <span className="text-[14px] font-[700] text-primary-main-600">{offset > 0 ? `+${offset}` : offset}ms</span>
+        <Section
+          title="진동 오프셋"
+          open={!!open.offset}
+          onToggle={() => toggle('offset')}
+          right={<span className="text-[14px] font-[700] text-primary-main-600">{offset > 0 ? `+${offset}` : offset}ms</span>}
+        >
+          <div className="px-[20px]">
+            <input
+              type="range"
+              min={-100}
+              max={200}
+              step={1}
+              value={offset}
+              onChange={(e) => changeOffset(e.target.value)}
+              className="w-full accent-primary-main-600"
+              aria-label="진동 오프셋(ms)"
+            />
+            <div className="flex items-center justify-between text-[11px] text-layout-gray-300">
+              <span>-100 (진동이 먼저)</span>
+              <span>+200 (진동이 늦게)</span>
+            </div>
+            <p className="mt-[8px] text-[12px] leading-[1.5] text-layout-gray-300">
+              진동이 소리보다 늦게 느껴지면 값을 낮추고, 먼저 느껴지면 높여요. 정답 큐를 반복해 눌러 가며 맞춘 값을 개발자에게 알려 주세요.
+            </p>
+            <Pressable
+              onClick={() => changeOffset(0)}
+              className="mt-[8px] h-[36px] px-[14px] rounded-[10px] bg-layout-gray-50 dark:bg-layout-gray-dark text-[13px] font-[600] text-layout-black dark:text-layout-white"
+            >
+              0으로 되돌리기
+            </Pressable>
           </div>
-          <input
-            type="range"
-            min={-100}
-            max={200}
-            step={1}
-            value={offset}
-            onChange={(e) => changeOffset(e.target.value)}
-            className="w-full accent-primary-main-600"
-            aria-label="진동 오프셋(ms)"
-          />
-          <div className="flex items-center justify-between text-[11px] text-layout-gray-300">
-            <span>-100 (진동이 먼저)</span>
-            <span>+200 (진동이 늦게)</span>
-          </div>
-          <p className="mt-[8px] text-[12px] leading-[1.5] text-layout-gray-300">
-            진동이 소리보다 늦게 느껴지면 값을 낮추고, 먼저 느껴지면 높여요. 정답 큐를 반복해 눌러 가며 맞춘 값을 개발자에게 알려 주세요.
-          </p>
-          <Pressable
-            onClick={() => changeOffset(0)}
-            className="mt-[8px] h-[36px] px-[14px] rounded-[10px] bg-layout-gray-50 dark:bg-layout-gray-dark text-[13px] font-[600] text-layout-black dark:text-layout-white"
-          >
-            0으로 되돌리기
-          </Pressable>
-        </section>
-
-        {/* 큐 목록 */}
-        <section className="pt-[20px]">
-          <h2 className="px-[20px] text-[14px] font-[700] text-layout-black dark:text-layout-white mb-[4px]">큐 재생</h2>
-          <ul className="w-full m-0 p-0 list-none">
-            {CUE_LIST.map((item) => {
-              const events = getHapticPattern(item.cue, { n: item.n, platform });
-              const errs = events ? validatePattern(events) : [];
-              return (
-                <li key={`${item.cue}-${item.n ?? ''}`} className="border-b border-[#ddd] dark:border-border-dark">
-                  <Pressable
-                    onClick={() => play(item)}
-                    className="flex items-center justify-between w-full px-[20px] py-[14px] text-left"
-                  >
-                    <span className="flex items-center gap-[12px] pr-[12px]">
-                      <HandTap weight="fill" className="text-[20px] text-primary-main-600 shrink-0" />
-                      <span className="flex flex-col gap-[2px]">
-                        <span className="text-[15px] font-[700] text-layout-black dark:text-layout-white">
-                          {item.label} <span className="text-[12px] font-[500] text-layout-gray-300">{item.cue}</span>
-                        </span>
-                        {item.desc && <span className="text-[12px] text-layout-gray-300 leading-tight">{item.desc}</span>}
-                      </span>
-                    </span>
-                    <span className="flex flex-col items-end shrink-0 text-[11px] text-layout-gray-300">
-                      <span>소리 {SFX_DURATION_MS[item.cue]}ms</span>
-                      <span>진동 {events ? `${PATTERN_DURATION_MS[item.cue]}ms` : '없음'}</span>
-                      <span className={errs.length ? 'text-status-error-600' : ''}>{!events ? '-' : errs.length ? `규격 위반 ${errs.length}` : '규격 OK'}</span>
-                    </span>
-                  </Pressable>
-                </li>
-              );
-            })}
-          </ul>
-        </section>
+        </Section>
       </div>
 
       {preview?.kind === 'interlude' && (

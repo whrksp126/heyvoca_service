@@ -19,8 +19,17 @@
 // 【Android 설계】 이 기기류는 진폭 제어가 안 돼 모든 진동이 최대 세기로 울린다 → duration 으로 세기를 흉내 내지 않고
 //   시스템 프리베이크 효과(tick/click/heavyClick)를 쓴다. 진동 횟수·총 길이도 최소화했다(progress 는 없음).
 //
+// 【Android 재생 방식 — 변형 3개】
+//   'android-waveform' : 진폭 제어(hasAmplitudeControl) 기기의 기본. effect 없이 intensity→진폭, duration 그대로.
+//                        세기 조절(전역 세기·편집기)이 실제로 먹힌다. 아주 약하고 짧게('가볍게') 잡았다.
+//   'android'          : 프리베이크 effect(tick/click/heavyClick) 전용 — 세기 조절 불가. 진폭 제어가 없는 기기나 수동 비교용.
+//   (위 Android 설계 문단은 'android' 변형에 대한 설명이다.)
+//   사용자가 손맛 테스트에서 편집한 패턴은 hapticSettings 의 오버라이드(플랫폼·변형별)로 우선 적용된다.
+//
 // 각 패턴의 time 은 sfx.js 의 음 시작 시각과 1:1 로 맞춰져 있다(소리 음 ↔ 진동 톡).
 // 패턴 길이(PATTERN_DURATION_MS)는 대응 효과음 길이(SFX_DURATION_MS)와 비슷하게 유지한다.
+
+import { getOverride } from './hapticSettings';
 
 const T = (time, intensity, sharpness, duration = 12) => ({ time, type: 'transient', duration, intensity, sharpness });
 const C = (time, duration, intensity, sharpness) => ({ time, type: 'continuous', duration, intensity, sharpness });
@@ -40,6 +49,9 @@ const TICK = (time) => E(time, 'tick', 0.3, 10);
 const CLICK = (time, i = 0.55) => E(time, 'click', i, 16);
 const HEAVY = (time) => E(time, 'heavyClick', 1, 24);
 
+// waveform 변형 이벤트 — sharpness 는 Android 가 무시(iOS 와 필드 모양만 맞춘다)
+const W = (time, intensity, duration) => ({ time, type: 'transient', duration, intensity, sharpness: 0.5 });
+
 const clamp01 = (v) => Math.max(0, Math.min(1, v));
 const comboK = (n = 2) => clamp01((Math.min(Math.max(n, 2), 14) - 2) / 12); // 0~1
 
@@ -48,26 +60,31 @@ const PATTERNS = {
   tap: {
     ios: () => [T(0, 0.25, 0.8)],
     android: () => [TICK(0)],
+    androidWave: () => [W(0, 0.15, 8)],
   },
   // 또렷한 톡
   select: {
     ios: () => [T(0, 0.45, 0.9)],
     android: () => [CLICK(0)],
+    androidWave: () => [W(0, 0.25, 10)],
   },
   // 약하다가 세게 — tick → 90ms → click (= 소리 두 음)
   correct: {
     ios: () => [T(0, 0.25, 0.7), T(90, 0.8, 0.9)],
     android: () => [TICK(0), CLICK(90, 0.8)],
+    androidWave: () => [W(0, 0.2, 10), W(90, 0.45, 14)],
   },
   // 한 번 묵직하게, 여운 없음
   wrong: {
     ios: () => [T(0, 0.85, 0.3, 20), C(30, 70, 0.25, 0.2)],
     android: () => [HEAVY(0)],
+    androidWave: () => [W(0, 0.5, 22)],
   },
   // 가벼운 더블 탭(소리 두 음)
   match: {
     ios: () => [T(0, 0.35, 0.85), T(70, 0.5, 0.9)],
     android: () => [TICK(0), TICK(70)],
+    androidWave: () => [W(0, 0.18, 10), W(70, 0.28, 10)],
   },
   // tick … click — 콤보가 높을수록 두 번째가 세진다
   combo: {
@@ -79,47 +96,52 @@ const PATTERNS = {
       const k = comboK(n);
       return [TICK(0), k > 0.6 ? HEAVY(90) : CLICK(90, 0.55 + k * 0.4)];
     },
+    androidWave: ({ n } = {}) => [W(0, 0.2, 10), W(90, Math.round((0.3 + comboK(n) * 0.25) * 100) / 100, 14)],
   },
   // tick · tick · click 상승
   perfect: {
     ios: () => [T(0, 0.35, 0.8), T(90, 0.55, 0.85), T(180, 0.85, 0.9)],
     android: () => [TICK(0), TICK(90), CLICK(180, 0.8)],
+    androidWave: () => [W(0, 0.2, 10), W(90, 0.3, 10), W(180, 0.5, 14)],
   },
   // 진동 없음 — 소리·시각만. (iOS 는 거의 느껴지지 않는 한 번)
   progress: {
     ios: () => [T(0, 0.1, 0.5)],
     android: () => null,
+    androidWave: () => null,
   },
   // tick tick tick click 리듬
   bonus: {
     ios: () => [T(0, 0.35, 0.8), T(80, 0.45, 0.85), T(160, 0.55, 0.85), T(240, 0.85, 0.9)],
     android: () => [TICK(0), TICK(80), TICK(160), CLICK(240, 0.8)],
+    androidWave: () => [W(0, 0.2, 8), W(80, 0.25, 8), W(160, 0.3, 10), W(240, 0.5, 14)],
   },
   complete: {
     ios: () => [
       T(0, 0.35, 0.8), T(110, 0.45, 0.85), T(220, 0.55, 0.85), T(330, 0.85, 0.9), T(560, 0.35, 0.7),
     ],
     android: () => [TICK(0), TICK(110), TICK(220), CLICK(330, 0.85), TICK(560)],
+    androidWave: () => [W(0, 0.2, 10), W(110, 0.25, 10), W(220, 0.3, 12), W(330, 0.5, 16), W(560, 0.2, 10)],
   },
 };
 
 export const HAPTIC_NAMES = Object.keys(PATTERNS);
 
 /**
- * 패턴 이벤트 배열 반환(없는 이름이면 null).
- * @param {{n?:number, platform?:'ios'|'android'|'android-waveform'}} opts  n=콤보 수(combo 세기), platform=변형 선택(기본 ios)
+ * 패턴 이벤트 배열 반환(없는 이름이면 null). 사용자 오버라이드가 있으면 그것을 우선한다(규격 위반이면 무시).
+ * @param {{n?:number, platform?:'ios'|'android'|'android-waveform', noOverride?:boolean}} opts
+ *   n=콤보 수(combo 세기), platform=변형 선택(기본 ios), noOverride=true 면 코드 기본값만.
  */
 export function getHapticPattern(name, opts = {}) {
   const entry = PATTERNS[name];
   if (!entry) return null;
-  if (opts.platform === 'android-waveform') {
-    const ev = entry.android(opts);
-    if (!ev) return null;
-    // effect 필드 제거 + 짧은 duration(톡 8, 중 14, 강 24)
-    const DUR = { tick: 8, click: 14, heavyClick: 24, doubleClick: 14 };
-    return ev.map(({ effect, ...rest }) => ({ ...rest, duration: DUR[effect] ?? rest.duration }));
+  const platform = opts.platform || 'ios';
+  if (!opts.noOverride) {
+    const ov = getOverride(platform, name);
+    if (ov && validateForVariant(ov, platform).length === 0) return ov.map((e) => ({ ...e }));
   }
-  const make = opts.platform === 'android' ? entry.android : entry.ios;
+  if (platform === 'android-waveform') return entry.androidWave(opts) || null;
+  const make = platform === 'android' ? entry.android : entry.ios;
   return make(opts) || null;
 }
 
@@ -151,8 +173,30 @@ export function validatePattern(events) {
   return errs;
 }
 
+/**
+ * 변형별 규격 검사 — validatePattern + 값 범위 + effect/waveform 혼용 금지 + 프리베이크 이벤트 간격(시작 60ms 이상).
+ * @param {'ios'|'android'|'android-waveform'} variant
+ */
+export function validateForVariant(events, variant) {
+  const errs = validatePattern(events);
+  if (!Array.isArray(events) || events.length < 1 || events.length > 32) return errs;
+  const sorted = [...events].sort((a, b) => a.time - b.time);
+  sorted.forEach((e, i) => {
+    if (e.time < 0) errs.push(`#${i} 시작 시각이 0 미만`);
+    if (!(e.duration >= 1)) errs.push(`#${i} 길이가 1ms 미만`);
+    if (e.intensity > 1) errs.push(`#${i} 세기가 100% 초과`);
+    if (variant === 'android' && !e.effect) errs.push(`#${i} 프리베이크 변형에는 effect 가 필요함(혼용 금지)`);
+    if (variant !== 'android' && e.effect) errs.push(`#${i} effect 는 프리베이크 변형에서만 가능(혼용 금지)`);
+    if (variant === 'android' && i > 0 && e.time - sorted[i - 1].time < 60) {
+      errs.push(`#${i - 1}~#${i} 프리베이크 이벤트 간격 60ms 미만`);
+    }
+  });
+  return errs;
+}
+
+// 코드 기본값 기준 길이(오버라이드 무관)
 export const PATTERN_DURATION_MS = Object.fromEntries(
-  HAPTIC_NAMES.map((k) => [k, patternDuration(getHapticPattern(k))]),
+  HAPTIC_NAMES.map((k) => [k, patternDuration(getHapticPattern(k, { noOverride: true }))]),
 );
 
 // 앱이 haptic_pattern 을 모르는 경우(1.1.2 미만) 가장 가까운 기존 kind. null 이면 폴백 진동 없음.
