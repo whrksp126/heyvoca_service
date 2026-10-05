@@ -492,7 +492,7 @@ const RottenListSheet = ({ onChanged, onOpenShop }) => {
                 type="button"
                 key={id}
                 onClick={() => toggle(id)}
-                className={`flex items-center gap-[11px] w-full h-[58px] border-b border-[#F4F4F4] dark:border-border-dark text-left ${on ? 'bg-layout-gray-50 dark:bg-layout-gray-dark' : ''}`}
+                className={`flex items-center gap-[11px] w-full h-[58px] border-b border-[#F4F4F4] dark:border-border-dark text-left ${on ? 'bg-primary-main-50 dark:bg-primary-main-dark' : ''}`}
               >
                 <CropImage
                   stage={rottenStage(it)}
@@ -515,7 +515,7 @@ const RottenListSheet = ({ onChanged, onOpenShop }) => {
                   className={`
                     flex items-center justify-center flex-shrink-0 w-[22px] h-[22px] rounded-full border-[1.5px]
                     ${on
-                      ? 'bg-layout-gray-400 border-layout-gray-400'
+                      ? 'bg-primary-main-600 border-primary-main-600'
                       : 'bg-transparent border-layout-gray-100 dark:border-border-dark'}
                   `}
                 >

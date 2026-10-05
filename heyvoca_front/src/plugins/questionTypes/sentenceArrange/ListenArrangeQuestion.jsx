@@ -1,7 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import { SpeakerHigh } from '@phosphor-icons/react';
-import TtsRipple from '../../../components/common/TtsRipple';
+import TtsSpeedPlayer from '../../../components/common/TtsSpeedPlayer';
 import { feel } from '../../../lib/feel';
 import { getTextSound, stripHtmlTags } from '../../../utils/common';
 import { useStudyAdvanceGate } from '../../../hooks/useStudyAdvanceGate';
@@ -16,9 +14,8 @@ import ArrangeTray from './ArrangeTray';
   원문 어순만 정답(accepted는 항상 원소 1개) — sentenceArrange류와 채점 로직은 같고
   accepted 배열이 서버에서부터 1개로 강제돼 있을 뿐이라 isAcceptedOrder 그대로 재사용한다.
 
-  위 = 좌우 카드 2장(각각이 곧 탭 영역, 안에 버튼을 두지 않는다):
-    왼쪽(primary 틴트)  = 보통 속도 재생
-    오른쪽(회색, 포인트 컬러 없음) = 0.7배속 재생, 스피커 오른쪽 아래에 작게 "0.7"
+  위 = 한 박스 [스피커 | 0.7 스피커](TtsSpeedPlayer) — 각 스피커 아이콘만 탭 영역:
+    왼쪽 = 보통 속도 재생, 오른쪽 = 0.7배속(문장 전체) 재생
   등장 시 보통 속도로 1회 자동 재생. 안내 문구 없음.
   아래 = ArrangeTray, 채점 후 정오답과 무관하게 한국어 해석을 보여준다(원문은 이미 들었다).
 */
@@ -34,14 +31,13 @@ const ListenArrangeQuestion = ({ question, onComplete, onCardMatched, farmByWord
   const resumeReplayKey = useResumeReplayKey();
   const advanceGate = useStudyAdvanceGate();
   const wordTtsActiveRef = useRef(false);
-  // 문장 재생(보통 속도 'normal' / 0.7배속 단어별 'slow') 중인지 — 조각을 슬롯에 놓을 때
+  // 문장 재생(보통 속도 'normal' / 0.7배속 'slow') 중인지 — 조각을 슬롯에 놓을 때
   // (onPiecePlaced) 이 값이 true면 단어 TTS를 재생하지도, 문장 재생을 끊지도 않는다
   // (2026-09-29 추가 요청). getTextSound가 끝나는 시점(정상 종료)에 false, 다른 speak() 호출에
   // 가로채이거나(중단) 언마운트되어도 false로 되돌아간다. 조각 단어 TTS 자체(target=null)는
   // 이 ref를 true로 만들지 않는다.
   const isSentencePlayingRef = useRef(false);
   const speakGenRef = useRef(0);
-  const wordGapTimeoutRef = useRef(null);
   const onCompleteRef = useRef(onComplete);
   useEffect(() => { onCompleteRef.current = onComplete; });
   // 채점 후 "다음" 버튼을 누를 때 진행할 콜백(2026-09-29) — SentenceArrangeQuestion과 동일 규칙,
@@ -63,10 +59,6 @@ const ListenArrangeQuestion = ({ question, onComplete, onCardMatched, farmByWord
   const speak = async (text, lang, target, rate = 1) => {
     if (!text) return;
     const gen = ++speakGenRef.current;
-    if (wordGapTimeoutRef.current) {
-      clearTimeout(wordGapTimeoutRef.current);
-      wordGapTimeoutRef.current = null;
-    }
     if (wordTtsActiveRef.current) {
       wordTtsActiveRef.current = false;
       advanceGate.ttsEnd();
@@ -90,54 +82,6 @@ const ListenArrangeQuestion = ({ question, onComplete, onCardMatched, farmByWord
     }
   };
 
-  // 0.7배속 = 문장을 단어 단위로 끊어 한 단어씩 재생 → WORD_GAP_MS 간격 → 다음 단어.
-  // speak()와 같은 gen 카운터를 공유해서(speakGenRef) 다른 재생이 끼어들면 즉시 멈춘다.
-  const WORD_GAP_MS = 70;
-  const speakWordsSlowly = async (text, lang, target, rate) => {
-    const words = text.split(/\s+/).filter(Boolean);
-    if (words.length === 0) return;
-    const gen = ++speakGenRef.current;
-    if (wordGapTimeoutRef.current) {
-      clearTimeout(wordGapTimeoutRef.current);
-      wordGapTimeoutRef.current = null;
-    }
-    if (wordTtsActiveRef.current) {
-      wordTtsActiveRef.current = false;
-      advanceGate.ttsEnd();
-    }
-    setIsSpeaking(true);
-    setSpeakDuration(null);
-    setSpeakingTarget(target);
-    wordTtsActiveRef.current = true;
-    advanceGate.ttsBegin();
-    const isSentence = target === 'normal' || target === 'slow';
-    if (isSentence) isSentencePlayingRef.current = true;
-    try {
-      for (let i = 0; i < words.length; i += 1) {
-        if (gen !== speakGenRef.current) return;
-        // eslint-disable-next-line no-await-in-loop
-        await getTextSound(words[i], lang, (d) => { if (gen === speakGenRef.current) setSpeakDuration(d); }, rate);
-        if (gen !== speakGenRef.current) return;
-        if (i < words.length - 1) {
-          // eslint-disable-next-line no-await-in-loop
-          await new Promise((resolve) => {
-            wordGapTimeoutRef.current = setTimeout(() => {
-              wordGapTimeoutRef.current = null;
-              resolve();
-            }, WORD_GAP_MS);
-          });
-        }
-      }
-    } finally {
-      if (gen === speakGenRef.current) {
-        setIsSpeaking(false);
-        wordTtsActiveRef.current = false;
-        advanceGate.ttsEnd();
-      }
-      if (isSentence && gen === speakGenRef.current) isSentencePlayingRef.current = false;
-    }
-  };
-
   // 문제 등장 시 보통 속도로 1회 자동 재생.
   useEffect(() => {
     if (plainAnswer) speak(plainAnswer, answerLang, 'normal', 1);
@@ -146,10 +90,6 @@ const ListenArrangeQuestion = ({ question, onComplete, onCardMatched, farmByWord
 
   useEffect(() => () => {
     speakGenRef.current += 1;
-    if (wordGapTimeoutRef.current) {
-      clearTimeout(wordGapTimeoutRef.current);
-      wordGapTimeoutRef.current = null;
-    }
     isSentencePlayingRef.current = false;
   }, []);
 
@@ -159,7 +99,8 @@ const ListenArrangeQuestion = ({ question, onComplete, onCardMatched, farmByWord
   };
   const handlePlaySlow = () => {
     feel('tap');
-    speakWordsSlowly(plainAnswer, answerLang, 'slow', 0.7);
+    // 문장 전체를 0.7배속으로 한 번에 재생 — 단어별로 끊어 재생하면 단어마다 mp3 앞뒤 무음·로딩이 붙어 너무 느려진다
+    speak(plainAnswer, answerLang, 'slow', 0.7);
   };
 
   const handleSubmit = (userTokens) => {
@@ -217,61 +158,13 @@ const ListenArrangeQuestion = ({ question, onComplete, onCardMatched, farmByWord
 
   return (
     <div className="flex flex-col gap-[15px] h-full">
-      {/* 위 — 좌우 카드 2장, 각 카드 자체가 탭 영역 */}
-      <div className="grid grid-cols-2 gap-[10px]">
-        <motion.button
-          type="button"
-          aria-label="보통 속도로 듣기"
-          onClick={handlePlayNormal}
-          whileTap={{ scale: 0.96 }}
-          transition={{ duration: 0.15 }}
-          className="
-            flex items-center justify-center
-            h-[92px] rounded-[12px]
-            bg-primary-main-50 dark:bg-primary-main-dark
-          "
-        >
-          <span className="relative inline-flex">
-            {speakingNormal && (
-              <TtsRipple
-                size={90}
-                loop
-                className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-[0] pointer-events-none"
-              />
-            )}
-            <span className={`relative z-[1] ${speakingNormal ? 'text-primary-main-600' : 'text-layout-gray-300'}`}>
-              <SpeakerHigh size={40} weight="fill" />
-            </span>
-          </span>
-        </motion.button>
-
-        <motion.button
-          type="button"
-          aria-label="0.7배속으로 듣기"
-          onClick={handlePlaySlow}
-          whileTap={{ scale: 0.96 }}
-          transition={{ duration: 0.15 }}
-          className="
-            flex items-center justify-center
-            h-[92px] rounded-[12px]
-            bg-layout-gray-50 dark:bg-layout-gray-dark
-          "
-        >
-          <span className="relative inline-flex">
-            {speakingSlow && (
-              <TtsRipple
-                size={90}
-                loop
-                className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-[0] pointer-events-none"
-              />
-            )}
-            <span className={`relative z-[1] inline-flex ${speakingSlow ? 'text-layout-black dark:text-layout-white' : 'text-layout-gray-300'}`}>
-              <SpeakerHigh size={40} weight="fill" />
-              <span className="absolute -bottom-[2px] -right-[10px] text-[11px] font-[800] leading-none">0.7</span>
-            </span>
-          </span>
-        </motion.button>
-      </div>
+      {/* 위 — 한 박스 안에 [스피커 | 0.7 스피커], 아이콘만 탭 영역 */}
+      <TtsSpeedPlayer
+        onPlayNormal={handlePlayNormal}
+        onPlaySlow={handlePlaySlow}
+        speakingNormal={speakingNormal}
+        speakingSlow={speakingSlow}
+      />
 
       {/* 아래 — 트레이(회색 카드) + 조각 은행 + 확인 */}
       <ArrangeTray
