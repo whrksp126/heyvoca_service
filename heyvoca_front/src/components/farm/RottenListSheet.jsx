@@ -78,6 +78,11 @@ const RottenListSheet = ({ onChanged, onOpenShop }) => {
   const [notice, setNotice] = useState('');
   const [tool, setTool] = useState('NUTRIENT');
   const [selected, setSelected] = useState(() => new Set());
+  // 서버가 내려주는 전체 개수 / 전체 id (구서버는 null → 불러온 개수로 대체)
+  const [total, setTotal] = useState(null);
+  const [allIds, setAllIds] = useState(null);
+  const [allIdsTruncated, setAllIdsTruncated] = useState(false);
+  const [pickingAll, setPickingAll] = useState(false);
   const [owned, setOwned] = useState({ SHOVEL: 0, NUTRIENT: 0, SHIELD: 0 });
   // 다시 심기 되돌리기 — 첫 진단이 시작되기 전(cancel_until) 까지만 (기획 7.2)
   const [undoState, setUndoState] = useState(null); // { ids, rows, until }
@@ -111,6 +116,18 @@ const RottenListSheet = ({ onChanged, onOpenShop }) => {
       setItems((prev) => (nextCursor ? [...prev, ...list] : list));
       setCursor(data.next_cursor ?? null);
       setHasMore(!!data.next_cursor && list.length > 0);
+      if (data.total !== null && data.total !== undefined && Number.isFinite(Number(data.total))) {
+        setTotal(Number(data.total));
+      }
+      if (!nextCursor) {
+        if (Array.isArray(data.all_ids)) {
+          setAllIds(data.all_ids);
+          setAllIdsTruncated(!!data.all_ids_truncated);
+        } else {
+          setAllIds(null);
+          setAllIdsTruncated(false);
+        }
+      }
     } else {
       setHasMore(false);
       setNotice(res?.message || '목록을 불러오지 못했어요. 잠시 뒤 다시 시도해 주세요.');
@@ -147,9 +164,43 @@ const RottenListSheet = ({ onChanged, onOpenShop }) => {
     });
   };
 
-  const pickAll = () => {
+  const pickAll = async () => {
+    if (pickingAll) return;
     vibrate({ duration: 5 });
-    setSelected(new Set(items.map((it) => it.user_voca_id)));
+    // 서버가 전체 id 를 줬으면 아직 안 불러온 항목까지 한 번에 선택
+    if (allIds && !allIdsTruncated) {
+      setSelected(new Set([...allIds, ...items.map((it) => it.user_voca_id)]));
+      return;
+    }
+    // 구서버·너무 많은 경우 — 남은 페이지를 끝까지 불러온 뒤 전체 선택
+    if (loadingRef.current) return;
+    loadingRef.current = true;
+    setPickingAll(true);
+    setLoading(true);
+    let all = [...items];
+    let cur = hasMore ? cursor : null;
+    let more = hasMore;
+    let failed = false;
+    while (more && cur) {
+      const res = await getRottenPlantsApi({ limit: 100, cursor: cur });
+      if (res?.code !== 200) { failed = true; break; }
+      const data = res?.data || {};
+      const list = Array.isArray(data.items) ? data.items : [];
+      const seen = new Set(all.map((it) => it.user_voca_id));
+      all = [...all, ...list.filter((it) => !seen.has(it.user_voca_id))];
+      cur = data.next_cursor ?? null;
+      more = !!cur && list.length > 0;
+    }
+    setItems(all);
+    setCursor(more ? cur : null);
+    setHasMore(more);
+    setLoading(false);
+    setPickingAll(false);
+    loadingRef.current = false;
+    if (failed) {
+      setNotice('목록을 끝까지 불러오지 못했어요. 불러온 작물만 선택했어요.');
+    }
+    setSelected(new Set(all.map((it) => it.user_voca_id)));
   };
 
   const clearPick = () => {
@@ -157,11 +208,11 @@ const RottenListSheet = ({ onChanged, onOpenShop }) => {
     setSelected(new Set());
   };
 
-  const selectedIds = items
-    .map((it) => it.user_voca_id)
-    .filter((id) => selected.has(id));
+  // 선택은 id Set 이 정본 — 아직 불러오지 않은 항목도 포함한다
+  const selectedIds = Array.from(selected);
   const selectedCount = selectedIds.length;
-  const allSelected = items.length > 0 && selectedCount === items.length;
+  const displayTotal = Math.max(total ?? 0, items.length);
+  const allSelected = displayTotal > 0 && selectedCount >= displayTotal;
   const toolDef = TOOLS.find((t) => t.key === tool);
   const ownedCnt = owned[tool] ?? 0;
   const need = selectedCount;
@@ -209,6 +260,8 @@ const RottenListSheet = ({ onChanged, onOpenShop }) => {
   const dropDone = (doneIds) => {
     const done = new Set(doneIds);
     setItems((prev) => prev.filter((it) => !done.has(it.user_voca_id)));
+    setTotal((prev) => (prev === null ? prev : Math.max(0, prev - done.size)));
+    setAllIds((prev) => (prev ? prev.filter((id) => !done.has(id)) : prev));
     setSelected((prev) => {
       const next = new Set(prev);
       done.forEach((id) => next.delete(id));
@@ -337,6 +390,7 @@ const RottenListSheet = ({ onChanged, onOpenShop }) => {
         const has = new Set(prev.map((it) => it.user_voca_id));
         return [...rows.filter((it) => !has.has(it.user_voca_id)), ...prev];
       });
+      setTotal((prev) => (prev === null ? prev : prev + rows.length));
       removePendingReplantIds(undoState.ids);
       setUndoState(null);
       setNotice('다시 심기를 되돌렸어요. 삽도 그대로 돌려놓았어요.');
@@ -397,7 +451,7 @@ const RottenListSheet = ({ onChanged, onOpenShop }) => {
                 <span className="text-[13px] font-[800] text-layout-black dark:text-layout-white whitespace-nowrap">
                   {t.name}
                 </span>
-                <span className="text-[11px] font-[700] text-primary-main-600">
+                <span className="text-[11px] font-[700] text-layout-gray-400 dark:text-layout-gray-200">
                   보유 {cnt}개
                 </span>
               </div>
@@ -411,13 +465,13 @@ const RottenListSheet = ({ onChanged, onOpenShop }) => {
             type="button"
             onClick={allSelected ? clearPick : pickAll}
             whileTap={{ scale: 0.96 }}
-            disabled={items.length === 0}
-            className="h-[30px] px-[11px] rounded-full bg-primary-main-100 dark:bg-primary-main-dark text-primary-main-600 text-[12.5px] font-[700] whitespace-nowrap disabled:opacity-40"
+            disabled={items.length === 0 || pickingAll}
+            className="h-[30px] px-[11px] rounded-full bg-layout-gray-50 dark:bg-layout-gray-dark text-layout-gray-400 dark:text-layout-gray-200 text-[12.5px] font-[700] whitespace-nowrap disabled:opacity-40"
           >
-            {allSelected ? '선택 해제' : '모두 선택'}
+            {pickingAll ? '불러오는 중' : allSelected ? '선택 해제' : '모두 선택'}
           </motion.button>
           <span className="text-[12.5px] font-[700] text-layout-gray-400 dark:text-layout-gray-200">
-            선택 {selectedCount} / 전체 {items.length}
+            선택 {selectedCount} / 전체 {displayTotal}
           </span>
         </div>
 
@@ -438,7 +492,7 @@ const RottenListSheet = ({ onChanged, onOpenShop }) => {
                 type="button"
                 key={id}
                 onClick={() => toggle(id)}
-                className="flex items-center gap-[11px] w-full h-[58px] border-b border-[#F4F4F4] dark:border-border-dark text-left"
+                className={`flex items-center gap-[11px] w-full h-[58px] border-b border-[#F4F4F4] dark:border-border-dark text-left ${on ? 'bg-layout-gray-50 dark:bg-layout-gray-dark' : ''}`}
               >
                 <CropImage
                   stage={rottenStage(it)}
@@ -461,7 +515,7 @@ const RottenListSheet = ({ onChanged, onOpenShop }) => {
                   className={`
                     flex items-center justify-center flex-shrink-0 w-[22px] h-[22px] rounded-full border-[1.5px]
                     ${on
-                      ? 'bg-primary-main-600 border-primary-main-600'
+                      ? 'bg-layout-gray-400 border-layout-gray-400'
                       : 'bg-transparent border-layout-gray-100 dark:border-border-dark'}
                   `}
                 >
@@ -511,7 +565,7 @@ const RottenListSheet = ({ onChanged, onOpenShop }) => {
             onClick={handleUndoReplant}
             whileTap={{ scale: 0.96 }}
             disabled={busy}
-            className="flex-shrink-0 h-[30px] px-[12px] rounded-full bg-layout-white dark:bg-layout-black text-[12.5px] font-[700] text-primary-main-600 disabled:opacity-40"
+            className="flex-shrink-0 h-[30px] px-[12px] rounded-full bg-layout-white dark:bg-layout-black text-[12.5px] font-[700] text-layout-gray-400 disabled:opacity-40"
           >
             되돌리기 {undoLeft}
           </motion.button>

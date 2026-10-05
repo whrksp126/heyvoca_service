@@ -1,40 +1,91 @@
 // src/lib/feel/sfx.js
 //
-// 효과음 합성 — 파일·라이선스 없이 Web Audio(OscillatorNode/GainNode 엔벨로프)로 만든다.
-// utils/audio.jsx 의 AudioContext 와 unlock(primeSfx)을 그대로 공유한다.
+// 효과음 — 실제 악기 녹음(CC0, VCSL)을 큐별로 미리 렌더한 WAV 샘플을 재생한다(테마: marimba | kalimba).
+// 'synth' 테마는 예전 Web Audio 합성음(비교용 + 샘플 디코드 실패 시 폴백)으로 남겨 둔다.
+// 샘플 출처·규칙: src/assets/sounds/feel/README.md. 파일은 WAV 24kHz mono 16-bit(인코더 지연이 없어
+// 진동과 타이밍이 맞는다). 컨텍스트 샘플레이트(44.1/48kHz)가 달라도 decodeAudioData 가 컨텍스트 레이트로
+// 리샘플해 주므로 길이(초)·음 시작 시각은 그대로 유지된다.
 //
-// 모든 큐는 `when`(ctx.currentTime 기준 절대 시각)을 받아 **그 시각에 시작하도록 예약**한다 —
-// cue.js 가 진동 지연과 맞추려고 미리 계산한 시각을 넘긴다. 음 하나하나의 시작 시각(ms)은
-// hapticPatterns.js 의 진동 이벤트 time 과 같은 값으로 짜여 있다(소리 음 ↔ 진동 톡이 1:1).
+// utils/audio.jsx 의 AudioContext 와 unlock(primeSfx)을 그대로 공유한다. 모든 큐는 `when`(ctx.currentTime
+// 기준 절대 시각)에 시작하도록 예약한다 — cue.js 가 진동 지연과 맞추려고 미리 계산한 시각을 넘긴다.
+// 샘플 파일 안의 음 시작 시각(ms)은 SFX_NOTE_STARTS_MS 와 같고 hapticPatterns.js 의 진동 이벤트 time 과 1:1.
 //
-// 음색: 마림바/칼림바/물방울 같은 부드럽고 따뜻한 나무 질감. 순수 sine 의 전자음 느낌을 줄이려고
-//  - 음역을 낮춤(G4~C6, 중심 C5~A5) + 공용 버스 lowpass(1.6kHz, Q 0.6)로 고역을 둥글게,
-//  - 어택 10~12ms + 지수 감쇠(끝은 0 으로 램프해 클릭 없음),
-//  - 기음을 ±5 cent 디튠한 2보이스(rich 음)로 미세한 두께,
-//  - 타격 순간 5~12ms 의 필터드 노이즈 버스트(작은 음량)로 말렛이 닿는 느낌,
-//  - 비정수 배음(약 3.9배)을 아주 약하고 빠르게,
-//  - 공용 짧은 리버브(임펄스 0.16초, wet 12%)로 방 안의 공간감.
-// 날카로운 square/saw 는 쓰지 않는다. 큐당 오실레이터는 6개 이내(노이즈 소스는 별도, 임펄스·노이즈 버퍼는 컨텍스트당 1회 생성).
-//
-// 볼륨은 절제: 합성음 피크는 0.04~0.12 안팎. 마스터 gain → DynamicsCompressor 를 거쳐 클리핑하지 않는다.
-import { getAudioCtx } from '../../utils/audio';
+// 샘플 경로: AudioBufferSourceNode → 테마 gain → 마스터 gain → DynamicsCompressor(원음 유지, lowpass/리버브 없음).
+// 합성 경로: 예전 그대로(lowpass 1.6kHz + 짧은 리버브 버스).
+import { getAudioCtx, registerPrimeHook } from '../../utils/audio';
 
-// 큐별 총 길이(ms) — 대응 진동 패턴 길이와 맞춘다(hapticPatterns.js PATTERN_DURATION_MS 참고).
-export const SFX_DURATION_MS = {
-  tap: 40,
-  select: 100,
-  correct: 320,
-  wrong: 380,
-  match: 220,
-  combo: 300,
-  perfect: 480,
-  progress: 50,
-  bonus: 520,
-  complete: 850,
+// ── 설정(이 기기 localStorage) ─────────────────────────────────────
+//   feel.sfxTheme    'marimba' | 'kalimba' | 'synth'
+//   feel.sfxVolume   0~150 (%)
+export const SFX_THEMES = ['marimba', 'kalimba', 'synth'];
+export const SFX_THEME_LABEL = { marimba: '마림바', kalimba: '칼림바', synth: '합성' };
+export const SFX_VOLUME_MIN = 0;
+export const SFX_VOLUME_MAX = 150;
+const KEY_THEME = 'feel.sfxTheme';
+const KEY_VOLUME = 'feel.sfxVolume';
+// 테마 전체 gain(샘플은 이미 큐 간 상대 음량으로 정규화돼 있어 큐별 gain 은 1)
+const THEME_GAIN = 0.9;
+
+const readLS = (k) => {
+  try { return typeof localStorage !== 'undefined' ? localStorage.getItem(k) : null; } catch (e) { return null; }
+};
+const writeLS = (k, v) => {
+  try { localStorage.setItem(k, v); } catch (e) { /* noop */ }
 };
 
-// 큐별 소리 음 시작 시각(ms) — 아래 CUES 의 각 음 `t + d` 와 같은 값. 편집기 그래프의 세로 눈금선에 쓴다.
-// (CUES 의 음 시각을 바꾸면 여기도 같이 고칠 것)
+let themeCache = null;
+let volumeCache = null;
+
+export function getSfxTheme() {
+  if (themeCache !== null) return themeCache;
+  const raw = readLS(KEY_THEME);
+  themeCache = SFX_THEMES.includes(raw) ? raw : 'marimba';
+  return themeCache;
+}
+
+export function setSfxTheme(theme) {
+  const v = SFX_THEMES.includes(theme) ? theme : 'marimba';
+  themeCache = v;
+  writeLS(KEY_THEME, v);
+  preloadSfx(v);
+  return v;
+}
+
+export function getSfxVolumePercent() {
+  if (volumeCache !== null) return volumeCache;
+  const raw = readLS(KEY_VOLUME);
+  const p = raw === null ? 100 : parseInt(raw, 10);
+  volumeCache = Number.isFinite(p) ? Math.max(SFX_VOLUME_MIN, Math.min(SFX_VOLUME_MAX, p)) : 100;
+  return volumeCache;
+}
+
+export function setSfxVolumePercent(p) {
+  const v = Math.max(SFX_VOLUME_MIN, Math.min(SFX_VOLUME_MAX, Math.round(Number(p) || 0)));
+  volumeCache = v;
+  writeLS(KEY_VOLUME, String(v));
+  return v;
+}
+
+// 큐별 샘플 파일 길이(ms, 감쇠 꼬리 포함). 합성 테마도 같은 값을 쓴다(표시용).
+export const SFX_DURATION_MS = {
+  tap: 58,
+  select: 176,
+  correct: 602,
+  wrong: 600,
+  match: 454,
+  combo: 506,
+  perfect: 820,
+  progress: 45,
+  bonus: 880,
+  complete: 1354,
+};
+
+// 겹침 대기(cue.js 의 busyUntil)에 쓰는 '체감상 끝나는 지점' — 감쇠 꼬리가 길어 전체 길이만큼 기다리면 과하다.
+export const SFX_BUSY_MS = Object.fromEntries(
+  Object.entries(SFX_DURATION_MS).map(([k, v]) => [k, Math.round(v * 0.6)]),
+);
+
+// 큐별 소리 음 시작 시각(ms) — 샘플 파일 렌더 시각이자 합성 CUES 의 각 음 `t + d`. 편집기 그래프의 세로 눈금선에 쓴다.
 export const SFX_NOTE_STARTS_MS = {
   tap: [0],
   select: [0],
@@ -58,7 +109,7 @@ const BUS_LP_HZ = 1600;
 const REVERB_WET = 0.12;
 const REVERB_SEC = 0.16;
 
-let chain = null; // { ctx, input, noise }
+let chain = null; // { ctx, input, noise, sample, synthVol }
 const getChain = (ctx) => {
   if (chain && chain.ctx === ctx) return chain;
   const input = ctx.createGain();
@@ -94,7 +145,10 @@ const getChain = (ctx) => {
   const noise = ctx.createBuffer(1, nlen, ctx.sampleRate);
   const nd = noise.getChannelData(0);
   for (let i = 0; i < nlen; i++) nd[i] = Math.random() * 2 - 1;
-  chain = { ctx, input, noise };
+  // 샘플 버스 — lowpass/리버브 없이 마스터로 직결(원음 유지)
+  const sample = ctx.createGain();
+  sample.connect(master);
+  chain = { ctx, input, noise, sample };
   return chain;
 };
 
@@ -233,19 +287,96 @@ const CUES = {
 
 export const SFX_NAMES = Object.keys(CUES);
 
+// ── 샘플 로드 ─────────────────────────────────────────────────────
+// Vite 가 wav 를 해시 파일명으로 내보낸다(4KB 미만 tap/progress 는 data URI 로 인라인될 수 있으나 fetch 가 둘 다 처리).
+const SAMPLE_URLS = import.meta.glob('../../assets/sounds/feel/*/*.wav', { query: '?url', import: 'default', eager: true });
+const sampleUrl = (theme, name) => SAMPLE_URLS[`../../assets/sounds/feel/${theme}/${name}.wav`];
+
+const buffers = {}; // `${theme}/${name}` → AudioBuffer
+const pending = {}; // `${theme}/${name}` → Promise<AudioBuffer|null> (null = 실패)
+
+const decode = (ctx, ab) => new Promise((resolve, reject) => {
+  // Safari 호환: Promise 미반환 시그니처가 있어 콜백형으로 호출.
+  try {
+    const ret = ctx.decodeAudioData(ab, resolve, reject);
+    if (ret && typeof ret.then === 'function') ret.then(resolve, reject);
+  } catch (e) { reject(e); }
+});
+
+function loadSample(theme, name) {
+  const key = `${theme}/${name}`;
+  if (buffers[key]) return Promise.resolve(buffers[key]);
+  if (pending[key]) return pending[key];
+  const ctx = getAudioCtx();
+  const url = sampleUrl(theme, name);
+  if (!ctx || !url) return Promise.resolve(null);
+  pending[key] = fetch(url)
+    .then((r) => r.arrayBuffer())
+    .then((ab) => decode(ctx, ab))
+    .then((buf) => { buffers[key] = buf; return buf; })
+    .catch(() => { delete pending[key]; return null; }); // 실패 → 재생 시 synth 폴백(다음 요청에서 재시도)
+  return pending[key];
+}
+
+/** 테마(기본: 현재 테마)의 10개 큐를 미리 디코드한다. 이미 받았으면 즉시 끝난다. */
+export function preloadSfx(theme = getSfxTheme()) {
+  if (theme === 'synth') return Promise.resolve();
+  return Promise.all(SFX_NAMES.map((n) => loadSample(theme, n)));
+}
+
+// 첫 사용자 입력(primeSfx)에서도 프리로드, 앱 시작 직후 idle 에도 프리로드.
+registerPrimeHook(() => { preloadSfx(); });
+if (typeof window !== 'undefined') {
+  const idle = window.requestIdleCallback || ((fn) => setTimeout(fn, 600));
+  idle(() => { preloadSfx(); });
+}
+
+// 콤보 수 → 반음 올림(펜타토닉 계단, 상한 +12). n=2 가 첫 단계.
+const COMBO_SEMITONES = [0, 2, 4, 7, 9, 12];
+const comboRate = (n) => {
+  const i = Math.min(Math.max((Number(n) || 2) - 2, 0), COMBO_SEMITONES.length - 1);
+  return Math.pow(2, COMBO_SEMITONES[i] / 12);
+};
+
+function startSample(ctx, c, buf, name, when, n) {
+  const src = ctx.createBufferSource();
+  src.buffer = buf;
+  if (name === 'combo') src.playbackRate.value = comboRate(n);
+  src.connect(c.sample);
+  src.start(Math.max(when ?? 0, ctx.currentTime + 0.001));
+}
+
+const setVolumes = (c) => {
+  const vol = getSfxVolumePercent() / 100;
+  c.sample.gain.value = THEME_GAIN * vol;
+  c.input.gain.value = vol;
+};
+
 /**
  * 효과음을 `when`(AudioContext 시각, 초)에 시작하도록 예약한다.
- * @returns {boolean} 합성 재생이 예약됐는지(컨텍스트 없음/suspended 등이면 false)
+ * 샘플이 아직 디코드 전이면 준비되는 즉시(when 이 이미 지났으면 바로) 재생한다 — 무음으로 건너뛰지 않는다.
+ * 디코드 실패 시에만 합성음으로 폴백.
+ * @returns {boolean} 재생이 예약됐는지(컨텍스트 없음 등이면 false)
  */
 export function playSfx(name, { when, n } = {}) {
   const ctx = getAudioCtx();
-  const fn = CUES[name];
-  if (!ctx || !fn) return false;
+  const synth = CUES[name];
+  if (!ctx || !synth) return false;
   try {
     if (ctx.state === 'suspended') ctx.resume().catch(() => { /* noop */ });
     const c = getChain(ctx);
-    const t = Math.max(when ?? 0, ctx.currentTime + 0.001);
-    fn(ctx, c, t, n);
+    setVolumes(c);
+    const theme = getSfxTheme();
+    const playSynth = (at) => synth(ctx, c, Math.max(at ?? 0, ctx.currentTime + 0.001), n);
+    if (theme === 'synth' || !sampleUrl(theme, name)) { playSynth(when); return true; }
+    const buf = buffers[`${theme}/${name}`];
+    if (buf) { startSample(ctx, c, buf, name, when, n); return true; }
+    loadSample(theme, name).then((b) => {
+      try {
+        if (b) startSample(ctx, c, b, name, when, n);
+        else playSynth(when);
+      } catch (e) { /* noop */ }
+    });
     return true;
   } catch (e) {
     return false;

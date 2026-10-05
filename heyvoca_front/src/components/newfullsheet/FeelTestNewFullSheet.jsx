@@ -9,6 +9,8 @@ import {
   Pressable, haptic, KIND_TO_CUE, requestHapticCaps, resolveHapticVariant, getHapticCapsSource,
   getHapticStrengthPercent, setHapticStrengthPercent, getHapticMode, setHapticMode,
   STRENGTH_MIN, STRENGTH_MAX,
+  SFX_THEMES, SFX_THEME_LABEL, SFX_VOLUME_MIN, SFX_VOLUME_MAX,
+  getSfxTheme, setSfxTheme, getSfxVolumePercent, setSfxVolumePercent, preloadSfx,
 } from '../../lib/feel';
 import { ComboInterlude, PhaseInterlude, CompleteCut } from '../takeTest/StudyInterlude';
 
@@ -21,6 +23,7 @@ const MODE_OPTIONS = [
   { key: 'waveform', label: 'waveform' },
   { key: 'prebaked', label: '프리베이크' },
 ];
+const THEME_OPTIONS = SFX_THEMES.map((k) => ({ key: k, label: SFX_THEME_LABEL[k] }));
 const AUTOPLAY_OPTIONS = [
   { key: 'both', label: '소리+진동' },
   { key: 'vibe', label: '진동만' },
@@ -32,19 +35,19 @@ const VARIANT_LABEL = { ios: 'iOS · Core Haptics', android: 'Android · 프리�
 // 소리와 진동의 엇박을 실기기에서 직접 맞춘다. 맞춘 값을 알려 주면 lib/feel/cue.js 의
 // FEEL_TIMING.PLATFORM_OFFSET_MS 상수에 반영한다. 오프셋은 이 기기 localStorage(feel.hapticOffsetMs)에 저장된다.
 const CUE_LIST = [
-  { cue: 'tap', label: '탭', desc: '작은 나무 톡 + 가장 약한 tick' },
-  { cue: 'select', label: '선택', desc: '물방울 뽁 + click' },
-  { cue: 'correct', label: '정답', desc: '마림바 2음 상승, tick 후 click' },
-  { cue: 'wrong', label: '오답', desc: '낮고 부드러운 뿌웅, heavyClick 1회' },
-  { cue: 'match', label: '카드 짝 맞음', desc: '맑은 딩딩, tick 2회' },
-  { cue: 'combo', n: 2, label: '콤보 2', desc: '펜타토닉을 따라 한 음씩 올라감' },
+  { cue: 'tap', label: '탭', desc: '짧은 나무 톡 + 가장 약한 tick' },
+  { cue: 'select', label: '선택', desc: '가볍게 한 음 + click' },
+  { cue: 'correct', label: '정답', desc: '상승 2음, tick 후 click' },
+  { cue: 'wrong', label: '오답', desc: '낮은 2음 하강, heavyClick 1회' },
+  { cue: 'match', label: '카드 짝 맞음', desc: '맑은 2음, tick 2회' },
+  { cue: 'combo', n: 2, label: '콤보 2', desc: '콤보가 쌓일수록 펜타토닉 계단으로 음이 올라감(최대 한 옥타브)' },
   { cue: 'combo', n: 5, label: '콤보 5' },
   { cue: 'combo', n: 10, label: '콤보 10' },
   { cue: 'combo', n: 14, label: '콤보 14(상한)' },
-  { cue: 'perfect', label: '완벽해요', desc: '반짝이는 3음, tick tick click' },
+  { cue: 'perfect', label: '완벽해요', desc: '상승 3음, tick tick click' },
   { cue: 'progress', label: '진행바 채움', desc: '아주 작게' },
-  { cue: 'bonus', label: '보너스', desc: '통통 튀는 4음' },
-  { cue: 'complete', label: '완료', desc: '짧은 팡파르' },
+  { cue: 'bonus', label: '보너스', desc: '통통 튀는 상승 4음' },
+  { cue: 'complete', label: '완료', desc: '상승 4음 팡파르' },
 ];
 
 // 기존 haptic(kind) 7종 — 앱 1.1.2+ 에서는 매핑된 큐의 진동만(소리 없음) 울린다.
@@ -126,6 +129,8 @@ const FeelTestNewFullSheet = () => {
   const toggle = (k) => setOpen((o) => ({ ...o, [k]: !o[k] }));
   const [strength, setStrength] = useState(() => getHapticStrengthPercent());
   const [mode, setMode] = useState(() => getHapticMode());
+  const [theme, setTheme] = useState(() => getSfxTheme());
+  const [sfxVol, setSfxVol] = useState(() => getSfxVolumePercent());
   const [autoPlay, setAutoPlay] = useState('both');
   const [editing, setEditing] = useState(null); // 펼친 큐 키
   const [editVersion, setEditVersion] = useState(0); // 가져오기/전체 초기화 후 편집기를 다시 불러온다
@@ -148,6 +153,15 @@ const FeelTestNewFullSheet = () => {
   };
   // 세기를 바꾼 직후 느껴 보게 — 진동만, 선택 큐(디바운스 무시)
   const feelStrength = () => feel('select', { sound: false, force: true });
+
+  const changeTheme = (t) => {
+    const v = setSfxTheme(t);
+    setTheme(v);
+    // 바꾸면 즉시 프리로드한 뒤 정답 큐를 한 번 들려준다(디코드 전이어도 playSfx 가 준비되는 즉시 재생).
+    preloadSfx(v).finally(() => feel('correct', { sound: true, vibe: false, force: true }));
+  };
+  const changeSfxVol = (value) => setSfxVol(setSfxVolumePercent(value));
+  const hearSfxVol = () => feel('correct', { vibe: false, force: true });
 
   const changeMode = (m) => {
     setMode(setHapticMode(m));
@@ -251,6 +265,38 @@ const FeelTestNewFullSheet = () => {
           </div>
         </Section>
 
+        {/* 효과음 테마 · 음량 */}
+        <Section
+          title="효과음 테마 · 음량"
+          open={!!open.sfx}
+          onToggle={() => toggle('sfx')}
+          right={<span className="text-[14px] font-[700] text-primary-main-600">{SFX_THEME_LABEL[theme]} · {sfxVol}%</span>}
+        >
+          <div className="px-[20px] pb-[8px]">
+            <Seg options={THEME_OPTIONS} value={theme} onChange={changeTheme} />
+            <p className="mt-[6px] text-[12px] leading-[1.5] text-layout-gray-300">
+              마림바·칼림바는 실제 악기 녹음이고, 합성은 예전 코드 합성음이에요. 바꾸면 정답 소리를 한 번 들려줘요.
+            </p>
+            <h3 className="mt-[12px] mb-[6px] text-[13px] font-[700] text-layout-black dark:text-layout-white">효과음 음량</h3>
+            <input
+              type="range"
+              min={SFX_VOLUME_MIN}
+              max={SFX_VOLUME_MAX}
+              step={1}
+              value={sfxVol}
+              onChange={(e) => changeSfxVol(e.target.value)}
+              onPointerUp={hearSfxVol}
+              onKeyUp={hearSfxVol}
+              className="w-full accent-primary-main-600"
+              aria-label="효과음 음량(%)"
+            />
+            <div className="flex items-center justify-between text-[11px] text-layout-gray-300">
+              <span>0%</span>
+              <span>150%</span>
+            </div>
+          </div>
+        </Section>
+
         {/* 큐 재생 + 패턴 편집 */}
         <Section title="큐 재생 · 패턴 편집" open={open.cues} onToggle={() => toggle('cues')}>
           <p className="px-[20px] pb-[6px] text-[12px] leading-[1.5] text-layout-gray-300">
@@ -317,13 +363,15 @@ const FeelTestNewFullSheet = () => {
         {/* 설정 내보내기 / 가져오기 */}
         <Section title="설정 내보내기 · 가져오기" open={!!open.io} onToggle={() => toggle('io')}>
           <p className="px-[20px] pb-[6px] text-[12px] leading-[1.5] text-layout-gray-300">
-            전역 세기·재생 방식·오프셋·편집한 모든 패턴을 JSON 으로 복사해 개발자에게 전달하면 기본값으로 반영할 수 있어요.
+            전역 세기·재생 방식·오프셋·효과음 테마·음량·편집한 모든 패턴을 JSON 으로 복사해 개발자에게 전달하면 기본값으로 반영할 수 있어요.
           </p>
           <Suspense fallback={null}>
             <HapticSettingsIO
               onChanged={() => {
                 setStrength(getHapticStrengthPercent());
                 setMode(getHapticMode());
+                setTheme(getSfxTheme());
+                setSfxVol(getSfxVolumePercent());
                 setOffset(getHapticOffsetMs());
                 setSnap(getFeelTimingSnapshot());
                 setEditVersion((v) => v + 1);

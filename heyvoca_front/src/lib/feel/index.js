@@ -10,7 +10,10 @@
 
 export { haptic, KIND_TO_CUE, hapticPattern, hapticWarmup, supportsHapticPattern, requestHapticCaps, resolveHapticVariant, getHapticCapsSource } from './haptics';
 export { feel, FEEL_TIMING, getHapticOffsetMs, setHapticOffsetMs, getFeelTimingSnapshot, measureOutputLatency } from './cue';
-export { SFX_NAMES, SFX_DURATION_MS, SFX_NOTE_STARTS_MS } from './sfx';
+export {
+  SFX_NAMES, SFX_DURATION_MS, SFX_BUSY_MS, SFX_NOTE_STARTS_MS, SFX_THEMES, SFX_THEME_LABEL, SFX_VOLUME_MIN, SFX_VOLUME_MAX,
+  getSfxTheme, setSfxTheme, getSfxVolumePercent, setSfxVolumePercent, preloadSfx,
+} from './sfx';
 export { HAPTIC_NAMES, PATTERN_DURATION_MS, validatePattern, validateForVariant, getHapticPattern } from './hapticPatterns';
 export { SPRING, PULSE_TWEEN, TAP, variants, pickVariant } from './motion';
 export { default as Pressable } from './Pressable';

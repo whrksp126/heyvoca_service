@@ -21,7 +21,7 @@
 //   그 전까지는 localStorage `feel.hapticOffsetMs`(ms, 정수)로 기기마다 덮어쓸 수 있다.
 import { getAudioCtx, primeSfx, playSuccessSound, playErrorSound } from '../../utils/audio';
 import { getDevicePlatform } from '../../utils/osFunction';
-import { playSfx, SFX_DURATION_MS } from './sfx';
+import { playSfx, SFX_DURATION_MS, SFX_BUSY_MS } from './sfx';
 import { hapticPattern, supportsHapticPattern } from './haptics';
 
 export const FEEL_TIMING = {
@@ -163,7 +163,7 @@ export function feel(cue, opts = {}) {
 
   if (opts.vibe !== false) hapticPattern(cue, { delayMs: hapticDelay, n: opts.n, events: opts.events, force: opts.force });
 
-  busyUntil = t + audioLead + SFX_DURATION_MS[cue];
+  busyUntil = t + audioLead + SFX_BUSY_MS[cue]; // 감쇠 꼬리 제외, 체감상 끝나는 지점
   return { fired: true, startInMs: audioLead };
 }
 

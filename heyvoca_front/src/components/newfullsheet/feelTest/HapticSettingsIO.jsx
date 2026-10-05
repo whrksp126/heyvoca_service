@@ -4,6 +4,7 @@ import {
   getHapticStrengthPercent, setHapticStrengthPercent, getHapticMode, setHapticMode,
   getHapticOffsetMs, setHapticOffsetMs, getOverrides, replaceOverrides, clearAllOverrides,
   sanitizeOverrides, validateForVariant, HAPTIC_MODES,
+  getSfxTheme, setSfxTheme, getSfxVolumePercent, setSfxVolumePercent, SFX_THEMES,
 } from '../../../lib/feel';
 
 // 설정 내보내기/가져오기 — 전역 세기·재생 방식·오프셋·모든 오버라이드를 JSON 으로 주고받는다.
@@ -30,6 +31,8 @@ const HapticSettingsIO = ({ onChanged }) => {
     strengthPercent: getHapticStrengthPercent(),
     mode: getHapticMode(),
     hapticOffsetMs: getHapticOffsetMs(),
+    sfxTheme: getSfxTheme(),
+    sfxVolumePercent: getSfxVolumePercent(),
     overrides: getOverrides(),
   }, null, 1);
 
@@ -64,6 +67,8 @@ const HapticSettingsIO = ({ onChanged }) => {
     if (Number.isFinite(Number(data.strengthPercent))) { setHapticStrengthPercent(data.strengthPercent); parts.push('세기'); }
     if (HAPTIC_MODES.includes(data.mode)) { setHapticMode(data.mode); parts.push('재생 방식'); }
     if (Number.isFinite(Number(data.hapticOffsetMs))) { setHapticOffsetMs(data.hapticOffsetMs); parts.push('오프셋'); }
+    if (SFX_THEMES.includes(data.sfxTheme)) { setSfxTheme(data.sfxTheme); parts.push('효과음 테마'); }
+    if (Number.isFinite(Number(data.sfxVolumePercent))) { setSfxVolumePercent(data.sfxVolumePercent); parts.push('효과음 음량'); }
     let dropped = 0;
     if (data.overrides && typeof data.overrides === 'object') {
       const clean = sanitizeOverrides(data.overrides);

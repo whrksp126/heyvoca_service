@@ -38,6 +38,7 @@ from app.utils.script_scope import script_user_voca_ids_subquery
 # 예약 취소 창 (기획 7.2 확인 문구 → 오조작 되돌리기용).
 # 짧게 두는 이유는 이 창이 "실수로 눌렀다"를 위한 것이지 "생각해 보고 무르기"가 아니어서다.
 CANCEL_WINDOW_SECONDS = 10
+ALL_IDS_LIMIT = 2000
 
 # 다시 심은 작물의 재시작 안정성. 씨앗 구간(잎 임계값 10일 미만)이어야
 # growth 의 씨앗 판정(심은 씨앗 → 새싹)이 다시 돌아간다.
@@ -300,11 +301,27 @@ def list_rotten(user_id: UUID, limit: int = 50, cursor: Optional[int] = None) ->
             'pending_action': game.pending_action,
         })
 
-    return {
+    result = {
         'items': items,
         'total': int(total),
         'next_cursor': items[-1]['user_voca_id'] if (has_more and items) else None,
     }
+    # 첫 페이지(cursor 없음)에만 전체 id — '모두 선택'이 불러온 분량에 묶이지 않게 한다.
+    if not cursor:
+        id_rows = (
+            db.session.query(UserVocaGame.user_voca_id)
+            .join(UserVoca, UserVoca.id == UserVocaGame.user_voca_id)
+            .filter(UserVocaGame.user_id == user_id,
+                    UserVoca.dict_lang == lang,
+                    UserVocaGame.health_state == HealthState.ROTTEN,
+                    ~UserVoca.id.in_(script_ids))
+            .order_by(UserVocaGame.user_voca_id.asc())
+            .limit(ALL_IDS_LIMIT + 1).all()
+        )
+        ids = [r[0] for r in id_rows]
+        result['all_ids_truncated'] = len(ids) > ALL_IDS_LIMIT
+        result['all_ids'] = ids[:ALL_IDS_LIMIT]
+    return result
 
 
 # ──────────────────────────────────────────────────────────────

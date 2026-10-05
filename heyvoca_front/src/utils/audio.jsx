@@ -31,6 +31,10 @@ const ensureCtx = () => {
 // primeSfx 가 만든(그리고 gesture 에서 unlock 한) 컨텍스트와 동일해야 iOS 에서 소리가 난다.
 export const getAudioCtx = () => ensureCtx();
 
+// primeSfx(첫 사용자 입력)에서 추가로 실행할 훅 — sfx.js 가 샘플 프리로드를 등록한다(순환 import 방지).
+const primeHooks = [];
+export const registerPrimeHook = (fn) => { primeHooks.push(fn); };
+
 // mp3 → ArrayBuffer → decodeAudioData → AudioBuffer 캐시. gesture와 무관하게 미리 받아둔다.
 const decodeAll = () => {
   const ctx = ensureCtx();
@@ -86,6 +90,7 @@ export const primeSfx = () => {
   if (ctx) {
     if (ctx.state === 'suspended') ctx.resume().catch(() => { /* noop */ });
     decodeAll();
+    primeHooks.forEach((fn) => { try { fn(); } catch (e) { /* noop */ } });
     try {
       const b = ctx.createBuffer(1, 1, 22050);
       const s = ctx.createBufferSource();
