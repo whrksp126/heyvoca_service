@@ -24,8 +24,8 @@ export const SFX_VOLUME_MAX = 150;
 const KEY_THEME = 'feel.sfxTheme';
 const KEY_VOLUME = 'feel.sfxVolume';
 // 테마 전체 gain(샘플은 이미 큐 간 상대 음량으로 정규화돼 있어 큐별 gain 은 1)
-// -3.5dB(×0.668) 만큼 전체를 낮춤. 합성 테마는 chain.input 에서 같은 비율(SFX_TRIM)을 곱한다.
-const SFX_TRIM = 0.668;
+// -5.5dB(×0.53) 만큼 전체를 낮춤. 합성 테마는 chain.input 에서 같은 비율(SFX_TRIM)을 곱한다.
+const SFX_TRIM = 0.53;
 const THEME_GAIN = 0.9 * SFX_TRIM;
 
 const readLS = (k) => {

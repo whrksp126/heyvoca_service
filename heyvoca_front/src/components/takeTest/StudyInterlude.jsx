@@ -3,7 +3,8 @@
 // 학습 중 전체 화면 연출(연출만 — 보상 지급·서버 호출 없음). 이미지·아이콘 없이 타이포그래피만 쓴다.
 //   ComboInterlude  콤보 마일스톤(COMBO_MILESTONE_STEP 의 배수마다) 직후 문제 사이에 끼는 인터루드.
 //   PhaseInterlude  학습 구간 경계 안내 — '실전 문장으로 학습해봐요' / '틀린 문제를 복습해봐요'.
-//   CompleteCut     세션이 끝난 뒤 결과 화면으로 가기 전 '학습 완료' 한 컷.
+//   CompleteCut     세션이 끝난 뒤 결과 화면으로 가기 전 '학습 완료' 한 컷. 사선 띠 4개가 완료 효과음의
+//                   네 음 시작 시각에 맞춰 좌우에서 번갈아 들어오고, 마지막 음에서 제목이 떠오른다.
 // 셋은 같은 InterludeShell(은은한 배경 + 아래에서 떠오르는 큰 제목 + 작은 보조 한 줄 + 얇은 포인트 선)을
 // 공유하고 tone 으로 배경·강조색만 구분한다. 탭하면 즉시 넘어간다.
 // body 포털 + fixed 로 그려 조상 transform 의 영향을 받지 않는다. prefers-reduced-motion 이면 페이드만.
@@ -11,6 +12,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { motion, useReducedMotion } from 'framer-motion';
 import { feel } from '../../lib/feel';
+import { SFX_NOTE_STARTS_MS } from '../../lib/feel/sfx';
 import { COMBO_MILESTONE_STEP } from './ComboBar';
 
 export const COMBO_INTERLUDE_MS = 1600;
@@ -21,6 +23,18 @@ export const COMPLETE_CUT_MS = 1200;
 export const PHASE_COPY = {
   sentence: { title: '실전 문장으로 학습해봐요', sub: '배운 단어를 문장 속에서 써봐요' },
   retry: { title: '틀린 문제를 복습해봐요', sub: '다시 풀면 더 오래 기억해요' },
+};
+
+// 완료 컷의 사선 띠 4개 — 완료 효과음 네 음(SFX_NOTE_STARTS_MS.complete) 시작 시각에 하나씩, 좌우 번갈아 들어온다.
+// 색은 primary 계열 토큰만, 은은하게(opacity).
+const COMPLETE_BANDS = {
+  noteStartsMs: SFX_NOTE_STARTS_MS.complete,
+  items: [
+    { cls: 'top-[14%] bg-primary-main-100 dark:bg-primary-main-dark opacity-80', from: '-110%' },
+    { cls: 'top-[36%] bg-primary-main-200 dark:bg-primary-main-dark opacity-50', from: '110%' },
+    { cls: 'top-[58%] bg-primary-main-100 dark:bg-primary-main-dark opacity-80', from: '-110%' },
+    { cls: 'top-[78%] bg-primary-main-200 dark:bg-primary-main-dark opacity-50', from: '110%' },
+  ],
 };
 
 // 단계별 응원 문구 — 주기(step)로 나눈 단계가 높을수록 한 단계 힘이 실린 말. 같은 단계 안에서는 무작위.
@@ -36,7 +50,9 @@ const pickPhrase = (milestone) => {
 };
 
 // 한 번만 불리는 종료 콜백 + 타이머 + 소리/진동 발사를 묶은 훅
+// leadMs = feel() 호출 시점부터 소리(=진동)가 시작되기까지(ms). 소리와 화면을 맞추려는 연출이 쓴다(첫 렌더엔 null).
 const useOneShot = ({ cue, cueOpts, durationMs, onDone }) => {
+  const [leadMs, setLeadMs] = useState(null);
   const doneRef = useRef(onDone);
   const firedRef = useRef(false);
   useEffect(() => { doneRef.current = onDone; });
@@ -46,12 +62,13 @@ const useOneShot = ({ cue, cueOpts, durationMs, onDone }) => {
     doneRef.current?.();
   };
   useEffect(() => {
-    feel(cue, cueOpts);
+    const r = feel(cue, cueOpts);
+    setLeadMs(r?.fired ? r.startInMs : 0);
     const t = setTimeout(finish, durationMs);
     return () => clearTimeout(t);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  return finish;
+  return { finish, leadMs };
 };
 
 // tone 별 배경·제목·선 색(토큰만)
@@ -82,11 +99,17 @@ const TONES = {
  * 공통 셸 — 제목은 size 로 키운다(콤보·완료는 hero, 구간 안내는 보통).
  * 등장 순서: 선(0.05s) → 제목(0.1s) → 보조(0.3s). 모두 tween(스프링·3키프레임 없음).
  */
-const InterludeShell = ({ tone, title, sub, hero = false, cue, cueOpts, durationMs, onDone }) => {
+const InterludeShell = ({ tone, title, sub, hero = false, bands = null, cue, cueOpts, durationMs, onDone }) => {
   "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
 
   const reducedMotion = useReducedMotion();
-  const finish = useOneShot({ cue, cueOpts, durationMs, onDone });
+  const { finish, leadMs } = useOneShot({ cue, cueOpts, durationMs, onDone });
+  // 띠 연출: 소리가 실제로 시작되는 시각(leadMs)을 알기 전엔 요소를 그리지 않는다(첫 렌더 직후 곧 채워짐).
+  const ready = !bands || leadMs !== null;
+  const lead = (leadMs ?? 0) / 1000;
+  // 띠 연출이면 제목·선은 마지막 음(네 번째) 시각에 맞춘다. 아니면 기존 지연.
+  const titleAt = bands ? lead + (bands.noteStartsMs[bands.noteStartsMs.length - 1] ?? 0) / 1000 : 0.1;
+  const lineAt = bands ? Math.max(0, titleAt - 0.05) : 0.05;
   const t = TONES[tone] ?? TONES.phase;
 
   // 입력 포커스(키보드)가 남아 있으면 인터루드 위에서 키보드가 올라와 있다 — 내린다.
@@ -99,34 +122,48 @@ const InterludeShell = ({ tone, title, sub, hero = false, cue, cueOpts, duration
     initial: { opacity: 0, y: reducedMotion ? 0 : 16 },
     animate: { opacity: 1, y: 0, transition: { delay, duration: 0.45, ease: [0.22, 1, 0.36, 1] } },
   });
+  const contentDelay = bands ? titleAt : 0.1;
   return createPortal(
     <motion.div
       role="presentation"
-      className={`fixed inset-0 z-[80] flex flex-col items-center justify-center px-[24px] ${t.bg}`}
+      className={`fixed inset-0 z-[80] flex flex-col items-center justify-center px-[24px] ${bands ? 'overflow-hidden' : ''} ${t.bg}`}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1, transition: { duration: 0.15 } }}
       exit={{ opacity: 0, transition: { duration: 0.15 } }}
       onClick={finish}
     >
+      {ready && bands && !reducedMotion && bands.items.map((b, i) => (
+        <motion.div
+          key={i}
+          aria-hidden
+          className={`absolute left-[-20%] w-[140%] h-[16%] -rotate-[14deg] ${b.cls}`}
+          initial={{ x: b.from }}
+          animate={{ x: 0, transition: { delay: lead + (bands.noteStartsMs[i] ?? 0) / 1000, duration: 0.32, ease: [0.22, 1, 0.36, 1] } }}
+        />
+      ))}
+      {ready && (
+      <>
       <motion.div
         aria-hidden
-        className={`h-[3px] w-[40px] rounded-full origin-center ${t.line}`}
+        className={`relative h-[3px] w-[40px] rounded-full origin-center ${t.line}`}
         initial={{ opacity: 0, scaleX: reducedMotion ? 1 : 0 }}
-        animate={{ opacity: 1, scaleX: 1, transition: { delay: 0.05, duration: 0.4, ease: 'easeOut' } }}
+        animate={{ opacity: 1, scaleX: 1, transition: { delay: lineAt, duration: 0.4, ease: 'easeOut' } }}
       />
       <motion.h1
-        {...rise(0.1)}
-        className={`mt-[20px] text-center tracking-[-0.03em] ${t.title} ${hero ? 'text-[56px] font-[900] leading-[1.1]' : 'text-[24px] font-[800] leading-[1.35]'}`}
+        {...rise(contentDelay)}
+        className={`relative mt-[20px] text-center tracking-[-0.03em] ${t.title} ${hero ? 'text-[56px] font-[900] leading-[1.1]' : 'text-[24px] font-[800] leading-[1.35]'}`}
       >
         {title}
       </motion.h1>
       {sub && (
         <motion.p
-          {...rise(0.3)}
-          className="mt-[12px] text-center text-[15px] font-[600] text-layout-gray-400 dark:text-layout-gray-100"
+          {...rise(bands ? titleAt + 0.2 : 0.3)}
+          className="relative mt-[12px] text-center text-[15px] font-[600] text-layout-gray-400 dark:text-layout-gray-100"
         >
           {sub}
         </motion.p>
+      )}
+      </>
       )}
     </motion.div>,
     document.body,
@@ -183,6 +220,7 @@ export const CompleteCut = ({ label = '학습 완료', onDone, durationMs = COMP
     <InterludeShell
       tone="complete"
       hero
+      bands={COMPLETE_BANDS}
       title={label}
       cue="complete"
       durationMs={durationMs}
