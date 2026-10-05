@@ -108,7 +108,7 @@ VITE_FIREBASE_*                      # Firebase 설정
 | 소셜 로그인 | Google OAuth, Apple Sign In |
 | 푸시 알림 | Firebase Admin SDK + pyfcm (APScheduler) |
 | 인앱결제 | App Store Connect API, Google Play (서비스 계정) |
-| TTS(발음) | ElevenLabs(영어) + Edge TTS(한국어) + objectstore 캐싱 (`app/services/tts/`), gTTS는 레거시 폴백 |
+| TTS(발음) | Edge TTS(영어·한국어·일본어, 무료) + objectstore 캐싱 (`app/services/tts/`), gTTS는 폴백. ElevenLabs 는 2026-06 호출 중단(코드만 잔존) |
 | 기타 | Google Drive API, pandas/openpyxl |
 | 베이스 이미지 | ubuntu:20.04 (Python 3, TZ=Asia/Seoul) |
 
@@ -124,7 +124,7 @@ heyvoca_back/
 │   ├── routes/               # Blueprint 라우트
 │   │   ├── auth.py           # 소셜 로그인, JWT (38KB)
 │   │   ├── search.py         # 단어 검색 영/한 (12KB)
-│   │   ├── tts.py            # TTS: /tts/resolve (ElevenLabs+Edge+캐싱), /tts/output (레거시 gTTS)
+│   │   ├── tts.py            # TTS: /tts/resolve (Edge TTS+캐싱), /tts/output (레거시 gTTS)
 │   │   ├── fcm.py            # FCM 푸시 알림 (15KB)
 │   │   ├── purchase.py       # 인앱결제 영수증 검증 (19KB)
 │   │   ├── drive.py          # Google Drive 업/다운로드 (25KB)
@@ -224,11 +224,9 @@ MINIO_DICT_RO_KEY=...        # 사전 dump 읽기
 MINIO_DICT_RO_SECRET=...
 MINIO_DICT_RW_KEY=...        # TTS put/presigned + 사전 publish (모든 환경 필요)
 MINIO_DICT_RW_SECRET=...
-# TTS — 영어=ElevenLabs, 한국어=Edge TTS(무료)
-ELEVENLABS_API_KEY=...
-TTS_VOICE_EN=Xb7hH8MSUJpSbSDYk0k2   # ElevenLabs voice_id (Alice)
-TTS_VOICE_KO=...                    # ElevenLabs용(현재 한국어는 edge 기본 ko-KR-SunHiNeural 사용)
-# 선택: TTS_PROVIDER_EN/KO, TTS_MODEL(eleven_flash_v2_5), TTS_GENERATE_REQUIRE_DICT, TTS_RATE_LIMIT
+# TTS — 전 언어 Edge TTS(무료, API 키 불필요). 기본 음성: en-US-AriaNeural / ko-KR-SunHiNeural / ja-JP-NanamiNeural
+# 선택: EDGE_TTS_VOICE_EN/KO/JA(음성 교체), TTS_PROVIDER_EN/KO/JA·TTS_PROVIDER(제공자 강제), TTS_GENERATE_REQUIRE_DICT, TTS_RATE_LIMIT(기본 30 per minute)
+# ElevenLabs(ELEVENLABS_API_KEY, TTS_VOICE_EN, TTS_MODEL)는 2026-06 호출 중단 — 롤백할 때만 필요
 ```
 
 ---
