@@ -308,11 +308,11 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
   const comboSessionRef = useRef({ maxCombo: 0, bestUpdated: false, best: 0 });
   const comboPopupOpenRef = useRef(false);
   /*
-    콤보 마일스톤(5·10) 인터루드 — 연출만(보상 없음). 정답 직후 콤보가 5·10 에 닿으면
+    콤보 마일스톤(5의 배수) 인터루드 — 연출만(보상 없음). 정답 직후 콤보가 5·10 에 닿으면
     pendingInterludeRef 에 "어느 문제(atIndex)에서 닿았는지"를 적어 두고, 그 문제가 다음으로
     넘어가는 순간(advanceWithInterlude)에 한 번 꺼내 쓴다. 다음 문제는 인터루드가 끝난 뒤에야
     마운트되므로(progressIndex 를 그때 올린다) 자동 음성·타이머·포커스가 인터루드 중에 시작하지 않는다.
-    세션당 마일스톤 하나에 한 번(최대 2회). 마지막 문제·안내 슬라이드 앞에서는 생략한다.
+    같은 마일스톤은 세션에서 한 번(횟수 상한 없음). 마지막 문제·안내 슬라이드 앞에서는 생략한다.
   */
   const [interlude, setInterlude] = useState(null); // { n, milestone }
   const pendingInterludeRef = useRef(null);        // { n, milestone, atIndex }
@@ -602,14 +602,16 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
     persistStreakSummary();
   };
 
-  // 콤보가 5·10 을 처음 넘는 순간을 기록(최초 값은 기준선일 뿐 트리거하지 않는다)
+  // 콤보가 5의 배수를 처음 넘는 순간을 기록(최초 값은 기준선일 뿐 트리거하지 않는다)
   const comboCurrent = combo?.current ?? null;
   useEffect(() => {
     if (comboCurrent === null) return;
     const prev = prevComboCurrentRef.current;
     prevComboCurrentRef.current = comboCurrent;
     if (prev === null || comboCurrent <= prev) return;
-    const crossed = [10, 5].find((m) => prev < m && comboCurrent >= m && !shownMilestonesRef.current.has(m));
+    // (prev, current] 안의 가장 큰 5의 배수 — 이미 보여준 마일스톤은 건너뛴다.
+    const top = Math.floor(comboCurrent / 5) * 5;
+    const crossed = top >= 5 && top > prev && !shownMilestonesRef.current.has(top) ? top : null;
     if (crossed) pendingInterludeRef.current = { n: comboCurrent, milestone: crossed, atIndex: progressIndex };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [comboCurrent]);
@@ -1933,7 +1935,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
         transition={optimizedTransition}
         style={{ willChange: 'transform, opacity' }}
       >
-        {isComboMode && <ComboBar combo={combo} isRecord={comboRunIsRecordRef.current} />}
+        {isComboMode && <ComboBar combo={combo} />}
         {interludeEl}
         <StudyProgressBar
           displayPassedCount={displayPassedCount}
@@ -1981,7 +1983,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
       transition={optimizedTransition}
       style={{ willChange: 'transform, opacity' }}
     >
-      {isComboMode && <ComboBar combo={combo} isRecord={comboRunIsRecordRef.current} />}
+      {isComboMode && <ComboBar combo={combo} />}
         {interludeEl}
       <StudyProgressBar
         displayPassedCount={displayPassedCount}

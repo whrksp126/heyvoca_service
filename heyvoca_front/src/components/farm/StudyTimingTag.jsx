@@ -23,7 +23,8 @@ import { lastStudiedLabel, nextReviewLabel, calendarDaysFromToday } from '../../
  *
  * 【유형 공통 규격 — 2026-09-26 통일】 호출부는 농장 payload(`farm`)를 그대로 넘긴다.
  * 정오답·복습일·대기 여부를 이 컴포넌트가 payload 에서 읽으므로 유형마다 계산이 갈라지지 않는다.
- * `isRetry` 면 같은 줄 왼쪽에 '이전 오답' 라벨을 붙인다(진행바 아래에 있던 라벨을 2026-10 이쪽으로 옮김).
+ * `isRetry` 면 같은 줄(top 12)의 **카드 왼쪽 상단**(left 14)에 '이전 오답' 라벨을 따로 띄운다 — 우측 시점 문구와 좌우로 갈라 놓는다.
+ * 카드 왼쪽 상단은 이 라벨 전용 자리다(다른 요소는 가운데·하단에만 둔다).
  * 위치도 기본값이 규격이다 — 문제 카드 `top 12 / right 14`, 카드 맞추기(compact) `top 6 / right 8`
  * (칸 여백만 다르고 글자 크기·굵기·색은 같다).
  * 채점 전 문구는 FSRS + 농장 단계(`stage`)로 정한다(reviewTiming.js — 단계가 심은 씨앗
@@ -66,17 +67,25 @@ const StudyTimingTag = ({
   }
 
   return (
-    <span
-      className={`pointer-events-none select-none flex items-center gap-[6px] ${place}`}
-      aria-live="polite"
-    >
-      {/* 오답 재출제로 다시 나온 문제 — '이전 학습일' 문구의 왼쪽에 같은 타이포로 나란히. 표시 전용. */}
+    <>
+      {/* 오답 재출제로 다시 나온 문제 — 카드 왼쪽 상단, 우측 시점 문구와 같은 줄·같은 타이포. 표시 전용. */}
       {isRetry && (
-        <span className="inline-flex items-center gap-[2px] whitespace-nowrap tracking-[-0.02em] text-[11.5px] font-[600] text-status-error-600 dark:text-status-error-300">
+        <span
+          className={`
+            pointer-events-none select-none absolute z-[2]
+            ${compact ? 'top-[6px] left-[8px]' : 'top-[12px] left-[14px]'}
+            inline-flex items-center gap-[2px] whitespace-nowrap tracking-[-0.02em]
+            text-[11.5px] font-[600] text-status-error-600 dark:text-status-error-300
+          `}
+        >
           <ArrowCounterClockwise weight="bold" className="text-[12px]" />
           이전 오답
         </span>
       )}
+      <span
+        className={`pointer-events-none select-none flex items-center gap-[6px] ${place}`}
+        aria-live="polite"
+      >
       <AnimatePresence mode="wait" initial={false}>
         {label && (
           <motion.span
@@ -96,7 +105,8 @@ const StudyTimingTag = ({
           </motion.span>
         )}
       </AnimatePresence>
-    </span>
+      </span>
+    </>
   );
 };
 

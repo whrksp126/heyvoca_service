@@ -1,8 +1,5 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { createPortal } from 'react-dom';
-import { Flame } from '@phosphor-icons/react';
-import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
-import { feel, pickVariant, SPRING } from '../../lib/feel';
+import { useEffect, useRef } from 'react';
+import { feel } from '../../lib/feel';
 
 /**
  * 콤보 마일스톤 단계 — 진행바는 브랜드 primary 계열을 유지하고 색을 갈아끼우는 대신 같은 계열 안에서
@@ -17,120 +14,31 @@ export const getComboFillClass = (current = 0) => {
   return 'bg-primary-main-600';
 };
 
-const MILESTONE_SHOW_MS = 900;
-
 /**
- * 콤보 팝업 — AI 추천 테스트에서 콤보가 "오를 때"만 프로그래스 바 위에 텍스트로 잠깐 달렸다 사라짐.
- * - 진입 시 초기 콤보값으로는 표시하지 않음(초기 노출 버그 방지).
- * - 다음 문제 슬라이드 전환(정답 ~1s) 전에 사라지도록 800ms 후 숨김.
- * - 레이아웃을 차지하지 않도록 0높이 relative 컨테이너 + absolute.
+ * 콤보 소리·진동 전담(화면 라벨 없음) — AI 추천 테스트에서 콤보가 "오를 때" feel('combo', {n}) 을 쏜다.
+ * 예전에는 진행바 위 '{n}콤보' 라벨과 15+ 중앙 pill 도 여기서 그렸지만, 라벨은 제거했고
+ * 5의 배수 연출은 Main 의 ComboInterlude 가 맡는다. 진행바 콤보 단계 강조(getComboFillClass)는 위에서 export.
  *
- * 【손맛】 콤보가 오르는 순간 feel('combo', {n}) — 음이 반음씩 올라가고 진동이 강해진다.
- *  feel() 이 돌려주는 startInMs(정답 큐가 아직 울리는 중이면 그 뒤로 밀린 시작 시각)만큼 팝업
- *  연출도 늦춰 소리·진동·글자가 같은 순간에 뜬다.
- *  15 이상의 5의 배수(15·20…)에서는 화면 중앙에 작은 '콤보 N' pill 이 짧게(900ms) 뜬다 — pointer-events-none 이라
- *  다음 문제 진입·터치를 막지 않는다. (body 포털: 조상의 transform 이 fixed 기준을 바꾸지 않게)
- *
- * @param {boolean} isRecord — 이번 판이 기존 최고 기록을 갱신 중인지(Main.jsx
- *   comboRunIsRecordRef 와 같은 값). 현재는 표시에 쓰지 않는다(예전에는 진동 종류를 갈랐다).
+ * - 진입 시 초기 콤보값으로는 울리지 않음(초기 노출 버그 방지).
+ * - feel() 이 정답 큐 뒤로 밀어 소리·진동 시점을 정한다(정답 큐와 겹치지 않게).
+ * - DOM 을 그리지 않으므로 레이아웃 영향 없음.
  */
-// eslint-disable-next-line no-unused-vars
-const ComboBar = ({ combo, isRecord = false }) => {
+const ComboBar = ({ combo }) => {
   "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
 
-  const reducedMotion = useReducedMotion();
   const current = combo?.current ?? 0;
-  const [show, setShow] = useState(false);
-  const [startDelay, setStartDelay] = useState(0);
-  const [milestone, setMilestone] = useState(null);
   const prevRef = useRef(null); // null = 아직 초기화 전(첫 값은 트리거하지 않음)
-  const timerRef = useRef(null);
-  const milestoneTimerRef = useRef(null);
 
   useEffect(() => {
     if (prevRef.current === null) {
-      // 진입 직후 최초 콤보값 — 표시하지 않고 기준값만 세팅
       prevRef.current = current;
       return;
     }
-    if (current >= 2 && current > prevRef.current) {
-      const { startInMs } = feel('combo', { n: current });
-      setStartDelay(startInMs / 1000);
-      setShow(true);
-      if (timerRef.current) clearTimeout(timerRef.current);
-      timerRef.current = setTimeout(() => setShow(false), 800 + startInMs);
-
-      // 5·10 은 Main 의 전체 화면 인터루드(StudyInterlude)가 맡는다 — 중앙 글자는 15·20… 에서만.
-      if (current % COMBO_MILESTONE_STEP === 0 && current > 10) {
-        setMilestone(current);
-        if (milestoneTimerRef.current) clearTimeout(milestoneTimerRef.current);
-        milestoneTimerRef.current = setTimeout(() => setMilestone(null), MILESTONE_SHOW_MS + startInMs);
-      }
-    } else if (current < prevRef.current) {
-      setShow(false); // 콤보 깨짐
-      setMilestone(null);
-    }
+    if (current >= 2 && current > prevRef.current) feel('combo', { n: current });
     prevRef.current = current;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [current]);
 
-  useEffect(() => () => {
-    if (timerRef.current) clearTimeout(timerRef.current);
-    if (milestoneTimerRef.current) clearTimeout(milestoneTimerRef.current);
-  }, []);
-
-  const popIn = pickVariant('popIn', reducedMotion);
-
-  return (
-    <div className="relative w-full">
-      <AnimatePresence>
-        {show && (
-          <motion.div
-            key={current}
-            initial={popIn.initial}
-            animate={{ ...popIn.animate, transition: { ...(popIn.animate.transition || {}), delay: startDelay } }}
-            exit={popIn.exit}
-            className="absolute bottom-[2px] right-[2px] z-[6] flex items-center gap-[3px] text-primary-main-600 whitespace-nowrap"
-          >
-            <Flame weight="fill" className="text-[13px]" />
-            <span className="text-[12px] font-[700] tracking-[-0.02em]">{current}콤보</span>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      {typeof document !== 'undefined' && createPortal(
-        <AnimatePresence>
-          {milestone !== null && (
-            <motion.div
-              key={`milestone-${milestone}`}
-              aria-hidden
-              className="pointer-events-none fixed inset-0 z-[70] flex items-center justify-center"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1, transition: { delay: startDelay, duration: 0.08 } }}
-              exit={{ opacity: 0, transition: { duration: 0.2 } }}
-            >
-              <motion.div
-                className="
-                  flex items-center gap-[6px]
-                  px-[16px] py-[8px] rounded-[20px]
-                  bg-primary-main-50 dark:bg-primary-main-dark
-                  text-primary-main-600 dark:text-primary-main-300
-                "
-                initial={{ scale: reducedMotion ? 1 : 0.6 }}
-                animate={reducedMotion
-                  ? { scale: 1 }
-                  : { scale: 1, transition: { ...SPRING.bouncy, delay: startDelay } }}
-              >
-                <Flame weight="fill" className="text-[22px]" />
-                <span className="text-[20px] font-[700] tracking-[-0.02em]">콤보 {milestone}</span>
-              </motion.div>
-            </motion.div>
-          )}
-        </AnimatePresence>,
-        document.body,
-      )}
-    </div>
-  );
+  return null;
 };
 
 export default ComboBar;
