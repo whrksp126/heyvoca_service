@@ -18,6 +18,11 @@ export const SPRING = {
   bouncy: { type: 'spring', stiffness: 400, damping: 14 },
 };
 
+// 3키프레임 펄스 전용 tween — framer-motion 의 spring/inertia 는 키프레임 2개까지만 지원한다
+// (dev 빌드는 invariant 로 throw). scale: [1, 1.18, 1] 같은 다중 키프레임에는 SPRING.* 를 쓰지 말고
+// 이 tween 을 쓴다. 정점(40%)까지 easeOut 으로 튀고 easeInOut 으로 돌아온다.
+export const PULSE_TWEEN = { duration: 0.38, times: [0, 0.4, 1], ease: ['easeOut', 'easeInOut'] };
+
 // 공용 탭 스케일 — motion.button 등에 whileTap={{ scale: TAP.scale }} 로 사용
 export const TAP = { scale: 0.96 };
 
@@ -53,7 +58,7 @@ export const variants = {
 
   // 강조 펄스 — 값이 바뀐 순간 한 번 커졌다 돌아옴 (탭바 아이콘, 게이지 시작 등)
   pulse: {
-    animate: { scale: [1, 1.18, 1], transition: SPRING.bouncy },
+    animate: { scale: [1, 1.18, 1], transition: PULSE_TWEEN },
   },
   pulseReduced: {
     animate: { scale: [1, 1.04, 1], transition: { duration: 0.2, ease: 'easeOut' } },

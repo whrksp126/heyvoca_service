@@ -12,7 +12,7 @@ export { haptic, hapticPattern, hapticWarmup, supportsHapticPattern, requestHapt
 export { feel, FEEL_TIMING, getHapticOffsetMs, setHapticOffsetMs, getFeelTimingSnapshot, measureOutputLatency } from './cue';
 export { SFX_NAMES, SFX_DURATION_MS } from './sfx';
 export { HAPTIC_NAMES, PATTERN_DURATION_MS, validatePattern, getHapticPattern } from './hapticPatterns';
-export { SPRING, TAP, variants, pickVariant } from './motion';
+export { SPRING, PULSE_TWEEN, TAP, variants, pickVariant } from './motion';
 export { default as Pressable } from './Pressable';
 export { useCountUp } from './useCountUp';
 export { CORRECT_PHRASES, pickCorrectPhrase } from './phrases';

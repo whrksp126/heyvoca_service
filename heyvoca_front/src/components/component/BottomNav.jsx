@@ -2,7 +2,7 @@ import React, { useRef } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { animate } from 'framer-motion';
 import { Lock } from "@phosphor-icons/react";
-import { haptic, SPRING } from '../../lib/feel';
+import { haptic, PULSE_TWEEN } from '../../lib/feel';
 import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 import { useOnboardingUnlock } from '../../context/OnboardingUnlockContext';
 import { UnlockGuideNewBottomSheet } from '../newBottomSheet/UnlockGuideNewBottomSheet';
@@ -50,7 +50,7 @@ const BottomNav = () => {
   const handleTap = (item) => {
     haptic('selection');
     const iconEl = iconRefs.current[item.path];
-    if (iconEl) animate(iconEl, { scale: [1, 1.18, 1] }, SPRING.bouncy);
+    if (iconEl) animate(iconEl, { scale: [1, 1.18, 1] }, PULSE_TWEEN);
     if (isLocked(item.lockKey)) {
       pushNewBottomSheet(
         UnlockGuideNewBottomSheet,

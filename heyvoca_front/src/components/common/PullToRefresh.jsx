@@ -41,7 +41,7 @@ import {
 } from 'framer-motion';
 import { Check } from '@phosphor-icons/react';
 import { usePullToRefresh, isPtrDebugEnabled } from '../../hooks/usePullToRefresh';
-import { SPRING } from '../../lib/feel';
+import { PULSE_TWEEN } from '../../lib/feel';
 
 // 링 지오메트리 — 배경 칩(40px) 안에 30px 링을 둔다.
 const RING_SIZE = 30;
@@ -148,7 +148,7 @@ const PullToRefreshIndicator = ({ pull, phase, threshold, maxPull }) => {
     if (isReady && !wasReadyRef.current) {
       chipControls.start(reducedMotion
         ? { scale: [1, 1.06, 1], transition: { duration: 0.2, ease: 'easeOut' } }
-        : { scale: [1, 1.18, 1], transition: SPRING.bouncy });
+        : { scale: [1, 1.18, 1], transition: PULSE_TWEEN });
     }
     wasReadyRef.current = isReady;
   }, [isReady, chipControls, reducedMotion]);
