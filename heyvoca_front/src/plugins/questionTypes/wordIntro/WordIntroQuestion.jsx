@@ -27,6 +27,11 @@ const meaningText = (item) => {
 
 const WORD_TO_MEANING_GAP_MS = 300;
 const RETRY_DELAY_MS = 250;
+// 카드 소유권 — takeTest/Main 은 AnimatePresence(popLayout)로 이전 카드를 exit 애니메이션이 끝날
+// 때까지(~250ms) 마운트해 둔다. 그래서 새 카드가 재생을 시작한 뒤에야 이전 카드의 effect cleanup 이
+// 돌고, 거기서 stopCurrentSound() 를 부르면 새 카드의 단어 재생을 끊는다(실기기 계측으로 확인).
+// 가장 최근에 시퀀스를 시작한 카드만 cleanup 에서 소리를 끊을 수 있게 한다.
+let latestIntroOwner = 0;
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
 // 이 카드가 읽을 (텍스트, 언어) 목록 — 재생 순서와 같다. 프리로드(prefetchTtsList)용.
@@ -109,6 +114,7 @@ const WordIntroQuestion = ({ question, onComplete }) => {
   useEffect(() => {
     cancelRef.current = false;
     const runId = ++runIdRef.current;
+    const ownerId = ++latestIntroOwner;
     const cancelled = () => cancelRef.current || runIdRef.current !== runId;
     const meanings = question?.meanings || [];
     const examples = question?.examples || [];
@@ -162,8 +168,10 @@ const WordIntroQuestion = ({ question, onComplete }) => {
 
     return () => {
       cancelRef.current = true;
+      const lineInFlight = !!resolveRef.current; // 이 카드의 줄이 아직 재생 중이었나
       if (resolveRef.current) { resolveRef.current(); resolveRef.current = null; }
-      stopCurrentSound();
+      // 이미 끝났거나(다음 카드가 자동 재생을 시작했을 수 있음) 더 새 카드가 시작했다면 끊지 않는다.
+      if (lineInFlight && latestIntroOwner === ownerId) stopCurrentSound();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [question?.id, question?.vocaIndexId]);
