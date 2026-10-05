@@ -11,17 +11,34 @@ import {
   replantApi,
   cancelReplantApi,
 } from '../../api/farm';
-import { cropLabel } from '../../utils/crop';
 import CropImage, { CROP_ASSETS } from './CropImage';
 import ReplantConfirmNewBottomSheet from '../newBottomSheet/ReplantConfirmNewBottomSheet';
 import RecoverConfirmNewBottomSheet from '../newBottomSheet/RecoverConfirmNewBottomSheet';
+import BuyAndApplyNewBottomSheet from '../newBottomSheet/BuyAndApplyNewBottomSheet';
+import GemPurchaseNewBottomSheet from '../newBottomSheet/GemPurchaseNewBottomSheet';
 import { addPendingReplantIds, removePendingReplantIds } from '../../utils/replantPending';
 
 const PAGE_SIZE = 20;
 const TOOLS = [
-  { key: 'NUTRIENT', name: '영양 회복제', verb: '사용하기', img: CROP_ASSETS.nutrient, hint: '시든 작물을 되살려요' },
-  { key: 'SHOVEL', name: '새심기 삽', verb: '사용하기', img: CROP_ASSETS.shovel, hint: '처음부터 다시 심어요' },
+  // desc 는 서버 동작 기준: 회복제 = 썩은 작물을 되살림(자란 단계 유지, 되살린 뒤 복습 1회 필요),
+  // 삽 = 씨앗부터 다시 심고 복습 주기(안정성·다음 복습일)를 새로 시작. 학습 로그·정답 이력·최고 단계는 남는다.
+  { key: 'NUTRIENT', name: '영양 회복제', verb: '사용하기', img: CROP_ASSETS.nutrient, desc: '시든 작물을 되살려요. 자란 단계는 그대로예요' },
+  { key: 'SHOVEL', name: '새심기 삽', verb: '사용하기', img: CROP_ASSETS.shovel, desc: '처음부터 다시 심어요. 복습 일정이 초기화돼요' },
 ];
+
+/**
+ * 이 목록의 작물은 전부 한 번 심었다가 썩은 것이다 — 미학습 봉투(UNPLANTED_SEED)를 그리면 안 된다.
+ * 서버 `crop` 은 UNPLANTED_SEED/PLANTED_SEED 를 둘 다 'seed' 로 합쳐 내려서, 그대로 넘기면
+ * 씨앗 단계가 전부 봉투로 그려진다. 그래서 씨앗 계열은 PLANTED_SEED 로 고정하고
+ * (낱알 씨앗의 썩은 모습), 나머지는 highest_stage 를 그대로 쓴다.
+ */
+const rottenStage = (it) => {
+  const hs = String(it.highest_stage || '').trim().toUpperCase();
+  if (!hs || hs === 'UNPLANTED_SEED' || hs === 'PLANTED_SEED') return 'PLANTED_SEED';
+  const crop = String(it.crop || '').trim().toLowerCase();
+  if (!crop || crop === 'seed') return 'PLANTED_SEED';
+  return hs;
+};
 /** 되돌리기 기본 창 — 서버 CANCEL_WINDOW_SECONDS 와 같은 값 */
 const UNDO_WINDOW_MS = 10000;
 
@@ -51,7 +68,7 @@ const cancelUntil = (raw) => {
  */
 const RottenListSheet = ({ onChanged, onOpenShop }) => {
   const { popNewFullSheet } = useNewFullSheetActions();
-  const { pushAwaitNewBottomSheet } = useNewBottomSheet();
+  const { pushAwaitNewBottomSheet, pushNewBottomSheet } = useNewBottomSheet();
 
   const [items, setItems] = useState([]);
   const [cursor, setCursor] = useState(null);
@@ -149,8 +166,44 @@ const RottenListSheet = ({ onChanged, onOpenShop }) => {
   const ownedCnt = owned[tool] ?? 0;
   const need = selectedCount;
   const shortage = need > 0 && ownedCnt < need;
-  const canUse = need > 0 && !shortage && !busy;
+  const canUse = need > 0 && !busy;
   const handleUse = () => (tool === 'NUTRIENT' ? handleRecover() : handleReplant());
+
+  /** 보유량 < 선택 수 — 전용 시트에서 부족분을 보석으로 사고, 이어서 기존 사용 처리까지 한다 */
+  const handleBuyAndApply = async () => {
+    if (busy || selectedCount === 0) return;
+    vibrate({ duration: 5 });
+
+    const fresh = (await loadItems()) || null;
+    const have = fresh ? (fresh[tool] ?? 0) : ownedCnt;
+    const targets = [...selectedIds];
+    const lack = targets.length - have;
+    if (lack <= 0) {
+      // 그 사이 보유량이 채워졌다(다른 기기·상점) — 기존 사용 흐름으로
+      handleUse();
+      return;
+    }
+
+    const run = () => (tool === 'NUTRIENT' ? applyRecover(targets) : applyReplant(targets));
+    const gemCnt = Number((await getFarmItemsApi())?.data?.gem_cnt);
+    const answer = await pushAwaitNewBottomSheet(
+      BuyAndApplyNewBottomSheet,
+      { itemType: tool, lack, count: targets.length, gemCnt: Number.isFinite(gemCnt) ? gemCnt : 0, onApply: run },
+      { isBackdropClickClosable: false, isDragToCloseEnabled: false },
+    );
+
+    if (answer?.action === 'gems') {
+      pushNewBottomSheet(GemPurchaseNewBottomSheet, {}, {});
+      return;
+    }
+    // 구매만 되고 사용이 안 된 채 닫았다면 보유량이 늘었으니 다시 읽어 버튼이 '사용하기'로 바뀌게 한다
+    if (answer?.action !== 'done') {
+      await loadItems();
+      if (answer?.purchased) {
+        setNotice(`${toolDef.name}는 구매했지만 아직 사용하지 않았어요. 아래 버튼으로 이어서 사용해 주세요.`);
+      }
+    }
+  };
 
   /** 성공한 id 를 목록에서 걷어내고 선택도 비운다 */
   const dropDone = (doneIds) => {
@@ -161,6 +214,25 @@ const RottenListSheet = ({ onChanged, onOpenShop }) => {
       done.forEach((id) => next.delete(id));
       return next;
     });
+  };
+
+  /** 회복제 사용 본체 — 확인 시트 흐름과 '구매하고 바로 적용하기'가 같이 쓴다 */
+  const applyRecover = async (targets) => {
+    setBusy(true);
+    const res = await recoverPlantsApi(targets);
+    setBusy(false);
+
+    if (res?.code === 200) {
+      const done = res?.data?.recovered || targets;
+      dropDone(done);
+      setOwned((prev) => ({ ...prev, NUTRIENT: res?.data?.nutrient_left ?? prev.NUTRIENT }));
+      setNotice(`작물 ${done.length}개가 다시 자라기 시작했어요.`);
+      onChanged?.();
+      return { ok: true };
+    }
+    const message = res?.message || '잠시 뒤 다시 시도해 주세요.';
+    setNotice(message);
+    return { ok: false, message };
   };
 
   const handleRecover = async () => {
@@ -181,20 +253,7 @@ const RottenListSheet = ({ onChanged, onOpenShop }) => {
 
     const targets = selectedIds.slice(0, answer.count);
     if (targets.length === 0) return;
-
-    setBusy(true);
-    const res = await recoverPlantsApi(targets);
-    setBusy(false);
-
-    if (res?.code === 200) {
-      const done = res?.data?.recovered || targets;
-      dropDone(done);
-      setOwned((prev) => ({ ...prev, NUTRIENT: res?.data?.nutrient_left ?? prev.NUTRIENT }));
-      setNotice(`작물 ${done.length}개가 다시 자라기 시작했어요.`);
-      onChanged?.();
-    } else {
-      setNotice(res?.message || '잠시 뒤 다시 시도해 주세요.');
-    }
+    await applyRecover(targets);
   };
 
   const handleReplant = async () => {
@@ -215,7 +274,11 @@ const RottenListSheet = ({ onChanged, onOpenShop }) => {
 
     const targets = selectedIds.slice(0, answer.count);
     if (targets.length === 0) return;
+    await applyReplant(targets);
+  };
 
+  /** 삽 사용(다시 심기 예약) 본체 — 확인 시트 흐름과 '구매하고 바로 적용하기'가 같이 쓴다 */
+  const applyReplant = async (targets) => {
     setBusy(true);
     const res = await replantApi(targets);
     setBusy(false);
@@ -233,9 +296,11 @@ const RottenListSheet = ({ onChanged, onOpenShop }) => {
       addPendingReplantIds(done);
       setUndoState({ ids: done, rows: removedRows, until: cancelUntil(res?.data?.cancel_until) });
       onChanged?.();
-    } else {
-      setNotice(res?.message || '잠시 뒤 다시 시도해 주세요.');
+      return { ok: true };
     }
+    const message = res?.message || '잠시 뒤 다시 시도해 주세요.';
+    setNotice(message);
+    return { ok: false, message };
   };
 
   // 되돌리기 창 카운트다운. 창이 지나면 조용히 사라진다(경고하듯 알리지 않는다).
@@ -314,7 +379,6 @@ const RottenListSheet = ({ onChanged, onOpenShop }) => {
           {TOOLS.map((t) => {
             const on = tool === t.key;
             const cnt = owned[t.key] ?? 0;
-            const lack = cnt === 0 || selectedCount > cnt;
             return (
               <div
                 key={t.key}
@@ -336,18 +400,6 @@ const RottenListSheet = ({ onChanged, onOpenShop }) => {
                 <span className="text-[11px] font-[700] text-primary-main-600">
                   보유 {cnt}개
                 </span>
-                <span className="text-[11.5px] font-[400] text-layout-gray-400 dark:text-layout-gray-200 text-center leading-[1.4]">
-                  {t.hint}
-                </span>
-                {lack && (
-                  <button
-                    type="button"
-                    onClick={(e) => { e.stopPropagation(); vibrate({ duration: 5 }); onOpenShop?.(t.key); }}
-                    className="mt-[2px] h-[30px] px-[11px] rounded-full bg-primary-main-600 text-layout-white text-[12.5px] font-[700] whitespace-nowrap"
-                  >
-                    추가 구매
-                  </button>
-                )}
               </div>
             );
           })}
@@ -389,7 +441,7 @@ const RottenListSheet = ({ onChanged, onOpenShop }) => {
                 className="flex items-center gap-[11px] w-full h-[58px] border-b border-[#F4F4F4] dark:border-border-dark text-left"
               >
                 <CropImage
-                  stage={it.crop || it.highest_stage}
+                  stage={rottenStage(it)}
                   health="ROTTEN"
                   size={30}
                   align="center"
@@ -399,9 +451,6 @@ const RottenListSheet = ({ onChanged, onOpenShop }) => {
                   <div className="flex items-center gap-[5px]">
                     <span className="text-[15px] font-[700] text-layout-black dark:text-layout-white truncate">
                       {it.word}
-                    </span>
-                    <span className="flex-shrink-0 text-[10px] font-[800] text-layout-gray-400 dark:text-layout-gray-200 bg-layout-gray-50 dark:bg-layout-gray-dark px-[5px] py-[1px] rounded-[4px]">
-                      {cropLabel(it.crop || it.highest_stage)}까지
                     </span>
                   </div>
                   <div className="text-[12px] text-layout-gray-400 truncate mt-[1px]">
@@ -472,21 +521,21 @@ const RottenListSheet = ({ onChanged, onOpenShop }) => {
       {/* 하단 고정 — 위에서 고른 아이템을 선택한 작물에 쓴다 (기획 7.1) */}
       {items.length > 0 && (
         <div className="flex-shrink-0 border-t border-border dark:border-border-dark bg-layout-white dark:bg-layout-black px-[16px] pt-[12px]">
-          {shortage && (
-            <p className="text-center text-[12px] font-[400] text-layout-gray-300 mb-[8px]">
-              {toolDef.name}가 {need - ownedCnt}개 모자라요. 추가 구매하면 사용할 수 있어요.
-            </p>
-          )}
+          <p className="text-center text-[12px] font-[400] text-layout-gray-400 dark:text-layout-gray-200 mb-[8px]">
+            {toolDef.desc}
+          </p>
           <motion.button
             type="button"
-            onClick={handleUse}
+            onClick={shortage ? handleBuyAndApply : handleUse}
             whileTap={canUse ? { scale: 0.98 } : undefined}
             disabled={!canUse}
             className="w-full h-[52px] rounded-[12px] bg-primary-main-600 text-layout-white text-[16px] font-[700] disabled:opacity-40"
           >
             {selectedCount === 0
               ? '돌볼 작물을 골라 주세요'
-              : `${toolDef.name} ${selectedCount}개 ${toolDef.verb}`}
+              : shortage
+                ? '구매하고 바로 적용하기'
+                : `${toolDef.name} ${selectedCount}개 ${toolDef.verb}`}
           </motion.button>
           <div style={{ height: 'calc(var(--safe-area-bottom) + 12px)' }} />
         </div>

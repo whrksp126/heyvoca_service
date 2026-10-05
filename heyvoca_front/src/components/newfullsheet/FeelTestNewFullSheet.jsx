@@ -10,7 +10,7 @@ import {
   getHapticStrengthPercent, setHapticStrengthPercent, getHapticMode, setHapticMode,
   STRENGTH_MIN, STRENGTH_MAX,
 } from '../../lib/feel';
-import { ComboInterlude, CompleteCut } from '../takeTest/StudyInterlude';
+import { ComboInterlude, PhaseInterlude, CompleteCut } from '../takeTest/StudyInterlude';
 
 // 패턴 그래프 편집기·설정 입출력은 실험실 전용이라 학습 화면 번들에 넣지 않는다(lazy).
 const HapticCueEditor = lazy(() => import('./feelTest/HapticCueEditor'));
@@ -111,9 +111,8 @@ const FeelTestNewFullSheet = () => {
   const [offset, setOffset] = useState(() => getHapticOffsetMs());
   const [snap, setSnap] = useState(() => getFeelTimingSnapshot());
   const [lastPlayed, setLastPlayed] = useState(null);
-  // 학습 중 전체 화면 연출 미리 보기 — { kind: 'interlude' | 'complete', n?, key }
+  // 학습 중 전체 화면 연출 미리 보기 — { kind: 'combo' | 'phase' | 'complete', n?, phase?, key }
   const [preview, setPreview] = useState(null);
-  const [interludeToggle, setInterludeToggle] = useState(false);
 
   // undefined = 조회 중, null = 회신 없음(구버전 앱/웹)
   const [caps, setCaps] = useState(undefined);
@@ -361,27 +360,26 @@ const FeelTestNewFullSheet = () => {
         {/* 전체 화면 연출 미리 보기 */}
         <Section title="전체 화면 연출 미리 보기" open={!!open.preview} onToggle={() => toggle('preview')}>
           <div className="px-[20px]">
-            <div className="flex gap-[8px]">
-              <Pressable
-                onClick={() => {
-                  setInterludeToggle((v) => !v);
-                  setPreview({ kind: 'interlude', n: interludeToggle ? 10 : 5, key: Date.now() });
-                }}
-                className="flex flex-1 items-center justify-center gap-[6px] h-[44px] rounded-[10px] bg-layout-gray-50 dark:bg-layout-gray-dark text-[14px] font-[600] text-layout-black dark:text-layout-white"
-              >
-                <FilmSlate weight="fill" className="text-[18px] text-primary-main-600" />
-                콤보 인터루드 (x{interludeToggle ? 10 : 5})
-              </Pressable>
-              <Pressable
-                onClick={() => setPreview({ kind: 'complete', key: Date.now() })}
-                className="flex flex-1 items-center justify-center gap-[6px] h-[44px] rounded-[10px] bg-layout-gray-50 dark:bg-layout-gray-dark text-[14px] font-[600] text-layout-black dark:text-layout-white"
-              >
-                <FilmSlate weight="fill" className="text-[18px] text-primary-main-600" />
-                학습 완료 컷
-              </Pressable>
+            <div className="grid grid-cols-2 gap-[8px]">
+              {[
+                { label: '콤보 10', preview: { kind: 'combo', n: 10 } },
+                { label: '콤보 20', preview: { kind: 'combo', n: 20 } },
+                { label: '실전 문장', preview: { kind: 'phase', phase: 'sentence' } },
+                { label: '오답 복습', preview: { kind: 'phase', phase: 'retry' } },
+                { label: '학습 완료', preview: { kind: 'complete' } },
+              ].map((b) => (
+                <Pressable
+                  key={b.label}
+                  onClick={() => setPreview({ ...b.preview, key: Date.now() })}
+                  className="flex items-center justify-center gap-[6px] h-[44px] rounded-[10px] bg-layout-gray-50 dark:bg-layout-gray-dark text-[14px] font-[600] text-layout-black dark:text-layout-white"
+                >
+                  <FilmSlate weight="fill" className="text-[18px] text-primary-main-600" />
+                  {b.label}
+                </Pressable>
+              ))}
             </div>
             <p className="mt-[8px] text-[12px] leading-[1.5] text-layout-gray-300">
-              인터루드는 1.6초, 완료 컷은 1.1초 뒤 자동으로 닫히고 탭하면 바로 닫혀요. 소리·진동은 실제 학습과 같은 큐(bonus·complete)를 써요.
+              콤보는 1.6초, 구간 안내는 1.5초, 학습 완료는 1.2초 뒤 자동으로 닫히고 탭하면 바로 닫혀요. 소리·진동은 실제 학습과 같은 큐(bonus·select·complete)를 써요.
             </p>
           </div>
         </Section>
@@ -421,8 +419,11 @@ const FeelTestNewFullSheet = () => {
         </Section>
       </div>
 
-      {preview?.kind === 'interlude' && (
+      {preview?.kind === 'combo' && (
         <ComboInterlude key={preview.key} n={preview.n} milestone={preview.n} onDone={() => setPreview(null)} />
+      )}
+      {preview?.kind === 'phase' && (
+        <PhaseInterlude key={preview.key} kind={preview.phase} onDone={() => setPreview(null)} />
       )}
       {preview?.kind === 'complete' && (
         <CompleteCut key={preview.key} label="학습 완료" onDone={() => setPreview(null)} />

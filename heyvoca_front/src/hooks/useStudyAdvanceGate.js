@@ -7,6 +7,30 @@ import {
   TTS_ADVANCE_WATCHDOG_MS,
 } from '../utils/studyTiming';
 
+/*
+  전역 홀드 — 콤보 보호 시트처럼 "사용자가 결정할 때까지 다음 슬라이드로 넘기면 안 되는" 순간에
+  Main 이 holdStudyAdvance() 로 잡고, 결정이 끝나면 반환된 release() 를 부른다. 문제 화면의 모든 게이트
+  (Main·플러그인 각자의 인스턴스)가 이 값 하나를 본다. 홀드 중에는 타이머를 걸지 않고(워치독 상한 포함),
+  풀린 뒤 HOLD_RELEASE_GRACE_MS 만큼 더 보여 주고 넘긴다. release 는 여러 번 불러도 한 번만 센다.
+*/
+export const HOLD_RELEASE_GRACE_MS = 600;
+let holdCount = 0;
+let lastReleaseAt = 0;
+const holdListeners = new Set();
+export const holdStudyAdvance = () => {
+  holdCount += 1;
+  let released = false;
+  return () => {
+    if (released) return;
+    released = true;
+    holdCount = Math.max(0, holdCount - 1);
+    if (holdCount === 0) {
+      lastReleaseAt = Date.now();
+      holdListeners.forEach((fn) => fn());
+    }
+  };
+};
+
 /**
  * 채점 → 다음 슬라이드 전환 게이트 — 모든 문제 유형 공통(규칙은 utils/studyTiming.js 상단).
  *
@@ -52,6 +76,7 @@ export function useStudyAdvanceGate() {
   const attempt = () => {
     clear();
     if (!s.armed || s.fired) return;
+    if (holdCount > 0) return; // 홀드 중 — 풀리면 holdListeners 가 다시 판정한다
     const now = Date.now();
     const minReadyAt = s.gradedAt + s.minDelayMs;
     const hardCap = s.gradedAt + ADVANCE_HARD_CAP_MS;
@@ -77,6 +102,8 @@ export function useStudyAdvanceGate() {
     }
 
     waitUntil = Math.min(waitUntil, hardCap);
+    // 홀드가 이 채점 이후에 풀렸다면 풀린 시각 + 여유까지는 상한이 지났어도 넘기지 않는다.
+    if (lastReleaseAt >= s.gradedAt) waitUntil = Math.max(waitUntil, lastReleaseAt + HOLD_RELEASE_GRACE_MS);
     if (now >= waitUntil) {
       fire();
       return;
@@ -126,6 +153,13 @@ export function useStudyAdvanceGate() {
     },
     isArmed: () => s.armed && !s.fired,
   }).current;
+
+  useEffect(() => {
+    const onRelease = () => attempt();
+    holdListeners.add(onRelease);
+    return () => { holdListeners.delete(onRelease); };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => () => {
     clear();

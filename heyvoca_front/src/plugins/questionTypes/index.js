@@ -5,7 +5,6 @@ import SentenceArrangeQuestion from './sentenceArrange/SentenceArrangeQuestion';
 import ListenArrangeQuestion from './sentenceArrange/ListenArrangeQuestion';
 import FillInTheBlankTypingQuestion from './fillInTheBlankTyping/FillInTheBlankTypingQuestion';
 import WordIntroQuestion from './wordIntro/WordIntroQuestion';
-import PhaseNoticeQuestion from './phaseNotice/PhaseNoticeQuestion';
 import ScriptIntroQuestion from './script/ScriptIntroQuestion';
 import ScriptChoiceQuestion from './script/ScriptChoiceQuestion';
 import ScriptTraceQuestion from './script/ScriptTraceQuestion';
@@ -411,21 +410,6 @@ export const QUESTION_TYPE_PLUGINS = [
     component: WordIntroQuestion,
     setupQuestions: null,
   },
-  {
-    // 구간 안내 슬라이드 — "실전 문장으로 학습해봐요"·"틀린 문제를 복습해봐요"(2026-10-02).
-    // wordIntro와 같은 안내형(채점 없음, NO_GRADE_QUESTION_TYPES). enabled:false — 설정 시트·
-    // AI 추천 유형 목록에는 노출되지 않고 pages/TakeTest.jsx(문장 구간)·Main.jsx(오답 복습 구간)가
-    // 큐에 직접 끼운다. question.kind('sentence'|'retry')로 문구를 고른다.
-    id: 'phaseNotice',
-    label: '구간 안내',
-    enabled: false,
-    family: 'phaseNotice',
-    direction: null,
-    listening: false,
-    guideTitle: '학습 안내',
-    component: PhaseNoticeQuestion,
-    setupQuestions: null,
-  },
   /*
     글자(문자 학습) 4종 — 2026-09-30. 학습장 "글자" 탭(components/script/ScriptFieldBody.jsx)이
     학습하기(TakeTest, testType='script') 안에서 돌리는 전용 유형들이다. wordIntro와 마찬가지로
@@ -498,7 +482,7 @@ export const getQuestionType = (id) => QUESTION_TYPE_PLUGINS.find(p => p.id === 
 // 채점 없이 그냥 다음으로 넘어가는 "정보 전달" 슬라이드 — Main.jsx가 onComplete를 전용
 // 핸들러(정오답 집계·재출제·로깅을 전혀 타지 않는 handleNoGradeNext)로 바꿔 넘기고,
 // pages/TakeTest.jsx가 결과 화면 집계에서 제외할 때 이 배열 하나를 공유한다.
-export const NO_GRADE_QUESTION_TYPES = ['wordIntro', 'scriptIntro', 'phaseNotice'];
+export const NO_GRADE_QUESTION_TYPES = ['wordIntro', 'scriptIntro'];
 export const isNoGradeQuestionType = (id) => NO_GRADE_QUESTION_TYPES.includes(id);
 
 // 빈칸 채우기 계열(단일 단어 플러그인) 판별 — Main/TakeTest 의 분기에서 id 를 나열하지 않게.
@@ -527,8 +511,9 @@ export const isSentenceQuestionType = (id) => SENTENCE_QUESTION_TYPES.includes(i
 export const ARRANGE_QUESTION_TYPES = ['sentenceArrangePartial', 'sentenceArrange', 'listenArrange'];
 export const isArrangeQuestionType = (id) => ARRANGE_QUESTION_TYPES.includes(id);
 
-// 구간 안내 슬라이드 유형 id — Main.jsx/TakeTest.jsx가 진행률·세션 종료 판정에서 따로 센다.
-export const PHASE_NOTICE_TYPE = 'phaseNotice';
+// 구간 안내는 이제 슬라이드(phaseNotice 유형)가 아니라 구간 첫 문제의 phaseStart 표식('sentence'|'retry') +
+// 전체 화면 인터루드(components/takeTest/StudyInterlude.jsx PhaseInterlude)다. 구세션 저장 데이터에 남은
+// phaseNotice 슬라이드는 utils/studyProgress.js normalizePhaseNotices 가 복원 시 표식으로 바꾼다.
 
 // "AI 추천 학습"(quick — 홈 물주기·빠른 복습) 진입 시 쓰는 유형 후보 풀.
 // enabled 플러그인에서 파생해 새 유형을 여기 배열에 추가하면 자동으로 quick에도 반영된다

@@ -5,7 +5,8 @@ import { prefetchSessionFarmSummary } from '../utils/sessionSummaryPrefetch';
 import Header from '../components/takeTest/Header';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useVocabulary } from '../context/VocabularyContext';
-import { getQuestionType, isFillInTheBlankType, isSingleWordPluginType, isSentenceQuestionType, isNoGradeQuestionType, isArrangeQuestionType, PHASE_NOTICE_TYPE } from '../plugins/questionTypes';
+import { getQuestionType, isFillInTheBlankType, isSingleWordPluginType, isSentenceQuestionType, isNoGradeQuestionType, isArrangeQuestionType } from '../plugins/questionTypes';
+import { normalizePhaseNotices } from '../utils/studyProgress';
 import { mapRecommendItemToWord } from '../utils/studyRecommendMapping';
 import { buildScriptTestQuestions } from '../utils/scriptQuestions';
 import { isListeningSkipActive, mapSkippedQuestionType } from '../utils/listeningSkip';
@@ -421,16 +422,11 @@ const TakeTest = () => {
     userResultIndex: null,
   });
 
-  // 구간 안내 슬라이드(채점 없음) — kind: 'sentence' | 'retry'. id는 null — 단어 id를 쓰는
-  // 곳(풀 수집·고유 단어 집계·복습 예측·결과 목록)이 이 슬라이드를 단어로 오인하지 않게 한다.
-  const buildPhaseNotice = (kind) => ({
-    id: null,
-    vocaIndexId: null,
-    questionType: PHASE_NOTICE_TYPE,
-    kind,
-    isCorrect: null,
-    userResultIndex: null,
-  });
+  // 구간(실전 문장 등)의 첫 문제에 phaseStart 표식을 붙인다 — Main.jsx 가 그 문제 직전에 전체 화면
+  // 구간 인터루드를 띄운다(안내 슬라이드는 없다). 새 배열을 돌려주고 원본은 건드리지 않는다.
+  const markPhaseStart = (list, kind) => (
+    list.length === 0 ? list : [{ ...list[0], phaseStart: kind }, ...list.slice(1)]
+  );
 
   // 한 단어의 한 유형 문제 — 만들 수 없으면(예문/서버 payload 없음) null.
   const buildPlantStepQuestion = (word, allWords, type) => {
@@ -541,7 +537,7 @@ const TakeTest = () => {
       .filter(Boolean);
     const sentenceCount = Math.min(sentenceQs.length, 2 + Math.floor(Math.random() * 2));
     if (sentenceCount > 0) {
-      out.push(buildPhaseNotice('sentence'), ...sentenceQs.slice(0, sentenceCount));
+      out.push(...markPhaseStart(sentenceQs.slice(0, sentenceCount), 'sentence'));
     }
     return out;
   };
@@ -578,7 +574,7 @@ const TakeTest = () => {
     const extra = buildSentenceArrangeQuestions(selectedWords);
     if (extra.length > 0) {
       const base = questions.filter((q) => !isArrangeQuestionType(q.questionType));
-      return [...base, buildPhaseNotice('sentence'), ...shuffleArray(extra).slice(0, 4)];
+      return [...base, ...markPhaseStart(shuffleArray(extra).slice(0, 4), 'sentence')];
     }
     const arrange = questions.filter((q) => isArrangeQuestionType(q.questionType));
     if (arrange.length === 0) return questions;
@@ -590,7 +586,7 @@ const TakeTest = () => {
       ['arrange', 'questionType', 'isCorrect', 'userResultIndex', 'options', 'resultIndex'].forEach((k) => { delete word[k]; });
       return buildPlantMcq(word, allWords, 'multipleChoice');
     });
-    return [...shuffleArray([...rest, ...overflow]), buildPhaseNotice('sentence'), ...keep];
+    return [...shuffleArray([...rest, ...overflow]), ...markPhaseStart(keep, 'sentence')];
   };
 
   // ─── setupTestQuestions ─────────────────────────────────────────────────────
@@ -858,7 +854,9 @@ const TakeTest = () => {
         return;
       }
       if (!isStaleLocalSession && recentStudy && recentStudy[state.testType] && recentStudy[state.testType].status === "learning" && recentStudy[state.testType].study_data?.length > 0) {
-        const studyData = recentStudy[state.testType].study_data;
+        // 구세션에 남은 phaseNotice 슬라이드는 구간 첫 문제의 표식으로 바꾸고 progress_index 를 당긴다.
+        const normalized = normalizePhaseNotices(recentStudy[state.testType].study_data, recentStudy[state.testType].progress_index);
+        const studyData = normalized.questions;
         // cardMatch/cardMatchListening 질문에 words 배열이 없으면 잘못된 캐시 → 재생성.
         // 빈칸 채우기는 문자열 선택지 4개 + 빈칸 문장 + resultIndex 가 있어야 한다
         // (예전 스키마의 exampleText/targetWord 캐시는 여기서 걸러 재생성).
@@ -886,7 +884,7 @@ const TakeTest = () => {
           // 저장된 문제도 추천 응답 모양이라 학습 이력(last_review 등)이 비어 있다 — 사전에서 채운다.
           attachStudyHistory(studyData, userDictionary);
           setTestQuestions(studyData);
-          setProgressIndex(recentStudy[state.testType].progress_index);
+          setProgressIndex(normalized.progressIndex);
           // 재출제 ref 리셋 (복원 시 안전하게 클린 스타트)
           retryCountMapRef.current = new Map();
           cardRetryEnqueuedRef.current = new Set();

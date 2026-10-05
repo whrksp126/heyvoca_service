@@ -7,12 +7,16 @@
 // cue.js 가 진동 지연과 맞추려고 미리 계산한 시각을 넘긴다. 음 하나하나의 시작 시각(ms)은
 // hapticPatterns.js 의 진동 이벤트 time 과 같은 값으로 짜여 있다(소리 음 ↔ 진동 톡이 1:1).
 //
-// 음색: 마림바/칼림바/물방울 같은 부드럽고 둥근 장난감 소리. sine 기음 + 약한 배음(2·4배음)을
-// 빠른 어택(4ms)·짧은 지수 감쇠로 울리고 lowpass 로 고역을 둥글게 깎는다. 날카로운 square/saw 는 쓰지 않는다.
-// 음계는 밝은 메이저 펜타토닉(C D E G A) 800~2100Hz 중심.
+// 음색: 마림바/칼림바/물방울 같은 부드럽고 따뜻한 나무 질감. 순수 sine 의 전자음 느낌을 줄이려고
+//  - 음역을 낮춤(G4~C6, 중심 C5~A5) + 공용 버스 lowpass(1.6kHz, Q 0.6)로 고역을 둥글게,
+//  - 어택 10~12ms + 지수 감쇠(끝은 0 으로 램프해 클릭 없음),
+//  - 기음을 ±5 cent 디튠한 2보이스(rich 음)로 미세한 두께,
+//  - 타격 순간 5~12ms 의 필터드 노이즈 버스트(작은 음량)로 말렛이 닿는 느낌,
+//  - 비정수 배음(약 3.9배)을 아주 약하고 빠르게,
+//  - 공용 짧은 리버브(임펄스 0.16초, wet 12%)로 방 안의 공간감.
+// 날카로운 square/saw 는 쓰지 않는다. 큐당 오실레이터는 6개 이내(노이즈 소스는 별도, 임펄스·노이즈 버퍼는 컨텍스트당 1회 생성).
 //
-// 볼륨은 절제: 기존 success/error mp3 가 gain 0.5 였던 것에 비해 합성음 피크는 0.06~0.14 안팎.
-// 동시에 여러 개가 겹쳐도 마스터 gain → DynamicsCompressor 를 거쳐 클리핑하지 않는다.
+// 볼륨은 절제: 합성음 피크는 0.04~0.12 안팎. 마스터 gain → DynamicsCompressor 를 거쳐 클리핑하지 않는다.
 import { getAudioCtx } from '../../utils/audio';
 
 // 큐별 총 길이(ms) — 대응 진동 패턴 길이와 맞춘다(hapticPatterns.js PATTERN_DURATION_MS 참고).
@@ -46,118 +50,184 @@ export const SFX_NOTE_STARTS_MS = {
 
 const midiToFreq = (m) => 440 * Math.pow(2, (m - 69) / 12);
 
-// 메이저 펜타토닉(C D E G A) MIDI. 스케일 인덱스 → 음.
-const PENTA = [79, 81, 84, 86, 88, 91, 93, 96]; // G5 A5 C6 D6 E6 G6 A6 C7
-const N = { C6: 84, D6: 86, E6: 88, G6: 91, A6: 93, C7: 96, G5: 79, A5: 81 };
+// 메이저 펜타토닉(C D E G A) MIDI. 스케일 인덱스 → 음. (G4 A4 C5 D5 E5 G5 A5 C6)
+const PENTA = [67, 69, 72, 74, 76, 79, 81, 84];
+const N = { C5: 72, D5: 74, E5: 76, G5: 79, A5: 81, C6: 84, G4: 67, A4: 69 };
 
-let chain = null; // { ctx, input }
+const BUS_LP_HZ = 1600;
+const REVERB_WET = 0.12;
+const REVERB_SEC = 0.16;
+
+let chain = null; // { ctx, input, noise }
 const getChain = (ctx) => {
-  if (chain && chain.ctx === ctx) return chain.input;
+  if (chain && chain.ctx === ctx) return chain;
+  const input = ctx.createGain();
+  const lp = ctx.createBiquadFilter();
+  lp.type = 'lowpass';
+  lp.frequency.value = BUS_LP_HZ;
+  lp.Q.value = 0.6;
   const master = ctx.createGain();
-  master.gain.value = 0.9;
+  master.gain.value = 0.85;
   const comp = ctx.createDynamicsCompressor();
   comp.threshold.value = -20;
   comp.knee.value = 14;
   comp.ratio.value = 5;
   comp.attack.value = 0.003;
   comp.release.value = 0.15;
+  input.connect(lp);
+  lp.connect(master); // dry
+  // 짧고 얕은 리버브 — 지수 감쇠 노이즈 임펄스(한 번만 생성)
+  const len = Math.max(1, Math.floor(ctx.sampleRate * REVERB_SEC));
+  const ir = ctx.createBuffer(2, len, ctx.sampleRate);
+  for (let ch = 0; ch < 2; ch++) {
+    const d = ir.getChannelData(ch);
+    for (let i = 0; i < len; i++) d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / len, 3);
+  }
+  const conv = ctx.createConvolver();
+  conv.buffer = ir;
+  const wet = ctx.createGain();
+  wet.gain.value = REVERB_WET;
+  lp.connect(conv).connect(wet).connect(master);
   master.connect(comp).connect(ctx.destination);
-  chain = { ctx, input: master };
-  return master;
+  // 타격 노이즈용 짧은 백색잡음 버퍼(공유)
+  const nlen = Math.max(1, Math.floor(ctx.sampleRate * 0.03));
+  const noise = ctx.createBuffer(1, nlen, ctx.sampleRate);
+  const nd = noise.getChannelData(0);
+  for (let i = 0; i < nlen; i++) nd[i] = Math.random() * 2 - 1;
+  chain = { ctx, input, noise };
+  return chain;
 };
 
-// 부분음 하나 — 4ms 어택 후 지수 감쇠. from 이 있으면 from → freq 로 빠르게 올라오는 '뽁'(pitch-bend).
-function partial(ctx, out, {
-  at, freq, dur, peak, type = 'sine', from = null, bendMs = 0.04, slideTo = null, lp = 3200,
+// 사인 보이스 하나 — 어택(attack) 후 지수 감쇠, 끝은 0 으로 램프(클릭 방지). cents 로 디튠, slideTo/from 은 완만한 피치 변화.
+function voice(ctx, out, {
+  at, freq, dur, peak, cents = 0, attack = 0.011, from = null, bendSec = 0.05, slideTo = null,
 }) {
   const osc = ctx.createOscillator();
   const g = ctx.createGain();
-  const f = ctx.createBiquadFilter();
-  osc.type = type;
+  osc.type = 'sine';
+  if (cents) osc.detune.value = cents;
   if (from) {
     osc.frequency.setValueAtTime(from, at);
-    osc.frequency.exponentialRampToValueAtTime(freq, at + bendMs);
+    osc.frequency.exponentialRampToValueAtTime(freq, at + bendSec);
   } else {
     osc.frequency.setValueAtTime(freq, at);
   }
   if (slideTo) osc.frequency.exponentialRampToValueAtTime(slideTo, at + dur);
-  g.gain.setValueAtTime(0.0001, at);
-  g.gain.linearRampToValueAtTime(peak, at + 0.004);
+  const a = Math.min(attack, dur * 0.3);
+  g.gain.setValueAtTime(0, at);
+  g.gain.linearRampToValueAtTime(peak, at + a);
   g.gain.exponentialRampToValueAtTime(0.0001, at + dur);
-  f.type = 'lowpass';
-  f.frequency.value = lp;
-  osc.connect(f).connect(g).connect(out);
+  g.gain.linearRampToValueAtTime(0, at + dur + 0.012);
+  osc.connect(g).connect(out);
   osc.start(at);
-  osc.stop(at + dur + 0.02);
+  osc.stop(at + dur + 0.03);
 }
 
-// 마림바/칼림바 음 — 기음(sine) + 2배음(triangle, 약하게·짧게) + 4배음(아주 약하고 매우 짧게, '톡' 어택)
-function marimba(ctx, out, at, midi, { dur = 0.16, peak = 0.1 } = {}) {
-  const f = midiToFreq(midi);
-  partial(ctx, out, { at, freq: f, dur, peak });
-  partial(ctx, out, { at, freq: f * 2, dur: dur * 0.5, peak: peak * 0.22, type: 'triangle' });
-  partial(ctx, out, { at, freq: f * 4, dur: dur * 0.2, peak: peak * 0.08 });
+// 말렛이 닿는 순간의 짧은 노이즈(밴드패스) 버스트. 노이즈 소스는 오실레이터 수에 넣지 않는다.
+function knock(ctx, c, at, hz, peak, sec = 0.008) {
+  const src = ctx.createBufferSource();
+  const bp = ctx.createBiquadFilter();
+  const g = ctx.createGain();
+  src.buffer = c.noise;
+  bp.type = 'bandpass';
+  bp.frequency.value = Math.min(Math.max(hz, 500), 1800);
+  bp.Q.value = 0.9;
+  g.gain.setValueAtTime(0, at);
+  g.gain.linearRampToValueAtTime(peak, at + 0.0015);
+  g.gain.exponentialRampToValueAtTime(0.0001, at + sec);
+  g.gain.linearRampToValueAtTime(0, at + sec + 0.004);
+  src.connect(bp).connect(g).connect(c.input);
+  src.start(at);
+  src.stop(at + sec + 0.01);
 }
 
-// 물방울 '뽁' — 낮은 음에서 올라오는 짧은 sine blip
-function pop(ctx, out, at, midi, { dur = 0.1, peak = 0.1, bend = 0.7 } = {}) {
+// 마림바/칼림바 음. lean = sine 1 + 노이즈(오실레이터 1개),
+// rich = ±5 cent 디튠 2보이스 + 비정수(3.9배) 약한 부분음 + 노이즈(오실레이터 3개).
+function note(ctx, c, at, midi, { dur = 0.16, peak = 0.1, rich = false } = {}) {
   const f = midiToFreq(midi);
-  partial(ctx, out, { at, freq: f, from: f * bend, bendMs: 0.035, dur, peak, lp: 2600 });
-  partial(ctx, out, { at, freq: f * 2, from: f * bend * 2, bendMs: 0.035, dur: dur * 0.4, peak: peak * 0.12, lp: 3500 });
+  const out = c.input;
+  if (rich) {
+    voice(ctx, out, { at, freq: f, dur, peak: peak * 0.55, cents: -5 });
+    voice(ctx, out, { at, freq: f, dur, peak: peak * 0.55, cents: 5 });
+    voice(ctx, out, { at, freq: f * 3.9, dur: Math.min(dur * 0.2, 0.05), peak: peak * 0.06, attack: 0.004 });
+  } else {
+    voice(ctx, out, { at, freq: f, dur, peak });
+  }
+  knock(ctx, c, at, f * 2.5, peak * 0.3);
+}
+
+// 물방울 '뽁' — 살짝만 올라오는 둥근 sine(오실레이터 1개). rich 면 디튠 2개.
+function pop(ctx, c, at, midi, { dur = 0.1, peak = 0.1, bend = 0.9, rich = false } = {}) {
+  const f = midiToFreq(midi);
+  const o = { at, freq: f, from: f * bend, bendSec: 0.05, dur };
+  if (rich) {
+    voice(ctx, c.input, { ...o, peak: peak * 0.55, cents: -4 });
+    voice(ctx, c.input, { ...o, peak: peak * 0.55, cents: 4 });
+  } else {
+    voice(ctx, c.input, { ...o, peak });
+  }
 }
 
 // 음 시작 시각(ms)은 hapticPatterns.js 의 time 과 같다.
 const CUES = {
-  // 아주 작은 나무 '톡'
-  tap: (c, o, t) => partial(c, o, { at: t, freq: 980, slideTo: 720, dur: 0.03, peak: 0.055, lp: 2200 }),
-  // 물방울 '뽁'
-  select: (c, o, t) => pop(c, o, t, N.C6, { dur: 0.09, peak: 0.1 }),
-  // 마림바 상승 2음 (E6 → A6)
-  correct: (c, o, t) => {
-    marimba(c, o, t, N.E6, { dur: 0.14, peak: 0.09 });
-    marimba(c, o, t + 0.09, N.A6, { dur: 0.22, peak: 0.12 });
+  // 아주 작은 나무 톡
+  tap: (x, c, t) => {
+    voice(x, c.input, { at: t, freq: 520, slideTo: 440, dur: 0.035, peak: 0.035, attack: 0.006 });
+    knock(x, c, t, 900, 0.02);
   },
-  // 낮고 부드러운 '뿌웅' 2음 하강 — 살짝 김빠지는 느낌(버저 아님)
-  wrong: (c, o, t) => {
-    partial(c, o, { at: t, freq: midiToFreq(62), slideTo: midiToFreq(59), dur: 0.2, peak: 0.13, lp: 700 });
-    partial(c, o, { at: t + 0.12, freq: midiToFreq(57), slideTo: midiToFreq(52), dur: 0.26, peak: 0.12, lp: 600 });
+  // 물방울 '뽁'
+  select: (x, c, t) => pop(x, c, t, N.C5, { dur: 0.1, peak: 0.1 }),
+  // 마림바 상승 2음 (E5 → A5)
+  correct: (x, c, t) => {
+    note(x, c, t, N.E5, { dur: 0.15, peak: 0.09 });
+    note(x, c, t + 0.09, N.A5, { dur: 0.24, peak: 0.11, rich: true });
+  },
+  // 낮고 둥근 '툭… 툭' 2음 하강(불쾌감 없는 부드러운 나무 소리)
+  wrong: (x, c, t) => {
+    const lo = (at, m, to, dur) => {
+      const f = midiToFreq(m);
+      voice(x, c.input, { at, freq: f, slideTo: midiToFreq(to), dur, peak: 0.065, cents: -4, attack: 0.012 });
+      voice(x, c.input, { at, freq: f, slideTo: midiToFreq(to), dur, peak: 0.065, cents: 4, attack: 0.012 });
+      knock(x, c, at, f * 2, 0.03, 0.01);
+    };
+    lo(t, 57, 55, 0.2);
+    lo(t + 0.12, 52, 50, 0.26);
   },
   // 맑은 '딩딩'
-  match: (c, o, t) => {
-    marimba(c, o, t, N.G6, { dur: 0.1, peak: 0.09 });
-    marimba(c, o, t + 0.07, N.C7, { dur: 0.16, peak: 0.1 });
+  match: (x, c, t) => {
+    note(x, c, t, N.G5, { dur: 0.11, peak: 0.09 });
+    note(x, c, t + 0.07, N.C6, { dur: 0.17, peak: 0.1, rich: true });
   },
   // 콤보 수가 오를수록 펜타토닉을 따라 한 음씩 올라간다('뽕' 두 번).
-  combo: (c, o, t, n = 2) => {
+  combo: (x, c, t, n = 2) => {
     const idx = Math.min(Math.max(n - 2, 0), PENTA.length - 3);
-    const vol = Math.min(0.085 + idx * 0.005, 0.115);
-    pop(c, o, t, PENTA[idx], { dur: 0.1, peak: vol * 0.8 });
-    pop(c, o, t + 0.09, PENTA[idx + 2], { dur: 0.16, peak: vol });
+    const vol = Math.min(0.085 + idx * 0.005, 0.11);
+    pop(x, c, t, PENTA[idx], { dur: 0.11, peak: vol * 0.8 });
+    pop(x, c, t + 0.09, PENTA[idx + 2], { dur: 0.17, peak: vol, rich: true });
   },
-  // 반짝이는 3음 + 아주 약한 shimmer
-  perfect: (c, o, t) => {
-    marimba(c, o, t, N.E6, { dur: 0.12, peak: 0.08 });
-    marimba(c, o, t + 0.09, N.G6, { dur: 0.12, peak: 0.09 });
-    marimba(c, o, t + 0.18, N.C7, { dur: 0.26, peak: 0.11 });
-    partial(c, o, { at: t + 0.18, freq: midiToFreq(103), dur: 0.28, peak: 0.012, lp: 5000 });
-    partial(c, o, { at: t + 0.19, freq: midiToFreq(103.2), dur: 0.26, peak: 0.01, lp: 5000 });
+  // 반짝이는 3음
+  perfect: (x, c, t) => {
+    note(x, c, t, N.E5, { dur: 0.13, peak: 0.08 });
+    note(x, c, t + 0.09, N.G5, { dur: 0.13, peak: 0.09 });
+    note(x, c, t + 0.18, N.C6, { dur: 0.28, peak: 0.11, rich: true });
   },
-  // 거의 안 들리는 작은 틱
-  progress: (c, o, t) => partial(c, o, { at: t, freq: midiToFreq(91), dur: 0.03, peak: 0.022, lp: 2400 }),
+  // 거의 안 들리는 작은 나무 톡
+  progress: (x, c, t) => {
+    voice(x, c.input, { at: t, freq: midiToFreq(79), dur: 0.035, peak: 0.014, attack: 0.008 });
+    knock(x, c, t, 800, 0.008);
+  },
   // 통통 튀는 4음
-  bonus: (c, o, t) => {
-    [[N.C6, 0], [N.G6, 0.08], [N.E6, 0.16], [N.C7, 0.24]].forEach(([m, d], i) => {
-      pop(c, o, t + d, m, { dur: i === 3 ? 0.26 : 0.09, peak: 0.085 + i * 0.01, bend: 0.8 });
+  bonus: (x, c, t) => {
+    [[N.C5, 0], [N.G5, 0.08], [N.E5, 0.16], [N.C6, 0.24]].forEach(([m, d], i) => {
+      pop(x, c, t + d, m, { dur: i === 3 ? 0.26 : 0.1, peak: 0.085 + i * 0.01, bend: 0.92, rich: i === 3 });
     });
   },
-  // 짧고 사랑스러운 팡파르(0.85초 이내)
-  complete: (c, o, t) => {
-    marimba(c, o, t, N.C6, { dur: 0.13, peak: 0.09 });
-    marimba(c, o, t + 0.11, N.E6, { dur: 0.13, peak: 0.095 });
-    marimba(c, o, t + 0.22, N.G6, { dur: 0.13, peak: 0.1 });
-    marimba(c, o, t + 0.33, N.C7, { dur: 0.45, peak: 0.12 });
-    marimba(c, o, t + 0.33, N.G6, { dur: 0.4, peak: 0.05 });
-    marimba(c, o, t + 0.33, N.E6, { dur: 0.4, peak: 0.04 });
+  // 짧고 사랑스러운 팡파르(0.85초 이내) — 마지막 음만 rich
+  complete: (x, c, t) => {
+    note(x, c, t, N.C5, { dur: 0.14, peak: 0.09 });
+    note(x, c, t + 0.11, N.E5, { dur: 0.14, peak: 0.095 });
+    note(x, c, t + 0.22, N.G5, { dur: 0.14, peak: 0.1 });
+    note(x, c, t + 0.33, N.C6, { dur: 0.45, peak: 0.115, rich: true });
   },
 };
 
@@ -173,9 +243,9 @@ export function playSfx(name, { when, n } = {}) {
   if (!ctx || !fn) return false;
   try {
     if (ctx.state === 'suspended') ctx.resume().catch(() => { /* noop */ });
-    const out = getChain(ctx);
+    const c = getChain(ctx);
     const t = Math.max(when ?? 0, ctx.currentTime + 0.001);
-    fn(ctx, out, t, n);
+    fn(ctx, c, t, n);
     return true;
   } catch (e) {
     return false;

@@ -16,7 +16,7 @@ import MemoryStateChangeBadge, {
   MEMORY_STATE_RANK as STATE_RANK,
   getMemoryStateKeyByStability,
 } from "../common/MemoryStateChangeBadge";
-import { getQuestionType, isSingleWordPluginType, isFillInTheBlankType, isSentenceQuestionType, isNoGradeQuestionType, isArrangeQuestionType, PHASE_NOTICE_TYPE } from '../../plugins/questionTypes';
+import { getQuestionType, isSingleWordPluginType, isFillInTheBlankType, isSentenceQuestionType, isNoGradeQuestionType, isArrangeQuestionType } from '../../plugins/questionTypes';
 import { getDisplayMeanings } from '../../utils/displayMeanings';
 import { logStudyQuestion, getRequeueEasierApi, exampleSeenApi } from '../../api/study';
 import { mapRecommendItemToWord } from '../../utils/studyRecommendMapping';
@@ -24,9 +24,10 @@ import { getAdvanceDelay } from '../../utils/studyTiming';
 import { useStudyAdvanceGate } from '../../hooks/useStudyAdvanceGate';
 import { optimisticFarmPayload, pendingFarmPayload } from '../../utils/farmOptimistic';
 import { getComboApi, protectComboApi, forfeitComboApi } from '../../api/game';
-import ComboBar, { getComboFillClass } from './ComboBar';
+import ComboBar, { getComboFillClass, COMBO_MILESTONE_STEP } from './ComboBar';
 import StudyProgressBar from './StudyProgressBar';
-import { ComboInterlude } from './StudyInterlude';
+import { ComboInterlude, PhaseInterlude } from './StudyInterlude';
+import { holdStudyAdvance } from '../../hooks/useStudyAdvanceGate';
 import { ComboProtectNewBottomSheet } from '../newBottomSheet/ComboProtectNewBottomSheet';
 import { useUser } from '../../context/UserContext';
 import FarmStatusBar, { FarmResultBar } from '../farm/FarmStatusBar';
@@ -240,9 +241,10 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
     plantAttemptsRef.current.set(vocaId, prev && !!wasCorrect);
   };
 
-  // 구간 안내 슬라이드(문장 만들기 안내·오답 복습 안내)가 큐에 있는 세션 — 진행률을 슬라이드
-  // 기준으로 세고, 세션 종료를 큐 소진으로만 판정한다(안내 슬라이드는 문제로 세지 않는다).
-  const hasPhaseFlow = (testQuestions ?? []).some((q) => q?.questionType === PHASE_NOTICE_TYPE);
+  // 학습 구간(문장 만들기·오답 복습)이 있는 세션 — 구간의 첫 문제에 phaseStart 표식('sentence'|'retry')이
+  // 붙어 있다(안내 슬라이드는 없다 — 그 표식 앞에서 전체 화면 인터루드만 뜬다). 이런 세션은 같은 단어가
+  // 문장 구간·재출제로 다시 나오므로 세션 종료를 큐 소진으로만 판정한다.
+  const hasPhaseFlow = (testQuestions ?? []).some((q) => !!q?.phaseStart);
 
   const [isCorrect, setIsCorrect] = useState(null);
   const [isFinishing, setIsFinishing] = useState(false); // 마지막 슬라이드 후 진행바 100% 연출 중
@@ -314,7 +316,18 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
     마운트되므로(progressIndex 를 그때 올린다) 자동 음성·타이머·포커스가 인터루드 중에 시작하지 않는다.
     같은 마일스톤은 세션에서 한 번(횟수 상한 없음). 마지막 문제·안내 슬라이드 앞에서는 생략한다.
   */
-  const [interlude, setInterlude] = useState(null); // { n, milestone }
+  // 인터루드 대기열 — 앞에서부터 하나씩 보여 준다(콤보 → 구간 안내 순서). 항목: { id, type: 'combo'|'phase',
+  // n, milestone, kind, hold }. hold=true 는 "지금 보고 있는 문제가 구간 첫 문제인 채로 (재)진입"한 경우로,
+  // 인터루드가 끝날 때까지 문제 화면 자체를 그리지 않는다(TTS 자동재생·타이머가 먼저 시작하지 않게).
+  const [initialPhaseKind] = useState(() => testQuestions?.[progressIndex]?.phaseStart ?? null);
+  const [interludeQueue, setInterludeQueue] = useState(
+    () => (initialPhaseKind ? [{ id: 0, type: 'phase', kind: initialPhaseKind, hold: true }] : []),
+  );
+  const interlude = interludeQueue[0] ?? null;
+  const interludeIdRef = useRef(1);
+  const shownPhasesRef = useRef(new Set(initialPhaseKind ? [initialPhaseKind] : [])); // 이미 보여 준 구간 종류
+  const questionsRef = useRef(testQuestions); // 클로저가 낡았을 때(재출제 직후) 다음 문제를 보기 위한 최신 큐
+  useEffect(() => { questionsRef.current = testQuestions; });
   const pendingInterludeRef = useRef(null);        // { n, milestone, atIndex }
   const shownMilestonesRef = useRef(new Set());
   const interludeNextRef = useRef(null);
@@ -413,25 +426,14 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
   const navigate = useNavigate();
 
   // ─── 재출제 유틸 ─────────────────────────────────────────────────────────────
-  // 재출제 문제를 큐 맨 끝에 붙인다. 이 큐에 "틀린 문제를 복습해봐요" 안내(phaseNotice, kind
-  // 'retry')가 아직 없으면 재출제 바로 앞에 한 번 끼운다 — 재출제는 항상 맨 끝에만 붙으므로
-  // 안내는 첫 재출제와 함께 생기고 이후 재출제는 그 뒤에 이어진다. 게스트 맛보기는 자체 안내
-  // 문구가 있어 안내 슬라이드를 끼우지 않는다. 순수 함수(상태 업데이터 안에서 호출된다).
+  // 재출제 문제를 큐 맨 끝에 붙인다. 큐에 오답 복습 구간 표식(phaseStart 'retry')이 아직 없으면 이번
+  // 재출제를 그 구간의 첫 문제로 표시한다 — 재출제는 항상 맨 끝에만 붙으므로 표식은 첫 재출제에만
+  // 생기고 이후 재출제는 그 뒤에 이어진다. 표식 앞에서 "틀린 문제를 복습해봐요" 인터루드가 뜬다.
+  // 게스트 맛보기는 자체 안내 문구가 있어 표식을 붙이지 않는다. 순수 함수(상태 업데이터 안에서 호출된다).
   const appendRetryAtEnd = (prev, retryQuestion) => {
-    const next = [...prev];
-    const hasRetryNotice = next.some((q) => q.questionType === PHASE_NOTICE_TYPE && q.kind === 'retry');
-    if (!hasRetryNotice && !guestMode) {
-      next.push({
-        id: null,
-        vocaIndexId: null,
-        questionType: PHASE_NOTICE_TYPE,
-        kind: 'retry',
-        isCorrect: null,
-        userResultIndex: null,
-      });
-    }
-    next.push(retryQuestion);
-    return next;
+    const hasRetryPhase = prev.some((q) => q.phaseStart === 'retry');
+    const marked = (!hasRetryPhase && !guestMode) ? { ...retryQuestion, phaseStart: 'retry' } : retryQuestion;
+    return [...prev, marked];
   };
 
   // 오답 문제를 큐의 맨 마지막에 재삽입 (마지막 슬라이드로 재출제)
@@ -472,6 +474,8 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
         isRetry: true,
       };
     }
+
+    delete retryQuestion.phaseStart; // 구간 표식은 구간 첫 문제에만 — 복사본에 따라오지 않게
 
     // 큐 삽입 위치 — 글자 학습(script)은 그 글자 블록 안(남은 단계 뒤, 다음 글자로 넘어가기
     // 전)에 다시 나오게 한다(isMultiStepMode && !isPlantMode). buildScriptLearnQuestions가 한
@@ -532,6 +536,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
     const word = mapRecommendItemToWord(res.data);
     const retryQuestion = buildQuestionForType(word, res.data.suggested_question_type, pool);
     retryQuestion.isRetry = true;
+    delete retryQuestion.phaseStart;
     retryQuestion.isCorrect = null;
     retryQuestion.userResultIndex = null;
     // requeue-easier 응답은 tier_target이 항상 null(계약 6절 — 자동 tier 진행에 영향 없음).
@@ -602,43 +607,59 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
     persistStreakSummary();
   };
 
-  // 콤보가 5의 배수를 처음 넘는 순간을 기록(최초 값은 기준선일 뿐 트리거하지 않는다)
+  // 콤보가 COMBO_MILESTONE_STEP 의 배수를 처음 넘는 순간을 기록(최초 값은 기준선일 뿐 트리거하지 않는다)
   const comboCurrent = combo?.current ?? null;
   useEffect(() => {
     if (comboCurrent === null) return;
     const prev = prevComboCurrentRef.current;
     prevComboCurrentRef.current = comboCurrent;
     if (prev === null || comboCurrent <= prev) return;
-    // (prev, current] 안의 가장 큰 5의 배수 — 이미 보여준 마일스톤은 건너뛴다.
-    const top = Math.floor(comboCurrent / 5) * 5;
-    const crossed = top >= 5 && top > prev && !shownMilestonesRef.current.has(top) ? top : null;
+    // (prev, current] 안의 가장 큰 주기 배수 — 이미 보여준 마일스톤은 건너뛴다.
+    const top = Math.floor(comboCurrent / COMBO_MILESTONE_STEP) * COMBO_MILESTONE_STEP;
+    const crossed = top >= COMBO_MILESTONE_STEP && top > prev && !shownMilestonesRef.current.has(top) ? top : null;
     if (crossed) pendingInterludeRef.current = { n: comboCurrent, milestone: crossed, atIndex: progressIndex };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [comboCurrent]);
 
-  // 다음 문제로 넘어가는 지점 공통 — 인터루드가 걸려 있으면 그것을 먼저 보여주고 applyNext 를 미룬다.
-  // applyNext 는 setProgressIndex + 문제 상태 초기화를 담은 클로저(세션 종료가 아닐 때만 부른다).
+  // 다음 문제로 넘어가는 지점 공통 — 보여 줄 인터루드(콤보 마일스톤 → 구간 안내 순)가 있으면 먼저 보여주고
+  // applyNext 를 미룬다. 다음 문제는 인터루드가 끝난 뒤에야 마운트되므로 그 문제의 TTS 자동재생·타이머도
+  // 그때 시작한다. applyNext 는 setProgressIndex + 문제 상태 초기화를 담은 클로저(세션 종료가 아닐 때만 부른다).
+  // 두 인터루드가 같은 지점에서 겹치면 둘 다 순서대로 하나씩 보여 준다(각각 탭하면 즉시 넘어감).
   const advanceWithInterlude = (nextIndex, applyNext) => {
+    const items = [];
     const pending = pendingInterludeRef.current;
     pendingInterludeRef.current = null;
-    const nextQ = testQuestions[nextIndex];
-    const canShow = pending
+    if (pending
       && pending.atIndex === progressIndex
       && !shownMilestonesRef.current.has(pending.milestone)
-      && !interlude
-      && nextQ?.questionType !== PHASE_NOTICE_TYPE;
-    if (!canShow) {
+      && interludeQueue.length === 0) {
+      shownMilestonesRef.current.add(pending.milestone);
+      items.push({ id: interludeIdRef.current++, type: 'combo', n: pending.n, milestone: pending.milestone });
+    }
+    // 구간 첫 문제 — 큐에 표식이 있으면 그것, 아직 큐 반영 전(재출제를 방금 끝에 붙인 직후)이라 다음 문제가
+    // 안 보이면 오답 복습 구간 진입으로 본다(재출제는 항상 맨 끝에 붙는다).
+    const nextQ = questionsRef.current?.[nextIndex] ?? testQuestions[nextIndex];
+    const retryAtEnd = !guestMode && !(isMultiStepMode && !isPlantMode);
+    const phaseKind = nextQ ? (nextQ.phaseStart ?? null) : (retryAtEnd ? 'retry' : null);
+    if (phaseKind && !shownPhasesRef.current.has(phaseKind) && interludeQueue.length === 0) {
+      shownPhasesRef.current.add(phaseKind);
+      items.push({ id: interludeIdRef.current++, type: 'phase', kind: phaseKind });
+    }
+    if (items.length === 0) {
       applyNext();
       return;
     }
-    shownMilestonesRef.current.add(pending.milestone);
     interludeNextRef.current = applyNext;
-    setInterlude({ n: pending.n, milestone: pending.milestone });
+    setInterludeQueue(items);
   };
   const handleInterludeDone = () => {
+    if (interludeQueue.length > 1) {
+      setInterludeQueue((prev) => prev.slice(1));
+      return;
+    }
     const fn = interludeNextRef.current;
     interludeNextRef.current = null;
-    setInterlude(null);
+    setInterludeQueue([]);
     fn?.();
   };
 
@@ -671,6 +692,9 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
     }
 
     comboPopupOpenRef.current = true;
+    // 시트가 떠 있는 동안(결정 + 보호/포기 API 완료까지) 모든 문제의 자동 전환을 멈춘다 — 사용자가
+    // 틀린 내용을 확인하고 유지/포기를 정할 수 있게. 풀린 뒤 짧은 여유를 두고 전환이 재개된다.
+    const releaseAdvance = holdStudyAdvance();
     try {
       const choice = await pushAwaitNewBottomSheet(
         ComboProtectNewBottomSheet,
@@ -684,6 +708,9 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
       if (choice === 'protect') {
         const res = await protectComboApi();
         if (res?.code === 200) {
+          // 보호로 복구된 콤보 값은 "새로 오른 값"이 아니다 — 마일스톤 판정의 기준선을 먼저 맞춰
+          // 이미 지난(또는 지난 세션의) 마일스톤 축하가 다시 터지지 않게 한다.
+          prevComboCurrentRef.current = res.data.current ?? prevComboCurrentRef.current;
           setCombo(res.data);
           if (typeof res.data.gem_cnt === 'number' && setUserProfile) {
             setUserProfile(prev => ({ ...prev, gem_cnt: res.data.gem_cnt }));
@@ -699,6 +726,8 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
       comboPopupOpenRef.current = false;
       // 팝업 응답 처리 완료 → 대기 중이던 카드 채점 로그를 순서대로 전송 재개
       flushCardLogQueue();
+      // flush 가 새 위기 시트를 동기적으로 띄웠다면 그 시트의 hold 가 이미 잡혀 있어 끊김 없이 이어진다.
+      releaseAdvance();
     }
   };
 
@@ -728,7 +757,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
     plantDoneIdxRef.current.set(vocaId, done);
     const primary = [];
     testQuestions.forEach((q, i) => {
-      if (!q || q.isRetry || isNoGradeQuestionType(q.questionType) || q.questionType === PHASE_NOTICE_TYPE) return;
+      if (!q || q.isRetry || isNoGradeQuestionType(q.questionType)) return;
       const has = Array.isArray(q.words) ? q.words.some((w) => w.id === vocaId) : (q.vocaIndexId ?? q.id) === vocaId;
       if (has) primary.push({ q, i });
     });
@@ -972,7 +1001,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
       // 단어(예: graduation)를 미리 읽어 버리는 버그였다(2026-09-29). wordIntro(①만나기)도
       // 같은 이유로 제외 — WordIntroQuestion이 마운트 시 자기만의 순서(단어→뜻→예문)로
       // 직접 재생한다. 여기서 또 origin을 읽으면 단어가 두 번 겹쳐 재생된다.
-      } else if (!['cardMatch', 'cardMatchListening', 'fillInTheBlank', 'fillInTheBlankTyping', 'sentenceArrangePartial', 'sentenceArrange', 'listenArrange', 'wordIntro', PHASE_NOTICE_TYPE].includes(question.questionType) && question.origin) {
+      } else if (!['cardMatch', 'cardMatchListening', 'fillInTheBlank', 'fillInTheBlankTyping', 'sentenceArrangePartial', 'sentenceArrange', 'listenArrange', 'wordIntro'].includes(question.questionType) && question.origin) {
         speakText(question.origin, wordLang(question));
       }
 
@@ -1822,13 +1851,15 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
     });
 
     if (!isSessionDone) {
-      setProgressIndex(nextIndex);
-      setIsCorrect(null);
-      setUserSelected(null);
-      setIsAnswered(false);
-      setIsStay(false);
-      setUpdateType(null);
-      setMemoryStateChange(null);
+      advanceWithInterlude(nextIndex, () => {
+        setProgressIndex(nextIndex);
+        setIsCorrect(null);
+        setUserSelected(null);
+        setIsAnswered(false);
+        setIsStay(false);
+        setUpdateType(null);
+        setMemoryStateChange(null);
+      });
     }
   };
 
@@ -1911,9 +1942,18 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
   ) : null;
 
   // 콤보 마일스톤 인터루드(전체 화면 포털) — 두 렌더 경로 공통
-  const interludeEl = interlude ? (
-    <ComboInterlude n={interlude.n} milestone={interlude.milestone} onDone={handleInterludeDone} />
-  ) : null;
+  const interludeEl = !interlude ? null : (interlude.type === 'phase'
+    ? <PhaseInterlude key={interlude.id} kind={interlude.kind} onDone={handleInterludeDone} />
+    : <ComboInterlude key={interlude.id} n={interlude.n} milestone={interlude.milestone} onDone={handleInterludeDone} />);
+
+  // 구간 첫 문제로 (재)진입한 직후 — 인터루드가 끝나기 전엔 문제를 그리지 않는다.
+  if (interlude?.hold) {
+    return (
+      <div className="flex flex-col h-[calc(100vh-var(--current-header-height)-var(--status-bar-height))] px-[16px] pt-[5px] pb-[20px]">
+        {interludeEl}
+      </div>
+    );
+  }
 
   if (currentPlugin?.component) {
     const PluginComponent = currentPlugin.component;
