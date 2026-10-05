@@ -90,6 +90,8 @@ const RottenListSheet = ({ onChanged, onOpenShop }) => {
 
   const loadingRef = useRef(false);
   const sentinelRef = useRef(null);
+  // 마지막 적용이 선택한 작물 전부에 성공했는지 — 성공이면 호출부가 시트를 닫는다
+  const allAppliedRef = useRef(false);
 
   // 보유 아이템 — 확인 시트에 정확한 수량을 넘겨야 부족분 안내가 맞는다
   // 갱신된 보유량을 그대로 돌려준다 — 확인 시트를 띄우기 직전에 다시 읽어야
@@ -247,6 +249,10 @@ const RottenListSheet = ({ onChanged, onOpenShop }) => {
       pushNewBottomSheet(GemPurchaseNewBottomSheet, {}, {});
       return;
     }
+    if (answer?.action === 'done' && allAppliedRef.current) {
+      popNewFullSheet();
+      return;
+    }
     // 구매만 되고 사용이 안 된 채 닫았다면 보유량이 늘었으니 다시 읽어 버튼이 '사용하기'로 바뀌게 한다
     if (answer?.action !== 'done') {
       await loadItems();
@@ -272,6 +278,7 @@ const RottenListSheet = ({ onChanged, onOpenShop }) => {
   /** 회복제 사용 본체 — 확인 시트 흐름과 '구매하고 바로 적용하기'가 같이 쓴다 */
   const applyRecover = async (targets) => {
     setBusy(true);
+    allAppliedRef.current = false;
     const res = await recoverPlantsApi(targets);
     setBusy(false);
 
@@ -280,6 +287,7 @@ const RottenListSheet = ({ onChanged, onOpenShop }) => {
       dropDone(done);
       setOwned((prev) => ({ ...prev, NUTRIENT: res?.data?.nutrient_left ?? prev.NUTRIENT }));
       setNotice(`작물 ${done.length}개가 다시 자라기 시작했어요.`);
+      allAppliedRef.current = done.length >= targets.length;
       onChanged?.();
       return { ok: true };
     }
@@ -307,6 +315,7 @@ const RottenListSheet = ({ onChanged, onOpenShop }) => {
     const targets = selectedIds.slice(0, answer.count);
     if (targets.length === 0) return;
     await applyRecover(targets);
+    if (allAppliedRef.current) popNewFullSheet();
   };
 
   const handleReplant = async () => {
@@ -328,11 +337,13 @@ const RottenListSheet = ({ onChanged, onOpenShop }) => {
     const targets = selectedIds.slice(0, answer.count);
     if (targets.length === 0) return;
     await applyReplant(targets);
+    if (allAppliedRef.current) popNewFullSheet();
   };
 
   /** 삽 사용(다시 심기 예약) 본체 — 확인 시트 흐름과 '구매하고 바로 적용하기'가 같이 쓴다 */
   const applyReplant = async (targets) => {
     setBusy(true);
+    allAppliedRef.current = false;
     const res = await replantApi(targets);
     setBusy(false);
 
@@ -348,6 +359,7 @@ const RottenListSheet = ({ onChanged, onOpenShop }) => {
       // 서버가 진단 표시를 내려주지 않아 예약 id 를 기기에 적어 둔다(utils/replantPending 참조).
       addPendingReplantIds(done);
       setUndoState({ ids: done, rows: removedRows, until: cancelUntil(res?.data?.cancel_until) });
+      allAppliedRef.current = done.length >= targets.length;
       onChanged?.();
       return { ok: true };
     }
@@ -492,7 +504,7 @@ const RottenListSheet = ({ onChanged, onOpenShop }) => {
                 type="button"
                 key={id}
                 onClick={() => toggle(id)}
-                className={`flex items-center gap-[11px] w-full h-[58px] border-b border-[#F4F4F4] dark:border-border-dark text-left ${on ? 'bg-primary-main-50 dark:bg-primary-main-dark' : ''}`}
+                className={`flex items-center gap-[11px] w-full h-[58px] border-b border-[#F4F4F4] dark:border-border-dark text-left`}
               >
                 <CropImage
                   stage={rottenStage(it)}
@@ -532,20 +544,9 @@ const RottenListSheet = ({ onChanged, onOpenShop }) => {
           )}
 
           {empty && (
-            <div className="flex flex-col items-center gap-[10px] py-[48px]">
-              <img
-                src={CROP_ASSETS.mascotHouse}
-                alt=""
-                draggable={false}
-                className="w-[80px] h-[80px] object-contain select-none"
-              />
-              <p className="text-[13.5px] font-[700] text-layout-black dark:text-layout-white">
-                지금 돌볼 작물이 없어요
-              </p>
-              <p className="text-[12.5px] font-[400] text-layout-gray-300 text-center leading-[1.55]">
-                오늘의 학습을 이어가면 농장이 계속 촉촉해져요.
-              </p>
-            </div>
+            <p className="py-[48px] text-center text-[13.5px] font-[400] text-layout-gray-300">
+              돌볼 작물이 없어요
+            </p>
           )}
 
           <div ref={sentinelRef} className="h-[1px]" />
@@ -573,7 +574,7 @@ const RottenListSheet = ({ onChanged, onOpenShop }) => {
       )}
 
       {/* 하단 고정 — 위에서 고른 아이템을 선택한 작물에 쓴다 (기획 7.1) */}
-      {items.length > 0 && (
+      {(
         <div className="flex-shrink-0 border-t border-border dark:border-border-dark bg-layout-white dark:bg-layout-black px-[16px] pt-[12px]">
           <p className="text-center text-[12px] font-[400] text-layout-gray-400 dark:text-layout-gray-200 mb-[8px]">
             {toolDef.desc}

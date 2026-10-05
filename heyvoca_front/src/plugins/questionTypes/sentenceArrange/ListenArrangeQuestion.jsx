@@ -179,13 +179,13 @@ const ListenArrangeQuestion = ({ question, onComplete, onCardMatched, farmByWord
   const postAnswerNode = (
     <div className="w-full mt-[16px]">
       {isCorrect === false && plainAnswer && (
-        <div className="w-full pt-[14px] border-t-[1px] border-layout-gray-200 dark:border-[#3A3A3A] flex items-start gap-[10px]">
+        <div className="relative w-full pt-[14px] border-t-[1px] border-layout-gray-200 dark:border-[#3A3A3A]">
           <motion.button
             type="button"
             aria-label="정답 문장 듣기"
             whileTap={{ scale: 0.9 }}
             transition={{ duration: 0.15 }}
-            className="relative flex-shrink-0 mt-[22px]"
+            className="absolute right-0 top-[14px] z-[1]"
             onClick={() => {
               feel('tap');
               speak(plainAnswer, answerLang, 'answer', 1);
@@ -202,13 +202,13 @@ const ListenArrangeQuestion = ({ question, onComplete, onCardMatched, farmByWord
               <SpeakerHigh size={22} weight="fill" />
             </span>
           </motion.button>
-          <p className="flex-1 min-w-0 text-[15px] leading-[1.7] text-layout-gray-400 dark:text-layout-gray-100 break-keep">
+          <p className="w-full pr-[32px] text-[15px] leading-[1.7] text-layout-gray-400 dark:text-layout-gray-100 break-keep">
             <span className="block mb-[2px] text-[11px] font-[700] text-layout-gray-300">정답 문장</span>
             {plainAnswer}
           </p>
         </div>
       )}
-      <p className="w-full pt-[14px] border-t-[1px] border-layout-gray-200 dark:border-[#3A3A3A] text-[15px] leading-[1.7] text-layout-gray-400 dark:text-layout-gray-100 break-keep">
+      <p className={`w-full pt-[14px] ${isCorrect === false && plainAnswer ? '' : 'border-t-[1px] border-layout-gray-200 dark:border-[#3A3A3A]'} text-[15px] leading-[1.7] text-layout-gray-400 dark:text-layout-gray-100 break-keep`}>
         <span className="block mb-[2px] text-[11px] font-[700] text-layout-gray-300">해석</span>
         {stripHtmlTags(ko)}
       </p>

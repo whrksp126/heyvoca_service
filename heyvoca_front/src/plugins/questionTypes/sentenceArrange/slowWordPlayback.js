@@ -11,7 +11,7 @@ import { getAudioCtx } from '../../../utils/audio';
 import { prefetchTextSound, registerSoundPreempt } from '../../../utils/common';
 
 const RATE = 0.78;          // 단어별 재생 배속
-const GAP_SEC = 0.14;       // 단어 사이 고정 간격(실시간 기준)
+const GAP_SEC = 0.24;       // 단어 사이 고정 간격(실시간 기준)
 const PAD_HEAD_SEC = 0.008; // 트림 후 앞쪽 여유
 const PAD_TAIL_SEC = 0.02;  // 트림 후 뒤쪽 여유
 const FADE_SEC = 0.006;     // 클릭 노이즈 방지 페이드

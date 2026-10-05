@@ -252,14 +252,14 @@ const SentenceArrangeQuestion = ({ question, onComplete, onCardMatched, farmByWo
   const postAnswerNode = isCorrect === false ? (() => {
     let wordIdx = 0;
     return (
-      <div className="w-full mt-[16px] pt-[14px] border-t-[1px] border-layout-gray-200 dark:border-[#3A3A3A] flex items-start gap-[10px]">
+      <div className="w-full mt-[16px] pt-[14px] border-t-[1px] border-layout-gray-200 dark:border-[#3A3A3A] relative">
       {/* 정답 문장 듣기 — 다른 유형의 예문 스피커 버튼과 같은 규격(SpeakerHigh 22 fill, 재생 중 primary + 리플) */}
       <motion.button
         type="button"
         aria-label="정답 문장 듣기"
         whileTap={{ scale: 0.9 }}
         transition={{ duration: 0.15 }}
-        className="relative flex-shrink-0 mt-[22px]"
+        className="absolute right-0 top-[14px] z-[1]"
         onClick={() => {
           feel('tap');
           const plain = stripTags(answerText);
@@ -277,7 +277,7 @@ const SentenceArrangeQuestion = ({ question, onComplete, onCardMatched, farmByWo
           <SpeakerHigh size={22} weight="fill" />
         </span>
       </motion.button>
-      <p className="flex-1 min-w-0 text-[15px] leading-[1.7] text-layout-gray-400 dark:text-layout-gray-100 break-keep">
+      <p className="w-full pr-[32px] text-[15px] leading-[1.7] text-layout-gray-400 dark:text-layout-gray-100 break-keep">
         <span className="block mb-[2px] text-[11px] font-[700] text-layout-gray-300">정답 문장</span>
         {(renderHighlightedText(answerText) ?? []).map((p) => (
           <span key={p.key}>
