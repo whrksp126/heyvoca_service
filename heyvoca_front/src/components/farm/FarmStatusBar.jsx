@@ -257,7 +257,6 @@ const FarmStatusBar = ({
     const timers = Array.from({ length: bandSteps }, (_, i) => setTimeout(() => {
       setPhase(i + 1);
       feel('match');
-      haptic('medium');
     }, (i + 1) * segS * 1000));
     return () => timers.forEach(clearTimeout);
     // eslint-disable-next-line react-hooks/exhaustive-deps

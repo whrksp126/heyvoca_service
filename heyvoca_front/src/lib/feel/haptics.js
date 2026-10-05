@@ -41,7 +41,8 @@
 //   selection  탭바 전환, 결과 화면 슬라이드 전환처럼 "여러 개 중 하나로 바뀜"
 // ─────────────────────────────────────────────────────────────────────────
 
-import { vibrate, getDevicePlatform } from '../../utils/osFunction';
+import { vibrate, getDevicePlatform, setVibrateInterceptor } from '../../utils/osFunction';
+import { feel } from './cue';
 import postMessageManager from '../../utils/postMessageManager';
 import { getHapticPattern, KIND_FALLBACK, eventsToWebPattern } from './hapticPatterns';
 import { canUseNative } from '../../utils/nativeBridge';
@@ -70,6 +71,21 @@ const WEB_VIBRATE_PATTERN = {
   selection: 5,
 };
 
+// kind → 새 패턴 시스템 큐 (앱 1.1.2+ 에서 haptic(kind) 가 울리는 큐 — 진동만, 소리 없음).
+// 전역 세기·오버라이드·재생 방식이 그대로 적용된다. kind→큐 매핑은 여기 한 곳에서만 정의한다.
+export const KIND_TO_CUE = {
+  light: 'tap',
+  selection: 'tap',
+  medium: 'select',
+  heavy: 'match',
+  warning: 'wrong',
+  success: 'correct',
+  error: 'wrong',
+};
+
+// vibrate({type}) 의 구 브릿지 트리거 이름 → kind (역매핑)
+const TYPE_TO_KIND = Object.fromEntries(Object.entries(HAPTIC_TYPE_MAP).map(([k, v]) => [v, k]));
+
 const DEBOUNCE_MS = 60;
 const lastFiredAt = {};
 
@@ -84,6 +100,12 @@ const lastFiredAt = {};
  */
 export function haptic(kind) {
   if (!HAPTIC_TYPE_MAP[kind]) return;
+
+  // 앱 1.1.2+ — 구 브릿지(강한 시스템 진동) 대신 새 패턴 시스템의 큐로(진동만). 디바운스는 feel() 이 큐별로 처리.
+  if (supportsHapticPattern()) {
+    feel(KIND_TO_CUE[kind], { sound: false });
+    return;
+  }
 
   const now = Date.now();
   if (now - (lastFiredAt[kind] || 0) < DEBOUNCE_MS) return;
@@ -166,6 +188,23 @@ export function ensureHapticCaps() {
   capsRequested = true;
   requestHapticCaps().then((v) => { if (v) cachedCaps = v; });
 }
+
+// osFunction.vibrate() 직접 호출부(채점 지점의 vibrate({type}) · vibrate({duration:5}) 류)도 1.1.2+ 앱에서는
+// 새 패턴 시스템으로 돌린다. type → KIND_TO_CUE, 짧은 duration(≤30ms) → tap. 그 외(취소·긴 진동)는 기존 경로.
+setVibrateInterceptor((props) => {
+  if (!supportsHapticPattern() || !props || props.cancel) return false;
+  if (props.type) {
+    const kind = TYPE_TO_KIND[props.type];
+    if (!kind) return false;
+    feel(KIND_TO_CUE[kind], { sound: false });
+    return true;
+  }
+  if (props.duration && props.duration <= 30) {
+    feel('tap', { sound: false });
+    return true;
+  }
+  return false;
+});
 
 const PATTERN_DEBOUNCE_MS = 40;
 const patternLastAt = {};

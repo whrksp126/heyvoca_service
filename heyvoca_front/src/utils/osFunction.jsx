@@ -217,7 +217,14 @@ export async function showToast(message) {
 //
 // 3. 진동 취소:
 //    vibrate({ cancel: true });
+let vibrateInterceptor = null;
+// lib/feel/haptics.js 가 등록 — 앱 1.1.2+ 에서 vibrate() 를 새 패턴 시스템으로 돌린다(true 반환 시 처리 완료).
+export function setVibrateInterceptor(fn) { vibrateInterceptor = fn; }
+
 export async function vibrate(props = null) {
+  if (vibrateInterceptor && window.ReactNativeWebView && getDevicePlatform() !== 'web') {
+    try { if (vibrateInterceptor(props)) return; } catch (e) { /* 기존 경로로 */ }
+  }
   if (getDevicePlatform() === 'web') {
     // 웹 환경에서는 navigator.vibrate API 사용
     if ('vibrate' in navigator) {

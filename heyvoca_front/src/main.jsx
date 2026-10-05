@@ -2,6 +2,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
+import './lib/feel/haptics'; // vibrate() 가로채기 등록(side effect)
 import './index.css';
 
 ReactDOM.createRoot(document.getElementById('root')).render(

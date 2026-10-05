@@ -6,7 +6,7 @@ import { parseAppVersion, getDevicePlatform } from '../../utils/osFunction';
 import {
   feel, getFeelTimingSnapshot, getHapticOffsetMs, setHapticOffsetMs,
   SFX_DURATION_MS, getHapticPattern, validateForVariant,
-  Pressable, requestHapticCaps, resolveHapticVariant,
+  Pressable, haptic, KIND_TO_CUE, requestHapticCaps, resolveHapticVariant,
   getHapticStrengthPercent, setHapticStrengthPercent, getHapticMode, setHapticMode,
   STRENGTH_MIN, STRENGTH_MAX,
 } from '../../lib/feel';
@@ -46,6 +46,17 @@ const CUE_LIST = [
   { cue: 'bonus', label: '보너스', desc: '통통 튀는 4음' },
   { cue: 'complete', label: '완료', desc: '짧은 팡파르' },
 ];
+
+// 기존 haptic(kind) 7종 — 앱 1.1.2+ 에서는 매핑된 큐의 진동만(소리 없음) 울린다.
+const KIND_LIST = ['light', 'medium', 'heavy', 'success', 'warning', 'error', 'selection'];
+
+const KIND_ITEMS = KIND_LIST.map((kind) => ({
+  kind,
+  cue: KIND_TO_CUE[kind],
+  label: `haptic('${kind}')`,
+  desc: `${KIND_TO_CUE[kind]} 큐로 매핑 (진동만, 소리 없음)`,
+}));
+const ALL_ITEMS = [...CUE_LIST, ...KIND_ITEMS];
 
 const patternEnd = (events) => events.reduce((m, e) => Math.max(m, e.time + e.duration), 0);
 
@@ -126,7 +137,9 @@ const FeelTestNewFullSheet = () => {
 
   const play = (item) => {
     // 오디오 컨텍스트는 첫 탭에서 만들어지므로 재생 뒤에 측정값을 갱신한다.
-    feel(item.cue, { n: item.n });
+    // 편집기의 '소리+진동' 버튼과 같은 경로(feel + force) — 추가 탭 햅틱 없음
+    if (item.kind) { haptic(item.kind); setLastPlayed(`haptic('${item.kind}') → ${KIND_TO_CUE[item.kind]}`); setSnap(getFeelTimingSnapshot()); return; }
+    feel(item.cue, { n: item.n, force: true });
     setLastPlayed(`${item.label}`);
     setSnap(getFeelTimingSnapshot());
   };
@@ -245,8 +258,8 @@ const FeelTestNewFullSheet = () => {
             행을 누르면 재생, 오른쪽 그래프 버튼을 누르면 패턴 그래프 편집기가 펼쳐져요. 편집 대상은 현재 재생 방식({VARIANT_LABEL[variant]})이에요.
           </p>
           <ul className="w-full m-0 p-0 list-none">
-            {CUE_LIST.map((item) => {
-              const rowKey = `${item.cue}-${item.n ?? ''}`;
+            {ALL_ITEMS.map((item) => {
+              const rowKey = `${item.kind ? `kind-${item.kind}-` : ''}${item.cue}-${item.n ?? ''}`;
               const events = getHapticPattern(item.cue, { n: item.n, platform: variant });
               const errs = events ? validateForVariant(events, variant) : [];
               const isOpen = editing === rowKey;
@@ -254,6 +267,7 @@ const FeelTestNewFullSheet = () => {
                 <li key={rowKey} className="border-b border-[#ddd] dark:border-border-dark">
                   <div className="flex items-center">
                     <Pressable
+                      hapticKind={null}
                       onClick={() => play(item)}
                       className="flex flex-1 min-w-0 items-center justify-between pl-[20px] pr-[8px] py-[14px] text-left"
                     >

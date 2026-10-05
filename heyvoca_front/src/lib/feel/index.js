@@ -8,7 +8,7 @@
 // 문제 화면(takeTest·questionTypes)은 소리·진동을 직접 부르지 말고 feel(cue) 한 줄만 쓴다.
 // 큐: tap select correct wrong match combo perfect progress bonus complete (cue.js 참고)
 
-export { haptic, hapticPattern, hapticWarmup, supportsHapticPattern, requestHapticCaps, resolveHapticVariant } from './haptics';
+export { haptic, KIND_TO_CUE, hapticPattern, hapticWarmup, supportsHapticPattern, requestHapticCaps, resolveHapticVariant } from './haptics';
 export { feel, FEEL_TIMING, getHapticOffsetMs, setHapticOffsetMs, getFeelTimingSnapshot, measureOutputLatency } from './cue';
 export { SFX_NAMES, SFX_DURATION_MS, SFX_NOTE_STARTS_MS } from './sfx';
 export { HAPTIC_NAMES, PATTERN_DURATION_MS, validatePattern, validateForVariant, getHapticPattern } from './hapticPatterns';
