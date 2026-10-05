@@ -123,6 +123,24 @@ const PATTERNS = {
     android: () => [TICK(0), TICK(110), TICK(220), CLICK(330, 0.85), TICK(560)],
     androidWave: () => [W(0, 0.2, 10), W(110, 0.25, 10), W(220, 0.3, 12), W(330, 0.5, 16), W(560, 0.2, 10)],
   },
+  // 경험치 오름 — 아주 가볍게 올라가는 3번(소리 3음 = 0/50/100ms). 프리베이크는 60ms 간격 제한이라 0·100 두 번만
+  xpUp: {
+    ios: () => [T(0, 0.12, 0.7, 8), T(50, 0.16, 0.7, 8), T(100, 0.22, 0.75, 8)],
+    android: () => [TICK(0), TICK(100)],
+    androidWave: () => [W(0, 0.12, 8), W(50, 0.16, 8), W(100, 0.22, 8)],
+  },
+  // 경험치 내림 — 가볍고 살짝 무딘 2번(0/70ms)
+  xpDown: {
+    ios: () => [T(0, 0.2, 0.4, 10), T(70, 0.14, 0.35, 10)],
+    android: () => [TICK(0), TICK(70)],
+    androidWave: () => [W(0, 0.2, 10), W(70, 0.14, 10)],
+  },
+  // 진화 — 또렷하게 올라가다 마지막(240ms)에 한 번 강조
+  evolve: {
+    ios: () => [T(0, 0.15, 0.8, 8), T(60, 0.2, 0.8, 8), T(120, 0.25, 0.85, 8), T(180, 0.3, 0.85, 8), T(240, 0.5, 0.9, 14)],
+    android: () => [TICK(0), TICK(60), TICK(120), TICK(180), CLICK(240, 0.8)],
+    androidWave: () => [W(0, 0.15, 8), W(60, 0.2, 8), W(120, 0.25, 8), W(180, 0.3, 8), W(240, 0.5, 14)],
+  },
 };
 
 export const HAPTIC_NAMES = Object.keys(PATTERNS);
@@ -211,6 +229,9 @@ export const KIND_FALLBACK = {
   progress: null,
   bonus: 'success',
   complete: 'success',
+  xpUp: 'light',
+  xpDown: 'light',
+  evolve: 'medium',
 };
 
 /**

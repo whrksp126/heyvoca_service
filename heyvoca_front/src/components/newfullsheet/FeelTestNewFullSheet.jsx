@@ -48,6 +48,9 @@ const CUE_LIST = [
   { cue: 'progress', label: '진행바 채움', desc: '아주 작게' },
   { cue: 'bonus', label: '보너스', desc: '통통 튀는 상승 4음' },
   { cue: 'complete', label: '완료', desc: '상승 4음 팡파르' },
+  { cue: 'xpUp', label: '경험치 오름', desc: '짧게 굴러 올라가는 3음, 아주 가벼운 진동 3번(프리베이크는 2번)' },
+  { cue: 'xpDown', label: '경험치 내림', desc: '부드럽게 내려가는 2음, 가볍고 무딘 진동 2번' },
+  { cue: 'evolve', label: '작물 진화', desc: '반짝이며 올라가는 5음 아르페지오, 마지막 진동만 강조' },
 ];
 
 // 기존 haptic(kind) 7종 — 앱 1.1.2+ 에서는 매핑된 큐의 진동만(소리 없음) 울린다.

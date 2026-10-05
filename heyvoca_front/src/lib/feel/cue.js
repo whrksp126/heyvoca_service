@@ -100,9 +100,10 @@ export function getFeelTimingSnapshot() {
 const DEBOUNCE_MS = {
   tap: 35, select: 60, correct: 150, wrong: 150, match: 60, combo: 150,
   perfect: 300, progress: 150, bonus: 300, complete: 300,
+  xpUp: 100, xpDown: 100, evolve: 300,
 };
 // 겹치면 뒤로 미룬다(소리가 겹쳐 시끄러워지는 축하류). 미룬 만큼 진동도 같이 밀린다.
-const QUEUEABLE = new Set(['combo', 'perfect', 'bonus', 'complete']);
+const QUEUEABLE = new Set(['combo', 'perfect', 'bonus', 'complete', 'xpUp', 'xpDown', 'evolve']);
 const MAX_QUEUE_SHIFT_MS = 400;
 
 const lastAt = {};
@@ -112,9 +113,9 @@ const nowMs = () => (typeof performance !== 'undefined' ? performance.now() : Da
 
 /**
  * 소리 + 진동을 같은 순간에 발사한다.
- * @param {'tap'|'select'|'correct'|'wrong'|'match'|'combo'|'perfect'|'progress'|'bonus'|'complete'} cue
+ * @param {'tap'|'select'|'correct'|'wrong'|'match'|'combo'|'perfect'|'progress'|'bonus'|'complete'|'xpUp'|'xpDown'|'evolve'} cue
  * @param {{n?:number, events?:object[], sound?:boolean, vibe?:boolean, force?:boolean}} opts
- *   n = 콤보 수(combo 전용). 손맛 테스트 편집기용: events = 임시 진동 패턴, sound/vibe = false 로 끔, force = 디바운스·겹침 대기 무시, debounceMs = 이 큐의 디바운스 구간 덮어쓰기(카드 맞추기 연속 짝용)
+ *   n = 콤보 수(combo 전용). 손맛 테스트 편집기용: events = 임시 진동 패턴, sound/vibe = false 로 끔, force = 디바운스·겹침 대기 무시, maxWaitMs = 겹침 대기가 이 값(ms)보다 길어지면 소리·진동을 통째로 생략(경험치 큐처럼 '늘어지면 안 울리는 게 낫다'는 큐용), debounceMs = 이 큐의 디바운스 구간 덮어쓰기(카드 맞추기 연속 짝용)
  * @returns {{fired:boolean, startInMs:number}} startInMs = 호출 시점부터 소리(=진동)가 시작되기까지.
  *   호출부가 애니메이션 임팩트를 이 값만큼 지연시키고 싶을 때 쓴다(0 이상).
  */
@@ -128,6 +129,9 @@ export function feel(cue, opts = {}) {
 
   // 진행바 반짝임은 정답 큐와 겹치면 소리·진동을 생략한다(시각만 호출부가 처리).
   if (!opts.force && cue === 'progress' && t - (lastAt.correct || -1e9) < 350) return none;
+
+  // 겹침 대기가 상한을 넘으면 늘어져 울리느니 생략한다(디바운스 시각도 갱신하지 않는다).
+  if (!opts.force && opts.maxWaitMs != null && QUEUEABLE.has(cue) && busyUntil - t > opts.maxWaitMs) return none;
 
   lastAt[cue] = t;
   const key = platformKey();
@@ -165,6 +169,19 @@ export function feel(cue, opts = {}) {
 
   busyUntil = t + audioLead + SFX_BUSY_MS[cue]; // 감쇠 꼬리 제외, 체감상 끝나는 지점
   return { fired: true, startInMs: audioLead };
+}
+
+/**
+ * 지금 feel(cue) 를 부르면 겹침 대기로 얼마나 밀릴지(ms)를 소리 없이 미리 알려 준다.
+ * 시각 애니메이션을 소리와 같은 박자로 시작시키려고 호출부가 렌더 중에 쓴다(feel 과 같은 busyUntil 기준).
+ * @returns {{waitMs:number, skip:boolean}} skip=true 면 maxWaitMs 초과라 feel 이 소리를 생략할 것(시각은 지연 없이)
+ */
+export function feelQueueWait(cue, { maxWaitMs } = {}) {
+  if (!QUEUEABLE.has(cue)) return { waitMs: 0, skip: false };
+  const wait = busyUntil - nowMs();
+  if (wait <= 0) return { waitMs: 0, skip: false };
+  if (maxWaitMs != null && wait > maxWaitMs) return { waitMs: 0, skip: true };
+  return { waitMs: Math.min(wait, MAX_QUEUE_SHIFT_MS), skip: false };
 }
 
 // 첫 사용자 제스처에서 AudioContext 를 unlock 한다(primeSfx 는 gesture 의 동기 스택에서만 유효).

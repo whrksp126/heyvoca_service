@@ -4,7 +4,7 @@ import CropImage, { CROP_ASSETS } from './CropImage';
 import CropProgressBar, { GROW_FILL_DURATION, GROW_FILL_TIMES } from './CropProgressBar';
 import { CROP_STAGES, CROP_LABEL, cropIndex, stageToCrop, withRo, isUnplantedStage } from '../../utils/crop';
 import { deriveFarmXp, xpBarPct, sameXpBand, xpFloor, xpStageRelative } from '../../utils/cropXp';
-import { haptic, feel, pickVariant, useCountUp } from '../../lib/feel';
+import { feel, feelQueueWait, pickVariant, useCountUp } from '../../lib/feel';
 import { FARM_ANIM_MS, FARM_ANIM_GROW_MS } from '../../utils/studyTiming';
 
 /**
@@ -105,7 +105,18 @@ const ICON_SWAP_TIMES = [0, GROW_RESET_START, GROW_RESET_END, 1];
   단계 하나만 오르는 흔한 회차는 위의 기존 키프레임 연출(GROW_FILL_*)을 그대로 쓴다.
 */
 const MULTI_GROW_TOTAL_S = 1.5;
-const MULTI_FILL_RATIO = 0.7; // 구간 길이 중 게이지가 차오르는 비율(나머지는 가득 찬 채 머물다 진화)
+const MULTI_FILL_RATIO = 0.7;
+
+/*
+  【경험치 소리 — 2026-10】 오름 xpUp / 내림 xpDown / 진화 evolve. 정답·오답·콤보 큐와 한 박자씩 번갈아 울리게
+  cue.js 의 겹침 대기(QUEUEABLE·busyUntil)를 쓴다. 채점 직후 정답/오답 큐(바쁜 구간 ≈ 0.36s)가 끝난 뒤에 울리고,
+  진화가 없는 회차는 막대 시작도 그만큼 미뤄 소리와 같은 박자로 맞춘다.
+  우선순위: 채점 큐(correct/wrong) → 콤보/완벽 → 경험치. 경험치 큐는 대기가 XP_SOUND_MAX_WAIT_MS 를 넘으면
+  늘어지느니 소리·진동을 생략한다(시각은 그대로, 지연 없음). 다음 문제 전환 게이트(onSettled)는 건드리지 않는다.
+*/
+const XP_SOUND_MAX_WAIT_MS = 250;
+// 단일 진화에서 evolve 를 울리는 시각 — 막대가 100% 를 찍고 아이콘이 바뀌기 시작(스파클이 튀는) 순간
+const EVOLVE_AT_MS = Math.round(GROW_FILL_DURATION * GROW_RESET_START * 1000); // 구간 길이 중 게이지가 차오르는 비율(나머지는 가득 찬 채 머물다 진화)
 
 
 const FarmStatusBar = ({
@@ -218,14 +229,26 @@ const FarmStatusBar = ({
 
   // 숫자 카운트업 — 막대와 같은 시간 동안 굴러간다. 정지(pending) 동안은 from===to 라
   // 멈춰 있다가, 응답이 오면 같은 엘리먼트에서 이어서 굴러간다.
+  // 경험치 소리와 같은 박자로 시작하도록 막대·숫자를 미루는 시간(초). 진화·연속 진화는 아이콘 연출과 엇갈리지
+  // 않게 미루지 않는다(그쪽은 소리가 시작 순간 xpUp 으로 겹침 대기 없이/생략 규칙만 따른다).
+  // 응답이 와 pending 이 풀리는 첫 렌더에서 한 번만 계산해 고정한다(이후 렌더에서 값이 흔들리지 않게 ref).
+  const xpDeltaRaw = xpTo - xpFrom;
+  const barDelayRef = useRef(null);
+  if (!pending && !diagnosis && barDelayRef.current === null) {
+    barDelayRef.current = (!grew && !multi && xpDeltaRaw !== 0)
+      ? feelQueueWait(xpDeltaRaw > 0 ? 'xpUp' : 'xpDown', { maxWaitMs: XP_SOUND_MAX_WAIT_MS }).waitMs / 1000
+      : 0;
+  }
+  const barDelay = barDelayRef.current || 0;
   const countDuration = multi ? MULTI_GROW_TOTAL_S : (barGrew ? GROW_FILL_DURATION : 0.45);
   // 연속 진화는 구간마다 목표를 그 구간 끝(= 다음 단계 문턱)으로 잡아 숫자도 게이지와 같이 굴러간다.
   const countTarget = multi && phase < bandSteps ? xpFloor(bandKeys[phase + 1]) : xpTo;
   const shownXp = useCountUp(countTarget, {
     from: xpFrom,
     duration: multi ? segS * MULTI_FILL_RATIO : countDuration,
+    delay: barDelay,
   });
-  const shownDelta = useCountUp(pending ? 0 : xpBadgeAbs, { from: 0, duration: countDuration, delay: 0.1 });
+  const shownDelta = useCountUp(pending ? 0 : xpBadgeAbs, { from: 0, duration: countDuration, delay: 0.1 + barDelay });
 
   /*
     진화 문구. 미보유 씨앗(봉투) → 심은 씨앗은 "씨앗으로 자랐어요"가 어색하다 — 자란 게 아니라
@@ -242,21 +265,31 @@ const FarmStatusBar = ({
 
   const reducedMotion = useReducedMotion();
 
-  // 진화한 순간에만 햅틱을 한 번 준다 (채점 햅틱은 문제 화면이 이미 준다).
-  const buzzedRef = useRef(false);
+  // 경험치가 움직이기 시작하는 순간(pending 해제) 소리+진동을 한 번 — 오르면 xpUp, 내리면 xpDown, 변화 0 이면 무음.
+  // 단일 진화는 같은 시작 순간에 xpUp(게이지 채움) → 아이콘이 바뀌는 순간 evolve 순으로 이어진다.
+  const xpFiredRef = useRef(false);
   useEffect(() => {
-    if (grew && !multi && !buzzedRef.current) {
-      buzzedRef.current = true;
-      haptic('medium');
-    }
-  }, [grew, multi]);
+    if (pending || diagnosis || xpFiredRef.current) return;
+    xpFiredRef.current = true;
+    if (xpDeltaRaw === 0) return;
+    feel(xpDeltaRaw > 0 ? 'xpUp' : 'xpDown', { maxWaitMs: XP_SOUND_MAX_WAIT_MS });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pending, diagnosis]);
 
-  // 연속 진화 — 구간이 바뀌는 시각마다 phase 를 올리고 진화 큐(소리·진동)를 울린다.
+  // 단일 진화 — 작물 그림이 바뀌는 시각에 evolve(1.07s). 구간 하나라 겹칠 일이 없다.
+  useEffect(() => {
+    if (pending || diagnosis || !grew || multi) return undefined;
+    const t = setTimeout(() => feel('evolve'), EVOLVE_AT_MS);
+    return () => clearTimeout(t);
+  }, [pending, diagnosis, grew, multi]);
+
+  // 연속 진화 — 구간이 바뀌는 시각마다 phase 를 올린다. 중간 진화는 가벼운 xpUp(0.32s)으로 이어 붙이고
+  // 마지막 진화에서만 evolve(1.07s)를 울린다 — 구간 길이(0.375~0.5s)보다 긴 evolve 가 겹쳐 울리는 걸 막는다.
   useEffect(() => {
     if (!multi) return undefined;
     const timers = Array.from({ length: bandSteps }, (_, i) => setTimeout(() => {
       setPhase(i + 1);
-      feel('match');
+      feel(i + 1 === bandSteps ? 'evolve' : 'xpUp');
     }, (i + 1) * segS * 1000));
     return () => timers.forEach(clearTimeout);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -436,6 +469,7 @@ const FarmStatusBar = ({
       tone={tone}
       height={barH}
       pending={pending}
+      delay={barDelay}
       label={xpLabel}
       labelClassName={`font-[700] tracking-[-0.02em] ${compact ? 'text-[8.5px]' : 'text-[10.5px]'}`}
     />
@@ -468,7 +502,7 @@ const FarmStatusBar = ({
           initial={pickVariant('popIn', reducedMotion).initial}
           animate={{
             ...pickVariant('popIn', reducedMotion).animate,
-            transition: { ...pickVariant('popIn', reducedMotion).animate.transition, delay: 0.1 },
+            transition: { ...pickVariant('popIn', reducedMotion).animate.transition, delay: 0.1 + barDelay },
           }}
         >
           {xpBadgeSign}{shownDelta} XP

@@ -80,6 +80,9 @@ export const SFX_DURATION_MS = {
   progress: 45,
   bonus: 880,
   complete: 1354,
+  xpUp: 324,
+  xpDown: 326,
+  evolve: 1072,
 };
 
 // 겹침 대기(cue.js 의 busyUntil)에 쓰는 '체감상 끝나는 지점' — 감쇠 꼬리가 길어 전체 길이만큼 기다리면 과하다.
@@ -99,13 +102,16 @@ export const SFX_NOTE_STARTS_MS = {
   progress: [0],
   bonus: [0, 80, 160, 240],
   complete: [0, 110, 220, 330],
+  xpUp: [0, 50, 100],
+  xpDown: [0, 70],
+  evolve: [0, 60, 120, 180, 240],
 };
 
 const midiToFreq = (m) => 440 * Math.pow(2, (m - 69) / 12);
 
 // 메이저 펜타토닉(C D E G A) MIDI. 스케일 인덱스 → 음. (G4 A4 C5 D5 E5 G5 A5 C6)
 const PENTA = [67, 69, 72, 74, 76, 79, 81, 84];
-const N = { C5: 72, D5: 74, E5: 76, G5: 79, A5: 81, C6: 84, G4: 67, A4: 69 };
+const N = { C5: 72, D5: 74, E5: 76, G5: 79, A5: 81, C6: 84, E6: 88, G4: 67, A4: 69 };
 
 const BUS_LP_HZ = 1600;
 const REVERB_WET = 0.12;
@@ -285,6 +291,24 @@ const CUES = {
     note(x, c, t + 0.22, N.G5, { dur: 0.14, peak: 0.1 });
     note(x, c, t + 0.33, N.C6, { dur: 0.45, peak: 0.115, rich: true });
   },
+  // 경험치 오름 — 작게 굴러 올라가는 3음(C5 E5 G5)
+  xpUp: (x, c, t) => {
+    note(x, c, t, N.C5, { dur: 0.1, peak: 0.04 });
+    note(x, c, t + 0.05, N.E5, { dur: 0.1, peak: 0.045 });
+    note(x, c, t + 0.1, N.G5, { dur: 0.16, peak: 0.05 });
+  },
+  // 경험치 내림 — 부드럽게 내려가는 2음(E5 → C5), 작게
+  xpDown: (x, c, t) => {
+    note(x, c, t, N.E5, { dur: 0.12, peak: 0.04 });
+    note(x, c, t + 0.07, N.C5, { dur: 0.2, peak: 0.038 });
+  },
+  // 진화 — 반짝이며 올라가는 5음 아르페지오, 마지막 음이 길게
+  evolve: (x, c, t) => {
+    [[N.C5, 0, 0.12], [N.E5, 0.06, 0.12], [N.G5, 0.12, 0.12], [N.C6, 0.18, 0.14]].forEach(([m, d, dur], i) => {
+      note(x, c, t + d, m, { dur, peak: 0.07 + i * 0.01 });
+    });
+    note(x, c, t + 0.24, N.E6, { dur: 0.75, peak: 0.1, rich: true });
+  },
 };
 
 export const SFX_NAMES = Object.keys(CUES);
@@ -320,7 +344,7 @@ function loadSample(theme, name) {
   return pending[key];
 }
 
-/** 테마(기본: 현재 테마)의 10개 큐를 미리 디코드한다. 이미 받았으면 즉시 끝난다. */
+/** 테마(기본: 현재 테마)의 모든 큐를 미리 디코드한다. 이미 받았으면 즉시 끝난다. */
 export function preloadSfx(theme = getSfxTheme()) {
   if (theme === 'synth') return Promise.resolve();
   return Promise.all(SFX_NAMES.map((n) => loadSample(theme, n)));
