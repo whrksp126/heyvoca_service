@@ -1,12 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
-import { Circle, X, Flame, Play, Pause } from '@phosphor-icons/react';
+import { Circle, X, Play, Pause } from '@phosphor-icons/react';
 import { useVocabulary } from '../../context/VocabularyContext';
 import { useUser } from '../../context/UserContext';
-import gemImg from '../../assets/images/gem.png';
-import ResultItemBackground01 from '../../assets/images/ResultItemBackground01.svg';
-import ResultItemBackground02 from '../../assets/images/ResultItemBackground02.svg';
 import { haptic, feel, useCountUp, ShineSweep, SPRING } from '../../lib/feel';
 import { warmTts } from '../../api/tts';
 import SpeakerButton from '../common/SpeakerButton';
@@ -17,11 +14,10 @@ import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 import WordDetaileNewBottomSheet from '../newBottomSheet/WordDetaileNewBottomSheet';
 import { useStatusBarStyle } from '../../hooks/useStatusBarStyle';
 // 당근 농장 V2 — 세션 요약 슬라이드
-import CropImage, { CROP_ASSETS, FARM_ITEM_ASSETS } from '../farm/CropImage';
-import { stageToCrop, FARM_ITEMS, FARM_ITEM_LABEL } from '../../utils/crop';
+import CropImage from '../farm/CropImage';
+import { stageToCrop, FARM_ITEMS } from '../../utils/crop';
 import WeekStreakStrip, { buildWeekCells } from '../farm/WeekStreakStrip';
 
-// 아이템 이름은 utils/crop.js 의 FARM_ITEM_LABEL 하나로 통일돼 있다(시안 §1⑤ "새심기 삽").
 import { getFarmTodayTasksApi } from '../../api/farm';
 import { fetchSessionFarmSummary } from '../../utils/sessionSummaryPrefetch';
 import { calendarDaysFromToday } from '../../utils/reviewTiming';
@@ -29,115 +25,27 @@ import StudyTimingTag from '../farm/StudyTimingTag';
 import { getAchievementCriteriaApi, updateUserRecentStudyDataApi } from '../../api/study';
 import { planNextStudy, loadStudyConfig, NEXT_STUDY_COUNTDOWN_MS } from '../../utils/nextStudy';
 import { primeSfx } from '../../utils/audio';
-
-// 업적 이미지 import
-import InviteKing from '../../assets/images/HeyCharacter/InviteKing.png';
-import AttendanceKing from '../../assets/images/HeyCharacter/AttendanceKing.png';
-import NoryeokKing from '../../assets/images/HeyCharacter/NoryeokKing.png';
-import WordKing from '../../assets/images/HeyCharacter/WordKing.png';
-import PerseveranceKing from '../../assets/images/HeyCharacter/PerseveranceKing.png';
-import ReadingKing from '../../assets/images/HeyCharacter/ReadingKing.png';
-import MemorizedKing from '../../assets/images/HeyCharacter/MemorizedKing.png';
-
-// 업적 타입과 이미지 매핑
-const ACHIEVEMENT_IMAGES = {
-  '초대왕': InviteKing,
-  '출석왕': AttendanceKing,
-  '노력왕': NoryeokKing,
-  '단어왕': WordKing,
-  '끈기왕': PerseveranceKing,
-  '독서왕': ReadingKing,
-  '암기왕': MemorizedKing, // 암기왕 = 연속 정답 콤보 최고치 (콤보왕 폐지 후 통합)
-};
-
-// 레벨별 배경 색상 및 스타일
-const getAchievementBackgroundStyle = (level) => {
-  if (level >= 10) {
-    // 레벨 10 이상: 그라데이션
-    return {
-      background: 'linear-gradient(135deg, var(--primary-main-600) 0%, #CD8DFF 50%, #74D5FF 100%)',
-    };
-  } else if (level >= 6) {
-    // 레벨 6~9: 노란색
-    return {
-      backgroundColor: '#F2D252',
-    };
-  } else if (level >= 3) {
-    // 레벨 3~5: 회색
-    return {
-      backgroundColor: '#C0C0C0',
-    };
-  } else {
-    // 레벨 0~2: 갈색
-    return {
-      backgroundColor: '#D3A686',
-    };
-  }
-};
-
-// 레벨별 글자 색상 및 스타일 (배경색과 동일)
-const getAchievementTextStyle = (level) => {
-  if (level >= 10) {
-    // 레벨 10 이상: 그라데이션 글자 (배경과 동일)
-    return {
-      background: 'linear-gradient(135deg, var(--primary-main-600) 0%, #CD8DFF 50%, #74D5FF 100%)',
-      WebkitBackgroundClip: 'text',
-      WebkitTextFillColor: 'transparent',
-      backgroundClip: 'text',
-      color: 'transparent',
-    };
-  } else if (level >= 6) {
-    // 레벨 6~9: 노란색 글자
-    return {
-      color: '#F2D252',
-    };
-  } else if (level >= 3) {
-    // 레벨 3~5: 회색 글자
-    return {
-      color: '#C0C0C0',
-    };
-  } else {
-    // 레벨 0~2: 갈색 글자
-    return {
-      color: '#D3A686',
-    };
-  }
-};
+// 보상 슬라이드(밭 성장 · 아이템 · 보석 · 업적 · 콤보)와 공용 껍데기 · 하단 버튼
+import {
+  RewardShell, LegacyAuroraStage, FarmGrowthSlide, ItemRewardSlide, GemRewardSlide, AchievementSlide, ComboRewardSlide,
+  FarmGrowRow, ResultCta, ResultCtaBar, CTA_BASE, CTA_PRIMARY_FACE, ACHIEVEMENT_IMAGES,
+  buildGrowthEntries,
+} from './rewards';
 
 // ─────────────────────────────────────────────────────────────
 // 당근 농장 V2 — 결과 슬라이드 조각
-// 보상/성장 슬라이드는 기존 규격(100px 그림 + 16px/700 한 줄)을 그대로 쓴다.
+// 밭 성장 · 아이템 · 보석 · 업적 슬라이드는 rewards/ 로 옮겼다. 여기 남은 것은
+// 새 씨앗 심기 결과(PlantReveal)와 예전 규격 슬라이드가 쓰는 조각이다.
 // ─────────────────────────────────────────────────────────────
 
-/*
-  목록이 붙는 슬라이드 — 여기서는 그림이 **보상이 아니라 요약**이다.
+// 새 연출 슬라이드 — 각자 빛과 시간표를 가지고, 연출이 끝나야 「확인」이 켜진다
+const SCENE_SLIDE_TYPES = new Set(['farmGrowth', 'farmItem', 'gem', 'achievement', 'combo']);
 
-  보상 슬라이드(보석·콤보·업적·황금 당근)는 그림 하나가 주인공이라 화면 한가운데에 세우고
-  뒤에 오로라를 깔아 돋보이게 한다. 목록 슬라이드는 그림 아래로 단어가 줄줄이 이어지는
-  **읽는 화면**이라, 그림만 가운데 띄우면 위아래가 텅 비고 오로라만 커 보인다.
-  그래서 이 셋은 가운데 정렬도 배경 효과도 쓰지 않고 위 여백만 넉넉히 준다.
-*/
-const LIST_SLIDE_TYPES = new Set(['farmPlanted', 'farmGrown', 'farmRescued']);
-const LIST_SLIDE_TOP_PAD = 40;   // 컨테이너 위 패딩(28) 위에 더 얹는 값
-
-// 100px 히어로 그림 — 기존 newWords 슬라이드와 같은 등장 연출
-const FarmArt = ({ src, alt }) => (
-  <motion.img
-    src={src}
-    alt={alt}
-    className='w-[100px] h-[100px] object-contain'
-    initial={{ scale: 0, opacity: 0 }}
-    animate={{ scale: [0, 1.2, 1, 1.1, 1], opacity: 1, y: [0, -8, 0] }}
-    transition={{
-      scale: { type: 'tween', ease: 'easeOut', duration: 0.6, times: [0, 0.5, 0.7, 0.85, 1] },
-      opacity: { duration: 0.6 },
-      y: { delay: 0.8, duration: 2.5, repeat: Infinity, repeatType: 'reverse', ease: 'easeInOut' },
-    }}
-  />
-);
+// 목록이 붙는 예전 규격 슬라이드 — 가운데 정렬도 배경 오로라도 쓰지 않는다(LegacyAuroraStage)
+const LIST_SLIDE_TYPES = new Set(['farmPlanted']);
 
 /*
-  100px 히어로 그림 — **작물 단계(stage) 전용**. FarmArt와 달리 뒤 글로우(ResultItemBackground01/02)의
+  100px 히어로 그림 — **작물 단계(stage) 전용**. 뒤 글로우(ResultItemBackground01/02)의
   중심(top-[50px]/50%)에 실제 그림 내용물이 맞도록 CropImage의 align="center" 보정을 함께 쓴다.
 
   씨앗·새싹·이파리 에셋은 512² 캔버스에 바닥선(y=440) 기준으로 그려져 있어(CropImage.jsx 주석),
@@ -164,42 +72,6 @@ const FarmCropArt = ({ stage, health = 'FRESH', alt }) => (
   </motion.div>
 );
 
-// 성장 목록 한 줄 — 시안 `.grow2` [작물][단어·뜻][오른쪽 결과].
-// 단어장·최종 결과와 같은 배치다(시안 학습결과 §1 ①).
-// `right` 는 선택이다 — 시든 작물 회복 목록처럼 상태 라벨이 필요 없는 자리는 통째로 뺀다
-// (빈 문자열 칸을 남기지 않고 단어·뜻 칸이 남은 폭을 그대로 채우도록 flex-1 만 남긴다).
-// `meta` 는 이 행에 대응하는 단어 객체(문제 원본)다 — 농장 요약 행은 {word, meaning} 뿐이라
-// ja 단어의 읽기·JLPT 는 문제 목록에서 찾아 붙인다(없으면 표기만).
-const FarmGrowRow = ({ crop, word, meaning, right, meta }) => {
-  const ja = !!meta && isJa(wordLang(meta));
-  return (
-  <div className='flex items-center gap-[11px] px-[14px] py-[12px] rounded-[10px] bg-layout-gray-50 dark:bg-layout-gray-dark'>
-    <CropImage stage={crop} size={52} align="center" className='flex-shrink-0' />
-    <div className='flex flex-col flex-1 min-w-0 text-left'>
-      <span className='flex items-center gap-[6px] min-w-0'>
-        <span lang={ja ? 'ja' : undefined} className='text-[15px] font-[700] text-layout-black dark:text-layout-white truncate'>{word}</span>
-        {ja && shouldShowReading({ ...meta, origin: word }) && (
-          <span lang="ja" className="shrink-0 truncate text-[11px] font-[500] text-layout-gray-300">
-            {getReading(meta)}
-          </span>
-        )}
-      </span>
-      {meaning ? (
-        <span className='mt-[2px] text-[11.5px] font-[400] text-layout-gray-400 dark:text-layout-gray-50 truncate'>
-          {meaning}
-        </span>
-      ) : null}
-    </div>
-    {/* 시안 `.grow2 .rt` — 11.5px/700 #12B76A(status-success-600) */}
-    {right ? (
-      <span className='flex-shrink-0 whitespace-nowrap text-[11.5px] font-[700] text-status-success-600'>
-        {right}
-      </span>
-    ) : null}
-  </div>
-  );
-};
-
 // 목록형 슬라이드 — 보상 슬라이드와 같은 형식(그림 + 한 줄 + 목록). 전부 가운데 정렬.
 //
 // **목록만 따로 스크롤하지 않는다.** 예전에는 목록에 `max-h-[34dvh] overflow-y-auto` 를 걸어
@@ -225,32 +97,6 @@ const FarmListSlide = ({ art, line, rows }) => (
     >
       {rows}
     </motion.div>
-  </div>
-);
-
-// 보상 슬라이드 — 시안 `award()`. 그림 100px + 16px/700 한 줄 (+ 여러 개일 때만 아래 한 줄)
-// 시안 `.rin` gap 15px, `.rwhy` 는 margin-top:-7px 로 8px 만 띄운다.
-const FarmAwardSlide = ({ art, line, why }) => (
-  <div className='relative flex flex-col items-center justify-center gap-[15px] w-full'>
-    {art}
-    <motion.p
-      className='text-[16px] font-[700] text-center leading-[1.45]'
-      initial={{ y: 20, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ delay: 0.3, duration: 0.5 }}
-    >
-      {line}
-    </motion.p>
-    {why ? (
-      <motion.p
-        className='-mt-[7px] text-[12px] font-[500] text-center text-layout-gray-300'
-        initial={{ y: 20, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ delay: 0.45, duration: 0.5 }}
-      >
-        {why}
-      </motion.p>
-    ) : null}
   </div>
 );
 
@@ -315,50 +161,7 @@ const buildGuestSignupResult = async () => {
   };
 };
 
-/*
-  하단 버튼 — **온보딩 하단 CTA와 같은 규격**(pages/Onboarding.jsx `Cta`).
-    52px / radius 12 / 16px·700 / tracking -0.03em / whileTap 0.97
-  결과 화면은 온보딩 첫 학습에서 그대로 이어지는 화면이라, 같은 자리의 버튼이 45px·radius 8 로
-  달라 보이면 화면이 바뀐 게 아니라 앱이 바뀐 것처럼 읽힌다.
-
-  【면 — 2026-09-27 실기기 피드백】
-    주 버튼: 홈 주 CTA(home/FarmCta.jsx)와 같은 세로 핑크 그라데이션 + 상단 안쪽 하이라이트.
-      글자는 모드와 무관하게 흰색이다(홈 CTA 와 같다). 다크에서 바깥 그림자를 쓰지 않는 것도 같다.
-    보조 버튼: 상점 `Btn` sec 톤(purchaseParts.jsx) — 라이트 회색 면 / 다크 gray-dark 면.
-      예전의 "빈 면 + 2px 테두리"는 다크에서 검은 바탕 위 검은 버튼이 되어 거의 안 보였다.
-  두 버튼은 높이·라운드·글자 규격이 같고 색만 다르다.
-*/
-const CTA_BASE = 'h-[52px] rounded-[12px] text-[16px] font-[700] tracking-[-0.03em]';
-const CTA_PRIMARY_FACE = `
-  bg-[linear-gradient(180deg,#FF88DC_0%,#FF70D4_100%)] text-layout-white
-  shadow-[inset_0_1px_0_rgba(255,255,255,.34),0_6px_16px_rgba(255,112,212,.28)]
-  dark:shadow-[inset_0_1px_0_rgba(255,255,255,.34)]
-`;
-const CTA_SECONDARY_FACE = 'bg-layout-gray-50 dark:bg-layout-gray-dark text-layout-gray-400 dark:text-layout-gray-200';
-
-const ResultCta = ({ label, onClick, secondary = false, className = '' }) => (
-  <motion.button
-    type="button"
-    onClick={onClick}
-    whileTap={{ scale: 0.97 }}
-    transition={{ type: 'spring', stiffness: 500, damping: 15 }}
-    className={`${CTA_BASE} ${secondary ? CTA_SECONDARY_FACE : CTA_PRIMARY_FACE} ${className}`}
-  >
-    {label}
-  </motion.button>
-);
-
-/*
-  하단 버튼 자리 — 온보딩과 같은 여백(px 24 / pt 18 / pb 26).
-  면은 토큰 배경 한 겹이다. 예전에는 흰색→흰색 그라데이션을 인라인 style 로 깔았는데,
-  라이트 모드 문자열의 괄호가 닫히지 않아(`... 100%'`) 값 자체가 무효였다 —
-  결국 아무것도 안 깔린 채 목록이 버튼 뒤로 비쳤다.
-*/
-const ResultCtaBar = ({ children, className = '' }) => (
-  <div className={`flex items-center gap-[12px] px-[24px] pt-[18px] pb-[26px] bg-layout-white dark:bg-layout-black ${className}`}>
-    {children}
-  </div>
-);
+// 하단 버튼(ResultCta · ResultCtaBar)은 rewards/ResultCta.jsx 로 옮겼다 — 보상 슬라이드 껍데기와 같이 쓴다.
 
 /*
   "다음 학습" — 넷플릭스 '다음화' 자동 재생. 다 세면 호출부가 다음 세션을 연다
@@ -695,7 +498,8 @@ const StudyResult = () => {
     });
   };
   const navigate = useNavigate();
-  const { state } = useLocation();
+  const location = useLocation();
+  const state = location.state;
   // cardMatch/cardMatchListening 세트는 words 배열을 개별 단어로 flatten
   // state.testQuestions가 없거나 빈 배열이어도 렌더 오류 없이 빈 결과로 처리
   const testQuestions = (state?.testQuestions ?? []).flatMap(q => {
@@ -735,6 +539,9 @@ const StudyResult = () => {
   // 결과 화면 통계 카드가 모두 나왔는지 — 하단 버튼(활성화)과 자동 '다음 학습' 카운트다운이 이때 시작한다.
   const [statsDone, setStatsDone] = useState(false);
   const statsSkipRef = useRef(null);
+  // 보상 슬라이드 연출이 끝난 화면 번호(그 화면의 「확인」이 켜진다)와, 탭으로 연출을 건너뛰는 함수
+  const [sceneReadyIndex, setSceneReadyIndex] = useState(-1);
+  const sceneSkipRef = useRef(null);
   const [resultData, setResultData] = useState(null);
   const [screenList, setScreenList] = useState([]); // 표시할 화면 리스트
   // 당근 농장 V2 세션 요약 (심은 씨앗 / 자란 작물 / 되살린 작물 / 아이템 / 연속 학습일)
@@ -930,27 +737,30 @@ const StudyResult = () => {
         to_stage: STATE_TO_CROP[q.nextMemoryStateKey] ?? 'sprout',
       }));
 
-      // ① 자란 작물 — 농장 요약이 없을 때만 기존 암기 상태 상승 집계로 같은 형식을 채운다
-      //    (둘은 같은 사실을 말하므로 함께 띄우지 않는다).
-      if (grownList.length > 0) {
-        screens.push({ type: 'farmGrown', data: { items: grownList } });
-      } else if (improvedRows.length > 0) {
-        screens.push({ type: 'farmGrown', data: { items: improvedRows } });
+      /*
+        ①③⑧⑨ 밭 성장 — 예전의 네 장(작물이 자랐어요 · 새싹이 돋았어요 · 되살렸어요 · 황금 당근)을
+        한 장으로 합친다. 넷 중 하나라도 해당되면 뜨고, 자리는 맨 앞(예전 ①)이다.
+        '자란 작물'은 농장 요약이 없을 때만 기존 암기 상태 상승 집계로 채운다(둘은 같은 사실을
+        말하므로 함께 쓰지 않는다). 같은 단어는 한 번만 센다 — buildGrowthEntries 가 거른다.
+      */
+      const growthEntries = buildGrowthEntries({
+        grownRows: [...goldenList, ...sproutedList, ...(grownList.length > 0 ? grownList : improvedRows)],
+        rescuedRows: rescuedList,
+        metaOfRow,
+      });
+      if (growthEntries.length > 0) {
+        screens.push({ type: 'farmGrowth', data: { entries: growthEntries } });
       }
 
       // ② 씨앗 심기 — 새 씨앗 심기(plant)는 마지막 결과 화면이 "새로 심은 씨앗" 목록을 직접 보여준다.
       //    농장 돌보기·일반 학습 등 그 외 세션에서는 새 단어가 섞여 있어도 심기 슬라이드를 띄우지 않는다.
 
-      // ③ 새싹 발아 — 시간이 지난 뒤 스스로 기억해낸 단어
-      if (sproutedList.length > 0) {
-        screens.push({ type: 'farmSprouted', data: { items: sproutedList } });
-      }
-
       // ④ 보석
       if (result.gem && result.gem.after > result.gem.before) {
         screens.push({
           type: 'gem',
-          data: { gemCount: result.gem.after - result.gem.before }
+          // before/after — 헤더 잔액 칩이 이 값에서 출발해 하나씩 오른다
+          data: { gemCount: result.gem.after - result.gem.before, before: result.gem.before, after: result.gem.after }
         });
       }
 
@@ -962,16 +772,6 @@ const StudyResult = () => {
         const why = itemKey === FARM_ITEMS.SHIELD ? '이번 주 지급분이에요' : null;
         screens.push({ type: 'farmItem', data: { itemKey, qty, why } });
       });
-
-      // ⑧ 시든 작물 회복 — 이미 안전해진 사실만 적는다(시안 §4 콜아웃)
-      if (rescuedList.length > 0) {
-        screens.push({ type: 'farmRescued', data: { items: rescuedList } });
-      }
-
-      // ⑨ 황금 당근 — 이 슬라이드만 글로우가 금색이다
-      if (goldenList.length > 0) {
-        screens.push({ type: 'farmGolden', gold: true, data: { items: goldenList } });
-      }
 
       /*
         ⑩ 연속 학습 — 오늘 5개 정답 문턱을 '이 세션에서 처음' 넘겼을 때만(기획 11.1, 하루 1회).
@@ -1096,17 +896,14 @@ const StudyResult = () => {
     }
   }
 
-  // 좋은 소식 슬라이드(진화·황금 당근·시든 작물 회복·연속 기록)가 화면에 뜨는 순간
-  // haptic('success') — 슬라이드 자체 전환음은 handleNextScreen 의 selection이 담당하고,
-  // 이건 "그 안의 내용이 좋은 소식"이라는 것만 따로 강조한다.
+  // 예전 규격 슬라이드(연속 기록 · 새로 심은 씨앗)가 화면에 뜨는 순간의 손맛 큐.
+  // 새 연출 슬라이드(밭 성장 · 보석 · 아이템 · 업적 · 콤보)는 여기서 울리지 않는다 — 각 슬라이드가
+  // 화면의 임팩트 프레임에 맞춰 직접 울린다(rewards/ 각 파일 머리의 시간표).
   useEffect(() => {
     const type = screenList[currentScreenIndex]?.type;
-    if (['farmGrown', 'farmGolden', 'farmRescued', 'farmStreak'].includes(type)) {
+    if (type === 'farmStreak') {
       haptic('success');
-    } else if (['gem', 'farmItem', 'achievement', 'combo'].includes(type)) {
-      // 보상류 슬라이드 진입 — 큐가 없던 자리를 손맛 큐로 통일(슬라이드 자체의 등장 연출은 각 슬라이드가 가진다)
-      feel('bonus');
-    } else if (['farmSprouted', 'farmPlanted'].includes(type)) {
+    } else if (type === 'farmPlanted') {
       feel('progress');
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -1640,6 +1437,13 @@ const StudyResult = () => {
     // farmStreak(연속 학습)는 목록 슬라이드는 아니지만 이제 마스코트 그림이 없어
     // 뒤 글로우도 함께 뺀다(2026-09-28 피드백 4차) — 아래 배경 분기에서 같이 검사한다.
     const noGlow = isListSlide || currentScreen.type === 'farmStreak';
+    // 새 연출 슬라이드(rewards/) — 각자 빛과 시간표를 가진다. 슬라이드가 바뀌면 껍데기의 본문이 통째로 새로 마운트된다.
+    const isScene = SCENE_SLIDE_TYPES.has(currentScreen.type);
+    const sceneProps = {
+      reducedMotion,
+      skipRef: sceneSkipRef,
+      onReady: () => setSceneReadyIndex(currentScreenIndex),
+    };
     let content = null;
 
     if (currentScreen.type === 'farmPlanted') {
@@ -1664,91 +1468,12 @@ const StudyResult = () => {
           ))}
         />
       );
-    } else if (currentScreen.type === 'farmGrown') {
-      // ① 자란 작물 — 이미 심은 것만. 시안은 목록 내용과 무관하게 이파리 그림을 대표로 쓴다.
-      const items = currentScreen.data.items ?? [];
-      content = (
-        <FarmListSlide
-          art={<FarmCropArt stage="leaf" alt="자란 작물" />}
-          line={<><strong className='text-primary-main-600'>{items.length}개</strong>의 작물이 자랐어요!</>}
-          rows={items.map((row) => {
-            /* 아이콘은 toResultStage 로 — 씨앗 구간이면 반드시 심은 씨앗(낱알)이다.
-               이 목록은 "학습을 끝낸 단어"만 모으므로 미학습(봉투)일 수 없다(cropOfWord 주석 참고). */
-            const to = toResultStage(row.to_stage ?? row.crop);
-            return (
-              <FarmGrowRow
-                key={row.user_voca_id}
-                crop={to}
-                word={row.word}
-                meaning={row.meaning}
-                meta={metaOfRow(row)}
-                // 상태 라벨 없음 — "새싹 → 이파리" 단계 전환 표기(CropStep)를 없애고
-                // 아이콘 + 단어 + 뜻만 남긴다(QA).
-              />
-            );
-          })}
-        />
-      );
-    } else if (currentScreen.type === 'farmSprouted') {
-      // ③ 새싹 발아 — 시간이 지난 뒤 스스로 기억해낸 단어. 목록 없이 한 줄만 적는다.
-      const items = currentScreen.data.items ?? [];
-      content = (
-        <FarmAwardSlide
-          art={<FarmCropArt stage="sprout" alt="새싹 발아" />}
-          line={
-            items.length === 1
-              ? <><strong className='text-primary-main-600'>{items[0]?.word}</strong>에 새싹이 돋았어요!</>
-              : <><strong className='text-primary-main-600'>{items.length}개</strong>에 새싹이 돋았어요!</>
-          }
-        />
-      );
-    } else if (currentScreen.type === 'farmGolden') {
-      // ⑨ 황금 당근 도달 — 이 슬라이드만 글로우가 금색이다(배경 교체는 아래 래퍼가 한다)
-      const items = currentScreen.data.items ?? [];
-      content = (
-        <FarmAwardSlide
-          art={<FarmArt src={CROP_ASSETS.goldenCarrot} alt="황금 당근" />}
-          line={
-            items.length === 1
-              ? <><strong className='text-primary-main-600'>{items[0]?.word}</strong>이 황금 당근이 됐어요!</>
-              : <><strong className='text-primary-main-600'>{items.length}개</strong>가 황금 당근이 됐어요!</>
-          }
-          why={items.length === 1 ? '이제 이 단어는 썩지 않아요' : '이제 이 단어들은 썩지 않아요'}
-        />
-      );
-    } else if (currentScreen.type === 'farmRescued') {
-      // ⑧ 시든 작물 회복 — 이미 안전해진 사실만 적는다 (기획 13.4)
-      const items = currentScreen.data.items ?? [];
-      content = (
-        <FarmListSlide
-          art={<FarmCropArt stage="leaf" alt="되살린 작물" />}
-          line={<>시들었던 <strong className='text-primary-main-600'>{items.length}개</strong>를 되살렸어요!</>}
-          rows={items.map((row) => (
-            <FarmGrowRow
-              key={row.user_voca_id}
-              /* toResultStage — 씨앗 구간이면 무조건 심은 씨앗(낱알). 되살린 단어는 이미 학습
-                 이력이 있어(그렇지 않으면 시들 밭에 있을 수 없다) 미학습(봉투)일 수 없다. */
-              crop={toResultStage(row.crop)}
-              word={row.word}
-              meaning={row.meaning}
-              meta={metaOfRow(row)}
-              // 상태 라벨 없음 — 시든 작물 회복 목록은 "이미 안전해졌다"는 사실만 위 한 줄로
-              // 전하고, 행마다 반복되는 "다시 촉촉해요" 라벨은 정보가 없어 없앤다(QA).
-            />
-          ))}
-        />
-      );
+    } else if (currentScreen.type === 'farmGrowth') {
+      // ①③⑧⑨ 밭 성장 — 자람 · 새싹 · 되살림 · 황금 당근을 밭 한 판에서 차례로 키운다
+      content = <FarmGrowthSlide entries={currentScreen.data.entries ?? []} {...sceneProps} />;
     } else if (currentScreen.type === 'farmItem') {
-      // ⑤⑥⑦ 농장 아이템 — 종류마다 한 장
-      const { itemKey, qty, why } = currentScreen.data;
-      const label = FARM_ITEM_LABEL[itemKey];
-      content = (
-        <FarmAwardSlide
-          art={<FarmArt src={FARM_ITEM_ASSETS[itemKey]} alt={label} />}
-          line={<><strong className='text-primary-main-600'>{label} {qty}개</strong>를 받았어요!</>}
-          why={why}
-        />
-      );
+      // ⑤⑥⑦ 농장 아이템 — 종류마다 한 장. 빛기둥에서 떨어져 착지한다
+      content = <ItemRewardSlide {...currentScreen.data} {...sceneProps} />;
     } else if (currentScreen.type === 'farmStreak') {
       /*
         ⑩ 연속 학습 — 한 줄 + 홈과 같은 1주 불꽃 달력. 시안에는 아래 한 줄이 없다.
@@ -1809,7 +1534,7 @@ const StudyResult = () => {
             ></div>
             {/* 캐릭터 — 원 위에 살짝 올라선 형태 */}
             <img
-              src={AttendanceKing}
+              src={ACHIEVEMENT_IMAGES['출석왕']}
               alt="출석"
               className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-[58%] w-[84px] h-[84px] object-contain z-10'
             />
@@ -1825,285 +1550,37 @@ const StudyResult = () => {
         </div>
       );
     } else if (currentScreen.type === 'combo') {
-      // 콤보 달성 (AI 추천 테스트) — 이 슬라이드는 최고 기록을 갱신했을 때만 만들어진다(위 push 조건 참고).
-      const { maxCombo } = currentScreen.data;
-      // 불꽃 계열(주황)로 — 아이콘 + 한 줄만 두어 오로라 중앙 아이콘 정렬 유지
-      content = (
-        <div className='relative flex flex-col items-center justify-center gap-[15px]'>
-          <motion.div
-            className='flex items-center justify-center w-[100px] h-[100px] rounded-full bg-[#FFF1DE] dark:bg-layout-gray-dark'
-            initial={{ scale: 0, opacity: 0 }}
-            animate={{ scale: [0, 1.2, 1, 1.1, 1], opacity: 1 }}
-            transition={{
-              scale: { type: "tween", ease: "easeOut", duration: 0.6, times: [0, 0.5, 0.7, 0.85, 1] },
-              opacity: { duration: 0.6 },
-            }}
-          >
-            <Flame weight="fill" className='text-[56px] text-[#FF7A00]' />
-          </motion.div>
-          <motion.p
-            className='text-[16px] font-[700] text-center'
-            initial={{ y: 20, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ delay: 0.3, duration: 0.5 }}
-          >
-            <><strong className='text-[#FF7A00]'>최고 기록 갱신!</strong> {maxCombo}콤보</>
-          </motion.p>
-        </div>
-      );
+      // 콤보 신기록 (AI 추천 테스트) — 최고 기록을 갱신했을 때만 만들어진다(위 push 조건 참고).
+      // 번개 당근이 솟아올라 자리 잡고 콤보 수가 굴러 올라간다
+      content = <ComboRewardSlide maxCombo={currentScreen.data.maxCombo ?? 0} {...sceneProps} />;
     } else if (currentScreen.type === 'achievement') {
-      // 업적 달성
-      const goal = currentScreen.data.goal;
-      if (!goal) return null;
-
-      const goalType = goal?.type || '단어왕';
-      const goalLevel = goal?.level || 0;
-      content = (
-        <div className='relative flex flex-col items-center justify-center gap-[20px]'>
-          {/* 업적 이미지와 레벨 표시 */}
-          <motion.div
-            className="relative h-[70px]"
-            initial={{ scale: 0, opacity: 0 }}
-            animate={{
-              scale: 1,
-              opacity: 1,
-              y: [0, -8, 0]
-            }}
-            transition={{
-              scale: {
-                type: "spring",
-                stiffness: 200,
-                damping: 15,
-                duration: 0.6
-              },
-              opacity: {
-                duration: 0.6
-              },
-              y: {
-                delay: 0.7,
-                duration: 2.5,
-                repeat: Infinity,
-                repeatType: "reverse",
-                ease: "easeInOut"
-              }
-            }}
-          >
-            <img
-              src={ACHIEVEMENT_IMAGES[goalType]}
-              alt={goalType}
-              className="absolute bottom-[10px] left-[50%] translate-x-[-50%] w-[60px] h-[60px] object-contain"
-            />
-            <div
-              className="w-[60px] h-[60px] rounded-[50%]"
-              style={getAchievementBackgroundStyle(goalLevel)}
-            ></div>
-            <span
-              className="
-                absolute bottom-[0] left-[50%] 
-                translate-x-[-50%]
-                text-[16px] font-[700]
-                font-family: 'Cafe24Ssurround', sans-serif;
-                [text-shadow:_-1.2px_-1.2px_0_var(--layout-white),_1.2px_-1.2px_0_var(--layout-white),_-1.2px_1.2px_0_var(--layout-white),_1.2px_1.2px_0_var(--layout-white)]
-              "
-              style={getAchievementTextStyle(goalLevel)}
-            >
-              <span className="text-[10px]">LV.</span>{goalLevel}
-            </span>
-          </motion.div>
-          <motion.p
-            className='text-[16px] font-[700]'
-            initial={{ y: 20, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{
-              delay: 0.5,
-              duration: 0.5
-            }}
-          >
-            <strong className='text-primary-main-600'>{goalType} {goalLevel}레벨</strong>을 달성했어요!
-          </motion.p>
-        </div>
-      );
+      // ⑫ 업적 — 메달 승급
+      if (!currentScreen.data.goal) return null;
+      content = <AchievementSlide goal={currentScreen.data.goal} {...sceneProps} />;
     } else if (currentScreen.type === 'gem') {
-      // 보석 획득
-      content = (
-        <div className='relative flex flex-col items-center justify-center gap-[15px]'>
-          <motion.img
-            src={gemImg}
-            alt="보석"
-            className='w-[100px] h-[100px] object-contain'
-            initial={{ scale: 0, opacity: 0, rotate: -180 }}
-            animate={{
-              scale: [0, 1.3, 1, 1.15, 1],
-              opacity: 1,
-              rotate: [0, 10, -10, 0]
-            }}
-            transition={{
-              scale: {
-                type: "tween",
-                ease: "easeOut",
-                duration: 0.7,
-                times: [0, 0.5, 0.7, 0.85, 1]
-              },
-              opacity: {
-                duration: 0.7
-              },
-              rotate: {
-                delay: 1,
-                duration: 2.5,
-                repeat: Infinity,
-                repeatType: "reverse",
-                ease: "easeInOut"
-              }
-            }}
-          />
-          <motion.p
-            className='text-[16px] font-[700]'
-            initial={{ y: 20, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{
-              delay: 0.3,
-              duration: 0.5
-            }}
-          >
-            <strong className='text-primary-main-600'>보석 {currentScreen.data.gemCount}개</strong>를 획득했어요!
-          </motion.p>
-          {/* 게스트는 아직 계정이 없어 보석이 들어갈 곳이 없다 — 어디로 들어오는지 한 줄 덧붙인다.
-              이 줄이 없으면 가입 화면에서 보석이 사라진 것처럼 보인다. */}
-          {isGuest ? (
-            <motion.p
-              className='-mt-[7px] text-[12px] font-[500] text-center text-layout-gray-300'
-              initial={{ y: 20, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ delay: 0.45, duration: 0.5 }}
-            >
-              가입하면 계정으로 바로 들어와요
-            </motion.p>
-          ) : null}
-        </div>
-      );
+      // ④ 보석 — 쏟아져서 헤더 잔액으로 날아가 쌓인다
+      content = <GemRewardSlide {...currentScreen.data} isGuest={isGuest} {...sceneProps} />;
     }
 
-    // 공용 슬라이드 껍데기 — 고정 헤더 + 배경 + 확인 버튼
+    // 공용 슬라이드 껍데기(rewards/RewardShell) — 고정 헤더 + 진행 점 + 본문 + 확인 버튼.
+    // 새 연출 슬라이드는 연출이 끝나야 「확인」이 켜지고, 그 전에 화면을 탭하면 연출을 건너뛴다.
     if (!content) return null;
 
     return (
-      <div className='relative flex flex-col h-[100dvh]'>
-        <div style={{ paddingTop: 'var(--status-bar-height)' }}></div>
-        {/* 고정 헤더 */}
-        <div
-          className='
-            absolute left-0
-            flex items-end justify-center
-            w-full h-[55px]
-            px-[16px] py-[14px]
-            z-20
-          '
-          style={{ top: 'var(--status-bar-height)' }}
-        >
-          <div className="center">
-            <h2 className='text-[18px] font-[700] leading-[21px]'>
-              학습 결과
-            </h2>
-          </div>
-        </div>
-        {/* 슬라이드되는 영역 (컨텐츠 + 확인 버튼) */}
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={currentScreenIndex}
-            initial={{ x: '100%', opacity: 0 }}
-            animate={{ x: 0, opacity: 1 }}
-            exit={{ x: '-100%', opacity: 0 }}
-            transition={{
-              type: "spring",
-              stiffness: 300,
-              damping: 30,
-              duration: 0.5
-            }}
-            className='relative flex flex-col flex-1 pt-[55px] overflow-hidden'
-          >
-            {/*
-              컨텐츠 영역 — **여기가 스크롤한다.**
-              그림·문구·목록이 한 덩어리로 움직이고, 아이콘 뒤 글로우도 같은 블록 안에 있어
-              따라 움직인다. 짧은 슬라이드는 min-h-full + justify-center 로 가운데에 선다.
-              (예전에는 -translate-y-[55px] 로 헤더 높이만큼 끌어올려 가운데를 맞췄는데,
-               스크롤이 생기면 그만큼 아래가 잘리므로 패딩으로 자리를 잡는다.)
-            */}
-            <div className='relative flex-1 overflow-y-auto scrollbar-hide px-[20px] py-[28px]'>
-              <div className={`relative w-full ${isListSlide ? '' : 'min-h-full flex flex-col justify-center'}`}>
-              {/*
-                글로우 기준 블록 — **콘텐츠 높이에 딱 맞는다.**
-                보상 슬라이드는 바깥이 min-h-full 이라 글로우를 거기에 붙이면
-                `top-50px` 이 화면 위쪽 50px 이 되어, 세로 중앙에 선 아이콘과 어긋난다.
-                콘텐츠와 같은 높이의 블록을 한 겹 두고 그 안에서 재면 항상 아이콘 중심이다.
-              */}
-              <div className='relative w-full' style={isListSlide ? { paddingTop: LIST_SLIDE_TOP_PAD } : undefined}>
-              {/* 배경 — 시안 ⑨ 황금 당근만 금색 글로우로 통째로 바꾼다("배경부터 다르게 둔다").
-                  나머지 슬라이드는 지금 형식(핑크 오로라) 그대로다. farmStreak는 글로우 없음. */}
-              {noGlow ? null : currentScreen.gold ? (
-                <div
-                  className='pointer-events-none absolute top-[50px] left-[50%] z-0 translate-x-[-50%] translate-y-[-50%] w-[300px] h-[300px] rounded-full'
-                  style={{
-                    background: 'radial-gradient(circle, rgba(242,183,19,.34) 0%, rgba(242,183,19,.12) 45%, rgba(242,183,19,0) 70%)',
-                  }}
-                ></div>
-              ) : (
-              <>
-              {/* ResultItemBackground01: 크기 변화 + 회전 + 섬광 효과 */}
-              <div className='pointer-events-none absolute top-[50px] left-[50%] z-0 translate-x-[-50%] translate-y-[-50%] w-[230px] h-[230px]'>
-                <motion.img
-                  src={ResultItemBackground01}
-                  alt="결과 아이템 배경"
-                  className='w-full h-full object-contain'
-                  animate={{
-                    rotate: [0, 360, 720],
-                    scale: [1, 2, 1, 2, 1],
-                    opacity: [0.8, 1, 0.8, 1, 0.8],
-                  }}
-                  transition={{
-                    duration: 4,
-                    repeat: Infinity,
-                    ease: "easeInOut",
-                  }}
-                />
-              </div>
-              {/* ResultItemBackground02: 투명도 + 확대/축소 */}
-              <div className='pointer-events-none absolute top-[50px] left-[50%] z-0 translate-x-[-50%] translate-y-[-50%] w-[757px] h-[600px]'>
-                <motion.img
-                  src={ResultItemBackground02}
-                  alt="결과 아이템 배경"
-                  className='w-full h-full object-contain'
-                  animate={{
-                    scale: [1, 1.05, 1],
-                  }}
-                  transition={{
-                    duration: 3,
-                    repeat: Infinity,
-                    ease: "easeInOut",
-                  }}
-                />
-              </div>
-              </>
-              )}
-
-              {/* 콘텐츠 */}
-
-              <div className='relative z-10 w-full flex flex-col items-center'>
-                {content}
-              </div>
-              </div>
-              </div>
-            </div>
-            {/* 확인 버튼 */}
-            <ResultCtaBar className="relative z-10">
-              <ResultCta
-                className="w-full"
-                label="확인"
-                onClick={() => { haptic('selection'); handleNextScreen(); }}
-              />
-            </ResultCtaBar>
-          </motion.div>
-        </AnimatePresence>
-      </div>
+      <RewardShell
+        slideKey={currentScreenIndex}
+        index={currentScreenIndex}
+        total={screenList.length - 1}
+        ready={!isScene || sceneReadyIndex === currentScreenIndex}
+        onSkip={() => sceneSkipRef.current?.()}
+        onConfirm={() => { haptic('selection'); handleNextScreen(); }}
+      >
+        {isScene ? content : (
+          <LegacyAuroraStage isListSlide={isListSlide} noGlow={noGlow}>
+            {content}
+          </LegacyAuroraStage>
+        )}
+      </RewardShell>
     );
   }
 

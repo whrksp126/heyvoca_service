@@ -1,6 +1,6 @@
 // src/components/takeTest/StudyInterlude.jsx
 //
-// 학습 중 전체 화면 연출(연출만 — 보상 지급·서버 호출 없음). 이미지·아이콘 없이 타이포그래피만 쓴다.
+// 학습 중 전체 화면 연출(연출만 — 보상 지급·서버 호출 없음). 콤보만 아이콘(번개 당근)을 얹고 나머지는 타이포그래피만 쓴다.
 //   ComboInterlude  콤보 마일스톤(COMBO_MILESTONE_STEP 의 배수마다) 직후 문제 사이에 끼는 인터루드.
 //   PhaseInterlude  학습 구간 경계 안내 — '실전 문장으로 학습해봐요' / '틀린 문제를 복습해봐요'.
 //   CompleteCut     세션이 끝난 뒤 결과 화면으로 가기 전 '학습 완료' 한 컷. 사선 띠 4개가 완료 효과음의
@@ -14,6 +14,7 @@ import { motion, useReducedMotion } from 'framer-motion';
 import { feel } from '../../lib/feel';
 import { SFX_NOTE_STARTS_MS } from '../../lib/feel/sfx';
 import { COMBO_MILESTONE_STEP } from './ComboBar';
+import ComboIcon from './ComboIcon';
 
 export const COMBO_INTERLUDE_MS = 1600;
 export const PHASE_INTERLUDE_MS = 1500;
@@ -98,8 +99,9 @@ const TONES = {
 /**
  * 공통 셸 — 제목은 size 로 키운다(콤보·완료는 hero, 구간 안내는 보통).
  * 등장 순서: 선(0.05s) → 제목(0.1s) → 보조(0.3s). 모두 tween(스프링·3키프레임 없음).
+ * icon 을 주면 선 자리에 그림이 통 튀어 들어온다(콤보).
  */
-const InterludeShell = ({ tone, title, sub, hero = false, bands = null, cue, cueOpts, durationMs, onDone }) => {
+const InterludeShell = ({ tone, title, sub, hero = false, icon = null, bands = null, cue, cueOpts, durationMs, onDone }) => {
   "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
 
   const reducedMotion = useReducedMotion();
@@ -143,15 +145,26 @@ const InterludeShell = ({ tone, title, sub, hero = false, bands = null, cue, cue
       ))}
       {ready && (
       <>
-      <motion.div
-        aria-hidden
-        className={`relative h-[3px] w-[40px] rounded-full origin-center ${t.line}`}
-        initial={{ opacity: 0, scaleX: reducedMotion ? 1 : 0 }}
-        animate={{ opacity: 1, scaleX: 1, transition: { delay: lineAt, duration: 0.4, ease: 'easeOut' } }}
-      />
+      {icon ? (
+        <motion.div
+          aria-hidden
+          className="relative h-[132px] w-[132px]"
+          initial={{ opacity: 0, scale: reducedMotion ? 1 : 0.4, rotate: reducedMotion ? 0 : -14 }}
+          animate={{ opacity: 1, scale: 1, rotate: 0, transition: { delay: lineAt, duration: 0.42, ease: [0.34, 1.56, 0.64, 1] } }}
+        >
+          {icon}
+        </motion.div>
+      ) : (
+        <motion.div
+          aria-hidden
+          className={`relative h-[3px] w-[40px] rounded-full origin-center ${t.line}`}
+          initial={{ opacity: 0, scaleX: reducedMotion ? 1 : 0 }}
+          animate={{ opacity: 1, scaleX: 1, transition: { delay: lineAt, duration: 0.4, ease: 'easeOut' } }}
+        />
+      )}
       <motion.h1
         {...rise(contentDelay)}
-        className={`relative mt-[20px] text-center tracking-[-0.03em] ${t.title} ${hero ? 'text-[56px] font-[900] leading-[1.1]' : 'text-[24px] font-[800] leading-[1.35]'}`}
+        className={`relative ${icon ? 'mt-[10px]' : 'mt-[20px]'} text-center tracking-[-0.03em] ${t.title} ${hero ? 'text-[56px] font-[900] leading-[1.1]' : 'text-[24px] font-[800] leading-[1.35]'}`}
       >
         {title}
       </motion.h1>
@@ -182,6 +195,7 @@ export const ComboInterlude = ({ n, milestone = COMBO_MILESTONE_STEP, onDone, du
     <InterludeShell
       tone="combo"
       hero
+      icon={<ComboIcon n={milestone} className="h-full w-full" />}
       title={`${n} 콤보`}
       sub={phrase}
       cue="bonus"

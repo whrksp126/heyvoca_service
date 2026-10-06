@@ -252,6 +252,9 @@ const buildTypingQuestions = (selectedWords) => {
   - direction: 'en2ko'(영어를 보고 뜻/한국어를 고름) | 'ko2en'(뜻/한국어를 보고 영어를 고름) | null(양쪽 동시)
                — 시트의 [방향] 칩. null 이면 방향 선택과 무관하게 항상 포함.
   - listening: 듣기 변형 — 시트의 [듣기 문제 포함] 토글이 켜졌을 때만 포함.
+  - autoSpeakOnShow: 문제 등장 시 Main.jsx 가 question.origin 을 자동으로 읽어 줄지. false 면 각 컴포넌트가
+               직접 재생하거나(빈칸·조립·카드·만나기) 읽어 주면 문제가 무의미해지는 유형(scriptSeePick).
+               생략하면 읽는다(shouldAutoSpeakOnShow).
 */
 export const QUESTION_TYPE_PLUGINS = [
   {
@@ -296,6 +299,7 @@ export const QUESTION_TYPE_PLUGINS = [
     // 빈칸 채우기 — 한국어 예문을 보고 영어 예문의 빈칸에 들어갈 단어를 고른다.
     // 방향이 하나뿐이라 direction: null — 시트의 [방향] 선택과 무관하게 항상 포함(카드 맞추기와 같다).
     id: 'fillInTheBlank',
+    autoSpeakOnShow: false,
     label: '빈칸 채우기',
     enabled: true,
     family: 'fillInTheBlank',
@@ -307,6 +311,7 @@ export const QUESTION_TYPE_PLUGINS = [
   },
   {
     id: 'cardMatch',
+    autoSpeakOnShow: false,
     label: '카드 맞추기',
     enabled: true,
     family: 'cardMatch',
@@ -327,6 +332,7 @@ export const QUESTION_TYPE_PLUGINS = [
   },
   {
     id: 'cardMatchListening',
+    autoSpeakOnShow: false,
     label: '카드 맞추기(듣기)',
     enabled: true,
     family: 'cardMatch',
@@ -349,6 +355,7 @@ export const QUESTION_TYPE_PLUGINS = [
     // 문장 만들기(부분 조립) — 한글 해석을 보고 목표 단어 주변 3~5조각만 조립(앞뒤는 고정 텍스트).
     // sentenceArrange(전체 조립)와 같은 family — 설정 시트에서는 "문장 만들기" 한 타일로 묶인다.
     id: 'sentenceArrangePartial',
+    autoSpeakOnShow: false,
     label: '문장 만들기(부분)',
     enabled: true,
     family: 'sentenceArrange',
@@ -361,6 +368,7 @@ export const QUESTION_TYPE_PLUGINS = [
   {
     // 문장 만들기(전체 조립) — 문장 전체 또는 뒷부분 최대 7조각을 조립.
     id: 'sentenceArrange',
+    autoSpeakOnShow: false,
     label: '문장 만들기',
     enabled: true,
     family: 'sentenceArrange',
@@ -374,6 +382,7 @@ export const QUESTION_TYPE_PLUGINS = [
     // 듣고 받아쓰기 — 영어 음성을 듣고 조립(원문 어순만 정답). "문장 만들기" family의 듣기 변형
     // — 설정 시트의 [듣기 문제 포함] 토글이 켜졌을 때만 선택지에 포함된다(카드 맞추기와 같은 방식).
     id: 'listenArrange',
+    autoSpeakOnShow: false,
     label: '듣고 받아쓰기',
     enabled: true,
     family: 'sentenceArrange',
@@ -386,6 +395,7 @@ export const QUESTION_TYPE_PLUGINS = [
   {
     // 빈칸 직접 입력 — 기존 빈칸 채우기와 같은 예문, 사지선다 대신 타이핑으로 정답 입력.
     id: 'fillInTheBlankTyping',
+    autoSpeakOnShow: false,
     label: '빈칸 입력',
     enabled: true,
     family: 'fillInTheBlankTyping',
@@ -401,6 +411,7 @@ export const QUESTION_TYPE_PLUGINS = [
     // 노출되지 않는다. setupQuestions도 없다 — pages/TakeTest.jsx의 buildPlantTestQuestions가
     // 단어당 1개씩 직접 만들어 배열 맨 앞에 넣는다(일반 추천 파이프라인에서는 절대 안 만들어짐).
     id: 'wordIntro',
+    autoSpeakOnShow: false,
     label: '단어 만나기',
     enabled: false,
     family: 'wordIntro',
@@ -433,6 +444,8 @@ export const QUESTION_TYPE_PLUGINS = [
   {
     // ② 글자를 보고 발음(한글 발음·로마자)을 고른다.
     id: 'scriptSeePick',
+    // 글자를 읽어 주면 "글자 보고 발음 고르기"가 무의미해진다 — 등장 시 자동 재생 끔(정답 발음은 선택 후 ChoiceCard 가 재생).
+    autoSpeakOnShow: false,
     label: '글자 보고 발음 고르기',
     enabled: false,
     family: 'script',
@@ -478,6 +491,9 @@ export const QUESTION_TYPE_PLUGINS = [
 ];
 
 export const getQuestionType = (id) => QUESTION_TYPE_PLUGINS.find(p => p.id === id);
+
+// 문제 등장 시 origin 자동 읽기 여부 — 메타에 없는 알 수 없는 유형은 기존처럼 읽는다.
+export const shouldAutoSpeakOnShow = (id) => getQuestionType(id)?.autoSpeakOnShow !== false;
 
 // 채점 없이 그냥 다음으로 넘어가는 "정보 전달" 슬라이드 — Main.jsx가 onComplete를 전용
 // 핸들러(정오답 집계·재출제·로깅을 전혀 타지 않는 handleNoGradeNext)로 바꿔 넘기고,

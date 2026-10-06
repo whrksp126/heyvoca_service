@@ -8,7 +8,7 @@ import { PreviewBookStoreNewFullSheet } from '../newfullsheet/PreviewBookStoreNe
 import { BuyEmptyBookNewBottomSheet } from '../newBottomSheet/BuyEmptyBookNewBottomSheet';
 import { getBookStoreDetailApi } from '../../api/bookStore';
 import { vibrate } from '../../utils/osFunction';
-import gem from '../../assets/images/gem.png';
+import gem from '../../assets/images/farm/icon-gem.png';
 import { useTheme } from '../../context/ThemeContext';
 import { resolveVocaBookBackground, resolveVocaBookAccentColor, resolveVocaBookSubColor } from '../../utils/vocaBookColor';
 
@@ -51,7 +51,7 @@ export const BookCard = ({ item, onClick, className = '', priceLabel }) => {
       <span className="flex items-center gap-[2px] text-[14px] font-[600] text-layout-black dark:text-layout-white">
         {priceLabel != null
           ? priceLabel
-          : (<><img src={gem} alt="보석" className="w-[17px] h-[15px]" /> {item.gem}</>)}
+          : (<><img src={gem} alt="보석" className="w-[17px] h-[17px] object-contain" /> {item.gem}</>)}
       </span>
       <div
         style={{
@@ -190,7 +190,7 @@ const BookSection = () => {
             </div>
             <div className="flex items-end justify-between">
               <span className="flex items-center gap-[2px] text-[14px] font-[600] text-layout-black dark:text-layout-white">
-                <img src={gem} alt="보석" className="w-[17px] h-[15px]" /> {EMPTY_BOOK_PRICE}
+                <img src={gem} alt="보석" className="w-[17px] h-[17px] object-contain" /> {EMPTY_BOOK_PRICE}
               </span>
               <div className="flex items-center justify-center w-[30px] h-[30px] rounded-[50px] bg-layout-gray-100 text-layout-gray-300">
                 <Plus />

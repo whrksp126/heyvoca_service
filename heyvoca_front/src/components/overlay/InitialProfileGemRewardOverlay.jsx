@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import gemImg from '../../assets/images/gem.png';
+import gemImg from '../../assets/images/farm/icon-gem.png';
 import ResultItemBackground01 from '../../assets/images/ResultItemBackground01.svg';
 import ResultItemBackground02 from '../../assets/images/ResultItemBackground02.svg';
 import { vibrate } from '../../utils/osFunction';

@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { Warning } from '@phosphor-icons/react';
 import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 import { vibrate } from '../../utils/osFunction';
-import gem from '../../assets/images/gem.png';
+import gem from '../../assets/images/farm/icon-gem.png';
 
 /**
  * 탈퇴 확인 — 숫자로 말한다 (시안 설정 1절 ⑤, 4절).
@@ -52,7 +52,7 @@ export const WithdrawNewBottomSheet = ({
         <div className={`flex items-center gap-[8px] text-[12.5px] tracking-[-0.02em] ${rows.length ? 'mt-[8px]' : ''}`}>
           <span className="flex-1 font-[600] text-layout-gray-400 dark:text-layout-gray-300">남은 보석 · 도구</span>
           <span className="flex items-center gap-[4px] font-[800] text-layout-black dark:text-layout-white">
-            <img src={gem} alt="보석" className="w-[14px] h-[13px]" />
+            <img src={gem} alt="보석" className="w-[14px] h-[14px] object-contain" />
             {gemCnt ?? 0}
             {tools !== undefined && ` · ${tools}개`}
           </span>

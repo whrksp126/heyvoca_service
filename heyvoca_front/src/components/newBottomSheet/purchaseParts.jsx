@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { haptic, SPRING, TAP } from '../../lib/feel';
-import iconGem from '../../assets/images/gem.png';
+import iconGem from '../../assets/images/farm/icon-gem.png';
 
 /**
  * 상점 구매 흐름 공용 조각.

@@ -60,7 +60,7 @@ const FillInTheBlankTypingQuestion = ({ question, onComplete, onCardMatched, far
   const [isAnswered, setIsAnswered] = useState(false);
   const [isCorrect, setIsCorrect] = useState(null);
   const [isPerfect, setIsPerfect] = useState(false); // 한 번에(오타 없이) 맞힘 → '완벽해요'
-  const [gradeInfo, setGradeInfo] = useState(null); // { typo, reason }
+  const [gradeInfo, setGradeInfo] = useState(null); // { typo, variant, reason }
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [speakDuration, setSpeakDuration] = useState(null);
   const [speakingTarget, setSpeakingTarget] = useState(null); // 'shown' | 'answer' | 'lookup' | null
@@ -101,6 +101,7 @@ const FillInTheBlankTypingQuestion = ({ question, onComplete, onCardMatched, far
     base_form: baseForm = '',
     ko = '',
     blocked_typos: blockedTypos = [],
+    near_synonyms: nearSynonyms = [],
   } = typing;
   const blankLang = wordLang(question);
   const jaBlank = isJa(blankLang);
@@ -304,7 +305,7 @@ const FillInTheBlankTypingQuestion = ({ question, onComplete, onCardMatched, far
     closeLookup(); // 채점 순간 말풍선은 닫힌다(O/X 와 겹치지 않게, fillInTheBlank와 동일 규칙)
     koLookup.closeLookup();
 
-    const grade = gradeTypingAnswer(value, { answerText, baseForm, blockedTypos });
+    const grade = gradeTypingAnswer(value, { answerText, baseForm, blockedTypos, nearSynonyms: Array.isArray(nearSynonyms) ? nearSynonyms : [] });
     const timeTakenMs = Date.now() - startTimeRef.current;
 
     // 소리·진동·시각(아래 setState)을 같은 틱에. 오타 허용 정답·재출제는 perfect 가 아니다.
@@ -350,14 +351,24 @@ const FillInTheBlankTypingQuestion = ({ question, onComplete, onCardMatched, far
 
   const showTtsRipple = isSpeaking && speakingTarget === 'shown';
 
+  // 유사 뜻 입력 — 기록은 오답이지만 화면은 빨강 대신 중립 교정 톤(흔들림·X 마크 없음).
+  const isSynonym = isAnswered && gradeInfo?.reason === 'synonym';
+  const neutralCaptionCls = 'text-layout-gray-400 dark:text-layout-gray-100';
+
   const pillStyle = !isAnswered
     ? 'border-layout-gray-200 dark:border-[#444444] bg-layout-white dark:bg-layout-black'
     : isCorrect
       ? 'border-status-success-500 text-status-success-600 bg-status-success-100'
-      : 'border-status-error-500 text-status-error-600 bg-status-error-100 dark:bg-status-error-dark';
+      : isSynonym
+        ? 'border-layout-gray-300 text-layout-black dark:text-layout-white bg-layout-white dark:bg-layout-black'
+        : 'border-status-error-500 text-status-error-600 bg-status-error-100 dark:bg-status-error-dark';
 
   const caption = isAnswered && gradeInfo?.reason === 'typo'
-    ? { text: `오타가 있어요 · 정확한 철자 ${answerText}`, cls: 'text-layout-gray-400 dark:text-layout-gray-100' }
+    ? { text: `오타가 있어요 · 정확한 철자 ${answerText}`, cls: neutralCaptionCls }
+    : isAnswered && gradeInfo?.reason === 'exact' && gradeInfo?.variant
+    ? { text: `정확한 표기 ${answerText}`, cls: neutralCaptionCls }
+    : isSynonym
+    ? { text: `${value.trim()} 도 비슷한 뜻이에요 · 이 문장에는 ${answerText} 가 더 잘 어울려요`, cls: neutralCaptionCls }
     : isAnswered && gradeInfo?.reason === 'baseForm'
       ? { text: `형태가 달라요 · 정답 ${answerText}`, cls: 'text-status-error-600' }
       : isAnswered && !isCorrect
@@ -456,7 +467,9 @@ const FillInTheBlankTypingQuestion = ({ question, onComplete, onCardMatched, far
                 <motion.span
                   // 채점 순간: 정답은 통 튀고 빛줄기가 지나가며, 오답은 좌우로 흔들린다(채점 큐와 같은 틱).
                   animate={isAnswered
-                    ? (isCorrect ? pickVariant('correctPop', reducedMotion).animate : pickVariant('shake', reducedMotion).animate)
+                    ? (isCorrect
+                      ? pickVariant('correctPop', reducedMotion).animate
+                      : (isSynonym ? undefined : pickVariant('shake', reducedMotion).animate))
                     : undefined}
                   className={`
                     relative overflow-hidden
@@ -547,7 +560,7 @@ const FillInTheBlankTypingQuestion = ({ question, onComplete, onCardMatched, far
         </AnimatePresence>
 
         <ResultMark
-          result={isCorrect}
+          result={isSynonym ? null : isCorrect}
           replayKey={resumeReplayKey}
           className="absolute inset-0 z-[3] flex items-center justify-center"
         />

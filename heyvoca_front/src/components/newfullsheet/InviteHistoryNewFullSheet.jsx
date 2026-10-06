@@ -6,7 +6,7 @@ import { useUser } from '../../context/UserContext';
 import { getInvitesApi } from '../../api/auth';
 import { vibrate, showToast } from '../../utils/osFunction';
 import PullToRefresh from '../common/PullToRefresh';
-import gem from '../../assets/images/gem.png';
+import gem from '../../assets/images/farm/icon-gem.png';
 
 const formatDate = (iso) => {
   if (!iso) return '';
@@ -160,7 +160,7 @@ const InviteHistoryNewFullSheet = () => {
                   </div>
                   {invite.reward > 0 && (
                     <span className="flex items-center gap-[3px] text-[14px] font-[700] text-primary-main-600 shrink-0 pl-[10px]">
-                      <img src={gem} alt="보석" className="w-[14px] h-[12px]" />
+                      <img src={gem} alt="보석" className="w-[14px] h-[14px] object-contain" />
                       +{invite.reward}
                     </span>
                   )}

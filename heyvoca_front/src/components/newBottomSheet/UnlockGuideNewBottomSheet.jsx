@@ -4,7 +4,7 @@ import { CheckCircle, Lock } from '@phosphor-icons/react';
 import { useNewBottomSheetActions, useNewBottomSheetContext } from '../../context/NewBottomSheetContext';
 import { useOnboardingUnlock, FEATURE_LABELS } from '../../context/OnboardingUnlockContext';
 import { vibrate } from '../../utils/osFunction';
-import gemImg from '../../assets/images/gem.png';
+import gemImg from '../../assets/images/farm/icon-gem.png';
 import emptyBookImg from '../../assets/images/voca_book_1.png';
 
 // 현재 진행 미션의 "무엇을 해야 열리는지" 구체 안내 문구(미션 key별).

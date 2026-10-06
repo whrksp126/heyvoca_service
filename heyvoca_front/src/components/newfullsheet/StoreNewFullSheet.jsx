@@ -26,7 +26,7 @@ import {
   resolveVocaBookBackground, resolveVocaBookAccentColor, resolveVocaBookSubColor,
 } from '../../utils/vocaBookColor';
 import { vibrate } from '../../utils/osFunction';
-import gemImg from '../../assets/images/gem.png';
+import gemImg from '../../assets/images/farm/icon-gem.png';
 
 /**
  * 상점 — 단어장 · 농장 도구 · 보석 3탭 (시안 shop.txt §1).

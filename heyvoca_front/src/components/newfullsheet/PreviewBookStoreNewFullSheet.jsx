@@ -15,7 +15,7 @@ import { useVocabulary } from '../../context/VocabularyContext';
 import { useExampleSettings } from '../../context/ExampleSettingsContext';
 import { getBookStoreDetailApi } from '../../api/bookStore';
 import PullToRefresh from '../common/PullToRefresh';
-import gem from '../../assets/images/gem.png';
+import gem from '../../assets/images/farm/icon-gem.png';
 import BookFieldHero from '../vocabularySheets/BookFieldHero';
 import CropImage from '../farm/CropImage';
 import { HEALTH_STATES } from '../../utils/crop';
@@ -558,7 +558,7 @@ export const PreviewBookStoreNewFullSheet = ({
             primaryActionLabel || '선택'
           ) : bookStoreVocabularySheet.gem > 0 ? (
             <>
-              <img src={gem} alt="" draggable={false} className="w-[20px] h-[18px]" />
+              <img src={gem} alt="" draggable={false} className="w-[20px] h-[20px] object-contain" />
               {bookStoreVocabularySheet.gem}개로 구매
             </>
           ) : (

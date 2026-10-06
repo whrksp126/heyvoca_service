@@ -150,3 +150,157 @@ def attach_concept_ids(voca_id: Optional[int], meanings: Iterable[str], concept_
             if cid not in concept_ids:
                 concept_ids.append(cid)
     return meaning_concepts, concept_ids
+
+
+# ──────────────────────────────────────────────
+# 빈칸 직접 입력용 "비슷한 뜻 단어" (near_synonyms)
+# ──────────────────────────────────────────────
+
+_TARGET_STRONG = re.compile(
+    r'<strong\b[^>]*\bclass\s*=\s*["\'][^"\']*\btarget-word\b[^"\']*["\'][^>]*>(.*?)</strong>',
+    re.I | re.S,
+)
+_ANY_TAG = re.compile(r'<[^>]*>')
+_LOOSE_DROP = re.compile(r"[\s\-.'’]")
+
+
+def _highlight_norms(ko_html: str) -> list:
+    """한국어 번역의 강조 어절(target-word) 텍스트 → 정규화 문자열 리스트."""
+    hs = []
+    for inner in _TARGET_STRONG.findall(ko_html or ''):
+        h = normalize_meaning(_ANY_TAG.sub('', inner))
+        if h:
+            hs.append(h)
+    return hs
+
+
+def _common_prefix_len(a: str, b: str) -> int:
+    n = 0
+    for x, y in zip(a, b):
+        if x != y:
+            break
+        n += 1
+    return n
+
+
+def context_meaning_indexes(meanings: Iterable, ko_html: str) -> list:
+    """"이 문장에서 쓰인 뜻"의 인덱스 목록 — 예문 한국어 번역의 강조 어절과 맞는 뜻만 고른다.
+
+    강조가 없으면 []. 판정(뜻 n, 강조 h는 모두 normalize_meaning 결과):
+      - n 이 h 에 포함, 또는 (len(h) >= 2 이고 h 가 n 에 포함)
+      - 공통 접두 길이 >= 2 (공정한 / 공정하게)
+      - n 이 '다'로 끝나고 길이 >= 2 이며 h 가 어간 n[:-1] 로 시작 (막다 / 막았다)
+    meanings 원소는 문자열 또는 {'meaning': ...} 모두 허용.
+    """
+    hs = _highlight_norms(ko_html)
+    if not hs:
+        return []
+    result = []
+    for i, m in enumerate(meanings or []):
+        text = m.get('meaning') if isinstance(m, dict) else m
+        if not text:
+            continue
+        n = normalize_meaning(text)
+        if not n:
+            continue
+        for h in hs:
+            if (n in h
+                    or (len(h) >= 2 and h in n)
+                    or _common_prefix_len(n, h) >= 2
+                    or (n.endswith('다') and len(n) >= 2 and h.startswith(n[:-1]))):
+                result.append(i)
+                break
+    return result
+
+
+def loose_word_key(word: str) -> str:
+    """영어 단어 느슨한 비교 키 — 소문자 + 공백/하이픈/마침표/아포스트로피 제거."""
+    return _LOOSE_DROP.sub('', (word or '').lower())
+
+
+def rank_near_synonyms(same_meaning_words: Iterable, concept_hits: Iterable,
+                       exclude: Iterable = (), limit: int = 120) -> list:
+    """DB 없는 정렬·정리 헬퍼.
+
+    same_meaning_words: 같은 한국어 뜻을 가진 단어 목록
+    concept_hits: (word, concept_id) 쌍 목록(개념 그룹 한 홉)
+    정렬: 같은 뜻 단어 먼저 → 공유 concept 개수 많은 순 → 알파벳순.
+    정리: strip, 대소문자 무시 중복 제거(처음 본 표기 유지), exclude 와 느슨한 키가 같으면 제외.
+    """
+    banned = {loose_word_key(e) for e in (exclude or ()) if e}
+    banned.discard('')
+    same_keys = set()
+    cids = {}       # lower → set(concept_id)
+    display = {}    # lower → 원문 표기
+    for w in same_meaning_words or []:
+        w = (w or '').strip()
+        if not w:
+            continue
+        k = w.lower()
+        display.setdefault(k, w)
+        same_keys.add(k)
+    for w, cid in concept_hits or []:
+        w = (w or '').strip()
+        if not w:
+            continue
+        k = w.lower()
+        display.setdefault(k, w)
+        cids.setdefault(k, set()).add(cid)
+    keys = [k for k in display if loose_word_key(k) and loose_word_key(k) not in banned]
+    keys.sort(key=lambda k: (0 if k in same_keys else 1, -len(cids.get(k, ())), k))
+    return [display[k] for k in keys[:max(0, int(limit))]]
+
+
+def near_synonym_words(voca_id: Optional[int], meanings: Iterable, meaning_concepts,
+                       ko_html: str, *, exclude: Iterable = (), limit: int = 120) -> list:
+    """빈칸 직접 입력에서 "뜻은 비슷하지만 다른 단어"로 볼 사전 단어 기본형 목록.
+
+    이 문장에서 쓰인 뜻(context_meaning_indexes)으로 먼저 좁힌 뒤, 그 뜻과 같은 한국어 뜻을
+    가진 단어 + 그 뜻의 concept 그룹을 한 홉 공유하는 단어를 모은다. 좁힐 수 없으면 [](정밀도 우선).
+    일본어 사전/사전 미연결(voca_id None)이면 쿼리 없이 [].
+    """
+    from app.utils.dict_lang import get_dict_lang
+    from app.models.models import Voca
+    if voca_id is None or get_dict_lang() == 'ja':
+        return []
+    meanings = list(meanings or [])
+    idx = context_meaning_indexes(meanings, ko_html)
+    if not idx:
+        return []
+    ctx_meanings = []
+    for i in idx:
+        m = meanings[i]
+        text = m.get('meaning') if isinstance(m, dict) else m
+        if text:
+            ctx_meanings.append(text)
+    mc = meaning_concepts if isinstance(meaning_concepts, (list, tuple)) and len(meaning_concepts) == len(meanings) else []
+    ctx_cids = set()
+    for i in idx:
+        if i < len(mc):
+            for cid in mc[i] or []:
+                if cid is not None:
+                    ctx_cids.add(cid)
+
+    same_words = []
+    if ctx_meanings:
+        rows = (
+            db.session.query(Voca.word)
+            .join(VocaMeaningMap, VocaMeaningMap.voca_id == Voca.id)
+            .join(VocaMeaning, VocaMeaning.id == VocaMeaningMap.meaning_id)
+            .filter(VocaMeaning.meaning.in_(ctx_meanings), Voca.id != voca_id)
+            .distinct()
+            .all()
+        )
+        same_words = [r[0] for r in rows]
+    hits = []
+    if ctx_cids:
+        rows = (
+            db.session.query(Voca.word, VocaMeaningConcept.concept_id)
+            .join(VocaMeaningMap, VocaMeaningMap.voca_id == Voca.id)
+            .join(VocaMeaningConcept, VocaMeaningConcept.meaning_id == VocaMeaningMap.meaning_id)
+            .filter(VocaMeaningConcept.concept_id.in_(ctx_cids), Voca.id != voca_id)
+            .distinct()
+            .all()
+        )
+        hits = [(r[0], r[1]) for r in rows]
+    return rank_near_synonyms(same_words, hits, exclude=exclude, limit=limit)

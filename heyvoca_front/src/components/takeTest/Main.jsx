@@ -17,7 +17,7 @@ import MemoryStateChangeBadge, {
   MEMORY_STATE_RANK as STATE_RANK,
   getMemoryStateKeyByStability,
 } from "../common/MemoryStateChangeBadge";
-import { getQuestionType, isSingleWordPluginType, isFillInTheBlankType, isSentenceQuestionType, isNoGradeQuestionType, isArrangeQuestionType } from '../../plugins/questionTypes';
+import { getQuestionType, shouldAutoSpeakOnShow, isSingleWordPluginType, isFillInTheBlankType, isSentenceQuestionType, isNoGradeQuestionType, isArrangeQuestionType } from '../../plugins/questionTypes';
 import { getDisplayMeanings } from '../../utils/displayMeanings';
 import { logStudyQuestion, getRequeueEasierApi, exampleSeenApi } from '../../api/study';
 import { mapRecommendItemToWord } from '../../utils/studyRecommendMapping';
@@ -995,14 +995,11 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
         // 최대 2개까지만 이어 읽는다. 단어 발음은 정답 공개 후에만(handleClickExamOption).
         const meaningsToSpeak = currentQuestionDisplayMeanings.slice(0, 2).join(', ');
         if (meaningsToSpeak) speakText(meaningsToSpeak, 'ko', 'meaning');
-      // sentenceArrangePartial/sentenceArrange/listenArrange/fillInTheBlankTyping 도
-      // fillInTheBlank와 같은 이유로 제외한다 — 각 플러그인 컴포넌트가 마운트 시 직접
-      // 정답 문장(ko 또는 answer_text)을 읽는다. 여기서 origin(주제 단어)까지 읽으면
-      // 문장 대신 단어만 들리는 버그가 된다(2026-09-28). fillInTheBlankTyping은 정답
-      // 단어(예: graduation)를 미리 읽어 버리는 버그였다(2026-09-29). wordIntro(①만나기)도
-      // 같은 이유로 제외 — WordIntroQuestion이 마운트 시 자기만의 순서(단어→뜻→예문)로
-      // 직접 재생한다. 여기서 또 origin을 읽으면 단어가 두 번 겹쳐 재생된다.
-      } else if (!['cardMatch', 'cardMatchListening', 'fillInTheBlank', 'fillInTheBlankTyping', 'sentenceArrangePartial', 'sentenceArrange', 'listenArrange', 'wordIntro'].includes(question.questionType) && question.origin) {
+      // 그 외 유형은 플러그인 메타 autoSpeakOnShow(plugins/questionTypes/index.js)로 결정한다.
+      // false 인 유형 — 카드 맞추기·빈칸·조립·만나기는 각 컴포넌트가 마운트 시 직접 재생하고
+      // (여기서 origin 을 또 읽으면 문장 대신 단어만 들리거나 정답을 미리 읽거나 겹쳐 재생된다),
+      // 글자 보고 발음 고르기(scriptSeePick)는 글자를 읽어 주면 문제가 무의미해진다.
+      } else if (shouldAutoSpeakOnShow(question.questionType) && question.origin) {
         speakText(question.origin, wordLang(question));
       }
 

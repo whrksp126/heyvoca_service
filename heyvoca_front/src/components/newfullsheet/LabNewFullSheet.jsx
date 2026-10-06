@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { CaretLeft, CaretRight, ChatCircleDots, Translate, HandTap } from '@phosphor-icons/react';
+import { CaretLeft, CaretRight, ChatCircleDots, Translate } from '@phosphor-icons/react';
 import { motion } from 'framer-motion';
 import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
 import { vibrate, showToast, checkNotificationPermissionGranted } from '../../utils/osFunction';
@@ -7,7 +7,6 @@ import postMessageManager from '../../utils/postMessageManager';
 import { getLabSettingsApi, setLabFeatureApi, getCachedLabFeatures } from '../../api/lab';
 import { useUser } from '../../context/UserContext';
 import { DEFAULT_LEARNING_LANG, LANG_LABEL } from '../../utils/lang';
-import FeelTestNewFullSheet from './FeelTestNewFullSheet';
 
 // 실험실 기능 목록 — 새 기능은 이 배열에 한 줄 추가로 노출된다.
 const LAB_FEATURES = [
@@ -58,7 +57,7 @@ const ToggleSwitch = ({ checked, onChange }) => (
 const LabNewFullSheet = () => {
   "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
 
-  const { popNewFullSheet, pushNewFullSheet } = useNewFullSheetActions();
+  const { popNewFullSheet } = useNewFullSheetActions();
   const { learningLang, setLearningLang } = useUser();
   // 앱 시작 시 prefetch된 캐시로 초기화 → 열자마자 올바른 토글 상태(OFF 깜빡임 없음).
   const [features, setFeatures] = useState(() => getCachedLabFeatures() || {});
@@ -199,28 +198,6 @@ const LabNewFullSheet = () => {
               </li>
             );
           })}
-        </ul>
-
-        {/* 개발·튜닝 도구 — 토글 기능이 아니라 화면으로 들어가는 항목 */}
-        <ul className="w-full m-0 p-0 list-none">
-          <li
-            onClick={() => {
-              vibrate({ duration: 5 });
-              pushNewFullSheet(FeelTestNewFullSheet, {}, { smFull: true, closeOnBackdropClick: true });
-            }}
-            className="flex items-center justify-between px-[20px] py-[16px] border-b border-[#ddd] dark:border-border-dark bg-layout-white dark:bg-layout-black cursor-pointer"
-          >
-            <div className="flex items-center gap-3 pr-[16px]">
-              <HandTap weight="fill" className="text-[20px] text-primary-main-600 shrink-0" />
-              <div className="flex flex-col gap-[2px]">
-                <span className="text-[16px] font-bold text-layout-black dark:text-layout-white">손맛 테스트</span>
-                <span className="text-[13px] text-layout-gray-200 dark:text-layout-gray-300 leading-tight">
-                  소리·진동 큐를 눌러 보고 진동 타이밍을 맞춰요
-                </span>
-              </div>
-            </div>
-            <CaretRight className="text-[18px] text-layout-black dark:text-layout-white" />
-          </li>
         </ul>
       </div>
     </div>

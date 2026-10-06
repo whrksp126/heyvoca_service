@@ -2,7 +2,7 @@
 // import { useFullSheet } from '../../context/FullSheetContext';
 // import { CaretLeft } from '@phosphor-icons/react';
 // import { motion } from 'framer-motion';
-// import gem from '../../assets/images/gem.png';
+// import gem from '../../assets/images/farm/icon-gem.png';
 // import { useUser } from '../../context/UserContext';
 // import { useStoreBuyItemBottomSheet } from './StoreBuyItemBottomSheet';
 

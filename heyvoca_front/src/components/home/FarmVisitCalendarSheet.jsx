@@ -27,7 +27,7 @@ import { CaretLeft, CaretRight, Check, Fire, Crown } from '@phosphor-icons/react
 import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
 import { getStreakApi } from '../../api/farm';
 import { CROP_ASSETS } from '../farm/CropImage';
-import gemIcon from '../../assets/images/gem.png';
+import gemIcon from '../../assets/images/farm/icon-gem.png';
 import { toLocalDateString } from '../../utils/common';
 import { vibrate } from '../../utils/osFunction';
 
@@ -478,7 +478,7 @@ const FarmVisitCalendarSheet = () => {
                         src={gemIcon}
                         alt="보석"
                         draggable={false}
-                        className="w-[13px] h-[12px] object-contain select-none"
+                        className="w-[13px] h-[13px] object-contain select-none"
                       />
                       {r.amount}
                     </>

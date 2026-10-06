@@ -49,7 +49,7 @@ import { NotifPermissionNewBottomSheet } from '../newBottomSheet/NotifPermission
 import AchievementRewardOverlay from '../overlay/AchievementRewardOverlay';
 
 import FarmHero from '../farm/FarmHero';
-import gemIcon from '../../assets/images/gem.png';
+import gemIcon from '../../assets/images/farm/icon-gem.png';
 import WordListSheet from '../farm/WordListSheet';
 import FarmCta, {
   HOME_STATES,
@@ -454,7 +454,7 @@ const Main = () => {
             src={gemIcon}
             alt=""
             draggable={false}
-            className="block w-[22px] h-[20px] object-contain select-none"
+            className="block w-[22px] h-[22px] object-contain select-none"
           />
           {gemCnt.toLocaleString()}
         </button>

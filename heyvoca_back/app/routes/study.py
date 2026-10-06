@@ -83,6 +83,18 @@ def _build_sentence_question_payload(item, qtype: str, ctx=None) -> dict:
         if not ex:
             return {}
         payload = build_typing_payload_for_example(item.word, ex)
+        if payload:
+            # 유사 뜻 단어(교정 멘트 판정용) — 부가 정보라 실패해도 추천 응답은 살린다.
+            try:
+                from app.services.meaning_concept import near_synonym_words
+                payload['near_synonyms'] = near_synonym_words(
+                    getattr(item, 'voca_id', None), getattr(item, 'meanings', None),
+                    getattr(item, 'meaning_concepts', None), ex.get('meaning'),
+                    exclude=(payload.get('answer_text'), item.word),
+                )
+            except Exception:
+                logging.getLogger(__name__).warning('near_synonyms 생성 실패 (문제 출제는 정상)', exc_info=True)
+                payload['near_synonyms'] = []
         return {'typing': payload, 'example_hash': ex['hash']} if payload else {}
 
     from app.services.sentence_puzzle import build_arrange_payload

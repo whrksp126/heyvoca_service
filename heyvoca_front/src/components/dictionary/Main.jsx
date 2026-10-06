@@ -29,7 +29,7 @@ import useFarmPlants from './useFarmPlants';
 import { useOpenWordDetail } from '../../hooks/useOpenWordDetail';
 import PullToRefresh from '../common/PullToRefresh';
 import bookEmptyImg from '../../assets/images/farm/book-empty.png';
-import gemImg from '../../assets/images/gem.png';
+import gemImg from '../../assets/images/farm/icon-gem.png';
 
 const ITEMS_PER_PAGE = 30;
 const SCROLL_THRESHOLD = 200;

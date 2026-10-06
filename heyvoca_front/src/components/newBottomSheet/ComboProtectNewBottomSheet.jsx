@@ -1,9 +1,9 @@
 import React from 'react';
-import { Flame } from '@phosphor-icons/react';
 import { motion } from 'framer-motion';
 import { useNewBottomSheet } from '../../hooks/useNewBottomSheet';
 import { vibrate } from '../../utils/osFunction';
-import gemImg from '../../assets/images/gem.png';
+import ComboIcon from '../takeTest/ComboIcon';
+import gemImg from '../../assets/images/farm/icon-gem.png';
 
 /**
  * 콤보 위기(오답) 순간 보호 팝업.
@@ -32,9 +32,9 @@ export const ComboProtectNewBottomSheet = ({ atRiskCombo = 0, protectCost = 1, g
         initial={{ scale: 0.6, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         transition={{ type: 'spring', stiffness: 300, damping: 18 }}
-        className="flex items-center justify-center w-[64px] h-[64px] rounded-full bg-primary-main-100 dark:bg-layout-gray-dark"
+        className="flex items-center justify-center w-[84px] h-[84px]"
       >
-        <Flame weight="fill" className="text-[36px] text-primary-main-600" />
+        <ComboIcon n={atRiskCombo} className="w-full h-full" />
       </motion.div>
 
       <div className="flex flex-col items-center gap-[6px]">
@@ -59,7 +59,7 @@ export const ComboProtectNewBottomSheet = ({ atRiskCombo = 0, protectCost = 1, g
             disabled:opacity-40
           "
         >
-          <img src={gemImg} alt="보석" className="w-[18px] h-[16px]" />
+          <img src={gemImg} alt="보석" className="w-[18px] h-[18px] object-contain" />
           {protectCost}개로 콤보 지키기
         </motion.button>
         <motion.button

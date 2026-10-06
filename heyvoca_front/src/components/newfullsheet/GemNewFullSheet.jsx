@@ -8,7 +8,7 @@ import { GemPurchaseNewBottomSheet } from '../newBottomSheet/GemPurchaseNewBotto
 import { getGemHistoryApi } from '../../api/store';
 import { vibrate } from '../../utils/osFunction';
 import PullToRefresh from '../common/PullToRefresh';
-import gem from '../../assets/images/gem.png';
+import gem from '../../assets/images/farm/icon-gem.png';
 
 // GemReason → 표시 라벨 (description이 없을 때 폴백)
 const REASON_LABEL = {
@@ -126,7 +126,7 @@ const GemNewFullSheet = () => {
               whileTap={{ scale: 0.95 }}
               className="flex items-center gap-[6px] px-[16px] py-[10px] rounded-[8px] bg-primary-main-600 text-layout-white text-[14px] font-[700]"
             >
-              <img src={gem} alt="보석" className="w-[18px] h-[16px]" />
+              <img src={gem} alt="보석" className="w-[18px] h-[18px] object-contain" />
               보석 구매
             </motion.button>
           </div>
@@ -168,7 +168,7 @@ const GemNewFullSheet = () => {
                           earned ? 'text-primary-main-600' : 'text-layout-gray-400'
                         }`}
                       >
-                        <img src={gem} alt="보석" className="w-[14px] h-[12px]" />
+                        <img src={gem} alt="보석" className="w-[14px] h-[14px] object-contain" />
                         {earned ? '+' : ''}{log.amount}
                       </span>
                       {typeof log.balance_after === 'number' && (

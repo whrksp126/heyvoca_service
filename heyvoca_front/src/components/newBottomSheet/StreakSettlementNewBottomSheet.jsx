@@ -63,9 +63,12 @@ const PrefillStepper = ({ defaultQty, gemCnt, onSkip, onNeedGems, setUserProfile
 
   if (status === 'done') {
     return (
-      <Hint center className="mt-[14px]">
-        보호권을 채웠어요 · 보유 보석 <HintB>{gemCnt}</HintB>
-      </Hint>
+      <>
+        <Hint center className="mt-[14px]">보호권 <HintB>{qty}개</HintB>를 채웠어요</Hint>
+        <Btns>
+          <Btn tone="pri" wide onClick={onSkip}>확인</Btn>
+        </Btns>
+      </>
     );
   }
 
@@ -87,13 +90,8 @@ const PrefillStepper = ({ defaultQty, gemCnt, onSkip, onNeedGems, setUserProfile
       </div>
       <div className="flex items-center gap-[11px] p-[9px] rounded-[12px] border-[1.5px] border-[#EEEEEE] dark:border-transparent bg-layout-white dark:bg-layout-gray-dark">
         <img src={CROP_ASSETS.shield} alt="" draggable={false} className="w-[38px] h-[38px] shrink-0 object-contain select-none" />
-        <span className="flex-1 min-w-0">
-          <span className="block text-[13.5px] font-[800] tracking-[-0.03em] text-layout-black dark:text-layout-white">
-            보호권 {qty}개
-          </span>
-          <span className="block mt-[2px] text-[11px] font-[500] text-layout-gray-300">
-            쓴 만큼 다시 채워 둬요
-          </span>
+        <span className="flex-1 min-w-0 text-[13.5px] font-[800] tracking-[-0.03em] text-layout-black dark:text-layout-white">
+          보호권 {qty}개
         </span>
         <span className="flex items-center rounded-[9px] bg-layout-gray-50 dark:bg-layout-gray-dark overflow-hidden">
           <button
@@ -177,7 +175,7 @@ const Header = ({ image, children }) => (
   </div>
 );
 
-/** paused 상세 표(시안 .kv) — 빈 날 · 필요/보유 · 지킬 수 있는 시간 */
+/** paused 상세 표(시안 .kv) — 빈 날 · 필요/보유 · 기한 */
 const KvRow = ({ k, children, warn = false }) => (
   <div className="flex justify-between items-center py-[10px] border-b border-[#F0F0F0] dark:border-white/[0.08] text-[12.5px]">
     <span className="text-layout-gray-400 dark:text-layout-gray-300">{k}</span>
@@ -243,7 +241,7 @@ const StreakSettlementNewBottomSheet = ({
 
   // ── protected: 자동 적용 완료 ───────────────────────────────
   if (type === 'protected') {
-    const { shields_spent: spent, streak: streakVal, shield_before: before, shield_after: after } = payload;
+    const { shields_spent: spent, streak: streakVal, shield_after: after } = payload;
     return (
       <div className={`${SHEET_SHELL} max-h-[calc(90vh-40px)] overflow-y-auto`}>
         <Grab />
@@ -252,8 +250,7 @@ const StreakSettlementNewBottomSheet = ({
         </Header>
         <div className="flex justify-center">
           <span className="inline-flex items-center gap-[7px] mt-[12px] px-[14px] py-[7px] rounded-full bg-layout-gray-50 dark:bg-layout-gray-dark text-[12.5px] font-[700] tracking-[-0.02em] text-layout-black dark:text-layout-white">
-            <span>보유 {before}개</span>
-            <span className="text-layout-gray-200">→</span>
+            <span>남은 보호권</span>
             <span className="font-[800] text-primary-main-600">{after}개</span>
           </span>
         </div>
@@ -265,7 +262,6 @@ const StreakSettlementNewBottomSheet = ({
           onNeedGems={openGemStore}
           setUserProfile={setUserProfile}
         />
-        <Hint center className="mt-[10px]">보유 보석 <HintB>{gemCnt}</HintB></Hint>
       </div>
     );
   }
@@ -334,9 +330,8 @@ const StreakSettlementNewBottomSheet = ({
           </Header>
           <div className="flex justify-center">
             <span className="inline-flex items-center gap-[7px] mt-[12px] px-[14px] py-[7px] rounded-full bg-layout-gray-50 dark:bg-layout-gray-dark text-[12.5px] font-[700] tracking-[-0.02em] text-layout-black dark:text-layout-white">
-              <span>보호권 {protectResult.shields_spent}개 사용</span>
-              <span className="text-layout-gray-200">·</span>
-              <span>남은 {protectResult.shield_cnt}개</span>
+              <span>남은 보호권</span>
+              <span className="font-[800] text-primary-main-600">{protectResult.shield_cnt}개</span>
             </span>
           </div>
           <PrefillStepper
@@ -379,13 +374,10 @@ const StreakSettlementNewBottomSheet = ({
         <Header image={CROP_ASSETS.shield}>
           보호권 <span className="text-primary-main-600">{short}개</span>만 더 있으면<br />연속 {fromStreak}일을 지킬 수 있어요
         </Header>
-        <Hint center className="mt-[8px]">
-          {missedDays.length}일을 쉬어서 보호권 {needed}개가 필요해요.
-        </Hint>
         <div className="mt-[14px] border-t border-[#F0F0F0] dark:border-white/[0.08]">
           <KvRow k="빈 날">{formatMissedDays(missedDays)}</KvRow>
           <KvRow k="필요 / 보유">{needed}개 / {have}개</KvRow>
-          <KvRow k="지킬 수 있는 시간" warn>{formatDeadline(deadline)}</KvRow>
+          <KvRow k="기한" warn>{formatDeadline(deadline)}</KvRow>
         </div>
         <Btns>
           <Btn tone="sec" onClick={close}>괜찮아요</Btn>
@@ -394,9 +386,6 @@ const StreakSettlementNewBottomSheet = ({
             {gemCost}개로 지키기
           </Btn>
         </Btns>
-        <Hint center className="mt-[10px]">
-          사면 가진 {have}개와 함께 바로 쓰여요 · 보유 보석 <HintB>{gemCnt}</HintB>
-        </Hint>
       </div>
     );
   }
@@ -404,7 +393,7 @@ const StreakSettlementNewBottomSheet = ({
   // ── broken: 연속 종료 (+ 다시 잇기 제안) ───────────────────
   if (type === 'broken') {
     const {
-      gap_days: gapDays, lost_streak: lostStreak, shield_cnt: shieldCnt, max_gap: maxGap,
+      gap_days: gapDays, lost_streak: lostStreak, max_gap: maxGap,
       earn_back: earnBack, next_earn_back_on: nextEarnBackOn,
     } = payload;
 
@@ -426,8 +415,7 @@ const StreakSettlementNewBottomSheet = ({
           {gapDays}일 쉬어서<br />연속이 이어지지 않았어요
         </Header>
         <Hint center className="mt-[8px]">
-          보호권은 빈 날이 <HintB>{maxGap}일 이하</HintB>일 때만 자동으로 쓰여요.<br />
-          가진 보호권 {shieldCnt}개는 그대로 남아 있어요.
+          보호권은 빈 날 <HintB>{maxGap}일</HintB>까지만 쓰여요
         </Hint>
 
         {earnBack ? (
@@ -437,8 +425,7 @@ const StreakSettlementNewBottomSheet = ({
                 연속 {lostStreak}일 다시 잇기
               </div>
               <div className="mt-[4px] text-[12px] leading-[1.55] text-layout-gray-400 dark:text-layout-gray-300">
-                오늘부터 {earnBack.days_required}일 동안 매일 단어 5개를 맞히면<br />
-                {lostStreak}일에 이어서 {earnBack.result_streak}일이 돼요.
+                {earnBack.days_required}일 동안 매일 단어 5개를 맞히면 연속 {earnBack.result_streak}일이 돼요
               </div>
               <div className="flex gap-[8px] mt-[12px]">
                 {Array.from({ length: earnBack.days_required }).map((_, i) => (
@@ -459,7 +446,7 @@ const StreakSettlementNewBottomSheet = ({
         ) : nextEarnBackOn ? (
           <>
             <Hint center className="mt-[10px]">
-              다음 도전은 <HintB>{formatIsoDate(nextEarnBackOn)}</HintB>부터 열려요.
+              다시 잇기는 <HintB>{formatIsoDate(nextEarnBackOn)}</HintB>부터 할 수 있어요
             </Hint>
             <Btns>
               <Btn tone="pri" wide onClick={close}>확인</Btn>
@@ -492,7 +479,6 @@ const StreakSettlementNewBottomSheet = ({
             <span className="font-[800] text-primary-main-600">{streakVal}일</span>
           </span>
         </div>
-        <Hint center className="mt-[10px]">쉰 날은 세지 않아요.</Hint>
         <Btns>
           <Btn tone="pri" wide onClick={close}>확인</Btn>
         </Btns>

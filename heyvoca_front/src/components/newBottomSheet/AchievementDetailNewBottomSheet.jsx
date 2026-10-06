@@ -8,7 +8,7 @@ import NoryeokKing from '../../assets/images/HeyCharacter/NoryeokKing.png';
 import PerseveranceKing from '../../assets/images/HeyCharacter/PerseveranceKing.png';
 import ReadingKing from '../../assets/images/HeyCharacter/ReadingKing.png';
 import MemorizedKing from '../../assets/images/HeyCharacter/MemorizedKing.png';
-import gem from '../../assets/images/gem.png';
+import gem from '../../assets/images/farm/icon-gem.png';
 import { vibrate } from '../../utils/osFunction';
 
 // 업적 타입과 이미지 매핑
@@ -220,7 +220,7 @@ export const AchievementDetailNewBottomSheet = ({ selectedType = '초대왕' }) 
                                                 className="flex items-center justify-center gap-[3px] w-[45px] h-[20px] px-[8px] py-[4px] rounded-[5px]"
                                                 style={{ backgroundColor: '#EAD2FF' }}
                                             >
-                                                <img src={gem} alt="보석" className="w-[13px] h-[12px]" />
+                                                <img src={gem} alt="보석" className="w-[13px] h-[13px] object-contain" />
                                                 <span className="text-[11px] font-[500] text-layout-black text-center tracking-[-0.22px] leading-[1.4]">
                                                     {levelInfo.reward}
                                                 </span>

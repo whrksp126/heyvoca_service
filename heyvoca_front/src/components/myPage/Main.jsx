@@ -20,7 +20,7 @@ import NoryeokKing from '../../assets/images/HeyCharacter/NoryeokKing.png';
 import PerseveranceKing from '../../assets/images/HeyCharacter/PerseveranceKing.png';
 import ReadingKing from '../../assets/images/HeyCharacter/ReadingKing.png';
 import MemorizedKing from '../../assets/images/HeyCharacter/MemorizedKing.png';
-import gemIcon from '../../assets/images/gem.png';
+import gemIcon from '../../assets/images/farm/icon-gem.png';
 import goldenCarrotIcon from '../../assets/images/farm/icon-golden-carrot.png';
 import emptyBookImg from '../../assets/images/voca_book_1.png';
 
@@ -297,7 +297,7 @@ const Main = ({ registerRefresh } = {}) => {
             onMore={() => openSheet(GemNewFullSheet)}
           />
           <div className="flex items-center gap-[12px] p-[16px] rounded-[12px] bg-layout-gray-50 dark:bg-layout-gray-dark">
-            <img src={gemIcon} alt="보석" draggable={false} className="w-[42px] h-[38px] shrink-0 object-contain select-none" />
+            <img src={gemIcon} alt="보석" draggable={false} className="w-[42px] h-[42px] shrink-0 object-contain select-none" />
             <div className="flex-1 min-w-0">
               <div className="text-[11px] font-[600] tracking-[-0.02em] text-layout-gray-300">보유 보석</div>
               <div className="text-[24px] font-[800] leading-[1.15] tracking-[-0.04em] text-layout-black dark:text-layout-white">
