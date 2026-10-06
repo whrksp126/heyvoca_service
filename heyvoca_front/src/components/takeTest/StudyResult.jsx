@@ -1551,7 +1551,7 @@ const StudyResult = () => {
       );
     } else if (currentScreen.type === 'combo') {
       // 콤보 신기록 (AI 추천 테스트) — 최고 기록을 갱신했을 때만 만들어진다(위 push 조건 참고).
-      // 번개 당근이 솟아올라 자리 잡고 콤보 수가 굴러 올라간다
+      // 번개이 솟아올라 자리 잡고 콤보 수가 굴러 올라간다
       content = <ComboRewardSlide maxCombo={currentScreen.data.maxCombo ?? 0} {...sceneProps} />;
     } else if (currentScreen.type === 'achievement') {
       // ⑫ 업적 — 메달 승급

@@ -34,7 +34,7 @@ export const ComboProtectNewBottomSheet = ({ atRiskCombo = 0, protectCost = 1, g
         transition={{ type: 'spring', stiffness: 300, damping: 18 }}
         className="flex items-center justify-center w-[84px] h-[84px]"
       >
-        <ComboIcon n={atRiskCombo} className="w-full h-full" />
+        <ComboIcon className="w-full h-full" />
       </motion.div>
 
       <div className="flex flex-col items-center gap-[6px]">

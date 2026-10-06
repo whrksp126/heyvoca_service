@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+<defs>
+  <filter id="claySide" x="-25%" y="-25%" width="150%" height="150%" color-interpolation-filters="sRGB">
+    <feGaussianBlur in="SourceAlpha" stdDeviation="10" result="h"/>
+    <feTurbulence type="fractalNoise" baseFrequency="0.045" numOctaves="3" seed="11" result="n"/>
+    <feColorMatrix in="n" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  1 0 0 0 0" result="na"/>
+    <feComposite in="h" in2="na" operator="arithmetic" k1="0.09" k2="1" k3="0" k4="0" result="hb"/>
+    <feDiffuseLighting in="hb" surfaceScale="8" diffuseConstant="1.12" lighting-color="#ffffff" result="d">
+      <feDistantLight azimuth="232" elevation="56"/>
+    </feDiffuseLighting>
+    <feColorMatrix in="d" type="matrix" values="0.42 0 0 0 0.58  0 0.74 0 0 0.26  0 0 1 0 0  0 0 0 1 0" result="dw"/>
+    <feComposite in="SourceGraphic" in2="dw" operator="arithmetic" k1="1" k2="0" k3="0" k4="0" result="lit"/>
+    <feSpecularLighting in="hb" surfaceScale="8" specularConstant="0.14" specularExponent="9" lighting-color="#fff6e8" result="s">
+      <feDistantLight azimuth="232" elevation="48"/>
+    </feSpecularLighting>
+    <feComposite in="s" in2="SourceAlpha" operator="in" result="s2"/>
+    <feComposite in="lit" in2="s2" operator="arithmetic" k1="0" k2="1" k3="1" k4="0" result="o"/>
+    <feTurbulence type="fractalNoise" baseFrequency="0.75" numOctaves="2" seed="5" result="f"/>
+    <feColorMatrix in="f" type="matrix" values="1 0 0 0 0  1 0 0 0 0  1 0 0 0 0  0 0 0 0 0.8" result="fg"/>
+    <feBlend in="fg" in2="o" mode="soft-light" result="t"/>
+    <feComposite in="t" in2="SourceAlpha" operator="in"/>
+  </filter>
+  <filter id="clayFace" x="-25%" y="-25%" width="150%" height="150%" color-interpolation-filters="sRGB">
+    <feGaussianBlur in="SourceAlpha" stdDeviation="11" result="h"/>
+    <feTurbulence type="fractalNoise" baseFrequency="0.045" numOctaves="3" seed="11" result="n"/>
+    <feColorMatrix in="n" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  1 0 0 0 0" result="na"/>
+    <feComposite in="h" in2="na" operator="arithmetic" k1="0.1" k2="1" k3="0" k4="0" result="hb"/>
+    <feDiffuseLighting in="hb" surfaceScale="8" diffuseConstant="1.1" lighting-color="#ffffff" result="d">
+      <feDistantLight azimuth="232" elevation="64"/>
+    </feDiffuseLighting>
+    <feColorMatrix in="d" type="matrix" values="0.42 0 0 0 0.58  0 0.74 0 0 0.26  0 0 1 0 0  0 0 0 1 0" result="dw"/>
+    <feComposite in="SourceGraphic" in2="dw" operator="arithmetic" k1="1" k2="0" k3="0" k4="0" result="lit"/>
+    <feSpecularLighting in="hb" surfaceScale="8" specularConstant="0.24" specularExponent="9" lighting-color="#fff6e8" result="s">
+      <feDistantLight azimuth="232" elevation="48"/>
+    </feSpecularLighting>
+    <feComposite in="s" in2="SourceAlpha" operator="in" result="s2"/>
+    <feComposite in="lit" in2="s2" operator="arithmetic" k1="0" k2="1" k3="1" k4="0" result="o"/>
+    <feTurbulence type="fractalNoise" baseFrequency="0.75" numOctaves="2" seed="5" result="f"/>
+    <feColorMatrix in="f" type="matrix" values="1 0 0 0 0  1 0 0 0 0  1 0 0 0 0  0 0 0 0 0.8" result="fg"/>
+    <feBlend in="fg" in2="o" mode="soft-light" result="t"/>
+    <feComposite in="t" in2="SourceAlpha" operator="in"/>
+  </filter>
+  <filter id="claySpark" x="-25%" y="-25%" width="150%" height="150%" color-interpolation-filters="sRGB">
+    <feGaussianBlur in="SourceAlpha" stdDeviation="4" result="h"/>
+    <feTurbulence type="fractalNoise" baseFrequency="0.045" numOctaves="3" seed="11" result="n"/>
+    <feColorMatrix in="n" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  1 0 0 0 0" result="na"/>
+    <feComposite in="h" in2="na" operator="arithmetic" k1="0.02" k2="1" k3="0" k4="0" result="hb"/>
+    <feDiffuseLighting in="hb" surfaceScale="5" diffuseConstant="1.2" lighting-color="#ffffff" result="d">
+      <feDistantLight azimuth="232" elevation="62"/>
+    </feDiffuseLighting>
+    <feColorMatrix in="d" type="matrix" values="0.42 0 0 0 0.58  0 0.74 0 0 0.26  0 0 1 0 0  0 0 0 1 0" result="dw"/>
+    <feComposite in="SourceGraphic" in2="dw" operator="arithmetic" k1="1" k2="0" k3="0" k4="0" result="lit"/>
+    <feSpecularLighting in="hb" surfaceScale="5" specularConstant="0.2" specularExponent="9" lighting-color="#fff6e8" result="s">
+      <feDistantLight azimuth="232" elevation="48"/>
+    </feSpecularLighting>
+    <feComposite in="s" in2="SourceAlpha" operator="in" result="s2"/>
+    <feComposite in="lit" in2="s2" operator="arithmetic" k1="0" k2="1" k3="1" k4="0" result="o"/>
+    <feTurbulence type="fractalNoise" baseFrequency="0.75" numOctaves="2" seed="5" result="f"/>
+    <feColorMatrix in="f" type="matrix" values="1 0 0 0 0  1 0 0 0 0  1 0 0 0 0  0 0 0 0 0.25" result="fg"/>
+    <feBlend in="fg" in2="o" mode="soft-light" result="t"/>
+    <feComposite in="t" in2="SourceAlpha" operator="in"/>
+  </filter>
+  <linearGradient id="gFace" gradientUnits="userSpaceOnUse" x1="200" y1="40" x2="300" y2="484">
+    <stop offset="0" stop-color="#FFDA3E"/><stop offset="0.45" stop-color="#FFB520"/><stop offset="1" stop-color="#F8800F"/>
+  </linearGradient>
+  <linearGradient id="gSide" gradientUnits="userSpaceOnUse" x1="200" y1="40" x2="320" y2="510">
+    <stop offset="0" stop-color="#EC7A16"/><stop offset="0.5" stop-color="#DC5A0E"/><stop offset="1" stop-color="#BE420A"/>
+  </linearGradient>
+  <linearGradient id="gSheen" gradientUnits="userSpaceOnUse" x1="150" y1="40" x2="330" y2="330">
+    <stop offset="0" stop-color="#FFFFFF" stop-opacity="0.8"/><stop offset="0.6" stop-color="#FFFFFF" stop-opacity="0.25"/><stop offset="1" stop-color="#FFFFFF" stop-opacity="0"/>
+  </linearGradient>
+  <filter id="soft" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="6"/></filter>
+  <filter id="soft2" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="1.6"/></filter>
+  <clipPath id="cFace"><path d="M222 40 L384 40 L312 206 L418 206 L168 484 L220 310 L100 310 Z" stroke="#000" stroke-width="14" stroke-linejoin="round"/></clipPath>
+</defs>
+<g transform="rotate(9 256 256) translate(256 256) scale(0.9) translate(-271 -276)">
+<g filter="url(#claySide)"><g fill="url(#gSide)" stroke="url(#gSide)" stroke-width="14" stroke-linejoin="round"><path d="M222 40 L384 40 L312 206 L418 206 L168 484 L220 310 L100 310 Z" transform="translate(20.00 26.00)"/><path d="M222 40 L384 40 L312 206 L418 206 L168 484 L220 310 L100 310 Z" transform="translate(18.46 24.00)"/><path d="M222 40 L384 40 L312 206 L418 206 L168 484 L220 310 L100 310 Z" transform="translate(16.92 22.00)"/><path d="M222 40 L384 40 L312 206 L418 206 L168 484 L220 310 L100 310 Z" transform="translate(15.38 20.00)"/><path d="M222 40 L384 40 L312 206 L418 206 L168 484 L220 310 L100 310 Z" transform="translate(13.85 18.00)"/><path d="M222 40 L384 40 L312 206 L418 206 L168 484 L220 310 L100 310 Z" transform="translate(12.31 16.00)"/><path d="M222 40 L384 40 L312 206 L418 206 L168 484 L220 310 L100 310 Z" transform="translate(10.77 14.00)"/><path d="M222 40 L384 40 L312 206 L418 206 L168 484 L220 310 L100 310 Z" transform="translate(9.23 12.00)"/><path d="M222 40 L384 40 L312 206 L418 206 L168 484 L220 310 L100 310 Z" transform="translate(7.69 10.00)"/><path d="M222 40 L384 40 L312 206 L418 206 L168 484 L220 310 L100 310 Z" transform="translate(6.15 8.00)"/><path d="M222 40 L384 40 L312 206 L418 206 L168 484 L220 310 L100 310 Z" transform="translate(4.62 6.00)"/><path d="M222 40 L384 40 L312 206 L418 206 L168 484 L220 310 L100 310 Z" transform="translate(3.08 4.00)"/><path d="M222 40 L384 40 L312 206 L418 206 L168 484 L220 310 L100 310 Z" transform="translate(1.54 2.00)"/><path d="M222 40 L384 40 L312 206 L418 206 L168 484 L220 310 L100 310 Z" transform="translate(0.00 0.00)"/></g></g>
+<g filter="url(#clayFace)"><path d="M222 40 L384 40 L312 206 L418 206 L168 484 L220 310 L100 310 Z" fill="url(#gFace)" stroke="url(#gFace)" stroke-width="14" stroke-linejoin="round"/></g>
+<g clip-path="url(#cFace)">
+  <path d="M250 330 L418 206 L168 484 Z" fill="#E8560A" opacity="0.22" filter="url(#soft)"/>
+  <path d="M228 62 L362 62 L326 150 L186 150 Z" fill="#FFFFFF" opacity="0.14" filter="url(#soft)"/>
+  <path d="M222 40 L384 40 L312 206 L418 206 L168 484 L220 310 L100 310 Z" fill="none" stroke="url(#gSheen)" stroke-width="9" stroke-linejoin="round" transform="translate(5 6)" filter="url(#soft2)"/>
+</g>
+</g>
+<path d="M452 118 C458.4 143.6 458.4 143.6 484 150 C458.4 156.4 458.4 156.4 452 182 C445.6 156.4 445.6 156.4 420 150 C445.6 143.6 445.6 143.6 452 118 Z" fill="#FFEFB0" stroke="#FFEFB0" stroke-width="6" stroke-linejoin="round" filter="url(#claySpark)"/>
+<path d="M70 396 C74.0 412.0 74.0 412.0 90 416 C74.0 420.0 74.0 420.0 70 436 C66.0 420.0 66.0 420.0 50 416 C66.0 412.0 66.0 412.0 70 396 Z" fill="#FFEFB0" stroke="#FFEFB0" stroke-width="6" stroke-linejoin="round" filter="url(#claySpark)"/>
+</svg>

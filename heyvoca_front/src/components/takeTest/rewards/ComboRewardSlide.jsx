@@ -1,6 +1,6 @@
 // src/components/takeTest/rewards/ComboRewardSlide.jsx
 //
-// 콤보 신기록 — 번개 당근이 아래에서 솟아올라 쿵 자리 잡고, 콤보 수가 굴러 올라간다.
+// 콤보 신기록 — 번개가 아래에서 솟아올라 쿵 자리 잡고, 콤보 수가 굴러 올라간다.
 // 이 슬라이드는 최고 기록을 갱신했을 때만 만들어진다(StudyResult 의 push 조건).
 //
 //   0ms     바닥 빛이 켜진다            select
@@ -14,9 +14,9 @@
 import React, { useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import { feel, useCountUp } from '../../../lib/feel';
-import ComboIcon, { getComboTier } from '../ComboIcon';
+import ComboIcon from '../ComboIcon';
 import { useRewardTimeline } from './useRewardTimeline';
-import { anim, burst, ring, jelly, pulse, clearFx, FX_GOLDS } from './fx';
+import { anim, burst, ring, jelly, pulse, clearFx } from './fx';
 import RewardGlow from './RewardGlow';
 import RewardHint from './RewardHint';
 
@@ -25,14 +25,11 @@ const COUNT_MS = 650;
 const HERO = 200;          // 주인공 상자 한 변
 const C = HERO / 2;        // 상자 중심
 const FLOOR = 170;         // 착지 지점(상자 안 y)
-const FX_COMBO = ['#FFB648', '#F58A22', '#FFE06A', '#F7806A', '#C6E23E', '#FFFFFF'];
+const FX_COMBO = ['#FFDA3E', '#FFB520', '#F8800F', '#FFEFB0', '#FFFFFF'];
 
 const FADE_UP = 'transition-[transform,opacity] duration-300 ease-out motion-reduce:transition-none';
 
 const ComboRewardSlide = ({ maxCombo = 0, reducedMotion, onReady, skipRef }) => {
-  const tier = getComboTier(maxCombo);
-  const colors = tier === 3 ? FX_GOLDS : FX_COMBO;
-
   const [risen, setRisen] = useState(false);
   const [landed, setLanded] = useState(false);
   const [counting, setCounting] = useState(false);
@@ -69,8 +66,8 @@ const ComboRewardSlide = ({ maxCombo = 0, reducedMotion, onReady, skipRef }) => 
           if (instant) return;
           const hero = heroRef.current;
           jelly(iconRef.current, 1.5);
-          burst(hero, C, FLOOR, { n: 16, dist: 120, size: 8, up: 30, dur: 820, colors });
-          ring(hero, C, FLOOR, { size: 260, color: '#FFB648', dur: 650 });
+          burst(hero, C, FLOOR, { n: 16, dist: 120, size: 8, up: 30, dur: 820, colors: FX_COMBO });
+          ring(hero, C, FLOOR, { size: 260, color: '#FFB520', dur: 650 });
           ring(hero, C, FLOOR, { size: 180, color: '#FFFFFF', dur: 560 });
           anim(hero, [{ transform: 'translateY(0)' }, { transform: 'translateY(6px)' }, { transform: 'translateY(-2px)' }, { transform: 'translateY(0)' }], { duration: 260 });
         },
@@ -96,7 +93,7 @@ const ComboRewardSlide = ({ maxCombo = 0, reducedMotion, onReady, skipRef }) => 
     if (!risen) return;
     feel('tap');
     jelly(iconRef.current, 1.1);
-    burst(heroRef.current, C, C, { n: 10, dist: 90, size: 8, colors });
+    burst(heroRef.current, C, C, { n: 10, dist: 90, size: 8, colors: FX_COMBO });
   };
 
   return (
@@ -119,7 +116,7 @@ const ComboRewardSlide = ({ maxCombo = 0, reducedMotion, onReady, skipRef }) => 
             animate={tail && !reducedMotion ? { y: [0, -9, 0], rotate: [-2, 2, -2] } : { y: 0, rotate: 0 }}
             transition={tail && !reducedMotion ? { duration: 2.6, repeat: Infinity, ease: 'easeInOut' } : { duration: 0.2 }}
           >
-            <ComboIcon tier={tier} alt='콤보' className='pointer-events-none h-full w-full' />
+            <ComboIcon className='pointer-events-none h-full w-full' />
           </motion.div>
         </div>
       </div>

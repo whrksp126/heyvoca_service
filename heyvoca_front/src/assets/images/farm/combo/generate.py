@@ -1,14 +1,24 @@
 #!/usr/bin/env python3
-"""콤보 아이콘(번개 당근) SVG 생성기 — 단계 1·2·3.
-사용: python3 gen.py <출력 폴더>
+"""콤보 아이콘(번개) SVG 생성기 — 단계 구분 없이 하나.
+사용: python3 generate.py [출력 폴더] [--png]
+  --png  크롬 헤드리스로 combo.svg 를 combo.png(512px, 투명 배경)로 굽는다.
+
+화면에는 구운 PNG 를 쓴다(SVG 필터는 WebView 마다 결과·비용이 달라서).
+모양은 각진 번개 한 개 — 옆면(두께) + 앞면 + 모서리 하이라이트 + 작은 반짝임 둘.
+재질은 다른 농장 에셋과 같은 클레이 결(알파 높이맵 + 잔요철 + 확산광·약한 반사광)을 쓴다.
 """
-import sys, os
+import sys, os, subprocess, tempfile
 
-OUT = sys.argv[1] if len(sys.argv) > 1 else '.'
+ARGS = [a for a in sys.argv[1:] if not a.startswith('--')]
+OUT = ARGS[0] if ARGS else os.path.dirname(os.path.abspath(__file__))
+BAKE = '--png' in sys.argv
+PNG_SIZE = 512
+CHROME = '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'
 
 
-def clay(fid, blur, scale, grain=0.05, spec=0.32, diff=1.18, elev=56):
-    """클레이 질감 필터 — 알파를 흐려 만든 높이맵에 잔요철을 얹고 확산광·약한 반사광으로 볼록하게 만든다."""
+def clay(fid, blur, scale, grain=0.05, spec=0.32, diff=1.18, elev=56, exp=9, speck=0.8):
+    """클레이 질감 필터 — 알파를 흐려 만든 높이맵에 잔요철을 얹고 확산광·약한 반사광으로 볼록하게 만든 뒤, 고운 알갱이(speck)를 입힌다.
+    그늘은 붉은 쪽을 덜 깎아(dw) 노랑이 올리브색으로 죽지 않고 주황으로 익게 한다."""
     return f'''
   <filter id="{fid}" x="-25%" y="-25%" width="150%" height="150%" color-interpolation-filters="sRGB">
     <feGaussianBlur in="SourceAlpha" stdDeviation="{blur}" result="h"/>
@@ -18,125 +28,88 @@ def clay(fid, blur, scale, grain=0.05, spec=0.32, diff=1.18, elev=56):
     <feDiffuseLighting in="hb" surfaceScale="{scale}" diffuseConstant="{diff}" lighting-color="#ffffff" result="d">
       <feDistantLight azimuth="232" elevation="{elev}"/>
     </feDiffuseLighting>
-    <feComposite in="SourceGraphic" in2="d" operator="arithmetic" k1="1" k2="0" k3="0" k4="0" result="lit"/>
-    <feSpecularLighting in="hb" surfaceScale="{scale}" specularConstant="{spec}" specularExponent="9" lighting-color="#fff6e8" result="s">
+    <feColorMatrix in="d" type="matrix" values="0.42 0 0 0 0.58  0 0.74 0 0 0.26  0 0 1 0 0  0 0 0 1 0" result="dw"/>
+    <feComposite in="SourceGraphic" in2="dw" operator="arithmetic" k1="1" k2="0" k3="0" k4="0" result="lit"/>
+    <feSpecularLighting in="hb" surfaceScale="{scale}" specularConstant="{spec}" specularExponent="{exp}" lighting-color="#fff6e8" result="s">
       <feDistantLight azimuth="232" elevation="48"/>
     </feSpecularLighting>
     <feComposite in="s" in2="SourceAlpha" operator="in" result="s2"/>
     <feComposite in="lit" in2="s2" operator="arithmetic" k1="0" k2="1" k3="1" k4="0" result="o"/>
-    <feComposite in="o" in2="SourceAlpha" operator="in"/>
+    <feTurbulence type="fractalNoise" baseFrequency="0.75" numOctaves="2" seed="5" result="f"/>
+    <feColorMatrix in="f" type="matrix" values="1 0 0 0 0  1 0 0 0 0  1 0 0 0 0  0 0 0 0 {speck}" result="fg"/>
+    <feBlend in="fg" in2="o" mode="soft-light" result="t"/>
+    <feComposite in="t" in2="SourceAlpha" operator="in"/>
   </filter>'''
 
 
-# 번개 당근 몸통 — 위가 넓고 아래로 뾰족해지는 지그재그
-BOLT = 'M200 152 L334 152 L294 246 L374 246 L220 462 L250 318 L156 318 Z'
-# 불꽃(뒤 배경) — 가운데 큰 혀 + 오른쪽 작은 혀
-FLAME_OUT = ('M190 22 C232 70 300 98 352 152 C372 174 388 200 396 228 '
-             'C410 206 418 178 412 148 C464 202 484 282 462 362 '
-             'C438 448 356 502 256 502 C150 502 64 432 60 330 '
-             'C56 242 108 184 134 122 C148 90 166 54 190 22 Z')
-FLAME_IN_TR = 'translate(262 496) scale(0.7) translate(-256 -502)'
-
-
-def leaf(cx, cy, rx, ry, rot, px, py):
-    """잎 한 장 — 통통한 물방울 꼴 + 가운데 잎맥 홈. (px,py)는 회전축(줄기 뿌리)."""
-    top = cy - ry
-    bot = cy + ry
-    d = (f'M{cx} {top} C{cx + rx * 1.25} {top + ry * 0.35} {cx + rx * 1.05} {bot - ry * 0.25} {cx} {bot + 14} '
-         f'C{cx - rx * 1.05} {bot - ry * 0.25} {cx - rx * 1.25} {top + ry * 0.35} {cx} {top} Z')
-    vein = f'M{cx} {top + 14} L{cx} {bot + 4}'
-    return d, vein, f'rotate({rot} {px} {py})'
+# 번개 앞면 — 위가 넓고 아래로 길게 뾰족해지는 각진 지그재그
+BOLT = 'M222 40 L384 40 L312 206 L418 206 L168 484 L220 310 L100 310 Z'
+JOIN = 14            # 모서리를 살짝만 굴리는 외곽선 두께(클레이 느낌은 남기되 각은 살린다)
+DEPTH = (20, 26)     # 옆면이 빠지는 방향·깊이(오른쪽 아래)
+STEPS = 13           # 옆면을 채우는 겹 수
+TILT = 9             # 전체 기울기(도)
 
 
 def sparkle(x, y, r):
-    k = r * 0.22
+    k = r * 0.2
     return (f'M{x} {y - r} C{x + k} {y - k} {x + k} {y - k} {x + r} {y} '
             f'C{x + k} {y + k} {x + k} {y + k} {x} {y + r} '
             f'C{x - k} {y + k} {x - k} {y + k} {x - r} {y} '
             f'C{x - k} {y - k} {x - k} {y - k} {x} {y - r} Z')
 
 
-PAL = {
-    1: dict(b0='#FFB648', b1='#F58A22', b2='#DC5F12', crease='#C2500C'),
-    2: dict(b0='#FFC550', b1='#F9982A', b2='#E26A14', crease='#C4560E'),
-    3: dict(b0='#FFE06A', b1='#F8C226', b2='#E09410', crease='#C27A08'),
-}
-
-
-def build(tier):
-    p = PAL[tier]
-    parts = []
-    parts.append(f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
-<defs>{clay('clayBolt', 13, 11, elev=60)}{clay('clayLeaf', 8, 9, grain=0.04)}{clay('claySpark', 4, 5, grain=0.02, spec=0.2, diff=1.2, elev=62)}{clay('clayFlame', 20, 15, grain=0.06, spec=0.22)}{clay('clayFlameIn', 15, 12, grain=0.06, spec=0.22)}
-  <linearGradient id="gBolt" x1="0.15" y1="0" x2="0.8" y2="1">
-    <stop offset="0" stop-color="{p['b0']}"/><stop offset="0.5" stop-color="{p['b1']}"/><stop offset="1" stop-color="{p['b2']}"/>
+def build():
+    dx, dy = DEPTH
+    side = ''.join(
+        f'<path d="{BOLT}" transform="translate({dx * i / STEPS:.2f} {dy * i / STEPS:.2f})"/>'
+        for i in range(STEPS, -1, -1))
+    parts = [f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+<defs>{clay('claySide', 10, 8, grain=0.09, spec=0.14, diff=1.12)}{clay('clayFace', 11, 8, grain=0.1, spec=0.24, diff=1.1, elev=64, exp=9)}{clay('claySpark', 4, 5, grain=0.02, spec=0.2, diff=1.2, elev=62, speck=0.25)}
+  <linearGradient id="gFace" gradientUnits="userSpaceOnUse" x1="200" y1="40" x2="300" y2="484">
+    <stop offset="0" stop-color="#FFDA3E"/><stop offset="0.45" stop-color="#FFB520"/><stop offset="1" stop-color="#F8800F"/>
   </linearGradient>
-  <linearGradient id="gLeaf" x1="0.2" y1="0" x2="0.8" y2="1">
-    <stop offset="0" stop-color="#C6E23E"/><stop offset="0.55" stop-color="#96C81C"/><stop offset="1" stop-color="#5E9E08"/>
+  <linearGradient id="gSide" gradientUnits="userSpaceOnUse" x1="200" y1="40" x2="320" y2="510">
+    <stop offset="0" stop-color="#EC7A16"/><stop offset="0.5" stop-color="#DC5A0E"/><stop offset="1" stop-color="#BE420A"/>
   </linearGradient>
-  <linearGradient id="gFlameOut" x1="0.2" y1="0" x2="0.75" y2="1">
-    <stop offset="0" stop-color="#FF9A7E"/><stop offset="0.55" stop-color="#F56E55"/><stop offset="1" stop-color="#DC4A3A"/>
+  <linearGradient id="gSheen" gradientUnits="userSpaceOnUse" x1="150" y1="40" x2="330" y2="330">
+    <stop offset="0" stop-color="#FFFFFF" stop-opacity="0.8"/><stop offset="0.6" stop-color="#FFFFFF" stop-opacity="0.25"/><stop offset="1" stop-color="#FFFFFF" stop-opacity="0"/>
   </linearGradient>
-  <linearGradient id="gFlameIn" x1="0.2" y1="0" x2="0.75" y2="1">
-    <stop offset="0" stop-color="#FFB25E"/><stop offset="0.6" stop-color="#FA8A34"/><stop offset="1" stop-color="#E8641C"/>
-  </linearGradient>
-  <linearGradient id="gFlameSolo" x1="0.2" y1="0" x2="0.75" y2="1">
-    <stop offset="0" stop-color="#FFAE92"/><stop offset="0.55" stop-color="#F7806A"/><stop offset="1" stop-color="#E25A48"/>
-  </linearGradient>
-  <filter id="soft" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="7"/></filter>
-  <filter id="soft3" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="3"/></filter>
-  <filter id="ao" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="9"/></filter>
-  <clipPath id="cFlame"><path d="{FLAME_OUT}"/></clipPath>
-  <clipPath id="cBolt"><path d="{BOLT}" stroke="#000" stroke-width="48" stroke-linejoin="round"/></clipPath>
+  <filter id="soft" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="6"/></filter>
+  <filter id="soft2" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="1.6"/></filter>
+  <clipPath id="cFace"><path d="{BOLT}" stroke="#000" stroke-width="{JOIN}" stroke-linejoin="round"/></clipPath>
 </defs>
-<g transform="translate(256 256) scale(0.965) translate(-256 -262)">''')
+<g transform="rotate({TILT} 256 256) translate(256 256) scale(0.9) translate(-271 -276)">''']
 
-    # ── 뒤 불꽃 ──
-    if tier == 2:
-        parts.append(f'<g filter="url(#clayFlame)"><path d="{FLAME_OUT}" fill="url(#gFlameSolo)" stroke="url(#gFlameSolo)" stroke-width="10" stroke-linejoin="round"/></g>')
-    if tier == 3:
-        parts.append(f'<g filter="url(#clayFlame)"><path d="{FLAME_OUT}" fill="url(#gFlameOut)" stroke="url(#gFlameOut)" stroke-width="10" stroke-linejoin="round"/></g>')
-        parts.append(f'<g transform="{FLAME_IN_TR}"><path d="{FLAME_OUT}" fill="#9E2A1E" opacity="0.30" filter="url(#ao)" transform="translate(6 10)"/></g>')
-        parts.append(f'<g filter="url(#clayFlameIn)"><g transform="{FLAME_IN_TR}"><path d="{FLAME_OUT}" fill="url(#gFlameIn)" stroke="url(#gFlameIn)" stroke-width="10" stroke-linejoin="round"/></g></g>')
-
-    body_tr = {1: 'translate(-9 12)', 2: 'translate(262 296) scale(0.93) translate(-262 -256)', 3: 'translate(262 296) scale(0.93) translate(-262 -256)'}[tier]
-    # ── 번개 당근이 불꽃 위에 드리우는 그림자(불꽃 밖으로는 새지 않게 자른다) ──
-    if tier > 1:
-        parts.append(f'<g clip-path="url(#cFlame)"><g transform="{body_tr}"><path d="{BOLT}" fill="#7A1E10" stroke="#7A1E10" stroke-width="48" stroke-linejoin="round" opacity="0.30" filter="url(#ao)" transform="translate(7 12)"/></g></g>')
-    parts.append(f'<g transform="{body_tr}">')
-
-    # ── 잎 ──
-    leaves = [
-        leaf(270, 78, 30, 40, -40, 268, 150),
-        leaf(270, 78, 30, 40, 40, 268, 150),
-        leaf(268, 62, 33, 46, 0, 268, 150),
-    ]
-    for d, vein, tr in leaves:
-        parts.append(f'<g transform="{tr}"><g filter="url(#clayLeaf)"><path d="{d}" fill="url(#gLeaf)"/>'
-                     f'<path d="{vein}" stroke="#5E9E08" stroke-width="5" stroke-linecap="round" opacity="0.55" fill="none"/></g></g>')
-
-    # ── 번개 당근 ──
-    parts.append(f'<g filter="url(#clayBolt)"><path d="{BOLT}" fill="url(#gBolt)" stroke="url(#gBolt)" stroke-width="48" stroke-linejoin="round"/></g>')
-    # 당근 주름 + 잎 밑 그늘 + 넓은 하이라이트 (몸통 안으로 자른다)
-    parts.append(f'''<g clip-path="url(#cBolt)">
-  <ellipse cx="268" cy="132" rx="62" ry="16" fill="{p['crease']}" opacity="0.38" filter="url(#soft)"/>
-  <path d="M196 204 q34 12 70 6" stroke="{p['crease']}" stroke-width="7" stroke-linecap="round" fill="none" opacity="0.42" filter="url(#soft3)"/>
-  <path d="M256 292 q36 12 76 2" stroke="{p['crease']}" stroke-width="7" stroke-linecap="round" fill="none" opacity="0.38" filter="url(#soft3)"/>
-  <path d="M238 380 q20 8 42 2" stroke="{p['crease']}" stroke-width="6" stroke-linecap="round" fill="none" opacity="0.34" filter="url(#soft3)"/>
-  <path d="M206 172 L300 172" stroke="#FFFFFF" stroke-width="20" stroke-linecap="round" opacity="0.20" filter="url(#soft)"/>
-  <path d="M222 190 L196 290" stroke="#FFFFFF" stroke-width="16" stroke-linecap="round" opacity="0.14" filter="url(#soft)"/>
+    # ── 옆면(두께) ──
+    parts.append(f'<g filter="url(#claySide)"><g fill="url(#gSide)" stroke="url(#gSide)" stroke-width="{JOIN}" stroke-linejoin="round">{side}</g></g>')
+    # ── 앞면 ──
+    parts.append(f'<g filter="url(#clayFace)"><path d="{BOLT}" fill="url(#gFace)" stroke="url(#gFace)" stroke-width="{JOIN}" stroke-linejoin="round"/></g>')
+    # 앞면 안쪽 — 빛 받는 모서리 선 + 넓은 광택 + 아래 끝 그늘
+    parts.append(f'''<g clip-path="url(#cFace)">
+  <path d="M250 330 L418 206 L168 484 Z" fill="#E8560A" opacity="0.22" filter="url(#soft)"/>
+  <path d="M228 62 L362 62 L326 150 L186 150 Z" fill="#FFFFFF" opacity="0.14" filter="url(#soft)"/>
+  <path d="{BOLT}" fill="none" stroke="url(#gSheen)" stroke-width="9" stroke-linejoin="round" transform="translate(5 6)" filter="url(#soft2)"/>
 </g>''')
-
     parts.append('</g>')
-    # ── 반짝임(3단계) ──
-    if tier == 3:
-        for x, y, r in [(92, 96, 30), (440, 70, 20), (452, 452, 16)]:
-            parts.append(f'<path d="{sparkle(x, y, r)}" fill="#FFF3CF" stroke="#FFF3CF" stroke-width="6" stroke-linejoin="round" filter="url(#claySpark)"/>')
-    parts.append('</g></svg>')
+    # ── 반짝임 ──
+    for x, y, r in [(452, 150, 32), (70, 416, 20)]:
+        parts.append(f'<path d="{sparkle(x, y, r)}" fill="#FFEFB0" stroke="#FFEFB0" stroke-width="6" stroke-linejoin="round" filter="url(#claySpark)"/>')
+    parts.append('</svg>')
     return '\n'.join(parts)
 
 
-for t in (1, 2, 3):
-    with open(os.path.join(OUT, f'combo-{t}.svg'), 'w') as f:
-        f.write(build(t))
+svg_path = os.path.join(OUT, 'combo.svg')
+with open(svg_path, 'w') as f:
+    f.write(build())
+
+if BAKE:
+    with tempfile.TemporaryDirectory() as tmp:
+        page = os.path.join(tmp, 'bake.html')
+        with open(page, 'w') as f:
+            f.write(f'<!doctype html><html><body style="margin:0;background:transparent">'
+                    f'<img src="file://{os.path.abspath(svg_path)}" width="{PNG_SIZE}" height="{PNG_SIZE}" style="display:block"></body></html>')
+        subprocess.run([CHROME, '--headless=new', '--hide-scrollbars', '--force-device-scale-factor=1',
+                        f'--window-size={PNG_SIZE},{PNG_SIZE}', '--default-background-color=00000000',
+                        f'--screenshot={os.path.join(OUT, "combo.png")}', f'file://{page}'],
+                       check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 print('ok')

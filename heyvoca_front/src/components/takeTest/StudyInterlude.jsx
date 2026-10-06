@@ -1,6 +1,6 @@
 // src/components/takeTest/StudyInterlude.jsx
 //
-// 학습 중 전체 화면 연출(연출만 — 보상 지급·서버 호출 없음). 콤보만 아이콘(번개 당근)을 얹고 나머지는 타이포그래피만 쓴다.
+// 학습 중 전체 화면 연출(연출만 — 보상 지급·서버 호출 없음). 콤보만 아이콘(번개)을 얹고 나머지는 타이포그래피만 쓴다.
 //   ComboInterlude  콤보 마일스톤(COMBO_MILESTONE_STEP 의 배수마다) 직후 문제 사이에 끼는 인터루드.
 //   PhaseInterlude  학습 구간 경계 안내 — '실전 문장으로 학습해봐요' / '틀린 문제를 복습해봐요'.
 //   CompleteCut     세션이 끝난 뒤 결과 화면으로 가기 전 '학습 완료' 한 컷. 사선 띠 4개가 완료 효과음의
@@ -45,8 +45,8 @@ const PHRASES = [
   ['놀라운 몰입이에요', '이대로 쭉 가요', '거침없는 연속 정답이에요'],
 ];
 const pickPhrase = (milestone) => {
-  const tier = Math.min(PHRASES.length - 1, Math.max(0, Math.floor(milestone / COMBO_MILESTONE_STEP) - 1));
-  const list = PHRASES[tier];
+  const level = Math.min(PHRASES.length - 1, Math.max(0, Math.floor(milestone / COMBO_MILESTONE_STEP) - 1));
+  const list = PHRASES[level];
   return list[Math.floor(Math.random() * list.length)];
 };
 
@@ -195,7 +195,7 @@ export const ComboInterlude = ({ n, milestone = COMBO_MILESTONE_STEP, onDone, du
     <InterludeShell
       tone="combo"
       hero
-      icon={<ComboIcon n={milestone} className="h-full w-full" />}
+      icon={<ComboIcon className="h-full w-full" />}
       title={`${n} 콤보`}
       sub={phrase}
       cue="bonus"
