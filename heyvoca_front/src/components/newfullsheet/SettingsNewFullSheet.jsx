@@ -1,7 +1,7 @@
 import React from 'react';
 import {
-  HandHeart, CircleHalf, Quotes, SpeakerHigh, Bell,
-  Plant, Drop, Flask, FileText, Lock, Info, Translate,
+  CircleHalf, Quotes, SpeakerHigh, Bell,
+  Plant, Flask, FileText, Lock, Info, Translate,
 } from '@phosphor-icons/react';
 import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
 import { useUser } from '../../context/UserContext';
@@ -28,7 +28,8 @@ const PRIVACY_URL = 'https://heyvoca.ghmate.com/privacy-policy';
 
 /**
  * 설정 — 마이페이지 우상단 기어에서 들어온다 (시안 설정 1절 ①).
- * 기존 그룹(기기 관리 · 학습 관리 · 실험실 · 정보)을 그대로 두고 맨 위에 농장 그룹을 얹었다.
+ * 그룹은 기기 관리 · 학습 관리 · 실험실 · 정보 넷이다.
+ * 같은 시트를 여는 줄은 하나로 합쳤다 — 돌봄 알림은 '알림', 새 단어·복습량은 '하루 학습량'.
  * 이 화면에는 분홍이 0개다 — 값이 전부 회색 텍스트다 (시안 6절).
  */
 const SettingsNewFullSheet = () => {
@@ -57,21 +58,8 @@ const SettingsNewFullSheet = () => {
       <SheetBar title="설정" />
 
       <div className="flex-1 overflow-y-auto px-[16px] pb-[20px]">
-        {/* ── 농장 — 기획안이 "설정에서만 바꾼다"고 못 박은 항목들 (시안 2절) ──
-            하루 도구 구매 한도 항목은 연속 학습 보호권 개편으로 제거했다
-            (계약 scratchpad/streak_shield_contract.md §1 "보석 하루 사용 한도 완전 제거"). */}
-        <GroupLabel first>농장</GroupLabel>
-        <SettingRow
-          first
-          icon={<HandHeart size={iconSize} />}
-          title="돌봄 알림"
-          sub="시들거나 썩기 전에 알려드려요"
-          value={isCareNotifyOn(farm) ? '켜짐' : '꺼짐'}
-          onClick={() => openSheet(PushNotificationsNewFullSheet)}
-        />
-
         {/* ── 기기 관리 ── */}
-        <GroupLabel>기기 관리</GroupLabel>
+        <GroupLabel first>기기 관리</GroupLabel>
         <SettingRow
           first
           icon={<CircleHalf size={iconSize} />}
@@ -99,25 +87,24 @@ const SettingsNewFullSheet = () => {
           title="음성"
           onClick={() => openSheet(VoiceSettingsNewFullSheet)}
         />
+        {/* 돌봄 알림(물주기 · 시듦 · 부패 · 연속 위험)도 이 줄에서 들어간다 — 값은 그 묶음의 켜짐 여부다.
+            하루 도구 구매 한도 항목은 연속 학습 보호권 개편으로 제거했다
+            (계약 scratchpad/streak_shield_contract.md §1 "보석 하루 사용 한도 완전 제거"). */}
         <SettingRow
           icon={<Bell size={iconSize} />}
-          title="푸시 알림"
+          title="알림"
+          sub="돌봄 알림 · 주간 요약 · 혜택 소식"
+          value={isCareNotifyOn(farm) ? '돌봄 켜짐' : '돌봄 꺼짐'}
           onClick={() => openSheet(PushNotificationsNewFullSheet)}
         />
 
-        {/* ── 학습 관리 — 새 단어 수만 있던 자리에 복습량이 붙는다 (시안 1절 ③) ── */}
+        {/* ── 학습 관리 — 새 단어 수와 복습량을 한 줄에 요약한다(둘 다 '학습 설정' 시트에서 바꾼다) ── */}
         <GroupLabel>학습 관리</GroupLabel>
         <SettingRow
           first
           icon={<Plant size={iconSize} />}
-          title="하루 새 단어"
-          value={newLimit === 0 ? '무제한' : `${newLimit}개`}
-          onClick={() => openSheet(DailyNewLimitNewFullSheet)}
-        />
-        <SettingRow
-          icon={<Drop size={iconSize} />}
-          title="하루 복습량"
-          value={farm.reviewAuto ? '자동' : '직접'}
+          title="하루 학습량"
+          value={`새 단어 ${newLimit === 0 ? '무제한' : `${newLimit}개`} · 복습 ${farm.reviewAuto ? '자동' : '직접'}`}
           onClick={() => openSheet(DailyNewLimitNewFullSheet)}
         />
 

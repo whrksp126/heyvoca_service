@@ -2,8 +2,11 @@
 //
 // 농장 방문 화면의 월 달력.
 //
-//   연속 띠   이어진 날(불꽃 · 보호권)끼리 띠로 잇는다. 주가 바뀌면 줄 끝까지 뻗어 다음 줄로 넘어간다
-//   칸        all 진한 칸 · part 옅은 칸 · shield 민트 점선 칸(보호권 그림) · 쉰 날은 숫자만
+//   연속 띠   이어진 날(all · part · shield)은 같은 색 · 같은 높이의 띠 한 줄로 잇는다. 끊긴 날에서만
+//             끊기고, 띠의 시작 · 끝만 둥글다. 주가 바뀌면 줄 끝에서 반듯하게 잘리고 다음 줄 첫 칸에서
+//             반듯하게 이어진다(달이 바뀌는 1일 · 말일도 같다) — 둥근 끝은 "여기서 시작 · 끝"만 뜻한다
+//   표식      상태는 띠의 색이 아니라 띠 위 표식으로 구분한다 — 찬 불꽃 · 작은 불씨 · 보호권 그림
+//             (streak/StreakMark.jsx 가 정본). 쉰 날은 숫자만
 //   오늘      테두리가 아니라 날짜 숫자를 검은 알약에 담아 표시한다 — 선택 테두리와 겹쳐
 //             이중 테두리가 되던 문제를 없앤다. 선택은 분홍 테두리 하나이고 칸 사이를 미끄러져 옮겨 간다
 //   줄 높이   42px 고정 — 정사각 칸이라 빈 주가 크게 비어 보이던 여백을 줄였다
@@ -13,12 +16,11 @@ import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import { CaretLeft, CaretRight } from '@phosphor-icons/react';
 import { haptic, SPRING } from '../../lib/feel';
-import { CROP_ASSETS } from '../farm/CropImage';
 import { burst, jelly } from '../takeTest/rewards/fx';
-import StreakFlame, { FLAME_SPARKS } from './StreakFlame';
+import { FLAME_SPARKS } from './StreakFlame';
+import StreakMark, { STREAK_BAND_CLASS, STREAK_LIT } from './StreakMark';
 
 const DOW = ['일', '월', '화', '수', '목', '금', '토'];
-const LIT = new Set(['all', 'part', 'shield']);
 
 const pad = (n) => String(n).padStart(2, '0');
 export const ymd = (y, m, d) => `${y}-${pad(m)}-${pad(d)}`;
@@ -29,7 +31,7 @@ const shiftDay = (y, m, d, offset) => {
 
 /**
  * 셀 상태 — 홈 1주 불꽃 줄과 같은 규칙.
- *   all 오늘 할 일 모두(진함) · part 일부(연함, 연속 인정만) · shield 보호권으로 지킴 · miss 쉰 날
+ *   all 오늘 할 일 모두 · part 일부(연속 인정만) · shield 보호권으로 지킴 · miss 쉰 날
  * 보호권은 학습하지 않은 날에만 서게 되므로(기획 11.3) 자격을 먼저 본다.
  * `daily_mission_complete` 가 없는 구버전 응답은 qualified 인 날을 "일부"로 낮춰 보여준다.
  */
@@ -40,18 +42,11 @@ export const cellState = (info) => {
   return 'miss';
 };
 
-const DISC_CLASS = {
-  all: 'bg-streak-all shadow-[inset_0_-2px_0_rgba(0,0,0,.07),inset_0_1.5px_0_rgba(255,255,255,.45)] dark:shadow-[inset_0_-2px_0_rgba(0,0,0,.25)]',
-  part: 'bg-streak-part',
-  shield: 'bg-secondary-mint-100 dark:bg-secondary-mint-dark border-[1.5px] border-dashed border-secondary-mint-500',
-  miss: '',
-};
-
 const DayCell = ({ cell, isSelected, intro, index, reducedMotion, onSelect }) => {
   const rootRef = useRef(null);
   const discRef = useRef(null);
   const { state, isToday, isFuture } = cell;
-  const lit = LIT.has(state);
+  const lit = STREAK_LIT.has(state);
 
   const handleClick = () => {
     haptic('selection');
@@ -80,34 +75,45 @@ const DayCell = ({ cell, isSelected, intro, index, reducedMotion, onSelect }) =>
       aria-label={`${cell.day}일`}
       aria-pressed={isSelected}
       className="relative flex h-[42px] items-center justify-center"
-      initial={intro && !reducedMotion ? { opacity: 0, scale: 0.6 } : false}
-      animate={{ opacity: 1, scale: 1 }}
-      transition={intro && !reducedMotion ? { ...SPRING.soft, delay: 0.1 + index * 0.012 } : { duration: 0 }}
+      initial={intro && !reducedMotion ? { opacity: 0 } : false}
+      animate={{ opacity: 1 }}
+      transition={intro && !reducedMotion ? { duration: 0.2, delay: 0.1 + index * 0.012 } : { duration: 0 }}
     >
-      {/* 연속 띠 — 앞날 · 뒷날과 이어지는 반쪽씩 */}
-      {cell.bandLeft && <span aria-hidden className="absolute left-0 right-1/2 top-[2px] h-[38px] bg-secondary-yellow-200 dark:bg-streak-part" />}
-      {cell.bandRight && <span aria-hidden className="absolute left-1/2 right-0 top-[2px] h-[38px] bg-secondary-yellow-200 dark:bg-streak-part" />}
+      {/* 연속 띠 한 토막 — 이어진 쪽은 칸 끝까지 반듯하게 뻗어 옆 칸 토막과 맞붙고,
+          띠가 시작 · 끝나는 쪽만 칸 가운데 원(지름 = 띠 높이)에 맞춰 둥글게 닫는다 */}
+      {lit && (
+        <span
+          aria-hidden
+          className={`
+            absolute top-[3px] h-[36px]
+            ${STREAK_BAND_CLASS}
+            ${cell.bandLeft ? 'left-0' : 'left-[calc(50%-18px)] rounded-l-full'}
+            ${cell.bandRight ? '-right-px' : 'right-[calc(50%-18px)] rounded-r-full'}
+          `}
+        />
+      )}
 
-      <span
-        ref={discRef}
-        className={`
-          relative flex h-[38px] w-[38px] flex-col items-center justify-center gap-[2px] rounded-[13px] leading-none
-          ${DISC_CLASS[state]}
-        `}
+      {/* 등장할 때 통 튀는 것은 숫자 · 표식뿐이다 — 띠까지 같이 줄였다 키우면 토막 사이가 벌어져 보인다 */}
+      <motion.span
+        className="relative"
+        initial={intro && !reducedMotion ? { scale: 0.6 } : false}
+        animate={{ scale: 1 }}
+        transition={intro && !reducedMotion ? { ...SPRING.soft, delay: 0.1 + index * 0.012 } : { duration: 0 }}
       >
-        <span className={`tabular-nums ${numClass}`}>{cell.day}</span>
-        {state === 'all' && <StreakFlame days={7} lit size={17} alive={isToday} />}
-        {state === 'part' && <StreakFlame days={1} lit size={17} alive={isToday} />}
-        {state === 'shield' && (
-          <img src={CROP_ASSETS.shield} alt="" draggable={false} className="h-[15px] w-[15px] select-none object-contain" />
-        )}
-      </span>
+        <span
+          ref={discRef}
+          className="flex h-[36px] w-[36px] flex-col items-center justify-center gap-[1px] leading-none"
+        >
+          <span className={`tabular-nums ${numClass}`}>{cell.day}</span>
+          {lit && <StreakMark status={state} size={17} alive={isToday} />}
+        </span>
+      </motion.span>
 
       {isSelected && (
         <motion.span
           layoutId="streak-month-selected"
           aria-hidden
-          className="pointer-events-none absolute left-1/2 top-1/2 -ml-[21px] -mt-[21px] h-[42px] w-[42px] rounded-[15px] border-[2px] border-primary-main-600"
+          className="pointer-events-none absolute left-1/2 top-1/2 -ml-[21px] -mt-[21px] h-[42px] w-[42px] rounded-full border-[2px] border-primary-main-600"
           transition={reducedMotion ? { duration: 0 } : SPRING.snappy}
         />
       )}
@@ -155,7 +161,7 @@ const StreakMonthCalendar = ({ view, byDate, today, selectedDate, canPrev, canNe
     const firstDow = new Date(year, month - 1, 1).getDay();
     const daysInMonth = new Date(year, month, 0).getDate();
     const rows = Math.ceil((firstDow + daysInMonth) / 7);
-    const litOn = (date) => date <= today && LIT.has(cellState(byDate[date]));
+    const litOn = (date) => date <= today && STREAK_LIT.has(cellState(byDate[date]));
 
     const out = [];
     for (let i = 0; i < rows * 7; i += 1) {
@@ -164,16 +170,17 @@ const StreakMonthCalendar = ({ view, byDate, today, selectedDate, canPrev, canNe
       const date = ymd(year, month, day);
       const isFuture = date > today;
       const state = isFuture ? 'miss' : cellState(byDate[date]);
-      const lit = LIT.has(state);
+      const lit = STREAK_LIT.has(state);
       out.push({
         day,
         date,
         state,
         isFuture,
         isToday: date === today,
-        // 띠는 이 달 안에서만 잇는다 — 1일 · 말일에서 바깥으로 반쪽만 삐져나오지 않게
-        bandLeft: lit && day > 1 && litOn(shiftDay(year, month, day, -1)),
-        bandRight: lit && day < daysInMonth && litOn(shiftDay(year, month, day, 1)),
+        // 달이 바뀌는 1일 · 말일도 앞뒤 날을 그대로 본다 — 지난달에서 이어 온 연속이
+        // 1일에서 새로 시작한 것처럼 둥글게 닫히지 않게(조회 창 밖의 날은 모르므로 닫는다)
+        bandLeft: lit && litOn(shiftDay(year, month, day, -1)),
+        bandRight: lit && litOn(shiftDay(year, month, day, 1)),
       });
     }
     return out;

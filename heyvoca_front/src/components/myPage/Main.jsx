@@ -189,8 +189,6 @@ const Main = ({ registerRefresh } = {}) => {
           <AchievementBoard
             goals={goals}
             criteria={achievementCriteria}
-            achieved={achievedLv}
-            total={totalLv}
             onOpen={openAchievementSheet}
           />
         </div>

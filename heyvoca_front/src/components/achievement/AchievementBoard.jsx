@@ -1,6 +1,6 @@
 // src/components/achievement/AchievementBoard.jsx
 //
-// 마이페이지 '나의 업적' — 전체 진행 막대 한 줄 + 업적 6칸.
+// 마이페이지 '나의 업적' — 업적 6칸. 전체 달성 수('N / M 달성')는 구역 제목 옆 글자가 맡는다.
 // 한 칸은 메달(테두리 게이지 = 달성 레벨 / 최고 레벨)과 이름, 그리고 다음에 할 일 한 줄이다.
 //   달성 중     "다음  학습 200회"
 //   아직 0레벨  "첫 목표  친구 초대 1명" (메달은 회색 + 자물쇠)
@@ -79,40 +79,21 @@ const AchievementCell = ({ goal, levels, index, reducedMotion, onOpen }) => {
   );
 };
 
-const AchievementBoard = ({ goals = [], criteria = {}, achieved = 0, total = 0, onOpen }) => {
+const AchievementBoard = ({ goals = [], criteria = {}, onOpen }) => {
   const reducedMotion = useReducedMotion();
-  const ratio = total > 0 ? Math.min(1, achieved / total) : 0;
 
   return (
-    <div className="flex flex-col gap-[10px]">
-      {/* 전체 진행 — 달성한 레벨 합 / 전체 레벨 수 */}
-      {total > 0 && (
-        <div className="flex items-center gap-[8px]">
-          <div className="relative h-[8px] flex-1 overflow-hidden rounded-full bg-layout-gray-50 dark:bg-layout-gray-dark">
-            <motion.div
-              className="absolute inset-y-0 left-0 w-full origin-left rounded-full bg-[linear-gradient(90deg,#FFAAE6,var(--primary-main-600)_55%,#CD8DFF)]"
-              initial={{ scaleX: reducedMotion ? ratio : 0 }}
-              animate={{ scaleX: ratio }}
-              transition={{ duration: 0.9, delay: 0.1, ease: [0.3, 0.7, 0.3, 1] }}
-            />
-          </div>
-          <span className="shrink-0 text-[11px] font-[800] tabular-nums tracking-[-0.02em] text-primary-main-600 dark:text-[#FFAAE6]">
-            {Math.round(ratio * 100)}%
-          </span>
-        </div>
-      )}
-      <div className="grid grid-cols-3 gap-[8px]">
-        {goals.map((goal, index) => (
-          <AchievementCell
-            key={goal.type}
-            goal={goal}
-            levels={criteria?.[goal.type]}
-            index={index}
-            reducedMotion={reducedMotion}
-            onOpen={onOpen}
-          />
-        ))}
-      </div>
+    <div className="grid grid-cols-3 gap-[8px]">
+      {goals.map((goal, index) => (
+        <AchievementCell
+          key={goal.type}
+          goal={goal}
+          levels={criteria?.[goal.type]}
+          index={index}
+          reducedMotion={reducedMotion}
+          onOpen={onOpen}
+        />
+      ))}
     </div>
   );
 };

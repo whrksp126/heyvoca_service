@@ -6,7 +6,7 @@
 //   ① 연속 요약   큰 불꽃(누르면 통 튄다) + 굴러 올라가는 연속 일수 + 최고 기록 대비 진행 막대 + 작은 수치 3칸
 //   ② 월 달력     StreakMonthCalendar — 연속 띠 · 달 넘김 전환 · 날짜 선택
 //   ③ 선택한 날   날짜를 누르면 설명이 부드럽게 바뀐다(맞힌 개수가 있으면 막대로도 보여준다)
-//   ④ 범례
+//   ④ 범례        띠 위 표식 3종(찬 불꽃 · 윤곽선 불꽃 · 방패) — streak/StreakMark.jsx
 //
 // 기획 11.5 — 끊겼을 때의 연출은 이 화면에 없다. 큰 빨간 0 도, 복구 유도도 두지 않는다.
 // 연속 보상 목록(3일/7일/14일 …)은 2026-10-07 QA 로 이 화면에서 뺐다 — 지급은 서버가 그대로 한다.
@@ -14,8 +14,8 @@ import React, { useMemo, useRef, useState } from 'react';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import { MoonStars } from '@phosphor-icons/react';
 import { haptic, SPRING, useCountUp } from '../../lib/feel';
-import { CROP_ASSETS } from '../farm/CropImage';
 import StreakFlame from './StreakFlame';
+import StreakMark, { StreakLegend } from './StreakMark';
 import StreakMonthCalendar, { cellState, ymd } from './StreakMonthCalendar';
 
 const DOW = ['일', '월', '화', '수', '목', '금', '토'];
@@ -83,7 +83,7 @@ const summaryFor = (date, info, streak, today) => {
 const TILE_CLASS = {
   progress: 'bg-primary-main-100 dark:bg-primary-main-dark',
   lit: 'bg-streak-all',
-  shield: 'bg-secondary-mint-100 dark:bg-secondary-mint-dark',
+  shield: 'bg-streak-all',
   short: 'bg-layout-gray-50 dark:bg-layout-black',
   rest: 'bg-layout-gray-50 dark:bg-layout-black',
 };
@@ -113,12 +113,11 @@ const DayDetail = ({ date, summary, reducedMotion }) => (
         exit={{ opacity: 0, y: reducedMotion ? 0 : -6 }}
         transition={{ duration: 0.15, ease: 'easeOut' }}
       >
-        <span className={`flex h-[44px] w-[44px] shrink-0 items-center justify-center rounded-[13px] ${summary.kind === 'lit' && summary.state === 'part' ? 'bg-streak-part' : TILE_CLASS[summary.kind]} ${summary.kind === 'rest' || summary.kind === 'short' ? 'dark:bg-layout-black' : ''}`}>
-          {summary.kind === 'lit' && <StreakFlame days={summary.state === 'all' ? 7 : 1} lit size={30} />}
+        {/* 이어진 날(모두 · 일부 · 보호권)은 달력 띠와 같은 바탕에 같은 표식을 올린다 */}
+        <span className={`flex h-[44px] w-[44px] shrink-0 items-center justify-center rounded-full ${TILE_CLASS[summary.kind]} ${summary.kind === 'rest' || summary.kind === 'short' ? 'dark:bg-layout-black' : ''}`}>
+          {summary.kind === 'lit' && <StreakMark status={summary.state} size={30} />}
           {(summary.kind === 'progress' || summary.kind === 'short') && <StreakFlame lit={false} size={28} />}
-          {summary.kind === 'shield' && (
-            <img src={CROP_ASSETS.shield} alt="" draggable={false} className="h-[28px] w-[28px] select-none object-contain" />
-          )}
+          {summary.kind === 'shield' && <StreakMark status="shield" size={30} />}
           {summary.kind === 'rest' && <MoonStars size={22} weight="fill" className="text-layout-gray-200 dark:text-layout-gray-400" />}
         </span>
 
@@ -168,12 +167,6 @@ const DayDetail = ({ date, summary, reducedMotion }) => (
     </AnimatePresence>
   </div>
 );
-
-const LEGEND = [
-  { t: '오늘 할 일 모두', c: 'bg-streak-all' },
-  { t: '일부', c: 'bg-streak-part ring-1 ring-inset ring-secondary-yellow-300 dark:ring-0' },
-  { t: '보호권', c: 'border border-dashed border-secondary-mint-500 bg-secondary-mint-100 dark:bg-secondary-mint-dark' },
-];
 
 const StreakRecordView = ({ streak, today }) => {
   "use memo";
@@ -305,15 +298,11 @@ const StreakRecordView = ({ streak, today }) => {
       {/* ③ 선택한 날 · ④ 범례 */}
       <motion.div {...rise(2)}>
         <DayDetail date={selectedDate} summary={selectedSummary} reducedMotion={reducedMotion} />
-        {/* 쉰 날은 색이 없는 상태 자체가 규칙이라 범례에 다시 적지 않는다 */}
-        <div className="mt-[12px] flex flex-wrap gap-[12px] px-[2px]">
-          {LEGEND.map((l) => (
-            <span key={l.t} className="flex items-center gap-[5px] text-[10.5px] font-[600] tracking-[-0.02em] text-layout-gray-300">
-              <i className={`block h-[14px] w-[14px] rounded-[5px] ${l.c}`} />
-              {l.t}
-            </span>
-          ))}
-        </div>
+        {/* 쉰 날은 띠가 없는 상태 자체가 규칙이라 범례에 다시 적지 않는다 */}
+        <StreakLegend className="mt-[12px] px-[2px] text-[10.5px] font-[600] tracking-[-0.02em] text-layout-gray-300" />
+        <p className="mt-[6px] px-[2px] text-[10.5px] font-[500] leading-[1.45] tracking-[-0.02em] text-layout-gray-300">
+          띠가 이어진 곳은 연속이 끊기지 않은 날이에요
+        </p>
       </motion.div>
     </>
   );

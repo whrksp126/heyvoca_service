@@ -8,7 +8,8 @@ import {
   protectStreakApi, startEarnBackApi, ackStreakNoticeApi, purchaseFarmItemApi,
 } from '../../api/farm';
 import { CROP_ASSETS } from '../farm/CropImage';
-import { STREAK_PROTECTED_BG_CLASS } from '../farm/StreakDayMark';
+import WeekStreakStrip from '../farm/WeekStreakStrip';
+import { cellState } from '../streak/StreakMonthCalendar';
 import { toLocalDateString } from '../../utils/common';
 import { vibrate } from '../../utils/osFunction';
 import {
@@ -133,29 +134,6 @@ const PrefillStepper = ({ defaultQty, gemCnt, onSkip, onNeedGems, setUserProfile
   );
 };
 
-/** 최근 7일 막대 한 칸(§3 "보호일=민트, 기존 STREAK_PROTECTED_BG_CLASS") */
-const WeekStrip = ({ week }) => (
-  <div className="flex gap-[6px] mt-[14px]">
-    {week.map((d) => (
-      <div key={d.key} className="flex-1 flex flex-col items-center gap-[5px]">
-        <div className={`w-full h-[30px] rounded-[4px] flex items-end ${d.isToday ? 'bg-primary-main-100 dark:bg-primary-main-dark' : ''}`}>
-          <i
-            style={{ height: `${Math.max(d.pct, d.isToday && d.pct > 0 ? 10 : 0)}%` }}
-            className={`block w-full rounded-[4px] ${
-              d.isProtected
-                ? STREAK_PROTECTED_BG_CLASS
-                : (d.isStudied || d.isToday) ? 'bg-primary-main-500' : 'bg-[#F3DEEC] dark:bg-[rgba(255,255,255,.14)]'
-            }`}
-          />
-        </div>
-        <span className={`text-[10px] font-[700] ${d.isToday ? 'text-primary-main-600 dark:text-primary-main-500' : 'text-[#B8709F] dark:text-primary-main-400'}`}>
-          {d.label}
-        </span>
-      </div>
-    ))}
-  </div>
-);
-
 /** 시트 공용 헤더 — 그림 + 제목 (넷 다 같은 골격, 시안 공통 .center) */
 const Header = ({ image, children }) => (
   <div className="relative text-center pt-[6px]">
@@ -212,28 +190,29 @@ const StreakSettlementNewBottomSheet = ({
 
   const gemCnt = Number(userProfile?.gem_cnt) || 0;
 
-  // ── 최근 7일 막대(protected 전용, 시안 §3 "최근 7일 막대") ────────────
+  // ── 최근 7일 줄(protected 전용, 시안 §3) ────────────────────────────
+  // 홈 1주 줄과 같은 띠 규칙으로 그린다(streak/StreakMark.jsx 가 정본) — 보호권으로 지킨 날도
+  // 앞뒤 날과 같은 색 띠로 이어지고, 구분은 띠 위 보호권 그림으로만 한다(2026-10-08 QA #11).
+  // 예전에는 보호일만 민트 막대로 따로 칠해 연속이 그날 끊긴 것처럼 보였다.
   const today = toLocalDateString(new Date());
   const DOW = ['일', '월', '화', '수', '목', '금', '토'];
   const week = useMemo(() => {
     const calendar = (streak?.calendar ?? []).slice().sort((a, b) => (a.date < b.date ? -1 : 1)).slice(-7);
-    const required = Math.max(1, streak?.required ?? 5);
     return calendar.map((d) => {
       const isToday = d.date === today;
       const date = new Date(`${d.date}T00:00:00`);
-      const isProtected = d.status === 'protected';
-      const isStudied = d.status ? d.status === 'studied' : (d.qualified && !isProtected);
-      let pct;
-      if (isToday) pct = Math.min(100, Math.round(((streak?.today_correct ?? 0) / required) * 100));
-      else if (isProtected) pct = 100;
-      else if (isStudied) pct = Math.max(30, Math.min(100, Math.round(((d.correct_cnt ?? required) / required) * 100)));
-      else pct = 0;
+      // 구서버는 status('studied'|'protected')만 줄 수 있다 — 그때는 status 로 자격 · 보호를 채운다
+      const state = cellState({
+        ...d,
+        qualified: d.qualified ?? d.status === 'studied',
+        protected: d.protected ?? d.status === 'protected',
+      });
+      let status = state;
+      if (state === 'miss') status = isToday ? 'today_empty' : 'none';
       return {
-        key: d.date,
+        date: d.date,
         isToday,
-        isProtected,
-        isStudied,
-        pct,
+        status,
         label: isToday ? '오늘' : (Number.isNaN(date.getTime()) ? '' : DOW[date.getDay()]),
       };
     });
@@ -254,7 +233,7 @@ const StreakSettlementNewBottomSheet = ({
             <span className="font-[800] text-primary-main-600">{after}개</span>
           </span>
         </div>
-        <WeekStrip week={week} />
+        <WeekStreakStrip cells={week} className="mt-[14px]" />
         <PrefillStepper
           defaultQty={spent}
           gemCnt={gemCnt}
