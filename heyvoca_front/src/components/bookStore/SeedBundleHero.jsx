@@ -24,11 +24,14 @@ import seedPacketImg from '../../assets/images/farm/crops/unplanted/healthy-seed
  */
 
 // [단어 수 상한, 뒷줄 봉투 수, 앞줄 봉투 수]
+// [단어 수 상한, 앞줄 봉투 수, 가운데 줄, 뒷줄] — 가장 작은 상자도 봉투 5개 이상. 단어가 많을수록
+// 상자가 넓어지고(앞줄 수) 깊어진다(줄 수).
 const BUNDLE_TIERS = [
-  [30, 1, 2],
-  [100, 2, 3],
-  [300, 3, 4],
-  [Infinity, 4, 5],
+  [30, 3, 2, 0],
+  [80, 4, 3, 0],
+  [200, 4, 3, 2],
+  [500, 5, 4, 3],
+  [Infinity, 5, 4, 4],
 ];
 
 const CX = 160;
@@ -36,7 +39,6 @@ const PACKET_STEP = 44;
 const PACKET_SCALE = 1.25;
 
 const tierOf = (count) => {
-  if (count <= 0) return [0, 0, 0];
   return BUNDLE_TIERS.find(([max]) => count <= max);
 };
 
@@ -83,9 +85,14 @@ const SeedBundleHero = ({ count = 0, ownedCount = 0 }) => {
   const reducedMotion = useReducedMotion();
   const controls = useAnimationControls();
 
-  const [, backCount, frontCount] = tierOf(count);
-  const packets = [...rowOf(backCount, 135, 'b'), ...rowOf(frontCount, 158, 'f')];
-  const crateW = Math.max(frontCount, 2) * PACKET_STEP + 48;
+  // 상자 크기는 살 것이 아니라 단어장 전체 단어 수로 정한다 — 다 가진 단어장도 상자는 제 크기다
+  const total = count + ownedCount;
+  const allOwned = count === 0 && ownedCount > 0;
+  const [, frontCount, midCount, backCount] = tierOf(Math.max(total, 1));
+  const packets = allOwned ? [] : [
+    ...rowOf(backCount, 116, 'b'), ...rowOf(midCount, 136, 'm'), ...rowOf(frontCount, 158, 'f'),
+  ];
+  const crateW = frontCount * PACKET_STEP + 52;
   const crateX = CX - crateW / 2;
 
   // 이름표 폭 — 씨앗 낱알 + "씨앗" + 숫자. 자릿수가 늘면 판도 같이 넓어진다
@@ -115,7 +122,6 @@ const SeedBundleHero = ({ count = 0, ownedCount = 0 }) => {
     }),
   };
 
-  const allOwned = count === 0 && ownedCount > 0;
 
   return (
     <div
@@ -139,7 +145,7 @@ const SeedBundleHero = ({ count = 0, ownedCount = 0 }) => {
         whileTap={reducedMotion ? undefined : { scale: 0.97 }}
         transition={{ type: 'spring', stiffness: 420, damping: 16 }}
         aria-label={allOwned ? '이 단어장의 씨앗을 모두 갖고 있어요' : `포장된 씨앗 ${count.toLocaleString('ko-KR')}개`}
-        className={`absolute left-1/2 -translate-x-1/2 w-[300px] max-w-[84%] ${ownedCount > 0 ? 'bottom-[44px]' : 'bottom-[24px]'}`}
+        className={`absolute left-1/2 -translate-x-1/2 w-[300px] max-w-[84%] ${ownedCount > 0 && !allOwned ? 'bottom-[44px]' : 'bottom-[24px]'}`}
       >
         <svg viewBox="0 0 320 250" fill="none" className="block w-full h-auto overflow-visible select-none">
           <defs>
@@ -179,8 +185,21 @@ const SeedBundleHero = ({ count = 0, ownedCount = 0 }) => {
             transition={{ duration: 3.4, repeat: Infinity, ease: 'easeInOut' }}
           >
             {/* 상자 안쪽 */}
-            <rect x={crateX + 9} y="127" width={crateW - 18} height="44" rx="10" fill="#5E391D" />
-            <rect x={crateX + 9} y="127" width={crateW - 18} height="14" rx="7" fill="#3F2410" fillOpacity="0.5" />
+            {allOwned ? (
+              <>
+                {/* 빈 상자 — 뒤판을 높이 세워 안이 비어 있는 게 들여다보인다 */}
+                <rect x={crateX + 7} y="104" width={crateW - 14} height="68" rx="12" fill="#9A6236" stroke="#6E4324" strokeWidth="1.4" />
+                <rect x={crateX + 15} y="112" width={crateW - 30} height="60" rx="8" fill="#5E391D" />
+                <rect x={crateX + 15} y="112" width={crateW - 30} height="20" rx="8" fill="#3F2410" fillOpacity="0.55" />
+                <path d={`M${crateX + 22} 150H${crateX + crateW - 22}`} stroke="#3F2410" strokeOpacity="0.5" strokeWidth="1.4" strokeDasharray="2 7" strokeLinecap="round" />
+                <ellipse cx={CX - crateW * 0.2} cy="146" rx="3.4" ry="2.3" fill="#E9B24A" transform={`rotate(-20 ${CX - crateW * 0.2} 146)`} />
+              </>
+            ) : (
+              <>
+                <rect x={crateX + 9} y="127" width={crateW - 18} height="44" rx="10" fill="#5E391D" />
+                <rect x={crateX + 9} y="127" width={crateW - 18} height="14" rx="7" fill="#3F2410" fillOpacity="0.5" />
+              </>
+            )}
 
             {packets.map((p, i) => (
               <motion.g
@@ -223,6 +242,14 @@ const SeedBundleHero = ({ count = 0, ownedCount = 0 }) => {
                 ))}
               </g>
             ))}
+            {allOwned ? (
+              <>
+                {/* 다 가졌다 — 문양 자리에 초록 체크 */}
+                <circle cx={CX} cy="190" r="20" fill="#3E9B57" stroke="#FFF6DE" strokeWidth="3" />
+                <path d={`M${CX - 9} 190.5l6 6.2l12 -12.4`} stroke="#fff" strokeWidth="4.2" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+              </>
+            ) : (
+              <>
             {/* 새싹 문양 — 파 넣은 둥근 판에 놋쇠빛 새싹 */}
             <circle cx={CX} cy="190" r="19" fill="#7A4B28" />
             <circle cx={CX} cy="191" r="17" fill="#8F5C33" />
@@ -231,6 +258,8 @@ const SeedBundleHero = ({ count = 0, ownedCount = 0 }) => {
             <path d={`M${CX} 189.5C${CX} 181 ${CX - 8.5} 178.5 ${CX - 13} 180C${CX - 12} 187 ${CX - 6.5} 191 ${CX} 189.5Z`} fill="#F0C873" />
             <path d={`M${CX} 189.5C${CX} 181 ${CX + 8.5} 178.5 ${CX + 13} 180C${CX + 12} 187 ${CX + 6.5} 191 ${CX} 189.5Z`} fill="#E3B059" />
             <path d={`M${CX - 10} 181.5C${CX - 7} 181.5 ${CX - 4} 183.5 ${CX - 2.5} 186`} stroke="#fff" strokeOpacity="0.5" strokeWidth="1.1" strokeLinecap="round" />
+              </>
+            )}
 
             {packets.length > 0 && (
               <motion.g
@@ -253,7 +282,7 @@ const SeedBundleHero = ({ count = 0, ownedCount = 0 }) => {
       </motion.button>
 
       {/* 이미 가진 단어 — 상자(살 것)와 섞지 않고 따로 말한다 */}
-      {ownedCount > 0 && (
+      {ownedCount > 0 && !allOwned && (
         <div className="absolute left-0 right-0 bottom-[12px] flex justify-center">
           <span className="flex items-center gap-[4px] h-[26px] px-[10px] rounded-full bg-status-success-100 dark:bg-status-success-dark text-[11.5px] font-[700] tracking-[-0.02em] text-status-success-600">
             <Plant size={13} weight="fill" />

@@ -19,6 +19,7 @@ import gem from '../../assets/images/farm/icon-gem.png';
 import SeedBundleHero from '../bookStore/SeedBundleHero';
 import CropImage from '../farm/CropImage';
 import { HEALTH_STATES } from '../../utils/crop';
+import { isUnplanted, wordCropStage, wordHealth } from '../../utils/vocaCrop';
 
 /**
  * 상점 단어장 미리보기 — 사기 전에 이 단어장에 어떤 씨앗이 들어 있는지 본다.
@@ -69,6 +70,15 @@ export const PreviewBookStoreNewFullSheet = ({
   const { popNewFullSheet } = useNewFullSheetActions();
   const { pushNewBottomSheet } = useNewBottomSheetActions();
   const { vocabularySheets } = useVocabulary();
+  // 내 단어(철자 기준) — 서점 단어 id 는 내 단어 id 와 달라 철자로 맞춘다
+  const myWordMap = React.useMemo(() => {
+    const map = new Map();
+    (vocabularySheets || []).forEach((sheet) => (sheet.words || []).forEach((w) => {
+      const key = (w.origin || '').toLowerCase();
+      if (key && (!map.has(key) || isUnplanted(map.get(key)))) map.set(key, w);
+    }));
+    return map;
+  }, [vocabularySheets]);
   const { showExamples } = useExampleSettings();
   const itemHeightEstimate = showExamples ? ROW_HEIGHT_EX : ROW_HEIGHT;
 
@@ -398,7 +408,13 @@ export const PreviewBookStoreNewFullSheet = ({
                 `}
               >
                 {/* 사기 전이라 모든 단어가 같은 씨앗이다 — 산 뒤에는 여기가 실제 단계로 바뀐다 */}
-                <CropImage stage="seed" health={HEALTH_STATES.FRESH} size={52} align="center" className="shrink-0" />
+                {(() => {
+                  // 이미 내 밭에서 키우는 단어는 봉투가 아니라 실제 작물 상태로 보여 준다
+                  const mine = myWordMap.get((item.origin || '').toLowerCase());
+                  return mine && !isUnplanted(mine)
+                    ? <CropImage stage={wordCropStage(mine)} health={wordHealth(mine)} planted size={52} align="center" className="shrink-0" />
+                    : <CropImage stage="seed" health={HEALTH_STATES.FRESH} size={52} align="center" className="shrink-0" />;
+                })()}
 
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-[5px]">
