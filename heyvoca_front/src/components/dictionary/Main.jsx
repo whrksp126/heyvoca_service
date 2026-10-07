@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useRef, useMemo, useCallback } from 'react';
 import {
-  MagnifyingGlass, CaretDown, CaretRight, X, Plus, Drop, ArrowUp,
+  CaretDown, CaretRight, X, Plus, ArrowUp,
 } from '@phosphor-icons/react';
+import { IconCare, IconSearch } from '../../assets/svg/icon';
 import SpeakerButton from '../common/SpeakerButton';
 import FuriganaText from '../common/FuriganaText';
 import { wordLang, isJa, getActiveLearningLang } from '../../utils/lang';
@@ -570,13 +571,13 @@ const Main = () => {
       <button
         type="button"
         onClick={() => { vibrate({ duration: 5 }); setFilter('care'); }}
-        className={`${chipBase} pl-[8px] pr-[11px] ${
+        className={`${chipBase} pl-[9px] pr-[11px] ${
           filter === 'care'
             ? chipOn
-            : 'bg-secondary-yellow-100 dark:bg-secondary-yellow-dark text-[#B54708] dark:text-[#FDB022]'
+            : 'bg-secondary-blue-100 dark:bg-secondary-blue-dark text-[#175CD3] dark:text-[#84CAFF]'
         }`}
       >
-        <Drop size={12} weight="fill" />
+        <IconCare size={20} className="shrink-0" />
         돌봄 <b className="font-[800]">{filterCounts.care}</b>
       </button>
     </div>
@@ -635,12 +636,12 @@ const Main = () => {
           onClick={enterSearchMode}
           className="flex items-center gap-[9px] w-full h-[46px] px-[14px] rounded-[12px] bg-layout-gray-50 dark:bg-layout-gray-dark"
         >
-          <MagnifyingGlass size={18} weight="fill" className="text-[#BBBBBB] shrink-0" />
+          <IconSearch size={22} className="shrink-0" />
           <span className="text-[15px] font-[500] tracking-[-0.02em] text-[#BBBBBB]">단어 찾기</span>
         </button>
       ) : (
         <div className="flex items-center gap-[9px] h-[46px] px-[14px] rounded-[12px] bg-layout-gray-50 dark:bg-layout-gray-dark">
-          <MagnifyingGlass size={18} weight="fill" className="text-primary-main-600 shrink-0" />
+          <IconSearch size={22} className="shrink-0" />
           <input
             ref={searchInputRef}
             type="text"
@@ -779,7 +780,7 @@ const Main = () => {
                   size={38}
                 />
               ) : (
-                <MagnifyingGlass size={13} weight="fill" className="text-layout-gray-200" />
+                <IconSearch size={16} className="grayscale opacity-45" />
               )}
             </span>
             <span lang={isJa(wordLang(item, learningLang)) ? 'ja' : undefined} className="shrink-0 text-[14.5px] font-[700] tracking-[-0.02em] text-layout-black dark:text-layout-white">

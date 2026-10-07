@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="none">
+<defs>
+  <linearGradient id="wBody" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#A9E2FB"/><stop offset="0.55" stop-color="#6FC3F3"/><stop offset="1" stop-color="#3F9BE0"/>
+  </linearGradient>
+  <linearGradient id="wSpout" x1="0" y1="1" x2="1" y2="0">
+    <stop offset="0" stop-color="#4FA9E8"/><stop offset="1" stop-color="#8AD2F8"/>
+  </linearGradient>
+  <linearGradient id="wRose" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0" stop-color="#FFE27A"/><stop offset="1" stop-color="#F6B93B"/>
+  </linearGradient>
+  <linearGradient id="wDrop" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#9BDCFB"/><stop offset="1" stop-color="#3F9BE0"/>
+  </linearGradient>
+</defs>
+
+<path d="M24 48Q4 47 5 62Q6 77 25 76" stroke="#2F86CE" stroke-width="10.5" stroke-linecap="round"/>
+<path d="M24 48Q4 47 5 62Q6 77 25 76" stroke="#6FC3F3" stroke-width="7" stroke-linecap="round"/>
+<path d="M60 70L85 31" stroke="#2F86CE" stroke-width="15" stroke-linecap="round"/>
+<path d="M60 70L85 31" stroke="url(#wSpout)" stroke-width="11.5" stroke-linecap="round"/>
+<rect x="17" y="33" width="52" height="57" rx="16" fill="url(#wBody)" stroke="#2F86CE" stroke-width="1.6"/>
+<path d="M17.8 73H68.2V74Q68.2 89.2 53 89.2H33Q17.8 89.2 17.8 74Z" fill="#2F86CE" fill-opacity="0.28"/>
+<ellipse cx="43" cy="39.5" rx="18.5" ry="4.5" fill="#2F7FC4" fill-opacity="0.75"/>
+<path d="M27.5 51V72" stroke="#fff" stroke-opacity="0.75" stroke-width="5" stroke-linecap="round"/>
+<g transform="rotate(34 86 28)">
+  <ellipse cx="86" cy="28" rx="13" ry="7.2" fill="url(#wRose)" stroke="#E5A024" stroke-width="1.6"/>
+  <ellipse cx="83" cy="26" rx="5.2" ry="1.8" fill="#fff" fill-opacity="0.6"/>
+</g>
+<path d="M86 52Q95 65 95 72A9 9 0 0 1 77 72Q77 65 86 52Z" fill="url(#wDrop)" stroke="#2F86CE" stroke-width="1.4" stroke-linejoin="round"/>
+<ellipse cx="82.5" cy="71" rx="2" ry="3.400" fill="#fff" fill-opacity="0.8"/>
+</svg>

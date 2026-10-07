@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect, useLayoutEffect } from 'react';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
-import { SpeakerHigh } from '@phosphor-icons/react';
+import { SpeakerHigh, Check, X, CheckCircle, XCircle } from '@phosphor-icons/react';
 import { FarmResultBar } from '../../../components/farm/FarmStatusBar';
 import StudyTimingTag from '../../../components/farm/StudyTimingTag';
 import TtsRipple from '../../../components/common/TtsRipple';
@@ -8,7 +8,7 @@ import LiftAboveBar from '../../../components/common/LiftAboveBar';
 import WordInfoBubble from '../../../components/common/WordInfoBubble';
 import ResultMark from '../../../components/common/ResultMark';
 import { getWordInfoApi } from '../../../api/search';
-import { feel, pickVariant, ShineSweep, PerfectBadge } from '../../../lib/feel';
+import { feel, pickVariant, SPRING, ShineSweep, PerfectBadge } from '../../../lib/feel';
 import { getTextSound, stripHtmlTags } from '../../../utils/common';
 import { useStudyAdvanceGate } from '../../../hooks/useStudyAdvanceGate';
 import { getMemoryStateKeyByStability } from '../../../components/common/MemoryStateChangeBadge';
@@ -351,29 +351,46 @@ const FillInTheBlankTypingQuestion = ({ question, onComplete, onCardMatched, far
 
   const showTtsRipple = isSpeaking && speakingTarget === 'shown';
 
-  // 유사 뜻 입력 — 기록은 오답이지만 화면은 빨강 대신 중립 교정 톤(흔들림·X 마크 없음).
-  const isSynonym = isAnswered && gradeInfo?.reason === 'synonym';
-  const neutralCaptionCls = 'text-layout-gray-400 dark:text-layout-gray-100';
+  /*
+    채점 결과 표현(2026-10-07 QA) — 오답은 어떤 갈래든 똑같이 "틀렸다"가 먼저 보인다.
+    예전에는 유사 뜻 입력(reason:'synonym')만 중립 톤(흰 칸·회색 안내문, X 마크·흔들림 없음)으로
+    처리해서, 효과음·진동은 오답인데 화면에는 틀렸다는 표시가 하나도 없었다. 큰 O/X(ResultMark)는
+    0.8초 뒤 사라지므로, "다음"을 누를 때까지 남는 표시는 입력 칸(색 + 아이콘)과 아래 결과 줄이 맡는다.
+    유사 뜻·형태 안내는 오답 표시를 대신하지 않고 그 아래 보조 설명으로만 붙는다.
+  */
+  const reason = isAnswered ? gradeInfo?.reason : null;
+  const isTypoAccepted = isAnswered && isCorrect === true && reason === 'typo';
+  const isVariantAccepted = isAnswered && isCorrect === true && reason === 'exact' && !!gradeInfo?.variant;
 
   const pillStyle = !isAnswered
     ? 'border-layout-gray-200 dark:border-[#444444] bg-layout-white dark:bg-layout-black'
     : isCorrect
-      ? 'border-status-success-500 text-status-success-600 bg-status-success-100'
-      : isSynonym
-        ? 'border-layout-gray-300 text-layout-black dark:text-layout-white bg-layout-white dark:bg-layout-black'
-        : 'border-status-error-500 text-status-error-600 bg-status-error-100 dark:bg-status-error-dark';
+      ? 'border-status-success-500 text-status-success-600 dark:text-status-success-300 bg-status-success-100 dark:bg-status-success-dark'
+      : 'border-status-error-500 text-status-error-600 dark:text-status-error-300 bg-status-error-100 dark:bg-status-error-dark';
 
-  const caption = isAnswered && gradeInfo?.reason === 'typo'
-    ? { text: `오타가 있어요 · 정확한 철자 ${answerText}`, cls: neutralCaptionCls }
-    : isAnswered && gradeInfo?.reason === 'exact' && gradeInfo?.variant
-    ? { text: `정확한 표기 ${answerText}`, cls: neutralCaptionCls }
-    : isSynonym
-    ? { text: `${value.trim()} 도 비슷한 뜻이에요 · 이 문장에는 ${answerText} 가 더 잘 어울려요`, cls: neutralCaptionCls }
-    : isAnswered && gradeInfo?.reason === 'baseForm'
-      ? { text: `형태가 달라요 · 정답 ${answerText}`, cls: 'text-status-error-600' }
-      : isAnswered && !isCorrect
-        ? { text: `정답 ${answerText}`, cls: 'text-status-error-600' }
-        : null;
+  // 결과 줄 — 제목(정답/오답) + 정답 낱말 + 보조 설명. 오타 허용 정답은 초록 그대로 두되
+  // "오타 허용" 딱지와 정확한 철자를 함께 보여 진짜 오답과도, 한 번에 맞힌 정답과도 구분한다.
+  const verdict = !isAnswered
+    ? null
+    : isCorrect
+      ? {
+        correct: true,
+        title: isTypoAccepted ? '정답으로 인정했어요' : '정답이에요',
+        tag: isTypoAccepted ? '오타 허용' : null,
+        answerLabel: isTypoAccepted ? '정확한 철자' : (isVariantAccepted ? '정확한 표기' : null),
+        note: isTypoAccepted ? '철자가 조금 달랐어요 · 다음엔 정확히 써 보세요' : null,
+      }
+      : {
+        correct: false,
+        title: '틀렸어요',
+        tag: null,
+        answerLabel: '정답',
+        note: reason === 'synonym'
+          ? `${value.trim()} 도 비슷한 뜻이에요 · 이 문장에는 ${answerText} 가 더 잘 어울려요`
+          : reason === 'baseForm'
+            ? '낱말은 맞지만 형태가 달라요'
+            : null,
+      };
 
   return (
     <div className="flex flex-col gap-[15px] h-full">
@@ -467,14 +484,12 @@ const FillInTheBlankTypingQuestion = ({ question, onComplete, onCardMatched, far
                 <motion.span
                   // 채점 순간: 정답은 통 튀고 빛줄기가 지나가며, 오답은 좌우로 흔들린다(채점 큐와 같은 틱).
                   animate={isAnswered
-                    ? (isCorrect
-                      ? pickVariant('correctPop', reducedMotion).animate
-                      : (isSynonym ? undefined : pickVariant('shake', reducedMotion).animate))
+                    ? pickVariant(isCorrect ? 'correctPop' : 'shake', reducedMotion).animate
                     : undefined}
                   className={`
                     relative overflow-hidden
                     inline-flex items-center justify-center align-middle
-                    min-w-[84px] px-[10px] mx-[2px]
+                    gap-[4px] min-w-[84px] px-[10px] mx-[2px]
                     rounded-[8px] border-[1px]
                     h-[40px] text-[17px] font-[700]
                     transition-colors duration-150
@@ -482,6 +497,9 @@ const FillInTheBlankTypingQuestion = ({ question, onComplete, onCardMatched, far
                   `}
                 >
                   <ShineSweep play={isAnswered && isCorrect === true} />
+                  {isAnswered && (isCorrect
+                    ? <Check size={15} weight="bold" aria-hidden="true" className="flex-shrink-0" />
+                    : <X size={15} weight="bold" aria-hidden="true" className="flex-shrink-0" />)}
                   {isAnswered ? (
                     // 채점 후 — 정답 자리도 탭하면 사전 말풍선이 뜬다(입력값을 그대로 조회한다).
                     <button
@@ -535,8 +553,71 @@ const FillInTheBlankTypingQuestion = ({ question, onComplete, onCardMatched, far
                 </motion.span>
                 {renderWordTokens(afterTokens, 'a')}
               </p>
-              {caption && (
-                <p className={`mt-[14px] text-[14px] font-[600] break-keep ${caption.cls}`}>{caption.text}</p>
+              {verdict && (
+                <motion.div
+                  role="status"
+                  aria-live="polite"
+                  className="mt-[14px] flex flex-col gap-[8px]"
+                  initial={reducedMotion ? { opacity: 0 } : { opacity: 0, y: 6 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={reducedMotion ? { duration: 0.15 } : SPRING.soft}
+                >
+                  <div className="flex items-center gap-[6px]">
+                    {verdict.correct
+                      ? <CheckCircle size={20} weight="fill" aria-hidden="true" className="flex-shrink-0 text-status-success-500" />
+                      : <XCircle size={20} weight="fill" aria-hidden="true" className="flex-shrink-0 text-status-error-500" />}
+                    <span className={`text-[15px] font-[800] ${verdict.correct
+                      ? 'text-status-success-600 dark:text-status-success-400'
+                      : 'text-status-error-600 dark:text-status-error-400'}`}
+                    >
+                      {verdict.title}
+                    </span>
+                    {verdict.tag && (
+                      <span className="
+                        px-[8px] py-[2px] rounded-[20px]
+                        text-[12px] font-[700]
+                        bg-layout-gray-100 dark:bg-layout-black
+                        text-layout-gray-500 dark:text-layout-gray-100
+                      "
+                      >
+                        {verdict.tag}
+                      </span>
+                    )}
+                  </div>
+                  {verdict.answerLabel && (
+                    <div className="flex items-center gap-[8px]">
+                      <span className="flex-shrink-0 text-[13px] font-[700] text-layout-gray-400 dark:text-layout-gray-100">
+                        {verdict.answerLabel}
+                      </span>
+                      {/* 정답 낱말 — 채점 결과와 상관없이 초록(정답 색). 탭하면 사전 말풍선이 뜬다. */}
+                      <button
+                        type="button"
+                        data-lookup-word
+                        lang={jaBlank ? 'ja' : undefined}
+                        aria-label={`정답 ${answerText} 뜻 보기`}
+                        aria-expanded={lookup?.key === 'correct'}
+                        className="
+                          inline-flex items-center gap-[4px]
+                          min-h-[34px] px-[12px] rounded-[8px] border-[1px]
+                          text-[18px] font-[800] leading-[1.2] text-left
+                          border-status-success-500
+                          text-status-success-600 dark:text-status-success-300
+                          bg-status-success-100 dark:bg-status-success-dark
+                          focus:outline-none
+                        "
+                        onClick={(e) => handleWordTap(e, 'correct', String(answerText).trim())}
+                      >
+                        <Check size={15} weight="bold" aria-hidden="true" className="flex-shrink-0" />
+                        {answerText}
+                      </button>
+                    </div>
+                  )}
+                  {verdict.note && (
+                    <p className="text-[13px] font-[600] leading-[1.5] break-keep text-layout-gray-400 dark:text-layout-gray-100">
+                      {verdict.note}
+                    </p>
+                  )}
+                </motion.div>
               )}
             </form>
           </LiftAboveBar>
@@ -560,7 +641,7 @@ const FillInTheBlankTypingQuestion = ({ question, onComplete, onCardMatched, far
         </AnimatePresence>
 
         <ResultMark
-          result={isSynonym ? null : isCorrect}
+          result={isCorrect}
           replayKey={resumeReplayKey}
           className="absolute inset-0 z-[3] flex items-center justify-center"
         />

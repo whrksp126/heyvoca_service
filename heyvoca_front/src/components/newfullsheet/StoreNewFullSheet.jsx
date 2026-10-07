@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
-  CaretLeft, CaretRight, Plus, PencilSimple, Info,
+  CaretLeft, CaretRight, Plus, Info,
 } from '@phosphor-icons/react';
 import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
 import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
@@ -20,7 +20,7 @@ import {
 import { getFarmItemsApi, getFarmShopApi } from '../../api/farm';
 import { getBookStoreDetailApi } from '../../api/bookStore';
 import { FARM_ITEM_ASSETS } from '../farm/CropImage';
-import { gemPackArt } from '../farm/itemArt';
+import { gemPackArt, EMPTY_BOOK_ART } from '../farm/itemArt';
 import PullToRefresh from '../common/PullToRefresh';
 import SegmentTabBar from '../common/SegmentTabBar';
 import {
@@ -79,76 +79,109 @@ const OwnPill = ({ count }) => (
 );
 
 /**
+ * 빈 단어장 — 단어장 탭 맨 위에 고정하는 전용 카드.
+ *
+ * 예전에는 서점 단어장 격자의 **맨 끝 칸**이었다. 그런데 빈 단어장은 단어가 담긴 상품이 아니라
+ * 내 단어를 직접 넣어 새 밭을 여는 도구라 성격이 전혀 다르고, 사려면 목록을 끝까지 내려야 했다.
+ * 그래서 격자에서 빼고 목록 위에 가로 카드로 따로 둔다 — 스크롤 없이 보이고, 정사각형 색 카드
+ * (서점 단어장)와 생김새부터 달라 다른 물건이라는 게 바로 읽힌다.
+ * 카테고리 필터와도 무관하게 늘 같은 자리에 있다.
+ */
+const EmptyBookCard = ({ owned, onClick }) => (
+  <motion.button
+    type="button"
+    whileTap={{ scale: 0.98 }}
+    transition={{ type: 'spring', stiffness: 400, damping: 17 }}
+    onClick={onClick}
+    className="shrink-0 w-full flex items-center gap-[10px] pl-[8px] pr-[12px] py-[9px] rounded-[14px] bg-layout-gray-50 dark:bg-layout-gray-dark text-left"
+  >
+    <img
+      src={EMPTY_BOOK_ART}
+      alt=""
+      draggable={false}
+      className="w-[58px] h-[58px] shrink-0 object-contain select-none"
+    />
+    <span className="flex-1 min-w-0">
+      <span className="flex items-center gap-[6px]">
+        <span className="text-[15px] font-[800] tracking-[-0.03em] text-layout-black dark:text-layout-white">
+          빈 단어장
+        </span>
+        <span
+          className={`shrink-0 px-[7px] py-[2px] rounded-full text-[10.5px] font-[700] tracking-[-0.02em] ${
+            owned > 0
+              ? 'bg-primary-main-100 dark:bg-primary-main-dark text-primary-main-600 dark:text-primary-main-400'
+              : 'bg-layout-white dark:bg-[#333333] text-layout-gray-300'
+          }`}
+        >
+          보유 {owned.toLocaleString('ko-KR')}개
+        </span>
+      </span>
+      <span className="block mt-[3px] text-[11.5px] font-[500] leading-[1.4] tracking-[-0.02em] text-layout-gray-400 dark:text-layout-gray-300">
+        내 단어를 직접 넣어 새 밭을 열어요
+      </span>
+    </span>
+    <span className="shrink-0 h-[34px] px-[13px] rounded-[9px] bg-primary-main-600 text-layout-white flex items-center text-[13.5px] font-[800]">
+      <Gem n={EMPTY_BOOK_PRICE} size="s" />
+    </span>
+  </motion.button>
+);
+
+/**
  * 서점 단어장 카드 (시안 §4).
  * 골격 — 정사각형, 색 배경, 카테고리 pill, 좌하단 가격, 우하단 + 버튼 — 은 그대로 두고
  * "심을 씨앗 N개"는 아이콘 없이 텍스트로만, 단어장 이름 바로 아래에 붙인다(§4 개정).
- * 검증 마크는 서점 단어장이 전부 검증된 데이터라 붙이지 않고,
- * 반대인 빈 단어장에만 "내가 채우는 밭"을 회색으로 남긴다.
+ * 검증 마크는 서점 단어장이 전부 검증된 데이터라 붙이지 않는다.
  *
  * QA §D — "심을 씨앗 N개"는 이 단어장의 전체 크기만 말해서, 이미 절반을 갖고 있는
  * 사람에게도 매번 같은 큰 수를 들이밀었다. `GET /search/bookstore` 가 로그인 사용자에게
  * `notOwnedCount`(안 갖고 있는 단어 수)를 함께 내려주면 그걸 우선 쓴다 — 0이면 살 이유가
  * 없다는 뜻이라 초록으로 안내하고, 게스트·구서버(필드 없음)는 예전처럼 전체 개수로 되돌아간다.
  */
-const ShopBookCard = ({ item, custom = false, onClick, className = '' }) => {
+const ShopBookCard = ({ item, onClick, className = '' }) => {
   const { isDark } = useTheme();
-  const bg = custom ? undefined : resolveVocaBookBackground(item?.color?.background, isDark);
-  const accent = custom ? undefined : resolveVocaBookAccentColor(item?.color?.main, isDark);
-  const sub = custom ? undefined : resolveVocaBookSubColor(item?.color?.sub, item?.color?.main, isDark);
+  const bg = resolveVocaBookBackground(item?.color?.background, isDark);
+  const accent = resolveVocaBookAccentColor(item?.color?.main, isDark);
+  const sub = resolveVocaBookSubColor(item?.color?.sub, item?.color?.main, isDark);
   const seeds = Number(item?.vocaCount) || 0;
   const notOwnedCount = item?.notOwnedCount;
-  const seedLine = custom
-    ? { text: '단어 0 — 직접 추가', className: 'text-layout-gray-400 dark:text-layout-gray-300' }
-    : typeof notOwnedCount === 'number'
-      ? (notOwnedCount === 0
-        ? { text: '모두 보유 중', className: 'text-status-success-600' }
-        : { text: `미보유 단어 ${notOwnedCount.toLocaleString('ko-KR')}개`, className: 'text-layout-gray-400 dark:text-layout-gray-300' })
-      : { text: `단어 ${seeds.toLocaleString('ko-KR')}개`, className: 'text-layout-gray-400 dark:text-layout-gray-300' };
+  const seedLine = typeof notOwnedCount === 'number'
+    ? (notOwnedCount === 0
+      ? { text: '모두 보유 중', className: 'text-status-success-600' }
+      : { text: `미보유 단어 ${notOwnedCount.toLocaleString('ko-KR')}개`, className: 'text-layout-gray-400 dark:text-layout-gray-300' })
+    : { text: `단어 ${seeds.toLocaleString('ko-KR')}개`, className: 'text-layout-gray-400 dark:text-layout-gray-300' };
 
   return (
     <motion.li
-      style={custom ? undefined : { backgroundColor: bg }}
+      style={{ backgroundColor: bg }}
       whileTap={{ scale: 0.96 }}
       transition={{ type: 'spring', stiffness: 400, damping: 17 }}
       onClick={onClick}
-      className={`flex flex-col justify-between aspect-square p-[13px] rounded-[12px] cursor-pointer shadow-[0_1px_3px_rgba(0,0,0,0.05)] dark:shadow-none ${
-        custom ? 'bg-layout-gray-50 dark:bg-layout-gray-dark' : ''
-      } ${className}`}
+      className={`flex flex-col justify-between aspect-square p-[13px] rounded-[12px] cursor-pointer shadow-[0_1px_3px_rgba(0,0,0,0.05)] dark:shadow-none ${className}`}
     >
       <div>
         <span
-          style={custom ? undefined : { backgroundColor: accent }}
-          className={`inline-block px-[7px] py-[3px] rounded-full text-[8.5px] font-[800] tracking-[0.01em] text-layout-white ${
-            custom ? 'bg-layout-gray-400' : ''
-          }`}
+          style={{ backgroundColor: accent }}
+          className="inline-block px-[7px] py-[3px] rounded-full text-[8.5px] font-[800] tracking-[0.01em] text-layout-white"
         >
-          {custom ? 'CUSTOM' : item.category}
+          {item.category}
         </span>
         <h5 className="mt-[6px] text-[14.5px] font-[800] leading-[1.3] tracking-[-0.04em] text-layout-black dark:text-layout-white">
-          {custom ? '빈 단어장' : item.name}
+          {item.name}
         </h5>
         {/* 이름 바로 아래 — 단어 수는 이 밭이 얼마나 커지는지를 정하는 가장 큰 값이다 (아이콘 없이 텍스트만) */}
         <div className={`mt-[2px] text-[10.5px] font-[700] tracking-[-0.02em] ${seedLine.className}`}>
           {seedLine.text}
         </div>
-        {custom && (
-          <div className="flex items-center gap-[3px] mt-[3px] text-[10px] font-[700] tracking-[-0.02em] text-[#BBBBBB]">
-            <PencilSimple size={11} weight="fill" />
-            내가 채우는 밭
-          </div>
-        )}
       </div>
 
       <div>
         <div className="flex items-center justify-between mt-[8px]">
           <span className="flex items-center text-[14px] font-[800] text-layout-black dark:text-layout-white">
-            <Gem n={custom ? EMPTY_BOOK_PRICE : item.gem} />
+            <Gem n={item.gem} />
           </span>
           <span
-            style={custom ? undefined : { color: accent, backgroundColor: sub }}
-            className={`flex items-center justify-center w-[28px] h-[28px] rounded-full ${
-              custom ? 'bg-layout-white text-layout-gray-400' : ''
-            }`}
+            style={{ color: accent, backgroundColor: sub }}
+            className="flex items-center justify-center w-[28px] h-[28px] rounded-full"
           >
             <Plus size={15} weight="bold" />
           </span>
@@ -360,6 +393,9 @@ const StoreNewFullSheet = ({ initialTab = 'books', onInventoryChanged, onGoRotte
         {/* ── ① 단어장 ─────────────────────────────────── */}
         {activeTab === 'books' && (
           <>
+            {/* 빈 단어장은 서점 목록과 따로, 늘 맨 위에 — 목록이 아직 안 왔어도 살 수 있다 */}
+            <EmptyBookCard owned={Number(userProfile?.book_cnt) || 0} onClick={openEmptyBook} />
+
             {isBookStoreLoading && (
               <div className="flex items-center justify-center py-[60px]">
                 <span className="animate-spin rounded-full h-[28px] w-[28px] border-b-2 border-primary-main-600" />
@@ -367,8 +403,9 @@ const StoreNewFullSheet = ({ initialTab = 'books', onInventoryChanged, onGoRotte
             )}
 
             {!isBookStoreLoading && (
-              <>
-                <div className="flex gap-[6px] overflow-x-auto scrollbar-hide -mx-[16px] px-[16px]">
+              <div className="flex flex-col gap-[10px]">
+                <SecHead title="서점 단어장" sub="검증된 단어가 담겨 있어요" />
+                <div className="flex gap-[6px] overflow-x-auto scrollbar-hide -mx-[16px] px-[16px] mb-[4px]">
                   {categories.map((cat) => {
                     const on = cat === category;
                     return (
@@ -392,11 +429,8 @@ const StoreNewFullSheet = ({ initialTab = 'books', onInventoryChanged, onGoRotte
                   {filteredBooks.map((item) => (
                     <ShopBookCard key={item.id} item={item} onClick={() => openBook(item)} />
                   ))}
-                  {category === ALL_CATEGORY && (
-                    <ShopBookCard key="empty-book" custom onClick={openEmptyBook} />
-                  )}
                 </ul>
-              </>
+              </div>
             )}
           </>
         )}

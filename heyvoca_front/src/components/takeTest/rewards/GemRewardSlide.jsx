@@ -21,7 +21,6 @@ import { useRewardTimeline } from './useRewardTimeline';
 import { useRewardShell } from './RewardShell';
 import { anim, burst, ring, jelly, pulse, clearFx, BACK_OUT } from './fx';
 import RewardGlow from './RewardGlow';
-import RewardHint from './RewardHint';
 
 const HERO = 200;
 const C = HERO / 2;
@@ -46,7 +45,6 @@ const GemRewardSlide = ({ gemCount, before = null, after = null, isGuest = false
   const [glow, setGlow] = useState(false);
   const [counted, setCounted] = useState(false);
   const [bal, setBal] = useState(hasBalance ? before : 0);
-  const [tail, setTail] = useState(false);
   const plusN = useCountUp(counted ? N : 0, { duration: 0.6 });
 
   const heroRef = useRef(null);
@@ -161,7 +159,6 @@ const GemRewardSlide = ({ gemCount, before = null, after = null, isGuest = false
       cue: 'perfect',
       run: (instant) => {
         if (hasBalance) setBal(after);
-        setTail(true);
         if (instant || !hasBalance) return;
         anim(pillRef.current, [
           { boxShadow: COLD_SHADOW }, { boxShadow: HOT_SHADOW, offset: 0.12 }, { boxShadow: HOT_SHADOW, offset: 0.8 }, { boxShadow: COLD_SHADOW },
@@ -243,7 +240,6 @@ const GemRewardSlide = ({ gemCount, before = null, after = null, isGuest = false
             이 줄이 없으면 가입 화면에서 보석이 사라진 것처럼 보인다. */}
         {isGuest ? <p className='mt-[6px] text-[12px] font-[500] text-layout-gray-300'>가입하면 계정으로 바로 들어와요</p> : null}
       </div>
-      <RewardHint show={tail} className='mt-[10px]'>보석을 눌러 보세요</RewardHint>
     </div>
   );
 };

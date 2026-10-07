@@ -9,8 +9,10 @@
 //              +90    씨앗이 위에서 떨어진다
 //              +350   흙에 닿는다 — 흙이 튀고 밭이 살짝 눌린다    tap
 //              +440   흙이 덮인다 — 숫자가 오르고 단어 줄이 뜬다  select(간격이 좁으면 진동만)
+//                       구멍이 오므라들며 둘레 흙이 안쪽으로 모이고, 씨앗이 묻히고,
+//                       넓고 낮게 깔린 흙이 봉긋하게 솟았다가 살짝 가라앉는다(COVER_MS)
 //   끝       심은 자리가 차례로 통 튄다                        xpUp
-//            안내가 뜨고 「학습 종료」가 켜진다
+//            「학습 종료」가 켜진다
 //
 // 밭에는 9칸까지만 올리고 나머지는 마지막 자리가 숫자로 대신한다(planField 의 weight).
 // 화면을 탭하면(skipRef) 남은 연출을 건너뛰고 최종 상태만 남긴다.
@@ -22,12 +24,13 @@ import { feel, SPRING } from '../../../lib/feel';
 import { useRewardTimeline } from '../rewards/useRewardTimeline';
 import { anim, burst, ring, jelly, pulse, clearFx, BACK_OUT } from '../rewards/fx';
 import { planField, FIELD_W, FIELD_H } from '../rewards/growth';
-import RewardHint from '../rewards/RewardHint';
 import FarmGrowRow from '../rewards/FarmGrowRow';
-import SoilMound from './SoilMound';
+import SoilMound, { MOUND_GROUND_X, MOUND_GROUND_Y, MOUND_H } from './SoilMound';
+import SoilHole, { HOLE_W, HOLE_H } from './SoilHole';
 
 const SEED_SRC = cropAssetByVariant('seed', 'healthy', { solo: true });   // 낱알
-const SOIL_COLORS = ['#6B4526', '#8B5E3C', '#A9774A', '#C9A27A'];
+// 튀는 흙 알갱이 — 밭 그림·구멍·흙무덤과 같은 흙 색 계열(SoilMound 주석)
+const SOIL_COLORS = ['#7A5230', '#9A7046', '#A47548', '#B98C5E'];
 const TICK = { cue: 'tap', cueOpts: { sound: false } };   // 소리 없이 진동만 한 번
 
 // 자리 한 칸 — 심는 지점(밭 좌표 x, y)이 칸 안의 (GROUND_X, GROUND_Y)에 온다
@@ -35,8 +38,12 @@ const SLOT = 60;
 const GROUND_X = 30;
 const GROUND_Y = 44;
 const SEED_BOX = 112;   // 낱알 그림은 512 캔버스의 1/5 크기라, 이 칸에서 약 22px 로 보인다
-const SEED_SINK = 7;    // 흙에 묻힌 만큼 내려앉는다
+const SEED_SINK = 10;   // 구멍 안으로 내려앉는다 — 앞쪽 턱 아래는 SEED_CLIP 이 가린다
 const DROP_MS = 340;
+// 씨앗이 구멍 **안에** 들어가 보이도록 구멍 앞쪽 턱 아래를 잘라낸다. 아주 길쭉한 타원의 밑동이
+// 구멍 앞 가장자리(반지름 15.5×6.5 타원)의 굽이와 같다(15.5² / 6.5 ≈ 86² / 200). 위는 낙하 구간까지 열려 있다.
+const SEED_CLIP = `ellipse(86px 200px at ${GROUND_X}px ${GROUND_Y + 6.5 - 200}px)`;
+const COVER_MS = 380;
 const PHASE = { NONE: 0, DUG: 1, SEEDED: 2, COVERED: 3 };
 
 const WORD_LABEL_FRAMES = [
@@ -47,6 +54,29 @@ const WORD_LABEL_FRAMES = [
 ];
 const clamp = (v, lo, hi) => Math.max(lo, Math.min(hi, v));
 
+// 구멍 둘레의 흙 알갱이가 안쪽으로 모여든다 — fx.burst 의 반대 방향. 끝나면 스스로 빠지고,
+// 건너뛸 때는 clearFx 가 치운다(부모 직속 span[aria-hidden]).
+const gatherSoil = (parent, x, y) => {
+  if (!parent) return;
+  const n = 6;
+  for (let k = 0; k < n; k += 1) {
+    const ang = (k / n) * Math.PI * 2 + 0.5;
+    const size = k % 2 ? 4 : 5.5;
+    const node = document.createElement('span');
+    node.setAttribute('aria-hidden', 'true');
+    node.style.cssText = `position:absolute;pointer-events:none;left:${x - size / 2}px;top:${y - size / 2}px;width:${size}px;height:${size * 0.8}px;border-radius:50%;z-index:30;opacity:0;background:${SOIL_COLORS[k % SOIL_COLORS.length]}`;
+    parent.appendChild(node);
+    const a = anim(node, [
+      { transform: `translate(${Math.cos(ang) * 23}px,${Math.sin(ang) * 10}px) scale(1)`, opacity: 0 },
+      { transform: `translate(${Math.cos(ang) * 17}px,${Math.sin(ang) * 7 - 3}px) scale(1)`, opacity: 1, offset: 0.3 },
+      { transform: 'translate(0,-2px) scale(.5)', opacity: 0 },
+    ], { duration: 240, easing: 'ease-in' });
+    if (!a) { node.remove(); continue; }
+    a.onfinish = () => node.remove();
+    a.oncancel = () => node.remove();
+  }
+};
+
 const PlantingScene = ({ rows, metaOfRow, reducedMotion, onDone, skipRef }) => {
   // 밭 자리 계산은 밭 성장 슬라이드의 것을 그대로 쓴다(한 종류로만 넘기면 순서대로 9칸을 채운다)
   const plan = useMemo(() => planField((rows ?? []).map((row) => ({ kind: 'sprout', row }))), [rows]);
@@ -55,7 +85,6 @@ const PlantingScene = ({ rows, metaOfRow, reducedMotion, onDone, skipRef }) => {
 
   const [fieldIn, setFieldIn] = useState(false);
   const [phases, setPhases] = useState([]);
-  const [tail, setTail] = useState(false);
 
   const fieldRef = useRef(null);
   const numRef = useRef(null);
@@ -113,7 +142,7 @@ const PlantingScene = ({ rows, metaOfRow, reducedMotion, onDone, skipRef }) => {
             { transform: `translate(${dx}px,-150px) rotate(${dx * 4}deg) scale(1.15)`, opacity: 0, easing: 'cubic-bezier(.5,0,.9,.6)' },
             { transform: `translate(${dx * 0.8}px,-120px) rotate(${dx * 3}deg) scale(1.15)`, opacity: 1, offset: 0.14, easing: 'cubic-bezier(.5,0,.9,.6)' },
             { transform: 'translate(0,0) rotate(0deg) scale(1)', opacity: 1, offset: 0.76 },
-            { transform: 'translate(0,3px) scale(1.2,.74)', opacity: 1, offset: 0.86 },
+            { transform: 'translate(0,5px) scale(1.2,.74)', opacity: 1, offset: 0.86 },
             { transform: `translate(0,${SEED_SINK}px) scale(1)`, opacity: 1 },
           ], { duration: DROP_MS }));
         },
@@ -135,11 +164,27 @@ const PlantingScene = ({ rows, metaOfRow, reducedMotion, onDone, skipRef }) => {
         run: (instant) => {
           setPhase(i, PHASE.COVERED);
           if (instant) return;
+          // 구멍이 오므라들고 둘레 흙이 안쪽으로 모인다
+          track(anim(holeRefs.current[i], [
+            { transform: 'scale(1)', opacity: 1 },
+            { transform: 'scale(.72,.6)', opacity: 1, offset: 0.55 },
+            { transform: 'scale(.45,.3)', opacity: 0 },
+          ], { duration: 220, easing: 'ease-in' }));
+          gatherSoil(fieldRef.current, x, y - 1);
+          // 씨앗이 흙에 묻힌다
+          track(anim(seedRefs.current[i], [
+            { transform: `translateY(${SEED_SINK}px) scale(1)`, opacity: 1 },
+            { transform: `translateY(${SEED_SINK + 2}px) scale(.94)`, opacity: 1, offset: 0.5 },
+            { transform: `translateY(${SEED_SINK + 4}px) scale(.86)`, opacity: 0 },
+          ], { duration: 130, easing: 'ease-in' }));
+          // 넓고 낮게 깔린 흙이 가운데로 모이며 솟고, 봉긋하게 가라앉는다
           track(anim(moundRefs.current[i], [
-            { transform: 'scale(.3,0)', opacity: 0 },
-            { transform: 'scale(1.12,1.2)', opacity: 1, offset: 0.6 },
+            { transform: 'scale(1.3,.3)', opacity: 0 },
+            { transform: 'scale(1.16,.74)', opacity: 1, offset: 0.24 },
+            { transform: 'scale(.95,1.16)', opacity: 1, offset: 0.58 },
+            { transform: 'scale(1.04,.92)', opacity: 1, offset: 0.82 },
             { transform: 'scale(1,1)', opacity: 1 },
-          ], { duration: 300, easing: 'ease-out' }));
+          ], { duration: COVER_MS, easing: 'ease-out' }));
           showWord(i);
           pulse(numRef.current, 1.35, 260);
         },
@@ -160,7 +205,6 @@ const PlantingScene = ({ rows, metaOfRow, reducedMotion, onDone, skipRef }) => {
       }));
       t += n * 55 + 260;
     }
-    steps.push({ at: t, run: () => setTail(true) });
     return { steps, readyAt: t };
   };
 
@@ -215,19 +259,22 @@ const PlantingScene = ({ rows, metaOfRow, reducedMotion, onDone, skipRef }) => {
                 className='absolute cursor-pointer origin-[50%_73%]'
                 style={{ width: SLOT, height: SLOT, left: x - GROUND_X, top: y - GROUND_Y, zIndex: 10 + Math.round(y / 19) }}
               >
-                {/* 구멍 — 씨앗 뒤에 남아 흙무덤의 뒤쪽 테두리가 된다 */}
+                {/* 구멍 — 흙이 덮이면 사라진다 */}
                 <span
                   ref={(el) => { holeRefs.current[i] = el; }}
                   aria-hidden
-                  className={`pointer-events-none absolute h-[14px] w-[36px] rounded-[50%] ${phase >= PHASE.DUG ? 'opacity-100' : 'opacity-0'}`}
-                  style={{ left: GROUND_X - 18, top: GROUND_Y - 8, background: 'radial-gradient(ellipse at 50% 60%, rgba(52,30,12,.78) 0%, rgba(74,45,20,.55) 55%, rgba(74,45,20,0) 100%)' }}
-                />
+                  className={`pointer-events-none absolute ${phase >= PHASE.DUG && phase < PHASE.COVERED ? 'opacity-100' : 'opacity-0'}`}
+                  style={{ left: GROUND_X - HOLE_W / 2, top: GROUND_Y - HOLE_H / 2 }}
+                >
+                  <SoilHole />
+                </span>
+                <span aria-hidden className='pointer-events-none absolute inset-0' style={{ clipPath: SEED_CLIP }}>
                 <img
                   ref={(el) => { seedRefs.current[i] = el; }}
                   src={SEED_SRC}
                   alt={entry.row.word}
                   draggable={false}
-                  className={`pointer-events-none absolute max-w-none select-none ${phase >= PHASE.SEEDED ? 'opacity-100' : 'opacity-0'}`}
+                  className={`pointer-events-none absolute max-w-none select-none ${phase === PHASE.SEEDED ? 'opacity-100' : 'opacity-0'}`}
                   style={{
                     width: SEED_BOX,
                     height: SEED_BOX,
@@ -237,12 +284,13 @@ const PlantingScene = ({ rows, metaOfRow, reducedMotion, onDone, skipRef }) => {
                     transformOrigin: `50% ${CROP_BASELINE * 100}%`,
                   }}
                 />
-                {/* 흙무덤 — 씨앗 앞에서 아래쪽을 덮는다. 씨앗 머리만 흙 위로 보인다 */}
+                </span>
+                {/* 흙무덤 — 씨앗을 완전히 덮는다. 땅에 닿는 줄을 축으로 솟는다 */}
                 <span
                   ref={(el) => { moundRefs.current[i] = el; }}
                   aria-hidden
-                  className={`pointer-events-none absolute origin-bottom ${phase >= PHASE.COVERED ? 'opacity-100' : 'opacity-0'}`}
-                  style={{ left: GROUND_X - 22, top: GROUND_Y - 7 }}
+                  className={`pointer-events-none absolute ${phase >= PHASE.COVERED ? 'opacity-100' : 'opacity-0'}`}
+                  style={{ left: GROUND_X - MOUND_GROUND_X, top: GROUND_Y - MOUND_GROUND_Y, transformOrigin: `50% ${((MOUND_GROUND_Y + 2) / MOUND_H) * 100}%` }}
                 >
                   <SoilMound />
                 </span>
@@ -258,8 +306,6 @@ const PlantingScene = ({ rows, metaOfRow, reducedMotion, onDone, skipRef }) => {
         </div>
       </div>
 
-      {total > 0 ? <RewardHint show={tail}>심은 자리를 눌러 보세요</RewardHint> : null}
-
       {/* 심기는 순서대로 한 줄씩 — 밭에 못 올린 단어는 마지막 자리와 함께 뜬다 */}
       <div className='flex w-full flex-col gap-[8px]'>
         {rows.map((row, i) => (
@@ -274,7 +320,6 @@ const PlantingScene = ({ rows, metaOfRow, reducedMotion, onDone, skipRef }) => {
                 word={row.word}
                 meaning={row.meaning}
                 meta={metaOfRow(row)}
-                right='새로 심었어요'
               />
             </motion.div>
           ) : null

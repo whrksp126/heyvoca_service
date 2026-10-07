@@ -8,7 +8,7 @@
 //   1050ms~  새싹이 190ms 간격으로 돋는다                 xpUp 한 번 + 매번 tick 진동
 //            이어서 자람(한 박자씩) → 되살림(물방울 뒤)   xpUp
 //            마지막에 황금 당근                          evolve — 강한 음(240ms)이 바뀌는 순간에 오도록 먼저 발사
-//   끝       「자란 단어 보기」 · 안내 · 「확인」 켜짐     select
+//   끝       「자란 단어 보기」 · 「확인」 켜짐            select
 //
 // 밭에는 9칸까지만 올리고 나머지는 숫자로 센다(planField). 단어 목록은 필요할 때만 여는 시트다.
 import React, { useMemo, useRef, useState } from 'react';
@@ -20,7 +20,6 @@ import { useRewardTimeline } from './useRewardTimeline';
 import { anim, burst, ring, jelly, pulse, clearFx, BACK_OUT, FX_GOLDS } from './fx';
 import { planField, growthRightLabel, GROWTH_KINDS, GROWTH_KIND_META, FIELD_W, FIELD_H, CROP_BOX } from './growth';
 import RewardGlow from './RewardGlow';
-import RewardHint from './RewardHint';
 import FarmGrowRow from './FarmGrowRow';
 
 // 밭 위 그림 — 흙 없는 심긴 판. 씨앗만 낱알(심긴 판의 씨앗은 32px 점이라 밭에서 안 보인다)
@@ -283,7 +282,6 @@ const FarmGrowthSlide = ({ entries, reducedMotion, onReady, skipRef }) => {
             <CaretUp size={14} weight='bold' />
             {onlyRescue ? '되살린' : '자란'} 단어 {total}개 보기
           </button>
-          <RewardHint show={tail}>작물을 눌러 보세요</RewardHint>
         </div>
       </div>
 

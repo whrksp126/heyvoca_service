@@ -1,4 +1,4 @@
-import { CAMERA_ART } from '../../components/farm/itemArt';
+import { CAMERA_ART, CARE_ART, SEARCH_ART } from '../../components/farm/itemArt';
 export const IconBell = ({width, height, className}) => {
   return (
     <svg xmlns="http://www.w3.org/2000/svg" width={width} height={height} viewBox="0 0 18 19" fill="none" className={className}>
@@ -19,5 +19,19 @@ export const IconBellRingingFill = ({width, height, className}) => {
 export const IconCamera = ({width, height, className = ''}) => {
   return (
     <img src={CAMERA_ART} alt="" width={width} height={height} draggable={false} className={`object-contain select-none ${className}`} />
+  )
+}
+
+/* 돌봄(물 주기) — 물뿌리개. 카메라와 같은 입체 그림이라 색이 그림 안에 있다. size 하나로도 크기를 줄 수 있다(Phosphor 자리 대체용). */
+export const IconCare = ({size, width = size, height = size, className = ''}) => {
+  return (
+    <img src={CARE_ART} alt="" width={width} height={height} draggable={false} className={`object-contain select-none ${className}`} />
+  )
+}
+
+/* 검색 돋보기 — 위와 같은 입체 그림 */
+export const IconSearch = ({size, width = size, height = size, className = ''}) => {
+  return (
+    <img src={SEARCH_ART} alt="" width={width} height={height} draggable={false} className={`object-contain select-none ${className}`} />
   )
 }

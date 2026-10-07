@@ -20,7 +20,6 @@ import { FARM_ITEM_LABEL } from '../../../utils/crop';
 import { useRewardTimeline } from './useRewardTimeline';
 import { anim, burst, ring, jelly, clearFx } from './fx';
 import RewardGlow from './RewardGlow';
-import RewardHint from './RewardHint';
 
 const LAND = 620;
 const HERO = 200;          // 주인공 상자 한 변
@@ -148,7 +147,6 @@ const ItemRewardSlide = ({ itemKey, qty = 1, why, reducedMotion, onReady, skipRe
         </p>
         {why ? <p className='mt-[6px] text-[12px] font-[500] text-layout-gray-300'>{why}</p> : null}
       </div>
-      <RewardHint show={tail}>아이템을 눌러 보세요</RewardHint>
     </div>
   );
 };

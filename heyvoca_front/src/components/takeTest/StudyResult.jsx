@@ -1391,7 +1391,6 @@ const StudyResult = () => {
               word={row.word}
               meaning={row.meaning}
               meta={metaOfRow(row)}
-              right="새로 심었어요"
             />
           ))}
         />

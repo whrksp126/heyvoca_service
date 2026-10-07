@@ -18,7 +18,6 @@ import { useRewardTimeline } from './useRewardTimeline';
 import { anim, burst, ring, confetti, clearFx, FX_COLORS, FX_GOLDS } from './fx';
 import { ACHIEVEMENT_IMAGES, achievementTier } from './achievement';
 import RewardGlow from './RewardGlow';
-import RewardHint from './RewardHint';
 
 const FLIP = 1120;
 const HERO = 190;
@@ -41,7 +40,6 @@ const AchievementSlide = ({ goal, reducedMotion, onReady, skipRef }) => {
   const [upgraded, setUpgraded] = useState(false);
   const [ribbon, setRibbon] = useState(false);
   const [texted, setTexted] = useState(false);
-  const [tail, setTail] = useState(false);
 
   const rootRef = useRef(null);
   const heroRef = useRef(null);
@@ -81,7 +79,6 @@ const AchievementSlide = ({ goal, reducedMotion, onReady, skipRef }) => {
       },
       { at: FLIP + 620, run: () => setRibbon(true) },
       { at: FLIP + 780, run: () => setTexted(true) },
-      { at: FLIP + 1000, run: () => setTail(true) },
     ],
   });
 
@@ -165,7 +162,6 @@ const AchievementSlide = ({ goal, reducedMotion, onReady, skipRef }) => {
       <p className={`text-center text-[17px] font-[700] leading-[1.45] tracking-[-0.02em] ${FADE_UP} ${texted ? 'translate-y-0 opacity-100' : 'translate-y-[18px] opacity-0'}`}>
         <strong className='text-primary-main-600'>{goalType} {to}레벨</strong>을 달성했어요
       </p>
-      <RewardHint show={tail}>메달을 눌러 보세요</RewardHint>
     </div>
   );
 };

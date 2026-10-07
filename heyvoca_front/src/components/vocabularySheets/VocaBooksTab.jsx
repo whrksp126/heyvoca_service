@@ -1,6 +1,6 @@
 import React, { useCallback, useMemo, useState } from 'react';
 import {
-  Plus, WarningCircle, Check, SealCheck,
+  Plus, Check, SealCheck,
 } from '@phosphor-icons/react';
 import { motion } from 'framer-motion';
 import { useVocabulary } from '../../context/VocabularyContext';
@@ -9,6 +9,7 @@ import { useNewFullSheet } from '../../hooks/useNewFullSheet';
 import { useVocabularyManageNewBottomSheet } from '../newBottomSheet/VocabularyManageNewBottomSheet';
 import VocabularyWordsNewFullSheet from '../newfullsheet/VocabularyWordsNewFullSheet';
 import CropImage from '../farm/CropImage';
+import { IconCare } from '../../assets/svg/icon';
 // 밭 썸네일 — 시안 §2. 홈 히어로와 같은 밭을 작게 그린다.
 // 예전에는 미리 구워 둔 네 장(book-seed/early/mid/done) 중 하나를 골라 썼는데,
 // 그러면 어느 단어장이든 넷 중 하나로만 보였다. 지금은 그 단어장에 실제로 심긴
@@ -27,12 +28,12 @@ import {
 
 /** 카드 배지 — 시안 §1① (돌봄 N · 완료 · 씨앗) */
 const BADGE_CLASS = {
-  care: 'bg-secondary-yellow-100 dark:bg-secondary-yellow-dark text-secondary-yellow-600',
+  care: 'bg-secondary-blue-100 dark:bg-secondary-blue-dark text-[#175CD3] dark:text-[#84CAFF]',
   done: 'bg-status-success-100 dark:bg-status-success-dark text-status-success-600',
 };
 
 const BADGE_ICON = {
-  care: WarningCircle,
+  care: IconCare,
   done: Check,
 };
 
@@ -216,7 +217,7 @@ const VocaBooksTab = () => {
                         ${BADGE_CLASS[badge.kind]}
                       `}
                     >
-                      {BadgeIcon && <BadgeIcon size={10} weight="bold" />}
+                      {BadgeIcon && <BadgeIcon size={badge.kind === 'care' ? 15 : 10} weight="bold" />}
                       {badge.text}
                     </span>
                   )}

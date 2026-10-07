@@ -2,11 +2,12 @@
 //
 // 홈 — 연속 학습 카드 (2026-09-27 확정 목업, scratchpad/home10/IMPL_SPEC.md "1주 불꽃 달력").
 //
-// 1층 헤더 — 불꽃 24px + "N일 연속"(15px/800) + 우측 "최장 N일"(12px/600) + CaretRight
-//           (기존 §6 헤더와 동일 — 그대로 둔다)
-// 2층 7칸 grid(최근 6일 + 오늘) — 그날 daily_mission_complete/streak_qualified/streak_protected로
-//           채색한다("오늘 할 일 모두" 진한 색 · "일부" 옅은 색 · 보호권 회색+아이콘 · 오늘 미달성은
-//           점선 빈칸). 개수·말풍선은 두지 않는다 — 그날 "오늘 할 일을 다 했는가"만 본다.
+// 그림은 streak/StreakCardView.jsx 가 그린다(2026-10-07 연속 학습 화면 고도화) — 이 파일은 조회 ·
+// 재조회 시점 · 정산 알림만 맡는다.
+// 1층 머리말 — 일렁이는 불꽃 + 굴러 올라가는 "N일 연속" + 우측 "최장 N일" 버튼(농장 방문 풀시트)
+// 2층 7칸(최근 6일 + 오늘) — 그날 daily_mission_complete/streak_qualified/streak_protected로
+//           채색한다("오늘 할 일 모두" 진한 색 · "일부" 옅은 색 · 보호권 민트 점선 · 오늘 미달성은
+//           점선 빈칸). 개수는 두지 않는다 — 그날 "오늘 할 일을 다 했는가"만 본다.
 // 이전의 "일별 학습량 막대 7칸"(맞힌 개수 높이)은 이 화면으로 대체됐다 — 오늘 할 일 카드가
 // 이미 "무엇을 얼마나 했는가"를 말하고 있어 여기서는 "그날 다 끝냈는가"만 겹치지 않게 말한다.
 // week 데이터는 /farm/today-tasks(StatsContext.todayTasks.week)에서 받는다 — 이 카드가 원래
@@ -30,9 +31,7 @@
 
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import { CaretRight } from '@phosphor-icons/react';
 import { getStreakApi, startEarnBackApi } from '../../api/farm';
-import { CROP_ASSETS } from '../farm/CropImage';
 import { useStats } from '../../context/StatsContext';
 import { useVocabulary } from '../../context/VocabularyContext';
 import { vibrate } from '../../utils/osFunction';
@@ -40,16 +39,10 @@ import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
 import { useNewBottomSheetContext, useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 import FarmVisitCalendarSheet from './FarmVisitCalendarSheet';
 import StreakSettlementNewBottomSheet from '../newBottomSheet/StreakSettlementNewBottomSheet';
-import WeekStreakStrip, { buildWeekCells } from '../farm/WeekStreakStrip';
+import { buildWeekCells } from '../farm/WeekStreakStrip';
+import StreakCardView from '../streak/StreakCardView';
 
 const MIN_RELOAD_INTERVAL_MS = 5000;
-
-/** 멈춤 기한까지 남은 시간(시간 단위, 올림) — "41시간 안에 채우면 이어져요" */
-const hoursUntil = (iso) => {
-  if (!iso) return 0;
-  const ms = new Date(iso).getTime() - Date.now();
-  return Math.max(0, Math.ceil(ms / 3600000));
-};
 
 /**
  * registerRefresh — 부모(홈 Main)가 당겨서 새로고침 때 이 카드의 /farm/streak도 같이
@@ -138,9 +131,6 @@ const StreakCard = ({ registerRefresh } = {}) => {
     );
   };
 
-  const required = Math.max(1, streak?.required ?? 5);
-  const todayCorrect = streak?.today_correct ?? 0;
-
   /**
    * 1주 불꽃 달력 — /farm/today-tasks(week)에서 받는다. 오늘 포함 최근 7일, 오래된→오늘 순.
    * status: 'all'(오늘 할 일 모두) | 'part'(일부) | 'shield'(보호권) | 'none'(빈 날) |
@@ -175,27 +165,6 @@ const StreakCard = ({ registerRefresh } = {}) => {
     });
   };
 
-  // 다시 잇기 도전(§3 "막대 7칸 자리 대신 도전 진행") — active/offered 모두 막대를 밀어낸다
-  const earnBack = streak?.earn_back ?? null;
-  const showEarnBack = earnBack?.status === 'active' || earnBack?.status === 'offered';
-  const earnBackDots = useMemo(() => {
-    if (!earnBack) return [];
-    const total = earnBack.days_required ?? 3;
-    const doneCnt = earnBack.days_done ?? 0;
-    const labels = ['오늘', '내일', '모레'];
-    return Array.from({ length: total }).map((_, i) => {
-      let fillPct = 0;
-      if (i < doneCnt) fillPct = 100;
-      else if (i === doneCnt && earnBack.status === 'active' && !earnBack.today_done) {
-        fillPct = Math.min(100, Math.round((todayCorrect / required) * 100));
-      }
-      return { key: i, label: labels[i] || `${i + 1}일째`, fillPct, isNow: i === doneCnt && earnBack.status === 'active' };
-    });
-  }, [earnBack, todayCorrect, required]);
-
-  const dayOrdinal = earnBack ? (earnBack.today_done ? (earnBack.days_done ?? 0) : (earnBack.days_done ?? 0) + 1) : 0;
-  const daysLeft = earnBack ? Math.max(0, (earnBack.days_required ?? 3) - dayOrdinal) : 0;
-
   const [startingEarnBack, setStartingEarnBack] = useState(false);
   const handleStartEarnBack = async () => {
     vibrate({ duration: 5 });
@@ -209,123 +178,15 @@ const StreakCard = ({ registerRefresh } = {}) => {
   // 조회 전이거나 실패했으면 홈에 빈 카드를 남기지 않는다
   if (!streak) return null;
 
-  const current = streak.current ?? 0;
-  const best = streak.best ?? 0;
-  const paused = !!streak.paused;
-  const pause = streak.pause ?? null;
-
   return (
-    <div className="
-      rounded-[12px] p-[18px]
-      bg-layout-white dark:bg-layout-gray-dark
-      border border-farm-line dark:border-transparent
-    ">
-      {/* 1층 — 불꽃 · 연속 일수 · 최장 기록 */}
-      <div className="flex items-center gap-[10px]">
-        <img
-          src={CROP_ASSETS.streak}
-          alt=""
-          draggable={false}
-          className="w-[26px] h-[26px] object-contain select-none flex-shrink-0"
-        />
-        <span className="flex items-center gap-[6px] flex-1 min-w-0 text-layout-black dark:text-layout-white text-[15px] font-[700] tracking-[-0.03em]">
-          {current}일 연속
-          {/* 멈춤(paused) — 계약 §3 "M일 연속 옆 멈춤 태그" */}
-          {paused && (
-            <span className="shrink-0 px-[8px] py-[3px] rounded-full text-[10.5px] font-[800] bg-primary-main-100 dark:bg-primary-main-dark text-primary-main-600 dark:text-primary-main-400">
-              멈춤
-            </span>
-          )}
-        </span>
-        <button
-          type="button"
-          onClick={handleBest}
-          className="flex items-center gap-[2px] text-[12px] font-[600] text-[#9A9A9A]"
-        >
-          최장 {best}일
-          <CaretRight size={10} weight="fill" className="text-[#BBBBBB]" />
-        </button>
-      </div>
-
-      {/* 멈춤 알림 행 — 계약 §3 "보호권 이미지 · 보호권 K개가 모자라요 · N시간 안에 채우면
-          이어져요 · [지키기] → paused 시트 재오픈" */}
-      {paused && pause && (
-        <div className="flex items-center gap-[10px] mt-[12px] px-[11px] py-[10px] rounded-[10px] bg-layout-gray-50 dark:bg-layout-black">
-          <img src={CROP_ASSETS.shield} alt="" draggable={false} className="w-[28px] h-[28px] object-contain select-none shrink-0" />
-          <span className="flex-1 min-w-0 text-[12px] leading-[1.45] text-layout-gray-400 dark:text-layout-gray-300">
-            <span className="block text-[12.5px] font-[800] text-layout-black dark:text-layout-white">
-              보호권 {pause.short}개가 모자라요
-            </span>
-            {hoursUntil(pause.deadline)}시간 안에 채우면 이어져요
-          </span>
-          <button
-            type="button"
-            onClick={openPausedSheet}
-            className="shrink-0 h-[30px] px-[11px] rounded-[8px] bg-primary-main-600 text-layout-white text-[12px] font-[800]"
-          >
-            지키기
-          </button>
-        </div>
-      )}
-
-      {/* 다시 잇기 도전 — 막대 7칸 자리를 대신한다(계약 §3) */}
-      {showEarnBack ? (
-        <div className="mt-[12px] p-[12px] rounded-[10px] bg-layout-gray-50 dark:bg-layout-black">
-          {earnBack.status === 'active' ? (
-            <>
-              <div className="flex items-center gap-[6px] text-[12.5px] font-[800] text-layout-black dark:text-layout-white">
-                다시 잇기 {dayOrdinal}일째
-                <span className="px-[7px] py-[2px] rounded-full text-[10.5px] font-[800] bg-primary-main-100 dark:bg-primary-main-dark text-primary-main-600 dark:text-primary-main-400">
-                  오늘 {todayCorrect}/{required}
-                </span>
-              </div>
-              <div className="mt-[4px] text-[11px] leading-[1.5] text-layout-gray-400 dark:text-layout-gray-300">
-                {daysLeft > 0
-                  ? `${daysLeft}일 더 하면 연속 ${earnBack.from_streak}일에 이어서 ${earnBack.result_streak}일이 돼요`
-                  : `오늘 완료하면 연속 ${earnBack.result_streak}일이 돼요`}
-              </div>
-              <div className="flex gap-[8px] mt-[10px]">
-                {earnBackDots.map((dot) => (
-                  <div key={dot.key} className="flex-1 flex flex-col items-center gap-[5px]">
-                    <span className="block w-full h-[8px] rounded-full bg-[#F3DEEC] dark:bg-[rgba(255,255,255,.14)] overflow-hidden">
-                      <span
-                        style={{ width: `${dot.fillPct}%` }}
-                        className="block h-full rounded-full bg-primary-main-600"
-                      />
-                    </span>
-                    <span className="text-[10px] font-[700] text-[#B8709F] dark:text-primary-main-400">{dot.label}</span>
-                  </div>
-                ))}
-              </div>
-            </>
-          ) : (
-            <>
-              <div className="text-[12.5px] font-[800] text-layout-black dark:text-layout-white">다시 잇기 도전</div>
-              <div className="mt-[4px] text-[11px] leading-[1.5] text-layout-gray-400 dark:text-layout-gray-300">
-                끊긴 연속 {earnBack.from_streak}일, {earnBack.days_required}일 동안 이어가면 다시 연결돼요
-              </div>
-              <button
-                type="button"
-                onClick={handleStartEarnBack}
-                disabled={startingEarnBack}
-                className="mt-[10px] w-full h-[36px] rounded-[9px] bg-primary-main-600 text-layout-white text-[12.5px] font-[800] disabled:opacity-50"
-              >
-                도전 시작
-              </button>
-            </>
-          )}
-        </div>
-      ) : weekCells.length === 7 ? (
-        <WeekStreakStrip cells={weekCells} showLegend className="mt-[14px]" />
-      ) : (
-        // week 응답이 아직 없을 때(로딩·구버전 백엔드) — 막대 대신 빈 칸 스켈레톤만 둔다
-        <div className="grid grid-cols-7 gap-[6px] mt-[14px]">
-          {Array.from({ length: 7 }).map((_, i) => (
-            <div key={i} className="h-[46px] rounded-[12px] bg-layout-gray-50 dark:bg-layout-gray-dark animate-pulse" />
-          ))}
-        </div>
-      )}
-    </div>
+    <StreakCardView
+      streak={streak}
+      weekCells={weekCells}
+      onOpenRecord={handleBest}
+      onOpenPaused={openPausedSheet}
+      onStartEarnBack={handleStartEarnBack}
+      startingEarnBack={startingEarnBack}
+    />
   );
 };
 

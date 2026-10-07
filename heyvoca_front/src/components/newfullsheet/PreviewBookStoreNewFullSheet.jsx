@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useMemo } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { CaretLeft, CaretUp } from '@phosphor-icons/react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
@@ -16,21 +16,18 @@ import { useExampleSettings } from '../../context/ExampleSettingsContext';
 import { getBookStoreDetailApi } from '../../api/bookStore';
 import PullToRefresh from '../common/PullToRefresh';
 import gem from '../../assets/images/farm/icon-gem.png';
-import BookFieldHero from '../vocabularySheets/BookFieldHero';
+import SeedBundleHero from '../bookStore/SeedBundleHero';
 import CropImage from '../farm/CropImage';
 import { HEALTH_STATES } from '../../utils/crop';
 
 /**
- * 상점 단어장 미리보기 — 사기 전에 이 밭에 무엇이 심길지 본다.
+ * 상점 단어장 미리보기 — 사기 전에 이 단어장에 어떤 씨앗이 들어 있는지 본다.
  *
- * 예전 화면은 서비스에서 유일하게 남은 구버전 디자인이었다. 단어마다 색 배경 카드를
- * 통째로 깔아 한 화면에 서너 개밖에 안 들어갔고, 산 뒤에 열리는 단어장 화면
- * (VocabularyWordsNewFullSheet)과 생김새가 전혀 달라 같은 단어장으로 보이지 않았다.
- *
- * 그래서 **산 뒤의 화면과 같은 골격**으로 맞췄다 — 밭 히어로 + 팻말, 58px 단어 행.
- * 다른 점은 딱 둘이다.
- *   ① 팻말이 씨앗 하나뿐이다. 아직 아무것도 심지 않았으니 다른 단계가 있을 수 없다
- *      (시안 shop §4 가 이 수를 "심을 씨앗 N개"라고 부른다).
+ * 목록은 **산 뒤의 화면**(VocabularyWordsNewFullSheet)과 같은 골격이다 — 58px 단어 행.
+ * 다른 점은 둘이다.
+ *   ① 위 그림이 밭이 아니라 **포장된 씨앗 묶음**(SeedBundleHero)이다. 아직 사지도 배우지도
+ *      않은 단어라 밭에 심겨 있을 수 없다 — 예전에는 밭에 씨앗을 전부 심어 보여 줘서 어색했다.
+ *      행 왼쪽의 분홍 씨앗 봉투가 상자에 모여 있는 그림이라 같은 물건으로 읽힌다.
  *   ② 오른쪽 복습 예정일 자리에 발음 버튼이 온다. 예정일은 사고 나서야 생긴다.
  */
 
@@ -53,11 +50,11 @@ const SAFE_TOP = 'max(var(--status-bar-height), env(safe-area-inset-top, 0px))';
 // onPrimaryAction/primaryActionLabel: 지정 시 하단 주요 버튼을 구매/추가 대신 커스텀 동작으로 대체
 // (온보딩에서 '이 단어장으로 시작하기' 선택에 재사용). 미지정이면 서점 기본(구매/추가).
 //
-// hideFieldHero: 밭 그림과 "심을 씨앗 N개" 줄을 빼고 단어 목록만 보여 준다.
+// hideFieldHero: 위 그림(씨앗 묶음)과 "심을 씨앗 N개" 줄을 빼고 단어 목록만 보여 준다.
 //   온보딩이 켠다. 온보딩은 바로 앞 화면에서 이미 밭을 한 장 보여 줬고, 씨앗 수는 다음
 //   화면(예고)에서 "오늘은 14알만 심어요"로 다시 말한다. 같은 그림과 같은 수를 세 번
 //   연속으로 보게 되므로 여기서는 뺀다. 서점·사전에서 열 때는 그대로 나온다 —
-//   거기서는 이 화면이 밭을 보여 주는 유일한 자리다.
+//   거기서는 이 화면이 씨앗 수를 그림으로 보여 주는 유일한 자리다.
 //
 // listItem: QA §D. 서점 목록(StoreNewFullSheet·BookSection)의 원본 item — 로그인 사용자에게는
 //   `notOwnedCount`(안 갖고 있는 단어 수)가 실려 있다. 넘겨받으면 상점 카드와 같은 규칙으로
@@ -95,25 +92,6 @@ export const PreviewBookStoreNewFullSheet = ({
   const lastScrollTopRef = useRef(0);
 
   const totalCount = bookStoreVocabularySheet?.words?.length || 0;
-
-  /*
-    이 밭에 심을 자리 — 사기 전이라 전부 같은 씨앗(PLANTED_SEED/FRESH)이라 단계가 섞일
-    일은 없지만, 산 뒤 화면(VocabularyWordsNewFullSheet)과 **같은 자리 규칙**(단어 id 기반
-    결정적 슬롯)을 쓴다. 여기서 쓸 수 있는 유일한 안정적 id 는 `vocaId`(= 사전 Voca.id) —
-    산 뒤에는 UserVoca.id(vocaIndexId)로 바뀌지만 `/vocaIndexs` 응답이 원본을 `vocaId`로
-    그대로 실어 보내므로(voca_indexs.py `build_voca_index_response`), 두 화면이 우연이
-    아니라 같은 값으로 자리를 겹칠 수 있다 — 다만 지금은 산 뒤 화면이 vocaIndexId 기준이라
-    실제로 같은 자리가 되지는 않는다(보고 참조 — 두 화면을 모두 voca_id 기준으로 통일할지는
-    별도 검토 필요).
-  */
-  const previewFieldWords = useMemo(
-    () => (bookStoreVocabularySheet?.words || []).map((w) => ({
-      id: w.vocaId ?? w.id,
-      stage: 'PLANTED_SEED',
-      health: 'FRESH',
-    })),
-    [bookStoreVocabularySheet],
-  );
 
   // ref 업데이트
   useEffect(() => {
@@ -292,6 +270,10 @@ export const PreviewBookStoreNewFullSheet = ({
         : { text: `미보유 단어 ${notOwnedCount.toLocaleString()}개`, className: 'text-layout-black dark:text-layout-white' })
       : { text: `단어 ${totalCount.toLocaleString()}개`, className: 'text-layout-black dark:text-layout-white' };
 
+  // 상자에 담을 수 = 새로 받는 씨앗. 보유 수를 모르면(게스트·다른 진입 경로) 전체가 새 씨앗이다.
+  const bundleCount = typeof notOwnedCount === 'number' ? Math.min(notOwnedCount, totalCount) : totalCount;
+  const ownedCount = totalCount - bundleCount;
+
   /*
     단어 한 줄 → 상세 시트.
 
@@ -365,13 +347,14 @@ export const PreviewBookStoreNewFullSheet = ({
           <div className="shrink-0" style={{ height: `calc(${HEADER_OFFSET}px + ${SAFE_TOP})` }} />
         ) : (
           <>
-            {/* 이 단어장이 열어 줄 밭 — 전부 씨앗이다. 아직 아무것도 심지 않았다 */}
-            <BookFieldHero counts={{ seed: totalCount }} words={previewFieldWords} />
+            {/* 포장된 씨앗 묶음 — 상자에는 지금 사면 새로 받는 씨앗만 담고,
+                이미 가진 단어는 그 아래 칩으로 따로 말한다 */}
+            <SeedBundleHero count={bundleCount} ownedCount={ownedCount} />
 
             {/* 시안 shop §4 가 카드에 넣으라고 한 줄을 여기서도 같은 말로 반복한다.
                 카드에서 읽고 들어온 값이 상세에서 사라지면 같은 상품인지 확신이 안 선다.
                 이름은 상단 고정 헤더(52px) 안에 있어 "이름 바로 아래"로 붙이려면 헤더를 늘려야 한다.
-                헤더는 밭 그림 위에 배경 없이 얹는 오버레이라 줄을 더하면 그 자리가 부자연스러워져서
+                헤더는 히어로 그림 위에 배경 없이 얹는 오버레이라 줄을 더하면 그 자리가 부자연스러워져서
                 자리는 그대로 두고 아이콘만 뺐다(카드 쪽 개정과 같은 규칙 — 텍스트만). */}
             <div className="flex items-center gap-[12px] shrink-0 px-[16px] pt-[26px] pb-[12px]">
               <span className={`text-[13px] font-[800] tracking-[-0.03em] ${seedLine.className}`}>

@@ -18,7 +18,6 @@ import ComboIcon from '../ComboIcon';
 import { useRewardTimeline } from './useRewardTimeline';
 import { anim, burst, ring, jelly, pulse, clearFx } from './fx';
 import RewardGlow from './RewardGlow';
-import RewardHint from './RewardHint';
 
 const LAND = 560;
 const COUNT_MS = 650;
@@ -140,7 +139,6 @@ const ComboRewardSlide = ({ maxCombo = 0, reducedMotion, onReady, skipRef }) => 
       <p className={`text-center text-[17px] font-[700] leading-[1.45] tracking-[-0.02em] ${FADE_UP} ${texted ? 'translate-y-0 opacity-100' : 'translate-y-[18px] opacity-0'}`}>
         <strong className='text-primary-main-600'>{maxCombo}번</strong> 연속으로 맞혔어요
       </p>
-      <RewardHint show={tail}>아이콘을 눌러 보세요</RewardHint>
     </div>
   );
 };
