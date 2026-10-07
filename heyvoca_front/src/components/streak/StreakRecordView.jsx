@@ -12,7 +12,7 @@
 // 연속 보상 목록(3일/7일/14일 …)은 2026-10-07 QA 로 이 화면에서 뺐다 — 지급은 서버가 그대로 한다.
 import React, { useMemo, useRef, useState } from 'react';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
-import { Check, Crown, MoonStars } from '@phosphor-icons/react';
+import { MoonStars } from '@phosphor-icons/react';
 import { haptic, SPRING, useCountUp } from '../../lib/feel';
 import { CROP_ASSETS } from '../farm/CropImage';
 import StreakFlame from './StreakFlame';
@@ -58,26 +58,26 @@ const summaryFor = (date, info, streak, today) => {
     const remain = Math.max(0, required - correctCnt);
     return {
       kind: 'progress',
-      title: `맞힌 단어 ${correctCnt}개`,
-      sub: remain > 0 ? `${remain}개만 더 맞히면 오늘도 이어져요` : '오늘도 이어졌어요',
-      ratio,
+      count: correctCnt,
+      required,
+      sub: remain > 0 ? `${remain}개만 더 맞히면 오늘도 이어져요` : null,
     };
   }
   if (info?.qualified) {
     const state = cellState(info);
     if (isToday || hasCorrectCnt) {
-      return { kind: 'lit', state, title: `맞힌 단어 ${correctCnt}개`, sub: `${required}개 이상 맞혀 연속으로 이어졌어요`, ratio: 1 };
+      return { kind: 'lit', state, count: correctCnt, required, sub: null };
     }
     // 구서버 폴백 — 개수를 모르니 자격 문구만 남긴다
-    return { kind: 'lit', state, title: '연속으로 이어진 날', sub: null, ratio: null };
+    return { kind: 'lit', state, count: null, title: '연속으로 이어진 날', sub: null };
   }
   if (info?.protected) {
-    return { kind: 'shield', title: '보호권으로 지킨 날', sub: '학습은 없었지만 연속은 끊기지 않았어요', ratio: null };
+    return { kind: 'shield', title: '보호권으로 지킨 날', sub: '학습은 없었지만 연속은 끊기지 않았어요', count: null };
   }
   if (!isToday && hasCorrectCnt && correctCnt > 0) {
-    return { kind: 'short', title: `맞힌 단어 ${correctCnt}개`, sub: `${required}개를 못 채워 연속엔 들어가지 않았어요`, ratio };
+    return { kind: 'short', count: correctCnt, required, sub: null };
   }
-  return { kind: 'rest', title: '쉰 날', sub: '기록이 없어요', ratio: null };
+  return { kind: 'rest', count: null, title: '쉰 날', sub: null };
 };
 
 const TILE_CLASS = {
@@ -91,6 +91,15 @@ const BAR_CLASS = {
   progress: 'bg-primary-main-600',
   lit: 'bg-[linear-gradient(90deg,var(--secondary-yellow-400),var(--secondary-yellow-600))]',
   short: 'bg-layout-gray-200 dark:bg-layout-gray-400',
+};
+
+const CHIP_LABEL = { progress: '진행 중', lit: '이어짐', shield: '보호권', short: '못 채움', rest: '쉼' };
+const CHIP_CLASS = {
+  progress: 'bg-primary-main-100 text-primary-main-600 dark:bg-primary-main-dark dark:text-primary-main-400',
+  lit: 'bg-streak-all text-layout-black',
+  shield: 'bg-secondary-mint-100 text-secondary-mint-600 dark:bg-secondary-mint-dark dark:text-secondary-mint-400',
+  short: 'bg-layout-gray-100 text-layout-gray-400 dark:bg-white/[0.12] dark:text-layout-gray-300',
+  rest: 'bg-layout-gray-100 text-layout-gray-400 dark:bg-white/[0.12] dark:text-layout-gray-300',
 };
 
 const DayDetail = ({ date, summary, reducedMotion }) => (
@@ -114,45 +123,50 @@ const DayDetail = ({ date, summary, reducedMotion }) => (
         </span>
 
         <span className="min-w-0 flex-1">
-          <span className="block text-[11px] font-[700] tracking-[-0.02em] text-layout-gray-300">
-            {formatDateLabel(date)}
+          <span className="flex items-center justify-between gap-[8px]">
+            <span className="text-[11.5px] font-[700] tracking-[-0.02em] text-layout-gray-300">
+              {formatDateLabel(date)}
+            </span>
+            <span className={`shrink-0 rounded-full px-[8px] py-[2px] text-[10.5px] font-[800] tracking-[-0.02em] ${CHIP_CLASS[summary.kind]}`}>
+              {CHIP_LABEL[summary.kind]}
+            </span>
           </span>
-          <span className="mt-[1px] block truncate text-[14px] font-[800] tracking-[-0.03em] text-layout-black dark:text-layout-white">
-            {summary.title}
-          </span>
-          {summary.sub && (
-            <span className="mt-[1px] block text-[11.5px] font-[500] leading-[1.4] tracking-[-0.02em] text-layout-gray-400 dark:text-layout-gray-300 line-clamp-2">
-              {summary.sub}
+          {summary.count !== null ? (
+            <span className="mt-[3px] flex items-baseline gap-[3px] text-layout-black dark:text-layout-white">
+              <span className="text-[22px] font-[800] leading-none tracking-[-0.04em] tabular-nums">{summary.count}</span>
+              <span className="text-[12.5px] font-[700] tracking-[-0.03em]">개 맞혔어요</span>
+              <span className="ml-[4px] text-[11.5px] font-[600] tracking-[-0.02em] text-layout-gray-300">목표 {summary.required}개</span>
+            </span>
+          ) : (
+            <span className="mt-[3px] block text-[14px] font-[800] tracking-[-0.03em] text-layout-black dark:text-layout-white">
+              {summary.title}
             </span>
           )}
-          {summary.ratio !== null && (
-            <span className="mt-[7px] block h-[6px] overflow-hidden rounded-full bg-layout-gray-100 dark:bg-white/[0.12]">
-              <motion.span
-                className={`block h-full w-full origin-left rounded-full ${BAR_CLASS[summary.kind]}`}
-                initial={{ scaleX: reducedMotion ? summary.ratio : 0 }}
-                animate={{ scaleX: summary.ratio }}
-                transition={{ duration: 0.5, delay: 0.08, ease: EASE }}
-              />
+          {summary.count !== null && (
+            <span className="mt-[8px] flex gap-[4px]">
+              {Array.from({ length: summary.required }).map((_, i) => (
+                <span key={i} className="h-[7px] flex-1 overflow-hidden rounded-full bg-layout-gray-100 dark:bg-white/[0.12]">
+                  {i < summary.count && (
+                    <motion.span
+                      className={`block h-full w-full origin-left rounded-full ${BAR_CLASS[summary.kind] ?? BAR_CLASS.short}`}
+                      initial={{ scaleX: reducedMotion ? 1 : 0 }}
+                      animate={{ scaleX: 1 }}
+                      transition={{ duration: 0.22, delay: 0.06 + i * 0.07, ease: EASE }}
+                    />
+                  )}
+                </span>
+              ))}
+            </span>
+          )}
+          {summary.sub && (
+            <span className="mt-[6px] block text-[11.5px] font-[500] leading-[1.4] tracking-[-0.02em] text-layout-gray-400 dark:text-layout-gray-300">
+              {summary.sub}
             </span>
           )}
         </span>
       </motion.div>
     </AnimatePresence>
   </div>
-);
-
-const StatTile = ({ label, index, reducedMotion, children }) => (
-  <motion.div
-    className="flex flex-col items-center gap-[3px] rounded-[12px] bg-layout-white px-[4px] py-[9px] dark:bg-layout-black"
-    initial={reducedMotion ? { opacity: 0 } : { opacity: 0, y: 10, scale: 0.9 }}
-    animate={{ opacity: 1, y: 0, scale: 1 }}
-    transition={reducedMotion ? { duration: 0.15 } : { ...SPRING.bouncy, delay: 0.25 + index * 0.07 }}
-  >
-    <span className="flex h-[20px] items-center gap-[3px] text-[15px] font-[800] tracking-[-0.03em] tabular-nums text-layout-black dark:text-layout-white">
-      {children}
-    </span>
-    <span className="text-[10.5px] font-[600] tracking-[-0.02em] text-layout-gray-300">{label}</span>
-  </motion.div>
 );
 
 const LEGEND = [
@@ -266,66 +280,11 @@ const StreakRecordView = ({ streak, today }) => {
               하루에 <b className="font-[800] text-layout-black dark:text-layout-white">{required}개</b>만 맞히면 그날은 이어져요
             </p>
           </div>
-        </div>
-
-        {/* 최고 기록 대비 진행 */}
-        <div className="mt-[14px]">
-          <div className="flex items-center justify-between text-[11.5px] font-[700] tracking-[-0.02em]">
-            <span className="flex items-center gap-[4px] text-layout-gray-400 dark:text-layout-gray-300">
-              <Crown size={13} weight="fill" className={isRecord ? 'text-secondary-yellow-500' : 'text-layout-gray-200 dark:text-layout-gray-400'} />
-              {isRecord ? '최고 기록을 새로 쓰고 있어요' : best > 0 ? `최고 기록 ${best}일` : '아직 기록이 없어요'}
+          {best > 0 && (
+            <span className="shrink-0 self-start text-[12px] font-[700] tracking-[-0.02em] tabular-nums text-layout-gray-300">
+              최고 {best}일
             </span>
-            {best > 0 && (
-              <span className="tabular-nums text-layout-black dark:text-layout-white">
-                {isRecord ? `${current}일` : (
-                  <>
-                    {current}
-                    <span className="font-[600] text-layout-gray-300"> / {best}일</span>
-                  </>
-                )}
-              </span>
-            )}
-          </div>
-          <div className="relative mt-[6px] h-[10px] overflow-hidden rounded-full bg-layout-white shadow-[inset_0_0_0_1px_var(--secondary-yellow-200)] dark:bg-layout-black dark:shadow-none">
-            <motion.div
-              className="absolute inset-y-0 left-0 w-full origin-left overflow-hidden rounded-full bg-[linear-gradient(90deg,var(--secondary-yellow-400),var(--secondary-yellow-600))]"
-              initial={{ scaleX: reducedMotion ? bestRatio : 0 }}
-              animate={{ scaleX: bestRatio }}
-              transition={{ duration: 0.9, delay: 0.2, ease: EASE }}
-            >
-              {/* 기록을 새로 쓰는 동안은 빛줄기가 가끔 지나간다 */}
-              {isRecord && !reducedMotion && (
-                <motion.span
-                  aria-hidden
-                  className="absolute inset-y-0 left-0 w-[30%] -skew-x-12 bg-gradient-to-r from-transparent via-white/70 to-transparent"
-                  initial={{ x: '-140%' }}
-                  animate={{ x: '440%' }}
-                  transition={{ duration: 1, delay: 1.2, repeat: Infinity, repeatDelay: 3.2, ease: 'easeInOut' }}
-                />
-              )}
-            </motion.div>
-          </div>
-        </div>
-
-        <div className="mt-[12px] grid grid-cols-3 gap-[8px]">
-          <StatTile label="오늘" index={0} reducedMotion={reducedMotion}>
-            {todayDone ? (
-              <>
-                <Check size={14} weight="bold" className="text-status-success-600" />
-                완료
-              </>
-            ) : (
-              <>
-                {todayCorrect}
-                <span className="text-[12px] font-[700] text-layout-gray-300">/{required}</span>
-              </>
-            )}
-          </StatTile>
-          <StatTile label="이번 달" index={1} reducedMotion={reducedMotion}>{monthLit}일</StatTile>
-          <StatTile label="보호권" index={2} reducedMotion={reducedMotion}>
-            <img src={CROP_ASSETS.shield} alt="" draggable={false} className="h-[16px] w-[16px] select-none object-contain" />
-            {streak?.shield_cnt ?? 0}개
-          </StatTile>
+          )}
         </div>
       </motion.div>
 

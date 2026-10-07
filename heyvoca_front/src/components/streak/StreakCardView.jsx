@@ -71,13 +71,6 @@ const StreakCardView = ({
   const dayOrdinal = earnBack ? (earnBack.today_done ? (earnBack.days_done ?? 0) : (earnBack.days_done ?? 0) + 1) : 0;
   const daysLeft = earnBack ? Math.max(0, (earnBack.days_required ?? 3) - dayOrdinal) : 0;
 
-  let statusLine = null;
-  if (!paused && !showEarnBack) {
-    if (todayDone) statusLine = '오늘 불꽃을 켰어요';
-    else if (current > 0) statusLine = '오늘 불꽃은 아직이에요';
-    else statusLine = '첫 불꽃을 기다리고 있어요';
-  }
-
   return (
     <div
       ref={rootRef}
@@ -112,11 +105,6 @@ const StreakCardView = ({
               </span>
             )}
           </div>
-          {statusLine && (
-            <p className="mt-[5px] truncate text-[11.5px] font-[600] tracking-[-0.02em] text-layout-gray-300">
-              {statusLine}
-            </p>
-          )}
         </div>
 
         <motion.button
@@ -126,7 +114,6 @@ const StreakCardView = ({
           transition={SPRING.snappy}
           className="flex shrink-0 items-center gap-[3px] rounded-full bg-layout-gray-50 py-[7px] pl-[10px] pr-[7px] text-[12px] font-[700] text-layout-gray-400 dark:bg-layout-black dark:text-layout-gray-300"
         >
-          {isRecord && <Crown size={12} weight="fill" className="text-secondary-yellow-500" />}
           최장 {best}일
           <CaretRight size={10} weight="bold" className="text-layout-gray-200 dark:text-layout-gray-400" />
         </motion.button>

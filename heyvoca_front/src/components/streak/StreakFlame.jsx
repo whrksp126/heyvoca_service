@@ -8,9 +8,10 @@
 //
 // 그림은 기존 불꽃 아이콘(icon-streak.png)과 같은 주황 램프(secondary-yellow)로 직접 그린 SVG 다 —
 // 원본 PNG 는 132px 이라 크게 키우면 흐려지고, 몸통과 속불을 따로 움직일 수도 없다.
-import React, { forwardRef, useId, useImperativeHandle, useRef } from 'react';
+import React, { forwardRef, useImperativeHandle, useRef } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import { burst, ring, jelly } from '../takeTest/rewards/fx';
+import flameImg from '../../assets/images/farm/icon-streak.png';
 
 /** 불티·파편 색 — 새 색을 만들지 않고 secondary-yellow 램프만 쓴다 */
 export const FLAME_SPARKS = [
@@ -31,37 +32,10 @@ const TIERS = [
 /** 연속 일수 → 불꽃 단계(크기 · 불티 수 · 빛 세기 · 일렁이는 박자) */
 export const flameTier = (days) => TIERS.find((t) => days >= t.min) ?? null;
 
-const BODY = 'M25 2C27 11 37 15 41 26C45 37 40 52 24 54C9 52 3 40 7 29C9 23 13 20 15 15C17 20 19 22 22 22C22 14 22 8 25 2Z';
-const CORE = 'M24 51C16 50 13 43 16 37C18 33 21 31 23 26C26 31 33 35 32 43C31 48 28 51 24 51Z';
-
-const FlameArt = ({ layer }) => {
-  const id = useId();
-  return (
-    <svg viewBox="0 0 48 56" aria-hidden className="block h-full w-full overflow-visible">
-      <defs>
-        <linearGradient id={`${id}b`} x1="0.25" y1="0" x2="0.75" y2="1">
-          <stop offset="0%" className="[stop-color:var(--secondary-yellow-400)]" />
-          <stop offset="42%" className="[stop-color:var(--secondary-yellow-500)]" />
-          <stop offset="100%" className="[stop-color:var(--secondary-yellow-600)]" />
-        </linearGradient>
-        <linearGradient id={`${id}c`} x1="0.5" y1="0" x2="0.5" y2="1">
-          <stop offset="0%" className="[stop-color:var(--secondary-yellow-300)]" />
-          <stop offset="100%" className="[stop-color:var(--secondary-yellow-200)]" />
-        </linearGradient>
-      </defs>
-      {layer === 'body' ? (
-        <>
-          <path d={BODY} fill={`url(#${id}b)`} />
-          {/* 아래쪽 그늘 · 왼쪽 위 광택 — 둥글고 도톰한 덩어리로 보이게 */}
-          <path d="M24 54C9 52 3 40 7 29C8 41 14 49 24 50C34 49 40 42 41 30C44 41 38 52 24 54Z" className="fill-secondary-yellow-600 opacity-45" />
-          <path d="M12 31C12 26 15 23 17 21C16 26 16 31 18 35C15 36 12 34 12 31Z" className="fill-layout-white opacity-40" />
-        </>
-      ) : (
-        <path d={CORE} fill={`url(#${id}c)`} />
-      )}
-    </svg>
-  );
-};
+// 불꽃은 기존 연속 학습 불꽃 그림(icon-streak.png)을 그대로 쓴다 — 직접 그린 SVG 는 품질이 떨어져 반려됨(2026-10-07).
+const FlameArt = () => (
+  <img src={flameImg} alt="" draggable={false} className="block h-full w-full select-none object-contain" />
+);
 
 const StreakFlame = forwardRef(function StreakFlame(
   {
@@ -82,7 +56,7 @@ const StreakFlame = forwardRef(function StreakFlame(
   const moving = alive && isLit && !reducedMotion;
 
   const h = size * (isLit ? tier.scale : 0.74);
-  const w = (h * 48) / 56;
+  const w = h;
   const glow = size * 1.3;
 
   useImperativeHandle(ref, () => ({
@@ -124,14 +98,7 @@ const StreakFlame = forwardRef(function StreakFlame(
             : { scaleY: 1, scaleX: 1, rotate: 0 }}
           transition={moving ? { duration: tier.speed, delay, repeat: Infinity, ease: 'easeInOut' } : { duration: 0.2 }}
         >
-          <FlameArt layer="body" />
-          <motion.div
-            className="absolute inset-0 origin-bottom"
-            animate={moving ? { scaleY: [1, 1.13, 0.93, 1.08, 1], scaleX: [1, 0.94, 1.05, 0.97, 1] } : { scaleY: 1, scaleX: 1 }}
-            transition={moving ? { duration: tier.speed * 0.68, delay, repeat: Infinity, ease: 'easeInOut' } : { duration: 0.2 }}
-          >
-            <FlameArt layer="core" />
-          </motion.div>
+          <FlameArt />
         </motion.div>
       </div>
 

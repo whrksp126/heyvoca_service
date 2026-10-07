@@ -2,6 +2,8 @@ import React, { useEffect, useId } from 'react';
 import { motion, useAnimationControls, useReducedMotion } from 'framer-motion';
 import { Plant } from '@phosphor-icons/react';
 import { vibrate } from '../../utils/osFunction';
+// 목록 줄과 같은 실제 씨앗 봉투 그림 — 흉내 낸 그림은 가짜처럼 보여 반려됨(2026-10-07)
+import seedPacketImg from '../../assets/images/farm/crops/unplanted/healthy-seed.png';
 
 /**
  * 서점 단어장 상세의 히어로 — 포장된 씨앗 묶음.
@@ -50,22 +52,8 @@ const rowOf = (k, baseY, row) => Array.from({ length: k }, (_, i) => {
 });
 
 /** 씨앗 봉투 하나 — 원점은 봉투 바닥 가운데. 목록 줄의 봉투 그림과 같은 생김새다 */
-const Packet = ({ ids }) => (
-  <g transform={`scale(${PACKET_SCALE})`}>
-    <rect x="-20" y="-44" width="40" height="44" rx="8" fill={`url(#${ids.pink})`} stroke="#FFF1D0" strokeWidth="2" />
-    <path
-      d="M-21 -37V-49q3.5 -5 7 0q3.5 5 7 0q3.5 -5 7 0q3.5 5 7 0q3.5 -5 7 0q3.5 5 7 0V-37Z"
-      fill="#FFF0C4"
-      stroke="#EFD9A2"
-      strokeWidth="1"
-      strokeLinejoin="round"
-    />
-    <rect x="-15" y="-32" width="3.4" height="19" rx="1.7" fill="#fff" fillOpacity="0.45" />
-    <g transform="rotate(-20 3 -17)">
-      <ellipse cx="3" cy="-17" rx="6.4" ry="4.5" fill={`url(#${ids.seed})`} stroke="#D9902A" strokeWidth="0.8" />
-      <ellipse cx="1.2" cy="-18.4" rx="2.6" ry="1.1" fill="#fff" fillOpacity="0.6" />
-    </g>
-  </g>
+const Packet = () => (
+  <image href={seedPacketImg} x="-66" y="-104" width="130" height="130" preserveAspectRatio="xMidYMid meet" />
 );
 
 const Star = ({ x, y, size, ids }) => (
@@ -100,10 +88,7 @@ const SeedBundleHero = ({ count = 0, ownedCount = 0 }) => {
   const crateW = Math.max(frontCount, 2) * PACKET_STEP + 48;
   const crateX = CX - crateW / 2;
 
-  const countText = count.toLocaleString('ko-KR');
   // 이름표 폭 — 씨앗 낱알 + "씨앗" + 숫자. 자릿수가 늘면 판도 같이 넓어진다
-  const labelW = 62 + countText.length * 10.5;
-  const labelX = CX - labelW / 2;
 
   useEffect(() => {
     if (reducedMotion) return;
@@ -153,7 +138,7 @@ const SeedBundleHero = ({ count = 0, ownedCount = 0 }) => {
         onClick={handleTap}
         whileTap={reducedMotion ? undefined : { scale: 0.97 }}
         transition={{ type: 'spring', stiffness: 420, damping: 16 }}
-        aria-label={allOwned ? '이 단어장의 씨앗을 모두 갖고 있어요' : `포장된 씨앗 ${countText}개`}
+        aria-label={allOwned ? '이 단어장의 씨앗을 모두 갖고 있어요' : `포장된 씨앗 ${count.toLocaleString('ko-KR')}개`}
         className={`absolute left-1/2 -translate-x-1/2 w-[300px] max-w-[84%] ${ownedCount > 0 ? 'bottom-[44px]' : 'bottom-[24px]'}`}
       >
         <svg viewBox="0 0 320 250" fill="none" className="block w-full h-auto overflow-visible select-none">
@@ -165,10 +150,10 @@ const SeedBundleHero = ({ count = 0, ownedCount = 0 }) => {
               <stop offset="0" stopColor="#FFD766" /><stop offset="1" stopColor="#EFA52B" />
             </linearGradient>
             <linearGradient id={ids.wood} x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0" stopColor="#F3D2A0" /><stop offset="0.55" stopColor="#E3B57F" /><stop offset="1" stopColor="#CC9560" />
+              <stop offset="0" stopColor="#C08650" /><stop offset="0.55" stopColor="#A66D3D" /><stop offset="1" stopColor="#8C5830" />
             </linearGradient>
             <linearGradient id={ids.post} x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0" stopColor="#D9A46A" /><stop offset="1" stopColor="#B57E4A" />
+              <stop offset="0" stopColor="#9A6236" /><stop offset="1" stopColor="#74471F" />
             </linearGradient>
             <radialGradient id={ids.shadow} cx="0.5" cy="0.5" r="0.5">
               <stop offset="0" stopColor="#3A1F2B" stopOpacity="0.28" /><stop offset="1" stopColor="#3A1F2B" stopOpacity="0" />
@@ -194,8 +179,8 @@ const SeedBundleHero = ({ count = 0, ownedCount = 0 }) => {
             transition={{ duration: 3.4, repeat: Infinity, ease: 'easeInOut' }}
           >
             {/* 상자 안쪽 */}
-            <rect x={crateX + 9} y="127" width={crateW - 18} height="44" rx="10" fill="#9B6A42" />
-            <rect x={crateX + 9} y="127" width={crateW - 18} height="14" rx="7" fill="#7E5231" fillOpacity="0.55" />
+            <rect x={crateX + 9} y="127" width={crateW - 18} height="44" rx="10" fill="#5E391D" />
+            <rect x={crateX + 9} y="127" width={crateW - 18} height="14" rx="7" fill="#3F2410" fillOpacity="0.5" />
 
             {packets.map((p, i) => (
               <motion.g
@@ -206,35 +191,46 @@ const SeedBundleHero = ({ count = 0, ownedCount = 0 }) => {
                 animate={controls}
               >
                 <g transform={`translate(${p.x} ${p.y}) rotate(${p.rot})`}>
-                  <Packet ids={ids} />
+                  <Packet />
                 </g>
               </motion.g>
             ))}
 
-            {/* 상자 앞판 */}
-            <rect x={crateX} y="150" width={crateW} height="74" rx="15" fill={`url(#${ids.wood})`} stroke="#C08A55" strokeWidth="1.4" />
-            <path d={`M${crateX + 22} 157H${crateX + crateW - 22}`} stroke="#fff" strokeOpacity="0.55" strokeWidth="3.4" strokeLinecap="round" />
-            <path d={`M${crateX + 4} 187H${crateX + crateW - 4}`} stroke="#B98350" strokeOpacity="0.5" strokeWidth="1.6" />
-            {[crateX + 8, crateX + crateW - 22].map((x) => (
+            {/* 상자 앞판 — 밭 흙과 이어지는 짙은 나무. 가운데는 개수 대신 새싹 문양(보석 상자와 같은 어휘) */}
+            <rect x={crateX} y="150" width={crateW} height="76" rx="14" fill={`url(#${ids.wood})`} stroke="#6E4324" strokeWidth="1.6" />
+            {/* 윗테 — 빛 받는 면 */}
+            <path d={`M${crateX} 164Q${crateX} 150 ${crateX + 14} 150H${crateX + crateW - 14}Q${crateX + crateW} 150 ${crateX + crateW} 164V167H${crateX}Z`} fill="#D9A56B" />
+            <path d={`M${crateX + 20} 156H${crateX + crateW - 20}`} stroke="#fff" strokeOpacity="0.45" strokeWidth="3" strokeLinecap="round" />
+            {/* 널빤지 이음매 + 나뭇결 */}
+            <path d={`M${crateX + 3} 186.5H${crateX + crateW - 3}M${crateX + 3} 206.5H${crateX + crateW - 3}`} stroke="#6E4324" strokeOpacity="0.55" strokeWidth="1.8" />
+            <path d={`M${crateX + 3} 188H${crateX + crateW - 3}M${crateX + 3} 208H${crateX + crateW - 3}`} stroke="#E0B07A" strokeOpacity="0.35" strokeWidth="1" />
+            <path
+              d={`M${crateX + 34} 176q14 -3 26 0M${crateX + crateW - 70} 197q16 3 30 0M${crateX + 44} 216q12 -2 22 0M${crateX + crateW - 58} 177q8 -2 16 0`}
+              stroke="#7A4B28" strokeOpacity="0.4" strokeWidth="1.3" strokeLinecap="round"
+            />
+            {/* 아래쪽 그늘 */}
+            <rect x={crateX + 1} y="212" width={crateW - 2} height="13" rx="6" fill="#5A3519" fillOpacity="0.22" />
+            {/* 모서리 기둥 + 놋쇠 못 */}
+            {[crateX + 7, crateX + crateW - 23].map((x) => (
               <g key={x}>
-                <rect x={x} y="150.7" width="14" height="72.6" rx="6" fill={`url(#${ids.post})`} />
-                <circle cx={x + 7} cy="166" r="2" fill="#8F5F35" />
-                <circle cx={x + 7} cy="208" r="2" fill="#8F5F35" />
+                <rect x={x} y="150.8" width="16" height="74.4" rx="6" fill={`url(#${ids.post})`} stroke="#6E4324" strokeWidth="1" />
+                <rect x={x + 2.5} y="154" width="3" height="68" rx="1.5" fill="#fff" fillOpacity="0.18" />
+                {[163, 213].map((cy) => (
+                  <g key={cy}>
+                    <circle cx={x + 8} cy={cy} r="3" fill="#F0C873" stroke="#B9842F" strokeWidth="0.8" />
+                    <circle cx={x + 7.2} cy={cy - 0.8} r="1" fill="#fff" fillOpacity="0.7" />
+                  </g>
+                ))}
               </g>
             ))}
-
-            {/* 이름표 */}
-            <rect x={labelX} y="171" width={labelW} height="33" rx="10" fill="#FFF8E8" stroke="#E3C99A" strokeWidth="1.4" />
-            <g transform={`rotate(-20 ${labelX + 17} 187.5)`}>
-              <ellipse cx={labelX + 17} cy="187.5" rx="6.4" ry="4.5" fill={`url(#${ids.seed})`} stroke="#D9902A" strokeWidth="0.8" />
-              <ellipse cx={labelX + 15.2} cy="186.1" rx="2.6" ry="1.1" fill="#fff" fillOpacity="0.6" />
-            </g>
-            <text x={labelX + 29} y="191.6" fontFamily="inherit" fontSize="11" fontWeight="700" letterSpacing="-0.4" fill="#9A6B3F">
-              씨앗
-            </text>
-            <text x={labelX + 52} y="194" fontFamily="inherit" fontSize="18" fontWeight="800" letterSpacing="-0.5" fill="#4A2E17">
-              {countText}
-            </text>
+            {/* 새싹 문양 — 파 넣은 둥근 판에 놋쇠빛 새싹 */}
+            <circle cx={CX} cy="190" r="19" fill="#7A4B28" />
+            <circle cx={CX} cy="191" r="17" fill="#8F5C33" />
+            <circle cx={CX} cy="190" r="19" stroke="#E3B26F" strokeOpacity="0.7" strokeWidth="1.4" />
+            <path d={`M${CX} 201V188`} stroke="#F0C873" strokeWidth="2.6" strokeLinecap="round" />
+            <path d={`M${CX} 189.5C${CX} 181 ${CX - 8.5} 178.5 ${CX - 13} 180C${CX - 12} 187 ${CX - 6.5} 191 ${CX} 189.5Z`} fill="#F0C873" />
+            <path d={`M${CX} 189.5C${CX} 181 ${CX + 8.5} 178.5 ${CX + 13} 180C${CX + 12} 187 ${CX + 6.5} 191 ${CX} 189.5Z`} fill="#E3B059" />
+            <path d={`M${CX - 10} 181.5C${CX - 7} 181.5 ${CX - 4} 183.5 ${CX - 2.5} 186`} stroke="#fff" strokeOpacity="0.5" strokeWidth="1.1" strokeLinecap="round" />
 
             {packets.length > 0 && (
               <motion.g
