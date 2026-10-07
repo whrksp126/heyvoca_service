@@ -31,11 +31,13 @@ import {
   FarmGrowRow, ResultCta, ResultCtaBar, CTA_BASE, CTA_PRIMARY_FACE, ACHIEVEMENT_IMAGES,
   buildGrowthEntries,
 } from './rewards';
+// 새 씨앗 심기 결과 — 밭에 씨앗을 하나씩 심는 연출
+import PlantingScene from './planting/PlantingScene';
 
 // ─────────────────────────────────────────────────────────────
 // 당근 농장 V2 — 결과 슬라이드 조각
 // 밭 성장 · 아이템 · 보석 · 업적 슬라이드는 rewards/ 로 옮겼다. 여기 남은 것은
-// 새 씨앗 심기 결과(PlantReveal)와 예전 규격 슬라이드가 쓰는 조각이다.
+// 예전 규격 슬라이드가 쓰는 조각이다(새 씨앗 심기 결과는 planting/PlantingScene).
 // ─────────────────────────────────────────────────────────────
 
 // 새 연출 슬라이드 — 각자 빛과 시간표를 가지고, 연출이 끝나야 「확인」이 켜진다
@@ -387,80 +389,6 @@ const ResultStatCards = ({ cards, reducedMotion, onDone, skipRef }) => {
         </div>
       ))}
     </div>
-  );
-};
-
-// plant 결과 — '새로 심은 씨앗 N개' 카운트업 + 목록 항목이 차례로 등장
-const PlantReveal = ({ rows, metaOfRow, reducedMotion, onDone, skipRef }) => {
-  const n = rows.length;
-  // 항목이 많아도 전체 등장은 약 1.5초 안에 끝나게 간격을 줄인다
-  const rowGap = n > 0 ? Math.max(40, Math.min(140, Math.floor(1500 / n))) : 0;
-  const [cardShown, setCardShown] = useState(false);
-  const rowSkipRef = useRef(null);
-  const shownRows = useStaggerReveal({
-    count: n,
-    gapMs: rowGap,
-    firstMs: REVEAL_FIRST_MS + 500,
-    onDone,
-    skipRef: rowSkipRef,
-  });
-  useEffect(() => {
-    const t = setTimeout(() => setCardShown(true), REVEAL_FIRST_MS);
-    if (skipRef) {
-      skipRef.current = () => { clearTimeout(t); setCardShown(true); rowSkipRef.current?.(); };
-    }
-    return () => { clearTimeout(t); if (skipRef) skipRef.current = null; };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-  return (
-    <div className='flex flex-col items-center gap-[15px] px-[20px] pt-[34px] pb-[30px]'>
-      <FarmCropArt stage="PLANTED_SEED" alt="새로 심은 씨앗" />
-      {n > 0 ? (
-        <div className='w-full min-h-[88px]'>
-          {cardShown && <PlantCountCard value={n} reducedMotion={reducedMotion} />}
-        </div>
-      ) : (
-        <p className='text-[16px] font-[700] text-center leading-[1.45]'>이번에는 심은 씨앗이 없어요</p>
-      )}
-      <div className='flex flex-col gap-[8px] w-full'>
-        {rows.map((row, i) => (
-          i < shownRows ? (
-            <motion.div
-              key={row.user_voca_id}
-              initial={reducedMotion ? { opacity: 0 } : { opacity: 0, y: 18, scale: 0.96 }}
-              animate={reducedMotion ? { opacity: 1 } : { opacity: 1, y: 0, scale: 1, transition: SPRING.soft }}
-            >
-              <FarmGrowRow
-                crop="PLANTED_SEED"
-                word={row.word}
-                meaning={row.meaning}
-                meta={metaOfRow(row)}
-                right="새로 심었어요"
-              />
-            </motion.div>
-          ) : null
-        ))}
-      </div>
-    </div>
-  );
-};
-
-const PlantCountCard = ({ value, reducedMotion }) => {
-  const display = useCountUp(value, { from: 0, duration: 0.6 });
-  useEffect(() => { feel('select'); }, []);
-  return (
-    <motion.div
-      className={`relative overflow-hidden flex items-center justify-center gap-[8px] py-[20px] rounded-[14px] ${TONE.primary.box}`}
-      initial={reducedMotion ? { opacity: 0 } : { opacity: 0, scale: 0.7, y: 20 }}
-      animate={reducedMotion ? { opacity: 1 } : { opacity: 1, scale: 1, y: 0, transition: SPRING.bouncy }}
-    >
-      <ShineSweep play={!reducedMotion} delay={0.1} />
-      <span className='text-[15px] font-[700] text-layout-gray-400 dark:text-layout-gray-100'>새로 심은 씨앗</span>
-      <span className='text-primary-main-600'>
-        <span className='text-[30px] font-[800] tabular-nums'>{display}</span>
-        <span className='text-[16px] font-[700]'>개</span>
-      </span>
-    </motion.div>
   );
 };
 
@@ -1256,8 +1184,8 @@ const StudyResult = () => {
             className={`relative isolate z-0 flex flex-col flex-1 overflow-y-auto scrollbar-hide ${showRing ? 'pb-[160px]' : (nextNotice || nextPlan.reason) ? 'pb-[140px]' : 'pb-[110px]'}`}
           >
             {currentScreen.data?.plantRows ? (
-              /* 새 씨앗 심기 결과 — 채점(점수·정답 수·O/X) 없이 새로 심은 씨앗만 보여준다 */
-              <PlantReveal
+              /* 새 씨앗 심기 결과 — 채점(점수·정답 수·O/X) 없이, 밭에 씨앗을 하나씩 심어 보여 준다 */
+              <PlantingScene
                 rows={currentScreen.data.plantRows}
                 metaOfRow={metaOfRow}
                 reducedMotion={reducedMotion}

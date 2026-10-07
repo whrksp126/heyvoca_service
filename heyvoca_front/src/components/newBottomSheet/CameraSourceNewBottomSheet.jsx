@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 import { vibrate } from '../../utils/osFunction';
+import { IconCamera } from '../../assets/svg/icon';
 
 export const CameraSourceNewBottomSheet = () => {
   "use memo";
@@ -17,8 +18,9 @@ export const CameraSourceNewBottomSheet = () => {
     <div>
       <div className="
         flex flex-col gap-[10px] items-center justify-center
-        pt-[40px] px-[20px] pb-[10px]
+        pt-[28px] px-[20px] pb-[10px]
       ">
+        <IconCamera width={64} height={64} />
         <h3 className="text-layout-black dark:text-layout-white text-[18px] font-[700]">
           이미지 선택
         </h3>

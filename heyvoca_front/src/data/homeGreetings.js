@@ -87,7 +87,8 @@ export function buildGreetingContext(farmOverview, { grewTodayCount = 0, now = n
   // 시간대처럼 예정일은 오늘인데 그 시각이 아직 안 된 단어가 빠져 "doneAll"(오늘 할 일
   // 다 끝냈어요) 인사말이 실제로는 남은 단어가 있는데도 떴다. 구버전 응답(필드 없음)
   // 폴백만 예전 건강 상태 합을 쓴다.
-  const careCount = today.care_due_cnt ?? (thirstyCount + wiltedCount + criticalCount);
+  // care_left_cnt — 오늘 한 번이라도 학습한 단어는 '오늘 할 일' 카드에서 돌본 것으로 세므로 같은 기준을 쓴다.
+  const careCount = today.care_left_cnt ?? today.care_due_cnt ?? (thirstyCount + wiltedCount + criticalCount);
 
   return {
     totalCount: ['seed', 'sprout', 'leaf', 'carrot'].reduce((sum, key) => sum + (counts[key] ?? 0), 0),

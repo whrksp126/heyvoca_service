@@ -306,6 +306,43 @@ def care_due_ids_from_rows(rows, now: dt.datetime) -> set:
     return due_ids
 
 
+def studied_today_ids(user_id: UUID, now: Optional[dt.datetime] = None,
+                      lang: Optional[str] = None) -> set:
+    """오늘(logical day) 한 번이라도 학습한 user_voca_id 집합 — 정답·오답 무관.
+
+    홈 카드는 "오늘 돌볼 목록에 있던 단어를 오늘 학습했으면 돌본 것"으로 센다.
+    보통은 답안이 기록되면(오답 포함) FSRS 예정일이 최소 +1일로 넘어가 예정일 기준으로도
+    빠지지만, 그 계산(스케줄러 설정·기기 시각 client_now)에 기대지 않고 '오늘 학습했는가'를
+    로그로 직접 판정한다.
+    """
+    from app.services.study_day import logical_day_start_utc
+    day_start = logical_day_start_utc(now)
+    rows = (
+        db.session.query(UserStudyLog.user_voca_id)
+        .filter(UserStudyLog.user_id == user_id,
+                UserStudyLog.dict_lang == _lang(lang),
+                UserStudyLog.created_at >= day_start)
+        .distinct()
+        .all()
+    )
+    return {r[0] for r in rows}
+
+
+def split_care_progress(live_ids, studied_ids, snapshot_ids, wilted_ids, rotten_ids) -> tuple:
+    """돌봄 줄의 (remaining, done) 판정부 — DB 없이 검증할 수 있게 뺐다.
+
+    remaining = live − studied : 오늘 학습했으면 예정일이 아직 오늘이어도(예정일이 오늘로 남는 경우에도) 남은
+                것에서 뺀다.
+    done      = (snapshot − remaining) − wilted − rotten : 스냅샷에는 호출부가 remaining
+                만 합집합한다(오늘 학습해서 새로 '오늘 예정'이 된 단어가 분모를 키우지
+                않게). 더 나쁜 줄(시듦·부패)로 옮겨간 것은 조용히 빠진다.
+    snapshot_ids 는 이미 remaining 이 합집합된 오늘 스냅샷이다.
+    """
+    remaining = set(live_ids) - set(studied_ids)
+    done = (set(snapshot_ids) - remaining) - set(wilted_ids) - set(rotten_ids)
+    return remaining, done
+
+
 def get_care_due_count(user_id: UUID, now: Optional[dt.datetime] = None, lang: Optional[str] = None) -> int:
     """`get_care_due_ids` 의 개수. 홈 overview.today.care_due_cnt 가 이걸 쓴다."""
     return len(get_care_due_ids(user_id, now, lang))
@@ -342,6 +379,7 @@ def get_overview(user_id: UUID, now: Optional[dt.datetime] = None,
     ) or C.DEFAULT_DAILY_REVIEW_LIMIT
 
     comeback_state = comeback.get_state(user_id, now)
+    care_due_ids = get_care_due_ids(user_id, now, lang)  # 한 번만 구해 재사용
 
     gem_cnt = db.session.query(User.gem_cnt).filter(User.id == user_id).scalar() or 0
 
@@ -359,7 +397,10 @@ def get_overview(user_id: UUID, now: Optional[dt.datetime] = None,
             # 이미 지남). 단어장 목록/찾기 탭의 "돌봄"(isCareDue), 데일리 미션의
             # review_due, /study/recommend 의 today·overdue 버킷과 같은 정의다.
             # 홈이 실제로 써야 하는 값 — get_care_due_ids 문서 참고.
-            'care_due_cnt': get_care_due_count(user_id, now, lang),
+            'care_due_cnt': len(care_due_ids),
+            # 오늘 이미 학습한 단어를 뺀 돌봄 남은 수(카드 기준). care_due_cnt 는 단어장
+            # 배지 정본이라 그대로 두고, 홈이 '남은 것'을 말할 때만 이 값을 쓴다.
+            'care_left_cnt': len(care_due_ids - studied_today_ids(user_id, now, lang)),
             # 부패까지 남은 단계가 하나뿐인 작물 — 오늘 목록 맨 앞에 올린다(8.4).
             'critical_first': health_counts['critical'],
             'recommended_limit': comeback.course_limit(comeback_state, setting_limit),
@@ -688,14 +729,19 @@ def get_today_tasks(user_id: UUID, now: Optional[dt.datetime] = None,
     # ── 2) 시듦·심한 시듦 / 돌봄 — 공유 헬퍼(recommend 의 task_bucket 과 같은 정의) ──
     wilted_ids_ordered = get_task_bucket_ids(user_id, 'wilted', now, lang)
     wilted_remaining_ids = set(wilted_ids_ordered)
-    care_remaining_ids = set(get_task_bucket_ids(user_id, 'care', now, lang))
+    care_live_ids = set(get_task_bucket_ids(user_id, 'care', now, lang))
+    # 돌봄은 '오늘 학습했으면 돌본 것'(정답·오답 무관) — wilted 는 오답=미완료 규칙 유지(기획 5.4).
+    studied_ids = studied_today_ids(user_id, now, lang)
+    care_remaining_ids = care_live_ids - studied_ids
 
     # ── 3) 오늘 스냅샷과 합집합 → done = (스냅샷 - 지금 남은 것) 중 더 나빠지지 않은 것 ──
     wilted_snapshot = _merge_today_snapshot(user_id, today, 'wilted', wilted_remaining_ids, lang)
+    # 스냅샷에는 remaining 만 합친다 — 오늘 학습해서 새로 '오늘 예정'이 된 단어가 분모를 키우지 않게.
     care_snapshot = _merge_today_snapshot(user_id, today, 'care', care_remaining_ids, lang)
 
     wilted_done_ids = (wilted_snapshot - wilted_remaining_ids) - rotten_ids
-    care_done_ids = (care_snapshot - care_remaining_ids) - wilted_remaining_ids - rotten_ids
+    _, care_done_ids = split_care_progress(
+        care_live_ids, studied_ids, care_snapshot, wilted_remaining_ids, rotten_ids)
 
     # ── 4) word/stage — wilted remaining·care remaining·양쪽 done 을 한 번에 조회 ──
     extra_ids = (wilted_remaining_ids | care_remaining_ids | wilted_done_ids | care_done_ids)

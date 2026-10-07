@@ -13,55 +13,16 @@ import InviteHistoryNewFullSheet from '../newfullsheet/InviteHistoryNewFullSheet
 import StoreNewFullSheet from '../newfullsheet/StoreNewFullSheet';
 import { AchievementDetailNewBottomSheet } from '../newBottomSheet/AchievementDetailNewBottomSheet';
 import { GemPurchaseNewBottomSheet } from '../newBottomSheet/GemPurchaseNewBottomSheet';
+import AchievementBoard from '../achievement/AchievementBoard';
 
-import InviteKing from '../../assets/images/HeyCharacter/InviteKing.png';
-import AttendanceKing from '../../assets/images/HeyCharacter/AttendanceKing.png';
-import NoryeokKing from '../../assets/images/HeyCharacter/NoryeokKing.png';
-import PerseveranceKing from '../../assets/images/HeyCharacter/PerseveranceKing.png';
-import ReadingKing from '../../assets/images/HeyCharacter/ReadingKing.png';
-import MemorizedKing from '../../assets/images/HeyCharacter/MemorizedKing.png';
 import gemIcon from '../../assets/images/farm/icon-gem.png';
 import goldenCarrotIcon from '../../assets/images/farm/icon-golden-carrot.png';
-import emptyBookImg from '../../assets/images/voca_book_1.png';
+import { EMPTY_BOOK_ART as emptyBookImg } from '../farm/itemArt';
 
 import { FARM_ITEM_ASSETS } from '../farm/CropImage';
 import { FARM_ITEM_LABEL, FARM_ITEM_DESC } from '../../utils/crop';
 import { getFarmItemsApi, getFarmOverviewApi } from '../../api/farm';
 import { getInvitesApi } from '../../api/auth';
-
-// 업적 타입과 이미지 매핑 — 지금 서비스(홈 "나의 업적" 카드)의 것을 그대로 옮겼다 (시안 3절).
-const ACHIEVEMENT_IMAGES = {
-  '초대왕': InviteKing,
-  '출석왕': AttendanceKing,
-  '노력왕': NoryeokKing,
-  '끈기왕': PerseveranceKing,
-  '독서왕': ReadingKing,
-  '암기왕': MemorizedKing,
-};
-
-// 등급색 — 0~2 동 · 3~5 은 · 6~9 금 · 10+ 무지개 (시안 3절 "그대로")
-const getAchievementBackgroundStyle = (level) => {
-  if (level >= 10) return { background: 'linear-gradient(135deg, #FF70D4 0%, #CD8DFF 50%, #74D5FF 100%)' };
-  if (level >= 6) return { backgroundColor: '#F2D252' };
-  if (level >= 3) return { backgroundColor: '#C0C0C0' };
-  return { backgroundColor: '#D3A686' };
-};
-
-const getAchievementTextStyle = (level) => {
-  if (level >= 10) {
-    return {
-      fontFamily: 'Cafe24Ssurround',
-      background: 'linear-gradient(135deg, #FF70D4 0%, #CD8DFF 50%, #74D5FF 100%)',
-      WebkitBackgroundClip: 'text',
-      WebkitTextFillColor: 'transparent',
-      backgroundClip: 'text',
-      color: 'transparent',
-    };
-  }
-  if (level >= 6) return { fontFamily: 'Cafe24Ssurround', color: '#F2D252' };
-  if (level >= 3) return { fontFamily: 'Cafe24Ssurround', color: '#C0C0C0' };
-  return { fontFamily: 'Cafe24Ssurround', color: '#D3A686' };
-};
 
 /**
  * 창고 문구 — 시안 4절 표 그대로. 상점의 가격 대신 "효능" 한 줄이 붙는다.
@@ -173,8 +134,8 @@ const Main = ({ registerRefresh } = {}) => {
   };
 
   // 업적 상세는 바텀시트다 — 시안 5절: 시트는 화면 일부만 덮으므로 하단 탭이 그대로 보인다.
+  // 진동은 누른 쪽이 낸다 — 메달 칸은 feel('tap'), "달성 기준"은 vibrate.
   const openAchievementSheet = (type) => {
-    vibrate({ duration: 5 });
     pushNewBottomSheet(
       AchievementDetailNewBottomSheet,
       { selectedType: type },
@@ -217,47 +178,21 @@ const Main = ({ registerRefresh } = {}) => {
           <CaretRight size={15} className="shrink-0 text-layout-gray-200" />
         </div>
 
-        {/* 나의 업적 — 지금 서비스의 홈 카드를 그대로 옮겼다 (시안 3절) */}
+        {/* 나의 업적 — 메달(레벨 게이지) + 다음 목표 한 줄. 표현은 components/achievement 가 맡는다 */}
         <div>
           <SectionHead
             title="나의 업적"
             sub={totalLv > 0 ? `${achievedLv} / ${totalLv} 달성` : ''}
             moreLabel="달성 기준"
-            onMore={() => openAchievementSheet(goals[0]?.type || '초대왕')}
+            onMore={() => { vibrate({ duration: 5 }); openAchievementSheet(goals[0]?.type || '초대왕'); }}
           />
-          <div className="grid grid-cols-3 gap-x-[8px] gap-y-[18px]">
-            {goals.map((goal) => (
-              <div
-                key={goal.type}
-                onClick={() => openAchievementSheet(goal.type)}
-                className="flex flex-col items-center gap-[12px] cursor-pointer"
-                style={goal.level === 0 ? { opacity: 0.3 } : {}}
-              >
-                <div className="relative w-[60px] h-[60px]">
-                  <div className="w-[60px] h-[60px] rounded-full" style={getAchievementBackgroundStyle(goal.level)} />
-                  <img
-                    src={ACHIEVEMENT_IMAGES[goal.type]}
-                    alt=""
-                    draggable={false}
-                    className="absolute bottom-[4px] left-1/2 -translate-x-1/2 w-[52px] select-none"
-                  />
-                  <span
-                    className="
-                      absolute bottom-[-9px] left-1/2 -translate-x-1/2
-                      text-[12px] font-[800] whitespace-nowrap
-                      [text-shadow:_-1.2px_-1.2px_0_var(--layout-white),_1.2px_-1.2px_0_var(--layout-white),_-1.2px_1.2px_0_var(--layout-white),_1.2px_1.2px_0_var(--layout-white)]
-                    "
-                    style={{ ...getAchievementTextStyle(goal.level), fontFamily: 'Cafe24Ssurround, sans-serif' }}
-                  >
-                    <span className="text-[10px]" style={{ fontFamily: 'Cafe24Ssurround' }}>LV.</span>{goal.level}
-                  </span>
-                </div>
-                <span className="text-[12px] font-[600] tracking-[-0.02em] text-layout-black dark:text-layout-white">
-                  {goal.type}
-                </span>
-              </div>
-            ))}
-          </div>
+          <AchievementBoard
+            goals={goals}
+            criteria={achievementCriteria}
+            achieved={achievedLv}
+            total={totalLv}
+            onOpen={openAchievementSheet}
+          />
         </div>
 
         {/* 창고 — 상세 화면 없이 여기서 다 보여준다 (시안 4절) */}

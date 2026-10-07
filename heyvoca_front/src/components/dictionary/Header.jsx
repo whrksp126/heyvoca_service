@@ -39,7 +39,7 @@ const Header = () => {
         className="absolute right-[16px] flex items-center cursor-pointer"
         onClick={handleCameraClick}
       >
-        <IconCamera width={22} height={20} className="text-primary-main-600" />
+        <IconCamera width={30} height={30} />
       </div>
     </div>
   );

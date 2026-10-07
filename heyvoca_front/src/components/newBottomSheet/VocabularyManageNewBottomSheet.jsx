@@ -8,7 +8,7 @@ import { LoadVocabularyNewBottomSheet } from './LoadVocabularyNewBottomSheet';
 import { userBookCntCheckApi } from '../../api/voca';
 import { vibrate } from '../../utils/osFunction';
 import { useUser } from '../../context/UserContext';
-import emptyBookImg from '../../assets/images/farm/book-empty.png';
+import { EMPTY_BOOK_ART as emptyBookImg } from '../farm/itemArt';
 
 export const useVocabularyManageNewBottomSheet = () => {
   const { pushNewBottomSheet } = useNewBottomSheetActions();

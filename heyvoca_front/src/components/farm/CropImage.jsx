@@ -1,4 +1,5 @@
 import React from 'react';
+import { GEM_PACK_ART } from './itemArt';
 import { stageToCrop, healthToVariant, cropLabel, healthLabel } from '../../utils/crop';
 
 /**
@@ -60,9 +61,9 @@ export const CROP_ASSETS = {
   gem: ASSET_URL['icon-gem'],
   streak: ASSET_URL['icon-streak'],
   goldenCarrot: ASSET_URL['icon-golden-carrot'],
-  gem10: ASSET_URL['gem-10'],
-  gem35: ASSET_URL['gem-35'],
-  gem110: ASSET_URL['gem-110'],
+  gem10: GEM_PACK_ART.small,
+  gem35: GEM_PACK_ART.medium,
+  gem110: GEM_PACK_ART.large,
   mascotWalk: ASSET_URL['mascot-walk'],
   mascotHouse: ASSET_URL['mascot-house'],
   mascotWatering: ASSET_URL['mascot-watering'],

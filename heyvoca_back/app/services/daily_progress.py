@@ -90,11 +90,12 @@ def get_card_review_remaining(user_id: UUID) -> int:
     조회 실패 시 0(미션 판정이 영원히 막히지 않게 보수적으로 폴백).
     """
     import datetime as dt
-    from app.services.game.farm_v2.query import get_task_bucket_ids
+    from app.services.game.farm_v2.query import get_task_bucket_ids, studied_today_ids
     try:
         now = dt.datetime.utcnow()
         wilted = get_task_bucket_ids(user_id, 'wilted', now)
-        care = get_task_bucket_ids(user_id, 'care', now)
-        return len(set(wilted) | set(care))
+        # 돌봄은 카드와 같은 기준 — 오늘 학습한 단어(정답·오답 무관)는 남은 것에서 뺀다.
+        care = set(get_task_bucket_ids(user_id, 'care', now)) - studied_today_ids(user_id, now)
+        return len(set(wilted) | care)
     except Exception:
         return 0

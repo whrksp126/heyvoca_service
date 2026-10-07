@@ -13,7 +13,7 @@ import {
   RecvBox, RecvRow, RecvHr, Arrow, Up, Down, HintB,
 } from './purchaseParts';
 import { vibrate } from '../../utils/osFunction';
-import emptyBookImg from '../../assets/images/farm/book-empty.png';
+import { EMPTY_BOOK_ART as emptyBookImg } from '../farm/itemArt';
 
 /**
  * 묶음 단어장 구매 확인 시트 (수량이 이미 정해진 상품을 바로 확인하는 자리).
@@ -52,7 +52,6 @@ export const StoreBuyBookNewBottomSheet = ({ options = {} }) => {
       options: {
         success: true,
         image: image || emptyBookImg,
-        plot: !image,
         title: <>빈 단어장 <ResultEm>{n(qty)}개</ResultEm>를<br />만들었어요</>,
         pill: { from: `단어장 ${n(bookCnt)}개`, to: `${n(nextBookCnt)}개` },
         secondary: { label: '확인' },

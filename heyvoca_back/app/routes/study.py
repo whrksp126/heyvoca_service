@@ -1355,11 +1355,31 @@ def get_recommend():
                 new_allowance = max(0, daily_limit - new_today)
             # daily_limit <= 0 → 무제한 → new_allowance=None
 
+        # ── 홈 '농장 돌보기' 세션: 오늘 할 일(시듦 → 돌봄) 단어를 먼저 넣는다 ──
+        # priority 가중 샘플링만으로는 오늘 돌볼 단어가 세션에 한 개도 안 들어올 수 있어
+        # 카드의 '오늘 돌봄 물주기'가 안 올라갔다(2026-10 QA). 오늘 이미 학습한 단어는
+        # 빼서 '방금 푼 단어 재선택'을 만들지 않는다. 실패해도 추천은 막지 않는다.
+        pinned_ids = None
+        if mode == 'review' and full_recommend:
+            try:
+                from app.services.game.farm_v2.query import get_task_bucket_ids, studied_today_ids
+                now_utc = dt.datetime.utcnow()
+                studied = studied_today_ids(user_id, now_utc)
+                pinned_ids = [
+                    uv_id
+                    for uv_id in (list(get_task_bucket_ids(user_id, 'wilted', now_utc))
+                                  + list(get_task_bucket_ids(user_id, 'care', now_utc)))
+                    if uv_id not in studied
+                ]
+            except Exception:
+                logging.getLogger(__name__).error('오늘 할 일 우선 포함 목록 실패 (추천은 정상)', exc_info=True)
+                pinned_ids = None
+
         # ── 세션 구성 ──
         result = compose(
             pool, count, selection=selection, user_stats=user_stats,
             full_recommend=full_recommend, new_allowance=new_allowance,
-            allowed_types=allowed_types,
+            allowed_types=allowed_types, pinned_ids=pinned_ids,
         )
     composition:    dict = result['composition']
     enriched_items: list = result['enriched_items']

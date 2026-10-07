@@ -20,6 +20,7 @@ import {
 import { getFarmItemsApi, getFarmShopApi } from '../../api/farm';
 import { getBookStoreDetailApi } from '../../api/bookStore';
 import { FARM_ITEM_ASSETS } from '../farm/CropImage';
+import { gemPackArt } from '../farm/itemArt';
 import PullToRefresh from '../common/PullToRefresh';
 import SegmentTabBar from '../common/SegmentTabBar';
 import {
@@ -297,7 +298,7 @@ const StoreNewFullSheet = ({ initialTab = 'books', onInventoryChanged, onGoRotte
     window.ReactNativeWebView?.postMessage(JSON.stringify({ type: 'iapPurchase', props: { itemId: id } }));
     pushNewBottomSheet(
       StoreBuyItemNewBottomSheet,
-      { options: { productId: id, image_url: (Array.isArray(gemItems) ? gemItems : []).find((g) => g.product_id === id)?.image_url } },
+      { options: { productId: id, image_url: gemPackArt((Array.isArray(gemItems) ? gemItems : []).find((g) => g.product_id === id) || { product_id: id }) } },
       { isBackdropClickClosable: false, isDragToCloseEnabled: false }
     );
   };
@@ -560,7 +561,7 @@ const StoreNewFullSheet = ({ initialTab = 'books', onInventoryChanged, onGoRotte
                           +{item.bonus}
                         </span>
                       )}
-                      <img src={item.image_url} alt="" draggable={false} className="w-[56px] h-[56px] mb-[6px] object-contain select-none" />
+                      <img src={gemPackArt(item)} alt="" draggable={false} className="w-[56px] h-[56px] mb-[6px] object-contain select-none" />
                       <span className="text-[12.5px] font-[800] tracking-[-0.03em] text-layout-black dark:text-layout-white">
                         {item.name}
                       </span>

@@ -76,7 +76,8 @@ const Pill = ({ tone = 'primary', children, onClick, disabled }) => (
  *
  * 압축 줄(compact)과 펼친 칩(expandedBlock) 모두 Row의 텍스트 칸(체크박스 오른쪽, 제목과
  * 같은 칼럼) 안에 얹는다 — 그래서 별도 들여쓰기(pl) 계산 없이도 타이틀 텍스트 시작선에
- * 그대로 맞는다.
+ * 그대로 맞는다. 둘은 동시에 그리지 않는다: 펼치면 compact 는 null 이고, '접기'는 칩 목록
+ * 맨 끝에 놓인다.
  */
 const buildWordListParts = (words = [], expanded, onToggle) => {
   if (words.length === 0) return { compact: null, expandedBlock: null };
@@ -88,7 +89,10 @@ const buildWordListParts = (words = [], expanded, onToggle) => {
   const visible = ordered.slice(0, VISIBLE_WORDS);
   const hiddenCount = ordered.length - visible.length;
 
-  const compact = (
+  const isExpanded = expanded && hiddenCount > 0;
+
+  // 펼친 상태에서는 미리보기 줄을 그리지 않는다(단어가 칩 목록에서 한 번만 보이게).
+  const compact = isExpanded ? null : (
     <span className="flex flex-wrap items-center gap-x-[8px] gap-y-[2px] text-[13px] font-[600] text-[#5A5A5A]">
       {visible.map((w) => (
         <span key={w.id} className={w.done ? 'text-[#BBBBBB] line-through' : undefined}>
@@ -99,16 +103,17 @@ const buildWordListParts = (words = [], expanded, onToggle) => {
         <button
           type="button"
           onClick={(e) => { e.stopPropagation(); vibrate({ duration: 5 }); onToggle(); }}
+          aria-expanded={false}
           className="text-[13px] font-[700] text-layout-gray-400 underline underline-offset-2"
         >
-          {expanded ? '접기' : `외 ${hiddenCount}개`}
+          {`외 ${hiddenCount}개`}
         </button>
       )}
     </span>
   );
 
-  const expandedBlock = expanded && hiddenCount > 0 ? (
-    <span className="flex flex-wrap gap-[6px]">
+  const expandedBlock = isExpanded ? (
+    <span className="flex flex-wrap items-center gap-[6px]">
       {ordered.map((w) => (
         <span
           key={w.id}
@@ -119,6 +124,14 @@ const buildWordListParts = (words = [], expanded, onToggle) => {
           {w.word}
         </span>
       ))}
+      <button
+        type="button"
+        onClick={(e) => { e.stopPropagation(); vibrate({ duration: 5 }); onToggle(); }}
+        aria-expanded={true}
+        className="inline-flex items-center h-[28px] px-[6px] text-[13px] font-[700] text-layout-gray-400 underline underline-offset-2"
+      >
+        접기
+      </button>
     </span>
   ) : null;
 

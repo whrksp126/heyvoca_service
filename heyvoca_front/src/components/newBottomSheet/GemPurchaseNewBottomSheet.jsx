@@ -4,6 +4,7 @@ import { useUser } from '../../context/UserContext';
 import { StoreBuyItemNewBottomSheet } from './StoreBuyItemNewBottomSheet';
 import { vibrate, showToast } from '../../utils/osFunction';
 import { nativeUnavailableReason, describeBridgeError } from '../../utils/nativeBridge';
+import { gemPackArt } from '../farm/itemArt';
 
 // 보석 구매 전용 바텀시트 (구매 내역 없음).
 // 진입점: 홈/상점 헤더의 보석, 단어장 구매 시 보석 부족, 마이페이지 보석 구매 버튼.
@@ -32,7 +33,7 @@ export const GemPurchaseNewBottomSheet = ({ notice }) => {
       {
         options: {
           productId: id,
-          image_url: gemItems.find((g) => g.product_id === id)?.image_url,
+          image_url: gemPackArt(gemItems.find((g) => g.product_id === id) || { product_id: id }),
         },
       },
       {
@@ -66,7 +67,7 @@ export const GemPurchaseNewBottomSheet = ({ notice }) => {
               onClick={() => handleGemClick(g.product_id)}
               className="relative flex flex-col items-center justify-center gap-[10px]"
             >
-              <img src={g.image_url} alt="" className="w-[80px] h-[80px]" />
+              <img src={gemPackArt(g)} alt="" className="w-[80px] h-[80px]" />
               {g.bonus > 0 && (
                 <div className="absolute top-[5px] right-[5px] flex items-center justify-center w-[25px] h-[25px] rounded-[500px] bg-primary-main-600">
                   <span className="text-[10px] font-[600] text-layout-white dark:text-layout-black">+{g.bonus}</span>

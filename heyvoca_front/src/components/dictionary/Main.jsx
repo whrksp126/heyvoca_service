@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, useMemo, useCallback } from 'react';
 import {
-  MagnifyingGlass, CaretDown, CaretRight, X, Plus, Drop, Camera, ArrowUp,
+  MagnifyingGlass, CaretDown, CaretRight, X, Plus, Drop, ArrowUp,
 } from '@phosphor-icons/react';
 import SpeakerButton from '../common/SpeakerButton';
 import FuriganaText from '../common/FuriganaText';
@@ -28,6 +28,7 @@ import { isCareDue, daysToReview, isUnplanted } from '../../utils/vocaCrop';
 import useFarmPlants from './useFarmPlants';
 import { useOpenWordDetail } from '../../hooks/useOpenWordDetail';
 import PullToRefresh from '../common/PullToRefresh';
+import { IconCamera } from '../../assets/svg/icon';
 import bookEmptyImg from '../../assets/images/farm/book-empty.png';
 import gemImg from '../../assets/images/farm/icon-gem.png';
 
@@ -735,7 +736,7 @@ const Main = () => {
         className="flex items-center gap-[11px] w-full rounded-[12px] p-[12px] bg-primary-main-50 dark:bg-primary-main-dark"
       >
         <span className="flex items-center justify-center w-[38px] h-[38px] shrink-0 rounded-[10px] bg-layout-white dark:bg-white/10">
-          <Camera size={34} weight="fill" className="text-primary-main-600" />
+          <IconCamera width={32} height={32} />
         </span>
         <span className="flex-1 min-w-0 text-left">
           <span className="block text-[13px] font-[800] tracking-[-0.03em] text-layout-black dark:text-layout-white">

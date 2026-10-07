@@ -15,7 +15,7 @@ import {
   RecvBox, RecvRow, RecvHr, Arrow, Up, Down, InfoBox, Hint, HintB,
 } from './purchaseParts';
 import { vibrate } from '../../utils/osFunction';
-import emptyBookImg from '../../assets/images/farm/book-empty.png';
+import { EMPTY_BOOK_ART as emptyBookImg } from '../farm/itemArt';
 
 /**
  * 빈 단어장 구매 시트.
@@ -100,7 +100,6 @@ export const BuyEmptyBookNewBottomSheet = () => {
       options: {
         success: true,
         image: emptyBookImg,
-        plot: true, // 밭은 마름모라 가로가 길다 (시안 .res .im.plot)
         title: <>빈 단어장 <ResultEm>{n(count)}개</ResultEm>를<br />만들었어요</>,
         pill: { from: `단어장 ${n(bookCnt)}개`, to: `${n(nextBookCnt)}개` },
         secondary: { label: '확인' },

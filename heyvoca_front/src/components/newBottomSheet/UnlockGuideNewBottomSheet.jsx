@@ -5,7 +5,7 @@ import { useNewBottomSheetActions, useNewBottomSheetContext } from '../../contex
 import { useOnboardingUnlock, FEATURE_LABELS } from '../../context/OnboardingUnlockContext';
 import { vibrate } from '../../utils/osFunction';
 import gemImg from '../../assets/images/farm/icon-gem.png';
-import emptyBookImg from '../../assets/images/voca_book_1.png';
+import { EMPTY_BOOK_ART as emptyBookImg } from '../farm/itemArt';
 
 // 현재 진행 미션의 "무엇을 해야 열리는지" 구체 안내 문구(미션 key별).
 // 미션 title만으로는 행동이 애매한 경우(특히 make_book=단어장 만들고 '단어 추가')를 명확히 안내한다.

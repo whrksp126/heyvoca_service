@@ -464,6 +464,7 @@ def _compose_recommend(
     full_recommend: bool = False,
     new_allowance: Optional[int] = None,
     allowed_types: Optional[List[str]] = None,
+    pinned_ids: Optional[List[int]] = None,
 ) -> Dict[str, Any]:
     """
     단일 priority 큐 기반 추천 (2026-09 재설계).
@@ -472,6 +473,12 @@ def _compose_recommend(
     줄세운다 — "맞힌 단어는 뒤로, 틀린 단어는 앞으로"가 bucket 경계 없이 전체에서
     성립한다. 신규(unplanted) 단어만 별도로 관리(_decide_new_quota)한다.
     FSRS 스케줄 계산 자체(ratings/scheduler)는 그대로이며 여기서 바꾸는 건 순서뿐이다.
+
+    pinned_ids(선택, 순서 있음): 홈 '오늘 할 일'(시듦·돌봄) 단어를 세션에 먼저 넣는다.
+    priority 가중 샘플링은 예정일이 아니라 점수로 뽑아 오늘 돌볼 단어가 통째로 빠질 수
+    있었다. pool 안에 있고 bucket != 'new' 인 것만 주어진 순서대로 need_from_rest 한도까지
+    선택하고, 남는 자리만 기존 방식(pinned 제외 topn 샘플링)으로 채운다. None/빈 값이면
+    기존 동작과 완전히 같다.
     """
     now = dt.datetime.utcnow()
     lapse_ids: Set[int] = set(user_stats.get('recent_lapse_voca_ids') or set()) if user_stats else set()
@@ -504,9 +511,25 @@ def _compose_recommend(
     # 3. 나머지는 priority 큐에서 — 상위 _PRIORITY_TOPN_MULTIPLIER*count 범위 안에서
     # priority 가중 랜덤 샘플링(top-N 고정 반복 방지).
     need_from_rest = max(0, count - len(selected_new))
-    topn = rest_sorted[:min(len(rest_sorted), _PRIORITY_TOPN_MULTIPLIER * count)]
-    selected_rest = weighted_sample_without_replacement(
-        topn, now, need_from_rest,
+    selected_pinned: List[CandidateItem] = []
+    sample_source = rest_sorted
+    if pinned_ids:
+        rest_by_id = {it.user_voca_id: it for it in rest_items}
+        seen_pin: Set[int] = set()
+        for pid in pinned_ids:
+            if len(selected_pinned) >= need_from_rest:
+                break
+            it = rest_by_id.get(pid)
+            if it is None or pid in seen_pin:
+                continue  # pool 에 없거나(신규 포함) 중복
+            seen_pin.add(pid)
+            selected_pinned.append(it)
+        if selected_pinned:
+            sample_source = [it for it in rest_sorted if it.user_voca_id not in seen_pin]
+    need_sample = need_from_rest - len(selected_pinned)
+    topn = sample_source[:min(len(sample_source), _PRIORITY_TOPN_MULTIPLIER * count)]
+    selected_rest = selected_pinned + weighted_sample_without_replacement(
+        topn, now, need_sample,
         weight_fn=lambda it, _now: priority_by_id[it.user_voca_id],
     )
 
@@ -670,6 +693,7 @@ def compose(
     full_recommend: bool = False,
     new_allowance: Optional[int] = None,
     allowed_types: Optional[List[str]] = None,
+    pinned_ids: Optional[List[int]] = None,
 ) -> Dict[str, Any]:
     """
     pool에서 count개를 골라 세션을 구성해 반환한다.
@@ -680,6 +704,8 @@ def compose(
         selection:     'recommended' | 'random'
         user_stats:    사용자 통계 dict (recent_7d_correct_rate, weakness_types,
                        today_seen, recent_lapse_voca_ids 등)
+        pinned_ids:    (선택) 먼저 넣을 user_voca_id 목록(순서 있음) — 추천 경로에서만
+                       의미 있다(random 은 무시). _compose_recommend 참고.
         allowed_types: (선택) `/study/recommend?question_types=` 로 지정된 문제 유형
                        목록(2026-09). 있으면 tier 로직을 완전히 건너뛰고 이 유형들
                        중 각 단어가 쓸 수 있는 것으로만 배정한다(여러 개면 기존
@@ -732,4 +758,5 @@ def compose(
 
     if selection == 'random':
         return _compose_random(pool, count, allowed_types=allowed_types)
-    return _compose_recommend(pool, count, user_stats, full_recommend, new_allowance, allowed_types=allowed_types)
+    return _compose_recommend(pool, count, user_stats, full_recommend, new_allowance,
+                              allowed_types=allowed_types, pinned_ids=pinned_ids)
