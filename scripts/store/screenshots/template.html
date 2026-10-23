@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8">
+<style>
+  @font-face { font-family: P; src: local('Pretendard ExtraBold'), local('Pretendard-ExtraBold'); font-weight: 800; }
+  @font-face { font-family: P; src: local('Pretendard Medium'), local('Pretendard-Medium'); font-weight: 500; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: var(--w); height: var(--h); overflow: hidden; }
+  body {
+    font-family: P, 'Pretendard', sans-serif; position: relative;
+    background: linear-gradient(180deg, #FFF3FB 0%, #FFE3F5 55%, #FFD0EE 100%);
+  }
+  .bg { position: absolute; inset: 0; overflow: hidden; }
+  .blob { position: absolute; border-radius: 50%; background: #FFB3E6; opacity: .35; filter: blur(2px); }
+  .head { position: absolute; top: calc(var(--h) * .045); left: 0; right: 0; text-align: center; padding: 0 24px; }
+  .logo { height: 30px; margin-bottom: calc(var(--h) * .03); }
+  h1 { font-weight: 800; font-size: 33px; line-height: 1.28; color: #111; letter-spacing: -0.5px; white-space: pre-line; }
+  h1 em { font-style: normal; color: #FF4FC6; }
+  p { margin-top: 14px; font-weight: 500; font-size: 15.5px; line-height: 1.5; color: #555; white-space: pre-line; }
+  .phone {
+    position: absolute; left: 50%; transform: translateX(-50%);
+    top: var(--phoneTop); width: 316px; height: 684px;
+    border-radius: 52px; background: #1d1d1f; padding: 11px;
+    box-shadow: 0 30px 60px rgba(255, 79, 198, .25), 0 0 0 2px #3a3a3c inset;
+  }
+  .screen { width: 100%; height: 100%; border-radius: 42px; overflow: hidden; background: #fff; position: relative; }
+  .screen img { width: 100%; display: block; }
+  .island { position: absolute; top: 10px; left: 50%; transform: translateX(-50%); width: 92px; height: 26px; border-radius: 14px; background: #1d1d1f; z-index: 2; }
+  .status { height: 42px; background: transparent; position: absolute; top: 0; left: 0; right: 0; }
+  .screen .wrap { position: absolute; top: 34px; left: 0; right: 0; }
+</style></head>
+<body>
+  <div class="bg">
+    <div class="blob" style="width:140px;height:140px;right:-40px;top:22%"></div>
+    <div class="blob" style="width:90px;height:90px;left:-30px;top:40%"></div>
+    <div class="blob" style="width:60px;height:60px;right:30px;top:62%"></div>
+  </div>
+  <div class="head">
+    <img class="logo" src="logo_h.svg" alt="">
+    <h1 id="t"></h1>
+    <p id="s"></p>
+  </div>
+  <div class="phone"><div class="screen"><div class="island"></div><div class="wrap"><img id="img"></div></div></div>
+</body></html>

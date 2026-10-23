@@ -4,6 +4,7 @@ import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { Circle, X, Play, Pause } from '@phosphor-icons/react';
 import { useVocabulary } from '../../context/VocabularyContext';
 import { useUser } from '../../context/UserContext';
+import { useStats } from '../../context/StatsContext';
 import { haptic, feel, useCountUp, ShineSweep, SPRING } from '../../lib/feel';
 import { warmTts } from '../../api/tts';
 import SpeakerButton from '../common/SpeakerButton';
@@ -284,6 +285,30 @@ const NextStudyNotice = ({ show, remainingSec, onStop, reducedMotion }) => (
 );
 
 /*
+  오늘 돌봄 남은 수 — 이어하기 유도 한 줄(안내 pill 위). 홈 '오늘 할 일' 카드의
+  "시듦 물주기" + "오늘 돌봄 물주기" 두 줄(x/y)과 같은 계산이다. 새 씨앗 심기는 이 화면의
+  "다음 학습"(복습 전용)이 하지 않으므로 넣지 않는다. 썩은 단어는 홈에서도 목표 밖이다.
+*/
+const TodayCareLeft = ({ tasks }) => {
+  const left = ['wilted', 'care'].reduce((sum, key) => {
+    const row = tasks?.[key];
+    return sum + Math.max(0, (row?.total ?? 0) - (row?.done ?? 0));
+  }, 0);
+  return (
+    <p
+      data-testid='today-care-left'
+      className='px-[24px] pt-[14px] -mb-[6px] text-center text-[13px] font-[600] tracking-[-0.02em] text-layout-gray-400 dark:text-layout-gray-200'
+    >
+      {left > 0 ? (
+        <>오늘 돌볼 단어 <span className='tabular-nums font-[700] text-primary-main-600'>{left}개</span>가 남아 있어요</>
+      ) : (
+        '오늘 돌볼 단어를 모두 돌봤어요'
+      )}
+    </p>
+  );
+};
+
+/*
   연속 학습 주간 달력 — 홈(home/StreakCard.jsx)의 "1주 불꽃 달력"과 완전히 같은 그림.
 
   【2026-09-28 실기기 피드백 4차】 예전엔 이 화면 전용으로 분홍 물방울 7칸(월~일 고정,
@@ -405,6 +430,18 @@ const StudyResult = () => {
   useStatusBarStyle(isDark ? 'light-content' : 'dark-content');
   const { recentStudy, updateRecentStudyState, isRecentStudyLoading, fetchVocabularySheets, setLastSessionResult, getWord, vocabularySheets } = useVocabulary();
   const reducedMotion = useReducedMotion();
+  /*
+    "오늘 돌볼 단어 N개가 남아 있어요" — 홈 '오늘 할 일' 카드(TodayTasksCard)와 **같은 값**
+    (StatsContext.todayTasks = GET /farm/today-tasks)을 그대로 읽는다. 따로 조회하면 두 화면
+    숫자가 어긋날 수 있다. 이 세션 결과가 반영된 값만 쓴다 — 아래 setLastSessionResult
+    (completedAt)가 StatsContext 재조회를 일으키므로, 세션을 마친 **뒤에** 바뀐 todayTasks 만 받는다.
+  */
+  const { todayTasks } = useStats();
+  const sessionEndedRef = useRef(false);
+  const [freshTodayTasks, setFreshTodayTasks] = useState(null);
+  useEffect(() => {
+    if (sessionEndedRef.current && todayTasks) setFreshTodayTasks(todayTasks);
+  }, [todayTasks]);
   const { updateUserHistory } = useUser();
   const { pushNewBottomSheet } = useNewBottomSheetActions();
 
@@ -741,6 +778,7 @@ const StudyResult = () => {
 
       // 메인 화면 동기부여 멘트용 — 방금 학습 결과 캐시 (게스트는 홈 진입 전이라 생략)
       if (!isGuest && typeof setLastSessionResult === 'function') {
+        sessionEndedRef.current = true;
         setLastSessionResult({
           totalCnt:        testQuestions.length,
           correctCnt,
@@ -1321,6 +1359,9 @@ const StudyResult = () => {
               <p className='px-[24px] pt-[14px] -mb-[6px] text-center text-[12px] font-[500] text-layout-gray-300'>
                 {nextNotice || nextPlan.reason}
               </p>
+            ) : null}
+            {nextPlan.available && !isFreeTest && freshTodayTasks ? (
+              <TodayCareLeft tasks={freshTodayTasks} />
             ) : null}
             <NextStudyNotice
               show={showRing}

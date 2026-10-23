@@ -1406,6 +1406,45 @@ class UserExampleSeen(db.Model):
     seen_at      = Column(DateTime, nullable=False, default=datetime.utcnow)
 
 
+class ContentReport(db.Model):
+    """학습 중 사용자가 보낸 데이터 오류 신고(뜻·예문·발음·채점 등, 2026-10).
+
+    POST /report 가 쓰고 어드민 '오류 신고' 화면(/admin/reports)이 읽고 상태를 바꾼다.
+    scripts/export_content_reports.py 가 open 건을 사전 원본과 묶어 AI 처리용으로 뽑는다.
+    snapshot 은 신고 순간 화면에 보이던 문제(보기·사용자 답·정답·예문 등)를 그대로 담는다 —
+    사전이 나중에 고쳐져도 "무엇을 보고 신고했는지"가 남게.
+    FK 없음(study_log 와 같은 방식) — voca_id 는 dict_lang 에 따라 heyvoca_dict(_ja) 를 가리킨다.
+    """
+    __tablename__ = 'content_report'
+    __table_args__ = (
+        Index('ix_content_report_status_created', 'status', 'created_at'),
+        Index('ix_content_report_voca', 'dict_lang', 'voca_id'),
+        Index('ix_content_report_user_created', 'user_id', 'created_at'),
+    )
+
+    id            = Column(BigInteger, primary_key=True, autoincrement=True)
+    user_id       = Column(BinaryUUID, nullable=False, comment='user.id 참조 (FK 없음)')
+    voca_id       = Column(Integer, nullable=True, comment='사전 voca id (dict_lang 기준)')
+    user_voca_id  = Column(Integer, nullable=True, comment='user_voca.id 참조 (FK 없음)')
+    dict_lang     = Column(String(8), nullable=True, comment='en|ja|script|custom')
+    target_key    = Column(String(191), nullable=True, comment='사전 id 가 없을 때 식별자(글자·단어 원문)')
+    word          = Column(String(255), nullable=True, comment='신고 시점 단어 원문(목록 표시용)')
+    question_type = Column(String(48), nullable=True)
+    test_type     = Column(String(16), nullable=True)
+    reason        = Column(String(32), nullable=False, comment='meaning|example|audio|grading|question|other')
+    memo          = Column(String(500), nullable=True)
+    snapshot      = Column(JSON, nullable=True, comment='신고 시점 화면 재현 데이터')
+    app_version   = Column(String(32), nullable=True)
+    web_version   = Column(String(64), nullable=True)
+    platform      = Column(String(16), nullable=True, comment='ios|android|web')
+    status        = Column(String(16), nullable=False, default='open', server_default='open',
+                           comment='open|resolved|rejected')
+    resolve_note  = Column(String(1000), nullable=True)
+    resolved_by   = Column(String(64), nullable=True)
+    created_at    = Column(DateTime, nullable=False, default=datetime.utcnow)
+    resolved_at   = Column(DateTime, nullable=True)
+
+
 class UserStudyLog(db.Model):
     """단어 1회 응답 로그. SM2 q_score + FSRS rating 병기 (Phase 1.2부터 rating 채움).
 

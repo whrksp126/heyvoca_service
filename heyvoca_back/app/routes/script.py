@@ -96,6 +96,70 @@ def _get_script_book(user_id, script):
     )
 
 
+def _heal_script_games(user_id, book_id) -> int:
+    """글자 작물의 건강·단계를 바로잡는다(멱등) — 이 글자장(book_id)의 UserVocaGame 만.
+
+    2026-10 이전에는 농장 부패 스캔(`farm_v2/watering._candidate_query`)이 글자를 제외하지
+    않아 글자 작물이 ROTTEN 이 됐고, 부패 작물은 `growth.next_stage` 가 성장을 막아
+    visual_stage 가 심은 씨앗에 멈춘 채 stability 기반 XP 만 계속 올랐다(상세 시트에서 씨앗
+    칸에 398 XP 가 찍히는 모순). 스캔은 이제 글자를 제외하므로, 여기서는 이미 망가진 행만
+    되돌린다: 건강은 FRESH 로, 단계는 stability 가 가리키는 단계까지(내려가지는 않는다).
+    성장 보상(보석·삽 등)은 소급 지급하지 않는다. 고칠 행이 없으면 쓰기 없이 끝난다.
+    """
+    from app.services.game.farm_v2 import growth
+
+    def _scan():
+        return (
+            db.session.query(UserVocaGame, UserVoca)
+            .join(UserVoca, UserVoca.id == UserVocaGame.user_voca_id)
+            .join(UserVocaBookMap, UserVocaBookMap.user_voca_id == UserVoca.id)
+            .filter(
+                UserVocaBookMap.user_voca_book_id == book_id,
+                UserVocaGame.user_id == user_id,
+                UserVocaGame.visual_stage != VisualStage.UNPLANTED_SEED,
+            )
+            .all()
+        )
+
+    def _fixes(rows):
+        out = []
+        for game, uv in rows:
+            want_stage = growth.stage_from_stability(growth._stability(growth.load_fsrs_state(uv)))
+            stage_up = (want_stage is not None and game.visual_stage != VisualStage.GOLDEN
+                        and VisualStage.rank(want_stage) > VisualStage.rank(game.visual_stage))
+            bad_health = game.health_state not in (HealthState.FRESH, HealthState.GOLDEN)
+            if stage_up or bad_health:
+                out.append((game, want_stage if stage_up else None, bad_health))
+        return out
+
+    if not _fixes(_scan()):
+        return 0
+
+    now = dt.datetime.utcnow()
+    try:
+        begin_user_tx(user_id)
+        fixes = _fixes(_scan())   # 잠금 뒤 다시 계산 — 그 사이 정답 반영을 덮어쓰지 않도록
+        for game, want_stage, bad_health in fixes:
+            if want_stage is not None:
+                game.visual_stage = want_stage
+                if VisualStage.rank(want_stage) > VisualStage.rank(game.highest_stage or ''):
+                    game.highest_stage = want_stage
+            if bad_health:
+                game.health_state = HealthState.FRESH
+                game.health_changed_at = now
+                game.protection_days = 0
+                game.rot_due_at = None
+            game.updated_at = now
+        db.session.commit()
+        if fixes:
+            _log.info('글자 작물 보정 user=%s book=%s %d건', user_id, book_id, len(fixes))
+        return len(fixes)
+    except Exception:
+        db.session.rollback()
+        _log.error('글자 작물 보정 실패', exc_info=True)
+        return 0
+
+
 def _build_progress_items(book_id, script):
     """(book_id) 안의 글자들 — 성장 단계(visual_stage)·XP만 담는다.
 
@@ -144,6 +208,7 @@ def _progress_payload(user_id, script):
     book = _get_script_book(user_id, script)
     if book is None:
         return {'book_id': None, 'items': [], 'learned_count': 0}
+    _heal_script_games(user_id, book.id)
     items, learned_count = _build_progress_items(book.id, script)
     return {
         'book_id': str(book.id),
@@ -304,6 +369,115 @@ def _recent_wrong_user_voca_ids(user_id, uv_ids) -> set:
     return {vid for vid, correct in latest.items() if not correct}
 
 
+# ── 복습 응용 문제용 "배운 글자로만 된 실제 단어" (2026-10) ──────────────────────────────
+# 일한 사전(heyvoca_dict_ja)에서 읽기(VocaJa.reading)의 모든 글자가 사용자가 이미 심은 가나
+# 집합에 들어가는 2~3글자(요음은 한 글자로 센다) 단어를 고른다. 후보 목록은 사전이 바뀌기
+# 전까지 같으므로 프로세스 메모리에 한 번만 읽어 둔다(상용어/JLPT 단어만, 수천 건).
+_WORD_UNITS = (2, 3)
+_WORD_BANK_LIMIT = 30
+_ja_word_candidates = {}   # script -> [(voca_id, word, reading, units, rank)]
+
+
+def _kana_units(reading, char_set):
+    """읽기를 글자 단위로 자른다 — 요음(きゃ 등 2자 단위)을 먼저 맞춘다. 글자장에 없는 글자가 있으면 None."""
+    units, i = [], 0
+    while i < len(reading):
+        two = reading[i:i + 2]
+        if len(two) == 2 and two in char_set:
+            units.append(two)
+            i += 2
+        elif reading[i] in char_set:
+            units.append(reading[i])
+            i += 1
+        else:
+            return None
+    return units
+
+
+def _load_word_candidates(script):
+    if script in _ja_word_candidates:
+        return _ja_word_candidates[script]
+    from sqlalchemy import func, or_
+    from app.models.models import Voca, VocaJa
+    from app.utils.dict_lang import use_dict_lang
+
+    char_set = {e['char'] for e in get_chars(script)}
+    with use_dict_lang('ja'):
+        rows = (
+            db.session.query(Voca.id, Voca.word, VocaJa.reading, VocaJa.jlpt, VocaJa.common,
+                             VocaJa.freq_rank)
+            .join(VocaJa, VocaJa.voca_id == Voca.id)
+            .filter(
+                or_(Voca.is_active.is_(None), Voca.is_active.is_(True)),
+                func.char_length(VocaJa.reading).between(2, 6),
+                or_(VocaJa.common.is_(True), VocaJa.jlpt.isnot(None)),
+            )
+            .all()
+        )
+    jlpt_rank = {'N5': 0, 'N4': 1, 'N3': 2, 'N2': 3, 'N1': 4}
+    out, seen = [], set()
+    for vid, word, reading, jlpt, common, freq in rows:
+        if not reading or reading in seen:
+            continue
+        units = _kana_units(reading, char_set)
+        if not units or not (_WORD_UNITS[0] <= len(units) <= _WORD_UNITS[1]):
+            continue
+        seen.add(reading)
+        rank = (jlpt_rank.get(jlpt, 5), 0 if common else 1, freq or 10 ** 6)
+        out.append((vid, word, reading, units, rank))
+    out.sort(key=lambda r: r[4])
+    _ja_word_candidates[script] = out
+    return out
+
+
+def _script_word_bank(script, learned_chars, focus_chars):
+    """배운 글자로만 된 실제 단어 최대 30개 — 이번 세션 글자(focus)가 들어간 단어를 앞에 둔다.
+
+    응답: [{word, reading, units, meaning, voca_id}] — 뜻은 첫 번째 뜻 하나. 가나 스크립트가
+    아니거나 사전 조회가 실패하면 빈 목록(프론트가 무의미 조합으로 채운다).
+    """
+    if script not in ('hiragana', 'katakana') or not learned_chars:
+        return []
+    try:
+        cands = _load_word_candidates(script)
+    except Exception:
+        _log.warning('글자 단어 후보 조회 실패', exc_info=True)
+        return []
+    learned = set(learned_chars)
+    focus = set(focus_chars)
+    usable = [c for c in cands if all(u in learned for u in c[3])]
+    # 쉬운 단어 위주로 앞 120개 안에서 섞는다 — 매 세션 같은 단어만 나오지 않게
+    with_focus = [c for c in usable if focus & set(c[3])]
+    others = [c for c in usable if not (focus & set(c[3]))]
+    picked = random.sample(with_focus[:120], min(len(with_focus[:120]), _WORD_BANK_LIMIT))
+    if len(picked) < _WORD_BANK_LIMIT:
+        picked += random.sample(others[:120], min(len(others[:120]), _WORD_BANK_LIMIT - len(picked)))
+    if not picked:
+        return []
+
+    from app.models.models import VocaMeaning, VocaMeaningMap
+    from app.utils.dict_lang import use_dict_lang
+    meanings = {}
+    try:
+        with use_dict_lang('ja'):
+            for vid, meaning in (
+                db.session.query(VocaMeaningMap.voca_id, VocaMeaning.meaning)
+                .join(VocaMeaning, VocaMeaning.id == VocaMeaningMap.meaning_id)
+                .filter(VocaMeaningMap.voca_id.in_([c[0] for c in picked]))
+                .order_by(VocaMeaningMap.voca_id, VocaMeaning.id)
+                .all()
+            ):
+                meanings.setdefault(vid, meaning)
+    except Exception:
+        _log.warning('글자 단어 뜻 조회 실패', exc_info=True)
+    return [
+        {'voca_id': vid, 'word': word, 'reading': reading, 'units': units,
+         'meaning': meanings.get(vid)}
+        for vid, word, reading, units, _rank in picked
+        if meanings.get(vid)
+    ]
+
+
 @script_bp.route('/session', methods=['GET'])
 @jwt_required
 def get_session():
@@ -343,6 +517,7 @@ def get_session():
     book = _get_script_book(user_id, script)
     if book is None:
         return jsonify({'code': 200, 'data': {'session_id': None, 'items': []}}), 200
+    _heal_script_games(user_id, book.id)
 
     base_q = (
         db.session.query(UserVoca, UserVocaGame)
@@ -416,7 +591,16 @@ def get_session():
             lang=lang, ja_info={}, ja_tokens={},
         ))
 
+    # 복습 응용 문제(조합 단어 읽기·듣고 고르기)용 실제 단어 — 복습에서만 내려준다.
+    words = []
+    if mode == 'review':
+        learned_chars = [
+            uv.word for uv, game in base_q.all()
+            if game is not None and game.visual_stage != VisualStage.UNPLANTED_SEED
+        ]
+        words = _script_word_bank(script, learned_chars, [uv.word for uv, _g in rows])
+
     return jsonify({
         'code': 200,
-        'data': {'session_id': str(session.id), 'items': items},
+        'data': {'session_id': str(session.id), 'items': items, 'words': words},
     }), 200

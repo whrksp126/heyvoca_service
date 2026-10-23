@@ -32,6 +32,7 @@ import {
   isStarted,
 } from '../../utils/scriptData';
 import { motion } from 'framer-motion';
+import { Plus, ArrowsClockwise } from '@phosphor-icons/react';
 import { haptic, SPRING, TAP } from '../../lib/feel';
 import ScriptRow from './ScriptRow';
 import { vibrate, showToast } from '../../utils/osFunction';
@@ -109,19 +110,17 @@ const ScriptFieldBody = () => {
   // 상단 학습 버튼(2026-09-30 실기기 피드백 — "순차적으로, 알아서"): 아직 안 배운 글자가
   // 있으면 격자 순서대로 다음 두 글자를 배우고(두 글자면 마지막에 확인 문제가 붙는다),
   // 전부 배웠으면 연습(mode=review, 서버가 XP 낮은 글자부터)으로 넘어간다.
+  //
+  // 2026-10 개편: 버튼 두 개로 나눴다 — "새 글자 배우기"(격자 순서상 다음 두 글자, 예전 "こ·さ 배우기")
+  // 와 "글자 복습"(이미 배운 글자들을 응용 문제로 — 듣고 쓰기·조합 단어·듣기 카드 맞추기).
+  // 배운 글자가 없으면 복습은 비활성 + 안내, 다 배웠으면 새 글자는 비활성 + 안내.
   const NEXT_LEARN_COUNT = 2;
   const nextLearnItems = useMemo(
     () => items.filter((it) => !isStarted(it)).slice(0, NEXT_LEARN_COUNT),
     [items]
   );
-  const mainAction = nextLearnItems.length > 0
-    ? {
-      label: `${nextLearnItems.map((it) => it.char).join(' · ')} 배우기`,
-      run: () => startSession(nextLearnItems, 'learn', '다음 글자'),
-    }
-    : totalPracticable.length > 0
-      ? { label: '글자 연습하기', run: () => startSession(totalPracticable, 'review', '글자 연습') }
-      : null;
+  const canLearn = nextLearnItems.length > 0;
+  const canReview = totalPracticable.length > 0;
 
   const subtitle = useMemo(
     () => availableScripts.map((s) => SCRIPT_LABEL[s]).join(' · '),
@@ -134,7 +133,8 @@ const ScriptFieldBody = () => {
     if (starting || !targetItems || targetItems.length === 0) return;
     setStarting(true);
     try {
-      const sessionMode = mode === 'learn' ? 'learn' : 'review';
+      // practice(시트의 연습하기)도 서버에는 chars 를 그대로 지정하는 learn 으로 — review 는 서버가 글자를 고른다
+      const sessionMode = mode === 'review' ? 'review' : 'learn';
       const chars = targetItems.map((it) => it.char);
       const res = await getScriptSessionApi(activeScript, sessionMode, chars);
       if (res?.code !== 200 || !Array.isArray(res.data?.items) || res.data.items.length === 0) {
@@ -146,6 +146,9 @@ const ScriptFieldBody = () => {
       // 채울 수 없다. 이 스크립트의 전체 글자 목록(items)을 풀로 함께 실어 보낸다
       // (utils/scriptQuestions.js buildScriptTestQuestions가 words 대신 이 pool로 오답을 뽑는다).
       const pool = buildDistractorPool(activeScript, items);
+      // 복습 조합 단어 문제 — 서버가 고른 "배운 글자로만 된 실제 단어"(mode=review)와 배운 글자 집합
+      const wordBank = Array.isArray(res.data.words) ? res.data.words : [];
+      const learnedChars = items.filter((it) => isStarted(it)).map((it) => it.char);
       // 돌아왔을 때 반드시 재조회하도록 — 위 location 이펙트가 처리한다(이 탭은 언마운트되지 않는다).
       awaitingReturnRef.current = true;
       navigate('/take-test', {
@@ -158,6 +161,8 @@ const ScriptFieldBody = () => {
             sessionId: res.data.session_id ?? null,
             words,
             pool,
+            wordBank,
+            learnedChars,
           },
         },
       });
@@ -177,29 +182,55 @@ const ScriptFieldBody = () => {
         </span>
       </div>
 
-      {mainAction && (
-        /* 홈 주 CTA(components/home/FarmCta.jsx)와 같은 버튼 — 56px·핑크 그라디언트·흰 글자.
-           히어로 위에 뜬 버튼이 아니라서 바깥 번짐 그림자는 빼고 안쪽 하이라이트만 둔다. */
+      {/* 상단 두 버튼 — 새 글자 배우기(주 CTA, 홈 FarmCta 규격) / 글자 복습(보조) */}
+      <div className="flex gap-[8px] mt-[12px]">
         <motion.button
           type="button"
-          disabled={starting}
-          onClick={mainAction.run}
-          whileTap={{ scale: TAP.scale }}
+          disabled={starting || !canLearn}
+          onClick={() => startSession(nextLearnItems, 'learn', '새 글자')}
+          whileTap={canLearn ? { scale: TAP.scale } : undefined}
           transition={SPRING.snappy}
-          onTapStart={() => haptic('light')}
+          onTapStart={canLearn ? () => haptic('light') : undefined}
           className="
-            flex items-center justify-center
-            w-full h-[56px] mt-[12px] rounded-[12px]
+            flex-1 min-w-0 flex flex-col items-center justify-center gap-[2px]
+            h-[64px] rounded-[12px]
             bg-[linear-gradient(180deg,#FF88DC_0%,#FF70D4_100%)]
             shadow-[inset_0_1px_0_rgba(255,255,255,.34)]
-            disabled:opacity-60
+            disabled:opacity-50
           "
         >
-          <span className="text-layout-white text-[17px] font-[700] leading-[1.2] tracking-[-0.02em]">
-            {mainAction.label}
+          <span className="flex items-center gap-[5px] text-layout-white text-[16px] font-[700] leading-[1.2] tracking-[-0.02em]">
+            <Plus size={16} weight="bold" />
+            새 글자 배우기
+          </span>
+          <span className="text-layout-white/90 text-[12px] font-[600] leading-[1.2]">
+            {canLearn ? nextLearnItems.map((it) => it.char).join(' · ') : '모든 글자를 배웠어요'}
           </span>
         </motion.button>
-      )}
+        <motion.button
+          type="button"
+          disabled={starting || !canReview}
+          onClick={() => startSession(totalPracticable, 'review', '글자 복습')}
+          whileTap={canReview ? { scale: TAP.scale } : undefined}
+          transition={SPRING.snappy}
+          onTapStart={canReview ? () => haptic('light') : undefined}
+          className="
+            flex-1 min-w-0 flex flex-col items-center justify-center gap-[2px]
+            h-[64px] rounded-[12px]
+            border-[2px] border-primary-main-600
+            bg-layout-white dark:bg-layout-black
+            disabled:border-border dark:disabled:border-border-dark
+          "
+        >
+          <span className={`flex items-center gap-[5px] text-[16px] font-[700] leading-[1.2] tracking-[-0.02em] ${canReview ? 'text-primary-main-600' : 'text-layout-gray-300'}`}>
+            <ArrowsClockwise size={16} weight="bold" />
+            글자 복습
+          </span>
+          <span className={`text-[12px] font-[600] leading-[1.2] ${canReview ? 'text-layout-gray-400' : 'text-layout-gray-300'}`}>
+            {canReview ? `배운 글자 ${totalPracticable.length}개` : '글자를 먼저 배워 보세요'}
+          </span>
+        </motion.button>
+      </div>
 
       {availableScripts.length > 1 && (
         <div className="flex gap-[8px] mt-[14px]">

@@ -53,7 +53,25 @@ node heyvoca_service/scripts/store/asc.mjs watch [--interval 600]
 node heyvoca_service/scripts/store/play.mjs status     # 트랙별 심사 상태
 node heyvoca_service/scripts/store/play.mjs watch [--interval 900]
 node heyvoca_service/scripts/store/play.mjs upload --aab <경로> --track production --notes "..." --yes
+
+node heyvoca_service/scripts/store/asc.mjs availability JPN            # 판매 국가(앱+인앱상품) 조회
+node heyvoca_service/scripts/store/asc.mjs availability --add JPN --yes  # 앱+인앱상품에 국가 추가
+node heyvoca_service/scripts/store/play.mjs availability JP            # Play 판매 국가 조회(변경 API 없음)
 ```
+
+### 판매 국가 (2026-10-23 일본 추가 때 실측)
+
+- **앱과 인앱상품의 판매 국가는 따로다(양 스토어 모두).** Apple 은 앱을 열어도 인앱상품이 KOR 만이면
+  그 나라 사용자는 보석을 못 산다 → `availability --add` 가 둘 다 처리한다. 인앱상품 가용성 POST 는
+  **전체 교체**라 기존 국가를 빠뜨리면 그 나라 판매가 꺼진다(스크립트가 기존+신규로 보낸다).
+- Apple 국가 추가는 **심사 없음**(PROCESSING_TO_AVAILABLE → 최대 24시간). 가격은 기준 국가에서 자동 환산
+  (보석 4/10/35/110 → JPN 50/100/300/1000엔). 막힌 국가는 `contentStatuses` 가 이유를 말한다
+  (예: CHN=MISSING_GRN). 그냥 `CANNOT_SELL` 하나면 "선택 안 함" 이라는 뜻일 뿐이다.
+- **Play 는 국가 변경 API 가 없다**(`edits.countryavailability` 는 get 뿐, 트랙 `countryTargeting` 은
+  단계적 출시 전용). Play Console → 프로덕션 → 국가/지역 에서 사람이 추가하고 '게시 개요' 에서 검토 전송.
+  ⚠ 헤이보카(`com.ghmate.heyvoca`)는 브라우저에 로그인된 'ghmate' 개발자 계정에 **없다**(그쪽엔 구
+  vocaandgo/voca/order 앱만) — 헤이보카가 있는 개발자 계정으로 로그인해야 한다.
+- Play 인앱상품은 이미 174개국 판매 설정이라 국가만 열면 바로 결제된다.
 
 조회는 자유, **바깥으로 나가는 행위(제출·출시·업로드)는 `--yes` 를 요구**한다. Apple 제출은
 `cancel --yes` 로 되돌릴 수 있다.
@@ -74,6 +92,21 @@ node heyvoca_service/scripts/store/play.mjs upload --aab <경로> --track produc
 | `APPROVED_NOT_PUBLISHED` | 승인됨, 게시 대기 |
 | `PUBLISHED` | 게시됨 |
 | `NOT_APPROVED` | 거절(사유는 Play Console) |
+
+## 스토어 스크린샷 (`screenshots.mjs`, 세트는 `screenshots/<세트>/`)
+
+```bash
+node heyvoca_service/scripts/store/screenshots.mjs list                     # 두 스토어 현재 스크린샷 요약(읽기 전용)
+node heyvoca_service/scripts/store/screenshots.mjs download --out <dir>     # 현재 스크린샷 내려받기
+node heyvoca_service/scripts/store/screenshots/build.mjs 2026-10-ko         # slides.json + src/ 캡처 → ios-65 / play-phone / play-feature 합성
+node heyvoca_service/scripts/store/screenshots.mjs upload-play --dir <세트>/play-phone --lang ko-KR --type phoneScreenshots --yes   # seven/tenInch 도 같은 폴더
+node heyvoca_service/scripts/store/screenshots.mjs upload-ios  --dir <세트>/ios-65 --locale ko --display APP_IPHONE_65 --yes
+```
+
+- **iOS 는 게시된 버전의 스크린샷을 못 바꾼다.** `asc.mjs prepare` 로 새 버전을 만든 직후 올린다.
+  2026-10-ko 세트는 Play 만 반영(2026-10-23), **iOS 는 다음 버전 prepare 때 위 upload-ios 를 실행**할 것.
+- 업로드는 대상 세트(로케일·기기)를 **교체**한다(기존 삭제 후 업로드). `--yes` 없으면 계획만 출력.
+- 원본 캡처(`src/`)는 로컬 데모 계정(`dev-login`, 실사용자 아님)을 414x896@3x 로 찍은 것이다.
 
 ## 실측 함정 — 여기서 시간 쓰지 말 것
 

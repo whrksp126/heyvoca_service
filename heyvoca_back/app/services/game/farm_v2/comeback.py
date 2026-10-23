@@ -31,6 +31,7 @@ from app.models.models import (CheckIn, FarmEvent, HealthState, UserComebackMiss
 from app.services.game.farm_v2 import constants as C
 from app.services.game.farm_v2 import events, localday
 from app.utils.db_lock import begin_user_tx
+from app.utils.script_scope import script_user_voca_ids_subquery
 
 STATUS_ACTIVE = 'ACTIVE'
 STATUS_COMPLETED = 'COMPLETED'
@@ -283,6 +284,8 @@ def _day_plan(user_id: UUID, now: dt.datetime) -> dict:
         db.session.query(func.count(func.distinct(UserStudyLog.user_voca_id)))
         .filter(UserStudyLog.user_id == user_id,
                 UserStudyLog.was_correct == True,   # noqa: E712 — SQLAlchemy 표현식
+                # 글자 학습은 복귀 미션 하루 단어 수에 넣지 않는다(학습 통계 격리 정책)
+                UserStudyLog.user_voca_id.notin_(script_user_voca_ids_subquery(user_id)),
                 UserStudyLog.created_at >= start_utc,
                 UserStudyLog.created_at < end_utc)
         .scalar() or 0
@@ -375,6 +378,8 @@ def _snapshot_rotten(user_id: UUID, mission: UserComebackMission) -> list:
         db.session.query(UserVocaGame)
         .filter(UserVocaGame.user_id == user_id,
                 UserVocaGame.visual_stage != VisualStage.GOLDEN,
+                # 글자(문자 학습)는 농장 작물이 아니다 — 시작 시 count_rotten 과 같은 범위로
+                UserVocaGame.user_voca_id.notin_(script_user_voca_ids_subquery(user_id)),
                 or_(
                     UserVocaGame.health_state == HealthState.ROTTEN,
                     UserVocaGame.rot_due_at <= started,

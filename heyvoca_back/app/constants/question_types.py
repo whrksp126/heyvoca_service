@@ -84,6 +84,12 @@ _NON_RECOMMENDABLE_QUESTION_TYPES = (
     'scriptSeePick',
     'scriptListenPick',
     'scriptTrace',
+    # 2026-10 글자 복습 응용 — 듣고 쓰기(가이드 없이 직접 써서 채점), 배운 글자로 된 단어
+    # 읽기(보고 발음 고르기)·듣고 글자 조합 고르기, 듣기 카드 맞추기(스피커 ↔ 글자).
+    'scriptListenWrite',
+    'scriptWordRead',
+    'scriptWordListen',
+    'scriptListenMatch',
 )
 
 # 프론트에서 드롭되어 더 이상 출제되지 않지만, 과거 /study/log 기록에 남아 있어

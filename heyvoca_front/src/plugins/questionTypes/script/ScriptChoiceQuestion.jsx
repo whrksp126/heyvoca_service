@@ -27,15 +27,23 @@ const ScriptChoiceQuestion = ({ question, onComplete, onCardMatched, farmByWordI
   const onCompleteRef = useRef(onComplete);
   onCompleteRef.current = onComplete;
 
-  const kind = question.questionType === 'scriptListenPick' ? 'listenPick' : 'seePick';
+  // 조합 단어 문제(scriptWordRead/scriptWordListen, 2026-10 복습 응용)도 같은 카드로 —
+  // 글자 대신 단어(question.wordPrompt)를 보여주거나 읽어 준다(utils/scriptQuestions.js buildScriptWordQuestion).
+  const qt = question.questionType;
+  const kind = (qt === 'scriptListenPick' || qt === 'scriptWordListen') ? 'listenPick' : 'seePick';
+  const wp = question.wordPrompt;
   const step = useMemo(() => ({
-    id: `${question.questionType}-${question.vocaIndexId ?? question.id}`,
+    id: `${question.questionType}-${question.vocaIndexId ?? question.id}-${wp?.reading ?? ''}`,
     script: question.script,
     item: question.item,
     options: question.options,
     answerIndex: question.resultIndex,
     type: kind,
-  }), [question, kind]);
+    prompt: wp && qt === 'scriptWordRead'
+      ? { text: wp.reading, sub: wp.real ? [wp.word && wp.word !== wp.reading ? wp.word : null, wp.meaning].filter(Boolean).join(' · ') : null }
+      : null,
+    speakText: wp ? wp.reading : null,
+  }), [question, kind, wp, qt]);
 
   // 농장 상태 바 — 카드 맞추기·빈칸 채우기와 같은 경로(Main.processCardWord → cardFarmByWordId[wordId]).
   // 글자는 시듦/썩음 개념이 없다(사용자 결정 2026-09-30) — 서버가 어떤 health를 보내든

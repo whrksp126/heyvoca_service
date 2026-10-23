@@ -14,6 +14,7 @@
  *   node play.mjs watch [--interval 900] 상태 전이를 주기 감시(무인 폴링)
  *   node play.mjs upload --aab <경로> [--track production] [--notes "..."] [--yes]
  *                                        AAB 업로드 + 트랙 릴리스 + 커밋(=심사 제출)
+ *   node play.mjs availability [JP ...]  트랙 판매 국가 + 인앱상품 국가별 가격(조회 전용)
  *   ... --pkg com.ghmate.codingpt.app     다른 앱 대상(같은 서비스계정에 권한이 있으면)
  *
  * ⚠ `--notes` 는 ko-KR 로만 넣는다(아래 하드코딩). 등록정보에 없는 언어를 주면 트랙 PUT 이 실패하므로,
@@ -209,7 +210,41 @@ async function cmdUpload(argv) {
   }
 }
 
+// ── 판매 국가 — **조회만 된다** ────────────────────────────────────────
+// `edits.countryavailability` 는 get 하나뿐이다(쓰기 메서드 없음, 2026-10-23 API 참조 확인). 국가 추가는
+//  Play Console → 테스트 및 출시 → 프로덕션 → 국가/지역 에서 사람이 한다(변경은 '게시 개요' 에서 검토로
+//  나간다). 트랙 release 의 countryTargeting 은 단계적 출시(inProgress) 전용이라 이 용도로 못 쓴다.
+//  조회에도 edit 이 필요하므로 열었다가 반드시 지운다(열어 두면 다음 upload 가 막힌다).
+//  인앱상품은 앱과 따로 국가별 가용성을 갖는다(oneTimeProducts.regionalPricingAndAvailabilityConfigs).
+async function cmdAvailability(argv) {
+  const focus = argv.filter((a) => /^[A-Za-z]{2}$/.test(a)).map((a) => a.toUpperCase());
+  const token = await accessToken();
+  console.log(`앱: ${PKG}`);
+  const edit = await papi(token, `/applications/${PKG}/edits`, { method: 'POST', body: '{}' });
+  try {
+    for (const track of TRACKS) {
+      const c = await papi(token, `/applications/${PKG}/edits/${edit.id}/countryAvailability/${track}`).catch((e) => ({ error: e.message }));
+      if (c.error) { console.log(`  ${track.padEnd(11)} 조회 실패 — ${c.error.split('\n')[0]}`); continue; }
+      const cs = (c.countries || []).map((x) => x.countryCode);
+      console.log(`  ${track.padEnd(11)} 국가 ${cs.length}개: ${cs.join(', ') || '(없음)'}${c.restOfWorld ? ' + 나머지 전 세계' : ''}`);
+      for (const f of focus) console.log(`    ${f}: ${cs.includes(f) || c.restOfWorld ? '판매 중' : '미판매'}`);
+    }
+  } finally {
+    await papi(token, `/applications/${PKG}/edits/${edit.id}`, { method: 'DELETE' }).catch(() => {});
+  }
+  const r = await papi(token, `/applications/${PKG}/oneTimeProducts?pageSize=100`).catch(() => null);
+  const money = (p) => (p ? `${Number(p.units || 0) + (p.nanos || 0) / 1e9} ${p.currencyCode}` : '-');
+  console.log(`인앱상품 ${(r?.oneTimeProducts || []).length}개:`);
+  for (const p of r?.oneTimeProducts || []) {
+    for (const o of p.purchaseOptions || []) {
+      const cfg = o.regionalPricingAndAvailabilityConfigs || [];
+      const shown = focus.map((f) => { const x = cfg.find((y) => y.regionCode === f); return `${f}=${x ? `${money(x.price)} ${x.availability}` : '없음'}`; });
+      console.log(`  ${String(p.productId).padEnd(22)} ${String(o.state).padEnd(18)} 국가 ${cfg.length}개  ${shown.join(' ')}`);
+    }
+  }
+}
+
 const [, , cmd = 'status', ...argv] = process.argv;
-const run = { status: cmdStatus, watch: () => cmdWatch(argv), upload: () => cmdUpload(argv) }[cmd];
-if (!run) die(`알 수 없는 명령: ${cmd}\n사용: status | watch [--interval 900] | upload --aab <경로> [--yes]`);
+const run = { status: cmdStatus, watch: () => cmdWatch(argv), upload: () => cmdUpload(argv), availability: () => cmdAvailability(argv) }[cmd];
+if (!run) die(`알 수 없는 명령: ${cmd}\n사용: status | watch [--interval 900] | upload --aab <경로> [--yes] | availability [JP]`);
 run().catch((e) => die(String(e.message || e)));

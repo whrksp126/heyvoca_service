@@ -7,6 +7,7 @@ import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 import { ConfirmNewBottomSheet } from '../newBottomSheet/ConfirmNewBottomSheet';
 import { vibrate } from '../../utils/osFunction';
 import { getQuestionType } from '../../plugins/questionTypes';
+import ReportFlagButton from '../report/ReportFlagButton';
 
 // 문제 유형별 안내 문구 — 상단 헤더에 현재 문제가 무엇을 요구하는지 표시. 대부분의 유형은
 // 플러그인 레지스트리(plugins/questionTypes/index.js)의 guideTitle을 그대로 쓴다(2026-09-29) —
@@ -15,7 +16,7 @@ import { getQuestionType } from '../../plugins/questionTypes';
 // 레지스트리에 없다 — 여기서만 예외로 다룬다.
 const DIAGNOSIS_INSTRUCTION = '다시 심기 진단'; // 부패 진단(당근 농장 V2 학습 시안 §6)
 
-const Header = ({ testType, onBackClick, questionType }) => {
+const Header = ({ testType, onBackClick, questionType, reportQuestions = null, reportIndex = 0 }) => {
   "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
 
   const { recentStudy } = useVocabulary();
@@ -83,8 +84,15 @@ const Header = ({ testType, onBackClick, questionType }) => {
           {instruction}
         </h2>
       </div>
-      <div className="right">
-
+      {/* 오류 신고 — reportQuestions 를 넘긴 화면(로그인 학습)에서만. 게스트 맛보기는 신고 주체가 없다. */}
+      <div className="
+        right
+        absolute right-[10px] bottom-[10px]
+        flex items-center justify-center
+      ">
+        {reportQuestions && (
+          <ReportFlagButton testQuestions={reportQuestions} progressIndex={reportIndex} testType={testType} />
+        )}
       </div>
     </div>
   );

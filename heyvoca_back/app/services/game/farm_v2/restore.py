@@ -697,7 +697,9 @@ def pending_targets(user_id: UUID) -> List[dict]:
                          UserVoca.voca_meanings)
         .join(UserVoca, UserVoca.id == UserVocaGame.user_voca_id)
         .filter(UserVocaGame.user_id == user_id,
-                UserVocaGame.pending_action.isnot(None))
+                UserVocaGame.pending_action.isnot(None),
+                # 글자 밭은 제외 — 예전 복귀 보상이 글자에 남긴 진단 표시가 목록에 뜨지 않게
+                ~UserVocaGame.user_voca_id.in_(script_user_voca_ids_subquery(user_id)))
         .order_by(UserVocaGame.pending_started_at.asc())
         .all()
     )

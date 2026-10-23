@@ -622,7 +622,11 @@ const TakeTest = () => {
       // pool(오답 후보) — 칸 하나짜리 세션(글자 1개)을 위해 학습장이 스크립트 전체 목록을
       // 함께 실어 보낸다(components/script/ScriptFieldBody.jsx startSession). 없으면(구버전
       // 캐시 등) words 자신을 풀로 쓰는 기존 동작으로 자동 폴백한다.
-      const testQuestions = buildScriptTestQuestions(script, state.data.words, mode, state.data.pool);
+      // wordBank/learnedChars — 글자 복습의 조합 단어 문제용(2026-10, 없으면 무의미 조합으로 채움).
+      const testQuestions = buildScriptTestQuestions(script, state.data.words, mode, state.data.pool, {
+        wordBank: state.data.wordBank,
+        learnedChars: state.data.learnedChars,
+      });
       return {
         testQuestions,
         sessionId: state.data.sessionId ?? null,
@@ -1374,6 +1378,8 @@ const TakeTest = () => {
               ? 'multipleChoiceDiagnosis'
               : testQuestions[progressIndex]?.questionType
           }
+          reportQuestions={isGuestMode ? null : testQuestions}
+          reportIndex={progressIndex}
         />
         <Main
           testQuestions={testQuestions}

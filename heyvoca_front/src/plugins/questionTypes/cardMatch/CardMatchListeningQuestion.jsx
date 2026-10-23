@@ -15,6 +15,7 @@ import { getAdvanceDelay } from '../../../utils/studyTiming';
 import StudyTimingTag from '../../../components/farm/StudyTimingTag';
 import { useResumeReplayKey } from '../../../hooks/useResumeReplayKey';
 import { wordLang } from '../../../utils/lang';
+import { speakScriptItem } from '../../../utils/scriptData';
 
 const FitText = ({ text, maxSize = 20, minSize = 12, className = '' }) => {
   const spanRef = useRef(null);
@@ -245,7 +246,12 @@ const CardMatchListeningQuestion = ({ question, testType, onComplete, onCardMatc
     // 단어를 읽는 중에는 세트를 넘기지 않는다(끝 + 0.2초) — 다른 유형과 같은 규칙.
     const gen = ++speakGenRef.current;
     advanceGate.ttsBegin();
-    getTextSound(word.origin, wordLang(word, wordLang(question)), setSpeakingDuration).finally(() => {
+    // 글자 듣기 카드 맞추기(scriptListenMatch, 2026-10) — 글자 한 개 음성은 장음 보정이 필요해
+    // 글자 전용 재생기(scriptSpokenText)를 쓴다.
+    const speakP = question.script
+      ? speakScriptItem(question.script, word.item, setSpeakingDuration)
+      : getTextSound(word.origin, wordLang(word, wordLang(question)), setSpeakingDuration);
+    speakP.finally(() => {
       setSpeakingWordId(prev => prev === wordId ? null : prev);
       if (gen === speakGenRef.current) advanceGate.ttsEnd();
     });
@@ -369,13 +375,14 @@ const CardMatchListeningQuestion = ({ question, testType, onComplete, onCardMatc
                   카드 매칭은 단어 카드(왼쪽 열)가 곧 이 단어의 "문제 카드"라 각 단어 카드의
                   우측 상단에 둔다 — 같은 카드 하단의 좁은 상태 바와 한 쌍으로 읽힌다.
                   뜻 카드(오른쪽 열)는 섞여 있어 단어와 짝이 아직 안 맞으므로 두지 않는다. */}
-              <StudyTimingTag
+              {/* 글자는 복습 예정일·학습 시점 개념이 없다(2026-09-30 결정) — 글자 카드에는 시점 문구를 두지 않는다 */}
+              {!question.script && <StudyTimingTag
                 compact
                 answered={!!farmByWordId?.[word.id]}
                 fsrs={word.fsrs}
                 stage={word.farmStage}
                 farm={farmByWordId?.[word.id] ?? null}
-              />
+              />}
               
 
               <LiftAboveBar
@@ -446,9 +453,16 @@ const CardMatchListeningQuestion = ({ question, testType, onComplete, onCardMatc
               animate={flashAnim(word.id, wrongFlashRightWordIds)}
               transition={flashTransition(word.id, wrongFlashRightWordIds)}
             >
-              <span className={`text-[14px] font-[600] ${getRightTextStyle(index)} text-center leading-snug break-keep`}>
-                {displayMeanings}
-              </span>
+              {question.script ? (
+                // 글자 카드 — 뜻 대신 글자 자체를 크게
+                <span className={`text-[30px] font-[800] leading-none ${getRightTextStyle(index)}`}>
+                  {word.char}
+                </span>
+              ) : (
+                <span className={`text-[14px] font-[600] ${getRightTextStyle(index)} text-center leading-snug break-keep`}>
+                  {displayMeanings}
+                </span>
+              )}
             </motion.button>
           );
         })}

@@ -319,3 +319,12 @@ export const resolveConfusables = (script, item, allMerged) => {
   const byChar = new Map(allMerged.map((it) => [it.char, it]));
   return item.confusables.map((c) => byChar.get(c)).filter(Boolean);
 };
+
+/** 정적 데이터만으로 만든 오답 후보 풀 — 진행도 없이도 쓸 수 있다(재출제·작은 세션 보충용). */
+const STATIC_POOL = {};
+export const staticDistractorPool = (script) => {
+  if (!STATIC_POOL[script]) {
+    STATIC_POOL[script] = (RAW_DATA[script] || []).map((it) => ({ char: it.char, script, item: it }));
+  }
+  return STATIC_POOL[script];
+};

@@ -1136,7 +1136,9 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
     const predicted = q.predictedReview?.[isCorrectAnswer ? 'correct' : 'wrong'];
     const fsrsBefore = q.fsrs;          // 아래에서 덮이기 전의 값 — 막대의 '학습 전'이다
     const optimistic = computeOptimisticFsrs(q.fsrs, isCorrectAnswer);
-    q.displayNextReview = predicted?.next_review ?? optimistic.next_review;
+    // 게스트는 새 씨앗 기준(아래 buildOptimisticFarm 주석) — 앞 채점이 누적되면 "7일 뒤 복습"이 떴다
+    q.displayNextReview = predicted?.next_review
+      ?? (guestMode ? computeOptimisticFsrs({ state: 'new', stability: 0 }, isCorrectAnswer) : optimistic).next_review;
     q.fsrs = optimistic; // 추정 fsrs — 백엔드 응답 도착 시 갱신(배지/홈 카운터용)
     // 함수형 업데이트 필수: 지금은 호출부(enqueueRetry보다 먼저 호출됨)에 기대어 안전하지만,
     // 위 486행과 같은 이유로 닫혀 있는 testQuestions를 그대로 덮으면 호출 순서가 바뀌는 순간
@@ -1178,10 +1180,13 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
       && !!loggedVocaIdsRef?.current
       && !q.isRetry
       && !loggedVocaIdsRef.current.has(vid);
+    // 게스트는 서버로 "마지막 정오답"만 보내 심은 씨앗(첫 정답 1회)으로 이전된다 — 화면도
+    // 늘 새 씨앗 기준으로 계산한다. 앞 오답이 깎아 둔 FSRS 에 이어 계산하면 같은 세션에서
+    // '새싹으로 자랐어요'가 떴다(발아는 다음 학습일 이후 — 기획 §21-5).
     const buildOptimisticFarm = () => optimisticFarmPayload({
       base,
-      fsrsBefore,
-      fsrsAfter: optimistic,
+      fsrsBefore: guestMode ? { state: 'new', stability: 0 } : fsrsBefore,
+      fsrsAfter: guestMode ? computeOptimisticFsrs({ state: 'new', stability: 0 }, isCorrectAnswer) : optimistic,
       wasCorrect: isCorrectAnswer,
       // 게스트 온보딩은 **마지막** 정오답을 서버로 보낸다(TakeTest 의 answers 집계).
       // 그러니 재출제에서 맞히면 실제로 심긴다 — 화면도 그때 심는 연출을 해야 한다.
@@ -1762,7 +1767,9 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
       const wordObj = target ?? currentQuestion?.words?.find(w => w.id === wordId);
       if (wordObj) {
         const pool = collectSessionWordPool(testQuestions);
-        const retryQuestion = buildMultipleChoiceFromWord(wordObj, pool);
+        // 유형이 자체 재출제 문제를 정의하면(글자 듣기 카드 맞추기 — 뜻이 없어 사지선다 불가) 그걸 쓴다
+        const customRetry = getQuestionType(questionType)?.buildRetryQuestion;
+        const retryQuestion = customRetry ? customRetry(wordObj, pool) : buildMultipleChoiceFromWord(wordObj, pool);
         enqueueRetry(progressIndex, retryQuestion);
       }
     }

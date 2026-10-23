@@ -23,6 +23,8 @@
  *   node asc.mjs cancel [--yes]         제출 철회
  *   node asc.mjs release [--yes]        승인 대기(PENDING_DEVELOPER_RELEASE) 버전을 출시
  *   node asc.mjs watch [--interval 600] 심사 상태를 주기 확인하며 전이를 출력(무인 폴링용)
+ *   node asc.mjs availability [JPN ...]   판매 국가(앱 + 인앱상품) 조회 — 국가를 주면 그 국가만 자세히
+ *   node asc.mjs availability --add JPN [--yes]   앱과 인앱상품 판매 국가에 추가(심사 불필요)
  *
  * 안전 규율: 조회는 자유. **바깥으로 나가는 행위(제출·출시)는 `--yes` 를 요구**하고, 제출 전에는
  * 사람이 눈으로 보던 것들을 preflight 로 대신 확인한다(빌드 연결·릴리스 노트·수출규정·심사 연락처).
@@ -429,11 +431,118 @@ async function cmdWatch(argv) {
   }
 }
 
+// ── 판매 국가(territory) ──────────────────────────────────────────────
+// 앱과 인앱상품의 판매 국가는 **따로** 관리된다. 앱만 열면 그 나라 사용자는 받을 수는 있어도 보석을
+//  못 산다(인앱상품이 KOR 만 열려 있던 2026-10-23 실측). 그래서 조회·추가 둘 다 양쪽을 같이 다룬다.
+//  - 앱:      GET /v2/appAvailabilities/{appId}/territoryAvailabilities → PATCH /v1/territoryAvailabilities/{id}
+//             (id 는 base64 {"s":appId,"t":"JPN"} — 국가코드는 응답의 id 를 풀어서 얻는다)
+//  - 인앱상품: GET /v2/inAppPurchases/{id}/inAppPurchaseAvailability → POST /v1/inAppPurchaseAvailabilities
+//             (**전체 교체**다 — 기존 국가를 빠뜨리면 그 나라 판매가 꺼진다)
+//  둘 다 심사 없이 반영된다(스토어 반영은 최대 24시간). 가격은 기준 국가(앱 USA·상품 KOR)에서 자동 환산.
+const terrOf = (taId) => { try { return JSON.parse(Buffer.from(taId, 'base64url').toString()).t; } catch (_) { return null; } };
+
+async function appTerritories(appid) {
+  const out = [];
+  let next = `/v2/appAvailabilities/${appid}/territoryAvailabilities?limit=200`;
+  while (next) {
+    const r = await api(next);
+    for (const d of r?.data || []) out.push({ id: d.id, territory: terrOf(d.id), ...d.attributes });
+    next = r?.links?.next ? r.links.next.replace(API, '') : null;
+  }
+  return out;
+}
+
+async function iapTerritories(appid) {
+  const r = await api(`/v1/apps/${appid}/inAppPurchasesV2?limit=50&fields[inAppPurchases]=name,productId,state`);
+  const out = [];
+  for (const p of r?.data || []) {
+    const a = await api(`/v2/inAppPurchases/${p.id}/inAppPurchaseAvailability`).catch(() => null);
+    // include 로 붙여 받으면 50개에서 잘린다 → 관계 엔드포인트를 페이지 단위로 끝까지 읽는다.
+    const territories = [];
+    let next = a?.data ? `/v1/inAppPurchaseAvailabilities/${a.data.id}/availableTerritories?limit=200` : null;
+    while (next) {
+      const t = await api(next);
+      territories.push(...(t?.data || []).map((x) => x.id));
+      next = t?.links?.next ? t.links.next.replace(API, '') : null;
+    }
+    out.push({
+      id: p.id, productId: p.attributes?.productId, state: p.attributes?.state,
+      availableInNewTerritories: a?.data?.attributes?.availableInNewTerritories, territories,
+    });
+  }
+  return out;
+}
+
+async function iapPrice(iapId, territory) {
+  const r = await api(`/v1/inAppPurchasePriceSchedules/${iapId}/automaticPrices?filter[territory]=${territory}&include=inAppPurchasePricePoint`).catch(() => null);
+  const m = await api(`/v1/inAppPurchasePriceSchedules/${iapId}/manualPrices?filter[territory]=${territory}&include=inAppPurchasePricePoint`).catch(() => null);
+  const pt = [...(m?.included || []), ...(r?.included || [])].find((x) => x.type === 'inAppPurchasePricePoints');
+  return pt?.attributes?.customerPrice ?? '?';
+}
+
+async function printAvailability(app, focus) {
+  const ts = await appTerritories(app.id);
+  const on = ts.filter((t) => t.available).map((t) => t.territory);
+  console.log(`앱 판매 국가 ${on.length}/${ts.length}: ${on.join(', ') || '(없음)'}`);
+  for (const c of focus) {
+    const t = ts.find((x) => x.territory === c);
+    console.log(`  ${c}: ${t ? `available=${t.available} contentStatuses=${(t.contentStatuses || []).join(',')}` : '알 수 없는 국가코드'}`);
+  }
+  const iaps = await iapTerritories(app.id);
+  console.log(`인앱상품 ${iaps.length}개:`);
+  for (const p of iaps) {
+    const prices = [];
+    for (const c of focus) prices.push(`${c}=${await iapPrice(p.id, c)}`);
+    console.log(`  ${String(p.productId).padEnd(22)} ${String(p.state).padEnd(9)} 국가 ${p.territories.join(',') || '(없음)'}${prices.length ? `  가격 ${prices.join(' ')}` : ''}`);
+  }
+  return { ts, iaps };
+}
+
+async function cmdAvailability(argv) {
+  const ai = argv.indexOf('--add');
+  const add = ai >= 0 ? String(argv[ai + 1] || '').toUpperCase() : null;
+  const focus = [...new Set([...argv.filter((a, i) => /^[A-Za-z]{3}$/.test(a) && (ai < 0 || i !== ai + 1)).map((a) => a.toUpperCase()), ...(add ? [add] : [])])];
+  const app = await appId();
+  console.log(`앱: ${app.attributes?.name} (${BUNDLE_ID})`);
+  const { ts, iaps } = await printAvailability(app, focus);
+  if (!add) return;
+  const t = ts.find((x) => x.territory === add);
+  if (!t) die(`\n${add} 는 알 수 없는 국가코드입니다(ISO 3166-1 alpha-3, 예: JPN).`);
+  const iapTodo = iaps.filter((p) => !p.territories.includes(add));
+  if (t.available && !iapTodo.length) { console.log(`\n${add} 는 이미 앱·인앱상품 모두 판매 중입니다.`); return; }
+  console.log(`\n할 일: ${t.available ? '' : `앱 판매 국가에 ${add} 추가 · `}인앱상품 ${iapTodo.length}개에 ${add} 추가`);
+  if (!argv.includes('--yes')) { console.log('실제로 바꾸려면 --yes 를 붙이세요(심사 없이 스토어에 반영됩니다).'); return; }
+  if (!t.available) {
+    await api(`/v1/territoryAvailabilities/${t.id}`, {
+      method: 'PATCH',
+      body: JSON.stringify({ data: { type: 'territoryAvailabilities', id: t.id, attributes: { available: true } } }),
+    });
+    console.log(`✅ 앱 판매 국가에 ${add} 추가`);
+  }
+  for (const p of iapTodo) {
+    await api('/v1/inAppPurchaseAvailabilities', {
+      method: 'POST',
+      body: JSON.stringify({ data: {
+        type: 'inAppPurchaseAvailabilities',
+        attributes: { availableInNewTerritories: !!p.availableInNewTerritories },
+        relationships: {
+          inAppPurchase: { data: { type: 'inAppPurchases', id: p.id } },
+          // 전체 교체 — 기존 국가 + 새 국가.
+          availableTerritories: { data: [...p.territories, add].map((id) => ({ type: 'territories', id })) },
+        },
+      } }),
+    });
+    console.log(`✅ ${p.productId} 판매 국가에 ${add} 추가`);
+  }
+  console.log('\n재조회:');
+  await printAvailability(app, focus);
+}
+
 const [, , cmd = 'status', ...argv] = process.argv;
 const run = {
   status: cmdStatus, builds: cmdBuilds, preflight: cmdPreflight, prepare: () => cmdPrepare(argv), compliance: () => cmdCompliance(argv),
   submit: () => cmdSubmit(argv), cancel: () => cmdCancel(argv),
-  release: () => cmdRelease(argv), watch: () => cmdWatch(argv),
+  release: () => cmdRelease(argv), watch: () => cmdWatch(argv), availability: () => cmdAvailability(argv),
 }[cmd];
-if (!run) die(`알 수 없는 명령: ${cmd}\n사용: status | builds | prepare <버전> | compliance | preflight | submit [--yes] | cancel [--yes] | release [--yes] | watch [--interval 600]`);
+if (!run) die(`알 수 없는 명령: ${cmd}\n사용: status | builds | prepare <버전> | compliance | preflight | submit [--yes] | cancel [--yes] | release [--yes] | watch [--interval 600] | availability [--add JPN] [--yes]`);
 run().catch((e) => die(String(e.message || e)));

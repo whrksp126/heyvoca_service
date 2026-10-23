@@ -5,7 +5,8 @@
 // 배우거나 연습한다. 큰 글자 + 한글 발음(가나) / 글자 이름·대표 소리(알파벳) + 스피커, 예시
 // 단어(있으면), 지금까지 자란 작물 단계·XP 진행을 보여주고, 하단 버튼 하나로 세션을 연다 —
 // 아직 한 번도 심지 않은 글자는 "배우기"(만나기→보고 고르기→듣고 고르기→따라 쓰기), 이미
-// 심은 글자는 "연습하기"(만나기 없는 랜덤 테스트형 몇 문제, 오답 보기엔 혼동 글자 포함).
+// 심은 글자는 "연습하기" — 둘 다 그 글자 하나만 글자 카드→따라 쓰기→보고/듣고 고르기 반복
+// (utils/scriptQuestions.js buildScriptSingleCharQuestions, 2026-10).
 //
 // 2026-09-30 재개편: 단어 상세 바텀시트(WordDetaileNewBottomSheet)와 같은 배치로 맞춘다 —
 // 좌측 작물 + 큰 글자·로마자 + 우측 원형 스피커 헤더, "발음" 섹션(단어 시트 "뜻" 자리),
@@ -63,7 +64,9 @@ const ScriptCharDetailNewBottomSheet = ({ script, item, onStart }) => {
   const handlePrimary = () => {
     vibrate({ duration: 5 });
     popNewBottomSheet();
-    onStart?.([item], started ? 'review' : 'learn', item.char);
+    // 연습하기도 그 글자 하나만, 처음 배우기와 같은 깊이로(2026-10 — 예전 'review'는 서버가 다른
+    // 배운 글자 20개를 골라 섞었다). 서버는 learn(chars 지정)으로 받고, 문제 구성만 practice 로 구분.
+    onStart?.([item], started ? 'practice' : 'learn', item.char);
   };
 
   return (

@@ -12,6 +12,11 @@
 // (StudyTimingTag, "N일 뒤 복습"/"N일 전 학습")는 두지 않는다. 농장 상태 바(XP 막대·델타)는
 // 그대로 쓰되, 항상 건강한(healthy) 작물 그림만 보여준다(farm.health는 상위 플러그인
 // (ScriptChoiceQuestion)이 넘기기 전에 이미 'FRESH'로 정규화해 둔다).
+//
+// 2026-10 복습 응용 — 조합 단어 문제(scriptWordRead / scriptWordListen)도 이 카드를 쓴다:
+//   step.prompt    = { text, sub } — 글자 대신 단어(가나)와 뜻을 보여준다(보고 고르기)
+//   step.speakText = 글자 대신 읽을 텍스트(단어 읽기) — 듣고 고르기 자동재생·채점 후 재생
+//   option.label/labelSub — 보기 문구를 직접 준다(한글 발음+로마자, 또는 가나 조합)
 
 import React, { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
@@ -22,7 +27,7 @@ import TtsRipple from '../common/TtsRipple';
 import LiftAboveBar from '../common/LiftAboveBar';
 import { FarmResultBar } from '../farm/FarmStatusBar';
 import { optionMainSub } from '../../utils/scriptQuestions';
-import { speakScriptItem } from '../../utils/scriptData';
+import { speakScriptItem, speakScriptText } from '../../utils/scriptData';
 import { CARD_ENTER_INITIAL, CARD_ENTER_ANIMATE, CARD_ENTER_TRANSITION } from '../../utils/studySlideMotion';
 
 // 정오답 버튼 규격은 components/takeTest/Main.jsx의 사지선다 옵션 버튼과 동일 클래스를 쓴다
@@ -34,8 +39,11 @@ const ChoiceCard = ({
 }) => {
   "use memo";
 
-  const { script, item, options, answerIndex, type } = step;
+  const { script, item, options, answerIndex, type, prompt, speakText } = step;
   const isListen = type === 'listenPick';
+  const speak = (onMeta) => (speakText
+    ? speakScriptText(script, speakText, onMeta)
+    : speakScriptItem(script, item, onMeta));
   const [speaking, setSpeaking] = useState(false);
   const [duration, setDuration] = useState(null);
   // 재생 중복 가드 — 듣기 자동재생(마운트 시)·사용자 탭·채점 후 정답 재생이 모두 같은
@@ -51,7 +59,7 @@ const ChoiceCard = ({
     setSpeaking(true);
     setDuration(null);
     try {
-      await speakScriptItem(script, item, setDuration);
+      await speak(setDuration);
     } finally {
       playingRef.current = false;
       setSpeaking(false);
@@ -64,7 +72,7 @@ const ChoiceCard = ({
   const playSilent = async () => {
     playingRef.current = true;
     try {
-      await speakScriptItem(script, item);
+      await speak();
     } finally {
       playingRef.current = false;
     }
@@ -126,6 +134,17 @@ const ChoiceCard = ({
           >
             <SpeakerHigh size={64} weight="fill" className={speaking ? 'text-primary-main-600' : 'text-layout-gray-300'} />
           </motion.div>
+        ) : prompt ? (
+          <div className="relative z-[1] flex flex-col items-center gap-[8px] px-[16px]">
+            <h2 className="text-[44px] font-[700] leading-[1.1] tracking-[0.02em] text-layout-black dark:text-layout-white">
+              {prompt.text}
+            </h2>
+            {prompt.sub && (
+              <span className="text-[14px] font-[600] text-layout-gray-400 dark:text-layout-gray-200 text-center break-keep">
+                {prompt.sub}
+              </span>
+            )}
+          </div>
         ) : (
           <h2 className="relative z-[1] text-[52px] font-[700] text-layout-black dark:text-layout-white">
             {item.char}
@@ -165,10 +184,12 @@ const ChoiceCard = ({
           } else if (index === selectedIndex) {
             style = 'border-primary-main-600 bg-primary-main-50 dark:bg-primary-main-dark text-layout-black dark:text-layout-white';
           }
-          const { main, sub } = optionMainSub(script, opt);
+          const { main, sub } = opt.label != null
+            ? { main: opt.label, sub: opt.labelSub || '' }
+            : optionMainSub(script, opt);
           return (
             <motion.button
-              key={`${opt.char}-${index}`}
+              key={`${opt.key ?? opt.char}-${index}`}
               type="button"
               disabled={answered}
               whileTap={{ scale: 0.96 }}
@@ -181,7 +202,7 @@ const ChoiceCard = ({
               `}
             >
               {isListen ? (
-                <span className="text-[26px] font-[800] leading-none">{opt.char}</span>
+                <span className="text-[26px] font-[800] leading-none">{opt.label ?? opt.char}</span>
               ) : (
                 <div className="flex flex-col items-center gap-[2px]">
                   <span className="text-[17px] font-[700] leading-none">{main}</span>

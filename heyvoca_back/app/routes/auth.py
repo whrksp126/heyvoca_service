@@ -1305,6 +1305,9 @@ def withdraw():
             db.session.query(UserStudyLog).filter(UserStudyLog.user_id == user_id).delete()
             from app.models.models import UserExampleSeen
             db.session.query(UserExampleSeen).filter(UserExampleSeen.user_id == user_id).delete()
+            # 학습 중 오류 신고(FK 없음) — 메모가 자유 입력이라 개인정보가 섞일 수 있어 익명화 대신 삭제한다.
+            from app.models.models import ContentReport
+            db.session.query(ContentReport).filter(ContentReport.user_id == user_id).delete()
             db.session.query(UserStudySession).filter(UserStudySession.user_id == user_id).delete()
 
             # 8-2. UserQuestionTypeStat 삭제 (문제 유형별 정답률 집계, 실제 FK)

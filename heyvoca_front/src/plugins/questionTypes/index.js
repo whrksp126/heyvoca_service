@@ -8,9 +8,11 @@ import WordIntroQuestion from './wordIntro/WordIntroQuestion';
 import ScriptIntroQuestion from './script/ScriptIntroQuestion';
 import ScriptChoiceQuestion from './script/ScriptChoiceQuestion';
 import ScriptTraceQuestion from './script/ScriptTraceQuestion';
+import ScriptListenWriteQuestion from './script/ScriptListenWriteQuestion';
 import { wordsOverlap } from '../../utils/meaningConcept';
 import { wordLang, isJa } from '../../utils/lang';
-import { buildScriptChoiceQuestion } from '../../utils/scriptQuestions';
+import { buildScriptChoiceQuestion, buildScriptTraceQuestion, buildScriptWordQuestion } from '../../utils/scriptQuestions';
+import { staticDistractorPool } from '../../utils/scriptData';
 
 // ─── 강조 마커(<strong class="target-word">…</strong>) 유틸 ─────────────────────
 const TARGET_WORD_RE = /<strong\b[^>]*\btarget-word\b[^>]*>([\s\S]*?)<\/strong\s*>/i;
@@ -487,6 +489,72 @@ export const QUESTION_TYPE_PLUGINS = [
     guideTitle: '따라 써 보세요',
     component: ScriptTraceQuestion,
     setupQuestions: null,
+  },
+  /*
+    글자 복습 응용 4종 — 2026-10. 학습장 "글자 복습"(utils/scriptQuestions.js
+    buildScriptReviewQuestions)만 만든다. 백엔드 ALLOWED_QUESTION_TYPES 등록 필수
+    (heyvoca_back/app/constants/question_types.py — 빠지면 /study/log 400).
+  */
+  {
+    // 소리만 듣고 빈 판에 직접 쓰기 — 가이드 획 없음, 정답 획 수만큼 쓰면 자동 채점.
+    id: 'scriptListenWrite',
+    autoSpeakOnShow: false, // 판이 직접 재생한다(글자 장음 보정)
+    label: '듣고 쓰기',
+    enabled: false,
+    family: 'script',
+    direction: null,
+    listening: true,
+    guideTitle: '듣고 글자를 써 보세요',
+    component: ScriptListenWriteQuestion,
+    // 오답 재출제 — 같은 듣고 쓰기를 되풀이하면(재출제 상한 10회) 못 쓰는 글자에서 막힌다.
+    // 대신 획순 가이드가 있는 따라 쓰기로 다시 써 보게 한다(따라 쓰기는 완료 시 정답).
+    setupQuestions: (selectedWords) => selectedWords.map((w) => buildScriptTraceQuestion(w, w.traceVariant ?? null)),
+  },
+  {
+    // 배운 글자로 된 단어(실제 단어 우선)를 보고 발음 고르기 — 뜻도 함께 보여준다.
+    id: 'scriptWordRead',
+    autoSpeakOnShow: false,
+    label: '단어 읽기',
+    enabled: false,
+    family: 'script',
+    direction: null,
+    listening: false,
+    guideTitle: '알맞은 발음을 고르세요',
+    component: ScriptChoiceQuestion,
+    setupQuestions: (selectedWords) => selectedWords
+      .filter((w) => w.wordPrompt)
+      .map((w) => buildScriptWordQuestion(w, w.wordPrompt, 'scriptWordRead', staticDistractorPool(w.script).map((p) => p.char).filter((c) => c.length === 1))),
+  },
+  {
+    // 소리를 듣고 글자 조합 고르기.
+    id: 'scriptWordListen',
+    autoSpeakOnShow: false, // 카드가 단어 읽기를 직접 재생한다
+    label: '듣고 단어 고르기',
+    enabled: false,
+    family: 'script',
+    direction: null,
+    listening: true,
+    guideTitle: '듣고 알맞은 글자를 고르세요',
+    component: ScriptChoiceQuestion,
+    setupQuestions: (selectedWords) => selectedWords
+      .filter((w) => w.wordPrompt)
+      .map((w) => buildScriptWordQuestion(w, w.wordPrompt, 'scriptWordListen', staticDistractorPool(w.script).map((p) => p.char).filter((c) => c.length === 1))),
+  },
+  {
+    // 듣기 카드 맞추기 — 스피커 카드 ↔ 글자 카드(기존 cardMatchListening 컴포넌트를 글자용으로 확장).
+    // family 를 'cardMatch' 로 두어 단일 단어 재구성 대상(SINGLE_WORD_PLUGIN_TYPES)에서 빠진다.
+    id: 'scriptListenMatch',
+    autoSpeakOnShow: false,
+    label: '듣기 카드 맞추기',
+    enabled: false,
+    family: 'cardMatch',
+    direction: null,
+    listening: true,
+    guideTitle: '듣고 같은 글자를 짝지어 보세요',
+    component: CardMatchListeningQuestion,
+    setupQuestions: null,
+    // 틀린 카드 재출제 — 뜻이 없는 글자라 사지선다(뜻) 대신 "듣고 글자 고르기"로.
+    buildRetryQuestion: (word) => buildScriptChoiceQuestion(word, staticDistractorPool(word.script), 'scriptListenPick'),
   },
 ];
 

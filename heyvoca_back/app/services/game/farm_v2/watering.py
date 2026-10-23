@@ -36,6 +36,7 @@ from app.services.game.farm_v2 import events, growth, health, localday
 from app.services.game.farm_v2.answer import CROP_KEY
 from app.services.game.farm_v2.restore import atomic, first_meaning
 from app.utils.db_lock import begin_user_tx, lock_user
+from app.utils.script_scope import script_user_voca_ids_subquery
 
 # 오늘 목록의 사유. 화면이 그룹 머리말로 그대로 쓴다(12.1 의 1~3순위).
 REASON_CRITICAL = 'CRITICAL'      # 오늘 안 돌보면 실제로 썩는다
@@ -96,6 +97,8 @@ def _candidate_query(user_id: UUID, now: dt.datetime, columns: list):
             UserVocaGame.visual_stage != VisualStage.UNPLANTED_SEED,
             # 부패는 restore 를 거쳐야 벗어난다. 황금은 부패 면역(10.3).
             UserVocaGame.health_state.notin_([HealthState.ROTTEN, HealthState.GOLDEN]),
+            # 글자(문자 학습)는 시들지도 썩지도 않는다 — 부패하면 성장이 멈춘 채 XP 만 오른다
+            UserVocaGame.user_voca_id.notin_(script_user_voca_ids_subquery(user_id)),
             or_(UserVocaGame.rot_due_at.is_(None),
                 UserVocaGame.rot_due_at <= horizon,
                 UserVocaGame.protection_days > 0),

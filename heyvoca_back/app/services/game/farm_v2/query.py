@@ -795,6 +795,15 @@ def get_today_tasks(user_id: UUID, now: Optional[dt.datetime] = None,
     # (퀴즐렛 업로드/OCR/직접 생성)은 전부 bookstore_id=None 으로 저장한다(voca_books.py,
     # user_voca_book.py 생성 코드 확인). created_at 을 오늘(logical day) 시작 시각과 비교한다.
     day_start = logical_day_start_utc(now)
+
+    # 가입 당일(logical day)은 첫날 분량(온보딩 14알 고정)이 목표다 — 하루 목표는 다음 날부터
+    # 적용된다고 온보딩에서 안내한다. 그날 심은 수가 목표보다 많으면 그 수를 목표로 둬
+    # 홈 카드가 '14/10'처럼 넘쳐 보이지 않게 한다.
+    joined_at = db.session.query(User.created_at).filter(User.id == user_id).scalar()
+    new_seed_target = daily_new_limit
+    if joined_at is not None and joined_at >= day_start:
+        new_seed_target = max(daily_new_limit, int(new_done))
+
     buy_done = db.session.query(UserVocaBook.id).filter(
         UserVocaBook.user_id == user_id,
         UserVocaBook.bookstore_id.isnot(None),
@@ -844,7 +853,7 @@ def get_today_tasks(user_id: UUID, now: Optional[dt.datetime] = None,
                   'done': len(wilted_done_ids), 'words': wilted_words},
         'care': {'total': len(care_remaining_ids) + len(care_done_ids),
                 'done': len(care_done_ids), 'words': care_words},
-        'new_seed': {'target': daily_new_limit, 'done': int(new_done)},
+        'new_seed': {'target': new_seed_target, 'done': int(new_done)},
         'seeds_left': seeds_left,
         'show_buy': (seeds_left < daily_new_limit) or buy_done,
         'buy_done': buy_done,

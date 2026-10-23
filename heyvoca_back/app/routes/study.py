@@ -12,6 +12,7 @@ from app import db
 from app.models.models import UserStudySession, UserStudyLog, UserVoca, UserQuestionTypeStat, User
 from app.utils.jwt_utils import jwt_required
 from app.utils.db_lock import begin_user_tx
+from app.utils.script_scope import script_user_voca_ids_subquery
 from app.constants.question_types import (
     ALLOWED_QUESTION_TYPES, CROP_STAGE_MAX_TIER, RECOMMENDABLE_QUESTION_TYPES,
 )
@@ -790,6 +791,8 @@ def today_summary():
             UserStudyLog.user_id == user_id,
             UserStudyLog.dict_lang == get_dict_lang(),
             UserStudyLog.created_at >= day_start_utc,
+            # 글자 학습은 "새 단어 N개"에 넣지 않는다(학습 통계 격리 정책)
+            ~UserStudyLog.user_voca_id.in_(script_user_voca_ids_subquery(user_id)),
         )
         .all()
     )
