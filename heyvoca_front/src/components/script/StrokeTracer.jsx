@@ -629,23 +629,30 @@ const StrokeTracer = ({ entries, compound = false, caseVariant = null, replayKey
           번호 시작점 + 좌상단 획순 썸네일로 충분하고, 채점 표현은 위 ResultMark(O) 하나로
           다른 문제 유형과 통일한다. */}
 
-      {/* 그리는 중(phase='trace')에만 "처음부터"를 보여준다 — "다음" 버튼은 없다(2026-09-29
-          QA 5차). 모든 획을 통과하면(phase='result') 버튼을 전부 숨기고 위 useEffect가
-          RESULT_AUTO_ADVANCE_MS 뒤 자동으로 다음 슬라이드로 넘어간다. */}
-      {phase === 'trace' && (
-        <div className="flex items-center gap-[12px] w-full flex-shrink-0">
+      {/* "처음부터" 자리는 처음부터 잡아 둔다(2026-10-24 이슈 #15 3차) — 예전엔 획순 시연(demo)이
+          끝나야 버튼이 생겨 위 캔버스가 한 번 줄어들었다. 시연 중엔 비활성(흐리게), 그리는 중에만
+          누를 수 있고, 다 쓴 뒤(result)엔 자리만 남기고 숨긴다. 요음 조합(compoundDone)은 같은
+          높이의 "다음" 버튼이 이 자리를 대신한다. */}
+      {phase !== 'compoundDone' && (
+        <div
+          aria-hidden={phase === 'result' ? true : undefined}
+          className={`flex items-center gap-[12px] w-full flex-shrink-0 ${phase === 'result' ? 'invisible' : ''}`}
+        >
           <motion.button
             type="button"
-            onClick={resetAll}
-            className="
+            onClick={phase === 'trace' ? resetAll : undefined}
+            disabled={phase !== 'trace'}
+            className={`
               w-full h-[52px] rounded-[12px]
               flex items-center justify-center gap-[6px]
               border-[2px] border-border dark:border-border-dark
               bg-layout-white dark:bg-layout-black
               text-layout-gray-400 dark:text-layout-gray-100
               text-[15px] font-[700] tracking-[-0.03em]
-            "
-            whileTap={{ scale: 0.97 }}
+              transition-opacity duration-200
+              ${phase === 'trace' ? '' : 'opacity-40 pointer-events-none'}
+            `}
+            whileTap={phase === 'trace' ? { scale: 0.97 } : undefined}
           >
             처음부터
           </motion.button>

@@ -17,7 +17,7 @@ import { feel } from '../../lib/feel';
 import ResultMark from '../common/ResultMark';
 import TtsRipple from '../common/TtsRipple';
 import { gradeFreeWrite } from '../../utils/scriptWriteGrader';
-import { speakScriptItem } from '../../utils/scriptData';
+import { speakScriptItem, stopScriptSpeech } from '../../utils/scriptData';
 import SpeakerArt from '../common/SpeakerArt';
 
 const INK_COLOR = 'var(--primary-main-600)';
@@ -61,12 +61,14 @@ const FreeWriteBoard = ({ script, item, entry, caseVariant = null, replayKey, on
   const pointerRef = useRef(null);
   const doneRef = useRef(false);
   const shake = useAnimationControls();
+  const ownerRef = useRef({}); // 이 판이 건 소리 — 넘어가면 자기 소리만 끊는다(utils/scriptData.js)
+  useEffect(() => () => stopScriptSpeech(ownerRef.current), []);
 
   const play = async () => {
     setSpeaking(true);
     setDuration(null);
     try {
-      await speakScriptItem(script, item, setDuration);
+      await speakScriptItem(script, item, setDuration, ownerRef.current);
     } finally {
       setSpeaking(false);
     }

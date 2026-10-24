@@ -9,7 +9,7 @@
 // 글자 하나 = 단어 하나(2026-09-30) — /study/log·FSRS·농장 성장은 Main.jsx의 공용 경로
 // (processCardWord)를 그대로 탄다. 별도 로깅 코드가 이 파일에는 없다.
 
-import React, { useMemo, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import ChoiceCard from '../../../components/script/ChoiceCard';
 import ScriptNextButton from '../../../components/script/ScriptNextButton';
 
@@ -18,6 +18,14 @@ const ScriptChoiceQuestion = ({ question, onComplete, onCardMatched }) => {
 
   const [answered, setAnswered] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(null);
+  // 채점 후 정답 소리가 끝나야 "다음"이 켜진다(2026-10-24 이슈 #15 3차 — 다음 슬라이드 첫 소리와
+  // 겹치지 않게). 재생이 어떤 이유로 끝 신호를 못 주더라도 막히지 않도록 3.5초 안전 타이머.
+  const [settled, setSettled] = useState(false);
+  useEffect(() => {
+    if (!answered) return undefined;
+    const t = setTimeout(() => setSettled(true), 3500);
+    return () => clearTimeout(t);
+  }, [answered]);
   const startTimeRef = useRef(Date.now());
   // 채점 후 "다음" 버튼으로 진행(2026-10-24 이슈 #15 — 자동 진행 폐지).
   const nextRef = useRef(null);
@@ -86,9 +94,10 @@ const ScriptChoiceQuestion = ({ question, onComplete, onCardMatched }) => {
           answered={answered}
           selectedIndex={selectedIndex}
           onSelect={handleSelect}
+          onSettled={() => setSettled(true)}
         />
       </div>
-      <ScriptNextButton show={answered} onNext={() => { const go = nextRef.current; nextRef.current = null; go?.(); }} />
+      <ScriptNextButton show={answered && settled} onNext={() => { const go = nextRef.current; nextRef.current = null; go?.(); }} />
     </div>
   );
 };

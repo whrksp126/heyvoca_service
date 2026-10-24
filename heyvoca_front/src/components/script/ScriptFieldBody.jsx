@@ -30,7 +30,7 @@ import {
   isStarted,
 } from '../../utils/scriptData';
 import { motion } from 'framer-motion';
-import { Plus, ArrowsClockwise } from '@phosphor-icons/react';
+import { Plus, ArrowsClockwise, CircleNotch } from '@phosphor-icons/react';
 import { haptic, SPRING, TAP } from '../../lib/feel';
 import ScriptRow from './ScriptRow';
 import { vibrate, showToast } from '../../utils/osFunction';
@@ -129,7 +129,8 @@ const ScriptFieldBody = () => {
   // 전체(상단 "글자 연습하기"). mode: 'learn' | 'review'.
   const startSession = useCallback(async (targetItems, mode, label) => {
     if (starting || !targetItems || targetItems.length === 0) return;
-    setStarting(true);
+    // 어떤 버튼으로 시작했는지(mode)를 담아 그 버튼에만 불러오는 중 표시를 띄운다
+    setStarting(mode);
     try {
       // practice(시트의 연습하기)도 서버에는 chars 를 그대로 지정하는 learn 으로 — review 는 서버가 글자를 고른다
       const sessionMode = mode === 'review' ? 'review' : 'learn';
@@ -184,7 +185,10 @@ const ScriptFieldBody = () => {
       <div className="flex gap-[8px] mt-[12px]">
         <motion.button
           type="button"
-          disabled={starting || !canLearn}
+          // 2026-10-24(이슈 #15 3차): 불러오는 동안 disabled 로 바꾸면 누르는 도중 탭 모션이 끊겨
+          // "렉 걸린 듯" 보였다 — 비활성은 조건 미충족일 때만, 중복 시작은 startSession 이 막는다.
+          disabled={!canLearn}
+          aria-busy={starting === 'learn' || undefined}
           onClick={() => startSession(nextLearnItems, 'learn', '새 글자')}
           whileTap={canLearn ? { scale: TAP.scale } : undefined}
           transition={SPRING.snappy}
@@ -198,7 +202,9 @@ const ScriptFieldBody = () => {
           "
         >
           <span className="flex items-center gap-[5px] text-layout-white text-[16px] font-[700] leading-[1.2] tracking-[-0.02em]">
-            <Plus size={16} weight="bold" />
+            {starting === 'learn'
+              ? <CircleNotch size={16} weight="bold" className="animate-spin" />
+              : <Plus size={16} weight="bold" />}
             새 글자 배우기
           </span>
           {!canLearn && (
@@ -209,7 +215,8 @@ const ScriptFieldBody = () => {
         </motion.button>
         <motion.button
           type="button"
-          disabled={starting || !canReview}
+          disabled={!canReview}
+          aria-busy={starting === 'review' || undefined}
           onClick={() => startSession(totalPracticable, 'review', '글자 복습')}
           whileTap={canReview ? { scale: TAP.scale } : undefined}
           transition={SPRING.snappy}
@@ -223,7 +230,9 @@ const ScriptFieldBody = () => {
           "
         >
           <span className={`flex items-center gap-[5px] text-[16px] font-[700] leading-[1.2] tracking-[-0.02em] ${canReview ? 'text-primary-main-600' : 'text-layout-gray-300'}`}>
-            <ArrowsClockwise size={16} weight="bold" />
+            {starting === 'review'
+              ? <CircleNotch size={16} weight="bold" className="animate-spin" />
+              : <ArrowsClockwise size={16} weight="bold" />}
             글자 복습
           </span>
           {!canReview && (
