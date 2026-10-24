@@ -20,7 +20,7 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
-import { SpeakerHigh } from '@phosphor-icons/react';
+
 import { feel } from '../../lib/feel';
 import ResultMark from '../common/ResultMark';
 import TtsRipple from '../common/TtsRipple';
@@ -29,6 +29,7 @@ import { FarmResultBar } from '../farm/FarmStatusBar';
 import { optionMainSub } from '../../utils/scriptQuestions';
 import { speakScriptItem, speakScriptText } from '../../utils/scriptData';
 import { CARD_ENTER_INITIAL, CARD_ENTER_ANIMATE, CARD_ENTER_TRANSITION } from '../../utils/studySlideMotion';
+import SpeakerArt from '../common/SpeakerArt';
 
 // 정오답 버튼 규격은 components/takeTest/Main.jsx의 사지선다 옵션 버튼과 동일 클래스를 쓴다
 // (h-50 · border-[1px] rounded-[10px] · text-[14px] font-[700]) — 학습 화면과 다른 화면처럼
@@ -132,7 +133,7 @@ const ChoiceCard = ({
             animate={speaking ? { scale: [1, 1.12, 1] } : { scale: 1 }}
             transition={speaking ? { duration: 0.6, repeat: Infinity, ease: 'easeInOut' } : {}}
           >
-            <SpeakerHigh size={64} weight="fill" className={speaking ? 'text-primary-main-600' : 'text-layout-gray-300'} />
+            <SpeakerArt size={64} playing={speaking} />
           </motion.div>
         ) : prompt ? (
           <div className="relative z-[1] flex flex-col items-center gap-[8px] px-[16px]">

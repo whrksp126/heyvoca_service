@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect, useLayoutEffect } from 'react';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
-import { SpeakerHigh, Check, X, CheckCircle, XCircle } from '@phosphor-icons/react';
+import { Check, X, CheckCircle, XCircle } from '@phosphor-icons/react';
 import { FarmResultBar } from '../../../components/farm/FarmStatusBar';
 import StudyTimingTag from '../../../components/farm/StudyTimingTag';
 import TtsRipple from '../../../components/common/TtsRipple';
@@ -18,6 +18,7 @@ import { tokenizeKoreanParts } from '../../../utils/koreanTokenize';
 import { wordLang, isJa } from '../../../utils/lang';
 import { renderHighlightedText } from '../highlightMarker';
 import { gradeTypingAnswer } from './typoTolerance';
+import SpeakerArt from '../../../components/common/SpeakerArt';
 
 /*
   빈칸 예문(before/after) 탭 가능한 단어 토큰화 — en/ja 공통. fillInTheBlank의 tokenizeWords와
@@ -429,7 +430,7 @@ const FillInTheBlankTypingQuestion = ({ question, onComplete, onCardMatched, far
               animate={showTtsRipple && !reducedMotion ? { scale: [1, 1.12, 1] } : { scale: 1 }}
               transition={showTtsRipple && !reducedMotion ? { duration: 0.6, repeat: Infinity, ease: 'easeInOut' } : {}}
             >
-              <SpeakerHigh size={22} weight="fill" />
+              <SpeakerArt size={22} playing={showTtsRipple} />
             </motion.span>
           </motion.button>
           <p className="text-[19px] font-[600] leading-[1.6] text-layout-black dark:text-layout-white break-keep">

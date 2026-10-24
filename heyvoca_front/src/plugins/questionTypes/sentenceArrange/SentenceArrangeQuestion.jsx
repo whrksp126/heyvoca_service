@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
-import { SpeakerHigh } from '@phosphor-icons/react';
+
 import TtsRipple from '../../../components/common/TtsRipple';
 import WordInfoBubble from '../../../components/common/WordInfoBubble';
 import { getWordInfoApi } from '../../../api/search';
@@ -14,6 +14,7 @@ import { wordLang } from '../../../utils/lang';
 import { tokenizeKoreanWords } from '../../../utils/koreanTokenize';
 import { stripTags, isAcceptedOrder, renderHighlightedText, tokenizeWords, diffAgainstAccepted } from './arrangeUtils';
 import ArrangeTray from './ArrangeTray';
+import SpeakerArt from '../../../components/common/SpeakerArt';
 
 /*
   문장 만들기(sentenceArrangePartial / sentenceArrange) — 계약: SENTENCE_QUESTIONS_CONTRACT.md 3-1절.
@@ -276,7 +277,7 @@ const SentenceArrangeQuestion = ({ question, onComplete, onCardMatched, farmByWo
             />
           )}
           <span className={`relative z-[1] block transition-colors duration-200 ${isSpeaking && speakingTarget === 'answer' ? 'text-primary-main-600' : 'text-layout-gray-300'}`}>
-            <SpeakerHigh size={22} weight="fill" />
+            <SpeakerArt size={22} playing={isSpeaking && speakingTarget === 'answer'} />
           </span>
         </motion.button>
         <p className="relative z-[1] flex-1 min-w-0 text-[15px] leading-[1.7] text-layout-gray-400 dark:text-layout-gray-100 break-keep">
@@ -390,7 +391,7 @@ const SentenceArrangeQuestion = ({ question, onComplete, onCardMatched, farmByWo
               animate={showTtsRipple && !reducedMotion ? { scale: [1, 1.12, 1] } : { scale: 1 }}
               transition={showTtsRipple && !reducedMotion ? { duration: 0.6, repeat: Infinity, ease: 'easeInOut' } : {}}
             >
-              <SpeakerHigh size={22} weight="fill" />
+              <SpeakerArt size={22} playing={showTtsRipple} />
             </motion.span>
           </motion.button>
           <p className="text-[19px] font-[600] leading-[1.6] text-layout-black dark:text-layout-white break-keep">

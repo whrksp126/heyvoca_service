@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { feel, hapticWarmup, pickVariant, ShineSweep } from '../../lib/feel';
 import { useVocabulary } from '../../context/VocabularyContext';
-import { BookOpenText, SpeakerHigh } from "@phosphor-icons/react";
+import { BookOpenText } from "@phosphor-icons/react";
 import { getTextSound, prefetchTextSound, prefetchTtsList } from '../../utils/common';
 import { wordIntroSoundItems } from '../../plugins/questionTypes/wordIntro/WordIntroQuestion';
 import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
@@ -44,6 +44,7 @@ import ReadingLine from '../common/ReadingLine';
 import ResultMark from '../common/ResultMark';
 import { computeStudyProgress } from '../../utils/studyProgress';
 import { SLIDE_VARIANTS, SLIDE_TRANSITION, CARD_ENTER_INITIAL, CARD_ENTER_ANIMATE, CARD_ENTER_TRANSITION } from '../../utils/studySlideMotion';
+import SpeakerArt from '../common/SpeakerArt';
 
 
 // 백엔드 memory state 키(short/medium/long) → 프론트 키(leaf/plant/carrot) 정규화
@@ -2124,11 +2125,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
                         animate={isSpeaking ? { scale: [1, 1.12, 1] } : { scale: 1 }}
                         transition={isSpeaking ? { duration: 0.6, repeat: Infinity, ease: "easeInOut" } : {}}
                       >
-                        <SpeakerHigh
-                          size={60}
-                          weight="fill"
-                          className={isSpeaking ? "text-primary-main-600" : "text-layout-gray-300"}
-                        />
+                        <SpeakerArt size={60} playing={isSpeaking} />
                       </motion.div>
                     </div>
                   ) : (

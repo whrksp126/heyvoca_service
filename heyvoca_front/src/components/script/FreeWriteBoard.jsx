@@ -9,12 +9,13 @@
 
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { motion, useAnimationControls } from 'framer-motion';
-import { SpeakerHigh, ArrowCounterClockwise } from '@phosphor-icons/react';
+import { ArrowCounterClockwise } from '@phosphor-icons/react';
 import { feel } from '../../lib/feel';
 import ResultMark from '../common/ResultMark';
 import TtsRipple from '../common/TtsRipple';
 import { gradeFreeWrite } from '../../utils/scriptWriteGrader';
 import { speakScriptItem } from '../../utils/scriptData';
+import SpeakerArt from '../common/SpeakerArt';
 
 const INK_COLOR = 'var(--primary-main-600)';
 const GUIDE_COLOR = '#B9B2A6';
@@ -154,7 +155,7 @@ const FreeWriteBoard = ({ script, item, entry, caseVariant = null, replayKey, on
               <TtsRipple size={96} duration={duration} />
             </span>
           )}
-          <SpeakerHigh size={38} weight="fill" className={speaking ? 'text-primary-main-600' : 'text-layout-gray-300'} />
+          <SpeakerArt size={40} playing={speaking} />
         </motion.button>
       </div>
 

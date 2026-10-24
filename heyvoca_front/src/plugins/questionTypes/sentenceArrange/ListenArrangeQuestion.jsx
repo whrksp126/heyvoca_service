@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { SpeakerHigh } from '@phosphor-icons/react';
+
 import TtsSpeedPlayer from '../../../components/common/TtsSpeedPlayer';
 import TtsRipple from '../../../components/common/TtsRipple';
 import { feel } from '../../../lib/feel';
@@ -12,6 +12,7 @@ import { wordLang } from '../../../utils/lang';
 import { stripTags, isAcceptedOrder } from './arrangeUtils';
 import ArrangeTray from './ArrangeTray';
 import { loadSlowWords, playSlowWords, stopSlowWords } from './slowWordPlayback';
+import SpeakerArt from '../../../components/common/SpeakerArt';
 
 /*
   듣고 받아쓰기(listenArrange) — 계약: SENTENCE_QUESTIONS_CONTRACT.md 3-1절.
@@ -201,7 +202,7 @@ const ListenArrangeQuestion = ({ question, onComplete, onCardMatched, farmByWord
                 />
               )}
               <span className={`relative z-[1] block transition-colors duration-200 ${answerPlaying ? 'text-primary-main-600' : 'text-layout-gray-300'}`}>
-                <SpeakerHigh size={22} weight="fill" />
+                <SpeakerArt size={22} playing={answerPlaying} />
               </span>
             </motion.button>
             <p className="relative z-[1] flex-1 min-w-0 text-[15px] leading-[1.7] text-layout-gray-400 dark:text-layout-gray-100 break-keep">

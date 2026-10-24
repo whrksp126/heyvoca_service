@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
-import { SpeakerHigh } from '@phosphor-icons/react';
+
 import TtsRipple from './TtsRipple';
+import SpeakerArt from './SpeakerArt';
 
 /*
   보통 속도 / 0.7배속 재생 버튼을 한 박스에 담은 공용 컴포넌트: [스피커 | 0.7 스피커]
@@ -26,7 +27,7 @@ const SpeakerTarget = ({ label, onPress, speaking, slow }) => (
         />
       )}
       <span className={`relative z-[1] inline-flex ${speaking ? 'text-primary-main-600' : 'text-layout-gray-300'}`}>
-        <SpeakerHigh size={36} weight="fill" />
+        <SpeakerArt size={36} playing={speaking} />
         {slow && (
           <span className="absolute -bottom-[2px] -right-[10px] text-[11px] font-[800] leading-none">0.7</span>
         )}

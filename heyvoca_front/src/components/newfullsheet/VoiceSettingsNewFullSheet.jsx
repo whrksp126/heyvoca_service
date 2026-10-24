@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { SpeakerHigh, Check } from '@phosphor-icons/react';
+import { Check } from '@phosphor-icons/react';
 import { useUser } from '../../context/UserContext';
 import { vibrate } from '../../utils/osFunction';
 import { backendUrl, fetchDataAsync } from '../../utils/common';
 import { SheetBar, GroupLabel, Hint } from './settingsUi';
+import SpeakerArt from '../common/SpeakerArt';
 
 // 학습 발음 음성(Edge 신경망)을 언어별로 선택. 다른 설정 페이지와 동일하게 선택 즉시 반영.
 // ja 는 서버 voice-options 에 목록이 있을 때만 그룹을 보인다(구버전 서버 호환).
@@ -134,11 +135,7 @@ const VoiceSettingsNewFullSheet = () => {
                     aria-label="샘플 듣기"
                   >
                     {isPlaying && <span className="absolute inset-0 rounded-full bg-primary-main-500/20 animate-ping" />}
-                    <SpeakerHigh
-                      weight={isPlaying ? 'fill' : 'regular'}
-                      size={15}
-                      className={`relative ${isPlaying ? 'text-primary-main-500' : 'text-layout-gray-400'}`}
-                    />
+                    <SpeakerArt size={17} playing={isPlaying} className="relative" />
                   </button>
                   <span className="flex-1" />
                   {/* 선택 — 오른쪽 끝. 동작은 라디오지만 모양은 체크박스다 (시안 8절) */}

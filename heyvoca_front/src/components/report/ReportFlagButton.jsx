@@ -1,8 +1,8 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Flag } from '@phosphor-icons/react';
 import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 import { ContentReportNewBottomSheet } from '../newBottomSheet/ContentReportNewBottomSheet';
+import ReportArt from './ReportArt';
 import { holdStudyAdvance } from '../../hooks/useStudyAdvanceGate';
 import { isNoGradeQuestionType } from '../../plugins/questionTypes';
 import { showToast, vibrate } from '../../utils/osFunction';
@@ -38,7 +38,7 @@ const ReportFlagButton = ({ testQuestions, progressIndex, testType }) => {
     try {
       const res = await pushAwaitNewBottomSheet(
         ContentReportNewBottomSheet,
-        { question, previousQuestion, testType },
+        { question, previousQuestion, testType, testQuestions, progressIndex },
         { isBackdropClickClosable: true, isDragToCloseEnabled: true }
       );
       if (res?.sent) showToast(res.duplicate ? '이미 받은 신고예요. 고마워요!' : '신고가 전달됐어요. 고마워요!');
@@ -52,15 +52,14 @@ const ReportFlagButton = ({ testQuestions, progressIndex, testType }) => {
       type="button"
       aria-label="오류 신고"
       onClick={handleClick}
-      whileTap={{ scale: 0.9 }}
+      whileTap={{ scale: 0.86 }}
       transition={{ type: 'spring', stiffness: 400, damping: 17 }}
       className="
         flex items-center justify-center
         w-[32px] h-[32px] rounded-[8px]
-        text-layout-gray-200 dark:text-layout-gray-300
       "
     >
-      <Flag size={20} />
+      <ReportArt size={26} />
     </motion.button>
   );
 };

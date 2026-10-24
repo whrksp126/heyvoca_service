@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { SpeakerHigh } from '@phosphor-icons/react';
+
 import { getTextSound } from '../../../utils/common';
 import { feel } from '../../../lib/feel';
 import TtsRipple from '../../../components/common/TtsRipple';
@@ -16,6 +16,7 @@ import StudyTimingTag from '../../../components/farm/StudyTimingTag';
 import { useResumeReplayKey } from '../../../hooks/useResumeReplayKey';
 import { wordLang } from '../../../utils/lang';
 import { speakScriptItem } from '../../../utils/scriptData';
+import SpeakerArt from '../../../components/common/SpeakerArt';
 
 const FitText = ({ text, maxSize = 20, minSize = 12, className = '' }) => {
   const spanRef = useRef(null);
@@ -404,11 +405,7 @@ const CardMatchListeningQuestion = ({ question, testType, onComplete, onCardMatc
                     animate={isSpeaking ? { scale: [1, 1.12, 1] } : { scale: 1 }}
                     transition={isSpeaking ? { duration: 0.6, repeat: Infinity, ease: "easeInOut" } : {}}
                   >
-                    <SpeakerHigh
-                      size={32}
-                      weight="fill"
-                      className={`${getLeftIconStyle(index)} transition-colors duration-150`}
-                    />
+                    <SpeakerArt size={32} playing={isSpeaking} />
                   </motion.div>
                 </div>
               )}

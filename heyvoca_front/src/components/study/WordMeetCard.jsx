@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { SpeakerHigh } from '@phosphor-icons/react';
+
 import CropImage from '../farm/CropImage';
 import TtsRipple from '../common/TtsRipple';
 import ReadingLine from '../common/ReadingLine';
@@ -8,6 +8,7 @@ import FuriganaText from '../common/FuriganaText';
 import { wordLang, isJa } from '../../utils/lang';
 import { getReading, shouldShowReading } from '../../utils/jaWord';
 import { renderHighlightedText, stripTags } from '../../plugins/questionTypes/highlightMarker';
+import SpeakerArt from '../common/SpeakerArt';
 
 /*
   단어 "만나기" 카드 — StudyMain(집중 반복 듣기)과 TakeTest의 ① wordIntro 슬라이드가
@@ -54,7 +55,7 @@ export const SpeakerButton = ({ active, duration, reducedMotion, onClick, size =
       animate={active && !reducedMotion ? { scale: [1, 1.15, 1] } : { scale: 1 }}
       transition={active && !reducedMotion ? { duration: 0.6, repeat: Infinity, ease: 'easeInOut' } : {}}
     >
-      <SpeakerHigh weight="fill" color={active ? 'var(--primary-main-600)' : 'var(--layout-gray-200)'} size={size} />
+      <SpeakerArt size={size} playing={active} />
     </motion.button>
   </span>
 );

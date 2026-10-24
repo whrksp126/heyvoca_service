@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
-import { SpeakerHigh } from '@phosphor-icons/react';
+
 import { FarmResultBar } from '../../../components/farm/FarmStatusBar';
 import StudyTimingTag from '../../../components/farm/StudyTimingTag';
 import TtsRipple from '../../../components/common/TtsRipple';
@@ -22,6 +22,7 @@ import { tokenizeKoreanParts } from '../../../utils/koreanTokenize';
 // 위 카드 어절 탭 토큰화용 — 이 파일의 renderHighlightedText(JSX 반환, 아래 정의)와 별개로
 // 강조 조각을 데이터로 얻어야 해서 공용 유틸(questionTypes/highlightMarker.js)을 함께 쓴다.
 import { renderHighlightedText as getHighlightParts } from '../highlightMarker';
+import SpeakerArt from '../../../components/common/SpeakerArt';
 
 /*
   빈칸 채우기(fillInTheBlank) — 한 방향뿐이다.
@@ -494,7 +495,7 @@ const FillInTheBlankQuestion = ({ question, onComplete, onCardMatched, farmByWor
               animate={showTtsRipple && !reducedMotion ? { scale: [1, 1.12, 1] } : { scale: 1 }}
               transition={showTtsRipple && !reducedMotion ? { duration: 0.6, repeat: Infinity, ease: 'easeInOut' } : {}}
             >
-              <SpeakerHigh size={22} weight="fill" />
+              <SpeakerArt size={22} playing={showTtsRipple} />
             </motion.span>
           </motion.button>
           <p className="text-[19px] font-[600] leading-[1.6] text-layout-black dark:text-layout-white break-keep">
