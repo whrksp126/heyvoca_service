@@ -1311,7 +1311,10 @@ const StudyResult = () => {
                       <div className='flex items-center gap-[11px]'>
                         {/* ① 상태 — 작물 그림. 단어장 단어 목록(vocabularySheets/WordRow)과 같은 자리(왼쪽)다.
                             텍스트 배지 분기는 없앴다(위 crop 계산 주석 참고). */}
-                        <CropImage stage={crop} size={52} align="center" className='flex-shrink-0' />
+                        {/* 글자는 작물·망각곡선 표현을 쓰지 않는다(2026-10-24 이슈 #15 3차) — 그림 없이 글자부터. */}
+                        {testType !== 'script' && (
+                          <CropImage stage={crop} size={52} align="center" className='flex-shrink-0' />
+                        )}
 
                         {/* ② 단어·뜻 */}
                         <div className='flex flex-col flex-1 gap-[2px] min-w-0'>

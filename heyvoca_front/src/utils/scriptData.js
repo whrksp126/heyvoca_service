@@ -10,7 +10,7 @@ import alphabetData from '../data/script/alphabet.json';
 import hiraganaStrokes from '../data/script/strokes/hiragana.json';
 import katakanaStrokes from '../data/script/strokes/katakana.json';
 import alphabetStrokes from '../data/script/strokes/alphabet.json';
-import { getTextSound, prefetchTextSound, prefetchTtsList } from './common';
+import { getTextSound, prefetchTextSound, prefetchTtsList, stopCurrentSound } from './common';
 import { stageToCrop } from './crop';
 
 export const SCRIPT_TYPES = {
@@ -93,24 +93,45 @@ export const scriptSpokenText = (script, item) => {
 // 재생 실패(캐시 미스·resolve/다운로드 실패)를 1회 재시도한 뒤 재생한다.
 // getTextSound 자체는 실패를 조용히 삼키므로, prefetchTextSound의 성공 여부(objectURL 반환)로
 // 성공/실패를 판별해 재시도한다 — 이미 성공적으로 캐시된 경우는 즉시 반환되어 비용이 없다.
-const speakTextWithRetry = async (text, lang, onMeta) => {
+//
+// owner — 재생을 건 카드(슬라이드) 식별 객체(대개 useRef().current 로 쓰는 {}). 2026-10-24(이슈 #15 3차):
+// 채점 후 정답 소리가 받아오는 중(prefetch await)에 다음 슬라이드로 넘어가면, 그 소리가 다음 슬라이드
+// 자동재생보다 늦게 도착해 새 소리를 끊고 옛 글자를 재생했다(앞 글자 소리와 새 단어가 겹쳐 들림).
+// 가장 최근에 재생을 건 owner 만 실제로 소리를 내고, 카드가 사라질 때는 stopScriptSpeech(owner)로
+// "자기 소리"만 끊는다(다음 슬라이드가 이미 재생을 걸었으면 건드리지 않는다).
+let speechOwner = null;
+const speakTextWithRetry = async (text, lang, onMeta, owner = null) => {
   if (!text) return;
+  const me = owner || {};
+  speechOwner = me;
   let cached = await prefetchTextSound(text, lang);
+  if (speechOwner !== me) return;
   if (!cached) {
     // 1회 재시도
     cached = await prefetchTextSound(text, lang);
+    if (speechOwner !== me) return;
   }
-  return getTextSound(text, lang, onMeta);
+  const res = await getTextSound(text, lang, onMeta);
+  // 다 끝난 소리는 더 이상 "재생 중"이 아니다 — 늦게 언마운트돼도 남의 소리를 끊지 않게
+  if (speechOwner === me) speechOwner = null;
+  return res;
+};
+
+/** owner 가 건 소리(받아오는 중 포함)만 멈춘다 — 카드 언마운트·"다음" 누름 시. */
+export const stopScriptSpeech = (owner) => {
+  if (!owner || speechOwner !== owner) return;
+  speechOwner = null;
+  stopCurrentSound();
 };
 
 /** script 문자 하나(item.speak 우선)를 소리 내 읽는다 — 실패 시 1회 재시도, 연속 탭 시
  *  이전 재생은 getTextSound 내부의 공유 오디오 인스턴스가 자동으로 끊고 새로 재생한다. */
-export const speakScriptItem = (script, item, onMeta) =>
-  speakTextWithRetry(scriptSpokenText(script, item), scriptTtsLang(script), onMeta);
+export const speakScriptItem = (script, item, onMeta, owner) =>
+  speakTextWithRetry(scriptSpokenText(script, item), scriptTtsLang(script), onMeta, owner);
 
 /** 예시 단어처럼 item.char 가 아닌 임의 텍스트(같은 스크립트 언어)를 재생할 때. */
-export const speakScriptText = (script, text, onMeta) =>
-  speakTextWithRetry(text, scriptTtsLang(script), onMeta);
+export const speakScriptText = (script, text, onMeta, owner) =>
+  speakTextWithRetry(text, scriptTtsLang(script), onMeta, owner);
 
 /** 세션에 들어갈 글자들의 음성을 세션 시작 시 미리 받아 둔다(줄 단위 prefetch) —
  *  글자 자체 소리 + 예시 단어 소리까지 포함해 첫 탭에서도 끊김 없이 재생되게 한다. */

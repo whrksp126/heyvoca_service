@@ -27,7 +27,7 @@ import TtsRipple from '../common/TtsRipple';
 import LiftAboveBar from '../common/LiftAboveBar';
 import { FarmResultBar } from '../farm/FarmStatusBar';
 import { optionMainSub } from '../../utils/scriptQuestions';
-import { speakScriptItem, speakScriptText } from '../../utils/scriptData';
+import { speakScriptItem, speakScriptText, stopScriptSpeech } from '../../utils/scriptData';
 import { CARD_ENTER_INITIAL, CARD_ENTER_ANIMATE, CARD_ENTER_TRANSITION } from '../../utils/studySlideMotion';
 import SpeakerArt from '../common/SpeakerArt';
 
@@ -42,9 +42,12 @@ const ChoiceCard = ({
 
   const { script, item, options, answerIndex, type, prompt, speakText } = step;
   const isListen = type === 'listenPick';
+  // 이 카드가 건 소리의 주인 표식 — 카드가 사라지면(다음 슬라이드) 자기 소리만 끊는다(utils/scriptData.js).
+  const ownerRef = useRef({});
   const speak = (onMeta) => (speakText
-    ? speakScriptText(script, speakText, onMeta)
-    : speakScriptItem(script, item, onMeta));
+    ? speakScriptText(script, speakText, onMeta, ownerRef.current)
+    : speakScriptItem(script, item, onMeta, ownerRef.current));
+  useEffect(() => () => stopScriptSpeech(ownerRef.current), []);
   const [speaking, setSpeaking] = useState(false);
   const [duration, setDuration] = useState(null);
   // 재생 중복 가드 — 듣기 자동재생(마운트 시)·사용자 탭·채점 후 정답 재생이 모두 같은

@@ -9,12 +9,12 @@
 // script/ScriptIntroQuestion.jsx가 감싸 쓰고, questionType='scriptIntro'는
 // NO_GRADE_QUESTION_TYPES(plugins/questionTypes/index.js)라 정오답 집계에서 제외된다.
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 
 import SpeakerButton from '../common/SpeakerButton';
 import { haptic } from '../../lib/feel';
-import { speakScriptItem, speakScriptText, scriptTtsLang } from '../../utils/scriptData';
+import { speakScriptItem, speakScriptText, scriptTtsLang, stopScriptSpeech } from '../../utils/scriptData';
 import SpeakerArt from '../common/SpeakerArt';
 
 const IntroCard = ({ step, onNext }) => {
@@ -23,10 +23,13 @@ const IntroCard = ({ step, onNext }) => {
   const lang = scriptTtsLang(script);
   const isAlphabet = script === 'alphabet';
 
+  // 넘어가면 이 카드가 건 소리만 끊는다 — 다음 슬라이드 첫 소리와 겹치지 않게(utils/scriptData.js)
+  const ownerRef = useRef({});
   useEffect(() => {
-    speakScriptItem(script, item);
+    speakScriptItem(script, item, undefined, ownerRef.current);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [step.id]);
+  useEffect(() => () => stopScriptSpeech(ownerRef.current), []);
 
   const mainReading = isAlphabet ? item.name_hangul : item.hangul;
   const subReading = isAlphabet
@@ -35,7 +38,7 @@ const IntroCard = ({ step, onNext }) => {
 
   const playConfusable = (c) => {
     haptic('light');
-    speakScriptItem(script, c);
+    speakScriptItem(script, c, undefined, ownerRef.current);
   };
 
   return (
@@ -78,7 +81,7 @@ const IntroCard = ({ step, onNext }) => {
               </div>
               <button
                 type="button"
-                onClick={() => { haptic('light'); speakScriptText(script, item.example.word); }}
+                onClick={() => { haptic('light'); speakScriptText(script, item.example.word, undefined, ownerRef.current); }}
                 className="flex-shrink-0 flex items-center justify-center w-[34px] h-[34px] rounded-full bg-layout-white dark:bg-layout-black border border-border dark:border-border-dark text-layout-gray-300"
               >
                 <SpeakerArt size={18} />
