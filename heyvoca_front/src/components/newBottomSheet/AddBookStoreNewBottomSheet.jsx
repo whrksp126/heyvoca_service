@@ -6,7 +6,6 @@ import { useUser } from '../../context/UserContext';
 import { useVocabulary } from '../../context/VocabularyContext';
 import { useStats } from '../../context/StatsContext';
 import { useOnboardingUnlock } from '../../context/OnboardingUnlockContext';
-import { deductGemApi } from '../../api/auth';
 import { vibrate } from '../../utils/osFunction';
 import {
   StorePurchaseResultNewBottomSheet, PurchaseResultBody, ResultEm,
@@ -91,19 +90,14 @@ export const AddBookStoreNewBottomSheet = ({ bookStoreVocabularySheet }) => {
 
     setStatus('loading');
     try {
+      // 보석 차감은 단어장 생성과 같은 서버 트랜잭션에서 한다(chargeGem) — 예전처럼 차감을
+      // 먼저 따로 부르면 생성이 실패했을 때 보석만 빠졌다(이슈 #15, JLPT N3 동음이의어).
+      const newBook = await addBookStoreVocabularySheet(bookStoreVocabularySheet, { chargeGem: cost > 0 });
       let remainGem = gemCnt;
-      if (cost > 0) {
-        const res = await deductGemApi({
-          gem_cnt: cost,
-          bookstore_id: bookStoreVocabularySheet.id,
-        });
-        // fetchDataAsync 는 비-2xx 도 throw 하지 않는다 — code 로 확인한다.
-        if (res?.code !== 200) { setStatus('error'); return; }
-        remainGem = Number(res.data?.remaining_gem_cnt);
+      if (cost > 0 && newBook?.gemCnt !== undefined) {
+        remainGem = Number(newBook.gemCnt);
         setUserProfile((prev) => ({ ...prev, gem_cnt: remainGem }));
       }
-
-      await addBookStoreVocabularySheet(bookStoreVocabularySheet);
       // 온보딩 미션(M3: 서점 단어장 담기)은 백엔드 훅이 완료 처리한다 — 최신 상태만 재조회.
       refreshUnlock();
       // 밭에 씨앗이 늘었다. 홈·마이 통계 캐시를 조용히 맞춘다.
@@ -113,6 +107,7 @@ export const AddBookStoreNewBottomSheet = ({ bookStoreVocabularySheet }) => {
       fetchBookStore({ silent: true });
       openSuccess(remainGem);
     } catch (e) {
+      if (e?.reason === 'gem_short') { setStatus('short'); return; }
       console.error('단어장 추가 실패:', e);
       setStatus('error');
     }

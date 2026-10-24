@@ -201,6 +201,8 @@ def send_push_notification(title, message, token, data=None):
                     aps=messaging.Aps(
                         sound='default',
                         content_available=True,
+                        # 배지는 누적이 아니라 '1로 설정'이다. 앱이 실행·포그라운드 진입 때
+                        # 0으로 되돌리고 전달된 알림을 지운다(heyvoca_app 알림 배지 초기화).
                         badge=1
                     ),
                 ),

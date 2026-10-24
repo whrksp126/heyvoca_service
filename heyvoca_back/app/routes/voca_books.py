@@ -15,7 +15,8 @@ from flask import request, jsonify, g
 from uuid import UUID, uuid4
 
 from app.routes import voca_books_bp
-from app.models.models import db, UserVocaBook, UserVocaBookMap, UserVoca, Bookstore, AdminVocaBookMap, UserVocaGame
+from app.models.models import db, UserVocaBook, UserVocaBookMap, UserVoca, Bookstore, AdminVocaBookMap, UserVocaGame, GemReason
+from app.utils.gem import change_gem, InsufficientGem
 from app.utils.jwt_utils import jwt_required
 from app.utils.db_lock import begin_user_tx
 from app.utils.dict_lang import get_dict_lang
@@ -344,6 +345,31 @@ def bulk_persist_vocas(user_id, voca_book_id, parsed_items):
     return len(book_maps_data)
 
 
+def _collapse_same_word(entries):
+    """같은 표기(word)의 항목을 하나로 합친다. entries: [(word, voca_id, meanings, examples)].
+
+    사용자 단어(UserVoca)는 (user, dict_lang, word) 하나로 묶이고 user_voca_book_map 에는
+    (user_voca_book_id, user_voca_id) 유니크(uq_userbook_voca)가 있다. 일본어 서점 단어장에는
+    같은 표기의 동음이의어(額 がく/ひたい, 上 うえ/かみ/じょう …)가 사전 항목 여러 개로 들어 있어서,
+    합치지 않으면 같은 user_voca 로 맵이 두 번 들어가 IntegrityError → 단어장 생성 500 이 났다
+    (2026-10 JLPT N3 1·2권 구매 실패). 뜻·예문은 순서를 지키며 중복 없이 합치고, 사전 id 는
+    첫 항목 것을 쓴다.
+    """
+    merged = {}
+    for word, voca_id, meanings, examples in entries:
+        if not word:
+            continue
+        cur = merged.get(word)
+        if cur is None:
+            merged[word] = [voca_id, list(meanings or []), list(examples or [])]
+            continue
+        if not cur[0] and voca_id:
+            cur[0] = voca_id
+        cur[1] = json.loads(merge_meanings(json.dumps(cur[1], ensure_ascii=False), meanings or []))
+        cur[2] = json.loads(merge_examples(json.dumps(cur[2], ensure_ascii=False), examples or []))
+    return [(w, v[0], v[1], v[2]) for w, v in merged.items()]
+
+
 def build_vocas_for_book(voca_book_id):
     """단어장에 소속된 단어 목록을 API 응답 형식으로 구성"""
     maps = db.session.query(UserVocaBookMap).filter(
@@ -477,6 +503,10 @@ def create_voca_book():
     color = req.get('color')
     voca_list = req.get('vocaList', [])
     bookstore_id = req.get('bookstoreId')
+    # chargeGem=True 면 서점 가격(bookstore.gem, 서버 값)을 단어장 생성과 **같은 트랜잭션**에서 차감한다.
+    # 예전에는 프론트가 /auth/deduct_gem 을 먼저 따로 불러, 생성이 실패하면 보석만 빠졌다.
+    # 플래그 없는 옛 웹 번들은 지금처럼 따로 차감하므로 이중 차감되지 않는다.
+    charge_gem = bool(bookstore_id) and req.get('chargeGem') is True
 
     if not title:
         return jsonify({'code': 400, 'message': '단어장 이름(title)은 필수입니다.'}), 400
@@ -494,10 +524,26 @@ def create_voca_book():
             status, msg = invalid
             return jsonify({'code': status, 'message': msg}), status
 
+    charge_book = None
+    if charge_gem:
+        # 사전 DB 읽기 — 사용자 잠금 전에 끝낸다
+        charge_book = db.session.query(Bookstore).filter(Bookstore.id == bookstore_id).first()
+        if charge_book is None:
+            return jsonify({'code': 404, 'message': '서점 단어장을 찾을 수 없습니다.'}), 404
+
     try:
         # 사용자 단위 잠금(`db_lock.begin_user_tx`) — 아래 '기존 UserVoca 조회 → 없으면 INSERT'가
         # 동시 요청에서 같은 단어를 두 번 만들지 않게 한다((user_id, dict_lang, word) 는 DB 유니크가 없다).
         begin_user_tx(user_id)
+        gem_after = None
+        if charge_book is not None:
+            try:
+                _, gem_after = change_gem(user_id, -int(charge_book.gem or 0), GemReason.BOOK_PURCHASE,
+                                          f'단어장 구매: {charge_book.name}', source_type='bookstore')
+            except InsufficientGem as e:
+                db.session.rollback()
+                return jsonify({'code': 400, 'reason': 'gem_short', 'message': '보석이 부족합니다.',
+                                'data': {'gem_cnt': e.balance, 'need': e.need}}), 400
         # UserVocaBook 생성
         voca_book = UserVocaBook(
             user_id=user_id,
@@ -515,6 +561,14 @@ def create_voca_book():
 
         # vocaList가 있으면 벌크 처리로 최적화
         if voca_list:
+            # 같은 표기 항목은 하나로 합친다(_collapse_same_word 참고)
+            voca_list = [
+                {'origin': w, 'vocaId': vid, 'meanings': m, 'examples': e}
+                for w, vid, m, e in _collapse_same_word(
+                    (item.get('origin'), payload_voca_id(item), item.get('meanings', []), item.get('examples', []))
+                    for item in voca_list
+                )
+            ]
             # 1. 기존 UserVoca 한 번에 조회 — 중복 키 (user_id, dict_lang, word)
             origins = [item.get('origin') for item in voca_list if item.get('origin')]
             existing_vocas = db.session.query(UserVoca).filter(
@@ -588,7 +642,7 @@ def create_voca_book():
             if book_maps_data:
                 db.session.bulk_insert_mappings(UserVocaBookMap, book_maps_data)
             
-            added_count = len(voca_list)
+            added_count = len(book_maps_data)
 
         # bookstoreId가 있고 vocaList가 없으면 admin_voca_book_map에서 단어 자동 복사
         elif bookstore_id:
@@ -603,9 +657,17 @@ def create_voca_book():
                 # 배치 조회한다(load_admin_book_texts, en/ja 공용). ja의 reading_tokens도 그 안에서
                 # 붙는다.
                 admin_texts_by_map = load_admin_book_texts([m.id for m in admin_maps], lang)
+                empty_texts = {'meanings': [], 'examples': []}
+                # 같은 표기 항목은 하나로 합친다(_collapse_same_word 참고)
+                admin_entries = _collapse_same_word(
+                    (m.voca.word, m.voca_id,
+                     admin_texts_by_map.get(m.id, empty_texts)['meanings'],
+                     admin_texts_by_map.get(m.id, empty_texts)['examples'])
+                    for m in admin_maps if m.voca
+                )
 
                 # 1. 기존 UserVoca 조회 — 중복 키 (user_id, dict_lang, word)
-                admin_words = [m.voca.word for m in admin_maps if m.voca]
+                admin_words = [w for w, _, _, _ in admin_entries]
                 existing_vocas = db.session.query(UserVoca).filter(
                     UserVoca.user_id == user_id,
                     UserVoca.dict_lang == lang,
@@ -616,26 +678,20 @@ def create_voca_book():
                 user_vocas_to_add = []
 
                 # 2. UserVoca 분류
-                for admin_map in admin_maps:
-                    if not admin_map.voca: continue
-                    word = admin_map.voca.word
-                    admin_texts = admin_texts_by_map.get(admin_map.id, {'meanings': [], 'examples': []})
-                    meanings = admin_texts['meanings']
-                    examples = admin_texts['examples']
-
+                for word, admin_voca_id, meanings, examples in admin_entries:
                     if word in user_voca_dict:
                         uv = user_voca_dict[word]
                         uv.voca_meanings = merge_meanings(uv.voca_meanings, meanings)
                         uv.voca_examples = merge_examples(uv.voca_examples, examples)
-                        if not uv.voca_id and admin_map.voca_id:
-                            uv.voca_id = admin_map.voca_id
+                        if not uv.voca_id and admin_voca_id:
+                            uv.voca_id = admin_voca_id
                         uv.updated_at = datetime.datetime.utcnow()
                     else:
                         # examples 는 admin_texts_by_map(load_admin_book_texts)에서 뽑은 사전 텍스트
                         # 그대로 — ja도 reading_tokens 가 이미 포함돼 있다.
                         new_uv = UserVoca(
                             user_id=user_id,
-                            voca_id=admin_map.voca_id,
+                            voca_id=admin_voca_id,
                             word=word,
                             voca_meanings=json.dumps(meanings, ensure_ascii=False),
                             voca_examples=json.dumps(examples, ensure_ascii=False),
@@ -653,22 +709,19 @@ def create_voca_book():
                 # (사용자 쪽 저장 포맷은 이번 개편 범위 밖). admin_texts_by_map은 이미 list 형태라
                 # bulk_insert_mappings에 넣을 땐 다시 json.dumps 해야 한다(ORM setter를 거치지 않음).
                 book_maps_data = []
-                for admin_map in admin_maps:
-                    if not admin_map.voca: continue
-                    word = admin_map.voca.word
+                for word, _, meanings, examples in admin_entries:
                     uv = user_voca_dict[word]
-                    admin_texts = admin_texts_by_map.get(admin_map.id, {'meanings': [], 'examples': []})
                     book_maps_data.append({
                         'user_voca_book_id': voca_book.id,
                         'user_voca_id': uv.id,
-                        'voca_meanings': json.dumps(admin_texts['meanings'], ensure_ascii=False),
-                        'voca_examples': json.dumps(admin_texts['examples'], ensure_ascii=False),
+                        'voca_meanings': json.dumps(meanings, ensure_ascii=False),
+                        'voca_examples': json.dumps(examples, ensure_ascii=False),
                     })
                 
                 if book_maps_data:
                     db.session.bulk_insert_mappings(UserVocaBookMap, book_maps_data)
                 
-                added_count = len(admin_maps)
+                added_count = len(book_maps_data)
             else:
                 added_count = 0
         else:
@@ -687,7 +740,10 @@ def create_voca_book():
         elif added_count > 0:
             _try_complete_onboarding_mission(user_id, 'make_book')
 
-        return jsonify({'code': 201, 'data': build_voca_book_response(voca_book)}), 201
+        resp = build_voca_book_response(voca_book)
+        if gem_after is not None:
+            resp['gemCnt'] = gem_after
+        return jsonify({'code': 201, 'data': resp}), 201
 
     except Exception:
         db.session.rollback()
