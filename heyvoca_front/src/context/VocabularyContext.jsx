@@ -387,6 +387,12 @@ export const VocabularyProvider = ({ children }) => {
   const addVocabularySheet = useCallback(async (newVocabulary) => {
     try {
       const result = await createVocaBookApi(newVocabulary);
+      // 서점 구매(chargeGem) 보석 부족 — 알림 없이 호출부가 '보석 부족' 화면을 띄우게 넘긴다.
+      if (result?.reason === 'gem_short') {
+        const shortErr = new Error(result.message || '보석이 부족합니다.');
+        shortErr.reason = 'gem_short';
+        throw shortErr;
+      }
       if (!result || result.code != 201 || !result.data) {
         const errorMessage = result?.message || '단어장 추가에 실패했습니다.';
         alert(errorMessage);
@@ -701,11 +707,13 @@ export const VocabularyProvider = ({ children }) => {
   }, []);
 
   // 서점의 단어장 내 단어장에 추가
-  const addBookStoreVocabularySheet = useCallback(async (vocabularySheet) => {
+  const addBookStoreVocabularySheet = useCallback(async (vocabularySheet, { chargeGem = false } = {}) => {
     try {
-      // One-Shot 처리를 위해 단어 목록을 포함하여 요청
-      await addVocabularySheet({
+      // One-Shot 처리를 위해 단어 목록을 포함하여 요청.
+      // chargeGem: 서버가 서점 가격 차감과 단어장 생성을 한 트랜잭션으로 처리(생성 실패 시 보석도 그대로).
+      return await addVocabularySheet({
         bookstoreId: vocabularySheet.id,
+        ...(chargeGem && { chargeGem: true }),
         title: vocabularySheet.name,
         color: vocabularySheet.color,
         vocaList: vocabularySheet.words.map(word => ({
