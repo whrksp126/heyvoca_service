@@ -178,3 +178,25 @@ export const TypingGlyph = ({ className = '', size = 44 }) => (
     <rect x="6.3" y="35.5" width="31.4" height="3.6" rx="1.5" fill="currentColor" />
   </svg>
 );
+
+/*
+  문장 뜻 고르기(sentenceMeaning, 독해) — 2026-10-24. 위 문장 카드(여러 줄, 목표 단어 한 칸만 진하게)
+  + 아래 넓은 보기 2개(첫째 선택됨). 보기가 '가' 글자로 시작해 한국어 뜻을 고르는 문제임을 드러낸다.
+*/
+export const ReadGlyph = ({ className = '', size = 44 }) => (
+  <svg {...base(size, className)}>
+    <rect x="4" y="3" width="36" height="17" rx="3" stroke="currentColor" strokeWidth="1.5" />
+    <rect x="8" y="7.5" width="7" height="2.6" rx="1.3" fill="currentColor" opacity="0.5" />
+    <rect x="17" y="7.5" width="9" height="2.6" rx="1.3" fill="currentColor" />
+    <rect x="28" y="7.5" width="8" height="2.6" rx="1.3" fill="currentColor" opacity="0.5" />
+    <rect x="8" y="13" width="20" height="2.6" rx="1.3" fill="currentColor" opacity="0.5" />
+
+    <rect x="4" y="24" width="36" height="7.4" rx="3" fill="currentColor" fillOpacity="0.18" stroke="currentColor" strokeWidth="1.3" />
+    <text x="9.6" y="29.8" textAnchor="middle" fill="currentColor" fontSize="5.6" fontWeight="700" fontFamily="inherit">가</text>
+    <rect x="14" y="26.5" width="20" height="2.4" rx="1.2" fill="currentColor" />
+
+    <rect x="4" y="34.6" width="36" height="7.4" rx="3" stroke="currentColor" strokeWidth="1.2" opacity="0.5" />
+    <text x="9.6" y="40.4" textAnchor="middle" fill="currentColor" fontSize="5.6" fontWeight="700" fontFamily="inherit" opacity="0.5">가</text>
+    <rect x="14" y="37.1" width="16" height="2.4" rx="1.2" fill="currentColor" opacity="0.5" />
+  </svg>
+);

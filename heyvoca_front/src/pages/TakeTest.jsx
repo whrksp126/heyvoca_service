@@ -450,7 +450,8 @@ const TakeTest = () => {
   // 단어당 2~3개) → ③ 안내 + 문장 만들기(서버 payload 있을 때만, 2~3문제) → ④ 오답 재학습(Main.jsx).
   // 카드 맞추기류는 세트(2~4단어)가 필요하므로 그 칸에 배정된 단어들을 모아 플러그인 setupQuestions로
   // 조립하고, 세트를 못 이루는 나머지 단어는 사지선다로 대체한다.
-  const PLANT_SINGLE_TYPES = ['multipleChoice', 'reverseMultipleChoice', 'multipleChoiceListening', 'fillInTheBlank', 'fillInTheBlankTyping'];
+  // sentenceMeaning(문장 뜻 고르기, 2026-10-24) — 예문 원문·뜻만 있으면 로컬에서 만든다.
+  const PLANT_SINGLE_TYPES = ['multipleChoice', 'reverseMultipleChoice', 'multipleChoiceListening', 'fillInTheBlank', 'sentenceMeaning', 'fillInTheBlankTyping'];
   const PLANT_SET_TYPES = ['cardMatch', 'cardMatchListening'];
   const PLANT_SENTENCE_TYPES = ['sentenceArrangePartial', 'sentenceArrange'];
 
@@ -523,7 +524,13 @@ const TakeTest = () => {
     if (!skipListening && !content.some((q) => q.questionType === 'multipleChoiceListening')) {
       content.push(buildPlantMcq(order[Math.floor(Math.random() * order.length)], allWords, 'multipleChoiceListening'));
     }
-    out.push(...shuffleArray(content));
+    // 직접 타이핑(빈칸 입력)은 만나기 바로 뒤에 나오면 당황스럽다(2026-10-24 QA #15) — 고르기 문제로
+    // 단어를 한 바퀴 익힌 뒤(앞쪽 절반 이상, 최소 단어 수만큼)에만 나오게 뒤쪽에 섞는다.
+    const isTyping = (q) => q.questionType === 'fillInTheBlankTyping';
+    const pickQs = shuffleArray(content.filter((q) => !isTyping(q)));
+    const typingQs = content.filter(isTyping);
+    const leadCount = Math.min(pickQs.length, Math.max(order.length, Math.ceil(content.length / 2)));
+    out.push(...pickQs.slice(0, leadCount), ...shuffleArray([...pickQs.slice(leadCount), ...typingQs]));
 
     // 문장 만들기 — 안내 + 2~3문제(서버 payload가 있는 단어만, 부분 조립 우선·없으면 전체 조립)
     const sentenceQs = shuffleArray(order)

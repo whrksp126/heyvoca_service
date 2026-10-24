@@ -232,6 +232,50 @@ def _serialize_recommend_item(item, *, suggested_question_type, tier_target, tie
     }
 
 
+# 새 씨앗 심기 '만나기' 카드용 사전 상세(2026-10-24 QA #15) — 발음, 품사별 뜻, 동사 변화형.
+# 사용자 단어장 사본(meanings JSON)에는 품사·발음이 없어 사전 DB 원본에서 직접 읽는다. en 전용
+# (ja 는 word_fields 가 이미 읽기·발음을 싣는다). 동사 변화형은 사전 뜻에 동사(VERB)가 있을 때만 —
+# 'bored' 처럼 형용사 뜻만 있는 단어에 'bore' 의 활용이 붙어 오는 데이터가 있어서다.
+_VERB_FORM_KEYS = ('base', 'third_sg', 'past', 'past_part', 'gerund')
+
+
+def _load_plant_dict_detail(voca_ids, lang) -> dict:
+    if lang == 'ja' or not voca_ids:
+        return {}
+    from app.models.models import Voca, VocaMeaning, VocaMeaningMap
+    ids = list({v for v in voca_ids if v is not None})
+    try:
+        vocas = Voca.query.filter(Voca.id.in_(ids)).all()
+        rows = (db.session.query(VocaMeaningMap.voca_id, VocaMeaning.meaning, VocaMeaning.pos)
+                .join(VocaMeaning, VocaMeaningMap.meaning_id == VocaMeaning.id)
+                .filter(VocaMeaningMap.voca_id.in_(ids))
+                .order_by(VocaMeaningMap.voca_id, VocaMeaning.id)
+                .all())
+    except Exception:
+        logging.getLogger(__name__).warning('plant 사전 상세 조회 실패', exc_info=True)
+        return {}
+    meanings = {}
+    for vid, meaning, pos in rows:
+        if meaning:
+            meanings.setdefault(vid, []).append({'meaning': meaning, 'pos': pos})
+    out = {}
+    for v in vocas:
+        ms = meanings.get(v.id, [])
+        forms = None
+        if v.verb_forms and any(m['pos'] == 'VERB' for m in ms):
+            try:
+                raw = json.loads(v.verb_forms)
+                forms = {k: raw[k] for k in _VERB_FORM_KEYS if isinstance(raw, dict) and raw.get(k)}
+            except (ValueError, TypeError):
+                forms = None
+        out[v.id] = {
+            'pronunciation': v.pronunciation or None,
+            'verb_forms':    forms or None,
+            'meanings':      ms,
+        }
+    return out
+
+
 def _clamp_limit(raw, default=20):
     """limit 파라미터를 1~_MAX_LIMIT 범위로 클램프."""
     try:
@@ -1469,6 +1513,11 @@ def get_recommend():
             for t in ('fillInTheBlank', 'fillInTheBlankTyping'):
                 qp[t] = _build_sentence_question_payload(enriched['_item'], t, ctx)
             resp['question_payloads'] = qp
+        detail_map = _load_plant_dict_detail([e['_item'].voca_id for e in enriched_items], lang)
+        for resp in items_response:
+            detail = detail_map.get(resp['voca_id'])
+            if detail:
+                resp['dict_detail'] = detail
 
     return jsonify({
         'code': 200,

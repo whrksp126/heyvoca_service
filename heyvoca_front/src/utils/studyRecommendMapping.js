@@ -19,7 +19,8 @@ export const mapRecommendItemToWord = (item, { isDiagnosis = false } = {}) => ({
   ...(item.reading ? { reading: item.reading } : {}),
   ...(item.romaji ? { romaji: item.romaji } : {}),
   ...(item.jlpt ? { jlpt: item.jlpt } : {}),
-  ...(item.pronunciation ? { pronunciation: item.pronunciation } : {}),
+  ...(item.pronunciation ? { pronunciation: item.pronunciation }
+    : (item.dict_detail?.pronunciation ? { pronunciation: item.dict_detail.pronunciation } : {})),
   // 오답 선택지에서 "뜻이 같거나 유사한 단어"를 제외하는 데 쓰는 개념 그룹 정보
   concept_ids: item.concept_ids ?? [],
   meaning_concepts: item.meaning_concepts ?? [],
@@ -32,6 +33,8 @@ export const mapRecommendItemToWord = (item, { isDiagnosis = false } = {}) => ({
   sentenceArrange: item.sentence_arrange ?? null,
   // plant(새 씨앗 심기) 전용 — 유형별 payload({fillInTheBlankTyping, sentenceArrange})
   questionPayloads: item.question_payloads ?? null,
+  // plant 전용 — '만나기' 카드의 사전 상세({pronunciation, verb_forms, meanings:[{meaning,pos}]}). en 만.
+  dictDetail: item.dict_detail ?? null,
   // 난이도 tier(계약 5절) — 설정 시트로 유형을 직접 고른 테스트에서는 항상 null.
   tierTarget: item.tier_target ?? null,
   tierShown: item.tier_shown ?? null,
