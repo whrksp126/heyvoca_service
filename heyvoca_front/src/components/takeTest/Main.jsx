@@ -1942,11 +1942,12 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
 
   // 듣기 문제 건너뛰기 버튼 — 현재 문제가 듣기 유형이고, 아직 건너뛰기 비활성이면 노출
   // (채점 후에도 유지해 레이아웃 점프 방지 — 누르면 이후 문제들을 일반 유형으로 전환)
+  // 자리는 하단 '다음' 버튼 아래(이슈 #15 3차 QA) — 문제 영역과 '다음' 사이에 끼지 않게.
   const showListeningSkip =
     !listeningSkipActive &&
     isListeningType(testQuestions[progressIndex]?.questionType);
   const listeningSkipButton = showListeningSkip ? (
-    <div className="flex-shrink-0 flex justify-center pt-[10px]">
+    <div className="flex-shrink-0 flex justify-center pt-[6px] -mb-[8px]">
       <motion.button
         type="button"
         onClick={() => { feel('tap'); handleSkipListening(); }}
@@ -2055,8 +2056,8 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
             </motion.div>
           </AnimatePresence>
         </div>
-        {listeningSkipButton}
         {nextFooter}
+        {listeningSkipButton}
       </motion.div>
     );
   }
@@ -2333,8 +2334,8 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
 
         </AnimatePresence>
       </div>
-      {listeningSkipButton}
       {nextFooter}
+      {listeningSkipButton}
     </motion.div>
   );
 };
