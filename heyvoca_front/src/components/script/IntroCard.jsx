@@ -11,10 +11,11 @@
 
 import React, { useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { SpeakerHigh } from '@phosphor-icons/react';
+
 import SpeakerButton from '../common/SpeakerButton';
 import { haptic } from '../../lib/feel';
 import { speakScriptItem, speakScriptText, scriptTtsLang } from '../../utils/scriptData';
+import SpeakerArt from '../common/SpeakerArt';
 
 const IntroCard = ({ step, onNext }) => {
   "use memo";
@@ -80,7 +81,7 @@ const IntroCard = ({ step, onNext }) => {
                 onClick={() => { haptic('light'); speakScriptText(script, item.example.word); }}
                 className="flex-shrink-0 flex items-center justify-center w-[34px] h-[34px] rounded-full bg-layout-white dark:bg-layout-black border border-border dark:border-border-dark text-layout-gray-300"
               >
-                <SpeakerHigh size={16} weight="fill" />
+                <SpeakerArt size={18} />
               </button>
             </div>
           )}

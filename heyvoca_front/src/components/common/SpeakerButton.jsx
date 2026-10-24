@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { SpeakerHigh } from '@phosphor-icons/react';
+
 import { getTextSound } from '../../utils/common';
 import { vibrate } from '../../utils/osFunction';
 import TtsRipple from './TtsRipple';
+import SpeakerArt from './SpeakerArt';
 
 /**
  * 단어/문장 발음 듣기 공용 스피커 버튼.
@@ -44,7 +45,7 @@ const SpeakerButton = ({ text, lang, size = 18, className = '', label = '발음 
     >
       {/* 재생 중 ripple(파동) — playing=false면 즉시 언마운트되어 잔상이 남지 않음 */}
       {playing && <TtsRipple size={rippleEnd} duration={duration} />}
-      <SpeakerHigh size={size} weight={playing ? 'fill' : 'regular'} />
+      <SpeakerArt size={size} playing={playing} />
     </button>
   );
 };

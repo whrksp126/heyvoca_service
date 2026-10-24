@@ -1,6 +1,6 @@
 import React, { useState, useRef, useCallback, useMemo, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Minus, Plus, Sparkle, Shuffle, ArrowRight, SpeakerHigh } from '@phosphor-icons/react';
+import { Minus, Plus, Sparkle, Shuffle, ArrowRight } from '@phosphor-icons/react';
 import { QUESTION_TYPE_PLUGINS, countFillInTheBlankCandidates, isFillInTheBlankType } from '../../plugins/questionTypes';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
@@ -15,6 +15,7 @@ import SetupTile from '../common/SetupTile';
 import MemoryStageSelector from '../common/MemoryStageSelector';
 import { McqGlyph, CardMatchGlyph, BlankGlyph, ArrangeGlyph, TypingGlyph } from '../common/QuestionTypeGlyphs';
 import { Toggle } from '../newfullsheet/settingsUi';
+import SpeakerArt from '../common/SpeakerArt';
 
 /*
   테스트 설정 — 순서: 어떤 단어를 → 몇 문제 → 단어 고르는 방식 → 문제 유형 → 방향 → 듣기.
@@ -576,7 +577,7 @@ export const TestSetupNewBottomSheet = ({ onCancel, onSet, maxVocabularyCount, v
               }}
             >
               <span className="flex items-center justify-center flex-shrink-0 w-[36px] h-[36px] rounded-full bg-layout-gray-50 dark:bg-[#2A2A2A]">
-                <SpeakerHigh size={20} weight="fill" className="text-layout-gray-300" />
+                <SpeakerArt size={22} />
               </span>
               <span className="flex-1 min-w-0 text-[14px] font-[700] text-layout-black dark:text-layout-white">듣기 문제 포함</span>
               {/* Toggle 은 자체 stopPropagation + haptic 을 가진다 — 행 onClick 과 이중 토글되지 않는다 */}

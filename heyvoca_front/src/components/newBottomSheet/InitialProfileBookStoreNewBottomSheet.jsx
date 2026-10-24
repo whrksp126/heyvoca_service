@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { SpeakerHigh } from '@phosphor-icons/react';
+
 import { motion } from 'framer-motion';
 import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 import { getTextSound } from '../../utils/common';
 import { vibrate } from '../../utils/osFunction';
 import { useTheme } from '../../context/ThemeContext';
 import { resolveVocaBookBackground } from '../../utils/vocaBookColor';
+import SpeakerArt from '../common/SpeakerArt';
 
 // Hook 제거 - 직접 컴포넌트 사용
 
@@ -354,7 +355,7 @@ export const InitialProfilePreviewBookStoreNewBottomSheet = ({ vocabularySheet, 
                     vibrate({ duration: 5 });
                     getTextSound(item.origin, "en");
                   }}>
-                    <SpeakerHigh weight="fill" />
+                    <SpeakerArt />
                   </button>
                 </div>
               </li>

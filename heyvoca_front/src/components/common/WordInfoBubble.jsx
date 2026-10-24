@@ -1,8 +1,9 @@
 import { useLayoutEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { motion } from 'framer-motion';
-import { SpeakerHigh } from '@phosphor-icons/react';
+
 import { getReading, shouldShowReading } from '../../utils/jaWord';
+import SpeakerArt from './SpeakerArt';
 
 /*
   단어 사전 말풍선 — 예문 속 영어 단어를 탭하면 그 단어 아래(또는 위)에 뜬다(듀오링고 방식).
@@ -210,7 +211,7 @@ const WordInfoBubble = ({
                 `}
                 onClick={(e) => { e.stopPropagation(); onReplay?.(); }}
               >
-                <SpeakerHigh size={16} weight="fill" />
+                <SpeakerArt size={17} playing={speaking} />
               </button>
             </div>
             {/* 발음기호 — 길면(예: 유/무성음 조건 표기) 말풍선 밖으로 새지 않도록 줄바꿈 +
