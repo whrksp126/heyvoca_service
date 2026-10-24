@@ -5,10 +5,8 @@ example_label.py — 예문 라벨 v2(난이도 cefr/score + 문법 태그) 계�
 채우는 job: jobs/label_examples_v2.py (영어 voca_example_meta / 일본어 voca_example_ja_meta)
 
 점수(0~100)는 문장 맥락만 본다 — 목표 단어 구간은 빼고(목표 단어는 FSRS 가 따로 다룬다):
-  어휘   : 내용어 등급(1=A1 … 6=C2)의 상위 80% 분위수 → (r-1)*15, 최고 등급이 그보다 높으면 +3/등급
-  희귀어 : C1 이상 내용어 1개당 +4 (최대 12)
-  길이   : 기준 길이(en 6단어, ja 8토큰) 초과 1개당 +1.5 (최대 18)
-  문법   : 태그 가중치 합(최대 20)
+  기본점 + 내용어 등급(1=A1 … 6=C2) 분위수·최고 등급 초과분 + 희귀어 수 + 기준 길이 초과분 + 문법 태그 가중치.
+  언어별 계수는 COMPOSE(2026-10-25 사람 판정 표본으로 보정).
 구간(A1 0–19 / A2 20–34 / B1 35–54 / B2 55–74 / C1 75–89 / C2 90–100)은 skill_level.score_to_cefr 와 같다.
 """
 
@@ -20,11 +18,19 @@ from app.services.skill_level import score_to_cefr
 
 LABEL_VER = 2
 
-_LEX_STEP = 15.0
-_MAX_OVER_STEP = 3.0
-_RARE_STEP, _RARE_CAP = 4.0, 12.0
-_LEN_STEP, _LEN_CAP = 1.5, 18.0
-_GRAMMAR_CAP = 20.0
+# 합성 파라미터(언어별) — 2026-10-25 사람 판정 표본(언어별 180문장, 구간별 30)으로 보정.
+#   b0: 기본점(문장이면 A1 끝자락에서 시작 — 사람 판정에서 A1 은 아주 짧은 기초 문장뿐이었다)
+#   q: 내용어 등급 분위수, lex: (분위수 등급−1)당 점수, over: 최고 등급 초과분 1등급당,
+#   rare: C1 이상 내용어 1개당(rare_cap 까지), len: 기준 길이 초과 1개당(len_cap 까지),
+#   gram: 문법 가중치 합에 곱하는 비율(gram_cap 까지)
+# 처음 값(b0 0·lex 15·rare 4·gram 1.0/20)은 어휘 한 단계가 구간 하나를 넘겨 B2 문장이 C2 로 갔다
+# (표본 정확 일치 en 27%·ja 26% → 보정 후 en 63%·ja 63%, 인접 포함 99%·97%).
+COMPOSE = {
+    'en': dict(b0=18.0, q=0.7, lex=7.0, over=3.0, rare=0.0, rare_cap=0.0, base_len=6, len=1.5, len_cap=25.0,
+               gram=0.4, gram_cap=10.0),
+    'ja': dict(b0=17.0, q=0.7, lex=7.0, over=3.0, rare=2.0, rare_cap=8.0, base_len=8, len=2.0, len_cap=25.0,
+               gram=0.6, gram_cap=10.0),
+}
 
 # ── 영어 ────────────────────────────────────────────────────────────────
 CEFR_RANK = {'A1': 1, 'A2': 2, 'B1': 3, 'B2': 4, 'C1': 5, 'C2': 6}
@@ -35,24 +41,56 @@ EN_GRAMMAR_WEIGHT = {
     'subordinate': 4, 'conditional': 5, 'perfect': 6, 'passive': 6, 'relative_clause': 6,
     'perfect_progressive': 4,   # perfect 에 더해 가산
 }
-_EN_BASE_LEN = 6
 
 
 def zipf_to_rank(zipf: Optional[float]) -> int:
-    """워드리스트에 없는 단어의 등급 추정(voca_label.cefr_source=freq-est 와 같은 방향)."""
+    """워드리스트에 없는 단어의 등급 추정. 추정만으로는 C2(6)를 주지 않는다 —
+    파생어·복합어(hiker, website)가 빈도만 낮아 C2 로 잡히는 일이 많았다."""
     if zipf is None:
         return 5
-    if zipf >= 5.5:
+    if zipf >= 5.3:
         return 1
-    if zipf >= 5.0:
+    if zipf >= 4.7:
         return 2
-    if zipf >= 4.3:
+    if zipf >= 4.0:
         return 3
-    if zipf >= 3.7:
+    if zipf >= 3.3:
         return 4
-    if zipf >= 3.0:
-        return 5
-    return 6
+    return 5
+
+
+# 파생어 → 어근(워드리스트 등급을 빌려 온다). 접두어가 붙으면 +1.
+_EN_SUFFIXES = ('ers', 'er', 'ings', 'ing', 'ed', 'ly', 'ness', 'ment', 'ful', 'less', 'able', 's')
+_EN_PREFIXES = ('un', 're', 'dis', 'mis', 'over', 'pre', 'non')
+
+
+def en_word_rank(lemma: str, text: str, rank_lookup: Dict[str, int], zipf_lookup: Dict[str, float]) -> int:
+    r = rank_lookup.get(lemma) or rank_lookup.get(text)
+    if r:
+        return r
+    cands = []
+    for w in {lemma, text}:
+        for suf in _EN_SUFFIXES:
+            if w.endswith(suf) and len(w) - len(suf) >= 3:
+                root = w[:-len(suf)]
+                for x in (root, root + 'e', root[:-1] if len(root) > 3 and root[-1] == root[-2] else None,
+                          root[:-1] + 'y' if root.endswith('i') else None):
+                    if x and rank_lookup.get(x):
+                        cands.append(rank_lookup[x])
+        for pre in _EN_PREFIXES:
+            if w.startswith(pre) and len(w) - len(pre) >= 4:
+                root = w[len(pre):]
+                rr = rank_lookup.get(root)
+                if rr is None:
+                    for suf in ('ed', 'ing', 's', 'ly', 'able'):
+                        if root.endswith(suf) and rank_lookup.get(root[:-len(suf)]):
+                            rr = rank_lookup[root[:-len(suf)]]
+                            break
+                if rr:
+                    cands.append(min(6, rr + 1))
+    if cands:
+        return min(cands)
+    return zipf_to_rank(zipf_lookup.get(lemma) or zipf_lookup.get(text))
 
 
 def _quantile(vals: Sequence[int], q: float) -> float:
@@ -64,17 +102,18 @@ def _quantile(vals: Sequence[int], q: float) -> float:
     return s[lo] + (s[hi] - s[lo]) * (k - lo)
 
 
-def compose_score(ranks: Sequence[int], length: int, base_len: int,
-                  grammar: Sequence[str], weights: Dict[str, int]) -> int:
+def compose_score(ranks: Sequence[int], length: int, grammar: Sequence[str],
+                  weights: Dict[str, int], lang: str = 'en') -> int:
     """내용어 등급 리스트·길이·문법 태그 → 0~100 점수."""
-    score = 0.0
+    c = COMPOSE[lang]
+    score = c['b0']
     if ranks:
-        p80 = _quantile(ranks, 0.8)
-        score += (p80 - 1) * _LEX_STEP
-        score += max(0.0, max(ranks) - p80) * _MAX_OVER_STEP
-        score += min(_RARE_CAP, sum(1 for r in ranks if r >= 5) * _RARE_STEP)
-    score += min(_LEN_CAP, max(0, length - base_len) * _LEN_STEP)
-    score += min(_GRAMMAR_CAP, float(sum(weights.get(g, 0) for g in grammar)))
+        pq = _quantile(ranks, c['q'])
+        score += (pq - 1) * c['lex']
+        score += max(0.0, max(ranks) - pq) * c['over']
+        score += min(c['rare_cap'], sum(1 for r in ranks if r >= 5) * c['rare'])
+    score += min(c['len_cap'], max(0, length - c['base_len']) * c['len'])
+    score += min(c['gram_cap'], c['gram'] * float(sum(weights.get(g, 0) for g in grammar)))
     return int(round(max(0.0, min(100.0, score))))
 
 
@@ -121,30 +160,35 @@ def en_grammar_tags(doc) -> List[str]:
     return sorted(tags)
 
 
-def label_en(doc, target_span: Tuple[Optional[int], Optional[int]], word_count: int,
-             rank_lookup: Dict[str, int], zipf_lookup: Dict[str, float]) -> dict:
-    """영어 예문 라벨. rank_lookup: 소문자 원형 → 등급(워드리스트/voca_label.cefr)."""
+def en_features(doc, target_span: Tuple[Optional[int], Optional[int]],
+                rank_lookup: Dict[str, int], zipf_lookup: Dict[str, float]) -> List[int]:
+    """목표 단어 구간·기능어·고유명사·숫자를 뺀 내용어 등급 리스트."""
     t_start, t_end = target_span
     ranks = []
     for token in doc:
         if t_start is not None and t_start <= token.idx < t_end:
             continue
-        if not token.is_alpha or token.is_stop or token.pos_ == 'PROPN':
+        if not token.is_alpha or token.is_stop or token.like_num or token.pos_ == 'PROPN':
             continue
-        lemma = token.lemma_.lower()
-        r = rank_lookup.get(lemma) or rank_lookup.get(token.text.lower())
-        if r is None:
-            r = zipf_to_rank(zipf_lookup.get(lemma))
-        ranks.append(r)
+        ranks.append(en_word_rank(token.lemma_.lower(), token.text.lower(), rank_lookup, zipf_lookup))
+    return ranks
+
+
+def label_en(doc, target_span: Tuple[Optional[int], Optional[int]], word_count: int,
+             rank_lookup: Dict[str, int], zipf_lookup: Dict[str, float]) -> dict:
+    """영어 예문 라벨. rank_lookup: 소문자 원형 → 등급(워드리스트/voca_label.cefr)."""
+    ranks = en_features(doc, target_span, rank_lookup, zipf_lookup)
     grammar = en_grammar_tags(doc)
-    score = compose_score(ranks, word_count, _EN_BASE_LEN, grammar, EN_GRAMMAR_WEIGHT)
-    return {'cefr': score_to_cefr(score), 'score': score, 'grammar': grammar}
+    score = compose_score(ranks, word_count, grammar, EN_GRAMMAR_WEIGHT, 'en')
+    return {'cefr': score_to_cefr(score), 'score': score, 'grammar': grammar, '_ranks': ranks}
 
 
 # ── 일본어 ──────────────────────────────────────────────────────────────
-# JLPT → 등급(계약 §1: N5≈A1 … N1≈C1, 밖≈C2)
+# JLPT → 등급(계약 §1: N5≈A1 … N1≈C1). JLPT 표시가 없는 단어(사전의 2/3 — 顔·東京·アプリ 같은 기초어도
+# 포함)는 우리 예문 코퍼스 문서빈도로 추정한다(ja_df_rank). 빈도 자료·형태소 분석기가 없어서 쓰는 대용품.
 JLPT_RANK = {'N5': 1, 'N4': 2, 'N3': 3, 'N2': 4, 'N1': 5}
-_JA_BASE_LEN = 8
+# 문서빈도(전체 예문 중 그 표제어가 목표 단어 밖에서 나온 예문 수) → 등급. 2026-10 로컬 5.4만 문장 기준.
+_JA_DF_STEPS = ((60, 1), (20, 2), (8, 3), (3, 4))
 
 JA_GRAMMAR_WEIGHT = {
     'polite': 0, 'past': 1, 'nai_form': 2, 'te_form': 2, 'question': 1,
@@ -162,7 +206,11 @@ JA_FUNCTION_TOKENS = frozenset("""
 これ それ あれ この その あの ここ そこ あそこ どこ だれ 誰 何 なに なん どう こう そう ああ
 私 僕 俺 あなた 彼 彼女 君 今 一 二 三 十 人 日 年 時 分 する し さ れ ・
 だろう でしょう だろ でしょ って という じゃ じゃない よね かな かも わけ はず べき つもり
+ましょう ましょ なさい ながら まま さえ なんて たち 達 ら ども がた 的 者 員 社 館 機 省 署 性 化 式 製 用 中 後 前 間
+さん 様 ちゃん くん 新 準 未 不 非 無 大 小 超 約 各 第 等 ごと ずつ について によって により による として として
+とか なんか しまう しまっ しまい ちゃう ちゃっ じゃう みる み いく いっ くる き こ ほしい
 """.split())
+_JA_SKIP_RE = re.compile(r'[0-9０-９A-Za-zＡ-Ｚａ-ｚ%％]')   # 숫자·로마자·기호가 섞인 토큰
 
 _JA_PUNCT_RE = re.compile(r'^[\s、。，．！？!?「」『』（）()・…ー〜~,.\-"\'：:；;]+$')
 _KANA_RE = re.compile(r'^[぀-ゟ]+$')
@@ -189,6 +237,9 @@ def ja_lemma_candidates(surface: str) -> List[str]:
         out += [surface[:-1] + 'く', surface[:-1] + 'ぐ']
     if last == 'く' and len(surface) > 1:     # 형용사 연용형(高く→高い)
         out.append(surface[:-1] + 'い')
+    for end in ('かっ', 'かった', 'くて', 'ければ', 'くない', 'さ'):   # 형용사 과거·て형·명사형(白かっ→白い)
+        if surface.endswith(end) and len(surface) > len(end):
+            out.append(surface[:-len(end)] + 'い')
     if last == 'し' and len(surface) > 1:     # する동사(勉強し→勉強)
         out.append(surface[:-1])
     return out
@@ -238,51 +289,92 @@ def ja_grammar_tags(surfaces: Sequence[str]) -> List[str]:
     return sorted(tags)
 
 
-def label_ja(tokens: Sequence[Sequence], target_text: str, ja_lexicon: Dict[str, Tuple[int, str]]) -> dict:
-    """일본어 예문 라벨.
+def ja_df_rank(df: int) -> int:
+    for floor, rank in _JA_DF_STEPS:
+        if df >= floor:
+            return rank
+    return 5
 
-    tokens: voca_example_ja.reading_tokens([[surface, reading|null, …], …])
-    target_text: 목표 단어 표층(강조 태그 안) — 이 문자열을 이루는 토큰은 뺀다.
-    ja_lexicon: 표기/읽기 → (등급, 표제어 voca.word)
-    """
-    surfaces = [str(t[0]) for t in tokens if t and t[0] is not None]
-    content = [s for s in surfaces if not _JA_PUNCT_RE.match(s)]
-    # 목표 단어 구간 제외 — 표층을 이어 붙인 문자열에서 target_text 구간과 겹치는 토큰.
+
+def _target_skip(surfaces: Sequence[str], target_text: str) -> set:
+    """표층을 이어 붙인 문자열에서 target_text 구간과 겹치는 토큰 번호."""
     skip = set()
-    joined = ''.join(surfaces)
-    idx = joined.find(target_text) if target_text else -1
+    idx = ''.join(surfaces).find(target_text) if target_text else -1
     if idx >= 0:
         pos = 0
         for i, s_ in enumerate(surfaces):
             if pos < idx + len(target_text) and pos + len(s_) > idx:
                 skip.add(i)
             pos += len(s_)
+    return skip
+
+
+def ja_match(surface: str, ja_lexicon: Dict[str, Tuple[Optional[int], str]]) -> Optional[Tuple[Optional[int], str]]:
+    """표층 → (JLPT 등급|None, 표제어). 후보 중 가장 쉬운 표제어(활용형을 엉뚱한 희귀어로 잡는 것보다
+    관대한 쪽이 낫다). JLPT 없는 표제어는 N3 정도로 보고 순서를 정한다."""
+    hits = [ja_lexicon[c] for c in ja_lemma_candidates(surface) if c in ja_lexicon]
+    if not hits:
+        return None
+    return min(hits, key=lambda h: (3.5 if h[0] is None else h[0]))
+
+
+def ja_content_tokens(surfaces: Sequence[str], target_text: str) -> List[Tuple[int, str]]:
+    """등급 계산 대상 토큰(목표 단어·기능어·문장부호·숫자/로마자 제외)."""
+    skip = _target_skip(surfaces, target_text)
+    return [(i, s) for i, s in enumerate(surfaces)
+            if i not in skip and not _JA_PUNCT_RE.match(s) and s not in JA_FUNCTION_TOKENS
+            and not _JA_SKIP_RE.search(s)]
+
+
+def ja_lemma_df(token_rows, ja_lexicon) -> Dict[str, int]:
+    """(surfaces, target_text) 반복자 → 표제어별 문서빈도(목표 단어 구간 밖에서 나온 예문 수)."""
+    df: Dict[str, int] = {}
+    for surfaces, target_text in token_rows:
+        seen = set()
+        for _i, s in ja_content_tokens(surfaces, target_text):
+            hit = ja_match(s, ja_lexicon)
+            if hit:
+                seen.add(hit[1])
+        for lemma in seen:
+            df[lemma] = df.get(lemma, 0) + 1
+    return df
+
+
+def label_ja(tokens: Sequence[Sequence], target_text: str, ja_lexicon: Dict[str, Tuple[Optional[int], str]],
+             lemma_df: Optional[Dict[str, int]] = None) -> dict:
+    """일본어 예문 라벨.
+
+    tokens: voca_example_ja.reading_tokens([[surface, reading|null, …], …])
+    target_text: 목표 단어 표층(강조 태그 안) — 이 문자열을 이루는 토큰은 뺀다.
+    ja_lexicon: 표기/읽기 → (JLPT 등급|None, 표제어 voca.word)
+    lemma_df: ja_lemma_df 결과 — JLPT 없는 표제어의 등급 추정용(없으면 B2 로 본다)
+    """
+    surfaces = [str(t[0]) for t in tokens if t and t[0] is not None]
+    content = [s for s in surfaces if not _JA_PUNCT_RE.match(s)]
     ranks, words, rare = [], [], 0
-    for i, s in enumerate(surfaces):
-        if i in skip or _JA_PUNCT_RE.match(s) or s in JA_FUNCTION_TOKENS:
-            continue
-        # 후보 중 가장 쉬운 표제어(활용형을 엉뚱한 희귀어로 잡는 것보다 관대한 쪽이 낫다)
-        hits = [ja_lexicon[c] for c in ja_lemma_candidates(s) if c in ja_lexicon]
-        hit = min(hits) if hits else None
+    for _i, s in ja_content_tokens(surfaces, target_text):
+        hit = ja_match(s, ja_lexicon)
         if hit:
             r, lemma = hit
+            if r is None:
+                r = ja_df_rank((lemma_df or {}).get(lemma, 3))
             if lemma not in words:
                 words.append(lemma)
         elif _KANA_RE.match(s) and len(s) <= 3:
             continue   # 사전에 없는 짧은 히라가나 = 활용 어미 조각일 가능성이 높다
+        elif len(s) == 1:
+            continue   # 사전에 없는 한 글자 = 접사(〜館·〜員)이거나 쪼개진 조각
         elif _KATA_RE.match(s):
-            r = 4      # 사전에 없는 외래어
-        elif s.isdigit():
-            continue
+            r = 3      # 사전에 없는 외래어·외국 이름
         else:
-            r = 5
+            r = 4
         if r >= 5:
             rare += 1
         ranks.append(r)
     grammar = ja_grammar_tags(surfaces)
-    score = compose_score(ranks, len(content), _JA_BASE_LEN, grammar, JA_GRAMMAR_WEIGHT)
+    score = compose_score(ranks, len(content), grammar, JA_GRAMMAR_WEIGHT, 'ja')
     return {'cefr': score_to_cefr(score), 'score': score, 'grammar': grammar,
-            'word_count': len(content), 'rare_count': rare, 'words': words}
+            'word_count': len(content), 'rare_count': rare, 'words': words, '_ranks': ranks}
 
 
 def legacy_level(cefr: int) -> int:

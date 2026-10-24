@@ -123,15 +123,16 @@ def _ja_lexicon():
     lex = {}
 
     def put(form, rank, lemma):
-        if form and (form not in lex or rank < lex[form][0]):
+        key = lambda r: 3.5 if r is None else r   # noqa: E731 — L.ja_match 와 같은 순서
+        if form and (form not in lex or key(rank) < key(lex[form][0])):
             lex[form] = (rank, lemma)
 
     rows = (db.session.query(Voca.word, VocaJa.reading, VocaJa.kanji_forms, VocaJa.kana_forms, VocaJa.jlpt,
                              VocaJa.common)
             .join(VocaJa, VocaJa.voca_id == Voca.id).all())
     for word, reading, kanji_forms, kana_forms, jlpt, common in rows:
-        # JLPT 밖 단어: JMdict common 표시가 있으면 C1(5), 없으면 C2(6)
-        rank = L.JLPT_RANK.get(jlpt or '') or (5 if common else 6)
+        # JLPT 밖 단어(None)는 label_ja 가 예문 코퍼스 문서빈도로 등급을 추정한다.
+        rank = L.JLPT_RANK.get(jlpt or '')
         put(word, rank, word)
         for f in (kanji_forms or []):
             put((f or {}).get('text') if isinstance(f, dict) else f, rank, word)
@@ -147,20 +148,25 @@ def run_ja(apply, only_missing, samples):
     print(f'일본어 표기 {len(lex)}개')
     q = (db.session.query(VocaExample.id, VocaExample.exam_en, VocaExample.exam_ko, VocaExampleJa.reading_tokens)
          .outerjoin(VocaExampleJa, VocaExampleJa.example_id == VocaExample.id))
-    if only_missing:
-        done = {r[0] for r in db.session.query(VocaExampleJaMeta.example_id).all()}
-        rows = [r for r in q.all() if r[0] not in done]
-    else:
-        rows = q.all()
-    print(f'대상 {len(rows)}건')
-    results = []
-    for eid, ja, ko, tokens in rows:
+    prepped = []
+    for eid, ja, ko, tokens in q.all():
         plain, target, _span = _plain_and_target(ja)
         if not plain:
             continue
         if not tokens:
             tokens = [[ch] for ch in plain]   # 토큰 없는 예문(드묾) — 글자 단위 폴백
-        lab = L.label_ja(tokens, target, lex)
+        surfaces = [str(t[0]) for t in tokens if t and t[0] is not None]
+        prepped.append((eid, ja, ko, tokens, plain, target, surfaces))
+    # JLPT 없는 표제어 등급 추정용 문서빈도 — --only-missing 이어도 전체 예문으로 센다(결과가 같아야 하므로).
+    lemma_df = L.ja_lemma_df(((p[6], p[5]) for p in prepped), lex)
+    if only_missing:
+        done = {r[0] for r in db.session.query(VocaExampleJaMeta.example_id)
+                .filter(VocaExampleJaMeta.label_ver.isnot(None)).all()}
+        prepped = [p for p in prepped if p[0] not in done]
+    print(f'대상 {len(prepped)}건')
+    results = []
+    for eid, ja, ko, tokens, plain, target, _surfaces in prepped:
+        lab = L.label_ja(tokens, target, lex, lemma_df)
         lab.update(example_id=eid, sentence_hash=sentence_hash(ja), _sentence=plain, _ko=_TAG_RE.sub('', ko or ''))
         results.append(lab)
     _print_dist(results)

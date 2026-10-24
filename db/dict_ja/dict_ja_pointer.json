@@ -1,13 +1,13 @@
 {
-  "version": "20261024-1",
-  "url": "https://objectstore.ghmate.com/heyvoca/dict_ja/heyvoca_dict_ja_v20261024-1.sql.gz",
+  "version": "20261024-2",
+  "url": "https://objectstore.ghmate.com/heyvoca/dict_ja/heyvoca_dict_ja_v20261024-2.sql.gz",
   "index": "https://objectstore.ghmate.com/heyvoca/dict_ja/index.json",
-  "sha256_gz": "6111fd344def454a9e9723da3e23248cc488bfc3e6dd918cf5ab5de2e22e6633",
-  "sha256_sql": "f532b4d86c20c438411818b19bfaa99bae47c828d592be7243850cfaf5262d9c",
+  "sha256_gz": "5e6866a7ab593673e2bb9b13bd12da94c6c64e3caacaf657bb08e6eb02d0423b",
+  "sha256_sql": "4f89dc5a3172e22051daa785fb0c6c583e42861f5fe061eed37ffd7b6abd2c65",
   "counts": {
     "voca": 23143,
     "voca_meaning": 53613,
-    "voca_example": 53909,
+    "voca_example": 58680,
     "voca_inactive": 20,
     "bookstore": 25,
     "admin_voca_book": 25,
