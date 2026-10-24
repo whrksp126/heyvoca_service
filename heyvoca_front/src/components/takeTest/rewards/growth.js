@@ -2,7 +2,7 @@
 //
 // 「밭 성장」 슬라이드의 데이터 준비 — 화면과 떼어 둔 순수 함수.
 // 예전에는 자람 · 새싹 · 되살림 · 황금 당근이 각각 한 장이었다. 네 목록을 한 줄로 합친다.
-import { stageToCrop, CROP_STAGES, CROP_LABEL, withRo } from '../../../utils/crop';
+import { stageToCrop, CROP_STAGES } from '../../../utils/crop';
 
 /** 밭에서 자라는 차례 — 새싹 → 자람 → 되살림 → 황금(피날레) */
 export const GROWTH_KINDS = ['sprout', 'grow', 'rescue', 'gold'];
@@ -44,14 +44,6 @@ export const buildGrowthEntries = ({ grownRows = [], rescuedRows = [], metaOfRow
     push(row, 'rescue', crop, crop);
   });
   return GROWTH_KINDS.flatMap((k) => out.filter((e) => e.kind === k));
-};
-
-/** 목록 시트 오른쪽 문구 */
-export const growthRightLabel = (entry) => {
-  if (entry.kind === 'sprout') return '새싹이 돋았어요';
-  if (entry.kind === 'rescue') return '되살렸어요';
-  if (entry.kind === 'gold') return '황금 당근';
-  return `${withRo(CROP_LABEL[entry.to] ?? '작물')} 자랐어요`;
 };
 
 /*

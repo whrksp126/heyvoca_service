@@ -272,9 +272,9 @@ export const AchievementDetailNewBottomSheet = ({ selectedType = '초대왕' }) 
                 </motion.div>
             </div>
 
-            {/* 하단 버튼 구역 (고정) */}
+            {/* 하단 버튼 구역 (고정) — z-10: 사다리 노드(z-[1])가 스크롤돼 내려오면 버튼 위로 비쳐 올라오던 문제 */}
             <div className="
-                absolute bottom-0 left-0 right-0
+                absolute bottom-0 left-0 right-0 z-10
                 p-[20px] pt-[50px]
                 bg-gradient-to-b from-transparent to-layout-white dark:to-layout-black
                 pointer-events-none

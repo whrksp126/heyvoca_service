@@ -18,9 +18,10 @@ import fieldBase from '../../../assets/images/farm/field-base.png';
 import { feel } from '../../../lib/feel';
 import { useRewardTimeline } from './useRewardTimeline';
 import { anim, burst, ring, jelly, pulse, clearFx, BACK_OUT, FX_GOLDS } from './fx';
-import { planField, growthRightLabel, GROWTH_KINDS, GROWTH_KIND_META, FIELD_W, FIELD_H, CROP_BOX } from './growth';
+import { planField, GROWTH_KINDS, GROWTH_KIND_META, FIELD_W, FIELD_H, CROP_BOX } from './growth';
 import RewardGlow from './RewardGlow';
 import FarmGrowRow from './FarmGrowRow';
+import SoilMound, { MOUND_GROUND_X, MOUND_GROUND_Y, MOUND_H } from '../planting/SoilMound';
 
 // 밭 위 그림 — 흙 없는 심긴 판. 씨앗만 낱알(심긴 판의 씨앗은 32px 점이라 밭에서 안 보인다)
 const fieldSrc = (crop, variant = 'healthy') => (
@@ -187,7 +188,7 @@ const FarmGrowthSlide = ({ entries, reducedMotion, onReady, skipRef }) => {
       <div className='h-full overflow-y-auto scrollbar-hide'>
         <div className='flex min-h-full flex-col items-center justify-center gap-[10px] px-[16px] py-[14px]'>
           <div className='text-center'>
-            <p className='mb-[6px] text-[12.5px] font-[700] text-layout-gray-300'>오늘 밭에서</p>
+            <p className='mb-[6px] text-[12.5px] font-[700] text-layout-gray-300'>이번 학습에서</p>
             <p className='text-[26px] font-[800] leading-[1.25] tracking-[-0.03em]'>
               <span className='text-primary-main-600'>
                 <span ref={numRef} className='inline-block tabular-nums'>{shownTotal}</span>개
@@ -220,12 +221,23 @@ const FarmGrowthSlide = ({ entries, reducedMotion, onReady, skipRef }) => {
                         style={{ background: 'radial-gradient(circle, rgba(242,210,82,.85) 0%, rgba(242,183,19,.35) 45%, rgba(242,183,19,0) 70%)' }}
                       />
                     ) : null}
-                    <img
-                      src={fieldSrc(entry.from, rescue ? 'wilted' : 'healthy')}
-                      alt=''
-                      draggable={false}
-                      className={`absolute inset-0 h-full w-full object-contain ${IMG_BASE} ${isGrown ? 'opacity-0' : 'opacity-100'}`}
-                    />
+                    {entry.from === 'seed' ? (
+                      // 심은 씨앗은 심기 장면처럼 흙에 덮여 있다 — 새싹이 돋으면 흙이 낮게 가라앉으며 사라진다
+                      <span
+                        aria-hidden
+                        className={`pointer-events-none absolute transition-[opacity,transform] duration-500 ease-out motion-reduce:transition-none ${isGrown ? 'scale-x-110 scale-y-50 opacity-0' : 'opacity-100'}`}
+                        style={{ left: CROP_BOX / 2 - MOUND_GROUND_X, top: CROP_BOX * CROP_BASELINE - MOUND_GROUND_Y, transformOrigin: `50% ${((MOUND_GROUND_Y + 2) / MOUND_H) * 100}%` }}
+                      >
+                        <SoilMound />
+                      </span>
+                    ) : (
+                      <img
+                        src={fieldSrc(entry.from, rescue ? 'wilted' : 'healthy')}
+                        alt=''
+                        draggable={false}
+                        className={`absolute inset-0 h-full w-full object-contain ${IMG_BASE} ${isGrown ? 'opacity-0' : 'opacity-100'}`}
+                      />
+                    )}
                     <img
                       src={fieldSrc(entry.to)}
                       alt={entry.word}
@@ -262,11 +274,11 @@ const FarmGrowthSlide = ({ entries, reducedMotion, onReady, skipRef }) => {
                 <div
                   key={kind}
                   ref={(el) => { chipRefs.current[kind] = el; }}
-                  className={`flex h-[32px] items-center gap-[5px] rounded-full bg-layout-gray-50 pl-[6px] pr-[11px] text-[12.5px] font-[700] transition-[transform,opacity] duration-300 ease-[cubic-bezier(.34,1.56,.64,1)] motion-reduce:transition-none dark:bg-layout-gray-dark ${n > 0 ? 'scale-100 opacity-100' : 'scale-0 opacity-0'}`}
+                  className={`flex h-[32px] items-center gap-[5px] rounded-full bg-layout-gray-50 pl-[6px] pr-[12px] text-[13px] font-[700] transition-[transform,opacity] duration-300 ease-[cubic-bezier(.34,1.56,.64,1)] motion-reduce:transition-none dark:bg-layout-gray-dark ${n > 0 ? 'scale-100 opacity-100' : 'scale-0 opacity-0'}`}
                 >
                   <CropImage stage={meta.chipStage} size={22} align='center' alt='' />
                   {meta.drop ? <Drop size={15} weight='fill' className='text-secondary-blue-400' /> : null}
-                  {meta.label}
+                  <span className='sr-only'>{meta.label}</span>
                   <b className={`font-[800] tabular-nums ${meta.gold ? 'text-crop-golden' : 'text-primary-main-600'}`}>{n}</b>
                 </div>
               );
@@ -308,7 +320,6 @@ const FarmGrowthSlide = ({ entries, reducedMotion, onReady, skipRef }) => {
               word={entry.word}
               meaning={entry.meaning}
               meta={entry.meta}
-              right={growthRightLabel(entry)}
               gold={entry.kind === 'gold'}
             />
           )) : null}

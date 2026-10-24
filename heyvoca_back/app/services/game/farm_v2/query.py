@@ -726,6 +726,21 @@ def get_today_tasks(user_id: UUID, now: Optional[dt.datetime] = None,
     )
     rotten_ids = {r[0] for r in rotten_rows}
 
+    # 오늘 살린 단어(회복제 · 삽) — 살리고 나면 부패가 아니라 행이 통째로 사라지던 문제(이슈 #15).
+    # 부패 수는 '지금 몇 개인가'라 스냅샷 대신 오늘 이벤트 로그로 '끝낸 것'을 센다. 다시 썩었으면 남은 쪽에만 둔다.
+    rescued_rows = (
+        db.session.query(UserVoca.id, UserVoca.word)
+        .select_from(FarmEventLog)
+        .join(UserVoca, UserVoca.id == FarmEventLog.user_voca_id)
+        .filter(FarmEventLog.user_id == user_id,
+                FarmEventLog.event.in_((FarmEvent.RECOVERED, FarmEvent.REPLANTED)),
+                FarmEventLog.created_at >= logical_day_start_utc(now),
+                UserVoca.dict_lang == lang, ~UserVoca.id.in_(script_ids))
+        .distinct()
+        .all()
+    )
+    rescued_rows = [r for r in rescued_rows if r[0] not in rotten_ids]
+
     # ── 2) 시듦·심한 시듦 / 돌봄 — 공유 헬퍼(recommend 의 task_bucket 과 같은 정의) ──
     wilted_ids_ordered = get_task_bucket_ids(user_id, 'wilted', now, lang)
     wilted_remaining_ids = set(wilted_ids_ordered)
@@ -759,7 +774,8 @@ def get_today_tasks(user_id: UUID, now: Optional[dt.datetime] = None,
         return answer.CROP_KEY.get(stage, 'seed')
 
     rotten_rows = sorted(rotten_rows, key=lambda r: r[2] or dt.datetime.min, reverse=True)
-    rotten_words = [{'id': uv_id, 'word': word or ''} for uv_id, word, _rotten_at in rotten_rows]
+    rotten_words = [{'id': uv_id, 'word': word or '', 'done': False} for uv_id, word, _rotten_at in rotten_rows]
+    rotten_words += [{'id': uv_id, 'word': word or '', 'done': True} for uv_id, word in rescued_rows]
 
     # wilted_ids_ordered 는 이미 rot_due_at 오름차순(공유 헬퍼가 정렬) — 그대로 쓴다.
     wilted_words = []
@@ -848,7 +864,9 @@ def get_today_tasks(user_id: UUID, now: Optional[dt.datetime] = None,
     streak_state = _streak_state(user_id, now)
 
     return {
-        'rotten': {'count': len(rotten_ids), 'words': rotten_words},
+        # count = 지금 남은 부패(기존 의미 유지), done = 오늘 살린 수, total = 둘의 합
+        'rotten': {'count': len(rotten_ids), 'done': len(rescued_rows),
+                   'total': len(rotten_ids) + len(rescued_rows), 'words': rotten_words},
         'wilted': {'total': len(wilted_remaining_ids) + len(wilted_done_ids),
                   'done': len(wilted_done_ids), 'words': wilted_words},
         'care': {'total': len(care_remaining_ids) + len(care_done_ids),
