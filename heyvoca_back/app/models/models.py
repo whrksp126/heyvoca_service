@@ -353,6 +353,14 @@ class VocaExampleMeta(db.Model):
     words = Column(JSON, nullable=False,
                    comment='목표 단어 구간과 기능어를 뺀 내용어의 원형(소문자) 리스트 — "아는 단어" 비율 계산용')
     source = Column(String(32), nullable=False, comment="dict(기존) / gen20260930(이번 생성) 등 생성 배치 표식")
+    # 라벨 v2(이슈 #16, 2026-10) — 채우는 job: jobs/label_examples_v2.py.
+    # 정본: heyvoca_service/docs/LEVEL_AND_MEANING_CONTRACT.md §1. v2 이전 행은 NULL.
+    sentence_hash = Column(String(64), nullable=True, index=True,
+                           comment='sentence_puzzle.sentence_hash(exam_en) — /study/log example_hash 로 난이도 찾기')
+    cefr = Column(TINYINT, nullable=True, comment='A1=1 … C2=6 (문장 맥락 난이도, 목표 단어 제외)')
+    score = Column(SMALLINT, nullable=True, comment='세부 난이도 0~100 (A1 0–19/A2 20–34/B1 35–54/B2 55–74/C1 75–89/C2 90–100)')
+    grammar = Column(JSON, nullable=True, comment='문법 태그 리스트')
+    label_ver = Column(TINYINT, nullable=True, comment='라벨 규칙 버전(2)')
 
     def __repr__(self):
         return f"<VocaExampleMeta(example_id={self.example_id}, level={self.level}, source={self.source!r})>"
@@ -418,6 +426,23 @@ class VocaExampleJa(db.Model):
     tatoeba_en_id = Column(Integer, nullable=True)
     verified = Column(Boolean, nullable=False, default=False, server_default='0')
     span_method = Column(String(20), nullable=True)
+
+
+# 일본어 예문 라벨(이슈 #16) — 영어 voca_example_meta 와 같은 역할. 채우는 job: jobs/label_examples_v2.py --lang ja.
+# words 는 사전 표제어(voca.word) 원형 — "아는 단어" 비율 계산용.
+class VocaExampleJaMeta(db.Model):
+    __tablename__ = 'voca_example_ja_meta'
+    __bind_key__ = 'dict'
+    __table_args__ = _ja_only()
+    example_id = Column(Integer, primary_key=True, autoincrement=False)
+    sentence_hash = Column(String(64), nullable=True, index=True)
+    cefr = Column(TINYINT, nullable=False)                       # JLPT 환산 A1=1 … C2=6
+    score = Column(SMALLINT, nullable=False)                     # 0~100
+    word_count = Column(SMALLINT, nullable=False)                # 문장부호 뺀 토큰 수
+    rare_count = Column(SMALLINT, nullable=False, default=0)     # N1·JLPT 밖 내용어 수
+    words = Column(JSON, nullable=False)
+    grammar = Column(JSON, nullable=True)
+    label_ver = Column(TINYINT, nullable=False, default=2)
 
 
 # 서점
@@ -1569,6 +1594,22 @@ class UserQuestionTypeStat(db.Model):
         self.last_30d_correct_rate = last_30d_correct_rate
 
 ### 문제 유형별 사용자 정답률 집계 ###
+
+
+### 사용자 수준(Elo/IRT θ) — 이슈 #16, LEVEL_AND_MEANING_CONTRACT.md §2 ###
+class UserSkillProfile(db.Model):
+    """학습 언어별 사용자 능력치. /study/log 가 갱신, example_select 가 목표 예문 난이도에 쓴다.
+    FK 없음(study_log 와 같은 방식) — 탈퇴 시 auth.py 에서 user_id 로 삭제."""
+    __tablename__ = 'user_skill_profile'
+
+    user_id     = Column(BinaryUUID, primary_key=True, comment='user.id 참조 (FK 없음)')
+    lang        = Column(String(8), primary_key=True, comment='en|ja')
+    theta       = Column(Float, nullable=False, default=20.0, comment='0~100 능력치(예문 score 와 같은 척도)')
+    answers     = Column(Integer, nullable=False, default=0)
+    type_stats  = Column(JSON, nullable=True, comment='{questionType: {n, correct, ewma}}')
+    error_stats = Column(JSON, nullable=True, comment='{typo, form, distractor, order, wrong_choice, timeout}')
+    updated_at  = Column(DateTime, nullable=False, default=datetime.utcnow, onupdate=datetime.utcnow)
+### 사용자 수준 ###
 
 
 ### 온보딩 행동 기반 미션 완료 기록 (사용자 DB) ###

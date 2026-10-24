@@ -269,6 +269,8 @@ def _load_pool_raw(user_id: UUID, book_ids_filter: Optional[list], lang: str = '
                     'level': row.level, 'words': row.words or [],
                     # plant(새 씨앗 심기) 쉬운 예문 우선 선택용(example_select)
                     'word_count': row.word_count, 'rare_count': row.rare_count,
+                    # 라벨 v2(이슈 #16) — θ 기반 예문 선택·문장 뜻 맞추기 payload 용. v2 전 행은 None.
+                    'score': row.score, 'cefr': row.cefr,
                 }
         for example_id, h in dict_example_hash_by_id.items():
             meta = meta_by_example_id.get(example_id)
@@ -282,19 +284,52 @@ def _load_pool_raw(user_id: UUID, book_ids_filter: Optional[list], lang: str = '
                 if origin:
                     all_hashes.add(sentence_hash(origin))
         puzzle_lookup = load_puzzles_by_hashes(all_hashes)
+    elif lang == 'ja':
+        # 일본어(이슈 #16) — 문장 뜻 맞추기용 예문 후보. 조각 조립(puzzle)은 없다.
+        # 사전 예문(voca_example_map ⋈ voca_example ⋈ voca_example_ja_meta)을 한 번에 조회.
+        from app.services.sentence_puzzle import sentence_hash
+        from app.models.models import VocaExampleJa, VocaExampleJaMeta
+        from app.services.example_label import legacy_level
+
+        voca_ids_all = sorted({r['voca_id'] for r in raw_items if r['voca_id'] is not None})
+        if voca_ids_all:
+            rows = (
+                db.session.query(VocaExampleMap.voca_id, VocaExample.id, VocaExample.exam_en,
+                                  VocaExample.exam_ko, VocaExampleJaMeta, VocaExampleJa.reading_tokens)
+                .join(VocaExample, VocaExampleMap.example_id == VocaExample.id)
+                .outerjoin(VocaExampleJaMeta, VocaExampleJaMeta.example_id == VocaExample.id)
+                .outerjoin(VocaExampleJa, VocaExampleJa.example_id == VocaExample.id)
+                .filter(VocaExampleMap.voca_id.in_(voca_ids_all))
+                .all()
+            )
+            for voca_id, example_id, exam_ja, exam_ko, m, reading_tokens in rows:
+                if not exam_ja or not exam_ko:
+                    continue
+                h = sentence_hash(exam_ja)
+                if m is not None:
+                    meta_by_hash[h] = {
+                        'level': legacy_level(m.cefr), 'words': m.words or [],
+                        'word_count': m.word_count, 'rare_count': m.rare_count,
+                        'score': m.score, 'cefr': m.cefr,
+                    }
+                dict_examples_by_voca_id.setdefault(voca_id, []).append({
+                    'origin': exam_ja, 'meaning': exam_ko, 'hash': h,
+                    'source': 'dict', 'example_id': example_id, 'reading_tokens': reading_tokens,
+                })
 
     items: list[CandidateItem] = []
     for r in raw_items:
         meaning_concepts, concept_ids = attach_concept_ids(r['voca_id'], r['meanings'], concept_lookup)
         example_puzzles = []
         example_pool: list = []
-        if lang == 'en':
+        if lang in ('en', 'ja'):
             from app.services.sentence_puzzle import sentence_hash
             from app.utils.example_tagging import example_origin_text, example_meaning_text
 
-            for ex in r['examples'] or []:
-                origin = example_origin_text(ex)
-                example_puzzles.append(puzzle_lookup.get(sentence_hash(origin)) if origin else None)
+            if lang == 'en':
+                for ex in r['examples'] or []:
+                    origin = example_origin_text(ex)
+                    example_puzzles.append(puzzle_lookup.get(sentence_hash(origin)) if origin else None)
 
             pool_by_hash: dict = {}
             for ex in r['examples'] or []:
@@ -315,7 +350,10 @@ def _load_pool_raw(user_id: UUID, book_ids_filter: Optional[list], lang: str = '
             for dex in dict_examples_by_voca_id.get(r['voca_id'], []):
                 h = dex['hash']
                 if h in pool_by_hash:
-                    continue  # 사용자가 고친 문장 보존 — 사용자 복사본 우선
+                    # 사용자가 고친 문장 보존 — 사용자 복사본 우선(일본어 후리가나 토큰만 사전 것을 빌린다)
+                    if dex.get('reading_tokens') and not pool_by_hash[h].get('reading_tokens'):
+                        pool_by_hash[h]['reading_tokens'] = dex['reading_tokens']
+                    continue
                 pool_by_hash[h] = {
                     'origin':  dex['origin'],
                     'meaning': dex['meaning'],
@@ -323,6 +361,7 @@ def _load_pool_raw(user_id: UUID, book_ids_filter: Optional[list], lang: str = '
                     'source':  'dict',
                     'puzzle':  puzzle_lookup.get(h),
                     'meta':    meta_by_hash.get(h),
+                    'reading_tokens': dex.get('reading_tokens'),
                 }
             example_pool = list(pool_by_hash.values())
 

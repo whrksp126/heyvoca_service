@@ -11,8 +11,10 @@ pool.py가 채움)에서 문제 유형에 맞는 예문 하나를 고른다. 기
 점수는 낮을수록 우선 선택된다:
   - 최근성: 이번 응답에서 이미 쓴 hash는 후보에서 제외. 최근 30일 내 본 문장은 벌점
     (최근에 볼수록 벌점 큼, 오래전일수록 작음). 한 번도 안 본 문장이 항상 최우선(0점).
-  - 수준 적합: |example.level - target_level| 에 비례한 벌점. meta 없는 예문(사용자 직접
-    입력)은 target_level과 같다고 보아 벌점 0.
+  - 수준 적합: (이슈 #16) 사용자 θ 가 있고 예문에 score 가 있으면 |score − 목표 score| 에 비례한 벌점.
+    목표 score = P(정답)≈0.8 이 되는 값(skill_level.target_score_for, 문제 유형 보정 포함) + 작물 단계 보조
+    이동(_STAGE_SCORE_SHIFT). 둘 중 하나라도 없으면 예전처럼 |level − target_level| 벌점.
+    meta 없는 예문(사용자 직접 입력)은 목표와 같다고 보아 벌점 0.
   - 아는 단어 비율: meta.words 중 아는 단어 비율이 높을수록 가점(감점). words가 비면 중립.
   - 동점은 무작위.
 
@@ -32,12 +34,18 @@ from app.services.sentence_puzzle import puzzle_usable
 # 예문 후보에 요구되는 자격(계약 §3-1).
 _TEXT_TYPES = ('fillInTheBlank', 'fillInTheBlankTyping')
 _ARRANGE_TYPES = ('sentenceArrangePartial', 'sentenceArrange', 'listenArrange')
+_MEANING_TYPES = ('sentenceTranslate',)
 
 RECENCY_WINDOW_DAYS = 30
 # 벌점 가중치 — 최근성이 가장 크게, 수준 적합이 다음, 아는 단어 비율이 보조 신호.
 _RECENCY_WEIGHT = 100.0
 _LEVEL_WEIGHT = 20.0
 _KNOWN_WEIGHT = 5.0
+# score 1점당 벌점 — level 1칸(약 33점)이 _LEVEL_WEIGHT(20) 와 비슷해지도록.
+_SCORE_WEIGHT = 0.6
+
+# 작물 단계별 목표 score 보조 이동(θ 기반 목표에 더함) — 갓 심은 단어는 더 쉬운 문장, 다 큰 단어는 조금 어렵게.
+_STAGE_SCORE_SHIFT = {'unlearned': -10, 'seed': -10, 'sprout': -5, 'leaf': 0, 'carrot': 5}
 
 # 작물 단계(crop_stage) → 목표 예문 수준(1~3). sprout는 1~2 중 매 호출마다 무작위로
 # 흔들어 다양성을 준다(계약 §3-2 "sprout → 1~2").
@@ -64,10 +72,20 @@ class SelectionContext:
     rng:           Optional[random.Random] = None
     # 새 씨앗 심기(mode=plant) 전용 — 쉬운 예문(짧고 수준 1, 희귀어 적음)을 우선 고른다.
     easy:          bool = False
+    # 사용자 수준(이슈 #16). None 이면 θ 기반 목표를 쓰지 않는다(예전 level 규칙).
+    theta:         Optional[float] = None
+    lang:          str = 'en'
+    # 문장 뜻 맞추기 방해 조각 원천 — 이번 응답 단어들의 예문 번역 [(score|None, 번역문, user_voca_id)]
+    meaning_sources: list = field(default_factory=list)
+
+    def meaning_pool(self, item) -> list:
+        """방해 조각 후보 [(score, 번역문)] — 이 단어 자신의 예문은 뺀다(같은 뜻 어절이 섞이지 않게)."""
+        uv = getattr(item, 'user_voca_id', None)
+        return [(sc, t) for sc, t, owner in self.meaning_sources if owner != uv]
 
 
 def build_selection_context(user_id, user_voca_ids, *, user_level_id=None, lang='en',
-                             now=None, rng=None, easy=False) -> SelectionContext:
+                             now=None, rng=None, easy=False, items=None) -> SelectionContext:
     """pool.py의 배치 조회 두 개를 묶어 SelectionContext를 만드는 편의 함수.
 
     study.py 등 호출부는 세션 구성(compose) 직후, 실제로 뽑힌 user_voca_id들만으로
@@ -75,8 +93,19 @@ def build_selection_context(user_id, user_voca_ids, *, user_level_id=None, lang=
     """
     from app.services.recommend.pool import load_recent_example_hashes, load_known_words
 
+    from app.services.skill_level import load_profile_row, initial_theta
+
     recent_seen = load_recent_example_hashes(user_id, user_voca_ids, window_days=RECENCY_WINDOW_DAYS)
     known_words = load_known_words(user_id, lang=lang)
+    profile = load_profile_row(user_id, lang)
+    theta = float(profile.theta) if profile is not None else initial_theta(user_level_id)
+    sources = []
+    for it in items or []:
+        for ex in getattr(it, 'example_pool', None) or []:
+            if ex.get('meaning'):
+                sources.append(((ex.get('meta') or {}).get('score'), ex['meaning'], it.user_voca_id))
+    if len(sources) < 40:
+        sources += _fallback_meaning_sources(lang, theta)
     return SelectionContext(
         recent_seen=recent_seen,
         known_words=known_words,
@@ -84,7 +113,30 @@ def build_selection_context(user_id, user_voca_ids, *, user_level_id=None, lang=
         now=now or dt.datetime.utcnow(),
         rng=rng,
         easy=easy,
+        theta=theta,
+        lang=lang,
+        meaning_sources=sources,
     )
+
+
+def _fallback_meaning_sources(lang: str, theta: float, n: int = 60) -> list:
+    """응답 단어가 적을 때(재출제 등) 방해 조각용 번역문을 사전에서 비슷한 수준으로 가져온다."""
+    from app import db
+    from app.models.models import VocaExample, VocaExampleMeta, VocaExampleJaMeta
+    try:
+        meta = VocaExampleJaMeta if lang == 'ja' else VocaExampleMeta
+        lo, hi = max(0, int(theta) - 25), min(100, int(theta) + 10)
+        base = (db.session.query(meta.score, VocaExample.exam_ko)
+                .join(VocaExample, VocaExample.id == meta.example_id)
+                .filter(meta.score.between(lo, hi)))
+        max_id = db.session.query(db.func.max(meta.example_id)).scalar() or 0
+        start = random.randint(0, max(0, max_id - 1))
+        rows = base.filter(meta.example_id >= start).limit(n).all()
+        if len(rows) < n:
+            rows += base.filter(meta.example_id < start).limit(n - len(rows)).all()
+        return [(sc, ko, None) for sc, ko in rows if ko]
+    except Exception:
+        return []
 
 
 def _target_level_for_item(item, user_level_id: Optional[int]) -> int:
@@ -110,6 +162,9 @@ def _eligible(ex: dict, question_type: str) -> bool:
         return example_has_target_tag(ex.get('origin')) and bool((ex.get('meaning') or '').strip())
     if question_type in _ARRANGE_TYPES:
         return puzzle_usable(ex.get('puzzle'))
+    if question_type in _MEANING_TYPES:
+        from app.services.sentence_meaning import meaning_usable
+        return meaning_usable(ex)
     return False
 
 
@@ -131,15 +186,29 @@ def _known_word_ratio(words: list, known_words: set) -> Optional[float]:
     return known / len(words)
 
 
-def _score(ex: dict, item, question_type: str, ctx: SelectionContext, target_level: int) -> float:
+def _target_score_for_item(item, question_type: str, ctx: SelectionContext) -> Optional[float]:
+    """θ 기반 목표 예문 score(P≈0.8) + 작물 단계 보조 이동. θ 가 없으면 None."""
+    if ctx.theta is None:
+        return None
+    from app.services.recommend.stage import crop_stage
+    from app.services.skill_level import target_score_for
+    shift = _STAGE_SCORE_SHIFT.get(crop_stage(item.fsrs_state), 0)
+    return max(0.0, min(100.0, target_score_for(ctx.theta, question_type) + shift))
+
+
+def _score(ex: dict, item, question_type: str, ctx: SelectionContext, target_level: int,
+           target_score: Optional[float] = None) -> float:
     score = 0.0
 
     recent_for_word = ctx.recent_seen.get(item.user_voca_id) or {}
     score += _recency_penalty(recent_for_word.get(ex.get('hash')), ctx.now)
 
     meta = ex.get('meta') or {}
-    level = meta.get('level', target_level)
-    score += abs(level - target_level) * _LEVEL_WEIGHT
+    if target_score is not None and meta.get('score') is not None:
+        score += abs(float(meta['score']) - target_score) * _SCORE_WEIGHT
+    else:
+        level = meta.get('level', target_level)
+        score += abs(level - target_level) * _LEVEL_WEIGHT
 
     ratio = _known_word_ratio(meta.get('words') or [], ctx.known_words)
     if ratio is not None:
@@ -253,7 +322,9 @@ def choose_example(item, question_type: str, ctx: SelectionContext) -> Optional[
         target_level = 1
     else:
         target_level = _target_level_for_item(item, ctx.user_level_id)
-    scored = [(_score(ex, item, question_type, ctx, target_level), ex) for ex in candidates]
+    # θ 기반 목표는 일반 경로(빈칸·뜻 맞추기)만 — plant·문장 만들기는 위 '쉬운 예문 우선' 규칙이 정본.
+    target_score = None if (ctx.easy or is_arrange) else _target_score_for_item(item, question_type, ctx)
+    scored = [(_score(ex, item, question_type, ctx, target_level, target_score), ex) for ex in candidates]
     min_score = min(s for s, _ in scored)
     tol = _EASY_JITTER if (ctx.easy or is_arrange) else 1e-9
     best = [ex for s, ex in scored if s - min_score < tol]

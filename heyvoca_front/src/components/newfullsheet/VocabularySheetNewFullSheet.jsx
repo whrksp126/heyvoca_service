@@ -12,6 +12,7 @@ import { memoryStateVisualStage, isWordStudiable } from '../../utils/vocaCrop';
 import CropImage from '../farm/CropImage';
 import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 import { TestSetupNewBottomSheet } from '../newBottomSheet/TestSetupNewBottomSheet';
+import { BookStudyTypeNewBottomSheet } from '../newBottomSheet/BookStudyTypeNewBottomSheet';
 import { StudySetupNewBottomSheet } from '../newBottomSheet/StudySetupNewBottomSheet';
 import { vibrate } from '../../utils/osFunction';
 import { useNavigate } from 'react-router-dom';
@@ -123,6 +124,16 @@ const VocabularySheetNewFullSheet = ({ testType }) => {
           ? '썩은 단어는 되살린 뒤에 학습할 수 있어요'
           : `단어 개수가 부족해요. 최소 ${MIN_TEST_VOCABULARY_COUNT}개 이상 필요합니다.`
       );
+    }
+
+    // 홈 '학습 고르기' → 단어장 골라 학습: 단어장을 고른 뒤 방식(집중 반복 / 자유 설정 테스트)을 묻는다.
+    if (testType === 'pick') {
+      pushNewBottomSheet(
+        BookStudyTypeNewBottomSheet,
+        { maxVocabularyCount: totalWords, vocabularySheetId: sheetId },
+        { isBackdropClickClosable: true, isDragToCloseEnabled: true }
+      );
+      return;
     }
 
     if (testType === 'study') {

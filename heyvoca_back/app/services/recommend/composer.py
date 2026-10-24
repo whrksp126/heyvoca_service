@@ -95,6 +95,7 @@ _QUESTION_TYPE_WEIGHTS: Dict[str, int] = {
     'listenArrange':           3,
     'fillInTheBlankTyping':    3,
     'sentenceMeaning':         8,
+    'sentenceTranslate':       6,
 }
 
 # ──────────────────────────────────────────────
@@ -229,6 +230,10 @@ def _item_can_use_question_type(item: CandidateItem, qtype: str) -> bool:
         # 하나라도 usable해야 한다. en 전용 — ja는 example_puzzles가 항상 비어 있다.
         from app.services.sentence_puzzle import puzzle_usable
         return any(puzzle_usable(p) for p in (item.example_puzzles or []))
+    if qtype == 'sentenceTranslate':
+        # 문장 뜻 맞추기: 예문 후보(example_pool, en·ja) 중 번역이 2~8어절인 게 하나라도 있어야 한다.
+        from app.services.sentence_meaning import meaning_usable
+        return any(meaning_usable(ex) for ex in (item.example_pool or []))
     return has_meanings or has_examples
 
 

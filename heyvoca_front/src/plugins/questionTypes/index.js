@@ -4,6 +4,7 @@ import FillInTheBlankQuestion from './fillInTheBlank/FillInTheBlankQuestion';
 import SentenceArrangeQuestion from './sentenceArrange/SentenceArrangeQuestion';
 import ListenArrangeQuestion from './sentenceArrange/ListenArrangeQuestion';
 import FillInTheBlankTypingQuestion from './fillInTheBlankTyping/FillInTheBlankTypingQuestion';
+import SentenceTranslateQuestion from './sentenceTranslate/SentenceTranslateQuestion';
 import WordIntroQuestion from './wordIntro/WordIntroQuestion';
 import SentenceMeaningQuestion from './sentenceMeaning/SentenceMeaningQuestion';
 import ScriptIntroQuestion from './script/ScriptIntroQuestion';
@@ -314,6 +315,31 @@ const buildTypingQuestions = (selectedWords) => {
   return out;
 };
 
+// 문장 뜻 맞추기(sentenceTranslate, LEVEL_AND_MEANING_CONTRACT §3) — 서버 payload 기반. payload 는 다른 출제형처럼
+// questionPayload 아래 키(meaning)로 오거나, 계약 예시처럼 payload 자체(tiles/accepted 를 바로 가짐)로 온다.
+export const getTranslatePayload = (questionPayload) => {
+  const p = questionPayload?.meaning ?? questionPayload;
+  return p && Array.isArray(p.tiles) && Array.isArray(p.accepted) && p.sentence ? p : null;
+};
+
+const buildTranslateQuestions = (selectedWords) => {
+  const out = [];
+  for (const word of selectedWords ?? []) {
+    if (word?.suggestedQuestionType !== 'sentenceTranslate') continue;
+    const meaning = getTranslatePayload(word.questionPayload);
+    if (!meaning) continue;
+    out.push({
+      ...word,
+      questionType: 'sentenceTranslate',
+      meaning,
+      isCorrect: null,
+      userResultIndex: null,
+      exampleHash: meaning.example_hash ?? word.questionPayload?.example_hash ?? null,
+    });
+  }
+  return out;
+};
+
 /*
   문제 유형 플러그인 메타데이터
   - family:    '사지선다' | '카드 맞추기' | '빈칸 채우기' 묶음 — 자유 설정 테스트 시트의 [문제 유형] 칩
@@ -487,6 +513,21 @@ export const QUESTION_TYPE_PLUGINS = [
     guideTitle: '문장의 뜻을 고르세요',
     component: SentenceMeaningQuestion,
     setupQuestions: (selectedWords, allWords) => buildSentenceMeaningQuestions(selectedWords, allWords),
+  },
+  {
+    // 문장 뜻 맞추기(이슈 #16) — 외국어 예문(듣기 포함)을 보고 한국어 블록을 눌러 뜻을 나열한다.
+    // 4지선다 '문장 뜻 고르기'(sentenceMeaning)와 별개 유형. 서버 payload(question_payloads.sentenceTranslate) 기반.
+    // 방향은 외국어→한국어 하나뿐이라 direction: null(빈칸 입력과 같은 독립 family 칩).
+    id: 'sentenceTranslate',
+    autoSpeakOnShow: false, // 컴포넌트가 예문을 직접 읽는다
+    label: '문장 뜻 맞추기',
+    enabled: true,
+    family: 'sentenceTranslate',
+    direction: null,
+    listening: false,
+    guideTitle: '문장의 뜻을 만드세요',
+    component: SentenceTranslateQuestion,
+    setupQuestions: buildTranslateQuestions,
   },
   {
     // ① "만나기" 슬라이드 — 새 씨앗 심기(plant) 세션 전용, 채점 없음(2026-09-29).
@@ -667,7 +708,7 @@ export const isSingleWordPluginType = (id) => SINGLE_WORD_PLUGIN_TYPES.includes(
 
 // 출제형 4종(서버 payload 기반 — 로컬 setupQuestions가 word.questionPayload 유무로 스스로
 // 판단한다) 판별. Main.jsx의 로그 페이로드(typo 필드 등) 분기에 쓴다.
-export const SENTENCE_QUESTION_TYPES = ['sentenceArrangePartial', 'sentenceArrange', 'listenArrange', 'fillInTheBlankTyping'];
+export const SENTENCE_QUESTION_TYPES = ['sentenceArrangePartial', 'sentenceArrange', 'listenArrange', 'fillInTheBlankTyping', 'sentenceTranslate'];
 export const isSentenceQuestionType = (id) => SENTENCE_QUESTION_TYPES.includes(id);
 
 // "문장 만들기" 구간(맨 끝 3문제 고정)으로 모으는 조립형 3종 — 빈칸 입력(fillInTheBlankTyping)은

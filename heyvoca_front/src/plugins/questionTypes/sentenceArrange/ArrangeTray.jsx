@@ -123,6 +123,8 @@ const ArrangeTray = ({
   onPiecePlaced,
   // 채점 후 "다음" 버튼 탭 — 자동으로 넘어가지 않는다(2026-09-29). 부모가 진행 콜백을 넘긴다.
   onNext,
+  // 채점 후 칩 탭 = 영어 사전 조회. 조각이 한국어인 문장 뜻 맞추기(sentenceTranslate)는 끈다.
+  lookupChips = true,
 }) => {
   const reducedMotion = useReducedMotion();
   // 채울 슬롯 총 개수 — accepted[0](정답 원소 하나)의 길이를 기준으로 삼는다(계약 §3-1,
@@ -612,7 +614,7 @@ const ArrangeTray = ({
                           // pointerup 뒤에 따라오는 네이티브 click — 채점 전에는 pointer 핸들러가
                           // 이미 탭/드래그(배치·교체·빼기)를 처리했으므로 여기서는 아무 것도 하지
                           // 않는다. 채점 후에만 일반 단어 탭과 동일하게 사전 말풍선을 연다.
-                          if (!disabled) return;
+                          if (!disabled || !lookupChips) return;
                           handleWordTap(e, `chip-${pos}`, bank[bankIdx]);
                         }}
                         // 고스트가 이미 그 자리로 미끄러져 들어온 뒤 확정되므로 팝인 애니메이션은

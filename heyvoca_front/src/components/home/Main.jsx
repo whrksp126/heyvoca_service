@@ -39,13 +39,13 @@ import useLabFeatures from '../../hooks/useLabFeatures';
 import { LANG_LABEL, DEFAULT_LEARNING_LANG } from '../../utils/lang';
 import { LearningLangNewBottomSheet } from '../newBottomSheet/LearningLangNewBottomSheet';
 import LangFlagIcon from '../common/LangFlagIcon';
-import { useQuickReview } from '../../hooks/useQuickReview';
 import { usePlantSession } from '../../hooks/usePlantSession';
 import PullToRefresh from '../common/PullToRefresh';
 
 import StoreNewFullSheet from '../newfullsheet/StoreNewFullSheet';
 import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 import { NotifPermissionNewBottomSheet } from '../newBottomSheet/NotifPermissionNewBottomSheet';
+import { StudyPickNewBottomSheet } from '../newBottomSheet/StudyPickNewBottomSheet';
 import AchievementRewardOverlay from '../overlay/AchievementRewardOverlay';
 
 import FarmHero from '../farm/FarmHero';
@@ -143,23 +143,11 @@ const Main = () => {
     : HOME_STATES.DUE;
   const view = HOME_STATE_VIEW[homeState];
 
-  /*
-    §7 CTA 문구·동작 — "오늘 할 일" 맨 위의 미완료 줄을 따라간다(홈 개편 2026-09-27).
-    썩은 단어는 학습 불가라 CTA 대상이 아니다 — 있어도 기존 상태별 문구를 그대로 쓴다.
-    todayTasks 가 아직 없으면(로딩 전·구버전 백엔드) 기존 view.cta 로 폴백한다.
-
-    kind: 'study'(handleTodayStudyButtonClick) | 'store'(/book-store) | 'default'(handleCtaClick
-    의 기존 다섯 상태 분기 — homeState===EMPTY 일 때만 서점, 나머지는 학습).
-    문구와 동작을 한 값에 묶은 이유 — 실기기 QA: 목표(new_seed.target)는 안 채웠는데 심을
-    씨앗 재고(seeds_left)가 0인 상태에서 "새 씨앗 N개 심기" 문구만 보고 학습을 열면
-    unlearned 단어가 없어 "출제 가능한 문제가 없어요"만 뜬다. 그 상태는 문구도 동작도
-    서점으로 보내야 해서, 둘을 따로 계산하면 어긋날 위험이 있어 하나로 묶었다.
-  */
-  // 2026-10-02 — 주 CTA 문구는 항상 '농장 돌보기'로 고정하고, 동작은 복습 전용이다
-  // (새 씨앗 심기는 오늘 할 일 카드의 '새 씨앗 심기' 버튼만 연다). 심을 밭이 아예 없는
-  // EMPTY 상태만 서점으로 보낸다.
+  // §7 주 CTA — 2026-10-25(이슈 #16 §4) '농사 시작' 하나. 누르면 학습 고르기 시트
+  // (StudyPickNewBottomSheet)가 돌보기·산책·심기·단어장 학습을 고르게 한다. 심을 밭이 아예
+  // 없는 EMPTY 상태만 서점으로 보낸다.
   const ctaInfo = useMemo(() => ({
-    label: '농장 돌보기',
+    label: '농사 시작',
     kind: homeState === HOME_STATES.EMPTY ? 'store' : 'study',
   }), [homeState]);
 
@@ -225,7 +213,6 @@ const Main = () => {
 
   // Actions만 구독하므로 state 변경 시 리렌더링 안 됨
   const { pushNewFullSheet } = useNewFullSheetActions();
-  const { startQuickReview } = useQuickReview();
   const { startPlantSession } = usePlantSession();
   const { pushNewBottomSheet } = useNewBottomSheetActions();
 
@@ -314,28 +301,14 @@ const Main = () => {
     });
   };
 
-  /*
-    홈에서 학습으로 들어가는 모든 자리(주 버튼 · 물주기/심으러 가기 · 오늘 할 일 행)는
-    **종류를 묻지 않고 바로 AI 추천 학습을 연다.**
-    무엇을 할지 정해 주는 것이 이 화면의 일이라, 화면 전체가 이미 오늘 무엇이 급한지를
-    말해 놓고 버튼에서 다시 종류를 묻는 건 방금 한 말을 무르는 셈이었다.
-    종류를 고르는 자리는 단어장 상세 시트로 옮겼다(useQuickReview 주석).
-  */
-  const handleTodayStudyButtonClick = () => {
-    startQuickReview();
-  };
-
-  // §12 — 버튼 모습은 다섯 상태 모두 같고 글자만 바뀐다. 가는 곳만 상태(ctaInfo.kind)를 따른다.
-  // ctaInfo.mode === 'plant' — "새 씨앗 N개 심기" 문구일 때만 복습(startQuickReview) 대신
-  // 심기 세션(usePlantSession)을 연다. 새 단어는 여기서만 시작한다(2026-09-29).
   const handleCtaClick = () => {
     if (homeState === HOME_STATES.EMPTY || ctaInfo.kind === 'store') {
       vibrate({ duration: 5 });
       navigate('/book-store');
       return;
     }
-    // 학습 진입의 햅틱은 startQuickReview 가 준다 — 여기서 또 주면 두 번 울린다
-    handleTodayStudyButtonClick();
+    vibrate({ duration: 5 });
+    pushNewBottomSheet(StudyPickNewBottomSheet, {}, { isBackdropClickClosable: true, isDragToCloseEnabled: true });
   };
 
   /*

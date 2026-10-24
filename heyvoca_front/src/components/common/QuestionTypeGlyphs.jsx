@@ -200,3 +200,27 @@ export const ReadGlyph = ({ className = '', size = 44 }) => (
     <rect x="14" y="37.1" width="16" height="2.4" rx="1.2" fill="currentColor" opacity="0.5" />
   </svg>
 );
+
+/*
+  문장 뜻 맞추기(sentenceTranslate, 이슈 #16) — 위에 외국어 문장 줄(스피커 + 글줄), 아래에 한국어 블록을
+  눌러 답 줄에 나열한다. ArrangeGlyph와 같은 칩·은행 구도를 쓰되, 위를 "읽을 문장"으로 둔다.
+*/
+export const TranslateGlyph = ({ className = '', size = 44 }) => (
+  <svg {...base(size, className)}>
+    {/* 외국어 문장 — 작은 스피커 + 글줄 2개 */}
+    <path d="M3 5.6h2.2l2.6-2.2v7.2L5.2 8.4H3Z" fill="currentColor" opacity="0.5" />
+    <rect x="11" y="4.2" width="22" height="2.6" rx="1.3" fill="currentColor" opacity="0.5" />
+    <rect x="11" y="8.4" width="14" height="2.6" rx="1.3" fill="currentColor" opacity="0.5" />
+
+    {/* 답 줄 — 앞 두 칸은 놓은 블록, 마지막은 빈 밑줄 */}
+    <rect x="4" y="15" width="10" height="7" rx="2" fill="currentColor" />
+    <rect x="15.6" y="15" width="10" height="7" rx="2" fill="currentColor" opacity="0.72" />
+    <path d="M27.4 21.4h10" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeDasharray="2 2.2" />
+
+    {/* 블록 은행 */}
+    <rect x="6" y="27" width="13" height="7" rx="3.5" stroke="currentColor" strokeWidth="1.3" opacity="0.55" transform="rotate(-6 12.5 30.5)" />
+    <rect x="25" y="27" width="13" height="7" rx="3.5" stroke="currentColor" strokeWidth="1.3" opacity="0.55" transform="rotate(5 31.5 30.5)" />
+
+    <rect x="4" y="37" width="36" height="4.4" rx="2.2" fill="currentColor" opacity="0.28" />
+  </svg>
+);

@@ -54,6 +54,18 @@ def _build_sentence_question_payload(item, qtype: str, ctx=None) -> dict:
     첫 태그 있는 예문)으로 만들고, 조립 3종/새 fillInTheBlank payload는 애초에 ja가
     voca_example_puzzle을 안 써서(example_puzzles 항상 []) 해당 없음.
     """
+    if qtype == 'sentenceTranslate':
+        # 문장 뜻 맞추기(이슈 #16, LEVEL_AND_MEANING_CONTRACT.md §3) — en·ja 공통.
+        if ctx is None:
+            return {}
+        from app.services.example_select import choose_example
+        from app.services.sentence_meaning import build_meaning_payload
+        ex = choose_example(item, qtype, ctx)
+        if not ex:
+            return {}
+        return build_meaning_payload(ex, lang=item.dict_lang, distractor_pool=ctx.meaning_pool(item),
+                                     rng=ctx.rng) or {}
+
     if item.dict_lang != 'en':
         if qtype == 'fillInTheBlankTyping':
             from app.services.fill_blank_typing import build_typing_payload
@@ -112,6 +124,9 @@ def _build_sentence_question_payload(item, qtype: str, ctx=None) -> dict:
 
 
 _ARRANGE_TYPES = ('sentenceArrangePartial', 'sentenceArrange', 'listenArrange')
+# 오답이면 실수 유형을 'wrong_choice' 로 세는 보기 고르기형(프론트가 error_type 을 안 보낼 때).
+_CHOICE_QUESTION_TYPES = ('multipleChoice', 'reverseMultipleChoice', 'multipleChoiceListening',
+                          'fillInTheBlank', 'cardMatch', 'cardMatchListening', 'sentenceMeaning')
 
 
 def _demote_arrange_to_general(enriched_items: list) -> list:
@@ -183,17 +198,18 @@ def _prefer_partial_arrange(enriched_items: list) -> None:
 
 
 def _build_selection_ctx(user_id, items, lang: str, easy: bool = False):
-    """items(en) 대상 "매번 새 문장" SelectionContext 빌드. ja면 None(ctx 자체를 안 씀).
+    """items 대상 "매번 새 문장" SelectionContext 빌드(en·ja). 일본어는 문장 뜻 맞추기만 ctx 를 쓴다.
 
     호출부(recommend/requeue-easier)가 실제로 응답에 실을 item들만 넘겨야 한다 —
     전체 풀이 아니라 이번 응답 분량(<=50개)이라 쿼리 비용이 작다.
     """
-    if lang != 'en' or not items:
+    if lang not in ('en', 'ja') or not items:
         return None
     from app.services.example_select import build_selection_context
     user_level_id = db.session.query(User.level_id).filter(User.id == user_id).scalar()
     voca_ids = [it.user_voca_id for it in items]
-    return build_selection_context(user_id, voca_ids, user_level_id=user_level_id, lang='en', easy=easy)
+    return build_selection_context(user_id, voca_ids, user_level_id=user_level_id, lang=lang, easy=easy,
+                                   items=items)
 
 
 def _serialize_recommend_item(item, *, suggested_question_type, tier_target, tier_shown,
@@ -203,6 +219,10 @@ def _serialize_recommend_item(item, *, suggested_question_type, tier_target, tie
     두 엔드포인트가 같은 모양(계약: SENTENCE_QUESTIONS_CONTRACT.md)을 내야 어긋나지 않는다.
     """
     fsrs = item.fsrs_state or {}
+    question_payload = _build_sentence_question_payload(item, suggested_question_type, ctx)
+    if suggested_question_type == 'sentenceTranslate' and not question_payload:
+        # 고를 예문이 없으면(이번 응답에서 다 썼거나 자격 미달) 보편 유형으로 — 빈 payload 로 내보내지 않는다.
+        suggested_question_type = 'multipleChoice'
     return {
         'user_voca_id':            item.user_voca_id,
         'user_voca_book_id':       str(item.user_voca_book_id) if item.user_voca_book_id else None,
@@ -228,7 +248,7 @@ def _serialize_recommend_item(item, *, suggested_question_type, tier_target, tie
         'reason':                  reason,
         'tier_target':             tier_target,
         'tier_shown':              tier_shown,
-        'question_payload':        _build_sentence_question_payload(item, suggested_question_type, ctx),
+        'question_payload':        question_payload,
     }
 
 
@@ -465,6 +485,11 @@ def post_study_log():
     tier_shown  = tier_shown_raw if isinstance(tier_shown_raw, int) and 1 <= tier_shown_raw <= 5 else None
     # fillInTheBlankTyping 오타 허용 정답 — FSRS 자동 평가를 Hard(2)로 고정한다.
     typo = bool(req.get('typo', False))
+    # 실수 유형(이슈 #16, optional) — typo|form|distractor|order|wrong_choice|timeout 밖의 값은 무시.
+    from app.services.skill_level import ERROR_TYPES
+    error_type = req.get('error_type') if req.get('error_type') in ERROR_TYPES else None
+    if error_type is None and typo:
+        error_type = 'typo'
     # "매번 새 문장"(2026-09-30) — 이 문제에 쓰인 예문의 sentence_hash. optional(구버전
     # 앱/문장 없는 유형은 안 보냄), 64자리 hex가 아니면 조용히 무시(NULL 저장).
     example_hash_raw = req.get('example_hash')
@@ -617,9 +642,16 @@ def post_study_log():
     if is_plant:
         was_correct = True
 
+    # ── 문장 뜻 맞추기 오답은 FSRS 면제(이슈 #16 결정, LEVEL_AND_MEANING_CONTRACT.md §5-3) ──
+    # 문장 '이해' 문제라 단어 기억 판정에 강하게 반영하지 않는다(문장 만들기 오답과 같은 취지).
+    # FSRS·mastery·농장/콤보 훅은 건드리지 않고, 로그·유형 집계·사용자 수준(θ)에만 반영한다.
+    fsrs_exempt = (question_type == 'sentenceTranslate' and not was_correct and not is_plant)
+
     # ── FSRS 계산 ──
     if is_plant:
         rating = 3  # GOOD
+    elif fsrs_exempt:
+        rating = None
     else:
         rating = derive_rating(
             bool(was_correct),
@@ -629,24 +661,28 @@ def post_study_log():
             question_type=question_type,
             typo=typo,
         )
-    fsrs_state_after = fsrs_review(
-        fsrs_state_before,
-        rating,
-        now,
-        lapse_history=lapse_history,
-        prior_correct_rate=prior_correct_rate,
-    )
+    if fsrs_exempt:
+        fsrs_state_after = fsrs_state_before
+    else:
+        fsrs_state_after = fsrs_review(
+            fsrs_state_before,
+            rating,
+            now,
+            lapse_history=lapse_history,
+            prior_correct_rate=prior_correct_rate,
+        )
 
     memory_state_after = _classify_memory_state(fsrs_state_after)
 
-    # ── payload 업데이트 ──
-    payload = set_fsrs_state(payload, fsrs_state_after)
-    # mastery 비정규화(2026-09) — 추천 알고리즘의 "약함 점수"용. 이미 잠그고 쓰는 이 행에
-    # 필드만 더 얹는 것이라 추가 쿼리·추가 락 없음(중복 요청은 위 멱등 가드에서 이미 리턴됨).
-    payload = set_mastery(payload, bool(was_correct), now.isoformat() + "Z")
+    if not fsrs_exempt:
+        # ── payload 업데이트 ──
+        payload = set_fsrs_state(payload, fsrs_state_after)
+        # mastery 비정규화(2026-09) — 추천 알고리즘의 "약함 점수"용. 이미 잠그고 쓰는 이 행에
+        # 필드만 더 얹는 것이라 추가 쿼리·추가 락 없음(중복 요청은 위 멱등 가드에서 이미 리턴됨).
+        payload = set_mastery(payload, bool(was_correct), now.isoformat() + "Z")
 
-    user_voca.data       = serialize_user_voca_data(payload)
-    user_voca.updated_at = dt.datetime.utcnow()
+        user_voca.data       = serialize_user_voca_data(payload)
+        user_voca.updated_at = dt.datetime.utcnow()
 
     # ── tier 진행 상태 정본 갱신(2026-09 2차 보완) ──
     # tier_target/tier_shown이 둘 다 있는 요청(자동 추천 경로)만 갱신한다. 설정 시트로
@@ -659,7 +695,7 @@ def post_study_log():
         user_voca.tier_correct = bool(was_correct)
 
     # ── UserStudyLog INSERT ──
-    q_score = rating_to_q_score(rating)
+    q_score = 0 if rating is None else rating_to_q_score(rating)
 
     log = UserStudyLog(
         user_id=user_id,
@@ -714,6 +750,25 @@ def post_study_log():
         stat.avg_time_taken_ms = round(0.9 * stat.avg_time_taken_ms + 0.1 * int(time_taken_ms))
         stat.updated_at = dt.datetime.utcnow()
 
+    # ── 사용자 수준(θ) 갱신 (이슈 #16, LEVEL_AND_MEANING_CONTRACT.md §2) ──
+    # 사전 모델은 요청 언어 schema 로 가므로 단어 언어와 요청 언어가 같을 때만 b 를 읽는다.
+    # 실패해도 학습 기록은 살린다(savepoint 로 격리).
+    skill = None
+    word_lang = user_voca.dict_lang or 'en'
+    if word_lang in ('en', 'ja') and word_lang == get_dict_lang():
+        try:
+            from app.services.skill_level import record_answer
+            with db.session.begin_nested():
+                skill = record_answer(
+                    user_id, word_lang, question_type=question_type, was_correct=bool(was_correct),
+                    example_hash=example_hash, voca_id=user_voca.voca_id,
+                    error_type=error_type if (error_type or was_correct) else (
+                        'wrong_choice' if question_type in _CHOICE_QUESTION_TYPES else None),
+                )
+        except Exception:
+            logging.getLogger(__name__).error('사용자 수준 갱신 실패 (학습 기록은 정상)', exc_info=True)
+            skill = None
+
     try:
         db.session.commit()
     except Exception as e:
@@ -732,18 +787,20 @@ def post_study_log():
     # 여기서의 실패는 학습 저장에 영향 없음. 게임 로직은 services/game/에만 둔다.
     # session_id 는 농장 V2 가 요구한다(씨앗 구간 독립 정답 판정 + 세션 종료 요약).
     game_payload = {'combo': None, 'farm': None, 'streak': None}
-    try:
-        from app.services.game.hooks import on_study_answer
-        game_payload = on_study_answer(
-            user_id, session_obj.test_type, bool(was_correct),
-            user_voca_id=user_voca_id, memory_state_after=memory_state_after,
-            session_id=session_uuid,
-            # 진행 막대의 '학습 전' 값 — 여기서 안 넘기면 농장은 이미 커밋된 새 상태밖에 못 본다
-            fsrs_before=fsrs_state_before,
-        )
-    except Exception:
-        db.session.rollback()
-        logging.getLogger(__name__).warning('game hook 실패 (학습 저장은 정상)', exc_info=True)
+    # 뜻 맞추기 오답(fsrs_exempt)은 농장·콤보에도 반영하지 않는다.
+    if not fsrs_exempt:
+        try:
+            from app.services.game.hooks import on_study_answer
+            game_payload = on_study_answer(
+                user_id, session_obj.test_type, bool(was_correct),
+                user_voca_id=user_voca_id, memory_state_after=memory_state_after,
+                session_id=session_uuid,
+                # 진행 막대의 '학습 전' 값 — 여기서 안 넘기면 농장은 이미 커밋된 새 상태밖에 못 본다
+                fsrs_before=fsrs_state_before,
+            )
+        except Exception:
+            db.session.rollback()
+            logging.getLogger(__name__).warning('game hook 실패 (학습 저장은 정상)', exc_info=True)
 
     return jsonify({
         'code': 200,
@@ -757,8 +814,31 @@ def post_study_log():
             'combo':  (game_payload or {}).get('combo'),
             'farm':   (game_payload or {}).get('farm'),
             'streak': (game_payload or {}).get('streak'),
+            # 사용자 수준(이슈 #16) — 갱신 안 됐으면 null. {theta_before, theta, b}
+            'skill':  skill,
         },
     }), 200
+
+
+@study_bp.route('/skill-profile', methods=['GET'])
+@jwt_required
+def get_skill_profile():
+    """GET /study/skill-profile?lang=en — 사용자 수준(LEVEL_AND_MEANING_CONTRACT.md §2).
+
+    lang 생략 시 현재 학습 언어. 프로필이 아직 없으면 초기값(가입 수준 기반 θ, answers 0)을 돌려준다(행은 만들지 않음).
+    응답: {code:200, data:{lang, theta, cefr:"A2", answers, type_stats, error_stats}}
+    """
+    from app.utils.dict_lang import normalize_lang
+    from app.services.skill_level import load_profile_row, profile_response
+    user_id = UUID(g.user_id)
+    lang = normalize_lang(request.args.get('lang')) or get_dict_lang()
+    if lang not in ('en', 'ja'):
+        return jsonify({'code': 400, 'message': 'lang은 en 또는 ja만 지원합니다.'}), 400
+    row = load_profile_row(user_id, lang)
+    level_id = None
+    if row is None:
+        level_id = db.session.query(User.level_id).filter(User.id == user_id).scalar()
+    return jsonify({'code': 200, 'data': profile_response(row, lang, level_id)}), 200
 
 
 @study_bp.route('/example-seen', methods=['POST'])
@@ -1512,6 +1592,10 @@ def get_recommend():
                     break
             for t in ('fillInTheBlank', 'fillInTheBlankTyping'):
                 qp[t] = _build_sentence_question_payload(enriched['_item'], t, ctx)
+            # 문장 뜻 맞추기 — 빈칸 입력 다음·문장 만들기 앞 단계(LEVEL_AND_MEANING_CONTRACT.md §3). 없으면 키 생략.
+            sm = _build_sentence_question_payload(enriched['_item'], 'sentenceTranslate', ctx)
+            if sm:
+                qp['sentenceTranslate'] = sm
             resp['question_payloads'] = qp
         detail_map = _load_plant_dict_detail([e['_item'].voca_id for e in enriched_items], lang)
         for resp in items_response:

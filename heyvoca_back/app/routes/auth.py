@@ -1312,6 +1312,9 @@ def withdraw():
 
             # 8-2. UserQuestionTypeStat 삭제 (문제 유형별 정답률 집계, 실제 FK)
             db.session.query(UserQuestionTypeStat).filter(UserQuestionTypeStat.user_id == user_id).delete()
+            # 사용자 수준(θ, FK 없음 — 이슈 #16)
+            from app.models.models import UserSkillProfile
+            db.session.query(UserSkillProfile).filter(UserSkillProfile.user_id == user_id).delete()
 
             # 8-3. UserOnboardingMission 삭제 (온보딩 미션 완료 기록, user.id 참조 FK)
             #      이걸 안 지우면 User 삭제 시 FK 제약 위반(1451)으로 탈퇴가 실패한다.

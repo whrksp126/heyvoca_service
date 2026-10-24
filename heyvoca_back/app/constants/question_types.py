@@ -37,6 +37,9 @@ RECOMMENDABLE_QUESTION_TYPES = (
     # 2026-10-24 QA #15 — 문장 뜻 고르기(독해): 예문 원문을 읽고 한국어 뜻 4개 중 고르기.
     # 프론트가 예문 데이터만으로 로컬 조립(plugins/questionTypes/index.js buildSentenceMeaningQuestions).
     'sentenceMeaning',
+    # 2026-10 이슈 #16 — 문장 뜻 맞추기(외국어 예문 → 한국어 어절 조각 나열). en·ja 공통.
+    # 정본: heyvoca_service/docs/LEVEL_AND_MEANING_CONTRACT.md §3
+    'sentenceTranslate',
 )
 
 # 난이도 오르내리기(자동 출제, composer._compose_recommend full_recommend 경로) 전용 —
@@ -53,16 +56,18 @@ QUESTION_TYPE_TIER = {
     'sentenceArrange':         4,
     'listenArrange':           4,
     'fillInTheBlankTyping':    4,   # 대표 tier. tier 5 에도 노출(TIER_QUESTION_TYPES[5] 참고)
+    # 2026-10 이슈 #16 문장 뜻 맞추기(한국어 조각 나열) — 4지선다 sentenceMeaning(tier 3)보다 한 칸 위.
+    'sentenceTranslate':       4,
 }
 
 # tier → 그 tier에서 출제 가능한 유형 목록(순서 고정). QUESTION_TYPE_TIER의 역인덱스 + 예외 1건:
 # fillInTheBlankTyping 은 대표 tier 4 이면서 tier 5 에도 들어간다(2026-10 tier 4 부터 노출).
-# tier 4 는 같은 tier 안 균등 무작위라 typing 비중 약 1/3(puzzle 없는 단어는 typing 만 후보).
+# tier 4 는 같은 tier 안 균등 무작위라 typing 비중 약 1/4(puzzle 없는 단어는 typing 만 후보).
 TIER_QUESTION_TYPES = {
     1: ('multipleChoice', 'cardMatch'),
     2: ('reverseMultipleChoice', 'multipleChoiceListening', 'cardMatchListening'),
     3: ('fillInTheBlank', 'sentenceArrangePartial', 'sentenceMeaning'),
-    4: ('sentenceArrange', 'listenArrange', 'fillInTheBlankTyping'),
+    4: ('sentenceArrange', 'listenArrange', 'fillInTheBlankTyping', 'sentenceTranslate'),
     5: ('fillInTheBlankTyping',),
 }
 

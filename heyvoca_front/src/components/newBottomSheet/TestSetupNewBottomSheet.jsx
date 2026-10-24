@@ -13,7 +13,7 @@ import { MEMORY_STAGE_ORDER, wordMemoryStage, memoryStageCounts, isWordStudiable
 import { vibrate } from '../../utils/osFunction';
 import SetupTile from '../common/SetupTile';
 import MemoryStageSelector from '../common/MemoryStageSelector';
-import { McqGlyph, CardMatchGlyph, BlankGlyph, ArrangeGlyph, TypingGlyph, ReadGlyph } from '../common/QuestionTypeGlyphs';
+import { McqGlyph, CardMatchGlyph, BlankGlyph, ArrangeGlyph, TypingGlyph, ReadGlyph, TranslateGlyph } from '../common/QuestionTypeGlyphs';
 import { Toggle } from '../newfullsheet/settingsUi';
 import SpeakerArt from '../common/SpeakerArt';
 
@@ -509,13 +509,14 @@ export const TestSetupNewBottomSheet = ({ onCancel, onSet, maxVocabularyCount, v
                 </SetupTile>
               ))}
             </div>
-            {/* 출제형 4종(2026-09) — 3칸 줄과 같은 타일을 새 줄에 둔다(5칸을 한 줄에 욱여넣으면
+            {/* 출제형 4종(2026-09)·문장 뜻 맞추기 — 3칸 줄과 같은 타일을 새 줄에 둔다(5칸을 한 줄에 욱여넣으면
                 아이콘·라벨이 너무 좁아진다). */}
             <div className="flex gap-[8px]">
               {[
                 { value: 'sentenceArrange', label: '문장 만들기', Glyph: ArrangeGlyph },
                 { value: 'fillInTheBlankTyping', label: '빈칸 입력', Glyph: TypingGlyph },
                 { value: 'sentenceMeaning', label: '문장 뜻 고르기', Glyph: ReadGlyph },
+                { value: 'sentenceTranslate', label: '문장 뜻 맞추기', Glyph: TranslateGlyph },
               ].map(({ value, label, Glyph }) => (
                 <SetupTile
                   key={value}

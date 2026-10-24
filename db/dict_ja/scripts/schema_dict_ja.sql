@@ -290,3 +290,19 @@ CREATE TABLE IF NOT EXISTS `voca_example_ja` (
   CONSTRAINT `fk_voca_example_ja_example` FOREIGN KEY (`example_id`) REFERENCES `voca_example` (`id`) ON DELETE CASCADE,
   CONSTRAINT `ck_voca_example_ja_source` CHECK ((`source` in (_utf8mb4'tatoeba',_utf8mb4'generated')))
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- 2026-10-25 이슈 #16: 예문 라벨 v2(난이도). 채우는 job: heyvoca_back/jobs/label_examples_v2.py --lang ja
+-- (정본: heyvoca_service/docs/LEVEL_AND_MEANING_CONTRACT.md §1). FK 없는 파생 테이블.
+CREATE TABLE IF NOT EXISTS `voca_example_ja_meta` (
+  `example_id` int NOT NULL,
+  `sentence_hash` varchar(64) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'sentence_puzzle.sentence_hash(exam_en)',
+  `cefr` tinyint NOT NULL COMMENT 'JLPT 환산 A1=1 … C2=6',
+  `score` smallint NOT NULL COMMENT '0~100',
+  `word_count` smallint NOT NULL COMMENT '문장부호 뺀 토큰 수',
+  `rare_count` smallint NOT NULL DEFAULT '0' COMMENT 'N1·JLPT 밖 내용어 수',
+  `words` json NOT NULL COMMENT '내용어 사전 표제어 리스트(아는 단어 판정용)',
+  `grammar` json DEFAULT NULL COMMENT '문법 태그 리스트',
+  `label_ver` tinyint NOT NULL DEFAULT '2',
+  PRIMARY KEY (`example_id`),
+  KEY `ix_voca_example_ja_meta_sentence_hash` (`sentence_hash`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

@@ -1598,7 +1598,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
   // 변환해 enqueueRetry로 큐 맨 끝에 재출제한다(맞출 때까지 반복, 통과 처리하지 않음).
   // loggedVocaIdsRef로 중복 로깅 방지, cardRetryEnqueuedRef로 동일 단어의 중복 재출제
   // (카드 즉시 콜백 onCardMatched + 세트 완료 콜백 onComplete 이중 호출) 방지.
-  const processCardWord = ({ sheetId, wordId, updateData, isCorrect: wordIsCorrect, timeTakenMs, typo }, currentQuestion, setWords, questionType) => {
+  const processCardWord = ({ sheetId, wordId, updateData, isCorrect: wordIsCorrect, timeTakenMs, typo, errorType }, currentQuestion, setWords, questionType) => {
     if (wordId == null) return;
     updateWordState(sheetId, wordId, updateData);
     setPendingUpdateSheetIds(prev => new Set(prev.add(sheetId)));
@@ -1713,6 +1713,8 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
           typo: !!typo,
           // 문제에 쓰인 예문(FRESH_SENTENCE_CONTRACT §4·5) — 없으면 보내지 않는다.
           ...(exampleHash ? { example_hash: exampleHash } : {}),
+          // 실수 유형(LEVEL_AND_MEANING_CONTRACT §3) — sentenceTranslate 등 아는 유형만, 없으면 보내지 않는다.
+          ...(errorType ? { error_type: errorType } : {}),
         };
 
         // pendingLogPromisesRef에는 실제 전송 시점과 무관하게(큐잉되더라도) 즉시 등록해야
@@ -1766,7 +1768,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
       }
       // 문제 전용 필드를 벗겨 순수 단어 객체로 되돌린 뒤 다시 출제한다
       const wordObj = { ...currentQuestion };
-      ['options', 'resultIndex', 'shownText', 'blankText', 'blankFill', 'arrange', 'typing',
+      ['options', 'resultIndex', 'shownText', 'blankText', 'blankFill', 'arrange', 'typing', 'meaning',
         'questionType', 'isCorrect', 'userResultIndex', 'isRetry'].forEach(k => { delete wordObj[k]; });
       const pool = collectSessionWordPool(testQuestions);
       const regenerated = getQuestionType(questionType)?.setupQuestions?.([wordObj], pool) ?? [];
