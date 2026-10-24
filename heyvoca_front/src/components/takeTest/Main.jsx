@@ -467,9 +467,9 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
     if (Array.isArray(question.options) && question.options.length > 0) {
       const correctOption = question.options[question.resultIndex];
       const shuffled = [...question.options].sort(() => Math.random() - 0.5);
-      // 선택지가 단어 객체(사지선다)면 id, 문자열(빈칸 채우기)이면 문자열 자체로 비교한다 —
+      // 선택지가 단어 객체(사지선다)면 id, 글자 보기면 key/char, 문자열(빈칸 채우기)이면 문자열 자체로 비교한다 —
       // 예전엔 객체만 가정해 문자열 선택지의 resultIndex 가 어긋났다.
-      const optionKey = (opt) => (opt !== null && typeof opt === 'object') ? (opt.id ?? opt.vocaIndexId) : opt;
+      const optionKey = (opt) => (opt !== null && typeof opt === 'object') ? (opt.id ?? opt.vocaIndexId ?? opt.key ?? opt.char) : opt;
       const newResultIndex = shuffled.findIndex((opt) => optionKey(opt) === optionKey(correctOption));
       retryQuestion = {
         ...question,
