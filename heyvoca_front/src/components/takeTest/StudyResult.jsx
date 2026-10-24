@@ -208,8 +208,8 @@ const CountdownRing = ({ remainingSec, from, runSec, running, animate }) => (
 
 /*
   【2026-09-27 실기기 피드백 3】 예전엔 링을 탭하면 멈췄는데(버튼 나머지는 바로 시작) 발견하기
-  어려웠고, 같은 버튼 안에서 누른 자리에 따라 반대 동작이 되어 헷갈렸다. 지금 멈추기는 버튼
-  바로 위 안내 줄(NextStudyNotice)의 `멈추기` 한 곳뿐이고, 버튼은 어디를 눌러도 바로 시작한다.
+  어려웠고, 같은 버튼 안에서 누른 자리에 따라 반대 동작이 되어 헷갈렸다. 지금 멈추기는 하단 왼쪽
+  버튼(카운트 중엔 `멈추기`, 멈춘 뒤 `학습 종료`) 한 곳뿐이고, 다음 학습 버튼은 어디를 눌러도 바로 시작한다.
   링은 남은 시간을 보여 주는 표시로만 남긴다.
 */
 const NextStudyCta = ({ showRing, ring, reducedMotion, onStart, className = '' }) => (
@@ -243,12 +243,12 @@ const NextStudyCta = ({ showRing, ring, reducedMotion, onStart, className = '' }
 
 /*
   카운트다운 안내 줄 — 하단 버튼 줄 바로 위 은은한 pill(토스트 형).
-  `N초 뒤 다음 학습이 시작돼요` + 오른쪽 `멈추기`. N 은 링과 같은 remainingSec 이다.
-  버튼 영역(data-result-cta, 불투명 z-20) 안에 있어 목록 스크롤과 겹치지 않고,
-  결과 화면의 "명시적 탭 = 멈춤" 판정에서도 빠진다(멈추기 버튼이 직접 멈춘다).
+  `N초 뒤 다음 학습이 시작돼요`. N 은 링과 같은 remainingSec 이다.
+  멈추기는 이 줄이 아니라 왼쪽 하단 버튼이 맡는다(이슈 #15 3차 QA — 아래 LeftCta 주석).
+  버튼 영역(data-result-cta, 불투명 z-20) 안에 있어 목록 스크롤과 겹치지 않는다.
   사라질 때는 높이·투명도를 함께 줄여 버튼 줄이 부드럽게 내려앉는다.
 */
-const NextStudyNotice = ({ show, remainingSec, onStop, reducedMotion }) => (
+const NextStudyNotice = ({ show, remainingSec, reducedMotion }) => (
   <AnimatePresence initial={false}>
     {show ? (
       <motion.div
@@ -263,20 +263,11 @@ const NextStudyNotice = ({ show, remainingSec, onStop, reducedMotion }) => (
           <div
             role='status'
             data-testid='next-study-notice'
-            className='flex items-center justify-between gap-[8px] rounded-full pl-[16px] pr-[4px] h-[40px] bg-layout-gray-50 dark:bg-layout-gray-dark'
+            className='flex items-center justify-center gap-[8px] rounded-full px-[16px] h-[40px] bg-layout-gray-50 dark:bg-layout-gray-dark'
           >
             <p className='min-w-0 truncate text-[13px] font-[600] tracking-[-0.02em] text-layout-gray-400 dark:text-layout-gray-200'>
               <span className='tabular-nums font-[700] text-primary-main-600'>{remainingSec}초</span> 뒤 다음 학습이 시작돼요
             </p>
-            <button
-              type='button'
-              data-testid='next-study-stop'
-              onClick={onStop}
-              className='flex-shrink-0 flex items-center gap-[4px] h-[32px] px-[12px] rounded-full text-[13px] font-[700] text-layout-black dark:text-layout-white active:bg-layout-gray-100 dark:active:bg-layout-black'
-            >
-              <Pause size={14} weight="fill" />
-              멈추기
-            </button>
           </div>
         </div>
       </motion.div>
@@ -907,7 +898,7 @@ const StudyResult = () => {
       · **명시적인 탭**(누른 자리에서 10px 안에서 떼고, 700ms 안) 만 멈춤으로 본다 —
         결과 카드의 발음 버튼·단어 탭도 탭이므로 멈춘다. 스크롤 제스처는 브라우저가
         pointercancel 을 보내거나 이동거리가 커서 탭이 아니다.
-      · 버튼 줄 위 안내 줄(NextStudyNotice)의 `멈추기` 를 누르면 멈춘다. 버튼은 어디를 눌러도 즉시 시작.
+      · 카운트다운 중 왼쪽 하단 버튼은 `멈추기` — 누르면 멈추고 그 자리가 `학습 종료`로 바뀐다.
       · 앱이 백그라운드로 가면(visibilitychange hidden / pagehide) **일시정지**, 돌아오면 남은
         시간부터 이어 센다. WebView 가 visible 을 놓치는 경우를 대비해 멈춘 동안 1초마다 실제
         visibilityState 를 다시 본다.
@@ -1377,16 +1368,26 @@ const StudyResult = () => {
               show={showRing}
               remainingSec={remainingSec}
               reducedMotion={reducedMotion}
-              onStop={() => { haptic('light'); stopCountdown('notice'); }}
             />
             <ResultCtaBar>
               {nextPlan.available && !isFreeTest ? (
                 <>
+                  {/* 왼쪽 버튼 한 자리가 두 단계 — 카운트다운 중엔 '멈추기'(자동 다음 학습만 멈춤),
+                      멈춘 뒤엔 '학습 종료'(이슈 #15 3차 QA, 예전엔 안내 줄에 따로 멈추기가 있었다). */}
                   <ResultCta
                     secondary
                     className="flex-1"
-                    label="학습 종료"
-                    onClick={() => { haptic('light'); onClickEndStudy(); }}
+                    label={showRing ? (
+                      <span className='flex items-center justify-center gap-[6px]'>
+                        <Pause size={14} weight="fill" />
+                        멈추기
+                      </span>
+                    ) : '학습 종료'}
+                    onClick={() => {
+                      haptic('light');
+                      if (showRing) stopCountdown('cta');
+                      else onClickEndStudy();
+                    }}
                   />
                   <NextStudyCta
                     className="flex-1"

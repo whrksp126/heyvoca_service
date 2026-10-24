@@ -369,17 +369,17 @@ const FillInTheBlankTypingQuestion = ({ question, onComplete, onCardMatched, far
       ? 'border-status-success-500 text-status-success-600 dark:text-status-success-300 bg-status-success-100 dark:bg-status-success-dark'
       : 'border-status-error-500 text-status-error-600 dark:text-status-error-300 bg-status-error-100 dark:bg-status-error-dark';
 
-  // 결과 줄 — 제목(정답/오답) + 정답 낱말 + 보조 설명. 오타 허용 정답은 초록 그대로 두되
-  // "오타 허용" 딱지와 정확한 철자를 함께 보여 진짜 오답과도, 한 번에 맞힌 정답과도 구분한다.
+  // 결과 줄 — 제목(정답/오답) + 정답 낱말 + 보조 설명. 오타 허용 정답은 '정답이에요' + 정확한 철자
+  // 한 줄만 보인다(이슈 #15 3차 QA — 예전엔 인정했어요·오타 허용 딱지·안내 문장이 같은 말을 반복했다).
   const verdict = !isAnswered
     ? null
     : isCorrect
       ? {
         correct: true,
-        title: isTypoAccepted ? '정답으로 인정했어요' : '정답이에요',
-        tag: isTypoAccepted ? '오타 허용' : null,
+        title: '정답이에요',
+        tag: null,
         answerLabel: isTypoAccepted ? '정확한 철자' : (isVariantAccepted ? '정확한 표기' : null),
-        note: isTypoAccepted ? '철자가 조금 달랐어요 · 다음엔 정확히 써 보세요' : null,
+        note: null,
       }
       : {
         correct: false,
@@ -387,7 +387,7 @@ const FillInTheBlankTypingQuestion = ({ question, onComplete, onCardMatched, far
         tag: null,
         answerLabel: '정답',
         note: reason === 'synonym'
-          ? `${value.trim()} 도 비슷한 뜻이에요 · 이 문장에는 ${answerText} 가 더 잘 어울려요`
+          ? `${value.trim()} 도 비슷한 뜻이지만 이 문장엔 맞지 않아요`
           : reason === 'baseForm'
             ? '낱말은 맞지만 형태가 달라요'
             : null,
