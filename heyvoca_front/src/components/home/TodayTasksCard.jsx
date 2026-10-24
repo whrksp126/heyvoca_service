@@ -6,8 +6,9 @@
 // 시듦·돌봄)을 개수 카드와 목록 카드 두 곳에서 반복하지 않는다(Main.jsx 정리 참고).
 //
 // 행 5개, 고정 순서. 0인 행은 숨긴다.
-//   1 썩은 단어 살리기 — 영양 회복제 충분하면 즉시 전부 회복, 부족하면 RottenListSheet(기존
-//     보관소 진입점)를 그대로 연다 — 회복제/삽 선택은 거기 이미 있다(중복 구현하지 않는다).
+//   1 썩은 단어 살리기 — 행/버튼을 누르면 확인 시트(필요·보유 회복제)를 먼저 띄우고, 시트의
+//     '살리기'로 전부 회복한다. 모자라면 RottenListSheet(기존 보관소 진입점)로 넘긴다 — 회복제/삽
+//     선택은 거기 이미 있다(중복 구현하지 않는다). 오늘 살린 단어는 행에 '완료'로 남는다(rotten.done).
 //   2 시듦 물주기
 //   3 오늘 돌봄 물주기
 //   4 새 씨앗 심기 — memoryState=['unlearned']로 좁힌 AI 추천 학습.
@@ -31,6 +32,8 @@ import { useStats } from '../../context/StatsContext';
 import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
 import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 import { ConfirmNewBottomSheet } from '../newBottomSheet/ConfirmNewBottomSheet';
+import RescueConfirmNewBottomSheet from '../newBottomSheet/RescueConfirmNewBottomSheet';
+import { CROP_ASSETS } from '../farm/CropImage';
 import { usePlantSession } from '../../hooks/usePlantSession';
 import { vibrate, showToast } from '../../utils/osFunction';
 import { getRottenPlantsApi, recoverPlantsApi } from '../../api/farm';
@@ -60,10 +63,10 @@ const Pill = ({ tone = 'primary', children, onClick, disabled }) => (
     onClick={(e) => { e.stopPropagation(); if (!disabled) onClick?.(); }}
     disabled={disabled}
     className={`
-      shrink-0 h-[30px] px-[11px] rounded-full text-[12.5px] font-[700] whitespace-nowrap
+      shrink-0 h-[32px] pl-[7px] pr-[11px] rounded-[8px] text-[13px] font-[700] tracking-[-0.02em] whitespace-nowrap
       disabled:opacity-40
       ${tone === 'primary'
-        ? 'bg-primary-main-100 dark:bg-primary-main-dark text-primary-main-600'
+        ? 'bg-primary-main-600 text-layout-white dark:text-layout-black'
         : 'bg-layout-gray-50 dark:bg-layout-gray-dark text-layout-gray-400 dark:text-layout-gray-200'}
     `}
   >
@@ -198,7 +201,8 @@ const TodayTasksCard = () => {
 
   if (!todayTasks) return null;
 
-  const rotten = todayTasks.rotten ?? { count: 0, words: [] };
+  const rotten = todayTasks.rotten ?? { count: 0, done: 0, words: [] };
+  const rottenDone = rotten.done ?? 0;
   const wilted = todayTasks.wilted ?? { total: 0, done: 0, words: [] };
   const care = todayTasks.care ?? { total: 0, done: 0, words: [] };
   const newSeed = todayTasks.new_seed ?? { target: 0, done: 0 };
@@ -232,16 +236,19 @@ const TodayTasksCard = () => {
     }, { smFull: true, closeOnBackdropClick: true });
   };
 
-  // '살리기' — 영양 회복제가 충분하면 그 자리에서 전부 회복, 부족하면 기존 보관소 시트를 연다
-  // (회복제 추가 구매 · 삽으로 다시 심기 선택은 그 시트가 이미 갖고 있다).
+  // '살리기' — 확인 시트를 먼저 띄운다. 회복제가 충분하면 시트의 '살리기'로 전부 회복,
+  // 모자라면 기존 보관소 시트를 연다(회복제 추가 구매 · 삽으로 다시 심기 선택은 그 시트가 갖고 있다).
   const handleRecover = async () => {
     if (recovering || rotten.count <= 0) return;
     vibrate({ duration: 5 });
 
-    if (nutrientCnt < rotten.count) {
-      openRottenSheet();
-      return;
-    }
+    const answer = await pushAwaitNewBottomSheet(
+      RescueConfirmNewBottomSheet,
+      { count: rotten.count, nutrientCnt },
+      { isBackdropClickClosable: true, isDragToCloseEnabled: true }
+    );
+    if (answer === 'pick') { openRottenSheet(); return; }
+    if (answer !== true) return;
 
     setRecovering(true);
     // today-tasks의 words는 미리보기(앞 몇 개)뿐이라 전체 id 목록은 다시 받아야 한다
@@ -297,15 +304,28 @@ const TodayTasksCard = () => {
   // 실제로 몇 행이 그려지는지(0인 행은 숨김) 다 정해진 뒤에만 알 수 있다.
   const rowDefs = [];
 
-  if (rotten.count > 0) {
+  // 다 살렸으면(남은 부패 0, 오늘 살린 것 ≥1) 다른 행처럼 체크 + 진행 x/y 로 남는다
+  if (rotten.count > 0 || rottenDone > 0) {
+    const done = rotten.count <= 0;
     const { compact, expandedBlock } = buildWordListParts(rotten.words, expanded.rotten, () => toggle('rotten'));
     rowDefs.push({
       key: 'rotten',
       title: '썩은 단어 살리기',
       sub: compact,
       expand: expandedBlock,
-      checked: false,
-      right: <Pill tone="primary" onClick={handleRecover} disabled={recovering}>살리기</Pill>,
+      faded: done,
+      checked: done,
+      onRowClick: done ? undefined : handleRecover,
+      right: done
+        ? <Progress done={rottenDone} total={rottenDone + rotten.count} />
+        : (
+          <Pill tone="primary" onClick={handleRecover} disabled={recovering}>
+            <span className="flex items-center gap-[3px]">
+              <img src={CROP_ASSETS.nutrient} alt="" draggable={false} className="h-[18px] w-[18px] object-contain" />
+              살리기
+            </span>
+          </Pill>
+        ),
     });
   }
 

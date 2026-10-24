@@ -10,15 +10,18 @@
 //   840ms   수량 도장                  tap
 //   1000ms  한 줄 문구
 //   1300ms  「확인」 켜짐              select
-//
-// 목업의 「보유 3 → 4」 줄은 세션 요약 응답에 현재 보유 수량이 없어 넣지 않았다(수량 도장까지만).
-import React, { useRef, useState } from 'react';
+//   보유 수량(before/after)을 알면 보석 슬라이드처럼 헤더에 잔액 칩을 띄우고, 1300ms~ 작은 아이템이
+//   하나씩 칩으로 날아가 +1 씩 오른다. 끝나면 칩이 빛나고 「확인」이 켜진다.
+//   모르면(게스트 · 조회 실패) 칩 없이 착지까지만 보여 준다.
+import React, { useEffect, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { motion } from 'framer-motion';
 import { feel } from '../../../lib/feel';
 import { FARM_ITEM_ASSETS } from '../../farm/CropImage';
 import { FARM_ITEM_LABEL } from '../../../utils/crop';
 import { useRewardTimeline } from './useRewardTimeline';
-import { anim, burst, ring, jelly, clearFx } from './fx';
+import { useRewardShell } from './RewardShell';
+import { anim, burst, ring, jelly, pulse, clearFx } from './fx';
 import RewardGlow from './RewardGlow';
 
 const LAND = 620;
@@ -34,10 +37,26 @@ const eulReul = (noun) => {
 };
 
 const FADE_UP = 'transition-[transform,opacity] duration-300 ease-out motion-reduce:transition-none';
+// 잔액 칩으로 날아가는 작은 아이템 — 보석 슬라이드(GemRewardSlide)와 같은 크기·궤적
+const MINI = 34;
+const MAX_MINIS = 6;
+const FLY0 = LAND + 700;
+const FLY_MS = 380;
+const HOT_SHADOW = '0 0 0 2px #FF70D4, 0 0 18px rgba(255,112,212,.5)';
+const COLD_SHADOW = '0 0 0 0 rgba(255,112,212,0)';
 
-const ItemRewardSlide = ({ itemKey, qty = 1, why, reducedMotion, onReady, skipRef }) => {
+const ItemRewardSlide = ({ itemKey, qty = 1, why, before = null, after = null, reducedMotion, onReady, skipRef }) => {
   const label = FARM_ITEM_LABEL[itemKey] ?? '아이템';
   const src = FARM_ITEM_ASSETS[itemKey];
+  const hasBalance = Number.isFinite(before) && Number.isFinite(after);
+  const shown = hasBalance ? Math.min(Math.max(1, qty), MAX_MINIS) : 0;
+  const per = shown > 0 ? (after - before) / shown : 0;
+  const gap = shown > 0 ? Math.max(80, Math.min(140, 700 / shown)) : 0;
+
+  const { headerSlot } = useRewardShell();
+  const [bal, setBal] = useState(hasBalance ? before : 0);
+  const pillRef = useRef(null);
+  const pillIconRef = useRef(null);
 
   const [dropped, setDropped] = useState(false);
   const [landed, setLanded] = useState(false);
@@ -49,8 +68,68 @@ const ItemRewardSlide = ({ itemKey, qty = 1, why, reducedMotion, onReady, skipRe
   const itemRef = useRef(null);
   const beamRef = useRef(null);
 
+  // 작은 아이템 하나가 주인공 자리에서 잔액 칩 그림으로 날아간다. 슬라이드 본문은 빛기둥 때문에
+  // overflow-hidden 이라, 화면(body) 위 고정 좌표로 띄워 헤더까지 잘리지 않게 한다.
+  const minisRef = useRef([]);
+  const flyMini = (i) => {
+    const hero = heroRef.current;
+    const icon = pillIconRef.current;
+    if (!hero || !icon) return;
+    const a = icon.getBoundingClientRect();
+    const b = hero.getBoundingClientRect();
+    const sx = b.left + C + (i % 2 ? 1 : -1) * (10 + i * 6);
+    const sy = b.top + C - 10;
+    const dx = a.left + a.width / 2 - sx;
+    const dy = a.top + a.height / 2 - sy;
+    const m = document.createElement('span');
+    m.setAttribute('aria-hidden', 'true');
+    m.style.cssText = `position:fixed;left:${sx - MINI / 2}px;top:${sy - MINI / 2}px;width:${MINI}px;height:${MINI}px;pointer-events:none;z-index:2147483000`;
+    const img = document.createElement('img');
+    img.src = src;
+    img.alt = '';
+    img.style.cssText = 'width:100%;height:100%;object-fit:contain';
+    m.appendChild(img);
+    document.body.appendChild(m);
+    minisRef.current.push(m);
+    const fly = anim(m, [
+      { transform: 'translate(0,0) scale(.4)', opacity: 0 },
+      { transform: `translate(${dx / 2 - 40}px,${dy / 2 - 10}px) scale(1.15)`, opacity: 1, offset: 0.45 },
+      { transform: `translate(${dx}px,${dy}px) scale(.55)`, opacity: 1 },
+    ], { duration: FLY_MS, easing: 'cubic-bezier(.5,0,.8,.5)', fill: 'forwards' });
+    if (fly) fly.onfinish = () => m.remove();
+    else m.remove();
+  };
+  const clearMinis = () => { minisRef.current.forEach((m) => m.remove()); minisRef.current = []; };
+  useEffect(() => () => { minisRef.current.forEach((m) => m.remove()); }, []);   // 날던 중 다음 장으로 넘겨도 남지 않게
+
+  const flySteps = [];
+  for (let i = 0; i < shown; i += 1) {
+    flySteps.push({ at: FLY0 + i * gap, run: (instant) => { if (!instant) flyMini(i); } });
+    flySteps.push({
+      at: FLY0 + i * gap + FLY_MS,
+      cue: 'select',
+      run: (instant) => {
+        setBal((prev) => Math.max(prev, Math.round(before + per * (i + 1))));
+        if (!instant) pulse(pillRef.current, 1.2, 220);
+      },
+    });
+  }
+  const flyEnd = FLY0 + shown * gap + 420;
+  if (shown > 0) {
+    flySteps.push({
+      at: flyEnd,
+      run: (instant) => {
+        setBal(after);
+        if (instant) return;
+        anim(pillRef.current, [
+          { boxShadow: COLD_SHADOW }, { boxShadow: HOT_SHADOW, offset: 0.12 }, { boxShadow: HOT_SHADOW, offset: 0.8 }, { boxShadow: COLD_SHADOW },
+        ], { duration: 1500 });
+      },
+    });
+  }
+
   const build = () => ({
-    readyAt: LAND + 680,
+    readyAt: shown > 0 ? flyEnd + 100 : LAND + 680,
     steps: [
       {
         at: 0,
@@ -86,10 +165,11 @@ const ItemRewardSlide = ({ itemKey, qty = 1, why, reducedMotion, onReady, skipRe
       { at: LAND + 220, cue: 'tap', run: () => setStamped(true) },
       { at: LAND + 380, run: () => setTexted(true) },
       { at: LAND + 560, run: () => setTail(true) },
+      ...flySteps,
     ],
   });
 
-  useRewardTimeline(build, { reducedMotion, reducedCue: 'bonus', onReady, skipRef, onSkip: () => clearFx(heroRef.current) });
+  useRewardTimeline(build, { reducedMotion, reducedCue: 'bonus', onReady, skipRef, onSkip: () => { clearFx(heroRef.current); clearMinis(); } });
 
   const onTapItem = (e) => {
     e.stopPropagation();
@@ -99,8 +179,21 @@ const ItemRewardSlide = ({ itemKey, qty = 1, why, reducedMotion, onReady, skipRe
     burst(heroRef.current, C, C, { n: 10, dist: 90, size: 8 });
   };
 
+  const pill = hasBalance && headerSlot ? createPortal(
+    <div
+      ref={pillRef}
+      aria-label={`${label} ${bal}개`}
+      className='flex h-[30px] items-center gap-[5px] rounded-full bg-layout-gray-50 pl-[6px] pr-[11px] text-[14px] font-[800] tabular-nums dark:bg-layout-gray-dark'
+    >
+      <img ref={pillIconRef} src={src} alt='' className='h-[22px] w-[22px] object-contain' />
+      <span>{bal}</span>
+    </div>,
+    headerSlot,
+  ) : null;
+
   return (
     <div className='relative flex flex-1 flex-col items-center justify-center gap-[14px] overflow-hidden px-[20px] pb-[10px]'>
+      {pill}
       <div ref={heroRef} className='relative shrink-0' style={{ width: HERO, height: HERO }}>
         <RewardGlow on={landed} />
         {/* 빛기둥 */}

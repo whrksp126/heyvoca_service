@@ -19,7 +19,7 @@ import CropImage from '../farm/CropImage';
 import { stageToCrop, FARM_ITEMS } from '../../utils/crop';
 import WeekStreakStrip, { buildWeekCells } from '../farm/WeekStreakStrip';
 
-import { getFarmTodayTasksApi } from '../../api/farm';
+import { getFarmTodayTasksApi, getFarmItemsApi } from '../../api/farm';
 import { fetchSessionFarmSummary } from '../../utils/sessionSummaryPrefetch';
 import { calendarDaysFromToday } from '../../utils/reviewTiming';
 import StudyTimingTag from '../farm/StudyTimingTag';
@@ -731,11 +731,21 @@ const StudyResult = () => {
 
       // ⑤⑥⑦ 농장 아이템 — 종류마다 한 장. 한 화면에 모아 두면 영수증이 된다(시안 §3).
       //     삽은 여러 개일 때만 어느 단어에서 왔는지, 보호권은 항상 주간 지급분이라고 적는다.
-      [FARM_ITEMS.SHOVEL, FARM_ITEMS.NUTRIENT, FARM_ITEMS.SHIELD].forEach((itemKey) => {
+      //     보유 수량은 세션 요약에 없어 받은 게 있을 때만 /farm/items 로 읽는다 — 보석처럼 헤더 잔액
+      //     칩으로 날아 들어가는 연출에 쓴다(지급 뒤에 읽으니 after 다). 실패하면 칩 없이 착지까지만.
+      const ITEM_KEYS = [FARM_ITEMS.SHOVEL, FARM_ITEMS.NUTRIENT, FARM_ITEMS.SHIELD];
+      let ownedItems = null;
+      if (!isGuest && ITEM_KEYS.some((k) => (farmRewards?.[k] ?? 0) > 0)) {
+        const walletRes = await getFarmItemsApi();
+        if (walletRes?.code === 200) ownedItems = walletRes.data?.items ?? null;
+      }
+      ITEM_KEYS.forEach((itemKey) => {
         const qty = farmRewards?.[itemKey] ?? 0;
         if (qty <= 0) return;
         const why = itemKey === FARM_ITEMS.SHIELD ? '이번 주 지급분이에요' : null;
-        screens.push({ type: 'farmItem', data: { itemKey, qty, why } });
+        const after = Number(ownedItems?.[itemKey]);
+        const balance = Number.isFinite(after) && after >= qty ? { before: after - qty, after } : {};
+        screens.push({ type: 'farmItem', data: { itemKey, qty, why, ...balance } });
       });
 
       /*
