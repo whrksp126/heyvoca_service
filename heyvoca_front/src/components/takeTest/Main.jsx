@@ -237,13 +237,14 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
     진행 중엔 XP가 계속 올랐는데 격자엔 12XP만 남음). 세션 종료 시 글자당 1회 일괄 전송.
   */
   const isMultiStepMode = isPlantMode || testType === 'script';
-  // 새 씨앗 심기는 채점 후 자동으로 넘어가지 않는다 — 아래 '다음' 버튼(plantNextFooter)을 눌러야 넘어간다
-  // (2026-10-24 QA #15). 게이트를 쓰는 모든 유형에 한 번에 적용된다(hooks/useStudyAdvanceGate.js).
+  // 모든 학습(농장 돌보기·심기·글자)은 채점 후 자동으로 넘어가지 않는다 — 아래 '다음' 버튼(nextFooter)을
+  // 눌러야 넘어간다(2026-10-24 QA #15 2차, 1차는 심기만). 게이트를 쓰는 모든 유형에 한 번에 적용된다
+  // (hooks/useStudyAdvanceGate.js). 수동 모드에서는 홀드(신고·콤보 보호 시트)가 넘기기를 막지 않으므로,
+  // 시트가 닫힘 경로에 따라 홀드를 못 풀어 일반 학습 전체가 멈추던 문제도 함께 사라진다.
   useEffect(() => {
-    if (!isPlantMode) return undefined;
     setStudyManualAdvance(true);
     return () => setStudyManualAdvance(false);
-  }, [isPlantMode]);
+  }, []);
   const manualAdvance = useManualAdvancePending();
   const recordPlantAttempt = (vocaId, wasCorrect) => {
     if (vocaId == null || !plantAttemptsRef?.current) return;
@@ -1963,21 +1964,28 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
     </div>
   ) : null;
 
-  // 심기 세션 '다음' 버튼 — 자체 '다음' 버튼이 있는 유형(만나기·문장 만들기·빈칸 입력)은 제외.
-  // 채점 전에도 자리를 잡아 둬 채점 순간 레이아웃이 튀지 않게 하고, 채점 뒤에만 보인다.
-  const currentQType = testQuestions[progressIndex]?.questionType;
-  const showPlantNextFooter = isPlantMode
+  // 학습 공통 '다음' 버튼 — 자체 '다음' 버튼이 있는 유형(만나기·문장 만들기·빈칸 입력·글자 문제)은 제외.
+  // 채점 전부터 비활성(회색)으로 자리를 잡아 둬 채점 순간 위 콘텐츠 크기가 바뀌지 않게 하고, 채점 뒤 활성화된다.
+  const currentQ = testQuestions[progressIndex];
+  const currentQType = currentQ?.questionType;
+  const showNextFooter = !!currentQ
     && !isNoGradeQuestionType(currentQType)
-    && !isSentenceQuestionType(currentQType);
-  const plantNextFooter = showPlantNextFooter ? (
+    && !isSentenceQuestionType(currentQType)
+    && !currentQ?.script
+    && !String(currentQType ?? '').startsWith('script');
+  const nextFooter = showNextFooter ? (
     <motion.button
       type="button"
       disabled={!manualAdvance}
       onClick={() => { feel('tap'); manualAdvance?.(); }}
       whileTap={manualAdvance ? { scale: 0.97 } : undefined}
-      animate={{ opacity: manualAdvance ? 1 : 0 }}
-      transition={{ duration: 0.15 }}
-      className={`mt-[14px] flex-shrink-0 h-[52px] rounded-[12px] text-[16px] font-[700] tracking-[-0.03em] bg-primary-main-600 text-layout-white ${manualAdvance ? '' : 'pointer-events-none'}`}
+      className={`
+        mt-[14px] flex-shrink-0 h-[50px] rounded-[12px] text-[16px] font-[700] tracking-[-0.03em]
+        transition-colors duration-150
+        ${manualAdvance
+          ? 'bg-primary-main-600 text-layout-white'
+          : 'bg-layout-gray-200 dark:bg-[#2A2A2A] text-layout-gray-400 dark:text-layout-gray-300 pointer-events-none'}
+      `}
     >
       다음
     </motion.button>
@@ -2048,7 +2056,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
           </AnimatePresence>
         </div>
         {listeningSkipButton}
-        {plantNextFooter}
+        {nextFooter}
       </motion.div>
     );
   }
@@ -2326,7 +2334,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
         </AnimatePresence>
       </div>
       {listeningSkipButton}
-      {plantNextFooter}
+      {nextFooter}
     </motion.div>
   );
 };

@@ -128,7 +128,28 @@ const ChoiceCard = ({
           </div>
         )}
         <LiftAboveBar active={!!farm} topReserve={28} className="relative z-[1] w-full flex justify-center">
-        {isListen ? (
+        {isListen && answered ? (
+          // 채점 후에는 카드 맞추기처럼 스피커 대신 정답(글자·단어)과 발음을 보여준다(2026-10-24 이슈 #15 2차).
+          // 카드를 누르면 여전히 소리를 다시 들을 수 있다.
+          (() => {
+            const reveal = step.reveal ?? (() => {
+              const { main, sub } = optionMainSub(script, { item });
+              return { text: item?.char, sub: [main, sub].filter(Boolean).join(' · ') };
+            })();
+            return (
+              <div className="relative z-[1] flex flex-col items-center gap-[8px] px-[16px]">
+                <h2 className={`${step.reveal ? 'text-[44px] leading-[1.1] tracking-[0.02em]' : 'text-[52px]'} font-[700] text-layout-black dark:text-layout-white`}>
+                  {reveal.text}
+                </h2>
+                {reveal.sub && (
+                  <span className="text-[14px] font-[600] text-layout-gray-400 dark:text-layout-gray-200 text-center break-keep">
+                    {reveal.sub}
+                  </span>
+                )}
+              </div>
+            );
+          })()
+        ) : isListen ? (
           <motion.div
             animate={speaking ? { scale: [1, 1.12, 1] } : { scale: 1 }}
             transition={speaking ? { duration: 0.6, repeat: Infinity, ease: 'easeInOut' } : {}}

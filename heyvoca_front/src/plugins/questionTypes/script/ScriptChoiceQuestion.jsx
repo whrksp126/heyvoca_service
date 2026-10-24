@@ -43,6 +43,10 @@ const ScriptChoiceQuestion = ({ question, onComplete, onCardMatched }) => {
       ? { text: wp.reading, sub: wp.real ? [wp.word && wp.word !== wp.reading ? wp.word : null, wp.meaning].filter(Boolean).join(' · ') : null }
       : null,
     speakText: wp ? wp.reading : null,
+    // 듣고 고르기 채점 후 문제 카드에 스피커 대신 보여줄 정답 단어(ChoiceCard)
+    reveal: wp && qt === 'scriptWordListen'
+      ? { text: wp.reading, sub: [wp.word && wp.word !== wp.reading ? wp.word : null, wp.meaning].filter(Boolean).join(' · ') || null }
+      : null,
   }), [question, kind, wp, qt]);
 
   // 글자에는 작물·성장 단계(망각곡선)를 보여주지 않는다(2026-10-24 이슈 #15) — 농장 상태 바 없음.
