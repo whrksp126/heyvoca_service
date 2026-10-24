@@ -160,8 +160,29 @@ def _heal_script_games(user_id, book_id) -> int:
         return 0
 
 
-def _build_progress_items(book_id, script):
-    """(book_id) 안의 글자들 — 성장 단계(visual_stage)·XP만 담는다.
+def _study_counts(user_id, uv_ids) -> dict:
+    """글자별 연습 횟수·정답 수 — {user_voca_id: (attempts, correct)}.
+
+    격자 칸 아래 숙련 막대(2026-10-24 이슈 #15 2차)용. 망각곡선 없이 "몇 번 맞혔나"만 센다.
+    """
+    if not user_id or not uv_ids:
+        return {}
+    from sqlalchemy import func, case
+    rows = (
+        db.session.query(
+            UserStudyLog.user_voca_id,
+            func.count(UserStudyLog.id),
+            func.sum(case((UserStudyLog.was_correct.is_(True), 1), else_=0)),
+        )
+        .filter(UserStudyLog.user_id == user_id, UserStudyLog.user_voca_id.in_(list(uv_ids)))
+        .group_by(UserStudyLog.user_voca_id)
+        .all()
+    )
+    return {vid: (int(n or 0), int(c or 0)) for vid, n, c in rows}
+
+
+def _build_progress_items(book_id, script, user_id=None):
+    """(book_id) 안의 글자들 — 성장 단계(visual_stage)·XP·연습/정답 수를 담는다.
 
     2026-09-30 결정: 글자는 농장의 건강 축(시듦/썩음)과 FSRS 예정일 기반 "복습 예정"
     개념을 쓰지 않는다 — `health`는 항상 `FRESH`로 고정한다(`_plant_item`/
@@ -181,6 +202,7 @@ def _build_progress_items(book_id, script):
         .all()
     )
 
+    counts = _study_counts(user_id, [uv.id for uv, _ in rows])
     items = []
     learned_count = 0
     for uv, game in rows:
@@ -195,6 +217,8 @@ def _build_progress_items(book_id, script):
             # 글자는 시들지도 썩지도 않는다(사용자 결정) — 항상 정상으로 고정.
             'health':       HealthState.FRESH,
             'xp':           xp_mod.xp_of(stage, fsrs_state),
+            'attempts':     counts.get(uv.id, (0, 0))[0],
+            'correct':      counts.get(uv.id, (0, 0))[1],
         })
 
     # 정본(app/services/script_chars.py) 순서로 정렬 — 학습 화면의 표시 순서와 맞춘다.
@@ -209,7 +233,7 @@ def _progress_payload(user_id, script):
     if book is None:
         return {'book_id': None, 'items': [], 'learned_count': 0}
     _heal_script_games(user_id, book.id)
-    items, learned_count = _build_progress_items(book.id, script)
+    items, learned_count = _build_progress_items(book.id, script, user_id)
     return {
         'book_id': str(book.id),
         'items': items,
