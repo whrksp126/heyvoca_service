@@ -11,7 +11,8 @@
 //   끝       「자란 단어 보기」 · 「확인」 켜짐            select
 //
 // 밭에는 9칸까지만 올리고 나머지는 숫자로 센다(planField). 단어 목록은 필요할 때만 여는 시트다.
-import React, { useMemo, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { CaretUp, Drop } from '@phosphor-icons/react';
 import CropImage, { CROP_ASSETS, CROP_BASELINE, cropAssetByVariant } from '../../farm/CropImage';
 import fieldBase from '../../../assets/images/farm/field-base.png';
@@ -183,8 +184,16 @@ const FarmGrowthSlide = ({ entries, reducedMotion, onReady, skipRef }) => {
   };
   const closeSheet = () => setSheetOpen(false);
 
+  // 시트가 떠 있는 동안 하드웨어 뒤로가기 / iOS 스와이프 백은 시트만 닫는다(학습 중단 핸들러로 새지 않게).
+  useEffect(() => {
+    if (!sheetOpen) return undefined;
+    const prev = window.onBackPressed;
+    window.onBackPressed = () => setSheetOpen(false);
+    return () => { window.onBackPressed = prev; };
+  }, [sheetOpen]);
+
   return (
-    <div className='relative flex-1 overflow-hidden' onClick={sheetOpen ? closeSheet : undefined}>
+    <div className='relative flex-1 overflow-hidden'>
       <div className='h-full overflow-y-auto scrollbar-hide'>
         <div className='flex min-h-full flex-col items-center justify-center gap-[10px] px-[16px] py-[14px]'>
           <div className='text-center'>
@@ -297,13 +306,22 @@ const FarmGrowthSlide = ({ entries, reducedMotion, onReady, skipRef }) => {
         </div>
       </div>
 
-      {/* 단어 목록 시트 — 본문 영역 안에서만 올라온다(「확인」 버튼은 가리지 않는다) */}
+      {/* 단어 목록 시트 — 일반 바텀시트처럼 body 로 포털해 화면 전체(하단 「확인」 포함)를 딤으로 덮는다.
+          슬라이드 본문은 framer-motion transform 안이라 fixed 가 화면 기준이 안 되므로 포털이 필요하다.
+          닫기: 바깥(딤) 탭 · 손잡이 탭 · 뒤로가기. */}
+      {createPortal(
+      <>
+      <div
+        aria-hidden
+        onClick={(e) => { e.stopPropagation(); closeSheet(); }}
+        className={`fixed inset-0 z-[1000] bg-black/50 transition-opacity duration-300 motion-reduce:transition-none ${sheetOpen ? 'opacity-100' : 'pointer-events-none opacity-0'}`}
+      />
       <div
         role='dialog'
         aria-hidden={!sheetOpen}
         aria-label={`${onlyRescue ? '되살린' : '자란'} 단어 ${total}개`}
         onClick={(e) => e.stopPropagation()}
-        className={`absolute inset-x-0 bottom-0 z-[60] flex h-[78%] flex-col rounded-t-[22px] bg-layout-white shadow-[0_-8px_30px_rgba(0,0,0,.16)] transition-transform duration-300 ease-[cubic-bezier(.2,.9,.3,1)] motion-reduce:transition-none dark:bg-layout-gray-dark ${sheetOpen ? 'translate-y-0' : 'translate-y-[104%]'}`}
+        className={`fixed inset-x-0 bottom-0 z-[1001] flex h-[70dvh] flex-col rounded-t-[22px] bg-layout-white shadow-[0_-8px_30px_rgba(0,0,0,.16)] transition-transform duration-300 ease-[cubic-bezier(.2,.9,.3,1)] motion-reduce:transition-none dark:bg-layout-gray-dark ${sheetOpen ? 'translate-y-0' : 'translate-y-[104%]'}`}
       >
         <button type='button' aria-label='목록 닫기' onClick={closeSheet} className='mx-auto flex h-[26px] w-[80px] shrink-0 items-center justify-center'>
           <span className='h-[4px] w-[38px] rounded-full bg-layout-gray-100 dark:bg-layout-gray-500' />
@@ -311,7 +329,7 @@ const FarmGrowthSlide = ({ entries, reducedMotion, onReady, skipRef }) => {
         <h4 className='shrink-0 px-[20px] pb-[10px] text-[15px] font-[800]'>
           {onlyRescue ? '되살린' : '자란'} 단어 {total}개
         </h4>
-        <div className='flex flex-1 flex-col gap-[8px] overflow-y-auto px-[16px] pb-[16px] scrollbar-hide'>
+        <div className='flex flex-1 flex-col gap-[8px] overflow-y-auto px-[16px] pb-[16px] scrollbar-hide' style={{ paddingBottom: 'calc(16px + env(safe-area-inset-bottom))' }}>
           {sheetMounted ? entries.slice().reverse().map((entry) => (
             <FarmGrowRow
               key={entry.id}
@@ -325,6 +343,9 @@ const FarmGrowthSlide = ({ entries, reducedMotion, onReady, skipRef }) => {
           )) : null}
         </div>
       </div>
+      </>,
+      document.body,
+      )}
     </div>
   );
 };
