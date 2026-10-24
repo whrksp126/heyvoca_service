@@ -242,6 +242,8 @@ export const mergeProgress = (script, progressItems) => {
       stage: p?.stage ?? null,
       health: p?.health ?? null,
       xp: p?.xp ?? 0,
+      attempts: p?.attempts ?? 0,
+      correct: p?.correct ?? 0,
       fsrs: p?.fsrs ?? null,
       due: !!p?.due,
     };
@@ -256,6 +258,15 @@ export const mergeProgress = (script, progressItems) => {
   우선하도록 서버가 정한다(클라이언트는 "이미 시작한 글자 전체"만 후보로 넘긴다).
 */
 export const practicableItems = (mergedItems) => (mergedItems || []).filter((it) => isStarted(it));
+
+/*
+  격자 칸 숙련 막대(2026-10-24 이슈 #15 2차) — 망각곡선 없이 "정답 수"만 센다.
+  정답 2번마다 한 칸씩, MASTERY_STEPS 칸을 다 채우면(정답 9번째부터) 완성.
+  서버 GET /script/progress items[].correct(UserStudyLog 정답 수) 기준.
+*/
+export const MASTERY_STEPS = 5;
+export const masteryLevel = (item) =>
+  Math.min(MASTERY_STEPS, Math.ceil(Math.max(0, item?.correct || 0) / 2));
 
 export const masteredCount = (mergedItems) => (mergedItems || []).filter((it) => isMastered(it.stage)).length;
 
