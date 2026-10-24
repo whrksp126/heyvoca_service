@@ -5,9 +5,11 @@
 // 자동 채점한다(utils/scriptWriteGrader.js — 위치·크기 정규화 후 획 짝 커버리지·정밀도·끝점·방향).
 // 획 수를 넘길 수는 없어서 "확인" 버튼이 없다 — 따라 쓰기(StrokeTracer)와 같은 원칙.
 // 틀리면 쓴 글씨 위에 정답 글자를 획순대로 겹쳐 그려 보여 준다. 맞으면 쓴 글씨 대신 정답 글자
-// 모양만 (애니메이션 없이) 보여 준다. "모르겠어요"는 오답으로 처리하고 정답을 보여 준다.
+// 모양만 (애니메이션 없이) 보여 준다.
 // 2026-10-24(이슈 #15): 스피커를 판 위 영역에서 판 안 우측 하단으로 옮겼다(위 영역 아래로 음파가
 // 가려졌다). 채점 후 자동으로 넘어가지 않고 아래 "다음" 버튼을 눌러야 onDone 이 불린다.
+// 같은 날 2차: "모르겠어요" 버튼 제거, "지우기"는 판 안 우측 상단 아이콘으로(소문자/대문자 표시는
+// 위 가운데로), 판 안 "들은 글자를 직접 써 보세요" 안내는 헤더와 겹쳐 제거.
 
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { motion, useAnimationControls } from 'framer-motion';
@@ -39,7 +41,7 @@ const pointsToD = (points) => points.reduce((acc, p, i) => acc + (i === 0 ? `M${
 
 /**
  * entry  — 정답 글자 획 데이터 { viewBox, strokes: [d...] }
- * onGraded(correct) — 채점 순간(정답/오답/모르겠어요) 한 번
+ * onGraded(correct) — 채점 순간(정답/오답) 한 번
  * onDone() — 채점 후 사용자가 "다음"을 눌렀을 때
  */
 const FreeWriteBoard = ({ script, item, entry, caseVariant = null, replayKey, onGraded, onDone }) => {
@@ -135,11 +137,6 @@ const FreeWriteBoard = ({ script, item, entry, caseVariant = null, replayKey, on
     setStrokes([]);
   };
 
-  const giveUp = () => {
-    if (result !== null) return;
-    finish(false);
-  };
-
   const answerPaths = useMemo(() => entry?.strokes || [], [entry]);
 
   return (
@@ -150,7 +147,7 @@ const FreeWriteBoard = ({ script, item, entry, caseVariant = null, replayKey, on
           className="relative w-full max-w-[340px] aspect-square rounded-[16px] bg-layout-gray-50 dark:bg-layout-gray-dark overflow-hidden touch-none select-none"
         >
           {caseVariant && (
-            <div aria-hidden className="absolute top-[8px] right-[8px] z-[1] h-[22px] px-[9px] rounded-full flex items-center bg-layout-white/90 dark:bg-layout-black/80 border border-border dark:border-border-dark pointer-events-none">
+            <div aria-hidden className="absolute top-[8px] left-[50%] translate-x-[-50%] z-[1] h-[22px] px-[9px] rounded-full flex items-center bg-layout-white/90 dark:bg-layout-black/80 border border-border dark:border-border-dark pointer-events-none">
               <span className="text-[11px] font-[700] text-layout-gray-400 dark:text-layout-gray-100">
                 {caseVariant === 'lower' ? '소문자' : '대문자'}
               </span>
@@ -249,10 +246,19 @@ const FreeWriteBoard = ({ script, item, entry, caseVariant = null, replayKey, on
             <SpeakerArt size={28} playing={speaking} />
           </motion.button>
 
-          {strokes.length === 0 && result === null && current.length === 0 && (
-            <span className="absolute bottom-[10px] left-0 right-0 text-center text-[12px] font-[600] text-layout-gray-300 pointer-events-none">
-              들은 글자를 직접 써 보세요
-            </span>
+          {/* 지우기 — 판 안 우측 상단. 판보다 위에 떠 있어 누르는 동안 획이 시작되지 않는다. */}
+          {result === null && (
+            <motion.button
+              type="button"
+              onPointerDown={(e) => e.stopPropagation()}
+              onClick={clearAll}
+              whileTap={{ scale: 0.94 }}
+              aria-label="지우기"
+              disabled={strokes.length === 0}
+              className="absolute right-[12px] top-[12px] z-[3] flex items-center justify-center w-[40px] h-[40px] rounded-full bg-layout-white dark:bg-layout-black border border-border dark:border-border-dark text-layout-gray-400 dark:text-layout-gray-100 disabled:opacity-40"
+            >
+              <ArrowCounterClockwise size={18} weight="bold" />
+            </motion.button>
           )}
           {showAnswer && (
             <span className="absolute bottom-[10px] left-0 right-0 text-center text-[12px] font-[700] text-status-success-600 pointer-events-none">
@@ -264,27 +270,6 @@ const FreeWriteBoard = ({ script, item, entry, caseVariant = null, replayKey, on
 
       <ScriptNextButton show={result !== null} onNext={() => onDone?.(result)} />
 
-      {result === null && (
-        <div className="flex items-center gap-[10px] w-full flex-shrink-0">
-          <motion.button
-            type="button"
-            onClick={clearAll}
-            whileTap={{ scale: 0.97 }}
-            className="flex-1 h-[52px] rounded-[12px] flex items-center justify-center gap-[6px] border-[2px] border-border dark:border-border-dark bg-layout-white dark:bg-layout-black text-layout-gray-400 dark:text-layout-gray-100 text-[15px] font-[700] tracking-[-0.03em]"
-          >
-            <ArrowCounterClockwise size={17} weight="bold" />
-            지우기
-          </motion.button>
-          <motion.button
-            type="button"
-            onClick={giveUp}
-            whileTap={{ scale: 0.97 }}
-            className="flex-1 h-[52px] rounded-[12px] flex items-center justify-center border-[2px] border-border dark:border-border-dark bg-layout-white dark:bg-layout-black text-layout-gray-400 dark:text-layout-gray-100 text-[15px] font-[700] tracking-[-0.03em]"
-          >
-            모르겠어요
-          </motion.button>
-        </div>
-      )}
     </div>
   );
 };
