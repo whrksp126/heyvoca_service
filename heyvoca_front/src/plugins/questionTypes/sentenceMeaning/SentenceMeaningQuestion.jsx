@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
-import { SpeakerHigh } from '@phosphor-icons/react';
+import SpeakerArt from '../../../components/common/SpeakerArt';
 import { FarmResultBar } from '../../../components/farm/FarmStatusBar';
 import StudyTimingTag from '../../../components/farm/StudyTimingTag';
 import TtsRipple from '../../../components/common/TtsRipple';
@@ -145,7 +145,7 @@ const SentenceMeaningQuestion = ({ question, onComplete, onCardMatched, farmByWo
                   animate={isSpeaking && !reducedMotion ? { scale: [1, 1.12, 1] } : { scale: 1 }}
                   transition={isSpeaking && !reducedMotion ? { duration: 0.6, repeat: Infinity, ease: 'easeInOut' } : {}}
                 >
-                  <SpeakerHigh size={22} weight="fill" />
+                  <SpeakerArt size={24} playing={isSpeaking} />
                 </motion.span>
               </motion.button>
               {ja ? (
