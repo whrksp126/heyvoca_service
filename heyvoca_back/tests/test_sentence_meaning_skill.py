@@ -15,7 +15,19 @@ def test_tiles_and_usable():
         ['나는', '보통', '7시에', '아침을', '먹는다']
     assert SM.meaning_usable(_ex('Hi there.', '안녕 친구'))
     assert not SM.meaning_usable(_ex('x', '한어절'))
-    assert not SM.meaning_usable(_ex('x', ' '.join(['가'] * 9)))
+    assert SM.meaning_usable(_ex('x', ' '.join(['가'] * 9)))      # 9~12어절은 앞부분 미리 채움
+    assert not SM.meaning_usable(_ex('x', ' '.join(['가'] * 13)))
+
+
+def test_long_translation_prefills_head():
+    ko = '어제 저녁 우리 가족은 오랜만에 다 같이 근처 식당에서 맛있는 밥을 먹었다.'
+    p = SM.build_meaning_payload(_ex('We ate dinner.', ko), lang='en', distractor_pool=[], rng=random.Random(0))
+    tiles = SM.ko_tiles(ko)
+    assert len(tiles) == 12
+    assert p['prefix'] == ' '.join(tiles[:4])
+    assert all(len(o) == SM.MAX_TILES for o in p['accepted'])
+    assert p['accepted'][0] == tiles[4:]
+    assert p['translation'].startswith('어제 저녁')
 
 
 def test_accepted_swaps_only_josa_constituents_before_predicate():
@@ -42,6 +54,38 @@ def test_payload_shape():
     for w in p['accepted'][0]:
         assert w in texts
     assert p['translation'] == '새 양말이 필요해.'
+    assert p['prefix'] == ''
+
+
+def _translate_item(uid, stage_stability, ko='나는 보통 아침을 먹는다'):
+    from app.services.recommend.pool import CandidateItem
+    return CandidateItem(
+        user_voca_id=uid, user_voca_book_id=None, word=f'w{uid}', meanings=['뜻'], examples=[],
+        fsrs_state={'state': 'review', 'stability': stage_stability, 'retrievability': 0.9, 'next_review': None},
+        bucket='review', word_length=3,
+        example_pool=[{'origin': 'I eat.', 'meaning': ko, 'hash': f'{uid:064d}', 'meta': None}],
+    )
+
+
+def test_translate_quota_farm_and_free_test():
+    from app.services.recommend import composer as C
+    enriched = [{'_item': _translate_item(i, 1.0), 'suggested_question_type': 'multipleChoice',
+                 'tier_target': 1, 'tier_shown': 1} for i in range(10)]
+    enriched[0]['suggested_question_type'] = 'cardMatch'
+    C._apply_translate_quota(enriched, full_recommend=True, allowed_types=None)
+    swapped = [e for e in enriched if e['suggested_question_type'] == 'sentenceTranslate']
+    assert len(swapped) == 2
+    assert all(e['tier_target'] is None and e['tier_shown'] is None for e in swapped)  # tier 진행 영향 없음
+    assert enriched[0]['suggested_question_type'] == 'cardMatch'                      # 세트형은 안 바꿈
+
+    free = [{'_item': _translate_item(i, 1.0), 'suggested_question_type': 'multipleChoice',
+             'tier_target': None, 'tier_shown': None} for i in range(10)]
+    C._apply_translate_quota(free, full_recommend=False, allowed_types=['multipleChoice', 'sentenceTranslate'])
+    assert sum(e['suggested_question_type'] == 'sentenceTranslate' for e in free) == 5
+    # 칩에 없으면 손대지 않음
+    other = [{'_item': _translate_item(i, 1.0), 'suggested_question_type': 'multipleChoice'} for i in range(4)]
+    C._apply_translate_quota(other, full_recommend=False, allowed_types=['multipleChoice'])
+    assert all(e['suggested_question_type'] == 'multipleChoice' for e in other)
 
 
 def test_elo_moves_toward_result_and_target_is_p80():

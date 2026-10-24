@@ -467,6 +467,63 @@ def _enrich_items(
 
 
 # ──────────────────────────────────────────────
+# 문장 뜻 맞추기(sentenceTranslate) 최소 출제 보장 (이슈 #16 후속, 2026-10-25)
+# ──────────────────────────────────────────────
+# tier 4 사다리만으로는 잎(leaf) 이상 작물에서만 열려, 씨앗·새싹 위주인 실사용자에겐 0건이었다
+# (로컬 실측: 농장 돌보기 50문항 중 0). 독해 문제가 실제로 나오도록 세션마다 예문이 있는 단어
+# 몇 개를 이 유형으로 바꾼다. 예문 수준은 choose_example 이 θ·작물 단계로 맞춘다(P≈0.8).
+# 바꾸는 대상은 단독 문제(사지선다류·빈칸)만 — 카드 맞추기(세트)·문장 만들기(끝 구간)는 건드리지 않는다.
+_TRANSLATE_SWAPPABLE = (
+    'multipleChoice', 'reverseMultipleChoice', 'multipleChoiceListening', 'fillInTheBlank', 'sentenceMeaning',
+)
+_STAGE_ORDER = {'carrot': 4, 'leaf': 3, 'sprout': 2, 'seed': 1, 'unlearned': 0}
+
+
+def _translate_quota(n: int) -> int:
+    return 2 if n >= 8 else (1 if n >= 1 else 0)
+
+
+def _ensure_translate_quota(enriched: List[Dict[str, Any]], quota: int, swappable=_TRANSLATE_SWAPPABLE) -> None:
+    """enriched 중 sentenceTranslate 가 quota 개 미만이면 자격 있는 단독 문제를 바꿔 채운다(제자리).
+
+    자동 추천(tier) 경로에서 바꾼 문항은 tier_target/tier_shown 을 None 으로 둔다 — 보너스 독해 문제라
+    단어의 tier 진행(/study/log 는 둘 다 있을 때만 갱신)에 영향을 주지 않는다.
+    """
+    have = sum(1 for e in enriched if e.get('suggested_question_type') == 'sentenceTranslate')
+    if have >= quota:
+        return
+    cands = [e for e in enriched
+             if e.get('suggested_question_type') in swappable
+             and _item_can_use_question_type(e['_item'], 'sentenceTranslate')]
+    random.shuffle(cands)
+    # 더 자란 작물(이미 뜻을 아는 단어)부터 — 같은 단계 안에서는 무작위.
+    cands.sort(key=lambda e: _STAGE_ORDER.get(_crop_stage(e['_item'].fsrs_state), 0), reverse=True)
+    for e in cands[:quota - have]:
+        e['suggested_question_type'] = 'sentenceTranslate'
+        e['tier_target'] = None
+        e['tier_shown'] = None
+
+
+def _apply_translate_quota(enriched, *, full_recommend: bool, allowed_types: Optional[List[str]]) -> None:
+    """경로별 최소 출제 수.
+    - 자유 설정 테스트(allowed_types 에 sentenceTranslate): 고른 유형 수로 나눈 몫, 최소 1~2.
+      바꿀 대상은 사용자가 고른 다른 단독 유형만(고르지 않은 유형은 애초에 배정되지 않는다).
+    - 농장 돌보기(full_recommend): 세션당 1~2.
+    - 그 밖(암기상태를 좁힌 빠른 복습 등 가중치 경로)은 그대로.
+    """
+    n = len(enriched)
+    if allowed_types:
+        if 'sentenceTranslate' not in allowed_types:
+            return
+        quota = max(_translate_quota(n), n // max(1, len(allowed_types)))
+        _ensure_translate_quota(enriched, quota,
+                                swappable=tuple(t for t in allowed_types
+                                                if t in _TRANSLATE_SWAPPABLE or t == 'fillInTheBlankTyping'))
+    elif full_recommend:
+        _ensure_translate_quota(enriched, _translate_quota(n))
+
+
+# ──────────────────────────────────────────────
 # 추천 / 랜덤 본체
 # ──────────────────────────────────────────────
 
@@ -583,6 +640,7 @@ def _compose_recommend(
         final_with_bucket, today_seen, weakness_types,
         full_recommend=full_recommend, allowed_types=allowed_types,
     )
+    _apply_translate_quota(enriched, full_recommend=full_recommend, allowed_types=allowed_types)
 
     composition: Dict[str, int] = {}
     for _, b in selected_with_bucket:
@@ -654,6 +712,8 @@ def _compose_random(
         }
         for it in selected
     ]
+    if allowed_types:
+        _apply_translate_quota(enriched, full_recommend=False, allowed_types=allowed_types)
     composition: Dict[str, int] = {}
     for it in selected:
         composition[it.bucket] = composition.get(it.bucket, 0) + 1

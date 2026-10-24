@@ -1,6 +1,4 @@
 import React from 'react';
-import { motion } from 'framer-motion';
-import { Brain, Lightbulb, CaretRight, Lock } from '@phosphor-icons/react';
 import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 import { useOnboardingUnlock } from '../../context/OnboardingUnlockContext';
 import { UnlockGuideNewBottomSheet } from './UnlockGuideNewBottomSheet';
@@ -8,6 +6,7 @@ import { StudySetupNewBottomSheet } from './StudySetupNewBottomSheet';
 import { TestSetupNewBottomSheet } from './TestSetupNewBottomSheet';
 import { vibrate } from '../../utils/osFunction';
 import { primeSfx } from '../../utils/audio';
+import SheetOptionRow from './SheetOptionRow';
 
 /*
   단어장 상세에서 "이 단어장 물주기"를 눌렀을 때 뜨는 방식 선택.
@@ -45,7 +44,6 @@ export const BookStudyTypeNewBottomSheet = ({ vocabularySheetId, maxVocabularyCo
   const OPTIONS = [
     {
       key: 'study',
-      icon: <Brain size={16} weight="fill" />,
       title: '집중 반복 학습',
       desc: '보고 듣고 따라 읽으며 뜻과 예문까지 익혀요',
       open: () => pushNewBottomSheet(
@@ -56,7 +54,6 @@ export const BookStudyTypeNewBottomSheet = ({ vocabularySheetId, maxVocabularyCo
     },
     {
       key: 'test',
-      icon: <Lightbulb size={16} weight="fill" />,
       title: '자유 설정 테스트',
       desc: '문제 유형과 개수를 직접 골라 점검해요',
       open: () => pushNewBottomSheet(
@@ -84,51 +81,23 @@ export const BookStudyTypeNewBottomSheet = ({ vocabularySheetId, maxVocabularyCo
   };
 
   return (
-    <div className="flex flex-col px-[20px] pt-[18px] pb-[20px]">
+    <div className="flex flex-col px-[20px] pt-[18px] pb-[calc(20px+var(--safe-area-bottom))]">
       <h1 className="max-w-full truncate text-[16px] font-[700] tracking-[-0.03em] text-layout-black dark:text-layout-white">
         어떻게 돌볼까요?
       </h1>
 
-      <div className="mt-[10px]">
+      <div className="mt-[6px]">
         {OPTIONS.map((option, idx) => {
           const locked = lockedOf(option.key);
           return (
-            <motion.button
+            <SheetOptionRow
               key={option.key}
-              type="button"
+              first={idx === 0}
+              title={option.title}
+              desc={locked ? lockTextOf(option.key) : option.desc}
+              locked={locked}
               onClick={() => handleClick(option)}
-              whileTap={{ scale: 0.99, backgroundColor: 'rgba(0,0,0,0.03)' }}
-              className={`
-                flex items-center gap-[11px] w-full py-[12px] text-left rounded-[8px]
-                ${idx > 0 ? 'border-t border-[#F4F4F4] dark:border-[rgba(255,255,255,.07)]' : ''}
-              `}
-            >
-              <span
-                className={`
-                  relative w-[30px] h-[30px] shrink-0 rounded-[9px] flex items-center justify-center
-                  bg-layout-gray-50 dark:bg-[#2A2A2A] text-layout-gray-400
-                  ${locked ? 'opacity-45' : ''}
-                `}
-              >
-                {option.icon}
-                {locked && (
-                  <span className="absolute -top-[4px] -right-[5px] flex items-center justify-center w-[16px] h-[16px] rounded-full bg-layout-gray-300 dark:bg-layout-gray-400">
-                    <Lock size={9} weight="bold" className="text-layout-white" />
-                  </span>
-                )}
-              </span>
-
-              <span className="flex-1 min-w-0">
-                <span className="block text-[14.5px] font-[700] tracking-[-0.03em] text-layout-black dark:text-layout-white">
-                  {option.title}
-                </span>
-                <small className="block mt-[2px] text-[11.5px] font-[500] tracking-[-0.02em] leading-[1.5] text-layout-gray-300">
-                  {locked ? lockTextOf(option.key) : option.desc}
-                </small>
-              </span>
-
-              <CaretRight size={13} weight="bold" className="shrink-0 text-layout-gray-200" />
-            </motion.button>
+            />
           );
         })}
       </div>

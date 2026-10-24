@@ -455,6 +455,7 @@ const TakeTest = () => {
   // sentenceTranslate(문장 뜻 맞추기, 이슈 #16)는 서버 payload 가 있을 때만 — 빈칸 입력 뒤·문장 만들기 앞에 둔다.
   const PLANT_SET_TYPES = ['cardMatch', 'cardMatchListening'];
   const PLANT_SENTENCE_TYPES = ['sentenceArrangePartial', 'sentenceArrange'];
+  const PLANT_TRANSLATE_MIN = 2;
 
   const buildPlantTestQuestions = (selectedWords, allWords) => {
     const skipListening = isListeningSkipActive();
@@ -483,6 +484,18 @@ const TakeTest = () => {
       for (const slot of shuffleArray(slots).slice(0, take)) {
         if (slot.kind === 'single') content.push(slot.q);
         else setBuckets[slot.type]?.push(word);
+      }
+    }
+    // 문장 뜻 맞추기는 위 무작위 2~3칸 배분만으로는 단어당 약 1/4 확률이라 세션에 한 번도 안 나오는 일이
+    // 잦았다(이슈 #16 후속, 2026-10-25) — 서버 payload 가 있는 단어 중 최소 PLANT_TRANSLATE_MIN 개는 꼭 넣는다.
+    const translateWords = new Set(content.filter((q) => q.questionType === 'sentenceTranslate').map((q) => q.id ?? q.vocaIndexId));
+    for (const word of shuffleArray(order)) {
+      if (translateWords.size >= PLANT_TRANSLATE_MIN) break;
+      if (translateWords.has(word.id ?? word.vocaIndexId)) continue;
+      const q = buildPlantStepQuestion(word, allWords, 'sentenceTranslate');
+      if (q) {
+        content.push(q);
+        translateWords.add(word.id ?? word.vocaIndexId);
       }
     }
     // 카드 맞추기류는 세트(2~4단어)가 필요하다. 무작위 배분만으로는 칸마다 1~2단어뿐이라 세트가 거의

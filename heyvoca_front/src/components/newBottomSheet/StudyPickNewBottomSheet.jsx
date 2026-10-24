@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
-import { CaretRight, Lock } from '@phosphor-icons/react';
 import { useStats } from '../../context/StatsContext';
 import { useVocabulary } from '../../context/VocabularyContext';
 import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
@@ -20,11 +18,7 @@ import { UnlockGuideNewBottomSheet } from './UnlockGuideNewBottomSheet';
 import RottenListSheet from '../farm/RottenListSheet';
 import StoreNewFullSheet from '../newfullsheet/StoreNewFullSheet';
 import VocabularySheetNewFullSheet from '../newfullsheet/VocabularySheetNewFullSheet';
-import rottenImg from '../../assets/images/farm/crops/planted/rotten-leaf.png';
-import careImg from '../../assets/images/farm/mascot-watering.png';
-import walkImg from '../../assets/images/farm/mascot-walk.png';
-import seedImg from '../../assets/images/farm/crops/unplanted/healthy-seed.png';
-import bookImg from '../../assets/images/farm/vocabulary.png';
+import SheetOptionRow from './SheetOptionRow';
 
 /*
   홈 '농사 시작' → 학습 고르기 (LEVEL_AND_MEANING_CONTRACT §4, 2026-10-25 승인).
@@ -61,8 +55,9 @@ export const StudyPickNewBottomSheet = () => {
 
   const careLeft = Math.max(0, wilted.total - wilted.done) + Math.max(0, care.total - care.done);
   const seedRemaining = Math.max(0, (newSeed.target ?? 0) - (newSeed.done ?? 0));
-  // 심을 씨앗이 없다 — 목표가 남았는데 재고가 없거나 모자란다(오늘 서점에서 받은 경우 제외).
-  const cannotPlant = seedsLeft <= 0 || (seedRemaining > 0 && !!tasks.show_buy && !tasks.buy_done);
+  // 심을 씨앗이 없다 — 오늘 할 일 카드와 같은 기준(재고 seeds_left 가 0일 때만 막는다).
+  // 예전엔 show_buy(재고 < 하루 목표)까지 막아, 씨앗이 3개 남아도 '0개'로 흐려졌다.
+  const cannotPlant = seedsLeft <= 0;
   const seedCount = cannotPlant ? 0 : (seedRemaining > 0 ? Math.min(seedRemaining, seedsLeft) : seedsLeft);
   const bookCount = vocabularySheets?.length ?? 0;
 
@@ -128,10 +123,13 @@ export const StudyPickNewBottomSheet = () => {
   };
 
   // 밭 산책하기 — 농장 돌보기와 같은 복습 추천(mode=review)으로 받은 단어를 집중 반복 듣기(StudyMain)로.
+  // 추천은 한 번만 부른다 — 비었을 때 startQuickReview 로 넘기면 TakeTest 가 /study/recommend 를
+  // 다시 불러 쓰이지 않는 session_id 가 하나 더 생겼다.
   const walk = async () => {
+    if (careLeft <= 0) { showToast('지금은 돌볼 단어가 없어요.'); return; }
     const res = await getStudyRecommend({ type: 'quick', mode: 'review', count: WALK_COUNT });
     const items = res?.code === 200 && Array.isArray(res.data?.items) ? res.data.items : [];
-    if (items.length === 0) { startQuickReview(); return; } // 단어 부족 안내는 quick 쪽이 이미 갖고 있다
+    if (items.length === 0) { showToast('지금은 돌볼 단어가 없어요.'); return; }
     navigate('/study', { state: { vocabularySheetId: 'all', words: items.map((it) => mapRecommendItemToWord(it)) } });
   };
 
@@ -141,23 +139,23 @@ export const StudyPickNewBottomSheet = () => {
 
   const OPTIONS = [
     rotten.count > 0 && {
-      key: 'rotten', img: rottenImg, title: '썩은 단어 살리기',
+      key: 'rotten', title: '썩은 단어 살리기',
       desc: `썩은 단어 ${rotten.count}개`, count: rotten.count, run: recoverRotten,
     },
     {
-      key: 'care', img: careImg, title: '농장 돌보기',
+      key: 'care', title: '농장 돌보기',
       desc: `돌볼 단어 ${careLeft}개`, count: careLeft, run: () => startQuickReview(),
     },
     {
-      key: 'walk', img: walkImg, title: '밭 산책하기', lock: 'listen',
+      key: 'walk', title: '밭 산책하기', lock: 'listen',
       desc: `듣기로 ${Math.min(careLeft, WALK_COUNT)}개`, count: careLeft, run: walk,
     },
     {
-      key: 'seed', img: seedImg, title: '새 씨앗 심기',
+      key: 'seed', title: '새 씨앗 심기',
       desc: `새 단어 ${seedCount}개`, count: seedCount, run: plant,
     },
     {
-      key: 'book', img: bookImg, title: '단어장 골라 학습',
+      key: 'book', title: '단어장 골라 학습',
       desc: `단어장 ${bookCount}개`, count: bookCount, run: pickBook,
     },
   ].filter(Boolean);
@@ -181,43 +179,19 @@ export const StudyPickNewBottomSheet = () => {
         학습 고르기
       </h1>
 
-      <div className="mt-[10px]">
-        {OPTIONS.map((option, idx) => {
-          const locked = !!option.lock && isFeatureLocked(option.lock);
-          const faded = locked || option.count <= 0;
-          return (
-            <motion.button
-              key={option.key}
-              type="button"
-              onClick={() => handleClick(option)}
-              whileTap={{ scale: 0.99, backgroundColor: 'rgba(0,0,0,0.03)' }}
-              className={`
-                flex items-center gap-[12px] w-full py-[12px] text-left rounded-[8px]
-                ${idx > 0 ? 'border-t border-[#F4F4F4] dark:border-[rgba(255,255,255,.07)]' : ''}
-              `}
-            >
-              <span className={`relative w-[44px] h-[44px] shrink-0 rounded-[12px] flex items-center justify-center bg-farm-canvas dark:bg-[#2A2A2A] ${faded ? 'opacity-45' : ''}`}>
-                <img src={option.img} alt="" draggable={false} className="block w-[36px] h-[36px] object-contain select-none" />
-                {locked && (
-                  <span className="absolute -top-[4px] -right-[5px] flex items-center justify-center w-[16px] h-[16px] rounded-full bg-layout-gray-300 dark:bg-layout-gray-400">
-                    <Lock size={9} weight="bold" className="text-layout-white" />
-                  </span>
-                )}
-              </span>
-
-              <span className={`flex-1 min-w-0 ${faded ? 'opacity-45' : ''}`}>
-                <span className={`block text-[15px] font-[700] tracking-[-0.03em] ${option.key === 'rotten' ? 'text-status-error-600' : 'text-layout-black dark:text-layout-white'}`}>
-                  {option.title}
-                </span>
-                <small className="block mt-[2px] text-[12px] font-[600] tracking-[-0.02em] text-layout-gray-300">
-                  {option.desc}
-                </small>
-              </span>
-
-              <CaretRight size={13} weight="bold" className="shrink-0 text-layout-gray-200" />
-            </motion.button>
-          );
-        })}
+      <div className="mt-[6px]">
+        {OPTIONS.map((option, idx) => (
+          <SheetOptionRow
+            key={option.key}
+            first={idx === 0}
+            title={option.title}
+            desc={option.desc}
+            danger={option.key === 'rotten'}
+            locked={!!option.lock && isFeatureLocked(option.lock)}
+            faded={option.count <= 0}
+            onClick={() => handleClick(option)}
+          />
+        ))}
       </div>
     </div>
   );

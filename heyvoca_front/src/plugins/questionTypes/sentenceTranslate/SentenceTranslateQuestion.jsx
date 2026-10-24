@@ -16,6 +16,7 @@ import ArrangeTray from '../sentenceArrange/ArrangeTray';
   - 위 카드: 외국어 예문(목표 단어 강조) + 스피커. 등장 시 1회 자동 재생(lang en/ja).
   - 아래: 문장 만들기와 같은 ArrangeTray — 한국어 블록을 눌러 답 줄에 나열, 놓은 블록을 누르면 되돌린다.
   - 채점: 고른 블록 text 배열이 accepted 중 하나와 같으면 정답(문장부호·공백 무시).
+    긴 번역은 앞부분이 prefix 로 미리 채워져 오고, accepted 는 나머지 부분만 담는다.
     틀리면 트레이 아래에 정답 문장(translation)을 보여 준다.
 */
 
@@ -31,7 +32,12 @@ const splitEmphasis = (html, plain) => {
   return String(html)
     .split(/(<(?:b|strong)\b[^>]*>[\s\S]*?<\/(?:b|strong)>)/i)
     .filter(Boolean)
-    .map((part) => ({ text: stripHtmlTags(part), hl: /^<(?:b|strong)\b/i.test(part) }));
+    // stripHtmlTags 는 앞뒤 공백을 trim 해서 강조 경계의 띄어쓰기가 사라진다("Bananasare") — 공백은 살린다.
+    .map((part) => {
+      const lead = /^\s/.test(part) ? ' ' : '';
+      const trail = /\s$/.test(part) ? ' ' : '';
+      return { text: `${lead}${stripHtmlTags(part)}${trail}`, hl: /^<(?:b|strong)\b/i.test(part) };
+    });
 };
 
 const SentenceTranslateQuestion = ({ question, onComplete, onCardMatched, farmByWordId }) => {
@@ -56,6 +62,8 @@ const SentenceTranslateQuestion = ({ question, onComplete, onCardMatched, farmBy
 
   const meaning = question.meaning ?? {};
   const { sentence = '', sentence_html: sentenceHtml = '', tiles = [], accepted = [], translation = '' } = meaning;
+  // 9어절 이상 번역은 서버가 앞부분을 미리 채워 보낸다(prefix) — 맞출 조각·accepted 는 그 뒷부분만.
+  const prefix = meaning.prefix ?? '';
   const lang = meaning.lang ?? wordLang(question);
   const bank = tiles.map((t) => t?.text ?? '');
   // 트레이의 칩 색(맞음/틀림) 비교는 원문 그대로 하므로 accepted 를 블록 표기에 맞춰 둔다.
@@ -174,7 +182,7 @@ const SentenceTranslateQuestion = ({ question, onComplete, onCardMatched, farmBy
 
       <ArrangeTray
         bank={bank}
-        prefix=""
+        prefix={prefix}
         suffix=""
         accepted={trayAccepted}
         answerLang="ko"

@@ -501,6 +501,8 @@ const ArrangeTray = ({
       if (tok.type !== 'word') return <span key={key}>{tok.text}</span>;
       const punct = answerPunct[wordOffset + wordIdx];
       wordIdx += 1;
+      // 조각이 한국어인 문장 뜻 맞추기는 미리 채운 앞부분(prefix)도 사전 조회 대상이 아니다.
+      if (!lookupChips) return <span key={key}>{punct?.leading}{tok.clean}{punct?.trailing}</span>;
       const active = lookup?.key === key;
       return (
         <button

@@ -120,6 +120,12 @@ payload (기존 문제 payload 와 같은 위치에 실린다):
 - 방해 조각 원천: 같은 응답의 다른 단어 예문 번역(score ±15 우선), 모자라면 사전에서 비슷한 수준 번역을 더 가져온다. 단어 자신의 다른 예문은 쓰지 않는다.
 - 난이도 사다리: **tier 3**(fillInTheBlank·sentenceArrangePartial 과 같은 칸) — 조각이 한국어라 '읽고 이해'에 해당해 영어 조립(tier 4)보다 아래. 가중치(빠른 복습 경로) 6.
 - 고를 예문이 없으면 그 문항은 `multipleChoice` 로 바뀌어 나간다(빈 payload 로 나가지 않음).
+- **최소 출제 보장(2026-10-25 후속)**: 실제 사다리는 tier 4(leaf 이상)라 씨앗·새싹 위주 사용자에겐 0건이었다.
+  `composer._apply_translate_quota` — 농장 돌보기(full_recommend) 세션당 2(8문항 미만 1), 자유 설정 테스트에서 칩 선택 시
+  `max(1~2, 문항수 // 고른 유형 수)`. 단독 문제(사지선다류·빈칸)만 바꾸고 카드 맞추기·문장 만들기는 안 건드린다. 농장 경로에서 바꾼 문항은
+  tier_target/tier_shown=null(tier 진행 영향 없음). 새 씨앗 심기는 프론트(`TakeTest.jsx` PLANT_TRANSLATE_MIN=2)가 payload 있는 단어 2개를 보장.
+- **긴 번역 완화**: 9~12어절은 앞부분을 `prefix`(문자열)로 미리 채워 보내고 `tiles`·`accepted` 는 뒤 8어절만. 13어절 이상은 제외
+  (쓸 수 있는 예문: en 76→94%, ja 94→99%).
 - **오답은 FSRS 면제**(코디네이터 결정 2026-10-25): `/study/log` 가 `question_type='sentenceTranslate'`·`was_correct=false` 면 FSRS·mastery·농장/콤보 훅을 건너뛰고(응답 `rating=null`, fsrs 는 이전 상태 그대로, combo/farm/streak null) 로그·유형 집계·θ 에만 반영한다. 정답은 다른 유형과 똑같이 FSRS 를 탄다.
 - 새 씨앗 심기(mode=plant): `question_payloads.sentenceTranslate` 키 추가(없으면 키 생략).
 - 자유 설정 테스트: `question_types=sentenceTranslate` 허용(RECOMMENDABLE_QUESTION_TYPES).

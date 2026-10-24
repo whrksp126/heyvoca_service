@@ -4,7 +4,10 @@ sentence_meaning.py — 문장 뜻 맞추기(sentenceTranslate) payload 생성 (
 정본: heyvoca_service/docs/LEVEL_AND_MEANING_CONTRACT.md §3
 
 외국어(영어·일본어) 예문을 보여 주고, 한국어 번역 어절 조각을 순서대로 눌러 맞추게 한다.
-  - 정답 조각: 한국어 번역을 어절(공백) 단위로 자른 것(문장부호 제거). 2~8어절 예문만.
+  - 정답 조각: 한국어 번역을 어절(공백) 단위로 자른 것(문장부호 제거). 2~12어절 예문.
+    9어절 이상이면 앞부분을 미리 채워(`prefix`, 트레이 앞에 고정 표시) 맞출 조각은 뒤 8어절만 남긴다
+    — 한국어는 서술어가 끝에 오므로 뜻의 핵심(목적어·서술어)이 뒤에 남는다. (2026-10-25: 8어절 제한으로
+    영어 예문 24%가 빠지던 것 완화 → 6%.)
   - 방해 조각 2~4개: 비슷한 수준(score ±15 우선)의 다른 예문 번역 어절. 정답 어절과 같은 글자이거나
     같은 어간(끝 조사 뗀 형태가 같거나 앞 두 글자가 같은 것)이면 제외 — 방해 조각이 정답 자리에
     들어가도 말이 되는 경우를 막는다(accepted 는 정답 어절로만 이뤄지므로 방해 조각은 항상 오답).
@@ -22,6 +25,7 @@ _PUNCT_RE = re.compile(r'[^\w\s]', re.UNICODE)
 _WS_RE = re.compile(r'\s+')
 
 MIN_TILES, MAX_TILES = 2, 8
+MAX_TILES_PREFILL = 12   # 이보다 길면 미리 채워도 너무 길어 쓰지 않는다
 MAX_ACCEPTED = 6
 _LEVEL_BAND = 15
 
@@ -45,7 +49,7 @@ def meaning_usable(ex: dict) -> bool:
     if not ex or not plain_text(ex.get('origin')):
         return False
     n = len(ko_tiles(ex.get('meaning')))
-    return MIN_TILES <= n <= MAX_TILES
+    return MIN_TILES <= n <= MAX_TILES_PREFILL
 
 
 def _stem(w: str) -> str:
@@ -119,11 +123,13 @@ def build_meaning_payload(ex: dict, *, lang: str, distractor_pool: Sequence[tupl
     if not meaning_usable(ex):
         return None
     rng = rng or random
-    tiles = ko_tiles(ex.get('meaning'))
+    all_tiles = ko_tiles(ex.get('meaning'))
+    head = all_tiles[:-MAX_TILES] if len(all_tiles) > MAX_TILES else []
+    tiles = all_tiles[len(head):]
     meta = ex.get('meta') or {}
     score = meta.get('score')
     k = rng.choice([2, 3, 3, 4])
-    distractors = pick_distractors(tiles, distractor_pool, score, k, rng)
+    distractors = pick_distractors(all_tiles, distractor_pool, score, k, rng)
     bank = tiles + distractors
     rng.shuffle(bank)
     origin = ex.get('origin') or ''
@@ -134,6 +140,7 @@ def build_meaning_payload(ex: dict, *, lang: str, distractor_pool: Sequence[tupl
         'sentence_html': _TARGET_RE.sub(lambda m: '<b>' + _TAG_RE.sub('', m.group(1)) + '</b>', origin)
                          if _TARGET_RE.search(origin) else None,
         'example_hash':  ex.get('hash'),
+        'prefix':        ' '.join(head),   # 미리 채운 앞부분(없으면 ''). 채점은 tiles/accepted 부분만.
         'tiles':         [{'id': f't{i}', 'text': t} for i, t in enumerate(bank)],
         'accepted':      accepted_orders(tiles),
         'translation':   plain_text(ex.get('meaning')),
