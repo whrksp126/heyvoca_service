@@ -25,10 +25,9 @@ import { wordIntroSoundItems } from '../plugins/questionTypes/wordIntro/WordIntr
   문장 만들기는 맨 끝 안내 슬라이드 뒤 2~3문제, 오답 재학습도 맨 끝에서 안내 슬라이드와 함께
   나온다(구성은 pages/TakeTest.jsx buildPlantTestQuestions, 재출제 삽입은 components/takeTest/Main.jsx).
 
-  중간 이탈 재개는 세션 중(같은 앱 인스턴스) recentStudy.plant 로컬 상태로만 판단한다 —
+  중간에 그만둔 세션은 이어 하지 않는다(2026-10-24 이슈 #15) — 다시 누르면 항상 새로 뽑는다.
   plant는 서버 RecentStudy에 쓰지 않는다(RecentStudyType enum에 값이 없어 500이 나던
-  버그, pages/TakeTest.jsx 주석 참고). 앱을 완전히 종료했다 다시 열면 이어하기 없이
-  새로 시작한다.
+  버그, pages/TakeTest.jsx 주석 참고).
 */
 
 const MAX_PLANT_COUNT = 5;
@@ -49,13 +48,8 @@ export const usePlantSession = () => {
     primeSfx();
     unlockTtsAudio(); // 제스처 안에서 AudioContext resume — 첫 카드 자동 재생이 무음이 되지 않게
 
-    // 이미 진행 중(같은 앱 인스턴스)인 심기 세션이 있으면 새로 뽑지 않고 그대로 이어간다 —
-    // TakeTest.jsx가 recentStudy['plant']의 study_data(로컬 상태, 서버에는 없음)로 복원한다.
-    if (recentStudy?.plant?.status === 'learning' && recentStudy.plant.study_data?.length > 0) {
-      navigate('/take-test', { state: { testType: 'plant' } });
-      return true;
-    }
-
+    // 중간에 그만둔 심기 세션은 이어 하지 않고 항상 새로 뽑는다(2026-10-24 이슈 #15) —
+    // TakeTest.jsx는 session_id가 다르면 저장분을 버리고 새 세션을 만든다.
     const n = Math.max(1, Math.min(MAX_PLANT_COUNT, count ?? MAX_PLANT_COUNT));
     const res = await getStudyRecommend({ type: 'plant', mode: 'plant', count: n, force });
     const items = res?.code === 200 && Array.isArray(res.data?.items) ? res.data.items : [];

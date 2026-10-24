@@ -6,7 +6,6 @@ import { useVocabulary } from '../../context/VocabularyContext';
 // import VocabularySheet from './VocabularySheet';
 import VocabularySheetNewFullSheet from '../newfullsheet/VocabularySheetNewFullSheet';
 // import TestSetup from './TestSetup';
-import { LearningInfoNewBottomSheet } from '../newBottomSheet/LearningInfoNewBottomSheet';
 import { MAX_TEST_VOCABULARY_COUNT, MIN_TEST_VOCABULARY_COUNT } from '../../utils/common';
 import { Brain, Lightbulb } from "@phosphor-icons/react";
 import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
@@ -30,47 +29,11 @@ const Main = () => {
   const handleStartClick = (testType) => {
     primeSfx();
     console.log("???testType", testType);
-    const isLearning = recentStudy[testType]?.status === "learning";
-    if (isLearning) {
-      // 이어학습 유무 확인
-      pushNewBottomSheet(
-        LearningInfoNewBottomSheet,
-        {
-          testType,
-          onCancel: (props) => {
-            popNewBottomSheet();
-            setTimeout(() => {
-              pushNewFullSheet(VocabularySheetNewFullSheet, { testType }, {
-                smFull: true,
-                closeOnBackdropClick: true
-              });
-            }, 300);
-          },
-          onSet: (props) => {
-            console.log("onStartTest", props);
-            clearNewBottomSheetStack();
-            navigate('/take-test', {
-              state: {
-                testType: props.testType
-              }
-            });
-          }
-        },
-        {
-          isBackdropClickClosable: false,
-          isDragToCloseEnabled: true
-        }
-      );
-      return;
-    } else {
-
-      pushNewFullSheet(VocabularySheetNewFullSheet, { testType }, {
-        smFull: true,
-        closeOnBackdropClick: true
-      });
-
-    }
-
+    // 중간에 그만둔 학습은 이어 하지 않고 항상 새로 시작한다(2026-10-24 이슈 #15 — 한 회차가 14문제 안팎이라 부담이 적다)
+    pushNewFullSheet(VocabularySheetNewFullSheet, { testType }, {
+      smFull: true,
+      closeOnBackdropClick: true
+    });
     return;
 
 

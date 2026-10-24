@@ -6,7 +6,6 @@ import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
 import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 import { useVocabulary } from '../../context/VocabularyContext';
 import { useOnboardingUnlock } from '../../context/OnboardingUnlockContext';
-import { LearningInfoNewBottomSheet } from '../newBottomSheet/LearningInfoNewBottomSheet';
 import { ConfirmNewBottomSheet } from '../newBottomSheet/ConfirmNewBottomSheet';
 import { UnlockGuideNewBottomSheet } from '../newBottomSheet/UnlockGuideNewBottomSheet';
 import VocabularySheetNewFullSheet from './VocabularySheetNewFullSheet';
@@ -97,38 +96,11 @@ const StudyNewFullSheet = () => {
 
   const handleTestClick = () => {
     vibrate({ duration: 5 });
-    const isLearning = recentStudy['test']?.status === "learning";
-    if (isLearning) {
-      pushNewBottomSheet(
-        LearningInfoNewBottomSheet,
-        {
-          testType: 'test',
-          onCancel: () => {
-            popNewBottomSheet();
-            setTimeout(() => {
-              pushNewFullSheet(VocabularySheetNewFullSheet, { testType: 'test' }, {
-                smFull: true,
-                closeOnBackdropClick: true
-              });
-            }, 300);
-          },
-          onSet: (props) => {
-            clearNewBottomSheetStack();
-            closeNewFullSheet();
-            navigate('/take-test', { state: { testType: props.testType } });
-          }
-        },
-        {
-          isBackdropClickClosable: false,
-          isDragToCloseEnabled: true
-        }
-      );
-    } else {
-      pushNewFullSheet(VocabularySheetNewFullSheet, { testType: 'test' }, {
-        smFull: true,
-        closeOnBackdropClick: true
-      });
-    }
+    // 중간에 그만둔 테스트는 이어 하지 않는다 — 항상 새로 고른다(2026-10-24 이슈 #15)
+    pushNewFullSheet(VocabularySheetNewFullSheet, { testType: 'test' }, {
+      smFull: true,
+      closeOnBackdropClick: true
+    });
   };
 
   const cards = [
@@ -160,40 +132,6 @@ const StudyNewFullSheet = () => {
       chevronColor: 'var(--secondary-blue-600)',
       onClick: async () => {
         vibrate({ duration: 5 });
-
-        const isLearning = recentStudy['quick']?.status === "learning";
-        if (isLearning) {
-          const resume = await pushAwaitNewBottomSheet(
-            ConfirmNewBottomSheet,
-            {
-              title: (
-                <>
-                  진행 중인 빠른 복습이 있어요.<br />
-                  이어서 하시겠어요?
-                </>
-              ),
-              btns: { confirm: "이어서 하기", cancel: "새로 시작" }
-            },
-            { isBackdropClickClosable: true, isDragToCloseEnabled: true }
-          );
-          if (resume) {
-            const allWords = vocabularySheets.flatMap(sheet => sheet.words || []).filter(isWordStudiable);
-            closeNewFullSheet();
-            navigate('/take-test', {
-              state: {
-                testType: 'quick',
-                data: {
-                  questionType: QUICK_QUESTION_TYPES,
-                  useRecommendedTypes: true,
-                  vocabularySheetId: "all",
-                  memoryState: null,
-                  count: Math.min(14, allWords.length),
-                }
-              }
-            });
-            return;
-          }
-        }
 
         startFreshQuickReview();
       },

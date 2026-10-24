@@ -110,28 +110,7 @@ export const useQuickReview = () => {
 
     const count = Math.min(MAX_QUESTIONS, countOverride ?? allWords.length);
 
-    if (recentStudy?.quick?.status === 'learning') {
-      const resume = await pushAwaitNewBottomSheet(
-        ConfirmNewBottomSheet,
-        {
-          title: (
-            <>
-              하던 물주기가 남아 있어요.<br />
-              이어서 하시겠어요?
-            </>
-          ),
-          btns: { confirm: '이어서 하기', cancel: '새로 시작' },
-        },
-        { isBackdropClickClosable: true, isDragToCloseEnabled: true }
-      );
-      if (resume) {
-        if (fromFullSheet) closeNewFullSheet();
-        navigate('/take-test', { state: buildState(count, memoryState, taskBucket) });
-        return;
-      }
-    }
-
-    // 새로 시작 — 이전 회차 기록을 비운 뒤 들어간다
+    // 항상 새로 시작 — 중간에 그만둔 회차는 이어 하지 않는다(2026-10-24 이슈 #15). 이전 기록을 비운 뒤 들어간다
     await updateRecentStudy('quick', {
       progress_index: null,
       type: 'quick',

@@ -971,8 +971,8 @@ const StudyResult = () => {
     primeSfx();
     const target = plan.state.testType;
     const slot = recentStudyRef.current?.[target];
-    const resumeOther = target !== testType && slot?.status === 'learning' && slot?.study_data?.length > 0;
-    if (!resumeOther) {
+    // 다른 종류의 진행 중 회차가 있어도 이어 하지 않는다 — 항상 비우고 새로 시작(2026-10-24 이슈 #15)
+    {
       // 끝난 회차(status end)를 비워야 TakeTest 가 새 세션을 만든다(end 면 결과로 되돌려 보낸다)
       const reset = {
         ...(slot ?? {}),
