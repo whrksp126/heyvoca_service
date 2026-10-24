@@ -3,7 +3,40 @@ import { createPortal } from 'react-dom';
 import { motion, AnimatePresence, useDragControls } from 'framer-motion';
 import { useNewBottomSheetContext, useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 
-const BottomSheetItem = ({ newBottomSheet, isActive, phase, onDragEnd, onAnimationComplete }) => {
+// 소프트 키보드 대응 — visualViewport 로 "지금 보이는 영역"을 잰다.
+// iOS WKWebView 는 키보드가 떠도 레이아웃 뷰포트가 그대로라 bottom:0 시트가 키보드 뒤로 숨고,
+// Android(adjustResize)는 창이 줄어 90vh 를 넘는 시트의 아래쪽(입력란)이 잘렸다(QA #15).
+// inset: 레이아웃 뷰포트 바닥과 보이는 영역 바닥의 차이(iOS 키보드 높이, Android 는 0)
+// visibleHeight: 보이는 영역 높이 — 시트 최대 높이를 여기에 맞추고 넘치면 시트 안에서 스크롤한다.
+const useVisualViewportBox = () => {
+  const [box, setBox] = useState({ inset: 0, visibleHeight: null });
+  useEffect(() => {
+    const vv = window.visualViewport;
+    if (!vv) return undefined;
+    const update = () => {
+      const inset = Math.max(0, Math.round(window.innerHeight - vv.height - vv.offsetTop));
+      setBox((prev) => {
+        const next = { inset: inset > 40 ? inset : 0, visibleHeight: Math.round(vv.height) };
+        return prev.inset === next.inset && prev.visibleHeight === next.visibleHeight ? prev : next;
+      });
+      // 시트 안 입력란에 포커스가 있으면 보이는 영역으로 끌어온다
+      const el = document.activeElement;
+      if (el && el.closest?.('[data-bottom-sheet]') && /^(INPUT|TEXTAREA)$/.test(el.tagName)) {
+        requestAnimationFrame(() => el.scrollIntoView({ block: 'nearest' }));
+      }
+    };
+    update();
+    vv.addEventListener('resize', update);
+    vv.addEventListener('scroll', update);
+    return () => {
+      vv.removeEventListener('resize', update);
+      vv.removeEventListener('scroll', update);
+    };
+  }, []);
+  return box;
+};
+
+const BottomSheetItem = ({ newBottomSheet, isActive, phase, onDragEnd, onAnimationComplete, viewportBox }) => {
   const controls = useDragControls();
   const sheetRef = useRef(null);
   const isDragEnabled = !!newBottomSheet.options?.isDragToCloseEnabled;
@@ -30,6 +63,11 @@ const BottomSheetItem = ({ newBottomSheet, isActive, phase, onDragEnd, onAnimati
 
   if (!isActive && !newBottomSheet.options?.keepInDOM) return null;
 
+  const boxStyle = {
+    bottom: viewportBox.inset,
+    maxHeight: viewportBox.visibleHeight ? `min(90vh, ${viewportBox.visibleHeight - 16}px)` : undefined,
+  };
+
   // overscroll-contain(시트 루트) — 시트 안에서 시작한 터치 스크롤이 시트 바깥으로
   // 체이닝되지 않게 한다. 시트 루트는 overflow-hidden 이라 사용자 스크롤은 안 되지만
   // (아래 ::after 가 만드는 오버플로 때문에) 스크롤 노드는 있어서, Chrome 의 스크롤 체인
@@ -52,6 +90,7 @@ const BottomSheetItem = ({ newBottomSheet, isActive, phase, onDragEnd, onAnimati
       left-0 right-0 bottom-0 z-[1001]
       fixed
       max-h-[90vh]
+      flex flex-col
       rounded-t-2xl
       bg-layout-white dark:bg-layout-black
       overflow-hidden
@@ -72,8 +111,9 @@ const BottomSheetItem = ({ newBottomSheet, isActive, phase, onDragEnd, onAnimati
         animate={{ y: phase === 'exit' ? '100%' : 0 }}
         transition={{ type: 'spring', damping: 25, stiffness: 300 }}
         onAnimationComplete={onAnimationComplete}
+        style={boxStyle}
       >
-        <div>
+        <div className="min-h-0 overflow-y-auto overscroll-contain">
           <newBottomSheet.component {...newBottomSheet.props} />
           <div style={{ height: 'calc(var(--safe-area-bottom) - 20px)' }} />
         </div>
@@ -89,9 +129,9 @@ const BottomSheetItem = ({ newBottomSheet, isActive, phase, onDragEnd, onAnimati
       initial={{ y: 0, opacity: 1 }}
       animate={{ y: newBottomSheet.options?.hidden ? '100%' : 0, opacity: newBottomSheet.options?.hidden ? 0 : 1 }}
       transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-      style={newBottomSheet.options?.hidden ? { pointerEvents: 'none' } : undefined}
+      style={newBottomSheet.options?.hidden ? { ...boxStyle, pointerEvents: 'none' } : boxStyle}
     >
-      <div>
+      <div className="min-h-0 overflow-y-auto overscroll-contain">
         <newBottomSheet.component {...newBottomSheet.props} />
         <div style={{ height: 'calc(var(--safe-area-bottom) - 20px)' }} />
       </div>
@@ -107,6 +147,7 @@ export const NewBottomSheetProvider = () => {
   const [renderedStack, setRenderedStack] = useState([]);
   const [renderedActiveIndex, setRenderedActiveIndex] = useState(-1);
   const [phase, setPhase] = useState('idle');
+  const viewportBox = useVisualViewportBox();
 
   useEffect(() => {
     if (stack.length > 0) {
@@ -178,6 +219,7 @@ export const NewBottomSheetProvider = () => {
                 phase={phase}
                 onDragEnd={handleDragEnd}
                 onAnimationComplete={isActive ? handleAnimationComplete : undefined}
+                viewportBox={viewportBox}
               />
             );
           })}

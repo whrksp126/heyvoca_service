@@ -9,7 +9,8 @@ import ReportArt from '../report/ReportArt';
 /**
  * 학습 중 오류 신고 바텀시트 — ReportFlagButton 이 pushAwaitNewBottomSheet 로 연다.
  * 두 단계: ① 이번 학습에서 지금까지 나온 단어를 휠 피커(알림 앱 시간 고르기처럼 위아래로 굴림)로 고르고
- * ② 사유 칩을 누르면 바로 전송한다(메모는 선택, 칩보다 먼저 적어 두면 같이 간다).
+ * ② 사유 칩으로 고르고 '보내기'로 전송한다. 칩은 선택만 하고, 직접 입력란은 '기타'를 골랐을 때만 연다
+ *   (QA #15: 칩을 누르자마자 가던 것을 되돌릴 수 없었다).
  * 기본 선택은 지금 문제의 단어(단어가 여럿인 카드 맞추기는 틀린 단어 → 첫 단어).
  * 같은 단어가 여러 번 나왔으면 가장 최근 문제 하나만 남긴다.
  *
@@ -64,7 +65,8 @@ export const ContentReportNewBottomSheet = ({ question, previousQuestion = null,
     const first = targets.findIndex((t) => t.isCurrent);
     return first >= 0 ? first : Math.max(0, targets.length - 1);
   });
-  const [sending, setSending] = useState(null);
+  const [reason, setReason] = useState(null);
+  const [sending, setSending] = useState(false);
   const [error, setError] = useState('');
   const selected = targets[index];
 
@@ -88,22 +90,31 @@ export const ContentReportNewBottomSheet = ({ question, previousQuestion = null,
     wheelRef.current?.scrollTo({ top: i * ROW_H, behavior: 'smooth' });
   };
 
-  const handleReason = async (code) => {
-    if (sending || !selected) return;
+  const handleReason = (code) => {
+    if (sending) return;
     vibrate({ duration: 5 });
-    setSending(code);
+    setReason(code);
     setError('');
-    const memo = (memoRef.current?.value || '').trim();
+    // '기타'면 바로 입력란에 커서 — 키보드가 뜨면 시트는 NewBottomSheetProvider 가 키보드 위로 올린다
+    if (code === 'other') requestAnimationFrame(() => memoRef.current?.focus());
+  };
+
+  const handleSend = async () => {
+    if (sending || !selected || !reason) return;
+    vibrate({ duration: 5 });
+    setSending(true);
+    setError('');
+    const memo = reason === 'other' ? (memoRef.current?.value || '').trim() : '';
     const res = await createContentReportApi({
       ...buildReportBody(selected.q, { testType, setWords: selected.setWords ?? null }),
-      reason: code,
+      reason,
       memo: memo || null,
     });
     if (res?.code === 200) {
       resolveNewBottomSheet({ sent: true, duplicate: !!res.data?.duplicate });
       return;
     }
-    setSending(null);
+    setSending(false);
     setError(res?.message || '보내지 못했어요. 잠시 후 다시 시도해 주세요.');
   };
 
@@ -117,7 +128,7 @@ export const ContentReportNewBottomSheet = ({ question, previousQuestion = null,
           어떤 점이 잘못됐나요?
         </h3>
         <p className="text-layout-gray-400 dark:text-layout-gray-200 text-[13px] text-center leading-[1.5] break-keep">
-          단어를 굴려서 고르고, 잘못된 점을 누르면 바로 전달돼요
+          단어를 굴려서 고르고, 잘못된 점을 골라 보내 주세요
         </p>
       </div>
 
@@ -171,46 +182,63 @@ export const ContentReportNewBottomSheet = ({ question, previousQuestion = null,
 
       <p className={`${stepLabel} pt-[12px] pb-[8px]`}>2 · 무엇이 잘못됐나요?</p>
       <div className="grid grid-cols-2 gap-[8px]">
-        {REPORT_REASONS.map(({ code, label }) => (
-          <motion.button
-            key={code}
-            type="button"
-            disabled={!!sending}
-            onClick={() => handleReason(code)}
-            whileTap={{ scale: 0.95 }}
-            transition={{ type: 'spring', stiffness: 500, damping: 20 }}
-            className={`
-              flex items-center justify-center
-              h-[46px] px-[8px] rounded-[12px] border-[1px]
-              text-[14px] font-[600] break-keep
-              ${sending === code
-                ? 'border-primary-main-600 bg-primary-main-100 dark:bg-primary-main-dark text-primary-main-600'
-                : 'border-layout-gray-200 dark:border-border-dark text-layout-black dark:text-layout-white'}
-              ${sending && sending !== code ? 'opacity-50' : ''}
-            `}
-          >
-            {sending === code ? '보내는 중…' : label}
-          </motion.button>
-        ))}
+        {REPORT_REASONS.map(({ code, label }) => {
+          const on = reason === code;
+          return (
+            <motion.button
+              key={code}
+              type="button"
+              aria-pressed={on}
+              disabled={sending}
+              onClick={() => handleReason(code)}
+              whileTap={{ scale: 0.95 }}
+              transition={{ type: 'spring', stiffness: 500, damping: 20 }}
+              className={`
+                flex items-center justify-center
+                h-[46px] px-[8px] rounded-[12px] border-[1px]
+                text-[14px] font-[600] break-keep
+                ${on
+                  ? 'border-primary-main-600 bg-primary-main-100 dark:bg-primary-main-dark text-primary-main-600'
+                  : 'border-layout-gray-200 dark:border-border-dark text-layout-black dark:text-layout-white'}
+              `}
+            >
+              {label}
+            </motion.button>
+          );
+        })}
       </div>
 
-      <input
-        ref={memoRef}
-        type="text"
-        maxLength={200}
-        placeholder="한 줄 메모 (선택, 먼저 적고 고르면 같이 가요)"
-        className="
-          mt-[10px] w-full px-[14px] py-[10px] rounded-[10px]
-          border border-border dark:border-border-dark
-          bg-layout-white dark:bg-layout-black
-          text-[16px] text-layout-black dark:text-layout-white
-          placeholder:text-layout-gray-300 placeholder:text-[14px]
-          focus:outline-none focus:border-primary-main-600
-        "
-      />
+      {reason === 'other' && (
+        <input
+          ref={memoRef}
+          type="text"
+          maxLength={200}
+          enterKeyHint="send"
+          onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); handleSend(); } }}
+          placeholder="무엇이 잘못됐는지 적어 주세요"
+          className="
+            mt-[10px] w-full px-[14px] py-[10px] rounded-[10px]
+            border border-border dark:border-border-dark
+            bg-layout-white dark:bg-layout-black
+            text-[16px] text-layout-black dark:text-layout-white
+            placeholder:text-layout-gray-300 placeholder:text-[14px]
+            focus:outline-none focus:border-primary-main-600
+          "
+        />
+      )}
       {error && (
         <p className="pt-[8px] text-center text-[13px] text-status-error-600">{error}</p>
       )}
+
+      <motion.button
+        type="button"
+        disabled={!reason || sending}
+        onClick={handleSend}
+        whileTap={{ scale: 0.97 }}
+        className="mt-[14px] w-full py-[14px] rounded-[8px] bg-primary-main-600 text-[16px] font-[700] text-layout-white disabled:bg-layout-gray-200 dark:disabled:bg-layout-gray-dark disabled:text-layout-gray-400"
+      >
+        {sending ? '보내는 중…' : '보내기'}
+      </motion.button>
     </div>
   );
 };

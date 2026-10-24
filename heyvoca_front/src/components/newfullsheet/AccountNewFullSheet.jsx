@@ -7,7 +7,6 @@ import { LogoutNewBottomSheet } from '../newBottomSheet/LogoutNewBottomSheet';
 import { WithdrawNewBottomSheet } from '../newBottomSheet/WithdrawNewBottomSheet';
 import { NicknameEditNewBottomSheet } from '../newBottomSheet/NicknameEditNewBottomSheet';
 import { useUser } from '../../context/UserContext';
-import { useVocabulary } from '../../context/VocabularyContext';
 import { withdrawApi } from '../../api/auth';
 import { getFarmOverviewApi } from '../../api/farm';
 import { setCookie } from '../../utils/common';
@@ -27,12 +26,11 @@ const AccountNewFullSheet = () => {
   const { pushNewBottomSheet, pushAwaitNewBottomSheet, clearStack: clearNewBottomSheetStack } = useNewBottomSheetActions();
   const { clearStack: clearNewFullSheetStack } = useNewFullSheetActions();
   const { userProfile, setIsWithdrawInProgress, updateUserProfile, loginProvider, fetchUserProfile } = useUser();
-  const { vocabularySheets } = useVocabulary();
   const [isWithdrawing, setIsWithdrawing] = useState(false);
   const [farmSummary, setFarmSummary] = useState(null);
 
-  // "이 계정의 농장" 재조회 — 최초 마운트 + 당겨서 새로고침이 함께 쓴다.
-  // 탈퇴 확인 시트가 그대로 다시 쓰는 숫자들이다.
+  // 농장 요약 재조회 — 화면에는 보이지 않고(QA #15: 계정 화면은 값 + 로그아웃·탈퇴만)
+  // 탈퇴 확인 시트가 "사라질 것" 목록으로 쓴다. 최초 마운트 + 당겨서 새로고침이 함께 쓴다.
   const fetchFarmSummary = useCallback(async () => {
     const res = await getFarmOverviewApi();
     if (res?.code !== 200) return;
@@ -56,7 +54,7 @@ const AccountNewFullSheet = () => {
     return () => { alive = false; };
   }, [fetchFarmSummary]);
 
-  // 당겨서 새로고침 — 계정 값(프로필)과 "이 계정의 농장" 요약을 함께 갱신한다
+  // 당겨서 새로고침 — 계정 값(프로필)과 농장 요약을 함께 갱신한다
   const handlePullToRefresh = useCallback(async () => {
     await Promise.all([fetchFarmSummary(), fetchUserProfile()]);
   }, [fetchFarmSummary, fetchUserProfile]);
@@ -232,23 +230,6 @@ const AccountNewFullSheet = () => {
             </div>
           )}
         </div>
-
-        {/* ── 이 계정의 농장 — 탈퇴하면 사라질 것의 목록 ── */}
-        {farmSummary && (
-          <div className="rounded-[14px] p-[14px] bg-[#FBF6EC] dark:bg-secondary-yellow-dark">
-            <div className="text-[12px] font-[700] tracking-[-0.02em] text-[#9A7B4F] dark:text-[#D6BB8E]">
-              이 계정의 농장
-            </div>
-            <div className="mt-[6px] text-[10.5px] leading-[1.65] tracking-[-0.02em] text-layout-gray-300">
-              기른 작물 <b className="font-[700] text-layout-gray-400 dark:text-layout-gray-200">{farmSummary.plants}</b>
-              {' · '}황금 당근 <b className="font-[700] text-layout-gray-400 dark:text-layout-gray-200">{farmSummary.golden}</b>
-              {' · '}단어장 <b className="font-[700] text-layout-gray-400 dark:text-layout-gray-200">{vocabularySheets?.length ?? 0}</b>
-              <br />
-              연속 학습 최고 <b className="font-[700] text-layout-gray-400 dark:text-layout-gray-200">{farmSummary.streakBest}일</b>
-              {' · '}보석 <b className="font-[700] text-layout-gray-400 dark:text-layout-gray-200">{userProfile?.gem_cnt ?? 0}</b>
-            </div>
-          </div>
-        )}
 
         {/* ── 로그아웃 ── */}
         <div
