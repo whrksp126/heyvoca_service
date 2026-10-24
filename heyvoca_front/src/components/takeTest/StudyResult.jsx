@@ -242,41 +242,7 @@ const NextStudyCta = ({ showRing, ring, reducedMotion, onStart, className = '' }
 );
 
 /*
-  카운트다운 안내 줄 — 하단 버튼 줄 바로 위 은은한 pill(토스트 형).
-  `N초 뒤 다음 학습이 시작돼요`. N 은 링과 같은 remainingSec 이다.
-  멈추기는 이 줄이 아니라 왼쪽 하단 버튼이 맡는다(이슈 #15 3차 QA — 아래 LeftCta 주석).
-  버튼 영역(data-result-cta, 불투명 z-20) 안에 있어 목록 스크롤과 겹치지 않는다.
-  사라질 때는 높이·투명도를 함께 줄여 버튼 줄이 부드럽게 내려앉는다.
-*/
-const NextStudyNotice = ({ show, remainingSec, reducedMotion }) => (
-  <AnimatePresence initial={false}>
-    {show ? (
-      <motion.div
-        key="next-study-notice"
-        initial={reducedMotion ? { opacity: 0 } : { opacity: 0, height: 0 }}
-        animate={reducedMotion ? { opacity: 1 } : { opacity: 1, height: 'auto' }}
-        exit={reducedMotion ? { opacity: 0 } : { opacity: 0, height: 0 }}
-        transition={{ duration: 0.22, ease: [0.4, 0, 0.2, 1] }}
-        className='overflow-hidden'
-      >
-        <div className='px-[24px] pt-[14px] -mb-[4px]'>
-          <div
-            role='status'
-            data-testid='next-study-notice'
-            className='flex items-center justify-center gap-[8px] rounded-full px-[16px] h-[40px] bg-layout-gray-50 dark:bg-layout-gray-dark'
-          >
-            <p className='min-w-0 truncate text-[13px] font-[600] tracking-[-0.02em] text-layout-gray-400 dark:text-layout-gray-200'>
-              <span className='tabular-nums font-[700] text-primary-main-600'>{remainingSec}초</span> 뒤 다음 학습이 시작돼요
-            </p>
-          </div>
-        </div>
-      </motion.div>
-    ) : null}
-  </AnimatePresence>
-);
-
-/*
-  오늘 돌봄 남은 수 — 이어하기 유도 한 줄(안내 pill 위). 홈 '오늘 할 일' 카드의
+  오늘 돌봄 남은 수 — 이어하기 유도 한 줄(버튼 줄 위). 홈 '오늘 할 일' 카드의
   "시듦 물주기" + "오늘 돌봄 물주기" 두 줄(x/y)과 같은 계산이다. 새 씨앗 심기는 이 화면의
   "다음 학습"(복습 전용)이 하지 않으므로 넣지 않는다. 썩은 단어는 홈에서도 목표 밖이다.
 */
@@ -1367,11 +1333,6 @@ const StudyResult = () => {
             {nextPlan.available && !isFreeTest && freshTodayTasks ? (
               <TodayCareLeft tasks={freshTodayTasks} />
             ) : null}
-            <NextStudyNotice
-              show={showRing}
-              remainingSec={remainingSec}
-              reducedMotion={reducedMotion}
-            />
             <ResultCtaBar>
               {nextPlan.available && !isFreeTest ? (
                 <>

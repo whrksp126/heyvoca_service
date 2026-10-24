@@ -612,7 +612,7 @@ def post_study_log():
     # ── 새 씨앗 심기(test_type='plant') 는 정오답과 무관하게 정답 1회로 처리 ──
     # 심기 세션은 틀려도 끝까지 정답을 맞춰야 종료되므로(2026-10 합의), 서버가 강제한다.
     # 클라이언트가 was_correct=false 를 보내도 안전 — 이후 로그·세션 카운터·mastery·
-    # 콤보·XP·농장 전이가 모두 이 값(정답)을 쓴다. rating 은 시간 무관하게 Good 고정.
+    # 콤보·XP·농장 전이가 모두 이 값(정답)을 쓴다. rating 은 Good 고정.
     is_plant = (session_obj.test_type == 'plant')
     if is_plant:
         was_correct = True
@@ -962,8 +962,8 @@ def predict_reviews():
     """정답/오답 각각의 복습 예정일을 미리 계산(미저장).
 
     학습/테스트 시작 시 호출 → 채점 순간 즉시·고정 표시로 깜빡임 제거.
-    실제 /study/log 채점은 속도 기반 rating(GOOD/EASY 등)이라 값이 미세하게
-    다를 수 있으나, 표시값은 안정적 추정(정답=GOOD, 오답=AGAIN)으로 고정한다.
+    실제 /study/log 채점도 정답=GOOD·오답=AGAIN 이라 표시값과 같다(오타 허용 정답만
+    HARD 라 미세하게 다를 수 있다).
 
     요청: { "items": [ {"user_voca_id": 123}, ... ] }
     응답: { "code":200, "data": {

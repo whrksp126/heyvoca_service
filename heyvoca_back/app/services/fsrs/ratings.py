@@ -1,89 +1,25 @@
 """
-was_correct + time_taken_ms → FSRS rating(1~4) 변환.
+was_correct → FSRS rating(1~4) 변환.
 
-Phase 1.2: 단순 시간 컷오프 (5/10초)
-Phase 2.3: 단어 길이/FSRS 난이도 기반 expected_time 보정 추가.
+2026-10 (이슈 #15 4차) 응답 시간·글자 수 기반 판정 폐기:
+  오답                 → 1 (Again)
+  정답                 → 3 (Good)
+  오타 허용 정답(typo) → 2 (Hard)
 
-보정 로직 (RATINGS_USE_TIME_CALIBRATION=true, 기본값):
-  expected_time_ms = 1500 + 120 * word_length + 200 * fsrs_difficulty
-  ratio = time_taken_ms / expected_time_ms
-
-  ratio <= 0.5 → 4 (Easy)
-  ratio <= 1.0 → 3 (Good)
-  그 외        → 2 (Hard)
-
-폴백 조건:
-  - RATINGS_USE_TIME_CALIBRATION=false 로 설정 시
-  - word_length 또는 fsrs_difficulty 둘 중 하나라도 None 시
-  단순 컷오프(5초/10초) 적용.
-
-2026-09 "출제형 문제 1단계" 보정: 조립/타이핑 유형은 사지선다보다 구조적으로 오래
-걸린다(조각을 여러 번 옮기거나 타이핑해야 함). question_type을 넘기면
-_TYPE_TIME_MULTIPLIER로 기대 시간에 배수를 곱해 "느려서 Hard로 깎이는" 오탐을 줄인다.
+예전에는 기대 응답 시간(1500 + 120×글자 수 + 200×난이도, 유형별 배수)과 실제 시간을
+비교해 Easy/Good/Hard 를 갈랐지만, 조작 속도·글자 수가 기억 강도를 대변하지 못해
+간격이 들쭉날쭉했다. Easy 는 이제 명시적 신호로만 쓴다(이 함수는 내지 않는다).
+time_taken_ms·word_length 는 UserStudyLog 기록용으로만 남는다.
 """
 
-import os
 from typing import Optional
 
 from app.services.fsrs.core import AGAIN, HARD, GOOD, EASY
 
-# 기대 시간 계산 상수 (Phase 2.3)
-_BASE_MS        = 1500   # 기본 기대 시간 (ms)
-_PER_CHAR_MS    = 120    # 글자당 추가 시간 (ms)
-_PER_DIFF_MS    = 200    # difficulty 단위당 추가 시간 (ms)
-
-# 폴백 컷오프 (Phase 1.2 기존값)
-_CUTOFF_EASY_MS = 5_000
-_CUTOFF_GOOD_MS = 10_000
-
-# 유형별 기대 시간 배수 (2026-09) — 조립/타이핑류는 사지선다보다 조작 단계가 많아
-# 순수 "생각하는 시간"만으로 비교하면 부당하게 Hard로 깎인다. 목록에 없으면 1.0.
-_TYPE_TIME_MULTIPLIER = {
-    'sentenceArrangePartial': 1.8,
-    'sentenceArrange':        2.5,
-    'listenArrange':          3.0,   # 듣기 재생 시간까지 포함
-    'fillInTheBlankTyping':   2.0,
-}
-
-
-def _time_multiplier(question_type: Optional[str]) -> float:
-    return _TYPE_TIME_MULTIPLIER.get(question_type or '', 1.0)
-
-
-def _use_calibration() -> bool:
-    """RATINGS_USE_TIME_CALIBRATION 환경변수 확인. 기본값 true."""
-    val = os.environ.get('RATINGS_USE_TIME_CALIBRATION', 'true').strip().lower()
-    return val != 'false'
-
-
-def _expected_time_ms(word_length: int, fsrs_difficulty: float) -> float:
-    """단어 길이·난이도 기반 기대 응답 시간(ms) 계산."""
-    return _BASE_MS + _PER_CHAR_MS * word_length + _PER_DIFF_MS * fsrs_difficulty
-
-
-def _rating_by_ratio(ratio: float) -> int:
-    """ratio(실제/기대 시간 비율) → rating."""
-    if ratio <= 0.5:
-        return EASY
-    elif ratio <= 1.0:
-        return GOOD
-    else:
-        return HARD
-
-
-def _rating_by_cutoff(time_taken_ms: int) -> int:
-    """Phase 1.2 단순 컷오프 → rating."""
-    if time_taken_ms <= _CUTOFF_EASY_MS:
-        return EASY
-    elif time_taken_ms <= _CUTOFF_GOOD_MS:
-        return GOOD
-    else:
-        return HARD
-
 
 def derive_rating(
     was_correct: bool,
-    time_taken_ms: int,
+    time_taken_ms: Optional[int] = None,
     *,
     word_length: Optional[int] = None,
     fsrs_difficulty: Optional[float] = None,
@@ -94,37 +30,20 @@ def derive_rating(
     학습 결과를 FSRS rating(1~4)으로 변환.
 
     Args:
-        was_correct:     정답 여부
-        time_taken_ms:   응답 소요 시간 (밀리초)
-        word_length:     단어 길이 (글자 수). None이면 폴백.
-        fsrs_difficulty: FSRS 난이도 (1.0~10.0). None이면 폴백.
-        question_type:   문제 유형 — 조립/타이핑류는 기대 시간에 배수를 곱한다
-                          (_TYPE_TIME_MULTIPLIER). None이면 배수 1.0.
-        typo:            fillInTheBlankTyping에서 오타 허용으로 정답 처리된 경우 True.
-                          정답이어도 시간 계산을 건너뛰고 Hard(2)로 고정한다(형태를
-                          완전히 맞히지 못했으므로 Good/Easy로 보지 않는다).
+        was_correct: 정답 여부
+        typo:        fillInTheBlankTyping 에서 오타 허용으로 정답 처리된 경우 True →
+                     형태를 완전히 맞히지 못했으므로 Hard(2).
+        time_taken_ms, word_length, fsrs_difficulty, question_type:
+                     호출부 호환용으로 받기만 하고 판정에 쓰지 않는다(2026-10 폐기).
 
     Returns:
-        1=Again, 2=Hard, 3=Good, 4=Easy
-
-    환경변수:
-        RATINGS_USE_TIME_CALIBRATION=false 로 설정하면 기존 단순 컷오프 사용.
+        1=Again, 2=Hard, 3=Good
     """
     if not was_correct:
         return AGAIN
-
     if typo:
         return HARD
-
-    # 보정 조건: 환경변수 ON + 파라미터 모두 존재
-    if _use_calibration() and word_length is not None and fsrs_difficulty is not None:
-        expected = _expected_time_ms(word_length, float(fsrs_difficulty)) * _time_multiplier(question_type)
-        ratio = time_taken_ms / expected if expected > 0 else float('inf')
-        return _rating_by_ratio(ratio)
-
-    # 폴백: 기존 단순 컷오프 (배수 적용 — 시간을 배수로 나눠 컷오프는 그대로 재사용)
-    adjusted_time = time_taken_ms / _time_multiplier(question_type)
-    return _rating_by_cutoff(adjusted_time)
+    return GOOD
 
 
 def rating_to_q_score(rating: int) -> int:

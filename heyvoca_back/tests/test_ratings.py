@@ -1,5 +1,5 @@
 """
-ratings.py — was_correct × time_taken_ms 매트릭스 테스트.
+ratings.py — 정답/오답/오타 판정 테스트 (2026-10: 응답 시간·글자 수 무관).
 """
 
 import pytest
@@ -9,67 +9,23 @@ from app.services.fsrs.core import AGAIN, HARD, GOOD, EASY
 
 
 class TestDeriveRating:
-    # ── 오답 케이스 ──
+    @pytest.mark.parametrize("time_ms", [0, 1000, 5000, 10001, 99999])
+    def test_incorrect_is_again(self, time_ms):
+        assert derive_rating(False, time_ms) == AGAIN
+        assert derive_rating(False, time_ms, typo=True) == AGAIN
 
-    def test_incorrect_any_time_is_again(self):
-        """오답이면 시간과 무관하게 AGAIN(1)."""
-        assert derive_rating(False, 0)      == AGAIN
-        assert derive_rating(False, 4999)   == AGAIN
-        assert derive_rating(False, 5000)   == AGAIN
-        assert derive_rating(False, 10000)  == AGAIN
-        assert derive_rating(False, 99999)  == AGAIN
+    @pytest.mark.parametrize("time_ms", [0, 1000, 5000, 10001, 99999])
+    def test_correct_is_always_good(self, time_ms):
+        assert derive_rating(True, time_ms) == GOOD
+        assert derive_rating(True, time_ms, word_length=3, fsrs_difficulty=1.0) == GOOD
+        assert derive_rating(True, time_ms, word_length=15, fsrs_difficulty=9.0,
+                             question_type='sentenceArrange') == GOOD
 
-    # ── 정답 케이스 ──
+    def test_typo_correct_is_hard(self):
+        assert derive_rating(True, 500, typo=True) == HARD
 
-    def test_correct_very_fast_is_easy(self):
-        """정답 + 5초 이하 → EASY(4)."""
-        assert derive_rating(True, 0)    == EASY
-        assert derive_rating(True, 1000) == EASY
-        assert derive_rating(True, 5000) == EASY
-
-    def test_correct_medium_is_good(self):
-        """정답 + 5001~10000ms → GOOD(3)."""
-        assert derive_rating(True, 5001)  == GOOD
-        assert derive_rating(True, 7500)  == GOOD
-        assert derive_rating(True, 10000) == GOOD
-
-    def test_correct_slow_is_hard(self):
-        """정답 + 10001ms 이상 → HARD(2)."""
-        assert derive_rating(True, 10001) == HARD
-        assert derive_rating(True, 15000) == HARD
-        assert derive_rating(True, 30000) == HARD
-        assert derive_rating(True, 99999) == HARD
-
-    # ── 경계값 ──
-
-    def test_boundary_5000ms(self):
-        """5000ms 경계: <=5000 → EASY."""
-        assert derive_rating(True, 4999) == EASY
-        assert derive_rating(True, 5000) == EASY
-        assert derive_rating(True, 5001) == GOOD
-
-    def test_boundary_10000ms(self):
-        """10000ms 경계: <=10000 → GOOD."""
-        assert derive_rating(True, 9999)  == GOOD
-        assert derive_rating(True, 10000) == GOOD
-        assert derive_rating(True, 10001) == HARD
-
-    # ── 전체 매트릭스 ──
-
-    @pytest.mark.parametrize("was_correct,time_ms,expected", [
-        (False, 0,     AGAIN),
-        (False, 5000,  AGAIN),
-        (False, 15000, AGAIN),
-        (True,  0,     EASY),
-        (True,  5000,  EASY),
-        (True,  5001,  GOOD),
-        (True,  10000, GOOD),
-        (True,  10001, HARD),
-        (True,  15000, HARD),
-        (True,  20000, HARD),
-    ])
-    def test_matrix(self, was_correct, time_ms, expected):
-        assert derive_rating(was_correct, time_ms) == expected
+    def test_never_easy(self):
+        assert derive_rating(True, 0, word_length=20, fsrs_difficulty=10.0) != EASY
 
 
 class TestRatingToQScore:
