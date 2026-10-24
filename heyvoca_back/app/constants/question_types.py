@@ -34,6 +34,9 @@ RECOMMENDABLE_QUESTION_TYPES = (
     'sentenceArrange',
     'listenArrange',
     'fillInTheBlankTyping',
+    # 2026-10-24 QA #15 — 문장 뜻 고르기(독해): 예문 원문을 읽고 한국어 뜻 4개 중 고르기.
+    # 프론트가 예문 데이터만으로 로컬 조립(plugins/questionTypes/index.js buildSentenceMeaningQuestions).
+    'sentenceMeaning',
 )
 
 # 난이도 오르내리기(자동 출제, composer._compose_recommend full_recommend 경로) 전용 —
@@ -46,6 +49,7 @@ QUESTION_TYPE_TIER = {
     'cardMatchListening':      2,
     'fillInTheBlank':          3,
     'sentenceArrangePartial':  3,
+    'sentenceMeaning':         3,
     'sentenceArrange':         4,
     'listenArrange':           4,
     'fillInTheBlankTyping':    4,   # 대표 tier. tier 5 에도 노출(TIER_QUESTION_TYPES[5] 참고)
@@ -57,7 +61,7 @@ QUESTION_TYPE_TIER = {
 TIER_QUESTION_TYPES = {
     1: ('multipleChoice', 'cardMatch'),
     2: ('reverseMultipleChoice', 'multipleChoiceListening', 'cardMatchListening'),
-    3: ('fillInTheBlank', 'sentenceArrangePartial'),
+    3: ('fillInTheBlank', 'sentenceArrangePartial', 'sentenceMeaning'),
     4: ('sentenceArrange', 'listenArrange', 'fillInTheBlankTyping'),
     5: ('fillInTheBlankTyping',),
 }

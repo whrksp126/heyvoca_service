@@ -9,19 +9,20 @@
 // 문제는 항상 앞으로만 진행되므로 direction은 항상 1로 호출한다(뒤로 가는 슬라이드는
 // 없음 — direction<0 분기는 나중에 뒤로가기를 지원할 때를 대비해 남겨둔다).
 
+// direction === 0 은 "제자리 교체" — 전체 화면 인터루드(구간 안내·콤보)가 가리고 있던 사이 문제가
+// 바뀌는 경우다. 인터루드가 걷힌 뒤 이전 슬라이드가 다시 보였다가 밀려나는 잔상이 없게 즉시 바꾼다
+// (2026-10-24 QA #15). AnimatePresence 의 custom 으로 넘겨야 퇴장 중인 슬라이드에도 적용된다.
 export const SLIDE_VARIANTS = {
-  enter: (direction) => ({
-    x: direction > 0 ? '100%' : '-100%',
-    opacity: 0,
-  }),
+  enter: (direction) => (direction === 0
+    ? { x: 0, opacity: 1, transition: { duration: 0 } }
+    : { x: direction > 0 ? '100%' : '-100%', opacity: 0 }),
   center: {
     x: 0,
     opacity: 1,
   },
-  exit: (direction) => ({
-    x: direction < 0 ? '100%' : '-100%',
-    opacity: 0,
-  }),
+  exit: (direction) => (direction === 0
+    ? { opacity: 0, transition: { duration: 0 } }
+    : { x: direction < 0 ? '100%' : '-100%', opacity: 0 }),
 };
 
 // 슬라이드(문제 카드 컨테이너) 전환 transition — AnimatePresence mode="popLayout"과 함께 쓴다.

@@ -28,7 +28,7 @@ import { getComboApi, protectComboApi, forfeitComboApi } from '../../api/game';
 import ComboBar, { getComboFillClass, COMBO_MILESTONE_STEP } from './ComboBar';
 import StudyProgressBar from './StudyProgressBar';
 import { ComboInterlude, PhaseInterlude } from './StudyInterlude';
-import { holdStudyAdvance } from '../../hooks/useStudyAdvanceGate';
+import { holdStudyAdvance, setStudyManualAdvance, useManualAdvancePending } from '../../hooks/useStudyAdvanceGate';
 import { ComboProtectNewBottomSheet } from '../newBottomSheet/ComboProtectNewBottomSheet';
 import { useUser } from '../../context/UserContext';
 import FarmStatusBar, { FarmResultBar } from '../farm/FarmStatusBar';
@@ -236,6 +236,14 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
     진행 중엔 XP가 계속 올랐는데 격자엔 12XP만 남음). 세션 종료 시 글자당 1회 일괄 전송.
   */
   const isMultiStepMode = isPlantMode || testType === 'script';
+  // 새 씨앗 심기는 채점 후 자동으로 넘어가지 않는다 — 아래 '다음' 버튼(plantNextFooter)을 눌러야 넘어간다
+  // (2026-10-24 QA #15). 게이트를 쓰는 모든 유형에 한 번에 적용된다(hooks/useStudyAdvanceGate.js).
+  useEffect(() => {
+    if (!isPlantMode) return undefined;
+    setStudyManualAdvance(true);
+    return () => setStudyManualAdvance(false);
+  }, [isPlantMode]);
+  const manualAdvance = useManualAdvancePending();
   const recordPlantAttempt = (vocaId, wasCorrect) => {
     if (vocaId == null || !plantAttemptsRef?.current) return;
     const prev = plantAttemptsRef.current.has(vocaId) ? plantAttemptsRef.current.get(vocaId) : true;
@@ -332,6 +340,8 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
   const pendingInterludeRef = useRef(null);        // { n, milestone, atIndex }
   const shownMilestonesRef = useRef(new Set());
   const interludeNextRef = useRef(null);
+  // 슬라이드 전환 방향 — 1: 오른쪽에서 밀려 들어옴(기본), 0: 인터루드 뒤 제자리 교체(SLIDE_VARIANTS 참고)
+  const [slideDirection, setSlideDirection] = useState(1);
   const prevComboCurrentRef = useRef(null);
   /*
     현재 진행 중인 콤보 판(스트릭)이 기존 최고 기록을 갱신 중인지 추적.
@@ -647,6 +657,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
       items.push({ id: interludeIdRef.current++, type: 'phase', kind: phaseKind });
     }
     if (items.length === 0) {
+      setSlideDirection(1);
       applyNext();
       return;
     }
@@ -661,6 +672,8 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
     const fn = interludeNextRef.current;
     interludeNextRef.current = null;
     setInterludeQueue([]);
+    // 인터루드가 가리던 사이 문제를 바꾼다 — 슬라이드 전환 없이 제자리 교체(이전 슬라이드 잔상 방지)
+    if (fn) setSlideDirection(0);
     fn?.();
   };
 
@@ -1949,6 +1962,26 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
     </div>
   ) : null;
 
+  // 심기 세션 '다음' 버튼 — 자체 '다음' 버튼이 있는 유형(만나기·문장 만들기·빈칸 입력)은 제외.
+  // 채점 전에도 자리를 잡아 둬 채점 순간 레이아웃이 튀지 않게 하고, 채점 뒤에만 보인다.
+  const currentQType = testQuestions[progressIndex]?.questionType;
+  const showPlantNextFooter = isPlantMode
+    && !isNoGradeQuestionType(currentQType)
+    && !isSentenceQuestionType(currentQType);
+  const plantNextFooter = showPlantNextFooter ? (
+    <motion.button
+      type="button"
+      disabled={!manualAdvance}
+      onClick={() => { feel('tap'); manualAdvance?.(); }}
+      whileTap={manualAdvance ? { scale: 0.97 } : undefined}
+      animate={{ opacity: manualAdvance ? 1 : 0 }}
+      transition={{ duration: 0.15 }}
+      className={`mt-[14px] flex-shrink-0 h-[52px] rounded-[12px] text-[16px] font-[700] tracking-[-0.03em] bg-primary-main-600 text-layout-white ${manualAdvance ? '' : 'pointer-events-none'}`}
+    >
+      다음
+    </motion.button>
+  ) : null;
+
   // 콤보 마일스톤 인터루드(전체 화면 포털) — 두 렌더 경로 공통
   const interludeEl = !interlude ? null : (interlude.type === 'phase'
     ? <PhaseInterlude key={interlude.id} kind={interlude.kind} onDone={handleInterludeDone} />
@@ -1991,10 +2024,10 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
           fillClass={progressFillClass}
         />
           <div className="relative flex flex-1 min-h-0 overflow-hidden">
-          <AnimatePresence initial={false} mode="popLayout">
+          <AnimatePresence initial={false} mode="popLayout" custom={slideDirection}>
             <motion.div
               key={progressIndex}
-              custom={1}
+              custom={slideDirection}
               variants={slideVariants}
               initial="enter"
               animate="center"
@@ -2014,6 +2047,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
           </AnimatePresence>
         </div>
         {listeningSkipButton}
+        {plantNextFooter}
       </motion.div>
     );
   }
@@ -2040,10 +2074,10 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
       />
 
       <div className="relative middle flex flex-1 min-h-0 overflow-hidden">
-        <AnimatePresence initial={false} mode="popLayout">
+        <AnimatePresence initial={false} mode="popLayout" custom={slideDirection}>
           <motion.div
             key={progressIndex}
-            custom={1}
+            custom={slideDirection}
             variants={slideVariants}
             initial="enter"
             animate="center"
@@ -2295,6 +2329,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
         </AnimatePresence>
       </div>
       {listeningSkipButton}
+      {plantNextFooter}
     </motion.div>
   );
 };

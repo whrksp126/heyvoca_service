@@ -13,7 +13,7 @@ import { MEMORY_STAGE_ORDER, wordMemoryStage, memoryStageCounts, isWordStudiable
 import { vibrate } from '../../utils/osFunction';
 import SetupTile from '../common/SetupTile';
 import MemoryStageSelector from '../common/MemoryStageSelector';
-import { McqGlyph, CardMatchGlyph, BlankGlyph, ArrangeGlyph, TypingGlyph } from '../common/QuestionTypeGlyphs';
+import { McqGlyph, CardMatchGlyph, BlankGlyph, ArrangeGlyph, TypingGlyph, ReadGlyph } from '../common/QuestionTypeGlyphs';
 import { Toggle } from '../newfullsheet/settingsUi';
 
 /*
@@ -514,6 +514,7 @@ export const TestSetupNewBottomSheet = ({ onCancel, onSet, maxVocabularyCount, v
               {[
                 { value: 'sentenceArrange', label: '문장 만들기', Glyph: ArrangeGlyph },
                 { value: 'fillInTheBlankTyping', label: '빈칸 입력', Glyph: TypingGlyph },
+                { value: 'sentenceMeaning', label: '문장 뜻 고르기', Glyph: ReadGlyph },
               ].map(({ value, label, Glyph }) => (
                 <SetupTile
                   key={value}
@@ -525,8 +526,6 @@ export const TestSetupNewBottomSheet = ({ onCancel, onSet, maxVocabularyCount, v
                   <span className="text-[14px] font-[700] break-keep group-data-[selected=true]:text-layout-black dark:group-data-[selected=true]:text-layout-white">{label}</span>
                 </SetupTile>
               ))}
-              {/* 빈 자리 1칸 — 위 3타일 줄과 폭(1/3씩)이 어긋나지 않게 자리만 채운다(비대칭 방지) */}
-              <div className="flex-1" aria-hidden />
             </div>
           </div>
         </Section>

@@ -5,6 +5,7 @@ import SentenceArrangeQuestion from './sentenceArrange/SentenceArrangeQuestion';
 import ListenArrangeQuestion from './sentenceArrange/ListenArrangeQuestion';
 import FillInTheBlankTypingQuestion from './fillInTheBlankTyping/FillInTheBlankTypingQuestion';
 import WordIntroQuestion from './wordIntro/WordIntroQuestion';
+import SentenceMeaningQuestion from './sentenceMeaning/SentenceMeaningQuestion';
 import ScriptIntroQuestion from './script/ScriptIntroQuestion';
 import ScriptChoiceQuestion from './script/ScriptChoiceQuestion';
 import ScriptTraceQuestion from './script/ScriptTraceQuestion';
@@ -155,6 +156,71 @@ const buildFillInTheBlankQuestions = (selectedWords, allWords) => {
       // 서버가 고른 예문일 때만 존재 — /study/log 전송부(components/takeTest/Main.jsx)가
       // 있으면 example_hash로 함께 보낸다(계약 4·5절).
       exampleHash,
+    });
+  }
+  return questions;
+};
+
+/*
+  문장 뜻 고르기(sentenceMeaning, 독해) — 2026-10-24 QA #15. 듀오링고의 "문장을 읽고 뜻 고르기".
+  예문 원문(영어/일본어)을 보여 주고 그 예문의 한국어 뜻 4개 중 하나를 고른다.
+  실시간 AI 없이 기존 데이터만 쓴다 — 정답은 그 예문의 meaning, 오답은 **같은 학습 풀의 다른 단어
+  예문 뜻**(같은 세션 단어 우선, 부족하면 단어장 풀). 뜻이 겹치는 단어의 예문은 우선 배제한다.
+  자격: 원문·뜻이 모두 있는 예문 + 오답 예문 뜻 3개 확보. 못 만들면 건너뛴다(호출부가 사지선다 폴백).
+*/
+const meaningPlain = (ex) => stripTags(exampleKo(ex)).trim();
+const originPlain = (ex) => stripTags(exampleEn(ex)).trim();
+const hasSentenceMeaningExample = (ex) => originPlain(ex) !== '' && meaningPlain(ex) !== '';
+
+const buildSentenceMeaningQuestions = (selectedWords, allWords) => {
+  const wordKey = (w) => w?.id ?? w?.vocaIndexId;
+  const selectedKeys = new Set((selectedWords ?? []).map(wordKey));
+  // 오답 풀 — 같은 세션 단어를 앞에 두고(섞어서) 단어장 풀을 뒤에 붙인다.
+  const pool = [
+    ...shuffleArray((selectedWords ?? [])),
+    ...shuffleArray((allWords ?? []).filter((w) => !selectedKeys.has(wordKey(w)))),
+  ];
+  const questions = [];
+  for (const word of selectedWords ?? []) {
+    const candidates = (Array.isArray(word?.examples) ? word.examples : []).filter(hasSentenceMeaningExample);
+    if (candidates.length === 0) continue;
+    // 너무 짧은 예문(단어 2~3개)은 뜻 고르기가 단어 뜻 고르기와 다를 바 없다 — 긴 쪽 우선.
+    const ja = isJa(wordLang(word));
+    const longEnough = candidates.filter((ex) => (ja
+      ? originPlain(ex).replace(/\s+/g, '').length >= 8
+      : originPlain(ex).split(/\s+/).length >= 4));
+    const example = shuffleArray(longEnough.length > 0 ? longEnough : candidates)[0];
+    const correctText = meaningPlain(example);
+
+    const seen = new Set([correctText]);
+    const pickFrom = (onlyNonOverlap) => {
+      const out = [];
+      for (const w of pool) {
+        if (out.length >= 3) break;
+        if (wordKey(w) === wordKey(word)) continue;
+        if (onlyNonOverlap && wordsOverlap(word, w)) continue;
+        const exs = shuffleArray((Array.isArray(w?.examples) ? w.examples : []).filter(hasSentenceMeaningExample));
+        const ex = exs.find((e) => !seen.has(meaningPlain(e)));
+        if (!ex) continue;
+        seen.add(meaningPlain(ex));
+        out.push(meaningPlain(ex));
+      }
+      return out;
+    };
+    let wrong = pickFrom(true);
+    if (wrong.length < 3) wrong = [...wrong, ...pickFrom(false)].slice(0, 3);
+    if (wrong.length < 3) continue;
+
+    const options = shuffleArray([correctText, ...wrong]);
+    questions.push({
+      ...word,
+      questionType: 'sentenceMeaning',
+      sentenceText: exampleEn(example),
+      sentenceReadingTokens: Array.isArray(example?.reading_tokens) ? example.reading_tokens : null,
+      options,
+      resultIndex: options.indexOf(correctText),
+      isCorrect: null,
+      userResultIndex: null,
     });
   }
   return questions;
@@ -406,6 +472,21 @@ export const QUESTION_TYPE_PLUGINS = [
     guideTitle: '빈칸에 단어를 입력하세요',
     component: FillInTheBlankTypingQuestion,
     setupQuestions: buildTypingQuestions,
+  },
+  {
+    // 문장 뜻 고르기(독해) — 예문 원문을 읽고 한국어 뜻을 고른다(위 buildSentenceMeaningQuestions).
+    // 방향은 하나뿐이라 direction: null — 시트의 [방향] 칩(사지선다 전용)과 무관하게 항상 포함.
+    // 읽기 문제라 등장 시 자동으로 읽어 주지 않는다(컴포넌트의 스피커로만 듣는다).
+    id: 'sentenceMeaning',
+    autoSpeakOnShow: false,
+    label: '문장 뜻 고르기',
+    enabled: true,
+    family: 'sentenceMeaning',
+    direction: null,
+    listening: false,
+    guideTitle: '문장의 뜻을 고르세요',
+    component: SentenceMeaningQuestion,
+    setupQuestions: (selectedWords, allWords) => buildSentenceMeaningQuestions(selectedWords, allWords),
   },
   {
     // ① "만나기" 슬라이드 — 새 씨앗 심기(plant) 세션 전용, 채점 없음(2026-09-29).

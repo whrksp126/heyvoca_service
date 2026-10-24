@@ -75,6 +75,57 @@ const HiddenPlaceholder = ({ onReveal, label, small = false }) => (
   </motion.button>
 );
 
+// 동사 변화형 라벨 — 백엔드 dict_detail.verb_forms 키 순서 그대로 보여 준다.
+const VERB_FORM_LABELS = [
+  ['base', '원형'], ['third_sg', '3인칭 단수'], ['past', '과거'], ['past_part', '과거분사'], ['gerund', '-ing'],
+];
+
+/*
+  사전 상세 — 새 씨앗 심기 '만나기' 카드에서만 내려오는 word.dictDetail(2026-10-24 QA #15).
+  사용자 단어장의 뜻 사본(위 '의미')은 단어장마다 줄여져 있어, 사전이 가진 품사별 뜻 전체와
+  동사 변화형을 따로 보여 준다. 읽어 주기(TTS 시퀀스)에는 넣지 않는다 — 표시 전용.
+*/
+const DictDetail = ({ detail }) => {
+  if (!detail) return null;
+  const groups = [];
+  for (const m of detail.meanings ?? []) {
+    const pos = m?.pos ? (POS_LABEL_KO[m.pos] || m.pos) : '기타';
+    const g = groups.find((x) => x.pos === pos);
+    if (g) { if (!g.items.includes(m.meaning)) g.items.push(m.meaning); } else groups.push({ pos, items: [m.meaning] });
+  }
+  const forms = VERB_FORM_LABELS.filter(([k]) => detail.verb_forms?.[k]);
+  if (groups.length === 0 && forms.length === 0) return null;
+  return (
+    <div className="flex flex-col gap-[10px]">
+      <p className="text-[14px] font-[700] text-layout-black dark:text-layout-white">사전</p>
+      {groups.length > 0 && (
+        <div className="flex flex-col gap-[6px]">
+          {groups.map((g) => (
+            <div key={g.pos} className="flex items-start gap-[8px]">
+              <span className="flex-shrink-0 mt-[1px] px-[6px] py-[1px] rounded-[4px] bg-layout-gray-100 dark:bg-layout-gray-500 text-[11px] font-[600] text-layout-gray-400 dark:text-layout-gray-100">
+                {g.pos}
+              </span>
+              <span className="text-[13px] font-[400] leading-[18px] text-layout-gray-500 dark:text-layout-gray-50">
+                {g.items.join(', ')}
+              </span>
+            </div>
+          ))}
+        </div>
+      )}
+      {forms.length > 0 && (
+        <div className="flex flex-wrap gap-[6px]">
+          {forms.map(([k, label]) => (
+            <div key={k} className="flex flex-col px-[10px] py-[6px] rounded-[8px] border border-layout-gray-200 dark:border-layout-gray-500">
+              <span className="text-[11px] font-[500] text-layout-gray-300 dark:text-layout-gray-200">{label}</span>
+              <span className="text-[13px] font-[600] text-layout-black dark:text-layout-white">{detail.verb_forms[k]}</span>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+};
+
 const defaultIsVisible = () => true;
 const defaultOnReveal = () => {};
 
@@ -162,6 +213,7 @@ const WordMeetCard = ({
           <HiddenPlaceholder onReveal={() => onReveal('meanings')} label="의미" />
         )}
       </div>
+      <DictDetail detail={word.dictDetail} />
       {/* 예문 — 원문/뜻 텍스트가 하나도 없는 단어는 섹션 자체를 숨긴다 */}
       {examples.length > 0 && examples.some(ex => (ex.origin || ex.sentence) || (ex.meaning || ex.translation)) && (
         <div className="flex flex-col gap-[8px]">

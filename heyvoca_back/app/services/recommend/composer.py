@@ -94,6 +94,7 @@ _QUESTION_TYPE_WEIGHTS: Dict[str, int] = {
     'sentenceArrange':         5,
     'listenArrange':           3,
     'fillInTheBlankTyping':    3,
+    'sentenceMeaning':         8,
 }
 
 # ──────────────────────────────────────────────
@@ -215,6 +216,13 @@ def _item_can_use_question_type(item: CandidateItem, qtype: str) -> bool:
         # fillInTheBlank(사지선다)와 요구 조건이 같다 — 강조 태그가 있는 영어 예문 필요.
         return any(
             example_has_target_tag(example_origin_text(ex)) for ex in (item.examples or [])
+        )
+    if qtype == 'sentenceMeaning':
+        # 문장 뜻 고르기: 원문·뜻이 모두 있는 예문이 하나라도 있어야 한다(오답 뜻은 프론트가
+        # 같은 풀의 다른 예문에서 고른다 — 모자라면 프론트가 사지선다로 폴백).
+        return any(
+            (example_origin_text(ex) or '').strip() and (example_meaning_text(ex) or '').strip()
+            for ex in (item.examples or [])
         )
     if qtype in ('sentenceArrangePartial', 'sentenceArrange', 'listenArrange'):
         # 사전 테이블 voca_example_puzzle 매칭 결과(pool.py가 채운 example_puzzles)가

@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import {
   FARM_DWELL_MS,
   FARM_START_WATCHDOG_MS,
@@ -31,6 +31,35 @@ export const holdStudyAdvance = () => {
   };
 };
 
+/*
+  수동 넘기기 모드 — 새 씨앗 심기(plant) 세션은 채점 후 자동으로 넘어가지 않고 '다음' 버튼을 눌러야
+  넘어간다(2026-10-24 QA #15). Main 이 세션 동안 setStudyManualAdvance(true) 로 켠다. 켜져 있으면
+  arm() 은 타이머를 걸지 않고 "누르면 넘어갈 함수"를 전역 대기값으로 올려 두며, Main 이
+  useManualAdvancePending() 으로 그 값을 받아 '다음' 버튼을 그린다. 게이트를 쓰는 모든 유형
+  (사지선다·빈칸 채우기·카드 맞추기·독해 …)이 자기 코드를 바꾸지 않고 같은 규칙을 따른다.
+*/
+let manualAdvanceMode = false;
+let pendingManualAdvance = null;
+const manualListeners = new Set();
+const setPendingManual = (fn) => {
+  pendingManualAdvance = fn;
+  manualListeners.forEach((l) => l(fn));
+};
+export const setStudyManualAdvance = (on) => {
+  manualAdvanceMode = !!on;
+  if (!on && pendingManualAdvance) setPendingManual(null);
+};
+export const useManualAdvancePending = () => {
+  const [pending, setPending] = useState(() => pendingManualAdvance);
+  useEffect(() => {
+    const l = (fn) => setPending(() => fn);
+    manualListeners.add(l);
+    setPending(() => pendingManualAdvance);
+    return () => { manualListeners.delete(l); };
+  }, []);
+  return pending;
+};
+
 /**
  * 채점 → 다음 슬라이드 전환 게이트 — 모든 문제 유형 공통(규칙은 utils/studyTiming.js 상단).
  *
@@ -56,7 +85,12 @@ export function useStudyAdvanceGate() {
     ttsActive: false,
     ttsEndedAt: null,
     timer: null,
+    manualFn: null,
   }).current;
+  const dropManual = () => {
+    if (s.manualFn && pendingManualAdvance === s.manualFn) setPendingManual(null);
+    s.manualFn = null;
+  };
 
   const clear = () => {
     if (s.timer) {
@@ -70,12 +104,14 @@ export function useStudyAdvanceGate() {
     s.fired = true;
     s.armed = false;
     clear();
+    dropManual();
     s.onAdvance?.();
   };
 
   const attempt = () => {
     clear();
     if (!s.armed || s.fired) return;
+    if (s.manualFn) return; // 수동 넘기기 대기 중 — TTS·XP 신호로 넘기지 않는다
     if (holdCount > 0) return; // 홀드 중 — 풀리면 holdListeners 가 다시 판정한다
     const now = Date.now();
     const minReadyAt = s.gradedAt + s.minDelayMs;
@@ -114,6 +150,7 @@ export function useStudyAdvanceGate() {
   const gate = useRef({
     arm: ({ minDelayMs = 0, onAdvance } = {}) => {
       clear();
+      dropManual();
       s.armed = true;
       s.fired = false;
       s.gradedAt = Date.now();
@@ -121,11 +158,18 @@ export function useStudyAdvanceGate() {
       s.onAdvance = onAdvance;
       s.farmStartedAt = null;
       s.farmSettledAt = null;
+      if (manualAdvanceMode) {
+        // 수동 넘기기 — 타이머 없이 '다음' 버튼(Main)이 fire 를 부를 때까지 기다린다.
+        s.manualFn = () => fire();
+        setPendingManual(s.manualFn);
+        return;
+      }
       attempt();
     },
     disarm: () => {
       clear();
       s.armed = false;
+      dropManual();
     },
     farmStarted: () => {
       if (!s.armed || s.fired) return;
@@ -163,6 +207,7 @@ export function useStudyAdvanceGate() {
 
   useEffect(() => () => {
     clear();
+    dropManual();
     s.armed = false;
     s.fired = true;
     // eslint-disable-next-line react-hooks/exhaustive-deps
