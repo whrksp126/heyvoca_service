@@ -14,7 +14,7 @@ import ScriptCell from './ScriptCell';
 // 한눈에 보이도록 돕는 용도라 과하지 않게 아주 작고 흐리게 둔다.
 const VOWEL_HEADER = ['a', 'i', 'u', 'e', 'o'];
 
-const ScriptRow = ({ script, label, columns, items, showVowelHeader, onStart }) => {
+const ScriptRow = ({ script, label, columns, items, showVowelHeader }) => {
   "use memo";
 
   const gridColsClass = columns === 3 ? 'grid-cols-3' : 'grid-cols-5';
@@ -48,7 +48,6 @@ const ScriptRow = ({ script, label, columns, items, showVowelHeader, onStart }) 
                 key={it.char}
                 item={it}
                 script={script}
-                onStart={onStart}
               />
             )
             : <div key={`blank-${idx}`} className="w-full" style={{ minHeight: 48 }} aria-hidden="true" />

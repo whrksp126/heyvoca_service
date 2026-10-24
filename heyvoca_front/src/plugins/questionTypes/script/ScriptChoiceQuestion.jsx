@@ -11,16 +11,16 @@
 
 import React, { useMemo, useRef, useState } from 'react';
 import ChoiceCard from '../../../components/script/ChoiceCard';
-import { getAdvanceDelay } from '../../../utils/studyTiming';
-import { useStudyAdvanceGate } from '../../../hooks/useStudyAdvanceGate';
+import ScriptNextButton from '../../../components/script/ScriptNextButton';
 
-const ScriptChoiceQuestion = ({ question, onComplete, onCardMatched, farmByWordId }) => {
+const ScriptChoiceQuestion = ({ question, onComplete, onCardMatched }) => {
   "use memo";
 
   const [answered, setAnswered] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(null);
   const startTimeRef = useRef(Date.now());
-  const advanceGate = useStudyAdvanceGate();
+  // 채점 후 "다음" 버튼으로 진행(2026-10-24 이슈 #15 — 자동 진행 폐지).
+  const nextRef = useRef(null);
   // 넘어갈 때는 최신 onComplete를 부른다 — FillInTheBlankQuestion과 같은 이유
   // (채점 순간의 함수를 들고 있으면 그 사이 큐에 들어간 재출제 문제를 모르는 옛
   // testQuestions로 세션 종료를 판정하게 된다).
@@ -45,11 +45,7 @@ const ScriptChoiceQuestion = ({ question, onComplete, onCardMatched, farmByWordI
     speakText: wp ? wp.reading : null,
   }), [question, kind, wp, qt]);
 
-  // 농장 상태 바 — 카드 맞추기·빈칸 채우기와 같은 경로(Main.processCardWord → cardFarmByWordId[wordId]).
-  // 글자는 시듦/썩음 개념이 없다(사용자 결정 2026-09-30) — 서버가 어떤 health를 보내든
-  // 항상 건강한 그림만 보이도록 여기서 정규화한다(XP 막대·델타는 그대로 쓴다).
-  const rawFarm = answered ? (farmByWordId?.[question.id] ?? null) : null;
-  const farm = rawFarm ? { ...rawFarm, health: 'FRESH' } : null;
+  // 글자에는 작물·성장 단계(망각곡선)를 보여주지 않는다(2026-10-24 이슈 #15) — 농장 상태 바 없음.
 
   const handleSelect = (index) => {
     if (answered) return;
@@ -75,28 +71,21 @@ const ScriptChoiceQuestion = ({ question, onComplete, onCardMatched, farmByWordI
     const processedNow = typeof onCardMatched === 'function';
     if (processedNow) onCardMatched(result);
 
-    // ChoiceCard가 채점 후 정답 발음을 재생한다 — 그 재생이 끝날 때까지 전환을 붙잡는다
-    // (ChoiceCard의 onSettled 콜백에서 advanceGate.ttsEnd()를 부른다. FillInTheBlankQuestion의
-    // target==='word' 재생 게이트와 같은 원리).
-    advanceGate.ttsBegin();
-
-    advanceGate.arm({
-      minDelayMs: getAdvanceDelay(correct),
-      onAdvance: () => onCompleteRef.current?.([result], { processed: processedNow }),
-    });
+    nextRef.current = () => onCompleteRef.current?.([result], { processed: processedNow });
   };
 
   return (
-    <ChoiceCard
-      step={step}
-      answered={answered}
-      selectedIndex={selectedIndex}
-      onSelect={handleSelect}
-      onSettled={() => advanceGate.ttsEnd()}
-      farm={farm}
-      onFarmAnimStart={advanceGate.farmStarted}
-      onFarmSettled={advanceGate.farmSettled}
-    />
+    <div className="flex flex-col gap-[16px] w-full h-full">
+      <div className="flex-1 min-h-0">
+        <ChoiceCard
+          step={step}
+          answered={answered}
+          selectedIndex={selectedIndex}
+          onSelect={handleSelect}
+        />
+      </div>
+      <ScriptNextButton show={answered} onNext={() => { const go = nextRef.current; nextRef.current = null; go?.(); }} />
+    </div>
   );
 };
 

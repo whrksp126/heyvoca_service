@@ -6,9 +6,8 @@
 // 돌린다 — 글자 하나 = 단어 하나로 취급해 FSRS·작물 성장이 단어와 동일하게 굴러간다.
 //
 // 2026-09-30 재개편(듀오링고 문자 탭 방식): 줄 단위 "이 줄 배우기"·"이미 알아요" 진입점을
-// 없앴다. 행 헤더는 이제 라벨만 표시하고(ScriptRow), 학습/연습은 칸(ScriptCell) 하나를
-// 탭해 여는 상세 시트(ScriptCharDetailNewBottomSheet)에서 그 글자 하나로 시작한다. 이미
-// 상단에는 홈 주 CTA와 같은 전폭 버튼을 둔다 — 안 배운 글자가 남았으면 격자 순서대로 다음
+// 없앴다. 행 헤더는 이제 라벨만 표시하고(ScriptRow), 칸(ScriptCell)을 탭하면 소리만
+// 들려준다(2026-10-24 상세 시트 폐지). 상단에는 홈 주 CTA와 같은 전폭 버튼을 둔다 — 안 배운 글자가 남았으면 격자 순서대로 다음
 // 글자 배우기, 다 배웠으면 "글자 연습하기"(mode=review, 서버가 XP 낮은 글자를 우선).
 //
 // 진행도는 GET /script/progress(계약: heyvoca_back 동시 구현)가 단어와 같은 visual_stage
@@ -28,7 +27,6 @@ import {
   mapScriptSessionItem,
   buildDistractorPool,
   practicableItems,
-  masteredCount,
   isStarted,
 } from '../../utils/scriptData';
 import { motion } from 'framer-motion';
@@ -105,7 +103,6 @@ const ScriptFieldBody = () => {
   }, [activeScript, refreshKey]);
 
   const groups = useMemo(() => buildScriptGroups(activeScript, items), [activeScript, items]);
-  const totalMastered = masteredCount(items);
   const totalPracticable = practicableItems(items);
   // 상단 학습 버튼(2026-09-30 실기기 피드백 — "순차적으로, 알아서"): 아직 안 배운 글자가
   // 있으면 격자 순서대로 다음 두 글자를 배우고(두 글자면 마지막에 확인 문제가 붙는다),
@@ -114,6 +111,7 @@ const ScriptFieldBody = () => {
   // 2026-10 개편: 버튼 두 개로 나눴다 — "새 글자 배우기"(격자 순서상 다음 두 글자, 예전 "こ·さ 배우기")
   // 와 "글자 복습"(이미 배운 글자들을 응용 문제로 — 듣고 쓰기·조합 단어·듣기 카드 맞추기).
   // 배운 글자가 없으면 복습은 비활성 + 안내, 다 배웠으면 새 글자는 비활성 + 안내.
+  // 2026-10-24(이슈 #15): 활성 상태의 부가 문구(다음 글자 표기·"배운 글자 N개")는 뺐다 — 안내는 비활성일 때만.
   const NEXT_LEARN_COUNT = 2;
   const nextLearnItems = useMemo(
     () => items.filter((it) => !isStarted(it)).slice(0, NEXT_LEARN_COUNT),
@@ -178,7 +176,7 @@ const ScriptFieldBody = () => {
           {subtitle}
         </h3>
         <span className="text-[12.5px] font-[700] text-layout-gray-400">
-          익힌 글자 {totalMastered}/{items.length}
+          배운 글자 {totalPracticable.length}/{items.length}
         </span>
       </div>
 
@@ -203,9 +201,11 @@ const ScriptFieldBody = () => {
             <Plus size={16} weight="bold" />
             새 글자 배우기
           </span>
-          <span className="text-layout-white/90 text-[12px] font-[600] leading-[1.2]">
-            {canLearn ? nextLearnItems.map((it) => it.char).join(' · ') : '모든 글자를 배웠어요'}
-          </span>
+          {!canLearn && (
+            <span className="text-layout-white/90 text-[12px] font-[600] leading-[1.2]">
+              모든 글자를 배웠어요
+            </span>
+          )}
         </motion.button>
         <motion.button
           type="button"
@@ -226,9 +226,11 @@ const ScriptFieldBody = () => {
             <ArrowsClockwise size={16} weight="bold" />
             글자 복습
           </span>
-          <span className={`text-[12px] font-[600] leading-[1.2] ${canReview ? 'text-layout-gray-400' : 'text-layout-gray-300'}`}>
-            {canReview ? `배운 글자 ${totalPracticable.length}개` : '글자를 먼저 배워 보세요'}
-          </span>
+          {!canReview && (
+            <span className="text-[12px] font-[600] leading-[1.2] text-layout-gray-300">
+              글자를 먼저 배워 보세요
+            </span>
+          )}
         </motion.button>
       </div>
 
@@ -261,7 +263,6 @@ const ScriptFieldBody = () => {
             columns={group.columns}
             items={group.cells}
             showVowelHeader={idx === 0 && activeScript !== 'alphabet'}
-            onStart={startSession}
           />
         ))}
       </div>

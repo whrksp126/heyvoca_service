@@ -40,7 +40,7 @@ const TraceCard = ({ step, onDone }) => {
           </span>
           <motion.button
             type="button"
-            onClick={onDone}
+            onClick={() => onDone?.({ manual: true })}
             className="h-[52px] px-[32px] rounded-[12px] bg-primary-main-600 text-layout-white text-[16px] font-[700]"
             whileTap={{ scale: 0.97 }}
           >

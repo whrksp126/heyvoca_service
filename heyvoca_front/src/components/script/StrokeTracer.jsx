@@ -655,7 +655,7 @@ const StrokeTracer = ({ entries, compound = false, caseVariant = null, replayKey
       {phase === 'compoundDone' && (
         <motion.button
           type="button"
-          onClick={() => { feel('tap'); onDone?.(); }}
+          onClick={() => { feel('tap'); onDone?.({ manual: true }); }}
           className="flex-shrink-0 h-[52px] rounded-[12px] text-[16px] font-[700] tracking-[-0.03em] bg-primary-main-600 text-layout-white"
           whileTap={{ scale: 0.97 }}
         >

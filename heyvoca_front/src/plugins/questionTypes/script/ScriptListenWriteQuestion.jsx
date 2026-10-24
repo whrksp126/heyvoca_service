@@ -3,8 +3,8 @@
 // 글자 복습 "듣고 쓰기"(scriptListenWrite, 2026-10) — 학습하기(TakeTest) 문제 유형 플러그인.
 // 판·채점은 components/script/FreeWriteBoard.jsx(+utils/scriptWriteGrader.js). 따라 쓰기
 // (ScriptTraceQuestion)와 달리 정답/오답이 있다 — 채점 순간 onCardMatched 로 공용 경로
-// (Main.processCardWord → 글자 세션은 종료 시 글자당 1회 /study/log)에 알리고, 결과 연출
-// (오답이면 정답 획 보여주기)이 끝나면 onComplete 로 넘어간다.
+// (Main.processCardWord → 글자 세션은 종료 시 글자당 1회 /study/log)에 알리고, 사용자가 판 아래
+// "다음"을 누르면(2026-10-24 이슈 #15 — 자동 진행 폐지) onComplete 로 넘어간다.
 
 import React, { useRef } from 'react';
 import { motion } from 'framer-motion';
@@ -43,6 +43,7 @@ const ScriptListenWriteQuestion = ({ question, onComplete, onCardMatched }) => {
   const handleDone = () => {
     const result = resultRef.current;
     if (!result) return;
+    resultRef.current = null;
     onCompleteRef.current?.([result], { processed: typeof onCardMatched === 'function' });
   };
 

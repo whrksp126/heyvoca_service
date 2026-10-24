@@ -1,15 +1,18 @@
 // src/components/script/FreeWriteBoard.jsx
 //
-// 글자 복습 "듣고 쓰기"(scriptListenWrite, 2026-10) — 위 스피커 버튼(등장 시 자동 재생)으로
-// 소리만 듣고, 아래 빈 판에 가이드 획 없이 직접 쓴다. 정답 글자의 획 수만큼 쓰면 손을 뗀 순간
+// 글자 복습 "듣고 쓰기"(scriptListenWrite, 2026-10) — 판 안 우측 하단 스피커 버튼(등장 시 자동
+// 재생)으로 소리만 듣고, 빈 판에 가이드 획 없이 직접 쓴다. 정답 글자의 획 수만큼 쓰면 손을 뗀 순간
 // 자동 채점한다(utils/scriptWriteGrader.js — 위치·크기 정규화 후 획 짝 커버리지·정밀도·끝점·방향).
 // 획 수를 넘길 수는 없어서 "확인" 버튼이 없다 — 따라 쓰기(StrokeTracer)와 같은 원칙.
-// 틀리면 쓴 글씨 위에 정답 글자를 획순대로 겹쳐 그려 보여 준 뒤 넘어간다.
-// "모르겠어요"는 오답으로 처리하고 정답을 보여 준다.
+// 틀리면 쓴 글씨 위에 정답 글자를 획순대로 겹쳐 그려 보여 준다. 맞으면 쓴 글씨 대신 정답 글자
+// 모양만 (애니메이션 없이) 보여 준다. "모르겠어요"는 오답으로 처리하고 정답을 보여 준다.
+// 2026-10-24(이슈 #15): 스피커를 판 위 영역에서 판 안 우측 하단으로 옮겼다(위 영역 아래로 음파가
+// 가려졌다). 채점 후 자동으로 넘어가지 않고 아래 "다음" 버튼을 눌러야 onDone 이 불린다.
 
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { motion, useAnimationControls } from 'framer-motion';
 import { SpeakerHigh, ArrowCounterClockwise } from '@phosphor-icons/react';
+import ScriptNextButton from './ScriptNextButton';
 import { feel } from '../../lib/feel';
 import ResultMark from '../common/ResultMark';
 import TtsRipple from '../common/TtsRipple';
@@ -36,7 +39,7 @@ const pointsToD = (points) => points.reduce((acc, p, i) => acc + (i === 0 ? `M${
 /**
  * entry  — 정답 글자 획 데이터 { viewBox, strokes: [d...] }
  * onGraded(correct) — 채점 순간(정답/오답/모르겠어요) 한 번
- * onDone() — 결과 연출(오답이면 정답 획 보여주기)까지 끝난 뒤
+ * onDone() — 채점 후 사용자가 "다음"을 눌렀을 때
  */
 const FreeWriteBoard = ({ script, item, entry, caseVariant = null, replayKey, onGraded, onDone }) => {
   "use memo";
@@ -84,8 +87,6 @@ const FreeWriteBoard = ({ script, item, entry, caseVariant = null, replayKey, on
       shake.start({ x: [0, -6, 6, -4, 4, 0], transition: { duration: 0.4 } });
       setTimeout(() => setShowAnswer(true), 700);
     }
-    const answerMs = correct ? 0 : 700 + strokeCount * (DRAW_DURATION + DRAW_GAP) * 1000 + 700;
-    setTimeout(() => onDone?.(correct), Math.max(1200, answerMs));
   };
 
   const handleDown = (e) => {
@@ -140,24 +141,6 @@ const FreeWriteBoard = ({ script, item, entry, caseVariant = null, replayKey, on
 
   return (
     <div className="flex flex-col gap-[14px] w-full h-full">
-      {/* 스피커 — 다시 듣기 */}
-      <div className="flex items-center justify-center flex-shrink-0">
-        <motion.button
-          type="button"
-          onClick={() => { feel('tap'); play(); }}
-          whileTap={{ scale: 0.94 }}
-          aria-label="소리 다시 듣기"
-          className="relative flex items-center justify-center w-[76px] h-[76px] rounded-full bg-layout-gray-50 dark:bg-layout-gray-dark"
-        >
-          {speaking && (
-            <span aria-hidden className="absolute inset-0 flex items-center justify-center pointer-events-none">
-              <TtsRipple size={96} duration={duration} />
-            </span>
-          )}
-          <SpeakerHigh size={38} weight="fill" className={speaking ? 'text-primary-main-600' : 'text-layout-gray-300'} />
-        </motion.button>
-      </div>
-
       <div className="flex flex-1 min-h-0 items-center justify-center">
         <motion.div
           animate={shake}
@@ -188,7 +171,20 @@ const FreeWriteBoard = ({ script, item, entry, caseVariant = null, replayKey, on
               <line x1={0} y1={vbH / 2} x2={vbW} y2={vbH / 2} stroke={GUIDE_COLOR} strokeWidth={vbW * 0.006} strokeDasharray={`${vbW * 0.014} ${vbW * 0.02}`} />
             </g>
 
-            {strokes.map((pts, i) => (
+            {/* 정답 — 쓴 글씨 대신 정답 글자 모양만, 애니메이션 없이 */}
+            {result === true && answerPaths.map((d, i) => (
+              <path
+                key={`ok-${i}`}
+                d={d}
+                fill="none"
+                stroke={INK_COLOR}
+                strokeWidth={vbW * 0.05}
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            ))}
+
+            {result !== true && strokes.map((pts, i) => (
               <path
                 key={`ink-${i}`}
                 d={pointsToD(pts)}
@@ -232,6 +228,24 @@ const FreeWriteBoard = ({ script, item, entry, caseVariant = null, replayKey, on
             />
           )}
 
+          {/* 스피커 — 다시 듣기. 판 안 우측 하단(음파가 판 안에서 보이도록). 판보다 위에 떠 있어
+              누르는 동안 획이 시작되지 않는다. */}
+          <motion.button
+            type="button"
+            onPointerDown={(e) => e.stopPropagation()}
+            onClick={() => { feel('tap'); play(); }}
+            whileTap={{ scale: 0.94 }}
+            aria-label="소리 다시 듣기"
+            className="absolute right-[12px] bottom-[12px] z-[3] flex items-center justify-center w-[48px] h-[48px] rounded-full bg-layout-white dark:bg-layout-black border border-border dark:border-border-dark"
+          >
+            {speaking && (
+              <span aria-hidden className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                <TtsRipple size={64} duration={duration} />
+              </span>
+            )}
+            <SpeakerHigh size={24} weight="fill" className={speaking ? 'text-primary-main-600' : 'text-layout-gray-300'} />
+          </motion.button>
+
           {strokes.length === 0 && result === null && current.length === 0 && (
             <span className="absolute bottom-[10px] left-0 right-0 text-center text-[12px] font-[600] text-layout-gray-300 pointer-events-none">
               들은 글자를 직접 써 보세요
@@ -244,6 +258,8 @@ const FreeWriteBoard = ({ script, item, entry, caseVariant = null, replayKey, on
           )}
         </motion.div>
       </div>
+
+      <ScriptNextButton show={result !== null} onNext={() => onDone?.(result)} />
 
       {result === null && (
         <div className="flex items-center gap-[10px] w-full flex-shrink-0">

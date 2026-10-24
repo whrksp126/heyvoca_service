@@ -16,6 +16,8 @@ import StudyTimingTag from '../../../components/farm/StudyTimingTag';
 import { useResumeReplayKey } from '../../../hooks/useResumeReplayKey';
 import { wordLang } from '../../../utils/lang';
 import { speakScriptItem } from '../../../utils/scriptData';
+import { optionMainSub } from '../../../utils/scriptQuestions';
+import ScriptNextButton from '../../../components/script/ScriptNextButton';
 
 const FitText = ({ text, maxSize = 20, minSize = 12, className = '' }) => {
   const spanRef = useRef(null);
@@ -76,6 +78,8 @@ const CardMatchListeningQuestion = ({ question, testType, onComplete, onCardMatc
   const [speakingWordId, setSpeakingWordId] = useState(null);
   const [speakingDuration, setSpeakingDuration] = useState(null);
   const [wordResolvedStates, setWordResolvedStates] = useState({});
+  // 글자 듣기 카드 맞추기(question.script) — 마지막 카드 채점 후 자동 진행 대신 "다음" 버튼(2026-10-24 이슈 #15)
+  const [scriptNext, setScriptNext] = useState(null);
   // 백그라운드 복귀 시 성장 게이지가 최종 상태로 정적으로 스냅되는 것을 막기 위한
   // 재마운트용 키 (이유는 useResumeReplayKey 주석 참고)
   const resumeReplayKey = useResumeReplayKey();
@@ -226,7 +230,10 @@ const CardMatchListeningQuestion = ({ question, testType, onComplete, onCardMatc
       }, CARD_FLASH_MS);
     }
 
-    if (isLastCard) {
+    if (isLastCard && question.script) {
+      const results = () => buildResults(wordResultsRef.current);
+      setScriptNext(() => () => onCompleteRef.current?.(results(), { processed: typeof onCardMatched === 'function' }));
+    } else if (isLastCard) {
       advanceGate.arm({
         minDelayMs: Math.max(CARD_FLASH_MS + 600, getAdvanceDelay(isMatch)),
         // 모든 카드는 채점 순간 onCardMatched 로 이미 처리됐다 — 넘어갈 때는 진행만(processed).
@@ -332,7 +339,8 @@ const CardMatchListeningQuestion = ({ question, testType, onComplete, onCardMatc
   };
 
   return (
-    <div className="grid grid-cols-2 gap-[10px] w-full h-full">
+    <div className="flex flex-col gap-[16px] w-full h-full">
+    <div className="grid grid-cols-2 gap-[10px] w-full flex-1 min-h-0">
       {/* 좌측: 스피커 (채점 후 단어 텍스트 공개) */}
       <div className="flex flex-col gap-[10px]">
         {leftWords.map((word, index) => {
@@ -386,13 +394,16 @@ const CardMatchListeningQuestion = ({ question, testType, onComplete, onCardMatc
               
 
               <LiftAboveBar
-                active={!!farmByWordId?.[word.id]}
+                active={!question.script && !!farmByWordId?.[word.id]}
                 topReserve={20}
                 className="relative z-[1] w-full flex justify-center"
               >
               {showText ? (
                 <FitText
-                  text={word.origin}
+                  // 글자는 정답 후 오른쪽 글자 카드와 같은 글자 대신 발음 표기(사지선다와 같은 한글·로마자)를 보인다
+                  text={question.script
+                    ? [optionMainSub(question.script, word).main, optionMainSub(question.script, word).sub].filter(Boolean).join(' · ') || word.origin
+                    : word.origin}
                   maxSize={20}
                   minSize={12}
                   className={`font-[800] w-full text-center ${getLeftTextStyle(index)}`}
@@ -415,9 +426,10 @@ const CardMatchListeningQuestion = ({ question, testType, onComplete, onCardMatc
               </LiftAboveBar>
 
               {/* 하단 - 채점 후: 농장 상태 바 좁은 형 — 유형 공통(FarmResultBar compact) */}
+              {/* 글자는 작물·성장 단계를 보이지 않는다(2026-10-24 이슈 #15) */}
               <FarmResultBar
                 compact
-                farm={farmByWordId?.[word.id] ?? null}
+                farm={question.script ? null : (farmByWordId?.[word.id] ?? null)}
                 replayKey={`${word.id}-${resumeReplayKey}`}
                 onAnimStart={() => handleFarmStart(word.id)}
                 onSettled={() => handleFarmSettled(word.id)}
@@ -467,6 +479,10 @@ const CardMatchListeningQuestion = ({ question, testType, onComplete, onCardMatc
           );
         })}
       </div>
+    </div>
+    {question.script && (
+      <ScriptNextButton show={!!scriptNext} onNext={() => { const go = scriptNext; setScriptNext(null); go?.(); }} />
+    )}
     </div>
   );
 };
