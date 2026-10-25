@@ -42,8 +42,14 @@ RECOMMENDABLE_QUESTION_TYPES = (
     'sentenceTranslate',
 )
 
+# 자동 출제(농장 돌보기 사다리·가중 무작위 배정·새 씨앗 심기)에는 넣지 않고, 자유 설정 테스트에서
+# 사용자가 유형 칩으로 직접 골랐을 때(question_types 로 좁힌 경우)만 나오는 유형.
+# QA 4차(2026-10-25): 4지선다 문장 뜻 고르기(sentenceMeaning)는 tier 3 의 sentenceTranslate 가 대신한다.
+# 정본: heyvoca_service/docs/LEVEL_AND_MEANING_CONTRACT.md §5
+MANUAL_ONLY_QUESTION_TYPES = ('sentenceMeaning',)
+
 # 난이도 오르내리기(자동 출제, composer._compose_recommend full_recommend 경로) 전용 —
-# 문제 유형 → 난이도 tier(1~5). tier가 없는 유형(사용자 직접 선택 전용 등)은 매핑에서 제외.
+# 문제 유형 → 난이도 tier(1~5). tier가 없는 유형(사용자 직접 선택 전용 MANUAL_ONLY_QUESTION_TYPES 등)은 매핑에서 제외.
 QUESTION_TYPE_TIER = {
     'multipleChoice':          1,
     'cardMatch':                1,
@@ -52,12 +58,12 @@ QUESTION_TYPE_TIER = {
     'cardMatchListening':      2,
     'fillInTheBlank':          3,
     'sentenceArrangePartial':  3,
-    'sentenceMeaning':         3,
     'sentenceArrange':         4,
     'listenArrange':           4,
     'fillInTheBlankTyping':    4,   # 대표 tier. tier 5 에도 노출(TIER_QUESTION_TYPES[5] 참고)
-    # 2026-10 이슈 #16 문장 뜻 맞추기(한국어 조각 나열). QA 3차(2026-10-25)에 4→3 — 4지선다
-    # sentenceMeaning 과 같은 '읽고 이해' 칸. tier 4 는 잎 이상만 열려 실전 문제로 거의 안 나왔다.
+    # 2026-10 이슈 #16 문장 뜻 맞추기(한국어 조각 나열). QA 3차(2026-10-25)에 4→3 — '읽고 이해' 칸.
+    # tier 4 는 잎 이상만 열려 실전 문제로 거의 안 나왔다. QA 4차에 4지선다 sentenceMeaning 이
+    # 사다리에서 빠져 이 칸의 독해 문제는 이 유형 하나다.
     'sentenceTranslate':       3,
 }
 
@@ -67,7 +73,7 @@ QUESTION_TYPE_TIER = {
 TIER_QUESTION_TYPES = {
     1: ('multipleChoice', 'cardMatch'),
     2: ('reverseMultipleChoice', 'multipleChoiceListening', 'cardMatchListening'),
-    3: ('fillInTheBlank', 'sentenceArrangePartial', 'sentenceMeaning', 'sentenceTranslate'),
+    3: ('fillInTheBlank', 'sentenceArrangePartial', 'sentenceTranslate'),
     4: ('sentenceArrange', 'listenArrange', 'fillInTheBlankTyping'),
     5: ('fillInTheBlankTyping',),
 }

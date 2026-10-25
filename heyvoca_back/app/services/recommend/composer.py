@@ -34,6 +34,7 @@ from app.utils.interleave import interleave_avoid_adjacent
 from app.utils.example_tagging import example_has_target_tag, example_origin_text, example_meaning_text
 from app.constants.question_types import (
     RECOMMENDABLE_QUESTION_TYPES, QUESTION_TYPE_TIER, TIER_QUESTION_TYPES, CROP_STAGE_MAX_TIER,
+    MANUAL_ONLY_QUESTION_TYPES,
 )
 from app.services.recommend.stage import crop_stage as _crop_stage
 
@@ -64,7 +65,8 @@ _BUCKET_REASON: Dict[str, str] = {
 
 # 지원 question_type 목록 — 단일 소스는 app/constants/question_types.py
 # (그쪽에 /study/log 화이트리스트도 같이 정의돼 있어 새 유형 추가 시 두 곳이 어긋나지 않는다).
-_ALL_QUESTION_TYPES = list(RECOMMENDABLE_QUESTION_TYPES)
+# 제한 없는 배정(새 씨앗 심기·가중 무작위)의 후보 — 사용자 직접 선택 전용 유형은 뺀다(QA 4차).
+_ALL_QUESTION_TYPES = [qt for qt in RECOMMENDABLE_QUESTION_TYPES if qt not in MANUAL_ONLY_QUESTION_TYPES]
 
 # 유형 배정 가중치 (2026-09) — "리스트 순서대로 첫 지원 유형"이면 앞쪽 유형(multipleChoice)만
 # 계속 뽑혀 뒤쪽 유형(특히 카드매칭류)이 사실상 노출되지 않는 문제가 있었다(약점이 없고
@@ -95,7 +97,7 @@ _QUESTION_TYPE_WEIGHTS: Dict[str, int] = {
     'sentenceArrange':         5,
     'listenArrange':           3,
     'fillInTheBlankTyping':    3,
-    'sentenceMeaning':         8,
+    'sentenceMeaning':         8,   # 자유 설정 테스트에서 직접 골랐을 때만(MANUAL_ONLY)
     'sentenceTranslate':       6,
 }
 
@@ -269,6 +271,8 @@ def _assign_suggested_question_type(
     """
     avoid = avoid_types or set()
     for wt in weakness_types:
+        if wt in MANUAL_ONLY_QUESTION_TYPES:
+            continue
         if wt not in avoid and _item_can_use_question_type(item, wt):
             return wt
 

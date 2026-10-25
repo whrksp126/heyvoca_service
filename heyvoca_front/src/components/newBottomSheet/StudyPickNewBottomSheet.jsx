@@ -27,8 +27,9 @@ import SheetOptionRow from './SheetOptionRow';
   예전엔 홈 CTA 가 종류를 묻지 않고 곧장 복습을 열고, '오늘 할 일' 카드 안의 '살리기'·'심기'
   버튼이 나머지 진입을 맡았다. 진입을 이 시트 하나로 모으고 카드는 줄(정보)만 남겼다.
 
-  항목(위→아래): 썩은 단어 살리기(있을 때만) / 농장 돌보기 / 밭 산책하기 / 새 씨앗 심기 / 단어장 골라 학습.
-  농장 돌보기·밭 산책하기·새 씨앗 심기는 0개여도 항상 누를 수 있다(QA 3차, 2026-10-25) — 돌볼 단어가 0이면
+  항목(위→아래): 썩은 단어 살리기(있을 때만) / 농장 돌보기 / 농장 산책하기 / 농장에 새 씨앗 심기 / 밭 골라 학습.
+  이름(QA 4차, 2026-10-25): 밭 = 단어장 하나, 농장 = 밭 전체. 예전 이름은 밭 산책하기·새 씨앗 심기·단어장 골라 학습.
+  농장 돌보기·산책하기·새 씨앗 심기는 0개여도 항상 누를 수 있다(QA 3차, 2026-10-25) — 돌볼 단어가 0이면
   서버(/study/recommend mode=review)가 심은 단어 중 다음 차례를 골라 준다. 심은 단어 자체가 없을 때만 심기로 안내하고,
   새 단어가 없으면 서점으로 간다. 단어장 0개만 흐리게 둔다.
 */
@@ -128,7 +129,7 @@ export const StudyPickNewBottomSheet = () => {
     startPlantSession({ count: Math.min(5, seedRemaining) });
   };
 
-  // 밭 산책하기 — 농장 돌보기와 같은 복습 추천(mode=review)으로 받은 단어를 집중 반복 듣기(StudyMain)로.
+  // 농장 산책하기 — 농장 돌보기와 같은 복습 추천(mode=review)으로 받은 단어를 집중 반복 듣기(StudyMain)로.
   // 추천은 한 번만 부른다 — 비었을 때 startQuickReview 로 넘기면 TakeTest 가 /study/recommend 를
   // 다시 불러 쓰이지 않는 session_id 가 하나 더 생겼다.
   const guidePlant = () => {
@@ -160,16 +161,16 @@ export const StudyPickNewBottomSheet = () => {
       desc: careLeft > 0 ? `돌볼 단어 ${careLeft}개` : '다음 차례 단어 미리 돌보기', run: startCare,
     },
     {
-      key: 'walk', title: '밭 산책하기', lock: 'listen',
+      key: 'walk', title: '농장 산책하기', lock: 'listen',
       desc: careLeft > 0 ? `듣기로 ${Math.min(careLeft, WALK_COUNT)}개` : '심은 단어 듣기로 훑어보기', run: walk,
     },
     {
-      key: 'seed', title: '새 씨앗 심기',
+      key: 'seed', title: '농장에 새 씨앗 심기',
       desc: seedCount > 0 ? `새 단어 ${seedCount}개` : '서점에서 씨앗 담아 오기', run: plant,
     },
     {
-      key: 'book', title: '단어장 골라 학습',
-      desc: `단어장 ${bookCount}개`, count: bookCount, fadeWhenEmpty: true, run: pickBook,
+      key: 'book', title: '밭 골라 학습',
+      desc: `밭 ${bookCount}개`, count: bookCount, fadeWhenEmpty: true, run: pickBook,
     },
   ].filter(Boolean);
 

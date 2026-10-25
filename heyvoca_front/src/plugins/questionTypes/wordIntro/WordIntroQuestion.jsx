@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
-import WordMeetCard from '../../../components/study/WordMeetCard';
+import WordMeetCard, { buildDictMeaningView } from '../../../components/study/WordMeetCard';
 import { getTextSound, stopCurrentSound, prefetchTtsList } from '../../../utils/common';
 import { wordLang } from '../../../utils/lang';
 import { stripTags } from '../highlightMarker';
@@ -25,6 +25,14 @@ const meaningText = (item) => {
   return item ?? '';
 };
 
+// 자동 듣기의 뜻 줄 — 사전 뜻이 있고 사용자 뜻과 겹치는 조각이 있으면 그 강조 조각(품사 줄마다 한 줄,
+// QA 4차 2026-10-25), 없으면 예전처럼 사용자 뜻. 인덱스는 WordMeetCard 의 'meanings' 줄 인덱스와 같다.
+const introMeaningLines = (question) => {
+  const view = question?.dictDetail ? buildDictMeaningView(question) : null;
+  if (view && view.lines.length > 0) return view.lines;
+  return (question?.meanings || []).map(meaningText).filter(Boolean);
+};
+
 const WORD_TO_MEANING_GAP_MS = 300;
 const RETRY_DELAY_MS = 250;
 // 카드 소유권 — takeTest/Main 은 AnimatePresence(popLayout)로 이전 카드를 exit 애니메이션이 끝날
@@ -42,10 +50,7 @@ export const wordIntroSoundItems = (question, { withExamples = true } = {}) => {
   const lang = wordLang(question);
   const items = [];
   if (question.origin) items.push({ text: question.origin, language: lang });
-  (question.meanings || []).forEach((m) => {
-    const t = meaningText(m);
-    if (t) items.push({ text: t, language: 'ko' });
-  });
+  introMeaningLines(question).forEach((t) => items.push({ text: t, language: 'ko' }));
   if (withExamples) {
     (question.examples || []).forEach((ex) => {
       const o = stripTags(ex?.origin || ex?.sentence || '');
@@ -116,7 +121,7 @@ const WordIntroQuestion = ({ question, onComplete }) => {
     const runId = ++runIdRef.current;
     const ownerId = ++latestIntroOwner;
     const cancelled = () => cancelRef.current || runIdRef.current !== runId;
-    const meanings = question?.meanings || [];
+    const meanings = introMeaningLines(question);
     const examples = question?.examples || [];
     const lang = wordLang(question);
 
@@ -142,7 +147,7 @@ const WordIntroQuestion = ({ question, onComplete }) => {
           await sleep(WORD_TO_MEANING_GAP_MS); // 단어 → (짧은 간격) → 뜻
           if (cancelled()) return;
         }
-        await playLine('meanings', i, meaningText(meanings[i]), 'ko');
+        await playLine('meanings', i, meanings[i], 'ko');
       }
       for (let i = 0; i < examples.length; i++) {
         if (cancelled()) return;
@@ -210,6 +215,7 @@ const WordIntroQuestion = ({ question, onComplete }) => {
           playDuration={playDuration}
           reducedMotion={reducedMotion}
           onSpeakerClick={handleSpeakerClick}
+          introMode
         />
       </div>
       <motion.button

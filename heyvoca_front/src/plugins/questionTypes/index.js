@@ -556,6 +556,9 @@ export const QUESTION_TYPE_PLUGINS = [
   {
     // ① 만나기 — 채점 없음(NO_GRADE_QUESTION_TYPES). UI는 components/script/IntroCard.jsx 재사용.
     id: 'scriptIntro',
+    // 글자 카드는 모두 자기 소리를 직접 낸다(utils/scriptData.js owner 가드 + 장음 보정 "あー").
+    // Main.jsx 가 origin("あ")을 또 읽으면 두 재생이 서로 끊으며 겹친다(2026-10-25 QA 4차) — 끔.
+    autoSpeakOnShow: false,
     label: '글자 만나기',
     enabled: false,
     family: 'script',
@@ -588,6 +591,7 @@ export const QUESTION_TYPE_PLUGINS = [
   {
     // ③ 소리를 듣고 글자를 고른다(혼동쌍 포함).
     id: 'scriptListenPick',
+    autoSpeakOnShow: false, // ChoiceCard 가 등장 시 직접 재생한다(위 scriptIntro 주석)
     label: '소리 듣고 글자 고르기',
     enabled: false,
     family: 'script',
@@ -603,6 +607,7 @@ export const QUESTION_TYPE_PLUGINS = [
   {
     // ④ 따라 쓰기 — 알파벳은 대문자·소문자 각각. 판정 없음(항상 정답), 완료 시 자동으로 다음.
     id: 'scriptTrace',
+    autoSpeakOnShow: false, // ScriptTraceQuestion 이 등장 시 직접 재생한다(위 scriptIntro 주석)
     label: '따라 쓰기',
     enabled: false,
     family: 'script',
@@ -725,4 +730,8 @@ export const isArrangeQuestionType = (id) => ARRANGE_QUESTION_TYPES.includes(id)
 // enabled 플러그인에서 파생해 새 유형을 여기 배열에 추가하면 자동으로 quick에도 반영된다
 // (예전엔 useQuickReview.jsx/StudyNewFullSheet.jsx 세 곳에 이 목록이 따로 복제돼 있어서
 //  새 유형을 추가해도 quick에서만 빠지는 사고가 있었다).
-export const QUICK_QUESTION_TYPES = QUESTION_TYPE_PLUGINS.filter(p => p.enabled).map(p => p.id);
+// 4지선다 문장 뜻 고르기(sentenceMeaning)는 자동 출제 후보에서 뺀다(QA 4차, 2026-10-25) — 자유 설정 테스트에서
+// 유형 칩으로 직접 골랐을 때만 나온다(백엔드 MANUAL_ONLY_QUESTION_TYPES 와 같은 규칙).
+export const MANUAL_ONLY_QUESTION_TYPES = ['sentenceMeaning'];
+export const QUICK_QUESTION_TYPES = QUESTION_TYPE_PLUGINS
+  .filter(p => p.enabled && !MANUAL_ONLY_QUESTION_TYPES.includes(p.id)).map(p => p.id);

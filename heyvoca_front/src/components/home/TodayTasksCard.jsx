@@ -215,7 +215,7 @@ const TodayTasksCard = () => {
     const done = newSeed.done >= newSeed.target;
     return {
       key: 'new_seed',
-      title: '새 씨앗 심기',
+      title: '농장에 새 씨앗 심기',
       faded: done,
       checked: done,
       right: <Progress done={newSeed.done} total={newSeed.target} />,

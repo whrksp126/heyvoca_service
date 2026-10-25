@@ -82,7 +82,7 @@ const VocabularySheetNewFullSheet = ({ testType }) => {
       );
     }
 
-    // 홈 '학습 고르기' → 단어장 골라 학습: 단어장을 고른 뒤 방식(집중 반복 / 자유 설정 테스트)을 묻는다.
+    // 홈 '학습 고르기' → 밭 골라 학습(구 단어장 골라 학습): 단어장을 고른 뒤 방식(집중 반복 / 자유 설정 테스트)을 묻는다.
     if (testType === 'pick') {
       pushNewBottomSheet(
         BookStudyTypeNewBottomSheet,

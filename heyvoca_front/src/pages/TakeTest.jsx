@@ -450,8 +450,8 @@ const TakeTest = () => {
   // 단어당 2~3개) → ③ 안내 + 문장 만들기(서버 payload 있을 때만, 2~3문제) → ④ 오답 재학습(Main.jsx).
   // 카드 맞추기류는 세트(2~4단어)가 필요하므로 그 칸에 배정된 단어들을 모아 플러그인 setupQuestions로
   // 조립하고, 세트를 못 이루는 나머지 단어는 사지선다로 대체한다.
-  // sentenceMeaning(문장 뜻 고르기, 2026-10-24) — 예문 원문·뜻만 있으면 로컬에서 만든다.
-  const PLANT_SINGLE_TYPES = ['multipleChoice', 'reverseMultipleChoice', 'multipleChoiceListening', 'fillInTheBlank', 'sentenceMeaning', 'fillInTheBlankTyping'];
+  // 4지선다 문장 뜻 고르기(sentenceMeaning)는 뺐다(QA 4차, 2026-10-25) — 자유 설정 테스트에서 직접 고를 때만 나온다.
+  const PLANT_SINGLE_TYPES = ['multipleChoice', 'reverseMultipleChoice', 'multipleChoiceListening', 'fillInTheBlank', 'fillInTheBlankTyping'];
   // 문장 뜻 맞추기(sentenceTranslate)는 심기 단계에서 내지 않는다(QA 3차, 2026-10-25) — 처음 만난 단어에 문장 해석은 이르다.
   const PLANT_SET_TYPES = ['cardMatch', 'cardMatchListening'];
   const PLANT_SENTENCE_TYPES = ['sentenceArrangePartial', 'sentenceArrange'];
@@ -1280,6 +1280,14 @@ const TakeTest = () => {
           completeMission('free_test');
         }
         await updateVocabularySheetAndRecentStudyData();
+        // 글자 "배우기"(learn·practice)는 결과 화면 없이 바로 마친다(2026-10-25 QA 4차) — 새 글자를
+        // 반복해 익히는 세션이라 정오답 집계가 의미 없다. 기록(/study/log·세션 종료)은 위에서 이미 끝났고,
+        // 돌아가는 곳은 결과 화면 '마치기'(StudyResult onClickEndStudy)와 같은 학습장 '글자' 탭. 복습은 결과 화면 유지.
+        if (state.testType === 'script' && (state.data?.mode === 'learn' || state.data?.mode === 'practice')) {
+          await completeCut.promise;
+          navigate('/vocabulary-sheets', { state: { tab: 'script' }, replace: true });
+          return;
+        }
         // 결과 화면: 재출제 문제(isRetry=true)는 제외하고 고유 단어 기준 첫 시도만 전달
         // (재출제로 맞춘 걸 정답으로 뒤집지 않기 위해 첫 등장 순서 기준). plant의 ①만나기
         // (wordIntro)·글자 학습의 ①만나기(scriptIntro)는 채점이 없는 슬라이드라 먼저

@@ -1,7 +1,10 @@
 import { useState, useRef, useEffect } from 'react';
-import { motion, useReducedMotion } from 'framer-motion';
-import { SpeakerHigh } from '@phosphor-icons/react';
+import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import TtsRipple from '../../../components/common/TtsRipple';
+import SpeakerArt from '../../../components/common/SpeakerArt';
+import WordInfoBubble from '../../../components/common/WordInfoBubble';
+import { getWordInfoApi } from '../../../api/search';
+import { useShowFurigana } from '../../../context/ExampleSettingsContext';
 import { feel } from '../../../lib/feel';
 import { getTextSound, stripHtmlTags } from '../../../utils/common';
 import { useStudyAdvanceGate } from '../../../hooks/useStudyAdvanceGate';
@@ -9,11 +12,13 @@ import { getMemoryStateKeyByStability } from '../../../components/common/MemoryS
 import { useResumeReplayKey } from '../../../hooks/useResumeReplayKey';
 import { wordLang } from '../../../utils/lang';
 import ArrangeTray from '../sentenceArrange/ArrangeTray';
+import { tokenizeWords } from '../sentenceArrange/arrangeUtils';
 
 /*
   문장 뜻 맞추기(sentenceTranslate) — 계약: heyvoca_service/docs/LEVEL_AND_MEANING_CONTRACT.md §3.
 
   - 위 카드: 외국어 예문(목표 단어 강조) + 스피커. 등장 시 1회 자동 재생(lang en/ja).
+    예문 단어를 탭하면 빈칸 채우기와 같은 사전 말풍선(WordInfoBubble)이 뜬다(en·ja 모두).
   - 아래: 문장 만들기와 같은 ArrangeTray — 한국어 블록을 눌러 답 줄에 나열, 놓은 블록을 누르면 되돌린다.
   - 채점: 고른 블록 text 배열이 accepted 중 하나와 같으면 정답(문장부호·공백 무시).
     accepted 는 서버가 '성분 묶음'(관형어+명사, 명사+동안 등) 단위로 서술어 앞 순서를 바꾼 경우를
@@ -42,12 +47,61 @@ const splitEmphasis = (html, plain) => {
     });
 };
 
+/*
+  예문 → 탭 가능한 토큰. 강조(hl)는 조각 단위로 유지한다.
+  - en: 강조 조각별 공백 분리(tokenizeWords — 빈칸 채우기·문장 만들기와 같은 규칙).
+  - ja: reading_tokens 를 평문 위에 놓고 토큰 하나 = 탭 단위. 강조 경계가 토큰 안에 걸리면
+    그 토큰은 조각으로 쪼개 보여 주되 탭은 원래 토큰 전체를 조회한다(ruby 는 쪼개지 않은 토큰만).
+    reading_tokens 가 없거나 평문과 맞지 않으면 null → 탭 없는 평문으로 그린다.
+*/
+const JA_TAPPABLE_RE = /[\u3040-\u30ff\u3400-\u9fffA-Za-z0-9\uff10-\uff19\uff21-\uff5a]/;
+const tokenizeEn = (parts) => parts.flatMap((p) => tokenizeWords(p.text).map((t) => ({ ...t, hl: p.hl })));
+const tokenizeJa = (parts, readingTokens) => {
+  if (!Array.isArray(readingTokens) || readingTokens.length === 0) return null;
+  const plain = parts.map((p) => p.text).join('');
+  const surfaces = readingTokens.map((t) => (Array.isArray(t) ? String(t[0] ?? '') : ''));
+  if (surfaces.join('') !== plain) return null;
+  const hlAt = [];
+  parts.forEach((p) => { for (let i = 0; i < p.text.length; i += 1) hlAt.push(p.hl); });
+  let pos = 0;
+  return readingTokens.map((tok, ti) => {
+    const surface = surfaces[ti];
+    const start = pos;
+    pos += surface.length;
+    const segs = [];
+    for (let i = 0; i < surface.length; i += 1) {
+      const hl = hlAt[start + i];
+      if (segs.length && segs[segs.length - 1].hl === hl) segs[segs.length - 1].text += surface[i];
+      else segs.push({ text: surface[i], hl });
+    }
+    const okurigana = tok[2] ? String(tok[2]) : '';
+    const hasOkuri = !!okurigana && surface.endsWith(okurigana) && surface.length > okurigana.length;
+    return {
+      type: JA_TAPPABLE_RE.test(surface) ? 'word' : 'text',
+      text: surface,
+      clean: surface,
+      segs,
+      hl: segs.length === 1 && segs[0].hl,
+      reading: segs.length === 1 && tok[1] ? String(tok[1]) : null,
+      base: hasOkuri ? surface.slice(0, surface.length - okurigana.length) : surface,
+      okurigana: hasOkuri ? okurigana : '',
+    };
+  });
+};
+
+const HL_CLASS = 'text-primary-main-600 dark:text-primary-main-400';
+
 const SentenceTranslateQuestion = ({ question, onComplete, onCardMatched, farmByWordId }) => {
   const [isAnswered, setIsAnswered] = useState(false);
   const [isCorrect, setIsCorrect] = useState(null);
   const [isPerfect, setIsPerfect] = useState(false);
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [speakDuration, setSpeakDuration] = useState(null);
+  // 지금 재생 중인 게 예문 전체('shown')인지 탭한 단어('lookup')인지 — 스피커 맥동은 예문일 때만.
+  const [speakingTarget, setSpeakingTarget] = useState(null);
+  const [lookup, setLookup] = useState(null);
+  const lookupReqRef = useRef(0); // 늦게 도착한 이전 단어의 응답이 현재 말풍선을 덮지 않게
+  const showFurigana = useShowFurigana();
 
   const startTimeRef = useRef(Date.now());
   const resumeReplayKey = useResumeReplayKey();
@@ -75,18 +129,63 @@ const SentenceTranslateQuestion = ({ question, onComplete, onCardMatched, farmBy
 
   const farm = isAnswered ? (farmByWordId?.[question.id] ?? null) : null;
 
-  const speak = async () => {
-    const text = stripHtmlTags(sentence);
+  const speak = async (text = stripHtmlTags(sentence), target = 'shown') => {
     if (!text) return;
     const gen = ++speakGenRef.current;
     setIsSpeaking(true);
+    setSpeakingTarget(target);
     setSpeakDuration(null);
     try {
       await getTextSound(text, lang, (d) => { if (gen === speakGenRef.current) setSpeakDuration(d); });
     } finally {
-      if (gen === speakGenRef.current) setIsSpeaking(false);
+      if (gen === speakGenRef.current) { setIsSpeaking(false); setSpeakingTarget(null); }
     }
   };
+
+  const closeLookup = () => {
+    lookupReqRef.current += 1;
+    setLookup((prev) => (prev ? null : prev));
+  };
+
+  // 예문 단어 탭 — 빈칸 채우기(handleWordTap)와 같은 동작: 단어를 읽고 사전 말풍선을 연다. 같은 단어 재탭 = 닫기.
+  const handleWordTap = (e, key, cleanWord) => {
+    e.stopPropagation();
+    if (lookup?.key === key) { closeLookup(); return; }
+    const r = e.currentTarget.getBoundingClientRect();
+    const anchor = { top: r.top, left: r.left, width: r.width, height: r.height };
+    feel('tap');
+    speak(cleanWord, 'lookup');
+    const reqId = ++lookupReqRef.current;
+    setLookup({ key, word: cleanWord, anchor, status: 'loading', info: null });
+    getWordInfoApi(cleanWord)
+      .then((info) => {
+        if (reqId !== lookupReqRef.current) return;
+        setLookup((prev) => (prev && prev.key === key ? { ...prev, status: info ? 'found' : 'notFound', info } : prev));
+      })
+      .catch(() => {
+        if (reqId !== lookupReqRef.current) return;
+        setLookup((prev) => (prev && prev.key === key ? { ...prev, status: 'error' } : prev));
+      });
+  };
+
+  // 말풍선 닫기 — 바깥 탭(단어 버튼은 자기 onClick 이 토글/전환을 맡으므로 제외) · 스크롤
+  useEffect(() => {
+    if (!lookup) return undefined;
+    const onPointerDown = (e) => {
+      const t = e.target;
+      if (!(t instanceof Element)) { closeLookup(); return; }
+      if (t.closest('[data-word-info-bubble]') || t.closest('[data-lookup-word]')) return;
+      closeLookup();
+    };
+    const onScroll = () => closeLookup();
+    document.addEventListener('pointerdown', onPointerDown, true);
+    window.addEventListener('scroll', onScroll, true);
+    return () => {
+      document.removeEventListener('pointerdown', onPointerDown, true);
+      window.removeEventListener('scroll', onScroll, true);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [lookup?.key]);
 
   useEffect(() => {
     speak();
@@ -96,6 +195,7 @@ const SentenceTranslateQuestion = ({ question, onComplete, onCardMatched, farmBy
 
   const handleSubmit = (userTokens) => {
     if (isAnswered) return;
+    closeLookup(); // 채점 순간 말풍선은 닫는다
     const correct = isAccepted(userTokens, accepted);
     const timeTakenMs = Date.now() - startTimeRef.current;
     const perfect = correct && !question.isRetry;
@@ -141,6 +241,42 @@ const SentenceTranslateQuestion = ({ question, onComplete, onCardMatched, farmBy
     </div>
   ) : null;
 
+  const ja = lang === 'ja';
+  const parts = splitEmphasis(sentenceHtml, stripHtmlTags(sentence));
+  const tokens = (ja ? tokenizeJa(parts, meaning.reading_tokens) : tokenizeEn(parts))
+    ?? parts.map((p) => ({ type: 'text', text: p.text, hl: p.hl }));
+  const showRipple = isSpeaking && speakingTarget === 'shown';
+
+  const renderToken = (tok, i) => {
+    const key = `s-${i}`;
+    const inner = tok.segs && tok.segs.length > 1
+      ? tok.segs.map((sg, j) => <span key={j} className={sg.hl ? HL_CLASS : ''}>{sg.text}</span>)
+      : (ja && showFurigana && tok.reading
+        ? <><ruby>{tok.base}<rt>{tok.reading}</rt></ruby>{tok.okurigana}</>
+        : tok.text);
+    const hlClass = tok.hl ? HL_CLASS : '';
+    if (tok.type !== 'word') return <span key={key} className={hlClass}>{inner}</span>;
+    const active = lookup?.key === key;
+    return (
+      <button
+        key={key}
+        type="button"
+        data-lookup-word
+        aria-label={`${tok.clean} 뜻 보기`}
+        aria-expanded={active}
+        className={`
+          inline font-[inherit] text-[inherit] leading-[inherit] text-left align-baseline
+          rounded-[4px] px-[1px] focus:outline-none transition-colors duration-150
+          ${hlClass}
+          ${active ? 'underline decoration-dotted decoration-2 underline-offset-[6px] decoration-layout-gray-300 bg-primary-main-100 dark:bg-primary-main-dark' : ''}
+        `}
+        onClick={(e) => handleWordTap(e, key, tok.clean)}
+      >
+        {inner}
+      </button>
+    );
+  };
+
   return (
     <div className="flex flex-col gap-[15px] h-full">
       {/* 위 카드 — 외국어 예문. 스피커를 누르면 다시 읽는다. */}
@@ -159,7 +295,7 @@ const SentenceTranslateQuestion = ({ question, onComplete, onCardMatched, farmBy
             className="relative flex-shrink-0 mt-[3px]"
             onClick={() => { feel('tap'); speak(); }}
           >
-            {isSpeaking && (
+            {showRipple && (
               <TtsRipple
                 size={90}
                 duration={speakDuration}
@@ -167,20 +303,32 @@ const SentenceTranslateQuestion = ({ question, onComplete, onCardMatched, farmBy
               />
             )}
             <motion.span
-              className={`relative z-[1] block transition-colors duration-200 ${isSpeaking ? 'text-primary-main-600' : 'text-layout-gray-300'}`}
-              animate={isSpeaking && !reducedMotion ? { scale: [1, 1.12, 1] } : { scale: 1 }}
-              transition={isSpeaking && !reducedMotion ? { duration: 0.6, repeat: Infinity, ease: 'easeInOut' } : {}}
+              className={`relative z-[1] block transition-colors duration-200 ${showRipple ? 'text-primary-main-600' : 'text-layout-gray-300'}`}
+              animate={showRipple && !reducedMotion ? { scale: [1, 1.12, 1] } : { scale: 1 }}
+              transition={showRipple && !reducedMotion ? { duration: 0.6, repeat: Infinity, ease: 'easeInOut' } : {}}
             >
-              <SpeakerHigh size={22} weight="fill" />
+              <SpeakerArt size={22} playing={showRipple} />
             </motion.span>
           </motion.button>
-          <p className="text-[19px] font-[600] leading-[1.6] text-layout-black dark:text-layout-white break-keep">
-            {splitEmphasis(sentenceHtml, stripHtmlTags(sentence)).map((p, i) => (
-              <span key={i} className={p.hl ? 'text-primary-main-600 dark:text-primary-main-400' : ''}>{p.text}</span>
-            ))}
+          <p className={`text-[19px] font-[600] text-layout-black dark:text-layout-white ${ja ? 'leading-[1.8] break-normal' : 'leading-[1.6] break-keep'}`}>
+            {tokens.map(renderToken)}
           </p>
         </div>
       </motion.div>
+
+      {/* 단어 뜻 말풍선 — document.body 포털이라 카드 overflow 에 잘리지 않는다. */}
+      <AnimatePresence>
+        {lookup && (
+          <WordInfoBubble
+            key={lookup.key}
+            anchor={lookup.anchor}
+            status={lookup.status}
+            info={lookup.info}
+            speaking={isSpeaking && speakingTarget === 'lookup'}
+            onReplay={() => { feel('tap'); speak(lookup.word, 'lookup'); }}
+          />
+        )}
+      </AnimatePresence>
 
       <ArrangeTray
         bank={bank}

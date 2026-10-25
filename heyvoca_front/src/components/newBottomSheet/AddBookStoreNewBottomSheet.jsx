@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
-import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
 import { useUser } from '../../context/UserContext';
 import { useVocabulary } from '../../context/VocabularyContext';
 import { useStats } from '../../context/StatsContext';
@@ -12,11 +10,10 @@ import {
 } from './StorePurchaseResultNewBottomSheet';
 import { GemPurchaseNewBottomSheet } from './GemPurchaseNewBottomSheet';
 import {
-  SHEET_SHELL, Grab, Gem, Btn, Btns, BtnSpinner, HintB,
+  SHEET_SHELL, Grab, Gem, Btn, Btns, BtnSpinner,
 } from './purchaseParts';
-// 씨앗 도착(성공 리턴)에서만 쓰는 그림 — 확인 시트 머리는 이름과 가격만 보여주므로
-// 여기서는 더 이상 쓰지 않는다.
-import seedImg from '../../assets/images/farm/crops/unplanted/healthy-seed.png';
+// 씨앗 도착(성공 리턴) 그림 — 서점 상세의 포장된 씨앗 상자를 그대로 쓴다(QA 4차)
+import SeedBundleHero from '../bookStore/SeedBundleHero';
 
 /**
  * 서점 단어장 구매 확인 시트.
@@ -35,10 +32,8 @@ import seedImg from '../../assets/images/farm/crops/unplanted/healthy-seed.png';
 export const AddBookStoreNewBottomSheet = ({ bookStoreVocabularySheet }) => {
   "use memo";
 
-  const navigate = useNavigate();
   const { addBookStoreVocabularySheet, fetchBookStore } = useVocabulary();
-  const { popNewBottomSheet, openNewBottomSheet, clearStack } = useNewBottomSheetActions();
-  const { popNewFullSheet } = useNewFullSheetActions();
+  const { popNewBottomSheet, openNewBottomSheet } = useNewBottomSheetActions();
   const { userProfile, setUserProfile } = useUser();
   const { refreshStats } = useStats();
   const { refreshUnlock } = useOnboardingUnlock();
@@ -62,23 +57,16 @@ export const AddBookStoreNewBottomSheet = ({ bookStoreVocabularySheet }) => {
     popNewBottomSheet();
   };
 
-  /** 성공 리턴 — 심긴 게 아니라 도착한 것(§7). 다음 행동이 주 버튼이다(§5) */
-  const openSuccess = (remainGem) => {
+  /** 성공 리턴 — 심긴 게 아니라 도착한 것(§7). QA 4차 — 그림은 서점 상세와 같은 씨앗 상자,
+   *  버튼은 '확인' 하나(물주기 바로가기·남은 보석 캡션 제거). 닫으면 뒤의 상세 풀시트가
+   *  서점 목록 재조회 결과로 '모두 보유 중'으로 바뀐다. */
+  const openSuccess = () => {
     openNewBottomSheet(StorePurchaseResultNewBottomSheet, {
       options: {
         success: true,
-        image: seedImg,
+        hero: <SeedBundleHero count={seeds} compact />,
         title: <>밭에 <ResultEm>씨앗 {n(seeds)}개</ResultEm>가<br />도착했어요</>,
-        secondary: { label: '확인' },
-        primary: {
-          label: '이 단어장 물주기',
-          onClick: () => {
-            clearStack();
-            popNewFullSheet();
-            navigate('/vocabulary-sheets');
-          },
-        },
-        caption: <>남은 보석 <HintB>{n(remainGem)}</HintB></>,
+        primary: { label: '확인' },
       },
     });
   };
@@ -93,10 +81,8 @@ export const AddBookStoreNewBottomSheet = ({ bookStoreVocabularySheet }) => {
       // 보석 차감은 단어장 생성과 같은 서버 트랜잭션에서 한다(chargeGem) — 예전처럼 차감을
       // 먼저 따로 부르면 생성이 실패했을 때 보석만 빠졌다(이슈 #15, JLPT N3 동음이의어).
       const newBook = await addBookStoreVocabularySheet(bookStoreVocabularySheet, { chargeGem: cost > 0 });
-      let remainGem = gemCnt;
       if (cost > 0 && newBook?.gemCnt !== undefined) {
-        remainGem = Number(newBook.gemCnt);
-        setUserProfile((prev) => ({ ...prev, gem_cnt: remainGem }));
+        setUserProfile((prev) => ({ ...prev, gem_cnt: Number(newBook.gemCnt) }));
       }
       // 온보딩 미션(M3: 서점 단어장 담기)은 백엔드 훅이 완료 처리한다 — 최신 상태만 재조회.
       refreshUnlock();
@@ -105,7 +91,7 @@ export const AddBookStoreNewBottomSheet = ({ bookStoreVocabularySheet }) => {
       // 후속 QA — 방금 산 단어장의 notOwnedCount 가 상점 목록에 굳어 있으면 산 직후에도
       // "미보유 단어 N개"가 그대로 남는다. 서점 목록을 조용히 재조회해 맞춘다.
       fetchBookStore({ silent: true });
-      openSuccess(remainGem);
+      openSuccess();
     } catch (e) {
       if (e?.reason === 'gem_short') { setStatus('short'); return; }
       console.error('단어장 추가 실패:', e);

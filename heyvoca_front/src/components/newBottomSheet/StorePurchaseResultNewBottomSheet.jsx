@@ -78,13 +78,14 @@ const ResultPill = ({ from, to }) => (
  * @param {boolean}  success  성공/실패
  * @param {string}   kind     실패 갈래 — 'error'(처리·결제 실패) | 'shortage'(보석 부족)
  * @param {string}   image    성공 그림 URL
+ * @param {node}     hero     성공 그림 노드 — 지정하면 image 대신 그대로 그린다(서점 단어장의 씨앗 상자)
  * @param {boolean}  plot     밭 그림이면 true — 마름모라 가로가 길다(시안 .res .im.plot)
  * @param {node}     title    2 · 제목
  * @param {object}   pill     3 · 변화 { from, to } — 수량이 바뀌는 것만
  * @param {node}     desc     4 · 한 줄 — 성공은 지금 할 수 있는 일, 실패는 원인
  */
 export const PurchaseResultBody = ({
-  success = true, kind = 'error', image, plot = false, title, pill = null, desc = null,
+  success = true, kind = 'error', image, hero = null, plot = false, title, pill = null, desc = null,
 }) => {
   // 구매 결과가 이 몸통 하나(성공/실패 여덟 장 공통)로 모이므로, 손맛도 여기 한 곳에서만
   // 울리면 모든 구매 흐름(보석 IAP StoreBuyItemNewBottomSheet · 단어장/아이템
@@ -98,7 +99,7 @@ export const PurchaseResultBody = ({
   return (
   <div className="relative text-center pt-[6px]">
     {success
-      ? (image ? <ResultImage src={image} plot={plot} /> : null)
+      ? (hero ? <div className="relative mb-[12px]">{hero}</div> : image ? <ResultImage src={image} plot={plot} /> : null)
       : <ResultIcon kind={kind} />}
     <h3 className="relative text-[19px] font-[800] leading-[1.35] tracking-[-0.04em] text-layout-black dark:text-layout-white">
       {title}
@@ -128,6 +129,7 @@ export const StorePurchaseResultNewBottomSheet = ({ options = {} }) => {
     success = true,
     kind = 'error',
     image,
+    hero = null,
     plot = false,
     title,
     pill = null,
@@ -155,6 +157,7 @@ export const StorePurchaseResultNewBottomSheet = ({ options = {} }) => {
         success={success}
         kind={kind}
         image={image}
+        hero={hero}
         plot={plot}
         title={title}
         pill={pill}

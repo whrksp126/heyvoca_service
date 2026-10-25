@@ -87,9 +87,10 @@ payload (기존 문제 payload 와 같은 위치에 실린다):
 - 바텀시트 항목(위→아래), 각 항목 = 기존 작물·아이템 그림 + 제목 + 짧은 한 줄(숫자 위주, 과한 설명 금지):
   1. **썩은 단어 살리기** — 썩은 단어가 있을 때만 최상단에 나타남(기존 살리기 동작 그대로).
   2. **농장 돌보기** — 기존 메인 CTA 동작(복습 자동 추천 문제). "돌볼 단어 N개".
-  3. **밭 산책하기** — 농장 돌보기와 같은 추천 단어로 **집중 반복 듣기(StudyMain)** 진행.
-  4. **새 씨앗 심기** — 기존 plant 세션. "새 단어 N개". 씨앗 0개면 서점 안내.
-  5. **단어장 골라 학습** — 단어장 선택 → 집중 반복 학습 / 자유 설정 테스트 (기존 VocabularySheetNewFullSheet·BookStudyType 흐름 재사용).
+  3. **농장 산책하기**(구 밭 산책하기) — 농장 돌보기와 같은 추천 단어로 **집중 반복 듣기(StudyMain)** 진행.
+  4. **농장에 새 씨앗 심기**(구 새 씨앗 심기) — 기존 plant 세션. "새 단어 N개". 씨앗 0개면 서점 안내.
+  5. **밭 골라 학습**(구 단어장 골라 학습) — 단어장 선택 → 집중 반복 학습 / 자유 설정 테스트 (기존 VocabularySheetNewFullSheet·BookStudyType 흐름 재사용). "밭 N개".
+- 이름 규칙(QA 4차 2026-10-25): **밭 = 단어장 하나, 농장 = 밭 전체.** 오늘 할 일 카드의 심기 줄도 '농장에 새 씨앗 심기'.
 - 해당 없는 상태(돌볼 단어 0 등)는 흐리게 + 숫자 0, 누르면 기존 안내 시트.
 - 디자인: Phosphor/토큰만, 이모지 금지, 기존 바텀시트·버튼 규격 재사용.
 
@@ -119,7 +120,7 @@ payload (기존 문제 payload 와 같은 위치에 실린다):
 ### 5-3. sentenceTranslate
 - 생성 `heyvoca_back/app/services/sentence_meaning.py`. payload 는 §3 모양 그대로 `question_payload` 에 평평하게 실린다(`type:'sentenceTranslate'`). 추가 키: 일본어는 사전 후리가나가 있으면 `reading_tokens`(examples 의 것과 같은 모양). `sentence_html` 은 강조 없으면 null.
 - 방해 조각 원천: 같은 응답의 다른 단어 예문 번역(score ±15 우선), 모자라면 사전에서 비슷한 수준 번역을 더 가져온다. 단어 자신의 다른 예문은 쓰지 않는다.
-- 난이도 사다리: **tier 3**(fillInTheBlank·sentenceArrangePartial·sentenceMeaning 과 같은 칸) — 조각이 한국어라 '읽고 이해'에 해당해 영어 조립(tier 4)보다 아래. 가중치(빠른 복습 경로) 6.
+- 난이도 사다리: **tier 3**(fillInTheBlank·sentenceArrangePartial 과 같은 칸) — 조각이 한국어라 '읽고 이해'에 해당해 영어 조립(tier 4)보다 아래. 가중치(빠른 복습 경로) 6.
   (구현 중 한때 tier 4 였으나 QA 3차에서 3으로 확정 — 4지선다 sentenceMeaning 과 같은 칸, 새싹부터 열림. `constants/question_types.py`)
 - 고를 예문이 없으면 그 문항은 `multipleChoice` 로 바뀌어 나간다(빈 payload 로 나가지 않음).
 - **농장 돌보기 실전 문제(QA 3차 2026-10-25, 예전 '보너스·오답 면제' 대체)**: `composer._apply_translate_quota` — 농장 돌보기(full_recommend, 유형 직접 선택 아님)
@@ -143,6 +144,16 @@ payload (기존 문제 payload 와 같은 위치에 실린다):
   (프론트 `TakeTest.jsx` PLANT_TRANSLATE_MIN 은 payload 가 없으니 자연히 0 — 정리는 프론트 담당.)
 - **자유 설정 테스트**: 칩으로 고른 유형 안에서 무작위 배정만 한다(유형별 몫 보장 제거).
 - 자유 설정 테스트: `question_types=sentenceTranslate` 허용(RECOMMENDABLE_QUESTION_TYPES).
+
+### 5-6. 4지선다 sentenceMeaning 자동 출제 제외 (QA 4차 2026-10-25)
+- `constants/question_types.py` `MANUAL_ONLY_QUESTION_TYPES = ('sentenceMeaning',)` — 사다리(`QUESTION_TYPE_TIER`·`TIER_QUESTION_TYPES`)에서 뺐고,
+  제한 없는 배정(`composer._ALL_QUESTION_TYPES` — 새 씨앗 심기·빠른 복습 가중 무작위)과 약점 유형 우선 배정에서도 고르지 않는다.
+- **tier 3 독해 자리는 `sentenceTranslate` 가 대신한다** — 이제 tier 3 = fillInTheBlank·sentenceArrangePartial·sentenceTranslate.
+  농장 돌보기 최소 출제 보장(`_ensure_translate_quota`)도 그대로. 로컬 실측(사용자 3명 × 15회): review 응답 sentenceMeaning 0, sentenceTranslate 세션당 2.
+- 새 씨앗 심기: `question_payloads` 에 원래 없었고, 프론트 plant 단일 유형 후보(`TakeTest.jsx PLANT_SINGLE_TYPES`)에서도 뺐다.
+- 프론트 자동 출제 폴백 풀 `QUICK_QUESTION_TYPES`(plugins/questionTypes/index.js)에서도 제외(`MANUAL_ONLY_QUESTION_TYPES`).
+- 자유 설정 테스트: 유형 칩 '문장 뜻 고르기'로 직접 고르면(`question_types=sentenceMeaning`) 그대로 나온다(`_assign_restricted_question_type`).
+  tier 가 없으므로 tier_target/tier_shown 은 원래처럼 None. θ b 보정(−2)은 `skill_level.py` 에 남는다.
 
 ### 5-5. 농장 돌보기·밭 산책하기 폴백 (QA 3차 2026-10-25)
 - `GET /study/recommend?mode=review` 에서 오늘 돌볼 단어(pool 의 bucket overdue/today, 오늘 할 일 시듦·돌봄)가 0이면 빈 결과 대신

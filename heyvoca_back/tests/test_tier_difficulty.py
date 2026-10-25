@@ -61,7 +61,12 @@ class TestTierConstants:
         assert 'fillInTheBlankTyping' in TIER_QUESTION_TYPES[5]
 
     def test_every_recommendable_type_has_a_tier(self):
+        from app.constants.question_types import MANUAL_ONLY_QUESTION_TYPES
         for qt in RECOMMENDABLE_QUESTION_TYPES:
+            if qt in MANUAL_ONLY_QUESTION_TYPES:
+                # 사용자 직접 선택 전용 — 사다리(tier)에 없어야 한다(QA 4차)
+                assert qt not in QUESTION_TYPE_TIER, f'{qt}는 사다리에 없어야 함'
+                continue
             assert qt in QUESTION_TYPE_TIER, f'{qt}에 tier가 없음'
 
     def test_tier_question_types_is_reverse_of_question_type_tier(self):

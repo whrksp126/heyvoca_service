@@ -69,7 +69,9 @@ const Star = ({ x, y, size, ids }) => (
   />
 );
 
-const SeedBundleHero = ({ count = 0, ownedCount = 0 }) => {
+// compact — 구매 완료 시트에서 같은 상자를 작게 다시 쓴다(QA 4차). 하늘 배경·보유 칩 없이
+//   상자만 그린다 — 시트 안에서는 "이 상자가 내 밭으로 왔다"만 말하면 된다.
+const SeedBundleHero = ({ count = 0, ownedCount = 0, compact = false }) => {
   "use memo";
 
   const uid = useId().replace(/:/g, '');
@@ -125,23 +127,29 @@ const SeedBundleHero = ({ count = 0, ownedCount = 0 }) => {
 
   return (
     <div
-      className="
+      className={compact
+        ? 'relative w-full h-[172px] flex-shrink-0'
+        : `
         relative w-full h-[341px] flex-shrink-0 z-[1] overflow-hidden
         bg-[linear-gradient(180deg,var(--farm-sky-100)_0%,var(--farm-sky-200)_34%,var(--farm-canvas)_100%)]
-      "
+      `}
     >
       {/* 상자 뒤의 은은한 빛 — 하늘 그라디언트 위에서 그림이 떠 보이게 한다 */}
-      <div
-        aria-hidden
-        className="
-          absolute left-1/2 top-[52%] -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] rounded-full
-          bg-[radial-gradient(circle,rgba(255,255,255,0.9)_0%,rgba(255,255,255,0)_68%)] dark:opacity-[0.07]
-        "
-      />
+      {!compact && (
+        <div
+          aria-hidden
+          className="
+            absolute left-1/2 top-[52%] -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] rounded-full
+            bg-[radial-gradient(circle,rgba(255,255,255,0.9)_0%,rgba(255,255,255,0)_68%)] dark:opacity-[0.07]
+          "
+        />
+      )}
 
       {/* 가운데 정렬(translate)은 바깥 div 가 맡는다 — motion.button 의 whileTap scale 이
           style.transform 을 덮어써 Tailwind -translate-x-1/2 가 사라지면서 상자가 오른쪽으로 튀었다. */}
-      <div className={`absolute left-1/2 -translate-x-1/2 w-[300px] max-w-[84%] ${ownedCount > 0 && !allOwned ? 'bottom-[44px]' : 'bottom-[24px]'}`}>
+      <div className={`absolute left-1/2 -translate-x-1/2 ${compact
+        ? 'w-[200px] bottom-[2px]'
+        : `w-[300px] max-w-[84%] ${ownedCount > 0 && !allOwned ? 'bottom-[44px]' : 'bottom-[24px]'}`}`}>
         <motion.button
           type="button"
           onClick={handleTap}
@@ -286,7 +294,7 @@ const SeedBundleHero = ({ count = 0, ownedCount = 0 }) => {
       </div>
 
       {/* 이미 가진 단어 — 상자(살 것)와 섞지 않고 따로 말한다 */}
-      {ownedCount > 0 && !allOwned && (
+      {!compact && ownedCount > 0 && !allOwned && (
         <div className="absolute left-0 right-0 bottom-[12px] flex justify-center">
           <span className="flex items-center gap-[4px] h-[26px] px-[10px] rounded-full bg-status-success-100 dark:bg-status-success-dark text-[11.5px] font-[700] tracking-[-0.02em] text-status-success-600">
             <Plant size={13} weight="fill" />

@@ -69,7 +69,7 @@ export const PreviewBookStoreNewFullSheet = ({
   // Actions만 구독하므로 state 변경 시 리렌더링 안 됨
   const { popNewFullSheet } = useNewFullSheetActions();
   const { pushNewBottomSheet } = useNewBottomSheetActions();
-  const { vocabularySheets } = useVocabulary();
+  const { vocabularySheets, bookStore } = useVocabulary();
   // 내 단어(철자 기준) — 서점 단어 id 는 내 단어 id 와 달라 철자로 맞춘다
   const myWordMap = React.useMemo(() => {
     const map = new Map();
@@ -271,7 +271,16 @@ export const PreviewBookStoreNewFullSheet = ({
 
   // QA §D — listItem 이 있으면 그 규칙(미보유/모두 보유/전체), 없으면 이 화면이 아는
   // 값(totalCount)으로 "단어 N개"만 말한다.
-  const notOwnedCount = listItem?.notOwnedCount;
+  // QA 4차 — listItem 은 열 때의 사본이라 여기서 사도 그대로 굳어 "미보유 단어 N개"가 남았다.
+  // 구매 성공 시 서점 목록을 재조회(AddBookStoreNewBottomSheet)하므로, 같은 id 의 최신 항목을 우선 쓴다.
+  // 내 단어장에 이 단어장이 이미 있으면(방금 산 직후 재조회 전 포함) 미보유는 0 이다.
+  const isOwnedBook = !onPrimaryAction && (vocabularySheets || []).some(
+    (sheet) => String(sheet.vocaBookStoreId) === String(bookStoreVocabularySheet?.id)
+  );
+  const liveListItem = listItem
+    ? ((bookStore || []).find((b) => String(b.id) === String(listItem.id)) || listItem)
+    : null;
+  const notOwnedCount = isOwnedBook ? 0 : liveListItem?.notOwnedCount;
   const seedLine = isEmptyBook
     ? { text: '단어 0 — 직접 추가', className: 'text-layout-black dark:text-layout-white' }
     : typeof notOwnedCount === 'number'
@@ -538,13 +547,15 @@ export const PreviewBookStoreNewFullSheet = ({
         dark:to-layout-black
       ">
         <motion.button
-          className="
+          className={`
             flex items-center justify-center gap-[5px]
             w-full h-[52px] rounded-[12px]
-            text-[16px] font-[700] tracking-[-0.02em] text-layout-white
-            bg-[linear-gradient(180deg,#FF88DC_0%,#FF70D4_100%)]
-            shadow-[inset_0_1px_0_rgba(255,255,255,0.34),0_8px_20px_rgba(255,112,212,0.38)]
-          "
+            text-[16px] font-[700] tracking-[-0.02em]
+            ${isOwnedBook
+              ? 'bg-layout-gray-100 dark:bg-layout-gray-dark text-layout-gray-400 dark:text-layout-gray-300'
+              : `text-layout-white bg-[linear-gradient(180deg,#FF88DC_0%,#FF70D4_100%)]
+                 shadow-[inset_0_1px_0_rgba(255,255,255,0.34),0_8px_20px_rgba(255,112,212,0.38)]`}
+          `}
           onClick={() => {
             vibrate({ duration: 5 });
             if (onPrimaryAction) { onPrimaryAction(); return; }
@@ -555,6 +566,8 @@ export const PreviewBookStoreNewFullSheet = ({
         >
           {onPrimaryAction ? (
             primaryActionLabel || '선택'
+          ) : isOwnedBook ? (
+            '보유 중인 단어장'
           ) : bookStoreVocabularySheet.gem > 0 ? (
             <>
               <img src={gem} alt="" draggable={false} className="w-[20px] h-[20px] object-contain" />

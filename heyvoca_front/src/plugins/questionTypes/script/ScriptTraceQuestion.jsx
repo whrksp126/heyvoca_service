@@ -9,9 +9,10 @@
 // 자동으로 넘어가지 않고 "다음" 버튼을 눌러야 진행하며, 농장 상태 바(작물·XP)는 보여주지 않는다
 // (글자 학습에는 망각곡선 개념이 맞지 않는다).
 
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import TraceCard from '../../../components/script/TraceCard';
 import ScriptNextButton from '../../../components/script/ScriptNextButton';
+import { speakScriptItem, stopScriptSpeech } from '../../../utils/scriptData';
 
 const ScriptTraceQuestion = ({ question, onComplete, onCardMatched }) => {
   "use memo";
@@ -28,6 +29,16 @@ const ScriptTraceQuestion = ({ question, onComplete, onCardMatched }) => {
     item: question.item,
     traceVariant: question.traceVariant,
   };
+
+  // 등장 시 글자 발음 1회 — 다른 글자 카드처럼 owner 로 건다(utils/scriptData.js). 예전엔 Main.jsx 가
+  // origin 을 가드 없이 읽어, 복습 '듣고 쓰기' 오답 뒤 끼워진 이 슬라이드에서 앞 판의 늦은 소리와
+  // 겹쳤다(2026-10-25 QA 4차). 넘어가면 자기 소리만 끊는다.
+  const ownerRef = useRef({});
+  useEffect(() => {
+    speakScriptItem(question.script, question.item, undefined, ownerRef.current);
+    return () => stopScriptSpeech(ownerRef.current);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [step.id]);
 
   // opts.manual — 카드 안의 "다음" 버튼(요음 조합 완료·획 데이터 없음)으로 끝난 경우.
   // 사용자가 이미 다음을 눌렀으니 아래 "다음" 버튼을 한 번 더 띄우지 않고 바로 넘어간다.

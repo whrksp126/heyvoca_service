@@ -83,34 +83,88 @@ const VERB_FORM_LABELS = [
 
 /*
   사전 상세 — 새 씨앗 심기 '만나기' 카드에서만 내려오는 word.dictDetail(2026-10-24 QA #15).
-  사용자 단어장의 뜻 사본(위 '의미')은 단어장마다 줄여져 있어, 사전이 가진 품사별 뜻 전체와
-  동사 변화형을 따로 보여 준다. 읽어 주기(TTS 시퀀스)에는 넣지 않는다 — 표시 전용.
+  사용자 단어장의 뜻 사본은 단어장마다 줄여져 있어, 사전이 가진 품사별 뜻 전체와 동사 변화형을 보여 준다.
+
+  QA 4차(2026-10-25): 사전 뜻이 있으면 별도 '의미' 줄과 '사전'·'예문' 제목을 빼고, 사전 뜻 중 이 단어장
+  (사용자 단어)의 뜻에 해당하는 조각만 primary 색으로 강조한다. 자동 듣기도 그 강조 조각만 읽는다
+  (품사 줄마다 한 줄 — WordIntroQuestion). 매칭이 하나도 없으면 강조 없이 보여 주고 듣기는 예전처럼
+  사용자 뜻을 읽는다.
 */
-const DictDetail = ({ detail }) => {
-  if (!detail) return null;
+// 뜻 비교용 정규화 — 괄호 보충어·물결·공백·문장부호를 지운다.
+const normMeaning = (t) => String(t ?? '')
+  .replace(/\([^)]*\)|\[[^\]]*\]/g, '')
+  .replace(/[~∼…·.\s'"]/g, '')
+  .toLowerCase();
+const splitMeaning = (t) => String(t ?? '').split(/[,;，、；]/).map((x) => x.trim()).filter(Boolean);
+const meaningsMatch = (a, b) => {
+  if (!a || !b) return false;
+  if (a === b) return true;
+  return Math.min(a.length, b.length) >= 2 && (a.includes(b) || b.includes(a));
+};
+
+// 사전 뜻을 품사별 조각으로 묶고, 사용자 뜻과 겹치는 조각에 hl 표시. lines = 자동 듣기 줄(강조 조각, 품사 줄마다 하나).
+export const buildDictMeaningView = (word) => {
+  const detail = word?.dictDetail;
+  const userTokens = (word?.meanings || [])
+    .flatMap((m) => splitMeaning(meaningParts(m).text))
+    .map(normMeaning).filter(Boolean);
   const groups = [];
-  for (const m of detail.meanings ?? []) {
+  for (const m of detail?.meanings ?? []) {
     const pos = m?.pos ? (POS_LABEL_KO[m.pos] || m.pos) : '기타';
-    const g = groups.find((x) => x.pos === pos);
-    if (g) { if (!g.items.includes(m.meaning)) g.items.push(m.meaning); } else groups.push({ pos, items: [m.meaning] });
+    let g = groups.find((x) => x.pos === pos);
+    if (!g) { g = { pos, items: [] }; groups.push(g); }
+    for (const text of splitMeaning(m?.meaning)) {
+      if (g.items.some((it) => it.text === text)) continue;
+      const n = normMeaning(text);
+      g.items.push({ text, hl: userTokens.some((u) => meaningsMatch(n, u)) });
+    }
   }
+  const lines = [];
+  for (const g of groups) {
+    const hl = g.items.filter((it) => it.hl).map((it) => it.text);
+    g.lineIndex = hl.length > 0 ? lines.length : null;
+    if (hl.length > 0) lines.push(hl.join(', '));
+  }
+  return { groups: groups.filter((g) => g.items.length > 0), lines };
+};
+
+const DictDetail = ({ detail, view, isPlayingLine, playDuration, reducedMotion, onSpeakerClick }) => {
+  if (!detail) return null;
+  const { groups } = view;
   const forms = VERB_FORM_LABELS.filter(([k]) => detail.verb_forms?.[k]);
   if (groups.length === 0 && forms.length === 0) return null;
   return (
     <div className="flex flex-col gap-[10px]">
-      <p className="text-[14px] font-[700] text-layout-black dark:text-layout-white">사전</p>
       {groups.length > 0 && (
         <div className="flex flex-col gap-[6px]">
-          {groups.map((g) => (
-            <div key={g.pos} className="flex items-start gap-[8px]">
-              <span className="flex-shrink-0 mt-[1px] px-[6px] py-[1px] rounded-[4px] bg-layout-gray-100 dark:bg-layout-gray-500 text-[11px] font-[600] text-layout-gray-400 dark:text-layout-gray-100">
-                {g.pos}
-              </span>
-              <span className="text-[13px] font-[400] leading-[18px] text-layout-gray-500 dark:text-layout-gray-50">
-                {g.items.join(', ')}
-              </span>
-            </div>
-          ))}
+          {groups.map((g) => {
+            const active = g.lineIndex != null && isPlayingLine('meanings', g.lineIndex);
+            return (
+              <div key={g.pos} className="flex items-start gap-[8px]">
+                <span className="flex-shrink-0 mt-[1px] px-[6px] py-[1px] rounded-[4px] bg-layout-gray-100 dark:bg-layout-gray-500 text-[11px] font-[600] text-layout-gray-400 dark:text-layout-gray-100">
+                  {g.pos}
+                </span>
+                <span className="flex-1 text-[13px] font-[400] leading-[18px] text-layout-gray-500 dark:text-layout-gray-50">
+                  {g.items.map((it, i) => (
+                    <React.Fragment key={it.text}>
+                      {i > 0 && ', '}
+                      {it.hl ? (
+                        <b className={`font-[700] text-primary-main-600 dark:text-primary-main-400 ${active ? 'underline underline-offset-[3px]' : ''}`}>{it.text}</b>
+                      ) : it.text}
+                    </React.Fragment>
+                  ))}
+                </span>
+                {g.lineIndex != null && (
+                  <SpeakerButton
+                    active={active}
+                    duration={playDuration}
+                    reducedMotion={reducedMotion}
+                    onClick={() => onSpeakerClick('meanings', g.lineIndex, view.lines[g.lineIndex], 'ko')}
+                  />
+                )}
+              </div>
+            );
+          })}
         </div>
       )}
       {forms.length > 0 && (
@@ -140,6 +194,7 @@ const WordMeetCard = ({
   isVisible = defaultIsVisible,
   onReveal = defaultOnReveal,
   showCrop = true,
+  introMode = false, // 새 씨앗 심기 만나기(wordIntro) — '예문' 제목을 뺀다(QA 4차, 영어·일본어 공통)
 }) => {
   if (!word) return null;
 
@@ -148,6 +203,10 @@ const WordMeetCard = ({
 
   const isPlayingLine = (itemId, index = null) =>
     playingItemId === itemId && playingItemIndex === index;
+
+  // 사전 뜻이 있으면(새 씨앗 심기 만나기) 별도 '의미' 줄·'예문' 제목 없이 사전 뜻 안에서 강조한다.
+  const dictView = word.dictDetail ? buildDictMeaningView(word) : null;
+  const dictMode = !!dictView && dictView.groups.length > 0;
 
   return (
     <div className="p-[20px] flex flex-col gap-[22px]">
@@ -185,7 +244,7 @@ const WordMeetCard = ({
           )}
         </div>
         {/* 의미 */}
-        {isVisible('meanings') ? (
+        {dictMode ? null : isVisible('meanings') ? (
           <div className="flex flex-col gap-[4px]">
             {meanings.map((meaningItem, idx) => {
               const { text: meaningText, pos: meaningPos } = meaningParts(meaningItem);
@@ -214,13 +273,24 @@ const WordMeetCard = ({
           <HiddenPlaceholder onReveal={() => onReveal('meanings')} label="의미" />
         )}
       </div>
-      <DictDetail detail={word.dictDetail} />
+      {dictView && (
+        <DictDetail
+          detail={word.dictDetail}
+          view={dictView}
+          isPlayingLine={isPlayingLine}
+          playDuration={playDuration}
+          reducedMotion={reducedMotion}
+          onSpeakerClick={onSpeakerClick}
+        />
+      )}
       {/* 예문 — 원문/뜻 텍스트가 하나도 없는 단어는 섹션 자체를 숨긴다 */}
       {examples.length > 0 && examples.some(ex => (ex.origin || ex.sentence) || (ex.meaning || ex.translation)) && (
         <div className="flex flex-col gap-[8px]">
-          <p className="text-[14px] font-[700] text-layout-black dark:text-layout-white">
-            예문
-          </p>
+          {!dictMode && !introMode && (
+            <p className="text-[14px] font-[700] text-layout-black dark:text-layout-white">
+              예문
+            </p>
+          )}
           {examples.map((example, idx) => {
             const exOrigin = example.origin || example.sentence || '';
             const exMeaning = example.meaning || example.translation || '';

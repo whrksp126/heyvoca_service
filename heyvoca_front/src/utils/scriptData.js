@@ -111,7 +111,8 @@ const speakTextWithRetry = async (text, lang, onMeta, owner = null) => {
     cached = await prefetchTextSound(text, lang);
     if (speechOwner !== me) return;
   }
-  const res = await getTextSound(text, lang, onMeta);
+  // endAtAudible — 단독 글자 mp3 의 1.3초 무음 꼬리를 기다리지 않는다(채점 후 "다음"이 소리 끝나자마자 켜지게).
+  const res = await getTextSound(text, lang, onMeta, 1, { endAtAudible: true });
   // 다 끝난 소리는 더 이상 "재생 중"이 아니다 — 늦게 언마운트돼도 남의 소리를 끊지 않게
   if (speechOwner === me) speechOwner = null;
   return res;

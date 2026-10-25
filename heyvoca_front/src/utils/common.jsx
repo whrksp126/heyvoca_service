@@ -422,9 +422,39 @@ const decodeTtsBuffer = async (ctx, audioUrl, key) => {
   return buf;
 };
 
+// 소리가 실제로 끝나는 지점(초) — 버퍼 끝에서부터 무음(|샘플| < -40dB)을 걷어낸 위치 + 여유 0.1초.
+// Edge TTS 일본어 단독 글자 mp3 는 1.87초 중 소리가 0.5초 남짓이고 나머지 1.3초 이상이 무음 꼬리라
+// (2026-10-25 objectstore 실측), 파일 끝(onended)을 기다리면 "소리는 끝났는데 한참 뒤에야" 끝 신호가 온다.
+const ttsAudibleEnd = new WeakMap(); // AudioBuffer -> seconds
+const audibleEndOf = (buf) => {
+  if (ttsAudibleEnd.has(buf)) return ttsAudibleEnd.get(buf);
+  let last = -1;
+  for (let c = 0; c < buf.numberOfChannels; c++) {
+    const data = buf.getChannelData(c);
+    for (let i = data.length - 1; i > last; i--) {
+      if (Math.abs(data[i]) > 0.01) { last = i; break; }
+    }
+  }
+  const end = last < 0 ? buf.duration : Math.min(buf.duration, last / buf.sampleRate + 0.1);
+  ttsAudibleEnd.set(buf, end);
+  return end;
+};
+
+// HTMLAudio 경로(iOS)용 — 같은 blob 을 디코드해(캐시) 소리 끝 지점만 구한다. 실패하면 null.
+const audibleEndForUrl = async (audioUrl, key) => {
+  const ctx = getAudioCtx();
+  if (!ctx) return null;
+  try {
+    return audibleEndOf(await decodeTtsBuffer(ctx, audioUrl, key));
+  } catch (e) {
+    return null;
+  }
+};
+
 // 공유 AudioContext 로 재생. 성공적으로 시작해 끝(또는 중단)나면 true 로 resolve,
 // 컨텍스트 사용 불가/디코드 실패면 null(→ 호출부가 HTMLAudio 폴백).
-const playViaWebAudio = async (audioUrl, key, rate, onMeta, requestId) => {
+// endAtAudible — 파일 끝 대신 소리가 끝나는 지점(audibleEndOf)에서 끝낸다(opt-in, getTextSound 참고).
+const playViaWebAudio = async (audioUrl, key, rate, onMeta, requestId, endAtAudible = false) => {
   const ctx = getAudioCtx();
   if (!ctx) return null;
   try {
@@ -456,7 +486,9 @@ const playViaWebAudio = async (audioUrl, key, rate, onMeta, requestId) => {
         resolve(true);
       };
       src.onended = cleanup;
-      timer = setTimeout(cleanup, (buf.duration / rate + 0.5) * 1000); // onended 누락 대비
+      timer = endAtAudible
+        ? setTimeout(cleanup, (audibleEndOf(buf) / rate) * 1000) // 무음 꼬리는 기다리지 않는다
+        : setTimeout(cleanup, (buf.duration / rate + 0.5) * 1000); // onended 누락 대비
       currentCleanup = cleanup;
       currentAudioResolve = resolve;
       src.start(0);
@@ -467,7 +499,10 @@ const playViaWebAudio = async (audioUrl, key, rate, onMeta, requestId) => {
   }
 };
 
-export const getTextSound = async (text, lang, onMeta, rate = 1) => {
+// opts.endAtAudible — 재생 Promise 를 파일 끝이 아니라 소리가 끝나는 지점에서 resolve 한다(무음 꼬리 생략).
+// 글자 학습(utils/scriptData.js)만 켠다 — 끝 신호를 기다려 "다음"을 여는 화면(2026-10-25 QA 4차).
+export const getTextSound = async (text, lang, onMeta, rate = 1, opts = {}) => {
+  const endAtAudible = !!opts?.endAtAudible;
   runPreemptHooks();
   // 오디오 unlock은 전역 gesture 리스너(_tryUnlockAudio)가 실제 첫 탭에서 처리한다.
   // 여기서(대개 gesture 밖에서 호출됨) prime하면 one-shot unlock을 헛되이 소모해
@@ -519,7 +554,7 @@ export const getTextSound = async (text, lang, onMeta, rate = 1) => {
     // HTMLAudio 를 먼저 쓰고, 멈추면 Web Audio 로 폴백한다.
     // 느린 재생(rate != 1)은 Web Audio 가 음높이를 같이 낮추므로 HTMLAudio(preservesPitch)를 유지한다.
     if (!IS_IOS && playRate === 1) {
-      const played = await playViaWebAudio(audioUrl, key, 1, onMeta, requestId);
+      const played = await playViaWebAudio(audioUrl, key, 1, onMeta, requestId, endAtAudible);
       if (played !== null) return;
       if (requestId !== currentRequestId) return;
     }
@@ -535,6 +570,7 @@ export const getTextSound = async (text, lang, onMeta, rate = 1) => {
 
       let watchdog = null;
       let stallTimer = null;
+      let audibleTimer = null;
 
       const cleanup = () => {
         sharedAudio.removeEventListener('ended', cleanup);
@@ -542,6 +578,7 @@ export const getTextSound = async (text, lang, onMeta, rate = 1) => {
         sharedAudio.removeEventListener('loadedmetadata', scheduleWatchdog);
         if (watchdog) { clearTimeout(watchdog); watchdog = null; }
         if (stallTimer) { clearTimeout(stallTimer); stallTimer = null; }
+        if (audibleTimer) { clearTimeout(audibleTimer); audibleTimer = null; }
         if (currentCleanup === cleanup) currentCleanup = null;
         if (currentAudioResolve === resolve) {
           currentAudioResolve = null;
@@ -573,6 +610,13 @@ export const getTextSound = async (text, lang, onMeta, rate = 1) => {
       scheduleWatchdog(); // 메타데이터가 이미 로드된 경우 대비
 
       sharedAudio.play().then(() => {
+        if (endAtAudible) {
+          audibleEndForUrl(audioUrl, key).then((end) => {
+            if (end == null || currentCleanup !== cleanup) return;
+            const remain = Math.max(0, end - (sharedAudio.currentTime || 0)) / (sharedAudio.playbackRate || 1);
+            audibleTimer = setTimeout(cleanup, remain * 1000);
+          });
+        }
         // 정지 감지: play() 는 성공하는데 currentTime 이 흐르지 않는 WebView 증상 → 같은 blob 을 Web Audio 로 재생.
         stallTimer = setTimeout(async () => {
           stallTimer = null;
@@ -585,10 +629,11 @@ export const getTextSound = async (text, lang, onMeta, rate = 1) => {
           sharedAudio.removeEventListener('error', cleanup);
           sharedAudio.removeEventListener('loadedmetadata', scheduleWatchdog);
           if (watchdog) { clearTimeout(watchdog); watchdog = null; }
+          if (audibleTimer) { clearTimeout(audibleTimer); audibleTimer = null; }
           currentCleanup = null;
           currentAudioResolve = null;
           // 중지(stopCurrentSound)가 폴백 재생을 끊을 수 있도록 playViaWebAudio 가 cleanup 슬롯을 점유한다.
-          await playViaWebAudio(audioUrl, key, playRate, onMeta, requestId);
+          await playViaWebAudio(audioUrl, key, playRate, onMeta, requestId, endAtAudible);
           resolve();
         }, STALL_CHECK_MS);
       }).catch(err => {

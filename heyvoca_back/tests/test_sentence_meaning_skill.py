@@ -144,3 +144,42 @@ def test_bands_and_label_helpers():
     assert compose_score([], 3, 6, [], {}) == 0
     assert compose_score([6, 6, 6], 30, 6, ['passive'], {'passive': 6}) > 90
     assert '書く' in ja_lemma_candidates('書き') and '覆う' in ja_lemma_candidates('覆わ')
+
+
+# ──────────────────────────────────────────────
+# QA 4차(2026-10-25) — 4지선다 sentenceMeaning 은 자동 출제에서 빠지고 직접 선택에서만 나온다
+# ──────────────────────────────────────────────
+
+def _meaning_item(uid, stability=5.0):
+    from app.services.recommend.pool import CandidateItem
+    return CandidateItem(
+        user_voca_id=uid, user_voca_book_id=None, word=f'w{uid}', meanings=['뜻'],
+        examples=[{'origin': 'I eat <strong class="target-word">rice</strong>.', 'meaning': '나는 밥을 먹는다.'}],
+        fsrs_state={'state': 'review', 'stability': stability, 'retrievability': 0.9, 'next_review': None},
+        bucket='review', word_length=3,
+    )
+
+
+def test_sentence_meaning_not_in_ladder():
+    from app.constants.question_types import TIER_QUESTION_TYPES, QUESTION_TYPE_TIER, MANUAL_ONLY_QUESTION_TYPES
+    assert 'sentenceMeaning' in MANUAL_ONLY_QUESTION_TYPES
+    assert all('sentenceMeaning' not in v for v in TIER_QUESTION_TYPES.values())
+    assert 'sentenceMeaning' not in QUESTION_TYPE_TIER
+    # 빠진 tier 3 독해 자리는 sentenceTranslate 가 맡는다
+    assert 'sentenceTranslate' in TIER_QUESTION_TYPES[3]
+
+
+def test_sentence_meaning_never_auto_assigned():
+    from app.services.recommend import composer as C
+    item = _meaning_item(1)
+    for _ in range(300):
+        # 제한 없는 배정(새 씨앗 심기·빠른 복습) — 약점 유형으로 올라와 있어도 고르지 않는다
+        assert C._assign_suggested_question_type(item, ['sentenceMeaning'], set()) != 'sentenceMeaning'
+        qt, _, _ = C._assign_tiered_question_type(item, ['sentenceMeaning'], set())
+        assert qt != 'sentenceMeaning'
+
+
+def test_sentence_meaning_still_available_when_chosen():
+    from app.services.recommend import composer as C
+    item = _meaning_item(1)
+    assert C._assign_restricted_question_type(item, ['sentenceMeaning'], [], set()) == 'sentenceMeaning'
