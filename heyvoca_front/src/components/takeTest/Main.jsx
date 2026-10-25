@@ -1994,10 +1994,18 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
     </motion.button>
   ) : null;
 
-  // 콤보 마일스톤 인터루드(전체 화면 포털) — 두 렌더 경로 공통
-  const interludeEl = !interlude ? null : (interlude.type === 'phase'
-    ? <PhaseInterlude key={interlude.id} kind={interlude.kind} onDone={handleInterludeDone} />
-    : <ComboInterlude key={interlude.id} n={interlude.n} milestone={interlude.milestone} onDone={handleInterludeDone} />);
+  // 콤보 마일스톤·구간 안내 인터루드(전체 화면 포털) — 두 렌더 경로 공통.
+  // AnimatePresence 로 감싸 걷힐 때 페이드아웃(InterludeShell exit)한다. handleInterludeDone 이 다음 문제로의
+  // 제자리 교체와 인터루드 제거를 같은 커밋에 하므로, 교체 순간엔 인터루드가 아직 불투명하게 덮고 있고
+  // 다음 문제는 그 아래에서 드러난다. 예전엔 인터루드가 그 커밋에서 즉시 사라져, 퇴장 슬라이드(이전 문제)가
+  // 다음 문제와 겹쳐 그려진 프레임이 그대로 보였다(실기기처럼 느린 화면일수록 길게).
+  const interludeEl = (
+    <AnimatePresence>
+      {!interlude ? null : (interlude.type === 'phase'
+        ? <PhaseInterlude key={interlude.id} kind={interlude.kind} onDone={handleInterludeDone} />
+        : <ComboInterlude key={interlude.id} n={interlude.n} milestone={interlude.milestone} onDone={handleInterludeDone} />)}
+    </AnimatePresence>
+  );
 
   // 구간 첫 문제로 (재)진입한 직후 — 인터루드가 끝나기 전엔 문제를 그리지 않는다.
   if (interlude?.hold) {

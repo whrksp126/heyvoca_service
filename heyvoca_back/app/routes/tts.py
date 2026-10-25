@@ -22,7 +22,8 @@ from app.utils.dict_lang import get_dict_lang, use_dict_lang
 from app.utils.jwt_utils import SECRET_KEY, jwt_required  # SECRET_KEY = ACCESS_SECRET
 from app.services.word_resolve import resolve_word_info
 from app.services.tts import service, voice_catalog
-from app.services.tts.registry import get_provider_for_language
+from app.services.tts.registry import get_provider, get_provider_for_language
+from app.services.tts import combine as combine_svc
 from app.services.tts.normalize import normalize_text
 from app.services.tts.base import (
     TTSError,
@@ -933,3 +934,97 @@ def put_my_voices():
     db.session.add(user)
     db.session.commit()
     return jsonify({'code': 200, 'data': _load_user_voices(user)})
+
+
+# ── 합친 음성: 클립 여러 개 → mp3 한 개(앱 '농장 산책하기' 네이티브 재생, 앱 1.1.5~) ──────
+_COMBINE_MAX_CHARS = 4000
+
+
+def _actual_clip_key(language, norm, voice):
+    """클립이 실제로 저장된 object key. 기본 엔진 키 → (없으면) gTTS 폴백 키 순. 둘 다 없으면 None."""
+    provider = get_provider_for_language(language)
+    candidates = [service.object_key_for(provider, language, norm, user_voice=voice)]
+    if provider.name != service.FALLBACK_PROVIDER:
+        fb = get_provider(service.FALLBACK_PROVIDER)
+        if fb.supports_language(language):
+            candidates.append(service.object_key_for(fb, language, norm))
+    for key in candidates:
+        if cache.get(_flag_key(key)):
+            return key
+        if service.exists(key):
+            cache.set(_flag_key(key), '1', timeout=_EXIST_FLAG_TTL)
+            return key
+    return None
+
+
+@tts_bp.route('/combine', methods=['POST'])
+@jwt_required
+def tts_combine():
+    """클립 목록을 무음 간격과 함께 mp3 한 개로 합쳐(캐시) presigned URL 을 돌려준다.
+
+    요청: { "clips": [{"text", "language", "voice"?}, ...], "gap_ms"?: 300, "tail_ms"?: 600 }
+    응답(200): { "url", "duration_ms", "clips": [{"start_ms","end_ms"}...], "cached": bool }
+    응답(409): { "code":409, "missing": [클립 인덱스...] } — 캐시에 없는 클립. 클라이언트가
+              /tts/resolve 로 만든 뒤 다시 요청한다(생성 정책·한도는 resolve 한 곳에서만).
+    """
+    body = request.get_json(silent=True) or {}
+    clips = body.get('clips')
+    if not isinstance(clips, list) or not clips:
+        return jsonify({"code": 400, "message": "clips는 필수입니다."}), 400
+    if len(clips) > combine_svc.MAX_CLIPS:
+        return jsonify({"code": 400, "message": f"clips는 {combine_svc.MAX_CLIPS}개까지입니다."}), 400
+    try:
+        gap_ms = int(body.get('gap_ms', 300))
+        tail_ms = int(body.get('tail_ms', 600))
+    except (TypeError, ValueError):
+        return jsonify({"code": 400, "message": "gap_ms, tail_ms는 정수입니다."}), 400
+    if not (0 <= gap_ms <= combine_svc.MAX_GAP_MS and 0 <= tail_ms <= combine_svc.MAX_GAP_MS):
+        return jsonify({"code": 400, "message": "gap_ms, tail_ms 범위를 벗어났습니다."}), 400
+
+    parsed = []
+    total_chars = 0
+    for c in clips:
+        if not isinstance(c, dict):
+            return jsonify({"code": 400, "message": "clips 항목 형식이 잘못되었습니다."}), 400
+        language = c.get('language')
+        norm = normalize_text(c.get('text') or '')
+        if language not in _SUPPORTED_LANGS or not norm:
+            return jsonify({"code": 400, "message": "clips 항목에 text, language가 필요합니다."}), 400
+        total_chars += len(norm)
+        parsed.append((language, norm, voice_catalog.resolve_voice(language, c.get('voice'))))
+    if total_chars > _COMBINE_MAX_CHARS:
+        return jsonify({"code": 400, "message": "텍스트가 너무 깁니다."}), 400
+
+    log = logging.getLogger(__name__)
+    try:
+        app = current_app._get_current_object()
+
+        def _key_in_ctx(p):
+            with app.app_context():
+                return _actual_clip_key(*p)
+        with ThreadPoolExecutor(max_workers=min(8, len(parsed))) as pool:
+            keys = list(pool.map(_key_in_ctx, parsed))
+        missing = [i for i, k in enumerate(keys) if not k]
+        if missing:
+            return jsonify({"code": 409, "message": "캐시에 없는 클립이 있습니다.", "missing": missing}), 409
+        key, meta, created = combine_svc.ensure_combined(keys, gap_ms, tail_ms, service.get_storage('rw'))
+    except combine_svc.ClipMissingError as e:
+        # 플래그는 있었지만 객체가 사라진 경우 — 플래그를 지워 다음 resolve 가 다시 만들게 한다
+        for i in e.missing:
+            cache.delete(_flag_key(keys[i]))
+        return jsonify({"code": 409, "message": "캐시에 없는 클립이 있습니다.", "missing": e.missing}), 409
+    except UnsupportedLanguageError as e:
+        return jsonify({"code": 400, "message": str(e)}), 400
+    except TTSConfigError:
+        log.error('TTS 설정 오류 (combine)', exc_info=True)
+        return jsonify({"code": 500, "message": "TTS 설정 오류가 발생했습니다."}), 500
+    except TTSError:
+        log.error('TTS 합치기 실패', exc_info=True)
+        return jsonify({"code": 502, "message": "음성 합치기에 실패했습니다."}), 502
+
+    return jsonify({
+        "url": _cached_presigned_url(key),
+        "duration_ms": meta.get('duration_ms'),
+        "clips": meta.get('clips') or [],
+        "cached": not created,
+    }), 200

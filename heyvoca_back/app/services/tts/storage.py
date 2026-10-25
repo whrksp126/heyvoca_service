@@ -158,6 +158,22 @@ class TTSStorage:
             )
         self._with_skew_retry(_do)
 
+    def get_bytes(self, key: str):
+        """객체 원본 바이트. 없으면 None(합친 음성 만들 때 클립 mp3 를 읽는다)."""
+        def _do():
+            response = self._client.get_object(self.bucket, key)
+            try:
+                return response.read()
+            finally:
+                response.close()
+                response.release_conn()
+        try:
+            return self._with_skew_retry(_do)
+        except S3Error as e:
+            if getattr(e, 'code', '') in _NOT_FOUND_CODES:
+                return None
+            raise
+
     def get_json(self, key: str):
         """JSON 객체를 읽어 파싱해 반환. 없으면(또는 파싱 실패) None."""
         def _do():
