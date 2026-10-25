@@ -52,7 +52,7 @@
 
 ## 3. 새 문제 유형 `sentenceTranslate` (문장 뜻 맞추기)
 
-> 2026-10-25 이름 정정: 처음엔 `sentenceMeaning` 으로 설계했으나, 이슈 #15(1290295)가 같은 이름으로 4지선다 **'문장 뜻 고르기'**(프론트 로컬 조립, tier 3)를 먼저 냈다. 이 블록 나열 유형은 `sentenceTranslate`(tier 4)로 바꿨고, `sentenceMeaning` 은 4지선다 그대로다. 오답 FSRS 면제는 `sentenceTranslate` 에만, θ/type_stats 집계는 두 유형 모두(θ b 보정: sentenceMeaning −2, sentenceTranslate +5).
+> 2026-10-25 이름 정정: 처음엔 `sentenceMeaning` 으로 설계했으나, 이슈 #15(1290295)가 같은 이름으로 4지선다 **'문장 뜻 고르기'**(프론트 로컬 조립, tier 3)를 먼저 냈다. 이 블록 나열 유형은 `sentenceTranslate`(QA 3차부터 tier 3)로 바꿨고, `sentenceMeaning` 은 4지선다 그대로다. 오답 FSRS 면제는 QA 3차에 없앴고(§5-3), θ/type_stats 집계는 두 유형 모두(θ b 보정: sentenceMeaning −2, sentenceTranslate +5).
 
 외국어 예문을 보고(듣기 버튼 포함) **한국어 블록을 눌러 나열**한다. 듀오링고 번역 블록과 같은 UI.
 
@@ -71,11 +71,12 @@ payload (기존 문제 payload 와 같은 위치에 실린다):
 }
 ```
 - 채점(프론트): 고른 조각의 text 배열이 `accepted` 중 하나와 같으면 정답(문장부호·공백 무시).
+  어순 규칙은 서버가 `accepted` 에 모든 허용 순서를 담아 표현한다(§5-3 '채점 어순') — 프론트는 비교만 한다.
 - 백엔드 생성 규칙: 한국어 번역을 어절 단위로 자름(문장부호 제거), 정답 어절 8개 이하인 예문만,
   방해 조각 2~4개는 비슷한 수준의 다른 예문 번역에서 가져오되 정답 어절과 같은 글자·같은 어간이면 제외.
-  `accepted` 에는 원래 순서 + 동사(마지막 어절) 앞의 조사 붙은 성분끼리만 자리 바꾼 순서(최대 6개).
+  `accepted` 에는 원래 순서 + 서술어 앞 '성분 묶음'끼리 자리 바꾼 모든 순서(최대 24개, §5-3).
 - 난이도 사다리: 기존 1~5 사다리에 넣는다(조각 배열 계열과 같은 칸 또는 바로 위 — 백엔드가 기존 구조에 맞춰 결정 후 이 문서에 기록).
-- 새 씨앗 심기: 6단계 중 빈칸 입력 다음, 문장 만들기 앞에 끼워 7단계로. 예문 없는 단어는 기존처럼 건너뜀.
+- ~~새 씨앗 심기: 6단계 중 빈칸 입력 다음, 문장 만들기 앞에 끼워 7단계로.~~ → QA 3차(2026-10-25) 심기에서 제외(§5-3).
 - 자유 설정 테스트: 문제 유형 칩에 '문장 뜻 맞추기' 추가.
 - 로그: `/study/log` 에 `question_type='sentenceTranslate'`, `example_hash`, 실수 유형(`error_type`, 선택값) 전달.
 
@@ -118,17 +119,38 @@ payload (기존 문제 payload 와 같은 위치에 실린다):
 ### 5-3. sentenceTranslate
 - 생성 `heyvoca_back/app/services/sentence_meaning.py`. payload 는 §3 모양 그대로 `question_payload` 에 평평하게 실린다(`type:'sentenceTranslate'`). 추가 키: 일본어는 사전 후리가나가 있으면 `reading_tokens`(examples 의 것과 같은 모양). `sentence_html` 은 강조 없으면 null.
 - 방해 조각 원천: 같은 응답의 다른 단어 예문 번역(score ±15 우선), 모자라면 사전에서 비슷한 수준 번역을 더 가져온다. 단어 자신의 다른 예문은 쓰지 않는다.
-- 난이도 사다리: **tier 3**(fillInTheBlank·sentenceArrangePartial 과 같은 칸) — 조각이 한국어라 '읽고 이해'에 해당해 영어 조립(tier 4)보다 아래. 가중치(빠른 복습 경로) 6.
+- 난이도 사다리: **tier 3**(fillInTheBlank·sentenceArrangePartial·sentenceMeaning 과 같은 칸) — 조각이 한국어라 '읽고 이해'에 해당해 영어 조립(tier 4)보다 아래. 가중치(빠른 복습 경로) 6.
+  (구현 중 한때 tier 4 였으나 QA 3차에서 3으로 확정 — 4지선다 sentenceMeaning 과 같은 칸, 새싹부터 열림. `constants/question_types.py`)
 - 고를 예문이 없으면 그 문항은 `multipleChoice` 로 바뀌어 나간다(빈 payload 로 나가지 않음).
-- **최소 출제 보장(2026-10-25 후속)**: 실제 사다리는 tier 4(leaf 이상)라 씨앗·새싹 위주 사용자에겐 0건이었다.
-  `composer._apply_translate_quota` — 농장 돌보기(full_recommend) 세션당 2(8문항 미만 1), 자유 설정 테스트에서 칩 선택 시
-  `max(1~2, 문항수 // 고른 유형 수)`. 단독 문제(사지선다류·빈칸)만 바꾸고 카드 맞추기·문장 만들기는 안 건드린다. 농장 경로에서 바꾼 문항은
-  tier_target/tier_shown=null(tier 진행 영향 없음). 새 씨앗 심기는 프론트(`TakeTest.jsx` PLANT_TRANSLATE_MIN=2)가 payload 있는 단어 2개를 보장.
-- **긴 번역 완화**: 9~12어절은 앞부분을 `prefix`(문자열)로 미리 채워 보내고 `tiles`·`accepted` 는 뒤 8어절만. 13어절 이상은 제외
-  (쓸 수 있는 예문: en 76→94%, ja 94→99%).
-- **오답은 FSRS 면제**(코디네이터 결정 2026-10-25): `/study/log` 가 `question_type='sentenceTranslate'`·`was_correct=false` 면 FSRS·mastery·농장/콤보 훅을 건너뛰고(응답 `rating=null`, fsrs 는 이전 상태 그대로, combo/farm/streak null) 로그·유형 집계·θ 에만 반영한다. 정답은 다른 유형과 똑같이 FSRS 를 탄다.
-- 새 씨앗 심기(mode=plant): `question_payloads.sentenceTranslate` 키 추가(없으면 키 생략).
+- **농장 돌보기 실전 문제(QA 3차 2026-10-25, 예전 '보너스·오답 면제' 대체)**: `composer._apply_translate_quota` — 농장 돌보기(full_recommend, 유형 직접 선택 아님)
+  세션당 2(8문항 미만 1)를 보장하되 사다리 안에서 고른다: 작물이 tier 3 을 여는 단어(새싹 이상)를 먼저, 모자랄 때만 씨앗. 단독 문제(사지선다류·빈칸)만 바꾸고
+  카드 맞추기·문장 만들기는 안 건드린다. 바꾼 문항은 `tier_target`=단어 계산값 그대로, `tier_shown`=3 으로 내보내 `/study/log` 가 tier 진행을 정상 갱신한다.
+- **FSRS·작물 XP 정상 반영**: `/study/log` 의 sentenceTranslate 오답 면제를 없앴다. 정답·오답 모두 다른 유형과 같이 rating(오답 Again)·FSRS·mastery·농장/콤보 훅을 탄다.
+- **채점 어순(QA 3차)**: `sentence_meaning.chunk_tiles` 가 어절을 성분 묶음으로 묶는다.
+  · 관형어(-의 / 관형형 -는·-은·-던·-ㄹ·-을, 어간 끝 글자 목록으로 판정)는 다음 어절과 한 묶음.
+  · 조사 없는 명사 + 의존명사/후치 어절(동안·때·후·전·중·내내·처럼·만큼 / 수·것·줄·앞·위·사이·근처 …)은 한 묶음, 시간 후치 어절이 묶음을 닫는다.
+  · 조사로 끝나는 어절·독립 부사(보통·오늘·함께 …)에서 묶음이 끝난다. 그 밖의 조사 없는 어절은 다음 어절에 붙는다.
+  · 서술어 = 마지막 묶음(-고 있다·-어 보다·-지 않다 같은 보조용언 포함), 끝 고정.
+  · 연결 어미(-고·-서·-면·-지만·-는데 …)로 끝나는 어절까지는 종속절이라 원래 순서로 고정.
+  · `accepted` = 원래 순서 + 자리 바꿀 묶음의 모든 순열. 묶음 상한 `MAX_MOVABLE`=4(≤24개).
+  · 알려진 한계: 관형절 안의 논항(예: "내가 어제 산 책을"의 '내가')은 관형형과 따로 움직여도 정답으로 본다(관대한 쪽).
+  예: "정전 동안 엘리베이터의 키패드가 작동을 멈췄다" → [정전 동안][엘리베이터의 키패드가][작동을] + [멈췄다] → 6가지 순서 정답,
+  "엘리베이터의 정전 동안 키패드가…"(관형어 분리)·"…멈췄다 작동을"(서술어가 끝 아님)은 오답.
+  판정을 서버(accepted)에 둔 이유: 구버전 클라이언트도 그대로 바르게 채점되고 규칙이 한 곳에만 있다.
+- **긴 번역 미리 채우기**: 맞출 부분이 8어절 이하이고 자리 바꿀 묶음이 4개 이하가 될 때까지 **앞 묶음 단위로** `prefix` 에 옮긴다(묶음 중간에서 자르지 않음).
+  13어절 이상은 제외. `tiles`·`accepted` 는 남은 부분만.
+- **새 씨앗 심기(mode=plant)에서 제외**: `question_payloads` 에 `sentenceTranslate` 를 싣지 않고, 배정된 suggested 가 있으면 multipleChoice 로 바꾼다.
+  (프론트 `TakeTest.jsx` PLANT_TRANSLATE_MIN 은 payload 가 없으니 자연히 0 — 정리는 프론트 담당.)
+- **자유 설정 테스트**: 칩으로 고른 유형 안에서 무작위 배정만 한다(유형별 몫 보장 제거).
 - 자유 설정 테스트: `question_types=sentenceTranslate` 허용(RECOMMENDABLE_QUESTION_TYPES).
+
+### 5-5. 농장 돌보기·밭 산책하기 폴백 (QA 3차 2026-10-25)
+- `GET /study/recommend?mode=review` 에서 오늘 돌볼 단어(pool 의 bucket overdue/today, 오늘 할 일 시듦·돌봄)가 0이면 빈 결과 대신
+  심은 단어 중 **다음 차례**로 채운다: 최근 12시간 안에 푼 단어는 뒤로 → 다음 복습일 가까운 순 → 기억 강도(stability) 낮은 순(가중 샘플링 대신 결정적 순서).
+  심은 단어가 0일 때만 빈 결과. task_bucket·target_states 로 좁힌 요청은 폴백하지 않는다.
+- 응답 `data.fallback`: `'ahead'`(폴백으로 채움) | `null`.
+- FSRS: 미리 하는 복습은 별도 처리 없이 그대로 기록한다 — FSRS-5 는 경과일로 회수율 R 을 계산하고, R≈1(예정보다 이른 복습)이면
+  안정도 상승폭 `e^{w10(1−R)}−1` 이 0 에 가까워 과하게 늘지 않는다(`services/fsrs/core.py`). 오답이면 다른 복습과 같이 lapse.
 
 ### 5-4. 배포 순서 (서버)
 1. 코드 배포(엔트리포인트가 `migrations_dict` 5d3a3c6fd998·사용자 f47bf9e66d5c 를 올린다).

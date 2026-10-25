@@ -476,6 +476,7 @@ const FarmStatusBar = ({
   );
 
   // 배지 — `+N XP` 핑크 / `−N XP` 회색 / `0 XP` 회색(crop_xp_contract.md §3, 2026-09-29 정정).
+  // 배경 칩은 뺐다(QA 3차, 2026-10-25) — 진한 칩이 막대보다 튀어 오히려 안 읽혔다. 글자색만 차분하게.
   // pending(서버 응답 대기) 동안만 비운다 — 아직 아무 값도 확정되지 않았기 때문이다.
   // 델타가 정확히 0(최근 학습한 단어를 다시 풀 때, 오답이 단계 floor 에 막힌 경우 등)이어도
   // 칩 자체는 계속 그린다 — 예전엔 이 경우 칩을 숨겨서 문제 카드 하단이 텅 비어 보였다
@@ -493,11 +494,11 @@ const FarmStatusBar = ({
         <motion.span
           className={`
             inline-flex flex-shrink-0 items-center justify-center whitespace-nowrap tabular-nums
-            rounded-full font-[800] tracking-[-0.03em]
-            ${compact ? 'px-[4px] py-[2px] text-[9px]' : 'px-[8px] py-[4px] text-[11.5px]'}
+            font-[800] tracking-[-0.03em]
+            ${compact ? 'text-[9px]' : 'text-[11.5px]'}
             ${xpBadgePositive
-              ? 'bg-primary-main-100 dark:bg-primary-main-dark text-primary-main-600'
-              : 'bg-layout-gray-50 dark:bg-layout-gray-dark text-layout-gray-400 dark:text-layout-gray-200'}
+              ? 'text-primary-main-600 dark:text-primary-main-400'
+              : 'text-layout-gray-300 dark:text-layout-gray-200'}
           `}
           initial={pickVariant('popIn', reducedMotion).initial}
           animate={{

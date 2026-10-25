@@ -56,8 +56,9 @@ QUESTION_TYPE_TIER = {
     'sentenceArrange':         4,
     'listenArrange':           4,
     'fillInTheBlankTyping':    4,   # 대표 tier. tier 5 에도 노출(TIER_QUESTION_TYPES[5] 참고)
-    # 2026-10 이슈 #16 문장 뜻 맞추기(한국어 조각 나열) — 4지선다 sentenceMeaning(tier 3)보다 한 칸 위.
-    'sentenceTranslate':       4,
+    # 2026-10 이슈 #16 문장 뜻 맞추기(한국어 조각 나열). QA 3차(2026-10-25)에 4→3 — 4지선다
+    # sentenceMeaning 과 같은 '읽고 이해' 칸. tier 4 는 잎 이상만 열려 실전 문제로 거의 안 나왔다.
+    'sentenceTranslate':       3,
 }
 
 # tier → 그 tier에서 출제 가능한 유형 목록(순서 고정). QUESTION_TYPE_TIER의 역인덱스 + 예외 1건:
@@ -66,8 +67,8 @@ QUESTION_TYPE_TIER = {
 TIER_QUESTION_TYPES = {
     1: ('multipleChoice', 'cardMatch'),
     2: ('reverseMultipleChoice', 'multipleChoiceListening', 'cardMatchListening'),
-    3: ('fillInTheBlank', 'sentenceArrangePartial', 'sentenceMeaning'),
-    4: ('sentenceArrange', 'listenArrange', 'fillInTheBlankTyping', 'sentenceTranslate'),
+    3: ('fillInTheBlank', 'sentenceArrangePartial', 'sentenceMeaning', 'sentenceTranslate'),
+    4: ('sentenceArrange', 'listenArrange', 'fillInTheBlankTyping'),
     5: ('fillInTheBlankTyping',),
 }
 

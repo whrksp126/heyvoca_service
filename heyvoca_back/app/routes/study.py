@@ -642,16 +642,12 @@ def post_study_log():
     if is_plant:
         was_correct = True
 
-    # ── 문장 뜻 맞추기 오답은 FSRS 면제(이슈 #16 결정, LEVEL_AND_MEANING_CONTRACT.md §5-3) ──
-    # 문장 '이해' 문제라 단어 기억 판정에 강하게 반영하지 않는다(문장 만들기 오답과 같은 취지).
-    # FSRS·mastery·농장/콤보 훅은 건드리지 않고, 로그·유형 집계·사용자 수준(θ)에만 반영한다.
-    fsrs_exempt = (question_type == 'sentenceTranslate' and not was_correct and not is_plant)
+    # 문장 뜻 맞추기(sentenceTranslate)도 다른 유형과 똑같이 FSRS·mastery·농장/콤보에 반영한다
+    # (QA 3차 2026-10-25 — 예전 '오답 FSRS 면제' 제거, LEVEL_AND_MEANING_CONTRACT.md §5-3).
 
     # ── FSRS 계산 ──
     if is_plant:
         rating = 3  # GOOD
-    elif fsrs_exempt:
-        rating = None
     else:
         rating = derive_rating(
             bool(was_correct),
@@ -661,28 +657,24 @@ def post_study_log():
             question_type=question_type,
             typo=typo,
         )
-    if fsrs_exempt:
-        fsrs_state_after = fsrs_state_before
-    else:
-        fsrs_state_after = fsrs_review(
-            fsrs_state_before,
-            rating,
-            now,
-            lapse_history=lapse_history,
-            prior_correct_rate=prior_correct_rate,
-        )
+    fsrs_state_after = fsrs_review(
+        fsrs_state_before,
+        rating,
+        now,
+        lapse_history=lapse_history,
+        prior_correct_rate=prior_correct_rate,
+    )
 
     memory_state_after = _classify_memory_state(fsrs_state_after)
 
-    if not fsrs_exempt:
-        # ── payload 업데이트 ──
-        payload = set_fsrs_state(payload, fsrs_state_after)
-        # mastery 비정규화(2026-09) — 추천 알고리즘의 "약함 점수"용. 이미 잠그고 쓰는 이 행에
-        # 필드만 더 얹는 것이라 추가 쿼리·추가 락 없음(중복 요청은 위 멱등 가드에서 이미 리턴됨).
-        payload = set_mastery(payload, bool(was_correct), now.isoformat() + "Z")
+    # ── payload 업데이트 ──
+    payload = set_fsrs_state(payload, fsrs_state_after)
+    # mastery 비정규화(2026-09) — 추천 알고리즘의 "약함 점수"용. 이미 잠그고 쓰는 이 행에
+    # 필드만 더 얹는 것이라 추가 쿼리·추가 락 없음(중복 요청은 위 멱등 가드에서 이미 리턴됨).
+    payload = set_mastery(payload, bool(was_correct), now.isoformat() + "Z")
 
-        user_voca.data       = serialize_user_voca_data(payload)
-        user_voca.updated_at = dt.datetime.utcnow()
+    user_voca.data       = serialize_user_voca_data(payload)
+    user_voca.updated_at = dt.datetime.utcnow()
 
     # ── tier 진행 상태 정본 갱신(2026-09 2차 보완) ──
     # tier_target/tier_shown이 둘 다 있는 요청(자동 추천 경로)만 갱신한다. 설정 시트로
@@ -695,7 +687,7 @@ def post_study_log():
         user_voca.tier_correct = bool(was_correct)
 
     # ── UserStudyLog INSERT ──
-    q_score = 0 if rating is None else rating_to_q_score(rating)
+    q_score = rating_to_q_score(rating)
 
     log = UserStudyLog(
         user_id=user_id,
@@ -787,20 +779,18 @@ def post_study_log():
     # 여기서의 실패는 학습 저장에 영향 없음. 게임 로직은 services/game/에만 둔다.
     # session_id 는 농장 V2 가 요구한다(씨앗 구간 독립 정답 판정 + 세션 종료 요약).
     game_payload = {'combo': None, 'farm': None, 'streak': None}
-    # 뜻 맞추기 오답(fsrs_exempt)은 농장·콤보에도 반영하지 않는다.
-    if not fsrs_exempt:
-        try:
-            from app.services.game.hooks import on_study_answer
-            game_payload = on_study_answer(
-                user_id, session_obj.test_type, bool(was_correct),
-                user_voca_id=user_voca_id, memory_state_after=memory_state_after,
-                session_id=session_uuid,
-                # 진행 막대의 '학습 전' 값 — 여기서 안 넘기면 농장은 이미 커밋된 새 상태밖에 못 본다
-                fsrs_before=fsrs_state_before,
-            )
-        except Exception:
-            db.session.rollback()
-            logging.getLogger(__name__).warning('game hook 실패 (학습 저장은 정상)', exc_info=True)
+    try:
+        from app.services.game.hooks import on_study_answer
+        game_payload = on_study_answer(
+            user_id, session_obj.test_type, bool(was_correct),
+            user_voca_id=user_voca_id, memory_state_after=memory_state_after,
+            session_id=session_uuid,
+            # 진행 막대의 '학습 전' 값 — 여기서 안 넘기면 농장은 이미 커밋된 새 상태밖에 못 본다
+            fsrs_before=fsrs_state_before,
+        )
+    except Exception:
+        db.session.rollback()
+        logging.getLogger(__name__).warning('game hook 실패 (학습 저장은 정상)', exc_info=True)
 
     return jsonify({
         'code': 200,
@@ -1444,6 +1434,7 @@ def get_recommend():
         if allowed_stages:
             pool = [it for it in pool if crop_stage(it.fsrs_state) in allowed_stages]
 
+    fallback = None  # 'ahead' = 오늘 돌볼 단어가 없어 다음 차례 단어로 채움(mode=review)
     if mode == 'plant':
         # ── mode=plant: 아직 안 심은 새 단어만 — 오늘 남은 새 씨앗 한도로 count를 clamp ──
         # (`GET /farm/today-tasks`의 new_seed 와 같은 계산: daily_new_limit − 오늘 심은 수.
@@ -1502,11 +1493,20 @@ def get_recommend():
                 logging.getLogger(__name__).error('오늘 할 일 우선 포함 목록 실패 (추천은 정상)', exc_info=True)
                 pinned_ids = None
 
+        # ── 폴백(QA 3차 2026-10-25): 오늘 돌볼(due) 단어가 0이어도 빈 세션을 주지 않는다 ──
+        # 심은 단어 중 '다음 차례'(다음 복습일 가까운 순 → 기억 강도 낮은 순)로 채운다. 심은 단어가 0일
+        # 때만 빈 결과. 미리 하는 복습은 FSRS 가 경과일·회수율(R≈1)로 안정도 상승을 작게 잡는다.
+        if (mode == 'review' and task_bucket is None and target_states is None and pool
+                and not pinned_ids
+                and not any(it.bucket in ('overdue', 'today') for it in pool)):
+            fallback = 'ahead'
+
         # ── 세션 구성 ──
         result = compose(
             pool, count, selection=selection, user_stats=user_stats,
             full_recommend=full_recommend, new_allowance=new_allowance,
             allowed_types=allowed_types, pinned_ids=pinned_ids,
+            ahead=(fallback == 'ahead' and selection != 'random'),
         )
     composition:    dict = result['composition']
     enriched_items: list = result['enriched_items']
@@ -1557,6 +1557,10 @@ def get_recommend():
                 for ex in (e['_item'].example_pool or [])
             ):
                 e['suggested_question_type'] = 'multipleChoice'
+        # 문장 뜻 맞추기는 새 씨앗 심기에서 내지 않는다(QA 3차 2026-10-25) — 처음 보는 단어엔 이르다.
+        for e in enriched_items:
+            if e.get('suggested_question_type') == 'sentenceTranslate':
+                e['suggested_question_type'] = 'multipleChoice'
     items_response = [
         _serialize_recommend_item(
             enriched['_item'],
@@ -1592,10 +1596,7 @@ def get_recommend():
                     break
             for t in ('fillInTheBlank', 'fillInTheBlankTyping'):
                 qp[t] = _build_sentence_question_payload(enriched['_item'], t, ctx)
-            # 문장 뜻 맞추기 — 빈칸 입력 다음·문장 만들기 앞 단계(LEVEL_AND_MEANING_CONTRACT.md §3). 없으면 키 생략.
-            sm = _build_sentence_question_payload(enriched['_item'], 'sentenceTranslate', ctx)
-            if sm:
-                qp['sentenceTranslate'] = sm
+            # 문장 뜻 맞추기는 싣지 않는다(QA 3차 2026-10-25, LEVEL_AND_MEANING_CONTRACT.md §5-3).
             resp['question_payloads'] = qp
         detail_map = _load_plant_dict_detail([e['_item'].voca_id for e in enriched_items], lang)
         for resp in items_response:
@@ -1609,6 +1610,8 @@ def get_recommend():
             'session_id':  str(session_obj.id),
             'composition': composition,
             'items':       items_response,
+            # 'ahead' = 오늘 돌볼 단어가 없어 심은 단어 중 다음 차례로 채운 세션(mode=review). 그 외 null.
+            'fallback':    fallback,
         },
     }), 200
 

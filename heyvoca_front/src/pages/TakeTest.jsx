@@ -451,11 +451,10 @@ const TakeTest = () => {
   // 카드 맞추기류는 세트(2~4단어)가 필요하므로 그 칸에 배정된 단어들을 모아 플러그인 setupQuestions로
   // 조립하고, 세트를 못 이루는 나머지 단어는 사지선다로 대체한다.
   // sentenceMeaning(문장 뜻 고르기, 2026-10-24) — 예문 원문·뜻만 있으면 로컬에서 만든다.
-  const PLANT_SINGLE_TYPES = ['multipleChoice', 'reverseMultipleChoice', 'multipleChoiceListening', 'fillInTheBlank', 'sentenceMeaning', 'fillInTheBlankTyping', 'sentenceTranslate'];
-  // sentenceTranslate(문장 뜻 맞추기, 이슈 #16)는 서버 payload 가 있을 때만 — 빈칸 입력 뒤·문장 만들기 앞에 둔다.
+  const PLANT_SINGLE_TYPES = ['multipleChoice', 'reverseMultipleChoice', 'multipleChoiceListening', 'fillInTheBlank', 'sentenceMeaning', 'fillInTheBlankTyping'];
+  // 문장 뜻 맞추기(sentenceTranslate)는 심기 단계에서 내지 않는다(QA 3차, 2026-10-25) — 처음 만난 단어에 문장 해석은 이르다.
   const PLANT_SET_TYPES = ['cardMatch', 'cardMatchListening'];
   const PLANT_SENTENCE_TYPES = ['sentenceArrangePartial', 'sentenceArrange'];
-  const PLANT_TRANSLATE_MIN = 2;
 
   const buildPlantTestQuestions = (selectedWords, allWords) => {
     const skipListening = isListeningSkipActive();
@@ -484,18 +483,6 @@ const TakeTest = () => {
       for (const slot of shuffleArray(slots).slice(0, take)) {
         if (slot.kind === 'single') content.push(slot.q);
         else setBuckets[slot.type]?.push(word);
-      }
-    }
-    // 문장 뜻 맞추기는 위 무작위 2~3칸 배분만으로는 단어당 약 1/4 확률이라 세션에 한 번도 안 나오는 일이
-    // 잦았다(이슈 #16 후속, 2026-10-25) — 서버 payload 가 있는 단어 중 최소 PLANT_TRANSLATE_MIN 개는 꼭 넣는다.
-    const translateWords = new Set(content.filter((q) => q.questionType === 'sentenceTranslate').map((q) => q.id ?? q.vocaIndexId));
-    for (const word of shuffleArray(order)) {
-      if (translateWords.size >= PLANT_TRANSLATE_MIN) break;
-      if (translateWords.has(word.id ?? word.vocaIndexId)) continue;
-      const q = buildPlantStepQuestion(word, allWords, 'sentenceTranslate');
-      if (q) {
-        content.push(q);
-        translateWords.add(word.id ?? word.vocaIndexId);
       }
     }
     // 카드 맞추기류는 세트(2~4단어)가 필요하다. 무작위 배분만으로는 칸마다 1~2단어뿐이라 세트가 거의
@@ -540,14 +527,11 @@ const TakeTest = () => {
     }
     // 직접 타이핑(빈칸 입력)은 만나기 바로 뒤에 나오면 당황스럽다(2026-10-24 QA #15) — 고르기 문제로
     // 단어를 한 바퀴 익힌 뒤(앞쪽 절반 이상, 최소 단어 수만큼)에만 나오게 뒤쪽에 섞는다.
-    // 문장 뜻 맞추기(sentenceTranslate)는 그보다 더 뒤 — 빈칸 입력 구간 다음, 문장 만들기 앞에 모은다.
     const isTyping = (q) => q.questionType === 'fillInTheBlankTyping';
-    const isTranslate = (q) => q.questionType === 'sentenceTranslate';
-    const pickQs = shuffleArray(content.filter((q) => !isTyping(q) && !isTranslate(q)));
+    const pickQs = shuffleArray(content.filter((q) => !isTyping(q)));
     const typingQs = content.filter(isTyping);
-    const translateQs = shuffleArray(content.filter(isTranslate));
     const leadCount = Math.min(pickQs.length, Math.max(order.length, Math.ceil(content.length / 2)));
-    out.push(...pickQs.slice(0, leadCount), ...shuffleArray([...pickQs.slice(leadCount), ...typingQs]), ...translateQs);
+    out.push(...pickQs.slice(0, leadCount), ...shuffleArray([...pickQs.slice(leadCount), ...typingQs]));
 
     // 문장 만들기 — 안내 + 2~3문제(서버 payload가 있는 단어만, 부분 조립 우선·없으면 전체 조립)
     const sentenceQs = shuffleArray(order)
@@ -982,7 +966,10 @@ const TakeTest = () => {
           if (!tempTestQuestions || tempTestQuestions.length === 0) {
             await pushAwaitNewBottomSheet(
               AlertNewBottomSheet,
-              { title: '출제 가능한 문제가 없어요', subTitle: '다른 유형을 함께 선택해주세요' },
+              // 복습(quick)은 서버가 다음 차례 단어로 폴백하므로 0개면 심은 단어 자체가 없다(QA 3차)
+              state.testType === 'quick'
+                ? { title: '돌볼 단어가 아직 없어요', subTitle: '새 씨앗을 먼저 심어 보세요' }
+                : { title: '출제 가능한 문제가 없어요', subTitle: '다른 유형을 함께 선택해주세요' },
               { isBackdropClickClosable: false, isDragToCloseEnabled: false }
             );
             setIsTestQuestionsSetting(false);

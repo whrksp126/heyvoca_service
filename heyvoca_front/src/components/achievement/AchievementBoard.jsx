@@ -37,7 +37,6 @@ const AchievementCell = ({ goal, levels, index, reducedMotion, onOpen }) => {
       <Pressable
         as="div"
         role="button"
-        cue="tap"
         whileTap={{ scale: 0.94 }}
         onClick={handleClick}
         aria-label={`${goal.type} ${state.isLocked ? '아직 달성 전' : `${state.level}레벨`}`}

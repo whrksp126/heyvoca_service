@@ -1,5 +1,7 @@
 import React from 'react';
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
+import { ShineSweep } from '../../lib/feel';
+import { PROGRESS_FILL_TRANSITION } from '../../utils/studySlideMotion';
 
 /**
  * 당근 농장 V2 — 학습 상태 바의 **막대 부분만** 떼어낸 재사용 컴포넌트.
@@ -80,7 +82,13 @@ const CropProgressBar = ({
   const from = clamp(pctFrom);
   const to = clamp(pctTo);
   const color = TONE[tone] || TONE.primary;
-  const gained = showGain && !grew && to > from;
+  const reducedMotion = useReducedMotion();
+  /*
+    【상단 진행바와 같은 채움 — QA 3차, 2026-10-25】 학습 상단 진행바(StudyProgressBar)처럼 채움 **하나**가
+    끝이 둥근 채로 늘어나고(같은 ease), 오를 때 빛줄기(ShineSweep)가 지나간다. 예전의 옅은 gain 덧칠층은
+    빼고(둥근 끝 두 개가 겹쳐 보였다) 오른 만큼은 물결로 보여 준다. showGain=false 면 물결도 끈다.
+  */
+  const wave = showGain && !pending && !reducedMotion && (grew || to > from);
   // 줄어든 구간 — 사라진 자리를 잠깐 비춰 줘야 '줄었다'가 읽힌다.
   // 막대만 스르륵 짧아지면 어디까지 있었는지 알 수 없어 그냥 짧은 막대로 보인다.
   const lost = !grew && to < from;
@@ -131,13 +139,12 @@ const CropProgressBar = ({
     ? (resets
       ? { width: [`${from}%`, '100%', '100%', '0%', `${to}%`] }
       : { width: '100%' })
-    // 오른 회차는 진한 채움이 from 에 머물고, 그 **아래** 깔린 gain 층이 to 까지 늘어난다(아래 【채움 모양】)
-    : { width: `${gained ? from : to}%` };
+    : { width: `${to}%` };
   const fillTransition = grew
     ? (resets
       ? { duration: GROW_FILL_DURATION, delay, times: GROW_FILL_TIMES, ease: ['easeOut', 'linear', 'easeIn', 'easeOut'] }
       : { duration: 0.5, delay, ease: 'easeOut' })
-    : { duration: fillDuration, delay, ease: 'easeOut' };
+    : { duration: fillDuration, delay, ease: PROGRESS_FILL_TRANSITION.ease };
 
   /*
     【막대 안 글자 — 2026-09-27】 `12 / 50 XP` 를 막대 안에 넣는다. 채움 경계가 글자 한가운데를
@@ -146,23 +153,17 @@ const CropProgressBar = ({
       2) 흰 겹: 진한 채움(분홍·초록·주황) 위에서만 보이도록 clip-path 로 채움 폭만큼 잘라 낸다.
          clip 은 채움과 **같은 키프레임·같은 transition** 으로 움직인다(진화 리셋·오답 줄어듦 포함)
          — 따로 계산하면 경계가 채움과 어긋난다.
-      3) 오른 구간(gain, 밝은 분홍/연두) 위 겹: 흰 글자는 연한 배경에서 안 읽히고, 다크 모드
-         바닥 겹(밝은 회색)도 마찬가지라 이 구간만 진회색 글자를 모드 무관하게 깐다.
-         gain 오버레이는 from 에서 시작해 to 까지 자라므로, 진한 채움이 보이는 건 0~from 뿐이다
-         — 그래서 gained 회차의 흰 겹은 from 에 멈춰 있고 이 겹이 from~to 를 맡는다.
   */
   const insetRight = (p) => `inset(0% ${100 - p}% 0% 0%)`;
   const whiteClipAnimate = grew
     ? (resets
       ? { clipPath: [from, 100, 100, 0, to].map(insetRight) }
       : { clipPath: insetRight(100) })
-    : { clipPath: insetRight(gained ? from : to) };
+    : { clipPath: insetRight(to) };
   /*
-    【채움 모양 — 2026-09-27 실기기 피드백】 둥근 건 **트랙 하나뿐**이다(`rounded-full overflow-hidden`).
-    안의 채움·gain·lost 층은 전부 직사각형이고 트랙이 양 끝을 잘라 준다. 예전엔 채움과 gain 이 각자
-    `rounded-[99px]` 라, 조금 찬 막대(예: 63/210)에서 진한 채움 끝의 반원 뒤에 옅은 gain 의 반원이
-    또 붙어 "동그라미 앞에 동그라미"로 보였다. 지금은 작은 값도 작은 폭 그대로(왼쪽 끝만 트랙 라운드),
-    이전 채움과 오른 구간이 틈 없이 한 막대로 이어진다.
+    【채움 모양 — 2026-10-25 QA 3차】 상단 진행바처럼 채움 끝이 둥글다(`rounded-[99px]`). 2026-09-27 엔
+    채움·gain 층이 각자 둥글어 "동그라미 앞에 동그라미"가 보여 직사각형으로 바꿨는데, 이제 gain 층이
+    없어 채움 하나만 둥글다. 줄어든 구간(lost) 층은 채움 아래에서 잠깐만 비친다.
   */
   const labelBase =`absolute inset-0 flex items-center justify-center whitespace-nowrap leading-none tabular-nums pointer-events-none select-none ${labelClassName}`;
 
@@ -171,38 +172,28 @@ const CropProgressBar = ({
       className={`relative block ${block ? 'flex-none w-full' : 'flex-1'} rounded-[99px] bg-[#E8E8E8] dark:bg-[#454545] overflow-hidden ${className}`}
       style={{ maxWidth: width, height }}
     >
-      {gained && (
-        // 이번 학습으로 오른 만큼 — 진한 채움 **아래**에 0 부터 깔아 두고 오른쪽 끝만 늘린다.
-        // 진한 채움이 0~from 을 덮으므로 보이는 건 from~to 뿐이고, 두 층 사이에 이음매가 없다.
+      {lost && (
+        // 줄어든 구간 — 있던 길이(0~from) 그대로 채움 **아래** 옅게 서 있다가 사라진다. 채움이 둥근 끝째로
+        // 줄어들며 그 뒤로 드러나는 자리가 '줄어든 만큼'이 된다.
         <motion.span
-          key="gain"
-          className="absolute left-0 top-0 bottom-0"
-          style={{ backgroundColor: color.gain }}
-          initial={{ width: `${from}%` }}
-          animate={{ width: `${to}%` }}
-          transition={{ duration: 0.45, delay, ease: 'easeOut' }}
+          key="lost"
+          className="absolute left-0 top-0 bottom-0 rounded-[99px]"
+          style={{ backgroundColor: color.gain, width: `${from}%` }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: [0, 0.4, 0.4, 0] }}
+          transition={{ duration: 0.8, delay, times: [0, 0.12, 0.55, 1], ease: 'easeOut' }}
         />
       )}
       <motion.span
         key={`fill-${pending ? 'p' : 'r'}-${grew ? 1 : 0}`}
-        className="absolute left-0 top-0 bottom-0"
+        className="absolute left-0 top-0 bottom-0 rounded-[99px] overflow-hidden"
         style={{ backgroundColor: color.fill }}
         initial={{ width: `${from}%` }}
         animate={fillAnimate}
         transition={fillTransition}
-      />
-      {lost && (
-        // 줄어든 구간 — 있던 자리에 그대로 서 있다가 사라진다.
-        // 같이 짧아지게 하면 채워진 막대와 붙어서 움직여 경계가 안 보인다.
-        <motion.span
-          key="lost"
-          className="absolute top-0 bottom-0"
-          style={{ backgroundColor: color.gain, left: `${to}%`, width: `${from - to}%` }}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: [0, 0.85, 0.85, 0] }}
-          transition={{ duration: 0.8, delay, times: [0, 0.12, 0.55, 1], ease: 'easeOut' }}
-        />
-      )}
+      >
+        {wave && <ShineSweep play delay={delay} duration={grew ? GROW_FILL_DURATION : fillDuration + 0.3} />}
+      </motion.span>
       {label != null && (
         <>
           <span aria-hidden className={`${labelBase} text-layout-gray-500 dark:text-layout-gray-100`}>
@@ -217,18 +208,6 @@ const CropProgressBar = ({
           >
             {label}
           </motion.span>
-          {gained && (
-            <motion.span
-              key="label-gain"
-              aria-hidden
-              className={`${labelBase} text-layout-gray-500`}
-              initial={{ clipPath: `inset(0% ${100 - from}% 0% ${from}%)` }}
-              animate={{ clipPath: `inset(0% ${100 - to}% 0% ${from}%)` }}
-              transition={{ duration: 0.45, delay, ease: 'easeOut' }}
-            >
-              {label}
-            </motion.span>
-          )}
         </>
       )}
     </span>

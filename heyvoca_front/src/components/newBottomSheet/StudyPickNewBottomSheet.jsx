@@ -10,6 +10,7 @@ import { usePlantSession } from '../../hooks/usePlantSession';
 import { getStudyRecommend } from '../../api/study';
 import { getRottenPlantsApi, recoverPlantsApi } from '../../api/farm';
 import { mapRecommendItemToWord } from '../../utils/studyRecommendMapping';
+import { isUnplanted, isWordStudiable } from '../../utils/vocaCrop';
 import { vibrate, showToast } from '../../utils/osFunction';
 import { primeSfx } from '../../utils/audio';
 import { ConfirmNewBottomSheet } from './ConfirmNewBottomSheet';
@@ -27,7 +28,9 @@ import SheetOptionRow from './SheetOptionRow';
   버튼이 나머지 진입을 맡았다. 진입을 이 시트 하나로 모으고 카드는 줄(정보)만 남겼다.
 
   항목(위→아래): 썩은 단어 살리기(있을 때만) / 농장 돌보기 / 밭 산책하기 / 새 씨앗 심기 / 단어장 골라 학습.
-  해당 없는 항목은 흐리게 + 0 — 누르면 각자의 기존 안내(서점 안내 등)로 간다.
+  농장 돌보기·밭 산책하기·새 씨앗 심기는 0개여도 항상 누를 수 있다(QA 3차, 2026-10-25) — 돌볼 단어가 0이면
+  서버(/study/recommend mode=review)가 심은 단어 중 다음 차례를 골라 준다. 심은 단어 자체가 없을 때만 심기로 안내하고,
+  새 단어가 없으면 서점으로 간다. 단어장 0개만 흐리게 둔다.
 */
 
 const WALK_COUNT = 14; // useQuickReview MAX_QUESTIONS 와 같은 상한
@@ -60,6 +63,9 @@ export const StudyPickNewBottomSheet = () => {
   const cannotPlant = seedsLeft <= 0;
   const seedCount = cannotPlant ? 0 : (seedRemaining > 0 ? Math.min(seedRemaining, seedsLeft) : seedsLeft);
   const bookCount = vocabularySheets?.length ?? 0;
+  // 심은(복습 가능한) 단어 — 0이면 돌보기·산책은 받을 단어가 없으니 심기로 안내한다
+  const plantedCount = (vocabularySheets ?? []).flatMap((sh) => sh.words || [])
+    .filter((w) => !isUnplanted(w) && isWordStudiable(w)).length;
 
   // ─── 동작 ──────────────────────────────────────────────────────────────
 
@@ -125,11 +131,18 @@ export const StudyPickNewBottomSheet = () => {
   // 밭 산책하기 — 농장 돌보기와 같은 복습 추천(mode=review)으로 받은 단어를 집중 반복 듣기(StudyMain)로.
   // 추천은 한 번만 부른다 — 비었을 때 startQuickReview 로 넘기면 TakeTest 가 /study/recommend 를
   // 다시 불러 쓰이지 않는 session_id 가 하나 더 생겼다.
+  const guidePlant = () => {
+    showToast('먼저 새 씨앗을 심어 보세요.');
+    plant();
+  };
+
+  const startCare = () => (plantedCount <= 0 ? guidePlant() : startQuickReview());
+
   const walk = async () => {
-    if (careLeft <= 0) { showToast('지금은 돌볼 단어가 없어요.'); return; }
+    if (plantedCount <= 0) { guidePlant(); return; }
     const res = await getStudyRecommend({ type: 'quick', mode: 'review', count: WALK_COUNT });
     const items = res?.code === 200 && Array.isArray(res.data?.items) ? res.data.items : [];
-    if (items.length === 0) { showToast('지금은 돌볼 단어가 없어요.'); return; }
+    if (items.length === 0) { guidePlant(); return; }
     navigate('/study', { state: { vocabularySheetId: 'all', words: items.map((it) => mapRecommendItemToWord(it)) } });
   };
 
@@ -144,19 +157,19 @@ export const StudyPickNewBottomSheet = () => {
     },
     {
       key: 'care', title: '농장 돌보기',
-      desc: `돌볼 단어 ${careLeft}개`, count: careLeft, run: () => startQuickReview(),
+      desc: careLeft > 0 ? `돌볼 단어 ${careLeft}개` : '다음 차례 단어 미리 돌보기', run: startCare,
     },
     {
       key: 'walk', title: '밭 산책하기', lock: 'listen',
-      desc: `듣기로 ${Math.min(careLeft, WALK_COUNT)}개`, count: careLeft, run: walk,
+      desc: careLeft > 0 ? `듣기로 ${Math.min(careLeft, WALK_COUNT)}개` : '심은 단어 듣기로 훑어보기', run: walk,
     },
     {
       key: 'seed', title: '새 씨앗 심기',
-      desc: `새 단어 ${seedCount}개`, count: seedCount, run: plant,
+      desc: seedCount > 0 ? `새 단어 ${seedCount}개` : '서점에서 씨앗 담아 오기', run: plant,
     },
     {
       key: 'book', title: '단어장 골라 학습',
-      desc: `단어장 ${bookCount}개`, count: bookCount, run: pickBook,
+      desc: `단어장 ${bookCount}개`, count: bookCount, fadeWhenEmpty: true, run: pickBook,
     },
   ].filter(Boolean);
 
@@ -188,7 +201,7 @@ export const StudyPickNewBottomSheet = () => {
             desc={option.desc}
             danger={option.key === 'rotten'}
             locked={!!option.lock && isFeatureLocked(option.lock)}
-            faded={option.count <= 0}
+            faded={!!option.fadeWhenEmpty && option.count <= 0}
             onClick={() => handleClick(option)}
           />
         ))}

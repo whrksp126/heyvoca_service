@@ -30,12 +30,49 @@ def test_long_translation_prefills_head():
     assert p['translation'].startswith('어제 저녁')
 
 
-def test_accepted_swaps_only_josa_constituents_before_predicate():
+def test_accepted_swaps_constituents_before_predicate():
     orders = SM.accepted_orders(['나는', '보통', '7시에', '아침을', '먹는다'])
     assert orders[0] == ['나는', '보통', '7시에', '아침을', '먹는다']
     assert all(o[-1] == '먹는다' for o in orders)
-    assert 1 < len(orders) <= SM.MAX_ACCEPTED
+    assert len(orders) == 24                                  # 묶음 4개 → 4!
     assert all(sorted(o) == sorted(orders[0]) for o in orders)
+
+
+def _ok(answer_ko, user_ko):
+    """프론트 채점과 같은 방식: 사용자가 고른 어절 순서가 accepted 중 하나와 같은가."""
+    head, tiles = SM.split_prefix(SM.ko_tiles(answer_ko))
+    user = SM.ko_tiles(user_ko)
+    assert user[:len(head)] == head
+    return user[len(head):] in SM.accepted_orders(tiles)
+
+
+def test_qa3_free_order_with_modifier_chunks():
+    ans = '정전 동안 엘리베이터의 키패드가 작동을 멈췄다.'
+    assert _ok(ans, '엘리베이터의 키패드가 정전 동안 작동을 멈췄다')    # QA 3차 오판 사례
+    assert _ok(ans, '작동을 정전 동안 엘리베이터의 키패드가 멈췄다')
+    assert _ok(ans, ans)
+    # 서술어가 끝이 아님
+    assert not _ok(ans, '정전 동안 엘리베이터의 키패드가 멈췄다 작동을')
+    # 관형어(-의)가 꾸밈 대상과 떨어짐
+    assert not _ok(ans, '엘리베이터의 정전 동안 키패드가 작동을 멈췄다')
+    # 조사 없는 명사 + 후치 어절(정전 동안)이 떨어짐
+    assert not _ok(ans, '정전 엘리베이터의 키패드가 동안 작동을 멈췄다')
+
+
+def test_chunk_rules():
+    _, mov, pred = SM.chunk_tiles(SM.ko_tiles('나는 공원에서 책을 읽고 있다'))
+    assert pred == ['읽고', '있다'] and len(mov) == 3                 # 보조용언은 서술어 묶음
+    _, mov, _ = SM.chunk_tiles(SM.ko_tiles('작동하는 기계를 그가 고쳤다'))
+    assert ['작동하는', '기계를'] in mov                               # 관형형은 다음 어절과 한 묶음
+    fixed, mov, _ = SM.chunk_tiles(SM.ko_tiles('밥을 먹고 학교에 갔다'))
+    assert fixed == [['밥을'], ['먹고']] and mov == [['학교에']]        # 종속절은 순서 고정
+    assert SM.accepted_orders(SM.ko_tiles('밥을 먹고 학교에 갔다')) == [SM.ko_tiles('밥을 먹고 학교에 갔다')]
+
+
+def test_many_chunks_prefill_more():
+    ko = '그는 내가 어제 산 책을 친구에게 빌려줬다'               # 7어절이지만 묶음 5개 → 앞 묶음 미리 채움
+    head, tiles = SM.split_prefix(SM.ko_tiles(ko))
+    assert head == ['그는'] and len(SM.accepted_orders(tiles)) <= 24
 
 
 def test_distractors_never_share_stem_with_answer():
@@ -67,25 +104,24 @@ def _translate_item(uid, stage_stability, ko='나는 보통 아침을 먹는다'
     )
 
 
-def test_translate_quota_farm_and_free_test():
+def test_translate_quota_farm_is_real_question():
     from app.services.recommend import composer as C
+    from app.constants.question_types import QUESTION_TYPE_TIER
+    assert QUESTION_TYPE_TIER['sentenceTranslate'] == 3
     enriched = [{'_item': _translate_item(i, 1.0), 'suggested_question_type': 'multipleChoice',
                  'tier_target': 1, 'tier_shown': 1} for i in range(10)]
     enriched[0]['suggested_question_type'] = 'cardMatch'
-    C._apply_translate_quota(enriched, full_recommend=True, allowed_types=None)
+    C._apply_translate_quota(enriched, full_recommend=True)
     swapped = [e for e in enriched if e['suggested_question_type'] == 'sentenceTranslate']
     assert len(swapped) == 2
-    assert all(e['tier_target'] is None and e['tier_shown'] is None for e in swapped)  # tier 진행 영향 없음
+    # 실전 문제 — tier 진행에 반영(tier_target 유지, tier_shown = 이 유형의 tier)
+    assert all(e['tier_target'] == 1 and e['tier_shown'] == 3 for e in swapped)
     assert enriched[0]['suggested_question_type'] == 'cardMatch'                      # 세트형은 안 바꿈
-
+    # 그 밖 경로(자유 설정 테스트 등)는 몫을 보장하지 않는다
     free = [{'_item': _translate_item(i, 1.0), 'suggested_question_type': 'multipleChoice',
              'tier_target': None, 'tier_shown': None} for i in range(10)]
-    C._apply_translate_quota(free, full_recommend=False, allowed_types=['multipleChoice', 'sentenceTranslate'])
-    assert sum(e['suggested_question_type'] == 'sentenceTranslate' for e in free) == 5
-    # 칩에 없으면 손대지 않음
-    other = [{'_item': _translate_item(i, 1.0), 'suggested_question_type': 'multipleChoice'} for i in range(4)]
-    C._apply_translate_quota(other, full_recommend=False, allowed_types=['multipleChoice'])
-    assert all(e['suggested_question_type'] == 'multipleChoice' for e in other)
+    C._apply_translate_quota(free, full_recommend=False)
+    assert all(e['suggested_question_type'] == 'multipleChoice' for e in free)
 
 
 def test_elo_moves_toward_result_and_target_is_p80():

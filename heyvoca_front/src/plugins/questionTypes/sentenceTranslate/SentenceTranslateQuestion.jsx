@@ -16,6 +16,8 @@ import ArrangeTray from '../sentenceArrange/ArrangeTray';
   - 위 카드: 외국어 예문(목표 단어 강조) + 스피커. 등장 시 1회 자동 재생(lang en/ja).
   - 아래: 문장 만들기와 같은 ArrangeTray — 한국어 블록을 눌러 답 줄에 나열, 놓은 블록을 누르면 되돌린다.
   - 채점: 고른 블록 text 배열이 accepted 중 하나와 같으면 정답(문장부호·공백 무시).
+    accepted 는 서버가 '성분 묶음'(관형어+명사, 명사+동안 등) 단위로 서술어 앞 순서를 바꾼 경우를
+    모두 담아 보낸다(QA 3차) — 어순 판정 규칙은 서버 한 곳(sentence_meaning.py)에만 둔다.
     긴 번역은 앞부분이 prefix 로 미리 채워져 오고, accepted 는 나머지 부분만 담는다.
     틀리면 트레이 아래에 정답 문장(translation)을 보여 준다.
 */

@@ -28,6 +28,7 @@ from typing import List, Optional, Dict, Any, Set, Tuple
 from app.services.recommend.pool import CandidateItem
 from app.services.recommend.ranking import (
     rank_new, compute_priority, weighted_sample_without_replacement,
+    _parse_next_review, _get_last_studied,
 )
 from app.utils.interleave import interleave_avoid_adjacent
 from app.utils.example_tagging import example_has_target_tag, example_origin_text, example_meaning_text
@@ -121,6 +122,9 @@ _URGENT_PRIORITY_THRESHOLD = 1.0
 _DONE_NEW_MIN_QUOTA   = 4
 # DONE 신규 쿼터의 절대 상한 비율(사용자 레벨 가중치와 무관하게 항상 이 비율로 캡).
 _DONE_NEW_QUOTA_RATIO = 0.3
+
+# 농장 돌보기 폴백(ahead)에서 '방금 푼 단어'로 보고 뒤로 미루는 시간.
+_AHEAD_RECENT_HOURS = 12
 
 
 # ──────────────────────────────────────────────
@@ -467,12 +471,13 @@ def _enrich_items(
 
 
 # ──────────────────────────────────────────────
-# 문장 뜻 맞추기(sentenceTranslate) 최소 출제 보장 (이슈 #16 후속, 2026-10-25)
+# 문장 뜻 맞추기(sentenceTranslate) 최소 출제 보장 — 농장 돌보기 전용 (QA 3차 2026-10-25)
 # ──────────────────────────────────────────────
-# tier 4 사다리만으로는 잎(leaf) 이상 작물에서만 열려, 씨앗·새싹 위주인 실사용자에겐 0건이었다
-# (로컬 실측: 농장 돌보기 50문항 중 0). 독해 문제가 실제로 나오도록 세션마다 예문이 있는 단어
-# 몇 개를 이 유형으로 바꾼다. 예문 수준은 choose_example 이 θ·작물 단계로 맞춘다(P≈0.8).
+# 사다리(tier 3)만으로는 새싹 이상 단어에서만 열려 씨앗 위주 사용자에겐 거의 안 나온다. 농장 돌보기
+# 세션마다 예문이 있는 단어 몇 개를 이 유형으로 바꾸되, **실전 문제**로 낸다 — tier_shown 은 이 유형의
+# tier(3), tier_target 은 단어의 계산값 그대로 두어 /study/log 가 tier 진행·FSRS·작물 XP 에 정상 반영한다.
 # 바꾸는 대상은 단독 문제(사지선다류·빈칸)만 — 카드 맞추기(세트)·문장 만들기(끝 구간)는 건드리지 않는다.
+# 자유 설정 테스트(유형 직접 선택)는 유형별 몫을 보장하지 않는다(무작위 배정 그대로).
 _TRANSLATE_SWAPPABLE = (
     'multipleChoice', 'reverseMultipleChoice', 'multipleChoiceListening', 'fillInTheBlank', 'sentenceMeaning',
 )
@@ -483,44 +488,33 @@ def _translate_quota(n: int) -> int:
     return 2 if n >= 8 else (1 if n >= 1 else 0)
 
 
-def _ensure_translate_quota(enriched: List[Dict[str, Any]], quota: int, swappable=_TRANSLATE_SWAPPABLE) -> None:
+def _ensure_translate_quota(enriched: List[Dict[str, Any]], quota: int) -> None:
     """enriched 중 sentenceTranslate 가 quota 개 미만이면 자격 있는 단독 문제를 바꿔 채운다(제자리).
 
-    자동 추천(tier) 경로에서 바꾼 문항은 tier_target/tier_shown 을 None 으로 둔다 — 보너스 독해 문제라
-    단어의 tier 진행(/study/log 는 둘 다 있을 때만 갱신)에 영향을 주지 않는다.
+    사다리 안에서 고른다: 작물 단계가 이 유형의 tier 를 여는 단어(새싹 이상)를 먼저, 모자랄 때만
+    그 아래 단어. 바꾼 문항은 tier_shown=이 유형의 tier 로 둔다(tier_target 은 그대로).
     """
     have = sum(1 for e in enriched if e.get('suggested_question_type') == 'sentenceTranslate')
     if have >= quota:
         return
+    tier = QUESTION_TYPE_TIER['sentenceTranslate']
     cands = [e for e in enriched
-             if e.get('suggested_question_type') in swappable
+             if e.get('suggested_question_type') in _TRANSLATE_SWAPPABLE
              and _item_can_use_question_type(e['_item'], 'sentenceTranslate')]
     random.shuffle(cands)
-    # 더 자란 작물(이미 뜻을 아는 단어)부터 — 같은 단계 안에서는 무작위.
-    cands.sort(key=lambda e: _STAGE_ORDER.get(_crop_stage(e['_item'].fsrs_state), 0), reverse=True)
+    # 사다리가 이 tier 를 여는 단어 먼저, 그 안에서는 더 자란 작물부터 — 같은 단계 안에서는 무작위.
+    cands.sort(key=lambda e: (_max_tier_for_item(e['_item']) >= tier,
+                              _STAGE_ORDER.get(_crop_stage(e['_item'].fsrs_state), 0)), reverse=True)
     for e in cands[:quota - have]:
         e['suggested_question_type'] = 'sentenceTranslate'
-        e['tier_target'] = None
-        e['tier_shown'] = None
+        if e.get('tier_target') is not None:
+            e['tier_shown'] = tier
 
 
-def _apply_translate_quota(enriched, *, full_recommend: bool, allowed_types: Optional[List[str]]) -> None:
-    """경로별 최소 출제 수.
-    - 자유 설정 테스트(allowed_types 에 sentenceTranslate): 고른 유형 수로 나눈 몫, 최소 1~2.
-      바꿀 대상은 사용자가 고른 다른 단독 유형만(고르지 않은 유형은 애초에 배정되지 않는다).
-    - 농장 돌보기(full_recommend): 세션당 1~2.
-    - 그 밖(암기상태를 좁힌 빠른 복습 등 가중치 경로)은 그대로.
-    """
-    n = len(enriched)
-    if allowed_types:
-        if 'sentenceTranslate' not in allowed_types:
-            return
-        quota = max(_translate_quota(n), n // max(1, len(allowed_types)))
-        _ensure_translate_quota(enriched, quota,
-                                swappable=tuple(t for t in allowed_types
-                                                if t in _TRANSLATE_SWAPPABLE or t == 'fillInTheBlankTyping'))
-    elif full_recommend:
-        _ensure_translate_quota(enriched, _translate_quota(n))
+def _apply_translate_quota(enriched, *, full_recommend: bool) -> None:
+    """농장 돌보기(full_recommend) 세션당 1~2. 그 밖 경로는 그대로."""
+    if full_recommend:
+        _ensure_translate_quota(enriched, _translate_quota(len(enriched)))
 
 
 # ──────────────────────────────────────────────
@@ -535,9 +529,13 @@ def _compose_recommend(
     new_allowance: Optional[int] = None,
     allowed_types: Optional[List[str]] = None,
     pinned_ids: Optional[List[int]] = None,
+    ahead: bool = False,
 ) -> Dict[str, Any]:
     """
     단일 priority 큐 기반 추천 (2026-09 재설계).
+
+    ahead=True(농장 돌보기 폴백 — 오늘 돌볼 단어가 0): 가중 샘플링 대신 '다음 차례' 순서로
+    고른다 — 최근 12시간 안에 푼 단어는 뒤로, 그다음 다음 복습일이 가까운 순, 기억 강도(stability) 낮은 순.
 
     학습 이력이 있는 모든 단어(bucket != 'new')를 ranking.compute_priority 하나로
     줄세운다 — "맞힌 단어는 뒤로, 틀린 단어는 앞으로"가 bucket 경계 없이 전체에서
@@ -597,11 +595,23 @@ def _compose_recommend(
         if selected_pinned:
             sample_source = [it for it in rest_sorted if it.user_voca_id not in seen_pin]
     need_sample = need_from_rest - len(selected_pinned)
-    topn = sample_source[:min(len(sample_source), _PRIORITY_TOPN_MULTIPLIER * count)]
-    selected_rest = selected_pinned + weighted_sample_without_replacement(
-        topn, now, need_sample,
-        weight_fn=lambda it, _now: priority_by_id[it.user_voca_id],
-    )
+    if ahead:
+        recent_cut = now - dt.timedelta(hours=_AHEAD_RECENT_HOURS)
+
+        def _ahead_key(it: CandidateItem):
+            last = _get_last_studied(it)
+            return (last is not None and last >= recent_cut, _parse_next_review(it),
+                    float((it.fsrs_state or {}).get('stability') or 0.0))
+        rest_sorted = sorted(rest_items, key=_ahead_key)
+        pinned_set = {it.user_voca_id for it in selected_pinned}
+        sample_source = [it for it in rest_sorted if it.user_voca_id not in pinned_set]
+        selected_rest = selected_pinned + sample_source[:max(0, need_sample)]
+    else:
+        topn = sample_source[:min(len(sample_source), _PRIORITY_TOPN_MULTIPLIER * count)]
+        selected_rest = selected_pinned + weighted_sample_without_replacement(
+            topn, now, need_sample,
+            weight_fn=lambda it, _now: priority_by_id[it.user_voca_id],
+        )
 
     selected: List[CandidateItem] = list(selected_new) + list(selected_rest)
 
@@ -640,7 +650,8 @@ def _compose_recommend(
         final_with_bucket, today_seen, weakness_types,
         full_recommend=full_recommend, allowed_types=allowed_types,
     )
-    _apply_translate_quota(enriched, full_recommend=full_recommend, allowed_types=allowed_types)
+    if not allowed_types:
+        _apply_translate_quota(enriched, full_recommend=full_recommend)
 
     composition: Dict[str, int] = {}
     for _, b in selected_with_bucket:
@@ -712,8 +723,6 @@ def _compose_random(
         }
         for it in selected
     ]
-    if allowed_types:
-        _apply_translate_quota(enriched, full_recommend=False, allowed_types=allowed_types)
     composition: Dict[str, int] = {}
     for it in selected:
         composition[it.bucket] = composition.get(it.bucket, 0) + 1
@@ -767,6 +776,7 @@ def compose(
     new_allowance: Optional[int] = None,
     allowed_types: Optional[List[str]] = None,
     pinned_ids: Optional[List[int]] = None,
+    ahead: bool = False,
 ) -> Dict[str, Any]:
     """
     pool에서 count개를 골라 세션을 구성해 반환한다.
@@ -832,4 +842,4 @@ def compose(
     if selection == 'random':
         return _compose_random(pool, count, allowed_types=allowed_types)
     return _compose_recommend(pool, count, user_stats, full_recommend, new_allowance,
-                              allowed_types=allowed_types, pinned_ids=pinned_ids)
+                              allowed_types=allowed_types, pinned_ids=pinned_ids, ahead=ahead)

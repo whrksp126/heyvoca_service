@@ -12,7 +12,7 @@ import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 import { useUser } from '../../context/UserContext';
 import gem from '../../assets/images/farm/icon-gem.png';
 import { vibrate } from '../../utils/osFunction';
-import { feel, SPRING } from '../../lib/feel';
+import { haptic, SPRING } from '../../lib/feel';
 import AchievementMedal from '../achievement/AchievementMedal';
 import AchievementLadder from '../achievement/AchievementLadder';
 import {
@@ -101,7 +101,7 @@ export const AchievementDetailNewBottomSheet = ({ selectedType = '초대왕' }) 
 
     const changeTab = (type) => {
         if (!type || type === activeTab) return;
-        feel('select');
+        haptic('selection');
         setDirection(ACHIEVEMENT_TYPES.indexOf(type) > ACHIEVEMENT_TYPES.indexOf(activeTab) ? 1 : -1);
         setActiveTab(type);
     };
@@ -115,7 +115,7 @@ export const AchievementDetailNewBottomSheet = ({ selectedType = '초대왕' }) 
     };
 
     const handleTapMedal = () => {
-        feel('tap');
+        haptic('light'); // 소리 없이 진동만 — 다른 기본 요소와 같게(QA 3차)
         heroMedalRef.current?.play();
     };
 
