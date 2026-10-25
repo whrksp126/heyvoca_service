@@ -62,3 +62,20 @@ export const getWordInfoFromKoreanApi = async (q) => {
   wordInfoCache.set(cacheKey, data);
   return data;
 };
+
+/*
+  단어장에 담을 사전 단어 전체 정보(뜻·예문·읽기) — 학습 말풍선의 '단어장에 추가'용.
+  word-info 응답에는 예문이 없어서, 사전 검색(GET /search/partial/en, 현재 학습 언어 사전 —
+  ja 도 같은 경로)이 주는 공통 단어 객체 {word, meanings, examples, vocaId, reading, ...} 중
+  같은 사전 id(없으면 같은 표기)를 고른다. 못 찾으면 null — 호출부가 word-info 값으로 담는다.
+*/
+export const getDictWordDetailApi = async (word, vocaId = null) => {
+  const q = String(word ?? '').trim();
+  if (!q) return null;
+  const result = await fetchDataAsync(`${backendUrl}/search/partial/en`, 'GET', { word: q });
+  if (!result || result.code !== 200 || !Array.isArray(result.data)) return null;
+  const items = result.data;
+  return (vocaId != null ? items.find((w) => String(w?.vocaId ?? w?.voca_id) === String(vocaId)) : undefined)
+    ?? items.find((w) => w?.word === q)
+    ?? null;
+};

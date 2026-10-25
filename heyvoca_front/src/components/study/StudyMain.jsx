@@ -7,7 +7,9 @@ import WordMeetCard from './WordMeetCard';
 import { StudySettingsNewBottomSheet } from '../newBottomSheet/StudySettingsNewBottomSheet';
 import { ConfirmNewBottomSheet } from '../newBottomSheet/ConfirmNewBottomSheet';
 import { wordLang } from '../../utils/lang';
-import { getTextSound, stopCurrentSound, prefetchTtsList } from '../../utils/common';
+import { getTextSound, stopCurrentSound, prefetchTtsList, peekTtsUrl, ttsVoiceFor } from '../../utils/common';
+import { canUseNative, requestNative } from '../../utils/nativeBridge';
+import postMessageManager from '../../utils/postMessageManager';
 import { collectStudyTexts, prepareTtsWithProgress } from '../../api/tts';
 import ProgressSplash from '../common/ProgressSplash';
 import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
@@ -50,6 +52,71 @@ const meaningParts = (item) => {
   return { text: item ?? '' };
 };
 
+
+// 한 카드(단어)를 읽는 줄 목록 — 재생 순서·횟수 규칙의 단일 소스.
+// 웹 재생(runPlay)과 앱 네이티브 재생(listen_session_start 의 slides)이 같은 목록을 쓴다.
+const buildSlideClips = (word, playbackOrder) => {
+  const out = [];
+  if (!word) return out;
+  const lang = wordLang(word);
+  const meaningsList = word.meanings || [];
+  const examplesList = word.examples || [];
+  const push = (itemId, itemIndex, text, clipLang) => {
+    if (text) out.push({ itemId, itemIndex, text, lang: clipLang });
+  };
+  const pushExampleLine = (id, i) => {
+    const ex = examplesList[i] || {};
+    if (id === 'exampleSentences') {
+      push(id, i, stripTags(ex.origin || ex.sentence || ''), lang);
+    } else {
+      push(id, i, stripTags(ex.meaning || ex.translation || ''), 'ko');
+    }
+  };
+
+  const EX_PAIR = ['exampleSentences', 'exampleMeanings'];
+  for (let oi = 0; oi < playbackOrder.length; oi++) {
+    const item = playbackOrder[oi];
+    if (item.count === 0) continue;
+
+    // 예문 문장·예문 뜻이 순서상 붙어 있으면 예문마다 짝지어 읽는다
+    // (예문1 → 예문1 뜻 → 예문2 → 예문2 뜻). 따로 떨어져 있으면 아래 기존 방식.
+    const nextItem = playbackOrder[oi + 1];
+    if (EX_PAIR.includes(item.id) && nextItem && EX_PAIR.includes(nextItem.id)
+        && nextItem.id !== item.id && nextItem.count > 0) {
+      for (let i = 0; i < examplesList.length; i++) {
+        for (const part of [item, nextItem]) {
+          for (let cycle = 0; cycle < part.count; cycle++) pushExampleLine(part.id, i);
+        }
+      }
+      oi += 1;
+      continue;
+    }
+
+    // count = 한 항목을 몇 사이클 반복할지. 한 사이클은 해당 항목의 모든 라인 1회 순회.
+    for (let cycle = 0; cycle < item.count; cycle++) {
+      if (item.id === 'word') {
+        push('word', null, word.origin || '', lang);
+      } else if (item.id === 'meanings') {
+        meaningsList.forEach((m, i) => push('meanings', i, meaningParts(m).text, 'ko'));
+      } else if (item.id === 'exampleSentences' || item.id === 'exampleMeanings') {
+        examplesList.forEach((_, i) => pushExampleLine(item.id, i));
+      }
+    }
+  }
+  return out;
+};
+
+// 앱 네이티브 재생에 넘기는 슬라이드. 받아 둔 presigned URL 이 있으면 같이 넘겨 앱의 재조회를 줄인다
+// (만료 판정·재발급은 앱이 한다).
+const buildNativeSlides = (words, playbackOrder) => words.map((w) => ({
+  title: w?.origin || '',
+  subtitle: (w?.meanings || []).slice(0, 2).map(m => meaningParts(m).text).filter(Boolean).join(', '),
+  clips: buildSlideClips(w, playbackOrder).map((c) => ({
+    ...c,
+    voice: ttsVoiceFor(c.lang) || undefined,
+    url: peekTtsUrl(c.text, c.lang) || undefined,
+  })),
+}));
 
 const StudyMain = ({ words }) => {
   "use memo";
@@ -98,6 +165,83 @@ const StudyMain = ({ words }) => {
   useEffect(() => { wordsRef.current = words; }, [words]);
   useEffect(() => { isPlayingRef.current = isPlaying; }, [isPlaying]);
   useEffect(() => { repeatModeRef.current = repeatMode; }, [repeatMode]);
+
+  // ── 앱 네이티브 재생(1.1.4~) ─────────────────────────────────────────
+  // 세션이 살아 있으면 오디오는 앱이 재생하고(화면 꺼짐·백그라운드·잠금화면 컨트롤), 웹은 그 위치를
+  // listen_state 로 받아 카드만 따라 그린다. null 이면 기존 웹 재생(구버전 앱·웹 브라우저·시작 실패).
+  const nativeSessionRef = useRef(null);
+
+  const sendNativeControl = useCallback((action, extra = {}) => {
+    const sessionId = nativeSessionRef.current;
+    if (!sessionId) return;
+    postMessageManager.sendMessageToReactNative('listen_control', { sessionId, action, ...extra });
+  }, []);
+
+  const startNativeSession = useCallback(async (startIndex, autoplay, playbackOrder) => {
+    if (!canUseNative('listen_session_start')) return false;
+    const sessionId = `listen-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
+    // 시작 응답보다 먼저 오는 listen_state 도 받도록 미리 세운다
+    nativeSessionRef.current = sessionId;
+    try {
+      const res = await requestNative('listen_session_start', {
+        sessionId,
+        slides: buildNativeSlides(wordsRef.current, playbackOrder),
+        startIndex,
+        autoplay,
+        repeat: repeatModeRef.current,
+        albumTitle: '농장 산책하기',
+      }, {
+        expect: ['listen_session_started', 'listen_session_error'],
+        ack: 'listen_session_ack',
+        ackTimeout: 4000,
+        timeout: 20000,
+      });
+      if (res.type !== 'listen_session_started') throw new Error(res.data?.data?.message || 'listen_session_error');
+      return nativeSessionRef.current === sessionId;
+    } catch (e) {
+      console.warn('[Study] 네이티브 재생 시작 실패 → 웹 재생:', e);
+      if (nativeSessionRef.current === sessionId) {
+        postMessageManager.sendMessageToReactNative('listen_control', { sessionId, action: 'stop' });
+        nativeSessionRef.current = null;
+      }
+      return false;
+    }
+  }, []);
+
+  // 네이티브 → 웹: 재생 위치·상태 동기화
+  useEffect(() => {
+    const off = postMessageManager.waitFor('listen_state', (msg) => {
+      const d = msg?.data || {};
+      if (!d.sessionId || d.sessionId !== nativeSessionRef.current) return;
+      if (d.lost) {
+        // 앱이 세션을 잃었다(앱 재시작 등) — 웹 재생으로 돌아간다
+        nativeSessionRef.current = null;
+        setIsPlaying(false);
+        return;
+      }
+      if (typeof d.slideIndex === 'number' && d.slideIndex !== currentIndexRef.current
+          && d.slideIndex >= 0 && d.slideIndex < wordsRef.current.length) {
+        setDirection(d.slideIndex > currentIndexRef.current ? 'next' : 'prev');
+        currentIndexRef.current = d.slideIndex;
+        setCurrentIndex(d.slideIndex);
+      }
+      const playing = !!d.playing;
+      isPlayingRef.current = playing;
+      setIsPlaying(playing);
+      setPlayingItemId(playing ? (d.itemId ?? null) : null);
+      setPlayingItemIndex(playing ? (d.itemIndex ?? null) : null);
+      setPlayDuration(null);
+    });
+    // 백그라운드에서 돌아오면 지금 위치를 다시 묻는다(그동안 온 이벤트가 밀렸을 수 있다)
+    const onVisible = () => {
+      if (document.visibilityState === 'visible') sendNativeControl('sync');
+    };
+    document.addEventListener('visibilitychange', onVisible);
+    return () => {
+      off();
+      document.removeEventListener('visibilitychange', onVisible);
+    };
+  }, [sendNativeControl]);
 
   const word = words[currentIndex];
   const totalCards = words.length;
@@ -180,70 +324,11 @@ const StudyMain = ({ words }) => {
       const nextWord = wordsRef.current[cardIdx + 1];
       if (nextWord) prefetchTtsList(collectStudyTexts([nextWord]));
 
-      const { playbackOrder } = settingsRef.current;
-      const meaningsList = currentWord.meanings || [];
-      const examplesList = currentWord.examples || [];
-
-      const EX_PAIR = ['exampleSentences', 'exampleMeanings'];
-      const playExampleLine = async (id, i) => {
-        const ex = examplesList[i] || {};
-        if (id === 'exampleSentences') {
-          await playOne(id, i, stripTags(ex.origin || ex.sentence || ''), wordLang(currentWord));
-        } else {
-          await playOne(id, i, stripTags(ex.meaning || ex.translation || ''), 'ko');
-        }
-      };
-
-      for (let oi = 0; oi < playbackOrder.length; oi++) {
-        const item = playbackOrder[oi];
+      const clips = buildSlideClips(currentWord, settingsRef.current.playbackOrder);
+      for (const clip of clips) {
         if (playbackCancelRef.current) return;
-        if (item.count === 0) continue;
-
-        // 예문 문장·예문 뜻이 순서상 붙어 있으면 예문마다 짝지어 읽는다
-        // (예문1 → 예문1 뜻 → 예문2 → 예문2 뜻). 따로 떨어져 있으면 아래 기존 방식.
-        const nextItem = playbackOrder[oi + 1];
-        if (EX_PAIR.includes(item.id) && nextItem && EX_PAIR.includes(nextItem.id)
-            && nextItem.id !== item.id && nextItem.count > 0) {
-          for (let i = 0; i < examplesList.length; i++) {
-            for (const part of [item, nextItem]) {
-              for (let cycle = 0; cycle < part.count; cycle++) {
-                if (playbackCancelRef.current) return;
-                // eslint-disable-next-line no-await-in-loop
-                await playExampleLine(part.id, i);
-              }
-            }
-          }
-          oi += 1;
-          continue;
-        }
-
-        // count = 한 항목을 몇 사이클 반복할지. 한 사이클은 해당 항목의 모든 라인 1회 순회.
-        for (let cycle = 0; cycle < item.count; cycle++) {
-          if (playbackCancelRef.current) return;
-
-          if (item.id === 'word') {
-            await playOne('word', null, currentWord.origin || '', wordLang(currentWord));
-          } else if (item.id === 'meanings') {
-            for (let i = 0; i < meaningsList.length; i++) {
-              if (playbackCancelRef.current) return;
-              await playOne('meanings', i, meaningParts(meaningsList[i]).text, 'ko');
-            }
-          } else if (item.id === 'exampleSentences') {
-            for (let i = 0; i < examplesList.length; i++) {
-              if (playbackCancelRef.current) return;
-              const ex = examplesList[i] || {};
-              const text = stripTags(ex.origin || ex.sentence || '');
-              await playOne('exampleSentences', i, text, wordLang(currentWord));
-            }
-          } else if (item.id === 'exampleMeanings') {
-            for (let i = 0; i < examplesList.length; i++) {
-              if (playbackCancelRef.current) return;
-              const ex = examplesList[i] || {};
-              const text = stripTags(ex.meaning || ex.translation || '');
-              await playOne('exampleMeanings', i, text, 'ko');
-            }
-          }
-        }
+        // eslint-disable-next-line no-await-in-loop
+        await playOne(clip.itemId, clip.itemIndex, clip.text, clip.lang);
       }
 
       if (playbackCancelRef.current) return;
@@ -290,6 +375,10 @@ const StudyMain = ({ words }) => {
     const nextIdx = currentIndexRef.current + 1;
     currentIndexRef.current = nextIdx;
     setCurrentIndex(nextIdx);
+    if (nativeSessionRef.current) {
+      sendNativeControl('seek_slide', { slideIndex: nextIdx, play: wasPlaying });
+      return;
+    }
     if (wasPlaying) {
       playTimeoutRef.current = setTimeout(() => {
         if (!playbackCancelRef.current) startPlayback(nextIdx);
@@ -297,7 +386,7 @@ const StudyMain = ({ words }) => {
     } else {
       setIsPlaying(false);
     }
-  }, [stopPlayback, startPlayback]);
+  }, [stopPlayback, startPlayback, sendNativeControl]);
 
   const goToPrev = useCallback(() => {
     if (currentIndexRef.current <= 0) return;
@@ -308,6 +397,10 @@ const StudyMain = ({ words }) => {
     const prevIdx = currentIndexRef.current - 1;
     currentIndexRef.current = prevIdx;
     setCurrentIndex(prevIdx);
+    if (nativeSessionRef.current) {
+      sendNativeControl('seek_slide', { slideIndex: prevIdx, play: wasPlaying });
+      return;
+    }
     if (wasPlaying) {
       playTimeoutRef.current = setTimeout(() => {
         if (!playbackCancelRef.current) startPlayback(prevIdx);
@@ -315,10 +408,12 @@ const StudyMain = ({ words }) => {
     } else {
       setIsPlaying(false);
     }
-  }, [stopPlayback, startPlayback]);
+  }, [stopPlayback, startPlayback, sendNativeControl]);
 
   const handleSpeakerClick = useCallback((itemId, index, text, lang) => {
     haptic('light');
+    // 한 줄 듣기는 웹이 재생한다 — 네이티브 자동재생은 먼저 멈춘다
+    sendNativeControl('pause');
     const isSameLine = playingItemId === itemId && playingItemIndex === index;
     if (isSameLine) {
       // 재생 중 클릭 → 정지
@@ -339,9 +434,15 @@ const StudyMain = ({ words }) => {
         setPlayDuration(null);
       });
     }
-  }, [playingItemId, playingItemIndex, stopPlayback]);
+  }, [playingItemId, playingItemIndex, stopPlayback, sendNativeControl]);
 
   const handlePlayToggle = () => {
+    if (nativeSessionRef.current) {
+      sendNativeControl(isPlaying ? 'pause' : 'play');
+      isPlayingRef.current = !isPlaying;
+      setIsPlaying(!isPlaying);
+      return;
+    }
     if (isPlaying) {
       setIsPlaying(false);
       stopPlayback();
@@ -352,7 +453,10 @@ const StudyMain = ({ words }) => {
   };
 
   const handleToggleRepeat = () => {
-    setRepeatMode(prev => !prev);
+    const next = !repeatModeRef.current;
+    repeatModeRef.current = next;
+    setRepeatMode(next);
+    sendNativeControl('set_repeat', { repeat: next });
   };
 
   // isPlaying이 false로 바뀌면 재생 중단
@@ -384,10 +488,16 @@ const StudyMain = ({ words }) => {
       ]);
 
       if (cancelled) return;
+      // 앱 1.1.4~ 는 네이티브로 재생한다(화면 꺼짐·백그라운드에서도 계속). 실패하면 기존 웹 재생.
+      const native = await startNativeSession(0, true, settingsRef.current.playbackOrder);
+      if (cancelled) {
+        if (native) sendNativeControl('stop');
+        return;
+      }
       setPrepareProgress(1);
       setIsPreparing(false);
       setIsPlaying(true);
-      startPlayback(0);
+      if (!native) startPlayback(0);
 
       // 진입 후: 전체(단어·의미·예문) 음성을 백그라운드로 계속 준비(진행률 없이).
       prepareTtsWithProgress(allTexts, null).catch(() => {});
@@ -399,6 +509,9 @@ const StudyMain = ({ words }) => {
       cancelled = true;
       stopPlayback();
       stopCurrentSound();
+      // 산책을 떠나면 네이티브 재생도 멈춘다(잠금화면 컨트롤 제거)
+      sendNativeControl('stop');
+      nativeSessionRef.current = null;
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -408,12 +521,17 @@ const StudyMain = ({ words }) => {
   const handleSettingsClick = () => {
     stopPlayback();
     setIsPlaying(false);
+    sendNativeControl('pause');
     pushNewBottomSheet(
       StudySettingsNewBottomSheet,
       {
         initialSettings: settings,
         onSet: (newSettings) => {
           setSettings(newSettings);
+          // 재생 순서가 바뀌었으니 네이티브 큐를 새 순서로 다시 만든다(정지 상태로, 지금 카드부터).
+          if (nativeSessionRef.current) {
+            startNativeSession(currentIndexRef.current, false, newSettings.playbackOrder);
+          }
         },
       },
       {

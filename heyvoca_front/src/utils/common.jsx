@@ -272,7 +272,11 @@ const ttsBlobCache = new Map();   // key -> objectURL
 const ttsInflight = new Map();    // key -> Promise<string|null>
 const TTS_BLOB_CACHE_MAX = 500;
 
-const ttsVoiceFor = (lang) => {
+// presigned mp3 URL(원격) — 앱 네이티브 재생(농장 산책하기)에 넘겨 앱이 /tts/resolve 를 다시 부르지 않게 한다.
+// 만료는 앱이 URL 의 X-Amz-Date/Expires 로 다시 판정하므로 여기서는 최신값만 들고 있는다.
+const ttsUrlCache = new Map();    // key -> presigned URL
+
+export const ttsVoiceFor = (lang) => {
   try {
     const tv = JSON.parse(localStorage.getItem('ttsVoices') || '{}');
     return tv && tv[lang] ? tv[lang] : '';
@@ -291,11 +295,19 @@ export const resolveTtsUrl = async (text, lang) => {
     const v = ttsVoiceFor(lang);
     if (v) fetchData.voice = v;
     const data = await fetchDataAsync(`${backendUrl}/tts/resolve`, 'GET', fetchData);
-    return (data && data.url) || null;
+    const url = (data && data.url) || null;
+    if (url) {
+      if (ttsUrlCache.size >= TTS_BLOB_CACHE_MAX) ttsUrlCache.delete(ttsUrlCache.keys().next().value);
+      ttsUrlCache.set(ttsCacheKey(t, lang), url);
+    }
+    return url;
   } catch (e) {
     return null;
   }
 };
+
+// 이미 받아 둔 presigned URL(없으면 null). 네트워크를 타지 않는다.
+export const peekTtsUrl = (text, lang) => ttsUrlCache.get(ttsCacheKey((text ?? '').trim(), lang)) || null;
 
 // 단일 텍스트의 mp3를 미리 받아 objectURL 캐시에 저장. 반환: objectURL | null
 export const prefetchTextSound = (text, lang) => {

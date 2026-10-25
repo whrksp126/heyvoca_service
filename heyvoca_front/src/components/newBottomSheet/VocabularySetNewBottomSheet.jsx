@@ -66,11 +66,14 @@ export const useVocabularySetNewBottomSheet = () => {
                         color: getColorSet(result.color),
                     });
                 } else {
-                    await addVocabularySheet({
+                    // 새로 만든 단어장을 돌려준다(truthy) — 만들자마자 그 단어장을 고르는 호출부용
+                    // (학습 말풍선 '단어장에 추가' 시트). 기존 호출부는 참/거짓만 본다.
+                    const newBook = await addVocabularySheet({
                         title: result.name,
                         color: getColorSet(result.color),
                         language: learningLang,
                     });
+                    return newBook || true;
                 }
                 return true;
             } catch (error) {

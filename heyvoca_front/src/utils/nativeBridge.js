@@ -65,6 +65,10 @@ export const NATIVE_HANDLER_MIN_VERSION = {
   //  구버전 앱은 모르는 메시지를 console.log 로 흘려버리므로 이 표로 선차단하고 기존 vibrate 로 폴백한다.
   haptic_pattern: '1.1.2',
   haptic_warmup: '1.1.2',
+  // 1.1.4 — 농장 산책하기 네이티브 재생(react-native-track-player). 백그라운드·잠금화면 재생.
+  //  구버전 앱·웹 브라우저는 이 표로 선차단되어 StudyMain 의 기존 웹 재생을 그대로 쓴다.
+  listen_session_start: '1.1.4',
+  listen_control: '1.1.4',
 };
 
 /** 요청 실패 사유 — 호출부는 이 코드로 분기해 폴백을 고른다. */

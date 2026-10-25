@@ -245,6 +245,8 @@ const NextStudyCta = ({ showRing, ring, reducedMotion, onStart, className = '' }
   오늘 돌봄 남은 수 — 이어하기 유도 한 줄(버튼 줄 위). 홈 '오늘 할 일' 카드의
   "시듦 물주기" + "오늘 돌봄 물주기" 두 줄(x/y)과 같은 계산이다. 새 씨앗 심기는 이 화면의
   "다음 학습"(복습 전용)이 하지 않으므로 넣지 않는다. 썩은 단어는 홈에서도 목표 밖이다.
+  tasks 가 아직 없으면(세션 종료 뒤 재조회 전) 같은 높이로 자리만 잡아 둔다 — 값이 도착해도
+  하단 높이가 바뀌지 않게(2026-10-25 이슈 #17).
 */
 const TodayCareLeft = ({ tasks }) => {
   const left = ['wilted', 'care'].reduce((sum, key) => {
@@ -254,9 +256,10 @@ const TodayCareLeft = ({ tasks }) => {
   return (
     <p
       data-testid='today-care-left'
-      className='px-[24px] pt-[14px] -mb-[6px] text-center text-[13px] font-[600] tracking-[-0.02em] text-layout-gray-400 dark:text-layout-gray-200'
+      aria-hidden={!tasks || undefined}
+      className={`px-[24px] pt-[14px] -mb-[6px] text-center text-[13px] font-[600] tracking-[-0.02em] text-layout-gray-400 dark:text-layout-gray-200 ${tasks ? '' : 'invisible'}`}
     >
-      {left > 0 ? (
+      {!tasks ? '\u00A0' : left > 0 ? (
         <>오늘 돌볼 단어 <span className='tabular-nums font-[700] text-primary-main-600'>{left}개</span>가 남아 있어요</>
       ) : (
         '오늘 돌볼 단어를 모두 돌봤어요'
@@ -910,6 +913,9 @@ const StudyResult = () => {
   const planRef = useRef(nextPlan);
   const showRing = (countdownPhase === 'counting' || countdownPhase === 'paused') && nextPlan.available;
   const counting = countdownPhase === 'counting' && nextPlan.available;
+  // 하단 버튼 위 안내 줄 — 결과 목록 아래 여백도 이 두 값으로만 정한다(카운트다운·멈추기와 무관)
+  const showFooterNotice = !isFreeTest && !!(nextNotice || nextPlan.reason);
+  const showCareLeft = nextPlan.available && !isFreeTest;
 
   const debugLog = (...args) => {
     // 실기기 원인 추적용 — 콘솔(WebView 원격 디버깅)에서 흐름을 볼 수 있게 남긴다
@@ -1183,10 +1189,15 @@ const StudyResult = () => {
             </div>
           </div>
 
-          {/* 아래 여백은 떠 있는 버튼 자리(52+18+26=96)보다 조금 넉넉하게 — 마지막 줄이 가리지 않도록 */}
+          {/* 아래 여백은 떠 있는 버튼 자리(52+18+26=96)보다 조금 넉넉하게 — 마지막 줄이 가리지 않도록.
+              하단에 실제로 그려지는 안내 줄 수(showFooterNotice·showCareLeft)로만 정한다. 카운트다운
+              여부(showRing)와는 무관하다 — 예전 '○초 뒤 다음 학습' 안내 줄(2026-10-24 제거)의 자리가
+              showRing 에 묶여 남아 있어서, 멈추기를 누르면 여백이 줄며 목록이 튀었다(이슈 #17). */}
           <div
             data-testid="result-scroll"
-            className={`relative isolate z-0 flex flex-col flex-1 overflow-y-auto scrollbar-hide ${showRing ? 'pb-[160px]' : (nextNotice || nextPlan.reason) ? 'pb-[140px]' : 'pb-[110px]'}`}
+            className={`relative isolate z-0 flex flex-col flex-1 overflow-y-auto scrollbar-hide ${
+              showFooterNotice && showCareLeft ? 'pb-[170px]' : (showFooterNotice || showCareLeft) ? 'pb-[140px]' : 'pb-[110px]'
+            }`}
           >
             {currentScreen.data?.plantRows ? (
               /* 새 씨앗 심기 결과 — 채점(점수·정답 수·O/X) 없이, 밭에 씨앗을 하나씩 심어 보여 준다 */
@@ -1325,12 +1336,12 @@ const StudyResult = () => {
             className={`absolute bottom-0 left-0 right-0 z-20 bg-layout-white dark:bg-layout-black transition-opacity duration-300 ${statsDone ? 'opacity-100' : 'opacity-40 pointer-events-none'}`}
           >
             <div aria-hidden className='pointer-events-none absolute left-0 right-0 bottom-full h-[20px] bg-gradient-to-t from-layout-white dark:from-layout-black to-transparent' />
-            {!isFreeTest && (nextNotice || nextPlan.reason) ? (
+            {showFooterNotice ? (
               <p className='px-[24px] pt-[14px] -mb-[6px] text-center text-[12px] font-[500] text-layout-gray-300'>
                 {nextNotice || nextPlan.reason}
               </p>
             ) : null}
-            {nextPlan.available && !isFreeTest && freshTodayTasks ? (
+            {showCareLeft ? (
               <TodayCareLeft tasks={freshTodayTasks} />
             ) : null}
             <ResultCtaBar>

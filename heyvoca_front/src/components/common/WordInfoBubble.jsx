@@ -1,8 +1,13 @@
 import { useLayoutEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { motion } from 'framer-motion';
+import { useLocation } from 'react-router-dom';
+import { PlusCircle } from '@phosphor-icons/react';
 
 import { getReading, shouldShowReading } from '../../utils/jaWord';
+import { vibrate } from '../../utils/osFunction';
+import { useNewBottomSheetActions, useNewBottomSheetContext } from '../../context/NewBottomSheetContext';
+import PickPlotNewBottomSheet from '../newBottomSheet/PickPlotNewBottomSheet';
 import SpeakerArt from './SpeakerArt';
 
 /*
@@ -33,6 +38,12 @@ import SpeakerArt from './SpeakerArt';
   대신 `results`(배열, 최대 3개)를 넘긴다. 결과가 여러 개일 수 있어 단일 단어 레이아웃(발음·
   TTS 버튼) 대신 "단어 + 대표 뜻 1줄" 목록을 그린다(TTS 없음 — 한국어라 발음 재생 대상이 아님).
   notFoundMessage 로 상태별 안내 문구를 바꿀 수 있다(기본은 영어 단어 조회 문구).
+
+  '단어장에 추가'(QA #17, 2026-10-25) — 단일 단어 모드에서 사전 단어(voca_id)를 찾았으면 뜻 아래에
+  버튼을 둔다. 누르면 찾기 화면과 같은 '어느 밭에 담을까' 시트(PickPlotNewBottomSheet)를 토스트 모드로
+  띄워 기존 단어 추가 경로(addWord)로 새 씨앗을 심는다. 모든 문제 유형이 이 컴포넌트를 쓰므로 호출부는
+  바꾸지 않는다. 말풍선(z 1200)이 시트(z 1001) 위에 뜨지 않게 바텀시트가 열려 있는 동안엔 그리지 않는다
+  (시트를 누르면 호출부의 바깥 탭 규칙으로 말풍선 상태도 닫힌다). 게스트 맛보기에선 숨긴다.
 */
 const EDGE_MARGIN_PX = 12;      // 화면 좌우 여백
 const TAIL_SIZE_PX = 10;        // 꼬리 한 변(회전 전 정사각형)
@@ -50,6 +61,9 @@ const WordInfoBubble = ({
 }) => {
   const bodyRef = useRef(null);
   const [measuredWidth, setMeasuredWidth] = useState(null);
+  const { stack: bottomSheetStack } = useNewBottomSheetContext();
+  const { pushNewBottomSheet } = useNewBottomSheetActions();
+  const isGuest = !!useLocation()?.state?.guestMode;
 
   useLayoutEffect(() => {
     const el = bodyRef.current;
@@ -105,8 +119,26 @@ const WordInfoBubble = ({
   const baseForm = info?.base_form ? String(info.base_form).trim() : '';
   const showBaseFormHint = !results && matchedForm && baseForm && matchedForm !== baseForm;
   const resultList = Array.isArray(results) ? results.slice(0, 3) : [];
+  const dictionaryId = info?.voca_id ?? info?.vocaId ?? null;
+  const canAddToBook = status === 'found' && !results && !isGuest && dictionaryId != null && !!word;
+
+  const handleAddToBook = (e) => {
+    e.stopPropagation();
+    vibrate({ duration: 5 });
+    pushNewBottomSheet(PickPlotNewBottomSheet, {
+      origin: word,
+      meanings: meaningsOf(info),
+      examples: [],
+      dictionaryId,
+      reading: isJaWord ? (getReading(info) || null) : null,
+      language: info?.language,
+      resultMode: 'toast',
+      enrich: true,
+    });
+  };
 
   if (typeof document === 'undefined') return null;
+  if (bottomSheetStack.length > 0) return null;
 
   return createPortal(
     <motion.div
@@ -230,6 +262,22 @@ const WordInfoBubble = ({
               <p className="text-[13px] font-[500] leading-[1.45] text-layout-gray-500 dark:text-layout-gray-200 break-keep [overflow-wrap:anywhere]">
                 {meanings.join(', ')}
               </p>
+            )}
+            {canAddToBook && (
+              <button
+                type="button"
+                className="
+                  flex items-center gap-[4px] self-start
+                  mt-[4px] -ml-[2px] px-[8px] h-[26px] rounded-full
+                  bg-primary-main-100 dark:bg-[#3A3A3A]
+                  text-[12px] font-[700] tracking-[-0.02em] text-primary-main-600
+                  active:opacity-70
+                "
+                onClick={handleAddToBook}
+              >
+                <PlusCircle size={14} weight="bold" />
+                단어장에 추가
+              </button>
             )}
           </div>
         )}
