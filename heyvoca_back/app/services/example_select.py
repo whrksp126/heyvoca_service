@@ -286,6 +286,43 @@ def _easy_subset(candidates: list, question_type: str) -> list:
     return ranked[:_EASY_FALLBACK_K]
 
 
+# ── 실전 문장(QA 5차) ────────────────────────────────────────────────────
+# 농장 돌보기 끝 '실전 문장' 구간(문장 만들기·문장 뜻 맞추기)은 연습이 아니라 써먹기라 어려우면 안 된다.
+# θ 기반 목표 score(P≈0.8, 유형·작물 단계 보정 포함) **이하**인 예문만 후보로 삼고 그 안에서 짧은 것을
+# 우선한다(목표에 가까운 것을 고르던 일반 경로와 다름). 이하가 하나도 없으면 score 가 가장 낮은 것.
+# score 없는 예문(사용자 직접 입력)은 수준 이하로 본다.
+_PRACTICE_LEN_WEIGHT = 2.0
+
+
+def _choose_practice(candidates: list, item, question_type: str, ctx: SelectionContext,
+                     target_score: float) -> dict:
+    def ex_score(ex):
+        return (ex.get('meta') or {}).get('score')
+
+    at_level = [ex for ex in candidates if ex_score(ex) is None or float(ex_score(ex)) <= target_score]
+    if not at_level:
+        lowest = min(float(ex_score(ex)) for ex in candidates)
+        at_level = [ex for ex in candidates if float(ex_score(ex)) - lowest < _EASY_JITTER]
+
+    recent_for_word = ctx.recent_seen.get(item.user_voca_id) or {}
+
+    def penalty(ex):
+        meta = ex.get('meta') or {}
+        p = _recency_penalty(recent_for_word.get(ex.get('hash')), ctx.now)
+        p += _word_count(ex, question_type) * _PRACTICE_LEN_WEIGHT
+        ratio = _known_word_ratio(meta.get('words') or [], ctx.known_words)
+        if ratio is not None:
+            p -= ratio * _KNOWN_WEIGHT
+        return p
+
+    scored = [(penalty(ex), ex) for ex in at_level]
+    min_p = min(p for p, _ in scored)
+    best = [ex for p, ex in scored if p - min_p < _EASY_JITTER]
+    chosen = (ctx.rng or random).choice(best)
+    ctx.used_hashes.add(chosen.get('hash'))
+    return chosen
+
+
 def choose_example(item, question_type: str, ctx: SelectionContext) -> Optional[dict]:
     """item.example_pool에서 question_type에 맞는 예문 하나를 고른다.
 
@@ -322,7 +359,13 @@ def choose_example(item, question_type: str, ctx: SelectionContext) -> Optional[
         target_level = 1
     else:
         target_level = _target_level_for_item(item, ctx.user_level_id)
-    # θ 기반 목표는 일반 경로(빈칸·뜻 맞추기)만 — plant·문장 만들기는 위 '쉬운 예문 우선' 규칙이 정본.
+
+    # 실전 문장(문장 만들기·문장 뜻 맞추기) — 사용자 수준 이하·짧은 예문 우선(QA 5차 2026-10-25).
+    if not ctx.easy and (is_arrange or question_type in _MEANING_TYPES):
+        target_score = _target_score_for_item(item, question_type, ctx)
+        if target_score is not None:
+            return _choose_practice(candidates, item, question_type, ctx, target_score)
+    # θ 기반 목표(가까운 것)는 빈칸 경로만 — plant 는 '쉬운 예문 우선', 실전 문장은 위 _choose_practice.
     target_score = None if (ctx.easy or is_arrange) else _target_score_for_item(item, question_type, ctx)
     scored = [(_score(ex, item, question_type, ctx, target_level, target_score), ex) for ex in candidates]
     min_score = min(s for s, _ in scored)

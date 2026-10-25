@@ -267,3 +267,38 @@ class TestTieBreak:
         item = _item(example_pool=[_ex('a'), _ex('b')])
         chosen = choose_example(item, 'fillInTheBlank', _ctx(rng=random.Random(1)))
         assert chosen['hash'] in ('a', 'b')
+
+
+# ── 실전 문장(QA 5차): 수준 이하·짧은 예문 우선, 이하가 없으면 가장 쉬운 것 ──────────────
+
+def _arr_meta(score, words):
+    return {'score': score, 'level': 1, 'rare_count': 0, 'word_count': words}
+
+
+def _arr_puzzle(n):
+    return dict(USABLE_PUZZLE, tokens=['w'] * n)
+
+
+class TestPracticeSentence:
+    def test_prefers_short_example_at_or_below_target(self):
+        # θ=40, sentenceArrangePartial 목표 ≈ 40 − 13.9 − 0 −10(unlearned) ≈ 16
+        pool = [
+            _ex('hard', puzzle=_arr_puzzle(5), meta=_arr_meta(40, 5)),
+            _ex('easy_long', puzzle=_arr_puzzle(8), meta=_arr_meta(5, 8)),
+            _ex('easy_short', puzzle=_arr_puzzle(4), meta=_arr_meta(10, 4)),
+        ]
+        for seed in range(5):
+            ex = choose_example(_item(pool), 'sentenceArrangePartial', _ctx(theta=40.0, rng=random.Random(seed)))
+            assert ex['hash'] == 'easy_short'
+
+    def test_falls_back_to_easiest_when_none_below_target(self):
+        pool = [
+            _ex('b', puzzle=_arr_puzzle(4), meta=_arr_meta(60, 4)),
+            _ex('a', puzzle=_arr_puzzle(7), meta=_arr_meta(35, 7)),
+        ]
+        ex = choose_example(_item(pool), 'sentenceArrangePartial', _ctx(theta=10.0))
+        assert ex['hash'] == 'a'
+
+    def test_without_theta_keeps_easy_rule(self):
+        pool = [_ex('x', puzzle=_arr_puzzle(4), meta=_arr_meta(60, 4))]
+        assert choose_example(_item(pool), 'sentenceArrangePartial', _ctx())['hash'] == 'x'

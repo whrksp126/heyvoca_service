@@ -578,23 +578,38 @@ const TakeTest = () => {
     return out;
   };
 
+  // 문장 뜻 맞추기(sentenceTranslate)도 실전 문장 구간 문제다(QA 5차, 2026-10-25) — 서버가 일반 item 의
+  // suggested 유형을 바꿔 세션당 1~2개 끼워 주는데(composer._ensure_translate_quota), 그대로 두면 단어 문제
+  // 사이(초반 포함)에 섞였다. 그 문제를 일반 구간에서 빼 구간 맨 앞에 둔다. 그 단어의 유일한 일반 문제라
+  // isSentenceExtra 가 아니다 — /study/log 는 평소처럼 단어당 1회(tier·FSRS·XP 정상 반영), 구간 총량이
+  // 늘지 않게 그 수만큼 문장 만들기를 줄인다(최소 1).
   const composeSentencePhase = (questions, allWords, selectedWords) => {
+    const isTranslate = (q) => q.questionType === 'sentenceTranslate';
+    const translate = questions.filter(isTranslate);
+    const others = questions.filter((q) => !isTranslate(q));
+    const arrangeCap = (cap) => Math.max(1, cap - translate.length);
     const extra = buildSentenceArrangeQuestions(selectedWords);
     if (extra.length > 0) {
-      const base = questions.filter((q) => !isArrangeQuestionType(q.questionType));
-      return [...base, ...markPhaseStart(shuffleArray(extra).slice(0, 4), 'sentence')];
+      const base = others.filter((q) => !isArrangeQuestionType(q.questionType));
+      // 뜻 맞추기로 이미 나온 단어의 문장 만들기는 뒤로 미룬다(같은 단어 연속 회피). 뜻 맞추기가 먼저라
+      // 그 단어는 거기서 기록되고, 뒤 문장 만들기는 loggedVocaIdsRef 로 다시 기록되지 않는다.
+      const translateIds = new Set(translate.map((q) => String(q.vocaIndexId ?? q.id)));
+      const isTranslateWord = (q) => translateIds.has(String(q.vocaIndexId ?? q.id));
+      const arranged = [...shuffleArray(extra.filter((q) => !isTranslateWord(q))), ...shuffleArray(extra.filter(isTranslateWord))];
+      return [...base, ...markPhaseStart([...translate, ...arranged.slice(0, arrangeCap(4))], 'sentence')];
     }
-    const arrange = questions.filter((q) => isArrangeQuestionType(q.questionType));
-    if (arrange.length === 0) return questions;
-    const rest = questions.filter((q) => !isArrangeQuestionType(q.questionType));
+    const arrange = others.filter((q) => isArrangeQuestionType(q.questionType));
+    if (arrange.length === 0) return [...others, ...markPhaseStart(translate, 'sentence')];
+    const rest = others.filter((q) => !isArrangeQuestionType(q.questionType));
     const picked = shuffleArray(arrange);
-    const keep = picked.slice(0, SENTENCE_PHASE_COUNT);
-    const overflow = picked.slice(SENTENCE_PHASE_COUNT).map((q) => {
+    const keepCount = arrangeCap(SENTENCE_PHASE_COUNT);
+    const keep = picked.slice(0, keepCount);
+    const overflow = picked.slice(keepCount).map((q) => {
       const word = { ...q };
       ['arrange', 'questionType', 'isCorrect', 'userResultIndex', 'options', 'resultIndex'].forEach((k) => { delete word[k]; });
       return buildPlantMcq(word, allWords, 'multipleChoice');
     });
-    return [...shuffleArray([...rest, ...overflow]), ...markPhaseStart(keep, 'sentence')];
+    return [...shuffleArray([...rest, ...overflow]), ...markPhaseStart([...translate, ...keep], 'sentence')];
   };
 
   // ─── setupTestQuestions ─────────────────────────────────────────────────────
