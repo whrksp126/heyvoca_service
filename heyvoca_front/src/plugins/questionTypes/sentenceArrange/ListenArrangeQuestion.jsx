@@ -2,7 +2,6 @@ import { useState, useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
 
 import TtsSpeedPlayer from '../../../components/common/TtsSpeedPlayer';
-import TtsRipple from '../../../components/common/TtsRipple';
 import { feel } from '../../../lib/feel';
 import { getTextSound, stopCurrentSound, prefetchTextSound, stripHtmlTags } from '../../../utils/common';
 import { useStudyAdvanceGate } from '../../../hooks/useStudyAdvanceGate';
@@ -29,7 +28,6 @@ const ListenArrangeQuestion = ({ question, onComplete, onCardMatched, farmByWord
   const [isCorrect, setIsCorrect] = useState(null);
   const [isPerfect, setIsPerfect] = useState(false); // 한 번에 맞힘 → '완벽해요'
   const [isSpeaking, setIsSpeaking] = useState(false);
-  const [speakDuration, setSpeakDuration] = useState(null);
   const [speakingTarget, setSpeakingTarget] = useState(null); // 'normal' | 'slow' | null
 
   const startTimeRef = useRef(Date.now());
@@ -69,7 +67,6 @@ const ListenArrangeQuestion = ({ question, onComplete, onCardMatched, farmByWord
       advanceGate.ttsEnd();
     }
     setIsSpeaking(true);
-    setSpeakDuration(null);
     setSpeakingTarget(target);
     wordTtsActiveRef.current = true;
     advanceGate.ttsBegin();
@@ -81,7 +78,7 @@ const ListenArrangeQuestion = ({ question, onComplete, onCardMatched, farmByWord
         stopCurrentSound();
         await customPlay();
       } else {
-        await getTextSound(text, lang, (d) => { if (gen === speakGenRef.current) setSpeakDuration(d); }, rate);
+        await getTextSound(text, lang, undefined, rate);
       }
     } finally {
       if (gen === speakGenRef.current) {
@@ -194,13 +191,6 @@ const ListenArrangeQuestion = ({ question, onComplete, onCardMatched, farmByWord
                 speak(plainAnswer, answerLang, 'answer', 1);
               }}
             >
-              {answerPlaying && (
-                <TtsRipple
-                  size={70}
-                  duration={speakDuration}
-                  className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-[0] pointer-events-none"
-                />
-              )}
               <span className={`relative z-[1] block transition-colors duration-200 ${answerPlaying ? 'text-primary-main-600' : 'text-layout-gray-300'}`}>
                 <SpeakerArt size={22} playing={answerPlaying} />
               </span>

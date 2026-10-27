@@ -1,6 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
-import TtsRipple from '../../../components/common/TtsRipple';
 import SpeakerArt from '../../../components/common/SpeakerArt';
 import WordInfoBubble from '../../../components/common/WordInfoBubble';
 import { getWordInfoApi } from '../../../api/search';
@@ -96,7 +95,6 @@ const SentenceTranslateQuestion = ({ question, onComplete, onCardMatched, farmBy
   const [isCorrect, setIsCorrect] = useState(null);
   const [isPerfect, setIsPerfect] = useState(false);
   const [isSpeaking, setIsSpeaking] = useState(false);
-  const [speakDuration, setSpeakDuration] = useState(null);
   // 지금 재생 중인 게 예문 전체('shown')인지 탭한 단어('lookup')인지 — 스피커 맥동은 예문일 때만.
   const [speakingTarget, setSpeakingTarget] = useState(null);
   const [lookup, setLookup] = useState(null);
@@ -134,9 +132,8 @@ const SentenceTranslateQuestion = ({ question, onComplete, onCardMatched, farmBy
     const gen = ++speakGenRef.current;
     setIsSpeaking(true);
     setSpeakingTarget(target);
-    setSpeakDuration(null);
     try {
-      await getTextSound(text, lang, (d) => { if (gen === speakGenRef.current) setSpeakDuration(d); });
+      await getTextSound(text, lang);
     } finally {
       if (gen === speakGenRef.current) { setIsSpeaking(false); setSpeakingTarget(null); }
     }
@@ -245,7 +242,7 @@ const SentenceTranslateQuestion = ({ question, onComplete, onCardMatched, farmBy
   const parts = splitEmphasis(sentenceHtml, stripHtmlTags(sentence));
   const tokens = (ja ? tokenizeJa(parts, meaning.reading_tokens) : tokenizeEn(parts))
     ?? parts.map((p) => ({ type: 'text', text: p.text, hl: p.hl }));
-  const showRipple = isSpeaking && speakingTarget === 'shown';
+  const showSpeaking = isSpeaking && speakingTarget === 'shown';
 
   const renderToken = (tok, i) => {
     const key = `s-${i}`;
@@ -295,19 +292,12 @@ const SentenceTranslateQuestion = ({ question, onComplete, onCardMatched, farmBy
             className="relative flex-shrink-0 mt-[3px]"
             onClick={() => { feel('tap'); speak(); }}
           >
-            {showRipple && (
-              <TtsRipple
-                size={90}
-                duration={speakDuration}
-                className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-[0] pointer-events-none"
-              />
-            )}
             <motion.span
-              className={`relative z-[1] block transition-colors duration-200 ${showRipple ? 'text-primary-main-600' : 'text-layout-gray-300'}`}
-              animate={showRipple && !reducedMotion ? { scale: [1, 1.12, 1] } : { scale: 1 }}
-              transition={showRipple && !reducedMotion ? { duration: 0.6, repeat: Infinity, ease: 'easeInOut' } : {}}
+              className={`relative z-[1] block transition-colors duration-200 ${showSpeaking ? 'text-primary-main-600' : 'text-layout-gray-300'}`}
+              animate={showSpeaking && !reducedMotion ? { scale: [1, 1.12, 1] } : { scale: 1 }}
+              transition={showSpeaking && !reducedMotion ? { duration: 0.6, repeat: Infinity, ease: 'easeInOut' } : {}}
             >
-              <SpeakerArt size={22} playing={showRipple} />
+              <SpeakerArt size={22} playing={showSpeaking} />
             </motion.span>
           </motion.button>
           <p className={`text-[19px] font-[600] text-layout-black dark:text-layout-white ${ja ? 'leading-[1.8] break-normal' : 'leading-[1.6] break-keep'}`}>

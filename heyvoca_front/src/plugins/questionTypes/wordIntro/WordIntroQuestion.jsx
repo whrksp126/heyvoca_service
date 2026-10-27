@@ -68,7 +68,6 @@ const WordIntroQuestion = ({ question, onComplete }) => {
   const reducedMotion = useReducedMotion();
   const [playingItemId, setPlayingItemId] = useState(null);
   const [playingItemIndex, setPlayingItemIndex] = useState(null);
-  const [playDuration, setPlayDuration] = useState(null);
 
   // 자동 재생 취소 플래그 — 언마운트/개별 스피커 탭 시 true로 세워 시퀀스를 멈춘다.
   const cancelRef = useRef(false);
@@ -79,7 +78,6 @@ const WordIntroQuestion = ({ question, onComplete }) => {
     if (!text) return Promise.resolve(true);
     setPlayingItemId(itemId);
     setPlayingItemIndex(index);
-    setPlayDuration(null);
     return new Promise((resolve) => {
       let settled = false;
       let started = false; // 실제 재생이 시작됐는지(onMeta 호출 = 디코드/메타 로드 성공)
@@ -97,9 +95,8 @@ const WordIntroQuestion = ({ question, onComplete }) => {
       const maybeFinish = () => { if (audioDone && minDone) finish(); };
       resolveRef.current = forceSettle;
       minTimer = setTimeout(() => { minDone = true; maybeFinish(); }, MIN_LINE_DWELL_MS);
-      Promise.resolve(getTextSound(text, lang, (d) => {
+      Promise.resolve(getTextSound(text, lang, () => {
         started = true;
-        if (!cancelRef.current) setPlayDuration(d);
       })).then(
         () => { audioDone = true; maybeFinish(); },
         () => { audioDone = true; maybeFinish(); },
@@ -112,7 +109,6 @@ const WordIntroQuestion = ({ question, onComplete }) => {
     if (resolveRef.current) { resolveRef.current(); resolveRef.current = null; }
     setPlayingItemId(null);
     setPlayingItemIndex(null);
-    setPlayDuration(null);
   }, []);
 
   // 마운트 시 1회 자동 재생: 단어 → 뜻 → 예문1 원문 → 예문1 뜻 → 예문2 원문 → 예문2 뜻…
@@ -166,7 +162,6 @@ const WordIntroQuestion = ({ question, onComplete }) => {
       if (!cancelled()) {
         setPlayingItemId(null);
         setPlayingItemIndex(null);
-        setPlayDuration(null);
       }
     };
     run();
@@ -190,11 +185,9 @@ const WordIntroQuestion = ({ question, onComplete }) => {
     if (isSameLine) return; // 재생 중이던 라인을 다시 누르면 정지만 한다
     setPlayingItemId(itemId);
     setPlayingItemIndex(index);
-    setPlayDuration(null);
-    getTextSound(text, lang, (d) => setPlayDuration(d)).then(() => {
+    getTextSound(text, lang).then(() => {
       setPlayingItemId((prev) => (prev === itemId ? null : prev));
       setPlayingItemIndex((prev) => (prev === index ? null : prev));
-      setPlayDuration(null);
     });
   };
 
@@ -212,7 +205,6 @@ const WordIntroQuestion = ({ question, onComplete }) => {
           word={question}
           playingItemId={playingItemId}
           playingItemIndex={playingItemIndex}
-          playDuration={playDuration}
           reducedMotion={reducedMotion}
           onSpeakerClick={handleSpeakerClick}
           introMode

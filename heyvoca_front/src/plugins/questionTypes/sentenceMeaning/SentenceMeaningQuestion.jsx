@@ -3,7 +3,6 @@ import { motion, useReducedMotion } from 'framer-motion';
 import SpeakerArt from '../../../components/common/SpeakerArt';
 import { FarmResultBar } from '../../../components/farm/FarmStatusBar';
 import StudyTimingTag from '../../../components/farm/StudyTimingTag';
-import TtsRipple from '../../../components/common/TtsRipple';
 import LiftAboveBar from '../../../components/common/LiftAboveBar';
 import ResultMark from '../../../components/common/ResultMark';
 import FuriganaText from '../../../components/common/FuriganaText';
@@ -30,7 +29,6 @@ const SentenceMeaningQuestion = ({ question, onComplete, onCardMatched, farmByWo
   const [isAnswered, setIsAnswered] = useState(false);
   const [isCorrect, setIsCorrect] = useState(null);
   const [isSpeaking, setIsSpeaking] = useState(false);
-  const [speakDuration, setSpeakDuration] = useState(null);
   const startTimeRef = useRef(Date.now());
   const resumeReplayKey = useResumeReplayKey();
   const reducedMotion = useReducedMotion();
@@ -54,9 +52,8 @@ const SentenceMeaningQuestion = ({ question, onComplete, onCardMatched, farmByWo
     if (!text) return;
     const gen = ++speakGenRef.current;
     setIsSpeaking(true);
-    setSpeakDuration(null);
     try {
-      await getTextSound(text, lang, (d) => { if (gen === speakGenRef.current) setSpeakDuration(d); });
+      await getTextSound(text, lang);
     } finally {
       if (gen === speakGenRef.current) setIsSpeaking(false);
     }
@@ -133,13 +130,6 @@ const SentenceMeaningQuestion = ({ question, onComplete, onCardMatched, farmByWo
                 className="relative flex-shrink-0 mt-[6px]"
                 onClick={() => { feel('tap'); speakSentence(); }}
               >
-                {isSpeaking && (
-                  <TtsRipple
-                    size={90}
-                    duration={speakDuration}
-                    className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-[0] pointer-events-none"
-                  />
-                )}
                 <motion.span
                   className={`relative z-[1] transition-colors duration-200 ${isSpeaking ? 'text-primary-main-600' : 'text-layout-gray-300'}`}
                   animate={isSpeaking && !reducedMotion ? { scale: [1, 1.12, 1] } : { scale: 1 }}

@@ -17,7 +17,6 @@ import { ArrowCounterClockwise } from '@phosphor-icons/react';
 import ScriptNextButton from './ScriptNextButton';
 import { feel } from '../../lib/feel';
 import ResultMark from '../common/ResultMark';
-import TtsRipple from '../common/TtsRipple';
 import { gradeFreeWrite } from '../../utils/scriptWriteGrader';
 import { speakScriptItem, stopScriptSpeech } from '../../utils/scriptData';
 import SpeakerArt from '../common/SpeakerArt';
@@ -56,7 +55,6 @@ const FreeWriteBoard = ({ script, item, entry, caseVariant = null, replayKey, on
   const [result, setResult] = useState(null); // null | true | false
   const [showAnswer, setShowAnswer] = useState(false);
   const [speaking, setSpeaking] = useState(false);
-  const [duration, setDuration] = useState(null);
   const svgRef = useRef(null);
   const pointsRef = useRef([]);
   const strokesRef = useRef([]);
@@ -68,9 +66,8 @@ const FreeWriteBoard = ({ script, item, entry, caseVariant = null, replayKey, on
 
   const play = async () => {
     setSpeaking(true);
-    setDuration(null);
     try {
-      await speakScriptItem(script, item, setDuration, ownerRef.current);
+      await speakScriptItem(script, item, undefined, ownerRef.current);
     } finally {
       setSpeaking(false);
     }
@@ -238,11 +235,6 @@ const FreeWriteBoard = ({ script, item, entry, caseVariant = null, replayKey, on
             aria-label="소리 다시 듣기"
             className="absolute right-[12px] bottom-[12px] z-[3] flex items-center justify-center w-[48px] h-[48px] rounded-full bg-layout-white dark:bg-layout-black border border-border dark:border-border-dark"
           >
-            {speaking && (
-              <span aria-hidden className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                <TtsRipple size={64} duration={duration} />
-              </span>
-            )}
             <SpeakerArt size={28} playing={speaking} />
           </motion.button>
 

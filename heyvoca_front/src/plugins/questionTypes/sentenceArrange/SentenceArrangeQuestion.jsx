@@ -1,7 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 
-import TtsRipple from '../../../components/common/TtsRipple';
 import WordInfoBubble from '../../../components/common/WordInfoBubble';
 import { getWordInfoApi } from '../../../api/search';
 import { feel } from '../../../lib/feel';
@@ -30,7 +29,6 @@ const SentenceArrangeQuestion = ({ question, onComplete, onCardMatched, farmByWo
   const [isCorrect, setIsCorrect] = useState(null);
   const [isPerfect, setIsPerfect] = useState(false); // 한 번에 맞힘 → '완벽해요'
   const [isSpeaking, setIsSpeaking] = useState(false);
-  const [speakDuration, setSpeakDuration] = useState(null);
   const [speakingTarget, setSpeakingTarget] = useState(null); // 'shown' | 'answer' | null
   // 채점 직전 사용자가 배열한 조각 — "정답 문장"에서 틀린 위치의 정답 단어를 강조하는 데 쓴다.
   const [submittedTokens, setSubmittedTokens] = useState([]);
@@ -80,7 +78,6 @@ const SentenceArrangeQuestion = ({ question, onComplete, onCardMatched, farmByWo
       advanceGate.ttsEnd();
     }
     setIsSpeaking(true);
-    setSpeakDuration(null);
     setSpeakingTarget(target);
     if (target === 'answer') {
       wordTtsActiveRef.current = true;
@@ -89,7 +86,7 @@ const SentenceArrangeQuestion = ({ question, onComplete, onCardMatched, farmByWo
     const isSentence = target === 'shown' || target === 'answer';
     if (isSentence) isSentencePlayingRef.current = true;
     try {
-      await getTextSound(text, lang, (d) => { if (gen === speakGenRef.current) setSpeakDuration(d); });
+      await getTextSound(text, lang);
     } finally {
       if (gen === speakGenRef.current) setIsSpeaking(false);
       if (target === 'answer' && gen === speakGenRef.current) {
@@ -227,7 +224,7 @@ const SentenceArrangeQuestion = ({ question, onComplete, onCardMatched, farmByWo
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [answerLookup?.key]);
 
-  const showTtsRipple = isSpeaking && speakingTarget === 'shown';
+  const showSpeaking = isSpeaking && speakingTarget === 'shown';
 
   // 틀렸을 때만 정답 문장을 강조 표시(계약 3-1절 표시 규칙) — 맞았을 때는 사용자가 놓은
   // 조각이 이미 정답이므로 다시 보여줄 필요가 없다.
@@ -256,7 +253,7 @@ const SentenceArrangeQuestion = ({ question, onComplete, onCardMatched, farmByWo
       <div className="w-full mt-[16px] pt-[14px] border-t-[1px] border-layout-gray-200 dark:border-[#3A3A3A] relative">
       <span className="block mb-[2px] text-[11px] font-[700] leading-[1.7] text-layout-gray-300">정답 문장</span>
       <div className="flex items-start gap-[8px] w-full">
-        {/* 정답 문장 듣기 — 본문 바로 왼쪽, 첫 줄 높이에 맞춰 상단 정렬(재생 중 primary + 리플) */}
+        {/* 정답 문장 듣기 — 본문 바로 왼쪽, 첫 줄 높이에 맞춰 상단 정렬(재생 중 primary + 스피커 음파) */}
         <motion.button
           type="button"
           aria-label="정답 문장 듣기"
@@ -269,13 +266,6 @@ const SentenceArrangeQuestion = ({ question, onComplete, onCardMatched, farmByWo
             if (plain) speak(plain, answerLang, 'answer');
           }}
         >
-          {isSpeaking && speakingTarget === 'answer' && (
-            <TtsRipple
-              size={70}
-              duration={speakDuration}
-              className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-[0] pointer-events-none"
-            />
-          )}
           <span className={`relative z-[1] block transition-colors duration-200 ${isSpeaking && speakingTarget === 'answer' ? 'text-primary-main-600' : 'text-layout-gray-300'}`}>
             <SpeakerArt size={22} playing={isSpeaking && speakingTarget === 'answer'} />
           </span>
@@ -379,19 +369,12 @@ const SentenceArrangeQuestion = ({ question, onComplete, onCardMatched, farmByWo
             className="relative flex-shrink-0 mt-[3px]"
             onClick={handleCardClick}
           >
-            {showTtsRipple && (
-              <TtsRipple
-                size={90}
-                duration={speakDuration}
-                className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-[0] pointer-events-none"
-              />
-            )}
             <motion.span
-              className={`relative z-[1] transition-colors duration-200 ${showTtsRipple ? 'text-primary-main-600' : 'text-layout-gray-300'}`}
-              animate={showTtsRipple && !reducedMotion ? { scale: [1, 1.12, 1] } : { scale: 1 }}
-              transition={showTtsRipple && !reducedMotion ? { duration: 0.6, repeat: Infinity, ease: 'easeInOut' } : {}}
+              className={`relative z-[1] transition-colors duration-200 ${showSpeaking ? 'text-primary-main-600' : 'text-layout-gray-300'}`}
+              animate={showSpeaking && !reducedMotion ? { scale: [1, 1.12, 1] } : { scale: 1 }}
+              transition={showSpeaking && !reducedMotion ? { duration: 0.6, repeat: Infinity, ease: 'easeInOut' } : {}}
             >
-              <SpeakerArt size={22} playing={showTtsRipple} />
+              <SpeakerArt size={22} playing={showSpeaking} />
             </motion.span>
           </motion.button>
           <p className="text-[19px] font-[600] leading-[1.6] text-layout-black dark:text-layout-white break-keep">

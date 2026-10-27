@@ -3,7 +3,6 @@ import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { Check, X, CheckCircle, XCircle } from '@phosphor-icons/react';
 import { FarmResultBar } from '../../../components/farm/FarmStatusBar';
 import StudyTimingTag from '../../../components/farm/StudyTimingTag';
-import TtsRipple from '../../../components/common/TtsRipple';
 import LiftAboveBar from '../../../components/common/LiftAboveBar';
 import WordInfoBubble from '../../../components/common/WordInfoBubble';
 import ResultMark from '../../../components/common/ResultMark';
@@ -63,7 +62,6 @@ const FillInTheBlankTypingQuestion = ({ question, onComplete, onCardMatched, far
   const [isPerfect, setIsPerfect] = useState(false); // 한 번에(오타 없이) 맞힘 → '완벽해요'
   const [gradeInfo, setGradeInfo] = useState(null); // { typo, variant, reason }
   const [isSpeaking, setIsSpeaking] = useState(false);
-  const [speakDuration, setSpeakDuration] = useState(null);
   const [speakingTarget, setSpeakingTarget] = useState(null); // 'shown' | 'answer' | 'lookup' | null
   /*
     단어 말풍선(사전 조회) 상태 — fillInTheBlank와 동일 패턴. 아래 카드(영어/일본어 빈칸 예문)
@@ -122,14 +120,13 @@ const FillInTheBlankTypingQuestion = ({ question, onComplete, onCardMatched, far
       advanceGate.ttsEnd();
     }
     setIsSpeaking(true);
-    setSpeakDuration(null);
     setSpeakingTarget(target);
     if (target === 'answer') {
       wordTtsActiveRef.current = true;
       advanceGate.ttsBegin();
     }
     try {
-      await getTextSound(text, lang, (d) => { if (gen === speakGenRef.current) setSpeakDuration(d); });
+      await getTextSound(text, lang);
     } finally {
       if (gen === speakGenRef.current) setIsSpeaking(false);
       if (target === 'answer' && gen === speakGenRef.current) {
@@ -350,7 +347,7 @@ const FillInTheBlankTypingQuestion = ({ question, onComplete, onCardMatched, far
     nextRef.current?.();
   };
 
-  const showTtsRipple = isSpeaking && speakingTarget === 'shown';
+  const showSpeaking = isSpeaking && speakingTarget === 'shown';
 
   /*
     채점 결과 표현(2026-10-07 QA) — 오답은 어떤 갈래든 똑같이 "틀렸다"가 먼저 보인다.
@@ -418,19 +415,12 @@ const FillInTheBlankTypingQuestion = ({ question, onComplete, onCardMatched, far
             className="relative flex-shrink-0 mt-[3px]"
             onClick={handleCardClick}
           >
-            {showTtsRipple && (
-              <TtsRipple
-                size={90}
-                duration={speakDuration}
-                className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-[0] pointer-events-none"
-              />
-            )}
             <motion.span
-              className={`relative z-[1] transition-colors duration-200 ${showTtsRipple ? 'text-primary-main-600' : 'text-layout-gray-300'}`}
-              animate={showTtsRipple && !reducedMotion ? { scale: [1, 1.12, 1] } : { scale: 1 }}
-              transition={showTtsRipple && !reducedMotion ? { duration: 0.6, repeat: Infinity, ease: 'easeInOut' } : {}}
+              className={`relative z-[1] transition-colors duration-200 ${showSpeaking ? 'text-primary-main-600' : 'text-layout-gray-300'}`}
+              animate={showSpeaking && !reducedMotion ? { scale: [1, 1.12, 1] } : { scale: 1 }}
+              transition={showSpeaking && !reducedMotion ? { duration: 0.6, repeat: Infinity, ease: 'easeInOut' } : {}}
             >
-              <SpeakerArt size={22} playing={showTtsRipple} />
+              <SpeakerArt size={22} playing={showSpeaking} />
             </motion.span>
           </motion.button>
           <p className="text-[19px] font-[600] leading-[1.6] text-layout-black dark:text-layout-white break-keep">

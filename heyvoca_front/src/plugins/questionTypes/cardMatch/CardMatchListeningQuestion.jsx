@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 import { getTextSound } from '../../../utils/common';
 import { feel } from '../../../lib/feel';
-import TtsRipple from '../../../components/common/TtsRipple';
+import CardSpeakerButton from '../../../components/common/CardSpeakerButton';
 import LiftAboveBar from '../../../components/common/LiftAboveBar';
 import MemoryStateChangeBadge, {
   MEMORY_STATE_RANK as STATE_RANK,
@@ -77,7 +77,6 @@ const CardMatchListeningQuestion = ({ question, testType, onComplete, onCardMatc
   const [wrongFlashRightWordIds, setWrongFlashRightWordIds] = useState(new Set());
   const [animatingWordIds, setAnimatingWordIds] = useState(new Set());
   const [speakingWordId, setSpeakingWordId] = useState(null);
-  const [speakingDuration, setSpeakingDuration] = useState(null);
   const [wordResolvedStates, setWordResolvedStates] = useState({});
   // 글자 듣기 카드 맞추기(question.script) — 마지막 카드 채점 후 자동 진행 대신 "다음" 버튼(2026-10-24 이슈 #15)
   const [scriptNext, setScriptNext] = useState(null);
@@ -244,25 +243,29 @@ const CardMatchListeningQuestion = ({ question, testType, onComplete, onCardMatc
     }
   };
 
-  const handleLeftClick = (index) => {
-    const word = leftWords[index];
-    if (matchedWordIds.has(word.id) || failedWordIds.has(word.id) || animatingWordIds.has(word.id)) return;
-
+  // 단어(글자) 발음 — 채점 전엔 카드 탭(짝 선택과 함께), 채점 후엔 오른쪽 아래 스피커 버튼으로 재생.
+  const speakWord = (word) => {
     const wordId = word.id;
     setSpeakingWordId(wordId);
-    setSpeakingDuration(null);
     // 단어를 읽는 중에는 세트를 넘기지 않는다(끝 + 0.2초) — 다른 유형과 같은 규칙.
     const gen = ++speakGenRef.current;
     advanceGate.ttsBegin();
     // 글자 듣기 카드 맞추기(scriptListenMatch, 2026-10) — 글자 한 개 음성은 장음 보정이 필요해
     // 글자 전용 재생기(scriptSpokenText)를 쓴다.
     const speakP = question.script
-      ? speakScriptItem(question.script, word.item, setSpeakingDuration)
-      : getTextSound(word.origin, wordLang(word, wordLang(question)), setSpeakingDuration);
+      ? speakScriptItem(question.script, word.item)
+      : getTextSound(word.origin, wordLang(word, wordLang(question)));
     speakP.finally(() => {
       setSpeakingWordId(prev => prev === wordId ? null : prev);
       if (gen === speakGenRef.current) advanceGate.ttsEnd();
     });
+  };
+
+  const handleLeftClick = (index) => {
+    const word = leftWords[index];
+    if (matchedWordIds.has(word.id) || failedWordIds.has(word.id) || animatingWordIds.has(word.id)) return;
+
+    speakWord(word);
 
     if (selectedRight !== null) {
       checkMatch(index, selectedRight);
@@ -361,8 +364,8 @@ const CardMatchListeningQuestion = ({ question, testType, onComplete, onCardMatc
               테두리도 1px 을 늘 깔아 둔다(평소엔 투명) — 선택·정오답 깜빡임에서만 border-[1px] 이
               붙던 시절엔 그 순간 카드가 2px 커졌다(flex-basis 0 이어도 border-box 최소치는 테두리 포함).
             */
+            <div key={word.id} className="relative flex flex-col flex-1 min-h-0">
             <motion.button
-              key={word.id}
               data-lift-card=""
               className={`
                 relative overflow-hidden
@@ -411,13 +414,7 @@ const CardMatchListeningQuestion = ({ question, testType, onComplete, onCardMatc
                 />
               ) : (
                 <div className="relative flex items-center justify-center">
-                  {isSpeaking && <TtsRipple size={62} duration={speakingDuration} />}
-                  <motion.div
-                    animate={isSpeaking ? { scale: [1, 1.12, 1] } : { scale: 1 }}
-                    transition={isSpeaking ? { duration: 0.6, repeat: Infinity, ease: "easeInOut" } : {}}
-                  >
-                    <SpeakerArt size={32} playing={isSpeaking} />
-                  </motion.div>
+                  <SpeakerArt size={32} playing={isSpeaking} />
                 </div>
               )}
               </LiftAboveBar>
@@ -426,16 +423,25 @@ const CardMatchListeningQuestion = ({ question, testType, onComplete, onCardMatc
               {/* 글자는 작물·성장 단계를 보이지 않는다(2026-10-24 이슈 #15) */}
               <FarmResultBar
                 compact
+                className="absolute bottom-[8px] left-[8px] right-[44px] z-[2]"
                 farm={question.script ? null : (farmByWordId?.[word.id] ?? null)}
                 replayKey={`${word.id}-${resumeReplayKey}`}
                 onAnimStart={() => handleFarmStart(word.id)}
                 onSettled={() => handleFarmSettled(word.id)}
               />
 
-              {/* 하단 중앙 - 복습 예정일 (채점 후)
-                  농장 상태 바가 같은 자리에서 다음 복습일까지 말하므로 그때는 숨긴다 */}
-              
             </motion.button>
+            {/* 채점 후: 오른쪽 아래 고정 스피커로 다시 듣기(카드는 disabled) — 일반 카드 맞추기와 같은 자리.
+                짝 선택 버튼 안에 버튼을 넣을 수 없어 형제로 겹쳐 둔다. */}
+            {showText && (
+              <CardSpeakerButton
+                compact
+                playing={isSpeaking}
+                onPress={() => speakWord(word)}
+                className="absolute bottom-[9px] right-[8px] z-[3]"
+              />
+            )}
+            </div>
           );
         })}
       </div>

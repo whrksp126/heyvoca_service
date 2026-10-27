@@ -144,8 +144,6 @@ const StudyMain = ({ words }) => {
   // 의미·예문처럼 한 항목에 여러 라인이 있을 때 현재 재생 중인 라인의 인덱스.
   // word처럼 단일 라인 항목은 null.
   const [playingItemIndex, setPlayingItemIndex] = useState(null);
-  // 지금 재생 중인 라인의 실제 오디오 길이(초) — 스피커 리플(TtsRipple)을 재생 길이에 1:1로 맞춘다.
-  const [playDuration, setPlayDuration] = useState(null);
   const [revealedMap, setRevealedMap] = useState({}); // { [cardIdx]: Set<itemId> }
   const [settings, setSettings] = useState(DEFAULT_SETTINGS);
 
@@ -230,7 +228,6 @@ const StudyMain = ({ words }) => {
       setIsPlaying(playing);
       setPlayingItemId(playing ? (d.itemId ?? null) : null);
       setPlayingItemIndex(playing ? (d.itemIndex ?? null) : null);
-      setPlayDuration(null);
     });
     // 백그라운드에서 돌아오면 지금 위치를 다시 묻는다(그동안 온 이벤트가 밀렸을 수 있다)
     const onVisible = () => {
@@ -274,7 +271,6 @@ const StudyMain = ({ words }) => {
     }
     setPlayingItemId(null);
     setPlayingItemIndex(null);
-    setPlayDuration(null);
   }, []);
 
   // 자동 재생 — 현재 카드의 playbackOrder 순서대로 TTS 재생
@@ -287,7 +283,6 @@ const StudyMain = ({ words }) => {
       if (!text) return;
       setPlayingItemId(itemId);
       setPlayingItemIndex(index);
-      setPlayDuration(null);
       await new Promise(resolve => {
         let settled = false, audioDone = false, minDone = false, minTimer = null;
         const finish = () => {
@@ -306,9 +301,7 @@ const StudyMain = ({ words }) => {
         const maybeFinish = () => { if (audioDone && minDone) finish(); };
         playbackResolveRef.current = forceSettle;
         minTimer = setTimeout(() => { minDone = true; maybeFinish(); }, MIN_LINE_DWELL_MS);
-        Promise.resolve(getTextSound(text, lang, (d) => {
-          if (!playbackCancelRef.current) setPlayDuration(d);
-        })).then(
+        Promise.resolve(getTextSound(text, lang)).then(
           () => { audioDone = true; maybeFinish(); },
           () => { audioDone = true; maybeFinish(); },
         );
@@ -335,7 +328,6 @@ const StudyMain = ({ words }) => {
 
       setPlayingItemId(null);
       setPlayingItemIndex(null);
-      setPlayDuration(null);
 
       if (repeatModeRef.current) {
         // 반복 재생 — 카드 이동 없이 같은 카드를 이어서 다시 읽는다.
@@ -427,11 +419,9 @@ const StudyMain = ({ words }) => {
       stopCurrentSound();
       setPlayingItemId(itemId);
       setPlayingItemIndex(index);
-      setPlayDuration(null);
-      getTextSound(text, lang, (d) => setPlayDuration(d)).then(() => {
+      getTextSound(text, lang).then(() => {
         setPlayingItemId(prev => prev === itemId ? null : prev);
         setPlayingItemIndex(prev => prev === index ? null : prev);
-        setPlayDuration(null);
       });
     }
   }, [playingItemId, playingItemIndex, stopPlayback, sendNativeControl]);
@@ -700,7 +690,6 @@ const StudyMain = ({ words }) => {
               word={word}
               playingItemId={playingItemId}
               playingItemIndex={playingItemIndex}
-              playDuration={playDuration}
               reducedMotion={reducedMotion}
               onSpeakerClick={handleSpeakerClick}
               isVisible={isVisible}

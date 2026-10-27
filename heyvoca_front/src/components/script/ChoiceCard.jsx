@@ -23,7 +23,6 @@ import { motion } from 'framer-motion';
 
 import { feel } from '../../lib/feel';
 import ResultMark from '../common/ResultMark';
-import TtsRipple from '../common/TtsRipple';
 import LiftAboveBar from '../common/LiftAboveBar';
 import { FarmResultBar } from '../farm/FarmStatusBar';
 import { optionMainSub } from '../../utils/scriptQuestions';
@@ -49,28 +48,26 @@ const ChoiceCard = ({
     : speakScriptItem(script, item, onMeta, ownerRef.current));
   useEffect(() => () => stopScriptSpeech(ownerRef.current), []);
   const [speaking, setSpeaking] = useState(false);
-  const [duration, setDuration] = useState(null);
   // 재생 중복 가드 — 듣기 자동재생(마운트 시)·사용자 탭·채점 후 정답 재생이 모두 같은
   // playingRef를 공유한다(순서상 겹칠 일은 없지만 자동 트리거끼리 아주 짧은 간격으로
   // 겹치면 카드 효과가 꺼졌다 켜졌다 반복해 보였다 — 2026-09-29 QA 4차).
   const playingRef = useRef(false);
 
-  // 카드 재생(스피커 활성·TtsRipple 파동·펄스 등 카드 효과 포함) — "사용자가 카드를 눌렀을
+  // 카드 재생(스피커 활성·펄스 등 카드 효과 포함) — "사용자가 카드를 눌렀을
   // 때"와 "문제 등장 자동재생 때"만 쓴다(2026-09-29 QA 5차).
   const playCard = async () => {
     feel('tap');
     playingRef.current = true;
     setSpeaking(true);
-    setDuration(null);
     try {
-      await speak(setDuration);
+      await speak();
     } finally {
       playingRef.current = false;
       setSpeaking(false);
     }
   };
 
-  // 채점 후 정답 발음 재생 — 카드 효과(스피커 활성·리플·펄스)는 전혀 켜지 않고 소리만
+  // 채점 후 정답 발음 재생 — 카드 효과(스피커 활성·펄스)는 전혀 켜지 않고 소리만
   // 낸다(2026-09-29 QA 5차: 채점 후에도 카드가 다시 "재생 중"처럼 보여 위 문제 카드를
   // 다시 누르는 것처럼 혼동됐다는 피드백 — 정답 확인은 아래 선택지의 초록 강조로 충분하다).
   const playSilent = async () => {
@@ -125,11 +122,6 @@ const ChoiceCard = ({
           cursor-pointer
         "
       >
-        {isListen && speaking && (
-          <div aria-hidden className="absolute inset-0 pointer-events-none flex items-center justify-center">
-            <TtsRipple size={110} duration={duration} />
-          </div>
-        )}
         <LiftAboveBar active={!!farm} topReserve={28} className="relative z-[1] w-full flex justify-center">
         {isListen && answered ? (
           // 채점 후에는 카드 맞추기처럼 스피커 대신 정답(글자·단어)과 발음을 보여준다(2026-10-24 이슈 #15 2차).

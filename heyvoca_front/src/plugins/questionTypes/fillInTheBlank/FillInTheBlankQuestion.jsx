@@ -3,7 +3,6 @@ import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 
 import { FarmResultBar } from '../../../components/farm/FarmStatusBar';
 import StudyTimingTag from '../../../components/farm/StudyTimingTag';
-import TtsRipple from '../../../components/common/TtsRipple';
 import LiftAboveBar from '../../../components/common/LiftAboveBar';
 import WordInfoBubble from '../../../components/common/WordInfoBubble';
 import ResultMark from '../../../components/common/ResultMark';
@@ -124,8 +123,6 @@ const FillInTheBlankQuestion = ({ question, onComplete, onCardMatched, farmByWor
   const [isAnswered, setIsAnswered] = useState(false);
   const [isCorrect, setIsCorrect] = useState(null);
   const [isSpeaking, setIsSpeaking] = useState(false);
-  // 재생 길이(초) — TtsRipple을 실제 재생 시간에 동기화(Main.jsx의 speakDuration과 동일한 용도).
-  const [speakDuration, setSpeakDuration] = useState(null);
   // 지금 재생 중인 게 "보여 주는 예문"(shown)인지 "탭한 선택지"(word)인지 "단어 조회"(lookup)인지 —
   // 사지선다 reverseMultipleChoice의 speakingTarget('meaning'/'word')과 같은 역할.
   const [speakingTarget, setSpeakingTarget] = useState(null); // 'shown' | 'word' | 'lookup' | null
@@ -206,7 +203,6 @@ const FillInTheBlankQuestion = ({ question, onComplete, onCardMatched, farmByWor
       advanceGate.ttsEnd();
     }
     setIsSpeaking(true);
-    setSpeakDuration(null);
     setSpeakingTarget(target);
     // 'word'(탭한 선택지)만 전환을 붙잡는다 — 'lookup'(예문 단어 탭)은 전환 대기와 무관하다.
     if (target === 'word') {
@@ -214,7 +210,7 @@ const FillInTheBlankQuestion = ({ question, onComplete, onCardMatched, farmByWor
       advanceGate.ttsBegin();
     }
     try {
-      await getTextSound(text, lang, (d) => { if (gen === speakGenRef.current) setSpeakDuration(d); });
+      await getTextSound(text, lang);
     } finally {
       if (gen === speakGenRef.current) setIsSpeaking(false);
       // 정상 종료·에러(getTextSound reject) 모두 여기로 온다 — 이 재생이 여전히 최신(세대 일치)
@@ -414,8 +410,8 @@ const FillInTheBlankQuestion = ({ question, onComplete, onCardMatched, farmByWor
     speakGenRef.current += 1; // 언마운트 뒤 늦게 끝나는 재생이 상태를 건드리지 않게(게이트는 훅이 스스로 정리)
   }, []);
 
-  // 위 카드(예문) TtsRipple 노출 — 사지선다 카드와 같은 자리, "보여 주는 예문"을 읽는 동안만.
-  const showTtsRipple = isSpeaking && speakingTarget === 'shown';
+  // 위 카드(예문) 스피커 재생 표시 — 사지선다 카드와 같은 자리, "보여 주는 예문"을 읽는 동안만.
+  const showSpeaking = isSpeaking && speakingTarget === 'shown';
 
   /*
     위 카드(한국어 예문) 어절 탭 렌더 — 강조 마커(hl) 색은 그대로 유지하면서 어절 단위로
@@ -473,8 +469,7 @@ const FillInTheBlankQuestion = ({ question, onComplete, onCardMatched, farmByWor
         style={{ willChange: 'transform, opacity' }}
       >
         <div className="relative z-[1] flex items-start gap-[12px]">
-          {/* 스피커 아이콘 — 텍스트 왼쪽. 평소엔 회색, 읽는 동안 primary + 맥동.
-              ripple 은 이 아이콘과 같은 앵커(relative span)에 겹쳐 그려 파동 중심이 아이콘과 일치하게 한다. */}
+          {/* 스피커 아이콘 — 텍스트 왼쪽. 평소엔 회색, 읽는 동안 primary + 맥동(SpeakerArt 음파). */}
           <motion.button
             type="button"
             aria-label="예문 듣기"
@@ -483,19 +478,12 @@ const FillInTheBlankQuestion = ({ question, onComplete, onCardMatched, farmByWor
             className="relative flex-shrink-0 mt-[3px]"
             onClick={handleCardClick}
           >
-            {showTtsRipple && (
-              <TtsRipple
-                size={90}
-                duration={speakDuration}
-                className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-[0] pointer-events-none"
-              />
-            )}
             <motion.span
-              className={`relative z-[1] transition-colors duration-200 ${showTtsRipple ? 'text-primary-main-600' : 'text-layout-gray-300'}`}
-              animate={showTtsRipple && !reducedMotion ? { scale: [1, 1.12, 1] } : { scale: 1 }}
-              transition={showTtsRipple && !reducedMotion ? { duration: 0.6, repeat: Infinity, ease: 'easeInOut' } : {}}
+              className={`relative z-[1] transition-colors duration-200 ${showSpeaking ? 'text-primary-main-600' : 'text-layout-gray-300'}`}
+              animate={showSpeaking && !reducedMotion ? { scale: [1, 1.12, 1] } : { scale: 1 }}
+              transition={showSpeaking && !reducedMotion ? { duration: 0.6, repeat: Infinity, ease: 'easeInOut' } : {}}
             >
-              <SpeakerArt size={22} playing={showTtsRipple} />
+              <SpeakerArt size={22} playing={showSpeaking} />
             </motion.span>
           </motion.button>
           <p className="text-[19px] font-[600] leading-[1.6] text-layout-black dark:text-layout-white break-keep">

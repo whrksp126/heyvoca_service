@@ -2,7 +2,6 @@ import React from 'react';
 import { motion } from 'framer-motion';
 
 import CropImage from '../farm/CropImage';
-import TtsRipple from '../common/TtsRipple';
 import ReadingLine from '../common/ReadingLine';
 import FuriganaText from '../common/FuriganaText';
 import { wordLang, isJa } from '../../utils/lang';
@@ -42,12 +41,9 @@ const meaningParts = (item) => {
   return { text: item ?? '', pos: null };
 };
 
-// 스피커 버튼 — 재생 중일 때만 TtsRipple(실제 재생 길이에 맞춘 파동) + 아이콘 펄스.
-export const SpeakerButton = ({ active, duration, reducedMotion, onClick, size = 16, className = '' }) => (
+// 스피커 버튼 — 재생 중일 때만 SpeakerArt 음파 출렁임 + 아이콘 펄스.
+export const SpeakerButton = ({ active, reducedMotion, onClick, size = 16, className = '' }) => (
   <span className={`relative z-[1] flex-shrink-0 flex items-center justify-center ${className}`}>
-    {active && !reducedMotion && (
-      <TtsRipple size={size * 2.6} duration={duration} className="z-[0]" />
-    )}
     <motion.button
       onClick={onClick}
       className="relative z-[1] py-[3px]"
@@ -128,7 +124,7 @@ export const buildDictMeaningView = (word) => {
   return { groups: groups.filter((g) => g.items.length > 0), lines };
 };
 
-const DictDetail = ({ detail, view, isPlayingLine, playDuration, reducedMotion, onSpeakerClick }) => {
+const DictDetail = ({ detail, view, isPlayingLine, reducedMotion, onSpeakerClick }) => {
   if (!detail) return null;
   const { groups } = view;
   const forms = VERB_FORM_LABELS.filter(([k]) => detail.verb_forms?.[k]);
@@ -157,7 +153,6 @@ const DictDetail = ({ detail, view, isPlayingLine, playDuration, reducedMotion, 
                 {g.lineIndex != null && (
                   <SpeakerButton
                     active={active}
-                    duration={playDuration}
                     reducedMotion={reducedMotion}
                     onClick={() => onSpeakerClick('meanings', g.lineIndex, view.lines[g.lineIndex], 'ko')}
                   />
@@ -188,7 +183,6 @@ const WordMeetCard = ({
   word,
   playingItemId,
   playingItemIndex,
-  playDuration,
   reducedMotion,
   onSpeakerClick,
   isVisible = defaultIsVisible,
@@ -233,7 +227,6 @@ const WordMeetCard = ({
               </div>
               <SpeakerButton
                 active={isPlayingLine('word')}
-                duration={playDuration}
                 reducedMotion={reducedMotion}
                 onClick={() => onSpeakerClick('word', null, word.origin, wordLang(word))}
                 className="mt-[3px]"
@@ -261,7 +254,6 @@ const WordMeetCard = ({
                   </span>
                   <SpeakerButton
                     active={isActive}
-                    duration={playDuration}
                     reducedMotion={reducedMotion}
                     onClick={() => onSpeakerClick('meanings', idx, meaningText, 'ko')}
                   />
@@ -278,7 +270,6 @@ const WordMeetCard = ({
           detail={word.dictDetail}
           view={dictView}
           isPlayingLine={isPlayingLine}
-          playDuration={playDuration}
           reducedMotion={reducedMotion}
           onSpeakerClick={onSpeakerClick}
         />
@@ -317,7 +308,6 @@ const WordMeetCard = ({
                       )}
                       <SpeakerButton
                         active={isOriginActive}
-                        duration={playDuration}
                         reducedMotion={reducedMotion}
                         onClick={() => onSpeakerClick('exampleSentences', idx, stripTags(exOrigin), wordLang(word))}
                         className="mt-[2px]"
@@ -337,7 +327,6 @@ const WordMeetCard = ({
                       </span>
                       <SpeakerButton
                         active={isMeaningActive}
-                        duration={playDuration}
                         reducedMotion={reducedMotion}
                         onClick={() => onSpeakerClick('exampleMeanings', idx, stripTags(exMeaning), 'ko')}
                         className="mt-[2px]"

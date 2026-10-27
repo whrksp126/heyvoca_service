@@ -10,7 +10,6 @@ import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 import { ProblemDataNewBottomSheet } from '../newBottomSheet/ProblemDataNewBottomSheet';
 import SkipListeningNewBottomSheet from '../newBottomSheet/SkipListeningNewBottomSheet';
 import { isListeningType, isListeningSkipActive, activateListeningSkip } from '../../utils/listeningSkip';
-import TtsRipple from '../common/TtsRipple';
 import LiftAboveBar from '../common/LiftAboveBar';
 import MemorizationStatus from "../common/MemorizationStatus";
 import MemoryStateChangeBadge, {
@@ -45,6 +44,7 @@ import ResultMark from '../common/ResultMark';
 import { computeStudyProgress } from '../../utils/studyProgress';
 import { SLIDE_VARIANTS, SLIDE_TRANSITION, CARD_ENTER_INITIAL, CARD_ENTER_ANIMATE, CARD_ENTER_TRANSITION } from '../../utils/studySlideMotion';
 import SpeakerArt from '../common/SpeakerArt';
+import CardSpeakerButton from '../common/CardSpeakerButton';
 
 
 // 백엔드 memory state 키(short/medium/long) → 프론트 키(leaf/plant/carrot) 정규화
@@ -277,15 +277,14 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
   const [isStay, setIsStay] = useState(false);
   const [isFetching, setIsFetching] = useState(false);
   const [isSpeaking, setIsSpeaking] = useState(false);
-  const [speakDuration, setSpeakDuration] = useState(null);
   // reverseMultipleChoice(뜻→단어) 전용 — 지금 재생 중인 게 "뜻(카드)"인지 "단어(정답 선택지)"인지.
   // 채점 전엔 뜻이, 채점 직후엔 정답 단어가 재생되는데 둘 다 isSpeaking=true라 이것만으로는
-  // 구분이 안 돼 리플(카드)/스피커 배지(선택지) 중 하나만 켜야 하는 자리에서 헷갈렸다.
+  // 구분이 안 돼 카드 스피커/스피커 배지(선택지) 중 하나만 켜야 하는 자리에서 헷갈렸다.
   // 다른 유형(multipleChoice/Listening)은 이 값을 쓰지 않는다(항상 null로 둬도 무방).
   const [speakingTarget, setSpeakingTarget] = useState(null); // 'meaning' | 'word' | null
   // TTS 재생 "세대" 가드. getTextSound는 새 재생 시작 시 이전 재생을 강제 resolve하므로,
   // 등장 자동재생이 진행 중일 때 카드를 클릭하면 중단된 이전 재생의 finally가 isSpeaking을
-  // false로 덮어써 음파(TtsRipple)가 사라진다. 각 재생에 세대 번호를 부여해, finally/onMeta는
+  // false로 덮어써 스피커 재생 표시가 꺼진다. 각 재생에 세대 번호를 부여해, finally/onMeta는
   // "자신이 최신 재생일 때만" 상태를 갱신하도록 한다.
   const speakGenRef = useRef(0);
   // 채점 → 다음 슬라이드 전환 게이트(모든 유형 공통 규칙, utils/studyTiming.js).
@@ -294,13 +293,12 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
   const speakText = async (text, lang = wordLang(null), target = null) => {
     const gen = ++speakGenRef.current;
     setIsSpeaking(true);
-    setSpeakDuration(null);
     setSpeakingTarget(target);
     // 읽는 중에는 넘기지 않는다(끝 + 200ms). 새 재생이 이전 재생을 끊으면 이전 finally 는
     // 세대가 달라 ttsEnd 를 부르지 않는다 — 새 재생이 끝날 때 한 번만 풀린다.
     advanceGate.ttsBegin();
     try {
-      await getTextSound(text, lang, (d) => { if (gen === speakGenRef.current) setSpeakDuration(d); });
+      await getTextSound(text, lang);
     } finally {
       if (gen === speakGenRef.current) {
         setIsSpeaking(false);
@@ -1364,7 +1362,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
 
     // reverseMultipleChoice(뜻→단어): 정답 공개 후 단어 발음 재생 — 뜻 화면에서는
     // 자동 재생하지 않았으므로(위 progressIndex useEffect), 여기서 한 번 들려준다.
-    // target='word' — 카드(뜻) 리플이 아니라 정답 선택지 버튼에 스피커 표시를 띄운다.
+    // target='word' — 카드(뜻) 스피커가 아니라 정답 선택지 버튼에 스피커 표시를 띄운다.
     if (question.questionType === 'reverseMultipleChoice') {
       speakText(question.origin, wordLang(question), 'word');
     }
@@ -1901,13 +1899,10 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
 
   // 역방향 사지선다(뜻→단어) 여부 — 카드 상단 텍스트/선택지 텍스트/TTS 타이밍을 이 값으로 분기
   const isReverseChoice = testQuestions[progressIndex]?.questionType === 'reverseMultipleChoice';
-  // TtsRipple(카드 영역) 노출 조건 — 일반 유형은 "등장 자동재생 중(채점 전)"에만.
-  // reverseMultipleChoice는 카드에 "뜻"만 있으므로, 뜻을 읽는 동안(speakingTarget==='meaning')만
-  // 카드에 리플을 띄운다 — 채점 후 "단어"를 읽을 때는 소리만 재생하고 선택지 버튼에는
-  // 아무 표시도 띄우지 않는다(카드/선택지 어디에도 스피커 아이콘 없음).
-  const showTtsRipple = isReverseChoice
-    ? (isSpeaking && speakingTarget === 'meaning')
-    : (testQuestions[progressIndex]?.questionType !== 'multipleChoiceListening' && isSpeaking && !isAnswered);
+  // 듣기 문제 채점 전 — 카드 중앙 큰 스피커 + 카드 전체 탭 재생. 그 밖에는(일반 유형 전부,
+  // 듣기 채점 후) 카드 탭 재생을 끄고 오른쪽 아래 고정 스피커 버튼으로만 재생한다(2026-10-28).
+  const isListeningBeforeAnswer =
+    testQuestions[progressIndex]?.questionType === 'multipleChoiceListening' && !isAnswered;
 
   // 플러그인 컴포넌트가 있으면 동적 렌더링 (cardMatch 등)
   // 진행바(듀오링고 방식, 모든 세션 유형 공통) — 계산은 utils/studyProgress.js 순수 함수.
@@ -2125,27 +2120,18 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
                     py-[45px]
                     rounded-[12px]
                     bg-layout-gray-50 dark:bg-layout-gray-dark
-                    cursor-pointer
+                    ${isListeningBeforeAnswer ? 'cursor-pointer' : ''}
                   `}
                   initial={CARD_ENTER_INITIAL}
                   animate={CARD_ENTER_ANIMATE}
-                  whileTap={{ scale: 0.96 }}
+                  whileTap={isListeningBeforeAnswer ? { scale: 0.96 } : undefined}
                   transition={CARD_ENTER_TRANSITION}
                   style={{ willChange: 'transform, opacity' }}
-                  onClick={() => {
+                  onClick={isListeningBeforeAnswer ? () => {
                     feel('tap');
                     handleClickTTS();
-                  }}
+                  } : undefined}
                 >
-
-                  {/* 일반 유형 클릭(TTS 재생) 시 ripple — 아이콘 없이 단어 중심에서 확산.
-                      padding 이 대칭이라 단어 중심 = 카드 정중앙 → 카드 전체를 앵커로 쓴다.
-                      (채점 전에만 뜨므로 LiftAboveBar 로 단어가 비킬 일과 겹치지 않는다) */}
-                  {showTtsRipple && (
-                    <div aria-hidden className="absolute inset-0 pointer-events-none">
-                      <TtsRipple size={160} duration={speakDuration} className="z-[0]" />
-                    </div>
-                  )}
 
                   {/* 우측 상단 - 채점 전: 최근 학습 시점 / 채점 후: 다음 복습 예정일(오답은 비움).
                       농장 상태 바에서 옮겨 온 "언제" 문구 — StudyTimingTag.jsx 참고. */}
@@ -2169,17 +2155,10 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
                     topReserve={28}
                     className="relative z-[1] w-full flex justify-center"
                   >
-                  {testQuestions[progressIndex].questionType === 'multipleChoiceListening' && !isAnswered ? (
-                    /* 듣기 모드: 채점 전 스피커 아이콘 */
+                  {isListeningBeforeAnswer ? (
+                    /* 듣기 모드: 채점 전 스피커 그림(재생 표시는 SpeakerArt playing) */
                     <div className="relative flex items-center justify-center">
-                      {/* 재생 중 ripple 애니메이션 */}
-                      {isSpeaking && <TtsRipple size={110} duration={speakDuration} />}
-                      <motion.div
-                        animate={isSpeaking ? { scale: [1, 1.12, 1] } : { scale: 1 }}
-                        transition={isSpeaking ? { duration: 0.6, repeat: Infinity, ease: "easeInOut" } : {}}
-                      >
-                        <SpeakerArt size={60} playing={isSpeaking} />
-                      </motion.div>
+                      <SpeakerArt size={60} playing={isSpeaking} />
                     </div>
                   ) : (
                     <h2 className="
@@ -2209,72 +2188,72 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
                     </h2>
                   )}
                   </LiftAboveBar>
-                  {/* 하단 - 부패 진단(시안 6절): 채점 전부터 뜨는 `.fb.ng` 형.
-                      삽 그림 + '삽 1개를 씁니다' + '맞히면 씨앗부터'.
-                      삽은 누른 순간이 아니라 진단 정답에서 빠지므로 여기서는 안내만 한다.
-                      채점 결과(농장 payload)가 오면 평소 상태 바로 교체된다. */}
-                  {isDiagnosis && !showFarmBar && (
-                    <motion.div
-                      key={`diagbar-${resumeReplayKey}`}
-                      initial={{ opacity: 0, y: 8 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.25, ease: [0.4, 0, 0.2, 1] }}
-                      className="absolute bottom-[14px] left-[14px] right-[14px] z-[2]"
-                      data-farm-result-bar=""
-                      onClick={(e) => e.stopPropagation()}
-                    >
-                      <FarmStatusBar diagnosis />
-                    </motion.div>
-                  )}
-
-                  {/* 하단 - 채점 후: 농장 상태 바 — 유형 공통(FarmResultBar). 연출 끝 신호로 전환 게이트를 푼다. */}
-                  {showFarmBar && (
-                    <FarmResultBar
-                      farm={farmStatus}
-                      replayKey={resumeReplayKey}
-                      className={`
-                        absolute bottom-[14px] left-[14px] z-[2]
-                        ${testType === "test" && isAnswered ? 'right-[50px]' : 'right-[14px]'}
-                      `}
-                      onAnimStart={advanceGate.farmStarted}
-                      onSettled={advanceGate.farmSettled}
-                    />
-                  )}
-
-                  {/* 하단 중앙 - 채점 후: 다음 복습 예정일 (채점 전에는 숨김) */}
-                  {/* displayNextReview는 채점 시 고정 — 백엔드 응답으로 덮지 않아 깜빡임 없음 */}
-                  {/* 농장 상태 바가 같은 자리에서 다음 복습일까지 말하므로 그때는 숨긴다 */}
-                  
-                  {testType === "test" && isAnswered && (
-                    <motion.button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        feel('tap');
-                        handleClickProblemHintData();
-                      }}
-                      whileHover={{
-                        backgroundColor: 'rgba(255, 141, 212, 0.1)',
-                        scale: 1.05
-                      }}
-                      whileTap={{
-                        scale: 0.95,
-                        backgroundColor: 'rgba(255, 141, 212, 0.2)'
-                      }}
-                      transition={{
-                        type: "spring",
-                        stiffness: 400,
-                        damping: 17
-                      }}
-                      style={{ willChange: 'transform, background-color' }}
-                      className="
-                      absolute bottom-[15px] right-[15px]
-                      rounded-[8px] p-[5px]
-                      text-primary-main-600
-                    "
-                    >
-                      <BookOpenText size={22} weight="duotone" />
-                    </motion.button>
-                  )}
+                  {/* 하단 한 줄 — [상태 바(flex-1)][힌트][스피커].
+                      스피커는 듣기 채점 전만 빼고 늘 같은 오른쪽 아래 자리에 있고, 상태 바·진단 pill 은
+                      그 왼쪽 남은 폭을 쓴다. 줄 자체는 터치를 막지 않는다(자식만 받음). */}
+                  <div className="absolute bottom-[14px] left-[14px] right-[14px] z-[2] flex items-center gap-[6px] pointer-events-none">
+                    <div className="flex-1 min-w-0 pointer-events-auto">
+                      {/* 부패 진단(시안 6절): 채점 전부터 뜨는 `.fb.ng` 형.
+                          삽 그림 + '삽 1개를 씁니다' + '맞히면 씨앗부터'.
+                          삽은 누른 순간이 아니라 진단 정답에서 빠지므로 여기서는 안내만 한다.
+                          채점 결과(농장 payload)가 오면 평소 상태 바로 교체된다. */}
+                      {isDiagnosis && !showFarmBar && (
+                        <motion.div
+                          key={`diagbar-${resumeReplayKey}`}
+                          initial={{ opacity: 0, y: 8 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ duration: 0.25, ease: [0.4, 0, 0.2, 1] }}
+                          data-farm-result-bar=""
+                          onClick={(e) => e.stopPropagation()}
+                        >
+                          <FarmStatusBar diagnosis />
+                        </motion.div>
+                      )}
+                      {/* 채점 후: 농장 상태 바 — 유형 공통(FarmResultBar). 연출 끝 신호로 전환 게이트를 푼다. */}
+                      {showFarmBar && (
+                        <FarmResultBar
+                          farm={farmStatus}
+                          replayKey={resumeReplayKey}
+                          className="w-full"
+                          onAnimStart={advanceGate.farmStarted}
+                          onSettled={advanceGate.farmSettled}
+                        />
+                      )}
+                    </div>
+                    {testType === "test" && isAnswered && (
+                      <motion.button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          feel('tap');
+                          handleClickProblemHintData();
+                        }}
+                        whileHover={{
+                          backgroundColor: 'rgba(255, 141, 212, 0.1)',
+                          scale: 1.05
+                        }}
+                        whileTap={{
+                          scale: 0.95,
+                          backgroundColor: 'rgba(255, 141, 212, 0.2)'
+                        }}
+                        transition={{
+                          type: "spring",
+                          stiffness: 400,
+                          damping: 17
+                        }}
+                        style={{ willChange: 'transform, background-color' }}
+                        className="
+                        pointer-events-auto flex-shrink-0
+                        rounded-[8px] p-[5px]
+                        text-primary-main-600
+                      "
+                      >
+                        <BookOpenText size={22} weight="duotone" />
+                      </motion.button>
+                    )}
+                    {!isListeningBeforeAnswer && (
+                      <CardSpeakerButton playing={isSpeaking} onPress={handleClickTTS} />
+                    )}
+                  </div>
 
                 </motion.div>
                 <div className="

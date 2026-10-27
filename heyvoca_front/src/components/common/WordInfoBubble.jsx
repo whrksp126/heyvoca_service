@@ -243,6 +243,11 @@ const WordInfoBubble = ({
         {status === 'found' && !results && (
           <div className="flex flex-col gap-[4px]">
             <div className="flex items-center gap-[6px]">
+              {ownedWord && (
+                <span className="flex-shrink-0" role="img" aria-label={cropLabelDetail(ownedStage)} title={cropLabelDetail(ownedStage)}>
+                  <CropImage stage={ownedStage} health={wordHealth(ownedWord)} size={24} align="center" alt="" />
+                </span>
+              )}
               <span lang={isJaWord ? 'ja' : undefined} className="min-w-0 flex-1 text-[15px] font-[700] leading-[1.3] text-layout-black dark:text-layout-white break-keep [overflow-wrap:anywhere]">
                 {word}
               </span>
@@ -277,20 +282,6 @@ const WordInfoBubble = ({
               <p className="text-[13px] font-[500] leading-[1.45] text-layout-gray-500 dark:text-layout-gray-200 break-keep [overflow-wrap:anywhere]">
                 {meanings.join(', ')}
               </p>
-            )}
-            {ownedWord && (
-              <span
-                className="
-                  flex items-center gap-[3px] self-start
-                  mt-[4px] -ml-[2px] h-[28px] pl-[2px] pr-[10px] rounded-full
-                  bg-layout-gray-50 dark:bg-[#3A3A3A]
-                  text-[12px] font-[700] tracking-[-0.02em] text-layout-gray-500 dark:text-layout-gray-100
-                "
-              >
-                <CropImage stage={ownedStage} health={wordHealth(ownedWord)} size={30} align="center" alt="" />
-                {cropLabelDetail(ownedStage)}
-                <span className="font-[500] text-layout-gray-300">· 내 단어장에 있어요</span>
-              </span>
             )}
             {canAddToBook && (
               <button

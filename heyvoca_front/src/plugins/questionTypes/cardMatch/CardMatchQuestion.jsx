@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { getTextSound } from '../../../utils/common';
 import { feel } from '../../../lib/feel';
-import TtsRipple from '../../../components/common/TtsRipple';
+import CardSpeakerButton from '../../../components/common/CardSpeakerButton';
 import LiftAboveBar from '../../../components/common/LiftAboveBar';
 import MemoryStateChangeBadge, {
   MEMORY_STATE_RANK as STATE_RANK,
@@ -72,7 +72,6 @@ const CardMatchQuestion = ({ question, testType, onComplete, onCardMatched, farm
   const [wrongFlashRightWordIds, setWrongFlashRightWordIds] = useState(new Set());
   const [animatingWordIds, setAnimatingWordIds] = useState(new Set());
   const [speakingWordId, setSpeakingWordId] = useState(null);
-  const [speakingDuration, setSpeakingDuration] = useState(null);
   const [wordResolvedStates, setWordResolvedStates] = useState({});
   // 백그라운드 복귀 시 성장 게이지가 최종 상태로 정적으로 스냅되는 것을 막기 위한
   // 재마운트용 키 (이유는 useResumeReplayKey 주석 참고)
@@ -234,20 +233,22 @@ const CardMatchQuestion = ({ question, testType, onComplete, onCardMatched, farm
     }
   };
 
-  const handleLeftClick = (index) => {
-    const word = leftWords[index];
-    if (matchedWordIds.has(word.id) || failedWordIds.has(word.id) || animatingWordIds.has(word.id)) return;
-
+  // 단어 발음 — 카드 오른쪽 아래 스피커 버튼으로만 재생한다(카드 탭은 짝 선택만, 2026-10-28).
+  const speakWord = (word) => {
     const wordId = word.id;
     setSpeakingWordId(wordId);
-    setSpeakingDuration(null);
     // 단어를 읽는 중에는 세트를 넘기지 않는다(끝 + 0.2초) — 다른 유형과 같은 규칙.
     const gen = ++speakGenRef.current;
     advanceGate.ttsBegin();
-    getTextSound(word.origin, wordLang(word, wordLang(question)), setSpeakingDuration).finally(() => {
+    getTextSound(word.origin, wordLang(word, wordLang(question))).finally(() => {
       setSpeakingWordId(prev => prev === wordId ? null : prev);
       if (gen === speakGenRef.current) advanceGate.ttsEnd();
     });
+  };
+
+  const handleLeftClick = (index) => {
+    const word = leftWords[index];
+    if (matchedWordIds.has(word.id) || failedWordIds.has(word.id) || animatingWordIds.has(word.id)) return;
 
     if (selectedRight !== null) {
       checkMatch(index, selectedRight);
@@ -336,8 +337,8 @@ const CardMatchQuestion = ({ question, testType, onComplete, onCardMatched, farm
               테두리도 1px 을 늘 깔아 둔다(평소엔 투명) — 선택·정오답 깜빡임에서만 border-[1px] 이
               붙던 시절엔 그 순간 카드가 2px 커졌다(flex-basis 0 이어도 border-box 최소치는 테두리 포함).
             */
+            <div key={word.id} className="relative flex flex-col flex-1 min-h-0">
             <motion.button
-              key={word.id}
               data-lift-card=""
               className={`
                 relative overflow-hidden
@@ -380,27 +381,27 @@ const CardMatchQuestion = ({ question, testType, onComplete, onCardMatched, farm
                   className={`relative z-[1] font-[800] w-full text-center ${getLeftTextStyle(index)}`}
                 />
               </LiftAboveBar>
-              {/* 클릭(TTS 재생) 시 ripple 효과 — 아이콘 없이 단어 중심(= 카드 정중앙)에서 확산.
-                  채점 전에만 뜨므로 LiftAboveBar 로 비킬 일이 없다 — 카드 전체를 앵커로 쓴다. */}
-              {isSpeaking && !isResolved && (
-                <div aria-hidden className="absolute inset-0 pointer-events-none">
-                  <TtsRipple size={96} duration={speakingDuration} />
-                </div>
-              )}
-
-              {/* 하단 - 채점 후: 농장 상태 바 좁은 형 — 유형 공통(FarmResultBar compact) */}
+              {/* 하단 - 채점 후: 농장 상태 바 좁은 형 — 유형 공통(FarmResultBar compact).
+                  오른쪽 끝은 스피커 버튼 자리(32px + 간격 4px)를 비워 둔다. */}
               <FarmResultBar
                 compact
+                className="absolute bottom-[8px] left-[8px] right-[44px] z-[2]"
                 farm={farmByWordId?.[word.id] ?? null}
                 replayKey={`${word.id}-${resumeReplayKey}`}
                 onAnimStart={() => handleFarmStart(word.id)}
                 onSettled={() => handleFarmSettled(word.id)}
               />
 
-              {/* 하단 중앙 - 복습 예정일 (채점 후)
-                  농장 상태 바가 같은 자리에서 다음 복습일까지 말하므로 그때는 숨긴다 */}
-              
             </motion.button>
+            {/* 오른쪽 아래 고정 스피커 — 짝 선택 버튼 안에 버튼을 넣을 수 없어 형제로 겹쳐 둔다.
+                채점 전후 같은 자리, 상태 바(높이 약 34px)와 세로 중앙을 맞춘다. */}
+            <CardSpeakerButton
+              compact
+              playing={isSpeaking}
+              onPress={() => speakWord(word)}
+              className="absolute bottom-[9px] right-[8px] z-[3]"
+            />
+            </div>
           );
         })}
       </div>
