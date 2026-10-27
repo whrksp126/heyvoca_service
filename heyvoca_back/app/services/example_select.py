@@ -376,3 +376,51 @@ def choose_example(item, question_type: str, ctx: SelectionContext) -> Optional[
     chosen = rng.choice(best)
     ctx.used_hashes.add(chosen.get('hash'))
     return chosen
+
+
+# ── 단어장에 담을 기본 예문(QA #19, 2026-10-28) ─────────────────────────────
+# 말풍선 '단어장에 추가'·사전 찾기 담기는 사전 예문을 통째로 넣어 한 단어에 예문이 10개 넘게
+# 쌓였다. 담을 때는 사용자 수준에 맞는 몇 개만 고른다 — 실전 문장(_choose_practice)과 같은 규칙:
+# 목표 score **이하**(score 없는 예문은 이하로 본다)를 후보로, 그 안에서 짧은 것 → 목표에 가까운 것.
+# 이하가 하나도 없으면 score 가 낮은 순. 강조 태그가 있는 예문(빈칸 문제로 쓸 수 있다)을 먼저 본다.
+# 매번 같은 결과가 나와야 해서(편집 화면 기본값) 무작위 없이 결정적으로 고른다.
+DISPLAY_EXAMPLE_N = 2
+
+
+def pick_display_examples(examples: list, target_score: Optional[float], n: int = DISPLAY_EXAMPLE_N) -> list:
+    """examples: [{'origin','meaning', 'meta'?: {'score','word_count'}}] → 고른 n개(원래 순서 유지 아님, 추천순).
+
+    origin/meaning 이 빈 예문은 제외한다. target_score 가 None 이면 짧은 순으로만 고른다.
+    """
+    from app.services.sentence_puzzle import normalize_sentence_text
+
+    usable = [ex for ex in examples or []
+              if (ex.get('origin') or '').strip() and (ex.get('meaning') or '').strip()]
+    if not usable:
+        return []
+
+    def score_of(ex):
+        s = (ex.get('meta') or {}).get('score')
+        return None if s is None else float(s)
+
+    def length_of(ex):
+        wc = (ex.get('meta') or {}).get('word_count')
+        return int(wc) if wc else len(normalize_sentence_text(ex.get('origin')).split())
+
+    def at_level(ex):
+        s = score_of(ex)
+        return target_score is None or s is None or s <= target_score
+
+    def key(ex):
+        s = score_of(ex)
+        distance = abs(s - target_score) if (s is not None and target_score is not None) else 0.0
+        return (
+            0 if example_has_target_tag(ex.get('origin')) else 1,
+            0 if at_level(ex) else 1,
+            # 수준을 넘는 예문끼리는 쉬운(score 낮은) 것부터
+            0.0 if at_level(ex) else (s if s is not None else 0.0),
+            length_of(ex),
+            distance,
+        )
+
+    return sorted(usable, key=key)[:n]

@@ -74,6 +74,9 @@ const WordDetaileNewBottomSheet = ({ vocabularyId, id }) => {
   const unverified = verification === 'unverified';
   // 검증된 단어는 헤이보카 사전의 표제어라 한 사람이 고치면 다른 단어장과 어긋난다 (시안 §6)
   const canEdit = !isPurchasedBook && verification !== 'verified';
+  // 빼기는 고치기와 다르다 — 사전 표제어를 건드리지 않고 내 단어장에서 연결만 끊으므로
+  // 검증된 단어도 내가 만든 단어장이면 뺄 수 있어야 한다. 제공(서점) 단어장만 막는다.
+  const canDelete = !isPurchasedBook;
 
   const [items, setItems] = useState(null);
   const [busy, setBusy] = useState(false);
@@ -183,7 +186,7 @@ const WordDetaileNewBottomSheet = ({ vocabularyId, id }) => {
     vibrate({ duration: 5 });
     const deleteResult = await pushAwaitNewBottomSheet(
       DeleteWordNewBottomSheet,
-      { vocabularyId, id },
+      { vocabularyId, id, bookTitle: vocabularySheet?.title, otherBookCount: Math.max(0, belongs.length - 1) },
       { hideUnderlying: true },
     );
     if (deleteResult?.cancelled) return;
@@ -275,26 +278,30 @@ const WordDetaileNewBottomSheet = ({ vocabularyId, id }) => {
         차지했다. 버튼이 없는 것 자체가 이미 "여기서는 못 고친다"는 답이다.
         (검증된 단어라는 사실은 단어 옆 파란 인장이 말한다.)
       */}
-      {canEdit && (
+      {(canEdit || canDelete) && (
         <div className="flex items-center justify-end gap-[4px] h-[26px] mb-[2px]">
-          <motion.button
-            type="button"
-            onClick={handleEdit}
-            whileTap={{ scale: 0.9 }}
-            className="flex items-center justify-center w-[28px] h-[28px] rounded-[8px]"
-            aria-label="단어 수정"
-          >
-            <PencilSimple size={17} className="text-layout-gray-400 dark:text-layout-gray-200" />
-          </motion.button>
+          {canEdit && (
+            <motion.button
+              type="button"
+              onClick={handleEdit}
+              whileTap={{ scale: 0.9 }}
+              className="flex items-center justify-center w-[28px] h-[28px] rounded-[8px]"
+              aria-label="단어 수정"
+            >
+              <PencilSimple size={17} className="text-layout-gray-400 dark:text-layout-gray-200" />
+            </motion.button>
+          )}
+          {canDelete && (
           <motion.button
             type="button"
             onClick={handleDelete}
             whileTap={{ scale: 0.9 }}
             className="flex items-center justify-center w-[28px] h-[28px] rounded-[8px]"
-            aria-label="단어 삭제"
+            aria-label="단어장에서 빼기"
           >
             <Trash size={17} className="text-layout-gray-400 dark:text-layout-gray-200" />
           </motion.button>
+          )}
         </div>
       )}
 

@@ -668,3 +668,69 @@ def _word_info_from_korean():
 
     app_cache.set(cache_key, data, timeout=_WORD_INFO_CACHE_TTL)
     return jsonify({'code': 200, 'data': data}), 200
+
+
+## 단어장에 담을 기본 뜻·예문 (QA #19, 2026-10-28)
+# 말풍선 '단어장에 추가'·사전 찾기 담기·단어 추가 시트 검색 선택이 사전의 뜻·예문을 통째로
+# 넣어(physical: 뜻 4개·예문 10개+) 단어 상세가 너무 길어졌다. 담기 직전에 이걸 불러
+# 대표 뜻 2개(사전 저장 순 = word-info 와 같은 순서) + 사용자 수준에 맞는 예문 2개를 기본값으로 쓴다.
+# 수준은 UserSkillProfile.theta(없으면 가입 수준 초기값) → 목표 score(P≈0.8) 이하·짧은 예문 우선
+# (example_select.pick_display_examples). 응답 예문 모양은 /search/partial/en 과 같다.
+_WORD_PICK_MEANINGS = 2
+
+
+@search_bp.route('/word-picks', methods=['GET'])
+@jwt_required
+def word_picks():
+    from app.models.models import User, VocaExampleMeta
+    from app.services.example_select import pick_display_examples
+    from app.services.skill_level import load_profile_row, initial_theta, target_score_for
+
+    try:
+        voca_id = int(request.args.get('voca_id', ''))
+    except (TypeError, ValueError):
+        return jsonify({'code': 400, 'message': 'voca_id 가 필요합니다.'}), 400
+
+    lang = get_dict_lang()
+    if not db.session.query(Voca.id).filter(Voca.id == voca_id).scalar():
+        return jsonify({'code': 200, 'data': None}), 200
+
+    meanings = _voca_meanings(voca_id, limit=_WORD_PICK_MEANINGS)
+
+    if lang == 'ja':
+        from app.models.models import VocaExampleJaMeta as MetaModel
+    else:
+        MetaModel = VocaExampleMeta
+    rows = (
+        db.session.query(VocaExample.id, VocaExample.exam_en, VocaExample.exam_ko,
+                         MetaModel.score, MetaModel.word_count)
+        .join(VocaExampleMap, VocaExampleMap.example_id == VocaExample.id)
+        .outerjoin(MetaModel, MetaModel.example_id == VocaExample.id)
+        .filter(VocaExampleMap.voca_id == voca_id)
+        .order_by(VocaExample.id.asc())
+        .all()
+    )
+    candidates = [
+        {'id': ex_id, 'origin': origin, 'meaning': meaning,
+         'meta': {'score': score, 'word_count': word_count}}
+        for ex_id, origin, meaning, score, word_count in rows
+    ]
+
+    user_id = UUID(g.user_id)
+    profile = load_profile_row(user_id, lang)
+    if profile is not None:
+        theta = float(profile.theta)
+    else:
+        level_id = db.session.query(User.level_id).filter(User.id == user_id).scalar()
+        theta = initial_theta(level_id)
+    picked = pick_display_examples(candidates, target_score_for(theta))
+
+    tokens_map = load_ja_example_tokens([ex['id'] for ex in picked], lang)
+    examples = [serialize_example(ex['id'], ex['origin'], ex['meaning'], tokens_map, lang) for ex in picked]
+
+    return jsonify({'code': 200, 'data': {
+        'voca_id': voca_id,
+        'vocaId': voca_id,
+        'meanings': meanings,
+        'examples': examples,
+    }}), 200

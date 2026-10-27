@@ -17,7 +17,7 @@ import { useStatusBarStyle } from '../../hooks/useStatusBarStyle';
 // 당근 농장 V2 — 세션 요약 슬라이드
 import CropImage from '../farm/CropImage';
 import { stageToCrop, FARM_ITEMS } from '../../utils/crop';
-import WeekStreakStrip, { buildWeekCells } from '../farm/WeekStreakStrip';
+import { buildWeekCells } from '../farm/WeekStreakStrip';
 
 import { getFarmTodayTasksApi, getFarmItemsApi } from '../../api/farm';
 import { fetchSessionFarmSummary } from '../../utils/sessionSummaryPrefetch';
@@ -28,7 +28,7 @@ import { planNextStudy, loadStudyConfig, NEXT_STUDY_COUNTDOWN_MS } from '../../u
 import { primeSfx } from '../../utils/audio';
 // 보상 슬라이드(밭 성장 · 아이템 · 보석 · 업적 · 콤보)와 공용 껍데기 · 하단 버튼
 import {
-  RewardShell, LegacyAuroraStage, FarmGrowthSlide, ItemRewardSlide, GemRewardSlide, AchievementSlide, ComboRewardSlide,
+  RewardShell, LegacyAuroraStage, FarmGrowthSlide, ItemRewardSlide, GemRewardSlide, AchievementSlide, ComboRewardSlide, StreakRewardSlide,
   FarmGrowRow, ResultCta, ResultCtaBar, CTA_BASE, CTA_PRIMARY_FACE, ACHIEVEMENT_IMAGES,
   buildGrowthEntries,
 } from './rewards';
@@ -42,7 +42,7 @@ import PlantingScene from './planting/PlantingScene';
 // ─────────────────────────────────────────────────────────────
 
 // 새 연출 슬라이드 — 각자 빛과 시간표를 가지고, 연출이 끝나야 「확인」이 켜진다
-const SCENE_SLIDE_TYPES = new Set(['farmGrowth', 'farmItem', 'gem', 'achievement', 'combo']);
+const SCENE_SLIDE_TYPES = new Set(['farmGrowth', 'farmItem', 'gem', 'achievement', 'combo', 'farmStreak']);
 
 // 목록이 붙는 예전 규격 슬라이드 — 가운데 정렬도 배경 오로라도 쓰지 않는다(LegacyAuroraStage)
 const LIST_SLIDE_TYPES = new Set(['farmPlanted']);
@@ -837,9 +837,8 @@ const StudyResult = () => {
   // 화면의 임팩트 프레임에 맞춰 직접 울린다(rewards/ 각 파일 머리의 시간표).
   useEffect(() => {
     const type = screenList[currentScreenIndex]?.type;
-    if (type === 'farmStreak') {
-      haptic('success');
-    } else if (type === 'farmPlanted') {
+    // farmStreak 는 2026-10-28부터 새 연출 슬라이드(StreakRewardSlide)가 직접 울린다.
+    if (type === 'farmPlanted') {
       feel('progress');
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -1389,9 +1388,7 @@ const StudyResult = () => {
     // 나머지 화면들 — 시안 §1 규격(그림 100px + 한 줄 + 확인 버튼)을 공유한다
     // 목록 슬라이드는 가운데 정렬도 배경 오로라도 쓰지 않는다(LIST_SLIDE_TYPES 주석 참고)
     const isListSlide = LIST_SLIDE_TYPES.has(currentScreen.type);
-    // farmStreak(연속 학습)는 목록 슬라이드는 아니지만 이제 마스코트 그림이 없어
-    // 뒤 글로우도 함께 뺀다(2026-09-28 피드백 4차) — 아래 배경 분기에서 같이 검사한다.
-    const noGlow = isListSlide || currentScreen.type === 'farmStreak';
+    const noGlow = isListSlide;
     // 새 연출 슬라이드(rewards/) — 각자 빛과 시간표를 가진다. 슬라이드가 바뀌면 껍데기의 본문이 통째로 새로 마운트된다.
     const isScene = SCENE_SLIDE_TYPES.has(currentScreen.type);
     const sceneProps = {
@@ -1430,43 +1427,12 @@ const StudyResult = () => {
       content = <ItemRewardSlide {...currentScreen.data} {...sceneProps} />;
     } else if (currentScreen.type === 'farmStreak') {
       /*
-        ⑩ 연속 학습 — 한 줄 + 홈과 같은 1주 불꽃 달력. 시안에는 아래 한 줄이 없다.
-        【2026-09-28 실기기 피드백 4차】 마스코트(토끼) 히어로 그림 + 뒤 핑크 글로우를 뺐다 —
-        이 슬라이드는 "며칠째"를 홈과 같은 달력 그림으로 보여주는 화면이지, 보상을 받는
-        화면(글로우가 어울리는 자리)이 아니다. 글로우 억제는 아래 렌더(§isListSlide 옆)에서
-        currentScreen.type === 'farmStreak' 도 같이 검사한다.
+        ⑩ 연속 학습 — 큰 불꽃 + 연속 일수 롤링(어제→오늘) + 홈과 같은 1주 띠(오늘 칸에 불이 붙는 연출)
+        + 다음 목표 한 줄. 2026-10-28 QA #19: 문구 + 띠만 있던 예전 화면이 밋밋하고 비어 보여
+        새 연출 슬라이드로 바꿨다(rewards/StreakRewardSlide.jsx 머리의 시간표 참고).
       */
       const { current, week } = currentScreen.data;
-      const weekCells = buildWeekCells(week);
-      content = (
-        <div className='relative flex flex-col items-center justify-center gap-[15px] w-full'>
-          <motion.p
-            className='text-[16px] font-[700] text-center leading-[1.45]'
-            initial={{ y: 20, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ delay: 0.15, duration: 0.5 }}
-          >
-            <strong className='text-primary-main-600'>{current}일</strong> 연속으로 농장을 돌봤어요!
-          </motion.p>
-          <motion.div
-            className='w-full'
-            initial={{ y: 20, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ delay: 0.3, duration: 0.4 }}
-          >
-            {weekCells.length === 7 ? (
-              <WeekStreakStrip cells={weekCells} />
-            ) : (
-              // week 조회 실패 시(드묾) — 달력 자리 스켈레톤만 남긴다(레이아웃 튐 방지)
-              <div className='grid grid-cols-7 gap-[6px]'>
-                {Array.from({ length: 7 }).map((_, i) => (
-                  <div key={i} className='h-[46px] rounded-[12px] bg-layout-gray-50 dark:bg-layout-gray-dark animate-pulse' />
-                ))}
-              </div>
-            )}
-          </motion.div>
-        </div>
-      );
+      content = <StreakRewardSlide current={current} cells={buildWeekCells(week)} {...sceneProps} />;
     } else if (currentScreen.type === 'attend') {
       // 출석 (오늘 첫 학습) — 출석 업적 배지처럼 캐릭터를 컬러 원형 배경 위에 올려 표시.
       content = (

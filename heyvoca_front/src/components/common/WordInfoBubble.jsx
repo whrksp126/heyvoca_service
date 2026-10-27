@@ -8,6 +8,11 @@ import { getReading, shouldShowReading } from '../../utils/jaWord';
 import { vibrate } from '../../utils/osFunction';
 import { useNewBottomSheetActions, useNewBottomSheetContext } from '../../context/NewBottomSheetContext';
 import PickPlotNewBottomSheet from '../newBottomSheet/PickPlotNewBottomSheet';
+import { useVocabulary } from '../../context/VocabularyContext';
+import { findOwnedWord } from '../../utils/ownedWord';
+import { wordStage, wordHealth } from '../../utils/vocaCrop';
+import { cropLabelDetail } from '../../utils/crop';
+import CropImage from '../farm/CropImage';
 import SpeakerArt from './SpeakerArt';
 
 /*
@@ -44,6 +49,11 @@ import SpeakerArt from './SpeakerArt';
   띄워 기존 단어 추가 경로(addWord)로 새 씨앗을 심는다. 모든 문제 유형이 이 컴포넌트를 쓰므로 호출부는
   바꾸지 않는다. 말풍선(z 1200)이 시트(z 1001) 위에 뜨지 않게 바텀시트가 열려 있는 동안엔 그리지 않는다
   (시트를 누르면 호출부의 바깥 탭 규칙으로 말풍선 상태도 닫힌다). 게스트 맛보기에선 숨긴다.
+
+  보유 표시(QA #19, 2026-10-28) — 이미 어느 단어장에든 있는 단어면 '단어장에 추가' 대신 그 단어의
+  작물 그림 + 단계 이름(미학습/씨앗/새싹/이파리/당근)을 작게 보여 준다. 판단은 내 사전(userDictionary)
+  으로만 한다(추가 네트워크 없음) — 사전 id 우선, 없으면 표기. word-info 의 word 가 이미 기본형이라
+  temperatures 를 탭해도 temperature 로 맞춰진다. 찾기 화면의 '내 단어' 칩과 같은 그림·이름이다.
 */
 const EDGE_MARGIN_PX = 12;      // 화면 좌우 여백
 const TAIL_SIZE_PX = 10;        // 꼬리 한 변(회전 전 정사각형)
@@ -64,6 +74,7 @@ const WordInfoBubble = ({
   const { stack: bottomSheetStack } = useNewBottomSheetContext();
   const { pushNewBottomSheet } = useNewBottomSheetActions();
   const isGuest = !!useLocation()?.state?.guestMode;
+  const { userDictionary } = useVocabulary();
 
   useLayoutEffect(() => {
     const el = bodyRef.current;
@@ -120,7 +131,11 @@ const WordInfoBubble = ({
   const showBaseFormHint = !results && matchedForm && baseForm && matchedForm !== baseForm;
   const resultList = Array.isArray(results) ? results.slice(0, 3) : [];
   const dictionaryId = info?.voca_id ?? info?.vocaId ?? null;
-  const canAddToBook = status === 'found' && !results && !isGuest && dictionaryId != null && !!word;
+  const ownedWord = status === 'found' && !results && !isGuest && word
+    ? findOwnedWord(Object.values(userDictionary ?? {}), info, info?.language)
+    : null;
+  const ownedStage = ownedWord ? wordStage(ownedWord) : null;
+  const canAddToBook = status === 'found' && !results && !isGuest && dictionaryId != null && !!word && !ownedWord;
 
   const handleAddToBook = (e) => {
     e.stopPropagation();
@@ -262,6 +277,20 @@ const WordInfoBubble = ({
               <p className="text-[13px] font-[500] leading-[1.45] text-layout-gray-500 dark:text-layout-gray-200 break-keep [overflow-wrap:anywhere]">
                 {meanings.join(', ')}
               </p>
+            )}
+            {ownedWord && (
+              <span
+                className="
+                  flex items-center gap-[3px] self-start
+                  mt-[4px] -ml-[2px] h-[28px] pl-[2px] pr-[10px] rounded-full
+                  bg-layout-gray-50 dark:bg-[#3A3A3A]
+                  text-[12px] font-[700] tracking-[-0.02em] text-layout-gray-500 dark:text-layout-gray-100
+                "
+              >
+                <CropImage stage={ownedStage} health={wordHealth(ownedWord)} size={30} align="center" alt="" />
+                {cropLabelDetail(ownedStage)}
+                <span className="font-[500] text-layout-gray-300">· 내 단어장에 있어요</span>
+              </span>
             )}
             {canAddToBook && (
               <button

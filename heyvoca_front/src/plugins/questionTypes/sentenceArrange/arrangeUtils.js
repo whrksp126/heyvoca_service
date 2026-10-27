@@ -73,7 +73,8 @@ export const wrongRefWords = (userTokens, accepted) => {
   탭 판정·비교엔 clean만 쓴다). fillInTheBlank의 tokenizeWords와 같은 규칙 — 카드 안 고정
   텍스트(prefix/suffix) 사전 탭에 쓴다.
 */
-const WORD_EDGE_PUNCT_RE = /^[^A-Za-z0-9']+|[^A-Za-z0-9']+$/g;
+// 유니코드 문자·숫자 기준 — 한국어 조각도 낱말로 잡혀야 answer_text 구두점 매핑이 어긋나지 않는다.
+const WORD_EDGE_PUNCT_RE = /^[^\p{L}\p{N}']+|[^\p{L}\p{N}']+$/gu;
 export const tokenizeWords = (text) => {
   if (!text) return [];
   return text.split(/(\s+)/).filter((t) => t !== '').map((t) => {

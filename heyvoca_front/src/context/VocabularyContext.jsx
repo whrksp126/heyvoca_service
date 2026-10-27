@@ -20,6 +20,7 @@ import {
 } from '../api/vocaBooks';
 import { getBookStoreApi } from '../api/bookStore';
 import { showToast } from '../utils/osFunction';
+import { notifyStudyDataChanged } from '../utils/studyDataEvents';
 import { toLocalDateString, STABILITY_LEAF_DAYS, STABILITY_CARROT_DAYS } from '../utils/common';
 import { getUserRecentStudyDataApi, updateUserRecentStudyDataApi } from '../api/study';
 import AchievementRewardOverlay from '../components/overlay/AchievementRewardOverlay';
@@ -619,11 +620,13 @@ export const VocabularyProvider = ({ children }) => {
       }
 
       fetchUserDictionary(); // Refresh to update relationships
+      fetchVocaBooks(); // 밭 표지판의 단어 수(vocaCount)
+      notifyStudyDataChanged(); // 홈 통계(StatsContext) 낡음 표시 → 재조회
     } catch (err) {
       setErrorVocabularySheets('단어 삭제에 실패했습니다.');
       throw err;
     }
-  }, [userDictionary, fetchUserDictionary]);
+  }, [userDictionary, fetchUserDictionary, fetchVocaBooks]);
 
   // 특정 단어장 단어 조회
   const getWord = useCallback((sheetId, wordId) => {

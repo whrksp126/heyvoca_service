@@ -14,7 +14,8 @@ import { useTheme } from '../../context/ThemeContext';
 import { resolveVocaBookBackground } from '../../utils/vocaBookColor';
 import { wordLang } from '../../utils/lang';
 import { userBookCntCheckApi } from '../../api/voca';
-import { getDictWordDetailApi } from '../../api/search';
+import { getDictWordDetailApi, getWordPicksApi } from '../../api/search';
+import { resolveWordPicks } from '../../utils/wordPicks';
 import { holdStudyAdvance } from '../../hooks/useStudyAdvanceGate';
 
 // 마지막으로 담은 단어장 — 다음에 열 때 기본 선택. 기기별 편의값이라 localStorage(실패해도 무시).
@@ -98,6 +99,14 @@ const PickPlotNewBottomSheet = ({
     detailRef.current = getDictWordDetailApi(origin, dictionaryId).catch(() => null);
   }, [enrich, origin, dictionaryId]);
 
+  // 담을 뜻·예문 줄이기(QA #19) — 사전 단어면 대표 뜻 2개 + 수준 맞춤 예문 2개만 담는다.
+  // 받은 meanings/examples 는 사전 전체라 그대로 담으면 한 단어에 뜻 4개·예문 10개+가 쌓였다.
+  const picksRef = useRef(null);
+  useEffect(() => {
+    if (dictionaryId == null) return;
+    picksRef.current = getWordPicksApi(dictionaryId);
+  }, [dictionaryId]);
+
   const selectedOwned = selectedId != null && ownedBookIds.has(String(selectedId));
 
   // 새 단어장 만들기 — 단어장 관리 메뉴(VocabularyManageNewBottomSheet)와 같은 한도 판단
@@ -128,8 +137,15 @@ const PickPlotNewBottomSheet = ({
     setSubmitting(true);
     try {
       const detail = detailRef.current ? await detailRef.current : null;
-      const wordMeanings = meanings?.length ? meanings : (detail?.meanings ?? []);
-      const wordExamples = examples?.length ? examples : (detail?.examples ?? []);
+      const fullContent = {
+        meanings: meanings?.length ? meanings : (detail?.meanings ?? []),
+        examples: examples?.length ? examples : (detail?.examples ?? []),
+      };
+      const picks = picksRef.current ? await picksRef.current : null;
+      // 사전에 없는(직접 고른) 단어는 받은 그대로 — 사용자가 적은 내용이라 줄이지 않는다
+      const { meanings: wordMeanings, examples: wordExamples } = dictionaryId != null
+        ? resolveWordPicks(picks, fullContent)
+        : fullContent;
       const wordReading = reading ?? detail?.reading ?? null;
       const before = sheet.total ?? (sheet.words?.length ?? 0);
       const result = await addWord(sheet.id, {

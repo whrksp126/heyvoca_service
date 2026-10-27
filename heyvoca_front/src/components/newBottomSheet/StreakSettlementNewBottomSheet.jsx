@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { WarningCircle } from '@phosphor-icons/react';
 import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
@@ -8,9 +8,6 @@ import {
   protectStreakApi, startEarnBackApi, ackStreakNoticeApi, purchaseFarmItemApi,
 } from '../../api/farm';
 import { CROP_ASSETS } from '../farm/CropImage';
-import WeekStreakStrip from '../farm/WeekStreakStrip';
-import { cellState } from '../streak/StreakMonthCalendar';
-import { toLocalDateString } from '../../utils/common';
 import { vibrate } from '../../utils/osFunction';
 import {
   SHEET_SHELL, Grab, Btn, Btns, Hint, HintB,
@@ -57,15 +54,16 @@ const formatIsoDate = (isoDate) => {
  * 다른 컴포넌트 타입으로 보고 매번 마운트를 새로 해서(로컬 state가 있는 컴포넌트라 위험)
  * 수량을 조작하는 도중에도 리셋될 수 있기 때문이다.
  */
-const PrefillStepper = ({ defaultQty, gemCnt, onSkip, onNeedGems, setUserProfile }) => {
+const PrefillStepper = ({ defaultQty, gemCnt, onSkip, onNeedGems, onFilled, setUserProfile }) => {
   const [qty, setQty] = useState(() => Math.min(10, Math.max(1, defaultQty || 1)));
   const [status, setStatus] = useState('idle'); // idle | loading | short | done
   const cost = qty * PREFILL_UNIT_GEM;
 
+  // 채운 결과는 위쪽 '남은 보호권' 숫자에 바로 반영한다(onFilled) — 같은 정보를 문구로 한 번 더
+  // 보여주던 '보호권 N개를 채웠어요'는 중복이라 뺐다(2026-10-28 QA #19).
   if (status === 'done') {
     return (
       <>
-        <Hint center className="mt-[14px]">보호권 <HintB>{qty}개</HintB>를 채웠어요</Hint>
         <Btns>
           <Btn tone="pri" wide onClick={onSkip}>확인</Btn>
         </Btns>
@@ -81,6 +79,7 @@ const PrefillStepper = ({ defaultQty, gemCnt, onSkip, onNeedGems, setUserProfile
     const res = await purchaseFarmItemApi({ sku: 'shield_1', qty });
     if (res?.code !== 200 || !res?.data) { setStatus('idle'); return; }
     setUserProfile((prev) => ({ ...prev, gem_cnt: res.data.gem_cnt }));
+    onFilled?.(qty);
     setStatus('done');
   };
 
@@ -190,33 +189,8 @@ const StreakSettlementNewBottomSheet = ({
 
   const gemCnt = Number(userProfile?.gem_cnt) || 0;
 
-  // ── 최근 7일 줄(protected 전용, 시안 §3) ────────────────────────────
-  // 홈 1주 줄과 같은 띠 규칙으로 그린다(streak/StreakMark.jsx 가 정본) — 보호권으로 지킨 날도
-  // 앞뒤 날과 같은 색 띠로 이어지고, 구분은 띠 위 보호권 그림으로만 한다(2026-10-08 QA #11).
-  // 예전에는 보호일만 민트 막대로 따로 칠해 연속이 그날 끊긴 것처럼 보였다.
-  const today = toLocalDateString(new Date());
-  const DOW = ['일', '월', '화', '수', '목', '금', '토'];
-  const week = useMemo(() => {
-    const calendar = (streak?.calendar ?? []).slice().sort((a, b) => (a.date < b.date ? -1 : 1)).slice(-7);
-    return calendar.map((d) => {
-      const isToday = d.date === today;
-      const date = new Date(`${d.date}T00:00:00`);
-      // 구서버는 status('studied'|'protected')만 줄 수 있다 — 그때는 status 로 자격 · 보호를 채운다
-      const state = cellState({
-        ...d,
-        qualified: d.qualified ?? d.status === 'studied',
-        protected: d.protected ?? d.status === 'protected',
-      });
-      let status = state;
-      if (state === 'miss') status = isToday ? 'today_empty' : 'none';
-      return {
-        date: d.date,
-        isToday,
-        status,
-        label: isToday ? '오늘' : (Number.isNaN(date.getTime()) ? '' : DOW[date.getDay()]),
-      };
-    });
-  }, [streak, today]);
+  // 미리 채워두기로 방금 산 보호권 수 — '남은 보호권' 숫자에 더해 보여준다.
+  const [filledQty, setFilledQty] = useState(0);
 
   // ── protected: 자동 적용 완료 ───────────────────────────────
   if (type === 'protected') {
@@ -230,15 +204,16 @@ const StreakSettlementNewBottomSheet = ({
         <div className="flex justify-center">
           <span className="inline-flex items-center gap-[7px] mt-[12px] px-[14px] py-[7px] rounded-full bg-layout-gray-50 dark:bg-layout-gray-dark text-[12.5px] font-[700] tracking-[-0.02em] text-layout-black dark:text-layout-white">
             <span>남은 보호권</span>
-            <span className="font-[800] text-primary-main-600">{after}개</span>
+            <span className="font-[800] text-primary-main-600">{(Number(after) || 0) + filledQty}개</span>
           </span>
         </div>
-        <WeekStreakStrip cells={week} className="mt-[14px]" />
+        {/* 최근 7일 띠는 뺐다 — 성공 화면에서는 헤더·남은 보호권과 겹치는 정보라(2026-10-28 QA #19) */}
         <PrefillStepper
           defaultQty={spent}
           gemCnt={gemCnt}
           onSkip={close}
           onNeedGems={openGemStore}
+          onFilled={setFilledQty}
           setUserProfile={setUserProfile}
         />
       </div>
@@ -310,7 +285,7 @@ const StreakSettlementNewBottomSheet = ({
           <div className="flex justify-center">
             <span className="inline-flex items-center gap-[7px] mt-[12px] px-[14px] py-[7px] rounded-full bg-layout-gray-50 dark:bg-layout-gray-dark text-[12.5px] font-[700] tracking-[-0.02em] text-layout-black dark:text-layout-white">
               <span>남은 보호권</span>
-              <span className="font-[800] text-primary-main-600">{protectResult.shield_cnt}개</span>
+              <span className="font-[800] text-primary-main-600">{(Number(protectResult.shield_cnt) || 0) + filledQty}개</span>
             </span>
           </div>
           <PrefillStepper
@@ -318,6 +293,7 @@ const StreakSettlementNewBottomSheet = ({
             gemCnt={gemCnt}
             onSkip={close}
             onNeedGems={openGemStore}
+            onFilled={setFilledQty}
             setUserProfile={setUserProfile}
           />
         </div>

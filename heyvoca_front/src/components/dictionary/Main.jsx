@@ -6,6 +6,7 @@ import { IconCare, IconSearch } from '../../assets/svg/icon';
 import SpeakerButton from '../common/SpeakerButton';
 import FuriganaText from '../common/FuriganaText';
 import { wordLang, isJa, getActiveLearningLang } from '../../utils/lang';
+import { dictIdOf, findOwnedWord } from '../../utils/ownedWord';
 import { getReading, shouldShowReading } from '../../utils/jaWord';
 import { useVocabulary } from '../../context/VocabularyContext';
 import { useUser } from '../../context/UserContext';
@@ -150,24 +151,6 @@ const GroupHead = ({ title, count, hint, action, first = false }) => (
     {action && <span className="ml-auto">{action}</span>}
   </div>
 );
-
-// 검색 결과(사전 단어)의 사전 id — 백엔드 응답 필드명이 섞여 있어 모두 본다.
-const dictIdOf = (w) => w?.vocaId ?? w?.voca_id ?? w?.dictionaryId ?? w?.id ?? null;
-
-// 내 사전에서 같은 단어 찾기 — dictionaryId(=vocaId) 우선, 없으면 표기 완전 일치.
-const findOwnedWord = (words, item) => {
-  const itemId = dictIdOf(item);
-  if (itemId != null) {
-    const byId = words.find((w) => {
-      const wId = w?.vocaId ?? w?.voca_id ?? w?.dictionaryId ?? null;
-      return wId != null && String(wId) === String(itemId);
-    });
-    if (byId) return byId;
-  }
-  const key = String(item?.word || '').toLowerCase();
-  if (!key) return null;
-  return words.find((w) => (w.origin || '').toLowerCase() === key) || null;
-};
 
 const Main = () => {
   "use memo";

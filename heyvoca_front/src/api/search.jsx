@@ -79,3 +79,20 @@ export const getDictWordDetailApi = async (word, vocaId = null) => {
     ?? items.find((w) => w?.word === q)
     ?? null;
 };
+
+/*
+  단어장에 담을 기본 뜻·예문(QA #19) — GET /search/word-picks?voca_id=<사전 id>
+  응답: { code: 200, data: { voca_id, meanings: [대표 2개], examples: [사용자 수준 맞춤 2개] } | null }
+  사전을 통째로 담으면 한 단어에 뜻 4개·예문 10개+가 쌓여서, 담기 직전 이 값을 기본값으로 쓴다.
+  실패하거나 구버전 서버(404)면 null — 호출부는 pickDefaultWordContent 로 앞쪽 2개씩 담는다.
+*/
+export const getWordPicksApi = async (vocaId) => {
+  if (vocaId == null) return null;
+  try {
+    const result = await fetchDataAsync(`${backendUrl}/search/word-picks`, 'GET', { voca_id: vocaId });
+    if (!result || result.code !== 200 || !result.data) return null;
+    return result.data;
+  } catch {
+    return null;
+  }
+};

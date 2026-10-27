@@ -8,6 +8,7 @@ export { default as ItemRewardSlide } from './ItemRewardSlide';
 export { default as GemRewardSlide } from './GemRewardSlide';
 export { default as AchievementSlide } from './AchievementSlide';
 export { default as ComboRewardSlide } from './ComboRewardSlide';
+export { default as StreakRewardSlide } from './StreakRewardSlide';
 export { default as FarmGrowRow } from './FarmGrowRow';
 export { ResultCta, ResultCtaBar, CTA_BASE, CTA_PRIMARY_FACE } from './ResultCta';
 export { ACHIEVEMENT_IMAGES } from './achievement';

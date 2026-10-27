@@ -4,7 +4,7 @@ import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 import { useVocabulary } from '../../context/VocabularyContext';
 import { vibrate } from '../../utils/osFunction';
 
-const DeleteWordNewBottomSheet = ({ vocabularyId, id }) => {
+const DeleteWordNewBottomSheet = ({ vocabularyId, id, bookTitle, otherBookCount = 0 }) => {
   "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
 
   const { deleteWord } = useVocabulary();
@@ -25,8 +25,15 @@ const DeleteWordNewBottomSheet = ({ vocabularyId, id }) => {
         flex flex-col gap-[15px] items-center justify-center 
         pt-[40px] px-[20px] pb-[10px]
       ">
-        <h3 className="text-layout-black dark:text-layout-white text-[18px] font-[700]">단어을 정말 삭제하시겠어요?</h3>
-        <p className="text-layout-black dark:text-layout-white text-[14px] font-[400]">삭제하면 되돌릴 수 없어요.</p>
+        <h3 className="text-layout-black dark:text-layout-white text-[18px] font-[700] text-center">
+          {bookTitle ? `'${bookTitle}'에서 뺄까요?` : '단어장에서 뺄까요?'}
+        </h3>
+        {/* 다른 단어장에도 있으면 이 단어장에서만 빠지고 학습 기록은 남는다(VocabularyContext.deleteWord) */}
+        <p className="text-layout-black dark:text-layout-white text-[14px] font-[400] text-center">
+          {otherBookCount > 0
+            ? '다른 단어장에 있는 같은 단어와 학습 기록은 그대로 남아요.'
+            : '이 단어의 학습 기록도 함께 지워지고 되돌릴 수 없어요.'}
+        </p>
       </div>
       <div className="flex items-center justify-between gap-[15px] p-[20px]">
         <motion.button
@@ -65,7 +72,7 @@ const DeleteWordNewBottomSheet = ({ vocabularyId, id }) => {
             stiffness: 500,
             damping: 15
           }}
-        >삭제</motion.button>
+        >빼기</motion.button>
       </div>
     </div>
   );

@@ -11,6 +11,8 @@ import { useUser } from '../../context/UserContext';
 import FuriganaText from '../common/FuriganaText';
 import { wordLang, isJa, getActiveLearningLang } from '../../utils/lang';
 import { getReading, shouldShowReading } from '../../utils/jaWord';
+import { getWordPicksApi } from '../../api/search';
+import { pickDefaultWordContent, resolveWordPicks } from '../../utils/wordPicks';
 
 // 검색 결과(사전 단어)의 사전 id — 응답 필드명이 섞여 있어 모두 본다.
 const dictIdOf = (w) => w?.vocaId ?? w?.voca_id ?? w?.dictionaryId ?? w?.id ?? null;
@@ -229,11 +231,29 @@ const AddWordNewBottomSheet = ({
     }
   };
 
+  // 검색 결과를 고르면 사전 뜻·예문을 통째로 채우지 않고 기본 2개씩만 채운다(QA #19).
+  // 먼저 앞쪽 2개로 바로 채우고, 서버 추천(수준 맞춤 예문)이 오면 그 사이 사용자가 손대지 않은 경우에만 바꾼다.
   const handleWordSelect = (item) => {
-    const { word, meanings = [], examples = [] } = item;
+    const { word } = item;
+    const { meanings, examples } = pickDefaultWordContent(item);
     getTextSound(word, wordLang(item, learningLang));
     setWordSearchResults(null);
     const reading = item.reading || '';
+    const pickedDictId = dictIdOf(item);
+    if (pickedDictId != null) {
+      getWordPicksApi(pickedDictId).then((picks) => {
+        if (!picks) return;
+        const cur = currentStateRef.current;
+        const untouched = cur.origin === word
+          && cur.examples === examples
+          && meaningsInputRef.current?.value === meanings.join(', ');
+        if (!untouched) return;
+        const next = resolveWordPicks(picks, item);
+        currentStateRef.current = { ...cur, meanings: next.meanings, examples: next.examples };
+        if (meaningsInputRef.current) meaningsInputRef.current.value = next.meanings.join(', ');
+        setExamplesState(next.examples);
+      });
+    }
     currentStateRef.current = {
       ...currentStateRef.current,
       origin: word,

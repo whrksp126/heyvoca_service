@@ -22,8 +22,11 @@ import { diffAgainstAccepted, tokenizeWords, stripTags } from './arrangeUtils';
   오프셋을 두면 suffix 낱말들이 이어진다 — 최종 문장이 prefix+슬롯+suffix 순서로 원문과
   1:1 대응한다는 계약(§3-1 표시 규칙)을 그대로 이용한 매핑이다.
 */
-const EDGE_LEADING_RE = /^[^A-Za-z0-9']+/;
-const EDGE_TRAILING_RE = /[^A-Za-z0-9']+$/;
+// 낱말 판정은 유니코드 문자·숫자 기준(2026-10-28) — 라틴 전용([A-Za-z0-9])이면 한국어 정답
+// 문장(문장 뜻 맞추기)에서 '그는' 같은 낱말이 통째로 빠지고 '20년간'의 '년간'이 꼬리 구두점으로
+// 잡혀 엉뚱한 슬롯에 붙었다('년간 20년간' 중복 표시). 영어 동작은 그대로다.
+const EDGE_LEADING_RE = /^[^\p{L}\p{N}']+/u;
+const EDGE_TRAILING_RE = /[^\p{L}\p{N}']+$/u;
 const answerWordEdgePunct = (answerText) => {
   const words = tokenizeWords(stripTags(answerText)).filter((t) => t.type === 'word');
   return words.map((t) => ({
