@@ -75,27 +75,14 @@ const WordRowSkeleton = () => (
 );
 
 /**
- * 단어 관리 모드의 한 줄 — [수정][단어 줄][선택 상자].
+ * 단어 관리 모드의 한 줄 — [선택 상자][작물·단어 줄][수정].
  * 행 높이는 WordRow 그대로(ITEM_HEIGHT)라 가상 스크롤 계산이 바뀌지 않는다.
  * 단어 줄을 눌러도 선택이 바뀐다 — 상자만 누르게 하면 손가락이 작은 칸을 찾아야 한다.
+ * 관리 중엔 복습일이 판단에 쓰이지 않으니 오른쪽 상태 텍스트는 뺀다(showDue=false).
  * 검증된 단어는 사전 표제어라 뜻·예문을 고칠 수 없다(단어 상세 시트와 같은 규칙) — 연필 대신 자물쇠.
  */
 const ManageWordRow = ({ word, checked, editable, onToggle, onEdit }) => (
   <div className="flex items-center gap-[6px] w-full shrink-0" style={{ height: ITEM_HEIGHT }}>
-    <motion.button
-      type="button"
-      onClick={onEdit}
-      whileTap={{ scale: 0.9 }}
-      className="flex items-center justify-center shrink-0 w-[30px] h-[30px] rounded-[8px] bg-layout-gray-50 dark:bg-layout-gray-dark"
-      aria-label={editable ? '단어 수정' : '수정할 수 없는 단어'}
-    >
-      {editable
-        ? <PencilSimple size={16} className="text-layout-gray-400 dark:text-layout-gray-200" />
-        : <Lock size={15} className="text-layout-gray-200" />}
-    </motion.button>
-    <div className="flex-1 min-w-0">
-      <WordRow word={word} onClick={onToggle} showXp={false} />
-    </div>
     <button
       type="button"
       onClick={onToggle}
@@ -107,6 +94,20 @@ const ManageWordRow = ({ word, checked, editable, onToggle, onEdit }) => (
         ? <CheckSquare size={24} weight="fill" className="text-primary-main-600" />
         : <Square size={24} className="text-layout-gray-200" />}
     </button>
+    <div className="flex-1 min-w-0">
+      <WordRow word={word} onClick={onToggle} showXp={false} showDue={false} />
+    </div>
+    <motion.button
+      type="button"
+      onClick={onEdit}
+      whileTap={{ scale: 0.9 }}
+      className="flex items-center justify-center shrink-0 w-[30px] h-[30px] rounded-[8px] bg-layout-gray-50 dark:bg-layout-gray-dark"
+      aria-label={editable ? '단어 수정' : '수정할 수 없는 단어'}
+    >
+      {editable
+        ? <PencilSimple size={16} className="text-layout-gray-400 dark:text-layout-gray-200" />
+        : <Lock size={15} className="text-layout-gray-200" />}
+    </motion.button>
   </div>
 );
 
@@ -601,7 +602,8 @@ const VocabularyWordsNewFullSheet = ({ id }) => {
           fontFamily: "'Pretendard Variable', sans-serif",
         }}
       >
-        {/* 이 단어장만의 밭 + 겹쳐 뜬 주 CTA */}
+        {/* 이 단어장만의 밭 + 겹쳐 뜬 주 CTA — 단어 관리 중엔 목록에 집중하게 숨긴다 */}
+        {!manageMode && (
         <BookFieldHero counts={counts} fieldCounts={field.counts} healthMix={field.healthMix} words={fieldWords} storedSeeds={storedSeeds}>
           <motion.button
             type="button"
@@ -617,9 +619,14 @@ const VocabularyWordsNewFullSheet = ({ id }) => {
             이 단어장 물주기
           </motion.button>
         </BookFieldHero>
+        )}
 
         {/* 필터 칩 — 팻말이 이미 단계별 수를 말하므로 여기는 눌러서 걸러지는 숫자만 둔다 */}
-        <div className="flex gap-[6px] shrink-0 px-[16px] pt-[32px] pb-[10px] overflow-x-auto">
+        {/* 관리 모드엔 밭이 없어 헤더(absolute)가 칩을 덮지 않게 상태바+헤더 높이만큼 띄운다 */}
+        <div
+          className="flex gap-[6px] shrink-0 px-[16px] pt-[32px] pb-[10px] overflow-x-auto"
+          style={manageMode ? { paddingTop: 'calc(max(var(--status-bar-height), env(safe-area-inset-top, 0px)) + 60px)' } : undefined}
+        >
           {chips.map((chip) => {
             const on = filter === chip.key;
             return (
@@ -648,19 +655,21 @@ const VocabularyWordsNewFullSheet = ({ id }) => {
 
         {manageMode && allDisplayedWords.length > 0 && (
           <div className="flex items-center justify-between shrink-0 h-[40px] px-[16px]">
-            <span className="text-[13px] font-[700] tracking-[-0.02em] text-layout-gray-400 dark:text-layout-gray-200">
-              <b className="font-[800] text-primary-main-600">{selectedWords.length}</b>개 선택
-            </span>
             <button
               type="button"
               onClick={toggleSelectAll}
               className="flex items-center gap-[6px] h-[32px] text-[13px] font-[700] tracking-[-0.02em] text-layout-black dark:text-layout-white"
             >
+              <span className="flex items-center justify-center w-[32px] h-[32px]">
+                {allSelected
+                  ? <CheckSquare size={24} weight="fill" className="text-primary-main-600" />
+                  : <Square size={24} className="text-layout-gray-200" />}
+              </span>
               {allSelected ? '전체 해제' : '전체 선택'}
-              {allSelected
-                ? <CheckSquare size={22} weight="fill" className="text-primary-main-600" />
-                : <Square size={22} className="text-layout-gray-200" />}
             </button>
+            <span className="text-[13px] font-[700] tracking-[-0.02em] text-layout-gray-400 dark:text-layout-gray-200">
+              <b className="font-[800] text-primary-main-600">{selectedWords.length}</b>개 선택
+            </span>
           </div>
         )}
 

@@ -21,8 +21,9 @@ import { getReading, shouldShowReading } from '../../utils/jaWord';
  *   58px로 되돌린다(실기기 QA 3차 — 단어장 상세 목록에서만 뺀다). 이 컴포넌트를 같이 쓰는
  *   다른 화면(StudyResult.jsx)은 기본값 그대로라 XP 게이지가 계속 보인다.
  *   높이가 바뀌는 화면은 호출부의 가상 스크롤 ITEM_HEIGHT 도 함께 맞춰야 한다.
+ * @param {boolean} [showDue=true] false면 오른쪽 복습일 텍스트를 그리지 않는다(단어 관리 모드).
  */
-const WordRow = ({ word, onClick, showXp = true }) => {
+const WordRow = ({ word, onClick, showXp = true, showDue = true }) => {
   "use memo";
 
   // 봉투(보유 씨앗)와 흙에 묻힌 씨앗(심은 씨앗)을 가르려면 visual_stage 가 필요하다
@@ -84,9 +85,11 @@ const WordRow = ({ word, onClick, showXp = true }) => {
         )}
       </span>
 
-      <span className={`shrink-0 text-right text-[11.5px] font-[700] ${DUE_TONE_CLASS[due.tone]}`}>
-        {due.text}
-      </span>
+      {showDue && (
+        <span className={`shrink-0 text-right text-[11.5px] font-[700] ${DUE_TONE_CLASS[due.tone]}`}>
+          {due.text}
+        </span>
+      )}
     </button>
   );
 };

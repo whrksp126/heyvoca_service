@@ -364,7 +364,13 @@ const CardMatchListeningQuestion = ({ question, testType, onComplete, onCardMatc
               테두리도 1px 을 늘 깔아 둔다(평소엔 투명) — 선택·정오답 깜빡임에서만 border-[1px] 이
               붙던 시절엔 그 순간 카드가 2px 커졌다(flex-basis 0 이어도 border-box 최소치는 테두리 포함).
             */
-            <div key={word.id} className="relative flex flex-col flex-1 min-h-0">
+            /* 정답·오답 흔들림은 래퍼에 건다 — 스피커가 카드와 같이 움직인다 */
+            <motion.div
+              key={word.id}
+              className="relative flex flex-col flex-1 min-h-0"
+              animate={flashAnim(word.id, wrongFlashLeftWordIds)}
+              transition={flashTransition(word.id, wrongFlashLeftWordIds)}
+            >
             <motion.button
               data-lift-card=""
               className={`
@@ -380,8 +386,6 @@ const CardMatchListeningQuestion = ({ question, testType, onComplete, onCardMatc
               whileTap={!isResolved && !isAnimating ? { scale: 0.95 } : {}}
               // 짝의 두 번째 탭은 곧바로 채점(match/wrong)이므로 톡은 첫 선택에서만 낸다.
               onTapStart={!isResolved && !isAnimating && selectedRight === null ? () => feel('tap') : undefined}
-              animate={flashAnim(word.id, wrongFlashLeftWordIds)}
-              transition={flashTransition(word.id, wrongFlashLeftWordIds)}
             >
               {/* 우측 상단 - 매칭 전: 최근 학습 시점 / 매칭 후: 다음 복습 예정일(오답은 비움).
                   카드 매칭은 단어 카드(왼쪽 열)가 곧 이 단어의 "문제 카드"라 각 단어 카드의
@@ -432,7 +436,7 @@ const CardMatchListeningQuestion = ({ question, testType, onComplete, onCardMatc
 
             </motion.button>
             {/* 채점 후: 오른쪽 아래 고정 스피커로 다시 듣기(카드는 disabled) — 일반 카드 맞추기와 같은 자리.
-                짝 선택 버튼 안에 버튼을 넣을 수 없어 형제로 겹쳐 둔다. */}
+                짝 선택 버튼 안에 버튼을 넣을 수 없어 형제로 두고 래퍼(relative) 기준 absolute 로 카드 안 오른쪽 아래에 겹친다. */}
             {showText && (
               <CardSpeakerButton
                 compact
@@ -441,7 +445,7 @@ const CardMatchListeningQuestion = ({ question, testType, onComplete, onCardMatc
                 className="absolute bottom-[9px] right-[8px] z-[3]"
               />
             )}
-            </div>
+            </motion.div>
           );
         })}
       </div>
