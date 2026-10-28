@@ -19,6 +19,7 @@ from app.models.models import db, UserVocaBook, UserVocaBookMap, UserVoca, Books
 from app.utils.gem import change_gem, InsufficientGem
 from app.utils.jwt_utils import jwt_required
 from app.utils.db_lock import begin_user_tx
+from app.services.user_voca_purge import purge_orphan_user_vocas, invalidate_user_word_caches
 from app.utils.dict_lang import get_dict_lang
 from app.utils.word_payload import (
     UserWordEnricher, payload_voca_id, validate_dict_voca_ids, check_payload_language,
@@ -1227,34 +1228,83 @@ def delete_voca_book(vocaBookId):
         db.session.delete(voca_book)
         db.session.flush()
 
-        # 3. 수집된 단어들에 대해 다른 단어장 매핑이 있는지 확인 후 고아 단어 삭제
-        #    (user_voca_book.py의 delete_user_voca_book과 동일 패턴으로 유지)
-        if voca_ids:
-            for uv_id in set(voca_ids):
-                exists_other = db.session.query(UserVocaBookMap).filter(
-                    UserVocaBookMap.user_voca_id == uv_id
-                ).first()
-                
-                if not exists_other:
-                    # 농장 게임 행(user_voca_game)이 user_voca_id를 FK로 참조(cascade 없음).
-                    # 먼저 지우지 않으면 학습(심기)까지 한 단어의 UserVoca 삭제 시
-                    # IntegrityError(1451)로 전체 삭제가 실패한다.
-                    db.session.query(UserVocaGame).filter(
-                        UserVocaGame.user_voca_id == uv_id,
-                        UserVocaGame.user_id == user_id
-                    ).delete()
-                    db.session.query(UserVoca).filter(
-                        UserVoca.id == uv_id,
-                        UserVoca.user_id == user_id
-                    ).delete()
+        # 3. 다른 단어장 매핑이 남지 않은 단어는 학습 상태(UserVoca·게임 행)까지 지운다
+        purge_orphan_user_vocas(user_id, voca_ids)
 
         db.session.commit()
+        # 추천 풀 캐시(30초)를 비우지 않으면 지운 단어가 곧바로 '새 씨앗 심기'에 다시 나온다.
+        invalidate_user_word_caches(user_id)
         return jsonify({'code': 204, 'message': '단어장 삭제 성공'}), 200
 
     except Exception:
         db.session.rollback()
         traceback.print_exc()
         return jsonify({'code': 500, 'message': '단어장 삭제 중 오류가 발생했습니다.'}), 500
+
+
+# 단어장에서 여러 단어 한 번에 빼기 — 단어 목록 '단어 관리' 모드(이슈 #19 3차)
+# body: {"ids": [user_voca_id, ...]}
+# 이 단어장의 매핑만 지우고, 다른 단어장에 남지 않은 단어는 학습 상태까지 지운다(purge_orphan_user_vocas).
+# 서점(제공) 단어장은 단어 구성이 잠겨 있어 403.
+@voca_books_bp.route('/<vocaBookId>/vocas/delete', methods=['POST'])
+@jwt_required
+def delete_vocas_from_book(vocaBookId):
+    user_id = UUID(g.user_id)
+    try:
+        voca_book_id = UUID(str(vocaBookId))
+    except ValueError:
+        return jsonify({'code': 400, 'message': '잘못된 형식의 단어장 ID입니다.'}), 400
+
+    data = request.get_json(silent=True) or {}
+    raw_ids = data.get('ids')
+    if not isinstance(raw_ids, list) or not raw_ids:
+        return jsonify({'code': 400, 'message': '삭제할 단어를 골라 주세요.'}), 400
+    try:
+        ids = {int(i) for i in raw_ids}
+    except (TypeError, ValueError):
+        return jsonify({'code': 400, 'message': '잘못된 단어 ID가 있습니다.'}), 400
+    if len(ids) > 2000:
+        return jsonify({'code': 400, 'message': '한 번에 지울 수 있는 단어 수를 넘었어요.'}), 400
+
+    # 사용자 단위 잠금 — '다른 단어장에도 있는가' 판정과 삭제 사이에 연결·학습이 끼어들지 않게 한다.
+    begin_user_tx(user_id)
+    voca_book = db.session.query(UserVocaBook).filter(
+        UserVocaBook.id == voca_book_id,
+        UserVocaBook.user_id == user_id
+    ).first()
+    if not voca_book:
+        db.session.rollback()
+        return jsonify({'code': 404, 'message': '해당 단어장을 찾을 수 없습니다.'}), 404
+    if is_purchased_book(voca_book):
+        db.session.rollback()
+        return jsonify({'code': 403, 'message': '제공 단어장의 단어는 뺄 수 없어요.'}), 403
+
+    try:
+        mapped_ids = [
+            row[0] for row in db.session.query(UserVocaBookMap.user_voca_id)
+            .filter(
+                UserVocaBookMap.user_voca_book_id == voca_book_id,
+                UserVocaBookMap.user_voca_id.in_(ids),
+            ).all()
+        ]
+        if mapped_ids:
+            db.session.query(UserVocaBookMap).filter(
+                UserVocaBookMap.user_voca_book_id == voca_book_id,
+                UserVocaBookMap.user_voca_id.in_(mapped_ids),
+            ).delete(synchronize_session=False)
+            db.session.flush()
+        purged = purge_orphan_user_vocas(user_id, mapped_ids)
+        db.session.commit()
+    except Exception:
+        db.session.rollback()
+        traceback.print_exc()
+        return jsonify({'code': 500, 'message': '단어 삭제 중 오류가 발생했습니다.'}), 500
+
+    invalidate_user_word_caches(user_id)
+    return jsonify({'code': 200, 'data': {
+        'removed': len(set(mapped_ids)),   # 이 단어장에서 빠진 단어 수
+        'purged': purged,                  # 다른 단어장에 없어 학습 기록까지 지운 단어 수
+    }}), 200
 
 
 # 단어장에 단어 청크 추가 (대용량 업로드 시 분할 저장용)

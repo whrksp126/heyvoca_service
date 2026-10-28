@@ -127,9 +127,6 @@ export const ContentReportNewBottomSheet = ({ question, previousQuestion = null,
         <h3 className="text-layout-black dark:text-layout-white text-[18px] font-[700]">
           어떤 점이 잘못됐나요?
         </h3>
-        <p className="text-layout-gray-400 dark:text-layout-gray-200 text-[13px] text-center leading-[1.5] break-keep">
-          단어를 굴려서 고르고, 잘못된 점을 골라 보내 주세요
-        </p>
       </div>
 
       <p className={`${stepLabel} pt-[16px] pb-[6px]`}>1 · 어떤 단어인가요?</p>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useMemo, useCallback } from 'react';
-import { CaretLeft, Plus, CaretUp, Lock, DotsThreeVertical, CloudSlash, ArrowClockwise, BookOpen, Plant } from '@phosphor-icons/react';
+import { CaretLeft, Plus, CaretUp, Lock, DotsThreeVertical, CloudSlash, ArrowClockwise, BookOpen, Plant, PencilSimple, CheckSquare, Square } from '@phosphor-icons/react';
 
 import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
 import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
@@ -9,6 +9,7 @@ import AddWordNewBottomSheet from '../newBottomSheet/AddWordNewBottomSheet';
 import WordDetaileNewBottomSheet from '../newBottomSheet/WordDetaileNewBottomSheet';
 import { BookStudyTypeNewBottomSheet } from '../newBottomSheet/BookStudyTypeNewBottomSheet';
 import { VocabularyBookMenuNewBottomSheet } from '../newBottomSheet/VocabularyBookMenuNewBottomSheet';
+import { ConfirmNewBottomSheet } from '../newBottomSheet/ConfirmNewBottomSheet';
 import { vibrate, showToast } from '../../utils/osFunction';
 import BookFieldHero from '../vocabularySheets/BookFieldHero';
 import WordRow from '../vocabularySheets/WordRow';
@@ -74,6 +75,42 @@ const WordRowSkeleton = () => (
 );
 
 /**
+ * 단어 관리 모드의 한 줄 — [수정][단어 줄][선택 상자].
+ * 행 높이는 WordRow 그대로(ITEM_HEIGHT)라 가상 스크롤 계산이 바뀌지 않는다.
+ * 단어 줄을 눌러도 선택이 바뀐다 — 상자만 누르게 하면 손가락이 작은 칸을 찾아야 한다.
+ * 검증된 단어는 사전 표제어라 뜻·예문을 고칠 수 없다(단어 상세 시트와 같은 규칙) — 연필 대신 자물쇠.
+ */
+const ManageWordRow = ({ word, checked, editable, onToggle, onEdit }) => (
+  <div className="flex items-center gap-[6px] w-full shrink-0" style={{ height: ITEM_HEIGHT }}>
+    <motion.button
+      type="button"
+      onClick={onEdit}
+      whileTap={{ scale: 0.9 }}
+      className="flex items-center justify-center shrink-0 w-[30px] h-[30px] rounded-[8px] bg-layout-gray-50 dark:bg-layout-gray-dark"
+      aria-label={editable ? '단어 수정' : '수정할 수 없는 단어'}
+    >
+      {editable
+        ? <PencilSimple size={16} className="text-layout-gray-400 dark:text-layout-gray-200" />
+        : <Lock size={15} className="text-layout-gray-200" />}
+    </motion.button>
+    <div className="flex-1 min-w-0">
+      <WordRow word={word} onClick={onToggle} showXp={false} />
+    </div>
+    <button
+      type="button"
+      onClick={onToggle}
+      className="flex items-center justify-center shrink-0 w-[32px] h-[32px]"
+      aria-label={checked ? '선택 해제' : '선택'}
+      aria-pressed={checked}
+    >
+      {checked
+        ? <CheckSquare size={24} weight="fill" className="text-primary-main-600" />
+        : <Square size={24} className="text-layout-gray-200" />}
+    </button>
+  </div>
+);
+
+/**
  * 단어장 안 — 단어 목록. 시안 vocabooks §1② · §4 · §5.
  *
  * 위는 이 단어장만의 밭(홈 히어로를 341px 로 축소 · 팻말 4개 · 겹쳐 뜬 주 CTA),
@@ -86,9 +123,9 @@ const VocabularyWordsNewFullSheet = ({ id }) => {
   const { popNewFullSheet } = useNewFullSheetActions();
   const {
     isVocabularySheetsLoading, getVocabularySheet, userDictionaryError,
-    retryUserDictionary, fetchUserDictionary, fetchVocaBooks,
+    retryUserDictionary, fetchUserDictionary, fetchVocaBooks, deleteWords,
   } = useVocabulary();
-  const { pushNewBottomSheet } = useNewBottomSheetActions();
+  const { pushNewBottomSheet, pushAwaitNewBottomSheet } = useNewBottomSheetActions();
 
   const vocabularySheet = getVocabularySheet(id);
   const [isRetrying, setIsRetrying] = useState(false);
@@ -107,6 +144,11 @@ const VocabularyWordsNewFullSheet = ({ id }) => {
   const lastScrollTopRef = useRef(0);
   const [showTopBtn, setShowTopBtn] = useState(false);
   const topBtnTimerRef = useRef(null);
+
+  // 단어 관리 모드(헤더 ... 메뉴 → '단어 관리') — 여러 단어를 골라 한 번에 빼거나 하나씩 고친다
+  const [manageMode, setManageMode] = useState(false);
+  const [selectedIds, setSelectedIds] = useState(() => new Set());
+  const [isDeleting, setIsDeleting] = useState(false);
 
   const words = vocabularySheet?.words;
 
@@ -150,6 +192,14 @@ const VocabularyWordsNewFullSheet = ({ id }) => {
     }
     return sortedWords;
   }, [sortedWords, filter]);
+
+  // 고른 단어 중 지금 목록에 실제로 있는 것만 센다 — 삭제·새로고침으로 사라진 id 가 남아 있어도
+  // '삭제(N)' 숫자가 부풀지 않게.
+  const selectedWords = useMemo(
+    () => (words || []).filter((w) => selectedIds.has(w.id)),
+    [words, selectedIds],
+  );
+  const allSelected = allDisplayedWords.length > 0 && allDisplayedWords.every((w) => selectedIds.has(w.id));
 
   useEffect(() => {
     vocabularySheetRef.current = vocabularySheet;
@@ -327,6 +377,8 @@ const VocabularyWordsNewFullSheet = ({ id }) => {
       bookId: vocabularySheet.id,
       title: vocabularySheet.title,
       onDeleted: popNewFullSheet,
+      // 서점(제공) 단어장은 단어 구성이 잠겨 있어 '단어 관리'를 숨긴다
+      onManage: !isPurchasedBook && totalCount > 0 ? enterManageMode : undefined,
     }, {
       isBackdropClickClosable: true,
       isDragToCloseEnabled: true,
@@ -336,6 +388,87 @@ const VocabularyWordsNewFullSheet = ({ id }) => {
   const handleCardClick = (wordId) => {
     vibrate({ duration: 5 });
     pushNewBottomSheet(WordDetaileNewBottomSheet, { vocabularyId: vocabularySheet.id, id: wordId });
+  };
+
+  const enterManageMode = () => {
+    setSelectedIds(new Set());
+    setManageMode(true);
+  };
+
+  const exitManageMode = () => {
+    vibrate({ duration: 5 });
+    setManageMode(false);
+    setSelectedIds(new Set());
+  };
+
+  const toggleSelect = (wordId) => {
+    vibrate({ duration: 5 });
+    setSelectedIds((prev) => {
+      const next = new Set(prev);
+      if (next.has(wordId)) next.delete(wordId);
+      else next.add(wordId);
+      return next;
+    });
+  };
+
+  // 전체 선택은 지금 보이는 목록(필터 적용 후) 기준이다 — '시듦'만 보다가 전체를 누르면
+  // 시든 단어만 골라야지 숨어 있는 단어까지 지우면 안 된다.
+  const toggleSelectAll = () => {
+    vibrate({ duration: 5 });
+    setSelectedIds((prev) => {
+      const next = new Set(prev);
+      if (allSelected) allDisplayedWords.forEach((w) => next.delete(w.id));
+      else allDisplayedWords.forEach((w) => next.add(w.id));
+      return next;
+    });
+  };
+
+  const handleManageEdit = (word) => {
+    vibrate({ duration: 5 });
+    if (wordVerification(word) === 'verified') {
+      showToast('사전 단어라 뜻과 예문은 고칠 수 없어요.');
+      return;
+    }
+    pushNewBottomSheet(AddWordNewBottomSheet, {
+      vocabularyId: vocabularySheet.id,
+      dictionaryId: word.dictionaryId,
+      id: word.id,
+    }, {
+      smFull: true,
+      closeOnBackdropClick: true,
+    });
+  };
+
+  const handleBulkDelete = async () => {
+    vibrate({ duration: 5 });
+    if (isDeleting || selectedWords.length === 0) return;
+    const count = selectedWords.length;
+    // 이 단어장에만 있는 단어는 서버가 학습 기록까지 지운다(다른 단어장에 있으면 거기 그대로 남는다)
+    const onlyHere = selectedWords.filter((w) => (w.vocaBooks?.length ?? 1) <= 1).length;
+    const ok = await pushAwaitNewBottomSheet(ConfirmNewBottomSheet, {
+      title: `단어 ${count}개를 뺄까요?`,
+      subTitle: onlyHere > 0
+        ? `${onlyHere === count ? '' : `그중 ${onlyHere}개는 `}다른 단어장에 없어 학습 기록도 함께 지워지고 되돌릴 수 없어요.`
+        : '다른 단어장에 있는 같은 단어와 학습 기록은 그대로 남아요.',
+      btns: { cancel: '취소', confirm: `빼기(${count})` },
+    }, {
+      isBackdropClickClosable: true,
+      isDragToCloseEnabled: true,
+    });
+    if (!ok) return;
+
+    setIsDeleting(true);
+    try {
+      await deleteWords(vocabularySheet.id, selectedWords.map((w) => w.vocaIndexId ?? w.id));
+      showToast(`단어 ${count}개를 뺐어요.`);
+      setSelectedIds(new Set());
+      if (count >= totalCount) setManageMode(false);
+    } catch (err) {
+      console.error('단어 일괄 삭제 실패:', err);
+      showToast('단어를 빼지 못했어요. 잠시 뒤 다시 시도해 주세요.');
+    } finally {
+      setIsDeleting(false);
+    }
   };
 
   /*
@@ -395,6 +528,17 @@ const VocabularyWordsNewFullSheet = ({ id }) => {
         {/* 이 단어장의 이름·색을 고치거나 지우는 자리.
             목록 화면 헤더에 있던 ✎ 를 여기로 옮겼다 — 거기서는 "어느 단어장인지"를
             먼저 골라야 했는데, 이 화면은 이미 그 단어장을 열어 둔 상태다. */}
+        {manageMode ? (
+          <motion.button
+            type="button"
+            onClick={exitManageMode}
+            whileTap={{ scale: 0.95 }}
+            className="shrink-0 h-[32px] px-[10px] rounded-[8px] text-[15px] font-[700] tracking-[-0.02em] text-primary-main-600"
+          >
+            완료
+          </motion.button>
+        ) : (
+        <>
         <motion.button
           className="flex items-center justify-center w-[32px] h-[32px] rounded-[8px] shrink-0"
           style={{ color: 'var(--layout-gray-400)' }}
@@ -437,6 +581,8 @@ const VocabularyWordsNewFullSheet = ({ id }) => {
             </motion.div>
           )}
         </div>
+        </>
+        )}
       </div>
 
       {/*
@@ -500,7 +646,25 @@ const VocabularyWordsNewFullSheet = ({ id }) => {
           })}
         </div>
 
-        <div className="flex flex-col px-[16px] pb-[20px]">
+        {manageMode && allDisplayedWords.length > 0 && (
+          <div className="flex items-center justify-between shrink-0 h-[40px] px-[16px]">
+            <span className="text-[13px] font-[700] tracking-[-0.02em] text-layout-gray-400 dark:text-layout-gray-200">
+              <b className="font-[800] text-primary-main-600">{selectedWords.length}</b>개 선택
+            </span>
+            <button
+              type="button"
+              onClick={toggleSelectAll}
+              className="flex items-center gap-[6px] h-[32px] text-[13px] font-[700] tracking-[-0.02em] text-layout-black dark:text-layout-white"
+            >
+              {allSelected ? '전체 해제' : '전체 선택'}
+              {allSelected
+                ? <CheckSquare size={22} weight="fill" className="text-primary-main-600" />
+                : <Square size={22} className="text-layout-gray-200" />}
+            </button>
+          </div>
+        )}
+
+        <div className={`flex flex-col px-[16px] ${manageMode ? 'pb-[110px]' : 'pb-[20px]'}`}>
           {isRetrying ? (
             <div className="flex flex-col pt-[8px]">
               {Array.from({ length: SKELETON_ROW_COUNT }).map((_, i) => (
@@ -596,7 +760,18 @@ const VocabularyWordsNewFullSheet = ({ id }) => {
               )}
 
               {displayedWords.map((item) => (
-                <WordRow key={item.id} word={item} onClick={() => handleCardClick(item.id)} showXp={false} />
+                manageMode ? (
+                  <ManageWordRow
+                    key={item.id}
+                    word={item}
+                    checked={selectedIds.has(item.id)}
+                    editable={wordVerification(item) !== 'verified'}
+                    onToggle={() => toggleSelect(item.id)}
+                    onEdit={() => handleManageEdit(item)}
+                  />
+                ) : (
+                  <WordRow key={item.id} word={item} onClick={() => handleCardClick(item.id)} showXp={false} />
+                )
               ))}
 
               {visibleRange.end < wordsToShow.length && (
@@ -626,8 +801,38 @@ const VocabularyWordsNewFullSheet = ({ id }) => {
         </div>
       </PullToRefresh>
 
+      {/* 관리 모드 하단 고정 — 고른 단어를 한 번에 뺀다 */}
       <AnimatePresence>
-        {showTopBtn && (
+        {manageMode && (
+          <motion.div
+            initial={{ y: 100 }}
+            animate={{ y: 0 }}
+            exit={{ y: 100 }}
+            transition={{ type: 'spring', stiffness: 400, damping: 34 }}
+            className="absolute left-0 right-0 bottom-0 z-[40] px-[16px] pt-[12px] bg-layout-white dark:bg-layout-black border-t border-[#F4F4F4] dark:border-layout-gray-dark"
+            style={{ paddingBottom: 'max(16px, env(safe-area-inset-bottom, 0px))' }}
+          >
+            <motion.button
+              type="button"
+              onClick={handleBulkDelete}
+              disabled={selectedWords.length === 0 || isDeleting}
+              whileTap={{ scale: 0.98 }}
+              className={`
+                flex items-center justify-center w-full h-[52px] rounded-[12px]
+                text-[16px] font-[700] tracking-[-0.02em]
+                ${selectedWords.length === 0 || isDeleting
+                  ? 'bg-layout-gray-50 dark:bg-layout-gray-dark text-layout-gray-300'
+                  : 'bg-status-error-600 text-layout-white'}
+              `}
+            >
+              {isDeleting ? '빼는 중…' : `삭제(${selectedWords.length})`}
+            </motion.button>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      <AnimatePresence>
+        {showTopBtn && !manageMode && (
           <motion.button
             initial={{ opacity: 0, scale: 0.5, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}

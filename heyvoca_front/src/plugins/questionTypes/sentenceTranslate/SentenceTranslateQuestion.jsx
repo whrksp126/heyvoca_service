@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import SpeakerArt from '../../../components/common/SpeakerArt';
+import CardSpeakerButton from '../../../components/common/CardSpeakerButton';
 import WordInfoBubble from '../../../components/common/WordInfoBubble';
 import { getWordInfoApi } from '../../../api/search';
 import { useShowFurigana } from '../../../context/ExampleSettingsContext';
@@ -284,6 +285,10 @@ const SentenceTranslateQuestion = ({ question, onComplete, onCardMatched, farmBy
         transition={{ duration: 0.2, ease: [0.4, 0, 0.2, 1] }}
       >
         <div className="relative z-[1] flex items-start gap-[12px]">
+          <p className={`flex-1 min-w-0 text-[19px] font-[600] text-layout-black dark:text-layout-white ${ja ? 'leading-[1.8] break-normal' : 'leading-[1.6] break-keep'}`}>
+            {tokens.map(renderToken)}
+          </p>
+          {/* 스피커 — 텍스트 오른쪽(듣기 문제 주 재생 스피커만 예외, 2026-10-28). 평소엔 회색, 읽는 동안 primary + 음파. */}
           <motion.button
             type="button"
             aria-label="문장 듣기"
@@ -300,9 +305,6 @@ const SentenceTranslateQuestion = ({ question, onComplete, onCardMatched, farmBy
               <SpeakerArt size={22} playing={showSpeaking} />
             </motion.span>
           </motion.button>
-          <p className={`text-[19px] font-[600] text-layout-black dark:text-layout-white ${ja ? 'leading-[1.8] break-normal' : 'leading-[1.6] break-keep'}`}>
-            {tokens.map(renderToken)}
-          </p>
         </div>
       </motion.div>
 
@@ -333,6 +335,13 @@ const SentenceTranslateQuestion = ({ question, onComplete, onCardMatched, farmBy
         perfect={isPerfect}
         question={question}
         farm={farm}
+        farmTrailing={
+          // 채점 후 농장 상태 바 옆 스피커 — 위 카드의 외국어 예문 전체를 다시 읽는다(게이트 무관).
+          <CardSpeakerButton
+            playing={isSpeaking && speakingTarget === 'full'}
+            onPress={() => speak(stripHtmlTags(sentence), 'full')}
+          />
+        }
         resumeReplayKey={resumeReplayKey}
         advanceGate={advanceGate}
         onSubmit={handleSubmit}

@@ -128,6 +128,8 @@ const ArrangeTray = ({
   onNext,
   // 채점 후 칩 탭 = 영어 사전 조회. 조각이 한국어인 문장 뜻 맞추기(sentenceTranslate)는 끈다.
   lookupChips = true,
+  // 채점 후 농장 상태 바 오른쪽에 붙일 노드 — 예문 보고 채우는 유형은 완성 문장 스피커를 넘긴다.
+  farmTrailing = null,
 }) => {
   const reducedMotion = useReducedMotion();
   // 채울 슬롯 총 개수 — accepted[0](정답 원소 하나)의 길이를 기준으로 삼는다(계약 §3-1,
@@ -715,6 +717,7 @@ const ArrangeTray = ({
           replayKey={resumeReplayKey}
           onAnimStart={advanceGate.farmStarted}
           onSettled={advanceGate.farmSettled}
+          trailing={farmTrailing}
         />
       </motion.div>
 

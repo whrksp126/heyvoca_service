@@ -2188,10 +2188,14 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
                     </h2>
                   )}
                   </LiftAboveBar>
-                  {/* 하단 한 줄 — [상태 바(flex-1)][힌트][스피커].
+                  {/* 하단 한 줄 — [상태 바(flex-1)][힌트] + 오른쪽 아래 [스피커].
                       스피커는 듣기 채점 전만 빼고 늘 같은 오른쪽 아래 자리에 있고, 상태 바·진단 pill 은
-                      그 왼쪽 남은 폭을 쓴다. 줄 자체는 터치를 막지 않는다(자식만 받음). */}
-                  <div className="absolute bottom-[14px] left-[14px] right-[14px] z-[2] flex items-center gap-[6px] pointer-events-none">
+                      그 왼쪽 남은 폭을 쓴다. 줄 자체는 터치를 막지 않는다(자식만 받음).
+                      2026-10-28 실기기: 스피커가 카드 밖 왼쪽 아래로 보였다는 신고 — 스피커를 줄(flex)의
+                      마지막 자식이 아니라 카드 기준 absolute right/bottom 으로 따로 고정하고, 줄은 그만큼
+                      오른쪽을 비운다(줄 내용 폭·줄바꿈과 무관하게 카드 안쪽 모서리에 붙는다).
+                      줄과 스피커 모두 44px 높이 띠에 세로 가운데 정렬. */}
+                  <div className={`absolute bottom-[14px] left-[14px] ${isListeningBeforeAnswer ? 'right-[14px]' : 'right-[64px]'} z-[2] min-h-[44px] flex items-center gap-[6px] pointer-events-none`}>
                     <div className="flex-1 min-w-0 pointer-events-auto">
                       {/* 부패 진단(시안 6절): 채점 전부터 뜨는 `.fb.ng` 형.
                           삽 그림 + '삽 1개를 씁니다' + '맞히면 씨앗부터'.
@@ -2250,10 +2254,14 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
                         <BookOpenText size={22} weight="duotone" />
                       </motion.button>
                     )}
-                    {!isListeningBeforeAnswer && (
-                      <CardSpeakerButton playing={isSpeaking} onPress={handleClickTTS} />
-                    )}
                   </div>
+                  {!isListeningBeforeAnswer && (
+                    <CardSpeakerButton
+                      playing={isSpeaking}
+                      onPress={handleClickTTS}
+                      className="!absolute bottom-[14px] right-[14px] z-[2]"
+                    />
+                  )}
 
                 </motion.div>
                 <div className="

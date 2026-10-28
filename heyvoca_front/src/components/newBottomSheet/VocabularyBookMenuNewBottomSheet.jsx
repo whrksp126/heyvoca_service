@@ -1,13 +1,16 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { PencilSimple, Trash, CaretRight } from '@phosphor-icons/react';
+import { PencilSimple, Trash, CaretRight, ListChecks } from '@phosphor-icons/react';
 import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 import { useVocabularySetNewBottomSheet } from './VocabularySetNewBottomSheet';
 import { useVocabularyDeleteNewBottomSheet } from './VocabularyDeleteNewBottomSheet';
 import { vibrate } from '../../utils/osFunction';
 
 /**
- * 단어장 하나를 다루는 메뉴 — 이름·색 수정 / 삭제.
+ * 단어장 하나를 다루는 메뉴 — 이름·색 수정 / 단어 관리 / 삭제.
+ *
+ * '단어 관리'는 onManage 를 넘긴 경우(=단어 구성을 바꿀 수 있는 내 단어장)에만 보인다.
+ * 서점(제공) 단어장은 단어 구성이 잠겨 있어 호출부가 넘기지 않는다.
  *
  * 예전에는 단어장 **목록** 화면의 ✎ 아이콘이 "단어장 편집" 풀시트를 띄웠고,
  * 그 안에서 다시 어느 단어장인지 골라야 했다. 이미 그 단어장을 열어 둔 자리
@@ -19,7 +22,7 @@ import { vibrate } from '../../utils/osFunction';
  * 되돌릴 수 없는 삭제가 이름 고치기와 똑같은 크기로 눈에 들어왔다.
  * 여기서는 삭제만 빨강을 쓰고 나머지는 무채색이다 — 색이 곧 경고다.
  */
-export const VocabularyBookMenuNewBottomSheet = ({ bookId, title, onDeleted }) => {
+export const VocabularyBookMenuNewBottomSheet = ({ bookId, title, onDeleted, onManage }) => {
   const { popNewBottomSheet } = useNewBottomSheetActions();
   const { showVocabularySetNewBottomSheet } = useVocabularySetNewBottomSheet();
   const { showVocabularyDeleteNewBottomSheet } = useVocabularyDeleteNewBottomSheet();
@@ -39,6 +42,18 @@ export const VocabularyBookMenuNewBottomSheet = ({ bookId, title, onDeleted }) =
         await showVocabularySetNewBottomSheet(bookId);
       },
     },
+    ...(onManage ? [{
+      id: 'manage',
+      icon: ListChecks,
+      title: '단어 관리',
+      sub: '여러 단어를 골라 빼거나 뜻·예문을 고쳐요',
+      danger: false,
+      onClick: () => {
+        vibrate({ duration: 5 });
+        popNewBottomSheet();
+        onManage();
+      },
+    }] : []),
     {
       id: 'delete',
       icon: Trash,

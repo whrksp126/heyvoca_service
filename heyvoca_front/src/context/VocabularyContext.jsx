@@ -16,7 +16,8 @@ import {
   getVocaBookDetailApi,
   createVocaBookApi,
   updateVocaBookApi,
-  deleteVocaBookApi
+  deleteVocaBookApi,
+  deleteVocasFromBookApi
 } from '../api/vocaBooks';
 import { getBookStoreApi } from '../api/bookStore';
 import { showToast } from '../utils/osFunction';
@@ -355,14 +356,22 @@ export const VocabularyProvider = ({ children }) => {
   const deleteVocaBook = useCallback(async (vocaBookId) => {
     try {
       const result = await deleteVocaBookApi(vocaBookId);
-      if (result.code === 204) {
-        setVocaBooks(prev => prev.filter(book => book.vocaBookId !== vocaBookId));
+      // 서버가 500 이면 fetchDataAsync 는 throw 하지 않고 Response 를 돌려준다.
+      // 예전에는 그대로 지나가 호출부가 "삭제됨"으로 알고 화면을 닫았다 — 실패는 실패로 던진다.
+      if (result?.code !== 204) {
+        showToast('단어장을 삭제하지 못했어요. 잠시 뒤 다시 시도해 주세요.');
+        throw new Error('단어장 삭제 실패');
       }
+      setVocaBooks(prev => prev.filter(book => book.vocaBookId !== vocaBookId));
+      // 그 단어장에만 있던 단어는 서버에서 지워졌다 — 사용자 사전과 홈 통계(새 씨앗 수)를 다시 받는다.
+      // 다시 받지 않으면 홈이 지운 단어 몫의 '새 씨앗 심기'를 계속 권한다.
+      fetchUserDictionary();
+      notifyStudyDataChanged();
     } catch (err) {
       console.error('deleteVocaBook 오류:', err);
       throw err;
     }
-  }, []);
+  }, [fetchUserDictionary]);
 
   // [UPDATED] 모든 단어장 데이터 불러오기 (New APIs)
   const fetchVocabularySheets = useCallback(async () => {
@@ -627,6 +636,19 @@ export const VocabularyProvider = ({ children }) => {
       throw err;
     }
   }, [userDictionary, fetchUserDictionary, fetchVocaBooks]);
+
+  // 여러 단어 한 번에 빼기 — 단어 관리 모드. 이 단어장 매핑만 지우고, 다른 단어장에 없는
+  // 단어는 서버가 학습 기록까지 지운다. 지운 뒤 목록·밭 표지판·홈 통계를 다시 받는다.
+  const deleteWords = useCallback(async (sheetId, wordIds) => {
+    const res = await deleteVocasFromBookApi(sheetId, wordIds);
+    if (res?.code !== 200) {
+      setErrorVocabularySheets('단어 삭제에 실패했습니다.');
+      throw new Error(res?.message || '단어 삭제 실패');
+    }
+    await Promise.all([fetchUserDictionary(), fetchVocaBooks()]);
+    notifyStudyDataChanged();
+    return res.data;
+  }, [fetchUserDictionary, fetchVocaBooks]);
 
   // 특정 단어장 단어 조회
   const getWord = useCallback((sheetId, wordId) => {
@@ -922,6 +944,7 @@ export const VocabularyProvider = ({ children }) => {
     updateWord,
     updateWordState,
     deleteWord,
+    deleteWords,
     getFilteredVocabularySheets,
     getRecentVocabularySheets,
     getProgressSortedSheets,

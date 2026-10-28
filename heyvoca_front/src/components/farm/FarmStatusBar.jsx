@@ -561,6 +561,8 @@ const FarmStatusBar = ({
  * @param {string} className   위치(absolute …) — 기본값은 유형 공통 규격
  * @param {string|number} replayKey  백그라운드 복귀 재생용 키(useResumeReplayKey)
  * @param {Function} onAnimStart / onSettled  전환 게이트용 연출 시작·끝 신호
+ * @param {ReactNode} trailing  바 오른쪽에 붙일 노드(예: CardSpeakerButton) — 주면 [바(flex-1)][trailing]
+ *                             한 줄로 놓는다(위치 규격은 같고, 줄 자체는 터치를 막지 않는다)
  */
 export const FarmResultBar = ({
   farm,
@@ -569,11 +571,29 @@ export const FarmResultBar = ({
   replayKey = 0,
   onAnimStart,
   onSettled,
+  trailing = null,
 }) => {
   if (!farm) return null;
   const place = className ?? (compact
     ? 'absolute bottom-[8px] left-[8px] right-[8px] z-[2]'
     : 'absolute bottom-[14px] left-[14px] right-[14px] z-[2]');
+  if (trailing) {
+    return (
+      <div className={`${place} flex items-center gap-[6px] pointer-events-none`}>
+        <div className="flex-1 min-w-0 pointer-events-auto">
+          <FarmResultBar
+            farm={farm}
+            compact={compact}
+            className="w-full"
+            replayKey={replayKey}
+            onAnimStart={onAnimStart}
+            onSettled={onSettled}
+          />
+        </div>
+        {trailing}
+      </div>
+    );
+  }
   return (
     <motion.div
       key={`farmbar-${replayKey}`}

@@ -7,6 +7,7 @@ from uuid import UUID
 from app.routes import voca_indexs_bp
 from app.models.models import db, UserVoca, UserVocaBookMap, UserVocaBook, UserVocaGame
 from app.utils.db_lock import begin_user_tx
+from app.services.user_voca_purge import purge_orphan_user_vocas, invalidate_user_word_caches
 from app.utils.jwt_utils import jwt_required
 from app.services.fsrs.state import (
     parse_user_voca_data, get_fsrs_state, is_v1, migrate_v1_to_v2, DEFAULT_FSRS_NEW,
@@ -435,16 +436,11 @@ def delete_voca_index(vocaIndexId):
             UserVocaBookMap.user_voca_id == vocaIndexId
         ).delete()
 
-        # 농장 게임 행(user_voca_game)은 user_voca_id 를 FK 로 참조한다(cascade 없음). 먼저 지우지
-        # 않으면 한 번이라도 학습한 단어는 삭제가 IntegrityError(1451)로 통째로 실패한다.
-        db.session.query(UserVocaGame).filter(
-            UserVocaGame.user_voca_id == vocaIndexId,
-            UserVocaGame.user_id == user_id,
-        ).delete(synchronize_session=False)
-
-        # UserVoca 삭제
-        db.session.delete(user_voca)
+        db.session.flush()
+        # 매핑이 모두 빠졌으니 게임 행(FK)·문장 노출 기록과 함께 UserVoca 를 지운다
+        purge_orphan_user_vocas(user_id, [vocaIndexId])
         db.session.commit()
+        invalidate_user_word_caches(user_id)
 
         return jsonify({'code': 204, 'message': '단어 전체 삭제 성공'}), 200
 
@@ -575,13 +571,10 @@ def delete_voca_index_book(vocaIndexId, vocaBookId):
 
         # 3. 고아 단어라면 사용자 사전(UserVoca)에서도 삭제 — 게임 행(FK)을 먼저 지운다
         if not exists_other:
-            db.session.query(UserVocaGame).filter(
-                UserVocaGame.user_voca_id == vocaIndexId,
-                UserVocaGame.user_id == user_id,
-            ).delete(synchronize_session=False)
-            db.session.delete(user_voca)
+            purge_orphan_user_vocas(user_id, [vocaIndexId])
 
         db.session.commit()
+        invalidate_user_word_caches(user_id)
         return jsonify({'code': 204, 'message': '단어장 데이터 삭제 성공'}), 200
 
     except Exception as e:

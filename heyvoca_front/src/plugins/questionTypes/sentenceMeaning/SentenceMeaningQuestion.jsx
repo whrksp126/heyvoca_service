@@ -122,6 +122,21 @@ const SentenceMeaningQuestion = ({ question, onComplete, onCardMatched, farmByWo
         <div className="relative z-[1] flex items-center flex-1 min-h-0 px-[20px] py-[45px]">
           <LiftAboveBar active={!!farm} topReserve={28} className="w-full">
             <div className="flex items-start gap-[12px] w-full">
+              {ja ? (
+                <FuriganaText
+                  as="p"
+                  html={sentenceText}
+                  readingTokens={sentenceReadingTokens}
+                  lang="ja"
+                  className="flex-1 min-w-0 text-[22px] font-[700] leading-[1.8] text-layout-black dark:text-layout-white break-normal"
+                />
+              ) : (
+                <p className="flex-1 min-w-0 text-[22px] font-[700] leading-[1.6] text-layout-black dark:text-layout-white break-keep">
+                  {(highlighted ?? [{ key: 0, text: stripTags(sentenceText) }]).map((p) => (
+                    <span key={p.key} className={p.hl ? 'text-primary-main-600' : undefined}>{p.text}</span>
+                  ))}
+                </p>
+              )}
               <motion.button
                 type="button"
                 aria-label="문장 듣기"
@@ -138,21 +153,6 @@ const SentenceMeaningQuestion = ({ question, onComplete, onCardMatched, farmByWo
                   <SpeakerArt size={24} playing={isSpeaking} />
                 </motion.span>
               </motion.button>
-              {ja ? (
-                <FuriganaText
-                  as="p"
-                  html={sentenceText}
-                  readingTokens={sentenceReadingTokens}
-                  lang="ja"
-                  className="flex-1 text-[22px] font-[700] leading-[1.8] text-layout-black dark:text-layout-white break-normal"
-                />
-              ) : (
-                <p className="flex-1 text-[22px] font-[700] leading-[1.6] text-layout-black dark:text-layout-white break-keep">
-                  {(highlighted ?? [{ key: 0, text: stripTags(sentenceText) }]).map((p) => (
-                    <span key={p.key} className={p.hl ? 'text-primary-main-600' : undefined}>{p.text}</span>
-                  ))}
-                </p>
-              )}
             </div>
           </LiftAboveBar>
         </div>

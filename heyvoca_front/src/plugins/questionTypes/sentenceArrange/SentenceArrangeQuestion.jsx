@@ -14,6 +14,7 @@ import { tokenizeKoreanWords } from '../../../utils/koreanTokenize';
 import { stripTags, isAcceptedOrder, renderHighlightedText, tokenizeWords, diffAgainstAccepted } from './arrangeUtils';
 import ArrangeTray from './ArrangeTray';
 import SpeakerArt from '../../../components/common/SpeakerArt';
+import CardSpeakerButton from '../../../components/common/CardSpeakerButton';
 
 /*
   문장 만들기(sentenceArrangePartial / sentenceArrange) — 계약: SENTENCE_QUESTIONS_CONTRACT.md 3-1절.
@@ -83,7 +84,7 @@ const SentenceArrangeQuestion = ({ question, onComplete, onCardMatched, farmByWo
       wordTtsActiveRef.current = true;
       advanceGate.ttsBegin();
     }
-    const isSentence = target === 'shown' || target === 'answer';
+    const isSentence = target === 'shown' || target === 'answer' || target === 'full';
     if (isSentence) isSentencePlayingRef.current = true;
     try {
       await getTextSound(text, lang);
@@ -98,6 +99,8 @@ const SentenceArrangeQuestion = ({ question, onComplete, onCardMatched, farmByWo
   };
 
   const speakShown = () => speak(stripHtmlTags(ko), 'ko', 'shown');
+  // 채점 후 농장 상태 바 옆 스피커 — 정답 문장 전체(외국어). 'answer' 와 달리 전환 게이트를 붙잡지 않는다.
+  const speakFull = () => speak(stripTags(answerText), answerLang, 'full');
 
   useEffect(() => {
     speakShown();
@@ -253,23 +256,7 @@ const SentenceArrangeQuestion = ({ question, onComplete, onCardMatched, farmByWo
       <div className="w-full mt-[16px] pt-[14px] border-t-[1px] border-layout-gray-200 dark:border-[#3A3A3A] relative">
       <span className="block mb-[2px] text-[11px] font-[700] leading-[1.7] text-layout-gray-300">정답 문장</span>
       <div className="flex items-start gap-[8px] w-full">
-        {/* 정답 문장 듣기 — 본문 바로 왼쪽, 첫 줄 높이에 맞춰 상단 정렬(재생 중 primary + 스피커 음파) */}
-        <motion.button
-          type="button"
-          aria-label="정답 문장 듣기"
-          whileTap={{ scale: 0.9 }}
-          transition={{ duration: 0.15 }}
-          className="relative shrink-0 flex items-center justify-center w-[28px] h-[25.5px]"
-          onClick={() => {
-            feel('tap');
-            const plain = stripTags(answerText);
-            if (plain) speak(plain, answerLang, 'answer');
-          }}
-        >
-          <span className={`relative z-[1] block transition-colors duration-200 ${isSpeaking && speakingTarget === 'answer' ? 'text-primary-main-600' : 'text-layout-gray-300'}`}>
-            <SpeakerArt size={22} playing={isSpeaking && speakingTarget === 'answer'} />
-          </span>
-        </motion.button>
+        {/* 정답 문장 듣기 — 본문 바로 오른쪽, 첫 줄 높이에 맞춰 상단 정렬(재생 중 primary + 스피커 음파) */}
         <p className="relative z-[1] flex-1 min-w-0 text-[15px] leading-[1.7] text-layout-gray-400 dark:text-layout-gray-100 break-keep">
         {(renderHighlightedText(answerText) ?? []).map((p) => (
           <span key={p.key}>
@@ -306,6 +293,22 @@ const SentenceArrangeQuestion = ({ question, onComplete, onCardMatched, farmByWo
           </span>
         ))}
         </p>
+        <motion.button
+          type="button"
+          aria-label="정답 문장 듣기"
+          whileTap={{ scale: 0.9 }}
+          transition={{ duration: 0.15 }}
+          className="relative shrink-0 flex items-center justify-center w-[28px] h-[25.5px]"
+          onClick={() => {
+            feel('tap');
+            const plain = stripTags(answerText);
+            if (plain) speak(plain, answerLang, 'answer');
+          }}
+        >
+          <span className={`relative z-[1] block transition-colors duration-200 ${isSpeaking && speakingTarget === 'answer' ? 'text-primary-main-600' : 'text-layout-gray-300'}`}>
+            <SpeakerArt size={22} playing={isSpeaking && speakingTarget === 'answer'} />
+          </span>
+        </motion.button>
       </div>
       </div>
     );
@@ -346,7 +349,7 @@ const SentenceArrangeQuestion = ({ question, onComplete, onCardMatched, farmByWo
 
   return (
     <div className="flex flex-col gap-[15px] h-full">
-      {/* 위 카드 — 한국어 해석. 카드 자체는 탭 동작 없음 — 왼쪽 스피커 아이콘을 눌러야
+      {/* 위 카드 — 한국어 해석. 카드 자체는 탭 동작 없음 — 오른쪽 스피커 아이콘을 눌러야
           읽는다(2026-09-29, 예전엔 카드 전체 탭 = TTS 였다). 어절 탭 = 한국어 역방향 사전 조회. */}
       <motion.div
         className="
@@ -361,6 +364,10 @@ const SentenceArrangeQuestion = ({ question, onComplete, onCardMatched, farmByWo
         style={{ willChange: 'transform, opacity' }}
       >
         <div className="relative z-[1] flex items-start gap-[12px]">
+          <p className="flex-1 min-w-0 text-[19px] font-[600] leading-[1.6] text-layout-black dark:text-layout-white break-keep">
+            {renderKoTokens()}
+          </p>
+          {/* 스피커 — 텍스트 오른쪽(듣기 문제 주 재생 스피커만 예외, 2026-10-28). 평소엔 회색, 읽는 동안 primary + 음파. */}
           <motion.button
             type="button"
             aria-label="해석 듣기"
@@ -377,9 +384,6 @@ const SentenceArrangeQuestion = ({ question, onComplete, onCardMatched, farmByWo
               <SpeakerArt size={22} playing={showSpeaking} />
             </motion.span>
           </motion.button>
-          <p className="text-[19px] font-[600] leading-[1.6] text-layout-black dark:text-layout-white break-keep">
-            {renderKoTokens()}
-          </p>
         </div>
 
         {/* 어절 사전 말풍선 — document.body 포털(WordInfoBubble)이라 카드가 짧아도 잘리지 않는다. */}
@@ -410,6 +414,12 @@ const SentenceArrangeQuestion = ({ question, onComplete, onCardMatched, farmByWo
         perfect={isPerfect}
         question={question}
         farm={farm}
+        farmTrailing={
+          <CardSpeakerButton
+            playing={isSpeaking && speakingTarget === 'full'}
+            onPress={speakFull}
+          />
+        }
         resumeReplayKey={resumeReplayKey}
         advanceGate={advanceGate}
         onSubmit={handleSubmit}

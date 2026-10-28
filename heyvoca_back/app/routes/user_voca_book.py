@@ -13,6 +13,7 @@ from app.routes import user_voca_book_bp
 from app.models.models import db, User, VocaBook, Voca, VocaMeaning, VocaExample, VocaBookMap, VocaMeaningMap, VocaExampleMap, Bookstore, UserVocaBook, UserVoca, UserVocaBookMap, UserVocaGame
 from app.routes.mainpage import update_user_goal
 from app.utils.db_lock import begin_user_tx
+from app.services.user_voca_purge import purge_orphan_user_vocas, invalidate_user_word_caches
 from app.utils.jwt_utils import jwt_required
 from app.utils.dict_lang import get_dict_lang
 from app.utils.word_payload import check_payload_language
@@ -225,26 +226,8 @@ def delete_user_voca_book():
         db.session.delete(user_voca_book)
         db.session.flush()
 
-        # 3. 수집된 단어들에 대해 다른 단어장 매핑이 있는지 확인 후 고아 단어 삭제
-        #    (voca_books.py의 delete_voca_book과 동일 패턴)
-        if voca_ids:
-            for uv_id in set(voca_ids):
-                exists_other = db.session.query(UserVocaBookMap).filter(
-                    UserVocaBookMap.user_voca_id == uv_id
-                ).first()
-
-                if not exists_other:
-                    # 농장 게임 행(user_voca_game)이 user_voca_id를 FK로 참조(cascade 없음).
-                    # 먼저 지우지 않으면 학습(심기)까지 한 단어의 UserVoca 삭제 시
-                    # IntegrityError(1451)로 전체 삭제가 실패한다.
-                    db.session.query(UserVocaGame).filter(
-                        UserVocaGame.user_voca_id == uv_id,
-                        UserVocaGame.user_id == user_id
-                    ).delete()
-                    db.session.query(UserVoca).filter(
-                        UserVoca.id == uv_id,
-                        UserVoca.user_id == user_id
-                    ).delete()
+        # 3. 다른 단어장 매핑이 남지 않은 단어는 학습 상태(UserVoca·게임 행)까지 지운다
+        purge_orphan_user_vocas(user_id, voca_ids)
 
         db.session.commit()
     except Exception as e:
@@ -252,6 +235,8 @@ def delete_user_voca_book():
         print("###delete_user_voca_book error : ", e)
         return jsonify({'code': 500, 'message': '단어장 삭제 중 오류가 발생했습니다.'}), 500
 
+    # 추천 풀 캐시(30초)를 비우지 않으면 지운 단어가 곧바로 '새 씨앗 심기'에 다시 나온다.
+    invalidate_user_word_caches(user_id)
     return jsonify({'code': 200, 'data': {}}), 200
 
 

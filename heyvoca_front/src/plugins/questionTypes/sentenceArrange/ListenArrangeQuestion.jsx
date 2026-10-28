@@ -172,7 +172,7 @@ const ListenArrangeQuestion = ({ question, onComplete, onCardMatched, farmByWord
   };
 
   // 채점 후: 틀렸으면 실제 정답 문장(원문)을 해석 위에 보여 준다 — 문장 만들기(SentenceArrangeQuestion)의
-  // '정답 문장' 블록과 같은 규격(왼쪽 스피커로 문장 전체 TTS). 정오답과 무관하게 한국어 해석은 항상 공개.
+  // '정답 문장' 블록과 같은 규격(오른쪽 스피커로 문장 전체 TTS). 정오답과 무관하게 한국어 해석은 항상 공개.
   const answerPlaying = isSpeaking && speakingTarget === 'answer';
   const postAnswerNode = (
     <div className="w-full mt-[16px]">
@@ -180,6 +180,9 @@ const ListenArrangeQuestion = ({ question, onComplete, onCardMatched, farmByWord
         <div className="relative w-full pt-[14px] border-t-[1px] border-layout-gray-200 dark:border-[#3A3A3A]">
           <span className="block mb-[2px] text-[11px] font-[700] leading-[1.7] text-layout-gray-300">정답 문장</span>
           <div className="flex items-start gap-[8px] w-full">
+            <p className="relative z-[1] flex-1 min-w-0 text-[15px] leading-[1.7] text-layout-gray-400 dark:text-layout-gray-100 break-keep">
+              {plainAnswer}
+            </p>
             <motion.button
               type="button"
               aria-label="정답 문장 듣기"
@@ -195,9 +198,6 @@ const ListenArrangeQuestion = ({ question, onComplete, onCardMatched, farmByWord
                 <SpeakerArt size={22} playing={answerPlaying} />
               </span>
             </motion.button>
-            <p className="relative z-[1] flex-1 min-w-0 text-[15px] leading-[1.7] text-layout-gray-400 dark:text-layout-gray-100 break-keep">
-              {plainAnswer}
-            </p>
           </div>
         </div>
       )}

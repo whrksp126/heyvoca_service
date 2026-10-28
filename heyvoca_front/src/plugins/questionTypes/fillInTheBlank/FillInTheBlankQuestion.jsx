@@ -22,6 +22,7 @@ import { tokenizeKoreanParts } from '../../../utils/koreanTokenize';
 // 강조 조각을 데이터로 얻어야 해서 공용 유틸(questionTypes/highlightMarker.js)을 함께 쓴다.
 import { renderHighlightedText as getHighlightParts } from '../highlightMarker';
 import SpeakerArt from '../../../components/common/SpeakerArt';
+import CardSpeakerButton from '../../../components/common/CardSpeakerButton';
 
 /*
   빈칸 채우기(fillInTheBlank) — 한 방향뿐이다.
@@ -226,6 +227,10 @@ const FillInTheBlankQuestion = ({ question, onComplete, onCardMatched, farmByWor
     const text = stripHtmlTags(shownText);
     speak(text, shownLang, 'shown');
   };
+
+  // 채점 후 농장 상태 바 옆 스피커 — 빈칸을 정답으로 채운 예문 전체(외국어)를 읽는다.
+  // 'full' 은 'lookup' 처럼 전환 게이트를 붙잡지 않는다(위 speak 참고 — 'word' 만 붙잡음).
+  const speakFull = () => speak(stripHtmlTags(`${before}${blankFill ?? ''}${after}`), blankLang, 'full');
 
   const handleCardClick = () => {
     feel('tap');
@@ -454,7 +459,7 @@ const FillInTheBlankQuestion = ({ question, onComplete, onCardMatched, farmByWor
 
   return (
     <div className="flex flex-col gap-[15px] h-full">
-      {/* 위 카드 — 보여 주는 예문. 카드 자체는 탭 동작 없음 — 왼쪽 스피커 아이콘을 눌러야
+      {/* 위 카드 — 보여 주는 예문. 카드 자체는 탭 동작 없음 — 오른쪽 스피커 아이콘을 눌러야
           읽는다(2026-09-29, 예전엔 카드 전체 탭 = TTS 였다). 어절 탭 = 한국어 역방향 사전 조회. */}
       <motion.div
         className="
@@ -469,7 +474,10 @@ const FillInTheBlankQuestion = ({ question, onComplete, onCardMatched, farmByWor
         style={{ willChange: 'transform, opacity' }}
       >
         <div className="relative z-[1] flex items-start gap-[12px]">
-          {/* 스피커 아이콘 — 텍스트 왼쪽. 평소엔 회색, 읽는 동안 primary + 맥동(SpeakerArt 음파). */}
+          <p className="flex-1 min-w-0 text-[19px] font-[600] leading-[1.6] text-layout-black dark:text-layout-white break-keep">
+            {renderShownKoreanTokens()}
+          </p>
+          {/* 스피커 — 텍스트 오른쪽(듣기 문제 주 재생 스피커만 예외, 2026-10-28). 평소엔 회색, 읽는 동안 primary + 음파. */}
           <motion.button
             type="button"
             aria-label="예문 듣기"
@@ -486,9 +494,6 @@ const FillInTheBlankQuestion = ({ question, onComplete, onCardMatched, farmByWor
               <SpeakerArt size={22} playing={showSpeaking} />
             </motion.span>
           </motion.button>
-          <p className="text-[19px] font-[600] leading-[1.6] text-layout-black dark:text-layout-white break-keep">
-            {renderShownKoreanTokens()}
-          </p>
         </div>
 
         {/* 어절 사전 말풍선 — document.body 포털(WordInfoBubble)이라 카드가 짧아도 잘리지 않는다. */}
@@ -597,6 +602,12 @@ const FillInTheBlankQuestion = ({ question, onComplete, onCardMatched, farmByWor
           replayKey={resumeReplayKey}
           onAnimStart={advanceGate.farmStarted}
           onSettled={advanceGate.farmSettled}
+          trailing={
+            <CardSpeakerButton
+              playing={isSpeaking && speakingTarget === 'full'}
+              onPress={speakFull}
+            />
+          }
         />
       </motion.div>
 

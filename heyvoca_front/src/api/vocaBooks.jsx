@@ -77,6 +77,18 @@ export const deleteVocaBookApi = async (vocaBookId) => {
   }
 };
 
+// 단어장에서 여러 단어 한 번에 빼기 — 단어 관리 모드.
+// 다른 단어장에 없는 단어는 서버가 학습 기록까지 지운다(POST /vocaBooks/<id>/vocas/delete).
+export const deleteVocasFromBookApi = async (vocaBookId, ids) => {
+  const url = `${backendUrl}/vocaBooks/${vocaBookId}/vocas/delete`;
+  try {
+    return await fetchDataAsync(url, 'POST', { ids });
+  } catch (error) {
+    console.error('deleteVocasFromBookApi 오류:', error);
+    throw error;
+  }
+};
+
 // Excel 파일 업로드로 단어장 생성
 export const uploadExcelApi = async (file, title, color) => {
   const url = `${backendUrl}/vocaBooks/upload/excel`;
