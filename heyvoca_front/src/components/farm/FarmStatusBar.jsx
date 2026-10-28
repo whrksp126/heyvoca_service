@@ -486,16 +486,21 @@ const FarmStatusBar = ({
   const badgeSlot = (
     <span
       className={`
-        relative z-[1] flex-shrink-0 flex items-center justify-end
-        ${compact ? 'w-[44px]' : 'w-[64px]'}
+        relative z-[1] flex-shrink-0 grid items-center justify-items-end
+        font-[800] tracking-[-0.03em] tabular-nums
+        ${compact ? 'text-[9px]' : 'text-[11.5px]'}
       `}
     >
+      {/* 폭 잡기용 보이지 않는 최종값 — 막대와의 간격을 작물–막대 간격(부모 gap)과 같게 두면서도
+          카운트업(0→N) 중 글자 폭이 바뀌어 막대가 흔들리지 않게 한다(2026-10-28 실기기 피드백:
+          예전 고정 폭 64/44px 은 +N XP 와 막대 사이가 너무 멀었다). 채점 결과 전에는 두 자리 폭. */}
+      <span aria-hidden className="invisible whitespace-nowrap [grid-area:1/1]">
+        {pending ? '+00' : `${xpBadgeSign}${xpBadgeAbs}`} XP
+      </span>
       {!pending && (
         <motion.span
           className={`
-            inline-flex flex-shrink-0 items-center justify-center whitespace-nowrap tabular-nums
-            font-[800] tracking-[-0.03em]
-            ${compact ? 'text-[9px]' : 'text-[11.5px]'}
+            [grid-area:1/1] inline-flex flex-shrink-0 items-center justify-center whitespace-nowrap
             ${xpBadgePositive
               ? 'text-primary-main-600 dark:text-primary-main-400'
               : 'text-layout-gray-300 dark:text-layout-gray-200'}
