@@ -112,7 +112,7 @@ const BottomNav = () => {
           );
         })}
       </ul>
-      <div style={{ height: 'calc(var(--safe-area-bottom) - 20px)' }}></div>
+      <div style={{ height: 'max(0px, calc(var(--safe-area-bottom) - var(--bottom-inset-trim, 20px)))' }}></div>
     </footer>
   );
 };

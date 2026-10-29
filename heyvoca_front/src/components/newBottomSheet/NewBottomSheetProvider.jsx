@@ -115,7 +115,7 @@ const BottomSheetItem = ({ newBottomSheet, isActive, phase, onDragEnd, onAnimati
       >
         <div className="min-h-0 overflow-y-auto overscroll-contain">
           <newBottomSheet.component {...newBottomSheet.props} />
-          <div style={{ height: 'calc(var(--safe-area-bottom) - 20px)' }} />
+          <div style={{ height: 'max(0px, calc(var(--safe-area-bottom) - var(--bottom-inset-trim, 20px)))' }} />
         </div>
       </motion.div>
     );
@@ -133,7 +133,7 @@ const BottomSheetItem = ({ newBottomSheet, isActive, phase, onDragEnd, onAnimati
     >
       <div className="min-h-0 overflow-y-auto overscroll-contain">
         <newBottomSheet.component {...newBottomSheet.props} />
-        <div style={{ height: 'calc(var(--safe-area-bottom) - 20px)' }} />
+        <div style={{ height: 'max(0px, calc(var(--safe-area-bottom) - var(--bottom-inset-trim, 20px)))' }} />
       </div>
     </motion.div>
   );

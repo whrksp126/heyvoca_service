@@ -24,6 +24,9 @@
   --height-bottom-nav: 60px;
   --status-bar-height: env(safe-area-inset-top, 0px);
   --safe-area-bottom: env(safe-area-inset-bottom, 0px);
+  /* 하단 inset 에서 깎는 양: iOS 홈 인디케이터 위에 탭바를 살짝 걸치게 하는 보정.
+     Android 앱(내비 바 = 터치 불가 영역)에서는 main.jsx 가 0px 로 덮어쓴다. */
+  --bottom-inset-trim: 20px;
   --current-header-height: 55px;
   --current-bottom-nav-height: 60px;
 
