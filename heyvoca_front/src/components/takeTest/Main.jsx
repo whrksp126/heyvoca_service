@@ -1596,7 +1596,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
   // 변환해 enqueueRetry로 큐 맨 끝에 재출제한다(맞출 때까지 반복, 통과 처리하지 않음).
   // loggedVocaIdsRef로 중복 로깅 방지, cardRetryEnqueuedRef로 동일 단어의 중복 재출제
   // (카드 즉시 콜백 onCardMatched + 세트 완료 콜백 onComplete 이중 호출) 방지.
-  const processCardWord = ({ sheetId, wordId, updateData, isCorrect: wordIsCorrect, timeTakenMs, typo, errorType }, currentQuestion, setWords, questionType) => {
+  const processCardWord = ({ sheetId, wordId, updateData, isCorrect: wordIsCorrect, timeTakenMs, typo, errorType, hintUsed }, currentQuestion, setWords, questionType) => {
     if (wordId == null) return;
     updateWordState(sheetId, wordId, updateData);
     setPendingUpdateSheetIds(prev => new Set(prev.add(sheetId)));
@@ -1713,6 +1713,8 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
           ...(exampleHash ? { example_hash: exampleHash } : {}),
           // 실수 유형(LEVEL_AND_MEANING_CONTRACT §3) — sentenceTranslate 등 아는 유형만, 없으면 보내지 않는다.
           ...(errorType ? { error_type: errorType } : {}),
+          // 스펠링 채우기 힌트 사용 횟수 — 정답일 때만(백엔드가 정답+힌트를 FSRS Hard 로 처리).
+          ...(wordIsCorrect && hintUsed > 0 ? { hint_used: hintUsed } : {}),
         };
 
         // pendingLogPromisesRef에는 실제 전송 시점과 무관하게(큐잉되더라도) 즉시 등록해야

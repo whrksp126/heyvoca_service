@@ -20,6 +20,11 @@ question_type 상수 — 백엔드 여러 곳(추천 composer, /study/log 화이
                              sentenceArrange/listenArrange 와 균등 혼합(약 1/3), tier 5 에서는 단독)
   이 4종은 사전 테이블 voca_example_puzzle(dict) 데이터가 있는 단어에서만 출제 가능하다
   (app/services/recommend/composer.py::_item_can_use_question_type).
+
+2026-10 이슈 #21 — spellingFill(스펠링 채우기): 뜻을 보고, 앞부분만 보이는 단어의 나머지 철자를
+  직접 입력(ja 는 읽기 가나). 예문 불필요. 정답(공백 제외) 2글자 이상·뜻 있음·ja 는 읽기 필요.
+  힌트를 쓰고 맞히면 /study/log 의 hint_used>0 → FSRS Hard(2). 대표 tier 4, tier 5 에도 노출.
+  계약: heyvoca_service/docs/SENTENCE_QUESTIONS_CONTRACT.md §spellingFill
 """
 
 # 추천 알고리즘(app/services/recommend/composer.py)이 단어에 배정할 수 있는 유형.
@@ -40,6 +45,8 @@ RECOMMENDABLE_QUESTION_TYPES = (
     # 2026-10 이슈 #16 — 문장 뜻 맞추기(외국어 예문 → 한국어 어절 조각 나열). en·ja 공통.
     # 정본: heyvoca_service/docs/LEVEL_AND_MEANING_CONTRACT.md §3
     'sentenceTranslate',
+    # 2026-10 이슈 #21 — 스펠링 채우기(뜻 보고 나머지 철자 입력). en·ja 공통, 예문 불필요.
+    'spellingFill',
 )
 
 # 자동 출제(농장 돌보기 사다리·가중 무작위 배정·새 씨앗 심기)에는 넣지 않고, 자유 설정 테스트에서
@@ -65,17 +72,19 @@ QUESTION_TYPE_TIER = {
     # tier 4 는 잎 이상만 열려 실전 문제로 거의 안 나왔다. QA 4차에 4지선다 sentenceMeaning 이
     # 사다리에서 빠져 이 칸의 독해 문제는 이 유형 하나다.
     'sentenceTranslate':       3,
+    'spellingFill':            4,   # 대표 tier. tier 5 에도 노출(fillInTheBlankTyping 과 같은 방식)
 }
 
-# tier → 그 tier에서 출제 가능한 유형 목록(순서 고정). QUESTION_TYPE_TIER의 역인덱스 + 예외 1건:
-# fillInTheBlankTyping 은 대표 tier 4 이면서 tier 5 에도 들어간다(2026-10 tier 4 부터 노출).
-# tier 4 는 같은 tier 안 균등 무작위라 typing 비중 약 1/4(puzzle 없는 단어는 typing 만 후보).
+# tier → 그 tier에서 출제 가능한 유형 목록(순서 고정). QUESTION_TYPE_TIER의 역인덱스 + 예외 2건:
+# fillInTheBlankTyping·spellingFill 은 대표 tier 4 이면서 tier 5 에도 들어간다(2026-10 tier 4 부터 노출).
+# tier 4 는 같은 tier 안 균등 무작위라 각 유형 비중 약 1/4(puzzle 없는 단어는 typing·spellingFill 만,
+# 예문 없는 단어는 spellingFill 만 후보). tier 5 는 typing 과 spellingFill 반반.
 TIER_QUESTION_TYPES = {
     1: ('multipleChoice', 'cardMatch'),
     2: ('reverseMultipleChoice', 'multipleChoiceListening', 'cardMatchListening'),
     3: ('fillInTheBlank', 'sentenceArrangePartial', 'sentenceTranslate'),
-    4: ('sentenceArrange', 'listenArrange', 'fillInTheBlankTyping'),
-    5: ('fillInTheBlankTyping',),
+    4: ('sentenceArrange', 'listenArrange', 'fillInTheBlankTyping', 'spellingFill'),
+    5: ('fillInTheBlankTyping', 'spellingFill'),
 }
 
 MAX_TIER = 5

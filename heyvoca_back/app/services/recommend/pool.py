@@ -68,6 +68,9 @@ class CandidateItem:
     # 담는다(2026-09 2차 보완). {'tier_target':int,'tier_shown':int,'was_correct':bool} 또는
     # 기록이 없으면 None. composer._compute_target_tier가 다음 tier_target 계산에 쓴다.
     tier_state:        Optional[dict] = None
+    # 일본어 단어 읽기(가나) — 사전 voca_ja.reading. 스펠링 채우기(spellingFill)가 ja 에서는
+    # 이 읽기를 입력받으므로 자격 검사에 쓴다(2026-10 이슈 #21). en 은 항상 None.
+    reading:           Optional[str] = None
 
 
 def _classify_bucket(fsrs_state: dict, today: dt.date) -> str:
@@ -226,6 +229,7 @@ def _load_pool_raw(user_id: UUID, book_ids_filter: Optional[list], lang: str = '
     # 예문분까지 넓혀 한 쿼리로 같이 처리한다(N+1 방지).
     puzzle_lookup: dict = {}
     dict_examples_by_voca_id: dict = {}
+    reading_by_voca_id: dict = {}
     meta_by_hash: dict = {}
     if lang == 'en':
         from app.services.sentence_puzzle import sentence_hash, load_puzzles_by_hashes
@@ -293,6 +297,14 @@ def _load_pool_raw(user_id: UUID, book_ids_filter: Optional[list], lang: str = '
 
         voca_ids_all = sorted({r['voca_id'] for r in raw_items if r['voca_id'] is not None})
         if voca_ids_all:
+            # 단어 읽기(가나) — 스펠링 채우기(spellingFill) 자격 검사용.
+            from app.models.models import VocaJa
+            reading_by_voca_id = {
+                vid: reading for vid, reading in
+                db.session.query(VocaJa.voca_id, VocaJa.reading)
+                .filter(VocaJa.voca_id.in_(voca_ids_all)).all()
+                if reading
+            }
             rows = (
                 db.session.query(VocaExampleMap.voca_id, VocaExample.id, VocaExample.exam_en,
                                   VocaExample.exam_ko, VocaExampleJaMeta, VocaExampleJa.reading_tokens)
@@ -383,6 +395,7 @@ def _load_pool_raw(user_id: UUID, book_ids_filter: Optional[list], lang: str = '
             example_puzzles=example_puzzles,
             example_pool=example_pool,
             tier_state=r['tier_state'],
+            reading=reading_by_voca_id.get(r['voca_id']),
         ))
 
     return items

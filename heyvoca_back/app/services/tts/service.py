@@ -9,6 +9,7 @@ from urllib.parse import quote
 from .registry import get_provider, get_provider_for_language
 from .storage import TTSStorage
 from .normalize import normalize_text, build_object_key
+from .speech import to_speech_text
 from .base import TTSError, TTSGenerationError
 
 _storages = {}
@@ -27,7 +28,12 @@ def get_storage(role: str = 'ro'):
 
 def object_key_for(provider, language: str, norm_text: str, prefix: str = None,
                    user_voice: str = None) -> str:
+    """norm_text 는 normalize_text 결과. 키는 읽기(to_speech_text) 기준으로 계산한다 —
+    "~할 수 있는" 처럼 자리표시어가 있으면 "무엇 무엇을 할 수 있는" 의 키가 되고, 없으면 그대로다.
+    to_speech_text 는 멱등이라 이미 읽기로 바꾼 텍스트를 넘겨도 같은 키가 나온다.
+    /tts/resolve·prewarm·combine 등 모든 진입점이 이 함수로 키를 만들므로 여기서 한 번에 맞춘다."""
     prefix = prefix or os.getenv('TTS_PREFIX', 'tts')
+    norm_text = to_speech_text(norm_text, language)
     voice = user_voice or provider.voice_for(language)
     return build_object_key(
         prefix, provider.name, provider.model,
@@ -57,7 +63,8 @@ def ensure_cached(text: str, language: str, provider=None, storage=None,
                   want_alignment: bool = False):
     """객체가 없으면 생성·업로드(RW 키). (object_key, created: bool, alignment) 반환.
 
-    text는 원문(미정규화) — 내부에서 normalize 후 키 계산.
+    text는 원문(미정규화) — 내부에서 normalize → 읽기 변환(to_speech_text) 후 키 계산·합성.
+    자리표시어(~, sb/sth, A/B)가 없으면 읽기 = 정규화 원문이라 기존 캐시 키가 그대로다.
 
     1차 provider의 synthesize가 실패(TTSGenerationError; quota 소진·장애 등)하면
     allow_fallback일 때 무료 FALLBACK_PROVIDER(gTTS)로 자동 전환해 재시도한다.
@@ -74,7 +81,7 @@ def ensure_cached(text: str, language: str, provider=None, storage=None,
     """
     provider = provider or get_provider_for_language(language)
     storage = storage or get_storage('rw')
-    norm = normalize_text(text)
+    norm = to_speech_text(normalize_text(text), language)
     if not norm:
         raise TTSError('빈 텍스트')
     key = object_key_for(provider, language, norm, user_voice=user_voice)

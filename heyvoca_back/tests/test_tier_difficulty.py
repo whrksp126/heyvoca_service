@@ -30,11 +30,11 @@ PUZZLE = {
 
 
 def _make_item(fsrs_state=None, examples=None, example_puzzles=None, meanings=None,
-               tier_state=None) -> CandidateItem:
+               tier_state=None, word='check in') -> CandidateItem:
     return CandidateItem(
         user_voca_id=1,
         user_voca_book_id=None,
-        word='check in',
+        word=word,
         meanings=meanings if meanings is not None else ['체크인하다'],
         examples=examples or [],
         fsrs_state=fsrs_state or {'state': 'new', 'stability': 0.0, 'retrievability': 0.0, 'next_review': None},
@@ -74,10 +74,10 @@ class TestTierConstants:
         for qt, tier in QUESTION_TYPE_TIER.items():
             rebuilt.setdefault(tier, []).append(qt)
         for tier, types in TIER_QUESTION_TYPES.items():
-            # fillInTheBlankTyping 은 대표 tier(4) 외에 tier 5 에도 노출되는 유일한 예외
+            # fillInTheBlankTyping·spellingFill 은 대표 tier(4) 외에 tier 5 에도 노출되는 예외
             expected = set(rebuilt.get(tier, []))
             if tier == 5:
-                expected.add('fillInTheBlankTyping')
+                expected |= {'fillInTheBlankTyping', 'spellingFill'}
             assert set(types) == expected, f'tier {tier} 불일치'
 
     def test_crop_stage_max_tier_covers_all_stages(self):
@@ -219,7 +219,9 @@ class TestAssignTieredQuestionType:
     def test_falls_back_to_lower_tier_when_word_cannot_use_shown_tier(self):
         # example_puzzles가 없으면 tier3/4의 조립형은 못 쓴다 — fillInTheBlank도
         # 강조 태그 없는 예문이라 tier3 후보에서 빠지므로 tier1/2로 내려가야 한다.
+        # 스펠링 채우기(tier 4)는 예문 없이도 되므로 1글자 단어로 막는다.
         item = _make_item(
+            word='a',
             fsrs_state={'state': 'review', 'stability': 999.0, 'next_review': '2099-01-01T00:00:00Z'},
             examples=[{'origin': 'no tag.', 'meaning': '태그 없음'}],
             example_puzzles=[None],

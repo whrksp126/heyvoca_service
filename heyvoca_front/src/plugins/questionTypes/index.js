@@ -11,6 +11,8 @@ import ScriptIntroQuestion from './script/ScriptIntroQuestion';
 import ScriptChoiceQuestion from './script/ScriptChoiceQuestion';
 import ScriptTraceQuestion from './script/ScriptTraceQuestion';
 import ScriptListenWriteQuestion from './script/ScriptListenWriteQuestion';
+import SpellingFillQuestion from './spellingFill/SpellingFillQuestion';
+import { canBuildSpelling } from './spellingFill/spellingUtils';
 import { wordsOverlap } from '../../utils/meaningConcept';
 import { wordLang, isJa } from '../../utils/lang';
 import { buildScriptChoiceQuestion, buildScriptTraceQuestion, buildScriptWordQuestion } from '../../utils/scriptQuestions';
@@ -63,6 +65,17 @@ export const countFillInTheBlankCandidates = (words, _directions) => {
   if (!Array.isArray(words)) return 0;
   return words.filter((w) => hasFillInTheBlankExample(w)).length;
 };
+
+// 스펠링 채우기 — 서버 payload 없이 단어 자신(영어 origin / 일본어 읽기)으로 칸을 만든다.
+// 공백 제외 2글자 미만·일본어 읽기 없는 단어는 출제 불가(호출부가 사지선다로 폴백).
+const buildSpellingFillQuestions = (selectedWords) => (selectedWords ?? [])
+  .filter(canBuildSpelling)
+  .map((word) => ({
+    ...word,
+    questionType: 'spellingFill',
+    isCorrect: null,
+    userResultIndex: null,
+  }));
 
 const shuffleArray = (array) => {
   const shuffled = [...array];
@@ -528,6 +541,21 @@ export const QUESTION_TYPE_PLUGINS = [
     guideTitle: '문장의 뜻을 만드세요',
     component: SentenceTranslateQuestion,
     setupQuestions: buildTranslateQuestions,
+  },
+  {
+    // 스펠링 채우기(이슈 #21) — 뜻을 보고 단어 철자의 빈칸을 OS 키보드로 채운다(힌트 최대 2번).
+    // 등장 시 단어를 읽으면 정답이 들리므로 자동 재생 끔(컴포넌트가 채점 후에만 읽는다).
+    // 정답+힌트 사용이면 /study/log 에 hint_used 를 싣는다(Main.jsx processCardWord).
+    id: 'spellingFill',
+    autoSpeakOnShow: false,
+    label: '스펠링 채우기',
+    enabled: true,
+    family: 'spelling',
+    direction: null,
+    listening: false,
+    guideTitle: '뜻을 보고 철자를 채우세요',
+    component: SpellingFillQuestion,
+    setupQuestions: buildSpellingFillQuestions,
   },
   {
     // ① "만나기" 슬라이드 — 새 씨앗 심기(plant) 세션 전용, 채점 없음(2026-09-29).

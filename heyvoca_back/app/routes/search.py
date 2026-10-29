@@ -477,6 +477,7 @@ def get_bookstore_detail(bookstoreId):
         JOIN {S}.voca v ON avbm.voca_id = v.id
         {ja_join}
         WHERE avbm.book_id = :admin_voca_book_id
+        ORDER BY avbm.id
     """)
 
     rows = db.session.execute(query, {'admin_voca_book_id': bookstore.admin_voca_book_id}).fetchall()

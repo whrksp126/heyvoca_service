@@ -22,6 +22,7 @@ user_stats 구조:
 """
 
 import random
+import re
 import datetime as dt
 from typing import List, Optional, Dict, Any, Set, Tuple
 
@@ -99,6 +100,7 @@ _QUESTION_TYPE_WEIGHTS: Dict[str, int] = {
     'fillInTheBlankTyping':    3,
     'sentenceMeaning':         8,   # 자유 설정 테스트에서 직접 골랐을 때만(MANUAL_ONLY)
     'sentenceTranslate':       6,
+    'spellingFill':            5,   # 2026-10 이슈 #21 — 뜻 보고 나머지 철자 입력(예문 불필요)
 }
 
 # ──────────────────────────────────────────────
@@ -203,6 +205,23 @@ def _decide_new_quota(
 # question_type 부여
 # ──────────────────────────────────────────────
 
+# 스펠링 채우기 정답(공백 제외)의 최소 글자 수 — 1글자 단어는 앞부분을 보여 주면 답이 다 보인다.
+SPELLING_FILL_MIN_LEN = 2
+_KANA_ONLY_RE = re.compile(r'[\u3040-\u30ff\u30fc\s]+')
+
+
+def spelling_answer(item: CandidateItem) -> str:
+    """스펠링 채우기에서 입력받을 정답. en=단어, ja=읽기(가나) — 읽기가 없으면 가나로만 된
+    단어 자체, 그것도 아니면 빈 문자열(출제 불가)."""
+    word = (item.word or '').strip()
+    if (item.dict_lang or 'en') != 'ja':
+        return word
+    reading = (item.reading or '').strip()
+    if reading:
+        return reading
+    return word if word and _KANA_ONLY_RE.fullmatch(word) else ''
+
+
 def _item_can_use_question_type(item: CandidateItem, qtype: str) -> bool:
     has_meanings = bool(item.meanings)
     has_examples = bool(item.examples)
@@ -224,6 +243,10 @@ def _item_can_use_question_type(item: CandidateItem, qtype: str) -> bool:
         return any(
             example_has_target_tag(example_origin_text(ex)) for ex in (item.examples or [])
         )
+    if qtype == 'spellingFill':
+        # 스펠링 채우기(2026-10 이슈 #21): 뜻을 보고 앞부분만 보이는 단어의 나머지 철자를 입력.
+        # 예문은 필요 없다. 정답 문자열(en=단어, ja=읽기 가나)이 공백 빼고 2글자 이상이어야 한다.
+        return has_meanings and len(spelling_answer(item).replace(' ', '')) >= SPELLING_FILL_MIN_LEN
     if qtype == 'sentenceMeaning':
         # 문장 뜻 고르기: 원문·뜻이 모두 있는 예문이 하나라도 있어야 한다(오답 뜻은 프론트가
         # 같은 풀의 다른 예문에서 고른다 — 모자라면 프론트가 사지선다로 폴백).

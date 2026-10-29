@@ -490,6 +490,12 @@ def post_study_log():
     error_type = req.get('error_type') if req.get('error_type') in ERROR_TYPES else None
     if error_type is None and typo:
         error_type = 'typo'
+    # 스펠링 채우기(spellingFill, 2026-10 이슈 #21) 등에서 힌트(글자 공개)를 쓴 횟수 — optional, 정수 ≥0.
+    # 힌트를 쓰고 맞히면 오타 허용 정답과 같이 FSRS 자동 평가를 Hard(2)로 고정한다. 오답은 기존대로.
+    # 저장 컬럼은 두지 않는다(평가에만 반영).
+    hint_used_raw = req.get('hint_used')
+    hint_used = hint_used_raw if isinstance(hint_used_raw, int) and not isinstance(hint_used_raw, bool) and hint_used_raw > 0 else 0
+    hard_correct = typo or (bool(was_correct) and hint_used > 0)
     # "매번 새 문장"(2026-09-30) — 이 문제에 쓰인 예문의 sentence_hash. optional(구버전
     # 앱/문장 없는 유형은 안 보냄), 64자리 hex가 아니면 조용히 무시(NULL 저장).
     example_hash_raw = req.get('example_hash')
@@ -655,7 +661,7 @@ def post_study_log():
             word_length=word_length,
             fsrs_difficulty=float(fsrs_difficulty) if fsrs_difficulty is not None else None,
             question_type=question_type,
-            typo=typo,
+            typo=hard_correct,
         )
     fsrs_state_after = fsrs_review(
         fsrs_state_before,

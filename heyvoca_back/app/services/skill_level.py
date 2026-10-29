@@ -41,6 +41,7 @@ QUESTION_TYPE_B_OFFSET = {
     'fillInTheBlankTyping':      5,
     'sentenceMeaning':          -2,   # 문장 뜻 고르기(4지선다, 이슈 #15)
     'sentenceTranslate':         5,   # 문장 뜻 맞추기(한국어 조각 나열, 이슈 #16)
+    'spellingFill':              3,   # 스펠링 채우기(이슈 #21): 직접 입력이지만 글자 수·일부 글자가 보여 fillInTheBlankTyping 보다 쉽다
 }
 
 ERROR_TYPES = ('typo', 'form', 'distractor', 'order', 'wrong_choice', 'timeout')

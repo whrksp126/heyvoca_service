@@ -224,3 +224,34 @@ export const TranslateGlyph = ({ className = '', size = 44 }) => (
     <rect x="4" y="37" width="36" height="4.4" rx="2.2" fill="currentColor" opacity="0.28" />
   </svg>
 );
+
+/*
+  스펠링 채우기(spellingFill, 이슈 #21) — 위 철자 칸 줄(앞 두 글자 공개 + 밑줄 빈칸 3개, 첫 빈칸은
+  입력 중이라 진한 밑줄) + 작은 힌트 알약(전구) + 아래 뜻 카드('가' + 글줄). 문장이 없고 낱자 칸이
+  한 줄로 놓인다는 점이 빈칸 입력(문장 속 입력칸 하나 + 키보드)과 다르다.
+*/
+export const SpellingGlyph = ({ className = '', size = 44, lang = 'en' }) => (
+  <svg {...base(size, className)}>
+    {/* 공개 글자 2개 — 흐리게 */}
+    <text x="6.4" y="11.6" textAnchor="middle" fill="currentColor" fontSize="8" fontWeight="700" fontFamily="inherit" opacity="0.5">{lang === 'ja' ? 'あ' : 'a'}</text>
+    <text x="13.6" y="11.6" textAnchor="middle" fill="currentColor" fontSize="8" fontWeight="700" fontFamily="inherit" opacity="0.5">{lang === 'ja' ? 'い' : 'b'}</text>
+    {/* 빈칸 3개 — 첫 칸은 입력 중(진한 밑줄 + 커서) */}
+    <path d="M18 13.4h5.6" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" />
+    <path d="M20.8 6.4v4.8" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
+    <path d="M26.4 13.4h5.6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" opacity="0.5" />
+    <path d="M34.8 13.4h5.6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" opacity="0.5" />
+
+    {/* 힌트 알약 — 전구 + 남은 횟수 점 2개 */}
+    <rect x="13" y="17.6" width="18" height="6.4" rx="3.2" stroke="currentColor" strokeWidth="1.1" opacity="0.6" />
+    <circle cx="17.6" cy="20.2" r="1.5" stroke="currentColor" strokeWidth="0.9" />
+    <path d="M17 22.4h1.2" stroke="currentColor" strokeWidth="0.9" strokeLinecap="round" />
+    <circle cx="24.2" cy="20.8" r="0.9" fill="currentColor" />
+    <circle cx="27.4" cy="20.8" r="0.9" fill="currentColor" opacity="0.45" />
+
+    {/* 아래 뜻 카드 */}
+    <rect x="4" y="28" width="36" height="13" rx="3" fill="currentColor" fillOpacity="0.12" stroke="currentColor" strokeWidth="1.3" />
+    <text x="10" y="37" textAnchor="middle" fill="currentColor" fontSize="6.4" fontWeight="700" fontFamily="inherit">가</text>
+    <rect x="15" y="32.6" width="20" height="2.6" rx="1.3" fill="currentColor" />
+    <rect x="15" y="36.6" width="12" height="2.2" rx="1.1" fill="currentColor" opacity="0.5" />
+  </svg>
+);

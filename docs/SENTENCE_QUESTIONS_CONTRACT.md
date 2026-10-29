@@ -279,6 +279,30 @@ GET /study/recommend?count=20&question_types=sentenceArrange,listenArrange
 - **`sentenceArrangePartial`/`sentenceArrange`의 `accepted`가 여러 개일 수 있다** —
   반드시 배열로 다루고 "포함되는지"로 채점할 것(첫 원소만 보지 말 것).
 
+## 8-1. 스펠링 채우기 — `spellingFill` (2026-10 이슈 #21)
+
+뜻을 보고, 앞부분만 보이는 단어의 나머지 철자를 직접 입력한다. **예문이 없어도 출제된다.**
+en·ja 공통(ja 는 단어 대신 **읽기 가나**를 입력).
+
+- **출제 자격**(`composer._item_can_use_question_type`): 뜻이 있고, 정답 문자열이 공백을 빼고
+  **2글자 이상**. 정답 = en: `word` / ja: `reading`(사전 `voca_ja.reading`, 없으면 가나로만 된
+  단어 자체, 그것도 아니면 출제 불가). 1글자 단어는 후보에서 빠진다.
+- **tier**: 대표 tier 4, tier 5 에도 노출(`fillInTheBlankTyping` 과 같은 방식).
+  `TIER_QUESTION_TYPES[4] = (sentenceArrange, listenArrange, fillInTheBlankTyping, spellingFill)`,
+  `TIER_QUESTION_TYPES[5] = (fillInTheBlankTyping, spellingFill)`. 예문·puzzle 이 없는 단어도
+  tier 4·5 에서 이 유형으로 출제될 수 있다. 설정 시트 `question_types` 로 직접 고를 수도 있다.
+- **`question_payload` 없음.** 프론트가 문항의 `word`(en) / `reading`(ja, `/study/recommend`
+  문항에 이미 실림)과 `meanings` 로 직접 조립한다. 몇 글자를 미리 보여 줄지·힌트 방식은 프론트 몫.
+- **`/study/log` 추가 필드 `hint_used`**(optional, 정수 ≥0): 힌트(글자 공개)를 쓴 횟수.
+  `was_correct: true` 이고 `hint_used > 0` 이면 서버가 FSRS 자동 평가를 **Hard(2)로 고정**한다
+  (`typo: true` 와 같은 경로). 오답은 기존대로 Again. 정수가 아니거나 0 이하면 무시.
+  저장 컬럼은 없다(평가에만 반영 — 새 컬럼 없이 처리).
+
+```jsonc
+POST /study/log
+{ "question_type": "spellingFill", "was_correct": true, "hint_used": 1, ... }   // → Hard(2)
+```
+
 ## 9. 관련 파일
 
 | 파일 | 역할 |
@@ -292,6 +316,6 @@ GET /study/recommend?count=20&question_types=sentenceArrange,listenArrange
 | `app/services/recommend/pool.py` | `CandidateItem.example_puzzles` 배치 로딩 |
 | `app/services/recommend/composer.py` | tier 배정(`_assign_tiered_question_type`), `question_types` 배정(`_assign_restricted_question_type`) |
 | `app/routes/study.py` | `/study/recommend`, `/study/log`, `/study/requeue-easier` |
-| `app/services/fsrs/ratings.py` | `typo`/`question_type` 보정 |
+| `app/services/fsrs/ratings.py` | `typo`/`question_type` 보정 (`hint_used>0` 정답도 `typo` 경로로 Hard) |
 | `scripts/import_example_puzzles.py`(top-level `heyvoca_service/scripts/`) | puzzle 데이터 upsert(dry-run 기본) |
 | `tests/test_sentence_puzzle_payload.py`, `tests/test_tier_difficulty.py` | 순수 함수 테스트 |

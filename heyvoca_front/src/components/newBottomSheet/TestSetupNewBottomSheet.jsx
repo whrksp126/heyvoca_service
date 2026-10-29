@@ -13,7 +13,7 @@ import { MEMORY_STAGE_ORDER, wordMemoryStage, memoryStageCounts, isWordStudiable
 import { vibrate } from '../../utils/osFunction';
 import SetupTile from '../common/SetupTile';
 import MemoryStageSelector from '../common/MemoryStageSelector';
-import { McqGlyph, CardMatchGlyph, BlankGlyph, ArrangeGlyph, TypingGlyph, ReadGlyph, TranslateGlyph } from '../common/QuestionTypeGlyphs';
+import { McqGlyph, CardMatchGlyph, BlankGlyph, ArrangeGlyph, TypingGlyph, ReadGlyph, TranslateGlyph, SpellingGlyph } from '../common/QuestionTypeGlyphs';
 import { Toggle } from '../newfullsheet/settingsUi';
 import SpeakerArt from '../common/SpeakerArt';
 
@@ -497,6 +497,7 @@ export const TestSetupNewBottomSheet = ({ onCancel, onSet, maxVocabularyCount, v
                 { value: 'multipleChoice', label: '사지선다', Glyph: McqGlyph },
                 { value: 'cardMatch', label: '카드 맞추기', Glyph: CardMatchGlyph },
                 { value: 'fillInTheBlank', label: '빈칸 채우기', Glyph: BlankGlyph },
+                { value: 'spelling', label: '스펠링 채우기', Glyph: SpellingGlyph },
               ].map(({ value, label, Glyph }) => (
                 <SetupTile
                   key={value}
