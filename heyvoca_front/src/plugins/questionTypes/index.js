@@ -463,7 +463,8 @@ export const QUESTION_TYPE_PLUGINS = [
   },
   {
     // 스펠링 채우기(이슈 #21) — 뜻을 보고 단어 철자의 빈칸을 OS 키보드로 채운다(힌트 최대 2번).
-    // 등장 시 단어를 읽으면 정답이 들리므로 자동 재생 끔(컴포넌트가 채점 후에만 읽는다).
+    // 등장 시 단어를 읽으면 정답이 들리므로 Main.jsx 자동 재생은 끈다 — 컴포넌트가 등장 시 뜻을,
+    // 채점 후에 단어를 직접 읽는다.
     // 정답+힌트 사용이면 /study/log 에 hint_used 를 싣는다(Main.jsx processCardWord).
     id: 'spellingFill',
     autoSpeakOnShow: false,

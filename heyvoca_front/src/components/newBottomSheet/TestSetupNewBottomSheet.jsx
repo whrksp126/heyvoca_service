@@ -1,6 +1,6 @@
 import React, { useState, useRef, useCallback, useMemo, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Minus, Plus, Sparkle, Shuffle, ArrowRight, SpeakerHigh } from '@phosphor-icons/react';
+import { Minus, Plus, Sparkle, Shuffle, ArrowRight } from '@phosphor-icons/react';
 import { QUESTION_TYPE_PLUGINS, countFillInTheBlankCandidates, isFillInTheBlankType } from '../../plugins/questionTypes';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
@@ -437,7 +437,7 @@ export const TestSetupNewBottomSheet = ({ onCancel, onSet, maxVocabularyCount, v
             >
               <Minus size={18} weight="bold" />
             </motion.button>
-            <div className="flex flex-col items-center w-[110px]">
+            <div className="flex items-center w-[110px]">
               <input
                 type="number"
                 ref={el => inputRefs.current['count'] = el}
@@ -450,7 +450,6 @@ export const TestSetupNewBottomSheet = ({ onCancel, onSet, maxVocabularyCount, v
                 }}
                 value={count}
               />
-              <span className="text-[11px] text-layout-gray-300">최대 {maxCount}문제</span>
             </div>
             <motion.button
               type="button"
@@ -537,7 +536,6 @@ export const TestSetupNewBottomSheet = ({ onCancel, onSet, maxVocabularyCount, v
                 setListeningOn(prev => !prev);
               }}
             >
-              <SpeakerHigh size={16} weight="fill" className="text-layout-gray-400 dark:text-layout-gray-300" aria-hidden />
               <span className="text-[13px] font-[700] text-layout-gray-500 dark:text-layout-gray-100">듣기</span>
               {/* Toggle 은 자체 stopPropagation + haptic 을 가진다 — 위 onClick 과 이중 토글되지 않는다 */}
               <Toggle on={listeningOn} onClick={() => setListeningOn(prev => !prev)} />

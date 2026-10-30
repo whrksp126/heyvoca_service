@@ -472,12 +472,12 @@ const TakeTest = () => {
   };
 
   // 2026-10-02 재구성 — 순서: ① 모든 단어의 만나기(wordIntro) 한 장씩 → ② 일반 학습 콘텐츠를
-  // 단어들에 무작위 배분(사지선다·듣기·역방향·빈칸 채우기·빈칸 입력·카드 맞추기·듣기 카드 맞추기,
+  // 단어들에 무작위 배분(사지선다·듣기·역방향·빈칸 채우기·빈칸 입력·단어 쓰기·카드 맞추기·듣기 카드 맞추기,
   // 단어당 2~3개) → ③ 안내 + 문장 만들기(서버 payload 있을 때만, 2~3문제) → ④ 오답 재학습(Main.jsx).
   // 카드 맞추기류는 세트(2~4단어)가 필요하므로 그 칸에 배정된 단어들을 모아 플러그인 setupQuestions로
   // 조립하고, 세트를 못 이루는 나머지 단어는 사지선다로 대체한다.
   // 4지선다 문장 뜻 고르기(sentenceMeaning)는 뺐다(QA 4차, 2026-10-25) — 자유 설정 테스트에서 직접 고를 때만 나온다.
-  const PLANT_SINGLE_TYPES = ['multipleChoice', 'reverseMultipleChoice', 'multipleChoiceListening', 'fillInTheBlank', 'fillInTheBlankTyping'];
+  const PLANT_SINGLE_TYPES = ['multipleChoice', 'reverseMultipleChoice', 'multipleChoiceListening', 'fillInTheBlank', 'fillInTheBlankTyping', 'spellingFill'];
   // 문장 뜻 맞추기(sentenceTranslate)는 심기 단계에서 내지 않는다(QA 3차, 2026-10-25) — 처음 만난 단어에 문장 해석은 이르다.
   const PLANT_SET_TYPES = ['cardMatch', 'cardMatchListening'];
   const PLANT_SENTENCE_TYPES = ['sentenceArrangePartial', 'sentenceArrange'];
@@ -551,9 +551,11 @@ const TakeTest = () => {
     if (!skipListening && !content.some((q) => q.questionType === 'multipleChoiceListening')) {
       content.push(buildPlantMcq(order[Math.floor(Math.random() * order.length)], allWords, 'multipleChoiceListening'));
     }
-    // 직접 타이핑(빈칸 입력)은 만나기 바로 뒤에 나오면 당황스럽다(2026-10-24 QA #15) — 고르기 문제로
+    // 직접 타이핑(빈칸 입력·단어 쓰기)은 만나기 바로 뒤에 나오면 당황스럽다(2026-10-24 QA #15) — 고르기 문제로
     // 단어를 한 바퀴 익힌 뒤(앞쪽 절반 이상, 최소 단어 수만큼)에만 나오게 뒤쪽에 섞는다.
-    const isTyping = (q) => q.questionType === 'fillInTheBlankTyping';
+    const isTyping = (q) => q.questionType === 'fillInTheBlankTyping' || q.questionType === 'spellingFill';
+    // 단어 1개 + 듣기 건너뛰기면 입력형만 뽑힐 수 있다 — 고르기 한 문제는 앞에 보장한다.
+    if (content.length > 0 && content.every(isTyping)) content.push(buildPlantMcq(order[0], allWords, resolve('multipleChoice')));
     const pickQs = shuffleArray(content.filter((q) => !isTyping(q)));
     const typingQs = content.filter(isTyping);
     const leadCount = Math.min(pickQs.length, Math.max(order.length, Math.ceil(content.length / 2)));

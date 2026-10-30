@@ -31,8 +31,9 @@ import {
   Android 키보드는 영어도 조합(composition)으로 넣어서, 조합이 끝나기를 기다리면 칸이 다 찬 뒤
   다른 버튼(스피커)을 눌러 입력이 blur 될 때에야 채점됐다(2026-10-30 버그). 그래서 조합 중이어도
   라틴 문자는 바로 채점하고, 일본어는 조합 글자가 전부 가나로 확정된 모양일 때만 채점한다.
-  스피커·힌트 버튼은 pointerdown 기본 동작을 막아 입력 포커스를 뺏지 않는다. 채점 전에는 단어 소리를 내지 않는다
-  (정답 노출). 진행은 빈칸 채우기와 같다 — 채점 즉시 onCardMatched, 넘기기는 공통 '다음' 버튼(advanceGate).
+  스피커·힌트 버튼은 pointerdown 기본 동작을 막아 입력 포커스를 뺏지 않는다. 등장 시 뜻(한국어)을 자동으로 읽고
+  (Main.jsx 공용 자동 재생은 origin 을 읽어 정답이 들리므로 쓰지 않는다 — 빈칸 쓰기처럼 컴포넌트가 직접 재생),
+  채점 전에는 단어 소리를 내지 않는다(정답 노출). 진행은 빈칸 채우기와 같다 — 채점 즉시 onCardMatched, 넘기기는 공통 '다음' 버튼(advanceGate).
 */
 const meaningTextOf = (m) => (m && typeof m === 'object' ? (m.meaning ?? m.text ?? '') : (m ?? ''));
 
@@ -111,9 +112,11 @@ const SpellingFillQuestion = ({ question, onComplete, onCardMatched, farmByWordI
   const speakWord = () => speak(question.origin || answer, lang, 'answer');
 
   useEffect(() => {
+    speakMeaning();
     // 키보드가 등장 애니메이션과 겹치지 않게 조금 늦게 포커스(빈칸 입력과 같은 규칙)
     const t = setTimeout(() => inputRef.current?.focus(), 350);
     return () => clearTimeout(t);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => () => { speakGenRef.current += 1; }, []);
