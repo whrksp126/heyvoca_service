@@ -6,7 +6,6 @@ import ListenArrangeQuestion from './sentenceArrange/ListenArrangeQuestion';
 import FillInTheBlankTypingQuestion from './fillInTheBlankTyping/FillInTheBlankTypingQuestion';
 import SentenceTranslateQuestion from './sentenceTranslate/SentenceTranslateQuestion';
 import WordIntroQuestion from './wordIntro/WordIntroQuestion';
-import SentenceMeaningQuestion from './sentenceMeaning/SentenceMeaningQuestion';
 import ScriptIntroQuestion from './script/ScriptIntroQuestion';
 import ScriptChoiceQuestion from './script/ScriptChoiceQuestion';
 import ScriptTraceQuestion from './script/ScriptTraceQuestion';
@@ -170,71 +169,6 @@ const buildFillInTheBlankQuestions = (selectedWords, allWords) => {
       // 서버가 고른 예문일 때만 존재 — /study/log 전송부(components/takeTest/Main.jsx)가
       // 있으면 example_hash로 함께 보낸다(계약 4·5절).
       exampleHash,
-    });
-  }
-  return questions;
-};
-
-/*
-  문장 뜻 고르기(sentenceMeaning, 독해) — 2026-10-24 QA #15. 듀오링고의 "문장을 읽고 뜻 고르기".
-  예문 원문(영어/일본어)을 보여 주고 그 예문의 한국어 뜻 4개 중 하나를 고른다.
-  실시간 AI 없이 기존 데이터만 쓴다 — 정답은 그 예문의 meaning, 오답은 **같은 학습 풀의 다른 단어
-  예문 뜻**(같은 세션 단어 우선, 부족하면 단어장 풀). 뜻이 겹치는 단어의 예문은 우선 배제한다.
-  자격: 원문·뜻이 모두 있는 예문 + 오답 예문 뜻 3개 확보. 못 만들면 건너뛴다(호출부가 사지선다 폴백).
-*/
-const meaningPlain = (ex) => stripTags(exampleKo(ex)).trim();
-const originPlain = (ex) => stripTags(exampleEn(ex)).trim();
-const hasSentenceMeaningExample = (ex) => originPlain(ex) !== '' && meaningPlain(ex) !== '';
-
-const buildSentenceMeaningQuestions = (selectedWords, allWords) => {
-  const wordKey = (w) => w?.id ?? w?.vocaIndexId;
-  const selectedKeys = new Set((selectedWords ?? []).map(wordKey));
-  // 오답 풀 — 같은 세션 단어를 앞에 두고(섞어서) 단어장 풀을 뒤에 붙인다.
-  const pool = [
-    ...shuffleArray((selectedWords ?? [])),
-    ...shuffleArray((allWords ?? []).filter((w) => !selectedKeys.has(wordKey(w)))),
-  ];
-  const questions = [];
-  for (const word of selectedWords ?? []) {
-    const candidates = (Array.isArray(word?.examples) ? word.examples : []).filter(hasSentenceMeaningExample);
-    if (candidates.length === 0) continue;
-    // 너무 짧은 예문(단어 2~3개)은 뜻 고르기가 단어 뜻 고르기와 다를 바 없다 — 긴 쪽 우선.
-    const ja = isJa(wordLang(word));
-    const longEnough = candidates.filter((ex) => (ja
-      ? originPlain(ex).replace(/\s+/g, '').length >= 8
-      : originPlain(ex).split(/\s+/).length >= 4));
-    const example = shuffleArray(longEnough.length > 0 ? longEnough : candidates)[0];
-    const correctText = meaningPlain(example);
-
-    const seen = new Set([correctText]);
-    const pickFrom = (onlyNonOverlap) => {
-      const out = [];
-      for (const w of pool) {
-        if (out.length >= 3) break;
-        if (wordKey(w) === wordKey(word)) continue;
-        if (onlyNonOverlap && wordsOverlap(word, w)) continue;
-        const exs = shuffleArray((Array.isArray(w?.examples) ? w.examples : []).filter(hasSentenceMeaningExample));
-        const ex = exs.find((e) => !seen.has(meaningPlain(e)));
-        if (!ex) continue;
-        seen.add(meaningPlain(ex));
-        out.push(meaningPlain(ex));
-      }
-      return out;
-    };
-    let wrong = pickFrom(true);
-    if (wrong.length < 3) wrong = [...wrong, ...pickFrom(false)].slice(0, 3);
-    if (wrong.length < 3) continue;
-
-    const options = shuffleArray([correctText, ...wrong]);
-    questions.push({
-      ...word,
-      questionType: 'sentenceMeaning',
-      sentenceText: exampleEn(example),
-      sentenceReadingTokens: Array.isArray(example?.reading_tokens) ? example.reading_tokens : null,
-      options,
-      resultIndex: options.indexOf(correctText),
-      isCorrect: null,
-      userResultIndex: null,
     });
   }
   return questions;
@@ -407,7 +341,7 @@ export const QUESTION_TYPE_PLUGINS = [
     // 방향이 하나뿐이라 direction: null — 시트의 [방향] 선택과 무관하게 항상 포함(카드 맞추기와 같다).
     id: 'fillInTheBlank',
     autoSpeakOnShow: false,
-    label: '빈칸 채우기',
+    label: '빈칸 고르기',
     enabled: true,
     family: 'fillInTheBlank',
     direction: null,
@@ -463,7 +397,7 @@ export const QUESTION_TYPE_PLUGINS = [
     // sentenceArrange(전체 조립)와 같은 family — 설정 시트에서는 "문장 만들기" 한 타일로 묶인다.
     id: 'sentenceArrangePartial',
     autoSpeakOnShow: false,
-    label: '문장 만들기(부분)',
+    label: '문장 조립(부분)',
     enabled: true,
     family: 'sentenceArrange',
     direction: null,
@@ -476,7 +410,7 @@ export const QUESTION_TYPE_PLUGINS = [
     // 문장 만들기(전체 조립) — 문장 전체 또는 뒷부분 최대 7조각을 조립.
     id: 'sentenceArrange',
     autoSpeakOnShow: false,
-    label: '문장 만들기',
+    label: '문장 조립',
     enabled: true,
     family: 'sentenceArrange',
     direction: null,
@@ -503,7 +437,7 @@ export const QUESTION_TYPE_PLUGINS = [
     // 빈칸 직접 입력 — 기존 빈칸 채우기와 같은 예문, 사지선다 대신 타이핑으로 정답 입력.
     id: 'fillInTheBlankTyping',
     autoSpeakOnShow: false,
-    label: '빈칸 입력',
+    label: '빈칸 쓰기',
     enabled: true,
     family: 'fillInTheBlankTyping',
     direction: null,
@@ -513,27 +447,12 @@ export const QUESTION_TYPE_PLUGINS = [
     setupQuestions: buildTypingQuestions,
   },
   {
-    // 문장 뜻 고르기(독해) — 예문 원문을 읽고 한국어 뜻을 고른다(위 buildSentenceMeaningQuestions).
-    // 방향은 하나뿐이라 direction: null — 시트의 [방향] 칩(사지선다 전용)과 무관하게 항상 포함.
-    // 읽기 문제라 등장 시 자동으로 읽어 주지 않는다(컴포넌트의 스피커로만 듣는다).
-    id: 'sentenceMeaning',
-    autoSpeakOnShow: false,
-    label: '문장 뜻 고르기',
-    enabled: true,
-    family: 'sentenceMeaning',
-    direction: null,
-    listening: false,
-    guideTitle: '문장의 뜻을 고르세요',
-    component: SentenceMeaningQuestion,
-    setupQuestions: (selectedWords, allWords) => buildSentenceMeaningQuestions(selectedWords, allWords),
-  },
-  {
     // 문장 뜻 맞추기(이슈 #16) — 외국어 예문(듣기 포함)을 보고 한국어 블록을 눌러 뜻을 나열한다.
-    // 4지선다 '문장 뜻 고르기'(sentenceMeaning)와 별개 유형. 서버 payload(question_payloads.sentenceTranslate) 기반.
+    // 서버 payload(question_payloads.sentenceTranslate) 기반. 설정 시트 이름은 '해석 조립'.
     // 방향은 외국어→한국어 하나뿐이라 direction: null(빈칸 입력과 같은 독립 family 칩).
     id: 'sentenceTranslate',
     autoSpeakOnShow: false, // 컴포넌트가 예문을 직접 읽는다
-    label: '문장 뜻 맞추기',
+    label: '해석 조립',
     enabled: true,
     family: 'sentenceTranslate',
     direction: null,
@@ -548,7 +467,7 @@ export const QUESTION_TYPE_PLUGINS = [
     // 정답+힌트 사용이면 /study/log 에 hint_used 를 싣는다(Main.jsx processCardWord).
     id: 'spellingFill',
     autoSpeakOnShow: false,
-    label: '스펠링 채우기',
+    label: '단어 쓰기',
     enabled: true,
     family: 'spelling',
     direction: null,
@@ -758,8 +677,8 @@ export const isArrangeQuestionType = (id) => ARRANGE_QUESTION_TYPES.includes(id)
 // enabled 플러그인에서 파생해 새 유형을 여기 배열에 추가하면 자동으로 quick에도 반영된다
 // (예전엔 useQuickReview.jsx/StudyNewFullSheet.jsx 세 곳에 이 목록이 따로 복제돼 있어서
 //  새 유형을 추가해도 quick에서만 빠지는 사고가 있었다).
-// 4지선다 문장 뜻 고르기(sentenceMeaning)는 자동 출제 후보에서 뺀다(QA 4차, 2026-10-25) — 자유 설정 테스트에서
-// 유형 칩으로 직접 골랐을 때만 나온다(백엔드 MANUAL_ONLY_QUESTION_TYPES 와 같은 규칙).
-export const MANUAL_ONLY_QUESTION_TYPES = ['sentenceMeaning'];
+// 자동 출제에서 빼고 자유 설정에서만 내는 유형. 4지선다 문장 뜻 고르기(sentenceMeaning)가 유일했는데
+// 2026-10-30(이슈 #21) 유형 자체를 없앴다 — 빈 목록이지만 백엔드 규칙과 짝을 맞추려 남겨 둔다.
+export const MANUAL_ONLY_QUESTION_TYPES = [];
 export const QUICK_QUESTION_TYPES = QUESTION_TYPE_PLUGINS
   .filter(p => p.enabled && !MANUAL_ONLY_QUESTION_TYPES.includes(p.id)).map(p => p.id);

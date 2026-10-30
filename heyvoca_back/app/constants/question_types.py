@@ -39,9 +39,8 @@ RECOMMENDABLE_QUESTION_TYPES = (
     'sentenceArrange',
     'listenArrange',
     'fillInTheBlankTyping',
-    # 2026-10-24 QA #15 — 문장 뜻 고르기(독해): 예문 원문을 읽고 한국어 뜻 4개 중 고르기.
-    # 프론트가 예문 데이터만으로 로컬 조립(plugins/questionTypes/index.js buildSentenceMeaningQuestions).
-    'sentenceMeaning',
+    # 2026-10-24 QA #15 의 문장 뜻 고르기(sentenceMeaning)는 이슈 #21 2차(2026-10-30)에 출제 중단 —
+    # 아래 _RETIRED_QUESTION_TYPES 로 옮겼다(로그 호환용).
     # 2026-10 이슈 #16 — 문장 뜻 맞추기(외국어 예문 → 한국어 어절 조각 나열). en·ja 공통.
     # 정본: heyvoca_service/docs/LEVEL_AND_MEANING_CONTRACT.md §3
     'sentenceTranslate',
@@ -51,9 +50,23 @@ RECOMMENDABLE_QUESTION_TYPES = (
 
 # 자동 출제(농장 돌보기 사다리·가중 무작위 배정·새 씨앗 심기)에는 넣지 않고, 자유 설정 테스트에서
 # 사용자가 유형 칩으로 직접 골랐을 때(question_types 로 좁힌 경우)만 나오는 유형.
-# QA 4차(2026-10-25): 4지선다 문장 뜻 고르기(sentenceMeaning)는 tier 3 의 sentenceTranslate 가 대신한다.
-# 정본: heyvoca_service/docs/LEVEL_AND_MEANING_CONTRACT.md §5
-MANUAL_ONLY_QUESTION_TYPES = ('sentenceMeaning',)
+# QA 4차(2026-10-25)에 sentenceMeaning 하나였는데 이슈 #21 2차(2026-10-30)에 그 유형 자체를 출제 중단해
+# 지금은 비어 있다(구조만 유지). 정본: heyvoca_service/docs/LEVEL_AND_MEANING_CONTRACT.md §5
+MANUAL_ONLY_QUESTION_TYPES = ()
+
+# 자유 설정 테스트 균등 출제용 묶음(family) — 프론트 plugins/questionTypes/index.js 의 family 와 같다.
+# 설정 시트의 한 칩(묶음) 안에서 방향·듣기 변형이 갈린다. 여기 없는 유형은 자기 자신이 한 묶음.
+# composer._assign_balanced_question_types 가 1단계 묶음 균등 → 2단계 묶음 안 변형 균등으로 쓴다.
+QUESTION_TYPE_FAMILY = {
+    'multipleChoice':          'multipleChoice',
+    'reverseMultipleChoice':   'multipleChoice',
+    'multipleChoiceListening': 'multipleChoice',
+    'cardMatch':               'cardMatch',
+    'cardMatchListening':      'cardMatch',
+    'sentenceArrangePartial':  'sentenceArrange',
+    'sentenceArrange':         'sentenceArrange',
+    'listenArrange':           'sentenceArrange',
+}
 
 # 난이도 오르내리기(자동 출제, composer._compose_recommend full_recommend 경로) 전용 —
 # 문제 유형 → 난이도 tier(1~5). tier가 없는 유형(사용자 직접 선택 전용 MANUAL_ONLY_QUESTION_TYPES 등)은 매핑에서 제외.
@@ -121,6 +134,9 @@ _NON_RECOMMENDABLE_QUESTION_TYPES = (
 # 화이트리스트에서는 계속 허용해야 하는 유형(2026-09 fillInTheBlankReverse 드롭).
 _DEPRECATED_QUESTION_TYPES = (
     'fillInTheBlankReverse',
+    # 출제 중단(이슈 #21 2차 2026-10-30), 로그 호환용 — 문장 뜻 고르기(4지선다). 구버전 앱이 아직
+    # 이 유형으로 /study/log 를 보낼 수 있어 화이트리스트에서 빼면 400 이 난다.
+    'sentenceMeaning',
 )
 
 # /study/log 가 허용하는 question_type 전체(화이트리스트).

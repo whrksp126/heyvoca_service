@@ -1,6 +1,6 @@
 import React, { useState, useRef, useCallback, useMemo, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Minus, Plus, Sparkle, Shuffle, ArrowRight } from '@phosphor-icons/react';
+import { Minus, Plus, Sparkle, Shuffle, ArrowRight, SpeakerHigh } from '@phosphor-icons/react';
 import { QUESTION_TYPE_PLUGINS, countFillInTheBlankCandidates, isFillInTheBlankType } from '../../plugins/questionTypes';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
@@ -13,21 +13,23 @@ import { MEMORY_STAGE_ORDER, wordMemoryStage, memoryStageCounts, isWordStudiable
 import { vibrate } from '../../utils/osFunction';
 import SetupTile from '../common/SetupTile';
 import MemoryStageSelector from '../common/MemoryStageSelector';
-import { McqGlyph, CardMatchGlyph, BlankGlyph, ArrangeGlyph, TypingGlyph, ReadGlyph, TranslateGlyph, SpellingGlyph } from '../common/QuestionTypeGlyphs';
+import { McqGlyph, CardMatchGlyph, BlankGlyph, ArrangeGlyph, TypingGlyph, TranslateGlyph, SpellingGlyph } from '../common/QuestionTypeGlyphs';
 import { Toggle } from '../newfullsheet/settingsUi';
-import SpeakerArt from '../common/SpeakerArt';
 
 /*
-  테스트 설정 — 순서: 어떤 단어를 → 몇 문제 → 단어 고르는 방식 → 문제 유형 → 방향 → 듣기.
-  브랜드색(primary)은 시작 CTA 와 듣기 스위치 ON 에만 쓴다. 선택은 검은 테두리 + 체크 배지(SetupTile).
+  테스트 설정 — 순서: 어떤 단어를 → 몇 문제 → 단어 고르는 방식 → 문제 유형(+듣기 토글) → 방향.
+  진한 브랜드색(primary-600)은 시작 CTA 와 듣기 토글 ON 에만 쓴다. 선택 타일은 옅은 분홍 면 + 연한
+  분홍 테두리(SetupTile). 2026-10-30(이슈 #21): 유형 이름을 짧게, 2열 '단어/문장' 묶음, 듣기는
+  '문제 유형' 제목 오른쪽 토글, 방향은 글자 없는 아이콘 타일, '문장 뜻 고르기' 삭제.
 */
 
-/** 섹션 껍데기 — 제목(좌) · 캡션(우) · 본문 · 주석 */
-const Section = ({ title, caption, note, children }) => (
+/** 섹션 껍데기 — 제목(좌) · 캡션 또는 trailing 요소(우) · 본문 · 주석 */
+const Section = ({ title, caption, trailing, note, children }) => (
   <section className="flex flex-col gap-[10px]">
-    <div className="flex items-baseline justify-between">
+    <div className={`flex justify-between ${trailing ? 'items-center min-h-[28px]' : 'items-baseline'}`}>
       <h3 className="text-[15px] font-[700] text-layout-black dark:text-layout-white">{title}</h3>
       {caption && <span className="text-[12px] text-layout-gray-300">{caption}</span>}
+      {trailing}
     </div>
     {children}
     {note && <p className="text-[12px] leading-[1.5] text-layout-gray-300 break-keep">{note}</p>}
@@ -36,10 +38,30 @@ const Section = ({ title, caption, note, children }) => (
 
 /** 방향 타일의 글자 배지 — currentColor 테두리라 타일 선택색을 따른다 */
 const LangBadge = ({ children }) => (
-  <span className="flex items-center justify-center w-[34px] h-[26px] rounded-[7px] border-[1.5px] border-current text-[12px] font-[800]">
+  <span className="flex items-center justify-center w-[34px] h-[28px] rounded-[7px] border-[1.5px] border-current text-[13px] font-[800]">
     {children}
   </span>
 );
+
+/** 문제 유형 묶음 라벨 — '단어' / '문장' */
+const GroupLabel = ({ children }) => (
+  <p className="text-[12px] font-[700] text-layout-gray-400 dark:text-layout-gray-300">{children}</p>
+);
+
+// 문제 유형 타일 — family 값은 플러그인 메타(family)와 같다. 이름은 짧게(2026-10-30 사용자 결정).
+const WORD_FAMILIES = [
+  { value: 'multipleChoice', label: '사지선다', Glyph: McqGlyph },
+  { value: 'cardMatch', label: '카드 맞추기', Glyph: CardMatchGlyph },
+  { value: 'spelling', label: '단어 쓰기', Glyph: SpellingGlyph },
+];
+const SENTENCE_FAMILIES = [
+  { value: 'fillInTheBlank', label: '빈칸 고르기', Glyph: BlankGlyph },
+  { value: 'fillInTheBlankTyping', label: '빈칸 쓰기', Glyph: TypingGlyph },
+  { value: 'sentenceArrange', label: '문장 조립', Glyph: ArrangeGlyph },
+  { value: 'sentenceTranslate', label: '해석 조립', Glyph: TranslateGlyph },
+];
+// 듣기 변형이 있는 묶음 — 이 중 하나라도 골라야 듣기 토글이 보인다(문장 조립 + 듣기 = 듣고 받아쓰기).
+const LISTENABLE_FAMILIES = ['multipleChoice', 'cardMatch', 'sentenceArrange'];
 
 export const TestSetupNewBottomSheet = ({ onCancel, onSet, maxVocabularyCount, vocabularySheetId, testType }) => {
   // 문제 유형 선택은 [유형 묶음 × 방향 × 듣기] 세 축으로 받고, 실제 questionType id 배열은
@@ -185,7 +207,7 @@ export const TestSetupNewBottomSheet = ({ onCancel, onSet, maxVocabularyCount, v
       && data.questionType.length > 0
       && data.questionType.every(isFillInTheBlankType);
     if (onlyFill && fillCandidateCount < MIN_TEST_VOCABULARY_COUNT) {
-      setErrorMessage('빈칸 채우기는 예문에 강조 표시가 있는 단어가 필요해요. 다른 유형도 함께 선택해주세요');
+      setErrorMessage('빈칸 고르기는 예문에 강조 표시가 있는 단어가 필요해요. 다른 유형도 함께 선택해주세요');
       return;
     }
 
@@ -315,6 +337,23 @@ export const TestSetupNewBottomSheet = ({ onCancel, onSet, maxVocabularyCount, v
   };
 
   const isStartDisabled = memoryState.length === 0 || currentMemoryStateCount < MIN_TEST_VOCABULARY_COUNT;
+
+  const hasListenable = selectedFamilies.some(f => LISTENABLE_FAMILIES.includes(f));
+  // 빈칸 고르기를 골랐는데 낼 수 있는 단어가 최소 문제 수에 못 미칠 때만 짧게 알린다
+  const fillShort = isFillSelected && fillCandidateCount < MIN_TEST_VOCABULARY_COUNT;
+
+  const renderFamilyTile = ({ value, label, Glyph }) => (
+    <SetupTile
+      key={value}
+      direction="row"
+      selected={selectedFamilies.includes(value)}
+      onClick={() => toggleFamily(value)}
+      className="h-[60px]"
+    >
+      <Glyph size={34} lang={learningLang} className="flex-shrink-0" />
+      <span className="text-[14px] font-[700] whitespace-nowrap">{label}</span>
+    </SetupTile>
+  );
 
   // 몇 문제 — 미리 정한 개수 칩. max 보다 큰 값은 빼고, '전체'와 같은 값은 숫자 칩을 뺀다(같은 칩 둘).
   const presetChips = useMemo(() => {
@@ -486,103 +525,58 @@ export const TestSetupNewBottomSheet = ({ onCancel, onSet, maxVocabularyCount, v
           </div>
         </Section>
 
-        {/* 4. 문제 유형 — 유형 묶음(다중) */}
+        {/* 4. 문제 유형 — 유형 묶음(다중), '단어'/'문장' 2열. 제목 오른쪽에 듣기 토글. */}
         <Section
           title="문제 유형"
-          note={isFillSelected && fillCandidateCount < allWords.length ? `빈칸 채우기: 학습할 수 있는 ${allWords.length}개 중 ${fillCandidateCount}개 출제 가능` : undefined}
-        >
-          <div className="flex flex-col gap-[8px]">
-            <div className="flex gap-[8px]">
-              {[
-                { value: 'multipleChoice', label: '사지선다', Glyph: McqGlyph },
-                { value: 'cardMatch', label: '카드 맞추기', Glyph: CardMatchGlyph },
-                { value: 'fillInTheBlank', label: '빈칸 채우기', Glyph: BlankGlyph },
-                { value: 'spelling', label: '스펠링 채우기', Glyph: SpellingGlyph },
-              ].map(({ value, label, Glyph }) => (
-                <SetupTile
-                  key={value}
-                  selected={selectedFamilies.includes(value)}
-                  onClick={() => toggleFamily(value)}
-                  className="h-[104px]"
-                >
-                  <Glyph size={44} lang={learningLang} />
-                  <span className="text-[14px] font-[700] break-keep group-data-[selected=true]:text-layout-black dark:group-data-[selected=true]:text-layout-white">{label}</span>
-                </SetupTile>
-              ))}
-            </div>
-            {/* 출제형 4종(2026-09)·문장 뜻 맞추기 — 3칸 줄과 같은 타일을 새 줄에 둔다(5칸을 한 줄에 욱여넣으면
-                아이콘·라벨이 너무 좁아진다). */}
-            <div className="flex gap-[8px]">
-              {[
-                { value: 'sentenceArrange', label: '문장 만들기', Glyph: ArrangeGlyph },
-                { value: 'fillInTheBlankTyping', label: '빈칸 입력', Glyph: TypingGlyph },
-                { value: 'sentenceMeaning', label: '문장 뜻 고르기', Glyph: ReadGlyph },
-                { value: 'sentenceTranslate', label: '문장 뜻 맞추기', Glyph: TranslateGlyph },
-              ].map(({ value, label, Glyph }) => (
-                <SetupTile
-                  key={value}
-                  selected={selectedFamilies.includes(value)}
-                  onClick={() => toggleFamily(value)}
-                  className="h-[104px]"
-                >
-                  <Glyph size={44} lang={learningLang} />
-                  <span className="text-[14px] font-[700] break-keep group-data-[selected=true]:text-layout-black dark:group-data-[selected=true]:text-layout-white">{label}</span>
-                </SetupTile>
-              ))}
-            </div>
-          </div>
-        </Section>
-
-        {/* 5. 방향 — 다중. 사지선다를 골랐을 때만(카드 맞추기·빈칸 채우기는 방향이 없다) */}
-        {selectedFamilies.includes('multipleChoice') && (
-          <Section title="방향">
-            <div className="flex gap-[8px]">
-              {[
-                { value: 'en2ko', label: `${learnLabel} 보고 한글`, from: learnGlyph, to: '가' },
-                { value: 'ko2en', label: `한글 보고 ${learnLabel}`, from: '가', to: learnGlyph },
-              ].map(({ value, label, from, to }) => (
-                <SetupTile
-                  key={value}
-                  selected={selectedDirections.includes(value)}
-                  onClick={() => toggleDirection(value)}
-                  className="h-[96px]"
-                >
-                  <span className="flex items-center gap-[6px]" aria-hidden>
-                    <LangBadge>{from}</LangBadge>
-                    <ArrowRight size={16} weight="bold" />
-                    <LangBadge>{to}</LangBadge>
-                  </span>
-                  <span className="text-[14px] font-[700] group-data-[selected=true]:text-layout-black dark:group-data-[selected=true]:text-layout-white">{label}</span>
-                </SetupTile>
-              ))}
-            </div>
-          </Section>
-        )}
-
-        {/* 6. 듣기 — 스위치 한 줄. 사지선다·카드 맞추기·문장 만들기를 골랐을 때만
-            (빈칸 채우기·빈칸 입력은 듣기 변형이 없다). 문장 만들기 + 듣기 = 듣고 받아쓰기(listenArrange). */}
-        {(selectedFamilies.includes('multipleChoice') || selectedFamilies.includes('cardMatch') || selectedFamilies.includes('sentenceArrange')) && (
-          <Section title="듣기">
+          trailing={hasListenable && (
             <div
-              className="
-                flex items-center gap-[12px]
-                h-[56px] px-[14px] rounded-[12px]
-                border-[1px] border-layout-gray-200 dark:border-[#3A3A3A]
-                bg-layout-white dark:bg-[#1A1A1A]
-                cursor-pointer
-              "
+              className="flex items-center gap-[6px] cursor-pointer"
               onPointerDown={(e) => e.stopPropagation()}
               onClick={() => {
                 vibrate({ duration: 5 });
                 setListeningOn(prev => !prev);
               }}
             >
-              <span className="flex items-center justify-center flex-shrink-0 w-[36px] h-[36px] rounded-full bg-layout-gray-50 dark:bg-[#2A2A2A]">
-                <SpeakerArt size={22} />
-              </span>
-              <span className="flex-1 min-w-0 text-[14px] font-[700] text-layout-black dark:text-layout-white">듣기 문제 포함</span>
-              {/* Toggle 은 자체 stopPropagation + haptic 을 가진다 — 행 onClick 과 이중 토글되지 않는다 */}
+              <SpeakerHigh size={16} weight="fill" className="text-layout-gray-400 dark:text-layout-gray-300" aria-hidden />
+              <span className="text-[13px] font-[700] text-layout-gray-500 dark:text-layout-gray-100">듣기</span>
+              {/* Toggle 은 자체 stopPropagation + haptic 을 가진다 — 위 onClick 과 이중 토글되지 않는다 */}
               <Toggle on={listeningOn} onClick={() => setListeningOn(prev => !prev)} />
+            </div>
+          )}
+          note={fillShort ? '빈칸 고르기를 낼 수 있는 예문이 부족해요' : undefined}
+        >
+          <div className="flex flex-col gap-[6px]">
+            <GroupLabel>단어</GroupLabel>
+            <div className="grid grid-cols-2 gap-[8px]">{WORD_FAMILIES.map(renderFamilyTile)}</div>
+          </div>
+          <div className="flex flex-col gap-[6px] mt-[4px]">
+            <GroupLabel>문장</GroupLabel>
+            <div className="grid grid-cols-2 gap-[8px]">{SENTENCE_FAMILIES.map(renderFamilyTile)}</div>
+          </div>
+        </Section>
+
+        {/* 5. 방향 — 다중. 사지선다를 골랐을 때만(다른 유형은 방향이 하나뿐). 글자 없이 [Aa→가] [가→Aa]. */}
+        {selectedFamilies.includes('multipleChoice') && (
+          <Section title="방향">
+            <div className="grid grid-cols-2 gap-[8px]">
+              {[
+                { value: 'en2ko', label: `${learnLabel} 보고 한글`, from: learnGlyph, to: '가' },
+                { value: 'ko2en', label: `한글 보고 ${learnLabel}`, from: '가', to: learnGlyph },
+              ].map(({ value, label, from, to }) => (
+                <SetupTile
+                  key={value}
+                  aria-label={label}
+                  selected={selectedDirections.includes(value)}
+                  onClick={() => toggleDirection(value)}
+                  className="h-[64px]"
+                >
+                  <span className="flex items-center gap-[6px]" aria-hidden>
+                    <LangBadge>{from}</LangBadge>
+                    <ArrowRight size={16} weight="bold" />
+                    <LangBadge>{to}</LangBadge>
+                  </span>
+                </SetupTile>
+              ))}
             </div>
           </Section>
         )}

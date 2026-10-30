@@ -23,10 +23,15 @@ import {
 } from './spellingUtils';
 
 /*
-  스펠링 채우기(spellingFill, 이슈 #21) — 뜻(아래 카드)을 보고 단어 철자의 빈칸을 직접 입력한다.
-  위 카드: 철자 칸(앞 글자 일부 공개) + 힌트 알약. 아래 카드: 품사·뜻 + 뜻 듣기.
+  단어 쓰기(spellingFill, 이슈 #21) — 뜻(위 카드)을 보고 단어 철자의 빈칸을 직접 입력한다.
+  위 카드: 품사·뜻 + 뜻 듣기. 아래 카드: 철자 칸(앞 글자 일부 공개) + 힌트 알약 + 농장 상태 바
+  (빈칸 고르기와 같은 배치, 2026-10-30).
   키보드는 OS 기본 가상 키보드 — 화면 밖 숨긴 input 하나에 입력받아 칸에 왼쪽부터 채운다.
-  모든 칸이 차면 자동 채점(대소문자 무시, 오타 봐주기 없음). 채점 전에는 단어 소리를 내지 않는다
+  마지막 칸이 채워지는 순간 자동 채점(대소문자 무시, 오타 봐주기 없음) — 엔터·제출 버튼은 없다.
+  Android 키보드는 영어도 조합(composition)으로 넣어서, 조합이 끝나기를 기다리면 칸이 다 찬 뒤
+  다른 버튼(스피커)을 눌러 입력이 blur 될 때에야 채점됐다(2026-10-30 버그). 그래서 조합 중이어도
+  라틴 문자는 바로 채점하고, 일본어는 조합 글자가 전부 가나로 확정된 모양일 때만 채점한다.
+  스피커·힌트 버튼은 pointerdown 기본 동작을 막아 입력 포커스를 뺏지 않는다. 채점 전에는 단어 소리를 내지 않는다
   (정답 노출). 진행은 빈칸 채우기와 같다 — 채점 즉시 onCardMatched, 넘기기는 공통 '다음' 버튼(advanceGate).
 */
 const meaningTextOf = (m) => (m && typeof m === 'object' ? (m.meaning ?? m.text ?? '') : (m ?? ''));
@@ -150,10 +155,16 @@ const SpellingFillQuestion = ({ question, onComplete, onCardMatched, farmByWordI
     });
   };
 
-  // 입력값 정리 + 칸이 다 차면 채점. IME 조합 중에는 채점·자르기를 하지 않는다.
+  // 입력값 정리 + 칸이 다 차면 채점. 일본어 IME 조합 중에는 가나로 다 확정된 모양이 아니면
+  // 채점·자르기를 하지 않는다(로마자 'n' 처럼 아직 변환 전 글자가 남아 있을 수 있다).
   const commitValue = (raw, nextHinted = hinted, usedHints = hintUsed) => {
     if (isAnswered || gradedRef.current) return;
-    if (composingRef.current) { setValue(raw); return; }
+    if (composingRef.current && ja) {
+      const cap = mapInputToCells(cells, nextHinted, '').slots.length;
+      const chars = Array.from(String(raw ?? '')).filter((ch) => /[\p{L}\p{N}ー]/u.test(ch));
+      const allKana = chars.every((ch) => /[\p{Script=Hiragana}\p{Script=Katakana}ー]/u.test(ch));
+      if (!(allKana && chars.length >= cap && cap > 0)) { setValue(raw); return; }
+    }
     let v = Array.from(String(raw ?? '')).filter((ch) => /[\p{L}\p{N}ー]/u.test(ch));
     if (ja) v = v.map(toHiragana);
     else v = v.map((ch) => ch.toLowerCase());
@@ -207,14 +218,56 @@ const SpellingFillQuestion = ({ question, onComplete, onCardMatched, farmByWordI
 
   return (
     <div className="flex flex-col gap-[15px] h-full">
-      {/* 위 카드 — 철자 칸 + 힌트. 카드 탭 = 입력 포커스(키보드 올리기). */}
+      {/* 위 카드 — 품사 + 뜻(빈칸 고르기의 보여 주는 예문 카드와 같은 자리·색). 스피커는 뜻(한국어)만 읽는다 */}
+      <motion.div
+        className="
+          relative flex-shrink-0
+          w-full px-[20px] py-[18px]
+          rounded-[12px] text-left
+          bg-primary-main-50 dark:bg-primary-main-dark
+        "
+        initial={{ opacity: 0, scale: 0.95 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.2, ease: [0.4, 0, 0.2, 1] }}
+        style={{ willChange: 'transform, opacity' }}
+      >
+        <div className="flex items-start gap-[12px]">
+          <div className="flex-1 min-w-0">
+            {posLabel && (
+              <p className="mb-[4px] text-[12px] font-[700] text-layout-gray-400 dark:text-layout-gray-100">{posLabel}</p>
+            )}
+            <p className="text-[19px] font-[700] leading-[1.5] text-layout-black dark:text-layout-white break-keep">
+              {meaningText}
+            </p>
+          </div>
+          <motion.button
+            type="button"
+            aria-label="뜻 듣기"
+            whileTap={{ scale: 0.9 }}
+            transition={{ duration: 0.15 }}
+            className="relative flex-shrink-0 mt-[3px]"
+            onPointerDown={(e) => e.preventDefault()}
+            onMouseDown={(e) => e.preventDefault()}
+            onClick={(e) => { e.stopPropagation(); feel('tap'); speakMeaning(); }}
+          >
+            <motion.span
+              className={`relative z-[1] transition-colors duration-200 ${showMeaningSpeaking ? 'text-primary-main-600' : 'text-layout-gray-300'}`}
+              animate={showMeaningSpeaking && !reducedMotion ? { scale: [1, 1.12, 1] } : { scale: 1 }}
+              transition={showMeaningSpeaking && !reducedMotion ? { duration: 0.6, repeat: Infinity, ease: 'easeInOut' } : {}}
+            >
+              <SpeakerArt size={22} playing={showMeaningSpeaking} />
+            </motion.span>
+          </motion.button>
+        </div>
+      </motion.div>
+      {/* 아래 카드 — 철자 칸 + 힌트 + 농장 상태 바(빈칸 고르기의 빈칸 카드와 같은 자리·색). 카드 탭 = 입력 포커스(키보드 올리기). */}
       <motion.div
         data-lift-card=""
         className="
           relative overflow-hidden
           flex flex-col flex-1 min-h-0
           w-full rounded-[12px]
-          bg-primary-main-50 dark:bg-primary-main-dark
+          bg-layout-gray-50 dark:bg-layout-gray-dark
         "
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
@@ -264,6 +317,8 @@ const SpellingFillQuestion = ({ question, onComplete, onCardMatched, farmByWordI
                 <button
                   type="button"
                   disabled={hintDisabled}
+                  onPointerDown={(e) => e.preventDefault()}
+                  onMouseDown={(e) => e.preventDefault()}
                   onClick={handleHint}
                   aria-label={`힌트, ${hintsLeft}번 남음`}
                   className={`
@@ -364,46 +419,6 @@ const SpellingFillQuestion = ({ question, onComplete, onCardMatched, farmByWordI
         />
       </motion.div>
 
-      {/* 아래 카드 — 품사 + 뜻, 스피커는 뜻(한국어)만 읽는다 */}
-      <motion.div
-        className="
-          relative flex-shrink-0
-          w-full px-[20px] py-[18px]
-          rounded-[12px] text-left
-          bg-layout-gray-50 dark:bg-layout-gray-dark
-        "
-        initial={{ opacity: 0, scale: 0.95 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.2, ease: [0.4, 0, 0.2, 1] }}
-        style={{ willChange: 'transform, opacity' }}
-      >
-        <div className="flex items-start gap-[12px]">
-          <div className="flex-1 min-w-0">
-            {posLabel && (
-              <p className="mb-[4px] text-[12px] font-[700] text-layout-gray-400 dark:text-layout-gray-100">{posLabel}</p>
-            )}
-            <p className="text-[19px] font-[700] leading-[1.5] text-layout-black dark:text-layout-white break-keep">
-              {meaningText}
-            </p>
-          </div>
-          <motion.button
-            type="button"
-            aria-label="뜻 듣기"
-            whileTap={{ scale: 0.9 }}
-            transition={{ duration: 0.15 }}
-            className="relative flex-shrink-0 mt-[3px]"
-            onClick={() => { feel('tap'); speakMeaning(); }}
-          >
-            <motion.span
-              className={`relative z-[1] transition-colors duration-200 ${showMeaningSpeaking ? 'text-primary-main-600' : 'text-layout-gray-300'}`}
-              animate={showMeaningSpeaking && !reducedMotion ? { scale: [1, 1.12, 1] } : { scale: 1 }}
-              transition={showMeaningSpeaking && !reducedMotion ? { duration: 0.6, repeat: Infinity, ease: 'easeInOut' } : {}}
-            >
-              <SpeakerArt size={22} playing={showMeaningSpeaking} />
-            </motion.span>
-          </motion.button>
-        </div>
-      </motion.div>
     </div>
   );
 };

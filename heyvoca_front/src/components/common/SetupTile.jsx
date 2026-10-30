@@ -1,13 +1,14 @@
 import { motion } from 'framer-motion';
-import { Check } from '@phosphor-icons/react';
 import { vibrate } from '../../utils/osFunction';
 
 /**
  * 설정 시트(테스트 설정 · 학습 설정)의 선택 타일.
  *
- * 선택 = primary 테두리(1.5px) + 우상단 primary 체크 배지 + 아이콘 primary. 라벨은 검정/흰색 유지.
- * 면은 칠하지 않는다(면까지 물들이면 시트 전체가 분홍이 된다 — 1차 시안 피드백).
- * 처음엔 흑백 테두리만 썼는데 "너무 밋밋하다"는 피드백으로 포인트 컬러를 이만큼만 되돌렸다.
+ * 선택 = 옅은 primary-50 면 + primary-300 테두리(1.5px) + 아이콘·라벨 검정(다크: 흰색).
+ * 비선택 = 흰 면 + gray-200 테두리 + gray-400.
+ * 진한 primary-600 은 시트의 시작 버튼·토글 ON 에만 쓴다 — 타일까지 진분홍이면 거부감이 크고,
+ * 흑백 테두리만 쓰면 너무 밋밋하다는 피드백 사이의 절충(2026-10-30, 이슈 #21). 체크 배지는 뺐다.
+ * direction='row' 는 가로형(왼쪽 아이콘 + 오른쪽 라벨) 타일.
  */
 const SetupTile = ({
   selected = false,
@@ -16,6 +17,7 @@ const SetupTile = ({
   children,
   'aria-label': ariaLabel,
   role = 'checkbox',
+  direction = 'col',
 }) => (
   <motion.button
     type="button"
@@ -31,23 +33,15 @@ const SetupTile = ({
       onClick?.();
     }}
     className={`
-      group relative flex flex-col flex-1 items-center justify-center gap-[8px]
-      rounded-[12px] px-[6px] py-[10px]
-      bg-layout-white dark:bg-[#1A1A1A]
+      group relative flex flex-1 items-center
+      ${direction === 'row' ? 'flex-row justify-start gap-[10px] px-[12px]' : 'flex-col justify-center gap-[8px] px-[6px] py-[10px]'}
+      rounded-[12px]
       ${selected
-        ? 'border-[1.5px] border-primary-main-600 text-primary-main-600'
-        : 'border-[1px] border-layout-gray-200 dark:border-[#3A3A3A] text-layout-gray-300'}
+        ? 'border-[1.5px] border-primary-main-300 dark:border-[#6B3A5D] bg-primary-main-50 dark:bg-primary-main-dark text-layout-black dark:text-layout-white'
+        : 'border-[1px] border-layout-gray-200 dark:border-[#3A3A3A] bg-layout-white dark:bg-[#1A1A1A] text-layout-gray-400 dark:text-layout-gray-300'}
       ${className}
     `}
   >
-    {selected && (
-      <span
-        aria-hidden
-        className="absolute top-[8px] right-[8px] flex items-center justify-center w-[18px] h-[18px] rounded-full bg-primary-main-600"
-      >
-        <Check size={11} weight="bold" className="text-layout-white" />
-      </span>
-    )}
     {children}
   </motion.button>
 );

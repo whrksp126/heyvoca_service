@@ -15,7 +15,7 @@ import { setStoredVocaSheetsTab } from '../../utils/vocaSheetsTab';
 const JA_SCRIPT_PROMPT_KEY = 'heyvoca_script_prompt_ja_shown';
 
 /** 언어 타일의 국기 배지 — 실사 이모지 대신 단순화한 플랫 SVG(LangFlagIcon). 선택 여부는
- *  타일 자체(SetupTile)의 테두리·체크 배지가 표시하므로 배지는 항상 같은 톤으로 둔다. */
+ *  타일 자체(SetupTile)의 면·테두리가 표시하므로 배지는 항상 같은 톤으로 둔다. */
 const LangBadge = ({ lang }) => (
   <span className="flex items-center justify-center w-[40px] h-[30px] rounded-[8px] overflow-hidden ring-1 ring-inset ring-black/5 dark:ring-white/10">
     <LangFlagIcon lang={lang} size={40} />
@@ -26,7 +26,7 @@ const LangBadge = ({ lang }) => (
  * 학습 언어 전환 — 홈 왼쪽 위 언어 칩(실험실 "다른 언어 학습하기" 켜짐)에서 연다.
  *
  * 규격은 설정 계열 시트(StudySetupNewBottomSheet · TestSetupNewBottomSheet)와 같다 —
- * 제목 중앙 18px/700 · 선택 타일(SetupTile, 체크 배지) · 하단 취소/확인 2버튼.
+ * 제목 중앙 18px/700 · 선택 타일(SetupTile, 옅은 분홍 면) · 하단 취소/확인 2버튼.
  * 고르는 즉시 바뀌지 않고 '확인'을 눌러야 전환된다(다른 설정 시트와 동일한 흐름).
  * 언어 표지는 국기 SVG(LangFlagIcon)로 표시한다(2026-09-29) — 실사 이모지·외부 이미지는
  * 여전히 금지지만, 단순화한 플랫 SVG 국기는 다른 언어 학습 앱들의 관용적 표현이라 예외로 둔다.

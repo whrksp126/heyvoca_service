@@ -35,7 +35,7 @@ from app.utils.interleave import interleave_avoid_adjacent
 from app.utils.example_tagging import example_has_target_tag, example_origin_text, example_meaning_text
 from app.constants.question_types import (
     RECOMMENDABLE_QUESTION_TYPES, QUESTION_TYPE_TIER, TIER_QUESTION_TYPES, CROP_STAGE_MAX_TIER,
-    MANUAL_ONLY_QUESTION_TYPES,
+    MANUAL_ONLY_QUESTION_TYPES, QUESTION_TYPE_FAMILY,
 )
 from app.services.recommend.stage import crop_stage as _crop_stage
 
@@ -98,7 +98,6 @@ _QUESTION_TYPE_WEIGHTS: Dict[str, int] = {
     'sentenceArrange':         5,
     'listenArrange':           3,
     'fillInTheBlankTyping':    3,
-    'sentenceMeaning':         8,   # 자유 설정 테스트에서 직접 골랐을 때만(MANUAL_ONLY)
     'sentenceTranslate':       6,
     'spellingFill':            5,   # 2026-10 이슈 #21 — 뜻 보고 나머지 철자 입력(예문 불필요)
 }
@@ -247,13 +246,6 @@ def _item_can_use_question_type(item: CandidateItem, qtype: str) -> bool:
         # 스펠링 채우기(2026-10 이슈 #21): 뜻을 보고 앞부분만 보이는 단어의 나머지 철자를 입력.
         # 예문은 필요 없다. 정답 문자열(en=단어, ja=읽기 가나)이 공백 빼고 2글자 이상이어야 한다.
         return has_meanings and len(spelling_answer(item).replace(' ', '')) >= SPELLING_FILL_MIN_LEN
-    if qtype == 'sentenceMeaning':
-        # 문장 뜻 고르기: 원문·뜻이 모두 있는 예문이 하나라도 있어야 한다(오답 뜻은 프론트가
-        # 같은 풀의 다른 예문에서 고른다 — 모자라면 프론트가 사지선다로 폴백).
-        return any(
-            (example_origin_text(ex) or '').strip() and (example_meaning_text(ex) or '').strip()
-            for ex in (item.examples or [])
-        )
     if qtype in ('sentenceArrangePartial', 'sentenceArrange', 'listenArrange'):
         # 사전 테이블 voca_example_puzzle 매칭 결과(pool.py가 채운 example_puzzles)가
         # 하나라도 usable해야 한다. en 전용 — ja는 example_puzzles가 항상 비어 있다.
@@ -294,7 +286,7 @@ def _assign_suggested_question_type(
     """
     avoid = avoid_types or set()
     for wt in weakness_types:
-        if wt in MANUAL_ONLY_QUESTION_TYPES:
+        if wt not in _ALL_QUESTION_TYPES:   # 직접 선택 전용·출제 중단 유형(sentenceMeaning 등)은 약점이어도 안 낸다
             continue
         if wt not in avoid and _item_can_use_question_type(item, wt):
             return wt
@@ -343,6 +335,51 @@ def _assign_restricted_question_type(
 
     # avoid를 전부 회피하면 후보가 하나도 안 남을 수 있다 — avoid 무시하고 다시 시도
     return _weighted_type_choice(candidates)
+
+
+def _pick_least_used(options: List[str], counts: Dict[str, int], prev: Optional[str]) -> str:
+    """options 중 지금까지 가장 덜 쓴 것을 고른다. 동률이면 직전(prev)과 다른 것 중 무작위.
+    가장 덜 쓴 것이 직전 것뿐이면, 한 번 더 쓴 정도(최소+1)인 다른 것으로 연속을 피한다."""
+    low = min(counts.get(o, 0) for o in options)
+    best = [o for o in options if counts.get(o, 0) == low]
+    fresh = [o for o in best if o != prev]
+    if not fresh:
+        fresh = [o for o in options if o != prev and counts.get(o, 0) <= low + 1]
+    return random.choice(fresh or best)
+
+
+def _assign_balanced_question_types(
+    items: List[CandidateItem], allowed_types: List[str],
+) -> List[Optional[str]]:
+    """자유 설정 테스트(`question_types` 로 유형을 직접 고른 경우) — 한 응답 안에서 고른 유형을 고르게 섞는다
+    (이슈 #21 2차 2026-10-30, 사용자 결정: 단어 고르기만 추천 로직, 유형·방향·듣기는 고른 것 안에서 균등).
+
+    약점 유형·가중치·tier 는 쓰지 않는다. 단어 순서대로:
+      1단계 — 이 단어가 쓸 수 있는 유형들의 묶음(QUESTION_TYPE_FAMILY) 중 지금까지 가장 덜 나온 묶음,
+      2단계 — 그 묶음 안 변형(방향·듣기) 중 가장 덜 나온 것. 두 단계 모두 직전과 같은 것은 피한다.
+    묶음 균등을 먼저 보는 건 변형을 많이 고른 묶음(사지선다 3방향 등)이 과다 출제되지 않게 하려는 것.
+    단어가 쓸 수 없는 유형은 건너뛴다(그 단어만 다음 묶음으로). 쓸 수 있는 게 없으면 None.
+    """
+    allowed = list(dict.fromkeys(allowed_types))
+    fam_counts: Dict[str, int] = {}
+    type_counts: Dict[str, int] = {}
+    prev_fam: Optional[str] = None
+    prev_type: Optional[str] = None
+    out: List[Optional[str]] = []
+    for item in items:
+        usable = [qt for qt in allowed if _item_can_use_question_type(item, qt)]
+        if not usable:
+            out.append(None)
+            continue
+        fams = list(dict.fromkeys(QUESTION_TYPE_FAMILY.get(qt, qt) for qt in usable))
+        fam = _pick_least_used(fams, fam_counts, prev_fam)
+        variants = [qt for qt in usable if QUESTION_TYPE_FAMILY.get(qt, qt) == fam]
+        chosen = _pick_least_used(variants, type_counts, prev_type)
+        fam_counts[fam] = fam_counts.get(fam, 0) + 1
+        type_counts[chosen] = type_counts.get(chosen, 0) + 1
+        prev_fam, prev_type = fam, chosen
+        out.append(chosen)
+    return out
 
 
 # ──────────────────────────────────────────────
@@ -456,6 +493,7 @@ def _enrich_items(
     *,
     full_recommend: bool = False,
     allowed_types: Optional[List[str]] = None,
+    balance_types: bool = False,
 ) -> List[Dict[str, Any]]:
     """
     각 아이템에 suggested_question_type, reason을 부여한다.
@@ -466,6 +504,8 @@ def _enrich_items(
          tier 로직을 완전히 건너뛰고 _assign_restricted_question_type을 쓴다 —
          "설정 시트에서 유형을 직접 고르면 그 유형만 나와야 한다". tier_target/
          tier_shown은 항상 None(UserVoca의 tier 상태를 건드리지 않음).
+         balance_types=True(자유 설정 테스트, 이슈 #21 2차)면 단어별 배정 대신
+         _assign_balanced_question_types 로 응답 전체를 고르게 섞는다(새 씨앗 심기는 기존 그대로).
       2. full_recommend=True(AI 추천)면 tier 기반 배정(_assign_tiered_question_type,
          단어별 tier 상태는 item.tier_state — pool.py가 UserVoca 컬럼에서 로드)을 쓰고
          결과 항목에 tier_target/tier_shown을 함께 채운다.
@@ -473,11 +513,17 @@ def _enrich_items(
          tier_target/tier_shown은 None으로 둔다.
     """
     result = []
-    for item, src_bucket in items_with_bucket:
+    balanced = (
+        _assign_balanced_question_types([it for it, _ in items_with_bucket], allowed_types)
+        if allowed_types and balance_types else None
+    )
+    for idx, (item, src_bucket) in enumerate(items_with_bucket):
         avoid = today_seen.get(item.user_voca_id, set())
         tier_target = None
         tier_shown = None
-        if allowed_types:
+        if balanced is not None:
+            suggested = balanced[idx]
+        elif allowed_types:
             suggested = _assign_restricted_question_type(item, allowed_types, weakness_types, avoid)
         elif full_recommend:
             suggested, tier_target, tier_shown = _assign_tiered_question_type(
@@ -504,9 +550,9 @@ def _enrich_items(
 # 세션마다 예문이 있는 단어 몇 개를 이 유형으로 바꾸되, **실전 문제**로 낸다 — tier_shown 은 이 유형의
 # tier(3), tier_target 은 단어의 계산값 그대로 두어 /study/log 가 tier 진행·FSRS·작물 XP 에 정상 반영한다.
 # 바꾸는 대상은 단독 문제(사지선다류·빈칸)만 — 카드 맞추기(세트)·문장 만들기(끝 구간)는 건드리지 않는다.
-# 자유 설정 테스트(유형 직접 선택)는 유형별 몫을 보장하지 않는다(무작위 배정 그대로).
+# 자유 설정 테스트(유형 직접 선택)는 이 몫을 적용하지 않는다(고른 유형 균등 배정, _assign_balanced_question_types).
 _TRANSLATE_SWAPPABLE = (
-    'multipleChoice', 'reverseMultipleChoice', 'multipleChoiceListening', 'fillInTheBlank', 'sentenceMeaning',
+    'multipleChoice', 'reverseMultipleChoice', 'multipleChoiceListening', 'fillInTheBlank',
 )
 _STAGE_ORDER = {'carrot': 4, 'leaf': 3, 'sprout': 2, 'seed': 1, 'unlearned': 0}
 
@@ -675,7 +721,7 @@ def _compose_recommend(
     # 7. enrich (suggested_question_type, reason)
     enriched = _enrich_items(
         final_with_bucket, today_seen, weakness_types,
-        full_recommend=full_recommend, allowed_types=allowed_types,
+        full_recommend=full_recommend, allowed_types=allowed_types, balance_types=True,
     )
     if not allowed_types:
         _apply_translate_quota(enriched, full_recommend=full_recommend)
@@ -734,21 +780,22 @@ def _compose_random(
     """
     추천 알고리즘을 거치지 않는 단순 랜덤 추출.
 
-    allowed_types(`question_types` 쿼리 파라미터)가 있으면 그 유형 안에서 배정한다
-    (2026-09) — random 선택 모드에서도 "직접 고른 유형만" 규칙은 동일하게 지킨다.
+    allowed_types(`question_types` 쿼리 파라미터)가 있으면 그 유형 안에서 고르게 배정한다
+    (2026-09, 균등 배정은 이슈 #21 2차) — random 선택 모드에서도 "직접 고른 유형만" 규칙은 동일하다.
     """
     shuffled = list(pool)
     random.shuffle(shuffled)
     selected = shuffled[:count]
+    types = (
+        _assign_balanced_question_types(selected, allowed_types) if allowed_types else [None] * len(selected)
+    )
     enriched = [
         {
             '_item': it, 'src_bucket': it.bucket,
-            'suggested_question_type': (
-                _assign_restricted_question_type(it, allowed_types, [], set()) if allowed_types else None
-            ),
+            'suggested_question_type': qt,
             'reason': '', 'tier_target': None, 'tier_shown': None,
         }
-        for it in selected
+        for it, qt in zip(selected, types)
     ]
     composition: Dict[str, int] = {}
     for it in selected:

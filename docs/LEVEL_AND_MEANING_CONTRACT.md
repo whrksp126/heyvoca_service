@@ -142,17 +142,25 @@ payload (기존 문제 payload 와 같은 위치에 실린다):
   13어절 이상은 제외. `tiles`·`accepted` 는 남은 부분만.
 - **새 씨앗 심기(mode=plant)에서 제외**: `question_payloads` 에 `sentenceTranslate` 를 싣지 않고, 배정된 suggested 가 있으면 multipleChoice 로 바꾼다.
   (프론트 `TakeTest.jsx` PLANT_TRANSLATE_MIN 은 payload 가 없으니 자연히 0 — 정리는 프론트 담당.)
-- **자유 설정 테스트**: 칩으로 고른 유형 안에서 무작위 배정만 한다(유형별 몫 보장 제거).
+- **자유 설정 테스트**: 칩으로 고른 유형 안에서 배정만 한다(유형별 몫 보장 제거). 이슈 #21 2차부터는 고른 유형 균등 배정
+  (`SENTENCE_QUESTIONS_CONTRACT.md` §7).
 - 자유 설정 테스트: `question_types=sentenceTranslate` 허용(RECOMMENDABLE_QUESTION_TYPES).
 
-### 5-6. 4지선다 sentenceMeaning 자동 출제 제외 (QA 4차 2026-10-25)
+### 5-6. 4지선다 sentenceMeaning 출제 중단 (QA 4차 2026-10-25 자동 출제 제외 → 이슈 #21 2차 2026-10-30 완전 중단)
+
+> **2026-10-30 갱신.** '문장 뜻 고르기'(sentenceMeaning)는 자유 설정 테스트에서도 더 이상 나오지 않는다.
+> `RECOMMENDABLE_QUESTION_TYPES` 에서 빼고 `_DEPRECATED_QUESTION_TYPES` 로 옮겼다 — `/study/log` 화이트리스트
+> (`ALLOWED_QUESTION_TYPES`)에는 남아 구버전 앱 로그가 400 나지 않는다. 구버전 프론트가 `question_types=sentenceMeaning` 을
+> 보내도 `/study/recommend` 가 걸러낸다. `MANUAL_ONLY_QUESTION_TYPES` 는 이제 빈 튜플. θ b 보정(−2)·실수 유형 집계는 과거 로그용으로 유지.
+> 아래 목록은 QA 4차 당시 기록이다.
+
 - `constants/question_types.py` `MANUAL_ONLY_QUESTION_TYPES = ('sentenceMeaning',)` — 사다리(`QUESTION_TYPE_TIER`·`TIER_QUESTION_TYPES`)에서 뺐고,
   제한 없는 배정(`composer._ALL_QUESTION_TYPES` — 새 씨앗 심기·빠른 복습 가중 무작위)과 약점 유형 우선 배정에서도 고르지 않는다.
 - **tier 3 독해 자리는 `sentenceTranslate` 가 대신한다** — 이제 tier 3 = fillInTheBlank·sentenceArrangePartial·sentenceTranslate.
   농장 돌보기 최소 출제 보장(`_ensure_translate_quota`)도 그대로. 로컬 실측(사용자 3명 × 15회): review 응답 sentenceMeaning 0, sentenceTranslate 세션당 2.
 - 새 씨앗 심기: `question_payloads` 에 원래 없었고, 프론트 plant 단일 유형 후보(`TakeTest.jsx PLANT_SINGLE_TYPES`)에서도 뺐다.
 - 프론트 자동 출제 폴백 풀 `QUICK_QUESTION_TYPES`(plugins/questionTypes/index.js)에서도 제외(`MANUAL_ONLY_QUESTION_TYPES`).
-- 자유 설정 테스트: 유형 칩 '문장 뜻 고르기'로 직접 고르면(`question_types=sentenceMeaning`) 그대로 나온다(`_assign_restricted_question_type`).
+- (2026-10-30 폐기) 자유 설정 테스트: 유형 칩 '문장 뜻 고르기'로 직접 고르면(`question_types=sentenceMeaning`) 그대로 나왔다.
   tier 가 없으므로 tier_target/tier_shown 은 원래처럼 None. θ b 보정(−2)은 `skill_level.py` 에 남는다.
 
 ### 5-7. 문장 뜻 맞추기를 실전 문장 구간으로 · 실전 예문 난이도 (QA 5차 2026-10-25)

@@ -197,9 +197,12 @@ const TakeTest = () => {
 
   // ─── 문제 유형 분배 ───────────────────────────────────────────────────────
   const buildTestQuestions = (selectedWords, allWords, vocabularySheetId) => {
-    const questionTypesArr = Array.isArray(state.data.questionType)
+    // 레지스트리에서 사라진 유형(2026-10-30 삭제한 sentenceMeaning 등)은 저장된 설정·이어하기 데이터에
+    // 남아 있어도 버린다 — 다 버려지면 사지선다.
+    const rawQuestionTypes = (Array.isArray(state.data.questionType)
       ? state.data.questionType
-      : [state.data.questionType];
+      : [state.data.questionType]).filter((t) => !t || getQuestionType(t));
+    const questionTypesArr = rawQuestionTypes.length > 0 ? rawQuestionTypes : ['multipleChoice'];
 
     // Phase 2.2: 사용자가 명시적으로 유형을 선택했는지 판단(판정 기준: 위 isRecommendedModeData).
     const isRecommendedMode = isRecommendedModeData(state.data);
@@ -227,7 +230,10 @@ const TakeTest = () => {
       const suggested = word?.suggestedQuestionType;
       if (!suggested) return null;
       const plugin = getQuestionType(suggested);
-      if (plugin && plugin.enabled === false) return null;
+      // 레지스트리에 없는 유형(2026-10-30 삭제한 sentenceMeaning 등 — 구버전 서버가 내려줄 수 있다)은
+      // 무시하고 호출부 폴백(사지선다)으로 넘긴다.
+      if (!plugin) return null;
+      if (plugin.enabled === false) return null;
       if (!isRecommendedMode && !questionTypesArr.includes(suggested)) return null;
       return suggested;
     };
@@ -334,11 +340,15 @@ const TakeTest = () => {
 
     // 추천 모드이거나 복수 유형인 경우: 단어별 suggestedQuestionType 우선 처리
     // cardMatch/cardMatchListening 계열은 세트 단위로 묶어야 하므로 별도 처리
-    const shuffledWords = shuffleArray([...wordsWithSheetId]);
+    // 자유 설정(직접 선택)은 서버가 '유형 균등·연속 중복 없음' 순서로 내려준다(2026-10-30, 이슈 #21) —
+    // 다시 섞으면 그 배치가 깨지므로 응답 순서를 그대로 쓴다. AI 추천은 예전처럼 섞는다.
+    const shuffledWords = isRecommendedMode ? shuffleArray([...wordsWithSheetId]) : [...wordsWithSheetId];
     const allQuestions = [];
     let wordIdx = 0;
+    const consumed = new Set(); // 카드 맞추기 세트로 먼저 쓰인 뒤쪽 단어(직접 선택 모드)
 
     while (wordIdx < shuffledWords.length) {
+      if (consumed.has(wordIdx)) { wordIdx++; continue; }
       const currentWord = shuffledWords[wordIdx];
 
       // Phase 2.2: 추천 모드일 때 suggestedQuestionType 우선
@@ -352,7 +362,23 @@ const TakeTest = () => {
         const remaining = shuffledWords.length - wordIdx;
 
         // cardMatch 계열: 세트 단위 처리 (최소 2개 필요)
-        if (chosenType === 'cardMatch' || chosenType === 'cardMatchListening') {
+        if ((chosenType === 'cardMatch' || chosenType === 'cardMatchListening') && !isRecommendedMode && suggestedType) {
+          // 직접 선택 모드: 바로 뒤 단어들을 (각자 배정된 유형을 무시하고) 끌어오면 카드 맞추기가
+          // 다른 유형 몫을 먹어 한쪽으로 쏠린다 — 서버가 같은 카드 유형으로 배정한 단어끼리만 최대 4개 묶는다.
+          const idxs = [wordIdx];
+          for (let j = wordIdx + 1; j < shuffledWords.length && idxs.length < 4; j++) {
+            if (consumed.has(j)) continue;
+            if (resolveType(resolveSuggestedType(shuffledWords[j]) ?? '') === chosenType) idxs.push(j);
+          }
+          const generated = idxs.length >= 2 ? plugin.setupQuestions(idxs.map(j => shuffledWords[j]), allWords) : [];
+          if (generated.length > 0) {
+            allQuestions.push(...generated);
+            idxs.forEach(j => consumed.add(j));
+          } else {
+            allQuestions.push(buildSingleWordQuestion(currentWord, 'multipleChoice'));
+          }
+          wordIdx++;
+        } else if (chosenType === 'cardMatch' || chosenType === 'cardMatchListening') {
           if (remaining >= 2) {
             const chunkSize = Math.min(4, remaining);
             const chunk = shuffledWords.slice(wordIdx, wordIdx + chunkSize);
@@ -697,7 +723,7 @@ const TakeTest = () => {
     const directQuestionTypes = isRecommendedMode
       ? null
       : (Array.isArray(state.data.questionType) ? state.data.questionType : [state.data.questionType])
-        .filter(Boolean);
+        .filter((t) => t && getQuestionType(t)); // 삭제된 유형(sentenceMeaning)은 서버에 보내지 않는다
 
     // 새 단어 학습 분리(2026-09-29) — 이 함수를 부르는 모든 곳(quick·자유 설정 테스트·단어장
     // 상세 테스트)은 항상 복습 전용(mode=review, 심은 단어만)이다. 새 단어는 오직 'plant'
