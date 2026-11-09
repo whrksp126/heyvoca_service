@@ -18,7 +18,7 @@ import CropImage, { CROP_ASSETS, CROP_BASELINE, cropAssetByVariant } from '../..
 import fieldBase from '../../../assets/images/farm/field-base.png';
 import { feel } from '../../../lib/feel';
 import { useRewardTimeline } from './useRewardTimeline';
-import { anim, burst, ring, jelly, pulse, clearFx, BACK_OUT, FX_GOLDS } from './fx';
+import { anim, burst, ring, jelly, pulse, clearFx, BACK_OUT, FX_GOLDS, WORD_LABEL_FRAMES, WORD_LABEL_CLASS } from './fx';
 import { planField, GROWTH_KINDS, GROWTH_KIND_META, FIELD_W, FIELD_H, CROP_BOX } from './growth';
 import RewardGlow from './RewardGlow';
 import FarmGrowRow from './FarmGrowRow';
@@ -30,12 +30,6 @@ const fieldSrc = (crop, variant = 'healthy') => (
 );
 const clamp = (v, lo, hi) => Math.max(lo, Math.min(hi, v));
 const TICK = { cue: 'tap', cueOpts: { sound: false } };   // 소리 없이 진동만 한 번
-const WORD_LABEL_FRAMES = [
-  { opacity: 0, transform: 'translate(-50%,8px) scale(.7)' },
-  { opacity: 1, transform: 'translate(-50%,-6px) scale(1)', offset: 0.18 },
-  { opacity: 1, transform: 'translate(-50%,-10px) scale(1)', offset: 0.8 },
-  { opacity: 0, transform: 'translate(-50%,-20px) scale(.9)' },
-];
 const IMG_BASE = 'pointer-events-none select-none transition-opacity duration-100';
 
 const FarmGrowthSlide = ({ entries, reducedMotion, onReady, skipRef }) => {
@@ -255,7 +249,7 @@ const FarmGrowthSlide = ({ entries, reducedMotion, onReady, skipRef }) => {
                     />
                     <span
                       ref={(el) => { labelRefs.current[i] = el; }}
-                      className='pointer-events-none absolute bottom-[78%] left-1/2 z-40 whitespace-nowrap rounded-full bg-layout-black px-[8px] py-[3px] text-[11px] font-[700] text-layout-white opacity-0 dark:bg-layout-white dark:text-layout-black'
+                      className={`${WORD_LABEL_CLASS} bottom-[78%]`}
                     >
                       {entry.word}
                     </span>

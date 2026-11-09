@@ -9,6 +9,16 @@ export const FX_COLORS = ['#FFAAE6', '#FFD166', '#6CE9A6', '#74D5FF', '#FFBDEB',
 export const FX_GOLDS = ['#F2B713', '#F2D252', '#FFF3C4', '#FFFFFF'];
 export const BACK_OUT = 'cubic-bezier(.34,1.56,.64,1)';
 
+// 작물 위에 잠깐 떴다 사라지는 단어 이름표 — 밭 성장·씨앗 심기 결과 슬라이드, 온보딩 체험 밭이 같이 쓴다.
+// 이름표 요소는 absolute left-1/2 로 두고 WORD_LABEL_CLASS 를 준다(가로 가운데는 프레임의 translate -50% 가 맡는다).
+export const WORD_LABEL_FRAMES = [
+  { opacity: 0, transform: 'translate(-50%,8px) scale(.7)' },
+  { opacity: 1, transform: 'translate(-50%,-6px) scale(1)', offset: 0.18 },
+  { opacity: 1, transform: 'translate(-50%,-10px) scale(1)', offset: 0.8 },
+  { opacity: 0, transform: 'translate(-50%,-20px) scale(.9)' },
+];
+export const WORD_LABEL_CLASS = 'pointer-events-none absolute left-1/2 z-40 whitespace-nowrap rounded-full bg-layout-black px-[8px] py-[3px] text-[11px] font-[700] text-layout-white opacity-0 dark:bg-layout-white dark:text-layout-black';
+
 /** node.animate 가 없는 구형 WebView 에서는 조용히 넘어간다(최종 상태는 호출부의 클래스가 정한다). */
 export const anim = (node, frames, opts) => {
   if (!node || typeof node.animate !== 'function') return null;

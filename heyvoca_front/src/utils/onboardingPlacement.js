@@ -955,20 +955,6 @@ export function fieldWords(s, { start = false } = {}) {
   }).filter(Boolean);
 }
 
-// 학습이 끝난 밭 — 세션은 학습이 끝나면 지우므로 마무리 장면(온보딩 finish)이 읽을 몫을 따로 둔다.
-export const FIELD_STORE_KEY = 'heyvoca_guest_onb_field_v1';
-export function saveFieldResult(s) {
-  try {
-    localStorage.setItem(FIELD_STORE_KEY, JSON.stringify({ words: fieldWords(s), start: fieldWords(s, { start: true }) }));
-  } catch { /* 저장 실패 무시 */ }
-}
-export function loadFieldResult() {
-  try { return JSON.parse(localStorage.getItem(FIELD_STORE_KEY) || 'null'); } catch { return null; }
-}
-export function clearFieldResult() {
-  try { localStorage.removeItem(FIELD_STORE_KEY); } catch { /* 무시 */ }
-}
-
 // ── 저장 ───────────────────────────────────────────────────────────────
 export const STORE_KEY = 'heyvoca_guest_onb_session_v1';
 export function saveSession(s) {

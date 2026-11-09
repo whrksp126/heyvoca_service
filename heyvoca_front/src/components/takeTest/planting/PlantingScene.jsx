@@ -22,7 +22,7 @@ import { cropAssetByVariant, CROP_BASELINE } from '../../farm/CropImage';
 import fieldBase from '../../../assets/images/farm/field-base.png';
 import { feel, SPRING } from '../../../lib/feel';
 import { useRewardTimeline } from '../rewards/useRewardTimeline';
-import { anim, burst, ring, jelly, pulse, clearFx, BACK_OUT } from '../rewards/fx';
+import { anim, burst, ring, jelly, pulse, clearFx, BACK_OUT, WORD_LABEL_FRAMES, WORD_LABEL_CLASS } from '../rewards/fx';
 import { planField, FIELD_W, FIELD_H } from '../rewards/growth';
 import FarmGrowRow from '../rewards/FarmGrowRow';
 import SoilMound, { MOUND_GROUND_X, MOUND_GROUND_Y, MOUND_H } from './SoilMound';
@@ -46,12 +46,6 @@ const SEED_CLIP = `ellipse(86px 200px at ${GROUND_X}px ${GROUND_Y + 6.5 - 200}px
 const COVER_MS = 380;
 const PHASE = { NONE: 0, DUG: 1, SEEDED: 2, COVERED: 3 };
 
-const WORD_LABEL_FRAMES = [
-  { opacity: 0, transform: 'translate(-50%,8px) scale(.7)' },
-  { opacity: 1, transform: 'translate(-50%,-6px) scale(1)', offset: 0.18 },
-  { opacity: 1, transform: 'translate(-50%,-10px) scale(1)', offset: 0.8 },
-  { opacity: 0, transform: 'translate(-50%,-20px) scale(.9)' },
-];
 const clamp = (v, lo, hi) => Math.max(lo, Math.min(hi, v));
 
 // 구멍 둘레의 흙 알갱이가 안쪽으로 모여든다 — fx.burst 의 반대 방향. 끝나면 스스로 빠지고,
@@ -296,7 +290,7 @@ const PlantingScene = ({ rows, metaOfRow, reducedMotion, onDone, skipRef }) => {
                 </span>
                 <span
                   ref={(el) => { labelRefs.current[i] = el; }}
-                  className='pointer-events-none absolute bottom-[74%] left-1/2 z-40 whitespace-nowrap rounded-full bg-layout-black px-[8px] py-[3px] text-[11px] font-[700] text-layout-white opacity-0 dark:bg-layout-white dark:text-layout-black'
+                  className={`${WORD_LABEL_CLASS} bottom-[74%]`}
                 >
                   {entry.row.word}
                 </span>

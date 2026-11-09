@@ -7,8 +7,9 @@
 //           (심기 = takeTest/planting/PlantingScene, 자람 = rewards/FarmGrowthSlide 연출을 그대로 가져왔다)
 //   wilt    같은 당근 그대로, 날짜 칩(3일 뒤 → 7일 뒤 → 14일 뒤)과 함께 마름 → 시듦 → 썩음
 //   field   썩은 당근이 흙으로 가라앉고 밭이 살짝 뒤로 물러나며, 이번 학습에 나올 단어 8개가 여러 상태
-//           (씨앗·새싹·이파리·당근, 일부 마름·시듦)로 팻말과 함께 돋아난다
-//   finish  학습을 마친 밭 — 처음 상태로 서 있다가 학습에서 바뀐 작물만 하나씩 바뀐다(자람·되살아남·마름)
+//           (씨앗·새싹·이파리·당근, 일부 마름·시듦)로 '뽕' 돋아난다. 돋을 때·탭할 때 작물 위에 단어 이름표가
+//           잠깐 떴다 사라진다(학습 결과 밭 성장·씨앗 심기 슬라이드와 같은 연출 — rewards/fx WORD_LABEL_FRAMES).
+//   (학습을 마친 뒤는 실제 학습 결과 화면(StudyResult)이 맡는다 — 이슈 #25 4차 후속)
 //
 // 연출이 끝나면 onSceneDone 을 한 번 부른다(호출부가 그때 버튼을 켠다). instant 면 끝 모습으로 바로 그리고
 // 곧장 끝을 알린다 — 뒤로 가기로 이전 장면을 다시 세울 때, 동작 줄이기(prefers-reduced-motion)일 때.
@@ -18,7 +19,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useReducedMotion } from 'framer-motion';
 import { cropAssetByVariant, CROP_BASELINE } from '../farm/CropImage';
 import fieldBase from '../../assets/images/farm/field-base.png';
-import { anim, burst, ring, jelly, clearFx, BACK_OUT } from '../takeTest/rewards/fx';
+import { anim, burst, ring, jelly, clearFx, BACK_OUT, WORD_LABEL_FRAMES, WORD_LABEL_CLASS } from '../takeTest/rewards/fx';
 import { FIELD_W, FIELD_H, CROP_BOX } from '../takeTest/rewards/growth';
 import SoilMound, { MOUND_GROUND_X, MOUND_GROUND_Y, MOUND_H } from '../takeTest/planting/SoilMound';
 import SoilHole, { HOLE_W, HOLE_H } from '../takeTest/planting/SoilHole';
@@ -40,7 +41,6 @@ const GROUND_X = 30;
 const GROUND_Y = 44;
 const SEED_CLIP = `ellipse(86px 200px at ${GROUND_X}px ${GROUND_Y + 6.5 - 200}px)`;
 const SOIL_COLORS = ['#7A5230', '#9A7046', '#A47548', '#B98C5E'];
-const GREENS = ['#6CE9A6', '#A6F4C5', '#FFFFFF'];
 const IMG_FADE = 'transition-opacity duration-150 motion-reduce:transition-none';
 
 // 주인공 당근의 그림 — 자라는 세 단계 + 시드는 세 상태
@@ -67,17 +67,15 @@ const fieldSrc = (stage, health) => {
 const GROW_T = { dug: 450, seeded: 90, landed: Math.round(DROP_MS * 0.76), covered: 180, sprout: 900, leaf: 950, carrot: 950, done: 650 };
 const WILT_T = { first: 800, step: 1150, done: 600 };
 const FIELD_T = { recede: 380, firstCrop: 900, each: 150, done: 450 };
-const FINISH_T = { first: 700, each: 420, done: 500 };
 
 /**
- * @param {'grow'|'wilt'|'field'|'finish'} scene
+ * @param {'grow'|'wilt'|'field'} scene
  * @param {number} runKey     값이 바뀌면 같은 장면이라도 처음부터 다시 그린다(호출부의 장면 진입 토큰)
  * @param {boolean} instant   끝 모습으로 바로(뒤로 가기·건너뛰기)
  * @param {Array} words       field 장면 단어 [{ id, origin, stage, health }]
- * @param {Array} startWords  finish 장면의 학습 전 상태(같은 순서). 없으면 words 를 그대로
  * @param {(scene) => void} onSceneDone
  */
-const FarmStoryStage = ({ scene, runKey = 0, instant = false, words = [], startWords = null, onSceneDone }) => {
+const FarmStoryStage = ({ scene, runKey = 0, instant = false, words = [], onSceneDone }) => {
   "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
 
   const reduced = useReducedMotion();
@@ -99,6 +97,7 @@ const FarmStoryStage = ({ scene, runKey = 0, instant = false, words = [], startW
   const moundRef = useRef(null);
   const heroRef = useRef(null);
   const cropRefs = useRef([]);
+  const labelRefs = useRef([]);
   const onDoneRef = useRef(onSceneDone);
   useEffect(() => { onDoneRef.current = onSceneDone; });
 
@@ -117,7 +116,6 @@ const FarmStoryStage = ({ scene, runKey = 0, instant = false, words = [], startW
   };
 
   const finalWords = words;
-  const firstWords = startWords && startWords.length === words.length ? startWords : words;
   const stateOf = (w) => ({ stage: w.stage, health: w.health });
 
   // 각 장면의 끝 모습 — 건너뛰기·뒤로 가기·동작 줄이기가 모두 이걸 그린다
@@ -133,12 +131,20 @@ const FarmStoryStage = ({ scene, runKey = 0, instant = false, words = [], startW
       setHero({ plant: 'grown', img: heroIdx('carrot', 'rotten'), gone: true });
       setDay(null); setReceded(true);
       setCropState(finalWords.map(stateOf)); setShown(finalWords.length);
-    } else if (sc === 'finish') {
-      setHero({ plant: 'grown', img: heroIdx('carrot', 'rotten'), gone: true });
-      setDay(null); setReceded(false);
-      setCropState(finalWords.map(stateOf)); setShown(finalWords.length);
     }
     finish();
+  };
+
+  const showWord = (i, hold = 900) => track(anim(labelRefs.current[i], WORD_LABEL_FRAMES, { duration: hold, easing: 'ease-out' }));
+  // 작물 탭 — 결과 슬라이드와 같이 통 튀고 이름표가 다시 뜬다
+  const onTapCrop = (i) => (e) => {
+    if (!doneRef.current || i >= shown) return; // 연출 중이면 밭 탭(건너뛰기)으로 넘긴다
+    e.stopPropagation();
+    const { x, y } = slotXY(i);
+    vibrate({ duration: 5 });
+    jelly(cropRefs.current[i], 1);
+    showWord(i, 1300);
+    burst(fieldRef.current, x, y - 34, { n: 6, dist: 26, size: 5 });
   };
 
   const growFx = (big) => {
@@ -223,41 +229,13 @@ const FarmStoryStage = ({ scene, runKey = 0, instant = false, words = [], startW
       at(FIELD_T.firstCrop + i * FIELD_T.each, () => {
         setShown(i + 1);
         const { x, y } = slotXY(i);
-        track(anim(cropRefs.current[i], [
-          { transform: 'translateY(10px) scale(.3)', opacity: 0 }, { transform: 'translateY(0) scale(1)', opacity: 1 },
-        ], { duration: 380, easing: BACK_OUT }));
+        // 결과 슬라이드(FarmGrowthSlide)의 작물 등장과 같은 '뽕' + 단어 이름표
+        track(anim(cropRefs.current[i], [{ transform: 'translateY(-16px) scale(.3)', opacity: 0 }, { transform: 'none', opacity: 1 }], { duration: 320, easing: BACK_OUT }));
+        showWord(i);
         burst(fieldRef.current, x, y - 6, { n: 5, dist: 20, size: 5, colors: SOIL_COLORS, dur: 420, up: 10 });
       });
     });
     at(FIELD_T.firstCrop + finalWords.length * FIELD_T.each + FIELD_T.done, finish);
-  };
-
-  const runFinish = () => {
-    setDay(null);
-    setHero((h) => ({ ...h, gone: true }));
-    setReceded(false);
-    setCropState(firstWords.map(stateOf));
-    setShown(firstWords.length);
-    // 학습에서 바뀐 작물만 차례로 — 자람·되살아남은 초록 파편, 마름은 통 처짐
-    const changed = finalWords
-      .map((w, i) => ({ i, w, before: firstWords[i] }))
-      .filter(({ w, before }) => before && (before.stage !== w.stage || before.health !== w.health));
-    changed.forEach(({ i, w, before }, k) => {
-      at(FINISH_T.first + k * FINISH_T.each, () => {
-        setCropState((prev) => prev.map((s, n) => (n === i ? stateOf(w) : s)));
-        const { x, y } = slotXY(i);
-        const better = w.stage !== before.stage || (w.health === 'FRESH' && before.health !== 'FRESH');
-        if (better) {
-          track(jelly(cropRefs.current[i], 1.2));
-          burst(fieldRef.current, x, y - 30, { n: 8, dist: 34, size: 6, colors: GREENS });
-        } else {
-          track(anim(cropRefs.current[i], [
-            { transform: 'rotate(0deg)' }, { transform: 'rotate(-6deg) translateY(2px)', offset: 0.4 }, { transform: 'rotate(0deg)' },
-          ], { duration: 700, easing: 'ease-in-out' }));
-        }
-      });
-    });
-    at(FINISH_T.first + changed.length * FINISH_T.each + FINISH_T.done, finish);
   };
 
   useEffect(() => {
@@ -271,7 +249,6 @@ const FarmStoryStage = ({ scene, runKey = 0, instant = false, words = [], startW
     } else if (scene === 'grow') runGrow();
     else if (scene === 'wilt') runWilt();
     else if (scene === 'field') runField();
-    else if (scene === 'finish') runFinish();
     return () => stopAll();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [scene, runKey]);
@@ -383,7 +360,7 @@ const FarmStoryStage = ({ scene, runKey = 0, instant = false, words = [], startW
             ))}
           </div>
 
-          {/* 체험 밭 작물 + 단어 팻말 */}
+          {/* 체험 밭 작물 — 단어는 돋을 때·탭할 때만 위에 잠깐 뜬다 */}
           {finalWords.map((w, i) => {
             const { x, y } = slotXY(i);
             const st = cropState[i] ?? stateOf(w);
@@ -392,18 +369,17 @@ const FarmStoryStage = ({ scene, runKey = 0, instant = false, words = [], startW
               <div
                 key={w.id}
                 ref={(el) => { cropRefs.current[i] = el; }}
-                className={`pointer-events-none absolute origin-[50%_86%] ${visible ? 'opacity-100' : 'opacity-0'}`}
+                onClick={onTapCrop(i)}
+                className={`absolute origin-[50%_86%] ${visible ? 'cursor-pointer opacity-100' : 'pointer-events-none opacity-0'}`}
                 style={{ width: CROP_BOX, height: CROP_BOX, left: x - CROP_BOX / 2, top: y - CROP_BOX * CROP_BASELINE, zIndex: 12 + Math.round(y / 19) }}
               >
                 <img
                   src={fieldSrc(st.stage, st.health)}
-                  alt=''
+                  alt={w.origin}
                   draggable={false}
-                  className='absolute inset-0 h-full w-full select-none object-contain'
+                  className='pointer-events-none absolute inset-0 h-full w-full select-none object-contain'
                 />
-                <span
-                  className='absolute left-1/2 top-[86%] -translate-x-1/2 whitespace-nowrap rounded-[6px] bg-layout-white/90 px-[5px] py-[1px] text-[10px] font-[700] leading-[1.35] text-layout-black shadow-[0_1px_3px_rgba(60,40,20,0.18)]'
-                >
+                <span ref={(el) => { labelRefs.current[i] = el; }} className={`${WORD_LABEL_CLASS} bottom-[78%]`}>
                   {w.origin}
                 </span>
               </div>

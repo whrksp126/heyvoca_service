@@ -123,11 +123,48 @@ const FarmListSlide = ({ art, line, rows }) => (
   업적(출석왕·노력왕·끈기왕 등)은 넣지 않는다 — 온보딩 학습은 업적에 반영하지 않기로 했다
   (이슈 #25 3차 QA). 가입 직후 updateUserHistory 가 is_onboarding 을 보내면 서버가 업적만 건너뛴다.
 */
-// 이슈 #25 4차 — 가입 보상 20개 고정(정답 수와 무관). 수준 맞춤 학습(placement)은 이제 이 화면을 거치지 않고
-// 온보딩 마무리 장면이 '보석 20'을 보여 준다. 여기는 구 게스트 맛보기 경로만 탄다.
+// 이슈 #25 4차 — 가입 보상 20개 고정(정답 수와 무관).
 const GUEST_SIGNUP_GEM = 20;       // heyvoca_back/app/routes/onboarding.py SIGNUP_REWARD_GEM
 const GUEST_ATTEND_GEM = 1;        // mainpage.py 출석 보석
 const GUEST_MISSION_GEM = 1;       // mainpage.py 데일리 미션 완료 보석
+
+/*
+  게스트 수준 맞춤 학습(온보딩 체험 밭, 이슈 #25 4차 후속) — 결과도 실제 학습 결과와 같은 슬라이드 흐름이다.
+  보석은 가입 보상 20개(정답 수와 무관한 고정 보상)만 보석 슬라이드로 보여 준다.
+*/
+const buildPlacementResult = () => ({
+  gem: { before: 0, after: GUEST_SIGNUP_GEM },
+  attend: false,
+  today_study_complete: false,
+  daily_mission_complete: false,
+  goals: [],
+});
+
+/*
+  체험 밭 가상 작물의 학습 전/후(TakeTest 가 넘긴 placement.field = { words, start }, 같은 순서)를
+  /farm/session-summary 와 같은 모양으로 바꾼다 — 아래 밭 성장 슬라이드·결과 목록 작물 그림이 실제 세션과
+  같은 경로로 그린다. 단계가 오르면 grown, 단계는 그대로인데 시들었다가 싱싱해지면 rescued.
+*/
+const VIRTUAL_STAGE_ORDER = ['PLANTED_SEED', 'SPROUT', 'LEAF', 'CARROT'];
+const virtualFieldSummary = (field) => {
+  const words = field?.words ?? [];
+  const start = field?.start ?? [];
+  const grown = [];
+  const rescued = [];
+  const wordStages = {};
+  words.forEach((w) => {
+    wordStages[String(w.id)] = w.stage;
+    const before = start.find((b) => b.id === w.id);
+    if (!before) return;
+    const row = { user_voca_id: w.id, word: w.origin, meaning: Array.isArray(w.meanings) ? w.meanings.join(', ') : '' };
+    if (VIRTUAL_STAGE_ORDER.indexOf(w.stage) > VIRTUAL_STAGE_ORDER.indexOf(before.stage)) {
+      grown.push({ ...row, from_stage: before.stage, to_stage: w.stage });
+    } else if (before.health !== 'FRESH' && w.health === 'FRESH') {
+      rescued.push({ ...row, crop: w.stage });
+    }
+  });
+  return { planted: [], grown, rescued, rewards: {}, streak: null, word_stages: wordStages };
+};
 
 const buildGuestSignupResult = async () => ({
   gem: { before: 0, after: GUEST_SIGNUP_GEM + GUEST_ATTEND_GEM + GUEST_MISSION_GEM },
@@ -436,6 +473,8 @@ const StudyResult = () => {
   const isGuest = !!state?.guestMode;
   // 게스트 수준 맞춤 학습(이슈 #25) — 단어를 심지 않으므로 목록에 작물·복습 예정일을 그리지 않는다.
   const isPlacement = isGuest && !!state?.placement;
+  // 체험 밭(가상 작물) 학습 전/후 — 있으면 실제 세션처럼 밭 성장 슬라이드와 목록 작물 그림을 그린다
+  const placementField = isPlacement ? (state.placement.field ?? null) : null;
 
   const [currentScreenIndex, setCurrentScreenIndex] = useState(0);
   // 결과 화면 통계 카드가 모두 나왔는지 — 하단 버튼(활성화)과 자동 '다음 학습' 카운트다운이 이때 시작한다.
@@ -535,7 +574,7 @@ const StudyResult = () => {
       let result;
       if (isGuest) {
         // 게스트: 서버 저장 없이 합성 결과 — 가입하면 계정에 들어올 것을 그대로 그린다
-        result = await buildGuestSignupResult();
+        result = isPlacement ? buildPlacementResult() : await buildGuestSignupResult();
       } else {
         result = await updateUserHistory({
           'correct_cnt': correctCnt,
@@ -581,6 +620,9 @@ const StudyResult = () => {
           farm = farmRes.data ?? null;
           setFarmSummary(farm);
         }
+      } else if (placementField) {
+        farm = virtualFieldSummary(placementField);
+        setFarmSummary(farm);
       }
 
       const plantedList = farm?.planted ?? [];
@@ -1108,8 +1150,9 @@ const StudyResult = () => {
     stopCountdown('end');
     // 게스트 첫 학습: 결과 확인 후 온보딩 닉네임으로 (답·θ 는 guestStorage 에 저장됨).
     // 소개 화면이 아니라 그다음으로 보낸다 — 학습을 마친 사람을 되돌리면 같은 학습을 다시 하게 된다.
+    // 수준 맞춤 학습(체험 밭)은 마지막 '나만의 밭을 만들러 가볼까요?' 장면으로.
     if (isGuest) {
-      navigate('/onboarding', { state: { step: 'nick' }, replace: true });
+      navigate('/onboarding', { state: { step: isPlacement ? 'finish' : 'nick' }, replace: true });
       return;
     }
     // 글자 학습은 학습장 '글자' 탭에서만 들어온다 — 홈이 아니라 그 탭으로 돌려보낸다
@@ -1255,7 +1298,7 @@ const StudyResult = () => {
                         {/* ① 상태 — 작물 그림. 단어장 단어 목록(vocabularySheets/WordRow)과 같은 자리(왼쪽)다.
                             텍스트 배지 분기는 없앴다(위 crop 계산 주석 참고). */}
                         {/* 글자는 작물·망각곡선 표현을 쓰지 않는다(2026-10-24 이슈 #15 3차) — 그림 없이 글자부터. */}
-                        {testType !== 'script' && !isPlacement && (
+                        {testType !== 'script' && (!isPlacement || !!placementField) && (
                           <CropImage stage={crop} size={52} align="center" className='flex-shrink-0' />
                         )}
 

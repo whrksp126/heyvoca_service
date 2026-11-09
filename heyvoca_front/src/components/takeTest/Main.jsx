@@ -27,7 +27,6 @@ import { getComboApi, protectComboApi, forfeitComboApi } from '../../api/game';
 import ComboBar, { getComboFillClass, COMBO_MILESTONE_STEP } from './ComboBar';
 import StudyProgressBar from './StudyProgressBar';
 import { ComboInterlude, PhaseInterlude } from './StudyInterlude';
-import VirtualFarmNote from '../onboarding/VirtualFarmNote';
 import { holdStudyAdvance, setStudyManualAdvance, useManualAdvancePending } from '../../hooks/useStudyAdvanceGate';
 import { ComboProtectNewBottomSheet } from '../newBottomSheet/ComboProtectNewBottomSheet';
 import { useUser } from '../../context/UserContext';
@@ -459,23 +458,14 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
   /*
     가상 농장(게스트 온보딩 체험, 이슈 #25 4차) — virtualFarm(vocaId, 정답?, key) 가 그 단어 체험 밭 작물의
     가상 상태를 바꾸고 상태 바 payload(실제 /study/log farm 과 같은 모양)를 돌려준다(utils/onboardingPlacement
-    gradeVirtualFarm). 서버에 아무것도 심지 않는다. 시듦·되살아남은 상태 바 그림 한 장으로는 안 읽혀
-    문제 위에 한 줄 알림(virtualNote)을 잠깐 띄운다.
+    gradeVirtualFarm). 서버에 아무것도 심지 않는다.
   */
-  const [virtualNote, setVirtualNote] = useState(null);
   const gradeVirtual = (vocaId, wasCorrect, qIndex) => {
     if (!virtualFarm || vocaId == null) return null;
     let payload = null;
     try { payload = virtualFarm(vocaId, !!wasCorrect, `${qIndex}:${vocaId}`); } catch (e) { console.error('virtualFarm 오류:', e); }
-    if (payload?.revived) setVirtualNote({ kind: 'revived', qIndex, at: Date.now() });
-    else if (payload?.withered) setVirtualNote({ kind: payload.health === 'WILTED' ? 'wilted' : 'drying', qIndex, at: Date.now() });
     return payload;
   };
-  useEffect(() => {
-    if (!virtualNote) return undefined;
-    const t = setTimeout(() => setVirtualNote(null), 2200);
-    return () => clearTimeout(t);
-  }, [virtualNote]);
 
   const navigate = useNavigate();
 
@@ -2112,7 +2102,6 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
           fillClass={progressFillClass}
         />
           <div className="relative flex flex-1 min-h-0 overflow-hidden">
-          {virtualFarm && <VirtualFarmNote note={virtualNote?.qIndex === progressIndex ? virtualNote : null} />}
           <AnimatePresence initial={false} mode="popLayout" custom={slideDirection}>
             <motion.div
               key={progressIndex}
@@ -2163,7 +2152,6 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
       />
 
       <div className="relative middle flex flex-1 min-h-0 overflow-hidden">
-        {virtualFarm && <VirtualFarmNote note={virtualNote?.qIndex === progressIndex ? virtualNote : null} />}
         <AnimatePresence initial={false} mode="popLayout" custom={slideDirection}>
           <motion.div
             key={progressIndex}

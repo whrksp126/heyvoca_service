@@ -8,7 +8,7 @@ import { getGuest, clearGuest, clearGuestTrial, buildMigrateBody } from '../util
 import { notifyOnboardingMigrated } from '../utils/studyDataEvents';
 import {
   createSession, saveSession as savePlacementSession, clearSession as clearPlacementSession,
-  fieldWords, loadFieldResult, clearFieldResult,
+  fieldWords,
 } from '../utils/onboardingPlacement';
 import { vibrate, getDevicePlatform } from '../utils/osFunction';
 import { primeSfx } from '../utils/audio';
@@ -20,17 +20,16 @@ import { cropAssetByVariant } from '../components/farm/CropImage';
 import { useStatusBarStyle } from '../hooks/useStatusBarStyle';
 import FarmStoryStage from '../components/onboarding/FarmStoryStage';
 import { nodeEnv } from '../utils/common';
-import { useCountUp } from '../lib/feel/useCountUp';
-import gemIcon from '../assets/images/farm/icon-gem.png';
 
 /*
   온보딩 — 인사에서 가입까지.
 
   【흐름】 hello → intro(농사 이야기: 성장 → 시듦 → 체험 밭) → 수준 맞춤 학습(/take-test, 8문제 + 틀린 단어
-          복습, 매 답마다 체험 밭 가상 작물이 자라고 시든다) → finish(학습으로 바뀐 밭 + 보석 20) → auth
+          복습, 매 답마다 체험 밭 가상 작물이 자라고 시든다) → 학습 결과(StudyResult — 실제 학습과 같은 슬라이드,
+          밭 성장 · 보석 20 · 결과 목록) → finish('나만의 밭을 만들러 가볼까요?' 문구 + 버튼) → auth
   (이슈 #25 4차 — 소개를 '하나의 밭이 이어지는 농사 이야기'로. 장면 사이 화면 전환 없이 밭 무대
-   (components/onboarding/FarmStoryStage) 위에서 연출이 이어지고 문구만 크로스페이드한다. 연출이 끝나기 전엔
-   버튼이 회색으로 잠긴다. 학습 결과 화면(StudyResult)은 거치지 않고 finish 장면이 마무리한다.)
+   (components/onboarding/FarmStoryStage) 위에서 연출이 이어지고 제목만 크로스페이드한다. 연출이 끝나기 전엔
+   버튼이 회색으로 잠긴다. 장면엔 큰 제목 한 줄과 버튼만 둔다 — 보조 설명 줄은 없앴다.)
   (이슈 #25 3차 — 닉네임 입력을 뺐다. 이름은 서버가 기본 닉네임으로 넣고 나중에 마이페이지에서 바꾼다.)
   (이슈 #25 2차 — 단어장 추천·선택, 유입 경로·학습 목적·하루 심기 수 질문을 뺐다.
    온보딩은 수준(θ) 측정과 학습 체험만 한다. 단어를 심지 않고, 가입 직후엔 단어장이 없다 —
@@ -48,37 +47,25 @@ const LEGACY_STEP = {
   nick: 'auth', recommend: 'auth', channel: 'auth', goal: 'auth', daily: 'auth',
 };
 
-// 장면 문구 — copyKey 가 바뀌면 새 문구가 아래에서 살짝 떠오르며 나타난다(들어오는 쪽만 — 나가는 쪽을
+// 장면 제목 — copyKey 가 바뀌면 새 제목이 아래에서 살짝 떠오르며 나타난다(들어오는 쪽만 — 나가는 쪽을
 // 기다리게 하면 exit 신호가 늦을 때 화면이 멈춘다. 아래 스텝 전환 주석과 같은 이유).
 const SCENE_COPY = {
-  grow: { title: <>복습할수록 오래 기억하고,<br /><span className="text-primary-main-600">작물이 자라요</span></>, sub: '맞힐 때마다 경험치가 쌓여 씨앗이 당근까지 자라요' },
-  wilt: { title: <>복습을 게을리하면<br />작물이 <span className="text-primary-main-600">시들어 죽을 수</span> 있어요</>, sub: '복습할 날을 놓치면 당근이 점점 말라 가요' },
-  'wilt-done': { title: <>복습을 게을리하면<br />작물이 <span className="text-primary-main-600">시들어 죽을 수</span> 있어요</>, sub: '다시 복습하면 되살릴 수 있어요' },
-  field: { title: <>농장 체험을 <span className="text-primary-main-600">해볼까요?</span></>, sub: '이번 학습에 나올 단어를 심어 뒀어요. 맞히면 자라고, 틀리면 시들어요' },
-  finish: { title: <>나만의 밭을<br /><span className="text-primary-main-600">만들러 가볼까요?</span></>, sub: '체험 보상으로 보석 20개를 드려요. 서점에서 마음에 드는 단어장을 골라 보세요' },
+  grow: <>복습할수록 오래 기억하고,<br /><span className="text-primary-main-600">작물이 자라요</span></>,
+  wilt: <>복습을 게을리하면<br />작물이 <span className="text-primary-main-600">시들어 죽을 수</span> 있어요</>,
+  field: <>농장 체험을 <span className="text-primary-main-600">해볼까요?</span></>,
+  finish: <>나만의 밭을<br /><span className="text-primary-main-600">만들러 가볼까요?</span></>,
 };
-const SceneCopy = ({ copyKey }) => {
-  const c = SCENE_COPY[copyKey] ?? SCENE_COPY.grow;
-  const titleKey = copyKey === 'wilt-done' ? 'wilt' : copyKey; // 시듦 끝은 보조 줄만 바뀐다
-  return (
-    <div className="mt-[20px] min-h-[96px] text-center">
-      <motion.p
-        key={`t-${titleKey}`}
-        initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.35 }}
-        className="text-[19px] font-[700] leading-[1.45] tracking-[-0.03em] text-layout-black dark:text-layout-white"
-      >
-        {c.title}
-      </motion.p>
-      <motion.p
-        key={`s-${copyKey}`}
-        initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.35, delay: 0.08 }}
-        className="mt-[8px] text-[14px] font-[500] leading-[1.6] text-layout-gray-300 dark:text-layout-gray-100"
-      >
-        {c.sub}
-      </motion.p>
-    </div>
-  );
-};
+const SceneCopy = ({ copyKey, className = 'mt-[20px] min-h-[56px]' }) => (
+  <div className={`text-center ${className}`}>
+    <motion.p
+      key={`t-${copyKey}`}
+      initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.35 }}
+      className="text-[19px] font-[700] leading-[1.45] tracking-[-0.03em] text-layout-black dark:text-layout-white"
+    >
+      {SCENE_COPY[copyKey] ?? SCENE_COPY.grow}
+    </motion.p>
+  </div>
+);
 
 const Onboarding = () => {
   "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
@@ -93,7 +80,7 @@ const Onboarding = () => {
   const isAndroid = getDevicePlatform() === 'android' || navigator.userAgent.toLowerCase().includes('android');
 
   // 학습에서 돌아온 경우 location.state.step 으로 스텝 지정
-  //  - 'finish': 학습 완료 → 마무리 장면  /  'intro'(+scene 'field'): 학습 중 그만둠 → 체험 밭으로 복귀
+  //  - 'finish': 학습 결과(StudyResult)를 마침 → 마무리 문구  /  'intro'(+scene 'field'): 학습 중 그만둠 → 체험 밭으로 복귀
   //  - 'nick'(→auth): 예전 결과 화면(StudyResult)을 거쳐 온 경우
   const incomingStep = location.state?.step;
   const [step, setStep] = useState(() => {
@@ -264,26 +251,9 @@ const Onboarding = () => {
     // 호출해야 Web Audio AudioContext가 unlock되고 mp3가 미리 디코드된다(await 이후엔 unlock 실패).
     primeSfx();
     clearGuestTrial(); // 구 맛보기 데이터가 남아 있으면 TakeTest 가 그쪽으로 뜨지 않게
-    clearFieldResult();
     savePlacementSession(trialSession);
     navigate('/take-test', { state: { testType: 'today', guestMode: true, placement: true } });
   };
-
-  // 마무리 장면 — 학습으로 바뀐 체험 밭(TakeTest 가 학습 끝에 남긴 것)
-  const [fieldResult] = useState(() => loadFieldResult());
-  const GEM_REWARD = 20; // heyvoca_back/app/routes/onboarding.py SIGNUP_REWARD_GEM — 정답 수와 무관한 고정 보상
-  // 보석 칩은 마무리 장면이 시작되고 잠시 뒤 0 → 20 으로 차오른다
-  const [gemOn, setGemOn] = useState(false);
-  useEffect(() => {
-    if (step !== 'finish') return undefined;
-    const t = setTimeout(() => setGemOn(true), 500);
-    return () => clearTimeout(t);
-  }, [step]);
-  const shownGem = useCountUp(gemOn ? GEM_REWARD : 0, { duration: 0.9 });
-  const finishWords = fieldResult?.words ?? [];
-  const finishStart = fieldResult?.start ?? null;
-  // 마무리 장면 연출 끝(무대가 알림) — 버튼 활성
-  const [finishDone, setFinishDone] = useState(false);
 
   // 학습·결과를 마치고 가입 단계에 들어온 순간.
   //  - 알림 권한은 온보딩이 아니라 로그인 후 홈 첫 진입에서 요청 → 플래그만 남긴다.
@@ -328,7 +298,6 @@ const Onboarding = () => {
       if (res?.code === 200 || res?.code === 409) {
         clearGuest();
         clearPlacementSession();
-        clearFieldResult();
         // 홈 등 다른 화면에서 최신 닉네임/온보딩 상태가 바로 보이도록 프로필 재조회(best-effort)
         fetchUserProfile().catch(() => { /* 무시 — 다음 조회 시 갱신됨 */ });
         notifyOnboardingMigrated(); // 이슈 #25: 단어장·홈 통계 캐시 재조회(로그인 시점 빈 목록 갱신)
@@ -427,7 +396,7 @@ const Onboarding = () => {
                   words={scene === 'field' && trialSession ? fieldWords(trialSession) : []}
                   onSceneDone={(sc) => { if (sc === scene) setSceneDone(true); }}
                 />
-                <SceneCopy copyKey={scene === 'wilt' && sceneDone ? 'wilt-done' : scene} />
+                <SceneCopy copyKey={scene} />
               </div>
               <div className="px-[24px] pt-[18px] pb-[26px] shrink-0">
                 {trialError && scene !== 'grow' && (
@@ -451,35 +420,14 @@ const Onboarding = () => {
             </>
           )}
 
-          {/* ③ 마무리 — 학습으로 바뀐 체험 밭 + 보석 20개(정답 수와 무관한 고정 보상). 버튼은 가입으로. */}
+          {/* ③ 마무리 — 학습 결과(StudyResult, 보석 20 포함)를 본 뒤. 문구와 가입 버튼만. */}
           {step === 'finish' && (
             <>
-              <div className="relative flex flex-col flex-1 min-h-0 justify-center px-[20px]">
-                <div
-                  className={`
-                    absolute top-[10px] right-[16px] z-[20] inline-flex items-center gap-[6px]
-                    h-[36px] pl-[6px] pr-[12px] rounded-full
-                    bg-layout-white dark:bg-layout-gray-dark
-                    shadow-[0_2px_8px_rgba(96,80,52,.16)] dark:shadow-[0_2px_8px_rgba(0,0,0,.4)]
-                    text-[16px] font-[700] tracking-[-0.02em] tabular-nums text-layout-black dark:text-layout-white
-                    transition-opacity duration-300 ${gemOn ? 'opacity-100' : 'opacity-0'}
-                  `}
-                  aria-label={`보석 ${GEM_REWARD}개`}
-                >
-                  <img src={gemIcon} alt="" draggable={false} className="block w-[22px] h-[22px] object-contain select-none" />
-                  {shownGem}
-                </div>
-                <FarmStoryStage
-                  scene="finish"
-                  words={finishWords}
-                  startWords={finishStart}
-                  onSceneDone={() => setFinishDone(true)}
-                />
-                <SceneCopy copyKey="finish" />
+              <div className="flex flex-col flex-1 min-h-0 justify-center px-[28px]">
+                <SceneCopy copyKey="finish" className="" />
               </div>
               <div className="px-[24px] pt-[18px] pb-[26px] shrink-0">
-                <Cta label="밭 만들러 가기" disabled={!finishDone || shownGem < GEM_REWARD}
-                  onClick={() => { vibrate({ duration: 5 }); clearFieldResult(); setStep('auth'); }} />
+                <Cta label="밭 만들러 가기" onClick={() => { vibrate({ duration: 5 }); setStep('auth'); }} />
               </div>
             </>
           )}

@@ -25,7 +25,7 @@ import { getGuestTrial, clearGuestTrial, patchGuest } from '../utils/guestStorag
 import {
   loadSession as loadPlacementSession, saveSession as savePlacementSession, clearSession as clearPlacementSession,
   advance as advancePlacement, currentQuestion as currentPlacementQuestion, summarize as summarizePlacement,
-  plannedProgressUnits, filledUnits, gradeVirtualFarm, saveFieldResult,
+  plannedProgressUnits, filledUnits, gradeVirtualFarm, resultWords as resultWordsPlacement, fieldWords,
 } from '../utils/onboardingPlacement';
 import { getPendingReplantIds } from '../utils/replantPending';
 import { beginStudySession } from '../utils/studySessionGuard';
@@ -1269,12 +1269,23 @@ const TakeTest = () => {
           const sum = summarizePlacement(placementRef.current || {});
           // flow·placement 가 '학습 완료' 표시 — utils/guestStorage pendingGuestMigration 이 이걸로 v2 게스트를 알아본다.
           patchGuest({ flow: 'v2', answers: sum.answers, theta: sum.theta, placement: { asked: sum.asked, correct: sum.correct } });
-          // 결과는 학습 결과 화면(StudyResult)이 아니라 온보딩 마무리 장면(학습으로 바뀐 체험 밭 + 보석 20)이다
-          // (이슈 #25 4차). 세션은 지우므로 밭 상태만 따로 남긴다.
-          if (placementRef.current) saveFieldResult(placementRef.current);
+          // 결과는 실제 학습 결과 화면(StudyResult)과 같은 슬라이드 흐름으로(이슈 #25 4차 후속) —
+          // 목록은 1부에서 만난 단어마다 한 줄(첫 시도 정오답, 세션에서 만든다 — 새로고침해도 빠지지 않게),
+          // 밭 성장 슬라이드·작물 그림은 체험 밭 가상 작물의 학습 전/후(field)로 그린다.
+          const ses = placementRef.current || {};
+          const p1 = resultWordsPlacement(ses);
+          const field = { words: fieldWords(ses), start: fieldWords(ses, { start: true }) };
           clearPlacementSession();
           await completeCut.promise;
-          navigate('/onboarding', { state: { step: 'finish' }, replace: true });
+          navigate('/take-test/result', {
+            state: {
+              testQuestions: p1,
+              testType: state.testType,
+              guestMode: true,
+              placement: { theta: sum.theta, asked: sum.asked, correct: sum.correct, field },
+            },
+            replace: true,
+          });
           return;
         }
         if (isGuestMode) {
