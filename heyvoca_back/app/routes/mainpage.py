@@ -426,6 +426,9 @@ def api_user_study_history():
     correct_cnt = int(data.get('correct_cnt') or 0)
     incorrect_cnt = int(data.get('incorrect_cnt') or 0)
     total_cnt = correct_cnt + incorrect_cnt
+    # 온보딩(가입 직후 첫 학습) 세션이면 업적(출석왕·노력왕·끈기왕)만 건너뛴다(이슈 #25 3차 QA).
+    # 출석 보석·데일리 미션·경험치는 그대로 처리한다.
+    is_onboarding = data.get('is_onboarding') is True
 
     user_id = UUID(g.user_id)
 
@@ -474,14 +477,15 @@ def api_user_study_history():
     # 출석왕 업적 진행 + 보석 +1
     attendance_goal_complete, att_reward, att_badge, att_level = None, None, None, None
     if attend_newly:
-        attendance_goal_complete, att_reward, att_badge, att_level = update_user_goal('출석왕')
+        if not is_onboarding:
+            attendance_goal_complete, att_reward, att_badge, att_level = update_user_goal('출석왕')
         # 출석 보석 — 예전에는 원장 없이 잔액만 올려 GemLog 합계와 잔액이 어긋났다.
         change_gem(user_id, 1, GemReason.ACHIEVEMENT, '출석 보상',
                    source_type='attendance', user=user)
 
     # ── (c) 노력왕 (total_cnt > 0 이면 진행, 기존과 동일) ──
     effort_goal_complete, effort_goal_reward_count, effort_goal_badge_img, effort_goal_level = None, None, None, None
-    if total_cnt > 0:
+    if total_cnt > 0 and not is_onboarding:
         effort_goal_complete, effort_goal_reward_count, effort_goal_badge_img, effort_goal_level = update_user_goal('노력왕')
 
     # ── (d) 데일리 미션 판정 ────────────────────────────────
@@ -531,7 +535,7 @@ def api_user_study_history():
 
     # ── (e) 끈기왕 (mission_newly일 때만 판정) ──────────────
     perseverance_goal_complete, perseverance_goal_reward_count, perseverance_goal_badge_img, perseverance_goal_level = None, None, None, None
-    if mission_newly:
+    if mission_newly and not is_onboarding:
         yesterday = today - timedelta(days=1)
         yesterday_checkin = (
             db.session.query(CheckIn)

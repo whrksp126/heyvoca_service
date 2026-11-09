@@ -1,4 +1,4 @@
-"""자리표시어(~, 〜, sb/sth, A/B)를 소리 내 읽을 문장으로 바꾼다.
+"""자리표시어(~, 〜, sb/sth, A/B, 한국어 ...·…)를 소리 내 읽을 문장으로 바꾼다.
 
 Edge TTS 는 "~할 수 있는" 의 "~" 를 그냥 건너뛰어 "할 수 있는" 으로 읽는다. 사람이 읽듯
 "무엇 무엇을 할 수 있는" 처럼 바꿔서 합성한다.
@@ -144,12 +144,27 @@ def _ko_has_ab(text: str) -> bool:
     return bool(found) and (found == {'A', 'B'} or bool(_TILDE_RE.search(text)))
 
 
+# 뜻의 말줄임 자리표시어 "...해야 하다", "반드시 ...하다", "...을" — Edge TTS 가 묵음으로 건너뛴다.
+# 바로 뒤에 말(한글·영숫자)이 붙은 것만 자리표시어로 보고 ~ 로 바꿔 같은 규칙으로 읽는다.
+# 말끝의 "그래서..." 처럼 뒤에 말이 없는 건 늘임표라 건드리지 않는다(캐시 키도 그대로).
+_KO_ELLIPSIS_RE = re.compile(rf'(?:\.{{2,}}|[…⋯]+)\s*(?=[{_KO_HANGUL}A-Za-z0-9])')
+
+
+def _ko_ellipsis(text: str) -> str:
+    def repl(m):
+        # 앞이 말이면 띄운다 — 붙어 있으면 ~ 규칙이 "월~금" 같은 범위로 읽는다.
+        prev = text[m.start() - 1] if m.start() > 0 else ''
+        return (' ~' if prev and _KO_WORD_CHAR.match(prev) else '~')
+    return _KO_ELLIPSIS_RE.sub(repl, text)
+
+
 def _ko_has(text: str) -> bool:
-    return bool(_TILDE_RE.search(text) or _ko_has_ab(text))
+    return bool(_TILDE_RE.search(text) or _KO_ELLIPSIS_RE.search(text) or _ko_has_ab(text))
 
 
 def _ko(text: str) -> str:
-    t = _ko_ab(text) if _ko_has_ab(text) else text
+    t = _ko_ellipsis(text)
+    t = _ko_ab(t) if _ko_has_ab(t) else t
     return _ko_rules(t) if _TILDE_RE.search(t) else t
 
 

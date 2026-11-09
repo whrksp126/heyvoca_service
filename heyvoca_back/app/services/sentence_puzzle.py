@@ -87,6 +87,49 @@ def puzzle_usable(puzzle: Optional[dict]) -> bool:
     return bool(tokens) and bool(target_idx)
 
 
+# 조각 끝 문장부호(이슈 #25 3차 QA: "court.", "land." 처럼 마침표가 붙은 조각). 조각에서 떼고
+# 문장부호만 남는 조각은 버린다. 약어(Mr. / a.m. / U.S.)의 점은 단어의 일부라 둔다.
+_TRAILING_PUNCT_RE = re.compile(r'[.!?,]+$')
+_DOTTED_ABBR_RE = re.compile(r'^(?:[A-Za-z]\.){2,}$')
+_ABBR = {'mr.', 'mrs.', 'ms.', 'dr.', 'st.', 'jr.', 'sr.', 'prof.', 'vs.', 'etc.', 'no.', 'mt.'}
+
+
+def clean_piece(token):
+    """조각 하나의 끝 문장부호(. ! ? ,)를 뗀다. 약어는 그대로 둔다. 문장부호뿐이면 ''."""
+    t = str(token or '').strip()
+    if not t:
+        return ''
+    if t.lower() in _ABBR or _DOTTED_ABBR_RE.match(t):
+        return t
+    return _TRAILING_PUNCT_RE.sub('', t)
+
+
+def _clean_pieces(pieces) -> List[str]:
+    return [c for c in (clean_piece(p) for p in (pieces or [])) if c]
+
+
+def _clean_puzzle(puzzle: dict) -> dict:
+    """tokens·alt_orders·distractors 의 끝 문장부호를 떼고, 문장부호만인 조각을 빼며
+    target_idx 를 그에 맞게 옮긴 사본. 채점(accepted)과 조각 뱅크가 같은 기준을 쓰게 한다."""
+    raw = puzzle.get('tokens') or []
+    cleaned = [clean_piece(t) for t in raw]
+    new_idx, kept = {}, []
+    for i, c in enumerate(cleaned):
+        if c:
+            new_idx[i] = len(kept)
+            kept.append(c)
+    target_idx = [new_idx[i] for i in (puzzle.get('target_idx') or []) if i in new_idx]
+    first_form = puzzle.get('first_form')
+    out = dict(puzzle)
+    out['tokens'] = kept
+    out['target_idx'] = target_idx
+    out['first_form'] = clean_piece(first_form) if first_form else first_form
+    out['alt_orders'] = [_clean_pieces(o) for o in (puzzle.get('alt_orders') or []) if isinstance(o, list)]
+    out['distractors'] = _clean_pieces(puzzle.get('distractors'))
+    out['listen_distractors'] = _clean_pieces(puzzle.get('listen_distractors'))
+    return out
+
+
 def _first_form_case(tokens: List[str], first_form: Optional[str]) -> List[str]:
     """tokens[0]을 first_form(문장 중간 표기)로 치환한 사본 반환. 조각 뱅크 섞기 전
     "문장 맨 앞이라 대문자였을 뿐"인 조각이 힌트가 되지 않도록 하기 위함."""
@@ -180,6 +223,9 @@ def build_arrange_payload(
       }
       puzzle이 사용 불가면 None.
     """
+    if not puzzle_usable(puzzle):
+        return None
+    puzzle = _clean_puzzle(puzzle)
     if not puzzle_usable(puzzle):
         return None
 

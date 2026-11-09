@@ -5,8 +5,10 @@
   **답할 때마다 다음 문제를 한 개씩** 만든다. 미리 다 만들지 않는 이유는 다음 문제의 난이도가
   방금 답으로 갱신된 수준(θ)에 달려 있어서다.
 
-    1부 체험  — 유형마다 한 번씩(PART1_PLAN). 새 단어만.
+    1부 체험  — **단어 유형만**(PART1_PLAN: 뜻 고르기·듣고 고르기·카드 맞추기·한→영·스펠링). 새 단어만.
     2부 실전  — 1부 단어 5개를 **예문 유형**(빈칸·문장 조립·문장 뜻)으로 다시. 가장 쉬운 예문부터.
+               예문 유형은 2부에서만 나온다(이슈 #25 3차 QA — 1부 '체험'에 문장 문제가 섞이면 2부
+               '실전 문장' 안내와 어긋났다).
     3부 복습  — 첫 시도에 틀린 단어를 맞힐 때까지(단어당 최대 MAX_RETRY 번) 쉬운 뜻 고르기로.
 
   【수준 θ】 백엔드 app/services/skill_level.py 와 같은 모형·척도다.
@@ -65,26 +67,25 @@ const isClimbing = (s) => !s.leftClimb;
 const clampBand = (b) => Math.max(1, Math.min(MAX_BAND, b));
 
 // ── 출제 계획 ──────────────────────────────────────────────────────────
-// 1부 — 유형마다 한 번씩. 카드 맞추기 4단어 포함 13단어 10문항.
-// (4지선다 문장 뜻 고르기 sentenceMeaning 은 2026-10-30 출제 중단·컴포넌트 삭제 —
-//  같은 '문장 뜻' 자리를 지금 쓰는 sentenceTranslate(해석 조립)로 낸다.)
+// 1부 — 단어 유형만. 카드 맞추기 4단어 포함 13단어 10문항.
+// 예문 유형(EXAMPLE_TYPES)을 여기 넣지 말 것 — 2부(실전 문장)에서만 낸다.
 export const PART1_PLAN = [
   'multipleChoice',
   'multipleChoiceListening',
   'cardMatch',
   'reverseMultipleChoice',
-  'fillInTheBlank',
   'spellingFill',
+  'multipleChoice',
   'multipleChoiceListening',
-  'sentenceTranslate',
   'reverseMultipleChoice',
-  'sentenceArrangePartial',
+  'spellingFill',
+  'multipleChoice',
 ];
 export const CARD_MATCH_SIZE = 4;
 export const PART2_COUNT = 5;
-// 2부 실전 — 예문 유형 위주(nextPart2). 1부에서 그 단어를 같은 유형으로 만났으면 다음 유형으로.
+// 2부 실전 문장 — 예문 유형만(nextPart2). 낼 예문이 없으면 2부를 그만큼 짧게 끝낸다
+// (단어 유형으로 채우면 '실전 문장' 안내와 어긋난다).
 const PART2_PLAN = ['fillInTheBlank', 'sentenceArrangePartial', 'sentenceTranslate', 'fillInTheBlank', 'sentenceArrangePartial'];
-const PART2_FALLBACK = ['reverseMultipleChoice', 'multipleChoiceListening'];
 export const MAX_RETRY = 3;
 
 const EXAMPLE_TYPES = new Set(['fillInTheBlank', 'sentenceTranslate', 'sentenceArrangePartial', 'sentenceArrange']);
@@ -277,14 +278,28 @@ function buildSpelling(p) {
 }
 
 // 문장 조립(부분) — heyvoca_back/app/services/sentence_puzzle.py build_arrange_payload(mode='partial', easy)
-// 를 단순화한 것. 서버 puzzle 데이터가 없으므로 공백 단위 토큰(문장부호는 붙은 채)으로 자른다.
+// 를 단순화한 것. 서버 puzzle 데이터가 없으므로 공백 단위 토큰으로 자른다.
+// 조각(bank·prefix·suffix·accepted)에는 앞뒤 구두점을 붙이지 않는다("court." → "court") — 서버 계약
+// §3-1 과 같다. 구두점은 answer_text(원문)에만 남고, ArrangeTray 가 그걸 보고 정답 문장 표시에 다시 얹는다.
+// 약어(Mr. · Dr. · U.S. · a.m. 등)의 마침표는 문장 끝 구두점이 아니라 단어의 일부라 둔다.
+const EDGE_PUNCT_RE = /^[^\p{L}\p{N}']+|[^\p{L}\p{N}']+$/gu;
+const ABBR_RE = /^(?:mr|mrs|ms|dr|jr|sr|st|mt|vs|etc|e\.g|i\.e|a\.m|p\.m|(?:[a-z]\.){1,3}[a-z])\.$/i;
+const cleanPiece = (t) => {
+  const core = t.replace(/^[^\p{L}\p{N}']+/u, '').replace(/[,!?;:"”’)\]]+$/u, '');
+  if (ABBR_RE.test(core)) return core;
+  return t.replace(EDGE_PUNCT_RE, '');
+};
 function buildArrange(p, pool, rng, questionType = 'sentenceArrangePartial') {
   const marked = p.example.origin;
   const rawTokens = marked.replace(TARGET_RE, (_, inner) => `\u0000${stripTags(inner)}\u0001`).split(/\s+/).filter(Boolean);
   const targetIdx = [];
-  const tokens = rawTokens.map((t, i) => {
-    if (t.includes('\u0000') || t.includes('\u0001')) targetIdx.push(i);
-    return t.replace(/[\u0000\u0001]/g, '');
+  const tokens = [];
+  rawTokens.forEach((t) => {
+    const isTarget = t.includes('\u0000') || t.includes('\u0001');
+    const piece = cleanPiece(t.replace(/[\u0000\u0001]/g, ''));
+    if (!piece) return; // 구두점만 있는 토큰('—' 등)은 조각이 아니다(ArrangeTray 도 낱말로 안 센다)
+    if (isTarget) targetIdx.push(tokens.length);
+    tokens.push(piece);
   });
   if (targetIdx.length === 0) targetIdx.push(0);
   // 문장 맨 앞이라 대문자인 조각이 힌트가 되지 않게(서버 first_form). 'I' 와 고유명사처럼 보이는 건 둔다.
@@ -308,7 +323,7 @@ function buildArrange(p, pool, rng, questionType = 'sentenceArrangePartial') {
     p.distractorSentences.flatMap((d) => enTokens(d.origin))
       .concat(distractorWords(p, pool, 2, rng).map((x) => x.origin)),
     rng,
-  ).filter((t) => !lowerWin.has(t.toLowerCase()));
+  ).map(cleanPiece).filter((t) => t && !lowerWin.has(t.toLowerCase()));
   const distractors = [...new Set(extraTokens)].slice(0, rng() < 0.5 ? 1 : 2);
   return {
     ...toWord(p),
@@ -573,17 +588,17 @@ const pickWords = (s, type, count, rng, extraFilter = () => true) => {
 
 const byId = (s, id) => s.pool.find((p) => p.voca_id === id);
 
-// 1부 다음 문제. 그 유형에 맞는 단어가 없으면(예문 없음 등) 계획의 다음 유형으로 넘어간다.
+// 1부 다음 문제 — 단어 유형만. 2부(실전 문장)에서 다시 물을 수 있게 예문 있는 단어를 먼저 고르고,
+// 없으면 아무 단어나. 그 유형에 맞는 단어가 없으면(스펠링인데 띄어쓰기 단어 등) 뜻 고르기로 채운다.
 const nextPart1 = (s, rng) => {
   while (s.step < PART1_PLAN.length) {
     let type = PART1_PLAN[s.step];
     s.step += 1;
-    let words = pickWords(s, type, type === 'cardMatch' ? CARD_MATCH_SIZE : 1, rng);
-    // 예문 유형을 낼 수 없으면(예문 없음·지금 수준엔 너무 어려움) 같은 자리를 새 단어 뜻 고르기로 채운다
-    // — 고유 단어 수(12~14)와 분량은 지킨다.
-    if (words.length === 0 && EXAMPLE_TYPES.has(type)) {
-      type = s.lastFallback === 'multipleChoice' ? 'reverseMultipleChoice' : 'multipleChoice';
-      s.lastFallback = type;
+    const count = type === 'cardMatch' ? CARD_MATCH_SIZE : 1;
+    let words = pickWords(s, type, count, rng, (p) => !!p.example);
+    if (words.length === 0) words = pickWords(s, type, count, rng);
+    if (words.length === 0 && type !== 'multipleChoice') {
+      type = 'multipleChoice';
       words = pickWords(s, type, 1, rng);
     }
     if (words.length === 0) continue;
@@ -597,7 +612,7 @@ const nextPart1 = (s, rng) => {
 // 2부 실전 — 1부 단어 PART2_COUNT 개를 **예문 유형**(PART2_PLAN 순서)으로 다시 묻는다.
 // 예문은 단어마다 풀이 준 가장 쉬운 것 하나뿐이다. 단어는 1부에서 다른 유형으로 만난 것 중
 // 지금 θ 에서 P(정답)이 targetP 에 가까운 것(같으면 예문 score 낮은 것) — 잘하는 사람이 A1 단어를 다시 보지 않게.
-// 계획한 유형을 낼 단어가 없으면 다른 예문 유형 → 그래도 없으면 뜻 고르기로 채운다.
+// 계획한 유형을 낼 단어가 없으면 다른 예문 유형으로. 예문 유형을 낼 단어가 없으면 2부를 끝낸다.
 const nextPart2 = (s, rng) => {
   const asked = new Set(s.part2Asked || []);
   if (s.part2Done >= PART2_COUNT) return null;
@@ -605,7 +620,7 @@ const nextPart2 = (s, rng) => {
     .filter((id) => !asked.has(id)).map((id) => byId(s, id)).filter(Boolean);
   if (words.length === 0) return null;
   const planned = PART2_PLAN[s.part2Done % PART2_PLAN.length];
-  const order = [planned, ...PART2_PLAN.filter((t) => t !== planned), ...PART2_FALLBACK];
+  const order = [planned, ...PART2_PLAN.filter((t) => t !== planned)];
   let pick = null;
   for (const t of order) {
     const fit = (p) => {
@@ -629,7 +644,8 @@ const nextPart2 = (s, rng) => {
   s.lastP2Type = type;
   s.pending = { kind: 'p2', type, ids: [p.voca_id] };
   const q = buildQuestion(type, [p], s.pool, rng);
-  if (s.part2Done === 1) q.phaseStart = 'practice';
+  // 2부 = 문장 문제만이라 안내도 '실전 문장'(StudyInterlude PHASE_COPY.sentence)
+  if (s.part2Done === 1) q.phaseStart = 'sentence';
   return q;
 };
 

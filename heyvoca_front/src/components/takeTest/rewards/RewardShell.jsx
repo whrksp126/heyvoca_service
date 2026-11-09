@@ -5,6 +5,7 @@
 //   · 진행 점: 보상이 몇 장 남았는지 보여 준다(최종 결과 화면은 세지 않는다).
 //   · 「확인」은 연출이 끝나야(ready) 켜진다. 그 전에 화면 아무 곳이나 탭하면 onSkip 으로 연출을 건너뛴다.
 //     (최종 결과 화면의 통계 카드와 같은 규칙.)
+//   · 헤더 제목(title)은 기본 「학습 결과」. 학습 밖 업적 연출(overlay/AchievementRewardOverlay)은 「업적 달성」을 넘긴다.
 //   · 헤더 오른쪽 자리(headerSlot)는 슬라이드가 포털로 채운다 — 보석 슬라이드의 잔액 칩이 여기 들어간다.
 //     잔액이 오를 때마다 결과 화면 전체를 다시 그리지 않도록 상태는 슬라이드 안에 둔다.
 import React, { createContext, useContext, useState } from 'react';
@@ -37,7 +38,7 @@ const StoryDots = ({ index, total, ready }) => (
   </div>
 );
 
-const RewardShell = ({ slideKey, index = 0, total = 0, ready = true, onSkip, onConfirm, children }) => {
+const RewardShell = ({ slideKey, title = '학습 결과', index = 0, total = 0, ready = true, onSkip, onConfirm, children }) => {
   const [headerSlot, setHeaderSlot] = useState(null);
   return (
     <div
@@ -58,7 +59,7 @@ const RewardShell = ({ slideKey, index = 0, total = 0, ready = true, onSkip, onC
       >
         <div className="center">
           <h2 className='text-[18px] font-[700] leading-[21px]'>
-            학습 결과
+            {title}
           </h2>
         </div>
         <div ref={setHeaderSlot} className='absolute right-[18px] top-1/2 -translate-y-1/2' />

@@ -1,10 +1,10 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { CaretLeft, AppleLogo, CaretRight } from '@phosphor-icons/react';
+import { CaretLeft, AppleLogo } from '@phosphor-icons/react';
 import googleLogo from '../assets/images/google_logo.png';
 import { getPlacementPoolApi, migrateOnboardingApi } from '../api/study';
-import { patchGuest, getGuest, clearGuest, clearGuestTrial, buildMigrateBody } from '../utils/guestStorage';
+import { getGuest, clearGuest, clearGuestTrial, buildMigrateBody } from '../utils/guestStorage';
 import { notifyOnboardingMigrated } from '../utils/studyDataEvents';
 import { createSession, saveSession as savePlacementSession, clearSession as clearPlacementSession } from '../utils/onboardingPlacement';
 import { vibrate, getDevicePlatform } from '../utils/osFunction';
@@ -15,13 +15,15 @@ import { useUser } from '../context/UserContext';
 import postMessageManager from '../utils/postMessageManager';
 import { cropAssetByVariant } from '../components/farm/CropImage';
 import { useStatusBarStyle } from '../hooks/useStatusBarStyle';
+import IntroGrowField from '../components/onboarding/IntroGrowField';
 import { nodeEnv } from '../utils/common';
 
 /*
   온보딩 — 인사에서 가입까지.
 
   【흐름】 hello → intro → 수준 맞춤 학습(1부 체험·2부 실전·3부 오답 복습, /take-test)
-          → 결과(보석 연출) → nick → auth
+          → 결과(보석 연출) → auth
+  (이슈 #25 3차 — 닉네임 입력을 뺐다. 이름은 서버가 기본 닉네임으로 넣고 나중에 마이페이지에서 바꾼다.)
   (이슈 #25 2차 — 단어장 추천·선택, 유입 경로·학습 목적·하루 심기 수 질문을 뺐다.
    온보딩은 수준(θ) 측정과 학습 체험만 한다. 단어를 심지 않고, 가입 직후엔 단어장이 없다 —
    첫 단어장은 홈 퀘스트에서 받은 보석으로 서점에서 산다. 하루 심기 수는 서버 기본값.)
@@ -31,13 +33,11 @@ import { nodeEnv } from '../utils/common';
   다르면 그다음부터 신뢰를 잃는다.
 */
 
-// 성장 순서 — 씨앗 → 새싹 → 이파리 → 당근. 밭과 같은 planted(V5) 그림(씨앗만 낱알).
-const GROWTH_STAGES = ['seed', 'sprout', 'leaf', 'carrot'];
-
 // 예전 단계 이름으로 들어온 경우(구 버전 화면·저장된 state) — 지금 단계로 옮긴다.
+// 'nick' 은 학습 결과 화면(StudyResult)이 학습을 마친 뒤 보내는 자리다 — 닉네임 단계가 없어져 가입으로 잇는다.
 const LEGACY_STEP = {
   memory: 'intro', ready: 'intro',
-  recommend: 'nick', channel: 'nick', goal: 'nick', daily: 'nick',
+  nick: 'auth', recommend: 'auth', channel: 'auth', goal: 'auth', daily: 'auth',
 };
 
 const Onboarding = () => {
@@ -52,15 +52,13 @@ const Onboarding = () => {
   // 온보딩 내부 로그인/회원가입 스텝(auth)에서만 앱 OAuth 노출 (안드로이드는 애플 숨김)
   const isAndroid = getDevicePlatform() === 'android' || navigator.userAgent.toLowerCase().includes('android');
 
-  const saved = getGuest() || {};
   // 학습에서 돌아온 경우 location.state.step 으로 스텝 지정
-  //  - 'nick': 학습·결과 완료  /  'intro': 학습 중 그만둠 → 소개로 복귀
+  //  - 'nick'(→auth): 학습·결과 완료  /  'intro': 학습 중 그만둠 → 소개로 복귀
   const incomingStep = location.state?.step;
   const [step, setStep] = useState(() => {
     const s = incomingStep || 'hello';
     return LEGACY_STEP[s] || s;
   });
-  const [username, setUsername] = useState(saved.username ?? '');
   const [loadingTrial, setLoadingTrial] = useState(false);
   // 이미 로그인된 사용자가 온보딩을 진행할 때 auth 스텝을 건너뛰고 서버 migrate 처리 중임을 표시
   const [finishingOnboarding, setFinishingOnboarding] = useState(false);
@@ -94,7 +92,7 @@ const Onboarding = () => {
   }, []);
 
   // 뒤로가기가 있는 스텝과, 각 스텝의 이전 자리.
-  // 학습은 별도 라우트라 그 뒤(nick)에서 앞으로 이어 붙이지 않는다 — 다시 학습하게 된다.
+  // 학습은 별도 라우트라 그 뒤(auth)에서 앞으로 이어 붙이지 않는다 — 다시 학습하게 된다.
   const BACK_TO = { intro: 'hello' };
 
   const goLogin = () => { vibrate({ duration: 5 }); navigate('/login'); };
@@ -175,39 +173,35 @@ const Onboarding = () => {
     }
   };
 
-  const handleNickNext = () => {
-    vibrate({ duration: 5 });
-    const trimmedUsername = username.trim() || null;
-    patchGuest({ username: trimmedUsername });
-    // 알림 권한은 온보딩이 아니라 로그인 후 홈 첫 진입에서 요청 → 플래그만 남긴다
+  // 학습·결과를 마치고 가입 단계에 들어온 순간.
+  //  - 알림 권한은 온보딩이 아니라 로그인 후 홈 첫 진입에서 요청 → 플래그만 남긴다.
+  //  - 이미 로그인된 사용자(게스트 온보딩 없이 로그인 후 다시 온보딩에 진입한 경우)는 재로그인이
+  //    필요 없으므로 가입 화면을 건너뛰고 서버로 바로 이전(migrate)한 뒤 홈으로 간다.
+  const authEnteredRef = useRef(false);
+  useEffect(() => {
+    if (step !== 'auth' || authEnteredRef.current) return;
+    authEnteredRef.current = true;
     try { localStorage.setItem('heyvoca_notif_prompt', '1'); } catch (e) { /* 무시 */ }
-
-    if (isLogin) {
-      // 이미 로그인된 사용자(게스트 온보딩 없이 로그인 후 다시 온보딩에 진입한 경우) —
-      // 재로그인이 필요 없으므로 마지막 auth 스텝은 건너뛰고 서버로 바로 이전(migrate)한 뒤 홈으로 이동.
-      finishLoggedInOnboarding(trimmedUsername);
-      return;
-    }
-    setStep('auth');
-  };
+    if (isLogin) finishLoggedInOnboarding();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [step, isLogin]);
 
   // 이미 로그인된 사용자의 온보딩 완료 처리 — guestStorage 대신 현재 온보딩 진행 상태(state)를
   // 곧바로 서버 /onboarding/migrate로 전송한다. 성공(200) 또는 이미 처리됨(409) 모두 정상 종료로 본다.
   // 네트워크 실패 등으로 migrate가 실패해도 로그인 상태 자체는 유효하므로 홈으로는 보낸다 —
   // 이 경우 onboarding_ver가 갱신되지 않아 다음 앱 실행 시 Index.jsx가 다시 /onboarding으로 보내는
   // 자연스러운 재시도가 이루어진다.
-  const finishLoggedInOnboarding = async (trimmedUsername) => {
+  const finishLoggedInOnboarding = async () => {
     if (finishingOnboarding) return;
     setFinishingOnboarding(true);
     try {
-      // v2 { flow, theta, answers, username } / 구 v1(레벨만 있는 예전 게스트 데이터) — utils/guestStorage buildMigrateBody
-      const res = await migrateOnboardingApi(buildMigrateBody(getGuest(), { username: trimmedUsername }));
+      // v2 { flow, theta, answers } / 구 v1(레벨만 있는 예전 게스트 데이터) — utils/guestStorage buildMigrateBody
+      const res = await migrateOnboardingApi(buildMigrateBody(getGuest()));
       if (res?.code === 200) {
-        // 온보딩 학습을 **정규 세션과 똑같이** 집계한다.
-        // /mainpage/user_study_history 가 XP · 출석 · 출석왕 · 노력왕 · 데일리 미션 · 끈기왕을
-        // 한 번에 처리하는 허브인데, 게스트 구간에서는 로그인이 없어 못 불렀다.
-        // migrate 가 학습 로그를 막 심어 놨으므로(신규 판정은 로그 기준) 지금 부르면
-        // 온보딩에서 한 학습이 그대로 오늘의 기록으로 잡힌다.
+        // 온보딩 학습을 오늘의 기록으로 집계한다(XP · 출석 · 데일리 미션 · 연속 학습 1일).
+        // 게스트 구간에서는 로그인이 없어 못 불렀다. migrate 가 학습 로그를 막 심어 놨으므로
+        // 지금 부르면 온보딩에서 한 학습이 그대로 오늘의 기록으로 잡힌다.
+        // is_onboarding — 업적(출석왕·노력왕·끈기왕)에는 반영하지 않는다(이슈 #25 3차, 서버가 건너뛴다).
         // 409(이미 온보딩 완료)는 앞선 시도에서 이미 처리된 것이라 건너뛴다.
         const studied = res?.data?.studied ?? 0;
         const correct = res?.data?.correct ?? 0;
@@ -215,6 +209,7 @@ const Onboarding = () => {
           await updateUserHistory({
             correct_cnt: correct,
             incorrect_cnt: Math.max(0, studied - correct),
+            is_onboarding: true,
           }).catch(() => { /* 실패해도 온보딩 흐름은 계속 */ });
         }
       }
@@ -250,17 +245,6 @@ const Onboarding = () => {
       className="w-full mt-[14px] text-[13px] font-[500] text-layout-gray-300 dark:text-layout-gray-100 underline">
       {isLogin ? '다른 계정으로 로그인' : '이미 계정이 있어요 · 로그인'}
     </button>
-  );
-
-  const Headline = ({ children, sub }) => (
-    <div className="text-[21px] font-[700] leading-[1.42] tracking-[-0.03em] text-center text-layout-black dark:text-layout-white">
-      {children}
-      {sub && (
-        <span className="block mt-[9px] text-[12.5px] font-[500] leading-[1.6] text-layout-gray-300">
-          {sub}
-        </span>
-      )}
-    </div>
   );
 
   const stepBody = useMemo(() => `on-${step}`, [step]);
@@ -317,24 +301,12 @@ const Onboarding = () => {
             </>
           )}
 
-          {/* ② 소개 — 작물 4단계 한 줄 + 한 줄 설명. 버튼을 누르면 바로 학습(수준 측정)이 시작된다. */}
+          {/* ② 소개 — 밭에 씨앗을 심고 당근까지 자라는 연출 + 한 줄 설명. 버튼을 누르면 바로 학습(수준 측정)이 시작된다. */}
           {step === 'intro' && (
             <>
               <div className="flex flex-col flex-1 min-h-0 justify-center px-[20px]">
-                <div className="flex items-end justify-between gap-[2px] w-full max-w-[360px] mx-auto">
-                  {GROWTH_STAGES.map((crop, i) => (
-                    <React.Fragment key={crop}>
-                      {/* 씨앗만 낱알(solo)로 — V5 의 심은 씨앗은 작은 상자에서 점처럼 보인다 */}
-                      <img src={cropAssetByVariant(crop, 'healthy', { solo: crop === 'seed' })}
-                        alt="" draggable={false}
-                        className="block w-[72px] h-[72px] object-contain object-bottom select-none" />
-                      {i < GROWTH_STAGES.length - 1 && (
-                        <CaretRight size={13} weight="fill" className="shrink-0 mb-[24px] text-layout-gray-100 dark:text-layout-gray-300" />
-                      )}
-                    </React.Fragment>
-                  ))}
-                </div>
-                <p className="mt-[28px] text-center text-[19px] font-[700] leading-[1.45] tracking-[-0.03em] text-layout-black dark:text-layout-white">
+                <IntroGrowField />
+                <p className="mt-[20px] text-center text-[19px] font-[700] leading-[1.45] tracking-[-0.03em] text-layout-black dark:text-layout-white">
                   복습할수록 오래 기억하고,<br />
                   <span className="text-primary-main-600">작물이 자라요</span>
                 </p>
@@ -351,49 +323,6 @@ const Onboarding = () => {
             </>
           )}
 
-          {/* ⑬ 닉네임 */}
-          {step === 'nick' && (
-            <>
-              <div className="flex flex-col flex-1 min-h-0 px-[24px] pt-[6px]">
-                {/* '나중에 바꿀 수 있다'는 안내는 입력 아래가 아니라 제목의 부제 자리로 옮겼다 —
-                    소개 화면들이 전부 [제목 + 회색 한 줄] 짜임이라 같은 자리에 둬야 같은 화면으로 읽힌다. */}
-                {/* 한 줄로 끝나는 짧은 물음이라 줄을 나누지 않고, 색도 나누지 않는다 —
-                    강조색은 두 줄을 갈라 앞뒤를 대비시킬 때만 뜻이 있다. */}
-                <Headline sub="나중에 언제든 바꿀 수 있어요.">
-                  어떻게 부르면 될까요?
-                </Headline>
-                <div className="mt-[26px]">
-                  <input
-                    value={username} onChange={(e) => setUsername(e.target.value.slice(0, 8))}
-                    placeholder="닉네임을 입력해주세요"
-                    enterKeyHint="done"
-                    /* 키보드의 '이동'/Enter 로도 넘어간다 — 버튼을 찾아 손을 옮기지 않아도 되게 */
-                    onKeyDown={(e) => {
-                      if (e.key !== 'Enter') return;
-                      e.preventDefault();
-                      if (username.trim() && !finishingOnboarding) handleNickNext();
-                    }}
-                    className="
-                      w-full h-[52px] px-[16px] rounded-[14px] border-[2px]
-                      border-border dark:border-border-dark bg-layout-white dark:bg-layout-black
-                      text-center text-[16px] font-[700] tracking-[-0.03em]
-                      text-layout-black dark:text-layout-white outline-none
-                      focus:border-primary-main-600
-                      placeholder:font-[500] placeholder:text-layout-gray-200
-                    "
-                  />
-                  <div className="mt-[8px] text-center text-[11.5px] font-[600] text-layout-gray-200">
-                    {username.trim().length} / 8
-                  </div>
-                </div>
-              </div>
-              <div className="px-[24px] pt-[18px] pb-[26px] shrink-0">
-                <Cta label={finishingOnboarding ? '처리 중...' : '다음'}
-                  disabled={!username.trim() || finishingOnboarding} onClick={handleNickNext} />
-              </div>
-            </>
-          )}
-
           {/* ⑭ 로그인 · 회원가입 — 심은 걸 저장한다는 이유만 위에 적는다 */}
           {step === 'auth' && (
             <>
@@ -401,9 +330,7 @@ const Onboarding = () => {
                 <img src={cropAssetByVariant('carrot', 'healthy')} alt="" draggable={false}
                   className="w-[120px] h-[120px] object-contain object-bottom select-none mb-[26px]" />
                 <h1 className="text-[23px] font-[800] leading-[1.4] tracking-[-0.04em] text-layout-black dark:text-layout-white">
-                  {username.trim()
-                    ? <><span className="text-primary-main-600">{username.trim()}</span>님, 거의 다 왔어요</>
-                    : '거의 다 왔어요'}
+                  거의 다 왔어요
                 </h1>
                 <p className="mt-[14px] text-[14px] font-[500] leading-[1.7] text-layout-gray-300">
                   오늘 학습한 기록을 저장할게요.

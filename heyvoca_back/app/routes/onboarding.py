@@ -38,6 +38,7 @@ from app.models.models import (
     Bookstore,
 )
 from app.utils.jwt_utils import jwt_required
+from app.constants.user import apply_signup_username
 from app.utils.db_lock import retry_on_deadlock
 from app.utils.dict_lang import use_dict_lang, get_dict_lang
 
@@ -515,9 +516,7 @@ def migrate():
         user.level_id = int(level)
     except (TypeError, ValueError):
         pass
-    username = (body.get('username') or '').strip()
-    if username and not user.username:
-        user.username = username[:36]
+    apply_signup_username(user, body.get('username'))
 
     # 레벨 단어장 생성 — 헤이보카 검증본 마크(bookstore_id)를 위해 레벨 대응 서점 행을 조회.
     # 못 찾아도(서점 미등록 등) 온보딩 자체는 실패하면 안 되므로 None으로 폴백한다.
@@ -668,10 +667,7 @@ def _apply_common_settings(user, body):
     user.learning_goal = (str(goal)[:50] if goal else None)
     user.daily_new_limit = daily_limit if 0 < daily_limit <= 200 else DEFAULT_DAILY_LIMIT
     user.onboarding_ver = '1'
-    username = body.get('username')
-    username = username.strip() if isinstance(username, str) else ''
-    if username and not user.username:
-        user.username = username[:36]
+    apply_signup_username(user, body.get('username'))
 
 
 def _migrate_v2(user_id, body):

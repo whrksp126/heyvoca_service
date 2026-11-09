@@ -1,6 +1,6 @@
 // src/components/onboarding/useQuestAction.jsx
 //
-// 입문 퀘스트 '하러 가기' — 미션 key 별로 그 기능을 바로 시작한다(이슈 #25 2차).
+// 입문 퀘스트 「바로가기」(QuestSteps 펼친 줄) — 미션 key 별로 그 기능을 바로 시작한다(이슈 #25 2차).
 // 홈 퀘스트 카드(OnboardingQuestCard)와 퀘스트 바텀시트(UnlockGuideNewBottomSheet)가 같이 쓴다.
 //
 //  buy_book    → 상점 탭

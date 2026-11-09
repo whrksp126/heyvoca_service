@@ -163,29 +163,19 @@ const Index = () => {
         const studied = res?.data?.studied ?? 0;
         const correct = res?.data?.correct ?? 0;
         //
-        // **끝날 때까지 기다린다.** 보석·XP·출석·업적이 여기서 붙는데, 기다리지 않고 바로
+        // **끝날 때까지 기다린다.** 보석·XP·출석이 여기서 붙는데, 기다리지 않고 바로
         // 아래에서 프로필을 다시 읽으면 지급 **전** 잔액이 캐시된다 — 실제로 홈 첫 화면의
         // 보석이 1,000 으로 떠 있고 DB 에는 1,013 이 들어 있는 상태를 기기에서 확인했다.
+        //
+        // is_onboarding — 온보딩 학습은 업적(출석왕·노력왕·끈기왕)에 반영하지 않는다(이슈 #25 3차).
+        // 서버가 이 표시를 보고 업적만 건너뛰고 출석·데일리 미션·연속 학습 1일은 그대로 처리한다.
+        // 그래서 홈 첫 진입 업적 연출 대기열(heyvoca_pending_goal_overlay)도 더는 채우지 않는다.
         if (studied > 0 && typeof updateUserHistory === 'function') {
-          const historyData = await updateUserHistory({ correct_cnt: correct, incorrect_cnt: Math.max(0, studied - correct) })
-            .catch(() => null); // 실패해도 온보딩 흐름은 계속
-
-          // ④ 이 호출로 서버가 방금 지급한 출석왕·노력왕·끈기왕 1레벨(goals)이 응답에 실려 온다.
-          // StudyResult.jsx(게스트 결과 화면, ②③)는 이 연출을 뺐다 — 계정도 없는 시점에
-          // 매번 똑같이 달성되는 업적을 보여주는 게 형식적이었다. 대신 계정에 실제로 반영된
-          // 지금, 홈 첫 진입에서 한 번만 보여주기 위해 대기열에 담아 둔다.
-          // components/home/Main.jsx 가 홈 마운트 시 이 값을 읽는 즉시 지우고 순차로 띄운다.
-          // migrate 응답(res.data.goals)에 업적이 실려 오면 함께 담는다. v2(이슈 #25 2차)는 가입 때
-          // 단어장을 담지 않아 보통 비어 있다 — 출석왕·노력왕·끈기왕은 아래 historyData 가 준다.
-          const overlayGoals = [
-            ...(Array.isArray(res?.data?.goals) ? res.data.goals : []),
-            ...(Array.isArray(historyData?.goals) ? historyData.goals : []),
-          ];
-          if (overlayGoals.length > 0) {
-            try {
-              localStorage.setItem('heyvoca_pending_goal_overlay', JSON.stringify(overlayGoals));
-            } catch (e) { /* 저장 실패는 무시 — 업적 연출만 못 볼 뿐 학습 자체엔 영향 없다 */ }
-          }
+          await updateUserHistory({
+            correct_cnt: correct,
+            incorrect_cnt: Math.max(0, studied - correct),
+            is_onboarding: true,
+          }).catch(() => null); // 실패해도 온보딩 흐름은 계속
         }
       }
       if (res?.code === 200 || res?.code === 409) {

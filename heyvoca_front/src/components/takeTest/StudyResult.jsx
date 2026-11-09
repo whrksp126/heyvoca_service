@@ -23,7 +23,7 @@ import { getFarmTodayTasksApi, getFarmItemsApi } from '../../api/farm';
 import { fetchSessionFarmSummary } from '../../utils/sessionSummaryPrefetch';
 import { calendarDaysFromToday } from '../../utils/reviewTiming';
 import StudyTimingTag from '../farm/StudyTimingTag';
-import { getAchievementCriteriaApi, updateUserRecentStudyDataApi } from '../../api/study';
+import { updateUserRecentStudyDataApi } from '../../api/study';
 import { planNextStudy, loadStudyConfig, NEXT_STUDY_COUNTDOWN_MS } from '../../utils/nextStudy';
 import { primeSfx } from '../../utils/audio';
 // 보상 슬라이드(밭 성장 · 아이템 · 보석 · 업적 · 콤보)와 공용 껍데기 · 하단 버튼
@@ -113,58 +113,29 @@ const FarmListSlide = ({ art, line, rows }) => (
   예전에는 그 자리를 `{ gem: 0 → 5 }` 한 줄로 때웠다. 그래서 첫 학습을 마친 사람이
   **보석 한 장만 보고** 넘어갔다 — 정작 가장 많이 받는 회차인데도.
 
-  가입 직후 실제로 벌어지는 일(pages/Index.jsx: migrate → updateUserHistory)은 이렇다.
+  가입 직후 실제로 벌어지는 일(pages/Index.jsx: migrate → updateUserHistory(is_onboarding))은 이렇다.
     · 온보딩 가입 보상 보석          (onboarding.py SIGNUP_REWARD_GEM)
     · 오늘 첫 학습 → 출석 + 보석      (mainpage.py 출석 처리)
-    · 출석왕 1레벨 (출석 1일)         → 보석
-    · 노력왕 1레벨 (학습 1회)         → 보석
     · 데일리 미션 완료 + 보석         (온보딩 당일은 첫날 계획 완수로 판정 — mainpage.py)
-    · 끈기왕 1레벨 (연속 학습 1일)    → 보석
   전부 조건이 '첫 학습'이라 예외 없이 달성된다. 그래서 예측이 아니라 사실상 확정이고,
-  여기서 그대로 그린다. 업적 보상 개수만 서버 기준표(/mainpage/achievement_criteria,
-  비인증)에서 읽어 온다 — 운영에서 보상을 바꿔도 화면 숫자가 따라가도록.
+  여기서 그대로 그린다. 합계는 가입 5 + 출석 1 + 데일리 미션 1 = 7.
 
-  암기왕은 콤보 기준이라 today 유형(온보딩)에서는 쌓이지 않는다.
-  독서왕은 넣지 않는다 — 가입 때 단어장을 담지 않으므로(이슈 #25 2차) 온보딩에선 달성되지 않는다.
-  합계는 가입 5 + 출석 1 + 데일리 미션 1 + 업적 1레벨 3개(기본 2 × 3) = 13.
+  업적(출석왕·노력왕·끈기왕 등)은 넣지 않는다 — 온보딩 학습은 업적에 반영하지 않기로 했다
+  (이슈 #25 3차 QA). 가입 직후 updateUserHistory 가 is_onboarding 을 보내면 서버가 업적만 건너뛴다.
 */
 const GUEST_SIGNUP_GEM = 5;        // heyvoca_back/app/routes/onboarding.py SIGNUP_REWARD_GEM
 const GUEST_ATTEND_GEM = 1;        // mainpage.py 출석 보석
 const GUEST_MISSION_GEM = 1;       // mainpage.py 데일리 미션 완료 보석
-const GUEST_FIRST_DAY_GOALS = ['출석왕', '노력왕', '끈기왕'];
-const GUEST_GOAL_REWARD_FALLBACK = 2;   // 기준표 조회 실패 시 (goals 1레벨 reward_count)
 
-const buildGuestSignupResult = async () => {
-  const goalTypes = GUEST_FIRST_DAY_GOALS;
-  const rewardByType = {};
-  try {
-    const res = await getAchievementCriteriaApi();
-    if (res?.code === 200 && res.data) {
-      goalTypes.forEach((type) => {
-        const lv1 = (res.data[type] || []).find((g) => g.level === 1);
-        if (lv1?.reward != null) rewardByType[type] = lv1.reward;
-      });
-    }
-  } catch (e) { /* 기준표 조회 실패 — 기본값으로 그린다 */ }
-
-  const goalGem = goalTypes
-    .reduce((sum, type) => sum + (rewardByType[type] ?? GUEST_GOAL_REWARD_FALLBACK), 0);
-
-  return {
-    // 보석 합계는 그대로 둔다 — 서버가 실제로 데일리 미션(GUEST_MISSION_GEM)과
-    // 업적 1레벨(goalGem)까지 지급하므로, 화면에 슬라이드로 안 그려도 지급분을 빼면 안 된다.
-    gem: { before: 0, after: GUEST_SIGNUP_GEM + GUEST_ATTEND_GEM + GUEST_MISSION_GEM + goalGem },
-    attend: true,
-    today_study_complete: true,
-    // ⑪⑫ 슬라이드는 여기서 비운다 — 데일리 미션 완료·업적 1레벨은 온보딩 "가입 직전 학습"에서
-    // 매번 조건 없이 달성돼(첫 학습이라 예외가 없다) 게스트 결과 화면에 붙이면 매번 똑같은
-    // 두 장이 반복 재생되는 형식적인 연출이 됐다. 업적 연출은 가입 후 실제 계정에 반영된
-    // 시점(홈 첫 진입)으로 옮겼다 — pages/Index.jsx → components/home/Main.jsx,
-    // AchievementRewardOverlay 재사용. 위 gem 계산에는 여전히 반영돼 있다.
-    daily_mission_complete: false,
-    goals: [],
-  };
-};
+const buildGuestSignupResult = async () => ({
+  gem: { before: 0, after: GUEST_SIGNUP_GEM + GUEST_ATTEND_GEM + GUEST_MISSION_GEM },
+  attend: true,
+  today_study_complete: true,
+  // 데일리 미션 슬라이드는 그리지 않는다 — 온보딩 첫 학습에선 매번 조건 없이 달성돼 형식적인 연출이 된다.
+  // 보석(GUEST_MISSION_GEM)은 서버가 실제로 지급하므로 위 합계에는 넣는다.
+  daily_mission_complete: false,
+  goals: [],
+});
 
 // 하단 버튼(ResultCta · ResultCtaBar)은 rewards/ResultCta.jsx 로 옮겼다 — 보상 슬라이드 껍데기와 같이 쓴다.
 

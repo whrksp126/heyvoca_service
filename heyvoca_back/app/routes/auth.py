@@ -4,6 +4,7 @@ from app import db, limiter
 from app.routes import auth_bp
 from app.models.models import User, Bookstore, GoalType, UserGoals, Goals, InviteMap, GemReason, UserHasToken, CheckIn, UserRecentStudy, UserVocaBook, Purchase, GemLog, UserVoca, UserVocaBookMap, UserCombo, UserVocaGame, UserStudySession, UserStudyLog, UserQuestionTypeStat, UserOnboardingMission, UserStreak, UserComebackMission, UserFarmItem, UserFarmItemLog, UserFarmSetting, UserFarmMigration, FarmEventLog, UserScriptProgress
 from app.routes.mainpage import update_user_goal
+from app.constants.user import DEFAULT_USERNAME
 from app.utils.db_lock import begin_user_tx, retry_on_deadlock
 from app.utils.gem import InsufficientGem, change_gem, lock_users_ordered, start_user_tx
 from app.utils.jwt_utils import jwt_required, generate_access_token, generate_refresh_token, verify_refresh_token, get_refresh_token_version
@@ -178,7 +179,7 @@ def google_oauth_app():
                 level_id=None,
                 email = email,
                 google_id = google_id,
-                username = None,
+                username = DEFAULT_USERNAME,
                 name = name,
                 phone = None,
                 refresh_token = '',
@@ -271,7 +272,7 @@ def dev_login():
                 email=email,
                 google_id=None,
                 apple_id=None,
-                username=None,
+                username=DEFAULT_USERNAME,
                 name='Developer',
                 phone=None,
                 refresh_token='',
@@ -414,7 +415,7 @@ def apple_oauth_app():
                 email = email if email else f"{apple_sub}@privaterelay.appleid.com", # 이메일 비공개 시 가짜 이메일 생성
                 google_id = None, # Apple 로그인이므로 Null
                 apple_id = apple_sub,
-                username = None,
+                username = DEFAULT_USERNAME,
                 name = name_str,
                 phone = None,
                 refresh_token = '',
@@ -1055,7 +1056,7 @@ def login():
             level_id=None,
             email=email,
             google_id=google_id,
-            username=None,
+            username=DEFAULT_USERNAME,
             name=name or '',
             phone=None,
             last_logged_at=None,

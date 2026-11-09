@@ -8,8 +8,8 @@
 //   1060ms                             evolve — 뒷면이 보이는 순간(약 240ms 뒤)에 강한 음
 //   1120ms  메달이 뒤집힌다
 //   1420ms  레벨 · 등급 색 교체, 빛 · 고리 · 파편 · 색종이
-//   1740ms  리본 → 1900ms 한 줄 문구
-//   2170ms  「확인」 켜짐              select
+//   1740ms  한 줄 문구 (가운데 업적 이름 리본은 2026-11 QA #25 에서 뺐다 — 문구와 겹친다)
+//   2010ms  「확인」 켜짐              select
 //
 // 목업의 「보상 보석 +N」 칩은 업적 응답(goals[])에 보상 개수가 없어 넣지 않았다.
 import React, { useRef, useState } from 'react';
@@ -25,7 +25,6 @@ const C = HERO / 2;
 const R = 86;
 const LEN = 2 * Math.PI * R;
 const FADE_UP = 'transition-[transform,opacity] duration-300 ease-out motion-reduce:transition-none';
-const RIBBON_CLIP = 'polygon(0 0, 100% 0, calc(100% - 12px) 50%, 100% 100%, 0 100%, 12px 50%)';
 
 const AchievementSlide = ({ goal, reducedMotion, onReady, skipRef }) => {
   const goalType = goal?.type || '단어왕';
@@ -38,7 +37,6 @@ const AchievementSlide = ({ goal, reducedMotion, onReady, skipRef }) => {
   const [medalIn, setMedalIn] = useState(false);
   const [gaugeFull, setGaugeFull] = useState(false);
   const [upgraded, setUpgraded] = useState(false);
-  const [ribbon, setRibbon] = useState(false);
   const [texted, setTexted] = useState(false);
 
   const rootRef = useRef(null);
@@ -54,7 +52,7 @@ const AchievementSlide = ({ goal, reducedMotion, onReady, skipRef }) => {
   ], { duration: 640, easing: 'cubic-bezier(.4,0,.2,1)' });
 
   const build = () => ({
-    readyAt: FLIP + 1050,
+    readyAt: FLIP + 890,
     steps: [
       {
         at: 0,
@@ -77,8 +75,7 @@ const AchievementSlide = ({ goal, reducedMotion, onReady, skipRef }) => {
           confetti(rootRef.current);
         },
       },
-      { at: FLIP + 620, run: () => setRibbon(true) },
-      { at: FLIP + 780, run: () => setTexted(true) },
+      { at: FLIP + 620, run: () => setTexted(true) },
     ],
   });
 
@@ -152,13 +149,6 @@ const AchievementSlide = ({ goal, reducedMotion, onReady, skipRef }) => {
         </div>
       </div>
 
-      {/* 리본 */}
-      <div
-        className={`h-[36px] whitespace-nowrap px-[26px] text-[16px] font-[800] leading-[36px] text-layout-white bg-[linear-gradient(180deg,#FF88DC,#FF70D4)] transition-transform duration-[380ms] ease-[cubic-bezier(.34,1.56,.64,1)] motion-reduce:transition-none ${ribbon ? 'scale-x-100' : 'scale-x-0'}`}
-        style={{ clipPath: RIBBON_CLIP }}
-      >
-        {goalType}
-      </div>
       <p className={`text-center text-[17px] font-[700] leading-[1.45] tracking-[-0.02em] ${FADE_UP} ${texted ? 'translate-y-0 opacity-100' : 'translate-y-[18px] opacity-0'}`}>
         <strong className='text-primary-main-600'>{goalType} {to}레벨</strong>을 달성했어요
       </p>

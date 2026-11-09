@@ -203,9 +203,9 @@ export const UserProvider = ({ children }) => {
   }, [fetchUserMainPage]);
 
   // 업적, 보석, ... 업데이트 함수
-  const updateUserHistory = useCallback(async ({ correct_cnt, incorrect_cnt }) => {
+  const updateUserHistory = useCallback(async ({ correct_cnt, incorrect_cnt, is_onboarding = false }) => {
     try {
-      const result = await updateUserStudyHistoryApi({ correct_cnt, incorrect_cnt });
+      const result = await updateUserStudyHistoryApi({ correct_cnt, incorrect_cnt, is_onboarding });
       if (result.code != 200) return;
 
       // 보석 업데이트 내용 적용

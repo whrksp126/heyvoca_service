@@ -250,7 +250,7 @@ const Main = () => {
     ④ 온보딩→가입→로그인 후 홈 첫 진입 시 벌어지는 두 연출을 **순서대로만** 띄운다.
       1) 업적 1레벨 오버레이(대기열) — pages/Index.jsx 가 migrate 직후 updateUserHistory 응답의
          goals 를 localStorage 대기열에 담아 둔다. 여기서 읽는 즉시 지워 중복 소비를 막고,
-         AchievementRewardOverlay(3초 자동 닫힘)를 하나씩 await 하며 순차로 띄운다.
+         AchievementRewardOverlay(학습 결과 업적 슬라이드와 같은 연출, 「확인」으로 닫힘)를 하나씩 await 하며 순차로 띄운다.
       2) 알림 권한 바텀시트 — 온보딩 signup에서 세운 플래그. 원래 있던 700ms 지연 로직 그대로.
     업적 오버레이가 다 끝난 뒤에 알림 시트를 열어야 한다 — 동시에 뜨면 오버레이가 시트를 덮는다.
   */

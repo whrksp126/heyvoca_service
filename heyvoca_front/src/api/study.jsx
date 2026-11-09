@@ -43,13 +43,15 @@ export const getUserGoalsApi = async () => {
 
 
 // 사용자 학습 기록 업데이트 API
-export const updateUserStudyHistoryApi = async ({ correct_cnt, incorrect_cnt }) => {
+// is_onboarding: 가입 직후 온보딩 학습 집계 — 서버가 업적(출석왕·노력왕·끈기왕)만 건너뛴다(이슈 #25 3차).
+export const updateUserStudyHistoryApi = async ({ correct_cnt, incorrect_cnt, is_onboarding = false }) => {
   const url = `${backendUrl}/mainpage/user_study_history`;
   const method = 'POST';
   const fetchData = {
     'correct_cnt': correct_cnt,
     'incorrect_cnt': incorrect_cnt
   }
+  if (is_onboarding === true) fetchData.is_onboarding = true;
   try {
     const result = await fetchDataAsync(url, method, fetchData);
     return result

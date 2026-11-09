@@ -55,13 +55,14 @@ export function pendingGuestMigration() {
   return null;
 }
 
-// /onboarding/migrate body — v2 는 { flow, theta, answers, username } 만(단어장·질문 답 없음, 하루 심기 수는 서버 기본값).
+// /onboarding/migrate body — v2 는 { flow, theta, answers } 만(단어장·질문 답 없음, 하루 심기 수는 서버 기본값).
+// 닉네임은 보내지 않는다 — 온보딩에서 묻지 않고(이슈 #25 3차) 서버가 기본 닉네임을 넣는다.
 // 구 v1(레벨만 있는 예전 게스트 데이터)은 예전 모양 그대로.
 export function buildMigrateBody(g, overrides = {}) {
   const d = { ...(g || {}), ...overrides };
   const answers = Array.isArray(d.answers) ? d.answers : [];
   if (isV2Guest(d) || d.bookstore_id != null || d.level == null) {
-    return { flow: 'v2', theta: d.theta ?? null, answers, username: d.username ?? null };
+    return { flow: 'v2', theta: d.theta ?? null, answers };
   }
   return {
     level: d.level,
