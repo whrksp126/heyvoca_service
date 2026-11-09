@@ -7,7 +7,7 @@ import { IconCare } from '../../assets/svg/icon';
 // 예전에는 미리 구워 둔 네 장(book-seed/early/mid/done) 중 하나를 골라 썼는데,
 // 그러면 어느 단어장이든 넷 중 하나로만 보였다. 지금은 그 단어장에 실제로 심긴
 // 작물을 그대로 심는다 — 목록에서 밭 그림을 먼저 본다는 시안 §2 가 그제야 성립한다.
-import FarmField from '../farm/FarmField';
+import FarmField, { bookRimColor } from '../farm/FarmField';
 import { HEALTH_STATES, CROP_LABEL } from '../../utils/crop';
 import {
   CROP_ORDER,
@@ -100,6 +100,7 @@ const VocaBookCard = ({ row, onClick, selected = null, dimmed = false }) => {
           maxSprites={18}
           shadows={false}
           reserveSigns={false}
+          rimColor={bookRimColor(book.color)}
         />
       </span>
 

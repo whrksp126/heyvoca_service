@@ -3,14 +3,11 @@
 // 홈 히어로 인사말 — 상황별 멘트 모음 + 선택 로직.
 //
 // 예전에는 FarmCta.jsx의 HOME_STATE_VIEW(주 CTA 5상태)에 얹혀 "헤이, {line1}{line2}"를
-// 그대로 그렸다(components/home/Main.jsx). CTA 문구(급한 작물부터 돌보기 등)와 히어로
-// 인사말이 같은 다섯 갈래를 강제로 공유해 표현이 좁았다 — 여기서 분리해 상황을 더
-// 세분화하고, 첫머리도 "헤이,"에서 로그인 유저의 닉네임(userProfile.username)으로 바꾼다.
-// 같은 필드를 vocabularySheets/Header.jsx가 "{username}의 단어장"에 그대로 쓴다.
+// 그대로 그렸다. 여기서 분리해 상황을 더 세분화했다. 한동안 첫머리에 닉네임("은비,")을
+// 붙였지만 이슈 #25 4차에서 뺐다 — 인사는 line1·line2 두 줄로만 읽힌다.
 //
-// 문장 구조는 그대로 유지한다 — "{이름}," 뒤에 line1(선행 공백 포함, 콤마와 자연스럽게
-// 이어지는 말)과 줄바꿈 line2 가 붙어 한 문장으로 읽힌다("은비, 당근이 물을 기다리고
-// 있어요"). 각 줄은 360px 폭·22px 폰트 기준으로 12~14자를 넘지 않게 짧게 둔다.
+// line1(첫 줄)과 줄바꿈 line2 가 한 문장으로 읽힌다("작물 3개가 / 물을 기다려요").
+// 각 줄은 360px 폭·22px 폰트 기준으로 12~14자를 넘지 않게 짧게 둔다.
 //
 // 선택 로직: 우선순위(priority) 높은 상황부터 매칭되는 **첫 상황**을 고르고, 그 안의
 // 2~4개 변형 중 무작위 1개. 시간대(아침/낮/저녁/밤) 네 상황이 항상 하나는 걸리므로
@@ -25,25 +22,6 @@ import { getKstToday } from '../utils/kstDate';
 /** 배열에서 무작위 인덱스 하나. 호출부가 세션 고정을 책임진다. */
 function pickIndex(len) {
   return Math.floor(Math.random() * len);
-}
-
-const NICKNAME_MAX_LEN = 6;
-
-/**
- * "헤이," 자리에 들어갈 라벨. 닉네임이 있으면 그 닉네임(+콤마)으로, 없거나 너무 길면
- * 줄인 닉네임 또는 기존 "헤이,"로 폴백한다. vocabularySheets/Header.jsx가 쓰는
- * userProfile.username 을 그대로 받는다.
- *
- * @param {string|null|undefined} username
- * @returns {string} 예: "은비," / "긴이름이라면…," / "헤이,"
- */
-export function formatGreetingName(username) {
-  const trimmed = (username || '').trim();
-  if (!trimmed) return '헤이,';
-  const clipped = trimmed.length > NICKNAME_MAX_LEN
-    ? `${trimmed.slice(0, NICKNAME_MAX_LEN)}…`
-    : trimmed;
-  return `${clipped},`;
 }
 
 /**
@@ -124,7 +102,7 @@ const hourBucket = (hour) => {
 
 /**
  * 상황 목록 — priority 높은 순으로 매칭. lines(ctx)는 [line1, line2] 변형 배열을
- * 반환한다(2~4개). line1은 "{이름},"에 바로 이어붙는 선행 공백 포함 문구다.
+ * 반환한다(2~4개). line1은 첫 줄, line2는 줄바꿈 뒤 둘째 줄이다.
  * 숫자가 필요한 변형은 이 함수 안에서 템플릿 리터럴로 채운다.
  */
 export const HOME_GREETINGS = [
@@ -134,9 +112,9 @@ export const HOME_GREETINGS = [
     priority: 100,
     when: (ctx) => ctx.totalCount === 0,
     lines: () => [
-      [' 밭이 아직', '비어 있어요'],
-      [' 첫 씨앗을', '심어볼까요'],
-      [' 여기서부터', '시작해봐요'],
+      ['밭이 아직', '비어 있어요'],
+      ['첫 씨앗을', '심어볼까요'],
+      ['여기서부터', '시작해봐요'],
     ],
   },
 
@@ -150,10 +128,10 @@ export const HOME_GREETINGS = [
     priority: 96,
     when: (ctx) => ctx.isSignupDay && ctx.totalCount > 0 && ctx.careCount === 0,
     lines: () => [
-      [' 농장에 첫 씨앗을', '심었어요'],
-      [' 농장을', '둘러볼까요'],
-      [' 첫 씨앗이', '자라기 시작했어요'],
-      [' 반가워요,', '농장을 둘러봐요'],
+      ['농장에 첫 씨앗을', '심었어요'],
+      ['농장을', '둘러볼까요'],
+      ['첫 씨앗이', '자라기 시작했어요'],
+      ['반가워요,', '농장을 둘러봐요'],
     ],
   },
 
@@ -163,12 +141,12 @@ export const HOME_GREETINGS = [
     priority: 95,
     when: (ctx) => ctx.todayDone && ctx.careCount === 0,
     lines: (ctx) => [
-      [' 오늘 할 일', '다 끝냈어요'],
-      [' 농장을 다', '돌봤어요'],
-      [` 오늘 ${ctx.todayCorrect}개`, '정답 맞췄어요'],
+      ['오늘 할 일', '다 끝냈어요'],
+      ['농장을 다', '돌봤어요'],
+      [`오늘 ${ctx.todayCorrect}개`, '정답 맞췄어요'],
       // "내일 또 만나요"는 남은 돌봄이 0일 때만 — doneMoreLeft(남은 작물 있음)에 두면
       // 단어장 탭의 "돌봄 N"과 정면으로 어긋난다(2026-09-22 사용자 지적).
-      [' 내일 또', '만나요'],
+      ['내일 또', '만나요'],
     ],
   },
 
@@ -179,9 +157,9 @@ export const HOME_GREETINGS = [
     when: (ctx) => ctx.todayDone && ctx.careCount > 0,
     // 모든 변형이 "남은 작물이 있다"를 말해야 한다 — 마무리 인사("내일 또 만나요")는 금지.
     lines: (ctx) => [
-      [` 아직 ${ctx.careCount}개가`, '기다리고 있어요'],
-      [` 오늘 몫은 끝,`, `${ctx.careCount}개 더 돌볼까요`],
-      [` 작물 ${ctx.careCount}개가`, '아직 목말라요'],
+      [`아직 ${ctx.careCount}개가`, '기다리고 있어요'],
+      [`오늘 몫은 끝,`, `${ctx.careCount}개 더 돌볼까요`],
+      [`작물 ${ctx.careCount}개가`, '아직 목말라요'],
     ],
   },
 
@@ -191,9 +169,9 @@ export const HOME_GREETINGS = [
     priority: 88,
     when: (ctx) => ctx.wiltedCount + ctx.criticalCount >= 1,
     lines: (ctx) => [
-      [' 시든 작물이', '기다리고 있어요'],
-      [' 목마른 작물을', '먼저 챙겨요'],
-      [` 작물 ${ctx.wiltedCount + ctx.criticalCount}개가`, '위태로워요'],
+      ['시든 작물이', '기다리고 있어요'],
+      ['목마른 작물을', '먼저 챙겨요'],
+      [`작물 ${ctx.wiltedCount + ctx.criticalCount}개가`, '위태로워요'],
     ],
   },
 
@@ -203,9 +181,9 @@ export const HOME_GREETINGS = [
     priority: 84,
     when: (ctx) => ctx.careCount >= 10,
     lines: (ctx) => [
-      [` 물 필요한 작물`, `${ctx.careCount}개예요`],
-      [' 오늘은', '물주기 데이예요'],
-      [` 작물 ${ctx.careCount}개가`, '목말라해요'],
+      [`물 필요한 작물`, `${ctx.careCount}개예요`],
+      ['오늘은', '물주기 데이예요'],
+      [`작물 ${ctx.careCount}개가`, '목말라해요'],
     ],
   },
 
@@ -215,9 +193,9 @@ export const HOME_GREETINGS = [
     priority: 79,
     when: (ctx) => ctx.streakCurrent >= 1 && !ctx.todayDone,
     lines: (ctx) => [
-      [` 연속 ${ctx.streakCurrent}일이`, '끊기려 해요'],
-      [' 오늘도 이어', '가볼까요'],
-      [` ${ctx.streakCurrent}일 연속`, '지켜야 해요'],
+      [`연속 ${ctx.streakCurrent}일이`, '끊기려 해요'],
+      ['오늘도 이어', '가볼까요'],
+      [`${ctx.streakCurrent}일 연속`, '지켜야 해요'],
     ],
   },
 
@@ -228,9 +206,9 @@ export const HOME_GREETINGS = [
     when: (ctx) => ctx.careCount >= 1 && ctx.careCount < 10,
     lines: (ctx) => [
       // "당근이 물을 기다려요"는 당근이 0개인 밭에서도 떠서 틀린 말이 됐다 — 작물로 통일.
-      [` 작물 ${ctx.careCount}개가`, '물을 기다려요'],
-      [` 작물 ${ctx.careCount}개만`, '주면 끝나요'],
-      [' 오늘도', '살짝 적셔줄까요'],
+      [`작물 ${ctx.careCount}개가`, '물을 기다려요'],
+      [`작물 ${ctx.careCount}개만`, '주면 끝나요'],
+      ['오늘도', '살짝 적셔줄까요'],
     ],
   },
 
@@ -240,9 +218,9 @@ export const HOME_GREETINGS = [
     priority: 72,
     when: (ctx) => ctx.streakCurrent >= 2 && ctx.streakCurrent === ctx.streakBest,
     lines: (ctx) => [
-      [` 최장 기록 ${ctx.streakCurrent}일`, '경신 중이에요'],
-      [' 지금이', '최고 기록이에요'],
-      [` ${ctx.streakCurrent}일째`, '신기록이에요'],
+      [`최장 기록 ${ctx.streakCurrent}일`, '경신 중이에요'],
+      ['지금이', '최고 기록이에요'],
+      [`${ctx.streakCurrent}일째`, '신기록이에요'],
     ],
   },
 
@@ -252,8 +230,8 @@ export const HOME_GREETINGS = [
     priority: 68,
     when: (ctx) => ctx.streakProtectedYesterday === true,
     lines: () => [
-      [' 보호권 덕분에', '연속이 이어졌어요'],
-      [' 어제는', '보호권이 지켜줬어요'],
+      ['보호권 덕분에', '연속이 이어졌어요'],
+      ['어제는', '보호권이 지켜줬어요'],
     ],
   },
 
@@ -263,9 +241,9 @@ export const HOME_GREETINGS = [
     priority: 64,
     when: (ctx) => ctx.unplantedCount >= 10,
     lines: (ctx) => [
-      [` 씨앗 ${ctx.unplantedCount}개가`, '심어달래요'],
-      [' 새 씨앗들이', '기다리고 있어요'],
-      [` 아직 ${ctx.unplantedCount}개를`, '못 심었어요'],
+      [`씨앗 ${ctx.unplantedCount}개가`, '심어달래요'],
+      ['새 씨앗들이', '기다리고 있어요'],
+      [`아직 ${ctx.unplantedCount}개를`, '못 심었어요'],
     ],
   },
 
@@ -275,8 +253,8 @@ export const HOME_GREETINGS = [
     priority: 56,
     when: (ctx) => ctx.streakCurrent >= 2,
     lines: (ctx) => [
-      [` ${ctx.streakCurrent}일째`, '함께하고 있어요'],
-      [` 연속 ${ctx.streakCurrent}일`, '기록 중이에요'],
+      [`${ctx.streakCurrent}일째`, '함께하고 있어요'],
+      [`연속 ${ctx.streakCurrent}일`, '기록 중이에요'],
     ],
   },
 
@@ -286,8 +264,8 @@ export const HOME_GREETINGS = [
     priority: 52,
     when: (ctx) => ctx.grewTodayCount >= 1,
     lines: (ctx) => [
-      [` 오늘 ${ctx.grewTodayCount}개가`, '더 자랐어요'],
-      [' 작물들이', '한 뼘 자랐어요'],
+      [`오늘 ${ctx.grewTodayCount}개가`, '더 자랐어요'],
+      ['작물들이', '한 뼘 자랐어요'],
     ],
   },
 
@@ -297,8 +275,8 @@ export const HOME_GREETINGS = [
     priority: 44,
     when: (ctx) => ctx.sproutCount + ctx.leafCount >= 10,
     lines: () => [
-      [' 밭에 작물이', '무럭무럭 자라요'],
-      [' 당근이 될', '날이 머지않았어요'],
+      ['밭에 작물이', '무럭무럭 자라요'],
+      ['당근이 될', '날이 머지않았어요'],
     ],
   },
 
@@ -308,8 +286,8 @@ export const HOME_GREETINGS = [
     priority: 36,
     when: (ctx) => ctx.careCount === 0 && !ctx.todayDone,
     lines: () => [
-      [' 오늘은', '물줄 곳이 없어요'],
-      [' 밭이', '평온한 날이에요'],
+      ['오늘은', '물줄 곳이 없어요'],
+      ['밭이', '평온한 날이에요'],
     ],
   },
 
@@ -322,8 +300,8 @@ export const HOME_GREETINGS = [
       return day === 0 || day === 6;
     },
     lines: () => [
-      [' 주말에도', '농장을 챙겨봐요'],
-      [' 느긋한', '주말이에요'],
+      ['주말에도', '농장을 챙겨봐요'],
+      ['느긋한', '주말이에요'],
     ],
   },
 
@@ -333,8 +311,8 @@ export const HOME_GREETINGS = [
     priority: 10,
     when: (ctx) => hourBucket(ctx.now.getHours()) === 'morning',
     lines: () => [
-      [' 상쾌한', '아침이에요'],
-      [' 오늘 하루도', '힘내봐요'],
+      ['상쾌한', '아침이에요'],
+      ['오늘 하루도', '힘내봐요'],
     ],
   },
   {
@@ -342,8 +320,8 @@ export const HOME_GREETINGS = [
     priority: 10,
     when: (ctx) => hourBucket(ctx.now.getHours()) === 'afternoon',
     lines: () => [
-      [' 활기찬', '오후예요'],
-      [' 잠깐 쉬며', '단어 볼까요'],
+      ['활기찬', '오후예요'],
+      ['잠깐 쉬며', '단어 볼까요'],
     ],
   },
   {
@@ -351,8 +329,8 @@ export const HOME_GREETINGS = [
     priority: 10,
     when: (ctx) => hourBucket(ctx.now.getHours()) === 'evening',
     lines: () => [
-      [' 하루를', '마무리해봐요'],
-      [' 저녁에도', '한 뼘 자라요'],
+      ['하루를', '마무리해봐요'],
+      ['저녁에도', '한 뼘 자라요'],
     ],
   },
   {
@@ -360,8 +338,8 @@ export const HOME_GREETINGS = [
     priority: 10,
     when: (ctx) => hourBucket(ctx.now.getHours()) === 'night',
     lines: () => [
-      [' 오늘도', '수고했어요'],
-      [' 잠들기 전', '잠깐 볼까요'],
+      ['오늘도', '수고했어요'],
+      ['잠들기 전', '잠깐 볼까요'],
     ],
   },
 ];

@@ -25,7 +25,7 @@ import { getGuestTrial, clearGuestTrial, patchGuest } from '../utils/guestStorag
 import {
   loadSession as loadPlacementSession, saveSession as savePlacementSession, clearSession as clearPlacementSession,
   advance as advancePlacement, currentQuestion as currentPlacementQuestion, summarize as summarizePlacement,
-  plannedProgressUnits, filledUnits, resultWords as resultWordsPlacement,
+  plannedProgressUnits, filledUnits, gradeVirtualFarm, saveFieldResult,
 } from '../utils/onboardingPlacement';
 import { getPendingReplantIds } from '../utils/replantPending';
 import { beginStudySession } from '../utils/studySessionGuard';
@@ -81,6 +81,14 @@ const TakeTest = () => {
     savePlacementSession(s);
     if (q) warmTts(collectTestTexts([q]));
     return q;
+  };
+  // 체험 밭 가상 농장(이슈 #25 4차) — 채점마다 그 단어 가상 작물을 바꾸고 상태 바 payload 를 돌려준다(Main.jsx virtualFarm).
+  const placementVirtualFarm = (vocaId, correct, key) => {
+    const s = placementRef.current;
+    if (!s) return null;
+    const payload = gradeVirtualFarm(s, vocaId, correct, key);
+    savePlacementSession(s);
+    return payload;
   };
   const { isRecentStudyLoading, isVocabularySheetsLoading, vocabularySheets, recentStudy, updateRecentStudy, updateVocabularySheetServer, updateRecentStudyServer, updateRecentStudyState, fetchVocabularySheets, userDictionary } = useVocabulary();
   const { pushAwaitNewBottomSheet } = useNewBottomSheetActions();
@@ -1154,7 +1162,8 @@ const TakeTest = () => {
     if (isGuestMode) {
       clearGuestTrial();
       clearPlacementSession();
-      navigate('/onboarding', { state: { step: 'intro' }, replace: true });
+      // 수준 맞춤 학습(체험 밭)에서 그만두면 체험 밭 장면으로 — 처음 소개부터 다시 보지 않게
+      navigate('/onboarding', { state: { step: 'intro', scene: isPlacement ? 'field' : undefined }, replace: true });
       return;
     }
 
@@ -1260,19 +1269,12 @@ const TakeTest = () => {
           const sum = summarizePlacement(placementRef.current || {});
           // flow·placement 가 '학습 완료' 표시 — utils/guestStorage pendingGuestMigration 이 이걸로 v2 게스트를 알아본다.
           patchGuest({ flow: 'v2', answers: sum.answers, theta: sum.theta, placement: { asked: sum.asked, correct: sum.correct } });
-          // 결과 화면엔 1부에서 만난 단어마다 한 줄(첫 시도 정오답) — 세션에서 만든다(새로고침해도 빠지지 않게).
-          const p1 = resultWordsPlacement(placementRef.current || {});
+          // 결과는 학습 결과 화면(StudyResult)이 아니라 온보딩 마무리 장면(학습으로 바뀐 체험 밭 + 보석 20)이다
+          // (이슈 #25 4차). 세션은 지우므로 밭 상태만 따로 남긴다.
+          if (placementRef.current) saveFieldResult(placementRef.current);
           clearPlacementSession();
           await completeCut.promise;
-          navigate('/take-test/result', {
-            state: {
-              testQuestions: p1,
-              testType: state.testType,
-              guestMode: true,
-              placement: { theta: sum.theta, asked: sum.asked, correct: sum.correct },
-            },
-            replace: true,
-          });
+          navigate('/onboarding', { state: { step: 'finish' }, replace: true });
           return;
         }
         if (isGuestMode) {
@@ -1530,6 +1532,7 @@ const TakeTest = () => {
           guestMode={isGuestMode}
           plantAttemptsRef={plantAttemptsRef}
           questionSupplier={isPlacement ? placementSupplier : undefined}
+          virtualFarm={isPlacement ? placementVirtualFarm : undefined}
           progressTotal={isPlacement ? plannedProgressUnits() : undefined}
           progressOffset={isPlacement ? placementOffset : 0}
         />

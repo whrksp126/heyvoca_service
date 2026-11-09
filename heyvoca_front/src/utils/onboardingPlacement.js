@@ -5,11 +5,12 @@
   **답할 때마다 다음 문제를 한 개씩** 만든다. 미리 다 만들지 않는 이유는 다음 문제의 난이도가
   방금 답으로 갱신된 수준(θ)에 달려 있어서다.
 
-    1부 체험  — **단어 유형만**(PART1_PLAN: 뜻 고르기·듣고 고르기·카드 맞추기·한→영·스펠링). 새 단어만.
-    2부 실전  — 1부 단어 5개를 **예문 유형**(빈칸·문장 조립·문장 뜻)으로 다시. 가장 쉬운 예문부터.
+    1부 체험  — **단어 유형만**(PART1_PLAN: 뜻 고르기·듣고 고르기·카드 맞추기·한→영·스펠링, 한 번씩).
+               단어는 세션을 만들 때 미리 뽑은 체험 밭 8단어(drawFieldWords) 안에서 고른다.
+    2부 실전  — 1부 단어 3개를 **예문 유형**(빈칸·문장 조립·문장 뜻, 한 번씩)으로 다시. 가장 쉬운 예문부터.
                예문 유형은 2부에서만 나온다(이슈 #25 3차 QA — 1부 '체험'에 문장 문제가 섞이면 2부
                '실전 문장' 안내와 어긋났다).
-    3부 복습  — 첫 시도에 틀린 단어를 맞힐 때까지(단어당 최대 MAX_RETRY 번) 쉬운 뜻 고르기로.
+    3부 복습  — 첫 시도에 틀린 단어를 쉬운 뜻 고르기로 한 번 더(단어당 MAX_RETRY 번 — 4차부터 1).
 
   【수준 θ】 백엔드 app/services/skill_level.py 와 같은 모형·척도다.
     P(정답) = σ((θ − b) / 10),  b = 문제 바탕 점수(예문 유형은 예문 score, 그 외는 단어 등급
@@ -67,26 +68,38 @@ const isClimbing = (s) => !s.leftClimb;
 const clampBand = (b) => Math.max(1, Math.min(MAX_BAND, b));
 
 // ── 출제 계획 ──────────────────────────────────────────────────────────
-// 1부 — 단어 유형만. 카드 맞추기 4단어 포함 13단어 10문항.
-// 예문 유형(EXAMPLE_TYPES)을 여기 넣지 말 것 — 2부(실전 문장)에서만 낸다.
+// 이슈 #25 4차 — **문제 유형은 한 번씩만**. 1부 단어 유형 5문항(카드 맞추기 4단어 포함 8단어) +
+// 2부 예문 유형 3문항 = 8문제, 그 뒤 틀린 단어 복습(3부).
+// 1부 단어 8개는 세션을 만들 때 미리 뽑아 둔 '체험 밭' 단어(FIELD_BANDS)이고, 계단 규칙은 그 8개 안에서
+// 어느 단어를 어느 유형으로 낼지(순서)만 정한다 — 그래야 학습 전에 밭에 심어 둔 단어가 곧 나올 단어다.
+// 예문 유형(EXAMPLE_TYPES)을 1부에 넣지 말 것 — 2부(실전 문장)에서만 낸다.
 export const PART1_PLAN = [
   'multipleChoice',
   'multipleChoiceListening',
   'cardMatch',
   'reverseMultipleChoice',
   'spellingFill',
-  'multipleChoice',
-  'multipleChoiceListening',
-  'reverseMultipleChoice',
-  'spellingFill',
-  'multipleChoice',
 ];
 export const CARD_MATCH_SIZE = 4;
-export const PART2_COUNT = 5;
-// 2부 실전 문장 — 예문 유형만(nextPart2). 낼 예문이 없으면 2부를 그만큼 짧게 끝낸다
+// 2부 실전 문장 — 예문 유형만(nextPart2), 유형마다 한 번. 낼 예문이 없으면 2부를 그만큼 짧게 끝낸다
 // (단어 유형으로 채우면 '실전 문장' 안내와 어긋난다).
-const PART2_PLAN = ['fillInTheBlank', 'sentenceArrangePartial', 'sentenceTranslate', 'fillInTheBlank', 'sentenceArrangePartial'];
-export const MAX_RETRY = 3;
+const PART2_PLAN = ['fillInTheBlank', 'sentenceArrangePartial', 'sentenceTranslate'];
+export const PART2_COUNT = PART2_PLAN.length;
+// 4차 — 8문제로 줄이며 1번으로(예전 3). 다 틀리는 초보도 13~14문제에서 끝난다(아래 시뮬 표).
+export const MAX_RETRY = 1;
+// 체험 밭 단어 8개의 등급 구성 — 쉬운 단어부터 C1 까지 한 번씩은 닿게(θ 추정이 위아래 어느 쪽으로도 막히지 않게).
+/*
+  node 시뮬(가상 사용자 θ 별 400회, dev placement-pool 3벌, 정답 확률대로 응답 — 2026-11-10):
+    θ   문항(복습 포함)  정답률  θ 추정 평균  |오차|   가상 진화(최소~최대)
+    10      13.5          35%       12.8       4.9     1.9 (0~3)
+    30      11.1          64%       32.4       6.9     2.8 (1~3)
+    50       9.3          79%       49.2       7.8     2.9 (2~3)
+    70       8.3          91%       68.6       8.9     3.0 (2~3)
+    90       8.1          97%       78.6      11.4     3.0 (3~3)
+  (예전 15문항 계단식: |오차| 3.7~7.2. 문항이 절반이라 오차는 조금 커졌다. [1,1,2,2,3,3,4,5] 는 초보 정답률 28%.)
+*/
+export const FIELD_BANDS = [1, 1, 1, 2, 2, 3, 4, 5];
+export const FIELD_SIZE = FIELD_BANDS.length;
 
 const EXAMPLE_TYPES = new Set(['fillInTheBlank', 'sentenceTranslate', 'sentenceArrangePartial', 'sentenceArrange']);
 
@@ -500,10 +513,16 @@ export function buildQuestion(type, words, pool, rng = Math.random) {
     pending   지금 화면에 낸 문제의 정보 {kind:'p1'|'p2'|'p3', type, ids}
     current   지금 화면의 문제 객체(복원용)
 */
-export function createSession(bands, { theta = START_THETA } = {}) {
+export function createSession(bands, { theta = START_THETA, rng = Math.random } = {}) {
+  const pool = normalizePool(bands);
+  const fieldIds = drawFieldWords(pool, rng);
   return {
-    v: 1,
-    pool: normalizePool(bands),
+    v: 2,
+    pool,
+    fieldIds,
+    farm: initVirtualFarm(pool, fieldIds),
+    farmStart: null,
+    farmKeys: {},
     theta,
     band: 1,
     nAnswers: 0,
@@ -557,7 +576,9 @@ const pickWords = (s, type, count, rng, extraFilter = () => true) => {
   const used = new Set(s.used);
   const band = s.band ?? 1;
   const climbing = isClimbing(s);
-  const base = s.pool.filter((p) => !used.has(p.voca_id) && canUseType(p, type) && extraFilter(p));
+  const field = Array.isArray(s.fieldIds) && s.fieldIds.length ? new Set(s.fieldIds) : null;
+  const base = s.pool.filter((p) => !used.has(p.voca_id) && (!field || field.has(p.voca_id))
+    && canUseType(p, type) && extraFilter(p));
   // 정해진 band 에 단어가 모자라면 가까운 band 로 넓힌다
   let cands = [];
   for (let r = 0; r <= MAX_BAND && cands.length < count; r += 1) {
@@ -619,8 +640,10 @@ const nextPart2 = (s, rng) => {
   const words = Object.keys(s.firstById).map(Number)
     .filter((id) => !asked.has(id)).map((id) => byId(s, id)).filter(Boolean);
   if (words.length === 0) return null;
+  // 유형은 한 번씩 — 계획한 유형부터, 그 유형을 낼 단어가 없으면 아직 안 낸 다른 예문 유형으로.
+  const doneTypes = new Set(s.part2Types || []);
   const planned = PART2_PLAN[s.part2Done % PART2_PLAN.length];
-  const order = [planned, ...PART2_PLAN.filter((t) => t !== planned)];
+  const order = [planned, ...PART2_PLAN.filter((t) => t !== planned)].filter((t) => !doneTypes.has(t));
   let pick = null;
   for (const t of order) {
     const fit = (p) => {
@@ -642,6 +665,7 @@ const nextPart2 = (s, rng) => {
   s.part2Asked = [...asked, p.voca_id];
   s.part2Done += 1;
   s.lastP2Type = type;
+  s.part2Types = [...doneTypes, type];
   s.pending = { kind: 'p2', type, ids: [p.voca_id] };
   const q = buildQuestion(type, [p], s.pool, rng);
   // 2부 = 문장 문제만이라 안내도 '실전 문장'(StudyInterlude PHASE_COPY.sentence)
@@ -718,9 +742,9 @@ export function advance(s, answered, rng = Math.random) {
     else s.band = askedBand;
   }
   s.pending = null;
-  const first = !answered && s.step === 0;
+  // 첫 문제 앞 '문제 유형을 하나씩 체험해요'(PHASE_COPY.trial) 안내는 없앴다(이슈 #25 4차) — 온보딩 '체험 밭'
+  // 장면이 그 자리를 대신한다. 학습 화면 안 안내가 떠 있는 동안 아직 안 보이는 첫 문제의 TTS 가 먼저 나왔다.
   const q = nextPart1(s, rng) || nextPart2(s, rng) || nextPart3(s, rng);
-  if (q && first) q.phaseStart = 'trial';
   s.current = q;
   if (!q) s.done = true;
   return q;
@@ -767,6 +791,182 @@ export const filledUnits = (s) => Math.min(s?.filled ?? 0, plannedProgressUnits(
 export function passedIds(s) {
   const wrong = new Set(s.wrong);
   return Object.keys(s.firstById).map(Number).filter((id) => !wrong.has(id));
+}
+
+// ── 체험 밭 단어 ─────────────────────────────────────────────────────────
+/*
+  학습 전에 밭에 심어 보여 줄 8단어 = 1부에서 실제로 낼 8단어. 적응형이라 다음 단어를 미리 알 수 없으므로
+  등급 구성(FIELD_BANDS)을 고정해 미리 뽑고, 1부 계단 규칙은 이 안에서 순서만 고른다.
+  모든 유형을 한 번씩 낼 수 있게 — 띄어쓰기 없는 단어(단어 쓰기)·2부 예문 유형 셋을 다 낼 수 있는 예문을
+  가진 단어를 먼저, 서로 뜻이 겹치지 않게(카드 맞추기) 고른다. 모자라면 조건을 하나씩 풀어 채운다.
+*/
+const exampleScore = (p) => ['fillInTheBlank', 'sentenceArrangePartial', 'sentenceTranslate']
+  .filter((t) => canUseType(p, t)).length;
+export function drawFieldWords(pool, rng = Math.random) {
+  const picked = [];
+  const tiers = [
+    (p) => exampleScore(p) === 3 && canUseType(p, 'spellingFill'),
+    (p) => exampleScore(p) >= 2 && canUseType(p, 'spellingFill'),
+    (p) => !!p.example && canUseType(p, 'spellingFill'),
+    () => true,
+  ];
+  FIELD_BANDS.forEach((band) => {
+    for (const ok of tiers) {
+      for (let r = 0; r <= MAX_BAND; r += 1) {
+        const cands = pool.filter((p) => Math.abs(p.rank - band) === r && ok(p)
+          && !picked.some((x) => x.voca_id === p.voca_id || wordsOverlap(x, p)
+            || x.origin.toLowerCase() === p.origin.toLowerCase()));
+        if (cands.length) {
+          // 쉬운 쪽(짧은 단어·쉬운 예문)에서 — 첫 학습이라
+          const ease = (p) => p.origin.length + (p.example ? p.example.score / 10 : 10);
+          const top = [...cands].sort((a, b) => ease(a) - ease(b)).slice(0, 6);
+          picked.push(top[Math.floor(rng() * top.length)]);
+          return;
+        }
+      }
+    }
+  });
+  return picked.map((p) => p.voca_id);
+}
+
+// ── 가상 농장 ──────────────────────────────────────────────────────────
+/*
+  체험 밭 작물의 가상 상태 — 서버에 아무것도 심지 않는다. 학습 화면 농장 결과 바(FarmResultBar)가
+  이 값을 실제 /study/log 농장 payload 와 같은 모양으로 받아 그대로 그린다.
+
+  【실제 규칙을 줄여 쓴다】 작물 XP 문턱은 실제와 같다(cropXp.js: 씨앗 0→50, 새싹 50→210, 이파리 210→600,
+  당근 600→1800 — 막대·숫자가 실제 화면과 같은 말을 해야 한다). 실제로는 '기억 1일 = 10XP' 라 한 번에
+  한 단계가 오르기 어렵지만, 8문제 안에서 진화를 보여 주려고
+    정답  지금 단계 폭의 GAIN_PCT% 만큼 오른다(문턱을 넘으면 다음 단계로 진화).
+    오답  단계 폭의 LOSS_PCT% 만큼 줄고(실제와 같이 현재 단계 시작점 아래로는 안 내려간다) 한 단계 마른다
+          (싱싱 → 마름 → 시듦). 단계는 내려가지 않는다(기획 5.2).
+    시든 작물을 맞히면 되살아난다(싱싱).
+  당근은 황금 당근으로 넘어가지 않는다(체험에선 다루지 않는다).
+
+  시작 상태는 단어 id 해시로 정해진다(같은 단어 = 같은 그림). 진화가 1~3번 보이게 쉬운 단어 쪽(1·2등급)에
+  문턱 가까운 작물 셋을 둔다 — 다 맞히면 3번, 쉬운 단어를 하나 틀리면 2번. 어려운 쪽은 막 단계에 들어선 작물이라
+  한 번 맞혀서는 진화하지 않는다.
+*/
+export const VFARM_GAIN_PCT = 40;
+export const VFARM_LOSS_PCT = 25;
+const VFARM_STAGES = ['PLANTED_SEED', 'SPROUT', 'LEAF', 'CARROT'];
+const VFARM_FLOOR = { PLANTED_SEED: 0, SPROUT: 50, LEAF: 210, CARROT: 600 };
+const VFARM_NEXT = { PLANTED_SEED: 50, SPROUT: 210, LEAF: 600, CARROT: 1800 };
+const VFARM_CROP = { PLANTED_SEED: 'seed', SPROUT: 'sprout', LEAF: 'leaf', CARROT: 'carrot' };
+// 쉬운 쪽 4 · 어려운 쪽 4. pct = 단계 안 진행률(0~100).
+const VFARM_EASY = [
+  { stage: 'PLANTED_SEED', health: 'FRESH', pct: 66 },
+  { stage: 'LEAF', health: 'THIRSTY', pct: 62 },
+  { stage: 'SPROUT', health: 'WILTED', pct: 70 },
+  { stage: 'PLANTED_SEED', health: 'FRESH', pct: 14 },
+];
+const VFARM_HARD = [
+  { stage: 'SPROUT', health: 'FRESH', pct: 10 },
+  { stage: 'LEAF', health: 'FRESH', pct: 4 },
+  { stage: 'LEAF', health: 'WILTED', pct: 8 },
+  { stage: 'CARROT', health: 'FRESH', pct: 40 },
+];
+// 단어 id 해시(FNV-1a) — 결정적 배정용
+export const hashId = (id) => {
+  let h = 0x811c9dc5;
+  const str = String(id);
+  for (let i = 0; i < str.length; i += 1) {
+    h ^= str.charCodeAt(i);
+    h = Math.imul(h, 0x01000193) >>> 0;
+  }
+  return h;
+};
+const xpAt = (stage, pct) => Math.round(VFARM_FLOOR[stage] + (pct / 100) * (VFARM_NEXT[stage] - VFARM_FLOOR[stage]));
+
+export function initVirtualFarm(pool, fieldIds) {
+  const rank = (id) => pool.find((p) => p.voca_id === id)?.rank ?? 1;
+  const byHash = (a, b) => hashId(a) - hashId(b);
+  const ids = [...(fieldIds || [])];
+  // 쉬운 쪽 = 등급 낮은 절반(같으면 해시 순) — 템플릿은 해시 순서로 배정
+  const sorted = [...ids].sort((a, b) => (rank(a) - rank(b)) || byHash(a, b));
+  const easy = sorted.slice(0, Math.ceil(sorted.length / 2)).sort(byHash);
+  const hard = sorted.slice(Math.ceil(sorted.length / 2)).sort(byHash);
+  const farm = {};
+  easy.forEach((id, i) => { const t = VFARM_EASY[i % VFARM_EASY.length]; farm[id] = { stage: t.stage, health: t.health, xp: xpAt(t.stage, t.pct) }; });
+  hard.forEach((id, i) => { const t = VFARM_HARD[i % VFARM_HARD.length]; farm[id] = { stage: t.stage, health: t.health, xp: xpAt(t.stage, t.pct) }; });
+  return farm;
+}
+
+/** 가상 작물 하나에 채점 1건을 반영한 다음 상태와 상태 바 payload. 순수 함수. */
+export function stepVirtualCrop(cur, correct) {
+  const span = VFARM_NEXT[cur.stage] - VFARM_FLOOR[cur.stage];
+  let { stage, health, xp } = cur;
+  const revived = !!correct && health !== 'FRESH';
+  let withered = false;
+  if (correct) {
+    xp += Math.round(span * VFARM_GAIN_PCT / 100);
+    health = 'FRESH';
+    while (stage !== 'CARROT' && xp >= VFARM_NEXT[stage]) stage = VFARM_STAGES[VFARM_STAGES.indexOf(stage) + 1];
+    if (stage === 'CARROT') xp = Math.min(xp, VFARM_NEXT.CARROT - 1);
+  } else {
+    xp = Math.max(VFARM_FLOOR[stage], xp - Math.round(span * VFARM_LOSS_PCT / 100));
+    const nextHealth = health === 'FRESH' ? 'THIRSTY' : 'WILTED';
+    withered = nextHealth !== health;
+    health = nextHealth;
+  }
+  const next = { stage, health, xp };
+  const pctOf = (st, x) => Math.max(0, Math.min(100, Math.round(((x - VFARM_FLOOR[st]) / (VFARM_NEXT[st] - VFARM_FLOOR[st])) * 100)));
+  const payload = {
+    crop: VFARM_CROP[stage], stage,
+    crop_from: VFARM_CROP[cur.stage], stage_from: cur.stage,
+    grew: stage !== cur.stage,
+    pct_from: pctOf(cur.stage, cur.xp), pct_to: pctOf(stage, xp),
+    xp_from: cur.xp, xp_to: xp, xp_delta: xp - cur.xp, xp_next: VFARM_NEXT[stage],
+    health, health_from: cur.health,
+    revived, withered,
+    days_to_review: null,
+    wasCorrect: !!correct,
+    virtual: true,
+  };
+  return { next, payload };
+}
+
+/**
+ * 학습 화면이 채점할 때 부른다 — 그 단어 가상 작물을 바꾸고 상태 바 payload 를 돌려준다.
+ * key(문제 자리:단어)로 한 번만 반영한다(같은 채점을 두 번 부르거나 화면을 다시 그려도 두 번 자라지 않게).
+ * 체험 밭 단어가 아니면 null.
+ */
+export function gradeVirtualFarm(s, vocaId, correct, key) {
+  if (!s?.farm) return null;
+  s.farmKeys = s.farmKeys || {};
+  if (key != null && s.farmKeys[key]) return s.farmKeys[key];
+  const cur = s.farm[vocaId];
+  if (!cur) return null;
+  if (!s.farmStart) s.farmStart = JSON.parse(JSON.stringify(s.farm));
+  const { next, payload } = stepVirtualCrop(cur, correct);
+  s.farm[vocaId] = next;
+  if (key != null) s.farmKeys[key] = payload;
+  return payload;
+}
+
+/** 밭에 그릴 단어 목록 — 체험 밭 순서대로 { id, origin, meanings, rank, stage, health, xp }. */
+export function fieldWords(s, { start = false } = {}) {
+  const src = start ? (s?.farmStart || s?.farm) : s?.farm;
+  return (s?.fieldIds || []).map((id) => {
+    const p = byId(s, id);
+    const f = src?.[id];
+    if (!p || !f) return null;
+    return { id, origin: p.origin, meanings: p.meanings, rank: p.rank, ...f };
+  }).filter(Boolean);
+}
+
+// 학습이 끝난 밭 — 세션은 학습이 끝나면 지우므로 마무리 장면(온보딩 finish)이 읽을 몫을 따로 둔다.
+export const FIELD_STORE_KEY = 'heyvoca_guest_onb_field_v1';
+export function saveFieldResult(s) {
+  try {
+    localStorage.setItem(FIELD_STORE_KEY, JSON.stringify({ words: fieldWords(s), start: fieldWords(s, { start: true }) }));
+  } catch { /* 저장 실패 무시 */ }
+}
+export function loadFieldResult() {
+  try { return JSON.parse(localStorage.getItem(FIELD_STORE_KEY) || 'null'); } catch { return null; }
+}
+export function clearFieldResult() {
+  try { localStorage.removeItem(FIELD_STORE_KEY); } catch { /* 무시 */ }
 }
 
 // ── 저장 ───────────────────────────────────────────────────────────────

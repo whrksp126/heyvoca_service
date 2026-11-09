@@ -66,7 +66,6 @@ import {
   buildGreetingContext,
   resolveGreetingSituation,
   pickGreetingVariant,
-  formatGreetingName,
 } from '../../data/homeGreetings';
 
 /**
@@ -215,13 +214,10 @@ const Main = () => {
   const greetingSituation = farmOverview ? resolveGreetingSituation(greetingCtx) : null;
   const greetingDateKey = todayKey;
   const greeting = useMemo(() => {
-    if (!greetingSituation) return { line1: ' 오늘도', line2: '농장을 둘러봐요' };
+    if (!greetingSituation) return { line1: '오늘도', line2: '농장을 둘러봐요' };
     return pickGreetingVariant(greetingSituation, greetingCtx);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [greetingSituation?.id, greetingDateKey]);
-  // "헤이," 자리 — 닉네임이 있으면 닉네임(+콤마)으로, 없거나 너무 길면 줄이거나 폴백한다.
-  // vocabularySheets/Header.jsx가 "{username}의 단어장"에 쓰는 것과 같은 필드.
-  const greetingName = formatGreetingName(userProfile?.username);
 
   // Actions만 구독하므로 state 변경 시 리렌더링 안 됨
   const { pushNewFullSheet } = useNewFullSheetActions();
@@ -478,8 +474,7 @@ const Main = () => {
           </button>
         )}
 
-        {/* §4 2줄 헤드라인 — 첫머리(닉네임 또는 "헤이,")만 브랜드 핑크로 칠해 brand 를
-            끼워 넣는다. 농장 전체를 핑크로 칠하지 않는다는 기획 20.1 을 지키는 지점이다.
+        {/* §4 2줄 헤드라인 — 닉네임 첫머리는 뺐다(이슈 #25 4차).
             문구 자체는 src/data/homeGreetings.js가 상황별로 고른다(CTA 5상태와 분리) */}
         <div className="
           absolute top-[max(92px,calc(var(--status-bar-height)+48px))] left-0 right-0 z-[6]
@@ -487,7 +482,7 @@ const Main = () => {
           text-[22px] font-[700] tracking-[-0.02em] leading-[1.4]
           text-farm-ink dark:text-layout-white
         ">
-          <em className="not-italic text-primary-main-600">{greetingName}</em>{greeting.line1}
+          {greeting.line1}
           <br />
           {greeting.line2}
         </div>

@@ -62,7 +62,9 @@ def english_dict(f):
 # 기능 잠금은 없앴다(이슈 #25 2차) — 모든 탭·기능을 처음부터 쓸 수 있다. UNLOCK_THRESHOLDS 는
 # unlock-status 응답의 하위호환 필드(thresholds/unlocked 키 목록)로만 남긴다. unlocked 는 항상 전부 true.
 UNLOCK_THRESHOLDS = {'vocabook': 1, 'store': 2, 'dict': 3, 'listen': 4, 'custom': 5}
-SIGNUP_REWARD_GEM = 5
+# 온보딩 체험(가입) 보상 — 이슈 #25 4차: 정답 수·학습 여부와 무관하게 20개 고정.
+# 서점 단어장(최저가)을 가입 직후 바로 살 수 있게 하려는 값이다. v1(구 게스트 호환) 경로도 같은 상수를 쓴다.
+SIGNUP_REWARD_GEM = 20
 
 # ──────────────────────────────────────────────
 # 온보딩 퀘스트 v3 (7개, 순서 무관 — 이슈 #25 2차)
@@ -762,11 +764,11 @@ def _migrate_v2(user_id, body):
         profile.type_stats = stats['type_stats']
         profile.error_stats = stats['error_stats']
 
-        reward = 0
-        if studied > 0:
-            change_gem(user_id, SIGNUP_REWARD_GEM, GemReason.ACHIEVEMENT, '온보딩 가입 보상',
-                       source_type='onboarding', user=user)
-            reward = SIGNUP_REWARD_GEM
+        # 가입 보상 — 정답 수·답변 수와 무관하게 항상 지급(0문항 포함). 이중 지급은 위의
+        # onboarding_ver 409 가드(User 행 잠금 뒤 판정)가 막는다 — 같은 트랜잭션에서 '1' 로 바뀐다.
+        change_gem(user_id, SIGNUP_REWARD_GEM, GemReason.ACHIEVEMENT, '온보딩 가입 보상',
+                   source_type='onboarding', user=user)
+        reward = SIGNUP_REWARD_GEM
         db.session.flush()
         if vbook is not None:
             vbook_id, vbook_title, vbook_total = str(vbook.id), vbook.name, vbook.total_word_cnt

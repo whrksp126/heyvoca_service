@@ -27,6 +27,7 @@ import { getComboApi, protectComboApi, forfeitComboApi } from '../../api/game';
 import ComboBar, { getComboFillClass, COMBO_MILESTONE_STEP } from './ComboBar';
 import StudyProgressBar from './StudyProgressBar';
 import { ComboInterlude, PhaseInterlude } from './StudyInterlude';
+import VirtualFarmNote from '../onboarding/VirtualFarmNote';
 import { holdStudyAdvance, setStudyManualAdvance, useManualAdvancePending } from '../../hooks/useStudyAdvanceGate';
 import { ComboProtectNewBottomSheet } from '../newBottomSheet/ComboProtectNewBottomSheet';
 import { useUser } from '../../context/UserContext';
@@ -218,7 +219,7 @@ const buildQuestionForType = (word, type, pool) => {
 
 const NO_FARM = {};
 
-const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex, setPendingUpdateSheetIds, setPendingUpdateWords, testType, studySessionRef, pendingLogPromisesRef, loggedVocaIdsRef, retryCountMapRef, passedVocaIdsRef, totalUniqueVocaCountRef, cardRetryEnqueuedRef, guestMode, plantAttemptsRef, questionSupplier, progressTotal, progressOffset = 0 }) => {
+const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex, setPendingUpdateSheetIds, setPendingUpdateWords, testType, studySessionRef, pendingLogPromisesRef, loggedVocaIdsRef, retryCountMapRef, passedVocaIdsRef, totalUniqueVocaCountRef, cardRetryEnqueuedRef, guestMode, plantAttemptsRef, questionSupplier, progressTotal, progressOffset = 0, virtualFarm }) => {
   "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
 
   /*
@@ -454,6 +455,27 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
     lastFarmByVocaRef.current[vocaId] = payload;
     setFarmStatus({ ...payload, vocaId, qIndex });
   };
+
+  /*
+    가상 농장(게스트 온보딩 체험, 이슈 #25 4차) — virtualFarm(vocaId, 정답?, key) 가 그 단어 체험 밭 작물의
+    가상 상태를 바꾸고 상태 바 payload(실제 /study/log farm 과 같은 모양)를 돌려준다(utils/onboardingPlacement
+    gradeVirtualFarm). 서버에 아무것도 심지 않는다. 시듦·되살아남은 상태 바 그림 한 장으로는 안 읽혀
+    문제 위에 한 줄 알림(virtualNote)을 잠깐 띄운다.
+  */
+  const [virtualNote, setVirtualNote] = useState(null);
+  const gradeVirtual = (vocaId, wasCorrect, qIndex) => {
+    if (!virtualFarm || vocaId == null) return null;
+    let payload = null;
+    try { payload = virtualFarm(vocaId, !!wasCorrect, `${qIndex}:${vocaId}`); } catch (e) { console.error('virtualFarm 오류:', e); }
+    if (payload?.revived) setVirtualNote({ kind: 'revived', qIndex, at: Date.now() });
+    else if (payload?.withered) setVirtualNote({ kind: payload.health === 'WILTED' ? 'wilted' : 'drying', qIndex, at: Date.now() });
+    return payload;
+  };
+  useEffect(() => {
+    if (!virtualNote) return undefined;
+    const t = setTimeout(() => setVirtualNote(null), 2200);
+    return () => clearTimeout(t);
+  }, [virtualNote]);
 
   const navigate = useNavigate();
 
@@ -1020,8 +1042,12 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
   }, [progressIndex])
 
   // 문제가 변경될 때마다 텍스트 읽기 (cardMatch는 제외 - 단어 클릭 시 재생)
+  // 구간 첫 문제로 (재)진입해 안내 인터루드가 문제 화면을 가리고 있는 동안(hold)은 읽지 않는다 — 아직 안 보이는
+  // 문제의 음성이 먼저 나왔다(이슈 #25 4차). 인터루드가 걷히면(holdActive false) 이 효과가 다시 돌며 그때 읽는다.
+  const holdActive = !!interlude?.hold;
   useEffect(() => {
     setIsSpeaking(false);
+    if (holdActive) return;
     if (testQuestions[progressIndex]) {
       const question = testQuestions[progressIndex];
       if (question.questionType === 'reverseMultipleChoice') {
@@ -1069,7 +1095,8 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
     }
     startTimeRef.current = Date.now();
     endTimeRef.current = null; // 항상 초기화!
-  }, [progressIndex]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [progressIndex, holdActive]);
 
   // 문제 시작 시
   useEffect(() => {
@@ -1208,6 +1235,12 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
       "낙관값을 발행하는 함수"를 미리 담아 두고 logIfFirstAttempt 의 catch 에서 호출한다.
     */
     const vid = q.vocaIndexId ?? q.id;
+    if (virtualFarm) {
+      // 체험 밭 가상 작물 — 낙관·서버 값 대신 가상 상태로만 그린다
+      const vp = gradeVirtual(vid, isCorrectAnswer, idx);
+      if (vp) publishFarm(vp, vid, idx);
+      return;
+    }
     const base = lastFarmByVocaRef.current[vid];
     // logIfFirstAttempt 의 로깅 게이트(505~513행)와 정확히 같은 조건이어야 한다 —
     // 여기서 "응답이 온다"고 판단했는데 실제로는 로깅이 스킵되면 정지 화면이 영영
@@ -1691,6 +1724,12 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
       // farmByWordId 없으면 알아서 숨긴다).
       if (!currentQuestion?.isRetry && !isArrangeQ) recordPlantAttempt(wordId, !!wordIsCorrect);
       if (!currentQuestion?.isRetry) plantQuestionDone(wordId, progressIndex);
+    } else if (virtualFarm) {
+      // 체험 밭 가상 작물 — 문장 조립 오답은 실제와 같이 작물에 아무 일도 없다(skipGrading)
+      if (!skipGrading) {
+        const vp = gradeVirtual(wordId, !!wordIsCorrect, progressIndex);
+        if (vp) setCardFarmByWordId(prev => ({ ...prev, [wordId]: vp }));
+      }
     } else if (!skipGrading) {
       const optimistic = computeOptimisticFsrs(fsrsBefore, !!wordIsCorrect);
       const buildOptimisticCardFarm = (base) => optimisticFarmPayload({
@@ -1962,8 +2001,9 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
   // 없다. applyOptimisticGrade 가 세워 둔 낙관값이 있어도 이 화면에서는 늘 숨긴다.
   // 공급자 세션(게스트 온보딩 수준 맞춤 학습, 이슈 #25)은 단어를 심지 않는다 — '씨앗을 심었어요 +XP' 농장 바와
   // 'N일 뒤 복습' 표시를 띄우지 않는다(사실과 다르다). 채점 표시는 그대로다.
+  // 단, 체험 밭 가상 농장(virtualFarm)이 있으면 가상 작물로 띄운다(이슈 #25 4차).
   const showFarmBar =
-    !questionSupplier &&
+    (!questionSupplier || !!virtualFarm) &&
     !isMultiStepMode &&
     isCorrect !== null &&
     !!farmStatus &&
@@ -2072,6 +2112,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
           fillClass={progressFillClass}
         />
           <div className="relative flex flex-1 min-h-0 overflow-hidden">
+          {virtualFarm && <VirtualFarmNote note={virtualNote?.qIndex === progressIndex ? virtualNote : null} />}
           <AnimatePresence initial={false} mode="popLayout" custom={slideDirection}>
             <motion.div
               key={progressIndex}
@@ -2089,7 +2130,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
                 testType={testType}
                 onComplete={pluginOnComplete}
                 onCardMatched={handleCardMatched}
-                farmByWordId={questionSupplier ? NO_FARM : cardFarmByWordId}
+                farmByWordId={questionSupplier && !virtualFarm ? NO_FARM : cardFarmByWordId}
               />
             </motion.div>
           </AnimatePresence>
@@ -2122,6 +2163,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
       />
 
       <div className="relative middle flex flex-1 min-h-0 overflow-hidden">
+        {virtualFarm && <VirtualFarmNote note={virtualNote?.qIndex === progressIndex ? virtualNote : null} />}
         <AnimatePresence initial={false} mode="popLayout" custom={slideDirection}>
           <motion.div
             key={progressIndex}
@@ -2172,7 +2214,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
                     answered={isCorrect !== null}
                     fsrs={testQuestions[progressIndex]?.fsrs}
                     stage={testQuestions[progressIndex]?.farmStage}
-                    farm={showFarmBar ? farmStatus : null}
+                    farm={showFarmBar && !virtualFarm ? farmStatus : null}
                     wasCorrect={isCorrect}
                     nextReviewIso={testQuestions[progressIndex]?.displayNextReview ?? null}
                     isRetry={!!testQuestions[progressIndex]?.isRetry}

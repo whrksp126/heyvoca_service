@@ -12,6 +12,7 @@ import { VocabularyBookMenuNewBottomSheet } from '../newBottomSheet/VocabularyBo
 import { ConfirmNewBottomSheet } from '../newBottomSheet/ConfirmNewBottomSheet';
 import { vibrate, showToast } from '../../utils/osFunction';
 import BookFieldHero from '../vocabularySheets/BookFieldHero';
+import { bookRimColor } from '../farm/FarmField';
 import WordRow from '../vocabularySheets/WordRow';
 import PullToRefresh from '../common/PullToRefresh';
 import {
@@ -604,7 +605,7 @@ const VocabularyWordsNewFullSheet = ({ id }) => {
       >
         {/* 이 단어장만의 밭 + 겹쳐 뜬 주 CTA — 단어 관리 중엔 목록에 집중하게 숨긴다 */}
         {!manageMode && (
-        <BookFieldHero counts={counts} fieldCounts={field.counts} healthMix={field.healthMix} words={fieldWords} storedSeeds={storedSeeds}>
+        <BookFieldHero counts={counts} fieldCounts={field.counts} healthMix={field.healthMix} words={fieldWords} storedSeeds={storedSeeds} rimColor={bookRimColor(vocabularySheet.color)}>
           <motion.button
             type="button"
             onClick={handleStudyClick}

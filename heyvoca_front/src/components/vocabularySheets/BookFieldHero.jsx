@@ -27,7 +27,10 @@ import { SIGN_ANCHORS } from '../../utils/farmField';
  */
 const SIGN_STAGE = { seed: 'PLANTED_SEED', sprout: 'SPROUT', leaf: 'LEAF', carrot: 'CARROT' };
 
-const BookFieldHero = ({ counts, fieldCounts, healthMix, words, storedSeeds = 0, children }) => {
+/**
+ * @param {string} rimColor  (선택) 밭 테두리 색 — 단어장 color.main(FarmField 의 bookRimColor 로 꺼낸다)
+ */
+const BookFieldHero = ({ counts, fieldCounts, healthMix, words, storedSeeds = 0, rimColor = null, children }) => {
   "use memo";
 
   return (
@@ -46,6 +49,7 @@ const BookFieldHero = ({ counts, fieldCounts, healthMix, words, storedSeeds = 0,
           words={words}
           maxSprites={72}
           storedSeeds={storedSeeds}
+          rimColor={rimColor}
         >
           {SIGN_ANCHORS.map((sign) => {
             // 팻말은 그 구역에 실제로 선 작물을 센다 — 보유 씨앗은 밭 밖 간판이 따로 말한다

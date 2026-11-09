@@ -22,6 +22,7 @@ export const COMPLETE_CUT_MS = 1200;
 
 // 구간 안내 문구 — Main.jsx 의 phaseStart 표식과 1:1.
 // trial·practice 는 게스트 온보딩 수준 맞춤 학습(이슈 #25) 1부·2부 — 3부는 retry 를 그대로 쓴다.
+// (4차부터 trial 은 쓰지 않는다 — 온보딩 '체험 밭' 장면이 대신한다. 구 저장 세션 호환으로 문구만 둔다.)
 export const PHASE_COPY = {
   trial: { title: '문제 유형을 하나씩 체험해요', sub: '아주 쉬운 단어부터 시작해요' },
   practice: { title: '배운 단어로 실전 연습해요', sub: '같은 단어를 다른 문제로 풀어요' },

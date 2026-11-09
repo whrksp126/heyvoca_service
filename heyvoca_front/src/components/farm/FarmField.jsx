@@ -11,8 +11,59 @@
 
 import React, { useMemo } from 'react';
 import fieldBase from '../../assets/images/farm/field-base.png';
+// 밭 테두리(풀색 rim) 마스크 — field-base.png 에서 풀색 픽셀만 뽑은 알파 마스크 두 장.
+// 윗면(밝은 풀색)과 옆면(어두운 풀색)을 나눠 두어야 색을 칠해도 입체감이 남는다.
+// 흙과 닿는 가장자리·바깥 안티에일리어싱은 알파로 부드럽게 들어 있다(바닥 그림자는 제외).
+import rimTopMask from '../../assets/images/farm/field-rim-top.png';
+import rimSideMask from '../../assets/images/farm/field-rim-side.png';
 import { CROP_ASSETS, cropAssetByVariant } from './CropImage';
 import { plantField, plantFieldByWords, CROP_BASELINE } from '../../utils/farmField';
+
+/** '#RGB' / '#RRGGBB' / '#RRGGBBAA' → [r,g,b] (그 밖의 값은 null) */
+const parseHex = (value) => {
+  const m = /^#([0-9a-f]{3}|[0-9a-f]{6}|[0-9a-f]{8})$/i.exec(String(value || '').trim());
+  if (!m) return null;
+  let h = m[1];
+  if (h.length === 3) h = h.split('').map((c) => c + c).join('');
+  return [0, 2, 4].map((i) => parseInt(h.slice(i, i + 2), 16));
+};
+
+const toHex = (rgb) => `#${rgb.map((v) => Math.round(Math.max(0, Math.min(255, v))).toString(16).padStart(2, '0')).join('')}`;
+
+/** 상대 휘도(0~1, sRGB 근사) */
+const luminance = ([r, g, b]) => (0.2126 * r + 0.7152 * g + 0.0722 * b) / 255;
+
+/** 아주 옅은 색은 흰 바탕·하늘 위에서 테두리가 사라지므로 이 휘도까지 눌러 쓴다 */
+const RIM_MAX_LUMINANCE = 0.8;
+/** 옆면 = 윗면을 이만큼 어둡게 — 원래 풀색 rim 의 윗면(172,217,130)/옆면(124,166,90) 비와 같다 */
+const RIM_SIDE_SHADE = 0.76;
+
+/**
+ * 단어장 색 → 테두리 윗면·옆면 색. hex 가 아니면(var(--…) 등) 계산 대신 color-mix 로 맡긴다.
+ * @returns {{ top: string, side: string } | null}
+ */
+export const rimShades = (color) => {
+  if (!color) return null;
+  const rgb = parseHex(color);
+  if (!rgb) {
+    return { top: color, side: `color-mix(in srgb, ${color} ${RIM_SIDE_SHADE * 100}%, black)` };
+  }
+  const lum = luminance(rgb);
+  const top = lum > RIM_MAX_LUMINANCE ? rgb.map((v) => v * (RIM_MAX_LUMINANCE / lum)) : rgb;
+  return { top: toHex(top), side: toHex(top.map((v) => v * RIM_SIDE_SHADE)) };
+};
+
+/**
+ * 단어장 color(JSON {main, sub, background} — 문자열로 올 때도 있다) → 테두리에 칠할 main.
+ * 서점 단어장도 고유 color 를 가진다.
+ */
+export const bookRimColor = (color) => {
+  let obj = color;
+  if (typeof obj === 'string') {
+    try { obj = JSON.parse(obj); } catch { return parseHex(obj) ? obj : null; }
+  }
+  return obj?.main || null;
+};
 
 /**
  * @param {object}  counts     단계별 **심은** 작물 수 { seed, sprout, leaf, carrot }
@@ -27,6 +78,9 @@ import { plantField, plantFieldByWords, CROP_BASELINE } from '../../utils/farmFi
  *                             피하려고 만든 스위치인데, **planted 가 V5 로 바뀌며 원판이 사라져**
  *                             그 이유는 없어졌다. 지금은 온보딩만 켜고 있고, 켜면 아직 V3 계열인
  *                             unplanted 그림이 나오므로 다른 화면과 그림체가 달라진다.
+ * @param {string}  rimColor   (선택) 밭 테두리(풀색 rim)를 이 색으로 칠한다 — 단어장 밭(목록 썸네일·
+ *                             상세 히어로)이 단어장 color.main 을 넘긴다. 없으면 원래 풀색 그대로.
+ *                             홈의 전체 밭은 여러 단어장 합본이라 넘기지 않는다(이슈 #25 4차).
  * @param {node}    children   팻말처럼 밭과 같은 좌표계에 얹을 것들
  *
  * 【크기·자리는 바깥이 정한다】 이 컴포넌트는 className 을 받지 않는다.
@@ -45,9 +99,12 @@ const FarmField = ({
   reserveSigns = true,
   soloCrops = false,
   storedSeeds = 0,
+  rimColor = null,
   children,
 }) => {
   "use memo";
+
+  const rim = rimShades(rimColor);
 
   const { items } = useMemo(
     () => (words && words.length > 0
@@ -106,6 +163,24 @@ const FarmField = ({
         draggable={false}
         className="absolute inset-0 w-full h-full select-none"
       />
+      {/* 단어장 색 테두리 — 풀색 rim 위에 같은 모양의 색 판을 덮는다(마스크 두 장).
+          다크모드에선 밝은 단어장 색이 어두운 화면에서 떠 보이지 않게 살짝 누른다. */}
+      {rim && [[rimTopMask, rim.top], [rimSideMask, rim.side]].map(([mask, color]) => (
+        <span
+          key={mask}
+          aria-hidden
+          className="absolute inset-0 pointer-events-none dark:brightness-[0.9]"
+          style={{
+            backgroundColor: color,
+            WebkitMaskImage: `url(${mask})`,
+            maskImage: `url(${mask})`,
+            WebkitMaskSize: '100% 100%',
+            maskSize: '100% 100%',
+            WebkitMaskRepeat: 'no-repeat',
+            maskRepeat: 'no-repeat',
+          }}
+        />
+      ))}
 
       {items.map((item) => {
         if (item.kind === 'mascot') {

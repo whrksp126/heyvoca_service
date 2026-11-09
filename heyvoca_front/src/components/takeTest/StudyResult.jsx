@@ -118,12 +118,14 @@ const FarmListSlide = ({ art, line, rows }) => (
     · 오늘 첫 학습 → 출석 + 보석      (mainpage.py 출석 처리)
     · 데일리 미션 완료 + 보석         (온보딩 당일은 첫날 계획 완수로 판정 — mainpage.py)
   전부 조건이 '첫 학습'이라 예외 없이 달성된다. 그래서 예측이 아니라 사실상 확정이고,
-  여기서 그대로 그린다. 합계는 가입 5 + 출석 1 + 데일리 미션 1 = 7.
+  여기서 그대로 그린다. 합계는 가입 20 + 출석 1 + 데일리 미션 1 = 22.
 
   업적(출석왕·노력왕·끈기왕 등)은 넣지 않는다 — 온보딩 학습은 업적에 반영하지 않기로 했다
   (이슈 #25 3차 QA). 가입 직후 updateUserHistory 가 is_onboarding 을 보내면 서버가 업적만 건너뛴다.
 */
-const GUEST_SIGNUP_GEM = 5;        // heyvoca_back/app/routes/onboarding.py SIGNUP_REWARD_GEM
+// 이슈 #25 4차 — 가입 보상 20개 고정(정답 수와 무관). 수준 맞춤 학습(placement)은 이제 이 화면을 거치지 않고
+// 온보딩 마무리 장면이 '보석 20'을 보여 준다. 여기는 구 게스트 맛보기 경로만 탄다.
+const GUEST_SIGNUP_GEM = 20;       // heyvoca_back/app/routes/onboarding.py SIGNUP_REWARD_GEM
 const GUEST_ATTEND_GEM = 1;        // mainpage.py 출석 보석
 const GUEST_MISSION_GEM = 1;       // mainpage.py 데일리 미션 완료 보석
 
