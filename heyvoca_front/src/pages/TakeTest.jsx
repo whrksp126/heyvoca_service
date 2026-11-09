@@ -22,6 +22,11 @@ import { useUser } from '../context/UserContext';
 import { useOnboardingUnlock } from '../context/OnboardingUnlockContext';
 import { saveStudyConfig, loadStudyConfig } from '../utils/nextStudy';
 import { getGuestTrial, clearGuestTrial, patchGuest } from '../utils/guestStorage';
+import {
+  loadSession as loadPlacementSession, saveSession as savePlacementSession, clearSession as clearPlacementSession,
+  advance as advancePlacement, currentQuestion as currentPlacementQuestion, summarize as summarizePlacement,
+  plannedProgressUnits, filledUnits, resultWords as resultWordsPlacement,
+} from '../utils/onboardingPlacement';
 import { getPendingReplantIds } from '../utils/replantPending';
 import { beginStudySession } from '../utils/studySessionGuard';
 import { wordsOverlap } from '../utils/meaningConcept';
@@ -55,11 +60,28 @@ const TakeTest = () => {
   const { isLogin } = useUser();
   // 기기 WebView에서 navigate state가 유실돼도 맛보기가 게스트로 뜨도록 localStorage에서 복원.
   const [pendingGuestTrial] = useState(() => getGuestTrial());
+  // 온보딩 수준 맞춤 학습(이슈 #25) — 진행 상태는 utils/onboardingPlacement 세션(localStorage)이 정본이다.
+  const [placementSession] = useState(() => (!isLogin ? loadPlacementSession() : null));
   const state = rawState || (
-    !isLogin && Array.isArray(pendingGuestTrial) && pendingGuestTrial.length > 0
-      ? { testType: 'today', guestMode: true, guestQuestions: pendingGuestTrial }
-      : rawState
+    placementSession && !placementSession.done
+      ? { testType: 'today', guestMode: true, placement: true }
+      : !isLogin && Array.isArray(pendingGuestTrial) && pendingGuestTrial.length > 0
+        ? { testType: 'today', guestMode: true, guestQuestions: pendingGuestTrial }
+        : rawState
   );
+  const isPlacement = !!state?.guestMode && !!state?.placement;
+  const placementRef = useRef(isPlacement ? (placementSession ?? loadPlacementSession()) : null);
+  // 진입 시점에 이미 채워져 있던 진행바 칸(재진입 복원) — 이후 칸은 화면의 문제들로 계산된다.
+  const [placementOffset] = useState(() => filledUnits(placementRef.current));
+  // 다음 문제 공급자 — 방금 끝난 문제의 결과로 θ 를 갱신하고 다음 문제를 만든다(Main.jsx questionSupplier).
+  const placementSupplier = (answered) => {
+    const s = placementRef.current;
+    if (!s) return null;
+    const q = advancePlacement(s, answered);
+    savePlacementSession(s);
+    if (q) warmTts(collectTestTexts([q]));
+    return q;
+  };
   const { isRecentStudyLoading, isVocabularySheetsLoading, vocabularySheets, recentStudy, updateRecentStudy, updateVocabularySheetServer, updateRecentStudyServer, updateRecentStudyState, fetchVocabularySheets, userDictionary } = useVocabulary();
   const { pushAwaitNewBottomSheet } = useNewBottomSheetActions();
   const { completeMission } = useOnboardingUnlock();
@@ -855,6 +877,31 @@ const TakeTest = () => {
 
   useEffect(() => {
     if (!isGuestMode) return;
+    if (isPlacement) {
+      // 세션이 없으면(저장소 비움 등) 온보딩 예고 화면으로 돌아가 다시 시작한다.
+      const s = placementRef.current;
+      const first = s ? currentPlacementQuestion(s) : null;
+      if (!first) {
+        navigate('/onboarding', { state: { step: 'ready' }, replace: true });
+        return;
+      }
+      savePlacementSession(s);
+      setTestQuestions([first]);
+      setProgressIndex(0);
+      studySessionRef.current = null;
+      loggedVocaIdsRef.current = new Set();
+      retryCountMapRef.current = new Map();
+      passedVocaIdsRef.current = new Set();
+      cardRetryEnqueuedRef.current = new Set();
+      totalUniqueVocaCountRef.current = plannedProgressUnits();
+      setIsTestQuestionsSetting(false);
+      // 풀 단어 발음을 미리 데운다(듣기 문제는 어느 단어가 나올지 답에 따라 정해진다).
+      warmTts([
+        ...collectTestTexts([first]),
+        ...(s.pool || []).map((p) => ({ text: p.origin, language: 'en' })),
+      ]);
+      return;
+    }
     const gq = Array.isArray(state.guestQuestions) ? state.guestQuestions : [];
     setTestQuestions(gq);
     setProgressIndex(0);
@@ -1106,6 +1153,7 @@ const TakeTest = () => {
     // 중간에 그만둔 것이므로 다시 시작할 수 있는 자리로 되돌린다
     if (isGuestMode) {
       clearGuestTrial();
+      clearPlacementSession();
       navigate('/onboarding', { state: { step: 'ready' }, replace: true });
       return;
     }
@@ -1207,6 +1255,25 @@ const TakeTest = () => {
       if (recentStudy && recentStudy[state.testType] && recentStudy[state.testType].status === "end") {
         const completeCut = getCompleteCut();
         // 게스트 맛보기 종료 → 서버 동기화 없이 답안만 챙겨 온보딩 보상으로
+        if (isGuestMode && isPlacement) {
+          // 수준 맞춤 학습 끝 — θ·답 기록(1·2부 첫 시도)을 게스트 데이터에 남기고 결과 화면으로.
+          const sum = summarizePlacement(placementRef.current || {});
+          patchGuest({ answers: sum.answers, theta: sum.theta, placement: { asked: sum.asked, correct: sum.correct } });
+          // 결과 화면엔 1부에서 만난 단어마다 한 줄(첫 시도 정오답) — 세션에서 만든다(새로고침해도 빠지지 않게).
+          const p1 = resultWordsPlacement(placementRef.current || {});
+          clearPlacementSession();
+          await completeCut.promise;
+          navigate('/take-test/result', {
+            state: {
+              testQuestions: p1,
+              testType: state.testType,
+              guestMode: true,
+              placement: { theta: sum.theta, asked: sum.asked, correct: sum.correct },
+            },
+            replace: true,
+          });
+          return;
+        }
         if (isGuestMode) {
           /*
             단어별 **마지막** 정오답을 보낸다.
@@ -1310,17 +1377,12 @@ const TakeTest = () => {
           finishStudyP = finishStudySession(studySessionRef.current)
             .catch(e => console.warn('[FSRS] finishStudySession 실패:', e));
         }
-        // 온보딩 미션 완료 신호 — M1(AI 추천 테스트)·M5(집중 반복 학습)·M6(자유 설정 테스트).
+        // 입문 퀘스트(이슈 #25 v2) — 프론트 신호는 focus_study(집중 반복 학습) 하나뿐이다.
+        // plant_seed(심기)·care_farm(복습)은 서버가 학습 저장 시점에 감지하고, 결과 화면을
+        // 벗어날 때 OnboardingMissionRewardWatcher 가 refreshUnlock 으로 반영·보상 연출한다.
         // 게스트/맛보기(today)는 위에서 이미 return됨.
-        // 보상(보석 지급 등)은 백엔드가 이 호출 시점에 이미 처리하고, "보상 받기" 연출은
-        // OnboardingMissionRewardWatcher가 학습 결과 화면(/take-test, /take-test/result)을
-        // 벗어난 뒤 안전하게 자동으로 보여준다 — 여기서는 신호만 보내면 된다.
-        if (state.testType === 'quick') {
-          completeMission('ai_test');
-        } else if (state.testType === 'study') {
+        if (state.testType === 'study') {
           completeMission('focus_study');
-        } else if (state.testType === 'test') {
-          completeMission('free_test');
         }
         await updateVocabularySheetAndRecentStudyData();
         // 글자 "배우기"(learn·practice)는 결과 화면 없이 바로 마친다(2026-10-25 QA 4차) — 새 글자를
@@ -1463,6 +1525,9 @@ const TakeTest = () => {
           cardRetryEnqueuedRef={cardRetryEnqueuedRef}
           guestMode={isGuestMode}
           plantAttemptsRef={plantAttemptsRef}
+          questionSupplier={isPlacement ? placementSupplier : undefined}
+          progressTotal={isPlacement ? plannedProgressUnits() : undefined}
+          progressOffset={isPlacement ? placementOffset : 0}
         />
       </div>
     );

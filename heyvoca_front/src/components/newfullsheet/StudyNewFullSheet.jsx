@@ -5,7 +5,7 @@ import { CaretLeft, CaretRight, RewindCircle, Brain, Lightbulb, Lock } from '@ph
 import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
 import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 import { useVocabulary } from '../../context/VocabularyContext';
-import { useOnboardingUnlock } from '../../context/OnboardingUnlockContext';
+import { useOnboardingUnlock, questTitleOf, withObjectJosa } from '../../context/OnboardingUnlockContext';
 import { ConfirmNewBottomSheet } from '../newBottomSheet/ConfirmNewBottomSheet';
 import { UnlockGuideNewBottomSheet } from '../newBottomSheet/UnlockGuideNewBottomSheet';
 import VocabularySheetNewFullSheet from './VocabularySheetNewFullSheet';
@@ -37,11 +37,11 @@ const StudyNewFullSheet = () => {
     const lk = CARD_LOCK_KEY[key];
     if (!lk) return '';
     const mission = missions.find((m) => m.unlocks === lk);
-    if (mission?.title) {
-      const action = mission.title.replace(/\s*완료\s*$/, '').trim();
-      return `'${action}' 미션을 완료하면 열려요`;
+    const title = questTitleOf(mission);
+    if (title) {
+      return `'${title}'${withObjectJosa(title).slice(title.length)} 완료하면 열려요`;
     }
-    return '이전 미션을 완료하면 열려요';
+    return '이전 퀘스트를 완료하면 열려요';
   };
 
   const startFreshQuickReview = async () => {

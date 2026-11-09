@@ -10,7 +10,8 @@
 //   끝       잔액이 빛난다                      perfect → 「확인」 켜짐
 //
 // 작은 보석은 12개까지만 그린다(그 이상은 한 개가 여러 개를 대표한다).
-// 게스트(가입 전)는 잔액이 없으므로 작은 보석이 큰 보석으로 되돌아 모인다.
+// 게스트(가입 전)도 로그인과 같은 모양 — 헤더 잔액 칩이 0 에서 시작해 채워진다(이슈 #25).
+// 잔액을 모르는 호출(before/after 없음)만 작은 보석이 큰 보석으로 되돌아 모인다.
 // 보석 그림은 농장 보석(farm/icon-gem.png, 289px 원본)을 쓴다.
 import React, { useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
@@ -32,10 +33,10 @@ const FADE_UP = 'transition-[transform,opacity] duration-300 ease-out motion-red
 const HOT_SHADOW = '0 0 0 2px #FF70D4, 0 0 18px rgba(255,112,212,.5)';
 const COLD_SHADOW = '0 0 0 0 rgba(255,112,212,0)';
 
-const GemRewardSlide = ({ gemCount, before = null, after = null, isGuest = false, reducedMotion, onReady, skipRef }) => {
+const GemRewardSlide = ({ gemCount, before = null, after = null, reducedMotion, onReady, skipRef }) => {
   const N = Math.max(0, Number(gemCount) || 0);
-  // 잔액 칩은 실제 잔액을 알 때만 그린다(게스트는 계정이 없다)
-  const hasBalance = !isGuest && Number.isFinite(before) && Number.isFinite(after);
+  // 잔액 칩은 잔액을 알 때 그린다 — 게스트는 0 에서 시작(StudyResult buildGuestSignupResult 가 before=0 을 준다).
+  const hasBalance = Number.isFinite(before) && Number.isFinite(after);
   const shown = Math.min(N, MAX_MINIS);
   const per = shown > 0 ? N / shown : 0;
   const gap = shown > 0 ? Math.max(70, Math.min(110, 900 / shown)) : 0;
@@ -236,9 +237,6 @@ const GemRewardSlide = ({ gemCount, before = null, after = null, isGuest = false
         <p className='text-[17px] font-[700] leading-[1.45] tracking-[-0.02em]'>
           <strong className='text-primary-main-600'>보석 {N}개</strong>를 획득했어요
         </p>
-        {/* 게스트는 아직 계정이 없어 보석이 들어갈 곳이 없다 — 어디로 들어오는지 한 줄 덧붙인다.
-            이 줄이 없으면 가입 화면에서 보석이 사라진 것처럼 보인다. */}
-        {isGuest ? <p className='mt-[6px] text-[12px] font-[500] text-layout-gray-300'>가입하면 계정으로 바로 들어와요</p> : null}
       </div>
     </div>
   );

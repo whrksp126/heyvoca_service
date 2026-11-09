@@ -57,6 +57,7 @@ import FarmCta, {
   resolveHomeState,
 } from './FarmCta';
 import TodayTasksCard from './TodayTasksCard';
+import OnboardingQuestCard from './OnboardingQuestCard';
 import StreakCard from './StreakCard';
 import GrewTodayCard from './GrewTodayCard';
 import WordFeedCard from './WordFeedCard';
@@ -197,8 +198,9 @@ const Main = () => {
   // todayKey(KST 날짜)를 deps 에 둔다 — buildGreetingContext 의 now(요일 등)가 렌더 시점 값이라,
   // 상태가 안 바뀌면 자정 뒤에도 어제 요일로 굳는다(2026-10-02).
   const greetingCtx = useMemo(
-    () => buildGreetingContext(farmOverview, { grewTodayCount: grewItems.length }),
-    [farmOverview, grewItems, todayKey]
+    // signupDate — 가입 당일엔 작별 인사 대신 환영 문구(homeGreetings 'firstDay', 이슈 #25)
+    () => buildGreetingContext(farmOverview, { grewTodayCount: grewItems.length, signupDate: userProfile?.created_date }),
+    [farmOverview, grewItems, todayKey, userProfile?.created_date]
   );
   const greetingSituation = farmOverview ? resolveGreetingSituation(greetingCtx) : null;
   const greetingDateKey = todayKey;
@@ -411,6 +413,7 @@ const Main = () => {
         {/* 보석 — 히어로 우측 상단에 떠 있는 칩(§6 · §10).
             히어로 위에 뜬 요소에만 그림자를 쓴다. 본문 카드는 시스템대로 보더 우선(§7) */}
         <button
+          id="home-gem-chip"
           type="button"
           onClick={handleStoreButtonClick}
           className="
@@ -498,6 +501,10 @@ const Main = () => {
       >
         {/* CTA 바로 아래 "오늘 할 일" 카드 — 썩은 단어·시듦·돌봄·새 씨앗을 한 곳에서 말한다.
             §8 water·amber·seed 스트립은 이 카드로 흡수돼 뺐다(위 변수 선언부 주석 참고). */}
+        {/* 가입 직후 '첫 퀘스트'(이슈 #25) — 신규 가입자에게 남은 퀘스트가 있을 때만 그려진다.
+            새 사용자에게 지금 할 일은 기능을 하나씩 열어 가는 것이라 오늘 할 일보다 위에 둔다. */}
+        <OnboardingQuestCard />
+
         <TodayTasksCard />
 
         {/* 연속 학습 — 1주 불꽃 달력. 홈에서 성과를 말하는 유일한 블록. 항상 노출된다 */}

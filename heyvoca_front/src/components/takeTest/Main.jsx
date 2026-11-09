@@ -216,7 +216,9 @@ const buildQuestionForType = (word, type, pool) => {
   return buildMultipleChoiceFromWord(word, pool, type);
 };
 
-const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex, setPendingUpdateSheetIds, setPendingUpdateWords, testType, studySessionRef, pendingLogPromisesRef, loggedVocaIdsRef, retryCountMapRef, passedVocaIdsRef, totalUniqueVocaCountRef, cardRetryEnqueuedRef, guestMode, plantAttemptsRef }) => {
+const NO_FARM = {};
+
+const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex, setPendingUpdateSheetIds, setPendingUpdateWords, testType, studySessionRef, pendingLogPromisesRef, loggedVocaIdsRef, retryCountMapRef, passedVocaIdsRef, totalUniqueVocaCountRef, cardRetryEnqueuedRef, guestMode, plantAttemptsRef, questionSupplier, progressTotal, progressOffset = 0 }) => {
   "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
 
   /*
@@ -337,6 +339,25 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
   const shownPhasesRef = useRef(new Set(initialPhaseKind ? [initialPhaseKind] : [])); // 이미 보여 준 구간 종류
   const questionsRef = useRef(testQuestions); // 클로저가 낡았을 때(재출제 직후) 다음 문제를 보기 위한 최신 큐
   useEffect(() => { questionsRef.current = testQuestions; });
+  /*
+    다음 문제 공급자(게스트 온보딩 수준 맞춤 학습, 이슈 #25) — questionSupplier 가 있으면 큐를 미리 갖지 않고
+    문제를 마칠 때마다 공급자에게 다음 문제를 받아 큐 끝에 붙인다. null 이면 세션 끝.
+    이때 재출제(enqueueRetry·requeueEasier)는 끈다 — 오답 복습도 공급자가 낸다.
+    정규 학습에는 이 prop 이 없어 아래 분기를 전혀 타지 않는다.
+  */
+  const suppliedRef = useRef(new Map()); // progressIndex → 그 문제 뒤에 붙인 문제(중복 호출 방지)
+  const supplyNext = (answered) => {
+    if (!questionSupplier) return null;
+    if (suppliedRef.current.has(progressIndex)) return suppliedRef.current.get(progressIndex);
+    let nextQ = null;
+    try { nextQ = questionSupplier(answered) || null; } catch (e) { console.error('questionSupplier 오류:', e); }
+    suppliedRef.current.set(progressIndex, nextQ);
+    if (nextQ) {
+      questionsRef.current = [...(questionsRef.current ?? testQuestions), nextQ];
+      setTestQuestions((prev) => [...prev, nextQ]);
+    }
+    return nextQ;
+  };
   const pendingInterludeRef = useRef(null);        // { n, milestone, atIndex }
   const shownMilestonesRef = useRef(new Set());
   const interludeNextRef = useRef(null);
@@ -450,6 +471,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
   // 오답 문제를 큐의 맨 마지막에 재삽입 (마지막 슬라이드로 재출제)
   // 재출제용 문제는 options를 셔플해서 새 객체로 생성
   const enqueueRetry = (currentIdx, question) => {
+    if (questionSupplier) return false; // 공급자 세션 — 재출제도 공급자가 낸다
     const retryMap = retryCountMapRef?.current;
     if (!retryMap) return false; // ref 없으면 재출제 스킵
 
@@ -522,6 +544,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
     "이 경우 프론트는 다음 단어로 넘어가면 된다"고 명시했기 때문이다.
   */
   const requeueEasier = async (question) => {
+    if (questionSupplier) return false;
     const vocaId = question.vocaIndexId ?? question.id;
     if (vocaId == null) return false;
 
@@ -1485,10 +1508,11 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
     const targetCount = totalUniqueVocaCountRef?.current || testQuestions.length;
     const nextIndex = progressIndex + 1;
     const adjustedQueueLen = testQuestions.length + (lastRetryEnqueuedRef.current ? 1 : 0);
-    const isQueueExhausted = nextIndex >= adjustedQueueLen;
+    const supplied = questionSupplier ? supplyNext(question) : null;
+    const isQueueExhausted = questionSupplier ? !supplied : nextIndex >= adjustedQueueLen;
     // 구간 안내(문장 만들기·오답 복습)가 있는 세션은 같은 단어가 문장 구간·재출제로 다시 나오므로
     // "통과 고유 단어 수" 판정을 쓰지 않고 큐를 끝까지 소진했을 때만 끝난 것으로 본다.
-    const isSessionDone = (isMultiStepMode || hasPhaseFlow) ? isQueueExhausted : (currentPassedCount >= targetCount || isQueueExhausted);
+    const isSessionDone = (isMultiStepMode || hasPhaseFlow || questionSupplier) ? isQueueExhausted : (currentPassedCount >= targetCount || isQueueExhausted);
 
     commitStudyState(isSessionDone, {
       [testType]: {
@@ -1826,11 +1850,12 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
     //   먼저 재출제되어 이 시점엔 이미 반영돼 있지만, 혹시 이번 배치 호출(onComplete)에서
     //   새로 재출제된 게 있다면(retriesEnqueuedThisCall) 그만큼 큐 길이를 보정해
     //   재출제 슬라이드가 추가되기 전에 세션이 끝나버리지 않도록 한다.
-    const isQueueExhausted = nextIndex >= (testQuestions.length + retriesEnqueuedThisCall);
+    const supplied = questionSupplier ? supplyNext(currentQuestion) : null;
+    const isQueueExhausted = questionSupplier ? !supplied : nextIndex >= (testQuestions.length + retriesEnqueuedThisCall);
     // plant·script는 위 setUpdateRecentStudyStateAndStatus와 같은 이유(isMultiStepMode)로
     // 1차 판정(통과 고유 단어 수)을 쓰지 않는다 — 같은 단어/글자가 여러 단계(같은 vocaId)로
     // 반복 등장해 조기 종료로 이어지기 때문. 큐 소진만으로 판단한다.
-    const isSessionDone = (isMultiStepMode || hasPhaseFlow) ? isQueueExhausted : (currentPassedCount >= targetCount || isQueueExhausted);
+    const isSessionDone = (isMultiStepMode || hasPhaseFlow || questionSupplier) ? isQueueExhausted : (currentPassedCount >= targetCount || isQueueExhausted);
 
     commitStudyState(isSessionDone, {
       [testType]: {
@@ -1863,7 +1888,8 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
   // 사실상 발생하지 않는다 — 방어적으로만 처리).
   const handleNoGradeNext = () => {
     const nextIndex = progressIndex + 1;
-    const isSessionDone = nextIndex >= testQuestions.length;
+    const supplied = questionSupplier ? supplyNext(testQuestions[progressIndex]) : null;
+    const isSessionDone = questionSupplier ? !supplied : nextIndex >= testQuestions.length;
 
     commitStudyState(isSessionDone, {
       [testType]: {
@@ -1913,8 +1939,10 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
   // testQuestions 의 isCorrect 에서 매 렌더 재계산하므로 복원·재마운트에도 그대로 복구된다.
   // 세션 종료 판정(passedVocaIdsRef·큐 소진)과는 무관한 표시 전용 값이다.
   const studyProgress = computeStudyProgress(testQuestions);
-  const totalWordCount = Math.max(1, studyProgress.total);
-  const displayPassedCount = isFinishing ? totalWordCount : Math.min(studyProgress.done, totalWordCount);
+  // 공급자 세션은 큐가 문제마다 자라므로 분모를 progressTotal(계획 칸 수)로 고정하고, 재진입 전에 채운 칸은
+  // progressOffset 으로 더한다.
+  const totalWordCount = Math.max(1, progressTotal ?? studyProgress.total);
+  const displayPassedCount = isFinishing ? totalWordCount : Math.min(studyProgress.done + (progressTotal ? progressOffset : 0), totalWordCount);
 
   const currentPlugin = getQuestionType(testQuestions[progressIndex]?.questionType);
 
@@ -1932,7 +1960,10 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
     testQuestions[progressIndex]?.vocaIndexId ?? testQuestions[progressIndex]?.id;
   // plant — 문제별 서버 응답(farm payload)에 의존하는 표시라 세션 종료 전까지 응답 자체가
   // 없다. applyOptimisticGrade 가 세워 둔 낙관값이 있어도 이 화면에서는 늘 숨긴다.
+  // 공급자 세션(게스트 온보딩 수준 맞춤 학습, 이슈 #25)은 단어를 심지 않는다 — '씨앗을 심었어요 +XP' 농장 바와
+  // 'N일 뒤 복습' 표시를 띄우지 않는다(사실과 다르다). 채점 표시는 그대로다.
   const showFarmBar =
+    !questionSupplier &&
     !isMultiStepMode &&
     isCorrect !== null &&
     !!farmStatus &&
@@ -2058,7 +2089,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
                 testType={testType}
                 onComplete={pluginOnComplete}
                 onCardMatched={handleCardMatched}
-                farmByWordId={cardFarmByWordId}
+                farmByWordId={questionSupplier ? NO_FARM : cardFarmByWordId}
               />
             </motion.div>
           </AnimatePresence>

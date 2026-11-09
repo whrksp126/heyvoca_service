@@ -223,11 +223,33 @@ export const getLevelBookApi = async (level) => {
   }
 };
 
-// 가입 직후 맛본 기록 이전 (인증) — 레벨 단어장 생성 + 답안 반영 + 보상
-export const migrateOnboardingApi = async ({ level, source_channel, learning_goal, daily_new_limit, username, answers }) => {
+// 온보딩 v2 수준 맞춤 학습 재료(이슈 #25) — 비인증. data.bands: {"1":[W..] … "5":[W..]}
+export const getPlacementPoolApi = async () => {
+  const url = `${backendUrl}/onboarding/placement-pool`;
+  try {
+    return await fetchDataAsync(url, 'GET', {});
+  } catch (error) {
+    console.error('getPlacementPoolApi 오류:', error);
+  }
+};
+
+// 측정 수준에 맞는 서점 단어장 3권(이슈 #25) — 비인증. data: { level:{cefr,label,theta}, books:[…] }
+export const getRecommendBooksApi = async (theta) => {
+  const url = `${backendUrl}/onboarding/recommend-books`;
+  try {
+    return await fetchDataAsync(url, 'GET', { theta: Math.round(Number(theta) || 0) });
+  } catch (error) {
+    console.error('getRecommendBooksApi 오류:', error);
+  }
+};
+
+// 가입 직후 온보딩 이전 (인증) — body 는 utils/guestStorage.js buildMigrateBody 가 만든다.
+//  v2: { flow:'v2', bookstore_id, theta, answers:[{voca_id, question_type, correct}], source_channel, learning_goal, daily_new_limit, username }
+//  v1(구 게스트 데이터): { level, answers:[{voca_id, correct}], … }
+export const migrateOnboardingApi = async (body) => {
   const url = `${backendUrl}/onboarding/migrate`;
   try {
-    return await fetchDataAsync(url, 'POST', { level, source_channel, learning_goal, daily_new_limit, username, answers });
+    return await fetchDataAsync(url, 'POST', body || {});
   } catch (error) {
     console.error('migrateOnboardingApi 오류:', error);
   }
@@ -243,8 +265,8 @@ export const getUnlockStatusApi = async () => {
   }
 };
 
-// 온보딩 행동 기반 미션 완료 처리 (인증) — key: 'ai_test' | 'search_word' | 'focus_study'
-// (make_book/buy_book은 백엔드 훅 전용이라 프론트에서 직접 호출하지 않음 — 400 응답)
+// 입문 퀘스트 완료 처리 (인증) — key: 'search_word' | 'focus_study' (이슈 #25 v2 체인)
+// (plant_seed·make_book·buy_book·care_farm 은 서버 감지 전용이라 프론트에서 호출하지 않음)
 // 응답: { code:200, data:{ newly_completed, reward_gem, unlocks, gem_cnt, ...unlock-status 전체 필드 } }
 export const completeOnboardingMissionApi = async (key) => {
   const url = `${backendUrl}/onboarding/mission/complete`;

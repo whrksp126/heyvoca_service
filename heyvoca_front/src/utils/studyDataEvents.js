@@ -15,3 +15,18 @@ export const notifyStudyDataChanged = () => {
     window.dispatchEvent(new CustomEvent(STUDY_DATA_CHANGED_EVENT));
   } catch { /* 이벤트 실패는 무시 — 다음 탭 진입 재조회가 받쳐 준다 */ }
 };
+
+// "게스트 온보딩 이전(/onboarding/migrate)이 끝났다" 신호.
+//
+// 단어장·사전·홈 통계는 **로그인되는 순간**(= migrate 전에) 한 번 받아 둔다. migrate 가
+// 온보딩 단어장(+단어)을 막 만들었는데 그 캐시를 다시 받지 않으면, 가입 직후 단어장 탭이
+// 비어 있다가 당겨서 새로고침해야 보였다(이슈 #25). migrate 를 부르는 곳이 두 군데
+// (pages/Index.jsx 게스트 가입 경로, pages/Onboarding.jsx 로그인 상태 완료 경로)라
+// 각 Context 가 이 신호 하나로 스스로 다시 받게 한다.
+export const ONBOARDING_MIGRATED_EVENT = 'heyvoca:onboarding-migrated';
+
+export const notifyOnboardingMigrated = () => {
+  try {
+    window.dispatchEvent(new CustomEvent(ONBOARDING_MIGRATED_EVENT));
+  } catch { /* 이벤트 실패는 무시 — 당겨서 새로고침이 받쳐 준다 */ }
+};

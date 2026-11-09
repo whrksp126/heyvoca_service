@@ -798,6 +798,42 @@ def record_correct_word(user_id: UUID, user_voca_id: int,
             'milestone': milestone}
 
 
+@retry_on_deadlock
+def qualify_today_for_onboarding(user_id: UUID, correct_cnt: int = 0,
+                                 now: Optional[dt.datetime] = None) -> dict:
+    """가입 당일 수준 측정(온보딩 v2)을 '학습한 날'로 인정한다 — 연속 학습 1일 (이슈 #25).
+
+    v2 온보딩은 단어를 심지 않아 UserStudyLog(user_voca_id 필수)가 없다. 그래서
+    `record_correct_word` 의 "정답 단어 5개" 집계로는 자격이 생기지 않으므로, 측정을 마친
+    그날 CheckIn 의 자격을 직접 세운다. 이후 판정(보호권·되짚기)은 모두 같은 플래그를 본다.
+    멱등하다(이미 자격이면 그대로). 커밋한다.
+    """
+    now = now or dt.datetime.utcnow()
+    begin_user_tx(user_id)   # 첫 문장 = User 잠금
+    tz = localday.get_timezone(user_id)
+    today = localday.local_day(now, tz)
+
+    st = _get_or_create_streak(user_id)
+    checkin = _get_or_create_checkin(user_id, today, studied=True)
+    if not checkin.today_study_complete:
+        checkin.today_study_complete = True
+    checkin.correct_word_cnt = max(checkin.correct_word_cnt or 0, int(correct_cnt or 0))
+
+    qualified_now = False
+    if not checkin.streak_qualified:
+        checkin.streak_qualified = True
+        qualified_now = True
+        if not _is_paused(st):
+            flags = _flag_days(user_id, today - dt.timedelta(days=_WALK_BACK_DAYS), today)
+            counted = _counted_days(flags)
+            counted.add(today)
+            st.current_streak = _resolve_current(st, counted, today)
+            st.last_qualified_day = today
+            st.best_streak = max(st.best_streak or 0, st.current_streak)
+    db.session.commit()
+    return {'qualified_now': qualified_now, 'streak': st.current_streak or 0}
+
+
 def settle_missed_days(user_id: UUID, now: Optional[dt.datetime] = None) -> dict:
     """빈 날 정산만 따로 (운영 도구·스크립트용). 규칙은 `_settle` 참고. 멱등하다."""
     now = now or dt.datetime.utcnow()

@@ -7,9 +7,12 @@ import {
   GraduationCap, Airplane, Sparkle, GlobeHemisphereWest,
 } from '@phosphor-icons/react';
 import googleLogo from '../assets/images/google_logo.png';
-import { getOnboardingBooksApi, getLevelBookApi, migrateOnboardingApi } from '../api/study';
-import { patchGuest, getGuest, setGuestTrial, clearGuest } from '../utils/guestStorage';
-import { buildGuestQuestions, countGuestWords, ONBOARDING_FIRST_DAY_WORDS } from '../utils/guestQuestions';
+import { getPlacementPoolApi, getRecommendBooksApi, migrateOnboardingApi } from '../api/study';
+import { getBookStoreDetailApi } from '../api/bookStore';
+import { patchGuest, getGuest, clearGuest, clearGuestTrial, buildMigrateBody } from '../utils/guestStorage';
+import { notifyOnboardingMigrated } from '../utils/studyDataEvents';
+import { createSession, saveSession as savePlacementSession, clearSession as clearPlacementSession } from '../utils/onboardingPlacement';
+import { levelFromTheta } from '../components/onboarding/LevelResultSlide';
 import { vibrate, getDevicePlatform } from '../utils/osFunction';
 import { primeSfx } from '../utils/audio';
 import { BookCard } from '../components/bookStore/BookSection';
@@ -20,19 +23,20 @@ import { useNewBottomSheetActions } from '../context/NewBottomSheetContext';
 import { useUser } from '../context/UserContext';
 import postMessageManager from '../utils/postMessageManager';
 import FarmField from '../components/farm/FarmField';
-import { CROP_ASSETS, cropAssetByVariant } from '../components/farm/CropImage';
+import { cropAssetByVariant } from '../components/farm/CropImage';
 import { useStatusBarStyle } from '../hooks/useStatusBarStyle';
 import { nodeEnv } from '../utils/common';
 
 /*
   온보딩 — 인사에서 첫 학습까지.
 
-  【흐름】 hello → intro → memory → level(+미리보기 시트) → ready → 학습 → 학습 결과
-          → channel → goal → daily → nick → auth
+  【흐름】 hello → intro → memory → ready → 수준 맞춤 학습 → 결과(내 수준)
+          → recommend(추천 단어장 3권 중 1권) → channel → goal → daily → nick → auth
+  (이슈 #25 — 예전엔 학습 전에 단어장을 직접 골랐다(level). 지금은 아주 쉬운 단어부터 풀며
+   수준(θ)을 재고, 그 수준에 맞는 서점 단어장을 추천해 무료로 담는다. 온보딩 단어는 심지 않는다.)
 
   【학습을 질문보다 앞에 둔 이유】 유입 경로·학습 목적은 사용자가 얻는 게 없는 질문이라
-  첫 학습에 닿기 전에 놓으면 순수한 이탈 구간이 된다. 뒤로 옮기면 하루 목표 안내도
-  "오늘 14알을 심을 거예요"(예고)가 아니라 "방금 14알을 심었어요"(사실)가 되어 짧아진다.
+  첫 학습에 닿기 전에 놓으면 순수한 이탈 구간이 된다.
 
   【학습·결과 화면을 여기서 그리지 않는 이유】 맛보기가 아니라 **진짜 첫 학습**이다.
   TakeTest / StudyResult 를 게스트 모드로 그대로 쓴다 — 온보딩에서 본 화면과 실제가
@@ -105,10 +109,14 @@ const MEMORY_STEPS = [
     box: 'bg-primary-main-600 text-layout-white dark:text-layout-black' },
 ];
 
-// 온보딩 단어장 → 미리보기 풀시트가 읽는 형태로 변환
-const toMeaningStrings = (m) => (Array.isArray(m) ? m : [])
-  .map((x) => (typeof x === 'string' ? x : (x?.meaning || '')))
-  .filter(Boolean);
+// 추천 단어장(recommend-books) → 서점 카드(BookCard)가 읽는 모양. 값은 받지 않는다(무료).
+const toBookCardItem = (b) => ({
+  id: b.bookstore_id,
+  name: b.name,
+  category: b.category,
+  color: b.color || { main: 'var(--primary-main-600)', sub: 'var(--primary-main-200)', background: 'var(--primary-main-100)' },
+  gem: 0,
+});
 
 // 큰 선택지 버튼 (유입/목적/일일 공용)
 const OptionRow = ({ active, Icon, title, desc, onClick }) => (
@@ -208,11 +216,15 @@ const Onboarding = () => {
   //  - 'channel': 학습·결과 완료 → 질문 구간으로  /  'ready': 학습 중 뒤로가기 → 예고로 복귀
   const incomingStep = location.state?.step;
 
-  const [step, setStep] = useState(incomingStep || 'hello');
-  const [books, setBooks] = useState([]);
-  const [level, setLevel] = useState(saved.level ?? null);
-  const [seedCount, setSeedCount] = useState(saved.seed_count ?? 0);
-  const [plantedCount, setPlantedCount] = useState(saved.planted_count ?? 0);
+  // 결과 화면 state 가 기기에서 유실돼 'channel' 로 왔어도, 수준을 쟀는데 단어장을 아직 안 골랐으면 추천부터.
+  const [step, setStep] = useState(() => {
+    const s = incomingStep || 'hello';
+    if (QUESTION_ORDER.includes(s) && saved.theta != null && saved.bookstore_id == null && saved.level == null) return 'recommend';
+    return s;
+  });
+  const [theta] = useState(saved.theta ?? null);
+  const [recommend, setRecommend] = useState(saved.recommend ?? null); // { level, books }
+  const [bookName, setBookName] = useState(saved.book_name ?? '');
   const [channel, setChannel] = useState(saved.source_channel ?? null);
   const [goal, setGoal] = useState(saved.learning_goal ?? null);
   const [daily, setDaily] = useState(saved.daily_new_limit ?? null);
@@ -222,24 +234,25 @@ const Onboarding = () => {
   // 이미 로그인된 사용자가 온보딩을 진행할 때 auth 스텝을 건너뛰고 서버 migrate 처리 중임을 표시
   const [finishingOnboarding, setFinishingOnboarding] = useState(false);
 
-  const answers = saved.answers ?? [];
-  // 오늘 심을 수 — 첫날은 하루 목표와 무관하게 고정이고, 단어장이 그보다 작으면 그 수만큼만.
-  // 예고 화면(ready)은 아직 학습 전이라 이 값으로 말한다.
-  const todayPlan = seedCount > 0
-    ? Math.min(ONBOARDING_FIRST_DAY_WORDS, seedCount)
-    : ONBOARDING_FIRST_DAY_WORDS;
-  // 실제로 심은 수 — 학습을 마쳤으면 그 수. 아직이면 예정 수로 말한다.
-  const planted = plantedCount || answers.length || todayPlan;
-  const restSeeds = Math.max(0, seedCount - todayPlan);
-
-  // 선택 가능한 단어장 목록 로드
+  // 추천 단어장 — 결과 화면(StudyResult)이 받아 둔 응답을 쓰고, 없으면(조회 실패·state 유실) 여기서 받는다.
+  const [recommendFailed, setRecommendFailed] = useState(false);
   useEffect(() => {
+    if (step !== 'recommend' || (recommend?.books?.length ?? 0) > 0 || theta == null) return undefined;
     let alive = true;
-    getOnboardingBooksApi().then((res) => {
-      if (alive && res?.code === 200) setBooks(res.data || []);
+    setRecommendFailed(false);
+    getRecommendBooksApi(theta).then((res) => {
+      if (!alive) return;
+      if (res?.code === 200 && res.data) {
+        const r = { theta, level: res.data.level ?? null, books: res.data.books ?? [] };
+        setRecommend(r);
+        patchGuest({ recommend: r });
+      } else {
+        setRecommendFailed(true);
+      }
     });
     return () => { alive = false; };
-  }, []);
+  }, [step, theta, recommend]);
+  const myLevel = recommend?.level ?? (theta != null ? levelFromTheta(theta) : null);
 
   // 온보딩 내부 인증(auth) 스텝용 앱 OAuth 콜백 리스너 (Login 페이지와 동일 로직)
   // 로그인 성공 시 홈으로 이동 → 홈에서 게스트 데이터 이전 + 알림 프롬프트가 이어짐
@@ -280,8 +293,8 @@ const Onboarding = () => {
   const BACK_TO = {
     intro: 'hello',
     memory: 'intro',
-    level: 'memory',
-    ready: 'level',
+    ready: 'memory',
+    channel: 'recommend',
     goal: 'channel',
     daily: 'goal',
     nick: 'daily',
@@ -341,41 +354,30 @@ const Onboarding = () => {
     if (prev) setStep(prev);
   };
 
-  // 단어장 카드 클릭 → 실제 미리보기 풀시트를 열고, 거기서 담는다.
-  // 서점에서 단어장을 고르는 동선(PreviewBookStoreNewFullSheet)과 같다.
+  // 추천 단어장 카드 클릭 → 서점과 같은 미리보기 풀시트(PreviewBookStoreNewFullSheet)로 단어를 보여 주고,
+  // 하단 버튼으로 고른다. 서점 상세 조회(/search/bookstore/<id>)는 비인증이라 게스트도 쓸 수 있다.
+  // 무료로 담기므로 가격은 0 으로 넘긴다.
+  const chooseBook = (book) => {
+    vibrate({ duration: 5 });
+    setBookName(book.name);
+    patchGuest({ bookstore_id: book.bookstore_id, book_name: book.name, theta });
+    setStep('channel');
+  };
   const openBookPreview = async (book) => {
     if (openingPreview) return;
     vibrate({ duration: 5 });
     setOpeningPreview(true);
     try {
-      const res = await getLevelBookApi(book.level);
-      const vocaList = res?.data?.vocaList || [];
-      const sheet = {
-        id: book.id,
-        name: book.name,
-        category: book.category,
-        color: book.color,
-        gem: 0,
-        words: vocaList.map((w) => ({
-          id: w.voca_id,
-          origin: w.origin,
-          meanings: toMeaningStrings(w.meanings),
-          examples: w.examples || [],
-        })),
-      };
+      const res = await getBookStoreDetailApi(book.bookstore_id);
+      if (res?.code !== 200 || !res.data) { chooseBook(book); return; }
       pushNewFullSheet(PreviewBookStoreNewFullSheet, {
-        bookStoreVocabularySheet: sheet,
+        bookStoreVocabularySheet: { ...res.data, gem: 0 },
         // 밭 그림과 씨앗 수는 앞뒤 화면이 이미 말한다 — 여기서는 단어만 보여 준다
         hideFieldHero: true,
         primaryActionLabel: '이 단어장으로 시작하기',
         onPrimaryAction: () => {
-          vibrate({ duration: 5 });
-          const seeds = vocaList.length || book.word_count || 0;
-          setLevel(book.level);
-          setSeedCount(seeds);
-          patchGuest({ level: book.level, seed_count: seeds });
           popNewFullSheet();
-          setStep('ready');
+          chooseBook(book);
         },
       });
     } finally {
@@ -388,26 +390,25 @@ const Onboarding = () => {
   const pickGoal = (key) => { vibrate({ duration: 5 }); setGoal(key); patchGuest({ learning_goal: key }); };
   const pickDaily = (key) => { vibrate({ duration: 5 }); setDaily(key); patchGuest({ daily_new_limit: key }); };
 
-  // 첫 학습 시작 — 고른 단어장으로 실제 학습 화면(TakeTest)을 그대로 띄운다.
-  // 여기서 만든 문제는 첫날 분량(14단어)이고, 하루 목표는 내일부터 적용된다.
+  // 수준 맞춤 학습 시작 — 문제 재료(placement-pool)를 받아 세션을 만들고 실제 학습 화면(TakeTest)을 띄운다.
+  // 문제는 미리 만들지 않는다 — 답할 때마다 utils/onboardingPlacement 가 다음 문제를 만든다.
+  // 세션은 localStorage 에도 두어 기기에서 router state 가 유실돼도 이어진다.
+  const [trialError, setTrialError] = useState(false);
   const startTrial = async () => {
-    if (loadingTrial || !level) return;
+    if (loadingTrial) return;
     vibrate({ duration: 5 });
     // 채점 효과음 저지연 재생 준비 — 반드시 이 클릭(user gesture)의 동기 시점에
     // 호출해야 Web Audio AudioContext가 unlock되고 mp3가 미리 디코드된다(await 이후엔 unlock 실패).
-    // 미호출 시 /take-test에서 느린 HTMLAudio 폴백으로 재생돼 효과음이 늦게 난다.
     primeSfx();
     setLoadingTrial(true);
+    setTrialError(false);
     try {
-      const res = await getLevelBookApi(level);
-      const questions = buildGuestQuestions(res?.data?.vocaList || []);
-      if (questions.length === 0) { setStep('channel'); return; }
-      const words = countGuestWords(questions);
-      setPlantedCount(words);
-      // router state가 기기에서 유실돼도 게스트 학습으로 뜨도록 localStorage에도 저장
-      patchGuest({ planted_count: words });
-      setGuestTrial(questions);
-      navigate('/take-test', { state: { testType: 'today', guestMode: true, guestQuestions: questions } });
+      const res = await getPlacementPoolApi();
+      const session = res?.code === 200 ? createSession(res.data?.bands) : null;
+      if (!session || session.pool.length < 8) { setTrialError(true); return; }
+      clearGuestTrial(); // 구 맛보기 데이터가 남아 있으면 TakeTest 가 그쪽으로 뜨지 않게
+      savePlacementSession(session);
+      navigate('/take-test', { state: { testType: 'today', guestMode: true, placement: true } });
     } finally {
       setLoadingTrial(false);
     }
@@ -417,7 +418,7 @@ const Onboarding = () => {
     vibrate({ duration: 5 });
     const trimmedUsername = username.trim() || null;
     patchGuest({
-      level, source_channel: channel, learning_goal: goal,
+      source_channel: channel, learning_goal: goal,
       daily_new_limit: daily, username: trimmedUsername,
     });
     // 알림 권한은 온보딩이 아니라 로그인 후 홈 첫 진입에서 요청 → 플래그만 남긴다
@@ -441,14 +442,13 @@ const Onboarding = () => {
     if (finishingOnboarding) return;
     setFinishingOnboarding(true);
     try {
-      const res = await migrateOnboardingApi({
-        level,
+      // v2(추천 단어장을 골랐으면) / 구 v1(레벨만 있는 예전 게스트 데이터) — utils/guestStorage buildMigrateBody
+      const res = await migrateOnboardingApi(buildMigrateBody(getGuest(), {
         source_channel: channel,
         learning_goal: goal,
         daily_new_limit: daily,
         username: trimmedUsername,
-        answers,
-      });
+      }));
       if (res?.code === 200) {
         // 온보딩 학습을 **정규 세션과 똑같이** 집계한다.
         // /mainpage/user_study_history 가 XP · 출석 · 출석왕 · 노력왕 · 데일리 미션 · 끈기왕을
@@ -467,8 +467,10 @@ const Onboarding = () => {
       }
       if (res?.code === 200 || res?.code === 409) {
         clearGuest();
+        clearPlacementSession();
         // 홈 등 다른 화면에서 최신 닉네임/온보딩 상태가 바로 보이도록 프로필 재조회(best-effort)
         fetchUserProfile().catch(() => { /* 무시 — 다음 조회 시 갱신됨 */ });
+        notifyOnboardingMigrated(); // 이슈 #25: 단어장·홈 통계 캐시 재조회(로그인 시점 빈 목록 갱신)
       }
     } catch (e) {
       /* 실패해도 로그인 흐름은 계속 — 아래 finally에서 홈으로 이동 */
@@ -549,17 +551,17 @@ const Onboarding = () => {
         transition={{ duration: 0.18 }}
         className="flex flex-col flex-1 min-h-0"
       >
-          {/* ① 인사 — 기능 설명 없이 누가 말을 거는지만 */}
+          {/* ① 인사 — 기능 설명 없이 누가 말을 거는지만. 그림은 다 자란 당근 한 포기(마스코트는 쓰지 않는다). */}
           {step === 'hello' && (
             <>
               <div className="flex flex-col flex-1 items-center justify-center text-center px-[28px]">
-                <img src={CROP_ASSETS.mascotSolo} alt="" draggable={false}
-                  className="w-[196px] h-[196px] object-contain select-none mb-[30px]" />
+                <img src={cropAssetByVariant('carrot', 'healthy')} alt="" draggable={false}
+                  className="w-[176px] h-[176px] object-contain object-bottom select-none mb-[30px]" />
                 <h1 className="text-[25px] font-[800] leading-[1.42] tracking-[-0.04em] text-layout-black dark:text-layout-white">
-                  안녕하세요!<br />저는 <span className="text-primary-main-600">헤이보카</span>예요
+                  안녕하세요!<br />여기는 <span className="text-primary-main-600">헤이보카</span>예요
                 </h1>
                 <p className="mt-[14px] text-[14px] font-[500] leading-[1.7] text-layout-gray-300">
-                  단어 외우는 걸 도와줄 농부예요.<br />같이 밭 하나 가꿔볼까요?
+                  단어를 외우면 밭이 자라요.<br />같이 밭 하나 가꿔볼까요?
                 </p>
               </div>
               <div className="px-[24px] pt-[18px] pb-[26px] shrink-0">
@@ -585,7 +587,6 @@ const Onboarding = () => {
                   <FarmField
                     counts={INTRO_FIELD}
                     maxSprites={24}
-                    mascot
                     reserveSigns={false}
                   />
                 </div>
@@ -670,51 +671,75 @@ const Onboarding = () => {
 
               <div className="px-[24px] pt-[18px] pb-[26px] shrink-0">
                 {/* 앞 화면의 질문에 답을 마쳤으니, 여기서는 다음에 할 일을 그대로 적는다 */}
-                <Cta label="단어장 고르러 가기" onClick={() => { vibrate({ duration: 5 }); setStep('level'); }} />
+                <Cta label="내 수준 알아보기" onClick={() => { vibrate({ duration: 5 }); setStep('ready'); }} />
               </div>
             </>
           )}
 
-          {/* ④ 단어장 고르기 — 서점 카드 규격 그대로. 값을 받지 않으므로 가격 자리는 비운다. */}
-          {step === 'level' && (
-            <div className="flex flex-col flex-1 min-h-0 px-[24px] pt-[16px] overflow-y-auto">
-              <h1 className="text-[22px] font-[800] leading-[1.35] tracking-[-0.04em] text-layout-black dark:text-layout-white">
-                어떤 단어장으로<br />시작할까요?
-              </h1>
-              <p className="mt-[9px] mb-[18px] text-[12.5px] font-[500] leading-[1.6] text-layout-gray-300">
-                카드를 누르면 어떤 단어가 들었는지 볼 수 있어요.
-              </p>
-              <ul className="grid grid-cols-2 gap-[15px] pb-[24px]">
-                {books.map((b) => (
-                  <BookCard key={b.id} item={b} priceLabel="" onClick={() => openBookPreview(b)} />
-                ))}
-              </ul>
-            </div>
-          )}
-
-          {/* ⑤ 심기 예고 — 씨앗을 늘어놓지 않는다. 제목 두 줄과 그림 하나. */}
+          {/* ④ 학습 예고 — 아주 쉬운 단어부터, 맞히면 어려워진다. 그림은 자라는 작물 세 포기. */}
           {step === 'ready' && (
             <>
               <div className="flex flex-col flex-1 min-h-0 items-center justify-center px-[26px]">
-                <Headline sub={restSeeds > 0 ? `나머지 ${restSeeds.toLocaleString()}알은 내일부터 심어요` : null}>
-                  씨앗 <span className="text-primary-main-600">{seedCount.toLocaleString()}알</span>을 담았어요<br />
-                  오늘은 <span className="text-primary-main-600">{todayPlan}알</span>만 심어볼게요
+                <Headline sub="4~5분이면 끝나요">
+                  <span className="text-primary-main-600">아주 쉬운 단어</span>부터 시작해요<br />
+                  맞히면 조금씩 어려워져요
                 </Headline>
-                <img src={CROP_ASSETS.mascotWatering} alt="" draggable={false}
-                  className="w-[210px] h-[210px] object-contain select-none mt-[26px]" />
+                <div className="flex items-end justify-center gap-[6px] mt-[30px]" aria-hidden>
+                  {['sprout', 'leaf', 'carrot'].map((c) => (
+                    <img key={c} src={cropAssetByVariant(c, 'healthy')} alt="" draggable={false}
+                      className="w-[92px] h-[92px] object-contain object-bottom select-none" />
+                  ))}
+                </div>
               </div>
               <div className="px-[24px] shrink-0">
                 <NoteCard icon={<CheckCircle size={16} weight="fill" className="text-status-success-600" />}
                   title="틀려도 괜찮아요">
-                  맞힐 때까지 <b className="text-layout-black dark:text-layout-white">뒤에서 다시</b> 물어봐요.
-                  뜻 고르기 · 듣고 고르기 · 카드 맞추기가 돌아가며 나와요.
+                  틀린 단어는 <b className="text-layout-black dark:text-layout-white">마지막에 다시</b> 물어봐요.
+                  뜻 고르기 · 듣고 고르기 · 카드 맞추기 · 빈칸 · 문장 만들기를 하나씩 해봐요.
                 </NoteCard>
+                {trialError && (
+                  <p className="mt-[10px] text-center text-[12px] font-[600] text-status-error-600">
+                    문제를 불러오지 못했어요. 다시 눌러주세요.
+                  </p>
+                )}
               </div>
               <div className="px-[24px] pt-[18px] pb-[26px] shrink-0">
-                <Cta label={loadingTrial ? '불러오는 중...' : '첫 학습 시작'}
+                <Cta label={loadingTrial ? '불러오는 중...' : '시작하기'}
                   disabled={loadingTrial} onClick={startTrial} />
               </div>
             </>
+          )}
+
+          {/* ⑤ 추천 단어장 — 잰 수준에 맞는 서점 단어장 3권. 서점 카드 규격 그대로, 가격 자리는 '무료로 시작'.
+              카드를 누르면 서점과 같은 미리보기에서 단어를 보고 고른다. */}
+          {step === 'recommend' && (
+            <div className="flex flex-col flex-1 min-h-0 px-[24px] pt-[16px] overflow-y-auto">
+              <h1 className="text-[22px] font-[800] leading-[1.35] tracking-[-0.04em] text-layout-black dark:text-layout-white">
+                {myLevel
+                  ? <><span className="text-primary-main-600">{myLevel.cefr} · {myLevel.label}</span>에<br />맞는 단어장이에요</>
+                  : <>수준에 맞는<br />단어장이에요</>}
+              </h1>
+              <p className="mt-[9px] mb-[18px] text-[12.5px] font-[500] leading-[1.6] text-layout-gray-300">
+                하나를 골라 무료로 시작해요. 카드를 누르면 어떤 단어가 들었는지 볼 수 있어요.
+              </p>
+              {(recommend?.books?.length ?? 0) > 0 ? (
+                <ul className="grid grid-cols-2 gap-[15px] pb-[24px]">
+                  {recommend.books.map((b) => (
+                    <BookCard key={b.bookstore_id} item={toBookCardItem(b)} priceLabel="무료로 시작"
+                      onClick={() => openBookPreview(b)} />
+                  ))}
+                </ul>
+              ) : (
+                <p className="py-[40px] text-center text-[13px] font-[500] text-layout-gray-300">
+                  {recommendFailed || theta == null ? '단어장을 불러오지 못했어요.' : '단어장을 찾는 중...'}
+                </p>
+              )}
+              {(recommendFailed || theta == null) && (
+                <div className="pb-[26px]">
+                  <Cta label="수준 다시 알아보기" onClick={() => { vibrate({ duration: 5 }); setStep('ready'); }} />
+                </div>
+              )}
+            </div>
           )}
 
           {/* ⑩ 유입 경로 */}
@@ -755,12 +780,12 @@ const Onboarding = () => {
             </>
           )}
 
-          {/* ⑫ 하루 목표 — 학습 뒤라 "오늘 n알"이 예고가 아니라 이미 일어난 일이다 */}
+          {/* ⑫ 하루 목표 — 온보딩에선 심지 않는다(이슈 #25). 고른 단어장에서 오늘부터 이만큼씩 심는다. */}
           {step === 'daily' && (
             <>
               <div className="flex flex-col flex-1 min-h-0 px-[24px] pt-[6px] overflow-y-auto">
                 <Headline>
-                  <span className="text-primary-main-600">내일부터</span> 하루에<br />몇 알씩 심을까요?
+                  <span className="text-primary-main-600">오늘부터</span> 하루에<br />몇 알씩 심을까요?
                 </Headline>
                 <div className="mt-[26px]">
                   {DAILY.map((d) => (
@@ -771,8 +796,8 @@ const Onboarding = () => {
                       보조 카드(NoteCard)와 같은 회색 배경·본문 톤을 쓴다. */}
                   <div className="flex gap-[8px] rounded-[14px] bg-layout-gray-50 dark:bg-layout-gray-dark p-[13px_14px] mt-[2px]">
                     <p className="text-[11.5px] font-[500] leading-[1.6] text-layout-gray-400 dark:text-layout-gray-100">
-                      오늘 심은 <b className="font-[800]">{planted}알</b>은 첫날 분량이에요.
-                      여기서 고른 개수는 <b className="font-[800]">내일부터</b> 적용됩니다.
+                      {bookName ? <><b className="font-[800]">{bookName}</b>에서 </> : null}
+                      하루에 이만큼 새 씨앗을 심어요. 홈의 <b className="font-[800]">새 씨앗 심기</b>로 오늘 바로 시작할 수 있어요.
                     </p>
                   </div>
                 </div>
@@ -830,15 +855,15 @@ const Onboarding = () => {
           {step === 'auth' && (
             <>
               <div className="flex flex-col flex-1 min-h-0 items-center justify-center text-center px-[28px]">
-                <img src={CROP_ASSETS.mascotSolo} alt="" draggable={false}
-                  className="w-[132px] h-[132px] object-contain select-none mb-[26px]" />
+                <img src={cropAssetByVariant('carrot', 'healthy')} alt="" draggable={false}
+                  className="w-[120px] h-[120px] object-contain object-bottom select-none mb-[26px]" />
                 <h1 className="text-[23px] font-[800] leading-[1.4] tracking-[-0.04em] text-layout-black dark:text-layout-white">
                   {username.trim()
                     ? <><span className="text-primary-main-600">{username.trim()}</span>님, 거의 다 왔어요</>
                     : '거의 다 왔어요'}
                 </h1>
                 <p className="mt-[14px] text-[14px] font-[500] leading-[1.7] text-layout-gray-300">
-                  방금 심은 씨앗 {planted}알을 저장할게요.
+                  {bookName ? <><b className="text-layout-black dark:text-layout-white">{bookName}</b><br />고른 단어장을 계정에 담아 둘게요.</> : '오늘 학습한 기록을 저장할게요.'}
                 </p>
               </div>
               <div className="flex flex-col gap-[10px] px-[24px] pb-[26px] shrink-0">

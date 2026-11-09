@@ -1,17 +1,20 @@
 """온보딩 (트랙 ⑤) — 게스트 맛보기 → 가입 → 데이터 이전 → 점진 해금.
 
-- GET  /onboarding/books              (비인증) 레벨 카드 목록
-- GET  /onboarding/level-book?level=N (비인증) 레벨별 단어장(단어 포함) — 맛보기 소스.
+- GET  /onboarding/books              (비인증) 레벨 카드 목록 (v1)
+- GET  /onboarding/level-book?level=N (비인증) 레벨별 단어장(단어 포함) — v1 맛보기 소스.
        응답 전 해당 레벨 단어 TTS를 백그라운드로 미리 생성·캐싱(게스트 무인증 재생 대비).
-- POST /onboarding/migrate           (인증) 가입 직후 1회, 레벨 단어장 생성 + 맛본 답안 반영 + 보상
+- GET  /onboarding/placement-pool     (비인증) v2 수준 측정 재료(등급별 단어+쉬운 예문) — 이슈 #25
+- GET  /onboarding/recommend-books?theta=N (비인증) v2 측정 수준에 맞는 서점 단어장 3권 — 이슈 #25
+- POST /onboarding/migrate           (인증) 가입 직후 1회. flow='v2' 면 고른 서점 단어장 무료 담기 +
+       θ 초기화 + 측정 세션 기록 + 보상, 아니면 v1(레벨 단어장 생성 + 맛본 답안 반영 + 보상)
 - GET  /onboarding/unlock-status      (인증) 온보딩 행동 기반 미션 해금 상태(6단계)
-- POST /onboarding/mission/complete   (인증) 프론트 신호 미션(ai_test/search_word/focus_study/free_test) 완료 처리
+- POST /onboarding/mission/complete   (인증) 프론트 신호 미션(search_word/focus_study) 완료 처리
 
-온보딩 행동 기반 미션(6단계 선형 체인, ONBOARDING_MISSIONS 참고):
-  ai_test → make_book → buy_book → search_word → focus_study → free_test
-make_book/buy_book은 app/routes/voca_books.py의 create_voca_book/append_vocas_to_book 훅에서
-백엔드가 자동 감지해 완료 처리하고, 나머지는 프론트가 /onboarding/mission/complete로 신호를 보낸다.
-free_test(M6)는 unlocks=None인 종료 미션 — 더 이상 해금할 feature가 없다(체인의 마무리 신호용).
+온보딩 행동 기반 미션 v2(6단계 선형 체인, ONBOARDING_MISSIONS 참고, 순서 강제):
+  plant_seed → make_book → search_word → buy_book → focus_study → care_farm
+plant_seed/care_farm 은 study.finish_session, make_book/buy_book 은 voca_books.py 훅에서
+백엔드가 자동 감지하고, 나머지는 프론트가 /onboarding/mission/complete로 신호를 보낸다.
+체인 대상은 v2 온보딩 가입자(test_type='placement' 온보딩 세션 보유)뿐 — 나머지는 legacy.
 
 레벨(1 초등 / 2 중등 / 3 고등 / 4 대학생)별 단어는 AdminVocaBook에서 구성 —
 기존 /auth/level_book_list와 동일 소스. 학습 알고리즘(FSRS)은 services/fsrs를 '호출만' 한다.
@@ -26,7 +29,7 @@ from uuid import UUID
 
 from flask import Blueprint, jsonify, g, request, current_app
 
-from app import db, cache
+from app import db, cache, limiter
 from app.models.models import (
     User, UserVoca, UserVocaBook, UserVocaBookMap, UserStudyLog, UserStudySession,
     Bookstore,
@@ -60,29 +63,54 @@ UNLOCK_THRESHOLDS = {'vocabook': 1, 'store': 2, 'dict': 3, 'listen': 4, 'custom'
 SIGNUP_REWARD_GEM = 5
 
 # ──────────────────────────────────────────────
-# 온보딩 행동 기반 미션 (5단계 선형 체인)
+# 온보딩 행동 기반 미션 v2 (6단계 선형 체인, 이슈 #25)
 # ──────────────────────────────────────────────
 # key         : 미션 식별자 (UserOnboardingMission.mission_key)
-# order       : 화면 노출 순서 / 다음 미션(current_mission) 판정 순서
+# order       : 화면 노출 순서 / 다음 미션(current_mission) 판정 순서 — 선행 미션을 끝내야 완료가 인정된다
 # title       : 사용자 노출 한국어 라벨
 # unlocks     : 완료 시 해금되는 feature (UNLOCK_THRESHOLDS와 동일 키 체계)
 # reward_gem  : 완료 보상 보석
+#
+# 완료 감지 경로:
+#   plant_seed  — study.finish_session: 새 씨앗 심기(test_type='plant') 세션 완료
+#   make_book   — voca_books/voca_indexs 훅: 직접 만든 단어장에 단어 추가
+#   search_word — 프론트 신호(/onboarding/mission/complete)
+#   buy_book    — voca_books.create_voca_book 훅: 서점 단어장 담기
+#   focus_study — 프론트 신호
+#   care_farm   — study.finish_session: 복습(test_type='quick') 세션 완료
 ONBOARDING_MISSIONS = [
-    {'key': 'ai_test',     'order': 1, 'title': 'AI 추천 테스트 완료',   'unlocks': 'vocabook', 'reward_gem': 5},
-    {'key': 'make_book',   'order': 2, 'title': '단어장 만들고 단어 추가',  'unlocks': 'store',    'reward_gem': 5},
-    {'key': 'buy_book',    'order': 3, 'title': '서점 단어장 담기 완료',   'unlocks': 'dict',     'reward_gem': 10},
-    {'key': 'search_word', 'order': 4, 'title': '사전에서 단어 찾아보기 완료', 'unlocks': 'listen', 'reward_gem': 5},
-    {'key': 'focus_study', 'order': 5, 'title': '집중 반복 학습 완료',    'unlocks': 'custom',   'reward_gem': 10},
-    # M6: 더 이상 해금할 기능이 없는 종료 미션(unlocks=None) — 온보딩 체인의 마무리 신호용.
-    {'key': 'free_test',   'order': 6, 'title': '자유 설정 테스트 완료',  'unlocks': None,       'reward_gem': 20},
+    {'key': 'plant_seed',  'order': 1, 'title': '새 씨앗 심기',               'unlocks': 'vocabook', 'reward_gem': 5},
+    {'key': 'make_book',   'order': 2, 'title': '단어장 만들고 단어 직접 추가', 'unlocks': 'dict',     'reward_gem': 5},
+    {'key': 'search_word', 'order': 3, 'title': '찾기에서 단어 검색',          'unlocks': 'store',    'reward_gem': 5},
+    {'key': 'buy_book',    'order': 4, 'title': '상점에서 단어장 담기',         'unlocks': 'listen',   'reward_gem': 10},
+    {'key': 'focus_study', 'order': 5, 'title': '집중 반복 학습 완료',          'unlocks': 'custom',   'reward_gem': 10},
+    # 마무리 미션: 더 이상 해금할 기능이 없다(unlocks=None).
+    {'key': 'care_farm',   'order': 6, 'title': '농장 돌보기(복습) 완료',       'unlocks': None,       'reward_gem': 20},
 ]
 ONBOARDING_MISSION_BY_KEY = {m['key']: m for m in ONBOARDING_MISSIONS}
 ONBOARDING_MISSION_KEYS = set(ONBOARDING_MISSION_BY_KEY.keys())
 # feature(해금 대상) → 이를 해금시키는 mission_key. unlocks=None(해금 대상 없는 종료 미션)은 제외.
 FEATURE_UNLOCK_MISSION = {m['unlocks']: m['key'] for m in ONBOARDING_MISSIONS if m['unlocks']}
 # /onboarding/mission/complete로 프론트가 직접 신호를 보내는 미션(백엔드 자동 감지 대상 제외).
-# make_book/buy_book은 voca_books.py 훅에서만 완료 처리한다 — API로 임의 완료 방지.
-FRONTEND_SIGNAL_MISSION_KEYS = {'ai_test', 'search_word', 'focus_study', 'free_test'}
+# plant_seed/make_book/buy_book/care_farm 은 백엔드 훅에서만 완료 처리한다 — API로 임의 완료 방지.
+FRONTEND_SIGNAL_MISSION_KEYS = {'search_word', 'focus_study'}
+# 구 체인(v1) 키. 구 프론트 번들이 보내도 400 대신 200 무시로 응답한다.
+LEGACY_MISSION_KEYS = {'ai_test', 'free_test'}
+
+# v2 온보딩(수준 측정형)으로 가입한 사용자 표식 — migrate v2 가 남기는 온보딩 세션의 test_type.
+# 이 세션이 있는 사용자만 미션 체인 대상이고, 나머지(이번 배포 전 가입자·v1 온보딩 가입자)는 legacy.
+# onboarding_ver 는 프론트 라우팅이 '1' 로 완료를 판정하므로 그대로 '1' 을 쓰고, 구분은 이 세션으로 한다.
+PLACEMENT_SESSION_TYPE = 'placement'
+
+
+def is_v2_onboarding_user(user_id) -> bool:
+    if isinstance(user_id, str):
+        user_id = UUID(user_id)
+    return db.session.query(UserStudySession.id).filter(
+        UserStudySession.user_id == user_id,
+        UserStudySession.is_onboarding.is_(True),
+        UserStudySession.test_type == PLACEMENT_SESSION_TYPE,
+    ).first() is not None
 
 
 @retry_on_deadlock
@@ -128,6 +156,24 @@ def complete_onboarding_mission(user_id, mission_key) -> dict:
         db.session.commit()   # 바꾼 것은 없다 — User 잠금만 푼다(호출부는 모두 자기 커밋 뒤에 부른다)
         return {'newly_completed': False, 'reward_gem': 0, 'unlocks': mission['unlocks']}
 
+    # legacy(v2 온보딩 가입자가 아님) — 미션이 숨겨진 사용자에게 보석·행을 만들지 않는다.
+    if not is_v2_onboarding_user(user_id):
+        db.session.commit()
+        return {'newly_completed': False, 'reward_gem': 0, 'unlocks': mission['unlocks'], 'skipped': 'legacy'}
+
+    # 순서 강제 — 바로 앞 미션이 끝나지 않았으면 인정하지 않는다(나중에 순서가 오면 다시 감지된다).
+    prev = next((m for m in ONBOARDING_MISSIONS if m['order'] == mission['order'] - 1), None)
+    if prev is not None:
+        prev_done = (
+            db.session.query(UserOnboardingMission.id)
+            .filter(UserOnboardingMission.user_id == user_id, UserOnboardingMission.mission_key == prev['key'])
+            .first()
+        )
+        if not prev_done:
+            db.session.commit()
+            return {'newly_completed': False, 'reward_gem': 0, 'unlocks': mission['unlocks'],
+                    'skipped': 'out_of_order'}
+
     reward = mission['reward_gem']
     db.session.add(UserOnboardingMission(user_id=user_id, mission_key=mission_key))
     # 보석 + 원장을 미션 행과 한 트랜잭션으로 커밋한다(예전에는 원장이 별도 커밋이었다).
@@ -167,12 +213,13 @@ def complete_onboarding_mission(user_id, mission_key) -> dict:
 def _build_unlock_status(user) -> dict:
     """GET /onboarding/unlock-status 및 POST /onboarding/mission/complete가 공유하는 페이로드.
 
-    legacy(onboarding_ver != '1') 유저는 전부 해금(True)·전부 완료로 간주.
-    신규 유저는 UserOnboardingMission 완료 기록 기준으로 missions/unlocked/current_mission을 계산한다.
+    legacy = v2 온보딩(수준 측정형, migrate flow='v2')으로 가입하지 않은 사용자 — 이번 배포 전
+    가입자와 v1 온보딩 가입자(구 미션 기록 보유 포함). 전부 해금(True)·전부 완료로 간주.
+    v2 가입자는 UserOnboardingMission 완료 기록 기준으로 missions/unlocked/current_mission을 계산한다.
     """
     from app.models.models import UserOnboardingMission
 
-    legacy = user.onboarding_ver != '1'
+    legacy = not is_v2_onboarding_user(user.id)
 
     rows = (
         db.session.query(UserOnboardingMission)
@@ -385,6 +432,47 @@ def level_book():
     return jsonify({'code': 200, 'data': book}), 200
 
 
+# ──────────────────────────────────────────────
+# 온보딩 v2 — 수준 측정형 (이슈 #25)
+# ──────────────────────────────────────────────
+
+@onboarding_bp.route('/placement-pool', methods=['GET'])
+@limiter.limit('20 per minute')
+@english_dict
+def placement_pool():
+    """적응형 수준 측정 문제 재료 — 비인증. 등급(A1=1 … C1=5)마다 12개 내외, 호출마다 섞인다."""
+    from app.services.onboarding_placement import build_placement_pool
+    try:
+        bands = build_placement_pool()
+    except Exception:
+        logging.getLogger(__name__).error('placement-pool 생성 실패', exc_info=True)
+        return jsonify({'code': 500, 'message': '수준 측정 문제를 준비하지 못했습니다.'}), 500
+    return jsonify({'code': 200, 'data': {'bands': bands}}), 200
+
+
+def _parse_theta(raw):
+    """0~100 클램프. 숫자가 아니면 None."""
+    try:
+        v = float(raw)
+    except (TypeError, ValueError):
+        return None
+    if v != v or v in (float('inf'), float('-inf')):   # NaN/inf
+        return None
+    return max(0.0, min(100.0, v))
+
+
+@onboarding_bp.route('/recommend-books', methods=['GET'])
+@limiter.limit('30 per minute')
+@english_dict
+def recommend_books():
+    """측정된 수준(theta 0~100)에 맞는 서점 단어장 3권 — 비인증."""
+    from app.services.onboarding_placement import recommend_books as _recommend
+    theta = _parse_theta(request.args.get('theta'))
+    if theta is None:
+        return jsonify({'code': 400, 'message': 'theta(0~100 숫자)가 필요합니다.'}), 400
+    return jsonify({'code': 200, 'data': _recommend(theta)}), 200
+
+
 @onboarding_bp.route('/migrate', methods=['POST'])
 @jwt_required
 @english_dict
@@ -406,6 +494,10 @@ def migrate():
 
     user_id = UUID(g.user_id)
     body = request.get_json(silent=True) or {}
+
+    # v2(수준 측정형) — flow='v2'. 없고 level 이 있으면 아래 v1 동작 그대로(구 게스트 데이터 호환).
+    if body.get('flow') == 'v2':
+        return _migrate_v2(user_id, body)
 
     # 새 트랜잭션의 첫 문장으로 User 를 잠근다(전역 순서 첫 번째 + 최신 잔액).
     user = start_user_tx(user_id)
@@ -574,15 +666,168 @@ def migrate():
     }), 200
 
 
+MIGRATE_MAX_ANSWERS = 100
+
+
+def _apply_common_settings(user, body):
+    """맞춤 설정(유입 경로·목표·하루 새 단어·이름) — v1/v2 공통."""
+    daily_limit = body.get('daily_new_limit')
+    try:
+        daily_limit = int(daily_limit)
+    except (TypeError, ValueError):
+        daily_limit = DEFAULT_DAILY_LIMIT
+    src = body.get('source_channel')
+    goal = body.get('learning_goal')
+    user.source_channel = (str(src)[:50] if src else None)
+    user.learning_goal = (str(goal)[:50] if goal else None)
+    user.daily_new_limit = daily_limit if 0 < daily_limit <= 200 else DEFAULT_DAILY_LIMIT
+    user.onboarding_ver = '1'
+    username = body.get('username')
+    username = username.strip() if isinstance(username, str) else ''
+    if username and not user.username:
+        user.username = username[:36]
+
+
+def _migrate_v2(user_id, body):
+    """v2 가입 직후 1회 — 수준 측정 결과 저장 + 고른 서점 단어장 무료 담기 + 보상.
+
+    body: { flow:'v2', bookstore_id, theta, answers:[{voca_id, question_type, correct}],
+            source_channel, learning_goal, daily_new_limit, username }
+    - 온보딩 단어는 심지 않는다(UserVoca/UserVocaBookMap 은 담은 단어장 복사분만).
+    - UserStudySession(is_onboarding, test_type='placement') — v2 가입자 표식 겸 측정 기록.
+    - 가입 당일을 연속 학습 1일로 인정(streak_v2.qualify_today_for_onboarding).
+    멱등: 이미 온보딩 완료(onboarding_ver='1')면 409.
+    """
+    from app.utils.gem import change_gem, start_user_tx
+    from app.models.models import GemReason, UserSkillProfile
+    from app.routes.voca_books import create_bookstore_book_for_user
+    from app.services import skill_level as SL
+    from app.services.onboarding_placement import theta_to_level_id
+
+    # ── 입력 검증(잠금 전에) ──
+    try:
+        bookstore_id = int(body.get('bookstore_id'))
+    except (TypeError, ValueError):
+        return jsonify({'code': 400, 'message': 'bookstore_id 가 필요합니다.'}), 400
+    theta = _parse_theta(body.get('theta'))
+    if theta is None:
+        theta = SL.DEFAULT_THETA
+    raw_answers = body.get('answers') or []
+    if not isinstance(raw_answers, list):
+        return jsonify({'code': 400, 'message': 'answers 는 배열이어야 합니다.'}), 400
+    answers = []
+    for a in raw_answers[:MIGRATE_MAX_ANSWERS]:
+        if not isinstance(a, dict):
+            continue
+        qtype = a.get('question_type')
+        answers.append({
+            'question_type': qtype if isinstance(qtype, str) and len(qtype) <= 40 else 'multipleChoice',
+            'correct': bool(a.get('correct')),
+        })
+    studied = len(answers)
+    correct_total = sum(1 for a in answers if a['correct'])
+
+    # 사전 DB 읽기 — 사용자 잠금 전에 끝낸다(voca_books.create_voca_book 과 같은 순서)
+    bookstore = db.session.query(Bookstore).filter(Bookstore.id == bookstore_id).first()
+    if bookstore is None or bookstore.hide == 'Y' or not bookstore.admin_voca_book_id:
+        return jsonify({'code': 400, 'message': '담을 수 있는 서점 단어장이 아닙니다.'}), 400
+
+    user = start_user_tx(user_id)
+    if user is None:
+        return jsonify({'code': 404, 'message': '사용자를 찾을 수 없습니다.'}), 404
+    if user.onboarding_ver == '1':
+        db.session.rollback()
+        return jsonify({'code': 409, 'message': '이미 온보딩을 완료했습니다.'}), 409
+
+    now = dt.datetime.utcnow()
+    try:
+        _apply_common_settings(user, body)
+        user.level_id = theta_to_level_id(theta)
+
+        # 서점 단어장 무료 담기 — POST /voca_books 서점 담기와 같은 생성 경로(보석 차감 없음, 독서왕 포함)
+        vbook, completed_goals = create_bookstore_book_for_user(user_id, bookstore, ONBOARDING_LANG)
+
+        session = UserStudySession(user_id=user_id, test_type=PLACEMENT_SESSION_TYPE,
+                                   book_ids=json.dumps([str(vbook.id)]),
+                                   question_count=studied, correct_count=correct_total,
+                                   is_onboarding=True)
+        session.started_at = now
+        session.finished_at = now
+        db.session.add(session)
+
+        # 사용자 수준 θ 초기화 — 측정값으로 덮고, 답변 수·유형 집계를 반영한다.
+        profile = SL.load_profile_row(user_id, ONBOARDING_LANG, lock=True, create=True)
+        stats = {'theta': theta, 'answers': 0,
+                 'type_stats': profile.type_stats or {}, 'error_stats': profile.error_stats or {}}
+        for a in answers:
+            if SL.counts_for_skill(a['question_type']):
+                stats = SL.apply_answer(stats, question_type=a['question_type'],
+                                        was_correct=a['correct'], item_score=None)
+        profile.theta = round(theta, 3)
+        profile.answers = int(profile.answers or 0) + studied
+        profile.type_stats = stats['type_stats']
+        profile.error_stats = stats['error_stats']
+
+        reward = 0
+        if studied > 0:
+            change_gem(user_id, SIGNUP_REWARD_GEM, GemReason.ACHIEVEMENT, '온보딩 가입 보상',
+                       source_type='onboarding', user=user)
+            reward = SIGNUP_REWARD_GEM
+        db.session.flush()
+        vbook_id, vbook_title, vbook_total = str(vbook.id), vbook.name, vbook.total_word_cnt
+        db.session.commit()
+    except Exception:
+        db.session.rollback()
+        logging.getLogger(__name__).error('온보딩 v2 migrate 실패', exc_info=True)
+        return jsonify({'code': 500, 'message': '온보딩 저장 중 오류가 발생했습니다.'}), 500
+
+    # 가입 당일 = 학습한 날(연속 학습 1일). 실패해도 온보딩 자체는 성공으로 응답한다.
+    streak = None
+    try:
+        from app.services.game.farm_v2.streak_v2 import qualify_today_for_onboarding
+        streak = qualify_today_for_onboarding(user_id, correct_total).get('streak')
+    except Exception:
+        db.session.rollback()
+        logging.getLogger(__name__).warning('온보딩 연속 학습 반영 실패(무해)', exc_info=True)
+
+    try:
+        from app.services.recommend.pool import invalidate_pool_cache
+        invalidate_pool_cache(user_id)
+    except Exception:
+        logging.getLogger(__name__).warning('온보딩 migrate 후 추천 풀 캐시 무효화 실패(무해)', exc_info=True)
+
+    gem_cnt = db.session.query(User.gem_cnt).filter(User.id == user_id).scalar()
+    from app.services.reading_goal import goals_payload
+    return jsonify({
+        'code': 200,
+        'data': {
+            'studied': studied,
+            'correct': correct_total,
+            'reward': reward,
+            'user_voca_book_id': vbook_id,
+            # v1 응답과 같은 이름의 보조 필드
+            'book_id': vbook_id,
+            'book_title': vbook_title,
+            'total_words': vbook_total,
+            'reward_gem': reward,
+            'gem_cnt': gem_cnt,
+            'theta': round(theta, 2),
+            'level_id': theta_to_level_id(theta),
+            'streak': streak,
+            'goals': goals_payload(completed_goals),
+        },
+    }), 200
+
+
 @onboarding_bp.route('/unlock-status', methods=['GET'])
 @jwt_required
 def unlock_status():
     """온보딩 행동 기반 미션 해금 상태(6단계).
 
-    legacy(onboarding_ver NULL)=기존 사용자 → 전부 해금.
-    신규(=1) → 미션(ai_test/make_book/buy_book/search_word/focus_study/free_test) 완료 기록 기준으로
-    단어장/상점/사전/반복듣기/커스텀을 점진 해금한다(과거 "완료 세션 수" 방식 대체).
-    free_test(M6)는 unlocks=None이라 unlocked 맵에는 영향을 주지 않는다(종료 미션).
+    legacy(v2 온보딩 가입자가 아님 — 이번 배포 전 가입자·v1 가입자) → 전부 해금, 미션 숨김.
+    v2 가입자 → 미션(plant_seed/make_book/search_word/buy_book/focus_study/care_farm) 완료 기록 기준으로
+    단어장/사전/상점/반복듣기/커스텀을 점진 해금한다.
+    care_farm(M6)는 unlocks=None이라 unlocked 맵에는 영향을 주지 않는다(종료 미션).
     """
     user_id = UUID(g.user_id)
     user = db.session.query(User).filter(User.id == user_id).first()
@@ -595,12 +840,14 @@ def unlock_status():
 @onboarding_bp.route('/mission/complete', methods=['POST'])
 @jwt_required
 def mission_complete():
-    """프론트 신호 기반 온보딩 미션 완료 처리 — ai_test / search_word / focus_study / free_test 전용.
+    """프론트 신호 기반 온보딩 미션 완료 처리 — search_word / focus_study 전용.
 
-    (make_book / buy_book은 voca_books.py의 create_voca_book / append_vocas_to_book 훅에서만
-     완료 처리한다 — 이 엔드포인트로는 완료시킬 수 없다.)
+    (plant_seed / make_book / buy_book / care_farm 은 백엔드 훅에서만 완료 처리한다.)
 
-    body: { "key": "ai_test" | "search_word" | "focus_study" | "free_test" }
+    body: { "key": "search_word" | "focus_study" }
+
+    구 체인 키(ai_test/free_test)나 백엔드 자동 감지 키가 오면(구 프론트 번들) 400 대신
+    200 + newly_completed=False·ignored=True 로 응답한다 — 구 번들이 오류 처리로 깨지지 않게.
 
     응답: unlock-status와 동일한 missions/unlocked/current_mission 전체를 함께 반환해
     프론트가 재조회 없이 바로 연출·갱신할 수 있도록 한다.
@@ -608,10 +855,19 @@ def mission_complete():
     body = request.get_json(silent=True) or {}
     key = body.get('key')
 
-    if key not in FRONTEND_SIGNAL_MISSION_KEYS:
+    if not isinstance(key, str) or not key or len(key) > 32:
         return jsonify({'code': 400, 'message': '유효하지 않은 미션 key입니다.'}), 400
 
     user_id = UUID(g.user_id)
+
+    if key not in FRONTEND_SIGNAL_MISSION_KEYS:
+        user = db.session.query(User).filter(User.id == user_id).first()
+        if user is None:
+            return jsonify({'code': 404, 'message': '사용자를 찾을 수 없습니다.'}), 404
+        return jsonify({'code': 200, 'data': {
+            'newly_completed': False, 'reward_gem': 0, 'unlocks': None, 'ignored': True,
+            **_build_unlock_status(user),
+        }}), 200
 
     try:
         result = complete_onboarding_mission(user_id, key)

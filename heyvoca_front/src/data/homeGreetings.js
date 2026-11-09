@@ -20,6 +20,8 @@
 // 지지 않는다(순수 함수만 둔다). 호출부(components/home/Main.jsx)가
 // useMemo(key = 상황 id + 날짜)로 고정하고, 학습 후 돌아오거나 날짜가 바뀌면 다시 뽑는다.
 
+import { getKstToday } from '../utils/kstDate';
+
 /** 배열에서 무작위 인덱스 하나. 호출부가 세션 고정을 책임진다. */
 function pickIndex(len) {
   return Math.floor(Math.random() * len);
@@ -61,6 +63,7 @@ export function formatGreetingName(username) {
  * @property {number} streakBest
  * @property {boolean} streakProtectedYesterday    - 어제가 보호권으로 이어진 날인지
  * @property {number} grewTodayCount               - 오늘 승급(성장)한 단어 수
+ * @property {boolean} isSignupDay                 - 오늘(KST)이 가입일인지(userProfile.created_date)
  * @property {Date} now
  */
 
@@ -69,10 +72,11 @@ export function formatGreetingName(username) {
  * StatsContext가 이미 캐시해 둔 값만 쓴다 — 이 화면을 위한 추가 API 호출은 없다.
  *
  * @param {object|null} farmOverview
- * @param {{ grewTodayCount?: number, now?: Date }} [extra]
+ * @param {{ grewTodayCount?: number, signupDate?: string|null, now?: Date }} [extra]
+ *   signupDate — userProfile.created_date(KST 'YYYY-MM-DD'). 없으면(구버전 서버) 가입 당일 판정 안 함.
  * @returns {GreetingContext}
  */
-export function buildGreetingContext(farmOverview, { grewTodayCount = 0, now = new Date() } = {}) {
+export function buildGreetingContext(farmOverview, { grewTodayCount = 0, signupDate = null, now = new Date() } = {}) {
   const counts = farmOverview?.counts ?? {};
   const health = farmOverview?.health ?? {};
   const today = farmOverview?.today ?? {};
@@ -106,6 +110,7 @@ export function buildGreetingContext(farmOverview, { grewTodayCount = 0, now = n
     streakBest: streak.best ?? 0,
     streakProtectedYesterday: streak.protected_yesterday ?? false,
     grewTodayCount,
+    isSignupDay: !!signupDate && signupDate === getKstToday(now),
     now,
   };
 }
@@ -132,6 +137,23 @@ export const HOME_GREETINGS = [
       [' 밭이 아직', '비어 있어요'],
       [' 첫 씨앗을', '심어볼까요'],
       [' 여기서부터', '시작해봐요'],
+    ],
+  },
+
+  // ── 가입 당일(온보딩 첫 학습으로 오늘 할 일을 다 끝낸 상태) — 이슈 #25 ──
+  // 가입하자마자 홈 첫 화면에서 "내일 또 만나요"(doneAll)·"오늘도 수고했어요"(밤) 같은
+  // 마무리 인사를 보면 바로 앱을 끄고 싶어진다. 이날만은 환영 + 다음 행동(둘러보기)을 권한다.
+  // 돌볼 작물이 남아 있으면(careCount>0) 아래 doneMoreLeft 등이 이미 다음 행동을 말하므로 양보한다.
+  // 둘째 날부터는 isSignupDay=false 라 기존 동작 그대로.
+  {
+    id: 'firstDay',
+    priority: 96,
+    when: (ctx) => ctx.isSignupDay && ctx.totalCount > 0 && ctx.careCount === 0,
+    lines: () => [
+      [' 농장에 첫 씨앗을', '심었어요'],
+      [' 농장을', '둘러볼까요'],
+      [' 첫 씨앗이', '자라기 시작했어요'],
+      [' 반가워요,', '농장을 둘러봐요'],
     ],
   },
 

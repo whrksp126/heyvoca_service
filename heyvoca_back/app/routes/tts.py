@@ -400,6 +400,20 @@ def _onboarding_words_whitelist():
         .all()
     )
     words = {normalize_text(w[0]).lower() for w in rows if w[0] and normalize_text(w[0])}
+    # 온보딩 v2 수준 측정(이슈 #25) 후보 단어·예문 — 게스트가 듣기 문제로 재생한다.
+    # 후보는 사전에서 서버가 고른 고정 집합(Redis 캐시)이라 임의 입력이 아니다.
+    try:
+        from app.routes.onboarding import ONBOARDING_LANG
+        from app.services.onboarding_placement import placement_tts_texts
+        from app.utils.dict_lang import use_dict_lang
+        with use_dict_lang(ONBOARDING_LANG):
+            for t in placement_tts_texts():
+                # 태그를 공백으로 바꾼 정규화('happy .')와 태그만 지운 평문('happy.') 둘 다 허용
+                for n in (normalize_text(t), normalize_text(_re.sub(r'<[^>]+>', '', t))):
+                    if n:
+                        words.add(n.lower())
+    except Exception:
+        logging.getLogger(__name__).warning('온보딩 측정 TTS 화이트리스트 구성 실패(무해)', exc_info=True)
     try:
         cache.set(_ONBOARDING_WHITELIST_KEY, json.dumps(list(words)), timeout=_ONBOARDING_WHITELIST_TTL)
     except Exception:

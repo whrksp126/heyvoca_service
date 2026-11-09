@@ -46,7 +46,8 @@ TEAM_EMAIL_SHA16 = {
 BOT_EMAIL_DOMAINS = ('cloudtestlabaccounts.com',)
 BOT_EMAIL_RE = re.compile(r'^[a-z]+\.\d{5}@gmail\.com$')
 
-MISSION_LAST_KEY = 'free_test'   # 온보딩 6단계 체인의 종료 미션 (routes/onboarding.py ONBOARDING_MISSIONS)
+# 온보딩 6단계 체인의 종료 미션 (routes/onboarding.py ONBOARDING_MISSIONS) — v1 'free_test', v2 'care_farm'(이슈 #25)
+MISSION_LAST_KEYS = ('free_test', 'care_farm')
 
 STORE_DOWNLOADS_NOTE = (
     '스토어 다운로드 수는 아직 자동 수집하지 않는다. '
@@ -197,7 +198,7 @@ def build_report(start, end, extra_exclude_emails=(), today=None):
         first_study = sum(1 for u in us if d in active_days[u.id])
         setup_done = sum(1 for u in us if u.onboarding_ver == '1')
         mission_any = sum(1 for u in us if missions[u.id])
-        mission_done = sum(1 for u in us if MISSION_LAST_KEY in missions[u.id])
+        mission_done = sum(1 for u in us if any(k in missions[u.id] for k in MISSION_LAST_KEYS))
 
         def _ret(offsets):
             if d + dt.timedelta(days=max(offsets)) > last_closed:

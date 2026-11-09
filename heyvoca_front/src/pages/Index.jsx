@@ -4,9 +4,9 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useUser } from '../context/UserContext';
 import { migrateOnboardingApi } from '../api/study';
-import { pendingGuestMigration, clearGuest } from '../utils/guestStorage';
+import { pendingGuestMigration, clearGuest, buildMigrateBody } from '../utils/guestStorage';
+import { notifyOnboardingMigrated } from '../utils/studyDataEvents';
 import { useVocabulary } from '../context/VocabularyContext';
-import { useStats } from '../context/StatsContext';
 import lottie from 'lottie-web';
 import animationData from '../assets/lottie/heyvoca logo-01.json';
 import postMessageManager from '../utils/postMessageManager';
@@ -38,11 +38,7 @@ const Index = () => {
     isUserDictionaryLoading,
     isRecentStudyLoading,
     isBookStoreLoading,
-    fetchVocabularySheets,
   } = useVocabulary();
-
-  // 온보딩 이전 직후 홈 통계(밭·오늘 요약) 캐시를 다시 채우기 위해서만 쓴다
-  const { refreshStats } = useStats();
 
   // 바가 100% 차 보이고 나서 실제 네비게이트
   const [graceDone, setGraceDone] = useState(false);
@@ -156,14 +152,7 @@ const Index = () => {
     const pending = pendingGuestMigration();
     if (!pending) return;
     migratedRef.current = true;
-    migrateOnboardingApi({
-      level: pending.level,
-      source_channel: pending.source_channel,
-      learning_goal: pending.learning_goal,
-      daily_new_limit: pending.daily_new_limit,
-      username: pending.username,
-      answers: pending.answers,
-    }).then(async (res) => {
+    migrateOnboardingApi(buildMigrateBody(pending)).then(async (res) => {
       if (res?.code === 200) {
         // 온보딩 학습을 **정규 세션과 똑같이** 집계한다.
         // /mainpage/user_study_history 가 XP · 출석 · 출석왕 · 노력왕 · 데일리 미션 · 끈기왕을
@@ -186,9 +175,16 @@ const Index = () => {
           // 매번 똑같이 달성되는 업적을 보여주는 게 형식적이었다. 대신 계정에 실제로 반영된
           // 지금, 홈 첫 진입에서 한 번만 보여주기 위해 대기열에 담아 둔다.
           // components/home/Main.jsx 가 홈 마운트 시 이 값을 읽는 즉시 지우고 순차로 띄운다.
-          if (historyData?.goals?.length > 0) {
+          // v2(이슈 #25)는 migrate 자체가 추천 서점 단어장을 서점 담기 경로로 넣어 독서왕 1레벨을
+          // 지급하고 그 응답(res.data.goals)에 실어 준다 — 게스트 결과 화면 보석 예측과 같은 목록이
+          // 되도록 함께 담는다(독서왕 먼저, 이어서 출석왕·노력왕·끈기왕).
+          const overlayGoals = [
+            ...(Array.isArray(res?.data?.goals) ? res.data.goals : []),
+            ...(Array.isArray(historyData?.goals) ? historyData.goals : []),
+          ];
+          if (overlayGoals.length > 0) {
             try {
-              localStorage.setItem('heyvoca_pending_goal_overlay', JSON.stringify(historyData.goals));
+              localStorage.setItem('heyvoca_pending_goal_overlay', JSON.stringify(overlayGoals));
             } catch (e) { /* 저장 실패는 무시 — 업적 연출만 못 볼 뿐 학습 자체엔 영향 없다 */ }
           }
         }
@@ -201,19 +197,12 @@ const Index = () => {
         //  ② 홈/마이페이지가 stale 프로필을 읽어 닉네임이 '미설정'으로 보인다.
         // 따라서 서버가 방금 세팅한 최신 프로필(닉네임·온보딩 상태)을 즉시 재조회한 뒤 홈으로 보낸다.
         fetchUserProfile().catch(() => { /* 실패해도 흐름은 계속 — 다음 조회 시 갱신됨 */ });
-        // migrate가 방금 만든 온보딩 단어장(+단어)을 프론트 vocabularySheets에 즉시 반영한다.
-        // 이걸 안 하면 로그인 시점에 로드된 빈 목록이 그대로 남아, 홈에서 AI 추천 테스트 진입 시
-        // "단어가 부족해요"가 뜬다(앱 재시작 전까지). fetchVocabularySheets가 vocaBooks+userDictionary를 재조회.
-        if (typeof fetchVocabularySheets === 'function') {
-          fetchVocabularySheets().catch(() => { /* 실패해도 흐름은 계속 */ });
-        }
-        // 홈의 밭 그림·씨앗 수·오늘 요약은 StatsContext 캐시에서 온다. 그 캐시는
-        // **로그인되는 순간**(= migrate 전에) 한 번 채워지고 학습 세션이 끝날 때까지
-        // 다시 돌지 않는다. 갱신하지 않으면 방금 14알을 심은 사람의 첫 홈 화면이
-        // "아직 밭이 비어 있어요"가 된다 — 기기에서 실제로 그렇게 떴다.
-        if (typeof refreshStats === 'function') {
-          refreshStats().catch(() => { /* 실패해도 흐름은 계속 */ });
-        }
+        // migrate가 방금 만든 온보딩 단어장(+단어)과 밭·오늘 요약을 프론트 캐시에 즉시 반영한다.
+        // 단어장(VocabularyContext)·홈 통계(StatsContext) 캐시는 **로그인되는 순간**(= migrate 전에)
+        // 한 번 채워진다. 다시 받지 않으면 단어장 탭이 비어 있고(당겨서 새로고침해야 보임, 이슈 #25),
+        // AI 추천이 "단어가 부족해요", 홈이 "아직 밭이 비어 있어요"가 된다.
+        // 각 Context 가 이 신호를 받아 스스로 재조회한다(Onboarding.jsx 로그인 완료 경로와 공용).
+        notifyOnboardingMigrated();
         if (res?.code === 200) navigate('/home', { replace: true });
       }
       // migrate가 끝났으므로(성공/이미완료/기타응답) 스플래시 네비게이트 게이트를 연다.

@@ -1992,12 +1992,29 @@ def finish_session(session_id):
         logging.getLogger(__name__).error('세션 종료 오류', exc_info=True)
         return jsonify({'code': 500, 'message': '세션 종료에 실패했습니다.'}), 500
 
-    return jsonify({
-        'code': 200,
-        'data': {
-            'session_id':     str(session_obj.id),
-            'question_count': session_obj.question_count,
-            'correct_count':  session_obj.correct_count,
-            'duration_sec':   duration_sec,
-        },
-    }), 200
+    resp_data = {
+        'session_id':     str(session_obj.id),
+        'question_count': session_obj.question_count,
+        'correct_count':  session_obj.correct_count,
+        'duration_sec':   duration_sec,
+    }
+
+    # 온보딩 미션 v2 자동 감지(이슈 #25) — 새 씨앗 심기(plant) 완료 → plant_seed,
+    # 복습(quick, 농장 돌보기) 완료 → care_farm. 실제로 답한 세션만(빈 세션 종료 제외).
+    # 순서 강제·legacy 판정은 complete_onboarding_mission 이 한다. 실패해도 세션 종료는 성공.
+    mission_key = {'plant': 'plant_seed', 'quick': 'care_farm'}.get(session_obj.test_type)
+    if mission_key:
+        try:
+            answered = (resp_data['question_count'] or 0) > 0 or db.session.query(UserStudyLog.id).filter(
+                UserStudyLog.user_id == user_id, UserStudyLog.session_id == session_uuid,
+            ).first() is not None
+            if answered:
+                from app.routes.onboarding import complete_onboarding_mission
+                result = complete_onboarding_mission(user_id, mission_key)
+                if result.get('newly_completed'):
+                    resp_data['onboarding_mission'] = {'key': mission_key, **result}
+        except Exception:
+            db.session.rollback()
+            logging.getLogger(__name__).warning('온보딩 미션 완료 처리 실패: %s', mission_key, exc_info=True)
+
+    return jsonify({'code': 200, 'data': resp_data}), 200

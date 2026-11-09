@@ -42,10 +42,32 @@ export function clearGuestTrial() {
   try { localStorage.removeItem(TRIAL_KEY); } catch { /* 무시 */ }
 }
 
-// 온보딩(레벨 선택 이상)을 진행했고 아직 서버 이전 전인 게스트 데이터가 있으면 반환.
-// 맛보기를 건너뛰어 answers가 비어도 레벨이 있으면 이전 대상(레벨 단어장 생성 + 설정).
+// 온보딩을 진행했고 아직 서버 이전 전인 게스트 데이터가 있으면 반환.
+//  - v2(이슈 #25): 추천 단어장을 골랐으면(bookstore_id) 이전 대상.
+//  - v1(구 데이터): 레벨을 골랐으면 이전 대상(맛보기를 건너뛰어 answers 가 비어도).
 export function pendingGuestMigration() {
   const g = getGuest();
-  if (g && g.level != null) return g;
+  if (g && (g.bookstore_id != null || g.level != null)) return g;
   return null;
+}
+
+// /onboarding/migrate body — v2 데이터면 v2, 아니면 구 v1 그대로.
+export function buildMigrateBody(g, overrides = {}) {
+  const d = { ...(g || {}), ...overrides };
+  const common = {
+    source_channel: d.source_channel ?? null,
+    learning_goal: d.learning_goal ?? null,
+    daily_new_limit: d.daily_new_limit ?? null,
+    username: d.username ?? null,
+  };
+  if (d.bookstore_id != null) {
+    return {
+      flow: 'v2',
+      bookstore_id: d.bookstore_id,
+      theta: d.theta ?? null,
+      answers: Array.isArray(d.answers) ? d.answers : [],
+      ...common,
+    };
+  }
+  return { level: d.level, answers: Array.isArray(d.answers) ? d.answers : [], ...common };
 }

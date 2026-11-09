@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect, useCallback, useMemo } from 'react';
+import React, { createContext, useContext, useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import { useUser, LEARNING_LANG_CHANGED_EVENT } from './UserContext';
 import { wordLang } from '../utils/lang';
 import { getUserVocabularySheetsApi, addUserVocabularySheetApi, updateUserVocabularySheetApi, deleteUserVocabularySheetApi } from '../api/voca';
@@ -21,7 +21,7 @@ import {
 } from '../api/vocaBooks';
 import { getBookStoreApi } from '../api/bookStore';
 import { showToast } from '../utils/osFunction';
-import { notifyStudyDataChanged } from '../utils/studyDataEvents';
+import { notifyStudyDataChanged, ONBOARDING_MIGRATED_EVENT } from '../utils/studyDataEvents';
 import { toLocalDateString, STABILITY_LEAF_DAYS, STABILITY_CARROT_DAYS } from '../utils/common';
 import { getUserRecentStudyDataApi, updateUserRecentStudyDataApi } from '../api/study';
 import AchievementRewardOverlay from '../components/overlay/AchievementRewardOverlay';
@@ -144,10 +144,18 @@ export const VocabularyProvider = ({ children }) => {
   }, [vocabularySheets]);
 
   // [NEW] 사용자 사전 데이터 불러오기
+  // 겹친 조회 중 **마지막에 시작한 것만** 상태에 반영한다. 로그인 직후 최초 로드(migrate 전)와
+  // migrate 뒤 재조회가 겹치면, 먼저 시작한 옛 응답이 나중에 도착해 새 목록(온보딩 단어장)을
+  // 빈 목록으로 덮어쓸 수 있다(이슈 #25 — 가입 직후 단어장 탭 빈 화면).
+  const userDictionarySeqRef = useRef(0);
+  const vocaBooksSeqRef = useRef(0);
+
   const fetchUserDictionary = useCallback(async () => {
+    const seq = ++userDictionarySeqRef.current;
     try {
       setIsUserDictionaryLoading(true);
       const result = await getUserDictionaryApi();
+      if (seq !== userDictionarySeqRef.current) return; // 더 늦게 시작한 조회가 있다 — 옛 응답 버림
       if (result.code === 200) {
         // 배열을 Map 객체로 변환 (ID 기반 빠른 조회를 위해)
         const dictionaryMap = {};
@@ -164,7 +172,7 @@ export const VocabularyProvider = ({ children }) => {
       console.error('fetchUserDictionary 오류:', err);
       setUserDictionaryError('사용자 사전을 불러오지 못했습니다.');
     } finally {
-      setIsUserDictionaryLoading(false);
+      if (seq === userDictionarySeqRef.current) setIsUserDictionaryLoading(false);
     }
   }, []);
 
@@ -173,9 +181,11 @@ export const VocabularyProvider = ({ children }) => {
 
   // [NEW] 단어장(Books) 데이터 불러오기
   const fetchVocaBooks = useCallback(async () => {
+    const seq = ++vocaBooksSeqRef.current;
     try {
       setIsVocaBooksLoading(true);
       const result = await getVocaBooksApi();
+      if (seq !== vocaBooksSeqRef.current) return; // 더 늦게 시작한 조회가 있다 — 옛 응답 버림
       if (result.code === 200) {
         setVocaBooks(result.data);
       } else {
@@ -184,7 +194,7 @@ export const VocabularyProvider = ({ children }) => {
     } catch (err) {
       console.error('fetchVocaBooks 오류:', err);
     } finally {
-      setIsVocaBooksLoading(false);
+      if (seq === vocaBooksSeqRef.current) setIsVocaBooksLoading(false);
     }
   }, []);
 
@@ -925,6 +935,17 @@ export const VocabularyProvider = ({ children }) => {
     };
     window.addEventListener(LEARNING_LANG_CHANGED_EVENT, onLangChanged);
     return () => window.removeEventListener(LEARNING_LANG_CHANGED_EVENT, onLangChanged);
+  }, [isLogin, refetchAll]);
+
+  // 온보딩 이전(migrate) 완료 → 방금 서버에 만든 온보딩 단어장(+단어)·최근 학습을 다시 받는다.
+  // 로그인 순간 받아 둔 목록은 migrate 전 것이라 비어 있다(utils/studyDataEvents.js 주석).
+  useEffect(() => {
+    const onMigrated = () => {
+      if (!isLogin) return;
+      refetchAll();
+    };
+    window.addEventListener(ONBOARDING_MIGRATED_EVENT, onMigrated);
+    return () => window.removeEventListener(ONBOARDING_MIGRATED_EVENT, onMigrated);
   }, [isLogin, refetchAll]);
 
   const value = {

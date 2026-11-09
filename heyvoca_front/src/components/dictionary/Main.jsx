@@ -430,7 +430,9 @@ const Main = () => {
     if (debounceTimerRef.current) clearTimeout(debounceTimerRef.current);
     fetchSuggestions(searchQuery, searchLang);
     searchInputRef.current?.blur();
-  }, [searchQuery, searchLang, fetchSuggestions]);
+    // 입문 퀘스트 3단계(search_word) — 엔터로 검색해도 완료. 이미 완료/legacy면 Context가 스킵한다
+    completeMission('search_word');
+  }, [searchQuery, searchLang, fetchSuggestions, completeMission]);
 
   // 검색 모드 진입 — 목록 자리를 최근 찾은 단어로 바꾼다 (시안 find §5)
   const enterSearchMode = () => {
@@ -465,7 +467,7 @@ const Main = () => {
     searchInputRef.current?.blur();
     executeSearch(item.word);
     scrollContainerRef.current?.scrollTo({ top: 0, behavior: 'auto' });
-    // 온보딩 미션(M4: 사전에서 단어 찾아보기) — 이미 완료/legacy면 Context 내부에서 스킵
+    // 입문 퀘스트 3단계(search_word: 찾기에서 단어 검색) — 이미 완료/legacy면 Context 내부에서 스킵
     completeMission('search_word');
   }, [executeSearch, completeMission, pushRecent, learningLang]);
 

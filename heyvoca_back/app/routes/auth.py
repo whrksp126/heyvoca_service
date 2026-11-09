@@ -664,6 +664,12 @@ def get_user_info():
         'learning_goal' : user.learning_goal,
         # 현재 학습 언어('en'|'ja') — 사전·단어장·학습·통계 조회 기준
         'learning_lang' : user.learning_lang or 'en',
+        # 가입일(KST 'YYYY-MM-DD') — 홈 인사말이 가입 당일엔 작별 인사 대신 환영 문구를 쓰는 데 쓴다(이슈 #25).
+        # created_at 은 datetime.utcnow 로 저장된 naive UTC 다.
+        'created_date': (
+            user.created_at.replace(tzinfo=timezone.utc).astimezone(KST).strftime('%Y-%m-%d')
+            if user.created_at else None
+        ),
     }
     return jsonify({'code':200, 'data': user_item})
 

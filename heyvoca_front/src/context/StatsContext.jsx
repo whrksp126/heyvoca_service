@@ -24,7 +24,7 @@ import { useUser, LEARNING_LANG_CHANGED_EVENT } from './UserContext';
 import { useVocabulary } from './VocabularyContext';
 import { getTodaySummary, getReviewScheduleApi, getTodayMemoryChangesApi } from '../api/study';
 import { getFarmOverviewApi, getFarmHomeFeedApi, getFarmTodayTasksApi, getFarmHeroPlantsApi } from '../api/farm';
-import { STUDY_DATA_CHANGED_EVENT } from '../utils/studyDataEvents';
+import { STUDY_DATA_CHANGED_EVENT, ONBOARDING_MIGRATED_EVENT } from '../utils/studyDataEvents';
 import { getKstToday, msUntilNextKstMidnight } from '../utils/kstDate';
 
 // 홈 탭 재진입 · 앱 복귀 때 이보다 오래된 캐시면 다시 받는다
@@ -215,6 +215,15 @@ export const StatsProvider = ({ children }) => {
       clearTimeout(timer);
       window.removeEventListener(STUDY_DATA_CHANGED_EVENT, onStudyDataChanged);
     };
+  }, [isLogin]);
+
+  // 온보딩 이전(migrate) 완료 → 밭·오늘 요약을 다시 받는다. 로그인 순간 받은 캐시는 migrate 전
+  // 것이라 "아직 밭이 비어 있어요"로 남는다. (진행 중 조회가 있으면 refreshStats 가 뒤에 한 번 더 돈다)
+  useEffect(() => {
+    if (!isLogin) return undefined;
+    const onMigrated = () => refreshStatsRef.current();
+    window.addEventListener(ONBOARDING_MIGRATED_EVENT, onMigrated);
+    return () => window.removeEventListener(ONBOARDING_MIGRATED_EVENT, onMigrated);
   }, [isLogin]);
 
   // 경로 전환 — 학습 화면을 벗어났고 낡았으면 즉시, 홈 탭 재진입이면 오래된 캐시만(주석 2).

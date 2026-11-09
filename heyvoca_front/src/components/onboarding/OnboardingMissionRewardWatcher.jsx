@@ -1,7 +1,7 @@
 // src/components/onboarding/OnboardingMissionRewardWatcher.jsx
 //
 // 온보딩 미션이 완료되면(프론트 direct 신호 completeMission의 newly_completed, 또는
-// make_book/buy_book처럼 백엔드 훅으로 완료돼 refreshUnlock diff로 감지된 경우) 보상은
+// plant_seed·make_book·buy_book·care_farm처럼 서버가 감지해 완료돼 refreshUnlock diff로 감지된 경우) 보상은
 // 이미 백엔드가 지급을 마친 상태다. 이 워처는 그 사실을 "입문 퀘스트" 바텀시트의
 // 보상 받기 연출로 순차 노출하는 타이밍만 담당한다.
 //
@@ -22,9 +22,27 @@ const REWARD_BLOCKED_PATH_PREFIXES = ['/take-test', '/study'];
 
 const OnboardingMissionRewardWatcher = () => {
   const location = useLocation();
-  const { pendingMissionRewards } = useOnboardingUnlock();
+  const { pendingMissionRewards, refreshUnlock, legacy, currentMission } = useOnboardingUnlock();
   const { stack } = useNewBottomSheetContext();
   const { openNewBottomSheet } = useNewBottomSheetActions();
+
+  // 학습·테스트 화면(/take-test·/study)을 벗어나는 순간 해금 상태를 다시 읽는다(이슈 #25).
+  // plant_seed·care_farm 은 서버가 학습 저장 시점에 감지하고, focus_study 신호도 결과 화면에서
+  // 나가므로, 여기서 diff 로 새 완료를 잡아 보상 연출 대기열에 올린다. 세션 종료 저장이
+  // fire-and-forget 이라 조금 늦게 끝날 수 있어 짧은 지연 뒤 한 번 더 읽는다.
+  const prevPathRef = useRef(location.pathname);
+  useEffect(() => {
+    const prev = prevPathRef.current;
+    prevPathRef.current = location.pathname;
+    if (legacy || !currentMission) return undefined;
+    const wasBlocked = REWARD_BLOCKED_PATH_PREFIXES.some((p) => prev.startsWith(p));
+    const isBlocked = REWARD_BLOCKED_PATH_PREFIXES.some((p) => location.pathname.startsWith(p));
+    if (!wasBlocked || isBlocked) return undefined;
+    refreshUnlock();
+    const t = setTimeout(() => refreshUnlock(), 1500);
+    return () => clearTimeout(t);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [location.pathname]);
 
   // 같은 보상 대기열에 대해 자동 오픈은 한 번만 시도(스팸 방지).
   // 대기열이 비워지면(consumePendingMissionRewards) 다음 완료 건을 위해 자동 리셋된다.

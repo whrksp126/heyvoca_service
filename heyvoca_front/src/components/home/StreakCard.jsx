@@ -6,7 +6,7 @@
 // 재조회 시점 · 정산 알림만 맡는다.
 // 1층 머리말 — 일렁이는 불꽃 + 굴러 올라가는 "N일 연속"(누르면 농장 방문 풀시트). 우측 "최장 N일"
 //           버튼은 이슈 #24 에서 없앴다 — 진입로는 연속 일수 영역으로 옮겼다
-// 2층 7칸(최근 6일 + 오늘) — 그날 daily_mission_complete/streak_qualified/streak_protected로
+// 2층 7칸(기록이 시작된 날부터 7칸, 오늘 이후는 다가올 날 — 이슈 #25, 기록이 6일 전부터면 최근 6일 + 오늘) — 그날 daily_mission_complete/streak_qualified/streak_protected로
 //           그린다. 이어진 날은 같은 색 띠 한 줄로 잇고 상태는 띠 위 표식으로만 구분한다
 //           ("오늘 할 일 모두" 찬 불꽃 · "일부" 작은 불씨 · 보호권 그림 · 오늘 미달성은 점선 빈칸
 //           — streak/StreakMark.jsx). 개수는 두지 않는다 — 그날 "오늘 할 일을 다 했는가"만 본다.
@@ -41,7 +41,7 @@ import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
 import { useNewBottomSheetContext, useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 import FarmVisitCalendarSheet from './FarmVisitCalendarSheet';
 import StreakSettlementNewBottomSheet from '../newBottomSheet/StreakSettlementNewBottomSheet';
-import { buildWeekCells } from '../farm/WeekStreakStrip';
+import { buildHomeWeekCells } from '../farm/WeekStreakStrip';
 import StreakCardView from '../streak/StreakCardView';
 
 const MIN_RELOAD_INTERVAL_MS = 5000;
@@ -147,7 +147,9 @@ const StreakCard = ({ registerRefresh } = {}) => {
   // todayKey(KST 날짜) — 자정이 지나면 바뀐다. 이 값이 deps 에 없으면 week 데이터가 그대로인 동안
   // "오늘" 칸·요일 라벨이 어제 기준으로 굳는다(2026-10-02). buildWeekCells 도 KST 오늘을 쓴다.
   const { todayTasks, todayKey } = useStats();
-  const weekCells = useMemo(() => buildWeekCells(todayTasks?.week), [todayTasks, todayKey]);
+  // 이슈 #25 — 홈 카드는 기록이 시작된 날부터 7칸(오늘 이후는 '다가올 날'). 가입 첫날 왼쪽 6칸이
+  // 빈 날로 깔려 "이전 날을 다 안 한" 느낌을 주던 것을 없앤다(buildHomeWeekCells 주석).
+  const weekCells = useMemo(() => buildHomeWeekCells(todayTasks?.week), [todayTasks, todayKey]);
 
   // 날짜가 바뀌면 연속 학습 상태(오늘 정답 수·정산 알림)도 새로 받는다 — 최초 마운트는 건너뛴다
   const prevTodayKeyRef = useRef(todayKey);

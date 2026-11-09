@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
-import { useOnboardingUnlock } from '../../context/OnboardingUnlockContext';
+import { useOnboardingUnlock, questTitleOf, withObjectJosa } from '../../context/OnboardingUnlockContext';
 import { UnlockGuideNewBottomSheet } from './UnlockGuideNewBottomSheet';
 import { StudySetupNewBottomSheet } from './StudySetupNewBottomSheet';
 import { TestSetupNewBottomSheet } from './TestSetupNewBottomSheet';
@@ -35,10 +35,11 @@ export const BookStudyTypeNewBottomSheet = ({ vocabularySheetId, maxVocabularyCo
   // 잠긴 항목 설명 — 그 기능을 여는 미션 이름으로 말한다
   const lockTextOf = (key) => {
     const mission = missions.find((m) => m.unlocks === CARD_LOCK_KEY[key]);
-    if (mission?.title) {
-      return `'${mission.title.replace(/\s*완료\s*$/, '').trim()}' 미션을 완료하면 열려요`;
+    const title = questTitleOf(mission);
+    if (title) {
+      return `'${title}'${withObjectJosa(title).slice(title.length)} 완료하면 열려요`;
     }
-    return '이전 미션을 완료하면 열려요';
+    return '이전 퀘스트를 완료하면 열려요';
   };
 
   const OPTIONS = [

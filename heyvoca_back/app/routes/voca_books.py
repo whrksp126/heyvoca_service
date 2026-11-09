@@ -66,6 +66,121 @@ def _try_complete_onboarding_mission(user_id, mission_key):
         )
 
 
+def copy_bookstore_words(user_id, voca_book, bookstore, lang):
+    """서점 단어장(bookstore → admin_voca_book_map) 단어를 사용자 단어장(voca_book)에 복사한다.
+
+    POST /voca_books(서점 담기)와 POST /onboarding/migrate v2(가입 무료 단어장)가 공유하는
+    생성 경로. 커밋하지 않는다 — 호출부가 사용자 잠금(begin_user_tx) 안에서 부르고 커밋한다.
+    반환: 추가된 단어 수.
+    """
+    if bookstore is None or not bookstore.admin_voca_book_id:
+        return 0
+    admin_maps = db.session.query(AdminVocaBookMap).filter(
+        AdminVocaBookMap.book_id == bookstore.admin_voca_book_id
+    ).all()
+
+    # 2026-09 구조 개편: en/ja 모두 admin_voca_book_map.voca_meanings/voca_examples를
+    # 더 이상 읽지 않고 사전 참조 테이블(admin_voca_book_map_meaning/_example)에서
+    # 배치 조회한다(load_admin_book_texts, en/ja 공용). ja의 reading_tokens도 그 안에서
+    # 붙는다.
+    admin_texts_by_map = load_admin_book_texts([m.id for m in admin_maps], lang)
+    empty_texts = {'meanings': [], 'examples': []}
+    # 같은 표기 항목은 하나로 합친다(_collapse_same_word 참고)
+    admin_entries = _collapse_same_word(
+        (m.voca.word, m.voca_id,
+         admin_texts_by_map.get(m.id, empty_texts)['meanings'],
+         admin_texts_by_map.get(m.id, empty_texts)['examples'])
+        for m in admin_maps if m.voca
+    )
+
+    # 1. 기존 UserVoca 조회 — 중복 키 (user_id, dict_lang, word)
+    admin_words = [w for w, _, _, _ in admin_entries]
+    existing_vocas = db.session.query(UserVoca).filter(
+        UserVoca.user_id == user_id,
+        UserVoca.dict_lang == lang,
+        UserVoca.word.in_(admin_words)
+    ).all()
+    user_voca_dict = {uv.word: uv for uv in existing_vocas}
+
+    user_vocas_to_add = []
+
+    # 2. UserVoca 분류
+    for word, admin_voca_id, meanings, examples in admin_entries:
+        if word in user_voca_dict:
+            uv = user_voca_dict[word]
+            uv.voca_meanings = merge_meanings(uv.voca_meanings, meanings)
+            uv.voca_examples = merge_examples(uv.voca_examples, examples)
+            if not uv.voca_id and admin_voca_id:
+                uv.voca_id = admin_voca_id
+            uv.updated_at = datetime.datetime.utcnow()
+        else:
+            # examples 는 admin_texts_by_map(load_admin_book_texts)에서 뽑은 사전 텍스트
+            # 그대로 — ja도 reading_tokens 가 이미 포함돼 있다.
+            new_uv = UserVoca(
+                user_id=user_id,
+                voca_id=admin_voca_id,
+                word=word,
+                voca_meanings=json.dumps(meanings, ensure_ascii=False),
+                voca_examples=json.dumps(examples, ensure_ascii=False),
+                dict_lang=lang,
+            )
+            user_vocas_to_add.append(new_uv)
+
+    if user_vocas_to_add:
+        db.session.add_all(user_vocas_to_add)
+        db.session.flush()
+        for uv in user_vocas_to_add:
+            user_voca_dict[uv.word] = uv
+
+    # 3. Map 데이터 구성 — 사용자 DB(UserVocaBookMap)는 지금처럼 JSON 텍스트로 복사한다
+    # (사용자 쪽 저장 포맷은 이번 개편 범위 밖). admin_texts_by_map은 이미 list 형태라
+    # bulk_insert_mappings에 넣을 땐 다시 json.dumps 해야 한다(ORM setter를 거치지 않음).
+    book_maps_data = []
+    for word, _, meanings, examples in admin_entries:
+        uv = user_voca_dict[word]
+        book_maps_data.append({
+            'user_voca_book_id': voca_book.id,
+            'user_voca_id': uv.id,
+            'voca_meanings': json.dumps(meanings, ensure_ascii=False),
+            'voca_examples': json.dumps(examples, ensure_ascii=False),
+        })
+    
+    if book_maps_data:
+        db.session.bulk_insert_mappings(UserVocaBookMap, book_maps_data)
+    
+    return len(book_maps_data)
+
+
+def create_bookstore_book_for_user(user_id, bookstore, lang, *, color=None, title=None):
+    """서점 단어장을 사용자 단어장으로 담는다(보석 처리 없음) + 독서왕 동기화. 커밋하지 않는다.
+
+    호출부가 사용자 잠금(begin_user_tx/start_user_tx) 안에서 부르고 커밋한다.
+    반환: (voca_book, completed_goals)
+    """
+    if color is None:
+        color = bookstore.color or json.dumps({'main': '#FF8DD4', 'sub': '#FF8DD44d', 'background': '#FFEFFA'})
+    elif not isinstance(color, str):
+        color = json.dumps(color, ensure_ascii=False)
+    voca_book = UserVocaBook(
+        user_id=user_id,
+        bookstore_id=bookstore.id,
+        color=color,
+        name=(title or (bookstore.name or '').split('\t')[0].strip())[:36],
+        total_word_cnt=0,
+        memorized_word_cnt=0,
+        voca_list=None,
+        updated_at=None,
+        language=lang,
+    )
+    db.session.add(voca_book)
+    db.session.flush()
+    voca_book.total_word_cnt = copy_bookstore_words(user_id, voca_book, bookstore, lang)
+    voca_book.updated_at = datetime.datetime.utcnow()
+    db.session.flush()
+    completed_goals = sync_reading_goal(user_id)
+    return voca_book, completed_goals
+
+
 # 강조 마크업을 헤이보카 표준 형식(<strong class="target-word">)으로 정규화한다.
 # - <b>/<strong>(class 없음)/<u>/<em>/<i>/<mark>/<span style|class> → <strong class="target-word">...</strong>
 # - 이미 <strong class="target-word">는 그대로 보존
@@ -649,83 +764,7 @@ def create_voca_book():
         # bookstoreId가 있고 vocaList가 없으면 admin_voca_book_map에서 단어 자동 복사
         elif bookstore_id:
             bookstore = db.session.query(Bookstore).filter(Bookstore.id == bookstore_id).first()
-            if bookstore and bookstore.admin_voca_book_id:
-                admin_maps = db.session.query(AdminVocaBookMap).filter(
-                    AdminVocaBookMap.book_id == bookstore.admin_voca_book_id
-                ).all()
-
-                # 2026-09 구조 개편: en/ja 모두 admin_voca_book_map.voca_meanings/voca_examples를
-                # 더 이상 읽지 않고 사전 참조 테이블(admin_voca_book_map_meaning/_example)에서
-                # 배치 조회한다(load_admin_book_texts, en/ja 공용). ja의 reading_tokens도 그 안에서
-                # 붙는다.
-                admin_texts_by_map = load_admin_book_texts([m.id for m in admin_maps], lang)
-                empty_texts = {'meanings': [], 'examples': []}
-                # 같은 표기 항목은 하나로 합친다(_collapse_same_word 참고)
-                admin_entries = _collapse_same_word(
-                    (m.voca.word, m.voca_id,
-                     admin_texts_by_map.get(m.id, empty_texts)['meanings'],
-                     admin_texts_by_map.get(m.id, empty_texts)['examples'])
-                    for m in admin_maps if m.voca
-                )
-
-                # 1. 기존 UserVoca 조회 — 중복 키 (user_id, dict_lang, word)
-                admin_words = [w for w, _, _, _ in admin_entries]
-                existing_vocas = db.session.query(UserVoca).filter(
-                    UserVoca.user_id == user_id,
-                    UserVoca.dict_lang == lang,
-                    UserVoca.word.in_(admin_words)
-                ).all()
-                user_voca_dict = {uv.word: uv for uv in existing_vocas}
-
-                user_vocas_to_add = []
-
-                # 2. UserVoca 분류
-                for word, admin_voca_id, meanings, examples in admin_entries:
-                    if word in user_voca_dict:
-                        uv = user_voca_dict[word]
-                        uv.voca_meanings = merge_meanings(uv.voca_meanings, meanings)
-                        uv.voca_examples = merge_examples(uv.voca_examples, examples)
-                        if not uv.voca_id and admin_voca_id:
-                            uv.voca_id = admin_voca_id
-                        uv.updated_at = datetime.datetime.utcnow()
-                    else:
-                        # examples 는 admin_texts_by_map(load_admin_book_texts)에서 뽑은 사전 텍스트
-                        # 그대로 — ja도 reading_tokens 가 이미 포함돼 있다.
-                        new_uv = UserVoca(
-                            user_id=user_id,
-                            voca_id=admin_voca_id,
-                            word=word,
-                            voca_meanings=json.dumps(meanings, ensure_ascii=False),
-                            voca_examples=json.dumps(examples, ensure_ascii=False),
-                            dict_lang=lang,
-                        )
-                        user_vocas_to_add.append(new_uv)
-
-                if user_vocas_to_add:
-                    db.session.add_all(user_vocas_to_add)
-                    db.session.flush()
-                    for uv in user_vocas_to_add:
-                        user_voca_dict[uv.word] = uv
-
-                # 3. Map 데이터 구성 — 사용자 DB(UserVocaBookMap)는 지금처럼 JSON 텍스트로 복사한다
-                # (사용자 쪽 저장 포맷은 이번 개편 범위 밖). admin_texts_by_map은 이미 list 형태라
-                # bulk_insert_mappings에 넣을 땐 다시 json.dumps 해야 한다(ORM setter를 거치지 않음).
-                book_maps_data = []
-                for word, _, meanings, examples in admin_entries:
-                    uv = user_voca_dict[word]
-                    book_maps_data.append({
-                        'user_voca_book_id': voca_book.id,
-                        'user_voca_id': uv.id,
-                        'voca_meanings': json.dumps(meanings, ensure_ascii=False),
-                        'voca_examples': json.dumps(examples, ensure_ascii=False),
-                    })
-                
-                if book_maps_data:
-                    db.session.bulk_insert_mappings(UserVocaBookMap, book_maps_data)
-                
-                added_count = len(book_maps_data)
-            else:
-                added_count = 0
+            added_count = copy_bookstore_words(user_id, voca_book, bookstore, lang)
         else:
             added_count = 0
 

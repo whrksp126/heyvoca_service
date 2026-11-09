@@ -20,8 +20,11 @@ export const COMBO_INTERLUDE_MS = 1600;
 export const PHASE_INTERLUDE_MS = 1500;
 export const COMPLETE_CUT_MS = 1200;
 
-// 구간 안내 문구 — Main.jsx 의 phaseStart 표식('sentence' | 'retry')과 1:1.
+// 구간 안내 문구 — Main.jsx 의 phaseStart 표식과 1:1.
+// trial·practice 는 게스트 온보딩 수준 맞춤 학습(이슈 #25) 1부·2부 — 3부는 retry 를 그대로 쓴다.
 export const PHASE_COPY = {
+  trial: { title: '문제 유형을 하나씩 체험해요', sub: '아주 쉬운 단어부터 시작해요' },
+  practice: { title: '배운 단어로 실전 연습해요', sub: '같은 단어를 다른 문제로 풀어요' },
   sentence: { title: '실전 문장으로 학습해봐요', sub: '배운 단어를 문장 속에서 써봐요' },
   retry: { title: '틀린 문제를 복습해봐요', sub: '다시 풀면 더 오래 기억해요' },
 };
@@ -205,7 +208,7 @@ export const ComboInterlude = ({ n, milestone = COMBO_MILESTONE_STEP, onDone, du
   );
 };
 
-/** @param {'sentence'|'retry'} kind 구간 종류 — 가벼운 큐('select') 사용 */
+/** @param {'sentence'|'retry'|'trial'|'practice'} kind 구간 종류 — 가벼운 큐('select') 사용 */
 export const PhaseInterlude = ({ kind = 'sentence', onDone, durationMs = PHASE_INTERLUDE_MS }) => {
   "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
 

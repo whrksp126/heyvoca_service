@@ -1,8 +1,8 @@
 // src/components/streak/StreakWeekRow.jsx
 //
-// 홈 연속 학습 카드의 1주 불꽃 줄 — 최근 6일 + 오늘, 오래된→오늘 7칸.
-// 칸 데이터는 farm/WeekStreakStrip 의 buildWeekCells 가 만든 배열을 그대로 받는다
-// (status: all · part · shield · none · today_empty — 정의는 그 파일 주석이 정본).
+// 홈 연속 학습 카드의 1주 불꽃 줄 — 기록이 시작된 날부터 7칸(오래된→새), 오늘 이후는
+// 'upcoming'(다가올 날). 칸 배열은 farm/WeekStreakStrip 의 buildHomeWeekCells 가 만든다(이슈 #25).
+// (status: all · part · shield · none · today_empty · upcoming — 정의는 그 파일 주석이 정본).
 //
 //   띠        이어진 날(all · part · shield)은 같은 색 · 같은 높이의 띠 한 줄로 잇는다. 끊긴 날에서만 끊긴다.
 //             상태는 띠의 색이 아니라 띠 위의 표식으로 구분한다(streak/StreakMark.jsx 가 정본)
@@ -26,6 +26,7 @@ const CAPTION = {
   shield: '보호권으로 불꽃을 지킨 날이에요',
   none: '쉬어 간 날이에요',
   today_empty: '오늘 불꽃은 아직 켜지 않았어요',
+  upcoming: '다가올 날이에요',
 };
 
 const dateLabel = (cell) => {
@@ -38,6 +39,8 @@ const dateLabel = (cell) => {
 const BOX_CLASS = {
   none: 'bg-layout-gray-50 dark:bg-layout-black',
   today_empty: 'bg-layout-white dark:bg-layout-black border-[1.5px] border-dashed border-primary-main-400',
+  // 다가올 날(홈 카드, 이슈 #25) — 아직 오지 않은 날이라 바탕 없이 흐린 점선만 둔다
+  upcoming: 'border-[1.5px] border-dashed border-layout-gray-200 dark:border-layout-gray-500 opacity-70',
 };
 
 const WeekCell = ({ cell, index, play, linkPrev, linkNext, reducedMotion, onPick }) => {
@@ -61,7 +64,7 @@ const WeekCell = ({ cell, index, play, linkPrev, linkNext, reducedMotion, onPick
 
   return (
     <div className="flex flex-col gap-[6px]">
-      <span className={`text-center text-[11px] ${isToday ? 'font-[800] text-layout-black dark:text-layout-white' : 'font-[600] text-layout-gray-300'}`}>
+      <span className={`text-center text-[11px] ${isToday ? 'font-[800] text-layout-black dark:text-layout-white' : status === 'upcoming' ? 'font-[600] text-layout-gray-200 dark:text-layout-gray-500' : 'font-[600] text-layout-gray-300'}`}>
         {cell.label}
       </span>
       <div className="relative h-[48px]">

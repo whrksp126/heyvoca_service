@@ -40,6 +40,48 @@ export const buildWeekCells = (week, now = new Date()) => {
   });
 };
 
+// 'YYYY-MM-DD' 에 n일을 더한다 — 시간대 영향이 없도록 UTC 자정 기준으로만 계산한다
+const addDays = (ymd, n) => {
+  const [y, m, d] = ymd.split('-').map(Number);
+  const t = new Date(Date.UTC(y, m - 1, d + n));
+  return `${t.getUTCFullYear()}-${String(t.getUTCMonth() + 1).padStart(2, '0')}-${String(t.getUTCDate()).padStart(2, '0')}`;
+};
+const dowOf = (ymd) => {
+  const [y, m, d] = ymd.split('-').map(Number);
+  return DOW[new Date(Date.UTC(y, m - 1, d)).getUTCDay()];
+};
+const RECORD_STATUS = new Set(['all', 'part', 'shield']);
+
+/**
+ * 홈 연속 학습 카드 전용 7칸 — 이슈 #25.
+ *
+ * buildWeekCells 는 "최근 6일 + 오늘"이라 오늘이 늘 오른쪽 끝이다. 가입 첫날엔 왼쪽 6칸이
+ * 전부 빈 날(none)로 깔려 "이전 날을 다 안 한" 것처럼 보였다. 그래서 홈 카드는 시작 칸을
+ * 기록 기준으로 옮긴다.
+ *   start = 최근 6일(오늘 제외) 중 기록(all·part·shield)이 있는 가장 이른 날, 없으면 오늘
+ *   칸   = start ~ start+6. 오늘 이후 칸은 status 'upcoming'(다가올 날 — 표식 없는 흐린 점선 칸)
+ * 6일 전에 기록이 있으면 결과는 buildWeekCells 와 같다(오늘이 오른쪽 끝).
+ * 학습 결과 슬라이드(StudyResult)는 계속 buildWeekCells 를 쓴다(홈 카드에만 적용).
+ */
+export const buildHomeWeekCells = (week, now = new Date()) => {
+  const base = buildWeekCells(week, now);
+  const todayIdx = base.findIndex((c) => c.isToday);
+  // 서버 응답 모양이 예상(오늘이 끝인 7칸)과 다르면 손대지 않는다
+  if (base.length !== 7 || todayIdx !== 6) return base;
+
+  const firstRecord = base.findIndex((c, i) => i < todayIdx && RECORD_STATUS.has(c.status));
+  const start = firstRecord === -1 ? todayIdx : firstRecord;
+  if (start === 0) return base;
+
+  const past = base.slice(start);
+  const today = base[todayIdx].date;
+  const upcoming = Array.from({ length: 7 - past.length }, (_, k) => {
+    const date = addDays(today, k + 1);
+    return { date, isToday: false, status: 'upcoming', label: dowOf(date) };
+  });
+  return [...past, ...upcoming];
+};
+
 /** 칸 하나 — 이어진 날은 띠 한 토막 + 표식, 나머지는 띠 없는 둥근 빈칸. */
 export const WeekStreakCell = ({ status, isToday = false, linkPrev = false, linkNext = false }) => {
   const lit = STREAK_LIT.has(status);
