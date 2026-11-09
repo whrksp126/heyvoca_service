@@ -440,7 +440,7 @@ const FarmStatusBar = ({
     </span>
   );
 
-  // 막대 안 글자 — `현재 / 문턱 XP`. compact 는 폭이 좁아(≈60px) 슬래시 앞뒤 공백을 뺀다.
+  // 막대 안 글자 — `현재 / 문턱`(이슈 #25 6차 QA: 막대 안 'XP' 글자 제거, 배지에만 단위). compact 는 폭이 좁아(≈60px) 슬래시 앞뒤 공백을 뺀다.
   // 한 inline span 으로 감싼다 — 막대 안 글자 칸이 flex 라, 조각이 따로 flex 항목이 되면
   // 앞뒤 공백이 잘려 `3/ 50 XP` 처럼 붙는다.
   // 단계 내 상대 XP(xpStageRelative, 2026-09-29) — 막대(xpBarPct)와 같은 축으로 통일한다.
@@ -453,7 +453,6 @@ const FarmStatusBar = ({
     <span>
       <b className="font-[900]">{stageRelXp}</b>
       {stageRelNext != null ? (compact ? `/${stageRelNext}` : ` / ${stageRelNext}`) : ''}
-      {' XP'}
     </span>
   );
 

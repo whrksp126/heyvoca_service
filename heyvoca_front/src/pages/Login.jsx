@@ -9,6 +9,7 @@ import { AppleLogo } from '@phosphor-icons/react';
 import { getValueFromURL, nodeEnv } from '../utils/common';
 import postMessageManager from '../utils/postMessageManager';
 import { getDevicePlatform } from '../utils/osFunction';
+import AuthSplash from '../components/onboarding/AuthSplash';
 
 const Login = () => {
   "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
@@ -18,6 +19,9 @@ const Login = () => {
   // 온보딩(회원가입) 흐름을 거쳐 도달한 로그인 페이지에서는 회원가입 버튼을 숨긴다.
   const fromOnboarding = !!location.state?.fromOnboarding;
   const { auth, Login, AppleLogin, clickGoogleOauth, clickAppleOauth } = useUser();
+  // 로그인 처리 중(웹 OAuth 콜백 파라미터 도착·앱 OAuth 결과 수신·이미 로그인됨)에는 버튼 화면 대신
+  // 스플래시를 그린다 — 가입 직후 홈 진입 전에 로그인 화면이 잠깐 보이던 문제(이슈 #25 6차 QA).
+  const [processing, setProcessing] = useState(() => !!auth.user || !!getValueFromURL('googleId'));
 
   const platform = getDevicePlatform();
   // User Agent에 Android가 포함되어 있으면 안드로이드 환경으로 간주
@@ -43,15 +47,18 @@ const Login = () => {
       return;
     }
 
+    setProcessing(true);
     try {
       const result = await Login({ googleId, email, name, status });
       if (result.success) {
         navigate('/');
       } else {
         console.log(`앱 로그인 실패`);
+        setProcessing(false);
       }
     } catch (error) {
       console.error(`앱 로그인 처리 중 오류: ${error}`);
+      setProcessing(false);
     }
   };
 
@@ -77,6 +84,7 @@ const Login = () => {
       return;
     }
 
+    setProcessing(true);
     try {
       const result = await AppleLogin({ identityToken, fullName, email, status, authorizationCode });
       if (result.success) {
@@ -84,9 +92,11 @@ const Login = () => {
         navigate('/');
       } else {
         console.log("App Apple Login Failed");
+        setProcessing(false);
       }
     } catch (e) {
       console.error(e);
+      setProcessing(false);
     }
   };
 
@@ -109,18 +119,22 @@ const Login = () => {
     // 필수 파라미터가 있는지 확인
     if (!googleId || !email || !name || !status) {
       console.log('로그인에 필요한 파라미터가 없습니다.');
+      setProcessing(false);
       return;
     }
 
     const result = await Login({ googleId, email, name, status });
     if (result.success) {
       navigate('/');
+    } else {
+      setProcessing(false);
     }
   }
 
 
 
   useEffect(() => {
+    if (processing) return undefined;
     const container = document.getElementById("lottie-container");
     if (container) {
       const anim = lottie.loadAnimation({
@@ -132,7 +146,8 @@ const Login = () => {
       });
       return () => anim.destroy();
     }
-  }, []);
+    return undefined;
+  }, [processing]);
 
 
   // 개발자 로그인 state
@@ -154,6 +169,8 @@ const Login = () => {
     }
   };
 
+
+  if (processing) return <AuthSplash />;
 
   return (
     <div className="bg-primary-main-100 dark:bg-layout-gray-dark w-full h-screen absolute top-0 left-0 flex flex-col items-center">

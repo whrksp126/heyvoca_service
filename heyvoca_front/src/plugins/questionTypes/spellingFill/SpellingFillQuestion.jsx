@@ -8,7 +8,7 @@ import ResultMark from '../../../components/common/ResultMark';
 import SpeakerArt from '../../../components/common/SpeakerArt';
 import CardSpeakerButton from '../../../components/common/CardSpeakerButton';
 import { buildDictMeaningView } from '../../../components/study/WordMeetCard';
-import { feel, pickVariant, SPRING, ShineSweep, PerfectBadge } from '../../../lib/feel';
+import { feel, pickVariant, SPRING, ShineSweep } from '../../../lib/feel';
 import { getTextSound } from '../../../utils/common';
 import { getAdvanceDelay } from '../../../utils/studyTiming';
 import { getDisplayMeanings } from '../../../utils/displayMeanings';
@@ -56,7 +56,6 @@ const SpellingFillQuestion = ({ question, onComplete, onCardMatched, farmByWordI
   const [hintUsed, setHintUsed] = useState(0);
   const [isAnswered, setIsAnswered] = useState(false);
   const [isCorrect, setIsCorrect] = useState(null);
-  const [isPerfect, setIsPerfect] = useState(false);
   const [wrongCells, setWrongCells] = useState(() => new Set());
   const [focused, setFocused] = useState(false);
   const [speakingTarget, setSpeakingTarget] = useState(null); // 'meaning' | 'answer' | null
@@ -126,9 +125,8 @@ const SpellingFillQuestion = ({ question, onComplete, onCardMatched, farmByWordI
     gradedRef.current = true;
     const g = gradeSpelling(cells, nextHinted, nextValue);
     const timeTakenMs = Date.now() - startTimeRef.current;
-    const perfect = g.isCorrect && usedHints === 0 && !question.isRetry;
-    feel(perfect ? 'perfect' : (g.isCorrect ? 'correct' : 'wrong'));
-    setIsPerfect(perfect);
+    // 다른 단어 유형과 같은 O/X 채점만 쓴다 — '완벽해요' 배지는 띄우지 않는다(이슈 #25 6차 QA).
+    feel(g.isCorrect ? 'correct' : 'wrong');
 
     question.isCorrect = g.isCorrect;
     question.prevMemoryStateKey = question.prevMemoryStateKey ?? prevStateKeyRef.current;
@@ -295,7 +293,6 @@ const SpellingFillQuestion = ({ question, onComplete, onCardMatched, farmByWordI
         <div className="relative z-[1] flex items-center justify-center flex-1 min-h-0 px-[16px] py-[45px]">
           <LiftAboveBar active={!!farm} topReserve={28} className="w-full">
             <div className="relative flex flex-col items-center gap-[16px]">
-              <PerfectBadge show={isPerfect && isAnswered} />
               <motion.div
                 lang={ja ? 'ja' : undefined}
                 animate={isAnswered ? pickVariant(isCorrect ? 'correctPop' : 'shake', reducedMotion).animate : undefined}

@@ -9,15 +9,30 @@
 // 그래서 이 컴포넌트는 **1200:860 비율의 상자**를 하나 만들고 그 안에만 그린다 —
 // 상자를 벗어나지 않으므로 바깥에서 잘라 내든 늘리든 작물은 흙 위에 그대로 있는다.
 
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import fieldBase from '../../assets/images/farm/field-base.png';
 // 밭 테두리(풀색 rim) 마스크 — field-base.png 에서 풀색 픽셀만 뽑은 알파 마스크 두 장.
 // 윗면(밝은 풀색)과 옆면(어두운 풀색)을 나눠 두어야 색을 칠해도 입체감이 남는다.
-// 흙과 닿는 가장자리·바깥 안티에일리어싱은 알파로 부드럽게 들어 있다(바닥 그림자는 제외).
+// 바깥 안티에일리어싱은 알파로 부드럽게 들어 있다(바닥 그림자는 제외).
+// 흙과 닿는 안쪽 가장자리는 1px 넓혀 불투명하게 구웠다 — 반투명이면 밑의 풀색이 비쳐
+// 흙과 테두리 사이에 풀색 실선이 남는다(이슈 #25 6차). 흙 쪽 가는 옆면 선도 윗면으로 합쳤다.
 import rimTopMask from '../../assets/images/farm/field-rim-top.png';
 import rimSideMask from '../../assets/images/farm/field-rim-side.png';
 import { CROP_ASSETS, cropAssetByVariant } from './CropImage';
 import { plantField, plantFieldByWords, CROP_BASELINE } from '../../utils/farmField';
+
+// 테두리 마스크는 CSS mask-image 라 처음 쓰일 때에야 받아 온다 — 그 사이 밭이 기본 풀색으로
+// 그려졌다가 단어장 색으로 바뀌어 보였다(새 단어장 추가 직후, 이슈 #25 6차). 모듈을 읽는 순간
+// 미리 받아 두고, 다 받기 전에는 색 밭을 그리지 않는다.
+let rimMasksReady = typeof Image === 'undefined';
+const rimMasksLoaded = rimMasksReady
+  ? Promise.resolve()
+  : Promise.all([rimTopMask, rimSideMask].map((src) => new Promise((resolve) => {
+    const img = new Image();
+    img.onload = resolve;
+    img.onerror = resolve;
+    img.src = src;
+  }))).then(() => { rimMasksReady = true; });
 
 /** '#RGB' / '#RRGGBB' / '#RRGGBBAA' → [r,g,b] (그 밖의 값은 null) */
 const parseHex = (value) => {
@@ -53,6 +68,10 @@ export const rimShades = (color) => {
   return { top: toHex(top), side: toHex(top.map((v) => v * RIM_SIDE_SHADE)) };
 };
 
+/** 원래 밭 테두리 풀색으로 그리는 단어장 color.main — 서점 '토익 기초' 와 같은 값 */
+export const FIELD_GRASS_MAIN = '#5CD97C';
+const FIELD_GRASS_MAINS = new Set([FIELD_GRASS_MAIN]);
+
 /**
  * 단어장 color(JSON {main, sub, background} — 문자열로 올 때도 있다) → 테두리에 칠할 main.
  * 서점 단어장도 고유 color 를 가진다.
@@ -60,9 +79,13 @@ export const rimShades = (color) => {
 export const bookRimColor = (color) => {
   let obj = color;
   if (typeof obj === 'string') {
-    try { obj = JSON.parse(obj); } catch { return parseHex(obj) ? obj : null; }
+    try { obj = JSON.parse(obj); } catch { obj = parseHex(obj) ? { main: obj } : null; }
   }
-  return obj?.main || null;
+  const main = obj?.main || null;
+  if (!main) return null;
+  // 기본 풀색 단어장 — 칠하지 않고 원래 밭 그대로(VOCABULARY_COLORS 의 풀색 선택지).
+  if (FIELD_GRASS_MAINS.has(String(main).trim().toUpperCase())) return null;
+  return main;
 };
 
 /**
@@ -105,6 +128,15 @@ const FarmField = ({
   "use memo";
 
   const rim = rimShades(rimColor);
+  const [masksReady, setMasksReady] = useState(rimMasksReady);
+  useEffect(() => {
+    if (!rim || masksReady) return undefined;
+    let alive = true;
+    rimMasksLoaded.then(() => { if (alive) setMasksReady(true); });
+    return () => { alive = false; };
+  }, [rim, masksReady]);
+  // 색 테두리 마스크를 받기 전엔 밭 전체를 감춘다 — 풀색 밭이 먼저 보였다가 바뀌지 않게.
+  const hideUntilMasks = !!rim && !masksReady;
 
   const { items } = useMemo(
     () => (words && words.length > 0
@@ -114,7 +146,7 @@ const FarmField = ({
   );
 
   return (
-    <div className="relative w-full aspect-[1200/860]">
+    <div className={`relative w-full aspect-[1200/860] ${hideUntilMasks ? 'invisible' : ''}`}>
       {/*
         보유 씨앗 간판 — 기획 5.1 "보유 씨앗 … 밭 밖 씨앗 또는 씨앗 봉투".
 

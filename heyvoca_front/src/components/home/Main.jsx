@@ -48,6 +48,10 @@ import { StudyPickNewBottomSheet } from '../newBottomSheet/StudyPickNewBottomShe
 import AchievementRewardOverlay from '../overlay/AchievementRewardOverlay';
 
 import FarmHero from '../farm/FarmHero';
+import HomeFieldGrid from './HomeFieldGrid';
+import { buildBookRow, isScriptBook } from '../vocabularySheets/VocaBookCard';
+import VocabularyWordsNewFullSheet from '../newfullsheet/VocabularyWordsNewFullSheet';
+import { useVocabulary } from '../../context/VocabularyContext';
 import gemIcon from '../../assets/images/farm/icon-gem.png';
 import WordListSheet from '../farm/WordListSheet';
 import FarmCta, {
@@ -135,6 +139,16 @@ const Main = () => {
   const heroWords = useMemo(() => (heroPlants ?? [])
     .map((p) => ({ id: p.id, stage: p.stage, health: p.health })),
   [heroPlants]);
+
+  /*
+    단어장별 밭(이슈 #25 6차) — 홈 히어로에 단어장마다 밭 하나씩 격자로 놓는다.
+    학습장 단어장 목록(VocaBooksTab)과 같은 행 계산(buildBookRow)·같은 제외(글자 단어장)를 쓴다.
+    단어장이 0개면 빈 배열이라 히어로는 예전 한 장짜리 밭(빈 상태)을 그대로 그린다.
+  */
+  const { vocabularySheets } = useVocabulary();
+  const bookRows = useMemo(() => (vocabularySheets || [])
+    .filter((book) => !isScriptBook(book))
+    .map(buildBookRow), [vocabularySheets]);
 
   // 농장 조회 전에는 §12 5번(빈 밭)으로 떨어지지 않게 2번(가장 흔한 상태)을 깔아 둔다.
   // 단어를 가진 사용자에게 "아직 밭이 비어 있어요"가 한 프레임 스치는 편이 훨씬 나쁘다.
@@ -420,6 +434,19 @@ const Main = () => {
         storedSeeds={unplanted}
         health={health}
         state={view.mood}
+        field={bookRows.length > 0 ? (
+          <HomeFieldGrid
+            rows={bookRows}
+            onSelect={(id) => {
+              vibrate({ duration: 5 });
+              pushNewFullSheet(VocabularyWordsNewFullSheet, { id }, { smFull: true, closeOnBackdropClick: true });
+            }}
+            onMore={() => {
+              vibrate({ duration: 5 });
+              navigate('/vocabulary-sheets');
+            }}
+          />
+        ) : null}
       >
         {/* 보석 — 히어로 우측 상단에 떠 있는 칩(§6 · §10).
             히어로 위에 뜬 요소에만 그림자를 쓴다. 본문 카드는 시스템대로 보더 우선(§7) */}

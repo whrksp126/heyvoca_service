@@ -57,10 +57,11 @@ const slotXY = (n) => {
   return { x: FIELD_W / 2 + (i - j) * 44, y: 150 + (i + j - 2) * 19 };
 };
 const STAGE_CROP = { PLANTED_SEED: 'seed', SPROUT: 'sprout', LEAF: 'leaf', CARROT: 'carrot' };
-// 밭 위 그림 — 흙 딸린 판, 씨앗만 낱알(FarmGrowthSlide fieldSrc 와 같다)
+// 밭 위 그림 — 실서비스 밭(FarmField)과 같은 planted 판. 씨앗도 낱알이 아니라 흙에 덮인 판
+// (이슈 #25 6차 QA: 체험 밭 씨앗이 낱알 그림으로 보였다).
 const fieldSrc = (stage, health) => {
   const crop = STAGE_CROP[stage] || 'seed';
-  return cropAssetByVariant(crop, healthToVariant(health), { solo: crop === 'seed' });
+  return cropAssetByVariant(crop, healthToVariant(health));
 };
 
 // 장면 시간표(ms)

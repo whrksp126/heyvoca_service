@@ -26,11 +26,11 @@ const OnboardingQuestCard = () => {
 
   return (
     <section
-      aria-label="첫 퀘스트"
+      aria-label="입문 퀘스트"
       className="rounded-[12px] pt-[16px] px-[18px] pb-[12px] bg-layout-white dark:bg-layout-gray-dark border border-farm-line dark:border-transparent"
     >
       <div className="flex items-center justify-between">
-        <b className="text-[17px] font-[800] text-layout-black dark:text-layout-white">첫 퀘스트</b>
+        <b className="text-[17px] font-[800] text-layout-black dark:text-layout-white">입문 퀘스트</b>
         <span className="text-[14px] font-[700] text-layout-gray-300">
           <b className="text-[15px] font-[800] text-primary-main-600">{doneCount}</b>/{missions.length}
         </span>

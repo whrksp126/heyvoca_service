@@ -10,7 +10,8 @@
     2부 실전  — 1부 단어 3개를 **예문 유형**(빈칸·문장 조립·문장 뜻, 한 번씩)으로 다시. 가장 쉬운 예문부터.
                예문 유형은 2부에서만 나온다(이슈 #25 3차 QA — 1부 '체험'에 문장 문제가 섞이면 2부
                '실전 문장' 안내와 어긋났다).
-    3부 복습  — 첫 시도에 틀린 단어를 쉬운 뜻 고르기로 한 번 더(단어당 MAX_RETRY 번 — 4차부터 1).
+    3부 복습  — 틀린 단어를 **틀린 그 문제 그대로**(같은 유형·같은 문항 데이터) 한 번 더(단어당 MAX_RETRY 번 —
+               4차부터 1). 이슈 #25 6차 QA: 예전엔 쉬운 뜻 고르기로 바꿔 내서 2부 예문 오답이 사지선다로 나왔다.
 
   【수준 θ】 백엔드 app/services/skill_level.py 와 같은 모형·척도다.
     P(정답) = σ((θ − b) / 10),  b = 문제 바탕 점수(예문 유형은 예문 score, 그 외는 단어 등급
@@ -510,6 +511,8 @@ export function buildQuestion(type, words, pool, rng = Math.random) {
     log       migrate 로 보낼 답 [{voca_id, question_type, correct}] (첫 시도만 — 1·2부)
     wrong     아직 맞히지 못한 단어 id (3부 대상)
     retryCount 단어별 재출제 수
+    wrongQ    단어별 '틀린 그 문제'의 출제 직후 사본(3부에서 그대로 다시 낸다)
+    pendingQ  지금 화면 문제의 출제 직후 사본(플러그인이 문제 객체에 답을 써 넣기 전)
     pending   지금 화면에 낸 문제의 정보 {kind:'p1'|'p2'|'p3', type, ids}
     current   지금 화면의 문제 객체(복원용)
 */
@@ -533,6 +536,8 @@ export function createSession(bands, { theta = START_THETA, rng = Math.random } 
     log: [],
     wrong: [],
     retryCount: {},
+    wrongQ: {},
+    pendingQ: null,
     pending: null,
     current: null,
     done: false,
@@ -673,21 +678,31 @@ const nextPart2 = (s, rng) => {
   return q;
 };
 
-// 3부 — 아직 못 맞힌 단어를 쉬운 뜻 고르기로, 맞힐 때까지(최대 MAX_RETRY).
+// 3부 — 아직 못 맞힌 단어를 **틀린 그 문제 그대로** 다시(최대 MAX_RETRY). 사본이 없으면(구버전 세션) 뜻 고르기.
+// 카드 맞추기처럼 한 문제에 틀린 단어가 여럿이면 그 문제를 한 번만 내고, 함께 든 틀린 단어도 재출제 1회로 센다.
 const nextPart3 = (s, rng) => {
   while (s.wrong.length > 0) {
     const id = s.wrong[0];
     const count = s.retryCount[id] ?? 0;
     if (count >= MAX_RETRY) { s.wrong.shift(); continue; }
-    s.retryCount[id] = count + 1;
     const p = byId(s, id);
     if (!p) { s.wrong.shift(); continue; }
     const first = !s.startedRetry;
     s.startedRetry = true;
     // 같은 단어를 연달아 두 번 묻지 않게 — 한 단어를 낸 뒤 줄 맨 뒤로 보낸다
     s.wrong.push(s.wrong.shift());
-    s.pending = { kind: 'p3', type: 'multipleChoice', ids: [id] };
-    const q = { ...buildQuestion('multipleChoice', [p], s.pool, rng), isRetry: true };
+    const snap = s.wrongQ?.[id];
+    let q;
+    if (snap) {
+      q = { ...JSON.parse(JSON.stringify(snap)), isCorrect: null, userResultIndex: null, isRetry: true };
+      delete q.phaseStart;
+    } else {
+      q = { ...buildQuestion('multipleChoice', [p], s.pool, rng), isRetry: true };
+    }
+    const ids = Array.isArray(q.words) ? q.words.map((w) => w.vocaIndexId ?? w.id) : [id];
+    if (!ids.includes(id)) ids.push(id);
+    ids.forEach((x) => { if (s.wrong.includes(x)) s.retryCount[x] = (s.retryCount[x] ?? 0) + 1; });
+    s.pending = { kind: 'p3', type: q.questionType, ids };
     if (first) q.phaseStart = 'retry';
     return q;
   }
@@ -710,7 +725,8 @@ export function advance(s, answered, rng = Math.random) {
       const p = byId(s, id);
       if (!p) return;
       if (pend.kind === 'p3') {
-        if (correct) {
+        // 카드 맞추기 재출제엔 이미 맞힌 단어도 같이 들어 있다 — 틀렸던 단어만 센다
+        if (correct && s.wrong.includes(id)) {
           s.wrong = s.wrong.filter((x) => x !== id);
           s.filled = (s.filled ?? 0) + 1; // 틀렸던 칸을 채운다(진행바)
         }
@@ -724,6 +740,8 @@ export function advance(s, answered, rng = Math.random) {
       if (pend.kind === 'p1') s.firstById[id] = { type: pend.type, correct };
       if (!correct && pend.kind === 'p1' && !s.wrong.includes(id)) s.wrong.push(id);
       if (!correct && pend.kind === 'p2' && !s.wrong.includes(id)) s.wrong.push(id);
+      // 3부는 틀린 그 문제를 그대로 다시 낸다 — 마지막으로 틀린 문제(2부가 1부보다 뒤)를 남긴다
+      if (!correct && s.pendingQ) s.wrongQ = { ...(s.wrongQ || {}), [id]: s.pendingQ };
     });
   }
   if (pend && answered && pend.kind !== 'p3') {
@@ -745,6 +763,8 @@ export function advance(s, answered, rng = Math.random) {
   // 첫 문제 앞 '문제 유형을 하나씩 체험해요'(PHASE_COPY.trial) 안내는 없앴다(이슈 #25 4차) — 온보딩 '체험 밭'
   // 장면이 그 자리를 대신한다. 학습 화면 안 안내가 떠 있는 동안 아직 안 보이는 첫 문제의 TTS 가 먼저 나왔다.
   const q = nextPart1(s, rng) || nextPart2(s, rng) || nextPart3(s, rng);
+  // 출제 직후 사본 — 플러그인이 문제 객체에 답(isCorrect·userResultIndex 등)을 써 넣기 전 상태
+  s.pendingQ = q && s.pending?.kind !== 'p3' ? JSON.parse(JSON.stringify(q)) : null;
   s.current = q;
   if (!q) s.done = true;
   return q;

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useMemo, useCallback } from 'react';
-import { CaretLeft, Plus, CaretUp, Lock, DotsThreeVertical, CloudSlash, ArrowClockwise, BookOpen, Plant, PencilSimple, CheckSquare, Square } from '@phosphor-icons/react';
+import { CaretLeft, Plus, CaretUp, Lock, DotsThreeVertical, CloudSlash, ArrowClockwise, PencilSimple, CheckSquare, Square } from '@phosphor-icons/react';
 
 import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
 import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
@@ -482,6 +482,8 @@ const VocabularyWordsNewFullSheet = ({ id }) => {
     대상이 이미 '이 단어장'으로 좁혀진 여기서만 방식이 남은 선택이 된다.
   */
   const handleStudyClick = () => {
+    // 단어가 하나도 없으면 돌볼 것이 없다 — '어떻게 돌볼까요?' 를 열지 않는다(이슈 #25 6차).
+    if (totalCount === 0) return;
     vibrate({ duration: 5 });
     pushNewBottomSheet(BookStudyTypeNewBottomSheet, {
       vocabularySheetId: id,
@@ -564,24 +566,6 @@ const VocabularyWordsNewFullSheet = ({ id }) => {
             {isPurchasedBook ? <Lock size={18} weight="light" /> : <Plus size={20} weight="light" />}
           </motion.button>
 
-          {!isPurchasedBook && totalCount === 0 && (
-            <motion.div
-              initial={{ opacity: 0, y: 5 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="
-                absolute top-[36px] right-[-4px] z-[20]
-                flex items-center justify-center
-                h-[30px] px-[10px] rounded-[6px]
-                bg-primary-main-600
-                pointer-events-none
-              "
-            >
-              <span className="absolute top-[-8px] right-[10px] w-0 h-0 border-l-[6px] border-r-[6px] border-b-[13px] border-l-transparent border-r-transparent border-b-primary-main-600" />
-              <span className="whitespace-nowrap text-[12px] font-[400] tracking-[-0.24px] text-layout-white dark:text-layout-black">
-                눌러서 단어 추가
-              </span>
-            </motion.div>
-          )}
         </div>
         </>
         )}
@@ -609,12 +593,14 @@ const VocabularyWordsNewFullSheet = ({ id }) => {
           <motion.button
             type="button"
             onClick={handleStudyClick}
-            whileTap={{ scale: 0.98 }}
+            disabled={totalCount === 0}
+            whileTap={totalCount === 0 ? undefined : { scale: 0.98 }}
             className="
               flex items-center justify-center w-full h-[52px] rounded-[12px]
               text-[16px] font-[700] tracking-[-0.02em] text-layout-white
               bg-[linear-gradient(180deg,#FF88DC_0%,#FF70D4_100%)]
               shadow-[inset_0_1px_0_rgba(255,255,255,0.34),0_8px_20px_rgba(255,112,212,0.38)]
+              disabled:opacity-40 disabled:shadow-none
             "
           >
             이 단어장 물주기
@@ -717,47 +703,12 @@ const VocabularyWordsNewFullSheet = ({ id }) => {
             </div>
           ) : totalCount === 0 ? (
             <div className="flex flex-col items-center pt-[40px]">
-              <EmptyIcon icon={isPurchasedBook ? BookOpen : Plant} />
-
-              {isPurchasedBook ? (
-                <p
-                  className="m-0 text-center text-[16px] font-[400] leading-[1.4] tracking-[-0.32px] text-layout-black dark:text-layout-white"
-                  style={{ fontFamily: "'Pretendard Variable', sans-serif" }}
-                >
-                  이 단어장에는 단어가 없어요
-                </p>
-              ) : (
-                <>
-                  <div
-                    className="text-center text-[16px] leading-[1.4] tracking-[-0.32px] mb-[20px]"
-                    style={{ fontFamily: "'Pretendard Variable', sans-serif" }}
-                  >
-                    <p className="m-0 font-[400] text-layout-black dark:text-layout-white">
-                      아직 심은 단어가 없어요.
-                    </p>
-                    <p className="m-0">
-                      <span className="font-[700] text-primary-main-500">단어</span>
-                      <span className="font-[400] text-layout-black dark:text-layout-white">를 추가해 밭을 채워 보세요.</span>
-                    </p>
-                  </div>
-
-                  <motion.button
-                    onClick={handleAddClick}
-                    whileTap={{ scale: 0.95 }}
-                    className="
-                      flex items-center justify-center gap-[5px]
-                      w-[136px] h-[40px] rounded-[8px]
-                      bg-primary-main-600
-                    "
-                    aria-label="단어 추가하기"
-                  >
-                    <Plus size={16} weight="light" className="text-layout-white dark:text-layout-black" />
-                    <span className="text-[14px] font-[700] text-layout-white dark:text-layout-black">
-                      단어 추가하기
-                    </span>
-                  </motion.button>
-                </>
-              )}
+              <p
+                className="m-0 text-center text-[16px] font-[400] leading-[1.4] tracking-[-0.32px] text-layout-black dark:text-layout-white"
+                style={{ fontFamily: "'Pretendard Variable', sans-serif" }}
+              >
+                {isPurchasedBook ? '이 단어장에는 단어가 없어요' : '아직 단어가 없어요. 단어를 추가하세요.'}
+              </p>
             </div>
           ) : allDisplayedWords.length === 0 ? (
             <p className="pt-[40px] text-center text-[14px] font-[400] text-layout-gray-300">

@@ -172,7 +172,7 @@ export const UnlockGuideNewBottomSheet = () => {
   return (
     <div className="flex flex-col max-h-[85vh] pt-[26px] pb-[20px] px-[20px]">
       <h3 className="shrink-0 text-center text-[18px] font-[700] text-layout-black dark:text-layout-white">
-        첫 퀘스트
+        입문 퀘스트
       </h3>
 
       <div className="mt-[14px] flex-1 min-h-0 overflow-y-auto">

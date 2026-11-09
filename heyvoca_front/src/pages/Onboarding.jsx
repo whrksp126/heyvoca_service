@@ -19,6 +19,7 @@ import postMessageManager from '../utils/postMessageManager';
 import { cropAssetByVariant } from '../components/farm/CropImage';
 import { useStatusBarStyle } from '../hooks/useStatusBarStyle';
 import FarmStoryStage from '../components/onboarding/FarmStoryStage';
+import AuthSplash from '../components/onboarding/AuthSplash';
 import { nodeEnv } from '../utils/common';
 
 /*
@@ -103,6 +104,9 @@ const Onboarding = () => {
   const [loadingTrial, setLoadingTrial] = useState(false);
   // 이미 로그인된 사용자가 온보딩을 진행할 때 auth 스텝을 건너뛰고 서버 migrate 처리 중임을 표시
   const [finishingOnboarding, setFinishingOnboarding] = useState(false);
+  // 앱 OAuth 결과를 받아 로그인 처리 중 — 가입 화면(버튼) 대신 스플래시를 그린다. 이 뒤 navigate('/') 의
+  // Index 스플래시와 같은 그림이라 홈까지 로그인 화면이 비치지 않는다(이슈 #25 6차 QA).
+  const [authProcessing, setAuthProcessing] = useState(false);
 
   // 온보딩 내부 인증(auth) 스텝용 앱 OAuth 콜백 리스너 (Login 페이지와 동일 로직)
   // 로그인 성공 시 홈으로 이동 → 홈에서 게스트 데이터 이전 + 알림 프롬프트가 이어짐
@@ -110,18 +114,22 @@ const Onboarding = () => {
     const onGoogle = async (data) => {
       const { googleId, email, name, status } = data || {};
       if (!googleId || !email || !name || !status) return;
+      setAuthProcessing(true);
       try {
         const result = await Login({ googleId, email, name, status });
-        if (result?.success) navigate('/');
+        if (result?.success) { navigate('/'); return; }
       } catch (e) { /* 로그인 처리 오류 무시 */ }
+      setAuthProcessing(false);
     };
     const onApple = async (data) => {
       const { identityToken, email, fullName, status, authorizationCode } = data || {};
       if (!identityToken || !status) return;
+      setAuthProcessing(true);
       try {
         const result = await AppleLogin({ identityToken, fullName, email, status, authorizationCode });
-        if (result?.success) navigate('/');
+        if (result?.success) { navigate('/'); return; }
       } catch (e) { /* 로그인 처리 오류 무시 */ }
+      setAuthProcessing(false);
     };
     postMessageManager.setupAppGoogleAuth(onGoogle);
     postMessageManager.setupAppAppleAuth(onApple);
@@ -164,7 +172,7 @@ const Onboarding = () => {
     try {
       const result = await DevLogin({ email });
       // 성공하면 홈으로 — 게스트 데이터 이전(migrate)은 구글·애플과 똑같이 Index.jsx 가 맡는다
-      if (result?.success) { navigate('/'); return; }
+      if (result?.success) { setAuthProcessing(true); navigate('/'); return; }
       setDevError(result?.message || '로그인 실패');
     } catch (e) {
       setDevError('서버 오류');
@@ -332,6 +340,9 @@ const Onboarding = () => {
   );
 
   const stepBody = useMemo(() => `on-${step}`, [step]);
+
+  // 로그인 처리 중·이미 로그인된 사용자의 이전(migrate) 중에는 가입 화면 대신 스플래시
+  if (authProcessing || (step === 'auth' && (isLogin || finishingOnboarding))) return <AuthSplash />;
 
   return (
     <div className="flex flex-col h-screen w-full bg-layout-white dark:bg-layout-black">

@@ -5,6 +5,7 @@ import { useNewBottomSheet } from '../../hooks/useNewBottomSheet';
 import { useVocabulary } from '../../context/VocabularyContext';
 import { useUser } from '../../context/UserContext';
 import { vibrate } from '../../utils/osFunction';
+import { FIELD_GRASS_MAIN } from '../farm/FarmField';
 
 export const VOCABULARY_COLORS = [
     { id: 'color-1', value: 'var(--primary-main-500)' },
@@ -12,6 +13,9 @@ export const VOCABULARY_COLORS = [
     { id: 'color-3', value: 'var(--secondary-blue-500)' },
     { id: 'color-4', value: 'var(--secondary-mint-500)' },
     { id: 'color-5', value: 'var(--secondary-yellow-500)' },
+    // 원래 밭 풀색 — 이 색 단어장은 밭 테두리를 칠하지 않는다(FarmField bookRimColor).
+    // 서점 '토익 기초' 단어장과 같은 color 값이다(이슈 #25 6차).
+    { id: 'color-6', value: FIELD_GRASS_MAIN },
 ];
 
 const getColorSet = (mainColor) => {
@@ -21,6 +25,7 @@ const getColorSet = (mainColor) => {
         case 'var(--secondary-blue-500)': return { main: "var(--secondary-blue-500)", sub: "var(--secondary-blue-200)", background: "var(--secondary-blue-100)" };
         case 'var(--secondary-mint-500)': return { main: "var(--secondary-mint-500)", sub: "var(--secondary-mint-200)", background: "var(--secondary-mint-100)" };
         case 'var(--secondary-yellow-500)': return { main: "var(--secondary-yellow-500)", sub: "var(--secondary-yellow-200)", background: "var(--secondary-yellow-100)" };
+        case FIELD_GRASS_MAIN: return { main: FIELD_GRASS_MAIN, sub: `${FIELD_GRASS_MAIN}4d`, background: "#EFFFEE" };
         default: return { main: "var(--primary-main-500)", sub: "var(--primary-main-200)", background: "var(--primary-main-100)" };
     }
 };

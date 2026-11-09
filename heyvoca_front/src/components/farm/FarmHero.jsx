@@ -66,6 +66,60 @@ const SUN_CLASS = {
  */
 const SIGN_STAGE = { seed: 'PLANTED_SEED', sprout: 'SPROUT', leaf: 'LEAF', carrot: 'CARROT' };
 
+
+/**
+ * 밭 팻말 하나 — 단계 아이콘 + 단계명 + 수. 홈 히어로와 홈 단어장 밭 격자(HomeFieldGrid,
+ * 밭이 하나뿐일 때)가 같이 쓴다. left/top 은 밭 캔버스(1200×860) 대비 %.
+ */
+export const FieldSign = ({ crop, count, left, top, onClick }) => {
+  const Tag = onClick ? 'button' : 'div';
+  return (
+    <Tag
+      {...(onClick ? { type: 'button', onClick } : {})}
+      style={{ left: `${left}%`, top: `${top}%` }}
+      className="absolute z-[14] -translate-x-1/2 w-[62px] h-[35px]"
+    >
+      {/* 말뚝 — 판 뒤에 서고 아래로 뻗는다. 판과 6/96 만큼 겹친다(생성 스크립트 그대로).
+          치수를 % 로 두는 이유는 판이 폰 폭에 따라 커지기 때문이다. */}
+      <span
+        aria-hidden
+        className="
+          absolute left-1/2 -translate-x-1/2 z-0
+          w-[8.8%] h-[41.7%] top-[93.75%]
+          bg-[linear-gradient(180deg,#96683E_0%,#6E4828_100%)]
+        "
+      />
+      {/* 나무 판 — 밝은 나무 + 어두운 테두리 + 상단 하이라이트.
+          히어로 PNG 에서 팻말을 빼고 여기서 그린다. 판이 이미지에 구워져 있으면
+          보유 0인 단계에서 **빈 판만 남는다** — 글자를 지워도 나무가 지워지지 않는다. */}
+      <span
+        className="
+          absolute inset-0 z-[1] flex items-center justify-center gap-[3px]
+          rounded-[6px] border-[1.8px] border-[#96683E]
+          bg-[linear-gradient(180deg,#D8AC74_0%,#BE8F58_100%)]
+          shadow-[0_2px_5px_rgba(92,58,30,0.28)]
+          overflow-hidden
+        "
+      >
+        <span
+          aria-hidden
+          className="absolute left-[5%] right-[5%] top-[9%] h-[42%] rounded-[4px] bg-[rgba(255,240,214,0.18)] blur-[2px]"
+        />
+        <CropImage stage={SIGN_STAGE[crop]} health={HEALTH_STATES.FRESH} size={30} align="center" />
+        {/* §5 — 단계명 9px/700 #7A5433 · 보유 수 13px/800 #4A2E17 (나무 위에서 읽히는 갈색) */}
+        <span className="relative min-w-0 text-left">
+          <span className="block text-[9px] font-[700] text-[#7A5433] tracking-[-0.05em] leading-[1.05]">
+            {CROP_LABEL[crop]}
+          </span>
+          <span className="block text-[13px] font-[800] text-[#4A2E17] tracking-[-0.05em] leading-[1.1] mt-[1px]">
+            {count}
+          </span>
+        </span>
+      </span>
+    </Tag>
+  );
+};
+
 // 밭 전체의 분위기 — 가장 손이 필요한 상태가 밭 전체의 인상을 정한다.
 // 홈은 §12 의 상태 판정 결과를 `state` 로 직접 넘기고, 농장 상세는 이 폴백을 쓴다.
 export const heroMood = (health) => {
@@ -81,12 +135,14 @@ export const heroMood = (health) => {
  *                             홈은 아직 심지 않은 씨앗을 빼고 넘긴다.
  * @param {object} healthMix   그림 variant 분포 { healthy, drying, wilted, rotten }
  * @param {number} storedSeeds 아직 심지 않은 보유 씨앗 — 밭 **밖** 간판에 적힌다(기획 5.1)
+ * @param {node}   field       (선택) 한 장짜리 밭 대신 그릴 것 — 홈은 단어장이 하나라도 있으면
+ *                             단어장별 밭 격자(HomeFieldGrid)를 넘긴다(이슈 #25 6차). 없으면 아래 한 장짜리 밭.
  * @param {Array}  words       (선택) 실제 단어 목록 {id, stage, health} — 주어지면 FarmField 가
  *                             단어 id 기반 결정적 슬롯(plantFieldByWords)으로 심어 단계가
  *                             섞여서 자연스럽게 배치되고, 자란 뒤에도 같은 자리를 지킨다
  *                             (2026-09-27 QA 2차 §D). 없으면 기존 집계 기반으로 폴백한다.
  */
-const FarmHero = ({ counts, fieldCounts, healthMix, storedSeeds = 0, words, health, state, onSelectGroup, children }) => {
+const FarmHero = ({ counts, fieldCounts, healthMix, storedSeeds = 0, words, health, state, onSelectGroup, field = null, children }) => {
   "use memo";
 
   const mood = SKY_CLASS[state] ? state : heroMood(health);
@@ -112,6 +168,7 @@ const FarmHero = ({ counts, fieldCounts, healthMix, storedSeeds = 0, words, heal
         예전에는 이 상자 자체에 배경 이미지를 깔았는데, 폭이 390px 이 아니면
         상자 높이(313 고정)와 그림 높이(폭×0.717)가 어긋나 팻말이 밭에서 떠올랐다.
       */}
+      {field || (
       <div className="absolute inset-x-0 top-0 bottom-[-4px] overflow-hidden">
         {/*
           밭 상자 — width 112%, left -6%, 아래 정렬.
@@ -133,57 +190,21 @@ const FarmHero = ({ counts, fieldCounts, healthMix, storedSeeds = 0, words, heal
             const n = (fieldCounts || counts)?.[sign.crop] ?? 0;
             // §3 — 그 구역에 아무것도 없으면 팻말이 서지 않는다. 빈 구역 자체가 정보다.
             if (n <= 0) return null;
-            const Tag = onSelectGroup ? 'button' : 'div';
             return (
-              <Tag
+              <FieldSign
                 key={sign.crop}
-                {...(onSelectGroup ? { type: 'button', onClick: () => onSelectGroup(sign.crop) } : {})}
-                style={{ left: `${sign.left}%`, top: `${sign.top}%` }}
-                className="absolute z-[14] -translate-x-1/2 w-[62px] h-[35px]"
-              >
-                {/* 말뚝 — 판 뒤에 서고 아래로 뻗는다. 판과 6/96 만큼 겹친다(생성 스크립트 그대로).
-                    치수를 % 로 두는 이유는 판이 폰 폭에 따라 커지기 때문이다. */}
-                <span
-                  aria-hidden
-                  className="
-                    absolute left-1/2 -translate-x-1/2 z-0
-                    w-[8.8%] h-[41.7%] top-[93.75%]
-                    bg-[linear-gradient(180deg,#96683E_0%,#6E4828_100%)]
-                  "
-                />
-                {/* 나무 판 — 밝은 나무 + 어두운 테두리 + 상단 하이라이트.
-                    히어로 PNG 에서 팻말을 빼고 여기서 그린다. 판이 이미지에 구워져 있으면
-                    보유 0인 단계에서 **빈 판만 남는다** — 글자를 지워도 나무가 지워지지 않는다. */}
-                <span
-                  className="
-                    absolute inset-0 z-[1] flex items-center justify-center gap-[3px]
-                    rounded-[6px] border-[1.8px] border-[#96683E]
-                    bg-[linear-gradient(180deg,#D8AC74_0%,#BE8F58_100%)]
-                    shadow-[0_2px_5px_rgba(92,58,30,0.28)]
-                    overflow-hidden
-                  "
-                >
-                  <span
-                    aria-hidden
-                    className="absolute left-[5%] right-[5%] top-[9%] h-[42%] rounded-[4px] bg-[rgba(255,240,214,0.18)] blur-[2px]"
-                  />
-                  <CropImage stage={SIGN_STAGE[sign.crop]} health={HEALTH_STATES.FRESH} size={30} align="center" />
-                  {/* §5 — 단계명 9px/700 #7A5433 · 보유 수 13px/800 #4A2E17 (나무 위에서 읽히는 갈색) */}
-                  <span className="relative min-w-0 text-left">
-                    <span className="block text-[9px] font-[700] text-[#7A5433] tracking-[-0.05em] leading-[1.05]">
-                      {CROP_LABEL[sign.crop]}
-                    </span>
-                    <span className="block text-[13px] font-[800] text-[#4A2E17] tracking-[-0.05em] leading-[1.1] mt-[1px]">
-                      {n}
-                    </span>
-                  </span>
-                </span>
-              </Tag>
+                crop={sign.crop}
+                count={n}
+                left={sign.left}
+                top={sign.top}
+                onClick={onSelectGroup ? () => onSelectGroup(sign.crop) : undefined}
+              />
             );
           })}
         </FarmField>
         </div>
       </div>
+      )}
 
       {/* 헤드라인 · 보석 칩 · 주황 핀 · 주 CTA — 화면이 넘긴다 */}
       {children}
