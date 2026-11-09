@@ -12,12 +12,12 @@
 // 기획 11.5 — 끊겼을 때의 연출은 이 화면에 없다. 큰 빨간 0 도, 복구(보호권 구매) 유도도
 // 두지 않는다. 끊긴 사실은 `current` 가 작아진 것으로만 드러난다.
 
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { CaretLeft } from '@phosphor-icons/react';
 import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
 import { getStreakApi } from '../../api/farm';
-import { toLocalDateString } from '../../utils/common';
+import { useStats } from '../../context/StatsContext';
 import { vibrate } from '../../utils/osFunction';
 import StreakRecordView from '../streak/StreakRecordView';
 
@@ -27,7 +27,9 @@ const FarmVisitCalendarSheet = () => {
   const { popNewFullSheet } = useNewFullSheetActions();
 
   const [streak, setStreak] = useState(null);
-  const today = useMemo(() => toLocalDateString(new Date()), []);
+  // 오늘 = KST 날짜 키(StatsContext.todayKey) — 기기 시간대와 무관하고, 시트가 열린 채 자정을
+  // 넘겨도 따라 바뀐다(예전엔 마운트 때 기기 로컬 날짜로 한 번만 계산했다 — 이슈 #24)
+  const { todayKey: today } = useStats();
   const load = useCallback(async () => {
     const res = await getStreakApi();
     if (res?.code === 200) setStreak(res.data);

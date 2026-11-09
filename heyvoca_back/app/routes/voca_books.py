@@ -15,7 +15,7 @@ from flask import request, jsonify, g
 from uuid import UUID, uuid4
 
 from app.routes import voca_books_bp
-from app.models.models import db, UserVocaBook, UserVocaBookMap, UserVoca, Bookstore, AdminVocaBookMap, UserVocaGame, GemReason
+from app.models.models import db, UserVocaBook, UserVocaBookMap, UserVoca, Bookstore, AdminVocaBookMap, UserVocaGame, GemReason, User
 from app.utils.gem import change_gem, InsufficientGem
 from app.utils.jwt_utils import jwt_required
 from app.utils.db_lock import begin_user_tx
@@ -31,6 +31,7 @@ from app.services.fsrs.state import (
     parse_user_voca_data, get_fsrs_state, is_v1, migrate_v1_to_v2, DEFAULT_FSRS_NEW,
 )
 from app.services.admin_book_refs import load_admin_book_texts
+from app.services.reading_goal import sync_reading_goal, goals_payload
 
 
 # 단어(word) 길이 정책: 영단어가 50자를 넘는 경우는 사실상 없으므로,
@@ -732,6 +733,18 @@ def create_voca_book():
         voca_book.total_word_cnt = added_count
         voca_book.updated_at = datetime.datetime.utcnow()
 
+        # 독서왕 업적 — 서점 단어장이면 보유 수(누적)로 진행을 맞춘다. 같은 트랜잭션(User 잠금은
+        # 위 begin_user_tx 가 첫 문장으로 잡았다), 보상 보석은 change_gem 으로, 커밋은 아래 한 번.
+        # 예전에는 레거시 /user_voca_book/create 에만 있어 서점 구매로는 업적이 오르지 않았다.
+        # 응답 gem.before = 구매 차감 후, gem.after = 독서왕 보상 반영 후(커밋 전, 같은 잠금 안에서 읽음).
+        completed_goals = []
+        gem_before = db.session.query(User.gem_cnt).filter(User.id == user_id).scalar()
+        if bookstore_id:
+            db.session.flush()
+            completed_goals = sync_reading_goal(user_id)
+        gem_final = (db.session.query(User.gem_cnt).filter(User.id == user_id).scalar()
+                     if completed_goals else gem_before)
+
         db.session.commit()
 
         # 온보딩 미션 훅 — 서점 등록(buy_book) vs 직접 생성+단어 포함(make_book).
@@ -742,8 +755,12 @@ def create_voca_book():
             _try_complete_onboarding_mission(user_id, 'make_book')
 
         resp = build_voca_book_response(voca_book)
-        if gem_after is not None:
-            resp['gemCnt'] = gem_after
+        # gemCnt 는 예전엔 구매 차감 후 잔액(chargeGem 때만) — 이제 독서왕 보상까지 반영한 값(= gem.after).
+        if gem_after is not None or completed_goals:
+            resp['gemCnt'] = gem_final
+        resp['gem'] = {'before': gem_before, 'after': gem_final}
+        # 레거시 /user_voca_book/create 와 같은 모양의 goals 배열(이번에 완료된 레벨, 없으면 빈 배열)
+        resp['goals'] = goals_payload(completed_goals)
         return jsonify({'code': 201, 'data': resp}), 201
 
     except Exception:

@@ -3,13 +3,15 @@
 // 홈 연속 학습 카드의 그림 — 데이터 조회 · 정산 알림 · 재조회 시점은 home/StreakCard.jsx 가 맡고,
 // 여기는 받은 값을 그리기만 한다(연속 계산 · 보호권 · 보상 로직은 건드리지 않는다).
 //
-//   머리말   일렁이는 불꽃(일수에 따라 커진다 · 누르면 통 튄다) + 굴러 올라가는 연속 일수 + 최장 기록 버튼
+//   머리말   일렁이는 불꽃(일수에 따라 커진다 · 누르면 통 튄다) + 굴러 올라가는 연속 일수
+//            연속 일수 영역을 누르면 농장 방문 기록(풀시트)이 열린다 — 이슈 #24 에서 우측 "최장 N일"
+//            버튼을 없애며 그 진입로를 이 자리로 옮겼다(화살표 아이콘만 두고 글자는 더하지 않는다)
 //   본문     1주 불꽃 줄(StreakWeekRow). 멈춤 알림 · 다시 잇기 도전은 예전 규칙 그대로 그 자리를 대신한다
 //
 // §6 — 홈은 "얼마나 해 왔나"만 말한다. 남은 거리(다음 보상까지 N일) 문구는 두지 않는다.
 import React, { useMemo, useRef } from 'react';
 import { motion, useInView, useReducedMotion } from 'framer-motion';
-import { CaretRight, Crown } from '@phosphor-icons/react';
+import { CaretRight } from '@phosphor-icons/react';
 import { haptic, SPRING, TAP, useCountUp } from '../../lib/feel';
 import { CROP_ASSETS } from '../farm/CropImage';
 import StreakFlame from './StreakFlame';
@@ -42,13 +44,11 @@ const StreakCardView = ({
   const play = seen || typeof IntersectionObserver === 'undefined';
 
   const current = streak.current ?? 0;
-  const best = streak.best ?? 0;
   const paused = !!streak.paused;
   const pause = streak.pause ?? null;
   const required = Math.max(1, streak.required ?? 5);
   const todayCorrect = streak.today_correct ?? 0;
   const todayDone = streak.today_done ?? todayCorrect >= required;
-  const isRecord = current > 0 && current >= best;
 
   const shown = useCountUp(play || reducedMotion ? current : 0, { duration: 0.7 });
 
@@ -80,7 +80,7 @@ const StreakCardView = ({
         border border-farm-line dark:border-transparent
       "
     >
-      {/* 1층 — 불꽃 · 연속 일수 · 최장 기록 */}
+      {/* 1층 — 불꽃 · 연속 일수(누르면 농장 방문 기록) */}
       <div className="flex items-center gap-[12px]">
         <motion.button
           type="button"
@@ -94,28 +94,25 @@ const StreakCardView = ({
           <StreakFlame ref={flameRef} days={paused ? 0 : current} size={46} alive={play} />
         </motion.button>
 
-        <div className="min-w-0 flex-1">
-          <div className="flex items-baseline gap-[3px] text-layout-black dark:text-layout-white">
-            <span className="text-[26px] font-[800] leading-none tracking-[-0.04em] tabular-nums">{shown}</span>
-            <span className="text-[14px] font-[700] tracking-[-0.03em]">일 연속</span>
-            {/* 멈춤(paused) — 계약 §3 "M일 연속 옆 멈춤 태그" */}
-            {paused && (
-              <span className="ml-[5px] shrink-0 self-center rounded-full bg-primary-main-100 px-[8px] py-[3px] text-[10.5px] font-[800] text-primary-main-600 dark:bg-primary-main-dark dark:text-primary-main-400">
-                멈춤
-              </span>
-            )}
-          </div>
-        </div>
-
         <motion.button
           type="button"
+          aria-label="연속 학습 기록 보기"
           onClick={onOpenRecord}
           whileTap={{ scale: TAP.scale }}
           transition={SPRING.snappy}
-          className="flex shrink-0 items-center gap-[3px] rounded-full bg-layout-gray-50 py-[7px] pl-[10px] pr-[7px] text-[12px] font-[700] text-layout-gray-400 dark:bg-layout-black dark:text-layout-gray-300"
+          className="flex min-w-0 flex-1 items-center gap-[4px] text-left"
         >
-          최장 {best}일
-          <CaretRight size={10} weight="bold" className="text-layout-gray-200 dark:text-layout-gray-400" />
+          <span className="flex items-baseline gap-[3px] text-layout-black dark:text-layout-white">
+            <span className="text-[26px] font-[800] leading-none tracking-[-0.04em] tabular-nums">{shown}</span>
+            <span className="text-[14px] font-[700] tracking-[-0.03em]">일 연속</span>
+          </span>
+          {/* 멈춤(paused) — 계약 §3 "M일 연속 옆 멈춤 태그" */}
+          {paused && (
+            <span className="ml-[5px] shrink-0 rounded-full bg-primary-main-100 px-[8px] py-[3px] text-[10.5px] font-[800] text-primary-main-600 dark:bg-primary-main-dark dark:text-primary-main-400">
+              멈춤
+            </span>
+          )}
+          <CaretRight size={12} weight="bold" className="shrink-0 text-layout-gray-200 dark:text-layout-gray-400" />
         </motion.button>
       </div>
 

@@ -11,7 +11,7 @@ from uuid import uuid4, UUID
 
 from app.routes import user_voca_book_bp
 from app.models.models import db, User, VocaBook, Voca, VocaMeaning, VocaExample, VocaBookMap, VocaMeaningMap, VocaExampleMap, Bookstore, UserVocaBook, UserVoca, UserVocaBookMap, UserVocaGame
-from app.routes.mainpage import update_user_goal
+from app.services.reading_goal import sync_reading_goal, goals_payload
 from app.utils.db_lock import begin_user_tx
 from app.services.user_voca_purge import purge_orphan_user_vocas, invalidate_user_word_caches
 from app.utils.jwt_utils import jwt_required
@@ -110,10 +110,12 @@ def create_user_voca_book():
             message = '단어장이 생성되었습니다.'
 
         # 독서왕 업적 업데이트 (서점 단어장 추가 시)
-        reading_goal_complete, reading_goal_reward_count, reading_goal_badge_img, reading_goal_level = None, None, None, None
+        # 보유 서점 단어장 수(누적)로 동기화 — POST /voca_books 와 같은 함수(app/services/reading_goal.py)
+        completed_goals = []
         before_gem_cnt = user.gem_cnt
         if bookstore_id:
-            reading_goal_complete, reading_goal_reward_count, reading_goal_badge_img, reading_goal_level = update_user_goal('독서왕')
+            db.session.flush()
+            completed_goals = sync_reading_goal(user_id)
 
         db.session.commit() 
         
@@ -129,17 +131,8 @@ def create_user_voca_book():
                 'before': before_gem_cnt,
                 'after': after_gem_cnt
             },
-            'goals': []
+            'goals': goals_payload(completed_goals),
         }
-
-        if reading_goal_complete:
-            data['goals'].append({
-                'name' : '독서왕',
-                'type' : '독서왕',
-                'level' : reading_goal_level,
-                'badge_img' : reading_goal_badge_img,
-                'completed_at' : reading_goal_complete.completed_at + datetime.timedelta(hours=9),
-            })
 
         return jsonify({'code': 200, 'message': message, 'data': data}), 200
     

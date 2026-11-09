@@ -32,7 +32,7 @@
 // 뜬다 — document.body에 createPortal로 그려서, 호출부가 `as={motion.div}`를 쓰든
 // 무엇을 쓰든(그 안에 transform이 걸리든) 전혀 영향받지 않는다.
 import React, {
-  forwardRef, useEffect, useImperativeHandle, useRef,
+  forwardRef, useCallback, useEffect, useImperativeHandle, useRef, useState,
 } from 'react';
 import { createPortal } from 'react-dom';
 import {
@@ -225,6 +225,64 @@ const PullToRefreshIndicator = ({ pull, phase, threshold, maxPull }) => {
   );
 };
 
+// ── 갱신 완료 섬광(이슈 #24) ────────────────────────────────────────────────
+// 체크가 뜨는 순간, 인디케이터 자리에서 화면 전체로 원형 빛이 퍼지며 옅어진다 — "최신 정보가
+// 적용됐다"는 신호. 데이터가 실제로 바뀌었는지와 무관하게 갱신이 성공하면 항상 재생한다.
+// 인디케이터와 같은 이유로 document.body 포털에 그리고, pointer-events-none 이라 터치를
+// 전혀 막지 않는다. 인디케이터(z-30) 바로 아래 층에 깔려 칩을 가리지 않는다.
+// 지름 300vmax — 인디케이터(상단 중앙)에서 가장 먼 화면 모서리까지 넉넉히 덮는다.
+const FLASH_DURATION = 0.52;
+const FLASH_ORIGIN_TOP = 'calc(var(--status-bar-height) + 64px + 20px)'; // 칩(40px) 중심
+
+const PullToRefreshFlash = ({ onDone }) => {
+  const reducedMotion = useReducedMotion();
+
+  if (reducedMotion) {
+    // 움직임 줄이기 — 퍼지는 연출 없이 화면 전체가 옅게 한 번 밝아졌다 돌아온다
+    return createPortal(
+      <motion.div
+        aria-hidden="true"
+        className="fixed inset-0 z-[29] pointer-events-none bg-primary-main-100 dark:bg-primary-main-dark"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: [0, 0.55, 0] }}
+        transition={{ duration: 0.32, ease: 'easeOut', times: [0, 0.3, 1] }}
+        onAnimationComplete={onDone}
+      />,
+      document.body,
+    );
+  }
+
+  return createPortal(
+    <div aria-hidden="true" className="fixed inset-0 z-[29] pointer-events-none overflow-hidden">
+      {/* 빛 — 중심이 진하고 바깥으로 갈수록 투명해지는 원. 커지면서 전체가 옅어진다 */}
+      <motion.div
+        className="
+          absolute left-1/2 w-[300vmax] h-[300vmax] rounded-full
+          bg-[radial-gradient(circle,var(--primary-main-200)_0%,var(--primary-main-100)_22%,transparent_58%)]
+          dark:bg-[radial-gradient(circle,var(--primary-main-400)_0%,var(--primary-main-dark)_24%,transparent_58%)]
+        "
+        style={{ top: FLASH_ORIGIN_TOP, x: '-50%', y: '-50%' }}
+        initial={{ scale: 0.02, opacity: 0.9 }}
+        animate={{ scale: 1, opacity: 0 }}
+        transition={{
+          scale: { duration: FLASH_DURATION, ease: [0.16, 1, 0.3, 1] },
+          opacity: { duration: FLASH_DURATION, ease: [0.4, 0, 0.6, 1] },
+        }}
+        onAnimationComplete={onDone}
+      />
+      {/* 물결 테두리 — 빛의 앞머리를 또렷하게 보여 "퍼져 나간다"를 읽히게 한다 */}
+      <motion.div
+        className="absolute left-1/2 w-[120vmax] h-[120vmax] rounded-full border-[3px] border-primary-main-300 dark:border-primary-main-400"
+        style={{ top: FLASH_ORIGIN_TOP, x: '-50%', y: '-50%' }}
+        initial={{ scale: 0.03, opacity: 0.7 }}
+        animate={{ scale: 1, opacity: 0 }}
+        transition={{ duration: FLASH_DURATION * 0.9, ease: [0.16, 1, 0.3, 1] }}
+      />
+    </div>,
+    document.body,
+  );
+};
+
 /**
  * 디버그 오버레이 — 개발 환경(local/development)에서 devtools로
  * `localStorage.setItem('ptr.debug','1')`을 켰을 때만 렌더된다(기본 꺼짐, prod 빌드에서는
@@ -280,9 +338,29 @@ const PullToRefresh = forwardRef(function PullToRefresh(
   const scrollRef = useRef(null);
   useImperativeHandle(forwardedRef, () => scrollRef.current, []);
 
+  // 섬광은 "실제 갱신 완료"(onRefresh promise resolve) 때만 — 실패하면 체크는 뜨지만(훅의
+  // 기존 동작) 섬광은 재생하지 않는다. 훅은 성공/실패를 밖으로 알려 주지 않아 여기서 감싼다.
+  const refreshOkRef = useRef(false);
+  const wrappedOnRefresh = useCallback(async () => {
+    refreshOkRef.current = false;
+    await onRefresh?.();
+    refreshOkRef.current = true;
+  }, [onRefresh]);
+
   const { pull, phase, debugLog } = usePullToRefresh({
-    scrollRef, onRefresh, disabled, threshold, maxPull, minShowMs, errorMessage,
+    scrollRef, onRefresh: wrappedOnRefresh, disabled, threshold, maxPull, minShowMs, errorMessage,
   });
+
+  // phase 가 done 으로 바뀌는 순간(=체크가 뜨는 순간) 섬광을 한 번 재생한다
+  const [flashKey, setFlashKey] = useState(0);
+  const prevPhaseRef = useRef(phase);
+  useEffect(() => {
+    if (phase === 'done' && prevPhaseRef.current !== 'done' && refreshOkRef.current) {
+      setFlashKey((k) => k + 1);
+    }
+    prevPhaseRef.current = phase;
+  }, [phase]);
+  const clearFlash = useCallback(() => setFlashKey(0), []);
 
   // ptr.debug 플래그 — 개발 환경에서 devtools로 켠 경우에만 마운트 시점 값을 읽는다.
   // prod 빌드에서는 isPtrDebugEnabled가 항상 false라 이 오버레이는 절대 렌더되지 않는다
@@ -304,6 +382,7 @@ const PullToRefresh = forwardRef(function PullToRefresh(
       {...rest}
     >
       <PullToRefreshIndicator pull={pull} phase={phase} threshold={threshold} maxPull={maxPull} />
+      {flashKey > 0 && <PullToRefreshFlash key={flashKey} onDone={clearFlash} />}
       {children}
       {debugEnabled && <PullToRefreshDebugOverlay log={debugLog} />}
     </Component>

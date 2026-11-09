@@ -198,13 +198,6 @@ const SpellingFillQuestion = ({ question, onComplete, onCardMatched, farmByWordI
 
   const cellClass = (i, c) => {
     if (c.kind === 'fixed') return 'border-transparent text-layout-gray-400';
-    if (isAnswered) {
-      if (c.kind === 'given') return 'border-transparent text-layout-gray-400';
-      if (hinted.has(i)) return 'border-transparent text-primary-main-600';
-      return wrongCells.has(i)
-        ? 'border-status-error-500 text-status-error-600 dark:text-status-error-300'
-        : 'border-status-success-500 text-status-success-600 dark:text-status-success-300';
-    }
     if (c.kind === 'given') return 'border-transparent text-layout-gray-400';
     if (hinted.has(i)) return 'border-transparent text-primary-main-600';
     if (i === currentCell) return 'border-primary-main-600 text-layout-black dark:text-layout-white';
@@ -215,6 +208,19 @@ const SpellingFillQuestion = ({ question, onComplete, onCardMatched, farmByWordI
     if (c.kind === 'given' || hinted.has(i)) return c.ch;
     return filled[i] ?? '';
   };
+
+  // 채점 후 표시용 — 칸별 글자(공백·기호·공개·힌트·입력)를 이어 붙이고, 틀린 칸이 연속된 구간끼리 묶는다.
+  const writtenRuns = [];
+  if (isAnswered) {
+    cells.forEach((c, i) => {
+      const ch = c.kind === 'fixed' ? c.ch : (c.kind === 'given' || hinted.has(i) ? c.ch : (filled[i] ?? ''));
+      if (!ch) return;
+      const wrong = wrongCells.has(i);
+      const last = writtenRuns[writtenRuns.length - 1];
+      if (last && last.wrong === wrong) last.text += ch;
+      else writtenRuns.push({ text: ch, wrong });
+    });
+  }
 
   const showMeaningSpeaking = speakingTarget === 'meaning';
   const reading = ja ? getReading(question) : '';
@@ -293,11 +299,21 @@ const SpellingFillQuestion = ({ question, onComplete, onCardMatched, farmByWordI
               <motion.div
                 lang={ja ? 'ja' : undefined}
                 animate={isAnswered ? pickVariant(isCorrect ? 'correctPop' : 'shake', reducedMotion).animate : undefined}
-                className="relative flex flex-wrap justify-center gap-x-[4px] gap-y-[10px]"
-                aria-label="단어 철자 입력 칸"
+                className={isAnswered
+                  ? 'relative max-w-full text-center break-words'
+                  : 'relative flex flex-wrap justify-center gap-x-[4px] gap-y-[10px]'}
+                aria-label={isAnswered ? `내가 쓴 철자 ${writtenRuns.map((r) => r.text).join('')}` : '단어 철자 입력 칸'}
               >
                 <ShineSweep play={isAnswered && isCorrect === true} />
-                {cells.map((c, i) => (c.ch === ' '
+                {isAnswered ? (
+                  // 채점 후 — 칸을 걷고 내가 쓴 철자를 한 단어로 이어 쓴다(구는 단어 사이 공백만).
+                  // 틀린 글자 구간만 빨간색, 나머지는 일반 텍스트. O/X 는 공용 ResultMark 가 띄운다.
+                  <span className="whitespace-pre-wrap text-[28px] font-[800] leading-[1.25] tracking-[-0.01em] text-layout-black dark:text-layout-white">
+                    {writtenRuns.map((r, k) => (r.wrong
+                      ? <span key={k} className="text-status-error-600 dark:text-status-error-300">{r.text}</span>
+                      : <span key={k}>{r.text}</span>))}
+                  </span>
+                ) : cells.map((c, i) => (c.ch === ' '
                   ? <span key={i} className="w-[12px]" aria-hidden="true" />
                   : (
                     <span

@@ -31,6 +31,8 @@ import { getKstToday, msUntilNextKstMidnight } from '../utils/kstDate';
 const STALE_MS = 30 * 1000;
 // 학습 화면 밖에서 /study/log 응답이 몰려 올 때(예: 도중 종료 직후 늦게 도착) 한 번으로 묶는다
 const DIRTY_DEBOUNCE_MS = 600;
+// 한 번의 통계 조회가 이보다 오래 끝나지 않으면 멈춘 것으로 보고 새로 시작한다(아래 refreshStats 주석)
+const RUN_STUCK_MS = 15 * 1000;
 
 const isStudyRoute = (pathname) => (pathname || '').startsWith('/take-test');
 
@@ -63,25 +65,29 @@ export const StatsProvider = ({ children }) => {
   const lastFetchedAtRef = useRef(0);
   const dirtyRef = useRef(false);
 
-  const inFlightRef = useRef(false);
-  // 조회 중에 들어온 갱신 요청 — 끝나면 한 번 더 돈다(아래 주석)
-  const queuedRef = useRef(false);
+  /*
+    조회 직렬화 — 한 번에 하나만 돌고, 조회 중에 들어온 요청은 "지금 것이 끝난 뒤 한 번 더"로
+    합친다. 합쳐진 호출자도 **그 다음 조회가 끝날 때 resolve 되는 promise** 를 받는다.
 
-  // 네 통계를 한 번에 조회. 성공 항목만 갱신(기존 캐시 보존).
-  // 농장 요약은 .catch 로 개별 격리한다 — 농장 API 가 실패해도 기존 세 통계의 동작이 바뀌면 안 된다.
-  const refreshStats = useCallback(async () => {
-    // 날짜 키는 조회 중 합류(아래 inFlight)와 무관하게 먼저 맞춘다 — 날짜 라벨은 즉시 고쳐진다
-    const nowKey = getKstToday();
-    fetchedDateKeyRef.current = nowKey;
-    setTodayKey(nowKey);
-    /*
-      이미 조회 중이면 **버리지 않고 뒤에 한 번 더** 돈다.
-      예전에는 그냥 return 이었는데, 그러면 "조회가 떠 있는 사이에 서버 데이터가 바뀐" 경우
-      갱신 요청이 통째로 사라지고 캐시가 옛날 값으로 굳는다. 실제로 온보딩 가입이 그 경우다 —
-      로그인되는 순간 첫 조회가 뜨고, 그 뒤 온보딩 이전(migrate)이 밭을 채운다.
-    */
-    if (inFlightRef.current) { queuedRef.current = true; return; }
-    inFlightRef.current = true;
+    【자정 버그(2026-11 이슈 #24)】 예전 구현은 조회 중이면 queued 표시만 하고 **즉시
+    return** 했고, 잠금(inFlightRef)은 앞선 조회의 finally 에서만 풀렸다. 앱이 조회 도중
+    백그라운드로 가면 WebView 가 그 fetch 를 멈춰 영영 settle 되지 않는 경우가 있는데
+    (fetchDataAsync 에 타임아웃이 없다), 그러면 잠금이 영구히 걸려 이후의 모든 갱신 —
+    자정 타이머·앱 복귀·당겨서 새로고침 — 이 큐 표시만 하고 아무것도 받지 않았다.
+    날짜 키(todayKey)만 먼저 바뀌어 라벨은 오늘인데 "오늘 할 일"·연속 학습은 어제 값으로
+    남았고, 당겨서 새로고침은 즉시 resolve 돼 체크까지 떴다(실제로는 아무것도 안 받음).
+
+    고친 것 — ① 한 조회가 RUN_STUCK_MS 를 넘기면 버린 것으로 보고 새 조회를 시작한다
+    (버린 조회의 늦은 응답은 세대 번호로 무시한다). ② 합쳐진 호출자는 다음 조회 완료까지
+    기다린다 — 당겨서 새로고침의 완료 표시가 실제 새 데이터 도착 뒤에 뜬다.
+  */
+  const runGenRef = useRef(0);
+  const inFlightRef = useRef(null);   // { gen, startedAt, promise } | null
+  const queuedRef = useRef(null);     // 조회 중에 들어온 요청들이 함께 기다리는 다음 조회 promise
+
+  // 실제 조회 한 번. gen 이 최신이 아니면(버려졌거나 더 새 조회가 시작됨) 결과를 반영하지 않는다.
+  const runFetch = useCallback(async (gen) => {
+    const isCurrent = () => gen === runGenRef.current;
     // 조회 **시작** 시점에 지운다 — 조회 도중 들어온 신호는 다시 낡음으로 남아야 한다
     dirtyRef.current = false;
     lastFetchedAtRef.current = Date.now();
@@ -103,6 +109,7 @@ export const StatsProvider = ({ children }) => {
         // 프론트에서 추가로 자르거나 다시 샘플링하지 않는다(2026-09-27 QA 3차 백엔드 안내).
         getFarmHeroPlantsApi().catch(() => null),
       ]);
+      if (!isCurrent()) return; // 버려진 조회의 늦은 응답 — 더 새 조회가 이미 반영 중이다
       if (summary?.code === 200) setTodaySummary(summary.data);
       if (schedule?.code === 200) setReviewSchedule(schedule.data);
       if (changes?.code === 200) setTodayChanges(changes.data);
@@ -113,17 +120,48 @@ export const StatsProvider = ({ children }) => {
     } catch (e) {
       console.error('refreshStats 오류:', e);
     } finally {
-      setReviewLoaded(true);
-      inFlightRef.current = false;
-    }
-    if (queuedRef.current) {
-      queuedRef.current = false;
-      await refreshStatsRef.current();
+      if (isCurrent()) setReviewLoaded(true);
     }
   }, []);
 
-  // 자기 자신을 다시 부르기 위한 참조 — useCallback 안에서 이름으로 부르면
-  // 정의 시점에는 아직 값이 없다(TDZ).
+  const startRun = useCallback(() => {
+    const gen = ++runGenRef.current;
+    const promise = runFetch(gen).finally(() => {
+      if (inFlightRef.current?.gen === gen) inFlightRef.current = null;
+    });
+    inFlightRef.current = { gen, startedAt: Date.now(), promise };
+    return promise;
+  }, [runFetch]);
+
+  // 네 통계를 한 번에 조회. 성공 항목만 갱신(기존 캐시 보존).
+  // 반환 promise 는 "이 호출 이후에 시작된 조회"가 끝날 때 resolve 된다.
+  const refreshStats = useCallback(() => {
+    // 날짜 키는 조회 합류와 무관하게 먼저 맞춘다 — 날짜 라벨은 즉시 고쳐진다
+    const nowKey = getKstToday();
+    fetchedDateKeyRef.current = nowKey;
+    setTodayKey(nowKey);
+
+    const inFlight = inFlightRef.current;
+    if (!inFlight || Date.now() - inFlight.startedAt > RUN_STUCK_MS) {
+      // 조회가 없거나, 있던 조회가 멈춰 버렸다 — 기다리지 않고 새로 시작한다
+      queuedRef.current = null;
+      return startRun();
+    }
+    /*
+      이미 조회 중이면 **버리지 않고 뒤에 한 번 더** 돈다. 지금 떠 있는 조회는 이 요청 전에
+      시작돼 그 사이 바뀐 서버 데이터(자정 정산·온보딩 이전 등)를 못 봤을 수 있다.
+    */
+    if (!queuedRef.current) {
+      const next = inFlight.promise.then(() => {
+        if (queuedRef.current === next) queuedRef.current = null;
+        return startRun();
+      });
+      queuedRef.current = next;
+    }
+    return queuedRef.current;
+  }, [startRun]);
+
+  // effect·이벤트 핸들러가 항상 최신 refreshStats 를 부르도록 담아 둔다
   const refreshStatsRef = useRef(refreshStats);
   refreshStatsRef.current = refreshStats;
 
@@ -236,7 +274,14 @@ export const StatsProvider = ({ children }) => {
       if (isStudyRoute(pathnameRef.current)) return;
       if (isDateChanged()) refreshStatsRef.current();
     }, msUntilNextKstMidnight() + 1000);
-    return () => clearTimeout(timer);
+    // 긴 setTimeout 은 WebView 절전·타이머 스로틀로 늦거나 빠질 수 있다 — 화면이 보이는 동안
+    // 1분마다 날짜만 비교하는 가벼운 백업(요청은 날짜가 바뀐 경우에만 나간다)
+    const interval = setInterval(() => {
+      if (document.visibilityState !== 'visible') return;
+      if (isStudyRoute(pathnameRef.current)) return;
+      if (isDateChanged()) refreshStatsRef.current();
+    }, 60 * 1000);
+    return () => { clearTimeout(timer); clearInterval(interval); };
   }, [isLogin, todayKey]);
 
   // 학습 언어 전환 등으로 통계·홈 피드·농장 요약을 전부 다시 받아야 할 때.

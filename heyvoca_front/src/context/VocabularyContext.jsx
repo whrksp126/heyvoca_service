@@ -453,7 +453,9 @@ export const VocabularyProvider = ({ children }) => {
       }
 
       // 업적 업데이트 (새로 완료된 업적이 있는 경우) - 먼저 표시
-      if (newBook.goals && newBook.goals.length > 0) {
+      // 서점 구매(POST /vocaBooks, bookstoreId)도 독서왕 달성 시 goals 와 gem{before:구매 차감 후, after:보상 반영 후}를
+      // 준다(2026-11 QA #24). goals 가 없거나 빈 배열이면(구 백엔드) 아무 것도 하지 않는다.
+      if (Array.isArray(newBook.goals) && newBook.goals.length > 0) {
         // 업적 오버레이 표시
         if (window.overlayContext?.showAwaitOverlay) {
           newBook.goals.forEach(goal => {

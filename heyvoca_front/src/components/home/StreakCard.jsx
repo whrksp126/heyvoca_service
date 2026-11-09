@@ -4,7 +4,8 @@
 //
 // 그림은 streak/StreakCardView.jsx 가 그린다(2026-10-07 연속 학습 화면 고도화) — 이 파일은 조회 ·
 // 재조회 시점 · 정산 알림만 맡는다.
-// 1층 머리말 — 일렁이는 불꽃 + 굴러 올라가는 "N일 연속" + 우측 "최장 N일" 버튼(농장 방문 풀시트)
+// 1층 머리말 — 일렁이는 불꽃 + 굴러 올라가는 "N일 연속"(누르면 농장 방문 풀시트). 우측 "최장 N일"
+//           버튼은 이슈 #24 에서 없앴다 — 진입로는 연속 일수 영역으로 옮겼다
 // 2층 7칸(최근 6일 + 오늘) — 그날 daily_mission_complete/streak_qualified/streak_protected로
 //           그린다. 이어진 날은 같은 색 띠 한 줄로 잇고 상태는 띠 위 표식으로만 구분한다
 //           ("오늘 할 일 모두" 찬 불꽃 · "일부" 작은 불씨 · 보호권 그림 · 오늘 미달성은 점선 빈칸
@@ -156,9 +157,9 @@ const StreakCard = ({ registerRefresh } = {}) => {
     loadStreak(true);
   }, [todayKey, loadStreak]);
 
-  // §6 "최장 기록 … 누르면 기록 화면" — 농장 방문 달력은 하단 탭을 덮는 풀시트다
-  // (home-calendar §3 "풀시트라 하단 탭이 없다"). 진입로는 홈의 이 버튼 하나뿐이다.
-  const handleBest = () => {
+  // 농장 방문 달력(기록 화면) — 하단 탭을 덮는 풀시트다(home-calendar §3 "풀시트라 하단 탭이
+  // 없다"). 진입로는 홈 연속 학습 카드의 "N일 연속" 영역 하나뿐이다(이슈 #24, 최장 버튼 제거).
+  const handleOpenRecord = () => {
     vibrate({ duration: 5 });
     pushNewFullSheet(FarmVisitCalendarSheet, {}, {
       smFull: true,
@@ -183,7 +184,7 @@ const StreakCard = ({ registerRefresh } = {}) => {
     <StreakCardView
       streak={streak}
       weekCells={weekCells}
-      onOpenRecord={handleBest}
+      onOpenRecord={handleOpenRecord}
       onOpenPaused={openPausedSheet}
       onStartEarnBack={handleStartEarnBack}
       startingEarnBack={startingEarnBack}
