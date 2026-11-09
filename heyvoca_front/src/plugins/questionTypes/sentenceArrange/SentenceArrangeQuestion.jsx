@@ -125,7 +125,8 @@ const SentenceArrangeQuestion = ({ question, onComplete, onCardMatched, farmByWo
 
     // 소리·진동·시각(아래 setState)을 같은 틱에. 재출제(isRetry)가 아닌 첫 시도 정답이면 perfect.
     const perfect = correct && !question.isRetry;
-    feel(perfect ? 'perfect' : (correct ? 'correct' : 'wrong'));
+    // 다른 유형과 같은 O/X 채점 + 정/오답 소리만 — '완벽해요' 배지·소리는 쓰지 않는다(이슈 #25 7차 QA).
+    feel(correct ? 'correct' : 'wrong');
     setIsPerfect(perfect);
 
     question.isCorrect = correct;

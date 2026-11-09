@@ -8,7 +8,7 @@ import WordInfoBubble from '../../../components/common/WordInfoBubble';
 import ResultMark from '../../../components/common/ResultMark';
 import { getWordInfoApi } from '../../../api/search';
 import { getTextSound } from '../../../utils/common';
-import { feel, pickVariant, ShineSweep, PerfectBadge } from '../../../lib/feel';
+import { feel, pickVariant, ShineSweep } from '../../../lib/feel';
 import { diffAgainstAccepted, tokenizeWords, stripTags } from './arrangeUtils';
 
 /*
@@ -113,7 +113,8 @@ const ArrangeTray = ({
   postAnswerNode,
   isAnswered,
   isCorrect,
-  perfect = false, // 한 번에 맞힘 → '완벽해요' 배지(채점 큐 perfect 는 호출부가 발사)
+  // eslint-disable-next-line no-unused-vars
+  perfect = false, // 이전 '완벽해요' 배지용 — 이슈 #25 7차 QA로 배지를 뺐다(O/X 만)
   question,
   farm,
   resumeReplayKey,
@@ -566,7 +567,6 @@ const ArrangeTray = ({
             {/* 문장 글자 크기(17px)는 칩 글자 크기(16px, CHIP_FONT)와 어울리도록 낮췄다(2026-09-29) —
                 이전 19px는 트레이 칩이 커지면서 고정 단어(prefix/suffix)만 도드라져 보였다. */}
             <div className="relative w-full">
-            <PerfectBadge show={perfect && isAnswered} />
             <p className="w-full text-[17px] font-[700] leading-[1.9] text-layout-black dark:text-layout-white break-keep">
               {prefix && (
                 <span className="text-layout-gray-300 dark:text-layout-gray-100 font-[600]">

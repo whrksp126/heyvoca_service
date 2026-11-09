@@ -7,7 +7,7 @@ import LiftAboveBar from '../../../components/common/LiftAboveBar';
 import WordInfoBubble from '../../../components/common/WordInfoBubble';
 import ResultMark from '../../../components/common/ResultMark';
 import { getWordInfoApi } from '../../../api/search';
-import { feel, pickVariant, SPRING, ShineSweep, PerfectBadge } from '../../../lib/feel';
+import { feel, pickVariant, SPRING, ShineSweep } from '../../../lib/feel';
 import { getTextSound, stripHtmlTags } from '../../../utils/common';
 import { useStudyAdvanceGate } from '../../../hooks/useStudyAdvanceGate';
 import { getMemoryStateKeyByStability } from '../../../components/common/MemoryStateChangeBadge';
@@ -311,7 +311,8 @@ const FillInTheBlankTypingQuestion = ({ question, onComplete, onCardMatched, far
 
     // 소리·진동·시각(아래 setState)을 같은 틱에. 오타 허용 정답·재출제는 perfect 가 아니다.
     const perfect = grade.isCorrect && !grade.typo && !question.isRetry;
-    feel(perfect ? 'perfect' : (grade.isCorrect ? 'correct' : 'wrong'));
+    // 다른 유형과 같은 O/X 채점 + 정/오답 소리만 — '완벽해요' 배지·소리는 쓰지 않는다(이슈 #25 7차 QA).
+    feel(grade.isCorrect ? 'correct' : 'wrong');
     setIsPerfect(perfect);
 
     question.isCorrect = grade.isCorrect;
@@ -473,7 +474,6 @@ const FillInTheBlankTypingQuestion = ({ question, onComplete, onCardMatched, far
         <div className="relative z-[1] flex items-center flex-1 min-h-0 px-[20px] py-[45px]">
           <LiftAboveBar active={!!farm} topReserve={28} className="w-full">
             <form onSubmit={handleSubmit} className="relative">
-            <PerfectBadge show={isPerfect && isAnswered} />
               <p lang={jaBlank ? 'ja' : undefined} className={`w-full text-[22px] font-[700] leading-[1.8] text-layout-black dark:text-layout-white ${jaBlank ? 'break-normal' : 'break-keep'}`}>
                 {renderWordTokens(beforeTokens, 'b')}
                 <motion.span

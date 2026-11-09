@@ -425,6 +425,64 @@ def level_book():
 # 온보딩 v2 — 수준 측정형 (이슈 #25)
 # ──────────────────────────────────────────────
 
+_PLACEMENT_TTS_PREWARM_KEY = 'onboarding:tts_prewarm:placement'
+_PLACEMENT_TTS_PREWARM_TTL = 6 * 3600   # 후보 캐시(onboarding_placement._CACHE_TTL)와 같은 주기
+
+
+def _trigger_placement_tts_prewarm():
+    """수준 측정 후보 전체(단어·예문 en, 뜻·예문 해석 ko)의 음성을 백그라운드로 미리 생성·캐싱.
+
+    게스트·가입 직후 사용자가 캐시 없는 문장을 처음 재생할 때 생성 대기(또는 게스트 404)로
+    소리가 안 나던 문제 대응. 후보 집합은 6시간 고정이라 TTL 키로 프로세스·워커 간 중복 트리거를
+    막고, 생성 여부는 objectstore 존재 확인으로 정해져 재트리거돼도 재생성되지 않는다.
+    """
+    try:
+        if cache.get(_PLACEMENT_TTS_PREWARM_KEY):
+            return
+        cache.set(_PLACEMENT_TTS_PREWARM_KEY, '1', timeout=_PLACEMENT_TTS_PREWARM_TTL)
+    except Exception:
+        return  # Redis 장애 시엔 요청마다 수천 건 스레드가 뜰 수 있어 건너뛴다
+
+    app = current_app._get_current_object()
+
+    def _worker():
+        log = logging.getLogger(__name__)
+        with app.app_context():
+            from app.services.onboarding_placement import placement_tts_items
+            from app.services.tts import service
+            from app.services.tts.registry import get_provider_for_language
+            from app.services.tts.base import TTSError
+            from app.utils.dict_lang import use_dict_lang
+            try:
+                with use_dict_lang(ONBOARDING_LANG):
+                    items = placement_tts_items()
+            except Exception:
+                log.warning('온보딩 측정 TTS prewarm: 후보 조회 실패', exc_info=True)
+                return
+            providers, created, failed = {}, 0, 0
+            for text, lang in items:
+                try:
+                    if lang not in providers:
+                        providers[lang] = get_provider_for_language(lang)
+                    key, made, _ = service.ensure_cached(text, lang, provider=providers[lang])
+                    if made:
+                        created += 1
+                    try:
+                        cache.set(f'tts:obj:{key}', '1', timeout=7 * 24 * 3600)
+                    except Exception:
+                        pass
+                except TTSError:
+                    failed += 1
+                    if failed <= 3:
+                        log.warning('온보딩 측정 TTS prewarm 실패: %s %r', lang, text[:60], exc_info=True)
+                except Exception:
+                    failed += 1
+                    log.warning('온보딩 측정 TTS prewarm 오류: %s %r', lang, text[:60], exc_info=True)
+            log.info('온보딩 측정 TTS prewarm 완료: 대상 %d, 생성 %d, 실패 %d', len(items), created, failed)
+
+    threading.Thread(target=_worker, name='onboarding-tts-prewarm-placement', daemon=True).start()
+
+
 @onboarding_bp.route('/placement-pool', methods=['GET'])
 @limiter.limit('20 per minute')
 @english_dict
@@ -436,6 +494,7 @@ def placement_pool():
     except Exception:
         logging.getLogger(__name__).error('placement-pool 생성 실패', exc_info=True)
         return jsonify({'code': 500, 'message': '수준 측정 문제를 준비하지 못했습니다.'}), 500
+    _trigger_placement_tts_prewarm()
     return jsonify({'code': 200, 'data': {'bands': bands}}), 200
 
 

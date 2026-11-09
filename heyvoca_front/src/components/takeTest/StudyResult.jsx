@@ -439,8 +439,10 @@ const StudyResult = () => {
   const state = location.state;
   // cardMatch/cardMatchListening 세트는 words 배열을 개별 단어로 flatten
   // state.testQuestions가 없거나 빈 배열이어도 렌더 오류 없이 빈 결과로 처리
+  // 온보딩 체험 결과(resultWords)는 이미 단어 한 줄씩이고 questionType 만 'cardMatch' 로 남아 있다 —
+  // words 가 없는 행까지 펼치면 카드 맞추기 4단어가 통째로 빠진다(이슈 #25 7차 QA: 8개 중 4개만 보임).
   const testQuestions = (state?.testQuestions ?? []).flatMap(q => {
-    if (q.questionType === 'cardMatch' || q.questionType === 'cardMatchListening') {
+    if ((q.questionType === 'cardMatch' || q.questionType === 'cardMatchListening') && Array.isArray(q.words)) {
       return (q.words ?? []).map(word => ({
         ...word,
         isCorrect: word.isCorrect ?? q.isCorrect,

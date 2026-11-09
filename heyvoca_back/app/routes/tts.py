@@ -372,15 +372,21 @@ def _daily_gen_count(user_id):
 
 
 _ONBOARDING_WHITELIST_TTL = 3600  # 온보딩 단어 화이트리스트 캐시(1시간, 관리자 단어장 변경 반영 지연 허용)
-_ONBOARDING_WHITELIST_KEY = 'tts:onboarding_words'
+_ONBOARDING_WHITELIST_KEY = 'tts:onboarding_words:v2'  # 원소 = f'{language}:{정규화 텍스트(소문자)}'
+
+
+def _wl_entry(language, text):
+    n = normalize_text(text or '')
+    return f'{language}:{n.lower()}' if n else None
 
 
 def _onboarding_words_whitelist():
-    """온보딩 레벨(1~4) 단어장에 포함된 영어 단어 집합(소문자, 정규화 기준).
+    """온보딩에서 게스트가 재생하는 고정 텍스트 집합 — 원소는 '{language}:{정규화 소문자}'.
 
     게스트(비로그인) TTS **생성**(캐시 미스) 허용 대상을 이 집합으로 한정한다.
-    레벨 단어장은 관리자가 구성하는 고정 세트(AdminVocaBook)라 텍스트가 임의 사용자
-    입력이 아니므로 무제한 생성 남용 없이 화이트리스트로 안전하게 쓸 수 있다.
+    - 레벨(1~4) 단어장 영어 단어(AdminVocaBook, 관리자 구성 고정 세트)
+    - 온보딩 v2 수준 측정(이슈 #25) 후보의 단어·예문(en)과 뜻·예문 해석(ko)
+      — 서버가 사전에서 고른 고정 집합(Redis 캐시)이라 임의 사용자 입력이 아니다.
     """
     try:
         cached = cache.get(_ONBOARDING_WHITELIST_KEY)
@@ -399,33 +405,31 @@ def _onboarding_words_whitelist():
         .filter(AdminVocaBookMap.book_id.in_(book_ids))
         .all()
     )
-    words = {normalize_text(w[0]).lower() for w in rows if w[0] and normalize_text(w[0])}
-    # 온보딩 v2 수준 측정(이슈 #25) 후보 단어·예문 — 게스트가 듣기 문제로 재생한다.
-    # 후보는 사전에서 서버가 고른 고정 집합(Redis 캐시)이라 임의 입력이 아니다.
+    entries = {_wl_entry('en', w[0]) for w in rows if w[0]}
     try:
         from app.routes.onboarding import ONBOARDING_LANG
-        from app.services.onboarding_placement import placement_tts_texts
+        from app.services.onboarding_placement import placement_tts_items
         from app.utils.dict_lang import use_dict_lang
         with use_dict_lang(ONBOARDING_LANG):
-            for t in placement_tts_texts():
+            for t, lang in placement_tts_items():
                 # 태그를 공백으로 바꾼 정규화('happy .')와 태그만 지운 평문('happy.') 둘 다 허용
-                for n in (normalize_text(t), normalize_text(_re.sub(r'<[^>]+>', '', t))):
-                    if n:
-                        words.add(n.lower())
+                entries.add(_wl_entry(lang, t))
+                entries.add(_wl_entry(lang, _re.sub(r'<[^>]+>', '', t)))
     except Exception:
         logging.getLogger(__name__).warning('온보딩 측정 TTS 화이트리스트 구성 실패(무해)', exc_info=True)
+    entries.discard(None)
     try:
-        cache.set(_ONBOARDING_WHITELIST_KEY, json.dumps(list(words)), timeout=_ONBOARDING_WHITELIST_TTL)
+        cache.set(_ONBOARDING_WHITELIST_KEY, json.dumps(list(entries)), timeout=_ONBOARDING_WHITELIST_TTL)
     except Exception:
         pass
-    return words
+    return entries
 
 
 def _is_onboarding_word(norm_text, language):
-    """게스트 miss-생성 허용 여부 — 온보딩 레벨 단어장 소속 영어 단어인지."""
-    if language != 'en':
+    """온보딩 고정 텍스트(레벨 단어·측정 후보 단어/예문/뜻/해석)인지 — 게스트 생성 허용·사전 검증 생략 기준."""
+    if language not in ('en', 'ko'):
         return False
-    return norm_text.lower() in _onboarding_words_whitelist()
+    return f'{language}:{(norm_text or "").lower()}' in _onboarding_words_whitelist()
 
 
 # ── 신규: objectstore 캐싱 + presigned URL ──────────────────────────────
@@ -512,7 +516,8 @@ def tts_resolve():
     #    (레벨 단어 음성은 /onboarding/level-book 조회 시 백그라운드로 미리 생성되므로,
     #     여기는 그 사이 레이스 상황을 위한 안전망 역할)
     user_id = _optional_user_id()
-    if not user_id and not _is_onboarding_word(norm, language):
+    onboarding_text = _is_onboarding_word(norm, language)
+    if not user_id and not onboarding_text:
         return jsonify({"error": "음성이 아직 준비되지 않았습니다. 로그인 후 재생해주세요."}), 404
 
     # 길이 상한
@@ -520,7 +525,9 @@ def tts_resolve():
         return jsonify({"error": "텍스트가 너무 깁니다."}), 400
 
     # 사전 실재 검증(토글)
-    if current_app.config.get('TTS_GENERATE_REQUIRE_DICT', True) and not _exists_in_dict(norm, language, user_id):
+    # (온보딩 고정 텍스트는 사전에서 뽑은 것이라 검증 생략 — ja 모드 사용자의 ko 뜻 조회가 ja 사전으로 가는 것도 피한다)
+    if (current_app.config.get('TTS_GENERATE_REQUIRE_DICT', True) and not onboarding_text
+            and not _exists_in_dict(norm, language, user_id)):
         return jsonify({"error": "사전에 없는 텍스트입니다."}), 404
 
     # 일일 생성 상한 — 게스트(화이트리스트 허용)는 로그인 사용자와 분리해 IP 기준으로 카운트.

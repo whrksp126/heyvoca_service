@@ -169,15 +169,35 @@ def build_placement_pool(rng=None) -> dict:
     return bands
 
 
-def placement_tts_texts() -> set:
-    """게스트 TTS 생성 화이트리스트에 더할 텍스트(정규화 전) — 측정 후보 단어와 예문."""
-    texts = set()
-    for items in (placement_candidates() or {}).values():
-        for it in items:
-            texts.add(it['origin'])
-            if it.get('example'):
-                texts.add(it['example']['origin'])
-    return texts
+def placement_tts_items() -> list:
+    """측정 후보가 TTS 로 읽힐 수 있는 (텍스트, 언어) 전부 — 밴드 오름차순, 중복 제거.
+
+    프론트(utils/onboardingPlacement.js → 문제 플러그인·takeTest)가 보내는 형태 그대로:
+      en  단어(origin), 예문 원문(태그 제거)
+      ko  뜻 앞 2개 ', ' 조인(뜻 맞히기 자동 듣기), 뜻 전체(≤3) 조인(철자 채우기·결과),
+          예문 해석(태그 제거 — 빈칸·조립·해석 문제의 한국어 문장)
+    방해 예문(distractor_sentences)은 같은 밴드 다른 후보의 예문이라 여기 이미 들어 있다.
+    """
+    seen, out = set(), []
+
+    def _add(text, lang):
+        t = (text or '').strip()
+        if t and (t, lang) not in seen:
+            seen.add((t, lang))
+            out.append((t, lang))
+
+    cands = placement_candidates() or {}
+    for band in sorted(cands, key=lambda b: int(b)):
+        for it in cands[band]:
+            ex = it.get('example')
+            if ex:
+                _add(_plain(ex.get('meaning')), 'ko')
+                _add(_plain(ex.get('origin')), 'en')
+            _add(it.get('origin'), 'en')
+            ms = it.get('meanings') or []
+            _add(', '.join(ms[:2]), 'ko')
+            _add(', '.join(ms), 'ko')
+    return out
 
 
 # ── 수준별 단어장 추천 ────────────────────────────────────────────────────

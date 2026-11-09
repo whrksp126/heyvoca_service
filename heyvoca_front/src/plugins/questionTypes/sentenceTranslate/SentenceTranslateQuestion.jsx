@@ -197,7 +197,8 @@ const SentenceTranslateQuestion = ({ question, onComplete, onCardMatched, farmBy
     const correct = isAccepted(userTokens, accepted);
     const timeTakenMs = Date.now() - startTimeRef.current;
     const perfect = correct && !question.isRetry;
-    feel(perfect ? 'perfect' : (correct ? 'correct' : 'wrong'));
+    // 다른 유형과 같은 O/X 채점 + 정/오답 소리만 — '완벽해요' 배지·소리는 쓰지 않는다(이슈 #25 7차 QA).
+    feel(correct ? 'correct' : 'wrong');
     setIsPerfect(perfect);
 
     // 실수 유형 — 정답에 없는 블록을 골랐으면 방해 조각, 아니면 어순.

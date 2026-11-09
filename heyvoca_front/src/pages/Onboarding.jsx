@@ -16,15 +16,19 @@ import { SwitchAccountNewBottomSheet } from '../components/newBottomSheet/Switch
 import { useNewBottomSheetActions } from '../context/NewBottomSheetContext';
 import { useUser } from '../context/UserContext';
 import postMessageManager from '../utils/postMessageManager';
-import { cropAssetByVariant } from '../components/farm/CropImage';
 import { useStatusBarStyle } from '../hooks/useStatusBarStyle';
 import FarmStoryStage from '../components/onboarding/FarmStoryStage';
 import AuthSplash from '../components/onboarding/AuthSplash';
 import { nodeEnv } from '../utils/common';
+import { useAppOAuthError } from '../hooks/useAppOAuthError';
 
 /*
   온보딩 — 인사에서 가입까지.
 
+  【시작】 (이슈 #25 7차) 첫 화면(hello)에서 곧바로 구글·애플로 계속하기 — 회원가입('시작하기') 경로와
+          게스트 학습 뒤 가입 화면('거의 다 왔어요')을 없앴다. 로그인하면 Index 가 onboarding_ver 로 갈라
+          최초 사용자만 여기로 다시 보내고, 로그인된 채 들어오면 hello 를 건너뛰어 소개부터 시작한다.
+          마지막 finish → auth 는 로그인 상태라 가입 화면 없이 migrate(v2: theta·answers) 후 홈으로 간다.
   【흐름】 hello → intro(농사 이야기: 성장 → 시듦 → 체험 밭) → 수준 맞춤 학습(/take-test, 8문제 + 틀린 단어
           복습, 매 답마다 체험 밭 가상 작물이 자라고 시든다) → 학습 결과(StudyResult — 실제 학습과 같은 슬라이드,
           밭 성장 · 보석 20 · 결과 목록) → finish('나만의 밭을 만들러 가볼까요?' 문구 + 버튼) → auth
@@ -85,7 +89,8 @@ const Onboarding = () => {
   //  - 'nick'(→auth): 예전 결과 화면(StudyResult)을 거쳐 온 경우
   const incomingStep = location.state?.step;
   const [step, setStep] = useState(() => {
-    const s = incomingStep || 'hello';
+    // 로그인된 채 처음 들어오면(로그인 직후 Index 가 보냄) 인사를 건너뛰고 소개부터
+    const s = incomingStep || (isLogin ? 'intro' : 'hello');
     return LEGACY_STEP[s] || s;
   });
   /*
@@ -107,6 +112,8 @@ const Onboarding = () => {
   // 앱 OAuth 결과를 받아 로그인 처리 중 — 가입 화면(버튼) 대신 스플래시를 그린다. 이 뒤 navigate('/') 의
   // Index 스플래시와 같은 그림이라 홈까지 로그인 화면이 비치지 않는다(이슈 #25 6차 QA).
   const [authProcessing, setAuthProcessing] = useState(false);
+  // 앱 OAuth 취소·실패(앱 → 웹 'oauthError') — 스플래시를 풀고 바텀시트로 알린다(이슈 #25 7차)
+  const showOAuthError = useAppOAuthError(() => setAuthProcessing(false));
 
   // 온보딩 내부 인증(auth) 스텝용 앱 OAuth 콜백 리스너 (Login 페이지와 동일 로직)
   // 로그인 성공 시 홈으로 이동 → 홈에서 게스트 데이터 이전 + 알림 프롬프트가 이어짐
@@ -118,8 +125,9 @@ const Onboarding = () => {
       try {
         const result = await Login({ googleId, email, name, status });
         if (result?.success) { navigate('/'); return; }
-      } catch (e) { /* 로그인 처리 오류 무시 */ }
+      } catch (e) { /* 아래에서 실패로 알린다 */ }
       setAuthProcessing(false);
+      showOAuthError('failed');
     };
     const onApple = async (data) => {
       const { identityToken, email, fullName, status, authorizationCode } = data || {};
@@ -128,8 +136,9 @@ const Onboarding = () => {
       try {
         const result = await AppleLogin({ identityToken, fullName, email, status, authorizationCode });
         if (result?.success) { navigate('/'); return; }
-      } catch (e) { /* 로그인 처리 오류 무시 */ }
+      } catch (e) { /* 아래에서 실패로 알린다 */ }
       setAuthProcessing(false);
+      showOAuthError('failed');
     };
     postMessageManager.setupAppGoogleAuth(onGoogle);
     postMessageManager.setupAppAppleAuth(onApple);
@@ -145,8 +154,6 @@ const Onboarding = () => {
   const BACK_TO = { intro: 'hello' };
   // 소개 안의 장면 뒤로 가기 — 이전 장면을 끝 모습으로 다시 세운다(연출을 또 기다리게 하지 않는다)
   const SCENE_BACK = { wilt: 'grow', field: 'wilt' };
-
-  const goLogin = () => { vibrate({ duration: 5 }); navigate('/login'); };
 
   /*
     로컬 전용 이메일 가입 — 실기기에서 구글·애플 없이 온보딩 가입까지 확인하려고 둔다.
@@ -263,6 +270,12 @@ const Onboarding = () => {
     navigate('/take-test', { state: { testType: 'today', guestMode: true, placement: true } });
   };
 
+  // 로그인 안 된 채 auth 에 닿으면(예전 화면·저장된 state) 가입 화면 대신 첫 화면으로 — 거기서 로그인한다
+  useEffect(() => {
+    if (step === 'auth' && !isLogin && !finishingOnboarding && !authProcessing) setStep('hello');
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [step, isLogin]);
+
   // 학습·결과를 마치고 가입 단계에 들어온 순간.
   //  - 알림 권한은 온보딩이 아니라 로그인 후 홈 첫 진입에서 요청 → 플래그만 남긴다.
   //  - 이미 로그인된 사용자(게스트 온보딩 없이 로그인 후 다시 온보딩에 진입한 경우)는 재로그인이
@@ -331,12 +344,67 @@ const Onboarding = () => {
     </motion.button>
   );
 
-  // 하단 로그인 링크 — 첫 화면에서만. 로그인된 상태면 계정 전환 출구가 된다.
+  // 하단 계정 전환 링크 — 로그인된 채 첫 화면으로 돌아온 경우에만.
   const LoginFooter = () => (
-    <button type="button" onClick={isLogin ? goSwitchAccount : goLogin}
+    <button type="button" onClick={goSwitchAccount}
       className="w-full mt-[14px] text-[13px] font-[500] text-layout-gray-300 dark:text-layout-gray-100 underline">
-      {isLogin ? '다른 계정으로 로그인' : '이미 계정이 있어요 · 로그인'}
+      다른 계정으로 로그인
     </button>
+  );
+
+  // 첫 화면 로그인 버튼 — 구글(+iOS 애플) · 약관 안내 · 로컬 전용 이메일 가입.
+  // 예전 가입 화면(auth)에 있던 것을 그대로 옮겼다(이슈 #25 7차).
+  const AUTH_BUTTONS = (
+    <>
+      <motion.button type="button" whileTap={{ scale: 0.97 }}
+        onClick={() => { vibrate({ duration: 5 }); clickGoogleOauth(); }}
+        className="flex items-center justify-center w-full h-[52px] bg-layout-white border border-layout-gray-200 rounded-[12px] text-black text-[16px] font-[700] gap-[10px]">
+        <img src={googleLogo} alt="" className="h-[22px]" />
+        <span>Google로 계속하기</span>
+      </motion.button>
+      {!isAndroid && (
+        <motion.button type="button" whileTap={{ scale: 0.97 }}
+          onClick={() => { vibrate({ duration: 5 }); clickAppleOauth(); }}
+          className="flex items-center justify-center w-full h-[52px] bg-black border border-black rounded-[12px] text-layout-white text-[16px] font-[700] gap-[8px]">
+          <AppleLogo size={22} weight="fill" color="#FFFFFF" />
+          <span>Apple로 계속하기</span>
+        </motion.button>
+      )}
+      <p className="mt-[6px] text-center text-[11px] font-[500] leading-[1.65] text-layout-gray-200">
+        계속하면 <span className="underline text-layout-gray-300">이용약관</span>과{' '}
+        <span className="underline text-layout-gray-300">개인정보처리방침</span>에 동의하게 됩니다.
+      </p>
+
+      {/* 로컬 전용 이메일 가입 — 실기기에서 소셜 없이 가입 경로를 확인하기 위한 것.
+          다른 환경에서는 렌더되지도, 서버가 받아 주지도 않는다(clickDevSignup 주석). */}
+      {isLocal && (
+        <div className="flex flex-col gap-[8px] mt-[10px] pt-[14px] border-t border-border dark:border-border-dark">
+          <p className="text-center text-[10.5px] font-[800] tracking-[0.06em] text-layout-gray-200">
+            LOCAL ONLY · 이메일로 가입
+          </p>
+          <input
+            type="email" inputMode="email" autoCapitalize="none" autoCorrect="off"
+            value={devEmail}
+            onChange={(e) => { setDevEmail(e.target.value); setDevError(null); }}
+            enterKeyHint="go"
+            onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); clickDevSignup(); } }}
+            className="
+              w-full h-[46px] px-[14px] rounded-[12px] border border-border dark:border-border-dark
+              bg-layout-white dark:bg-layout-black text-center text-[13.5px] font-[600]
+              text-layout-black dark:text-layout-white outline-none focus:border-primary-main-600
+            "
+          />
+          <motion.button type="button" whileTap={{ scale: 0.97 }}
+            disabled={devBusy || !devEmail.trim()} onClick={clickDevSignup}
+            className="w-full h-[46px] rounded-[12px] bg-layout-gray-400 dark:bg-layout-gray-dark text-layout-white text-[14px] font-[700] disabled:opacity-40">
+            {devBusy ? '처리 중...' : '이 이메일로 가입하고 시작하기'}
+          </motion.button>
+          {devError && (
+            <p className="text-center text-[11.5px] font-[600] text-status-error-600">{devError}</p>
+          )}
+        </div>
+      )}
+    </>
   );
 
   const stepBody = useMemo(() => `on-${step}`, [step]);
@@ -389,10 +457,16 @@ const Onboarding = () => {
                   안녕하세요!<br />여기는 <span className="text-primary-main-600">헤이보카</span>예요
                 </h1>
               </div>
-              <div className="px-[24px] pt-[18px] pb-[26px] shrink-0">
-                <Cta label="시작하기" onClick={() => { vibrate({ duration: 5 }); goScene('grow'); setStep('intro'); }} />
-                <LoginFooter />
-              </div>
+              {isLogin ? (
+                <div className="px-[24px] pt-[18px] pb-[26px] shrink-0">
+                  <Cta label="시작하기" onClick={() => { vibrate({ duration: 5 }); goScene('grow'); setStep('intro'); }} />
+                  <LoginFooter />
+                </div>
+              ) : (
+                <div className="flex flex-col gap-[10px] px-[24px] pt-[18px] pb-[26px] shrink-0">
+                  {AUTH_BUTTONS}
+                </div>
+              )}
             </>
           )}
 
@@ -443,71 +517,6 @@ const Onboarding = () => {
             </>
           )}
 
-          {/* ⑭ 로그인 · 회원가입 — 심은 걸 저장한다는 이유만 위에 적는다 */}
-          {step === 'auth' && (
-            <>
-              <div className="flex flex-col flex-1 min-h-0 items-center justify-center text-center px-[28px]">
-                <img src={cropAssetByVariant('carrot', 'healthy')} alt="" draggable={false}
-                  className="w-[120px] h-[120px] object-contain object-bottom select-none mb-[26px]" />
-                <h1 className="text-[23px] font-[800] leading-[1.4] tracking-[-0.04em] text-layout-black dark:text-layout-white">
-                  거의 다 왔어요
-                </h1>
-                <p className="mt-[14px] text-[14px] font-[500] leading-[1.7] text-layout-gray-300">
-                  오늘 학습한 기록을 저장할게요.
-                </p>
-              </div>
-              <div className="flex flex-col gap-[10px] px-[24px] pb-[26px] shrink-0">
-                <motion.button type="button" whileTap={{ scale: 0.97 }}
-                  onClick={() => { vibrate({ duration: 5 }); clickGoogleOauth(); }}
-                  className="flex items-center justify-center w-full h-[52px] bg-layout-white border border-layout-gray-200 rounded-[12px] text-black text-[16px] font-[700] gap-[10px]">
-                  <img src={googleLogo} alt="" className="h-[22px]" />
-                  <span>Google로 계속하기</span>
-                </motion.button>
-                {!isAndroid && (
-                  <motion.button type="button" whileTap={{ scale: 0.97 }}
-                    onClick={() => { vibrate({ duration: 5 }); clickAppleOauth(); }}
-                    className="flex items-center justify-center w-full h-[52px] bg-black border border-black rounded-[12px] text-layout-white text-[16px] font-[700] gap-[8px]">
-                    <AppleLogo size={22} weight="fill" color="#FFFFFF" />
-                    <span>Apple로 계속하기</span>
-                  </motion.button>
-                )}
-                <p className="mt-[6px] text-center text-[11px] font-[500] leading-[1.65] text-layout-gray-200">
-                  계속하면 <span className="underline text-layout-gray-300">이용약관</span>과{' '}
-                  <span className="underline text-layout-gray-300">개인정보처리방침</span>에 동의하게 됩니다.
-                </p>
-
-                {/* 로컬 전용 이메일 가입 — 실기기에서 소셜 없이 가입 경로를 확인하기 위한 것.
-                    다른 환경에서는 렌더되지도, 서버가 받아 주지도 않는다(clickDevSignup 주석). */}
-                {isLocal && (
-                  <div className="flex flex-col gap-[8px] mt-[10px] pt-[14px] border-t border-border dark:border-border-dark">
-                    <p className="text-center text-[10.5px] font-[800] tracking-[0.06em] text-layout-gray-200">
-                      LOCAL ONLY · 이메일로 가입
-                    </p>
-                    <input
-                      type="email" inputMode="email" autoCapitalize="none" autoCorrect="off"
-                      value={devEmail}
-                      onChange={(e) => { setDevEmail(e.target.value); setDevError(null); }}
-                      enterKeyHint="go"
-                      onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); clickDevSignup(); } }}
-                      className="
-                        w-full h-[46px] px-[14px] rounded-[12px] border border-border dark:border-border-dark
-                        bg-layout-white dark:bg-layout-black text-center text-[13.5px] font-[600]
-                        text-layout-black dark:text-layout-white outline-none focus:border-primary-main-600
-                      "
-                    />
-                    <motion.button type="button" whileTap={{ scale: 0.97 }}
-                      disabled={devBusy || !devEmail.trim()} onClick={clickDevSignup}
-                      className="w-full h-[46px] rounded-[12px] bg-layout-gray-400 dark:bg-layout-gray-dark text-layout-white text-[14px] font-[700] disabled:opacity-40">
-                      {devBusy ? '처리 중...' : '이 이메일로 가입하고 시작하기'}
-                    </motion.button>
-                    {devError && (
-                      <p className="text-center text-[11.5px] font-[600] text-status-error-600">{devError}</p>
-                    )}
-                  </div>
-                )}
-              </div>
-            </>
-          )}
       </motion.div>
     </div>
   );

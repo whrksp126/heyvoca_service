@@ -100,6 +100,27 @@ class PostMessageManager {
   }
 
   /**
+   * 앱 OAuth 취소·실패 알림 등록 — 앱이 네이티브 Alert 대신 보낸다(이슈 #25 7차).
+   * 메시지: { type: 'oauthError', data: { provider: 'google'|'apple', code: 'cancelled'|'failed' } }
+   * 콜백에는 { provider, code } 만 넘긴다(data 없이 평평하게 와도 받는다).
+   * @param {Function} callback - ({ provider, code }) => void
+   */
+  setupAppOAuthError(callback) {
+    this.init();
+    this.addListener('oauthError', (msg) => {
+      const d = msg?.data && typeof msg.data === 'object' ? msg.data : (msg || {});
+      callback({ provider: d.provider ?? null, code: d.code === 'cancelled' ? 'cancelled' : 'failed' });
+    });
+  }
+
+  /**
+   * 앱 OAuth 취소·실패 알림 제거
+   */
+  removeAppOAuthError() {
+    this.removeListener('oauthError');
+  }
+
+  /**
    * 앱 구글 로그아웃 콜백 등록
    * @param {Function} callback - 로그아웃 처리 콜백 함수
    */

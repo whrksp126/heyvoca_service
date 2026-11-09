@@ -10,6 +10,7 @@ import { getValueFromURL, nodeEnv } from '../utils/common';
 import postMessageManager from '../utils/postMessageManager';
 import { getDevicePlatform } from '../utils/osFunction';
 import AuthSplash from '../components/onboarding/AuthSplash';
+import { useAppOAuthError } from '../hooks/useAppOAuthError';
 
 const Login = () => {
   "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
@@ -22,6 +23,8 @@ const Login = () => {
   // 로그인 처리 중(웹 OAuth 콜백 파라미터 도착·앱 OAuth 결과 수신·이미 로그인됨)에는 버튼 화면 대신
   // 스플래시를 그린다 — 가입 직후 홈 진입 전에 로그인 화면이 잠깐 보이던 문제(이슈 #25 6차 QA).
   const [processing, setProcessing] = useState(() => !!auth.user || !!getValueFromURL('googleId'));
+  // 앱 OAuth 취소·실패 → 스플래시를 풀고 바텀시트로 알린다(이슈 #25 7차)
+  const showOAuthError = useAppOAuthError(() => setProcessing(false));
 
   const platform = getDevicePlatform();
   // User Agent에 Android가 포함되어 있으면 안드로이드 환경으로 간주
@@ -55,10 +58,12 @@ const Login = () => {
       } else {
         console.log(`앱 로그인 실패`);
         setProcessing(false);
+        showOAuthError('failed');
       }
     } catch (error) {
       console.error(`앱 로그인 처리 중 오류: ${error}`);
       setProcessing(false);
+      showOAuthError('failed');
     }
   };
 
@@ -93,10 +98,12 @@ const Login = () => {
       } else {
         console.log("App Apple Login Failed");
         setProcessing(false);
+        showOAuthError('failed');
       }
     } catch (e) {
       console.error(e);
       setProcessing(false);
+      showOAuthError('failed');
     }
   };
 

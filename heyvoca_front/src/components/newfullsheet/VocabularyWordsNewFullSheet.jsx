@@ -119,10 +119,13 @@ const ManageWordRow = ({ word, checked, editable, onToggle, onEdit }) => (
  * 아래는 그 밭에 심긴 단어들이다. 풀시트라 바텀 네비를 띄우지 않는다.
  * 헤더는 배경을 깔지 않고 일러스트 위에 얹는다 — 흰 막대를 두면 밭 위쪽이 잘려 나간다.
  */
-const VocabularyWordsNewFullSheet = ({ id }) => {
+const VocabularyWordsNewFullSheet = ({ id, manageOnly = false }) => {
   "use memo";
 
-  const { popNewFullSheet } = useNewFullSheetActions();
+  // manageOnly — '단어 관리'는 이 단어장 풀시트 위에 같은 컴포넌트를 새 풀시트로 하나 더 쌓아 연다.
+  // 그래야 뒤로가기·완료가 관리 화면만 닫고 단어장 풀시트는 남는다. 단어 목록은 둘 다
+  // VocabularyContext 에서 읽으므로 관리 화면에서 빼거나 고친 내용이 아래 단어장에 바로 반영된다.
+  const { popNewFullSheet, pushNewFullSheet } = useNewFullSheetActions();
   const {
     isVocabularySheetsLoading, getVocabularySheet, userDictionaryError,
     retryUserDictionary, fetchUserDictionary, fetchVocaBooks, deleteWords,
@@ -148,7 +151,7 @@ const VocabularyWordsNewFullSheet = ({ id }) => {
   const topBtnTimerRef = useRef(null);
 
   // 단어 관리 모드(헤더 ... 메뉴 → '단어 관리') — 여러 단어를 골라 한 번에 빼거나 하나씩 고친다
-  const [manageMode, setManageMode] = useState(false);
+  const [manageMode, setManageMode] = useState(manageOnly);
   const [selectedIds, setSelectedIds] = useState(() => new Set());
   const [isDeleting, setIsDeleting] = useState(false);
 
@@ -393,12 +396,18 @@ const VocabularyWordsNewFullSheet = ({ id }) => {
   };
 
   const enterManageMode = () => {
-    setSelectedIds(new Set());
-    setManageMode(true);
+    pushNewFullSheet(VocabularyWordsNewFullSheet, { id, manageOnly: true }, {
+      smFull: true,
+      closeOnBackdropClick: true,
+    });
   };
 
   const exitManageMode = () => {
     vibrate({ duration: 5 });
+    if (manageOnly) {
+      popNewFullSheet();
+      return;
+    }
     setManageMode(false);
     setSelectedIds(new Set());
   };
@@ -464,7 +473,10 @@ const VocabularyWordsNewFullSheet = ({ id }) => {
       await deleteWords(vocabularySheet.id, selectedWords.map((w) => w.vocaIndexId ?? w.id));
       showToast(`단어 ${count}개를 뺐어요.`);
       setSelectedIds(new Set());
-      if (count >= totalCount) setManageMode(false);
+      if (count >= totalCount) {
+        if (manageOnly) popNewFullSheet();
+        else setManageMode(false);
+      }
     } catch (err) {
       console.error('단어 일괄 삭제 실패:', err);
       showToast('단어를 빼지 못했어요. 잠시 뒤 다시 시도해 주세요.');
