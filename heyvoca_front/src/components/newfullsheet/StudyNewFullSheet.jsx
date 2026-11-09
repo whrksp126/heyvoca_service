@@ -1,13 +1,11 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
-import { CaretLeft, CaretRight, RewindCircle, Brain, Lightbulb, Lock } from '@phosphor-icons/react';
+import { CaretLeft, CaretRight, RewindCircle, Brain, Lightbulb } from '@phosphor-icons/react';
 import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
 import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 import { useVocabulary } from '../../context/VocabularyContext';
-import { useOnboardingUnlock, questTitleOf, withObjectJosa } from '../../context/OnboardingUnlockContext';
 import { ConfirmNewBottomSheet } from '../newBottomSheet/ConfirmNewBottomSheet';
-import { UnlockGuideNewBottomSheet } from '../newBottomSheet/UnlockGuideNewBottomSheet';
 import VocabularySheetNewFullSheet from './VocabularySheetNewFullSheet';
 import { vibrate } from '../../utils/osFunction';
 import { useTheme } from '../../context/ThemeContext';
@@ -23,26 +21,6 @@ const StudyNewFullSheet = () => {
   const { popNewFullSheet, pushNewFullSheet, closeNewFullSheet } = useNewFullSheetActions();
   const { pushNewBottomSheet, popNewBottomSheet, pushAwaitNewBottomSheet, clearStack: clearNewBottomSheetStack } = useNewBottomSheetActions();
   const { recentStudy, vocabularySheets, updateRecentStudy } = useVocabulary();
-
-  // 온보딩 미션 기반 해금 — study(집중 반복 학습)·test(자유 설정 테스트) 카드 게이팅
-  const { missions, isFeatureLocked } = useOnboardingUnlock();
-  const CARD_LOCK_KEY = { study: 'listen', test: 'custom' };
-  const isCardLocked = (key) => {
-    const lk = CARD_LOCK_KEY[key];
-    if (!lk) return false;
-    return isFeatureLocked(lk);
-  };
-  // 잠긴 카드 설명 — 해당 기능을 여는 미션 안내로 대체(세션 횟수 카운트 대신 미션명 노출)
-  const cardLockText = (key) => {
-    const lk = CARD_LOCK_KEY[key];
-    if (!lk) return '';
-    const mission = missions.find((m) => m.unlocks === lk);
-    const title = questTitleOf(mission);
-    if (title) {
-      return `'${title}'${withObjectJosa(title).slice(title.length)} 완료하면 열려요`;
-    }
-    return '이전 퀘스트를 완료하면 열려요';
-  };
 
   const startFreshQuickReview = async () => {
     // 썩은 단어는 출제 대상이 아니다 — 문제 수 상한도 되살릴 수 있는 것만 빼고 센다
@@ -203,7 +181,6 @@ const StudyNewFullSheet = () => {
       {/* Cards */}
       <div className="relative flex flex-col gap-[15px] flex-1 py-[10px] px-[16px] overflow-y-auto">
         {cards.map((card) => {
-          const locked = isCardLocked(card.key);
           return (
             <motion.button
               key={card.key}
@@ -211,15 +188,6 @@ const StudyNewFullSheet = () => {
                 // 학습/테스트 시작 진입점 — 이후 문제풀이에서 재생될 정답/오답 효과음을
                 // iOS WKWebView에서 지연 없이 재생하려면 user gesture 동기 스택에서 미리 unlock해야 한다.
                 primeSfx();
-                if (locked) {
-                  vibrate({ duration: 5 });
-                  pushNewBottomSheet(
-                    UnlockGuideNewBottomSheet,
-                    { highlightKey: CARD_LOCK_KEY[card.key] },
-                    { isBackdropClickClosable: true, isDragToCloseEnabled: true }
-                  );
-                  return;
-                }
                 card.onClick();
               }}
               className={`
@@ -228,7 +196,6 @@ const StudyNewFullSheet = () => {
                 px-[15px] py-[40px]
                 rounded-[12px]
                 ${card.className || ''}
-                ${locked ? 'opacity-50' : ''}
               `}
               style={(isDark ? (card.darkBorderStyle || card.borderStyle) : card.borderStyle) || {}}
               whileTap={{ scale: 0.97 }}
@@ -241,14 +208,10 @@ const StudyNewFullSheet = () => {
                   {card.title}
                 </span>
                 <span className="text-[11px] font-[400] text-layout-gray-500 dark:text-layout-gray-50 whitespace-pre-line text-left">
-                  {locked ? cardLockText(card.key) : card.desc}
+                  {card.desc}
                 </span>
               </div>
-              {locked ? (
-                <Lock size={22} weight="fill" style={{ color: 'var(--layout-gray-300)', flexShrink: 0 }} />
-              ) : (
-                <CaretRight size={24} weight="bold" style={{ color: card.chevronColor, flexShrink: 0 }} />
-              )}
+              <CaretRight size={24} weight="bold" style={{ color: card.chevronColor, flexShrink: 0 }} />
             </motion.button>
           );
         })}

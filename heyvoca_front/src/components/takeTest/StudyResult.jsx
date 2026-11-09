@@ -23,9 +23,7 @@ import { getFarmTodayTasksApi, getFarmItemsApi } from '../../api/farm';
 import { fetchSessionFarmSummary } from '../../utils/sessionSummaryPrefetch';
 import { calendarDaysFromToday } from '../../utils/reviewTiming';
 import StudyTimingTag from '../farm/StudyTimingTag';
-import { getAchievementCriteriaApi, updateUserRecentStudyDataApi, getRecommendBooksApi } from '../../api/study';
-import LevelResultSlide, { levelFromTheta } from '../onboarding/LevelResultSlide';
-import { patchGuest } from '../../utils/guestStorage';
+import { getAchievementCriteriaApi, updateUserRecentStudyDataApi } from '../../api/study';
 import { planNextStudy, loadStudyConfig, NEXT_STUDY_COUNTDOWN_MS } from '../../utils/nextStudy';
 import { primeSfx } from '../../utils/audio';
 // 보상 슬라이드(밭 성장 · 아이템 · 보석 · 업적 · 콤보)와 공용 껍데기 · 하단 버튼
@@ -127,21 +125,17 @@ const FarmListSlide = ({ art, line, rows }) => (
   비인증)에서 읽어 온다 — 운영에서 보상을 바꿔도 화면 숫자가 따라가도록.
 
   암기왕은 콤보 기준이라 today 유형(온보딩)에서는 쌓이지 않는다.
-  독서왕은 흐름에 따라 다르다.
-    · v2 온보딩(이슈 #25, 수준 맞춤 = state.placement): migrate 가 추천 서점 단어장을
-      '서점 담기 경로'(create_bookstore_book_for_user)로 무료로 넣으면서 독서왕 1레벨이
-      실제로 지급된다(실호출 확인: 가입 보석 5 + 독서왕 2). 그래서 포함한다.
-    · 구 v1 온보딩(레벨 선택): 온보딩 단어장을 서점 경로 없이 만들어 독서왕이 없다.
+  독서왕은 넣지 않는다 — 가입 때 단어장을 담지 않으므로(이슈 #25 2차) 온보딩에선 달성되지 않는다.
+  합계는 가입 5 + 출석 1 + 데일리 미션 1 + 업적 1레벨 3개(기본 2 × 3) = 13.
 */
 const GUEST_SIGNUP_GEM = 5;        // heyvoca_back/app/routes/onboarding.py SIGNUP_REWARD_GEM
 const GUEST_ATTEND_GEM = 1;        // mainpage.py 출석 보석
 const GUEST_MISSION_GEM = 1;       // mainpage.py 데일리 미션 완료 보석
 const GUEST_FIRST_DAY_GOALS = ['출석왕', '노력왕', '끈기왕'];
-const GUEST_FIRST_DAY_GOALS_V2 = [...GUEST_FIRST_DAY_GOALS, '독서왕']; // v2: 서점 담기 경로 → 독서왕 1레벨
 const GUEST_GOAL_REWARD_FALLBACK = 2;   // 기준표 조회 실패 시 (goals 1레벨 reward_count)
 
-const buildGuestSignupResult = async ({ isV2 = false } = {}) => {
-  const goalTypes = isV2 ? GUEST_FIRST_DAY_GOALS_V2 : GUEST_FIRST_DAY_GOALS;
+const buildGuestSignupResult = async () => {
+  const goalTypes = GUEST_FIRST_DAY_GOALS;
   const rewardByType = {};
   try {
     const res = await getAchievementCriteriaApi();
@@ -568,8 +562,7 @@ const StudyResult = () => {
       let result;
       if (isGuest) {
         // 게스트: 서버 저장 없이 합성 결과 — 가입하면 계정에 들어올 것을 그대로 그린다
-        // 수준 맞춤 온보딩(placement)이 v2 — 결과 시점엔 아직 단어장을 안 골라 bookstore_id 로는 못 가린다.
-        result = await buildGuestSignupResult({ isV2: isPlacement });
+        result = await buildGuestSignupResult();
       } else {
         result = await updateUserHistory({
           'correct_cnt': correctCnt,
@@ -635,21 +628,6 @@ const StudyResult = () => {
 
       // 표시할 화면 리스트 생성 — 순서는 시안 §4 순서표가 정본이다.
       const screens = [];
-
-      // 게스트 수준 맞춤 학습(이슈 #25) — '내 수준' 한 장을 맨 앞에. 추천 단어장 응답을 여기서 받아
-      // 게스트 데이터에 남긴다(다음 단계 '추천 단어장'이 다시 부르지 않게). 실패하면 θ 로 계산한 등급.
-      if (isGuest && state?.placement) {
-        const { theta, asked, correct } = state.placement;
-        let level = null;
-        try {
-          const rec = await getRecommendBooksApi(theta);
-          if (rec?.code === 200 && rec.data) {
-            level = rec.data.level ?? null;
-            patchGuest({ recommend: { theta, level: rec.data.level ?? null, books: rec.data.books ?? [] } });
-          }
-        } catch (e) { /* 추천 조회 실패 — 등급만 직접 계산, 추천 단계에서 다시 부른다 */ }
-        screens.push({ type: 'level', data: { level: level ?? levelFromTheta(theta), asked, correct } });
-      }
 
       // 새 단어(처음 학습) 목록 — 농장 요약을 못 받았을 때 ② 슬라이드를 채운다
       const newWordMap = new Map();
@@ -1155,12 +1133,10 @@ const StudyResult = () => {
 
   const onClickEndStudy = async () => {
     stopCountdown('end');
-    // 게스트 첫 학습: 결과 확인 후 온보딩 질문 구간으로 (심은 답안은 guestStorage에 저장됨).
-    // 예고 화면(ready)이 아니라 그다음으로 보낸다 — 학습을 마친 사람을 예고로 되돌리면
-    // 같은 학습을 다시 하게 된다.
+    // 게스트 첫 학습: 결과 확인 후 온보딩 닉네임으로 (답·θ 는 guestStorage 에 저장됨).
+    // 소개 화면이 아니라 그다음으로 보낸다 — 학습을 마친 사람을 되돌리면 같은 학습을 다시 하게 된다.
     if (isGuest) {
-      // 수준 맞춤 학습(이슈 #25)은 결과 다음이 '추천 단어장' — 구 맛보기는 그대로 channel.
-      navigate('/onboarding', { state: { step: state?.placement ? 'recommend' : 'channel' }, replace: true });
+      navigate('/onboarding', { state: { step: 'nick' }, replace: true });
       return;
     }
     // 글자 학습은 학습장 '글자' 탭에서만 들어온다 — 홈이 아니라 그 탭으로 돌려보낸다
@@ -1504,9 +1480,6 @@ const StudyResult = () => {
       // ⑫ 업적 — 메달 승급
       if (!currentScreen.data.goal) return null;
       content = <AchievementSlide goal={currentScreen.data.goal} {...sceneProps} />;
-    } else if (currentScreen.type === 'level') {
-      // 게스트 수준 맞춤 학습 — 내 수준(이슈 #25)
-      content = <LevelResultSlide {...currentScreen.data} />;
     } else if (currentScreen.type === 'gem') {
       // ④ 보석 — 쏟아져서 헤더 잔액으로 날아가 쌓인다
       content = <GemRewardSlide {...currentScreen.data} {...sceneProps} />;

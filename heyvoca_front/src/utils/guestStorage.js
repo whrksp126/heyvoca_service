@@ -43,31 +43,32 @@ export function clearGuestTrial() {
 }
 
 // 온보딩을 진행했고 아직 서버 이전 전인 게스트 데이터가 있으면 반환.
-//  - v2(이슈 #25): 추천 단어장을 골랐으면(bookstore_id) 이전 대상.
+//  - v2(이슈 #25): 수준 맞춤 학습을 마쳤으면(학습 완료 표시 placement/flow + theta 또는 answers) 이전 대상.
+//    예전 v2 데이터(추천 단어장 bookstore_id 를 고른 것)도 그대로 인식한다.
 //  - v1(구 데이터): 레벨을 골랐으면 이전 대상(맛보기를 건너뛰어 answers 가 비어도).
+export const isV2Guest = (g) => !!g && (g.flow === 'v2' || g.placement != null)
+  && (g.theta != null || (Array.isArray(g.answers) && g.answers.length > 0));
+
 export function pendingGuestMigration() {
   const g = getGuest();
-  if (g && (g.bookstore_id != null || g.level != null)) return g;
+  if (g && (isV2Guest(g) || g.bookstore_id != null || g.level != null)) return g;
   return null;
 }
 
-// /onboarding/migrate body — v2 데이터면 v2, 아니면 구 v1 그대로.
+// /onboarding/migrate body — v2 는 { flow, theta, answers, username } 만(단어장·질문 답 없음, 하루 심기 수는 서버 기본값).
+// 구 v1(레벨만 있는 예전 게스트 데이터)은 예전 모양 그대로.
 export function buildMigrateBody(g, overrides = {}) {
   const d = { ...(g || {}), ...overrides };
-  const common = {
+  const answers = Array.isArray(d.answers) ? d.answers : [];
+  if (isV2Guest(d) || d.bookstore_id != null || d.level == null) {
+    return { flow: 'v2', theta: d.theta ?? null, answers, username: d.username ?? null };
+  }
+  return {
+    level: d.level,
+    answers,
     source_channel: d.source_channel ?? null,
     learning_goal: d.learning_goal ?? null,
     daily_new_limit: d.daily_new_limit ?? null,
     username: d.username ?? null,
   };
-  if (d.bookstore_id != null) {
-    return {
-      flow: 'v2',
-      bookstore_id: d.bookstore_id,
-      theta: d.theta ?? null,
-      answers: Array.isArray(d.answers) ? d.answers : [],
-      ...common,
-    };
-  }
-  return { level: d.level, answers: Array.isArray(d.answers) ? d.answers : [], ...common };
 }

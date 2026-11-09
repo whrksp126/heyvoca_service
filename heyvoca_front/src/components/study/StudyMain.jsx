@@ -149,6 +149,11 @@ const StudyMain = ({ words }) => {
 
   // 재생 취소용 ref
   const playbackCancelRef = useRef(false);
+  // 재생 세대 — stopPlayback 마다 올린다. 이전 세대의 runPlay 체인은 cancel 플래그가 다시
+  // false 로 돌아가도 세대가 달라 스스로 끝난다(넘긴 뒤 옛 카드로 되돌아가는 문제 방지).
+  const playbackGenRef = useRef(0);
+  // 웹이 슬라이드를 옮긴 직후, 앱이 이전 위치로 보내는 늦은 listen_state 는 무시한다.
+  const pendingSeekRef = useRef(null); // { index, until }
   const playTimeoutRef = useRef(null);
   const playbackResolveRef = useRef(null); // 현재 대기 중인 재생 Promise resolve
 
@@ -211,6 +216,11 @@ const StudyMain = ({ words }) => {
     const off = postMessageManager.waitFor('listen_state', (msg) => {
       const d = msg?.data || {};
       if (!d.sessionId || d.sessionId !== nativeSessionRef.current) return;
+      const pending = pendingSeekRef.current;
+      if (pending && !d.lost) {
+        if (Date.now() < pending.until && d.slideIndex !== pending.index) return;
+        pendingSeekRef.current = null;
+      }
       if (d.lost) {
         // 앱이 세션을 잃었다(앱 재시작 등) — 웹 재생으로 돌아간다
         nativeSessionRef.current = null;
@@ -260,6 +270,7 @@ const StudyMain = ({ words }) => {
   // 재생 중단
   const stopPlayback = useCallback(() => {
     playbackCancelRef.current = true;
+    playbackGenRef.current += 1;
     if (playTimeoutRef.current) {
       clearTimeout(playTimeoutRef.current);
       playTimeoutRef.current = null;
@@ -276,6 +287,8 @@ const StudyMain = ({ words }) => {
   // 자동 재생 — 현재 카드의 playbackOrder 순서대로 TTS 재생
   const startPlayback = useCallback(async (startCardIndex) => {
     playbackCancelRef.current = false;
+    const gen = playbackGenRef.current;
+    const cancelled = () => playbackCancelRef.current || playbackGenRef.current !== gen;
 
     // 한 라인 재생. 인덱스가 null이면 단일 라인 항목.
     // getTextSound가 reject/throw해도 settle은 한 번만 resolve되어 await 정지 방지.
@@ -319,12 +332,12 @@ const StudyMain = ({ words }) => {
 
       const clips = buildSlideClips(currentWord, settingsRef.current.playbackOrder);
       for (const clip of clips) {
-        if (playbackCancelRef.current) return;
+        if (cancelled()) return;
         // eslint-disable-next-line no-await-in-loop
         await playOne(clip.itemId, clip.itemIndex, clip.text, clip.lang);
       }
 
-      if (playbackCancelRef.current) return;
+      if (cancelled()) return;
 
       setPlayingItemId(null);
       setPlayingItemIndex(null);
@@ -332,7 +345,7 @@ const StudyMain = ({ words }) => {
       if (repeatModeRef.current) {
         // 반복 재생 — 카드 이동 없이 같은 카드를 이어서 다시 읽는다.
         playTimeoutRef.current = setTimeout(() => {
-          if (!playbackCancelRef.current) runPlay(cardIdx);
+          if (!cancelled()) runPlay(cardIdx);
         }, 350);
         return;
       }
@@ -345,7 +358,7 @@ const StudyMain = ({ words }) => {
         setCurrentIndex(nextIdx);
         // 카드 전환 애니메이션 후 다음 카드 재생
         playTimeoutRef.current = setTimeout(() => {
-          if (!playbackCancelRef.current) runPlay(nextIdx);
+          if (!cancelled()) runPlay(nextIdx);
         }, 350);
       } else {
         // 마지막 카드 재생 완료 → 정지
@@ -356,51 +369,33 @@ const StudyMain = ({ words }) => {
     runPlay(typeof startCardIndex === 'number' ? startCardIndex : currentIndexRef.current);
   }, []);
 
-  // 카드 이동 — 재생 중이었다면 새 카드에서 이어서 자동 재생(끊기지 않는다), 아니었다면
-  // 정지 상태를 유지한다. 손끝 스와이프(handleDragEnd)도 이 함수를 그대로 쓴다.
+  // 카드 이동 — 재생 중이었다면 일시 정지한다(웹 재생 큐·타이머·소리, 앱 네이티브 재생 모두).
+  // 손끝 스와이프(handleDragEnd)도 이 함수를 그대로 쓴다.
+  const moveTo = useCallback((idx, dir) => {
+    stopPlayback();
+    stopCurrentSound();
+    isPlayingRef.current = false;
+    setIsPlaying(false);
+    haptic('selection');
+    setDirection(dir);
+    currentIndexRef.current = idx;
+    setCurrentIndex(idx);
+    if (nativeSessionRef.current) {
+      pendingSeekRef.current = { index: idx, until: Date.now() + 1500 };
+      sendNativeControl('pause');
+      sendNativeControl('seek_slide', { slideIndex: idx, play: false });
+    }
+  }, [stopPlayback, sendNativeControl]);
+
   const goToNext = useCallback(() => {
     if (currentIndexRef.current >= wordsRef.current.length - 1) return;
-    const wasPlaying = isPlayingRef.current;
-    stopPlayback();
-    haptic('selection');
-    setDirection('next');
-    const nextIdx = currentIndexRef.current + 1;
-    currentIndexRef.current = nextIdx;
-    setCurrentIndex(nextIdx);
-    if (nativeSessionRef.current) {
-      sendNativeControl('seek_slide', { slideIndex: nextIdx, play: wasPlaying });
-      return;
-    }
-    if (wasPlaying) {
-      playTimeoutRef.current = setTimeout(() => {
-        if (!playbackCancelRef.current) startPlayback(nextIdx);
-      }, 350);
-    } else {
-      setIsPlaying(false);
-    }
-  }, [stopPlayback, startPlayback, sendNativeControl]);
+    moveTo(currentIndexRef.current + 1, 'next');
+  }, [moveTo]);
 
   const goToPrev = useCallback(() => {
     if (currentIndexRef.current <= 0) return;
-    const wasPlaying = isPlayingRef.current;
-    stopPlayback();
-    haptic('selection');
-    setDirection('prev');
-    const prevIdx = currentIndexRef.current - 1;
-    currentIndexRef.current = prevIdx;
-    setCurrentIndex(prevIdx);
-    if (nativeSessionRef.current) {
-      sendNativeControl('seek_slide', { slideIndex: prevIdx, play: wasPlaying });
-      return;
-    }
-    if (wasPlaying) {
-      playTimeoutRef.current = setTimeout(() => {
-        if (!playbackCancelRef.current) startPlayback(prevIdx);
-      }, 350);
-    } else {
-      setIsPlaying(false);
-    }
-  }, [stopPlayback, startPlayback, sendNativeControl]);
+    moveTo(currentIndexRef.current - 1, 'prev');
+  }, [moveTo]);
 
   const handleSpeakerClick = useCallback((itemId, index, text, lang) => {
     haptic('light');

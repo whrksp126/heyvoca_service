@@ -11,63 +11,45 @@ import React, { createContext, useContext, useState, useCallback, useEffect, use
 import { useUser } from './UserContext';
 import { getUnlockStatusApi, completeOnboardingMissionApi } from '../api/study';
 
-// 잠금 대상 기능 key → 한국어 라벨 (UnlockGuideNewBottomSheet, 홈 배너 등에서 공용으로 사용)
-export const FEATURE_LABELS = {
-  vocabook: '단어장',
-  store: '상점',
-  dict: '찾기', // 키는 백엔드 계약이라 'dict' 그대로, 사용자에게 보이는 이름만 시안 §10 의 탭 이름
-
-  listen: '집중 반복 학습',
-  custom: '자유 설정 테스트',
-};
-
 /**
- * v2 입문 퀘스트 체인(이슈 #25) — 화면 문구 정본.
- * 순서·보상·해금 대상의 정본은 서버(/onboarding/unlock-status)다. 여기서는 서버 응답에 없는
- * '한 줄 설명'·'하러 가기 문구'만 들고, 제목은 서버 title 이 있으면 그것을 쓴다(없을 때 폴백).
+ * 입문 퀘스트 체인(이슈 #25 2차) — 화면 문구 정본.
+ * 순서·보상의 정본은 서버(/onboarding/unlock-status)다. 제목은 서버 title 이 있으면 그것을 쓴다.
+ * **기능 잠금은 없다** — 처음부터 모든 탭·기능을 쓸 수 있다. 1번(구매)만 먼저 하게 유도하고,
+ * 그 뒤 2~7은 순서 상관없이 각자 완료된다.
  *
- *  1 plant_seed  새 씨앗 심기                → vocabook(단어장 탭)   [서버 감지]
- *  2 make_book   단어장 만들고 단어 직접 추가 → dict(찾기 탭)         [서버 감지]
- *  3 search_word 찾기에서 단어 검색          → store(상점 탭)        [프론트 신호]
- *  4 buy_book    상점에서 단어장 담기         → listen(집중 반복 학습) [서버 감지]
- *  5 focus_study 집중 반복 학습 완료          → custom(자유 설정 테스트) [프론트 신호]
- *  6 care_farm   농장 돌보기(복습) 완료       → (마무리)              [서버 감지]
+ *  1 buy_book    서점에서 단어장 구매   [서버 감지]
+ *  2 plant_seed  새 씨앗 심기           [서버 감지]
+ *  3 care_farm   농장 돌보기            [서버 감지]
+ *  4 search_word 사전에서 단어 검색     [프론트 신호]
+ *  5 make_book   단어장 만들고 단어 추가 [서버 감지]
+ *  6 free_test   자유 설정 테스트       [프론트 신호]
+ *  7 focus_study 집중 반복 듣기         [프론트 신호]
  */
+export const QUEST_ORDER = ['buy_book', 'plant_seed', 'care_farm', 'search_word', 'make_book', 'free_test', 'focus_study'];
+
 export const QUEST_META = {
-  plant_seed: { title: '새 씨앗 심기', desc: '새 단어 몇 개를 만나고 밭에 심어 보세요' },
-  make_book: { title: '단어장 만들고 단어 직접 추가', desc: '내 단어장을 만들고 단어를 하나 넣어 보세요' },
-  search_word: { title: '찾기에서 단어 검색', desc: '궁금한 단어를 하나 찾아보세요' },
-  buy_book: { title: '상점에서 단어장 담기', desc: '마음에 드는 단어장을 하나 담아 보세요' },
-  focus_study: { title: '집중 반복 학습 완료', desc: '단어를 듣고 따라 읽으며 끝까지 한 번 익혀 보세요' },
-  care_farm: { title: '농장 돌보기', desc: '심은 단어를 한 번 복습해 밭을 돌봐 주세요' },
+  buy_book: { title: '서점에서 단어장 구매' },
+  plant_seed: { title: '새 씨앗 심기' },
+  care_farm: { title: '농장 돌보기' },
+  search_word: { title: '사전에서 단어 검색' },
+  make_book: { title: '단어장 만들고 단어 추가' },
+  free_test: { title: '자유 설정 테스트' },
+  focus_study: { title: '집중 반복 듣기' },
 };
 
-// 프론트가 완료 신호를 보내는 미션. 나머지(plant_seed·make_book·buy_book·care_farm)는
-// 서버가 학습 저장·단어장 생성·담기 시점에 스스로 감지하므로 refreshUnlock 만 한다.
-export const FRONTEND_SIGNAL_MISSIONS = ['search_word', 'focus_study'];
+// 프론트가 완료 신호를 보내는 미션. 나머지(buy_book·plant_seed·care_farm·make_book)는
+// 서버가 학습 저장·단어장 생성·구매 시점에 스스로 감지하므로 refreshUnlock 만 한다.
+export const FRONTEND_SIGNAL_MISSIONS = ['search_word', 'free_test', 'focus_study'];
 
 export const questTitleOf = (mission) =>
   (mission?.title || QUEST_META[mission?.key]?.title || '').trim();
 
-// 받침 유무로 조사 고르기 — 한글이 아니면(영문·숫자 끝) 받침 없는 쪽으로 둔다.
-const hasBatchim = (w) => {
-  const last = w.charCodeAt(w.length - 1);
-  return last >= 0xac00 && last <= 0xd7a3 && (last - 0xac00) % 28 !== 0;
-};
-export const withObjectJosa = (word) => {
-  const w = (word || '').trim();
-  return `${w}${hasBatchim(w) ? '을' : '를'}`;
-};
-export const withSubjectJosa = (word) => {
-  const w = (word || '').trim();
-  return `${w}${hasBatchim(w) ? '이' : '가'}`;
-};
-// 해금 대상의 화면 이름 — 탭이면 '찾기 탭'처럼 붙인다.
-const TAB_FEATURES = ['vocabook', 'dict', 'store'];
-export const featureNameOf = (featureKey) => {
-  const label = FEATURE_LABELS[featureKey] || featureKey || '';
-  return TAB_FEATURES.includes(featureKey) ? `${label} 탭` : label;
-};
+// 서버 순서(order)를 따르되, 없으면 QUEST_ORDER 순서로 정렬한다.
+const sortMissions = (missions) => [...missions].sort((a, b) => {
+  const oa = a.order ?? (QUEST_ORDER.indexOf(a.key) + 1 || 99);
+  const ob = b.order ?? (QUEST_ORDER.indexOf(b.key) + 1 || 99);
+  return oa - ob;
+});
 
 /**
  * 온보딩 행동 미션·기능 잠금 스위치.
@@ -209,7 +191,7 @@ export const OnboardingUnlockProvider = ({ children }) => {
       const res = await completeOnboardingMissionApi(key);
       if (res?.code !== 200 || !res.data) return null;
 
-      const { newly_completed, reward_gem, unlocks, gem_cnt } = res.data;
+      const { newly_completed, reward_gem, gem_cnt } = res.data;
 
       // diff 기반 큐잉은 스킵하고(celebrate:false), newly_completed 응답을 직접 사용해 큐잉
       applyUnlockData(res.data, { celebrate: false });
@@ -219,7 +201,7 @@ export const OnboardingUnlockProvider = ({ children }) => {
         const fullMission = Array.isArray(res.data.missions)
           ? res.data.missions.find((m) => m.key === key)
           : null;
-        queueMissionRewards([fullMission || { key, unlocks, reward_gem, title: FEATURE_LABELS[unlocks] || unlocks, reward_book: false }]);
+        queueMissionRewards([fullMission || { key, reward_gem, title: QUEST_META[key]?.title, reward_book: false }]);
       }
 
       if (typeof gem_cnt === 'number') {
@@ -235,12 +217,8 @@ export const OnboardingUnlockProvider = ({ children }) => {
     }
   }, [unlock, applyUnlockData, queueMissionRewards, setUserProfile, fetchUserProfile]);
 
-  // featureKey(vocabook/store/dict/listen/custom) 잠금 여부.
-  // legacy거나 unlock 미조회(null)면 낙관적으로 열림 처리(false=안 잠김).
-  const isFeatureLocked = useCallback((featureKey) => {
-    if (!unlock || unlock.legacy) return false;
-    return unlock.unlocked?.[featureKey] === false;
-  }, [unlock]);
+  // 기능 잠금은 없앴다(이슈 #25 2차) — 예전 호출부 호환용으로만 남긴다. 항상 열림.
+  const isFeatureLocked = useCallback(() => false, []);
 
   // "보상 받기" 연출을 다 보여줬거나(또는 사용자가 시트를 닫아) 더 이상 대기열이 필요 없을 때 비운다.
   // 보상 자체는 이미 완료 시점에 지급되었으므로, 큐를 비워도 데이터 손실은 없다(연출만 재노출되지 않음).
@@ -248,26 +226,17 @@ export const OnboardingUnlockProvider = ({ children }) => {
     setPendingMissionRewards([]);
   }, []);
 
-  const missionsList = unlock?.missions ?? [];
-  const currentMissionKey = unlock?.current_mission ?? null;
-  const currentMissionInfo = currentMissionKey
-    ? missionsList.find((m) => m.key === currentMissionKey) || null
-    : null;
-  // featureKey 를 여는 미션(잠금 안내의 '선행 퀘스트')
-  const missionForFeature = useCallback(
-    (featureKey) => (unlock?.missions ?? []).find((m) => m.unlocks === featureKey) || null,
-    [unlock]
-  );
+  const missionsList = sortMissions(unlock?.missions ?? []);
+  // 지금 할 퀘스트 = 미완료 중 첫 번째(순서 무관 완료라 서버 current_mission 보다 이게 정확하다).
+  const currentMissionInfo = missionsList.find((m) => !m.done) || null;
 
   const value = {
     unlock,
     currentMissionInfo,
-    missionForFeature,
     loading,
     legacy: unlock?.legacy ?? false,
-    missions: unlock?.missions ?? [],
-    currentMission: unlock?.current_mission ?? null,
-    unlocked: unlock?.unlocked ?? {},
+    missions: missionsList,
+    currentMission: currentMissionInfo?.key ?? null,
     thresholds: unlock?.thresholds ?? {},
     completedSessions: unlock?.completed_sessions ?? 0,
     isFeatureLocked,

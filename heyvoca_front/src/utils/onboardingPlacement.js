@@ -6,21 +6,14 @@
   방금 답으로 갱신된 수준(θ)에 달려 있어서다.
 
     1부 체험  — 유형마다 한 번씩(PART1_PLAN). 새 단어만.
-    2부 실전  — 1부 단어 5개를 **다른 유형**으로 다시(농장 돌보기처럼). 예문 유형은 가장 쉬운 예문만.
+    2부 실전  — 1부 단어 5개를 **예문 유형**(빈칸·문장 조립·문장 뜻)으로 다시. 가장 쉬운 예문부터.
     3부 복습  — 첫 시도에 틀린 단어를 맞힐 때까지(단어당 최대 MAX_RETRY 번) 쉬운 뜻 고르기로.
 
   【수준 θ】 백엔드 app/services/skill_level.py 와 같은 모형·척도다.
     P(정답) = σ((θ − b) / 10),  b = 문제 바탕 점수(예문 유형은 예문 score, 그 외는 단어 등급
     대표값 RANK_CENTER) + 유형 보정(QUESTION_TYPE_B_OFFSET).
-  다른 점 — 서버의 θ += K·(정답 − P) 한 걸음 갱신 대신 **지금까지 답 전체로 다시 추정(EAP)**한다.
-    시작 θ 15 에서 K 갱신은 잘하는 사람이 20문제 안에 제 수준에 못 닿았다(θ=80 → 40 에서 끝, 정답률 99.6%),
-    K·도약을 키우면 처음인 사람이 몇 문제 운 좋게 맞혀 튀었다가 어려운 문제를 연달아 틀렸다.
-    EAP 는 쉬운 문제를 맞힌 건 약한 근거, 어려운 걸 맞힌 건 강한 근거로 저절로 다룬다.
-    출제 규칙(TUNE, 값은 node 시뮬레이션으로 정함):
-      - 아직 안 틀렸으면 P≈probeP(어려운 쪽)로 위를 더듬는다 — 잘하는 사람이 빨리 올라온다.
-      - 한 번 틀린 뒤로는 P≈targetP, 그리고 (추정 − caution·불확실성) 기준으로 쉬운 쪽에 선다.
-      - 출제 θ 상한(cap)을 문제마다 조금씩 연다 — 첫 정답 하나로 갑자기 어려워지지 않게.
-      - 처음인 사람에게 예문 유형의 가장 쉬운 문제도 P < skipBelow 면 그 유형은 이번엔 건너뛴다.
+  θ 는 지금까지 답 전체로 다시 추정(EAP)해 migrate 로 보낸다. 출제 등급은 아래 TUNE 주석의
+  '오르기 → 안정' 계단 규칙이 정한다.
   3부(오답 복습) 재출제는 같은 단어를 다시 묻는 것이라 θ 를 움직이지 않는다(서버도 재출제는 기록 안 함).
 
   【저장】 기기 WebView 에서 router state 가 유실될 수 있어 세션 전체를 localStorage 에 둔다
@@ -52,31 +45,24 @@ export const QUESTION_TYPE_B_OFFSET = {
 export const pCorrect = (theta, b) => 1 / (1 + Math.exp(-(theta - b) / SCALE));
 
 export const START_THETA = 15;
-// 조정값 — 시뮬레이션(가상 사용자 θ=20/50/80, 정답 확률대로 응답)으로 정했다. 바꾸면 sim 을 다시 돌릴 것.
-//   priorSd   사전분포 N(START_THETA, priorSd) 의 폭 — 넓을수록 잘하는 사람이 빨리 올라온다
-//   targetP   한 번 틀린 뒤의 출제 목표 정답 확률
-//   probeP    아직 안 틀린 동안의 목표(어려운 쪽 더듬기), probeFrom~probeN 답 사이에서만
-//   caution   틀린 뒤 출제 θ = 추정 − caution × 사후 표준편차
-//   capStep   출제 θ 상한을 문제마다 여는 폭, 연속 정답이면 × (1 + capGrow × (연속 − 1))
-//   skipBelow 예문 유형 가장 쉬운 문제의 P 가 이보다 낮으면 그 유형은 건너뜀
+export const MAX_BAND = 5;
+// 조정값 — node 시뮬레이션(가상 사용자 θ=10/30/50/70/90, 정답 확률대로 응답)으로 정했다. 바꾸면 sim 을 다시 돌릴 것.
+//   priorSd  EAP 사전분포 N(START_THETA, priorSd) 의 폭
+//   targetP  첫 오답 뒤 출제 목표 정답 확률(전체 정답률 75~90% 를 노린다)
 export const TUNE = {
   priorSd: 60,
-  targetP: 0.9,
-  probeP: 0.3, probeFrom: 1, probeN: 30,
-  caution: 1,
-  capStep: 8, capGrow: 3,
-  skipBelow: 0.6,
+  targetP: 0.85,
 };
-// 출제 목표 P — 아직 한 번도 안 틀렸으면 probeP(더 어려운 쪽)로 빨리 위를 더듬고, 처음 틀린 뒤로는 targetP.
-const goalP = (s) => (s.nAnswers >= TUNE.probeFrom && s.nAnswers < TUNE.probeN && !(s.log || []).some((a) => !a.correct) ? TUNE.probeP : TUNE.targetP);
-// 출제에 쓰는 θ — 한 번이라도 틀린 뒤로는 추정이 불확실한 만큼(사후 표준편차 × caution) 쉬운 쪽으로 잡는다.
-// 처음인 사람이 몇 문제 운 좋게 맞혀 추정이 튀어도 갑자기 어려운 문제가 나오지 않게.
-const selTheta = (s) => {
-  const missed = (s.log || []).some((a) => !a.correct);
-  const t = missed ? s.theta - TUNE.caution * (s.thetaSd ?? TUNE.priorSd) : s.theta;
-  // 오르는 속도 제한 — 쉬운 문제 하나 맞혔다고 추정이 확 뛰어도 출제는 문제당 capStep 씩만 올린다.
-  return Math.min(t, s.cap ?? START_THETA);
-};
+/*
+  출제 등급(band) 정하기 — 두 구간.
+    오르기  아직 한 번도 안 틀렸으면 **맞힐 때마다 band +1**(1→2→…→5). 다 맞히는 사람은 1부 5번째 문제에 C1 에 닿는다.
+    안정    처음 틀리면 band −1, 그 뒤로는 EAP θ 에서 P(정답)이 targetP 에 가장 가까운 단어를 고르되
+            직전 band 에서 ±1 안에서만 움직인다(한 문제로 크게 튀지 않게).
+  예전 규칙(시작 θ15 + 어려운 쪽 더듬기 + 출제 상한 + 예문 건너뛰기)은 너무 보수적이라 다 맞혀도
+  쉬운 단어에 머물렀고, 처음 θ 에선 예문 유형이 P<0.6 으로 전부 건너뛰어져 사지선다만 나왔다.
+*/
+const isClimbing = (s) => !s.leftClimb;
+const clampBand = (b) => Math.max(1, Math.min(MAX_BAND, b));
 
 // ── 출제 계획 ──────────────────────────────────────────────────────────
 // 1부 — 유형마다 한 번씩. 카드 맞추기 4단어 포함 13단어 10문항.
@@ -96,8 +82,9 @@ export const PART1_PLAN = [
 ];
 export const CARD_MATCH_SIZE = 4;
 export const PART2_COUNT = 5;
-// 2부 유형 후보 — 1부와 다른 유형 중 지금 θ 에 맞는 것(nextPart2).
-const PART2_TYPES = ['reverseMultipleChoice', 'fillInTheBlank', 'multipleChoiceListening', 'spellingFill', 'multipleChoice'];
+// 2부 실전 — 예문 유형 위주(nextPart2). 1부에서 그 단어를 같은 유형으로 만났으면 다음 유형으로.
+const PART2_PLAN = ['fillInTheBlank', 'sentenceArrangePartial', 'sentenceTranslate', 'fillInTheBlank', 'sentenceArrangePartial'];
+const PART2_FALLBACK = ['reverseMultipleChoice', 'multipleChoiceListening'];
 export const MAX_RETRY = 3;
 
 const EXAMPLE_TYPES = new Set(['fillInTheBlank', 'sentenceTranslate', 'sentenceArrangePartial', 'sentenceArrange']);
@@ -503,6 +490,7 @@ export function createSession(bands, { theta = START_THETA } = {}) {
     v: 1,
     pool: normalizePool(bands),
     theta,
+    band: 1,
     nAnswers: 0,
     step: 0,
     part2Done: 0,
@@ -548,21 +536,29 @@ const updateTheta = (s, b, correct) => {
   s.nAnswers += 1;
 };
 
-// P(정답)이 목표(goalP)에 가장 가까운 단어 — 목표보다 어려운 쪽은 1.5배 벌점. 비슷하면 쉬운(짧은) 단어부터, 근처 3개 중 무작위.
+// 이번 문제의 단어. 오르기 구간은 지금 band 의 단어에서 쉬운(짧은·쉬운 예문) 것부터,
+// 안정 구간은 band ±1 안에서 P(정답)이 targetP 에 가장 가까운 것(어려운 쪽은 1.5배 벌점). 근처 3개 중 무작위.
 const pickWords = (s, type, count, rng, extraFilter = () => true) => {
   const used = new Set(s.used);
-  const cands = s.pool.filter((p) => !used.has(p.voca_id) && canUseType(p, type) && extraFilter(p));
-  const goal = goalP(s);
-  const th = selTheta(s);
+  const band = s.band ?? 1;
+  const climbing = isClimbing(s);
+  const base = s.pool.filter((p) => !used.has(p.voca_id) && canUseType(p, type) && extraFilter(p));
+  // 정해진 band 에 단어가 모자라면 가까운 band 로 넓힌다
+  let cands = [];
+  for (let r = 0; r <= MAX_BAND && cands.length < count; r += 1) {
+    cands = base.filter((p) => Math.abs(p.rank - band) <= (climbing ? r : Math.max(1, r)));
+  }
+  const ease = (p) => (EXAMPLE_TYPES.has(type) && p.example ? p.example.score : 0) + p.origin.length;
   const scored = cands.map((p) => {
-    const pc = pCorrect(th, itemB(p, type));
-    return { p, pc, d: pc < goal ? (goal - pc) * 1.5 : pc - goal, ease: (p.example?.score ?? RANK_CENTER[p.rank]) + p.origin.length };
-  }).sort((a, b) => (a.d - b.d) || (a.ease - b.ease));
+    const pc = pCorrect(s.theta, itemB(p, type));
+    const d = climbing
+      ? Math.abs(p.rank - band) * 10 + ease(p) / 100
+      : (pc < TUNE.targetP ? (TUNE.targetP - pc) * 1.5 : pc - TUNE.targetP);
+    return { p, d, ease: ease(p) };
+  }).sort((x, y) => (x.d - y.d) || (x.ease - y.ease));
   if (count === 1) {
-    const top = scored.filter((x) => x.d <= (scored[0]?.d ?? 0) + 0.03).slice(0, 3);
+    const top = scored.filter((x) => x.d <= (scored[0]?.d ?? 0) + (climbing ? 0.1 : 0.03)).slice(0, 3);
     if (!top.length) return [];
-    // 처음인 사람에게 이 유형의 가장 쉬운 문제도 너무 어려우면(P < skipBelow) 이번엔 내지 않는다.
-    if (EXAMPLE_TYPES.has(type) && scored[0].pc < TUNE.skipBelow) return [];
     return [top[Math.floor(rng() * top.length)].p];
   }
   // 카드 맞추기 — 뜻이 서로 겹치지 않는 count 개
@@ -598,31 +594,36 @@ const nextPart1 = (s, rng) => {
   return null;
 };
 
-// 2부 — 1부 단어 PART2_COUNT 개를 **다른 유형**으로 다시(농장 돌보기처럼).
-// 매 문제 (단어, 유형) 쌍 중 지금 θ 에서 P(정답)이 목표에 가장 가까운 것을 고른다 — 잘하는 사람은
-// 1부의 어려운 단어를 철자·빈칸으로, 처음인 사람은 쉬운 단어를 뜻 고르기로 만난다.
-// 목표보다 어려운 쪽은 1.5배 벌점(첫 학습은 쉬운 쪽으로 틀리는 게 낫다), 직전 2부와 같은 유형은 작은 벌점.
+// 2부 실전 — 1부 단어 PART2_COUNT 개를 **예문 유형**(PART2_PLAN 순서)으로 다시 묻는다.
+// 예문은 단어마다 풀이 준 가장 쉬운 것 하나뿐이다. 단어는 1부에서 다른 유형으로 만난 것 중
+// 지금 θ 에서 P(정답)이 targetP 에 가까운 것(같으면 예문 score 낮은 것) — 잘하는 사람이 A1 단어를 다시 보지 않게.
+// 계획한 유형을 낼 단어가 없으면 다른 예문 유형 → 그래도 없으면 뜻 고르기로 채운다.
 const nextPart2 = (s, rng) => {
   const asked = new Set(s.part2Asked || []);
   if (s.part2Done >= PART2_COUNT) return null;
-  const goal = goalP(s);
-  const th = selTheta(s);
-  const cands = [];
-  Object.keys(s.firstById).map(Number).forEach((id) => {
-    if (asked.has(id)) return;
-    const p = byId(s, id);
-    if (!p) return;
-    const firstType = s.firstById[id]?.type;
-    PART2_TYPES.forEach((t) => {
-      if (t === firstType || !canUseType(p, t)) return;
-      const pc = pCorrect(th, itemB(p, t));
-      cands.push({ p, t, d: (pc < goal ? (goal - pc) * 1.5 : pc - goal) + (t === s.lastP2Type ? 0.08 : 0) });
-    });
-  });
-  if (cands.length === 0) return null;
-  cands.sort((x, y) => x.d - y.d);
-  const near = cands.filter((x) => x.d <= cands[0].d + 0.03);
-  const { p, t: type } = near[Math.floor(rng() * near.length)];
+  const words = Object.keys(s.firstById).map(Number)
+    .filter((id) => !asked.has(id)).map((id) => byId(s, id)).filter(Boolean);
+  if (words.length === 0) return null;
+  const planned = PART2_PLAN[s.part2Done % PART2_PLAN.length];
+  const order = [planned, ...PART2_PLAN.filter((t) => t !== planned), ...PART2_FALLBACK];
+  let pick = null;
+  for (const t of order) {
+    const fit = (p) => {
+      const pc = pCorrect(s.theta, itemB(p, t));
+      return pc < TUNE.targetP ? (TUNE.targetP - pc) * 1.5 : pc - TUNE.targetP;
+    };
+    const cands = words
+      .filter((p) => s.firstById[p.voca_id]?.type !== t && canUseType(p, t))
+      .map((p) => ({ p, d: fit(p) }))
+      .sort((x, y) => (x.d - y.d) || ((x.p.example?.score ?? 99) - (y.p.example?.score ?? 99)));
+    if (cands.length) {
+      const top = cands.filter((x) => x.d <= cands[0].d + 0.03).slice(0, 2);
+      pick = { p: top[Math.floor(rng() * top.length)].p, t };
+      break;
+    }
+  }
+  if (!pick) return null;
+  const { p, t: type } = pick;
   s.part2Asked = [...asked, p.voca_id];
   s.part2Done += 1;
   s.lastP2Type = type;
@@ -691,8 +692,14 @@ export function advance(s, answered, rng = Math.random) {
       : answered.isCorrect === true;
     s.nQuestions = (s.nQuestions ?? 0) + 1;
     s.streak = allRight ? (s.streak ?? 0) + 1 : 0;
-    // 출제 상한 — 연달아 맞힐수록 더 크게 연다(capStep × (1 + capGrow × (연속−1))). 틀리면 capStep 만.
-    s.cap = (s.cap ?? START_THETA) + TUNE.capStep * (allRight ? 1 + TUNE.capGrow * (s.streak - 1) : 0.5);
+    // 다음 band — 오르기 구간(아직 안 틀림)은 +1, 첫 오답은 −1. 그 뒤(안정)는 pickWords 가 θ 로 고르고
+    // 여기서는 방금 낸 단어의 band 를 기준점으로 남긴다.
+    const askedBand = Math.round(pend.ids.map((id) => byId(s, id)?.rank ?? 1)
+      .reduce((n, r) => n + r, 0) / Math.max(1, pend.ids.length));
+    const wasClimbing = !s.leftClimb;
+    if (wasClimbing && allRight) s.band = clampBand(askedBand + 1);
+    else if (wasClimbing) { s.band = clampBand(askedBand - 1); s.leftClimb = true; }
+    else s.band = askedBand;
   }
   s.pending = null;
   const first = !answered && s.step === 0;

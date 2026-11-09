@@ -24,7 +24,7 @@ import { motion } from 'framer-motion';
 import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
 import { vibrate } from '../../utils/osFunction';
 import { getFarmPlantsApi } from '../../api/farm';
-import CropImage, { CROP_ASSETS } from './CropImage';
+import CropImage from './CropImage';
 import { HEALTH_STATES } from '../../utils/crop';
 import { useOpenWordDetail } from '../../hooks/useOpenWordDetail';
 
@@ -152,13 +152,7 @@ const WordListSheet = ({ title, items, paged = false, emptyText = '목록이 비
           )}
 
           {empty && (
-            <div className="flex flex-col items-center gap-[10px] py-[48px]">
-              <img
-                src={CROP_ASSETS.mascotHouse}
-                alt=""
-                draggable={false}
-                className="w-[80px] h-[80px] object-contain select-none"
-              />
+            <div className="flex flex-col items-center py-[48px]">
               <p className="text-[13.5px] font-[700] text-layout-black dark:text-layout-white">
                 {emptyText}
               </p>

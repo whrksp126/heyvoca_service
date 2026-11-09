@@ -1,76 +1,92 @@
-import React, { useState } from 'react';
-import { Minus, Plus, Sparkle, SortAscending, Info } from '@phosphor-icons/react';
+import React, { useEffect, useRef, useState } from 'react';
+import { Minus, Plus } from '@phosphor-icons/react';
 import { motion } from 'framer-motion';
 import { useUser } from '../../context/UserContext';
 import { updateUserInfoApi } from '../../api/auth';
 import { vibrate } from '../../utils/osFunction';
-import { readFarmSettings, writeFarmSettings } from '../../utils/farmSettings';
-import { SheetBar, GroupLabel, SettingRow, InfoBox, Hint } from './settingsUi';
+import { SheetBar, GroupLabel, Hint } from './settingsUi';
 
-// 선택 가능한 단계: 0(무제한), 5, 10, 15, 20, 25, 30, 35, 40, 45, 50
-const STEP = 5;
-const MIN_LIMIT = 5;
-const MAX_LIMIT = 50;
-const UNLIMITED = 0;
+// 하루 새 단어 — 숫자를 자유롭게 정한다(이슈 #25 2차 QA 21). 백엔드(auth.py)와 같은 범위.
+export const DAILY_NEW_MIN = 4;
+export const DAILY_NEW_MAX = 200;
+const DEFAULT_LIMIT = 20;
+const SAVE_DELAY_MS = 500;
 
-const clampToStep = (value) => {
-  if (value <= UNLIMITED) return UNLIMITED;
-  return Math.min(MAX_LIMIT, Math.max(MIN_LIMIT, Math.round(value / STEP) * STEP));
+const clamp = (v) => Math.min(DAILY_NEW_MAX, Math.max(DAILY_NEW_MIN, Math.round(v)));
+// 예전 '무제한'(0) 값은 상한으로 보여 준다(서버 값은 사용자가 바꿀 때까지 그대로).
+const toDisplay = (raw) => {
+  if (raw === null || raw === undefined) return DEFAULT_LIMIT;
+  if (raw === 0) return DAILY_NEW_MAX;
+  return clamp(raw);
 };
 
 /**
- * 학습 설정 — 심는 양과 주는 양 (시안 설정 1절 ③).
- * 새 단어 수만 있던 자리에 복습량과 순서가 붙는다.
- * 저장 버튼이 없다 — 고르면 바로 저장된다(기존 음성/테마 설정과 같은 규칙).
+ * 학습 설정 — 하루 새 단어 수만 둔다.
+ * 저장 버튼이 없다 — 바꾸면 잠시 뒤 자동 저장된다.
  */
 const DailyNewLimitNewFullSheet = () => {
-  "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
+  "use memo";
 
   const { userProfile, setUserProfile } = useUser();
 
-  const rawLimit = userProfile?.daily_new_limit ?? 20;
-  const [localLimit, setLocalLimit] = useState(
-    rawLimit === UNLIMITED ? UNLIMITED : clampToStep(rawLimit)
-  );
-  const [farm, setFarm] = useState(readFarmSettings);
+  const [value, setValue] = useState(() => toDisplay(userProfile?.daily_new_limit));
+  const [draft, setDraft] = useState(String(value));
+  const savedRef = useRef(userProfile?.daily_new_limit);
+  const timerRef = useRef(null);
 
-  const displayLabel = localLimit === UNLIMITED ? '무제한' : String(localLimit);
+  const pendingRef = useRef(null);
+  const saveRef = useRef(null);
+  // 시트를 닫을 때 아직 안 보낸 값이 있으면 바로 저장한다
+  useEffect(() => () => {
+    if (timerRef.current) clearTimeout(timerRef.current);
+    if (pendingRef.current !== null) saveRef.current?.(pendingRef.current);
+  }, []);
 
-  // 값이 바뀌는 즉시 저장한다. 실패하면 이전 값으로 되돌린다.
-  const commit = async (next) => {
-    const prev = userProfile?.daily_new_limit;
-    setLocalLimit(next);
+  const save = async (next) => {
+    pendingRef.current = null;
+    const prev = savedRef.current;
+    if (prev === next) return;
+    savedRef.current = next;
     setUserProfile((p) => ({ ...p, daily_new_limit: next }));
     try {
       const result = await updateUserInfoApi({ daily_new_limit: next });
       if (!result || result.code !== 200) throw new Error('save failed');
     } catch (e) {
+      savedRef.current = prev;
       setUserProfile((p) => ({ ...p, daily_new_limit: prev }));
-      setLocalLimit(prev === UNLIMITED ? UNLIMITED : clampToStep(prev ?? 20));
+      const back = toDisplay(prev);
+      setValue(back);
+      setDraft(String(back));
     }
   };
 
-  // 감소: 5 → 무제한(0), 나머지 -5
-  const handleDecrement = () => {
-    vibrate({ duration: 5 });
-    if (localLimit === UNLIMITED) return;
-    commit(localLimit <= MIN_LIMIT ? UNLIMITED : localLimit - STEP);
+  saveRef.current = save;
+
+  const apply = (next, { immediate = false } = {}) => {
+    const v = clamp(next);
+    setValue(v);
+    setDraft(String(v));
+    if (timerRef.current) clearTimeout(timerRef.current);
+    pendingRef.current = v;
+    if (immediate) {
+      save(v);
+    } else {
+      timerRef.current = setTimeout(() => save(v), SAVE_DELAY_MS);
+    }
   };
 
-  // 증가: 무제한 → 5, 나머지 +5
-  const handleIncrement = () => {
+  const step = (delta) => {
     vibrate({ duration: 5 });
-    if (localLimit >= MAX_LIMIT) return;
-    commit(localLimit === UNLIMITED ? MIN_LIMIT : localLimit + STEP);
+    apply(value + delta);
   };
 
-  const isDecrementDisabled = localLimit === UNLIMITED;
-  const isIncrementDisabled = localLimit >= MAX_LIMIT;
-
-  const toggleFarm = (key) => {
-    vibrate({ duration: 5 });
-    setFarm(writeFarmSettings({ ...farm, [key]: !farm[key] }));
+  const commitDraft = () => {
+    const n = parseInt(draft, 10);
+    apply(Number.isFinite(n) ? n : value, { immediate: true });
   };
+
+  const isMin = value <= DAILY_NEW_MIN;
+  const isMax = value >= DAILY_NEW_MAX;
 
   const stepBtn = (disabled) =>
     `w-[44px] h-[44px] rounded-[10px] border-[1.5px] flex items-center justify-center ${
@@ -85,62 +101,41 @@ const DailyNewLimitNewFullSheet = () => {
       <SheetBar title="학습 설정" />
 
       <div className="flex-1 overflow-y-auto px-[16px] pb-[20px]">
-        {/* ── 하루 새 단어 ── */}
         <GroupLabel first>하루 새 단어</GroupLabel>
-        <Hint>
-          하루에 새로 심을 씨앗 수예요.
-          많이 심으면 <b className="font-[700] text-layout-gray-400">나중에 물 줄 작물도 그만큼 늘어요.</b>
-        </Hint>
         <div className="flex items-center justify-center gap-[14px] mt-[16px] mb-[4px]">
           <motion.button
-            onClick={handleDecrement}
-            disabled={isDecrementDisabled}
-            className={stepBtn(isDecrementDisabled)}
-            whileTap={isDecrementDisabled ? {} : { scale: 0.9 }}
+            onClick={() => step(-1)}
+            disabled={isMin}
+            className={stepBtn(isMin)}
+            whileTap={isMin ? {} : { scale: 0.9 }}
+            aria-label="줄이기"
           >
             <Minus size={17} />
           </motion.button>
-          <span className="w-[86px] text-center text-[30px] font-[800] tracking-[-0.04em] text-primary-main-600 tabular-nums">
-            {displayLabel}
-          </span>
+          <input
+            type="number"
+            inputMode="numeric"
+            pattern="[0-9]*"
+            min={DAILY_NEW_MIN}
+            max={DAILY_NEW_MAX}
+            value={draft}
+            onChange={(e) => setDraft(e.target.value.replace(/[^0-9]/g, '').slice(0, 3))}
+            onBlur={commitDraft}
+            onKeyDown={(e) => { if (e.key === 'Enter') e.currentTarget.blur(); }}
+            aria-label="하루 새 단어 수"
+            className="w-[96px] h-[44px] rounded-[10px] text-center text-[30px] font-[800] tracking-[-0.04em] tabular-nums text-primary-main-600 bg-transparent outline-none focus:bg-layout-gray-50 dark:focus:bg-layout-gray-dark [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+          />
           <motion.button
-            onClick={handleIncrement}
-            disabled={isIncrementDisabled}
-            className={stepBtn(isIncrementDisabled)}
-            whileTap={isIncrementDisabled ? {} : { scale: 0.9 }}
+            onClick={() => step(1)}
+            disabled={isMax}
+            className={stepBtn(isMax)}
+            whileTap={isMax ? {} : { scale: 0.9 }}
+            aria-label="늘리기"
           >
             <Plus size={17} />
           </motion.button>
         </div>
-        <Hint className="text-center">
-          5개씩 조절 · 5에서 한 번 더 내리면 <b className="font-[700] text-layout-gray-400">무제한</b>
-        </Hint>
-
-        {/* ── 하루 복습량 — 시스템 권장량이 이미 계산되고 있다 (시안 2절) ── */}
-        <GroupLabel>하루 복습량</GroupLabel>
-        <SettingRow
-          first
-          icon={<Sparkle size={16} />}
-          title="자동으로 맞추기"
-          sub="밭 크기에 따라 헤이보카가 정해요"
-          toggle={farm.reviewAuto}
-          onClick={() => toggleFarm('reviewAuto')}
-        />
-        <InfoBox tone="blue" icon={<Info size={13} />}>
-          권장량을 넘긴 작물 중 <b>오늘 안 주면 썩는 것</b>은
-          자동으로 하루 더 보호돼요. 도구를 쓰지 않아요.
-        </InfoBox>
-
-        {/* ── 복습 순서 — CRITICAL 작물을 앞으로 (기획 8.4) ── */}
-        <GroupLabel>복습 순서</GroupLabel>
-        <SettingRow
-          first
-          icon={<SortAscending size={16} />}
-          title="급한 것부터"
-          sub="썩기 직전 작물을 앞으로"
-          toggle={farm.reviewUrgentFirst}
-          onClick={() => toggleFarm('reviewUrgentFirst')}
-        />
+        <Hint className="text-center">{DAILY_NEW_MIN}~{DAILY_NEW_MAX}개</Hint>
       </div>
     </div>
   );

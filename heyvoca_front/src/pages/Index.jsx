@@ -175,9 +175,8 @@ const Index = () => {
           // 매번 똑같이 달성되는 업적을 보여주는 게 형식적이었다. 대신 계정에 실제로 반영된
           // 지금, 홈 첫 진입에서 한 번만 보여주기 위해 대기열에 담아 둔다.
           // components/home/Main.jsx 가 홈 마운트 시 이 값을 읽는 즉시 지우고 순차로 띄운다.
-          // v2(이슈 #25)는 migrate 자체가 추천 서점 단어장을 서점 담기 경로로 넣어 독서왕 1레벨을
-          // 지급하고 그 응답(res.data.goals)에 실어 준다 — 게스트 결과 화면 보석 예측과 같은 목록이
-          // 되도록 함께 담는다(독서왕 먼저, 이어서 출석왕·노력왕·끈기왕).
+          // migrate 응답(res.data.goals)에 업적이 실려 오면 함께 담는다. v2(이슈 #25 2차)는 가입 때
+          // 단어장을 담지 않아 보통 비어 있다 — 출석왕·노력왕·끈기왕은 아래 historyData 가 준다.
           const overlayGoals = [
             ...(Array.isArray(res?.data?.goals) ? res.data.goals : []),
             ...(Array.isArray(historyData?.goals) ? historyData.goals : []),

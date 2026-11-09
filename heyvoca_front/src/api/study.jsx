@@ -233,18 +233,8 @@ export const getPlacementPoolApi = async () => {
   }
 };
 
-// 측정 수준에 맞는 서점 단어장 3권(이슈 #25) — 비인증. data: { level:{cefr,label,theta}, books:[…] }
-export const getRecommendBooksApi = async (theta) => {
-  const url = `${backendUrl}/onboarding/recommend-books`;
-  try {
-    return await fetchDataAsync(url, 'GET', { theta: Math.round(Number(theta) || 0) });
-  } catch (error) {
-    console.error('getRecommendBooksApi 오류:', error);
-  }
-};
-
 // 가입 직후 온보딩 이전 (인증) — body 는 utils/guestStorage.js buildMigrateBody 가 만든다.
-//  v2: { flow:'v2', bookstore_id, theta, answers:[{voca_id, question_type, correct}], source_channel, learning_goal, daily_new_limit, username }
+//  v2: { flow:'v2', theta, answers:[{voca_id, question_type, correct}], username } — 단어장 없음, 하루 심기 수는 서버 기본값
 //  v1(구 게스트 데이터): { level, answers:[{voca_id, correct}], … }
 export const migrateOnboardingApi = async (body) => {
   const url = `${backendUrl}/onboarding/migrate`;

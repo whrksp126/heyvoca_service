@@ -225,13 +225,17 @@ const PullToRefreshIndicator = ({ pull, phase, threshold, maxPull }) => {
   );
 };
 
-// ── 갱신 완료 섬광(이슈 #24) ────────────────────────────────────────────────
-// 체크가 뜨는 순간, 인디케이터 자리에서 화면 전체로 원형 빛이 퍼지며 옅어진다 — "최신 정보가
-// 적용됐다"는 신호. 데이터가 실제로 바뀌었는지와 무관하게 갱신이 성공하면 항상 재생한다.
-// 인디케이터와 같은 이유로 document.body 포털에 그리고, pointer-events-none 이라 터치를
-// 전혀 막지 않는다. 인디케이터(z-30) 바로 아래 층에 깔려 칩을 가리지 않는다.
-// 지름 300vmax — 인디케이터(상단 중앙)에서 가장 먼 화면 모서리까지 넉넉히 덮는다.
-const FLASH_DURATION = 0.52;
+// ── 갱신 완료 섬광(이슈 #24, #25 2차 QA 20) ────────────────────────────────
+// 체크가 뜨는 순간, 인디케이터 자리에서 화면 전체로 빛이 퍼지며 옅어진다 — "최신 정보가
+// 적용됐다"는 신호. document.body 포털 + pointer-events-none 이라 터치를 막지 않는다.
+//
+// 성능(#25 20): 예전엔 300vmax 짜리 거대 원 + 테두리 링을 scale 로 키워 GPU 텍스처가
+// 수천 px 로 커지고(첫 프레임 래스터화로 버벅임), 테두리가 또렷한 원으로 보였다.
+// 지금은 작은(FLASH_BASE px) 방사형 그라데이션 하나만 transform(scale)·opacity 로 키운다.
+// 그라데이션은 가장자리까지 부드럽게 투명해지므로 확대해도 경계선이 생기지 않는다.
+const FLASH_DURATION = 0.6;
+const FLASH_BASE = 240; // px — 실제 레이어 크기(작게 그리고 scale 로 키운다)
+const FLASH_SCALE_TO = 14; // 240 × 14 ≈ 3360px — 휴대폰·태블릿 화면 모서리까지 덮는다
 const FLASH_ORIGIN_TOP = 'calc(var(--status-bar-height) + 64px + 20px)'; // 칩(40px) 중심
 
 const PullToRefreshFlash = ({ onDone }) => {
@@ -243,6 +247,7 @@ const PullToRefreshFlash = ({ onDone }) => {
       <motion.div
         aria-hidden="true"
         className="fixed inset-0 z-[29] pointer-events-none bg-primary-main-100 dark:bg-primary-main-dark"
+        style={{ willChange: 'opacity' }}
         initial={{ opacity: 0 }}
         animate={{ opacity: [0, 0.55, 0] }}
         transition={{ duration: 0.32, ease: 'easeOut', times: [0, 0.3, 1] }}
@@ -253,32 +258,29 @@ const PullToRefreshFlash = ({ onDone }) => {
   }
 
   return createPortal(
-    <div aria-hidden="true" className="fixed inset-0 z-[29] pointer-events-none overflow-hidden">
-      {/* 빛 — 중심이 진하고 바깥으로 갈수록 투명해지는 원. 커지면서 전체가 옅어진다 */}
-      <motion.div
-        className="
-          absolute left-1/2 w-[300vmax] h-[300vmax] rounded-full
-          bg-[radial-gradient(circle,var(--primary-main-200)_0%,var(--primary-main-100)_22%,transparent_58%)]
-          dark:bg-[radial-gradient(circle,var(--primary-main-400)_0%,var(--primary-main-dark)_24%,transparent_58%)]
-        "
-        style={{ top: FLASH_ORIGIN_TOP, x: '-50%', y: '-50%' }}
-        initial={{ scale: 0.02, opacity: 0.9 }}
-        animate={{ scale: 1, opacity: 0 }}
-        transition={{
-          scale: { duration: FLASH_DURATION, ease: [0.16, 1, 0.3, 1] },
-          opacity: { duration: FLASH_DURATION, ease: [0.4, 0, 0.6, 1] },
-        }}
-        onAnimationComplete={onDone}
-      />
-      {/* 물결 테두리 — 빛의 앞머리를 또렷하게 보여 "퍼져 나간다"를 읽히게 한다 */}
-      <motion.div
-        className="absolute left-1/2 w-[120vmax] h-[120vmax] rounded-full border-[3px] border-primary-main-300 dark:border-primary-main-400"
-        style={{ top: FLASH_ORIGIN_TOP, x: '-50%', y: '-50%' }}
-        initial={{ scale: 0.03, opacity: 0.7 }}
-        animate={{ scale: 1, opacity: 0 }}
-        transition={{ duration: FLASH_DURATION * 0.9, ease: [0.16, 1, 0.3, 1] }}
-      />
-    </div>,
+    <motion.div
+      aria-hidden="true"
+      className="
+        fixed left-1/2 z-[29] pointer-events-none
+        bg-[radial-gradient(closest-side,var(--primary-main-200)_0%,var(--primary-main-100)_40%,transparent_100%)]
+        dark:bg-[radial-gradient(closest-side,var(--primary-main-400)_0%,var(--primary-main-dark)_40%,transparent_100%)]
+      "
+      style={{
+        top: FLASH_ORIGIN_TOP,
+        width: FLASH_BASE,
+        height: FLASH_BASE,
+        marginLeft: -FLASH_BASE / 2,
+        marginTop: -FLASH_BASE / 2,
+        willChange: 'transform, opacity',
+      }}
+      initial={{ scale: 0.15, opacity: 0.85 }}
+      animate={{ scale: FLASH_SCALE_TO, opacity: 0 }}
+      transition={{
+        scale: { duration: FLASH_DURATION, ease: [0.16, 1, 0.3, 1] },
+        opacity: { duration: FLASH_DURATION, ease: [0.4, 0, 0.6, 1] },
+      }}
+      onAnimationComplete={onDone}
+    />,
     document.body,
   );
 };
@@ -355,10 +357,17 @@ const PullToRefresh = forwardRef(function PullToRefresh(
   const [flashKey, setFlashKey] = useState(0);
   const prevPhaseRef = useRef(phase);
   useEffect(() => {
+    let raf1 = 0;
+    let raf2 = 0;
     if (phase === 'done' && prevPhaseRef.current !== 'done' && refreshOkRef.current) {
-      setFlashKey((k) => k + 1);
+      // 갱신된 데이터가 그려진 다음 프레임에 시작한다 — 데이터 반영 렌더와 같은 프레임에
+      // 섬광 레이어 생성이 겹쳐 버벅이지 않게(#25 2차 QA 20).
+      raf1 = requestAnimationFrame(() => {
+        raf2 = requestAnimationFrame(() => setFlashKey((k) => k + 1));
+      });
     }
     prevPhaseRef.current = phase;
+    return () => { cancelAnimationFrame(raf1); cancelAnimationFrame(raf2); };
   }, [phase]);
   const clearFlash = useCallback(() => setFlashKey(0), []);
 

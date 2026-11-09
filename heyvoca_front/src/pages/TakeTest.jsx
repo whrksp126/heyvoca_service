@@ -878,11 +878,11 @@ const TakeTest = () => {
   useEffect(() => {
     if (!isGuestMode) return;
     if (isPlacement) {
-      // 세션이 없으면(저장소 비움 등) 온보딩 예고 화면으로 돌아가 다시 시작한다.
+      // 세션이 없으면(저장소 비움 등) 온보딩 소개 화면으로 돌아가 다시 시작한다.
       const s = placementRef.current;
       const first = s ? currentPlacementQuestion(s) : null;
       if (!first) {
-        navigate('/onboarding', { state: { step: 'ready' }, replace: true });
+        navigate('/onboarding', { state: { step: 'intro' }, replace: true });
         return;
       }
       savePlacementSession(s);
@@ -1149,12 +1149,12 @@ const TakeTest = () => {
 
   // 학습 종료 확인 및 네비게이션 함수
   const handleStopLearning = async () => {
-    // 게스트 첫 학습: 확인 바텀시트 없이 온보딩 예고 화면으로 복귀 —
+    // 게스트 첫 학습: 확인 바텀시트 없이 온보딩 소개 화면으로 복귀 —
     // 중간에 그만둔 것이므로 다시 시작할 수 있는 자리로 되돌린다
     if (isGuestMode) {
       clearGuestTrial();
       clearPlacementSession();
-      navigate('/onboarding', { state: { step: 'ready' }, replace: true });
+      navigate('/onboarding', { state: { step: 'intro' }, replace: true });
       return;
     }
 
@@ -1258,7 +1258,8 @@ const TakeTest = () => {
         if (isGuestMode && isPlacement) {
           // 수준 맞춤 학습 끝 — θ·답 기록(1·2부 첫 시도)을 게스트 데이터에 남기고 결과 화면으로.
           const sum = summarizePlacement(placementRef.current || {});
-          patchGuest({ answers: sum.answers, theta: sum.theta, placement: { asked: sum.asked, correct: sum.correct } });
+          // flow·placement 가 '학습 완료' 표시 — utils/guestStorage pendingGuestMigration 이 이걸로 v2 게스트를 알아본다.
+          patchGuest({ flow: 'v2', answers: sum.answers, theta: sum.theta, placement: { asked: sum.asked, correct: sum.correct } });
           // 결과 화면엔 1부에서 만난 단어마다 한 줄(첫 시도 정오답) — 세션에서 만든다(새로고침해도 빠지지 않게).
           const p1 = resultWordsPlacement(placementRef.current || {});
           clearPlacementSession();
@@ -1377,12 +1378,15 @@ const TakeTest = () => {
           finishStudyP = finishStudySession(studySessionRef.current)
             .catch(e => console.warn('[FSRS] finishStudySession 실패:', e));
         }
-        // 입문 퀘스트(이슈 #25 v2) — 프론트 신호는 focus_study(집중 반복 학습) 하나뿐이다.
+        // 입문 퀘스트(이슈 #25 2차) — 학습 화면의 프론트 신호는 focus_study(집중 반복 듣기)와
+        // free_test(자유 설정 테스트: 단어장 고르기 'exam'·학습하기 화면 'test').
         // plant_seed(심기)·care_farm(복습)은 서버가 학습 저장 시점에 감지하고, 결과 화면을
         // 벗어날 때 OnboardingMissionRewardWatcher 가 refreshUnlock 으로 반영·보상 연출한다.
         // 게스트/맛보기(today)는 위에서 이미 return됨.
         if (state.testType === 'study') {
           completeMission('focus_study');
+        } else if (state.testType === 'exam' || state.testType === 'test') {
+          completeMission('free_test');
         }
         await updateVocabularySheetAndRecentStudyData();
         // 글자 "배우기"(learn·practice)는 결과 화면 없이 바로 마친다(2026-10-25 QA 4차) — 새 글자를

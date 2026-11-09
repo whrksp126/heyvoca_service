@@ -98,13 +98,13 @@ const SettingsNewFullSheet = () => {
           onClick={() => openSheet(PushNotificationsNewFullSheet)}
         />
 
-        {/* ── 학습 관리 — 새 단어 수와 복습량을 한 줄에 요약한다(둘 다 '학습 설정' 시트에서 바꾼다) ── */}
+        {/* ── 학습 관리 — 하루 새 단어 수('학습 설정' 시트에서 바꾼다) ── */}
         <GroupLabel>학습 관리</GroupLabel>
         <SettingRow
           first
           icon={<Plant size={iconSize} />}
           title="하루 학습량"
-          value={`새 단어 ${newLimit === 0 ? '무제한' : `${newLimit}개`} · 복습 ${farm.reviewAuto ? '자동' : '직접'}`}
+          value={`새 단어 ${newLimit === 0 ? 200 : newLimit}개`}
           onClick={() => openSheet(DailyNewLimitNewFullSheet)}
         />
 

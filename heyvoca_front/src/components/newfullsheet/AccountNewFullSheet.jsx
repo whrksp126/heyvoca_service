@@ -91,17 +91,9 @@ const AccountNewFullSheet = () => {
 
   const handleWithdraw = async () => {
     try {
-      // 확인 BottomSheet 표시 — "모든 데이터"가 아니라 숫자로 적는다 (시안 4절)
       const confirmed = await pushAwaitNewBottomSheet(
         WithdrawNewBottomSheet,
-        {
-          plants: farmSummary?.plants,
-          golden: farmSummary?.golden,
-          streakCurrent: farmSummary?.streakCurrent,
-          streakBest: farmSummary?.streakBest,
-          tools: farmSummary?.tools,
-          gem: userProfile?.gem_cnt ?? 0,
-        },
+        {},
         {
           isBackdropClickClosable: true,
           isDragToCloseEnabled: true

@@ -1,18 +1,14 @@
 import React, { useRef } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { animate } from 'framer-motion';
-import { Lock } from "@phosphor-icons/react";
 import { haptic, PULSE_TWEEN } from '../../lib/feel';
-import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
-import { useOnboardingUnlock } from '../../context/OnboardingUnlockContext';
-import { UnlockGuideNewBottomSheet } from '../newBottomSheet/UnlockGuideNewBottomSheet';
 import navHome from '../../assets/images/farm/home.png';
 import navVocabulary from '../../assets/images/farm/vocabulary.png';
 import navDictionary from '../../assets/images/farm/dictionary.png';
 import navStore from '../../assets/images/farm/store.png';
 import navMypage from '../../assets/images/farm/mypage.png';
 
-// 탭 정의 — lockKey 있는 탭은 온보딩 점진 해금 대상
+// 탭 정의 — 잠금 없음(이슈 #25 2차: 처음부터 모든 탭을 쓸 수 있다)
 // 라벨은 화면에 그리지 않는다(아이콘이 곧 그 탭의 사물이라 같은 말이 두 번 된다).
 // 스크린리더·툴팁 용도로만 남긴다.
 //
@@ -22,13 +18,12 @@ import navMypage from '../../assets/images/farm/mypage.png';
 //   /home     — 시안이 "홈(= 농장)"이라 부르는 그 화면 자체.
 //               (구 /farm 농장 상세 화면은 시안에 없어 제거됐다 — App.jsx 에서 /home 으로 넘긴다)
 //   /dictionary — 찾기는 기존 사전 탭을 다시 그린 것(시안 찾기 1절)이라 같은 화면이다.
-// lockKey('dict' 등)는 온보딩 해금 키라서 이름과 무관하게 유지한다.
 const NAV_ITEMS = [
-  { path: '/home', label: '농장', icon: navHome, lockKey: null },
-  { path: '/vocabulary-sheets', label: '단어장', icon: navVocabulary, lockKey: 'vocabook' },
-  { path: '/dictionary', label: '찾기', icon: navDictionary, lockKey: 'dict' },
-  { path: '/book-store', label: '상점', icon: navStore, lockKey: 'store' },
-  { path: '/mypage', label: '마이', icon: navMypage, lockKey: null },
+  { path: '/home', label: '농장', icon: navHome },
+  { path: '/vocabulary-sheets', label: '단어장', icon: navVocabulary },
+  { path: '/dictionary', label: '찾기', icon: navDictionary },
+  { path: '/book-store', label: '상점', icon: navStore },
+  { path: '/mypage', label: '마이', icon: navMypage },
 ];
 
 const BottomNav = () => {
@@ -36,29 +31,14 @@ const BottomNav = () => {
 
   const navigate = useNavigate();
   const location = useLocation();
-  const { pushNewBottomSheet } = useNewBottomSheetActions();
-  const { isFeatureLocked } = useOnboardingUnlock();
   // 탭 선택 순간의 아이콘 "통통" 연출용 — 실제 DOM 노드에 직접 animate() 를 걸어
   // (motion 컴포넌트 remount 트릭 없이) 매 탭마다 재생한다.
   const iconRefs = useRef({});
-
-  const isLocked = (lockKey) => {
-    if (!lockKey) return false;
-    return isFeatureLocked(lockKey);
-  };
 
   const handleTap = (item) => {
     haptic('selection');
     const iconEl = iconRefs.current[item.path];
     if (iconEl) animate(iconEl, { scale: [1, 1.18, 1] }, PULSE_TWEEN);
-    if (isLocked(item.lockKey)) {
-      pushNewBottomSheet(
-        UnlockGuideNewBottomSheet,
-        { highlightKey: item.lockKey },
-        { isBackdropClickClosable: true, isDragToCloseEnabled: true }
-      );
-      return;
-    }
     navigate(item.path);
   };
 
@@ -70,7 +50,6 @@ const BottomNav = () => {
       <ul className="flex justify-around items-center h-[60px] max-w-md mx-auto">
         {NAV_ITEMS.map((item) => {
           const active = location.pathname === item.path;
-          const locked = isLocked(item.lockKey);
           return (
             <li
               key={item.path}
@@ -86,13 +65,12 @@ const BottomNav = () => {
                   active ? 'bg-primary-main-100 dark:bg-primary-main-dark' : ''
                 }`}
               >
-                <span className={`relative flex items-center justify-center ${locked ? 'opacity-45' : ''}`}>
+                <span className="relative flex items-center justify-center">
                   {/* 아이콘은 켜짐·꺼짐에 관계없이 **제 색 그대로** 둔다.
                       예전에는 꺼진 탭을 탈색(grayscale + brightness)했는데, 이 아이콘들은
                       각자 다른 사물(밭·책·돋보기·상점·토끼)이고 색이 곧 그 사물의 표식이라
                       색을 빼면 다섯 개가 다 비슷한 회색 덩어리가 되어 무엇이 무엇인지 흐려졌다.
-                      켜짐·꺼짐은 아이콘이 아니라 **뒤에 깔리는 면**(위 div 의 분홍 알약)이 말한다.
-                      잠금(opacity-45)은 다른 뜻이라 그대로 둔다 — 그건 '못 쓴다'는 표시다. */}
+                      켜짐·꺼짐은 아이콘이 아니라 **뒤에 깔리는 면**(위 div 의 분홍 알약)이 말한다. */}
                   <img
                     ref={(el) => { iconRefs.current[item.path] = el; }}
                     src={item.icon}
@@ -101,11 +79,6 @@ const BottomNav = () => {
                     draggable={false}
                     className="w-[27px] h-[27px] object-contain select-none"
                   />
-                  {locked && (
-                    <span className="absolute -top-[3px] -right-[5px] flex items-center justify-center w-[14px] h-[14px] rounded-full bg-layout-gray-300 dark:bg-layout-gray-400">
-                      <Lock size={8} weight="bold" className="text-layout-white" />
-                    </span>
-                  )}
                 </span>
               </div>
             </li>

@@ -117,7 +117,7 @@ const FarmHero = ({ counts, fieldCounts, healthMix, storedSeeds = 0, words, heal
           밭 상자 — width 112%, left -6%, 아래 정렬.
           밭이 화면 좌우로 살짝 넘쳐야 섬이 잘린 게 아니라 이어지는 것처럼 보인다.
           하단이 알파로 페이드되어 있어 어떤 배경 위에 놓아도 그 색으로 녹아든다(§17).
-          작물·마스코트·팻말이 모두 이 상자 안에 % 로 얹혀 함께 움직인다.
+          작물·팻말이 모두 이 상자 안에 % 로 얹혀 함께 움직인다.
         */}
         <div className="absolute left-[-6%] w-[112%] bottom-0">
         <FarmField
@@ -125,7 +125,6 @@ const FarmHero = ({ counts, fieldCounts, healthMix, storedSeeds = 0, words, heal
           healthMix={healthMix}
           words={words}
           maxSprites={96}
-          mascot
           storedSeeds={storedSeeds}
         >
           {SIGN_ANCHORS.map((sign) => {

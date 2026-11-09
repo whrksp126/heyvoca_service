@@ -1,202 +1,44 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import {
-  CaretLeft, CheckCircle, AppleLogo, CaretRight,
-  Users, AppStoreLogo, Megaphone, MagnifyingGlass, DotsThreeOutline,
-  GraduationCap, Airplane, Sparkle, GlobeHemisphereWest,
-} from '@phosphor-icons/react';
+import { CaretLeft, AppleLogo, CaretRight } from '@phosphor-icons/react';
 import googleLogo from '../assets/images/google_logo.png';
-import { getPlacementPoolApi, getRecommendBooksApi, migrateOnboardingApi } from '../api/study';
-import { getBookStoreDetailApi } from '../api/bookStore';
+import { getPlacementPoolApi, migrateOnboardingApi } from '../api/study';
 import { patchGuest, getGuest, clearGuest, clearGuestTrial, buildMigrateBody } from '../utils/guestStorage';
 import { notifyOnboardingMigrated } from '../utils/studyDataEvents';
 import { createSession, saveSession as savePlacementSession, clearSession as clearPlacementSession } from '../utils/onboardingPlacement';
-import { levelFromTheta } from '../components/onboarding/LevelResultSlide';
 import { vibrate, getDevicePlatform } from '../utils/osFunction';
 import { primeSfx } from '../utils/audio';
-import { BookCard } from '../components/bookStore/BookSection';
-import { PreviewBookStoreNewFullSheet } from '../components/newfullsheet/PreviewBookStoreNewFullSheet';
 import { SwitchAccountNewBottomSheet } from '../components/newBottomSheet/SwitchAccountNewBottomSheet';
-import { useNewFullSheetActions } from '../context/NewFullSheetContext';
 import { useNewBottomSheetActions } from '../context/NewBottomSheetContext';
 import { useUser } from '../context/UserContext';
 import postMessageManager from '../utils/postMessageManager';
-import FarmField from '../components/farm/FarmField';
 import { cropAssetByVariant } from '../components/farm/CropImage';
 import { useStatusBarStyle } from '../hooks/useStatusBarStyle';
 import { nodeEnv } from '../utils/common';
 
 /*
-  온보딩 — 인사에서 첫 학습까지.
+  온보딩 — 인사에서 가입까지.
 
-  【흐름】 hello → intro → memory → ready → 수준 맞춤 학습 → 결과(내 수준)
-          → recommend(추천 단어장 3권 중 1권) → channel → goal → daily → nick → auth
-  (이슈 #25 — 예전엔 학습 전에 단어장을 직접 골랐다(level). 지금은 아주 쉬운 단어부터 풀며
-   수준(θ)을 재고, 그 수준에 맞는 서점 단어장을 추천해 무료로 담는다. 온보딩 단어는 심지 않는다.)
-
-  【학습을 질문보다 앞에 둔 이유】 유입 경로·학습 목적은 사용자가 얻는 게 없는 질문이라
-  첫 학습에 닿기 전에 놓으면 순수한 이탈 구간이 된다.
+  【흐름】 hello → intro → 수준 맞춤 학습(1부 체험·2부 실전·3부 오답 복습, /take-test)
+          → 결과(보석 연출) → nick → auth
+  (이슈 #25 2차 — 단어장 추천·선택, 유입 경로·학습 목적·하루 심기 수 질문을 뺐다.
+   온보딩은 수준(θ) 측정과 학습 체험만 한다. 단어를 심지 않고, 가입 직후엔 단어장이 없다 —
+   첫 단어장은 홈 퀘스트에서 받은 보석으로 서점에서 산다. 하루 심기 수는 서버 기본값.)
 
   【학습·결과 화면을 여기서 그리지 않는 이유】 맛보기가 아니라 **진짜 첫 학습**이다.
   TakeTest / StudyResult 를 게스트 모드로 그대로 쓴다 — 온보딩에서 본 화면과 실제가
   다르면 그다음부터 신뢰를 잃는다.
 */
 
-// 유입 경로 / 학습 목적 — 큰 버튼 선택지 (각 항목 앞 아이콘)
-const CHANNELS = [
-  { key: 'friend', label: '지인 추천', Icon: Users },
-  { key: 'appstore', label: '앱스토어 검색', Icon: AppStoreLogo },
-  { key: 'sns', label: 'SNS·광고', Icon: Megaphone },
-  { key: 'search', label: '인터넷 검색', Icon: MagnifyingGlass },
-  { key: 'etc', label: '기타', Icon: DotsThreeOutline },
-];
-const GOALS = [
-  { key: 'exam', label: '시험 대비', Icon: GraduationCap },
-  { key: 'conversation', label: '회화·여행', Icon: Airplane },
-  { key: 'hobby', label: '취미·자기계발', Icon: Sparkle },
-  { key: 'abroad', label: '유학·이민', Icon: GlobeHemisphereWest },
-];
-const DAILY = [
-  { key: 5, label: '하루 5알', desc: '가볍게' },
-  { key: 10, label: '하루 10알', desc: '적당하게 (추천)' },
-  { key: 20, label: '하루 20알', desc: '집중해서' },
-  { key: 30, label: '하루 30알', desc: '빠르게' },
-];
+// 성장 순서 — 씨앗 → 새싹 → 이파리 → 당근. 밭과 같은 planted(V5) 그림(씨앗만 낱알).
+const GROWTH_STAGES = ['seed', 'sprout', 'leaf', 'carrot'];
 
-// 학습을 마친 뒤 묻는 세 가지. 이 구간에도 **진행바를 두지 않는다** —
-// 앞의 소개 화면들에는 없는 장치라, 학습을 마치고 넘어오는 순간 화면이 통째로 다른
-// 앱처럼 바뀌어 보였다. 남은 개수는 세 화면을 넘기면 바로 끝나는 길이라 굳이 셀 것도 없다.
-// 목록은 헤더 줄(뒤로가기 자리)의 높이를 예약하는 용도로만 남는다.
-const QUESTION_ORDER = ['channel', 'goal', 'daily'];
-
-// 소개 화면의 예시 밭 — 실제 데이터가 아니라 "이렇게 자란다"를 보여주는 장면이다.
-const INTRO_FIELD = { seed: 6, sprout: 5, leaf: 4, carrot: 3 };
-
-// 성장 순서. 밭과 같은 planted(V5) 그림을 쓴다 — 예전 V3 는 흙 원판이 딸려 있어
-// 밭과 이 줄에 다른 판을 써야 했지만, V5 는 작물만 있어 한 벌로 충분하다.
-//
-// 【라벨에 단계 이름을 쓰지 않는다】 씨앗·새싹·이파리·당근은 그림이 이미 말한다.
-// 글자는 그림이 못 말하는 것, 즉 **그 단계가 되면 다음 복습이 얼마나 멀어지는지**를 맡는다.
-// 숫자 정본은 백엔드 `fsrs/thresholds.py` (5 / 21 / 60). 프론트 사본은 utils/common.jsx.
-// 목표 기억률 0.9 에서 다음 복습 간격(일) = FSRS stability 라(fsrs/core.py `_next_interval`)
-// 그 값이 곧 "다음 복습이 며칠 뒤인가"이고, 그래서 그대로 화면에 적을 수 있다.
-//
-// 실측 간격 진행(전부 Good): 3 → 9 → 24 → 61 일. 복습 회차마다 한 단계씩 오른다.
-// 이파리가 21인 건 빠른 정답(EASY)이 첫 회차부터 15일을 줘서다 — 15면 새싹을 건너뛴다.
-// 씨앗 칸만 숫자가 아닌 이유는 첫 정답의 간격이 3일 남짓으로 고정이라(w[2]=3.1262)
-// 어떤 문턱을 걸어도 심기와 발아를 가르지 못해서다 — 심기는 "처음 맞혔는가"로 정한다.
-const GROWTH_STAGES = [
-  { crop: 'seed', label: '처음 맞힘' },
-  { crop: 'sprout', label: '5일 이상' },
-  { crop: 'leaf', label: '21일 이상' },
-  { crop: 'carrot', label: '60일 이상' },
-];
-
-// 기억이 넘어가는 세 칸 — 백엔드 `_classify_memory_state`(study.py)가 쓰는 short/medium/long 과
-// 같은 구분이고, 경계도 같은 값(fsrs/thresholds.py · common.jsx 의 21 / 60)이다.
-//
-// **바로 앞 화면(진화 줄)과 같은 숫자를 쓴다.** 단기=씨앗·새싹, 중기=이파리, 장기=당근이라
-// 두 줄은 같은 눈금을 다른 이름으로 부르는 것이다. 예전에 1 / 10 / 60 으로 적혀 있어
-// 앞 화면의 5 / 21 / 60 과 나란히 놓으면 서로 다른 기준처럼 보였다.
-// 색이 회색 → 연분홍 → 분홍으로 진해지는 것이 곧 "넘어간다"는 표시다.
-const MEMORY_STEPS = [
-  { key: 'short', label: '단기', days: '5일 뒤',
-    box: 'bg-layout-gray-50 dark:bg-layout-gray-dark text-layout-gray-300' },
-  { key: 'medium', label: '중기', days: '21일 뒤',
-    box: 'bg-primary-main-50 dark:bg-primary-main-dark text-primary-main-600' },
-  { key: 'long', label: '장기', days: '60일 뒤',
-    box: 'bg-primary-main-600 text-layout-white dark:text-layout-black' },
-];
-
-// 추천 단어장(recommend-books) → 서점 카드(BookCard)가 읽는 모양. 값은 받지 않는다(무료).
-const toBookCardItem = (b) => ({
-  id: b.bookstore_id,
-  name: b.name,
-  category: b.category,
-  color: b.color || { main: 'var(--primary-main-600)', sub: 'var(--primary-main-200)', background: 'var(--primary-main-100)' },
-  gem: 0,
-});
-
-// 큰 선택지 버튼 (유입/목적/일일 공용)
-const OptionRow = ({ active, Icon, title, desc, onClick }) => (
-  <motion.button
-    type="button" whileTap={{ scale: 0.98 }} onClick={onClick}
-    className={`
-      flex items-center gap-[14px] w-full px-[18px] py-[16px] rounded-[14px] border-[2px] text-left mb-[10px]
-      ${active
-        ? 'border-primary-main-600 bg-primary-main-50 dark:bg-primary-main-dark'
-        /* 테두리 색은 NoteCard 와 같은 `border` 토큰을 쓴다 — 같은 화면 안에서 카드마다
-           회색이 달라 보이던 원인이다(예전엔 layout-gray-100). 두께만 2px 로 두는 건
-           선택되는 순간 굵기가 변해 줄이 밀리지 않게 하기 위해서다. */
-        : 'border-border dark:border-border-dark bg-layout-white dark:bg-layout-black'}
-    `}
-  >
-    {Icon && (
-      <span className={`flex items-center justify-center w-[36px] h-[36px] rounded-[10px] flex-shrink-0
-        ${active ? 'bg-primary-main-100 dark:bg-primary-main-dark text-primary-main-600' : 'bg-layout-gray-50 dark:bg-layout-gray-dark text-layout-gray-200'}`}>
-        <Icon size={20} weight={active ? 'fill' : 'regular'} />
-      </span>
-    )}
-    <span className="flex flex-col flex-1">
-      <span className={`text-[16px] font-[700] ${active ? 'text-primary-main-600' : 'text-layout-black dark:text-layout-white'}`}>{title}</span>
-      {desc && <span className="text-[12px] font-[500] text-layout-gray-300 mt-[2px]">{desc}</span>}
-    </span>
-    {active
-      ? <CheckCircle size={24} weight="fill" className="text-primary-main-600 flex-shrink-0" />
-      : <span className="w-[22px] h-[22px] rounded-full border-[2px] border-border dark:border-border-dark flex-shrink-0" />}
-  </motion.button>
-);
-
-/*
-  망각곡선 — 복습 간격이 왜 점점 벌어지는지 한 장으로 말한다.
-
-  가로는 시간, 세로는 기억. 외운 직후부터 기억은 빠르게 떨어지고(곡선), 바닥선에
-  닿기 직전에 다시 맞히면 처음 높이로 돌아온다(세로 점선). **다시 맞힐수록 다음
-  곡선이 완만해져** 같은 높이에서 바닥까지 가는 데 걸리는 시간이 길어진다.
-  며칠인지는 그래프에 적지 않는다 — 바로 아래 단기·중기·장기 줄이 그 숫자를 맡는다.
-
-  path 몇 개로 직접 그린다 — 그래프 한 장 때문에 차트 라이브러리를 번들에 넣지 않는다.
-*/
-const ForgettingCurve = () => (
-  <svg viewBox="0 0 320 124" className="w-full h-auto"
-    role="img" aria-label="복습할수록 기억이 떨어지는 속도가 느려지는 그래프">
-    {/* 잊기 직전 — 이 선에 닿기 전에 다시 물어본다 */}
-    <line x1="14" y1="112" x2="306" y2="112" strokeWidth="1.5" strokeDasharray="3 4"
-      className="stroke-current text-layout-gray-100 dark:text-layout-gray-dark" />
-
-    <g fill="none" strokeWidth="2.6" strokeLinecap="round"
-      className="stroke-current text-primary-main-600">
-      <path d="M18 28 C 34 74, 52 104, 88 112" />
-      <path d="M88 28 C 112 74, 142 104, 178 112" />
-      <path d="M178 28 C 216 72, 260 104, 302 112" />
-    </g>
-
-    {/* 복습 순간 — 기억이 처음 높이로 돌아온다 */}
-    <g strokeWidth="1.5" strokeDasharray="3 3"
-      className="stroke-current text-primary-main-600 opacity-40">
-      <line x1="88" y1="112" x2="88" y2="28" />
-      <line x1="178" y1="112" x2="178" y2="28" />
-    </g>
-    <g className="fill-current text-primary-main-600">
-      <circle cx="18" cy="28" r="4" />
-      <circle cx="88" cy="28" r="4" />
-      <circle cx="178" cy="28" r="4" />
-    </g>
-  </svg>
-);
-
-// 설명 카드 — 소개·예고 화면에서 규칙 한 가지씩 짚는다
-const NoteCard = ({ icon, title, children }) => (
-  <div className="rounded-[14px] border border-border dark:border-border-dark p-[15px_16px]">
-    <div className="flex items-center gap-[6px] text-[14px] font-[800] tracking-[-0.03em] text-layout-black dark:text-layout-white">
-      {icon}{title}
-    </div>
-    <p className="mt-[6px] text-[12px] font-[500] leading-[1.6] text-layout-gray-400 dark:text-layout-gray-100">
-      {children}
-    </p>
-  </div>
-);
+// 예전 단계 이름으로 들어온 경우(구 버전 화면·저장된 state) — 지금 단계로 옮긴다.
+const LEGACY_STEP = {
+  memory: 'intro', ready: 'intro',
+  recommend: 'nick', channel: 'nick', goal: 'nick', daily: 'nick',
+};
 
 const Onboarding = () => {
   "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
@@ -204,7 +46,6 @@ const Onboarding = () => {
   useStatusBarStyle('dark-content');
   const navigate = useNavigate();
   const location = useLocation();
-  const { pushNewFullSheet, popNewFullSheet } = useNewFullSheetActions();
   const { pushAwaitNewBottomSheet } = useNewBottomSheetActions();
   const { Login, AppleLogin, clickGoogleOauth, clickAppleOauth, isLogin, fetchUserProfile, performLogout, updateUserHistory, DevLogin } = useUser();
 
@@ -213,46 +54,16 @@ const Onboarding = () => {
 
   const saved = getGuest() || {};
   // 학습에서 돌아온 경우 location.state.step 으로 스텝 지정
-  //  - 'channel': 학습·결과 완료 → 질문 구간으로  /  'ready': 학습 중 뒤로가기 → 예고로 복귀
+  //  - 'nick': 학습·결과 완료  /  'intro': 학습 중 그만둠 → 소개로 복귀
   const incomingStep = location.state?.step;
-
-  // 결과 화면 state 가 기기에서 유실돼 'channel' 로 왔어도, 수준을 쟀는데 단어장을 아직 안 골랐으면 추천부터.
   const [step, setStep] = useState(() => {
     const s = incomingStep || 'hello';
-    if (QUESTION_ORDER.includes(s) && saved.theta != null && saved.bookstore_id == null && saved.level == null) return 'recommend';
-    return s;
+    return LEGACY_STEP[s] || s;
   });
-  const [theta] = useState(saved.theta ?? null);
-  const [recommend, setRecommend] = useState(saved.recommend ?? null); // { level, books }
-  const [bookName, setBookName] = useState(saved.book_name ?? '');
-  const [channel, setChannel] = useState(saved.source_channel ?? null);
-  const [goal, setGoal] = useState(saved.learning_goal ?? null);
-  const [daily, setDaily] = useState(saved.daily_new_limit ?? null);
   const [username, setUsername] = useState(saved.username ?? '');
   const [loadingTrial, setLoadingTrial] = useState(false);
-  const [openingPreview, setOpeningPreview] = useState(false);
   // 이미 로그인된 사용자가 온보딩을 진행할 때 auth 스텝을 건너뛰고 서버 migrate 처리 중임을 표시
   const [finishingOnboarding, setFinishingOnboarding] = useState(false);
-
-  // 추천 단어장 — 결과 화면(StudyResult)이 받아 둔 응답을 쓰고, 없으면(조회 실패·state 유실) 여기서 받는다.
-  const [recommendFailed, setRecommendFailed] = useState(false);
-  useEffect(() => {
-    if (step !== 'recommend' || (recommend?.books?.length ?? 0) > 0 || theta == null) return undefined;
-    let alive = true;
-    setRecommendFailed(false);
-    getRecommendBooksApi(theta).then((res) => {
-      if (!alive) return;
-      if (res?.code === 200 && res.data) {
-        const r = { theta, level: res.data.level ?? null, books: res.data.books ?? [] };
-        setRecommend(r);
-        patchGuest({ recommend: r });
-      } else {
-        setRecommendFailed(true);
-      }
-    });
-    return () => { alive = false; };
-  }, [step, theta, recommend]);
-  const myLevel = recommend?.level ?? (theta != null ? levelFromTheta(theta) : null);
 
   // 온보딩 내부 인증(auth) 스텝용 앱 OAuth 콜백 리스너 (Login 페이지와 동일 로직)
   // 로그인 성공 시 홈으로 이동 → 홈에서 게스트 데이터 이전 + 알림 프롬프트가 이어짐
@@ -282,23 +93,9 @@ const Onboarding = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // 질문 구간인지 — 헤더 줄(뒤로가기 자리)의 높이를 예약하는 데만 쓴다.
-  // 예전에는 여기에 진행바(1/3)도 달려 있었는데, 소개 화면들에는 없는 장치라
-  // 학습을 마치고 넘어오는 순간 화면이 다른 앱처럼 바뀌어 보였다.
-  const isQuestion = QUESTION_ORDER.includes(step);
-
   // 뒤로가기가 있는 스텝과, 각 스텝의 이전 자리.
-  // 학습은 별도 라우트라 그 앞뒤(ready ↔ channel)는 이어 붙이지 않는다 —
-  // 학습을 마친 사람을 예고 화면으로 되돌리면 다시 학습하게 된다.
-  const BACK_TO = {
-    intro: 'hello',
-    memory: 'intro',
-    ready: 'memory',
-    channel: 'recommend',
-    goal: 'channel',
-    daily: 'goal',
-    nick: 'daily',
-  };
+  // 학습은 별도 라우트라 그 뒤(nick)에서 앞으로 이어 붙이지 않는다 — 다시 학습하게 된다.
+  const BACK_TO = { intro: 'hello' };
 
   const goLogin = () => { vibrate({ duration: 5 }); navigate('/login'); };
 
@@ -354,42 +151,6 @@ const Onboarding = () => {
     if (prev) setStep(prev);
   };
 
-  // 추천 단어장 카드 클릭 → 서점과 같은 미리보기 풀시트(PreviewBookStoreNewFullSheet)로 단어를 보여 주고,
-  // 하단 버튼으로 고른다. 서점 상세 조회(/search/bookstore/<id>)는 비인증이라 게스트도 쓸 수 있다.
-  // 무료로 담기므로 가격은 0 으로 넘긴다.
-  const chooseBook = (book) => {
-    vibrate({ duration: 5 });
-    setBookName(book.name);
-    patchGuest({ bookstore_id: book.bookstore_id, book_name: book.name, theta });
-    setStep('channel');
-  };
-  const openBookPreview = async (book) => {
-    if (openingPreview) return;
-    vibrate({ duration: 5 });
-    setOpeningPreview(true);
-    try {
-      const res = await getBookStoreDetailApi(book.bookstore_id);
-      if (res?.code !== 200 || !res.data) { chooseBook(book); return; }
-      pushNewFullSheet(PreviewBookStoreNewFullSheet, {
-        bookStoreVocabularySheet: { ...res.data, gem: 0 },
-        // 밭 그림과 씨앗 수는 앞뒤 화면이 이미 말한다 — 여기서는 단어만 보여 준다
-        hideFieldHero: true,
-        primaryActionLabel: '이 단어장으로 시작하기',
-        onPrimaryAction: () => {
-          popNewFullSheet();
-          chooseBook(book);
-        },
-      });
-    } finally {
-      setOpeningPreview(false);
-    }
-  };
-
-  // 유입/목적/일일 — 선택만(다음 버튼으로 진행)
-  const pickChannel = (key) => { vibrate({ duration: 5 }); setChannel(key); patchGuest({ source_channel: key }); };
-  const pickGoal = (key) => { vibrate({ duration: 5 }); setGoal(key); patchGuest({ learning_goal: key }); };
-  const pickDaily = (key) => { vibrate({ duration: 5 }); setDaily(key); patchGuest({ daily_new_limit: key }); };
-
   // 수준 맞춤 학습 시작 — 문제 재료(placement-pool)를 받아 세션을 만들고 실제 학습 화면(TakeTest)을 띄운다.
   // 문제는 미리 만들지 않는다 — 답할 때마다 utils/onboardingPlacement 가 다음 문제를 만든다.
   // 세션은 localStorage 에도 두어 기기에서 router state 가 유실돼도 이어진다.
@@ -417,10 +178,7 @@ const Onboarding = () => {
   const handleNickNext = () => {
     vibrate({ duration: 5 });
     const trimmedUsername = username.trim() || null;
-    patchGuest({
-      source_channel: channel, learning_goal: goal,
-      daily_new_limit: daily, username: trimmedUsername,
-    });
+    patchGuest({ username: trimmedUsername });
     // 알림 권한은 온보딩이 아니라 로그인 후 홈 첫 진입에서 요청 → 플래그만 남긴다
     try { localStorage.setItem('heyvoca_notif_prompt', '1'); } catch (e) { /* 무시 */ }
 
@@ -442,13 +200,8 @@ const Onboarding = () => {
     if (finishingOnboarding) return;
     setFinishingOnboarding(true);
     try {
-      // v2(추천 단어장을 골랐으면) / 구 v1(레벨만 있는 예전 게스트 데이터) — utils/guestStorage buildMigrateBody
-      const res = await migrateOnboardingApi(buildMigrateBody(getGuest(), {
-        source_channel: channel,
-        learning_goal: goal,
-        daily_new_limit: daily,
-        username: trimmedUsername,
-      }));
+      // v2 { flow, theta, answers, username } / 구 v1(레벨만 있는 예전 게스트 데이터) — utils/guestStorage buildMigrateBody
+      const res = await migrateOnboardingApi(buildMigrateBody(getGuest(), { username: trimmedUsername }));
       if (res?.code === 200) {
         // 온보딩 학습을 **정규 세션과 똑같이** 집계한다.
         // /mainpage/user_study_history 가 XP · 출석 · 출석왕 · 노력왕 · 데일리 미션 · 끈기왕을
@@ -517,7 +270,7 @@ const Onboarding = () => {
       <div style={{ paddingTop: 'var(--status-bar-height)' }}></div>
 
       {/*
-        헤더 — 뒤로가기는 되돌아갈 자리가 있는 스텝에만. 질문 구간은 자리만 예약한다.
+        헤더 — 뒤로가기는 되돌아갈 자리가 있는 스텝에만.
 
         **`data-page-header` 를 달지 않는다.** 그 표식이 붙으면 전역 규칙
         (index.css `html[data-keyboard-visible] [data-page-header]{display:none}`)에 걸려
@@ -525,17 +278,15 @@ const Onboarding = () => {
         자리를 벌려 주려고 만든 것인데, 여기는 입력칸 하나뿐이라 벌 자리가 필요 없고
         뒤로가기만 없어져 화면이 덜컥 위로 튄다.
       */}
-      {(BACK_TO[step] || isQuestion) && (
+      {BACK_TO[step] && (
         <div className="relative flex items-end w-full h-[55px] px-[10px] pb-[13px] shrink-0">
-          {BACK_TO[step] && (
-            <motion.button onClick={goBack}
-              className="flex text-layout-gray-200 dark:text-layout-white rounded-[8px]"
-              whileHover={{ backgroundColor: 'rgba(0,0,0,0.05)', scale: 1.05 }}
-              whileTap={{ scale: 0.95, backgroundColor: 'rgba(0,0,0,0.1)' }}
-              transition={{ type: 'spring', stiffness: 400, damping: 17 }}>
-              <CaretLeft size={24} />
-            </motion.button>
-          )}
+          <motion.button onClick={goBack}
+            className="flex text-layout-gray-200 dark:text-layout-white rounded-[8px]"
+            whileHover={{ backgroundColor: 'rgba(0,0,0,0.05)', scale: 1.05 }}
+            whileTap={{ scale: 0.95, backgroundColor: 'rgba(0,0,0,0.1)' }}
+            transition={{ type: 'spring', stiffness: 400, damping: 17 }}>
+            <CaretLeft size={24} />
+          </motion.button>
         </div>
       )}
 
@@ -551,18 +302,13 @@ const Onboarding = () => {
         transition={{ duration: 0.18 }}
         className="flex flex-col flex-1 min-h-0"
       >
-          {/* ① 인사 — 기능 설명 없이 누가 말을 거는지만. 그림은 다 자란 당근 한 포기(마스코트는 쓰지 않는다). */}
+          {/* ① 인사 — 누가 말을 거는지만 */}
           {step === 'hello' && (
             <>
               <div className="flex flex-col flex-1 items-center justify-center text-center px-[28px]">
-                <img src={cropAssetByVariant('carrot', 'healthy')} alt="" draggable={false}
-                  className="w-[176px] h-[176px] object-contain object-bottom select-none mb-[30px]" />
                 <h1 className="text-[25px] font-[800] leading-[1.42] tracking-[-0.04em] text-layout-black dark:text-layout-white">
                   안녕하세요!<br />여기는 <span className="text-primary-main-600">헤이보카</span>예요
                 </h1>
-                <p className="mt-[14px] text-[14px] font-[500] leading-[1.7] text-layout-gray-300">
-                  단어를 외우면 밭이 자라요.<br />같이 밭 하나 가꿔볼까요?
-                </p>
               </div>
               <div className="px-[24px] pt-[18px] pb-[26px] shrink-0">
                 <Cta label="시작하기" onClick={() => { vibrate({ duration: 5 }); setStep('intro'); }} />
@@ -571,239 +317,36 @@ const Onboarding = () => {
             </>
           )}
 
-          {/* ② 서비스 소개 — 밭이 나오는 유일한 화면.
-              밭과 진화 줄 모두 planted(V5)를 쓴다. V5 에는 흙 원판이 없어 밭 위에 얹어도
-              얼룩이 지지 않는다 — 예전에 켜 두던 soloCrops(=V3 unplanted)는 필요 없어졌다. */}
+          {/* ② 소개 — 작물 4단계 한 줄 + 한 줄 설명. 버튼을 누르면 바로 학습(수준 측정)이 시작된다. */}
           {step === 'intro' && (
             <>
-              <div className="relative h-[340px] shrink-0 overflow-hidden">
-                <div className="absolute inset-x-0 top-[10px] z-[16] px-[26px]">
-                  <Headline>
-                    단어를 외우면<br />
-                    <span className="text-primary-main-600">당근이 자라요</span>
-                  </Headline>
-                </div>
-                <div className="absolute left-[-6%] w-[112%] bottom-[-4px]">
-                  <FarmField
-                    counts={INTRO_FIELD}
-                    maxSprites={24}
-                    reserveSigns={false}
-                  />
-                </div>
-              </div>
-
-              {/* 진화 줄 — 그림 아래 글자는 단계 이름이 아니라 **다음 복습일**이다.
-                  단계 이름은 그림이 이미 말하고 있어 한 번 더 적으면 자리만 먹는다. */}
-              <div className="flex flex-col flex-1 min-h-0 justify-center px-[20px] pt-[10px] pb-[10px]">
-                <p className="text-center text-[12.5px] font-[600] leading-[1.6] tracking-[-0.03em] text-layout-gray-300">
-                  다음 <b className="text-layout-black dark:text-layout-white">복습일이 멀어질수록</b> 자라요
-                </p>
-                <div className="flex items-end justify-between gap-[2px] pt-[16px]">
-                  {GROWTH_STAGES.map((s, i) => (
-                    <React.Fragment key={s.crop}>
-                      <span className="flex flex-1 flex-col items-center gap-[9px]">
-                        {/* 씨앗만 낱알(bare)로 그린다 — V5 의 심은 씨앗은 512 캔버스에서 32px 이라
-                            60px 상자에서는 4px 점이 되어 진화 줄의 첫 칸이 비어 보인다. */}
-                        <img src={cropAssetByVariant(s.crop, 'healthy', { solo: s.crop === 'seed' })}
-                          alt="" draggable={false}
-                          className="block w-[60px] h-[60px] object-contain object-bottom select-none" />
-                        {/* 새싹 라벨만 두 줄이라 가운데 정렬과 어절 단위 줄바꿈이 필요하다.
-                            break-keep 이 없으면 "예정일에 또 맞"에서 끊긴다. */}
-                        <span className="text-center break-keep leading-[1.35] text-[11.5px] font-[800] tracking-[-0.03em] text-layout-gray-400 dark:text-layout-gray-100">
-                          {s.label}
-                        </span>
-                      </span>
+              <div className="flex flex-col flex-1 min-h-0 justify-center px-[20px]">
+                <div className="flex items-end justify-between gap-[2px] w-full max-w-[360px] mx-auto">
+                  {GROWTH_STAGES.map((crop, i) => (
+                    <React.Fragment key={crop}>
+                      {/* 씨앗만 낱알(solo)로 — V5 의 심은 씨앗은 작은 상자에서 점처럼 보인다 */}
+                      <img src={cropAssetByVariant(crop, 'healthy', { solo: crop === 'seed' })}
+                        alt="" draggable={false}
+                        className="block w-[72px] h-[72px] object-contain object-bottom select-none" />
                       {i < GROWTH_STAGES.length - 1 && (
-                        <CaretRight size={13} weight="fill" className="shrink-0 mb-[30px] text-layout-gray-100" />
+                        <CaretRight size={13} weight="fill" className="shrink-0 mb-[24px] text-layout-gray-100 dark:text-layout-gray-300" />
                       )}
                     </React.Fragment>
                   ))}
                 </div>
+                <p className="mt-[28px] text-center text-[19px] font-[700] leading-[1.45] tracking-[-0.03em] text-layout-black dark:text-layout-white">
+                  복습할수록 오래 기억하고,<br />
+                  <span className="text-primary-main-600">작물이 자라요</span>
+                </p>
               </div>
-
               <div className="px-[24px] pt-[18px] pb-[26px] shrink-0">
-                {/* 버튼이 읽는 사람의 다음 질문이 되고, 다음 화면("다음 물 줄 날은 제가
-                    계산해요")이 그 답이 된다. "좋아요"는 어느 화면에나 붙일 수 있는 추임새라
-                    이 화면이 무슨 말을 했는지도, 다음에 뭐가 오는지도 말하지 못했다. */}
-                <Cta label="물은 언제 주죠?" onClick={() => { vibrate({ duration: 5 }); setStep('memory'); }} />
-              </div>
-            </>
-          )}
-
-          {/* ③ 복습일 자동 계산 — 앞 화면이 "얼마나 멀어지는지"를 보여줬으니
-              여기서는 "그 날짜를 누가 정하는지"에 답한다. 밭 그림은 쓰지 않는다. */}
-          {step === 'memory' && (
-            <>
-              <div className="flex flex-col flex-1 min-h-0 px-[24px] pt-[6px]">
-                <Headline>
-                  다음 물 줄 날은<br />
-                  <span className="text-primary-main-600">제가 계산해요</span>
-                </Headline>
-
-                <div className="mt-[34px]">
-                  <ForgettingCurve />
-
-                  {/* 앞 화면의 진화 줄과 같은 짜임 — 그림 자리에 기억의 칸이 들어간다 */}
-                  <div className="flex items-end justify-between gap-[4px] mt-[34px] px-[6px]">
-                    {MEMORY_STEPS.map((m, i) => (
-                      <React.Fragment key={m.key}>
-                        <span className="flex flex-1 flex-col items-center gap-[9px]">
-                          <span className={`flex items-center justify-center w-full h-[40px] rounded-[11px] text-[14.5px] font-[800] tracking-[-0.03em] ${m.box}`}>
-                            {m.label}
-                          </span>
-                          <span className="text-[11.5px] font-[800] tracking-[-0.03em] text-layout-gray-400 dark:text-layout-gray-100">
-                            {m.days}
-                          </span>
-                        </span>
-                        {i < MEMORY_STEPS.length - 1 && (
-                          <CaretRight size={13} weight="fill" className="shrink-0 mb-[30px] text-layout-gray-100" />
-                        )}
-                      </React.Fragment>
-                    ))}
-                  </div>
-
-                  <p className="mt-[22px] text-center text-[12.5px] font-[600] leading-[1.6] tracking-[-0.03em] text-layout-gray-300">
-                    잊기 직전에 다시 물어봐서<br />
-                    <b className="text-layout-black dark:text-layout-white">기억을 한 칸씩 밀어 올려요</b>
-                  </p>
-                </div>
-              </div>
-
-              <div className="px-[24px] pt-[18px] pb-[26px] shrink-0">
-                {/* 앞 화면의 질문에 답을 마쳤으니, 여기서는 다음에 할 일을 그대로 적는다 */}
-                <Cta label="내 수준 알아보기" onClick={() => { vibrate({ duration: 5 }); setStep('ready'); }} />
-              </div>
-            </>
-          )}
-
-          {/* ④ 학습 예고 — 아주 쉬운 단어부터, 맞히면 어려워진다. 그림은 자라는 작물 세 포기. */}
-          {step === 'ready' && (
-            <>
-              <div className="flex flex-col flex-1 min-h-0 items-center justify-center px-[26px]">
-                <Headline sub="4~5분이면 끝나요">
-                  <span className="text-primary-main-600">아주 쉬운 단어</span>부터 시작해요<br />
-                  맞히면 조금씩 어려워져요
-                </Headline>
-                <div className="flex items-end justify-center gap-[6px] mt-[30px]" aria-hidden>
-                  {['sprout', 'leaf', 'carrot'].map((c) => (
-                    <img key={c} src={cropAssetByVariant(c, 'healthy')} alt="" draggable={false}
-                      className="w-[92px] h-[92px] object-contain object-bottom select-none" />
-                  ))}
-                </div>
-              </div>
-              <div className="px-[24px] shrink-0">
-                <NoteCard icon={<CheckCircle size={16} weight="fill" className="text-status-success-600" />}
-                  title="틀려도 괜찮아요">
-                  틀린 단어는 <b className="text-layout-black dark:text-layout-white">마지막에 다시</b> 물어봐요.
-                  뜻 고르기 · 듣고 고르기 · 카드 맞추기 · 빈칸 · 문장 만들기를 하나씩 해봐요.
-                </NoteCard>
                 {trialError && (
-                  <p className="mt-[10px] text-center text-[12px] font-[600] text-status-error-600">
+                  <p className="mb-[10px] text-center text-[12px] font-[600] text-status-error-600">
                     문제를 불러오지 못했어요. 다시 눌러주세요.
                   </p>
                 )}
-              </div>
-              <div className="px-[24px] pt-[18px] pb-[26px] shrink-0">
-                <Cta label={loadingTrial ? '불러오는 중...' : '시작하기'}
+                <Cta label={loadingTrial ? '불러오는 중...' : '체험하며 학습해 볼까요'}
                   disabled={loadingTrial} onClick={startTrial} />
-              </div>
-            </>
-          )}
-
-          {/* ⑤ 추천 단어장 — 잰 수준에 맞는 서점 단어장 3권. 서점 카드 규격 그대로, 가격 자리는 '무료로 시작'.
-              카드를 누르면 서점과 같은 미리보기에서 단어를 보고 고른다. */}
-          {step === 'recommend' && (
-            <div className="flex flex-col flex-1 min-h-0 px-[24px] pt-[16px] overflow-y-auto">
-              <h1 className="text-[22px] font-[800] leading-[1.35] tracking-[-0.04em] text-layout-black dark:text-layout-white">
-                {myLevel
-                  ? <><span className="text-primary-main-600">{myLevel.cefr} · {myLevel.label}</span>에<br />맞는 단어장이에요</>
-                  : <>수준에 맞는<br />단어장이에요</>}
-              </h1>
-              <p className="mt-[9px] mb-[18px] text-[12.5px] font-[500] leading-[1.6] text-layout-gray-300">
-                하나를 골라 무료로 시작해요. 카드를 누르면 어떤 단어가 들었는지 볼 수 있어요.
-              </p>
-              {(recommend?.books?.length ?? 0) > 0 ? (
-                <ul className="grid grid-cols-2 gap-[15px] pb-[24px]">
-                  {recommend.books.map((b) => (
-                    <BookCard key={b.bookstore_id} item={toBookCardItem(b)} priceLabel="무료로 시작"
-                      onClick={() => openBookPreview(b)} />
-                  ))}
-                </ul>
-              ) : (
-                <p className="py-[40px] text-center text-[13px] font-[500] text-layout-gray-300">
-                  {recommendFailed || theta == null ? '단어장을 불러오지 못했어요.' : '단어장을 찾는 중...'}
-                </p>
-              )}
-              {(recommendFailed || theta == null) && (
-                <div className="pb-[26px]">
-                  <Cta label="수준 다시 알아보기" onClick={() => { vibrate({ duration: 5 }); setStep('ready'); }} />
-                </div>
-              )}
-            </div>
-          )}
-
-          {/* ⑩ 유입 경로 */}
-          {step === 'channel' && (
-            <>
-              <div className="flex flex-col flex-1 min-h-0 px-[24px] pt-[6px] overflow-y-auto">
-                <Headline>
-                  헤이보카를<br /><span className="text-primary-main-600">어떻게 알게 되셨어요?</span>
-                </Headline>
-                <div className="mt-[26px]">
-                  {CHANNELS.map((c) => (
-                    <OptionRow key={c.key} active={channel === c.key} Icon={c.Icon} title={c.label} onClick={() => pickChannel(c.key)} />
-                  ))}
-                </div>
-              </div>
-              <div className="px-[24px] pt-[18px] pb-[26px] shrink-0">
-                <Cta label="다음" disabled={!channel} onClick={() => { vibrate({ duration: 5 }); setStep('goal'); }} />
-              </div>
-            </>
-          )}
-
-          {/* ⑪ 학습 목적 */}
-          {step === 'goal' && (
-            <>
-              <div className="flex flex-col flex-1 min-h-0 px-[24px] pt-[6px] overflow-y-auto">
-                <Headline>
-                  어떤 목표로<br /><span className="text-primary-main-600">공부하세요?</span>
-                </Headline>
-                <div className="mt-[26px]">
-                  {GOALS.map((g) => (
-                    <OptionRow key={g.key} active={goal === g.key} Icon={g.Icon} title={g.label} onClick={() => pickGoal(g.key)} />
-                  ))}
-                </div>
-              </div>
-              <div className="px-[24px] pt-[18px] pb-[26px] shrink-0">
-                <Cta label="다음" disabled={!goal} onClick={() => { vibrate({ duration: 5 }); setStep('daily'); }} />
-              </div>
-            </>
-          )}
-
-          {/* ⑫ 하루 목표 — 온보딩에선 심지 않는다(이슈 #25). 고른 단어장에서 오늘부터 이만큼씩 심는다. */}
-          {step === 'daily' && (
-            <>
-              <div className="flex flex-col flex-1 min-h-0 px-[24px] pt-[6px] overflow-y-auto">
-                <Headline>
-                  <span className="text-primary-main-600">오늘부터</span> 하루에<br />몇 알씩 심을까요?
-                </Headline>
-                <div className="mt-[26px]">
-                  {DAILY.map((d) => (
-                    <OptionRow key={d.key} active={daily === d.key} title={d.label} desc={d.desc} onClick={() => pickDaily(d.key)} />
-                  ))}
-                  {/* 안내 박스 — 포인트 컬러는 결정을 유도할 때만 쓴다(시안 톤 규칙).
-                      여기는 "왜 오늘치가 다르게 보이는지" 설명일 뿐이라, 다른 화면의
-                      보조 카드(NoteCard)와 같은 회색 배경·본문 톤을 쓴다. */}
-                  <div className="flex gap-[8px] rounded-[14px] bg-layout-gray-50 dark:bg-layout-gray-dark p-[13px_14px] mt-[2px]">
-                    <p className="text-[11.5px] font-[500] leading-[1.6] text-layout-gray-400 dark:text-layout-gray-100">
-                      {bookName ? <><b className="font-[800]">{bookName}</b>에서 </> : null}
-                      하루에 이만큼 새 씨앗을 심어요. 홈의 <b className="font-[800]">새 씨앗 심기</b>로 오늘 바로 시작할 수 있어요.
-                    </p>
-                  </div>
-                </div>
-              </div>
-              <div className="px-[24px] pt-[18px] pb-[26px] shrink-0">
-                <Cta label="정했어요" disabled={!daily} onClick={() => { vibrate({ duration: 5 }); setStep('nick'); }} />
               </div>
             </>
           )}
@@ -863,7 +406,7 @@ const Onboarding = () => {
                     : '거의 다 왔어요'}
                 </h1>
                 <p className="mt-[14px] text-[14px] font-[500] leading-[1.7] text-layout-gray-300">
-                  {bookName ? <><b className="text-layout-black dark:text-layout-white">{bookName}</b><br />고른 단어장을 계정에 담아 둘게요.</> : '오늘 학습한 기록을 저장할게요.'}
+                  오늘 학습한 기록을 저장할게요.
                 </p>
               </div>
               <div className="flex flex-col gap-[10px] px-[24px] pb-[26px] shrink-0">

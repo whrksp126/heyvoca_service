@@ -1,7 +1,5 @@
 import React from 'react';
 import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
-import { useOnboardingUnlock, questTitleOf, withObjectJosa } from '../../context/OnboardingUnlockContext';
-import { UnlockGuideNewBottomSheet } from './UnlockGuideNewBottomSheet';
 import { StudySetupNewBottomSheet } from './StudySetupNewBottomSheet';
 import { TestSetupNewBottomSheet } from './TestSetupNewBottomSheet';
 import { vibrate } from '../../utils/osFunction';
@@ -17,31 +15,12 @@ import SheetOptionRow from './SheetOptionRow';
 
   그래서 두 갈래만 둔다. AI 추천은 단어장을 가리지 않고 전체에서 뽑는 방식이라
   단어장 하나를 펼쳐 놓은 이 자리에는 들어올 수 없다.
-
-  해금(입문 퀘스트)은 학습 종류 시트에 있던 규칙을 그대로 가져왔다 —
-  잠긴 항목을 누르면 시작하지 않고 무엇을 하면 열리는지 안내한다.
 */
-
-const CARD_LOCK_KEY = { study: 'listen', test: 'custom' };
 
 export const BookStudyTypeNewBottomSheet = ({ vocabularySheetId, maxVocabularyCount }) => {
   "use memo";
 
   const { pushNewBottomSheet, popNewBottomSheet } = useNewBottomSheetActions();
-  const { missions, isFeatureLocked } = useOnboardingUnlock();
-
-  const lockedOf = (key) => isFeatureLocked(CARD_LOCK_KEY[key]);
-
-  // 잠긴 항목 설명 — 그 기능을 여는 미션 이름으로 말한다
-  const lockTextOf = (key) => {
-    const mission = missions.find((m) => m.unlocks === CARD_LOCK_KEY[key]);
-    const title = questTitleOf(mission);
-    if (title) {
-      return `'${title}'${withObjectJosa(title).slice(title.length)} 완료하면 열려요`;
-    }
-    return '이전 퀘스트를 완료하면 열려요';
-  };
-
   const OPTIONS = [
     {
       key: 'study',
@@ -69,14 +48,6 @@ export const BookStudyTypeNewBottomSheet = ({ vocabularySheetId, maxVocabularyCo
     // 효과음 unlock 은 user gesture 동기 시점에만 걸린다(iOS WKWebView)
     primeSfx();
     vibrate({ duration: 5 });
-    if (lockedOf(option.key)) {
-      pushNewBottomSheet(
-        UnlockGuideNewBottomSheet,
-        { highlightKey: CARD_LOCK_KEY[option.key] },
-        { isBackdropClickClosable: true, isDragToCloseEnabled: true }
-      );
-      return;
-    }
     popNewBottomSheet();
     option.open();
   };
@@ -88,19 +59,15 @@ export const BookStudyTypeNewBottomSheet = ({ vocabularySheetId, maxVocabularyCo
       </h1>
 
       <div className="mt-[6px]">
-        {OPTIONS.map((option, idx) => {
-          const locked = lockedOf(option.key);
-          return (
-            <SheetOptionRow
-              key={option.key}
-              first={idx === 0}
-              title={option.title}
-              desc={locked ? lockTextOf(option.key) : option.desc}
-              locked={locked}
-              onClick={() => handleClick(option)}
-            />
-          );
-        })}
+        {OPTIONS.map((option, idx) => (
+          <SheetOptionRow
+            key={option.key}
+            first={idx === 0}
+            title={option.title}
+            desc={option.desc}
+            onClick={() => handleClick(option)}
+          />
+        ))}
       </div>
     </div>
   );

@@ -33,6 +33,10 @@ from dotenv import load_dotenv
 import os, time, jwt
 from datetime import datetime, timedelta, timezone
 
+# 하루 새 단어 수 허용 범위 (학습 설정, PUT 사용자 정보)
+DAILY_NEW_LIMIT_MIN = 4
+DAILY_NEW_LIMIT_MAX = 200
+
 # -------------------
 # 환경 변수 & 기본값
 # -------------------
@@ -694,12 +698,15 @@ def update_user_info():
     if 'username' in data:
         user_item.username = data['username']
     if 'daily_new_limit' in data:
-        # 하루 신규 단어 상한 (0=무제한, 상한 100). 잘못된 값은 무시.
+        # 하루 신규 단어 수 — 4~200 정수(이슈 #25 2차 QA 21, 프론트 학습 설정과 같은 범위).
+        # 예전 '무제한'(0)은 더 이상 새로 저장하지 않는다(기존 저장값은 그대로 둔다).
         try:
             v = int(data['daily_new_limit'])
-            user_item.daily_new_limit = max(0, min(v, 100))
         except (TypeError, ValueError):
-            pass
+            return jsonify({'code': 400, 'message': '하루 새 단어 수가 올바르지 않습니다.'}), 400
+        if v < DAILY_NEW_LIMIT_MIN or v > DAILY_NEW_LIMIT_MAX:
+            return jsonify({'code': 400, 'message': f'하루 새 단어는 {DAILY_NEW_LIMIT_MIN}~{DAILY_NEW_LIMIT_MAX}개로 정할 수 있어요.'}), 400
+        user_item.daily_new_limit = v
     if 'learning_lang' in data:
         # 학습 언어 전환 — 지원 언어(config.SUPPORTED_LEARNING_LANGS)만 허용
         from app.utils.dict_lang import normalize_lang

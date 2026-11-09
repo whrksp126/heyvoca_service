@@ -23,8 +23,7 @@
 //   나의 업적    → 마이페이지로 이관(mypage 시안 1절 "홈에 있던 업적을 여기로 옮기고")
 //   데일리 미션  → §7 "홈에는 진행 지표가 없다". 신규 n/m · 복습 n/m 이 정확히 그 지표였다
 //   출석체크     → §10 구조에 없다. 달력은 연속 학습 카드의 "N일 연속" 영역을 눌러 들어간다
-//   온보딩 배너  → §10 구조에 없다. 해금 안내는 잠긴 탭을 눌렀을 때 뜬다
-//                 (해금 스위치 자체가 지금 꺼져 있어 실제 노출도 없던 블록)
+//   온보딩 배너  → §10 구조에 없다. 입문 퀘스트는 OnboardingQuestCard 가 맡는다(잠금 없음)
 
 import React, { useCallback, useEffect, useMemo, useRef } from 'react';
 import { motion } from 'framer-motion';
@@ -58,6 +57,7 @@ import FarmCta, {
 } from './FarmCta';
 import TodayTasksCard from './TodayTasksCard';
 import OnboardingQuestCard from './OnboardingQuestCard';
+import { useOnboardingUnlock } from '../../context/OnboardingUnlockContext';
 import StreakCard from './StreakCard';
 import GrewTodayCard from './GrewTodayCard';
 import WordFeedCard from './WordFeedCard';
@@ -147,10 +147,20 @@ const Main = () => {
   // §7 주 CTA — 2026-10-25(이슈 #16 §4) '농사 시작' 하나. 누르면 학습 고르기 시트
   // (StudyPickNewBottomSheet)가 돌보기·산책·심기·단어장 학습을 고르게 한다. 심을 밭이 아예
   // 없는 EMPTY 상태만 서점으로 보낸다.
-  const ctaInfo = useMemo(() => ({
-    label: '농사 시작',
-    kind: homeState === HOME_STATES.EMPTY ? 'store' : 'study',
-  }), [homeState]);
+  //
+  // 입문 퀘스트(이슈 #25 2차) — 이 버튼으로도 퀘스트를 이어 간다.
+  //   단어가 하나도 없으면(가입 직후) '서점에서 단어장 고르기' → 상점.
+  //   퀘스트 진행 중이고 아직 '새 씨앗 심기'를 안 했으면 구매 후 '새 씨앗 심기' → 심기 세션.
+  //   그 밖(기존 사용자 포함)은 예전 그대로 '농사 시작'.
+  const { legacy: questLegacy, missions: questMissions } = useOnboardingUnlock();
+  const plantQuestPending = !questLegacy
+    && questMissions.some((m) => m.key === 'plant_seed' && !m.done)
+    && unplanted > 0;
+  const ctaInfo = useMemo(() => {
+    if (homeState === HOME_STATES.EMPTY) return { label: '서점에서 단어장 고르기', kind: 'store' };
+    if (plantQuestPending) return { label: '새 씨앗 심기', kind: 'plant' };
+    return { label: '농사 시작', kind: 'study' };
+  }, [homeState, plantQuestPending]);
 
   const gemCnt = farmOverview?.gem_cnt ?? userProfile?.gem_cnt ?? 0;
 
@@ -307,6 +317,11 @@ const Main = () => {
     if (homeState === HOME_STATES.EMPTY || ctaInfo.kind === 'store') {
       vibrate({ duration: 5 });
       navigate('/book-store');
+      return;
+    }
+    if (ctaInfo.kind === 'plant') {
+      vibrate({ duration: 5 });
+      startPlantSession({ count: Math.min(5, unplanted || 5) });
       return;
     }
     vibrate({ duration: 5 });
@@ -502,7 +517,7 @@ const Main = () => {
         {/* CTA 바로 아래 "오늘 할 일" 카드 — 썩은 단어·시듦·돌봄·새 씨앗을 한 곳에서 말한다.
             §8 water·amber·seed 스트립은 이 카드로 흡수돼 뺐다(위 변수 선언부 주석 참고). */}
         {/* 가입 직후 '첫 퀘스트'(이슈 #25) — 신규 가입자에게 남은 퀘스트가 있을 때만 그려진다.
-            새 사용자에게 지금 할 일은 기능을 하나씩 열어 가는 것이라 오늘 할 일보다 위에 둔다. */}
+            새 사용자에게 지금 할 일은 퀘스트를 하나씩 해 보는 것이라 오늘 할 일보다 위에 둔다. */}
         <OnboardingQuestCard />
 
         <TodayTasksCard />

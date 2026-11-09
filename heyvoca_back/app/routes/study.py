@@ -1999,13 +1999,14 @@ def finish_session(session_id):
         'duration_sec':   duration_sec,
     }
 
-    # 온보딩 미션 v2 자동 감지(이슈 #25) — 새 씨앗 심기(plant) 완료 → plant_seed,
-    # 복습(quick, 농장 돌보기) 완료 → care_farm. 실제로 답한 세션만(빈 세션 종료 제외).
-    # 순서 강제·legacy 판정은 complete_onboarding_mission 이 한다. 실패해도 세션 종료는 성공.
+    # 온보딩 퀘스트 자동 감지(이슈 #25) — 새 씨앗 심기(plant) 완료 → plant_seed,
+    # 농장 돌보기(quick) 완료 → care_farm. plant 는 실제로 답한 세션만(빈 세션 종료 제외).
+    # care_farm 은 첫날 복습할 단어가 적거나 없을 수 있어 세션을 정상 종료(finish)하면 인정한다.
+    # legacy 판정은 complete_onboarding_mission 이 한다(순서 무관). 실패해도 세션 종료는 성공.
     mission_key = {'plant': 'plant_seed', 'quick': 'care_farm'}.get(session_obj.test_type)
     if mission_key:
         try:
-            answered = (resp_data['question_count'] or 0) > 0 or db.session.query(UserStudyLog.id).filter(
+            answered = mission_key == 'care_farm' or (resp_data['question_count'] or 0) > 0 or db.session.query(UserStudyLog.id).filter(
                 UserStudyLog.user_id == user_id, UserStudyLog.session_id == session_uuid,
             ).first() is not None
             if answered:

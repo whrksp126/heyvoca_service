@@ -1,14 +1,14 @@
 // src/components/onboarding/OnboardingMissionRewardWatcher.jsx
 //
-// 온보딩 미션이 완료되면(프론트 direct 신호 completeMission의 newly_completed, 또는
-// plant_seed·make_book·buy_book·care_farm처럼 서버가 감지해 완료돼 refreshUnlock diff로 감지된 경우) 보상은
+// 온보딩 미션이 완료되면(프론트 신호 search_word·free_test·focus_study 의 newly_completed, 또는
+// buy_book·plant_seed·care_farm·make_book처럼 서버가 감지해 완료돼 refreshUnlock diff로 감지된 경우) 보상은
 // 이미 백엔드가 지급을 마친 상태다. 이 워처는 그 사실을 "입문 퀘스트" 바텀시트의
 // 보상 받기 연출로 순차 노출하는 타이밍만 담당한다.
 //
 // 학습 결과 화면(/take-test, /take-test/result)이나 집중 반복 학습 화면(/study) 위에
 // 겹쳐 보이면 안 되므로, 해당 라우트에 있는 동안은 열지 않고 안전한 화면(홈 등)으로
-// 돌아온 뒤에만 연다. make_book/buy_book/search_word는 애초에 해당 기능 화면(단어장,
-// 상점, 사전)에서 완료되므로 그 자리에서 바로 열려도 무방하다.
+// 돌아온 뒤에만 연다. make_book/buy_book/search_word는 그 기능 화면에서 바로 열리고,
+// 홈이 아닌 곳에서는 보석이 칩으로 날아가지 않는다(UnlockGuideNewBottomSheet 참고).
 
 import { useEffect, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
@@ -27,7 +27,7 @@ const OnboardingMissionRewardWatcher = () => {
   const { openNewBottomSheet } = useNewBottomSheetActions();
 
   // 학습·테스트 화면(/take-test·/study)을 벗어나는 순간 해금 상태를 다시 읽는다(이슈 #25).
-  // plant_seed·care_farm 은 서버가 학습 저장 시점에 감지하고, focus_study 신호도 결과 화면에서
+  // plant_seed·care_farm 은 서버가 학습 저장 시점에 감지하고, focus_study·free_test 신호도 결과 화면에서
   // 나가므로, 여기서 diff 로 새 완료를 잡아 보상 연출 대기열에 올린다. 세션 종료 저장이
   // fire-and-forget 이라 조금 늦게 끝날 수 있어 짧은 지연 뒤 한 번 더 읽는다.
   const prevPathRef = useRef(location.pathname);

@@ -46,8 +46,15 @@ TEAM_EMAIL_SHA16 = {
 BOT_EMAIL_DOMAINS = ('cloudtestlabaccounts.com',)
 BOT_EMAIL_RE = re.compile(r'^[a-z]+\.\d{5}@gmail\.com$')
 
-# 온보딩 6단계 체인의 종료 미션 (routes/onboarding.py ONBOARDING_MISSIONS) — v1 'free_test', v2 'care_farm'(이슈 #25)
-MISSION_LAST_KEYS = ('free_test', 'care_farm')
+# 온보딩 퀘스트 전부 완료 판정 (routes/onboarding.py ONBOARDING_MISSIONS).
+#  - v3(이슈 #25 2차, 순서 무관 7개): 7개 키를 모두 가짐
+#  - v1(선형 체인, ai_test 로 시작): 종료 미션 free_test 를 가짐
+MISSION_V3_KEYS = frozenset({'buy_book', 'plant_seed', 'care_farm', 'search_word',
+                             'make_book', 'free_test', 'focus_study'})
+
+
+def _missions_all_done(keys):
+    return MISSION_V3_KEYS <= keys or ('ai_test' in keys and 'free_test' in keys)
 
 STORE_DOWNLOADS_NOTE = (
     '스토어 다운로드 수는 아직 자동 수집하지 않는다. '
@@ -198,7 +205,7 @@ def build_report(start, end, extra_exclude_emails=(), today=None):
         first_study = sum(1 for u in us if d in active_days[u.id])
         setup_done = sum(1 for u in us if u.onboarding_ver == '1')
         mission_any = sum(1 for u in us if missions[u.id])
-        mission_done = sum(1 for u in us if any(k in missions[u.id] for k in MISSION_LAST_KEYS))
+        mission_done = sum(1 for u in us if _missions_all_done(missions[u.id]))
 
         def _ret(offsets):
             if d + dt.timedelta(days=max(offsets)) > last_closed:
