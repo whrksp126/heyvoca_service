@@ -104,8 +104,6 @@ export const bookRimColor = (color) => {
  * @param {string}  rimColor   (선택) 밭 테두리(풀색 rim)를 이 색으로 칠한다 — 단어장 밭(목록 썸네일·
  *                             상세 히어로)이 단어장 color.main 을 넘긴다. 없으면 원래 풀색 그대로.
  *                             홈의 전체 밭은 여러 단어장 합본이라 넘기지 않는다(이슈 #25 4차).
- * @param {number}  plantReach (선택) 작물 배치 영역을 흙 가장자리 쪽으로 넓힌다 — 바깥 칸 중심이
- *                             흙 마름모 반경의 이 비율까지 닿는다. 홈 밭 지도만 쓴다(다른 화면은 기본값).
  * @param {node}    children   팻말처럼 밭과 같은 좌표계에 얹을 것들
  *
  * 【크기·자리는 바깥이 정한다】 이 컴포넌트는 className 을 받지 않는다.
@@ -125,7 +123,6 @@ const FarmField = ({
   soloCrops = false,
   storedSeeds = 0,
   rimColor = null,
-  plantReach = null,
   children,
 }) => {
   "use memo";
@@ -143,9 +140,9 @@ const FarmField = ({
 
   const { items } = useMemo(
     () => (words && words.length > 0
-      ? plantFieldByWords(words, { maxSprites, mascot, reserveSigns, reach: plantReach })
-      : plantField(counts, healthMix, { maxSprites, mascot, reserveSigns, reach: plantReach })),
-    [words, counts, healthMix, maxSprites, mascot, reserveSigns, plantReach],
+      ? plantFieldByWords(words, { maxSprites, mascot, reserveSigns })
+      : plantField(counts, healthMix, { maxSprites, mascot, reserveSigns })),
+    [words, counts, healthMix, maxSprites, mascot, reserveSigns],
   );
 
   return (

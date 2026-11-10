@@ -243,10 +243,7 @@ const Main = () => {
   // registerRefresh로 여기 넘겨주면, 그 함수를 ref에 담아뒀다가 당겨서 새로고침 때 같이 부른다.
   const streakRefreshRef = useRef(null);
   const registerStreakRefresh = useCallback((fn) => { streakRefreshRef.current = fn; }, []);
-  // 밭 지도 기본 시점 리셋 신호 — 당겨서 새로고침 때 1 올린다(HomeFieldGrid resetSignal)
-  const [mapReset, setMapReset] = useState(0);
   const handlePullToRefresh = useCallback(async () => {
-    setMapReset((n) => n + 1);
     await Promise.all([
       refreshStats(),
       streakRefreshRef.current ? streakRefreshRef.current() : Promise.resolve(),
@@ -440,7 +437,6 @@ const Main = () => {
         field={bookRows.length > 0 ? (
           <HomeFieldGrid
             rows={bookRows}
-            resetSignal={mapReset}
             onSelect={(id) => {
               vibrate({ duration: 5 });
               pushNewFullSheet(VocabularyWordsNewFullSheet, { id }, { smFull: true, closeOnBackdropClick: true });
