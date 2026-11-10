@@ -136,7 +136,7 @@ const InfoBox = ({ tone = 'gray', icon, children }) => {
 };
 
 /** 상품 카드 (시안 .prod). variant: '' | 'best'(가장 이득 진열) | 'sel'(시트에서 고른 묶음) */
-export const PackCard = ({ pack, itemType, ribbon, variant = '', onClick, disabled = false }) => {
+export const PackCard = ({ pack, itemType, ribbon, variant = '', onClick, disabled = false, showUnit = true }) => {
   const best = variant === 'best';
   const sel = variant === 'sel';
   const box = sel
@@ -170,9 +170,12 @@ export const PackCard = ({ pack, itemType, ribbon, variant = '', onClick, disabl
       <span className="text-[13px] font-[800] tracking-[-0.03em] text-layout-black dark:text-layout-white">
         {pack.amount}개
       </span>
-      <span className="mt-[2px] text-[9.5px] font-[600] tracking-[-0.02em] text-[#BBBBBB] dark:text-layout-gray-400">
-        개당 {unit.toFixed(2)}
-      </span>
+      {/* 상점 진열에서는 숨긴다(showUnit=false) — 구매 시트에서만 개당 단가를 작게 보여준다 */}
+      {showUnit && (
+        <span className="mt-[2px] text-[9.5px] font-[600] tracking-[-0.02em] text-[#BBBBBB] dark:text-layout-gray-400">
+          개당 {unit.toFixed(2)}
+        </span>
+      )}
       <span
         className={`mt-[6px] w-full h-[25px] rounded-[8px] flex items-center justify-center text-[13px] font-[800] ${
           best || sel

@@ -1,24 +1,27 @@
 // src/components/streak/StreakWeekRow.jsx
 //
-// 홈 연속 학습 카드의 1주 불꽃 줄 — 기록이 시작된 날부터 7칸(오래된→새), 오늘 이후는
+// 홈 '오늘 할 일' 카드 아래의 1주 줄 — 기록이 시작된 날부터 7칸(오래된→새), 오늘 이후는
 // 'upcoming'(다가올 날). 칸 배열은 farm/WeekStreakStrip 의 buildHomeWeekCells 가 만든다(이슈 #25).
 // (status: all · part · shield · none · today_empty · upcoming — 정의는 그 파일 주석이 정본).
 //
-//   띠        이어진 날(all · part · shield)은 같은 색 · 같은 높이의 띠 한 줄로 잇는다. 끊긴 날에서만 끊긴다.
-//             상태는 띠의 색이 아니라 띠 위의 표식으로 구분한다(streak/StreakMark.jsx 가 정본)
-//   등장      카드가 화면에 들어오면 띠가 왼쪽부터 그어지고 표식이 하나씩 켜진다
-//   오늘      켜진 날은 주황 고리 + 일렁이는 표식, 아직이면 분홍 고리가 숨 쉬듯 깜빡인다
-//   탭        칸이 통 튀고(켜진 날은 불티) 아래 범례 자리가 그날 설명으로 잠깐 바뀐다
+// 이슈 #25 13차 — 시각 언어를 streak/StreakChip.jsx 한 벌로 통일했다.
+//   칩        요일마다 같은 크기의 원형 칩(불꽃 채움 · 옅은 불꽃 · 방패 · 옅은 점)
+//   캡슐      이어진 날(all · part · shield)은 칩 뒤 하나의 둥근 캡슐로 묶는다 — 얇은 띠 대신
+//   오늘      테두리 고리 대신 요일 라벨 강조 + 칩 아래 작은 점, 켜졌으면 은은한 빛
+//   점화      `igniteDate` 칸은 처음 켜질 때 작게 → 크게 확 타오르며 불티가 튄다(홈 달성 연출)
+//   탭        칸이 통 튀고(켜진 날은 불티) 아래에 그날 설명이 잠깐 펼쳐진다
 import React, { useEffect, useRef, useState } from 'react';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import { haptic, SPRING } from '../../lib/feel';
-import { burst, jelly } from '../takeTest/rewards/fx';
-import StreakFlame, { FLAME_SPARKS } from './StreakFlame';
-import StreakMark, { StreakLegend, STREAK_BAND_CLASS, STREAK_LIT } from './StreakMark';
+import { burst, ring, jelly } from '../takeTest/rewards/fx';
+import { StreakChip, TodayDot, RUN_CAPSULE_CLASS, STREAK_LIT, CHIP_SPARKS, litRuns } from './StreakChip';
 
 const DOW = ['일', '월', '화', '수', '목', '금', '토'];
 const CAPTION_MS = 2600;
-const STEP = 0.07; // 칸이 켜지는 간격(s)
+const STEP = 0.06; // 칸이 켜지는 간격(s)
+const GAP = 6; // 칸 사이(px)
+const CHIP = 34; // 칩 지름(px)
+const ROW_H = 40; // 칩 줄 높이(px) — 캡슐 높이와 같다
 
 const CAPTION = {
   all: '오늘 할 일을 모두 끝낸 날이에요',
@@ -35,101 +38,91 @@ const dateLabel = (cell) => {
   return `${m}월 ${d}일 (${DOW[new Date(y, m - 1, d).getDay()]})`;
 };
 
-// 띠가 없는 칸의 모양 — 이어진 날은 뒤에 깔린 띠가 바탕이라 따로 칠하지 않는다
-const BOX_CLASS = {
-  none: 'bg-layout-gray-50 dark:bg-layout-black',
-  today_empty: 'bg-layout-white dark:bg-layout-black border-[1.5px] border-dashed border-primary-main-400',
-  // 다가올 날(홈 카드, 이슈 #25) — 아직 오지 않은 날이라 바탕 없이 흐린 점선만 둔다
-  upcoming: 'border-[1.5px] border-dashed border-layout-gray-200 dark:border-layout-gray-500 opacity-70',
+/** 7칸 그리드에서 s~e 칸을 덮는 캡슐 위치 — 칸 너비 = (100% − 6칸 사이) / 7 */
+const capsuleStyle = (s, e) => {
+  const col = `((100% - ${GAP * 6}px) / 7)`;
+  const half = ROW_H / 2;
+  return {
+    left: `calc(${col} * ${s + 0.5} + ${GAP * s}px - ${half}px)`,
+    width: `calc(${col} * ${e - s} + ${GAP * (e - s)}px + ${ROW_H}px)`,
+    height: ROW_H,
+  };
 };
 
-const WeekCell = ({ cell, index, play, linkPrev, linkNext, reducedMotion, onPick }) => {
+const WeekCell = ({ cell, index, play, ignite, reducedMotion, onPick }) => {
   const rootRef = useRef(null);
-  const boxRef = useRef(null);
+  const chipRef = useRef(null);
+  const [flare, setFlare] = useState(0);
   const { status, isToday } = cell;
-  const lit = STREAK_LIT.has(status);
-  const hasFlame = status === 'all' || status === 'part';
+  const lit = status === 'all' || status === 'part';
+
+  // 점화 — 작게 시작해 크게 확 타오르고(오버슈트) 제자리로, 둘레로 빛 고리 · 불티가 퍼진다
+  useEffect(() => {
+    if (!ignite || reducedMotion) return;
+    const root = rootRef.current;
+    setFlare((n) => n + 1);
+    if (root) {
+      const cx = root.clientWidth / 2;
+      const cy = root.clientHeight / 2;
+      ring(root, cx, cy, { size: CHIP * 2.4, color: 'var(--secondary-yellow-400)', dur: 700 });
+      burst(root, cx, cy, { n: 14, dist: 42, size: 5, colors: CHIP_SPARKS, up: 16, dur: 820 });
+    }
+  }, [ignite, reducedMotion]);
 
   const handleClick = () => {
     haptic('light');
     if (!reducedMotion) {
-      jelly(boxRef.current, 0.8);
+      jelly(chipRef.current, 0.8);
       const root = rootRef.current;
-      if (hasFlame && root) {
-        burst(root, root.clientWidth / 2, root.clientHeight / 2, { n: 8, dist: 30, size: 5, colors: FLAME_SPARKS, up: 8, dur: 600 });
+      if (lit && root) {
+        burst(root, root.clientWidth / 2, root.clientHeight / 2, { n: 8, dist: 30, size: 5, colors: CHIP_SPARKS, up: 8, dur: 600 });
       }
     }
     onPick(cell);
   };
 
   return (
-    <div className="flex flex-col gap-[6px]">
-      <span className={`text-center text-[11px] ${isToday ? 'font-[800] text-layout-black dark:text-layout-white' : status === 'upcoming' ? 'font-[600] text-layout-gray-200 dark:text-layout-gray-500' : 'font-[600] text-layout-gray-300'}`}>
-        {cell.label}
-      </span>
-      <div className="relative h-[48px]">
-        {/* 연속 띠 한 토막 — 이어진 쪽은 칸 사이 틈까지 덮어 옆 토막과 맞붙고, 끝나는 쪽만 둥글다.
-            칸마다 STEP 간격으로 왼쪽부터 펴져서 띠 한 줄이 쭉 그어지는 것처럼 보인다 */}
-        {lit && (
-          <motion.span
-            aria-hidden
-            className={`
-              pointer-events-none absolute bottom-[6px] left-0 top-[6px] origin-left
-              ${STREAK_BAND_CLASS}
-              ${linkPrev ? '' : 'rounded-l-full'}
-              ${linkNext ? '-right-[7px]' : 'right-0 rounded-r-full'}
-            `}
-            initial={reducedMotion ? { opacity: 0 } : { scaleX: 0 }}
-            animate={play ? { opacity: 1, scaleX: 1 } : undefined}
-            transition={reducedMotion ? { duration: 0.15 } : { duration: STEP, delay: STEP * index, ease: 'linear' }}
-          />
-        )}
-
-        <motion.button
-          ref={rootRef}
-          type="button"
-          onClick={handleClick}
-          aria-label={`${dateLabel(cell)} ${CAPTION[status] ?? ''}`}
-          className="relative block h-full w-full"
-          initial={reducedMotion ? { opacity: 0 } : { opacity: 0, y: 10, scale: 0.6 }}
-          animate={play ? { opacity: 1, y: 0, scale: 1 } : undefined}
-          transition={reducedMotion ? { duration: 0.15 } : { ...SPRING.bouncy, delay: STEP * index }}
-        >
-          <div ref={boxRef} className={`absolute inset-x-0 bottom-[6px] top-[6px] flex items-center justify-center rounded-full ${BOX_CLASS[status] ?? ''}`}>
-            {lit && <StreakMark status={status} size={28} alive={isToday} />}
-            {status === 'none' && <i className="block h-[5px] w-[5px] rounded-full bg-layout-gray-200 dark:bg-layout-gray-500" />}
-            {status === 'today_empty' && (
-              <motion.span
-                animate={reducedMotion ? { opacity: 0.6 } : { opacity: [0.45, 0.9, 0.45] }}
-                transition={reducedMotion ? { duration: 0.15 } : { duration: 2.2, repeat: Infinity, ease: 'easeInOut' }}
-              >
-                <StreakFlame lit={false} size={24} />
-              </motion.span>
-            )}
-          </div>
-
-          {/* 오늘 — 켜졌으면 띠 위에 주황 고리, 아직이면 분홍 고리가 숨 쉰다 */}
-          {isToday && (
-            status === 'today_empty' ? (
-              !reducedMotion && (
-                <motion.span
-                  aria-hidden
-                  className="pointer-events-none absolute -inset-x-[3px] bottom-[3px] top-[3px] rounded-full border-[2px] border-primary-main-400"
-                  animate={{ opacity: [0.85, 0, 0.85], scale: [1, 1.08, 1] }}
-                  transition={{ duration: 2.2, repeat: Infinity, ease: 'easeInOut' }}
-                />
-              )
-            ) : (
-              <span aria-hidden className="pointer-events-none absolute -inset-x-[3px] bottom-[3px] top-[3px] rounded-full border-[2px] border-secondary-yellow-500" />
-            )
-          )}
-        </motion.button>
-      </div>
-    </div>
+    <motion.button
+      ref={rootRef}
+      type="button"
+      onClick={handleClick}
+      aria-label={`${dateLabel(cell)} ${CAPTION[status] ?? ''}`}
+      className="relative flex items-center justify-center"
+      style={{ height: ROW_H }}
+      initial={reducedMotion ? { opacity: 0 } : { opacity: 0, y: 8, scale: 0.6 }}
+      animate={play ? { opacity: 1, y: 0, scale: 1 } : undefined}
+      transition={reducedMotion ? { duration: 0.15 } : { ...SPRING.bouncy, delay: STEP * index }}
+    >
+      {/* 점화 섬광 — 칩 뒤에서 한 번 크게 번졌다 사라진다 */}
+      {flare > 0 && (
+        <motion.span
+          key={flare}
+          aria-hidden
+          className="pointer-events-none absolute left-1/2 top-1/2 -ml-[30px] -mt-[30px] h-[60px] w-[60px] rounded-full bg-[radial-gradient(circle,var(--secondary-yellow-400)_0%,transparent_70%)]"
+          initial={{ opacity: 0.95, scale: 0.4 }}
+          animate={{ opacity: 0, scale: 2.1 }}
+          transition={{ duration: 0.9, ease: 'easeOut' }}
+        />
+      )}
+      <motion.span
+        ref={chipRef}
+        className="relative flex"
+        initial={false}
+        animate={ignite && !reducedMotion ? { scale: [0.35, 1.38, 0.92, 1] } : { scale: 1 }}
+        transition={ignite && !reducedMotion
+          ? { duration: 0.62, times: [0, 0.55, 0.8, 1], ease: 'easeOut' }
+          : { duration: 0 }}
+      >
+        <StreakChip status={status} size={CHIP} glow={isToday && lit} breathe={status === 'today_empty'} />
+      </motion.span>
+    </motion.button>
   );
 };
 
-const StreakWeekRow = ({ cells, play = true, className = '' }) => {
+/**
+ * cells — buildHomeWeekCells 결과. igniteDate — 이 날짜 칸이 지금 막 켜졌다(점화 연출을 한 번 튼다).
+ */
+const StreakWeekRow = ({ cells, play = true, igniteDate = null, className = '' }) => {
   const reducedMotion = useReducedMotion();
   const [picked, setPicked] = useState(null);
   const timerRef = useRef(null);
@@ -142,47 +135,91 @@ const StreakWeekRow = ({ cells, play = true, className = '' }) => {
     timerRef.current = setTimeout(() => setPicked(null), CAPTION_MS);
   };
 
-  const hasShield = cells.some((c) => c.status === 'shield');
+  const runs = litRuns(cells, (c) => STREAK_LIT.has(c.status));
 
   return (
     <div className={className}>
-      <div className="grid grid-cols-7 gap-[6px]">
-        {cells.map((cell, i) => (
-          <WeekCell
+      {/* 요일 — 오늘은 라벨을 '오늘'로 굵게 */}
+      <div className="grid grid-cols-7" style={{ columnGap: GAP }}>
+        {cells.map((cell) => (
+          <span
             key={cell.date}
-            cell={cell}
-            index={i}
-            play={play}
-            linkPrev={STREAK_LIT.has(cell.status) && STREAK_LIT.has(cells[i - 1]?.status)}
-            linkNext={STREAK_LIT.has(cell.status) && STREAK_LIT.has(cells[i + 1]?.status)}
-            reducedMotion={reducedMotion}
-            onPick={handlePick}
-          />
+            className={`text-center text-[11px] ${cell.isToday
+              ? 'font-[800] text-primary-main-600 dark:text-primary-main-400'
+              : cell.status === 'upcoming'
+                ? 'font-[600] text-layout-gray-200 dark:text-layout-gray-500'
+                : 'font-[600] text-layout-gray-300'}`}
+          >
+            {cell.label}
+          </span>
         ))}
       </div>
 
-      {/* 범례 자리 — 칸을 누르면 그날 설명으로 잠깐 바뀐다 */}
-      <div className="relative mt-[12px] h-[16px] text-[11px] font-[600] leading-[16px] text-layout-gray-300" aria-live="polite">
-        <AnimatePresence mode="wait" initial={false}>
+      <div className="relative mt-[6px]">
+        {/* 이어진 구간 캡슐 — 칩 뒤 한 장. 왼쪽부터 펴진다 */}
+        {runs.map(([s, e]) => (
           <motion.span
-            key={picked ? picked.date : 'legend'}
-            className="absolute inset-0 flex items-center truncate"
-            initial={{ opacity: 0, y: reducedMotion ? 0 : 5 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: reducedMotion ? 0 : -5 }}
-            transition={{ duration: 0.14 }}
+            key={`${s}-${e}`}
+            aria-hidden
+            className={`pointer-events-none absolute top-0 origin-left rounded-full ${RUN_CAPSULE_CLASS}`}
+            style={capsuleStyle(s, e)}
+            initial={reducedMotion ? { opacity: 0 } : { opacity: 0, scaleX: 0.2 }}
+            animate={play ? { opacity: 1, scaleX: 1 } : undefined}
+            transition={reducedMotion ? { duration: 0.15 } : { duration: 0.32 + (e - s) * STEP, delay: STEP * s, ease: [0.3, 0.7, 0.3, 1] }}
+          />
+        ))}
+        <div className="relative grid grid-cols-7" style={{ columnGap: GAP }}>
+          {cells.map((cell, i) => (
+            <WeekCell
+              key={cell.date}
+              cell={cell}
+              index={i}
+              play={play}
+              ignite={igniteDate != null && cell.date === igniteDate}
+              reducedMotion={reducedMotion}
+              onPick={handlePick}
+            />
+          ))}
+        </div>
+      </div>
+
+      {/* 오늘 점 */}
+      <div className="mt-[4px] grid grid-cols-7" style={{ columnGap: GAP }}>
+        {cells.map((cell) => (
+          <span key={cell.date} className="flex h-[4px] justify-center">
+            {cell.isToday && <TodayDot />}
+          </span>
+        ))}
+      </div>
+
+      {/* 칸을 누르면 그날 설명이 잠깐 펼쳐진다(평소엔 자리를 차지하지 않는다) */}
+      <AnimatePresence initial={false}>
+        {picked && (
+          <motion.div
+            key="caption"
+            className="overflow-hidden"
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: 'auto', opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: reducedMotion ? 0.1 : 0.18 }}
+            aria-live="polite"
           >
-            {picked ? (
-              <>
+            <AnimatePresence mode="wait" initial={false}>
+              <motion.p
+                key={picked.date}
+                className="truncate pt-[8px] text-[11.5px] font-[600] leading-[16px] text-layout-gray-400 dark:text-layout-gray-300"
+                initial={{ opacity: 0, y: reducedMotion ? 0 : 4 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: reducedMotion ? 0 : -4 }}
+                transition={{ duration: 0.14 }}
+              >
                 <b className="mr-[6px] font-[800] text-layout-black dark:text-layout-white">{dateLabel(picked)}</b>
                 {CAPTION[picked.status] ?? CAPTION.none}
-              </>
-            ) : (
-              <StreakLegend showShield={hasShield} />
-            )}
-          </motion.span>
-        </AnimatePresence>
-      </div>
+              </motion.p>
+            </AnimatePresence>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };

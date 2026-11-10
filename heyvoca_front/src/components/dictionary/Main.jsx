@@ -547,10 +547,12 @@ const Main = () => {
           key={key}
           type="button"
           onClick={() => { vibrate({ duration: 5 }); setFilter(key); }}
+          aria-label={`${label} ${filterCounts[key]}개`}
+          aria-pressed={filter === key}
           className={`${chipBase} pl-[8px] pr-[11px] ${filter === key ? chipOn : chipOff}`}
         >
           <CropImage stage={stage} health="FRESH" size={34} align="center" alt="" />
-          {label} <b className="font-[800]">{filterCounts[key]}</b>
+          <b className="font-[800]">{filterCounts[key]}</b>
         </button>
       ))}
       <button

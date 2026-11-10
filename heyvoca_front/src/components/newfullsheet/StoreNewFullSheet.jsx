@@ -66,19 +66,6 @@ const SecHead = ({ title, sub, right }) => (
   </div>
 );
 
-/** 보유 pill (시안 .sechead .own) */
-const OwnPill = ({ count }) => (
-  <span
-    className={`shrink-0 ml-auto px-[8px] py-[3px] rounded-full text-[11.5px] font-[700] tracking-[-0.02em] ${
-      count > 0
-        ? 'bg-primary-main-100 dark:bg-primary-main-dark text-primary-main-600 dark:text-primary-main-400'
-        : 'bg-layout-gray-50 dark:bg-layout-gray-dark text-layout-gray-300'
-    }`}
-  >
-    보유 {count}개
-  </span>
-);
-
 /**
  * 빈 단어장 — 단어장 탭 맨 위에 고정하는 전용 카드.
  *
@@ -121,8 +108,9 @@ const EmptyBookCard = ({ owned, onClick }) => (
         내 단어를 직접 넣어 새 밭을 열어요
       </span>
     </span>
-    <span className="shrink-0 h-[34px] px-[13px] rounded-[9px] bg-primary-main-600 text-layout-white flex items-center text-[13.5px] font-[800]">
-      <Gem n={EMPTY_BOOK_PRICE} size="s" />
+    {/* 가격 — 아래 서점 단어장 카드(ShopBookCard)의 가격과 같은 모양(배경 없는 보석+숫자) */}
+    <span className="shrink-0 flex items-center text-[14px] font-[800] text-layout-black dark:text-layout-white">
+      <Gem n={EMPTY_BOOK_PRICE} />
     </span>
   </motion.button>
 );
@@ -489,19 +477,17 @@ const StoreNewFullSheet = ({ initialTab = 'books', onInventoryChanged, onGoRotte
                         <div
                           key={type}
                           id={`farm-item-hold-${type}`}
-                          className="flex-1 flex flex-col items-center gap-[3px] px-[6px] pt-[8px] pb-[7px] rounded-[12px] bg-layout-gray-50 dark:bg-layout-gray-dark"
+                          aria-label={`${ITEM_SHORT[type]} ${count}개 보유`}
+                          className="flex-1 flex items-center justify-center gap-[5px] px-[6px] py-[8px] rounded-[12px] bg-layout-gray-50 dark:bg-layout-gray-dark"
                         >
                           <img
                             src={FARM_ITEM_ASSETS[type]}
                             alt={ITEM_SHORT[type]}
                             draggable={false}
-                            className="w-[28px] h-[28px] object-contain select-none"
+                            className="w-[22px] h-[22px] object-contain select-none"
                           />
-                          <span className={`text-[15px] font-[800] tracking-[-0.02em] ${count > 0 ? 'text-layout-black dark:text-layout-white' : 'text-layout-gray-200'}`}>
+                          <span className={`text-[16px] font-[800] tracking-[-0.02em] ${count > 0 ? 'text-layout-black dark:text-layout-white' : 'text-layout-gray-200'}`}>
                             {count}
-                          </span>
-                          <span className="text-[10px] font-[600] tracking-[-0.02em] text-layout-gray-400 dark:text-layout-gray-300">
-                            {ITEM_SHORT[type]}
                           </span>
                         </div>
                       );
@@ -511,13 +497,11 @@ const StoreNewFullSheet = ({ initialTab = 'books', onInventoryChanged, onGoRotte
 
                 {packGroups.map((group) => {
                   const best = bestSku(group);
-                  const owned = itemCounts?.[group.itemType] ?? 0;
                   return (
                     <div key={group.itemType}>
                       <SecHead
                         title={ITEM_NAME[group.itemType]}
                         sub={ITEM_TAG[group.itemType]}
-                        right={<OwnPill count={owned} />}
                       />
 
                       {group.packs.length > 1 ? (
@@ -530,6 +514,7 @@ const StoreNewFullSheet = ({ initialTab = 'books', onInventoryChanged, onGoRotte
                               ribbon={pack.sku === best ? '가장 이득' : null}
                               variant={pack.sku === best ? 'best' : ''}
                               onClick={() => openItemSheet(group, pack)}
+                              showUnit={false}
                             />
                           ))}
                         </div>

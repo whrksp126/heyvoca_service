@@ -25,11 +25,21 @@
 //   홈에 들어올 때·다른 화면에서 돌아올 때·당겨서 새로고침 때 항상 기본 시점으로(짧은 애니메이션).
 //   경계 밖으로 끌면 고무줄처럼 저항을 받으며 따라오고, 배율도 범위 밖으로 살짝 넘어간다.
 //   손을 떼면 rAF 물리 루프가 관성(플링)으로 미끄러지다 경계 밖이면 스프링으로 되돌린다.
-//   이동 거리가 작은 한 손가락 터치만 탭 — 화면 좌표를 밭 좌표로 되돌려 마름모 안에 든 밭(앞줄 우선)을
-//   고른다. 당겨서 새로고침은 data-no-ptr 로 끈다.
+//   이동 거리가 작은 한 손가락 터치만 탭(이슈 #25 13차):
+//     · 이름판(간판) → 단어장 상세. 판정은 그려진 판의 실제 사각형 + 여유(기본 시점의 작은 판도 누르기 쉽게).
+//     · 작물 → 그 작물 위에 단어·짧은 뜻 말풍선(학습 결과 '밭 성장'과 같은 떠올랐다 사라지는 꼬리표) + tap cue.
+//       작물 자리는 FarmField 와 같은 인자로 plantFieldByWords 를 다시 계산해 얻고, 히트 하한은 화면 px 를
+//       현재 배율로 나눠 확대·축소에 맞춘다.
+//     · 그 밖(흙·길·허공) = 빈 곳 → 두 번 탭이면 기본 시점.
+//   확대 상태는 시트를 열고 닫아도 유지된다(경로가 바뀔 때·당겨서 새로고침 때만 기본 시점).
+//   당겨서 새로고침은 data-no-ptr 로 끈다.
 //
 // 【성능·선명도】 움직이는 동안엔 transform 한 레이어만 rAF 로 바꾸고(리렌더 없음, will-change),
 //   멈추면 잠시 뒤 현재 배율로 다시 그려 will-change 를 푼다 — 확대해도 흐려지지 않는다.
+//   쉬는 화면의 이동값은 기기 픽셀(devicePixelRatio) 격자에 맞춰 반 픽셀 번짐을 없앤다.
+//   브라우저는 화면에 보이는 타일만 현재 배율 × 픽셀비로 래스터화하므로 따로 타일링하지 않는다.
+//   한계: 밭 바탕(field-base.png)은 1200px 원본뿐이라 기본 시점의 약 1.4배를 넘으면(픽셀비 3 기준)
+//   흙·풀 바탕은 원본 해상도가 상한이다. 작물(512px)·글자는 최대 배율까지 선명하다.
 //   작물 표시 상한·이름판 크기는 기본 시점 타일 크기에 고정한다.
 //
 // 【상태 요약】 밭이 하나뿐이면 지도 대신 크게 한 장 + 나무 팻말 4개(단계별 수).
@@ -41,8 +51,12 @@ import { motion } from 'framer-motion';
 import { Check } from '@phosphor-icons/react';
 import FarmField, { bookRimColor } from '../farm/FarmField';
 import { FieldSign } from '../farm/FarmHero';
-import { SIGN_ANCHORS, FIELD_W as FIELD_CANVAS_W } from '../../utils/farmField';
+import {
+  SIGN_ANCHORS, FIELD_W as FIELD_CANVAS_W, FIELD_H as FIELD_CANVAS_H, plantFieldByWords,
+} from '../../utils/farmField';
 import { IconCare } from '../../assets/svg/icon';
+import { feel } from '../../lib/feel';
+import { anim, WORD_LABEL_FRAMES, WORD_LABEL_CLASS } from '../takeTest/rewards/fx';
 
 /*
   타일이 보여 주는 창 — 밭 캔버스(1200×860) 중 세로 180~820 만 잘라 보인다.
@@ -78,6 +92,11 @@ const COMMIT_DELAY = 140; // 멈춘 뒤 현재 배율로 다시 그리기까지(
 const TAP_SLOP = 8;
 const DOUBLE_TAP_MS = 320; // 빈 땅 두 번 탭 → 기본 시점(두 탭 사이 최대 간격)
 const DOUBLE_TAP_DIST = 32; // 두 탭이 이만큼 안쪽이어야 같은 자리를 두 번 누른 것으로 본다
+const BUBBLE_MS = 1700;     // 작물 탭 → 단어 말풍선이 떠올랐다 사라지는 시간(학습 결과와 같은 프레임)
+const BUBBLE_MAX = 3;       // 동시에 떠 있는 말풍선 수
+const CROP_HIT_MIN = 20;    // 작물 히트 영역 반폭 하한(화면 px) — 축소해도 손가락으로 집을 수 있게
+const SIGN_HIT_PAD = 10;    // 이름판 히트 영역 여유(화면 px)
+const SIGN_HIT_MIN_H = 40;  // 이름판 히트 영역 최소 높이(화면 px) — 기본 시점의 작은 판도 누르기 쉽게
 
 /** 개수 → 격자 c×r (정사각형에 가깝게) */
 const gridFor = (n) => {
@@ -96,6 +115,91 @@ const cellOrder = (c, r) => {
 };
 
 const clamp = (v, lo, hi) => Math.max(lo, Math.min(hi, v));
+
+/*
+  【작물 탭】 밭에 서 있는 작물마다 단어가 하나씩 매여 있다(plantFieldByWords — 단어 id 로 슬롯이 정해진다).
+  FarmField 와 **같은 인자**로 다시 계산해 그려진 자리를 그대로 얻는다(결정적이라 어긋나지 않는다).
+  반환 좌표는 밭 캔버스(1200×860) px — 밑동(bx, by)과 그림 상자 한 변(box).
+  words 가 비면 FarmField 가 집계 기반으로 그려 단어가 없으므로 빈 배열.
+*/
+const cropSpots = (fieldWords, opts) => {
+  if (!fieldWords || fieldWords.length === 0) return [];
+  const { items } = plantFieldByWords(fieldWords, { mascot: false, ...opts });
+  return items
+    .filter((it) => it.kind === 'crop' && String(it.key).startsWith('w-'))
+    .map((it) => ({
+      id: String(it.key).slice(2),
+      bx: (it.leftPct / 100) * FIELD_CANVAS_W,
+      by: (it.topPct / 100) * FIELD_CANVAS_H,
+      box: (it.boxPct / 100) * FIELD_CANVAS_W,
+    }));
+};
+
+/**
+ * 작물 히트 — 그림 상자(512 정사각형) 안 실제 작물이 차지하는 부분(밑동 위 가운데)만 잡는다.
+ * minHalf(캔버스 px)는 화면 px 하한을 배율로 나눈 값이라 확대·축소에 맞게 정확하다.
+ * 겹치면 정규화 거리가 가장 가까운 것, 같으면 앞(아래)에 선 것.
+ * @returns {{ spot, d } | null}
+ */
+const pickCrop = (spots, x, y, minHalf) => {
+  let best = null;
+  spots.forEach((sp) => {
+    const cx = sp.bx;
+    const cy = sp.by - sp.box * 0.34;
+    const hx = Math.max(sp.box * 0.32, minHalf);
+    const hy = Math.max(sp.box * 0.44, minHalf * 1.15);
+    const d = Math.max(Math.abs(x - cx) / hx, Math.abs(y - cy) / hy);
+    if (d > 1) return;
+    if (!best || d < best.d - 0.05 || (Math.abs(d - best.d) <= 0.05 && sp.by > best.spot.by)) best = { spot: sp, d };
+  });
+  return best;
+};
+
+/** 단어장 단어 목록에서 작물 id 로 단어·짧은 뜻을 찾는다 */
+const cropWordText = (book, id) => {
+  const w = (book?.words || []).find((x) => String(x?.vocaIndexId ?? x?.id) === id);
+  if (!w) return null;
+  const first = Array.isArray(w.meanings) ? w.meanings.find(Boolean) : null;
+  let meaning = typeof first === 'string' ? first : (first?.meaning || first?.text || '');
+  meaning = String(meaning).split(/[,;]/)[0].trim();
+  if (meaning.length > 12) meaning = `${meaning.slice(0, 11)}…`;
+  return { word: w.origin || '', meaning };
+};
+
+/**
+ * 작물 위에 떠올랐다 사라지는 단어 말풍선 — 학습 결과 '밭 성장'(FarmGrowthSlide)과 같은 모양·프레임.
+ * (x, y) = 작물 머리 위 점(부모 좌표계 px). 말풍선 아래 끝이 그 점에 닿는다.
+ */
+const CropWordBubble = ({ x, y, word, meaning }) => {
+  const ref = useRef(null);
+  useEffect(() => {
+    anim(ref.current, WORD_LABEL_FRAMES, { duration: BUBBLE_MS, easing: 'ease-out' });
+  }, []);
+  return (
+    <div className="absolute z-[30] w-0 h-0 pointer-events-none" style={{ left: x, top: y }}>
+      <span ref={ref} className={`${WORD_LABEL_CLASS} bottom-0 flex items-center gap-[5px]`}>
+        <span>{word}</span>
+        {meaning && <span className="font-[500] opacity-75">{meaning}</span>}
+      </span>
+    </div>
+  );
+};
+
+/** 말풍선 목록 상태 — 띄우고 BUBBLE_MS 뒤 지운다(최대 BUBBLE_MAX 개) */
+const useCropBubbles = () => {
+  const [bubbles, setBubbles] = useState([]);
+  const timers = useRef([]);
+  useEffect(() => () => timers.current.forEach(clearTimeout), []);
+  const show = useCallback((b) => {
+    const key = `${b.id}-${Date.now()}`;
+    setBubbles((prev) => [...prev.filter((x) => x.id !== b.id), { ...b, key }].slice(-BUBBLE_MAX));
+    feel('tap');
+    timers.current.push(setTimeout(() => {
+      setBubbles((prev) => prev.filter((x) => x.key !== key));
+    }, BUBBLE_MS + 60));
+  }, []);
+  return [bubbles, show];
+};
 
 /** 타일 폭(px) → 작물 표시 상한 · 그림자 */
 const spriteBudget = (w) => {
@@ -152,14 +256,28 @@ const FieldTile = ({ row, width, single, onSelect }) => {
   const { maxSprites, shadows } = spriteBudget(width);
   const small = width < 120;
   const { book, field, fieldWords, badge } = row;
+  const [bubbles, showBubble] = useCropBubbles();
+
+  // 단어장 상세는 이름판(간판)을 눌렀을 때만 연다 — 밭 흙·작물 탭은 작물 말풍선(이슈 #25 13차)
+  const spots = useMemo(
+    () => cropSpots(fieldWords, { maxSprites, reserveSigns: single }),
+    [fieldWords, maxSprites, single],
+  );
+  const k = width / FIELD_CANVAS_W; // 캔버스 px → 화면 px
+  const onTileTap = (e) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = (e.clientX - rect.left) / k;
+    const y = (e.clientY - rect.top) / k + VIEW_TOP;
+    const hit = pickCrop(spots, x, y, CROP_HIT_MIN / k);
+    if (!hit) return;
+    const text = cropWordText(book, hit.spot.id);
+    if (!text) return;
+    showBubble({ id: hit.spot.id, ...text, x: hit.spot.bx * k, y: (hit.spot.by - hit.spot.box * 0.7 - VIEW_TOP) * k });
+  };
 
   return (
-    <motion.button
-      type="button"
-      onClick={() => onSelect(book.id)}
-      whileTap={{ scale: 0.96 }}
-      transition={{ type: 'spring', stiffness: 400, damping: 17 }}
-      aria-label={book.title}
+    <div
+      onClick={onTileTap}
       className="relative shrink-0 overflow-hidden"
       style={{ width, height: width * VIEW_RATIO }}
     >
@@ -181,14 +299,24 @@ const FieldTile = ({ row, width, single, onSelect }) => {
         </FarmField>
       </span>
 
-      {/* 섬 위 허공(왼쪽 위 · 오른쪽 위)에 이름판과 배지를 단다 — 밭과 작물을 가리지 않는 자리 */}
-      <span className="absolute left-[3%] top-[3%] z-[16] flex max-w-[58%]">
+      {bubbles.map((b) => <CropWordBubble key={b.key} x={b.x} y={b.y} word={b.word} meaning={b.meaning} />)}
+
+      {/* 섬 위 허공(왼쪽 위 · 오른쪽 위)에 이름판과 배지를 단다 — 밭과 작물을 가리지 않는 자리.
+          이름판이 단어장 상세로 가는 유일한 입구다(눌리는 영역은 판보다 넉넉하게) */}
+      <motion.button
+        type="button"
+        onClick={(e) => { e.stopPropagation(); onSelect(book.id); }}
+        whileTap={{ scale: 0.94 }}
+        transition={{ type: 'spring', stiffness: 400, damping: 17 }}
+        aria-label={`${book.title} 단어장 열기`}
+        className="absolute left-[1%] top-[1%] z-[16] flex max-w-[60%] min-h-[40px] items-start p-[2%]"
+      >
         <NameBoard title={book.title} small={small} />
-      </span>
-      <span className="absolute right-[3%] top-[3%] z-[16] flex">
+      </motion.button>
+      <span className="absolute right-[3%] top-[3%] z-[16] flex pointer-events-none">
         <BookBadge badge={badge} small={small} />
       </span>
-    </motion.button>
+    </div>
   );
 };
 
@@ -348,9 +476,13 @@ const HomeFieldGrid = ({ rows, onSelect, resetSignal = 0, focusBottom }) => {
     const { S, tx, ty } = view.current;
     const k = S / rRef.current;
     el.style.willChange = moving.current ? 'transform' : 'auto';
-    el.style.transform = moving.current || Math.abs(k - 1) > 1e-4
-      ? `translate3d(${tx}px, ${ty}px, 0) scale(${k})`
-      : `translate(${tx}px, ${ty}px)`;
+    if (moving.current || Math.abs(k - 1) > 1e-4) {
+      el.style.transform = `translate3d(${tx}px, ${ty}px, 0) scale(${k})`;
+    } else {
+      // 쉬는 화면은 기기 픽셀 격자에 맞춘다 — 소수 px 이동이면 래스터가 반 픽셀 어긋나 흐려 보인다
+      const dpr = (typeof window !== 'undefined' && window.devicePixelRatio) || 1;
+      el.style.transform = `translate(${Math.round(tx * dpr) / dpr}px, ${Math.round(ty * dpr) / dpr}px)`;
+    }
   }, []);
 
   /** 움직임 시작 — 다시 그리기 예약을 취소하고 합성 레이어로 */
@@ -592,22 +724,53 @@ const HomeFieldGrid = ({ rows, onSelect, resetSignal = 0, focusBottom }) => {
   const gesture = useRef(null);
   const samples = useRef([]);
   const lastEmptyTap = useRef(null); // 직전 빈 땅 탭 { t, x, y } — 두 번 탭 판정용
+  const [bubbles, showBubble] = useCropBubbles();
 
-  /** 화면 점(영역 기준) → 그 자리 밭 (마름모 안, 앞줄 우선 · 가까운 것) */
-  const hitTest = (px, py) => {
+  // 밭마다 작물 자리(밭 캔버스 px) — MapField 의 FarmField 와 같은 인자(표시 상한 고정·팻말 자리 없음·PLANT_REACH)
+  const mapBudgetSprites = layout ? spriteBudget(layout.homeTileW).maxSprites : 0;
+  const cropMap = useMemo(
+    () => (mapBudgetSprites
+      ? placed.map((p) => ({ p, spots: cropSpots(p.row.fieldWords, { maxSprites: mapBudgetSprites, reserveSigns: false, reach: PLANT_REACH }) }))
+      : []),
+    [placed, mapBudgetSprites],
+  );
+
+  /* 이름판(간판) DOM — 탭 판정은 실제 그려진 사각형으로 한다(배율·이동·labelK 가 모두 반영돼 정확하다) */
+  const labelRefs = useRef(new Map());
+
+  /** 화면 점(영역 기준) → 그 자리 이름판의 단어장 행 (앞줄 우선) */
+  const hitSign = (px, py) => {
+    const rect = boxRef.current?.getBoundingClientRect();
+    if (!rect) return null;
+    for (let i = placed.length - 1; i >= 0; i -= 1) {
+      const el = labelRefs.current.get(placed[i].row.book.id);
+      if (!el) continue;
+      const r = el.getBoundingClientRect();
+      const cy = r.top - rect.top + r.height / 2;
+      const halfH = Math.max(r.height / 2 + SIGN_HIT_PAD, SIGN_HIT_MIN_H / 2);
+      if (px >= r.left - rect.left - SIGN_HIT_PAD && px <= r.right - rect.left + SIGN_HIT_PAD
+        && Math.abs(py - cy) <= halfH) return placed[i].row;
+    }
+    return null;
+  };
+
+  /** 화면 점(영역 기준) → 그 자리 작물 { row, spot, wx, wy(머리 위, 지도 캔버스 px) } */
+  const hitCrop = (px, py) => {
     const L = lay.current;
     if (!L) return null;
     const { S, tx, ty } = view.current;
     const wx = (px - tx) / S + L.x0;
     const wy = (py - ty) / S + L.y0;
-    let best = null; let bestD = Infinity;
-    for (let i = placed.length - 1; i >= 0; i -= 1) {
-      const p = placed[i];
-      const d = Math.abs(wx - p.cx) / (DIA_W / 2) + Math.abs(wy - p.cy) / (DIA_H / 2);
-      if (d <= 1) return p.row; // 앞줄부터 훑으므로 처음 맞은 것이 가장 앞
-      if (d < bestD) { bestD = d; best = p.row; }
-    }
-    return bestD < 1.4 ? best : null; // 이름판·작물처럼 마름모 바로 바깥을 누른 경우
+    let best = null;
+    cropMap.forEach(({ p, spots }) => {
+      const ox = p.cx - DIA_CX;
+      const oy = p.cy - DIA_CY;
+      const hit = pickCrop(spots, wx - ox, wy - oy, CROP_HIT_MIN / S);
+      if (hit && (!best || hit.d < best.d - 0.05 || (Math.abs(hit.d - best.d) <= 0.05 && hit.spot.by + oy > best.by))) {
+        best = { d: hit.d, by: hit.spot.by + oy, row: p.row, spot: hit.spot, wx: hit.spot.bx + ox, wy: hit.spot.by - hit.spot.box * 0.7 + oy };
+      }
+    });
+    return best;
   };
 
   const localPoint = (e) => {
@@ -702,13 +865,19 @@ const HomeFieldGrid = ({ rows, onSelect, resetSignal = 0, focusBottom }) => {
     if (pointers.current.size === 0) {
       gesture.current = null;
       if (!cancelled && g?.kind === 'pan' && g.tap) {
-        const hit = hitTest(last.x, last.y);
-        if (hit) {
+        // 간판(이름판) → 단어장 상세 · 작물 → 단어 말풍선 · 그 밖(흙·길·허공) → 빈 곳(두 번 탭 리셋)
+        const sign = hitSign(last.x, last.y);
+        const crop = sign ? null : hitCrop(last.x, last.y);
+        const text = crop ? cropWordText(crop.row.book, crop.spot.id) : null;
+        if (sign) {
           lastEmptyTap.current = null;
-          onSelect(hit.book.id);
+          onSelect(sign.book.id);
+        } else if (text) {
+          lastEmptyTap.current = null;
+          showBubble({ id: `${crop.row.book.id}:${crop.spot.id}`, ...text, wx: crop.wx, wy: crop.wy });
         } else {
-          // 밭이 아닌 빈 땅을 두 번 탭(마우스는 더블 클릭) → 기본 시점으로 부드럽게.
-          // 밭 탭·이동·핀치는 tap 이 아니거나 hit 이 있어서 여기 오지 않는다.
+          // 간판·작물이 아닌 빈 곳을 두 번 탭(마우스는 더블 클릭) → 기본 시점으로 부드럽게.
+          // 간판·작물 탭·이동·핀치는 여기 오지 않는다.
           const now = performance.now();
           const prev = lastEmptyTap.current;
           if (prev && now - prev.t <= DOUBLE_TAP_MS && Math.hypot(last.x - prev.x, last.y - prev.y) <= DOUBLE_TAP_DIST) {
@@ -827,6 +996,7 @@ const HomeFieldGrid = ({ rows, onSelect, resetSignal = 0, focusBottom }) => {
           {placed.map((p) => (
             <div
               key={`label-${p.row.book.id}`}
+              ref={(el) => { if (el) labelRefs.current.set(p.row.book.id, el); else labelRefs.current.delete(p.row.book.id); }}
               aria-label={p.row.book.title}
               className="absolute z-[16] flex items-center gap-[3px] pointer-events-none"
               style={{
@@ -839,6 +1009,16 @@ const HomeFieldGrid = ({ rows, onSelect, resetSignal = 0, focusBottom }) => {
               <span className="flex min-w-0"><NameBoard title={p.row.book.title} small={small} /></span>
               <BookBadge badge={p.row.badge} small={small} />
             </div>
+          ))}
+          {/* 작물 말풍선 — 지도 좌표에 달려 이동·확대를 따라간다(쉬는 화면에선 화면 px 크기 그대로) */}
+          {bubbles.map((b) => (
+            <CropWordBubble
+              key={b.key}
+              x={(b.wx - layout.x0) * R}
+              y={(b.wy - layout.y0) * R}
+              word={b.word}
+              meaning={b.meaning}
+            />
           ))}
         </div>
       )}

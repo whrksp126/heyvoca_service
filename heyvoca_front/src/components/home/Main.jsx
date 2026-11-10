@@ -38,7 +38,6 @@ import useLabFeatures from '../../hooks/useLabFeatures';
 import { LANG_LABEL, DEFAULT_LEARNING_LANG } from '../../utils/lang';
 import { LearningLangNewBottomSheet } from '../newBottomSheet/LearningLangNewBottomSheet';
 import LangFlagIcon from '../common/LangFlagIcon';
-import { usePlantSession } from '../../hooks/usePlantSession';
 import PullToRefresh from '../common/PullToRefresh';
 
 import StoreNewFullSheet from '../newfullsheet/StoreNewFullSheet';
@@ -60,9 +59,7 @@ import FarmCta, {
 import TodayTasksCard from './TodayTasksCard';
 import OnboardingQuestCard from './OnboardingQuestCard';
 import { useOnboardingUnlock } from '../../context/OnboardingUnlockContext';
-import StreakCard from './StreakCard';
 import GrewTodayCard from './GrewTodayCard';
-import WordFeedCard from './WordFeedCard';
 
 /** 히어로 높이(지도 배경 히어로 h-[420px] 와 같은 값) — 밭 지도의 '보이는 창' 아래 끝 = CTA 위 */
 const HERO_HEIGHT = 420;
@@ -106,14 +103,11 @@ const Main = () => {
 
   // 통계는 StatsContext(라우터 바깥 캐시)에서 구독 — 탭 전환마다 재조회/스피너 없이 캐시값을 즉시 사용,
   // 학습 세션 완료 시에만 조용히 갱신된다.
-  const { todaySummary, farmOverview, todayChanges, farmFeed, todayKey, refreshStats } = useStats();
+  const { todaySummary, farmOverview, todayChanges, todayKey, refreshStats } = useStats();
   const todayNewWords = todaySummary?.new_words ?? 0;
   const dailyNewLimit = userProfile?.daily_new_limit ?? 0;
 
   // ── §12 상태 판정 ────────────────────────────────────────────────
-  const seedDetail = farmOverview?.seed_detail ?? {};
-
-  const unplanted = seedDetail.unplanted ?? 0;
   const newRemaining = Math.max(0, dailyNewLimit - todayNewWords);
 
   /*
@@ -230,11 +224,10 @@ const Main = () => {
 
   // Actions만 구독하므로 state 변경 시 리렌더링 안 됨
   const { pushNewFullSheet } = useNewFullSheetActions();
-  const { startPlantSession } = usePlantSession();
   const { pushNewBottomSheet } = useNewBottomSheetActions();
 
-  // 당겨서 새로고침 — StreakCard는 /farm/streak를 자체 상태로 들고 있어(streak 값이 이 컴포넌트에
-  // 없음) 직접 재조회할 수 없다. 대신 StreakCard가 마운트 시 자신의 재조회 함수를
+  // 당겨서 새로고침 — 오늘 할 일 카드(연속 학습 포함, useStreakCard)는 /farm/streak를 자체 상태로 들고 있어(streak 값이 이 컴포넌트에
+  // 없음) 직접 재조회할 수 없다. 대신 그 카드가 마운트 시 자신의 재조회 함수를
   // registerRefresh로 여기 넘겨주면, 그 함수를 ref에 담아뒀다가 당겨서 새로고침 때 같이 부른다.
   const streakRefreshRef = useRef(null);
   const registerStreakRefresh = useCallback((fn) => { streakRefreshRef.current = fn; }, []);
@@ -350,57 +343,10 @@ const Main = () => {
     }, { smFull: true, closeOnBackdropClick: true });
   };
 
-  // 아직 심지 않은 씨앗 — 총량이 커서(최대 수백) 커서 페이지네이션(GET /farm/plants?group=unplanted).
-  // 학습 진입은 헤더가 아니라 시트 하단 고정 CTA로 옮겼다(⑤-3 "심으러 가기"가 목록을 가리던 문제).
-  const openSeedsSheet = () => {
-    vibrate({ duration: 5 });
-    pushNewFullSheet(WordListSheet, {
-      title: '아직 심지 않은 씨앗',
-      paged: true,
-      emptyText: '아직 심지 않은 씨앗이 없어요',
-      ctaLabel: '씨앗 심으러 가기',
-      // "심으러 가기"는 문자 그대로 새 단어를 심는 동작이라 복습(startQuickReview)이 아니라
-      // 심기 세션(usePlantSession)을 연다 — 새 단어는 여기서만 시작한다(2026-09-29).
-      onCta: () => startPlantSession({ count: Math.min(5, unplanted || 5) }),
-    }, { smFull: true, closeOnBackdropClick: true });
-  };
-
   /*
-    성과 카드 아래에 붙는 "지금 볼 만한 단어".
-
-    2026-09-27 홈 개편 — "지금 물이 필요한 단어"·"되살릴 수 있는 단어" 두 묶음은 뺐다.
-    새 TodayTasksCard(오늘 할 일)의 "오늘 돌봄 물주기"·"시듦 물주기"·"썩은 단어 살리기" 행이
-    같은 사실(개수 + 단어 목록 + 학습/회복 진입)을 이미 더 자세히 말한다 — 카드 두 곳에서
-    같은 단어를 두 번 나열하지 않는다. "아직 심지 않은 씨앗"은 오늘 할 일 카드가 다루지 않는
-    정보(하루 목표가 아니라 보유 전체)라 그대로 남긴다.
-
-    "최근에 심은 단어"는 2026-09-29 QA로 제거 — "오늘 자란 단어" 카드(그 씨앗도 심은 순간
-    'seed' 단계로 포함된다)와 사실이 겹쳐 같은 단어를 두 번 보여주는 카드였다.
+    "지금 볼 만한 단어"의 마지막 묶음이던 "아직 심지 않은 씨앗"(WordFeedCard)은 이슈 #25 13차에서 뺐다.
+    새 씨앗 심기는 오늘 할 일 카드의 '농장에 새 씨앗 심기' 줄과 홈 주 버튼(학습 고르기 시트)이 맡는다.
   */
-  const feed = farmFeed ?? {};
-  const feedCandidates = [
-    {
-      key: 'seeds',
-      title: '아직 심지 않은 씨앗',
-      items: feed.seeds ?? [],
-      // 상태어(안 배움) 제거 → 뜻으로(tone 없음). 헤더는 "심으러 가기"(바로 학습)를 뗐고
-      // 학습 진입은 시트 하단 CTA로 옮겼다(⑤-3). onMore가 없어 헤더는 숫자만 있고 안 눌린다 —
-      // "+n개 더"와 같은 곳으로 가는 중복 진입점이었기 때문(사용자 목업 승인). "+n개 더"만 시트를 연다.
-      moreLabel: null,
-      onMore: null,
-      totalCount: unplanted,
-      onViewAll: openSeedsSheet,
-    },
-  ];
-
-  // 'care'·'rotten'·'recent'는 뺐으니(위 주석) 지금은 'seeds' 하나뿐이다. slice(0, 2)는 그대로 둬
-  // 앞으로 후보가 다시 늘어도 §7 "최대 두 묶음"을 지키게 한다.
-  const feedOrder = ['seeds'];
-
-  const feedSections = feedOrder
-    .map((key) => feedCandidates.find((c) => c.key === key))
-    .filter((section) => section && section.items.length > 0)
-    .slice(0, 2);
 
   // 히어로 위에 뜨는 것들(보석 칩 · 학습 언어 칩 · 헤드라인 · 주 CTA) — 지도 배경 히어로와
   // 단어장 0개 퀘스트 히어로가 같은 내용을 쓴다
@@ -578,30 +524,14 @@ const Main = () => {
             새 사용자에게 지금 할 일은 퀘스트를 하나씩 해 보는 것이라 오늘 할 일보다 위에 둔다. */}
         {!questInHero && <OnboardingQuestCard />}
 
-        <TodayTasksCard />
-
-        {/* 연속 학습 — 1주 불꽃 달력. 홈에서 성과를 말하는 유일한 블록. 항상 노출된다 */}
-        <StreakCard registerRefresh={registerStreakRefresh} />
+        {/* 오늘 할 일 + 연속 학습(이슈 #25 13차 — 두 카드를 하나로 합쳤다). 연속 일수는 머리말 오른쪽,
+            1주 불꽃 줄은 카드 아래. 홈에 돌아왔을 때 새로 달성한 줄 · 오늘 불꽃 점화를 연출한다 */}
+        <TodayTasksCard registerStreakRefresh={registerStreakRefresh} />
 
         {/* 오늘 자란 단어 — 조건부다(§10). 오늘 자란 것이 없으면 카드를 아예 띄우지 않는다.
             "황금 당근" 카드는 내렸다 — 개수 하나만 적혀 있어 대부분의 날에 "0개"만 말했고,
             황금 당근은 마이페이지 온실에 그대로 있다. */}
         <GrewTodayCard items={grewItems} onViewAll={openGrownSheet} />
-
-        {/* 지금 볼 만한 단어 — "아직 심지 않은 씨앗" ("최근에 심은 단어"는 2026-09-29 제거) */}
-        {feedSections.map((section) => (
-          <WordFeedCard
-            key={section.key}
-            title={section.title}
-            items={section.items}
-            tone={section.tone}
-            showCrop={section.showCrop}
-            moreLabel={section.moreLabel}
-            onMore={section.onMore}
-            totalCount={section.totalCount}
-            onViewAll={section.onViewAll}
-          />
-        ))}
 
       </motion.div>
     </PullToRefresh>

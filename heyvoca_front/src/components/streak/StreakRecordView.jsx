@@ -6,7 +6,7 @@
 //   ① 연속 요약   큰 불꽃(누르면 통 튄다) + 굴러 올라가는 연속 일수 + 최고 기록 대비 진행 막대 + 작은 수치 3칸
 //   ② 월 달력     StreakMonthCalendar — 연속 띠 · 달 넘김 전환 · 날짜 선택
 //   ③ 선택한 날   날짜를 누르면 설명이 부드럽게 바뀐다(맞힌 개수가 있으면 막대로도 보여준다)
-//   ④ 범례        띠 위 표식 3종(찬 불꽃 · 윤곽선 불꽃 · 방패) — streak/StreakMark.jsx
+//   ④ 범례        칩 3종(불꽃 · 옅은 불꽃 · 방패) — streak/StreakChip.jsx (이슈 #25 13차 — 큰 불꽃 그림 · 띠 · 표식을 칩 한 벌로 통일)
 //
 // 기획 11.5 — 끊겼을 때의 연출은 이 화면에 없다. 큰 빨간 0 도, 복구 유도도 두지 않는다.
 // 연속 보상 목록(3일/7일/14일 …)은 2026-10-07 QA 로 이 화면에서 뺐다 — 지급은 서버가 그대로 한다.
@@ -14,8 +14,8 @@ import React, { useMemo, useRef, useState } from 'react';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import { MoonStars } from '@phosphor-icons/react';
 import { haptic, SPRING, useCountUp } from '../../lib/feel';
-import StreakFlame from './StreakFlame';
-import StreakMark, { StreakLegend } from './StreakMark';
+import { burst, jelly, ring } from '../takeTest/rewards/fx';
+import { StreakChip, StreakChipLegend, CHIP_SPARKS } from './StreakChip';
 import StreakMonthCalendar, { cellState, ymd } from './StreakMonthCalendar';
 
 const DOW = ['일', '월', '화', '수', '목', '금', '토'];
@@ -80,13 +80,6 @@ const summaryFor = (date, info, streak, today) => {
   return { kind: 'rest', count: null, title: '쉰 날', sub: null };
 };
 
-const TILE_CLASS = {
-  progress: 'bg-primary-main-100 dark:bg-primary-main-dark',
-  lit: 'bg-streak-all',
-  shield: 'bg-streak-all',
-  short: 'bg-layout-gray-50 dark:bg-layout-black',
-  rest: 'bg-layout-gray-50 dark:bg-layout-black',
-};
 const BAR_CLASS = {
   progress: 'bg-primary-main-600',
   lit: 'bg-[linear-gradient(90deg,var(--secondary-yellow-400),var(--secondary-yellow-600))]',
@@ -113,12 +106,16 @@ const DayDetail = ({ date, summary, reducedMotion }) => (
         exit={{ opacity: 0, y: reducedMotion ? 0 : -6 }}
         transition={{ duration: 0.15, ease: 'easeOut' }}
       >
-        {/* 이어진 날(모두 · 일부 · 보호권)은 달력 띠와 같은 바탕에 같은 표식을 올린다 */}
-        <span className={`flex h-[44px] w-[44px] shrink-0 items-center justify-center rounded-full ${TILE_CLASS[summary.kind]} ${summary.kind === 'rest' || summary.kind === 'short' ? 'dark:bg-layout-black' : ''}`}>
-          {summary.kind === 'lit' && <StreakMark status={summary.state} size={30} />}
-          {(summary.kind === 'progress' || summary.kind === 'short') && <StreakFlame lit={false} size={28} />}
-          {summary.kind === 'shield' && <StreakMark status="shield" size={30} />}
-          {summary.kind === 'rest' && <MoonStars size={22} weight="fill" className="text-layout-gray-200 dark:text-layout-gray-400" />}
+        {/* 달력 · 홈 1주 줄과 같은 칩(크기만 다르다) */}
+        <span className="flex h-[44px] w-[44px] shrink-0 items-center justify-center">
+          {summary.kind === 'lit' && <StreakChip status={summary.state} size={40} />}
+          {summary.kind === 'shield' && <StreakChip status="shield" size={40} />}
+          {(summary.kind === 'progress' || summary.kind === 'short') && <StreakChip status="today_empty" size={40} />}
+          {summary.kind === 'rest' && (
+            <span className="flex h-[40px] w-[40px] items-center justify-center rounded-full bg-layout-gray-100 dark:bg-white/[0.08]">
+              <MoonStars size={20} weight="fill" className="text-layout-gray-300 dark:text-layout-gray-400" />
+            </span>
+          )}
         </span>
 
         <span className="min-w-0 flex-1">
@@ -173,6 +170,16 @@ const StreakRecordView = ({ streak, today }) => {
 
   const reducedMotion = useReducedMotion();
   const flameRef = useRef(null);
+  const playFlame = () => {
+    haptic('light');
+    const el = flameRef.current;
+    if (reducedMotion || !el) return;
+    jelly(el, 0.9);
+    if (current > 0 && !paused) {
+      ring(el, 28, 28, { size: 100, color: 'var(--secondary-yellow-400)', dur: 620 });
+      burst(el, 28, 28, { n: 12, dist: 46, size: 5, colors: CHIP_SPARKS, up: 12 });
+    }
+  };
 
   const [view, setView] = useState(() => {
     const [y, m] = today.split('-').map(Number);
@@ -253,10 +260,12 @@ const StreakRecordView = ({ streak, today }) => {
           <button
             type="button"
             aria-label="연속 학습 불꽃"
-            onClick={() => { haptic('light'); flameRef.current?.play(); }}
-            className="shrink-0"
+            onClick={playFlame}
+            className="shrink-0 p-[6px]"
           >
-            <StreakFlame ref={flameRef} days={paused ? 0 : current} size={68} />
+            <span ref={flameRef} className="relative block h-[56px] w-[56px]">
+              <StreakChip status={current > 0 && !paused ? 'all' : 'off'} size={56} glow />
+            </span>
           </button>
           <div className="min-w-0 flex-1">
             <div className="flex items-baseline gap-[4px] text-layout-black dark:text-layout-white">
@@ -299,9 +308,9 @@ const StreakRecordView = ({ streak, today }) => {
       <motion.div {...rise(2)}>
         <DayDetail date={selectedDate} summary={selectedSummary} reducedMotion={reducedMotion} />
         {/* 쉰 날은 띠가 없는 상태 자체가 규칙이라 범례에 다시 적지 않는다 */}
-        <StreakLegend className="mt-[12px] px-[2px] text-[10.5px] font-[600] tracking-[-0.02em] text-layout-gray-300" />
+        <StreakChipLegend className="mt-[12px] px-[2px] text-[10.5px] font-[600] tracking-[-0.02em] text-layout-gray-300" />
         <p className="mt-[6px] px-[2px] text-[10.5px] font-[500] leading-[1.45] tracking-[-0.02em] text-layout-gray-300">
-          띠가 이어진 곳은 연속이 끊기지 않은 날이에요
+          한 캡슐로 묶인 날들은 연속이 끊기지 않은 날이에요
         </p>
       </motion.div>
     </>

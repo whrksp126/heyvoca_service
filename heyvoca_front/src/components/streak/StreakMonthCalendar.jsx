@@ -2,14 +2,11 @@
 //
 // 농장 방문 화면의 월 달력.
 //
-//   연속 띠   이어진 날(all · part · shield)은 같은 색 · 같은 높이의 띠 한 줄로 잇는다. 끊긴 날에서만
-//             끊기고, 띠의 시작 · 끝만 둥글다. 주가 바뀌면 줄 끝에서 반듯하게 잘리고 다음 줄 첫 칸에서
-//             반듯하게 이어진다(달이 바뀌는 1일 · 말일도 같다) — 둥근 끝은 "여기서 시작 · 끝"만 뜻한다
-//   표식      상태는 띠의 색이 아니라 띠 위 표식으로 구분한다 — 찬 불꽃 · 작은 불씨 · 보호권 그림
-//             (streak/StreakMark.jsx 가 정본). 쉰 날은 숫자만
-//   오늘      테두리가 아니라 날짜 숫자를 검은 알약에 담아 표시한다 — 선택 테두리와 겹쳐
-//             이중 테두리가 되던 문제를 없앤다. 선택은 분홍 테두리 하나이고 칸 사이를 미끄러져 옮겨 간다
-//   줄 높이   42px 고정 — 정사각 칸이라 빈 주가 크게 비어 보이던 여백을 줄였다
+// 이슈 #25 13차 — 홈 1주 줄과 같은 시각 언어(streak/StreakChip.jsx)로 바꿨다.
+//   칸        날짜 숫자 + 그 아래 같은 크기의 원형 칩(불꽃 채움 · 옅은 불꽃 · 방패 · 옅은 점)
+//   캡슐      이어진 날(all · part · shield)은 칩 뒤 하나의 둥근 캡슐로 묶는다. 주가 바뀌면 줄 끝에서
+//             반듯하게 잘리고 다음 줄 첫 칸에서 반듯하게 이어진다(달이 바뀌는 1일 · 말일도 같다)
+//   오늘      테두리 대신 분홍 숫자 + 칩 아래 작은 점. 선택은 칩 둘레 분홍 고리 하나(칸 사이를 미끄러진다)
 //   달 넘김   넘기는 방향으로 밀려 들어온다. 실제 주 수만큼만 그린다(빈 줄을 만들지 않는다)
 //   탭        칸이 통 튀고, 켜진 날은 불티가 흩어진다. 미래 날짜는 누를 수 없다
 import React, { useEffect, useMemo, useRef, useState } from 'react';
@@ -17,8 +14,7 @@ import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import { CaretLeft, CaretRight } from '@phosphor-icons/react';
 import { haptic, SPRING } from '../../lib/feel';
 import { burst, jelly } from '../takeTest/rewards/fx';
-import { FLAME_SPARKS } from './StreakFlame';
-import StreakMark, { STREAK_BAND_CLASS, STREAK_LIT } from './StreakMark';
+import { StreakChip, TodayDot, RUN_CAPSULE_CLASS, STREAK_LIT, CHIP_SPARKS, litRuns } from './StreakChip';
 
 const DOW = ['일', '월', '화', '수', '목', '금', '토'];
 
@@ -42,29 +38,36 @@ export const cellState = (info) => {
   return 'miss';
 };
 
+const CHIP = 24; // 달력 칩 지름(px)
+const CAP_H = 30; // 캡슐 높이(px)
+const CELL_H = 52;
+const CHIP_TOP = 19; // 칸 안에서 칩 위쪽 위치(px) — 숫자 13 + 간격
+const CAP_TOP = CHIP_TOP - (CAP_H - CHIP) / 2;
+
 const DayCell = ({ cell, isSelected, intro, index, reducedMotion, onSelect }) => {
   const rootRef = useRef(null);
-  const discRef = useRef(null);
+  const chipRef = useRef(null);
   const { state, isToday, isFuture } = cell;
-  const lit = STREAK_LIT.has(state);
+  const chipStatus = isFuture ? 'upcoming' : (state === 'miss' ? (isToday ? 'today_empty' : 'none') : state);
+  const lit = state === 'all' || state === 'part';
 
   const handleClick = () => {
     haptic('selection');
     if (!reducedMotion) {
-      jelly(discRef.current, 0.8);
+      jelly(chipRef.current, 0.8);
       const root = rootRef.current;
-      if ((state === 'all' || state === 'part') && root) {
-        burst(root, root.clientWidth / 2, root.clientHeight / 2, { n: 8, dist: 28, size: 5, colors: FLAME_SPARKS, up: 8, dur: 600 });
+      if (lit && root) {
+        burst(root, root.clientWidth / 2, CHIP_TOP + CHIP / 2, { n: 8, dist: 28, size: 5, colors: CHIP_SPARKS, up: 8, dur: 600 });
       }
     }
     onSelect(cell.date);
   };
 
   let numClass;
-  if (isToday) numClass = 'flex h-[15px] min-w-[15px] items-center justify-center rounded-full bg-layout-black px-[4px] text-[10px] font-[800] text-layout-white dark:bg-layout-white dark:text-layout-black';
-  else if (lit) numClass = 'text-[10.5px] font-[800] text-layout-black dark:text-layout-white';
-  else if (isFuture) numClass = 'text-[12.5px] font-[600] text-layout-gray-200 dark:text-layout-gray-500';
-  else numClass = 'text-[12.5px] font-[600] text-layout-gray-400 dark:text-layout-gray-300';
+  if (isToday) numClass = 'font-[800] text-primary-main-600 dark:text-primary-main-400';
+  else if (isFuture) numClass = 'font-[600] text-layout-gray-200 dark:text-layout-gray-500';
+  else if (STREAK_LIT.has(state)) numClass = 'font-[700] text-layout-black dark:text-layout-white';
+  else numClass = 'font-[600] text-layout-gray-400 dark:text-layout-gray-300';
 
   return (
     <motion.button
@@ -74,51 +77,57 @@ const DayCell = ({ cell, isSelected, intro, index, reducedMotion, onSelect }) =>
       onClick={handleClick}
       aria-label={`${cell.day}일`}
       aria-pressed={isSelected}
-      className="relative flex h-[42px] items-center justify-center"
+      className="relative flex flex-col items-center"
+      style={{ height: CELL_H }}
       initial={intro && !reducedMotion ? { opacity: 0 } : false}
       animate={{ opacity: 1 }}
       transition={intro && !reducedMotion ? { duration: 0.2, delay: 0.1 + index * 0.012 } : { duration: 0 }}
     >
-      {/* 연속 띠 한 토막 — 이어진 쪽은 칸 끝까지 반듯하게 뻗어 옆 칸 토막과 맞붙고,
-          띠가 시작 · 끝나는 쪽만 칸 가운데 원(지름 = 띠 높이)에 맞춰 둥글게 닫는다 */}
-      {lit && (
-        <span
-          aria-hidden
-          className={`
-            absolute top-[3px] h-[36px]
-            ${STREAK_BAND_CLASS}
-            ${cell.bandLeft ? 'left-0' : 'left-[calc(50%-18px)] rounded-l-full'}
-            ${cell.bandRight ? '-right-px' : 'right-[calc(50%-18px)] rounded-r-full'}
-          `}
-        />
-      )}
-
-      {/* 등장할 때 통 튀는 것은 숫자 · 표식뿐이다 — 띠까지 같이 줄였다 키우면 토막 사이가 벌어져 보인다 */}
+      <span className={`mt-[2px] h-[13px] text-[11px] leading-[13px] tabular-nums ${numClass}`}>{cell.day}</span>
       <motion.span
-        className="relative"
+        ref={chipRef}
+        className="relative mt-[4px] flex"
         initial={intro && !reducedMotion ? { scale: 0.6 } : false}
         animate={{ scale: 1 }}
         transition={intro && !reducedMotion ? { ...SPRING.soft, delay: 0.1 + index * 0.012 } : { duration: 0 }}
       >
-        <span
-          ref={discRef}
-          className="flex h-[36px] w-[36px] flex-col items-center justify-center gap-[1px] leading-none"
-        >
-          <span className={`tabular-nums ${numClass}`}>{cell.day}</span>
-          {lit && <StreakMark status={state} size={17} alive={isToday} />}
-        </span>
+        <StreakChip status={chipStatus} size={CHIP} glow={isToday && lit} breathe={isToday && chipStatus === 'today_empty'} />
+        {/* 선택 — 칩 둘레 분홍 고리 하나. 칸 사이를 미끄러져 옮겨 간다(오늘은 고리가 아니라 아래 점) */}
+        {isSelected && (
+          <motion.span
+            layoutId="streak-month-selected"
+            aria-hidden
+            className="pointer-events-none absolute -inset-[4px] rounded-full border-[2px] border-primary-main-600 dark:border-primary-main-400"
+            transition={reducedMotion ? { duration: 0 } : SPRING.snappy}
+          />
+        )}
       </motion.span>
-
-      {isSelected && (
-        <motion.span
-          layoutId="streak-month-selected"
-          aria-hidden
-          className="pointer-events-none absolute left-1/2 top-1/2 -ml-[21px] -mt-[21px] h-[42px] w-[42px] rounded-full border-[2px] border-primary-main-600"
-          transition={reducedMotion ? { duration: 0 } : SPRING.snappy}
-        />
-      )}
+      <span className="mt-[3px] flex h-[4px] justify-center">{isToday && <TodayDot />}</span>
     </motion.button>
   );
+};
+
+/**
+ * 한 주(7칸)의 연속 캡슐 — 칩 뒤 한 장. 앞 주에서 이어 온 구간은 줄 왼쪽 끝에서, 다음 주로 이어지는
+ * 구간은 오른쪽 끝에서 반듯하게 잘린다(둥근 끝은 "여기서 시작 · 끝"만 뜻한다).
+ */
+const WeekCapsules = ({ week }) => {
+  const runs = litRuns(week, (c) => STREAK_LIT.has(c.state) && !c.isFuture);
+  return runs.map(([s, e]) => {
+    const openLeft = s === 0 && week[s].bandLeft;
+    const openRight = e === 6 && week[e].bandRight;
+    const col = '(100% / 7)';
+    const left = openLeft ? '0px' : `calc(${col} * ${s + 0.5} - ${CAP_H / 2}px)`;
+    const right = openRight ? '0px' : `calc(${col} * ${6 - e + 0.5} - ${CAP_H / 2}px)`;
+    return (
+      <span
+        key={`${s}-${e}`}
+        aria-hidden
+        className={`pointer-events-none absolute ${RUN_CAPSULE_CLASS} ${openLeft ? '' : 'rounded-l-full'} ${openRight ? '' : 'rounded-r-full'}`}
+        style={{ top: CAP_TOP, height: CAP_H, left, right }}
+      />
+    );
+  });
 };
 
 const NavButton = ({ enabled, onClick, label, children }) => (
@@ -235,21 +244,31 @@ const StreakMonthCalendar = ({ view, byDate, today, selectedDate, canPrev, canNe
             animate="center"
             exit="exit"
             transition={{ duration: 0.16, ease: 'easeOut' }}
-            className="grid grid-cols-7 gap-y-[3px]"
+            className="flex flex-col gap-y-[2px]"
           >
-            {cells.map((cell, i) => (
-              cell ? (
-                <DayCell
-                  key={cell.date}
-                  cell={cell}
-                  index={i}
-                  intro={intro}
-                  isSelected={cell.date === selectedDate}
-                  reducedMotion={reducedMotion}
-                  onSelect={onSelect}
-                />
-              ) : <span key={`e${i}`} className="h-[42px]" />
-            ))}
+            {Array.from({ length: cells.length / 7 }).map((_, w) => {
+              const week = cells.slice(w * 7, w * 7 + 7);
+              return (
+                <div key={w} className="relative">
+                  <WeekCapsules week={week} />
+                  <div className="relative grid grid-cols-7">
+                    {week.map((cell, j) => (
+                      cell ? (
+                        <DayCell
+                          key={cell.date}
+                          cell={cell}
+                          index={w * 7 + j}
+                          intro={intro}
+                          isSelected={cell.date === selectedDate}
+                          reducedMotion={reducedMotion}
+                          onSelect={onSelect}
+                        />
+                      ) : <span key={`e${w}-${j}`} style={{ height: CELL_H }} />
+                    ))}
+                  </div>
+                </div>
+              );
+            })}
           </motion.div>
         </AnimatePresence>
       </div>

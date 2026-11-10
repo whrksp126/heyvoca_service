@@ -1,5 +1,10 @@
 // src/components/home/StreakCard.jsx
 //
+// 이슈 #25 13차 — 홈의 '연속 학습' 카드는 '오늘 할 일' 카드(TodayTasksCard)에 합쳐졌다.
+// 이 파일은 이제 카드를 그리지 않고 **훅(useStreakCard)** 만 내보낸다 — /farm/streak 조회 · 재조회 시점 ·
+// 정산 알림 · 농장 방문 열기 · 다시 잇기 시작. 그림은 TodayTasksCard 가 streak/StreakCardView 로 그린다.
+// 아래 옛 설명 중 '1층 · 2층' 배치는 합친 카드의 머리말 알약 · 아래 1주 줄로 옮겨 갔다.
+//
 // 홈 — 연속 학습 카드 (2026-09-27 확정 목업, scratchpad/home10/IMPL_SPEC.md "1주 불꽃 달력").
 //
 // 그림은 streak/StreakCardView.jsx 가 그린다(2026-10-07 연속 학습 화면 고도화) — 이 파일은 조회 ·
@@ -42,7 +47,6 @@ import { useNewBottomSheetContext, useNewBottomSheetActions } from '../../contex
 import FarmVisitCalendarSheet from './FarmVisitCalendarSheet';
 import StreakSettlementNewBottomSheet from '../newBottomSheet/StreakSettlementNewBottomSheet';
 import { buildHomeWeekCells } from '../farm/WeekStreakStrip';
-import StreakCardView from '../streak/StreakCardView';
 
 const MIN_RELOAD_INTERVAL_MS = 5000;
 
@@ -52,8 +56,7 @@ const MIN_RELOAD_INTERVAL_MS = 5000;
  * 간격 무시)를 실행 함수로 넘겨준다 — 이 카드 자체는 streak 상태를 밖으로 내보내지 않으므로
  * 부모가 직접 재조회할 수 없어, 실행 함수를 대신 내려받는 방식을 쓴다.
  */
-const StreakCard = ({ registerRefresh } = {}) => {
-  "use memo";
+export const useStreakCard = ({ registerRefresh } = {}) => {
 
   const { lastSessionResult } = useVocabulary();
   const { pushNewFullSheet } = useNewFullSheetActions();
@@ -179,19 +182,15 @@ const StreakCard = ({ registerRefresh } = {}) => {
     if (res?.code === 200) loadStreak(true);
   };
 
-  // 조회 전이거나 실패했으면 홈에 빈 카드를 남기지 않는다
-  if (!streak) return null;
-
-  return (
-    <StreakCardView
-      streak={streak}
-      weekCells={weekCells}
-      onOpenRecord={handleOpenRecord}
-      onOpenPaused={openPausedSheet}
-      onStartEarnBack={handleStartEarnBack}
-      startingEarnBack={startingEarnBack}
-    />
-  );
+  return {
+    streak,
+    weekCells,
+    loadStreak,
+    onOpenRecord: handleOpenRecord,
+    onOpenPaused: openPausedSheet,
+    onStartEarnBack: handleStartEarnBack,
+    startingEarnBack,
+  };
 };
 
-export default StreakCard;
+export default useStreakCard;
