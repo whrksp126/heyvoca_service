@@ -32,7 +32,7 @@ const OnboardingQuestCard = () => {
       <div className="flex items-center justify-between">
         <b className="text-[17px] font-[800] text-layout-black dark:text-layout-white">입문 퀘스트</b>
         <span className="text-[14px] font-[700] text-layout-gray-300">
-          <b className="text-[15px] font-[800] text-primary-main-600">{doneCount}</b>/{missions.length}
+          <b className="text-[15px] font-[800] text-status-success-600">{doneCount}</b>/{missions.length}
         </span>
       </div>
 

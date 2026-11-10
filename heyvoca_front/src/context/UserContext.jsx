@@ -4,7 +4,7 @@ import { getDevicePlatform, isAppVersionAtLeast } from '../utils/osFunction';
 import { loginApi, updateUserInfoApi, getUserInfoApi, withdrawApi, appleLoginApi, devLoginApi } from '../api/auth';
 import { setUserCheckinApi, getUserDatesApi, getUserGoalsApi, updateUserStudyHistoryApi, getAchievementCriteriaApi } from '../api/study';
 import AchievementRewardOverlay from '../components/overlay/AchievementRewardOverlay';
-import GemRewardOverlay from '../components/overlay/GemRewardOverlay';
+import { openGemRewardSheet } from '../components/rewards/openRewardSheet';
 import { getGemItemsApi } from '../api/store';
 import postMessageManager from '../utils/postMessageManager';
 import { invalidateCurrentAttendance } from './AttendanceCalendarContext';
@@ -308,13 +308,14 @@ export const UserProvider = ({ children }) => {
     });
 
     // 업적 업데이트 (새로 완료된 업적이 있는 경우) - 먼저 표시
+    const achievementOverlays = [];
     if (result.data?.goals && result.data.goals.length > 0) {
       // 업적 오버레이 표시 — 온보딩 가입 직후 홈 첫 진입이면 Main.jsx 가 대기열로 이미
       // 같은 업적을 띄웠을 수 있다(markGoalOverlayShown 주석 참고). 그런 건 건너뛴다.
       if (window.overlayContext?.showAwaitOverlay) {
         result.data.goals.forEach(goal => {
           if (!markGoalOverlayShown(goal)) return;
-          window.overlayContext.showAwaitOverlay(AchievementRewardOverlay, { goal });
+          achievementOverlays.push(window.overlayContext.showAwaitOverlay(AchievementRewardOverlay, { goal }));
         });
       }
 
@@ -347,19 +348,17 @@ export const UserProvider = ({ children }) => {
       });
     }
 
-    // 보석 업데이트 및 오버레이 표시 - 업적이 없을 때만 표시
-    // 업적 완료 시 지급되는 보석은 업적 오버레이에 포함되므로 별도 표시 안 함
+    // 보석 보상 — 퀘스트 보상과 같은 「보상 받기」 시트 → 우측 상단 보석 칩 카운트업(2026-11 QA #25 8차).
+    // 업적이 함께 달성됐으면 업적 연출이 모두 닫힌 뒤에 연다(업적 → 보석 순서).
     if (result.data.gem && result.data.gem.after > result.data.gem.before) {
-      // 업적이 완료되지 않은 경우에만 보석 오버레이 표시
-      if (!result.data.goals || result.data.goals.length === 0) {
-        if (window.overlayContext?.showAwaitOverlay) {
-          window.overlayContext.showAwaitOverlay(GemRewardOverlay, {
-            gemCount: result.data.gem.after - result.data.gem.before,
-            title: "출석 보상!",
-            description: "오늘의 보석 보상이 지급되었습니다."
-          });
-        }
-      }
+      const withGoal = Array.isArray(result.data.goals) && result.data.goals.length > 0;
+      openGemRewardSheet({
+        after: achievementOverlays,
+        title: withGoal ? '업적 달성 보상' : '출석 보상',
+        subtitle: withGoal ? '출석·업적 달성 보석이 지급됐어요' : '오늘의 출석 보석이 지급됐어요',
+        gemFrom: result.data.gem.before,
+        gemTo: result.data.gem.after,
+      });
     }
 
     setUserProfile(prevProfile => ({

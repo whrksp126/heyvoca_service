@@ -75,6 +75,8 @@ const PLANT_REACH = 0.87; // 지도 밭의 작물 배치 영역 — 흙 마름�
 const RESET_MS = 380;   // 기본 시점으로 돌아가는 애니메이션 길이
 const COMMIT_DELAY = 140; // 멈춘 뒤 현재 배율로 다시 그리기까지(연속 제스처 사이엔 다시 그리지 않게)
 const TAP_SLOP = 8;
+const DOUBLE_TAP_MS = 320; // 빈 땅 두 번 탭 → 기본 시점(두 탭 사이 최대 간격)
+const DOUBLE_TAP_DIST = 32; // 두 탭이 이만큼 안쪽이어야 같은 자리를 두 번 누른 것으로 본다
 
 /** 개수 → 격자 c×r (정사각형에 가깝게) */
 const gridFor = (n) => {
@@ -562,6 +564,7 @@ const HomeFieldGrid = ({ rows, onSelect, resetSignal = 0 }) => {
   const pointers = useRef(new Map());
   const gesture = useRef(null);
   const samples = useRef([]);
+  const lastEmptyTap = useRef(null); // 직전 빈 땅 탭 { t, x, y } — 두 번 탭 판정용
 
   /** 화면 점(영역 기준) → 그 자리 밭 (마름모 안, 앞줄 우선 · 가까운 것) */
   const hitTest = (px, py) => {
@@ -673,7 +676,23 @@ const HomeFieldGrid = ({ rows, onSelect, resetSignal = 0 }) => {
       gesture.current = null;
       if (!cancelled && g?.kind === 'pan' && g.tap) {
         const hit = hitTest(last.x, last.y);
-        if (hit) onSelect(hit.book.id);
+        if (hit) {
+          lastEmptyTap.current = null;
+          onSelect(hit.book.id);
+        } else {
+          // 밭이 아닌 빈 땅을 두 번 탭(마우스는 더블 클릭) → 기본 시점으로 부드럽게.
+          // 밭 탭·이동·핀치는 tap 이 아니거나 hit 이 있어서 여기 오지 않는다.
+          const now = performance.now();
+          const prev = lastEmptyTap.current;
+          if (prev && now - prev.t <= DOUBLE_TAP_MS && Math.hypot(last.x - prev.x, last.y - prev.y) <= DOUBLE_TAP_DIST) {
+            lastEmptyTap.current = null;
+            resetView(true);
+            return;
+          }
+          lastEmptyTap.current = { t: now, x: last.x, y: last.y };
+        }
+      } else {
+        lastEmptyTap.current = null;
       }
       // 관성 — 마지막 ~100ms 이동 속도(경계 밖이면 스프링이 받아 준다)
       let vx = 0; let vy = 0;

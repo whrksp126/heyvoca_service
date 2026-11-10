@@ -60,7 +60,7 @@ const QuestSteps = ({ missions = [], currentKey = null, onSelect }) => {
                   m.done
                     ? 'bg-status-success-600 text-layout-white'
                     : isCurrent
-                      ? 'bg-primary-main-600 text-layout-white dark:text-layout-black'
+                      ? 'bg-status-success-50 dark:bg-status-success-dark border-[1.5px] border-status-success-600 text-status-success-600'
                       : 'bg-layout-white dark:bg-layout-gray-dark border-[1.5px] border-layout-gray-200 dark:border-[rgba(255,255,255,.2)] text-layout-gray-300'
                 }`}
               >
@@ -124,7 +124,7 @@ const QuestSteps = ({ missions = [], currentKey = null, onSelect }) => {
                       <button
                         type="button"
                         onClick={() => onSelect(m.key)}
-                        className="mt-[6px] inline-flex items-center gap-[2px] h-[28px] px-[10px] rounded-full bg-primary-main-100 dark:bg-primary-main-dark text-[12px] font-[700] text-primary-main-600"
+                        className="mt-[6px] inline-flex items-center gap-[2px] h-[28px] px-[10px] rounded-full bg-status-success-50 dark:bg-status-success-dark text-[12px] font-[700] text-status-success-600"
                       >
                         바로가기
                         <CaretRight size={11} weight="bold" />

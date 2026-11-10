@@ -14,7 +14,16 @@
 // 연출이 끝나면 onSceneDone 을 한 번 부른다(호출부가 그때 버튼을 켠다). instant 면 끝 모습으로 바로 그리고
 // 곧장 끝을 알린다 — 뒤로 가기로 이전 장면을 다시 세울 때, 동작 줄이기(prefers-reduced-motion)일 때.
 // 밭을 탭하면 지금 장면을 끝 모습으로 건너뛴다.
-// 움직임은 transform·opacity 만 쓴다(Web Animations · CSS transition). 소리는 내지 않는다 — 탭할 때만 짧은 진동.
+// 움직임은 transform·opacity·filter 만 쓴다(Web Animations · CSS transition).
+//
+// 【손맛 — 이슈 #25 8차 QA】 작물 그림이 바뀌는 순간 실제 학습(밭 성장 슬라이드·FarmStatusBar)과 같은
+// lib/feel 의 feel(cue) 한 줄로 소리+진동을 같이 낸다.
+//   진화  밝은 빛(뒤쪽 후광 + 밝기 번쩍)이 차오른 순간 그림을 크로스페이드 → 젤리·파편·고리.
+//         소리 새싹 xpUp(가벼운 3음) · 이파리/당근 evolve(올라가는 아르페지오 + 짧은 진동).
+//   퇴화  그 반대 — 채도·밝기가 잠깐 가라앉고 위에 어두운 그늘(먹구름)이 끼며 살짝 처지고 떨린다.
+//         어두운 부스러기가 아래로 떨어지고, 가장 어두운 순간 다음 그림으로 크로스페이드.
+//         소리 wrong(낮고 둥근 '툭… 툭' + 한 번 묵직한 진동).
+//   두 연출 모두 그림 교체 시점(SWAP)을 효과의 정점에 맞춰 '딱 바뀌는' 느낌을 감춘다.
 import React, { useEffect, useRef, useState } from 'react';
 import { useReducedMotion } from 'framer-motion';
 import { cropAssetByVariant, CROP_BASELINE } from '../farm/CropImage';
@@ -25,6 +34,8 @@ import SoilMound, { MOUND_GROUND_X, MOUND_GROUND_Y, MOUND_H } from '../takeTest/
 import SoilHole, { HOLE_W, HOLE_H } from '../takeTest/planting/SoilHole';
 import { healthToVariant } from '../../utils/crop';
 import { vibrate } from '../../utils/osFunction';
+import { primeSfx } from '../../utils/audio';
+import { feel } from '../../lib/feel';
 
 // 가운데 칸 — 주인공 당근 자리(growth.planField 의 1칸 자리)
 const X = FIELD_W / 2;
@@ -41,7 +52,12 @@ const GROUND_X = 30;
 const GROUND_Y = 44;
 const SEED_CLIP = `ellipse(86px 200px at ${GROUND_X}px ${GROUND_Y + 6.5 - 200}px)`;
 const SOIL_COLORS = ['#7A5230', '#9A7046', '#A47548', '#B98C5E'];
-const IMG_FADE = 'transition-opacity duration-150 motion-reduce:transition-none';
+// 주인공 그림 크로스페이드 — 진화·퇴화 효과의 정점에서 바꾸고 이 시간 동안 겹쳐 넘긴다
+const IMG_FADE = 'transition-opacity duration-[320ms] ease-out motion-reduce:transition-none';
+// 효과 시작 → 그림 교체까지(ms). 진화는 evolve 의 강한 마지막 음(240ms)에, 퇴화는 가장 어두운 순간에 맞춘다.
+const EVOLVE_SWAP_MS = 220;
+const WILT_SWAP_MS = 360;
+const DUST_COLORS = ['#4A3B2C', '#5E4A35', '#3B3340', '#6B5A48'];
 
 // 주인공 당근의 그림 — 자라는 세 단계 + 시드는 세 상태
 const HERO_IMGS = [
@@ -97,6 +113,8 @@ const FarmStoryStage = ({ scene, runKey = 0, instant = false, words = [], onScen
   const seedRef = useRef(null);
   const moundRef = useRef(null);
   const heroRef = useRef(null);
+  const glowRef = useRef(null);
+  const gloomRef = useRef(null);
   const cropRefs = useRef([]);
   const labelRefs = useRef([]);
   const onDoneRef = useRef(onSceneDone);
@@ -153,14 +171,81 @@ const FarmStoryStage = ({ scene, runKey = 0, instant = false, words = [], onScen
     burst(field, X, Y - (big ? 50 : 30), big ? { n: 12, dist: 60, size: 8 } : { n: 8, dist: 36, size: 6 });
     ring(field, X, Y - 26, { size: big ? 150 : 96, color: '#6CE9A6', dur: 560 });
   };
-  const heroTo = (img, fx) => {
-    setHero((h) => ({ ...h, plant: 'grown', img }));
-    if (fx === 'grow') { track(jelly(heroRef.current, img === heroIdx('carrot', 'healthy') ? 1.3 : 1.1)); growFx(img === heroIdx('carrot', 'healthy')); }
-    if (fx === 'droop') {
-      track(anim(heroRef.current, [
-        { transform: 'rotate(0deg)' }, { transform: 'rotate(-5deg) translateY(2px)', offset: 0.4 }, { transform: 'rotate(0deg)' },
-      ], { duration: 900, easing: 'ease-in-out' }));
+
+  // 어두운 부스러기 — 작물 위쪽에서 아래로 힘없이 떨어진다(fx.burst 의 반대). 끝나면 스스로 빠진다.
+  const dust = (n = 9) => {
+    const field = fieldRef.current;
+    if (!field) return;
+    for (let i = 0; i < n; i += 1) {
+      const size = 4 + (i % 3);
+      const node = document.createElement('span');
+      node.setAttribute('aria-hidden', 'true');
+      const x0 = X + (i - (n - 1) / 2) * 9 + ((i * 37) % 7) - 3;
+      const y0 = Y - 90 + ((i * 53) % 30);
+      node.style.cssText = `position:absolute;pointer-events:none;left:${x0}px;top:${y0}px;width:${size}px;height:${size}px;border-radius:50%;z-index:30;opacity:0;background:${DUST_COLORS[i % DUST_COLORS.length]}`;
+      field.appendChild(node);
+      const a = anim(node, [
+        { transform: 'translate(0,0) scale(.6)', opacity: 0 },
+        { transform: `translate(${(i % 2 ? 1 : -1) * 3}px,10px) scale(1)`, opacity: 0.85, offset: 0.2 },
+        { transform: `translate(${(i % 2 ? -1 : 1) * 5}px,${70 + (i % 4) * 10}px) scale(.7)`, opacity: 0 },
+      ], { duration: 900 + (i % 3) * 140, delay: (i % 4) * 60, easing: 'cubic-bezier(.45,0,.9,.6)' });
+      if (!a) { node.remove(); continue; }
+      a.onfinish = () => node.remove();
+      a.oncancel = () => node.remove();
     }
+  };
+
+  // 진화 — 후광과 밝기가 차오른 정점에서 그림을 바꾼다
+  const evolveFx = (img) => {
+    const big = img === heroIdx('carrot', 'healthy');
+    feel(img === heroIdx('sprout', 'healthy') ? 'xpUp' : 'evolve');
+    track(anim(glowRef.current, [
+      { transform: 'scale(.55)', opacity: 0 },
+      { transform: 'scale(1.05)', opacity: 1, offset: 0.35 },
+      { transform: 'scale(1.3)', opacity: 0 },
+    ], { duration: 820, easing: 'ease-out' }));
+    track(anim(heroRef.current, [
+      { filter: 'brightness(1) saturate(1)' },
+      { filter: 'brightness(1.55) saturate(1.15)', offset: 0.4 },
+      { filter: 'brightness(1) saturate(1)' },
+    ], { duration: 560, easing: 'ease-out' }));
+    at(EVOLVE_SWAP_MS, () => {
+      setHero((h) => ({ ...h, plant: 'grown', img }));
+      track(jelly(heroRef.current, big ? 1.3 : 1.1));
+      growFx(big);
+    });
+  };
+
+  // 퇴화 — 진화의 반대: 가라앉는 색·어두운 그늘·처짐과 떨림·떨어지는 부스러기. 가장 어두운 순간 그림을 바꾼다
+  const wiltFx = (img) => {
+    feel('wrong');
+    track(anim(heroRef.current, [
+      { filter: 'saturate(1) brightness(1)' },
+      { filter: 'saturate(.35) brightness(.62)', offset: 0.42 },
+      { filter: 'saturate(.6) brightness(.8)', offset: 0.7 },
+      { filter: 'saturate(1) brightness(1)' },
+    ], { duration: 1000, easing: 'ease-in-out' }));
+    track(anim(heroRef.current, [
+      { transform: 'rotate(0deg) translateY(0)' },
+      { transform: 'rotate(-2.5deg) translateY(1px)', offset: 0.12 },
+      { transform: 'rotate(2deg) translateY(1px)', offset: 0.24 },
+      { transform: 'rotate(-1.5deg) translateY(2px)', offset: 0.34 },
+      { transform: 'rotate(-6deg) translateY(4px) scale(1,.96)', offset: 0.55 },
+      { transform: 'rotate(0deg) translateY(0)' },
+    ], { duration: 1000, easing: 'ease-in-out' }));
+    track(anim(gloomRef.current, [
+      { transform: 'translateY(-14px) scale(.8)', opacity: 0 },
+      { transform: 'translateY(0) scale(1)', opacity: 1, offset: 0.4 },
+      { transform: 'translateY(4px) scale(1.05)', opacity: 0 },
+    ], { duration: 1050, easing: 'ease-in-out' }));
+    at(120, () => dust());
+    at(WILT_SWAP_MS, () => setHero((h) => ({ ...h, plant: 'grown', img })));
+  };
+
+  const heroTo = (img, fx) => {
+    if (fx === 'grow') { evolveFx(img); return; }
+    if (fx === 'droop') { wiltFx(img); return; }
+    setHero((h) => ({ ...h, plant: 'grown', img }));
   };
 
   const runGrow = () => {
@@ -264,6 +349,7 @@ const FarmStoryStage = ({ scene, runKey = 0, instant = false, words = [], onScen
 
   // 탭 — 지금 장면을 끝 모습으로
   const onTap = () => {
+    primeSfx(); // 탭(user gesture) 안에서 소리를 깨워 둔다 — 다음 장면의 진화·퇴화 소리가 나게
     vibrate({ duration: 5 });
     if (!doneRef.current) { settle(sceneRef.current); return; }
     if (hero.img >= 0 && !hero.gone) {
@@ -343,6 +429,15 @@ const FarmStoryStage = ({ scene, runKey = 0, instant = false, words = [], onScen
             </span>
           </div>
 
+          {/* 진화 후광 — 주인공 뒤에서 번쩍 차오르고 퍼지며 사라진다(평소 opacity 0) */}
+          <span
+            ref={glowRef}
+            aria-hidden
+            data-keep='1'
+            className='pointer-events-none absolute rounded-full opacity-0 bg-[radial-gradient(circle,rgba(255,246,196,0.95)_0%,rgba(255,226,120,0.55)_38%,rgba(255,226,120,0)_70%)]'
+            style={{ width: 190, height: 190, left: X - 95, top: Y - HERO * 0.42 - 95, zIndex: 10 }}
+          />
+
           {/* 주인공 당근 — 그림을 겹쳐 두고 opacity 로만 바꾼다 */}
           <div
             ref={heroRef}
@@ -360,6 +455,18 @@ const FarmStoryStage = ({ scene, runKey = 0, instant = false, words = [], onScen
               />
             ))}
           </div>
+
+          {/* 퇴화 그늘 — 주인공 위로 어두운 먹구름이 잠깐 끼었다 걷힌다(평소 opacity 0) */}
+          <span
+            ref={gloomRef}
+            aria-hidden
+            data-keep='1'
+            className='pointer-events-none absolute opacity-0'
+            style={{ width: HERO, height: HERO, left: X - HERO / 2, top: Y - HERO * CROP_BASELINE, zIndex: 13 }}
+          >
+            <span className='absolute inset-0 rounded-full bg-[radial-gradient(ellipse_at_50%_55%,rgba(28,22,36,0.42)_0%,rgba(28,22,36,0.18)_45%,rgba(28,22,36,0)_70%)]' />
+            <span className='absolute left-[18%] top-[2%] h-[26%] w-[64%] rounded-full bg-[radial-gradient(ellipse_at_50%_50%,rgba(58,52,68,0.75)_0%,rgba(58,52,68,0.4)_50%,rgba(58,52,68,0)_72%)]' />
+          </span>
 
           {/* 체험 밭 작물 — 단어는 돋을 때·탭할 때만 위에 잠깐 뜬다 */}
           {finalWords.map((w, i) => {

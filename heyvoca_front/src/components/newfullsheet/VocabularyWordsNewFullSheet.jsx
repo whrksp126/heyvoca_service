@@ -612,7 +612,8 @@ const VocabularyWordsNewFullSheet = ({ id, manageOnly = false }) => {
               text-[16px] font-[700] tracking-[-0.02em] text-layout-white
               bg-[linear-gradient(180deg,#FF88DC_0%,#FF70D4_100%)]
               shadow-[inset_0_1px_0_rgba(255,255,255,0.34),0_8px_20px_rgba(255,112,212,0.38)]
-              disabled:opacity-40 disabled:shadow-none
+              disabled:bg-none disabled:bg-layout-gray-100 disabled:text-layout-gray-300 disabled:shadow-none
+              dark:disabled:bg-layout-gray-dark dark:disabled:text-layout-gray-400
             "
           >
             이 단어장 물주기

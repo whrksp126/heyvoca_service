@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { CaretLeft, AppleLogo } from '@phosphor-icons/react';
+import { CaretLeft, CaretRight, AppleLogo } from '@phosphor-icons/react';
 import googleLogo from '../assets/images/google_logo.png';
 import { getPlacementPoolApi, migrateOnboardingApi } from '../api/study';
 import { getGuest, clearGuest, clearGuestTrial, buildMigrateBody } from '../utils/guestStorage';
@@ -18,6 +18,7 @@ import { useUser } from '../context/UserContext';
 import postMessageManager from '../utils/postMessageManager';
 import { useStatusBarStyle } from '../hooks/useStatusBarStyle';
 import FarmStoryStage from '../components/onboarding/FarmStoryStage';
+import { cropAssetByVariant } from '../components/farm/CropImage';
 import AuthSplash from '../components/onboarding/AuthSplash';
 import { nodeEnv } from '../utils/common';
 import { useAppOAuthError } from '../hooks/useAppOAuthError';
@@ -31,7 +32,7 @@ import { useAppOAuthError } from '../hooks/useAppOAuthError';
           마지막 finish → auth 는 로그인 상태라 가입 화면 없이 migrate(v2: theta·answers) 후 홈으로 간다.
   【흐름】 hello → intro(농사 이야기: 성장 → 시듦 → 체험 밭) → 수준 맞춤 학습(/take-test, 8문제 + 틀린 단어
           복습, 매 답마다 체험 밭 가상 작물이 자라고 시든다) → 학습 결과(StudyResult — 실제 학습과 같은 슬라이드,
-          밭 성장 · 보석 20 · 결과 목록) → finish('나만의 밭을 만들러 가볼까요?' 문구 + 버튼) → auth
+          밭 성장 · 보석 20 · 결과 목록) → guide('단어를 학습하면 새 농작물을 심고 키울 수 있어요', 8차 QA) → finish('나만의 밭을 만들러 가볼까요?' 문구 + 버튼) → auth
   (이슈 #25 4차 — 소개를 '하나의 밭이 이어지는 농사 이야기'로. 장면 사이 화면 전환 없이 밭 무대
    (components/onboarding/FarmStoryStage) 위에서 연출이 이어지고 제목만 크로스페이드한다. 연출이 끝나기 전엔
    버튼이 회색으로 잠긴다. 장면엔 큰 제목 한 줄과 버튼만 둔다 — 보조 설명 줄은 없앴다.)
@@ -58,8 +59,12 @@ const SCENE_COPY = {
   grow: <>복습할수록 오래 기억하고,<br /><span className="text-primary-main-600">작물이 자라요</span></>,
   wilt: <>복습을 게을리하면<br />작물이 <span className="text-primary-main-600">시들어 죽을 수</span> 있어요</>,
   field: <>농장 체험을 <span className="text-primary-main-600">해볼까요?</span></>,
+  guide: <>단어를 학습하면 새 농작물을<br /><span className="text-primary-main-600">심고 키울 수 있어요</span></>,
   finish: <>나만의 밭을<br /><span className="text-primary-main-600">만들러 가볼까요?</span></>,
 };
+// 안내 장(guide)의 작물 단계 — 씨앗부터 당근까지
+const GUIDE_CROPS = ['seed', 'sprout', 'leaf', 'carrot'];
+
 const SceneCopy = ({ copyKey, className = 'mt-[20px] min-h-[56px]' }) => (
   <div className={`text-center ${className}`}>
     <motion.p
@@ -91,6 +96,8 @@ const Onboarding = () => {
   const [step, setStep] = useState(() => {
     // 로그인된 채 처음 들어오면(로그인 직후 Index 가 보냄) 인사를 건너뛰고 소개부터
     const s = incomingStep || (isLogin ? 'intro' : 'hello');
+    // 학습 결과(StudyResult)를 마치고 오면 마무리 앞에 '새 농작물' 안내 한 장을 먼저(이슈 #25 8차 QA)
+    if (s === 'finish') return 'guide';
     return LEGACY_STEP[s] || s;
   });
   /*
@@ -188,7 +195,7 @@ const Onboarding = () => {
   };
 
   // 이미 로그인된 상태에서 온보딩에 갇힌 경우 — 확인 바텀시트 후 로그아웃하고 로그인 화면으로 이동.
-  // fromOnboarding state를 넘기지 않으므로 Login.jsx에서 회원가입 버튼도 그대로 노출된다.
+  // 로그인 화면은 구글·애플 버튼 하나로 가입·로그인을 겸한다(회원가입 연결 버튼 없음, 이슈 #25 8차).
   const goSwitchAccount = async () => {
     vibrate({ duration: 5 });
     const confirmed = await pushAwaitNewBottomSheet(
@@ -248,6 +255,7 @@ const Onboarding = () => {
   // 시듦 → 체험 밭. 세션이 아직이면 받을 때까지 기다린다(버튼은 '불러오는 중...').
   const goField = async () => {
     vibrate({ duration: 5 });
+    primeSfx();
     if (!trialSession) {
       setLoadingTrial(true);
       const ses = await loadTrialSession();
@@ -459,7 +467,7 @@ const Onboarding = () => {
               </div>
               {isLogin ? (
                 <div className="px-[24px] pt-[18px] pb-[26px] shrink-0">
-                  <Cta label="시작하기" onClick={() => { vibrate({ duration: 5 }); goScene('grow'); setStep('intro'); }} />
+                  <Cta label="시작하기" onClick={() => { vibrate({ duration: 5 }); primeSfx(); goScene('grow'); setStep('intro'); }} />
                   <LoginFooter />
                 </div>
               ) : (
@@ -490,7 +498,7 @@ const Onboarding = () => {
                   </p>
                 )}
                 {scene === 'grow' && (
-                  <Cta label="확인" disabled={!sceneDone} onClick={() => { vibrate({ duration: 5 }); goScene('wilt'); }} />
+                  <Cta label="확인" disabled={!sceneDone} onClick={() => { vibrate({ duration: 5 }); primeSfx(); goScene('wilt'); }} />
                 )}
                 {scene === 'wilt' && (
                   <Cta label={loadingTrial ? '불러오는 중...' : '확인'} disabled={!sceneDone || loadingTrial} onClick={goField} />
@@ -505,7 +513,42 @@ const Onboarding = () => {
             </>
           )}
 
-          {/* ③ 마무리 — 학습 결과(StudyResult, 보석 20 포함)를 본 뒤. 문구와 가입 버튼만. */}
+          {/* ③ 안내 — 학습 결과 슬라이드를 다 본 뒤, 마무리 직전 한 장. 씨앗 → 새싹 → 이파리 → 당근이
+              차례로 '뽕' 돋으며(결과 슬라이드 작물 등장과 같은 스프링) 학습할수록 밭이 자란다는 걸 보여 준다. */}
+          {step === 'guide' && (
+            <>
+              <div className="flex flex-col flex-1 min-h-0 justify-center px-[20px]">
+                <div className="flex items-end justify-center gap-[2px]" aria-hidden>
+                  {GUIDE_CROPS.map((crop, i) => (
+                    <React.Fragment key={crop}>
+                      {i > 0 && (
+                        <motion.span
+                          initial={{ opacity: 0 }} animate={{ opacity: 1 }}
+                          transition={{ delay: 0.15 + i * 0.28, duration: 0.25 }}
+                          className="mb-[26px] text-layout-gray-200"
+                        >
+                          <CaretRight size={14} weight="bold" />
+                        </motion.span>
+                      )}
+                      <motion.img
+                        src={cropAssetByVariant(crop, 'healthy')}
+                        alt="" draggable={false}
+                        initial={{ opacity: 0, y: -14, scale: 0.3 }} animate={{ opacity: 1, y: 0, scale: 1 }}
+                        transition={{ delay: 0.2 + i * 0.28, type: 'spring', stiffness: 420, damping: 16 }}
+                        className="h-[72px] w-[72px] select-none object-contain max-[360px]:h-[60px] max-[360px]:w-[60px]"
+                      />
+                    </React.Fragment>
+                  ))}
+                </div>
+                <SceneCopy copyKey="guide" className="mt-[28px] min-h-[56px]" />
+              </div>
+              <div className="px-[24px] pt-[18px] pb-[26px] shrink-0">
+                <Cta label="다음" onClick={() => { vibrate({ duration: 5 }); setStep('finish'); }} />
+              </div>
+            </>
+          )}
+
+          {/* ④ 마무리 — 학습 결과(StudyResult, 보석 20 포함)를 본 뒤. 문구와 가입 버튼만. */}
           {step === 'finish' && (
             <>
               <div className="flex flex-col flex-1 min-h-0 justify-center px-[28px]">

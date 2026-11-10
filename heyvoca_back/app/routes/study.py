@@ -1395,7 +1395,18 @@ def get_recommend():
     # ── mode=review: 신규(unplanted) 단어를 후보에서 완전히 뺀다 ──
     # 이후의 rotten/task_bucket/target_states 필터·compose() 어디를 타도 bucket='new'가
     # 하나도 없으니 새 단어로 채워질 일이 없다(부족하면 부족한 대로 반환).
+    #
+    # 예외(이슈 #25 8차): 자유 설정 테스트·집중 반복에서 사용자가 "포장된 씨앗(unlearned)"을
+    # target_states 에 직접 넣었다면, 심은 단어로 요청 수를 못 채울 때 그 부족분만 새 단어로
+    # 채운다(아래 review_fill_new). 학습한 단어 5개 + 문제 12개 → 5문제만 나오던 문제.
+    review_fill_new = []
     if mode == 'review':
+        wants_unlearned = False
+        if target_states and task_bucket is None:
+            from app.services.recommend.stage import expand_target_states
+            wants_unlearned = 'unlearned' in expand_target_states(target_states)
+        if wants_unlearned:
+            review_fill_new = [it for it in pool if it.bucket == 'new']
         pool = [it for it in pool if it.bucket != 'new']
 
     # ── 당근 농장: 썩은 단어는 되살리기 전까지 **모든 모드에서** 제외한다. ──
@@ -1409,9 +1420,10 @@ def get_recommend():
     # 게임 로직은 services/game/에만 두고, 실패해도 추천을 막지 않는다.
     try:
         from app.services.game.farm_v2.query import rotten_user_voca_ids
-        rotten_ids = rotten_user_voca_ids(user_id, [it.user_voca_id for it in pool])
+        rotten_ids = rotten_user_voca_ids(user_id, [it.user_voca_id for it in pool + review_fill_new])
         if rotten_ids:
             pool = [it for it in pool if it.user_voca_id not in rotten_ids]
+            review_fill_new = [it for it in review_fill_new if it.user_voca_id not in rotten_ids]
     except Exception:
         logging.getLogger(__name__).error('농장 썩은단어 필터 실패 (추천은 정상)', exc_info=True)
 
@@ -1514,6 +1526,25 @@ def get_recommend():
             allowed_types=allowed_types, pinned_ids=pinned_ids,
             ahead=(fallback == 'ahead' and selection != 'random'),
         )
+
+        # ── 포장된 씨앗으로 부족분 채우기(위 review_fill_new 참고) ──
+        # 추천이면 새 단어 추천 순(rank_new), 랜덤이면 랜덤 — compose 가 selection 대로 고른다.
+        shortfall = count - len(result['enriched_items'])
+        if shortfall > 0 and review_fill_new:
+            fill = compose(
+                review_fill_new, shortfall, selection=selection, user_stats=user_stats,
+                full_recommend=False, new_allowance=None, allowed_types=allowed_types,
+            )
+            if fill['enriched_items']:
+                merged = dict(result['composition'])
+                for k, v in fill['composition'].items():
+                    merged[k] = merged.get(k, 0) + v
+                result = {
+                    **result,
+                    'composition': merged,
+                    'items': list(result.get('items') or []) + list(fill.get('items') or []),
+                    'enriched_items': list(result['enriched_items']) + list(fill['enriched_items']),
+                }
     composition:    dict = result['composition']
     enriched_items: list = result['enriched_items']
 

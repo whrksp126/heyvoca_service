@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import lottie from 'lottie-web';
 import animationData from '../assets/lottie/heyvoca logo-01.json';
 import googleLogo from '../assets/images/google_logo.png';
@@ -16,9 +16,6 @@ const Login = () => {
   "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
 
   const navigate = useNavigate();
-  const location = useLocation();
-  // 온보딩(회원가입) 흐름을 거쳐 도달한 로그인 페이지에서는 회원가입 버튼을 숨긴다.
-  const fromOnboarding = !!location.state?.fromOnboarding;
   const { auth, Login, AppleLogin, clickGoogleOauth, clickAppleOauth } = useUser();
   // 로그인 처리 중(웹 OAuth 콜백 파라미터 도착·앱 OAuth 결과 수신·이미 로그인됨)에는 버튼 화면 대신
   // 스플래시를 그린다 — 가입 직후 홈 진입 전에 로그인 화면이 잠깐 보이던 문제(이슈 #25 6차 QA).
@@ -204,16 +201,8 @@ const Login = () => {
           </button>
         )}
 
-        {/* 온보딩(회원가입)을 거쳐 온 경우가 아니면, 계정이 없을 때 회원가입(온보딩)으로 유도 */}
-        {!fromOnboarding && (
-          <button
-            type="button"
-            onClick={() => navigate('/onboarding')}
-            className="mt-[6px] text-[13px] font-[500] text-layout-gray-400 dark:text-layout-gray-200 underline"
-          >
-            아직 계정이 없으신가요? · 회원가입
-          </button>
-        )}
+        {/* 회원가입 연결 버튼은 없앴다(이슈 #25 8차 QA) — 구글·애플 로그인 하나로 가입과 로그인을 모두 처리한다
+            (새 계정이면 서버가 만들고, Index 가 onboarding_ver 로 갈라 최초 사용자를 온보딩으로 보낸다). */}
 
         {/* 개발자 로그인 (Local Env Only) */}
         {isLocal && (

@@ -1,14 +1,15 @@
 // src/components/takeTest/rewards/ComboRewardSlide.jsx
 //
-// 콤보 신기록 — 번개가 아래에서 솟아올라 쿵 자리 잡고, 콤보 수가 굴러 올라간다.
+// 콤보 신기록 — 번개가 하늘에서 번쩍 내리꽂히고(지그재그 섬광 + 화면 플래시 + 흔들림), 콤보 수가 굴러 올라간다.
 // 이 슬라이드는 최고 기록을 갱신했을 때만 만들어진다(StudyResult 의 push 조건).
 //
-//   0ms     바닥 빛이 켜진다            select
-//   120ms   아래에서 돌며 솟아오른다
-//   320ms                               bonus — 네 번째 강한 음(240ms)과 click 이 착지에 맞게 먼저 발사
-//   560ms   착지 — 찌그러짐 · 파편 · 고리 · 뒤 빛
+//   0ms     select
+//   320ms                               bonus — 강한 음이 내리꽂힘에 맞게 먼저 발사
+//   380ms   지그재그 섬광이 위에서 번쩍
+//   440ms   번개가 위에서 빠르게 떨어진다(120ms, 가속)
+//   560ms   꽂힘 — 화면 플래시 · 흔들림 · 찌그러짐 · 불꽃 · 고리
 //   700ms   콤보 수 카운트업(650ms)
-//   1350ms  「최고 기록 갱신」 띠           tap
+//   1350ms  콤보 수 통 튐                 tap
 //   1500ms  한 줄 문구
 //   1750ms  「확인」 켜짐               select
 import React, { useRef, useState } from 'react';
@@ -32,13 +33,15 @@ const ComboRewardSlide = ({ maxCombo = 0, reducedMotion, onReady, skipRef }) => 
   const [risen, setRisen] = useState(false);
   const [landed, setLanded] = useState(false);
   const [counting, setCounting] = useState(false);
-  const [ribbon, setRibbon] = useState(false);
   const [texted, setTexted] = useState(false);
   const [tail, setTail] = useState(false);
 
   const heroRef = useRef(null);
   const iconRef = useRef(null);
   const numRef = useRef(null);
+  const boltRef = useRef(null);
+  const flashRef = useRef(null);
+  const rootRef = useRef(null);
 
   const shown = useCountUp(counting ? maxCombo : 0, { duration: reducedMotion ? 0.01 : COUNT_MS / 1000 });
 
@@ -46,18 +49,31 @@ const ComboRewardSlide = ({ maxCombo = 0, reducedMotion, onReady, skipRef }) => 
     readyAt: LAND + 1190,
     steps: [
       { at: 0, cue: 'select' },
+      { at: LAND - 240, cue: 'bonus' },
       {
-        at: 120,
+        // 지그재그 섬광 — 번개가 내려올 길을 먼저 번쩍 그어 둔다
+        at: LAND - 180,
+        run: (instant) => {
+          if (instant) return;
+          anim(boltRef.current, [
+            { opacity: 0, transform: 'scaleY(.2)' },
+            { opacity: 1, transform: 'scaleY(1)', offset: 0.2 },
+            { opacity: 0.25, offset: 0.4 },
+            { opacity: 1, offset: 0.55 },
+            { opacity: 0, transform: 'scaleY(1)' },
+          ], { duration: 360, easing: 'linear' });
+        },
+      },
+      {
+        at: LAND - 120,
         run: (instant) => {
           setRisen(true);
           if (!instant) anim(iconRef.current, [
-            { transform: 'translateY(210px) rotate(-160deg) scale(.3)', offset: 0 },
-            { transform: 'translateY(-46px) rotate(8deg) scale(1.08)', offset: 0.7 },
-            { transform: 'translateY(0) rotate(0deg) scale(1)', offset: 1 },
-          ], { duration: LAND - 120, easing: 'cubic-bezier(.3,.7,.5,1)' });
+            { transform: 'translateY(-320px) scale(.75,1.35)', opacity: 0.6 },
+            { transform: 'translateY(0) scale(.85,1.2)', opacity: 1 },
+          ], { duration: 120, easing: 'cubic-bezier(.55,0,1,.45)' });
         },
       },
-      { at: LAND - 240, cue: 'bonus' },
       {
         at: LAND,
         run: (instant) => {
@@ -65,10 +81,18 @@ const ComboRewardSlide = ({ maxCombo = 0, reducedMotion, onReady, skipRef }) => 
           if (instant) return;
           const hero = heroRef.current;
           jelly(iconRef.current, 1.5);
-          burst(hero, C, FLOOR, { n: 16, dist: 120, size: 8, up: 30, dur: 820, colors: FX_COMBO });
+          burst(hero, C, FLOOR, { n: 18, dist: 130, size: 8, up: 40, dur: 760, colors: FX_COMBO });
           ring(hero, C, FLOOR, { size: 260, color: '#FFB520', dur: 650 });
           ring(hero, C, FLOOR, { size: 180, color: '#FFFFFF', dur: 560 });
-          anim(hero, [{ transform: 'translateY(0)' }, { transform: 'translateY(6px)' }, { transform: 'translateY(-2px)' }, { transform: 'translateY(0)' }], { duration: 260 });
+          anim(flashRef.current, [{ opacity: 0.85 }, { opacity: 0.2, offset: 0.35 }, { opacity: 0.5, offset: 0.5 }, { opacity: 0 }], { duration: 320, easing: 'ease-out' });
+          anim(rootRef.current, [
+            { transform: 'translate(0,0)' },
+            { transform: 'translate(-7px,5px)' },
+            { transform: 'translate(6px,-3px)' },
+            { transform: 'translate(-4px,2px)' },
+            { transform: 'translate(2px,-1px)' },
+            { transform: 'translate(0,0)' },
+          ], { duration: 300, easing: 'ease-out' });
         },
       },
       { at: LAND + 140, run: () => setCounting(true) },
@@ -76,7 +100,6 @@ const ComboRewardSlide = ({ maxCombo = 0, reducedMotion, onReady, skipRef }) => 
         at: LAND + 140 + COUNT_MS,
         cue: 'tap',
         run: (instant) => {
-          setRibbon(true);
           if (!instant) pulse(numRef.current, 1.18, 260);
         },
       },
@@ -96,9 +119,23 @@ const ComboRewardSlide = ({ maxCombo = 0, reducedMotion, onReady, skipRef }) => 
   };
 
   return (
-    <div className='relative flex flex-1 flex-col items-center justify-center gap-[10px] overflow-hidden px-[20px] pb-[10px]'>
+    <div ref={rootRef} className='relative flex flex-1 flex-col items-center justify-center gap-[10px] overflow-hidden px-[20px] pb-[10px]'>
+      {/* 꽂히는 순간의 화면 플래시 — 평소엔 투명, 눌림을 막지 않는다 */}
+      <div ref={flashRef} aria-hidden className='pointer-events-none absolute inset-0 z-20 bg-[#FFF6D6] opacity-0' />
       <div ref={heroRef} className='relative shrink-0' style={{ width: HERO, height: HERO }}>
         <RewardGlow on={landed} gold />
+        {/* 지그재그 섬광 — 하늘에서 번개 착지점까지 */}
+        <svg
+          ref={boltRef}
+          aria-hidden
+          className='pointer-events-none absolute left-1/2 -ml-[40px] origin-top opacity-0'
+          style={{ top: -230, width: 80, height: FLOOR + 230 - 40, filter: 'drop-shadow(0 0 6px rgba(255,218,62,.9))' }}
+          viewBox='0 0 80 360'
+          preserveAspectRatio='none'
+        >
+          <polyline points='44,0 26,70 52,120 22,195 50,250 30,310 40,360' fill='none' stroke='#FFDA3E' strokeWidth='9' strokeLinejoin='miter' opacity='.55' />
+          <polyline points='44,0 26,70 52,120 22,195 50,250 30,310 40,360' fill='none' stroke='#FFFFFF' strokeWidth='4' strokeLinejoin='miter' />
+        </svg>
         {/* 바닥 빛 */}
         <div
           aria-hidden
@@ -129,15 +166,8 @@ const ComboRewardSlide = ({ maxCombo = 0, reducedMotion, onReady, skipRef }) => 
         <span className='text-[22px] font-[800] leading-[1]'>콤보</span>
       </div>
 
-      {/* 최고 기록 띠 */}
-      <div
-        className={`h-[32px] whitespace-nowrap rounded-full px-[18px] text-[14px] font-[800] leading-[32px] text-layout-white bg-[linear-gradient(180deg,#FF88DC,#FF70D4)] transition-[transform,opacity] duration-[380ms] ease-[cubic-bezier(.34,1.56,.64,1)] motion-reduce:transition-none ${ribbon ? 'scale-100 opacity-100' : 'scale-50 opacity-0'}`}
-      >
-        최고 기록 갱신
-      </div>
-
       <p className={`text-center text-[17px] font-[700] leading-[1.45] tracking-[-0.02em] ${FADE_UP} ${texted ? 'translate-y-0 opacity-100' : 'translate-y-[18px] opacity-0'}`}>
-        <strong className='text-primary-main-600'>{maxCombo}번</strong> 연속으로 맞혔어요
+        연속 정답 최고 기록!
       </p>
     </div>
   );

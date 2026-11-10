@@ -126,10 +126,22 @@ export const StudySetupNewBottomSheet = ({ onCancel, vocabularySheetId, maxVocab
     // 1. 선택된 작물 단계로 필터 — 테스트 설정(/study/recommend target_states)과 같은 판정
     const candidatePool = allWords.filter(word => memoryState.includes(wordMemoryStage(word)));
 
-    // 2. 출제 유형 분기
+    // 2. 출제 유형 분기 — 학습한 단어를 먼저 고르고, 모자라면 포장된 씨앗(unlearned)으로 채운다
+    //    (이슈 #25 8차: 자유 설정 테스트와 같은 원칙 — 백엔드 /study/recommend review_fill_new).
+    //    랜덤이어도 학습한 단어가 충분하면 새 단어가 섞이지 않는다.
+    const shuffle = (arr) => {
+      const out = [...arr];
+      for (let i = out.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [out[i], out[j]] = [out[j], out[i]];
+      }
+      return out;
+    };
+    const learned = candidatePool.filter(word => wordMemoryStage(word) !== 'unlearned');
+    const unlearned = candidatePool.filter(word => wordMemoryStage(word) === 'unlearned');
     const ordered = selectionType === 'recommended'
-      ? sortByForgettingPriority(candidatePool)
-      : [...candidatePool].sort(() => Math.random() - 0.5);
+      ? [...sortByForgettingPriority(learned), ...shuffle(unlearned)]
+      : [...shuffle(learned), ...shuffle(unlearned)];
 
     const picked = ordered.slice(0, count);
 

@@ -71,10 +71,12 @@ const AchievementSlide = ({ goal, reducedMotion, onReady, skipRef }) => {
           setUpgraded(true);
           if (instant) return;
           ring(heroRef.current, C, C, { size: 330, color: tierTo.color, dur: 800 });
-          burst(heroRef.current, C, C, { n: 18, dist: 150, size: 9, dur: 900, colors: tierChanged ? FX_GOLDS : FX_COLORS });
-          confetti(rootRef.current);
+          burst(heroRef.current, C, C, { n: 12, dist: 150, size: 9, dur: 900, colors: tierChanged ? FX_GOLDS : FX_COLORS });
         },
       },
+      // 색종이는 한 박자 뒤에 — 레벨 교체 리렌더·고리·파편과 같은 프레임에 DOM 수십 개를 한꺼번에
+      // 만들면 저사양 WebView 에서 뒤집기 중간이 끊겼다(2026-11 QA #25 8차). 개수도 28 → 18.
+      { at: FLIP + 420, run: (instant) => { if (!instant) confetti(rootRef.current, { n: 18 }); } },
       { at: FLIP + 620, run: () => setTexted(true) },
     ],
   });
@@ -104,7 +106,8 @@ const AchievementSlide = ({ goal, reducedMotion, onReady, skipRef }) => {
           onClick={onTapMedal}
           className={`absolute inset-0 cursor-pointer [perspective:700px] ${medalIn ? 'opacity-100' : 'opacity-0'}`}
         >
-          <div ref={medalRef} className='absolute inset-0'>
+          {/* 뒤집기 전에 미리 합성 레이어로 올려 둔다 — 뒤집는 순간 레이어를 새로 만들며 다시 칠하지 않게 */}
+          <div ref={medalRef} className='absolute inset-0 [will-change:transform]'>
             {/* 테두리 게이지 */}
             <svg viewBox={`0 0 ${HERO} ${HERO}`} aria-hidden className='absolute inset-0 h-full w-full -rotate-90'>
               <circle cx={C} cy={C} r={R} fill='none' strokeWidth='7' className='stroke-layout-gray-100 dark:stroke-layout-gray-500' />

@@ -49,7 +49,8 @@ const TABS = [
 ];
 
 const ITEM_ORDER = ['SHOVEL', 'NUTRIENT', 'SHIELD'];
-const ALL_CATEGORY = '전체';
+// 서점 단어장 맨 앞 탭 — 서버가 사용자 수준(θ)으로 고른 recommendRank 가 있는 단어장(이슈 #25 8차).
+const RECOMMEND_CATEGORY = '추천';
 const EMPTY_BOOK_PRICE = 3;
 
 /** 섹션 머리 (시안 .sechead) */
@@ -224,19 +225,33 @@ const StoreNewFullSheet = ({ initialTab = 'books', onInventoryChanged, onGoRotte
   const [packs, setPacks] = useState([]);
   const [itemCounts, setItemCounts] = useState({});
   const [toolsStatus, setToolsStatus] = useState('idle'); // idle | loading | ready | error
-  const [category, setCategory] = useState(ALL_CATEGORY);
+  // null = 기본 탭(추천이 있으면 추천, 없으면 첫 카테고리). '전체' 탭은 없앴다(이슈 #25 8차).
+  const [category, setCategory] = useState(null);
   const [loadingDetail, setLoadingDetail] = useState(false);
 
   // ── 단어장 탭 ───────────────────────────────────────────
+  // 카테고리 순서는 서버 정렬(bookstore_category.sort_order) 그대로 — 처음 나온 순서를 지킨다.
+  const recommendedBooks = useMemo(() => (
+    bookStore
+      .filter((b) => Number.isFinite(Number(b.recommendRank)) && b.recommendRank != null)
+      .sort((a, b) => Number(a.recommendRank) - Number(b.recommendRank))
+  ), [bookStore]);
+
   const categories = useMemo(() => {
     const set = new Set();
     bookStore.forEach((item) => { if (item.category) set.add(item.category); });
-    return [ALL_CATEGORY, ...Array.from(set)];
-  }, [bookStore]);
+    const list = Array.from(set);
+    return recommendedBooks.length > 0 ? [RECOMMEND_CATEGORY, ...list] : list;
+  }, [bookStore, recommendedBooks]);
 
-  const filteredBooks = useMemo(() => (
-    category === ALL_CATEGORY ? bookStore : bookStore.filter((b) => b.category === category)
-  ), [bookStore, category]);
+  // 고른 탭이 목록에서 사라졌으면(언어 전환·재조회) 기본 탭으로 돌아간다.
+  const activeCategory = categories.includes(category) ? category : (categories[0] ?? null);
+
+  const filteredBooks = useMemo(() => {
+    if (activeCategory === RECOMMEND_CATEGORY) return recommendedBooks;
+    if (activeCategory == null) return bookStore;
+    return bookStore.filter((b) => b.category === activeCategory);
+  }, [bookStore, recommendedBooks, activeCategory]);
 
   const openBook = async (item) => {
     vibrate({ duration: 5 });
@@ -404,10 +419,13 @@ const StoreNewFullSheet = ({ initialTab = 'books', onInventoryChanged, onGoRotte
 
             {!isBookStoreLoading && (
               <div className="flex flex-col gap-[10px]">
-                <SecHead title="서점 단어장" sub="검증된 단어가 담겨 있어요" />
+                <SecHead
+                  title="서점 단어장"
+                  sub={activeCategory === RECOMMEND_CATEGORY ? '내 수준에 맞는 단어장을 골랐어요' : '검증된 단어가 담겨 있어요'}
+                />
                 <div className="flex gap-[6px] overflow-x-auto scrollbar-hide -mx-[16px] px-[16px] mb-[4px]">
                   {categories.map((cat) => {
-                    const on = cat === category;
+                    const on = cat === activeCategory;
                     return (
                       <button
                         key={cat}

@@ -25,7 +25,7 @@ import { notifyStudyDataChanged, ONBOARDING_MIGRATED_EVENT } from '../utils/stud
 import { toLocalDateString, STABILITY_LEAF_DAYS, STABILITY_CARROT_DAYS } from '../utils/common';
 import { getUserRecentStudyDataApi, updateUserRecentStudyDataApi } from '../api/study';
 import AchievementRewardOverlay from '../components/overlay/AchievementRewardOverlay';
-import GemRewardOverlay from '../components/overlay/GemRewardOverlay';
+import { openGemRewardSheet } from '../components/rewards/openRewardSheet';
 
 const VocabularyContext = createContext(null);
 export const VocabularyProvider = ({ children }) => {
@@ -465,11 +465,12 @@ export const VocabularyProvider = ({ children }) => {
       // 업적 업데이트 (새로 완료된 업적이 있는 경우) - 먼저 표시
       // 서점 구매(POST /vocaBooks, bookstoreId)도 독서왕 달성 시 goals 와 gem{before:구매 차감 후, after:보상 반영 후}를
       // 준다(2026-11 QA #24). goals 가 없거나 빈 배열이면(구 백엔드) 아무 것도 하지 않는다.
+      const achievementOverlays = [];
       if (Array.isArray(newBook.goals) && newBook.goals.length > 0) {
         // 업적 오버레이 표시
         if (window.overlayContext?.showAwaitOverlay) {
           newBook.goals.forEach(goal => {
-            window.overlayContext.showAwaitOverlay(AchievementRewardOverlay, { goal });
+            achievementOverlays.push(window.overlayContext.showAwaitOverlay(AchievementRewardOverlay, { goal }));
           });
         }
 
@@ -507,13 +508,14 @@ export const VocabularyProvider = ({ children }) => {
 
       // 보석 업데이트 및 오버레이 표시 - 나중에 표시
       if (newBook.gem && newBook.gem.after > newBook.gem.before) {
-        if (window.overlayContext?.showAwaitOverlay) {
-          window.overlayContext.showAwaitOverlay(GemRewardOverlay, {
-            gemCount: newBook.gem.after - newBook.gem.before,
-            title: "업적 달성 보상!",
-            description: "독서왕 업적 달성 보석이 지급되었습니다."
-          });
-        }
+        // 업적 연출이 다 닫힌 뒤, 퀘스트 보상과 같은 「보상 받기」 시트 → 보석 칩 카운트업(2026-11 QA #25 8차)
+        openGemRewardSheet({
+          after: achievementOverlays,
+          title: '업적 달성 보상',
+          subtitle: '독서왕 업적을 달성했어요',
+          gemFrom: newBook.gem.before,
+          gemTo: newBook.gem.after,
+        });
 
         setUserProfile(prev => ({
           ...prev,

@@ -41,4 +41,7 @@ const AchievementRewardOverlay = ({ goal }) => {
   );
 };
 
+// 불투명 전체 화면 — OverlayProvider 가 흐림 배경·스케일 스프링 없이 페이드만 한다(성능, 8차 QA)
+AchievementRewardOverlay.overlayBare = true;
+
 export default AchievementRewardOverlay;

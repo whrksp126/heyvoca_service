@@ -351,8 +351,78 @@ def search_bookstore_word():
     return jsonify({'code': 200, 'data': data}), 200
 
 
+## 서점 "추천" 탭 (이슈 #25 8차) ─────────────────────────────────────────
+# 사용자 수준(θ) — 온보딩 migrate 가 user_skill_profile 에 저장하고 /study/log 가 갱신한다.
+# 프로필이 없으면 가입 시 고른 level_id 로 초기값, 그것도 없으면 None(추천 탭 숨김).
+_BOOKSTORE_RECOMMEND_MAX = 8      # 추천 탭에 보여줄 최대 권수
+_BOOKSTORE_RECOMMEND_PER_SERIES = 2  # "Day NN"·"N탄"·"N권" 시리즈는 같은 묶음에서 최대 2권
+_SERIES_RE = re.compile(r'(day\s*\d+|\d+\s*(탄|권|편))', re.IGNORECASE)
+_JLPT_RE = re.compile(r'\bN([1-5])\b', re.IGNORECASE)
+
+
+def _user_theta(user_id, lang):
+    from app.models.models import UserSkillProfile, User
+    from app.services import skill_level as SL
+    uid = UUID(user_id)
+    prof = UserSkillProfile.query.filter_by(user_id=uid, lang=lang).first()
+    if prof is not None and prof.theta is not None:
+        return float(prof.theta)
+    user = db.session.get(User, uid) if hasattr(db.session, 'get') else User.query.get(uid)
+    if user is not None and user.level_id in SL.LEVEL_ID_THETA:
+        return SL.LEVEL_ID_THETA[user.level_id]
+    return None
+
+
+def _bookstore_book_scores(lang, rows):
+    """bookstore_id → 난이도 점수(0~100, θ 와 같은 척도)."""
+    from app.services import skill_level as SL
+    if lang == 'ja':
+        # 일본어 서점은 JLPT 단어장뿐이라 이름의 N5~N1 을 등급 대표 점수로 쓴다.
+        out = {}
+        for row in rows:
+            m = _JLPT_RE.search(row.bookstore_name or '')
+            if m:
+                out[row.bookstore_id] = float(SL.RANK_CENTER[SL.JLPT_RANK['N' + m.group(1)]])
+        return out
+    from app.services.onboarding_placement import _book_levels
+    return {b['bookstore_id']: float(b['score']) for b in _book_levels()}
+
+
+def _bookstore_recommend_ranks(user_id, lang, rows, not_owned_map):
+    """수준에 맞는 서점 단어장 → {bookstore_id: 1..N}. 수준 정보가 없으면 {}.
+
+    θ 와 가까운 순(살짝 쉬운 쪽 우선 — 어려운 쪽은 거리 1.5배). 이미 다 가진 단어장은 뺀다.
+    한 시리즈(Day 01~30 등)가 추천을 다 차지하지 않게 시리즈당 2권까지만.
+    """
+    theta = _user_theta(user_id, lang)
+    if theta is None:
+        return {}
+    scores = _bookstore_book_scores(lang, rows)
+    cands = []
+    for row in rows:
+        score = scores.get(row.bookstore_id)
+        if score is None or row.hide == 'Y':
+            continue
+        if not_owned_map.get(row.admin_voca_book_id, 1) == 0:
+            continue
+        dist = (theta - score) if score <= theta else (score - theta) * 1.5
+        cands.append((dist, row.bookstore_id, row.bookstore_name or ''))
+    cands.sort()
+    ranks, series_cnt = {}, {}
+    for _dist, bid, name in cands:
+        series = _SERIES_RE.sub('#', name).strip().lower()
+        if series_cnt.get(series, 0) >= _BOOKSTORE_RECOMMEND_PER_SERIES:
+            continue
+        series_cnt[series] = series_cnt.get(series, 0) + 1
+        ranks[bid] = len(ranks) + 1
+        if len(ranks) >= _BOOKSTORE_RECOMMEND_MAX:
+            break
+    return ranks
+
+
 ## 서점 데이터 API
 # bookstore, admin_voca_book, admin_voca_book_map 테이블의 데이터를 가져옴
+# 로그인 사용자에게는 항목마다 recommendRank(추천 탭 순서, 아니면 null)를 붙인다.
 @search_bp.route('/bookstore', methods=['GET'])
 def search_bookstore_all():
     # 선택적 인증 — 게스트 온보딩도 이 API를 부른다. 토큰이 없거나 무효해도 401을 내지
@@ -420,6 +490,14 @@ def search_bookstore_all():
             for book_id, voca_ids in book_voca_map.items():
                 not_owned_map[book_id] = len(voca_ids - owned_ids)
 
+    # 추천 탭 — 실패해도 서점 목록은 그대로 내려간다(추천만 빠짐).
+    recommend_map = {}
+    if user_id:
+        try:
+            recommend_map = _bookstore_recommend_ranks(user_id, lang, rows, not_owned_map)
+        except Exception:
+            logging.getLogger(__name__).exception('서점 추천 계산 실패')
+
     # 결과 가공
     final_results = []
     for row in rows:
@@ -441,6 +519,7 @@ def search_bookstore_all():
             "vocaCount": row.word_count,
             "notOwnedCount": not_owned_count,
             "language": lang,
+            "recommendRank": recommend_map.get(row.bookstore_id),
         })
 
     return jsonify({'code': 200, 'data': final_results}), 200
