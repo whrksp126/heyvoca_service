@@ -16,6 +16,7 @@ import { createPortal } from 'react-dom';
 import { CaretUp, Drop } from '@phosphor-icons/react';
 import CropImage, { CROP_ASSETS, CROP_BASELINE, cropAssetByVariant } from '../../farm/CropImage';
 import fieldBase from '../../../assets/images/farm/field-base.png';
+import { healthToVariant } from '../../../utils/crop';
 import { feel } from '../../../lib/feel';
 import { useRewardTimeline } from './useRewardTimeline';
 import { anim, burst, ring, jelly, pulse, clearFx, BACK_OUT, FX_GOLDS, WORD_LABEL_FRAMES, WORD_LABEL_CLASS } from './fx';
@@ -28,6 +29,11 @@ import SoilMound, { MOUND_GROUND_X, MOUND_GROUND_Y, MOUND_H } from '../planting/
 const fieldSrc = (crop, variant = 'healthy') => (
   crop === 'golden' ? CROP_ASSETS.goldenCarrot : cropAssetByVariant(crop, variant, { solo: crop === 'seed' })
 );
+// 되살리기 전 그림 — 체험 밭은 실제 시작 건강(목마름이면 목마름 그림), 서버 요약(시듦·심한 시듦만 셈)은 시듦
+const rescueFromVariant = (entry) => {
+  const v = entry.fromHealth ? healthToVariant(entry.fromHealth) : 'wilted';
+  return ['drying', 'wilted', 'rotten'].includes(v) ? v : 'wilted';
+};
 const clamp = (v, lo, hi) => Math.max(lo, Math.min(hi, v));
 const TICK = { cue: 'tap', cueOpts: { sound: false } };   // 소리 없이 진동만 한 번
 const IMG_BASE = 'pointer-events-none select-none transition-opacity duration-100';
@@ -235,7 +241,7 @@ const FarmGrowthSlide = ({ entries, reducedMotion, onReady, skipRef }) => {
                       </span>
                     ) : (
                       <img
-                        src={fieldSrc(entry.from, rescue ? 'wilted' : 'healthy')}
+                        src={fieldSrc(entry.from, rescue ? rescueFromVariant(entry) : 'healthy')}
                         alt=''
                         draggable={false}
                         className={`absolute inset-0 h-full w-full object-contain ${IMG_BASE} ${isGrown ? 'opacity-0' : 'opacity-100'}`}

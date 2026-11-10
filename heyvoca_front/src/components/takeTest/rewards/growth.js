@@ -29,7 +29,8 @@ export const buildGrowthEntries = ({ grownRows = [], rescuedRows = [], metaOfRow
     const id = row?.user_voca_id;
     if (id == null || seen.has(id)) return;
     seen.add(id);
-    out.push({ id, word: row.word, meaning: row.meaning, kind, from, to, meta: metaOfRow(row) });
+    // fromHealth — 되살림 전 건강(체험 밭만 준다). 서버 요약은 시듦·심한 시듦만 되살림으로 세서 없으면 시듦 그림.
+    out.push({ id, word: row.word, meaning: row.meaning, kind, from, to, fromHealth: row.health_from ?? null, meta: metaOfRow(row) });
   };
   grownRows.forEach((row) => {
     const to = stageToCrop(row.to_stage ?? row.crop);

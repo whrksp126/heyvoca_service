@@ -1,13 +1,17 @@
 // src/components/takeTest/rewards/StreakRewardSlide.jsx
 //
-// 연속 학습 달성 — 큰 불꽃이 솟아 자리 잡고, 연속 일수가 어제 값에서 오늘 값으로 굴러 넘어간 뒤,
+// 연속 학습 달성 — 바닥 불씨가 반짝이다 불꽃이 아래에서 확 치솟아 타오르고(점화), 연속 일수가 어제 값에서 오늘 값으로 굴러 넘어간 뒤,
 // 1주 띠의 오늘 칸에 불이 '붙는다'(2026-10-28 QA #19 — 예전엔 문구 + 띠만 있어 화면 대부분이 비었다).
 // 이 슬라이드는 오늘 문턱을 이 세션에서 처음 넘겼을 때만 만들어진다(StudyResult 의 push 조건).
 //
-//   0ms     바닥 빛                          select
-//   120ms   불꽃이 아래에서 솟아오른다
-//   280ms                                    bonus — 착지에 맞춰 먼저 발사
-//   520ms   착지 — 젤리 · 불티 · 고리 · 뒤 빛
+//   0ms     select
+//   80ms    바닥 불씨가 두어 번 반짝인다(작은 불티 한 줌)
+//   280ms                                    bonus — 점화 순간에 맞춰 먼저 발사
+//   360ms   점화 — 불꽃이 밑동 기준으로 확 치솟는다(scaleY 0→1.2→1) · 따뜻한 화면 플래시 ·
+//           빛 번짐 · 열기 아지랑이 · 불티가 위로 튄다
+//   520ms   타오름 — 일렁임 시작 · 고리 · 뒤 빛
+// (2026-11 이슈 #25 15차 — 예전엔 불꽃이 아래에서 날아올라 '착지'했다. 불과 안 어울려 콤보 번개처럼
+//  소재에 맞는 임팩트로 바꿨다. 불꽃 그림은 기존 StreakFlame 그대로.)
 //   660ms   숫자 등장(어제 값)
 //   900ms   숫자가 오늘 값으로 굴러 넘어간다    tap
 //   1150ms  1주 띠(오늘 칸은 아직 빈칸)
@@ -27,6 +31,7 @@ import { useRewardTimeline } from './useRewardTimeline';
 import { anim, burst, ring, pulse, clearFx, BACK_OUT } from './fx';
 import RewardGlow from './RewardGlow';
 
+const IGNITE = 360;        // 불꽃이 치솟는 순간
 const LAND = 520;
 const ROLL_AT = 900;
 const STRIP_AT = 1150;
@@ -35,7 +40,10 @@ const READY_AT = 1900;
 const HERO = 190;          // 주인공 상자 한 변
 const FLAME = 140;         // 불꽃 크기
 const C = HERO / 2;
-const FLOOR = 160;         // 착지 지점(상자 안 y)
+const FLOOR = 160;         // 불꽃 밑동(상자 안 y)
+// 열기 아지랑이·빛 번짐·화면 플래시 색 — 불꽃 그림(StreakFlame)의 주황·노랑 계열
+const HEAT_GLOW = 'radial-gradient(ellipse at 50% 100%, rgba(255,186,73,.55) 0%, rgba(245,138,34,.28) 40%, rgba(245,138,34,0) 72%)';
+const EMBER_GLOW = 'radial-gradient(circle, #FFF3C4 0%, #FFB520 45%, rgba(245,138,34,0) 72%)';
 
 const FADE_UP = 'transition-[transform,opacity] duration-300 ease-out motion-reduce:transition-none';
 
@@ -54,6 +62,10 @@ const StreakRewardSlide = ({ current = 0, cells = [], reducedMotion, onReady, sk
   const heroRef = useRef(null);
   const riseRef = useRef(null);
   const flameRef = useRef(null);
+  const emberRef = useRef(null);
+  const hazeRef = useRef(null);
+  const bloomRef = useRef(null);
+  const flashRef = useRef(null);
   const numRef = useRef(null);
   const todayRef = useRef(null);
 
@@ -71,25 +83,60 @@ const StreakRewardSlide = ({ current = 0, cells = [], reducedMotion, onReady, sk
     steps: [
       { at: 0, cue: 'select' },
       {
-        at: 120,
+        // 바닥 불씨 — 꺼질 듯 두어 번 반짝인다
+        at: 80,
         run: (instant) => {
-          setRisen(true);
-          if (!instant) anim(riseRef.current, [
-            { transform: 'translateY(170px) scale(.3)', offset: 0 },
-            { transform: 'translateY(-30px) scale(1.08)', offset: 0.72 },
-            { transform: 'translateY(0) scale(1)', offset: 1 },
-          ], { duration: LAND - 120, easing: 'cubic-bezier(.3,.7,.5,1)' });
+          if (instant) return;
+          anim(emberRef.current, [
+            { transform: 'scale(.2)', opacity: 0 },
+            { transform: 'scale(1)', opacity: 1, offset: 0.25 },
+            { transform: 'scale(.7)', opacity: 0.55, offset: 0.5 },
+            { transform: 'scale(1.25)', opacity: 1, offset: 0.8 },
+            { transform: 'scale(1.6)', opacity: 0 },
+          ], { duration: IGNITE, easing: 'ease-in-out' });
+          burst(heroRef.current, C, FLOOR - 4, { n: 4, dist: 14, size: 4, up: 18, dur: 420, colors: FLAME_SPARKS });
         },
       },
-      { at: LAND - 240, cue: 'bonus' },
+      { at: IGNITE - 80, cue: 'bonus' },
+      {
+        // 점화 — 밑동을 축으로 아래에서 확 치솟았다가(1.2) 자리 잡는다
+        at: IGNITE,
+        run: (instant) => {
+          setRisen(true);
+          if (instant) return;
+          anim(riseRef.current, [
+            { transform: 'scale(.5,0)', opacity: 0.4 },
+            { transform: 'scale(.9,1.2)', opacity: 1, offset: 0.55 },
+            { transform: 'scale(1.06,.94)', offset: 0.8 },
+            { transform: 'scale(1,1)', opacity: 1 },
+          ], { duration: LAND - IGNITE + 60, easing: 'cubic-bezier(.2,.9,.3,1)' });
+          // 열기 아지랑이 — 불꽃 위로 일렁이며 올라가 흩어진다
+          anim(hazeRef.current, [
+            { transform: 'translateY(20px) scale(.6,.4)', opacity: 0 },
+            { transform: 'translateY(-10px) scale(1,1.1)', opacity: 0.9, offset: 0.3 },
+            { transform: 'translateY(-40px) scale(1.15,1.3) skewX(4deg)', opacity: 0.5, offset: 0.65 },
+            { transform: 'translateY(-70px) scale(1.25,1.5) skewX(-4deg)', opacity: 0 },
+          ], { duration: 900, easing: 'ease-out' });
+          // 빛 번짐 — 불이 붙는 순간 확 퍼졌다가 잦아든다
+          anim(bloomRef.current, [
+            { transform: 'scale(.3)', opacity: 0 },
+            { transform: 'scale(1.25)', opacity: 1, offset: 0.3 },
+            { transform: 'scale(1)', opacity: 0 },
+          ], { duration: 700, easing: 'ease-out' });
+          // 짧은 따뜻한 화면 플래시
+          anim(flashRef.current, [{ opacity: 0.55 }, { opacity: 0.15, offset: 0.4 }, { opacity: 0 }], { duration: 300, easing: 'ease-out' });
+          // 불티 — 밑동에서 위로 튀어 오른다
+          burst(heroRef.current, C, FLOOR - 20, { n: 12, dist: 40, size: 6, up: 90, dur: 900, colors: FLAME_SPARKS });
+          burst(heroRef.current, C, FLOOR - 50, { n: 8, dist: 60, size: 5, up: 120, dur: 1100, colors: FLAME_SPARKS });
+        },
+      },
       {
         at: LAND,
         run: (instant) => {
           setLanded(true);
           if (instant) return;
           flameRef.current?.play();
-          burst(heroRef.current, C, FLOOR - 30, { n: 14, dist: 110, size: 8, up: 30, dur: 820, colors: FLAME_SPARKS });
-          ring(heroRef.current, C, FLOOR - 20, { size: 240, color: 'var(--secondary-yellow-400)', dur: 650 });
+          ring(heroRef.current, C, FLOOR - 40, { size: 220, color: 'var(--secondary-yellow-400)', dur: 650 });
         },
       },
       { at: LAND + 140, run: () => setNumShown(true) },
@@ -148,6 +195,8 @@ const StreakRewardSlide = ({ current = 0, cells = [], reducedMotion, onReady, sk
 
   return (
     <div ref={stageRef} className='relative flex flex-1 flex-col items-center justify-center gap-[10px] overflow-hidden px-[20px] pb-[10px]'>
+      {/* 점화 순간의 따뜻한 화면 플래시 — 평소엔 투명, 눌림을 막지 않는다 */}
+      <div ref={flashRef} aria-hidden className='pointer-events-none absolute inset-0 z-20 bg-[#FFE3B3] opacity-0' />
       {/* 큰 불꽃 — 은은한 금빛 글로우 위에서 일렁인다(StreakFlame 의 일렁임 · 불티) */}
       <div ref={heroRef} className='relative shrink-0' style={{ width: HERO, height: HERO }}>
         <RewardGlow on={landed} gold />
@@ -156,10 +205,30 @@ const StreakRewardSlide = ({ current = 0, cells = [], reducedMotion, onReady, sk
           className={`pointer-events-none absolute left-1/2 -ml-[85px] h-[30px] w-[170px] rounded-[50%] transition-[transform,opacity] duration-300 motion-reduce:transition-none ${landed ? 'scale-100 opacity-100' : 'scale-[.4] opacity-0'}`}
           style={{ top: FLOOR - 15, background: 'radial-gradient(ellipse, rgba(245,138,34,.38) 0%, rgba(245,138,34,0) 70%)' }}
         />
+        {/* 빛 번짐 · 열기 아지랑이 — 점화 순간에만 보인다(평소 투명) */}
+        <div
+          ref={bloomRef}
+          aria-hidden
+          className='pointer-events-none absolute left-1/2 -ml-[90px] h-[180px] w-[180px] rounded-full opacity-0'
+          style={{ top: FLOOR - 130, background: HEAT_GLOW }}
+        />
+        <div
+          ref={hazeRef}
+          aria-hidden
+          className='pointer-events-none absolute left-1/2 -ml-[60px] h-[150px] w-[120px] origin-bottom rounded-[50%] opacity-0 blur-[10px]'
+          style={{ top: FLOOR - 170, background: HEAT_GLOW }}
+        />
+        {/* 바닥 불씨 */}
+        <div
+          ref={emberRef}
+          aria-hidden
+          className='pointer-events-none absolute left-1/2 -ml-[14px] h-[28px] w-[28px] rounded-full opacity-0'
+          style={{ top: FLOOR - 16, background: EMBER_GLOW }}
+        />
         <div
           ref={riseRef}
           onClick={onTapFlame}
-          className={`absolute cursor-pointer ${risen ? 'opacity-100' : 'opacity-0'}`}
+          className={`absolute cursor-pointer origin-bottom ${risen ? 'opacity-100' : 'opacity-0'}`}
           style={{ left: (HERO - FLAME) / 2, top: FLOOR - FLAME + 8 }}
         >
           <StreakFlame ref={flameRef} days={days} size={FLAME} lit alive={landed} />

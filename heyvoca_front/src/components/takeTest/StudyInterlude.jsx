@@ -30,7 +30,7 @@ export const PHASE_COPY = {
   retry: { title: '틀린 문제를 복습해봐요', sub: '다시 풀면 더 오래 기억해요' },
   // 새 씨앗 심기 사전 테스트(이슈 #25 12차) — 세션 맨 앞 / 사전 테스트가 끝나고 학습이 시작될 때
   pretest: { title: '아는 단어인지 먼저 볼게요', sub: '이미 아는 단어는 건너뛸게요' },
-  plantLearn: { title: '새 단어를 익혀봐요', sub: '모르는 단어만 골라 배워요' },
+  plantLearn: { title: '모르는 단어만 학습해 볼게요!', sub: '아는 단어는 이미 심었어요' },
 };
 
 // 완료 컷의 사선 띠 4개 — 완료 효과음 네 음(SFX_NOTE_STARTS_MS.complete) 시작 시각에 하나씩, 좌우 번갈아 들어온다.
@@ -212,8 +212,11 @@ export const ComboInterlude = ({ n, milestone = COMBO_MILESTONE_STEP, onDone, du
   );
 };
 
-/** @param {'sentence'|'retry'|'trial'|'practice'} kind 구간 종류 — 가벼운 큐('select') 사용 */
-export const PhaseInterlude = ({ kind = 'sentence', onDone, durationMs = PHASE_INTERLUDE_MS }) => {
+/**
+ * @param {'sentence'|'retry'|'trial'|'practice'|'pretest'|'plantLearn'} kind 구간 종류 — 가벼운 큐('select') 사용
+ * @param {string} [sub] 보조 문구 덮어쓰기(심기 학습 구간의 '모르는 단어 N개' 등)
+ */
+export const PhaseInterlude = ({ kind = 'sentence', sub, onDone, durationMs = PHASE_INTERLUDE_MS }) => {
   "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
 
   const copy = PHASE_COPY[kind] ?? PHASE_COPY.sentence;
@@ -221,7 +224,7 @@ export const PhaseInterlude = ({ kind = 'sentence', onDone, durationMs = PHASE_I
     <InterludeShell
       tone={kind === 'retry' ? 'retry' : 'phase'}
       title={copy.title}
-      sub={copy.sub}
+      sub={sub ?? copy.sub}
       cue="select"
       durationMs={durationMs}
       onDone={onDone}

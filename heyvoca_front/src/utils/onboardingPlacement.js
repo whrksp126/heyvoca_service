@@ -992,17 +992,16 @@ export function stepVirtualCrop(cur, correct) {
   const span = VFARM_NEXT[cur.stage] - VFARM_FLOOR[cur.stage];
   let { stage, health, xp } = cur;
   const revived = !!correct && health !== 'FRESH';
-  let withered = false;
+  const withered = false; // 오답에도 건강은 그대로(아래) — payload 호환으로 키만 남긴다
   if (correct) {
     xp += Math.round(span * VFARM_GAIN_PCT / 100);
     health = 'FRESH';
     while (stage !== 'CARROT' && xp >= VFARM_NEXT[stage]) stage = VFARM_STAGES[VFARM_STAGES.indexOf(stage) + 1];
     if (stage === 'CARROT') xp = Math.min(xp, VFARM_NEXT.CARROT - 1);
   } else {
+    // 오답은 물주기 미완료일 뿐 건강을 깎지 않는다 — 실제 서버(farm_v2/answer.py)와 같은 규칙(이슈 #25 15차).
+    // 예전엔 FRESH→THIRSTY→WILTED 로 시들게 해 체험 결과 밭이 실제보다 시들어 보였다.
     xp = Math.max(VFARM_FLOOR[stage], xp - Math.round(span * VFARM_LOSS_PCT / 100));
-    const nextHealth = health === 'FRESH' ? 'THIRSTY' : 'WILTED';
-    withered = nextHealth !== health;
-    health = nextHealth;
   }
   const next = { stage, health, xp };
   const pctOf = (st, x) => Math.max(0, Math.min(100, Math.round(((x - VFARM_FLOOR[st]) / (VFARM_NEXT[st] - VFARM_FLOOR[st])) * 100)));

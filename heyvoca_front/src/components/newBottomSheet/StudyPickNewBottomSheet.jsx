@@ -34,6 +34,7 @@ import SheetOptionRow from './SheetOptionRow';
 
 /*
   이슈 #25 9차 — 항목 제목은 '농장 돌보기' / '새 씨앗 심기' / '밭 골라 돌보기', 부제는 학습 설명 한 줄.
+  15차 — 부제에 개수를 적지 않는다(돌보기·심기 모두 고정 문구).
   seedOnly: 아직 씨앗을 한 번도 안 심은 입문 사용자(plant_seed 미완료) — 새 씨앗 심기 외 항목은 잠금 표시.
 */
 export const StudyPickNewBottomSheet = ({ seedOnly = false } = {}) => {
@@ -50,18 +51,14 @@ export const StudyPickNewBottomSheet = ({ seedOnly = false } = {}) => {
 
   const tasks = todayTasks ?? {};
   const rotten = tasks.rotten ?? { count: 0 };
-  const wilted = tasks.wilted ?? { total: 0, done: 0 };
-  const care = tasks.care ?? { total: 0, done: 0 };
   const newSeed = tasks.new_seed ?? { target: 0, done: 0 };
   const seedsLeft = tasks.seeds_left ?? 0;
   const nutrientCnt = tasks.items?.nutrient ?? 0;
 
-  const careLeft = Math.max(0, wilted.total - wilted.done) + Math.max(0, care.total - care.done);
   const seedRemaining = Math.max(0, (newSeed.target ?? 0) - (newSeed.done ?? 0));
   // 심을 씨앗이 없다 — 오늘 할 일 카드와 같은 기준(재고 seeds_left 가 0일 때만 막는다).
   // 예전엔 show_buy(재고 < 하루 목표)까지 막아, 씨앗이 3개 남아도 '0개'로 흐려졌다.
   const cannotPlant = seedsLeft <= 0;
-  const seedCount = cannotPlant ? 0 : (seedRemaining > 0 ? Math.min(seedRemaining, seedsLeft) : seedsLeft);
   const bookCount = vocabularySheets?.length ?? 0;
   // 심은(복습 가능한) 단어 — 0이면 돌보기는 받을 단어가 없으니 심기로 안내한다
   const plantedCount = (vocabularySheets ?? []).flatMap((sh) => sh.words || [])
@@ -146,12 +143,12 @@ export const StudyPickNewBottomSheet = ({ seedOnly = false } = {}) => {
     },
     {
       key: 'care', title: '농장 돌보기',
-      desc: careLeft > 0 ? `지금 복습하면 좋은 단어 ${careLeft}개를 골라 드려요` : '지금 복습하면 좋은 단어를 골라 드려요',
+      desc: '지금 복습하면 좋은 단어를 골라 드려요',
       run: startCare,
     },
     {
       key: 'seed', title: '새 씨앗 심기',
-      desc: seedCount > 0 ? `처음 보는 새 단어 ${seedCount}개를 학습해요` : '처음 보는 새 단어를 학습해요',
+      desc: '처음 보는 새 단어를 학습해요',
       run: plant,
     },
     {

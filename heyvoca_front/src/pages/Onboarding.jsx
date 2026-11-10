@@ -42,7 +42,7 @@ import { useAppOAuthError } from '../hooks/useAppOAuthError';
    버튼이 회색으로 잠긴다. 장면엔 큰 제목 한 줄과 버튼만 둔다 — 보조 설명 줄은 없앴다.)
   (이슈 #25 3차 — 닉네임 입력을 뺐다. 이름은 서버가 기본 닉네임으로 넣고 나중에 마이페이지에서 바꾼다.)
   (이슈 #25 14차 — 닉네임 묻기를 되살렸다. 이제 hello 에서 먼저 로그인하므로 가입 뒤 홈 직전(guide 다음)에
-   묻고, 마이페이지 닉네임 변경과 같은 API(/auth/update_user_info)로 바로 저장한다. 건너뛰면 서버 기본 닉네임
+   묻고, 마이페이지 닉네임 변경과 같은 API(/auth/update_user_info)로 바로 저장한다. (15차부터 건너뛰기 없음.) 예전엔 건너뛰면 서버 기본 닉네임
    ('새내기 농부') 또는 소셜 계정 이름을 그대로 둔다. 단계 이름은 'nickname' — 'nick' 은 예전 화면이 쓰던 값이라
    LEGACY_STEP 에서 가입(auth)으로 잇는다.)
   (이슈 #25 2차 — 단어장 추천·선택, 유입 경로·학습 목적·하루 심기 수 질문을 뺐다.
@@ -293,7 +293,8 @@ const Onboarding = () => {
   /*
     닉네임(이슈 #25 14차) — 안내(guide) 다음, 마무리(finish) 앞 한 장.
     지금 이름이 기본 닉네임이 아니면(소셜 계정 이름 등) 그 이름을 채워 둔다 — 그대로 '다음'이면 바꾸지 않는다.
-    저장은 마이페이지 닉네임 변경과 같은 /auth/update_user_info. 실패하면 알리고 다시 누르거나 건너뛸 수 있다.
+    저장은 마이페이지 닉네임 변경과 같은 /auth/update_user_info. 실패하면 알리고 다시 누르게 한다.
+    15차: 건너뛰기 없음 — 이름을 입력해야 다음(빈 값이면 버튼 비활성), placeholder '홍길동'.
   */
   const [nickname, setNickname] = useState(() => {
     const cur = cleanNickname(userProfile?.username);
@@ -311,13 +312,6 @@ const Onboarding = () => {
   const [savedNickname, setSavedNickname] = useState(null);
   const nickValue = cleanNickname(nickname);
   const nickValid = nickValue.length >= 1 && nickValue.length <= NICKNAME_MAX;
-
-  const skipNickname = () => {
-    if (nickSaving) return;
-    vibrate({ duration: 5 });
-    setNickError(null);
-    setStep('finish');
-  };
 
   const saveNickname = async () => {
     if (nickSaving || !nickValid) return;
@@ -617,7 +611,7 @@ const Onboarding = () => {
             </>
           )}
 
-          {/* ③-1 닉네임 — '제가 뭐라고 불러드릴까요?'(이슈 #25 14차 복원). 건너뛰면 지금 이름(기본 '새내기 농부') 그대로. */}
+          {/* ③-1 닉네임 — '제가 뭐라고 불러드릴까요?'(이슈 #25 14차 복원, 15차 건너뛰기 제거). */}
           {step === 'nickname' && (
             <>
               <div className="flex flex-col flex-1 min-h-0 justify-center px-[28px]">
@@ -626,7 +620,7 @@ const Onboarding = () => {
                   <input
                     value={nickname}
                     onChange={(e) => { nickTouchedRef.current = true; setNickname(e.target.value.slice(0, NICKNAME_MAX + 4)); setNickError(null); }}
-                    placeholder={DEFAULT_NICKNAME}
+                    placeholder="홍길동"
                     maxLength={NICKNAME_MAX + 4}
                     enterKeyHint="done"
                     autoComplete="nickname"
@@ -659,10 +653,6 @@ const Onboarding = () => {
               </div>
               <div className="px-[24px] pt-[18px] pb-[26px] shrink-0">
                 <Cta label={nickSaving ? '저장 중...' : '다음'} disabled={!nickValid || nickSaving} onClick={saveNickname} />
-                <button type="button" onClick={skipNickname} disabled={nickSaving}
-                  className="w-full mt-[14px] text-[13px] font-[500] text-layout-gray-300 dark:text-layout-gray-100 underline disabled:opacity-40">
-                  건너뛰기
-                </button>
               </div>
             </>
           )}

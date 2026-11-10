@@ -31,6 +31,7 @@ const flameScale = (level, fraction) => {
 };
 
 const GLOW = [0.18, 0.42, 0.75];
+const HALO_DUR = 2.8; // 잔상 빛 한 주기(초) — 두 겹이 반 주기씩 어긋나 돈다
 
 const captionOf = (level, hasTasks) => {
   if (level >= 2) return '오늘 불꽃이 활짝 타올랐어요';
@@ -92,16 +93,44 @@ const TodayFlameHero = forwardRef(function TodayFlameHero(
           aria-hidden
           className="pointer-events-none absolute bottom-[3px] left-[14px] right-[14px] h-[10px] rounded-full bg-[radial-gradient(ellipse_at_center,rgba(96,80,52,.22)_0%,transparent_70%)] dark:bg-[radial-gradient(ellipse_at_center,rgba(0,0,0,.5)_0%,transparent_70%)]"
         />
-        {/* 빛 — 단계가 오를수록 진하다 */}
+        {/* 빛 — 단계가 오를수록 진하다. 바탕 빛은 반복하지 않고 단계가 바뀔 때만 opacity 를 옮긴다 */}
         <motion.span
           aria-hidden
           className="pointer-events-none absolute -inset-[22%] rounded-full bg-[radial-gradient(circle,var(--secondary-yellow-400)_0%,transparent_64%)]"
           initial={false}
-          animate={moving
-            ? { opacity: [GLOW[level] * 0.7, GLOW[level], GLOW[level] * 0.7] }
-            : { opacity: GLOW[level] * 0.85 }}
-          transition={moving ? { duration: 2.2, repeat: Infinity, ease: 'easeInOut' } : { duration: 0.2 }}
+          animate={{ opacity: GLOW[level] * (moving ? 0.55 : 0.85) }}
+          transition={{ duration: 0.4 }}
         />
+        {/* 잔상 빛 — 이슈 #25 15차. 예전엔 한 겹이 0.7→1→0.7 로 숨 쉬다 반복 경계에서 뚝 끊겨 보였다.
+            이제 두 겹이 위상차(반 주기)를 두고 opacity 0 에서 서서히 나타나 커지며 퍼지고 0 으로 사라진다.
+            키프레임 시작·끝이 모두 opacity 0 이라 loop 이음매가 보이지 않는다. transform·opacity 만 쓴다 */}
+        {/* 단계별 진하기는 바깥 겹이 맡는다 — 단계가 바뀌어도 안쪽 루프가 다시 시작되며 튀지 않게 */}
+        {moving && (
+          <motion.span
+            aria-hidden
+            className="pointer-events-none absolute inset-0"
+            initial={false}
+            animate={{ opacity: GLOW[level] * 0.9 }}
+            transition={{ duration: 0.4 }}
+          >
+            {[0, 1].map((i) => (
+              <motion.span
+                key={i}
+                className="absolute -inset-[22%] rounded-full bg-[radial-gradient(circle,var(--secondary-yellow-400)_0%,transparent_64%)] will-change-transform"
+                initial={{ opacity: 0, scale: 0.7 }}
+                animate={{ opacity: [0, 1, 0], scale: [0.7, 1.05, 1.35] }}
+                transition={{
+                  duration: HALO_DUR,
+                  times: [0, 0.4, 1],
+                  ease: 'easeInOut',
+                  repeat: Infinity,
+                  repeatType: 'loop',
+                  delay: i * (HALO_DUR / 2),
+                }}
+              />
+            ))}
+          </motion.span>
+        )}
         {/* 단계 상승 섬광 */}
         {evolveKey > 0 && !reducedMotion && (
           <motion.span

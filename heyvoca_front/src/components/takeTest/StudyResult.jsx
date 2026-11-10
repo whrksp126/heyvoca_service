@@ -160,7 +160,8 @@ const virtualFieldSummary = (field) => {
     if (VIRTUAL_STAGE_ORDER.indexOf(w.stage) > VIRTUAL_STAGE_ORDER.indexOf(before.stage)) {
       grown.push({ ...row, from_stage: before.stage, to_stage: w.stage });
     } else if (before.health !== 'FRESH' && w.health === 'FRESH') {
-      rescued.push({ ...row, crop: w.stage });
+      // health_from — 밭 성장 슬라이드가 '되살리기 전' 그림을 실제 상태(목마름/시듦)대로 그린다
+      rescued.push({ ...row, crop: w.stage, health_from: before.health });
     }
   });
   return { planted: [], grown, rescued, rewards: {}, streak: null, word_stages: wordStages };

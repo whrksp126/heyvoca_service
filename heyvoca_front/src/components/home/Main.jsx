@@ -489,11 +489,14 @@ const Main = () => {
       ) : (
         /* 단어장 0개 — 밭 그림 없이 하늘만 깔고, 헤드라인 아래 ~ CTA 위 자리에 입문 퀘스트 카드.
            카드 높이만큼 히어로가 늘어난다(최소 420px). 단어장 목록을 받기 전·퀘스트 대상이 아니면 빈 자리 */
-        <div className="
-          relative w-full min-h-[420px] flex-shrink-0 z-[1]
+        /* 이슈 #25 15차 — 주 버튼을 숨긴 동안(buyQuestPending)은 버튼 자리(pb 64px · 최소 높이 420px)도
+           비우지 않는다. 그 자리가 남아 카드 아래가 휑하게 떨어져 보였다 */
+        <div className={`
+          relative w-full flex-shrink-0 z-[1]
           bg-[linear-gradient(180deg,var(--farm-sky-100)_0%,var(--farm-sky-200)_32%,var(--farm-canvas)_100%)]
-          px-[20px] pt-[max(170px,calc(var(--status-bar-height)+126px))] pb-[64px]
-        ">
+          px-[20px] pt-[max(170px,calc(var(--status-bar-height)+126px))]
+          ${buyQuestPending ? 'pb-[8px]' : 'min-h-[420px] pb-[64px]'}
+        `}>
           {questInHero && <OnboardingQuestCard />}
           {questPending && (
             <div
@@ -511,12 +514,13 @@ const Main = () => {
         initial={{ opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.2 }}
-        className="
+        /* 주 버튼이 없으면(buyQuestPending) 흘러나온 버튼을 비켜 줄 30px 도 필요 없다 */
+        className={`
           relative z-[2] shrink-0
           flex flex-col gap-[12px]
-          px-[20px] pt-[30px]
+          px-[20px] ${buyQuestPending ? 'pt-[12px]' : 'pt-[30px]'}
           pb-[calc(84px+var(--safe-area-bottom))]
-        "
+        `}
       >
         {/* CTA 바로 아래 "오늘 할 일" 카드 — 썩은 단어·시듦·돌봄·새 씨앗을 한 곳에서 말한다.
             §8 water·amber·seed 스트립은 이 카드로 흡수돼 뺐다(위 변수 선언부 주석 참고). */}

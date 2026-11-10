@@ -42,7 +42,7 @@ import { getReading, shouldShowReading } from '../../utils/jaWord';
 import ReadingLine from '../common/ReadingLine';
 import ResultMark from '../common/ResultMark';
 import { computeStudyProgress } from '../../utils/studyProgress';
-import { PRETEST_MCQ, KNOWN, UNKNOWN, classifyPretest, pretestWordId, pretestWordIds } from '../../utils/plantPretest';
+import { KNOWN, UNKNOWN, classifyPretest, pretestWordId, pretestWordIds, computePlantProgress, countUnknownWords } from '../../utils/plantPretest';
 import { SLIDE_VARIANTS, SLIDE_TRANSITION, CARD_ENTER_INITIAL, CARD_ENTER_ANIMATE, CARD_ENTER_TRANSITION } from '../../utils/studySlideMotion';
 import SpeakerArt from '../common/SpeakerArt';
 import CardSpeakerButton from '../common/CardSpeakerButton';
@@ -360,7 +360,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
     return nextQ;
   };
   /*
-    새 씨앗 심기 사전 테스트(이슈 #25 12차, utils/plantPretest.js). 사전 테스트 문제(plantPretest)는
+    새 씨앗 심기 사전 테스트(이슈 #25 12차·15차 단순화, utils/plantPretest.js). 사전 테스트 문제(plantPretest)는
     채점 로그·FSRS·plantAttemptsRef·재출제를 전혀 타지 않고 분류만 한다. 분류는 그 단어의 첫 사전 테스트
     문제 객체(pretestClass)에 적어 둔다 — 큐(study_data)와 함께 저장되므로 재마운트에도 남는다.
     아는 단어(known)만 그 철자 문제가 단어의 유일한 1차 문제가 되어 기존 심기 기록(plantQuestionDone)으로 1회 기록된다.
@@ -383,18 +383,9 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
     if (!head) return null;
     if (question.pretestGraded) return head.pretestClass ?? null; // 즉시 콜백·완료 콜백 이중 호출
     question.pretestGraded = true;
-    const res = classifyPretest(question.plantPretest, correct, { hinted });
+    // 15차 — 아는(힌트 없이 정답)/모르는 둘로만 나눈다. 오답 뒤 사지선다 2차 테스트는 없다.
+    head.pretestClass = classifyPretest(question.plantPretest, correct, { hinted });
     const at = progressIndex;
-    if (res === PRETEST_MCQ) {
-      if (question.pretestMcq) {
-        const mcq = { ...question.pretestMcq };
-        replaceQueue((list) => [...list.slice(0, at + 1), mcq, ...list.slice(at + 1)]);
-        return PRETEST_MCQ;
-      }
-      head.pretestClass = UNKNOWN;
-    } else {
-      head.pretestClass = res;
-    }
     // 모든 단어가 분류됐으면 학습 구간을 걸러 낸다(이 문제가 사전 테스트의 마지막)
     const list = questionsRef.current ?? testQuestions;
     const ids = pretestWordIds(list);
@@ -409,6 +400,13 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
       if (Array.isArray(filtered)) replaceQueue((l) => [...l.slice(0, cut), ...filtered]);
     }
     return head.pretestClass ?? null;
+  };
+  // 철자를 만들 수 없어 사지선다로 본 단어를 맞혔을 때 — 철자 정답(processCardWord)과 같이 그 자리에서 심는다
+  // (그 사지선다가 단어의 유일한 1차 문제, plantQuestionDone 이 /study/log 1회).
+  const plantKnownByMcq = (question) => {
+    const vocaId = question.vocaIndexId ?? question.id;
+    recordPlantAttempt(vocaId, true);
+    plantQuestionDone(vocaId, progressIndex);
   };
   const pendingInterludeRef = useRef(null);        // { n, milestone, atIndex }
   const shownMilestonesRef = useRef(new Set());
@@ -741,7 +739,9 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
     const phaseKind = nextQ ? (nextQ.phaseStart ?? null) : (retryAtEnd ? 'retry' : null);
     if (phaseKind && !shownPhasesRef.current.has(phaseKind) && interludeQueue.length === 0) {
       shownPhasesRef.current.add(phaseKind);
-      items.push({ id: interludeIdRef.current++, type: 'phase', kind: phaseKind });
+      // 심기 학습 구간 — 모르는 단어 수를 함께 보여 준다
+      const n = phaseKind === 'plantLearn' ? countUnknownWords(questionsRef.current ?? testQuestions) : null;
+      items.push({ id: interludeIdRef.current++, type: 'phase', kind: phaseKind, n });
     }
     if (items.length === 0) {
       setSlideDirection(1);
@@ -1360,7 +1360,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
 
     // 심기 사전 테스트 — 분류만 하고 기록·재출제는 하지 않는다
     if (isPlantPretestQ(question)) {
-      handlePretestGraded(question, isCorrectAnswer);
+      if (handlePretestGraded(question, isCorrectAnswer) === KNOWN) plantKnownByMcq(question);
       lastRetryEnqueuedRef.current = false;
       setIsStay(true);
       setIsAnswered(true);
@@ -1435,7 +1435,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
 
     // 심기 사전 테스트(사지선다) — 분류만 하고 기록·재출제·낙관 상태 표시는 하지 않는다
     if (isPlantPretestQ(question)) {
-      handlePretestGraded(question, isCorrectAnswer);
+      if (handlePretestGraded(question, isCorrectAnswer) === KNOWN) plantKnownByMcq(question);
       lastRetryEnqueuedRef.current = false;
       setIsAnswered(true);
       advanceGate.arm({
@@ -2058,7 +2058,10 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
   // 슬라이드·재출제 제외). 분자 = 채점 순간 정답으로 채워진 단위 수(오답은 그대로, 재출제 정답 시 채움).
   // testQuestions 의 isCorrect 에서 매 렌더 재계산하므로 복원·재마운트에도 그대로 복구된다.
   // 세션 종료 판정(passedVocaIdsRef·큐 소진)과는 무관한 표시 전용 값이다.
-  const studyProgress = computeStudyProgress(testQuestions);
+  // 새 씨앗 심기(사전 테스트가 있는 세션)는 사전 테스트·학습 두 구간을 따로 센다(utils/plantPretest.js) —
+  // 사전 테스트 칸(단어 수)이 답마다 차서 가득 찬 뒤, 학습 칸이 모르는 단어의 학습 단위 수로 새로 시작한다.
+  const studyProgress = (isPlantMode && computePlantProgress(testQuestions, progressIndex, computeStudyProgress))
+    || computeStudyProgress(testQuestions);
   // 공급자 세션은 큐가 문제마다 자라므로 분모를 progressTotal(계획 칸 수)로 고정하고, 재진입 전에 채운 칸은
   // progressOffset 으로 더한다.
   // 온보딩 공급자 세션은 progressOf(세션 정본 + 지금 문제 채점 미리보기, utils/onboardingPlacement.js)로
@@ -2159,7 +2162,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
   const interludeEl = (
     <AnimatePresence>
       {!interlude ? null : (interlude.type === 'phase'
-        ? <PhaseInterlude key={interlude.id} kind={interlude.kind} onDone={handleInterludeDone} />
+        ? <PhaseInterlude key={interlude.id} kind={interlude.kind} sub={interlude.kind === 'plantLearn' && interlude.n > 0 ? `모르는 단어 ${interlude.n}개를 익혀요` : undefined} onDone={handleInterludeDone} />
         : <ComboInterlude key={interlude.id} n={interlude.n} milestone={interlude.milestone} onDone={handleInterludeDone} />)}
     </AnimatePresence>
   );
