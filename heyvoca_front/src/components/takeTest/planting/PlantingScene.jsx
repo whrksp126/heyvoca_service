@@ -14,7 +14,8 @@
 //   끝       심은 자리가 차례로 통 튄다                        xpUp
 //            「학습 종료」가 켜진다
 //
-// 밭에는 9칸까지만 올리고 나머지는 마지막 자리가 숫자로 대신한다(planField 의 weight).
+// 심은 씨앗은 전부 밭에 올린다(이슈 #25 11차 — 10개 심었는데 9칸만 보였다). 9개까지는 밭 성장 슬라이드와
+// 같은 3×3 자리, 그보다 많으면 마름모 격자를 k×k 로 늘리고 칸을 작게 줄여 같은 밭 안에 담는다(planSeedField).
 // 화면을 탭하면(skipRef) 남은 연출을 건너뛰고 최종 상태만 남긴다.
 import React, { useMemo, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
@@ -23,7 +24,7 @@ import fieldBase from '../../../assets/images/farm/field-base.png';
 import { feel, SPRING } from '../../../lib/feel';
 import { useRewardTimeline } from '../rewards/useRewardTimeline';
 import { anim, burst, ring, jelly, pulse, clearFx, BACK_OUT, WORD_LABEL_FRAMES, WORD_LABEL_CLASS } from '../rewards/fx';
-import { planField, FIELD_W, FIELD_H } from '../rewards/growth';
+import { planField, FIELD_W, FIELD_H, FIELD_MAX } from '../rewards/growth';
 import FarmGrowRow from '../rewards/FarmGrowRow';
 import SoilMound, { MOUND_GROUND_X, MOUND_GROUND_Y, MOUND_H } from './SoilMound';
 import SoilHole, { HOLE_W, HOLE_H } from './SoilHole';
@@ -47,6 +48,36 @@ const COVER_MS = 380;
 const PHASE = { NONE: 0, DUG: 1, SEEDED: 2, COVERED: 3 };
 
 const clamp = (v, lo, hi) => Math.max(lo, Math.min(hi, v));
+
+/*
+  씨앗 자리 — 한 줄에 한 칸씩, 숫자로 뭉치지 않는다(weight 1). 9개 이하는 planField 의 3×3 자리 그대로.
+  그보다 많으면 k×k 마름모 격자(k = ⌈√n⌉)에서 가운데에 가까운 칸부터 n 칸을 고르고, 3×3 과 같은 밭 범위
+  (x ±88, y ±38)에 맞게 간격을 줄인다. 칸이 겹치지 않게 그림도 같은 비율(scale)로 줄인다.
+*/
+const planSeedField = (rows) => {
+  const list = rows ?? [];
+  if (list.length <= FIELD_MAX) {
+    const { crops } = planField(list.map((row) => ({ kind: 'sprout', row })));
+    return crops.map((c) => ({ ...c, scale: 1 }));
+  }
+  const k = Math.ceil(Math.sqrt(list.length));
+  const c = (k - 1) / 2;
+  const cells = [];
+  for (let i = 0; i < k; i += 1) for (let j = 0; j < k; j += 1) cells.push([i, j]);
+  const picked = cells
+    .sort((a, b) => (Math.hypot(a[0] - c, a[1] - c) - Math.hypot(b[0] - c, b[1] - c)) || (a[0] + a[1] - b[0] - b[1]))
+    .slice(0, list.length)
+    .sort((a, b) => (a[0] + a[1] - b[0] - b[1]) || (b[0] - a[0])); // 뒤(위)에서 앞(아래)으로
+  const step = 2 / (k - 1); // 3×3 간격(44, 19) 대비
+  const scale = Math.min(1, 2.4 / (k - 1));
+  return picked.map(([i, j], n) => ({
+    entry: { kind: 'sprout', row: list[n] },
+    weight: 1,
+    scale,
+    x: FIELD_W / 2 + (i - j) * 44 * step,
+    y: 150 + (i + j - (k - 1)) * 19 * step,
+  }));
+};
 
 // 구멍 둘레의 흙 알갱이가 안쪽으로 모여든다 — fx.burst 의 반대 방향. 끝나면 스스로 빠지고,
 // 건너뛸 때는 clearFx 가 치운다(부모 직속 span[aria-hidden]).
@@ -72,9 +103,8 @@ const gatherSoil = (parent, x, y) => {
 };
 
 const PlantingScene = ({ rows, metaOfRow, reducedMotion, onDone, skipRef }) => {
-  // 밭 자리 계산은 밭 성장 슬라이드의 것을 그대로 쓴다(한 종류로만 넘기면 순서대로 9칸을 채운다)
-  const plan = useMemo(() => planField((rows ?? []).map((row) => ({ kind: 'sprout', row }))), [rows]);
-  const { crops } = plan;
+  // 밭 자리 — 심은 씨앗 수만큼 칸을 만든다(planSeedField)
+  const crops = useMemo(() => planSeedField(rows), [rows]);
   const total = rows.length;
 
   const [fieldIn, setFieldIn] = useState(false);
@@ -243,15 +273,23 @@ const PlantingScene = ({ rows, metaOfRow, reducedMotion, onDone, skipRef }) => {
       <div className='relative -mt-[40px] shrink-0 max-[350px]:-mb-[12px] max-[350px]:-mt-[52px] max-[350px]:scale-90' style={{ width: FIELD_W, height: FIELD_H }}>
         <div ref={fieldRef} className={`absolute inset-0 ${fieldIn ? 'opacity-100' : 'opacity-0'}`}>
           <img src={fieldBase} alt='' draggable={false} className='absolute inset-0 h-full w-full select-none' />
-          {crops.map(({ entry, x, y }, i) => {
+          {crops.map(({ entry, x, y, scale }, i) => {
             const phase = phaseOf(i);
             return (
+              /* 바깥은 자리·크기(scale), 안쪽은 통 튀기(jelly) — jelly 가 transform 을 덮어써도 크기가 유지된다 */
               <div
-                key={entry.row.user_voca_id}
+                key={entry.row.user_voca_id ?? `${entry.row.word}-${i}`}
+                className='absolute'
+                style={{
+                  width: SLOT, height: SLOT, left: x - GROUND_X, top: y - GROUND_Y, zIndex: 10 + Math.round(y / 19),
+                  transform: scale !== 1 ? `scale(${scale})` : undefined,
+                  transformOrigin: `${GROUND_X}px ${GROUND_Y}px`,
+                }}
+              >
+              <div
                 ref={(el) => { slotRefs.current[i] = el; }}
                 onClick={onTapSlot(i)}
-                className='absolute cursor-pointer origin-[50%_73%]'
-                style={{ width: SLOT, height: SLOT, left: x - GROUND_X, top: y - GROUND_Y, zIndex: 10 + Math.round(y / 19) }}
+                className='absolute inset-0 cursor-pointer origin-[50%_73%]'
               >
                 {/* 구멍 — 흙이 덮이면 사라진다 */}
                 <span
@@ -294,6 +332,7 @@ const PlantingScene = ({ rows, metaOfRow, reducedMotion, onDone, skipRef }) => {
                 >
                   {entry.row.word}
                 </span>
+              </div>
               </div>
             );
           })}

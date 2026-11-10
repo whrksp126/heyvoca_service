@@ -543,6 +543,13 @@ export function createSession(bands, { theta = START_THETA, rng = Math.random } 
     pending: null,
     current: null,
     done: false,
+    // 진행바(이슈 #25 11차) — pv 가 있는 세션만 아래 칸 계산을 쓴다(구세션은 고정 분모 폴백).
+    pv: 2,
+    units: 0,      // 지금까지 낸 1·2부 채점 단위 수(카드 맞추기는 단어 수, 재출제 제외)
+    unfilled: {},  // 단어별 아직 안 채워진 칸 수(틀린 1·2부 단위)
+    dropped: 0,    // 재출제 상한으로 포기한 칸 수 — 분모에서 뺀다
+    seq: 0,        // 낸 문제 일련번호(문제 객체 placementSeq) — 화면 미리보기의 이중 계산 방지
+    curSeq: null,  // 아직 advance 로 반영하지 않은 지금 화면 문제의 일련번호
   };
 }
 
@@ -631,6 +638,7 @@ const nextPart1 = (s, rng) => {
     }
     if (words.length === 0) continue;
     words.forEach((w) => s.used.push(w.voca_id));
+    s.units = (s.units ?? 0) + words.length;
     s.pending = { kind: 'p1', type, ids: words.map((w) => w.voca_id) };
     return buildQuestion(type, words, s.pool, rng);
   }
@@ -643,10 +651,10 @@ const nextPart1 = (s, rng) => {
 // 계획한 유형을 낼 단어가 없으면 다른 예문 유형으로. 예문 유형을 낼 단어가 없으면 2부를 끝낸다.
 const nextPart2 = (s, rng) => {
   const asked = new Set(s.part2Asked || []);
-  if (s.part2Done >= PART2_COUNT) return null;
+  if (s.part2Done >= PART2_COUNT || s.part2Ended) return null;
   const words = Object.keys(s.firstById).map(Number)
     .filter((id) => !asked.has(id)).map((id) => byId(s, id)).filter(Boolean);
-  if (words.length === 0) return null;
+  if (words.length === 0) { s.part2Ended = true; return null; }
   // 유형은 한 번씩 — 계획한 유형부터, 그 유형을 낼 단어가 없으면 아직 안 낸 다른 예문 유형으로.
   const doneTypes = new Set(s.part2Types || []);
   const planned = PART2_PLAN[s.part2Done % PART2_PLAN.length];
@@ -667,10 +675,11 @@ const nextPart2 = (s, rng) => {
       break;
     }
   }
-  if (!pick) return null;
+  if (!pick) { s.part2Ended = true; return null; }
   const { p, t: type } = pick;
   s.part2Asked = [...asked, p.voca_id];
   s.part2Done += 1;
+  s.units = (s.units ?? 0) + 1;
   s.lastP2Type = type;
   s.part2Types = [...doneTypes, type];
   s.pending = { kind: 'p2', type, ids: [p.voca_id] };
@@ -686,9 +695,14 @@ const nextPart3 = (s, rng) => {
   while (s.wrong.length > 0) {
     const id = s.wrong[0];
     const count = s.retryCount[id] ?? 0;
-    if (count >= MAX_RETRY) { s.wrong.shift(); continue; }
+    if (count >= MAX_RETRY || !byId(s, id)) {
+      // 포기한 단어의 빈 칸은 분모에서 뺀다 — 덜 찬 채로 끝나지 않게
+      s.wrong.shift();
+      s.dropped = (s.dropped ?? 0) + (s.unfilled?.[id] ?? 0);
+      if (s.unfilled) s.unfilled[id] = 0;
+      continue;
+    }
     const p = byId(s, id);
-    if (!p) { s.wrong.shift(); continue; }
     const first = !s.startedRetry;
     s.startedRetry = true;
     // 같은 단어를 연달아 두 번 묻지 않게 — 한 단어를 낸 뒤 줄 맨 뒤로 보낸다
@@ -723,6 +737,11 @@ export function advance(s, answered, rng = Math.random) {
     const results = Array.isArray(answered.words)
       ? answered.words.map((w) => [w.vocaIndexId ?? w.id, w.isCorrect === true])
       : [[answered.vocaIndexId ?? answered.id, answered.isCorrect === true]];
+    if (s.pv) {
+      const f = applyFill(s, pend, results);
+      s.filled = f.filled;
+      s.unfilled = f.unfilled;
+    }
     results.forEach(([id, correct]) => {
       const p = byId(s, id);
       if (!p) return;
@@ -730,11 +749,11 @@ export function advance(s, answered, rng = Math.random) {
         // 카드 맞추기 재출제엔 이미 맞힌 단어도 같이 들어 있다 — 틀렸던 단어만 센다
         if (correct && s.wrong.includes(id)) {
           s.wrong = s.wrong.filter((x) => x !== id);
-          s.filled = (s.filled ?? 0) + 1; // 틀렸던 칸을 채운다(진행바)
+          if (!s.pv) s.filled = (s.filled ?? 0) + 1; // 틀렸던 칸을 채운다(진행바, 구세션)
         }
         return;
       }
-      if (correct) s.filled = (s.filled ?? 0) + 1;
+      if (correct && !s.pv) s.filled = (s.filled ?? 0) + 1;
       // 2부에서 맞히면 3부(오답 복습) 대상에서 뺀다 — 이미 맞힌 단어를 또 묻지 않는다
       if (pend.kind === 'p2' && correct) s.wrong = s.wrong.filter((x) => x !== id);
       updateTheta(s, itemB(p, pend.type), correct);
@@ -765,6 +784,8 @@ export function advance(s, answered, rng = Math.random) {
   // 첫 문제 앞 '문제 유형을 하나씩 체험해요'(PHASE_COPY.trial) 안내는 없앴다(이슈 #25 4차) — 온보딩 '체험 밭'
   // 장면이 그 자리를 대신한다. 학습 화면 안 안내가 떠 있는 동안 아직 안 보이는 첫 문제의 TTS 가 먼저 나왔다.
   const q = nextPart1(s, rng) || nextPart2(s, rng) || nextPart3(s, rng);
+  if (q) { s.seq = (s.seq ?? 0) + 1; q.placementSeq = s.seq; }
+  s.curSeq = q ? s.seq : null;
   // 출제 직후 사본 — 플러그인이 문제 객체에 답(isCorrect·userResultIndex 등)을 써 넣기 전 상태
   s.pendingQ = q && s.pending?.kind !== 'p3' ? JSON.parse(JSON.stringify(q)) : null;
   s.current = q;
@@ -808,6 +829,58 @@ export function resultWords(s) {
 
 /** 진행바에 이미 채워진 칸 수 — 화면 복원(재진입) 때 Main 진행바 오프셋으로 쓴다. */
 export const filledUnits = (s) => Math.min(s?.filled ?? 0, plannedProgressUnits());
+
+/*
+  진행바 칸 채우기(이슈 #25 11차) — 농장 돌보기(utils/studyProgress.js)와 같은 규칙:
+    분모 = 1·2부에서 낸 채점 단위(카드 맞추기는 단어 수) + 아직 안 낸 계획 단위. 재출제는 분모에 없다.
+    분자 = 정답으로 채운 단위. 틀린 단위는 그 단어를 나중에 맞힐 때(3부 재출제, 또는 2부에서 같은 단어를
+           맞혀 복습 대상에서 빠질 때) 채워진다 — 그래서 마지막 문제를 맞히는 순간 정확히 가득 찬다.
+  advance(반영)와 progressOf(채점 직후 미리보기)가 같은 함수를 써서 화면과 세션이 어긋나지 않는다.
+*/
+function applyFill(s, pend, results) {
+  let filled = s.filled ?? 0;
+  const unfilled = { ...(s.unfilled || {}) };
+  const wrong = new Set(s.wrong || []);
+  results.forEach(([id, correct]) => {
+    if (!byId(s, id)) return;
+    if (pend.kind === 'p3') {
+      if (correct && wrong.has(id)) { filled += unfilled[id] ?? 0; unfilled[id] = 0; wrong.delete(id); }
+      return;
+    }
+    if (correct) {
+      filled += 1;
+      // 2부 정답이면 복습 대상에서 빠지므로 앞서 틀린 칸도 함께 채운다
+      if (pend.kind === 'p2' && wrong.has(id)) { filled += unfilled[id] ?? 0; unfilled[id] = 0; wrong.delete(id); }
+    } else {
+      unfilled[id] = (unfilled[id] ?? 0) + 1;
+      wrong.add(id);
+    }
+  });
+  return { filled, unfilled };
+}
+
+/**
+ * 진행바 { total, done } — 세션 정본 + 지금 화면 문제의 채점 결과(아직 advance 전)를 미리 반영한다.
+ * 채점 순간 바로 칸이 차고, 다음 문제로 넘어가 advance 가 반영한 뒤에도 같은 값이 유지된다.
+ */
+export function progressOf(s, question) {
+  if (!s) return { total: 1, done: 0 };
+  if (!s.pv) return { total: plannedProgressUnits(), done: filledUnits(s) };
+  let remaining = 0;
+  if (!s.done) {
+    for (let i = s.step; i < PART1_PLAN.length; i += 1) remaining += PART1_PLAN[i] === 'cardMatch' ? CARD_MATCH_SIZE : 1;
+    if (!s.part2Ended) remaining += Math.max(0, PART2_COUNT - (s.part2Done ?? 0));
+  }
+  const total = Math.max(1, (s.units ?? 0) - (s.dropped ?? 0) + remaining);
+  let done = s.filled ?? 0;
+  if (question && s.pending && question.placementSeq != null && question.placementSeq === s.curSeq) {
+    const results = Array.isArray(question.words)
+      ? question.words.map((w) => [w.vocaIndexId ?? w.id, w.isCorrect === true])
+      : [[question.vocaIndexId ?? question.id, question.isCorrect === true]];
+    done = applyFill(s, s.pending, results).filled;
+  }
+  return { total, done: Math.min(done, total) };
+}
 
 /** 이미 통과(정답 처리)된 단어 id — 진행바 복원용. */
 export function passedIds(s) {

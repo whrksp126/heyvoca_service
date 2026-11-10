@@ -216,7 +216,7 @@ def _build_progress_items(book_id, script, user_id=None):
             'stage':        stage,
             # 글자는 시들지도 썩지도 않는다(사용자 결정) — 항상 정상으로 고정.
             'health':       HealthState.FRESH,
-            'xp':           xp_mod.xp_of(stage, fsrs_state),
+            'xp':           xp_mod.xp_of(stage, fsrs_state, xp_mod.game_bonus(game)),
             'attempts':     counts.get(uv.id, (0, 0))[0],
             'correct':      counts.get(uv.id, (0, 0))[1],
         })
@@ -578,7 +578,7 @@ def get_session():
         def _priority(pair):
             uv, game = pair
             fsrs_state = growth.load_fsrs_state(uv)
-            xp_val = xp_mod.xp_of(game.visual_stage, fsrs_state)
+            xp_val = xp_mod.xp_of(game.visual_stage, fsrs_state, xp_mod.game_bonus(game))
             wrong_first = 0 if uv.id in wrong_ids else 1
             return (xp_val, wrong_first, random.random())
 

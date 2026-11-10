@@ -62,10 +62,50 @@ def xp_next(stage: Optional[str]) -> Optional[int]:
     return None
 
 
-def xp_of(stage: Optional[str], fsrs_state: dict) -> int:
-    """표시 XP = `max(xp_raw, floor(stage))`. UNPLANTED_SEED 는 항상 0."""
+def xp_of(stage: Optional[str], fsrs_state: dict, bonus: int = 0) -> int:
+    """표시 XP = `max(xp_raw, floor(stage)) + bonus`. UNPLANTED_SEED 는 항상 0.
+
+    bonus 는 정답 바닥 보정 누적분(UserVocaGame.xp_bonus, `bump_bonus`)이다. 단계가 안 바뀌었는데
+    문턱을 넘어 보이면 안 되므로 bonus 를 더한 값은 다음 단계 문턱 − 1 을 넘지 않는다
+    (stability 만으로 이미 문턱 이상이면 그 값을 그대로 둔다).
+    """
     stage = stage or VisualStage.UNPLANTED_SEED
     if stage == VisualStage.UNPLANTED_SEED:
         return 0
     stability = growth._stability(fsrs_state)
-    return max(xp_raw(stability), xp_floor(stage))
+    base = max(xp_raw(stability), xp_floor(stage))
+    if not bonus or bonus <= 0:
+        return base
+    nxt = xp_next(stage)
+    val = base + int(bonus)
+    if nxt is not None:
+        val = min(val, max(base, nxt - 1))
+    return val
+
+
+def game_bonus(game) -> int:
+    """UserVocaGame 행의 보정 누적분(행이 없거나 구 스키마면 0)."""
+    return int(getattr(game, 'xp_bonus', 0) or 0) if game is not None else 0
+
+
+def bump_bonus(game, stage: Optional[str], fsrs_state: dict, xp_from: int, today) -> int:
+    """정답인데 XP 가 안 올랐으면(xp_to <= xp_from) xp_to 가 xp_from + 1 이 되게 bonus 를 올린다.
+
+    같은 단어 같은 현지 학습일에는 1회만(xp_bonus_day) — 하루에 여러 번 맞혀 XP 를 무한히
+    올리는 것을 막는다. 문턱 직전이라 더 못 올리면 손대지 않는다. 반환값은 보정 후 xp_to.
+    호출부가 정답 여부를 판정한다(오답·감소 규칙은 그대로).
+    """
+    stage = stage or VisualStage.UNPLANTED_SEED
+    bonus = game_bonus(game)
+    xp_to = xp_of(stage, fsrs_state, bonus)
+    if stage == VisualStage.UNPLANTED_SEED or xp_to > xp_from:
+        return xp_to
+    if getattr(game, 'xp_bonus_day', None) == today:
+        return xp_to
+    want = bonus + (xp_from - xp_to + 1)
+    bumped = xp_of(stage, fsrs_state, want)
+    if bumped <= xp_to:
+        return xp_to
+    game.xp_bonus = want
+    game.xp_bonus_day = today
+    return bumped

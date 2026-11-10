@@ -3,13 +3,14 @@
 // 업적 레벨 — 메달 승급. 이전 레벨 메달이 먼저 나오고, 테두리 게이지가 가득 찬 뒤
 // 메달이 한 바퀴 뒤집히며 숫자(와 등급 색)가 바뀐다.
 //
-//   0ms     이전 레벨 메달 등장        select
-//   420ms   테두리 게이지가 가득 찬다  xpUp
-//   1060ms                             evolve — 뒷면이 보이는 순간(약 240ms 뒤)에 강한 음
-//   1120ms  메달이 뒤집힌다
-//   1420ms  레벨 · 등급 색 교체, 빛 · 고리 · 파편 · 색종이
-//   1740ms  한 줄 문구 (가운데 업적 이름 리본은 2026-11 QA #25 에서 뺐다 — 문구와 겹친다)
-//   2010ms  「확인」 켜짐              select
+//   0ms     이전 레벨 메달 등장(테두리 게이지는 빈 채로)   select
+//   420ms   테두리 게이지가 0 에서 한 바퀴 가득 찬다(GAUGE_MS, 이징)  xpUp
+//           — 예전엔 3/4 쯤 찬 상태에서 나머지만 채웠다(이슈 #25 11차 QA)
+//   1560ms                             evolve — 뒷면이 보이는 순간(약 240ms 뒤)에 강한 음
+//   1620ms  메달이 뒤집힌다
+//   1920ms  레벨 · 등급 색 교체, 빛 · 고리 · 파편 · 색종이
+//   2240ms  한 줄 문구 (가운데 업적 이름 리본은 2026-11 QA #25 에서 뺐다 — 문구와 겹친다)
+//   2510ms  「확인」 켜짐              select
 //
 // 목업의 「보상 보석 +N」 칩은 업적 응답(goals[])에 보상 개수가 없어 넣지 않았다.
 import React, { useRef, useState } from 'react';
@@ -19,7 +20,9 @@ import { anim, burst, ring, confetti, clearFx, FX_COLORS, FX_GOLDS } from './fx'
 import { ACHIEVEMENT_IMAGES, achievementTier } from './achievement';
 import RewardGlow from './RewardGlow';
 
-const FLIP = 1120;
+const GAUGE_AT = 420;
+const GAUGE_MS = 1100; // 게이지 클래스 duration-[1100ms] 와 같은 값
+const FLIP = GAUGE_AT + GAUGE_MS + 100;
 const HERO = 190;
 const C = HERO / 2;
 const R = 86;
@@ -62,7 +65,7 @@ const AchievementSlide = ({ goal, reducedMotion, onReady, skipRef }) => {
           if (!instant) anim(wrapRef.current, [{ transform: 'translateY(-60px) scale(.4)', opacity: 0 }, { transform: 'none', opacity: 1 }], { duration: 460, easing: 'cubic-bezier(.34,1.56,.64,1)' });
         },
       },
-      { at: 420, cue: 'xpUp', run: () => setGaugeFull(true) },
+      { at: GAUGE_AT, cue: 'xpUp', run: () => setGaugeFull(true) },
       { at: FLIP - 60, cue: 'evolve' },
       { at: FLIP, run: (instant) => { if (!instant) flip(); } },
       {
@@ -120,8 +123,10 @@ const AchievementSlide = ({ goal, reducedMotion, onReady, skipRef }) => {
                 strokeWidth='7'
                 strokeLinecap='round'
                 strokeDasharray={LEN}
-                strokeDashoffset={gaugeFull ? 0 : LEN * 0.28}
-                className='transition-[stroke-dashoffset] duration-[620ms] ease-[cubic-bezier(.3,.7,.3,1)] motion-reduce:transition-none'
+                strokeDashoffset={gaugeFull ? 0 : LEN}
+                // 빈 게이지에서 둥근 끝(round cap)이 점으로 보이지 않게, 채우기 시작 전엔 숨긴다
+                strokeOpacity={gaugeFull ? 1 : 0}
+                className='transition-[stroke-dashoffset] duration-[1100ms] ease-in-out motion-reduce:transition-none'
               />
             </svg>
             {/* 메달 면 */}

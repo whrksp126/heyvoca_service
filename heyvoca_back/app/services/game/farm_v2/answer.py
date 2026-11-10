@@ -125,7 +125,7 @@ def on_answer(user_id: UUID, user_voca_id: int, was_correct: bool,
     # 학습 전 상태를 못 받았으면(구 호출부) 최소한 예전 동작으로 떨어진다
     fsrs_for_before = fsrs_before if fsrs_before is not None else fsrs_state
     pct_before = stage_progress(game, fsrs_for_before, now)
-    xp_from = xp_calc.xp_of(stage_before, fsrs_for_before)
+    xp_from = xp_calc.xp_of(stage_before, fsrs_for_before, xp_calc.game_bonus(game))
 
     # ── 독립 정답 판정 ──
     # 씨앗 구간에서만 로그를 뒤진다. 잎 이상은 안정성만으로 단계가 정해지므로
@@ -183,6 +183,12 @@ def on_answer(user_id: UUID, user_voca_id: int, was_correct: bool,
         if growth.check_golden(user_id, user_voca_id, game, fsrs_state):
             _apply_golden(game, now, user_id, user_voca_id, session_id, rewards)
 
+    # ── 정답 XP 바닥 보정(이슈 #25 11차) ──
+    # 막 심은 씨앗을 같은 날 다시 맞히면 stability 가 거의 그대로라 XP 증가가 0 이었다.
+    # 정답이면 최소 +1(같은 단어 같은 날 1회, 다음 단계 문턱 − 1 까지). 오답은 손대지 않는다.
+    if was_correct:
+        xp_calc.bump_bonus(game, game.visual_stage, fsrs_state, xp_from, today)
+
     game.updated_at = now
     db.session.commit()
 
@@ -191,7 +197,7 @@ def on_answer(user_id: UUID, user_voca_id: int, was_correct: bool,
     # 진화한 회차에도 **새 단계에서의** 진행률을 보낸다. 0 으로 눌러 버리면
     # pct_from(0) == pct_to(0) 이 되어, 가장 보여 줘야 할 순간에 막대가 멈춘다.
     pct_after = stage_progress(game, fsrs_state, now)
-    xp_to = xp_calc.xp_of(stage_after, fsrs_state)
+    xp_to = xp_calc.xp_of(stage_after, fsrs_state, xp_calc.game_bonus(game))
 
     return {
         'crop': CROP_KEY.get(stage_after, 'seed'),
@@ -273,6 +279,7 @@ def _apply_stage_up(game: UserVocaGame, from_stage: str, to_stage: str,
                     user_id: UUID, user_voca_id: int, session_id, rewards: list) -> None:
     """단계 상승 + 최초 도달 보상 (기획 8.2)."""
     game.visual_stage = to_stage
+    game.xp_bonus = 0   # 새 단계 바닥에서 다시 센다(정답 XP 바닥 보정, xp.bump_bonus)
     if VisualStage.rank(to_stage) > VisualStage.rank(game.highest_stage or ''):
         game.highest_stage = to_stage
 
@@ -326,6 +333,7 @@ def _apply_golden(game: UserVocaGame, now: dt.datetime, user_id: UUID,
     """
     from_stage = game.visual_stage
     game.visual_stage = VisualStage.GOLDEN
+    game.xp_bonus = 0
     game.highest_stage = VisualStage.GOLDEN
     game.health_state = HealthState.GOLDEN
     game.golden_at = now

@@ -35,14 +35,11 @@ const QuestSection = () => {
     showToast(questHidden ? '홈에 입문 퀘스트를 다시 보여 드려요.' : '홈에서 입문 퀘스트를 숨겼어요.');
   };
 
-  // 홈 표시 상태 줄 — 다 끝냈으면 카드가 홈에 없으니 토글도 없다
-  let visibilityRow = null;
+  // 홈 보이기/숨기기 버튼 — 다 끝냈으면 카드가 홈에 없으니 버튼도 없다(이슈 #25 11차: 설명 문구 없이 하단 가운데)
+  let visibilityBtn = null;
   if (!allDone) {
-    if (questHidden) {
-      visibilityRow = { label: '홈에 다시 보이기', icon: Eye, desc: '지금 홈에서 숨겨져 있어요' };
-    } else if (requiredDone) {
-      visibilityRow = { label: '홈에서 숨기기', icon: EyeSlash, desc: '홈에 보이는 중이에요' };
-    }
+    if (questHidden) visibilityBtn = { label: '홈에 다시 보이기', icon: Eye };
+    else if (requiredDone) visibilityBtn = { label: '홈에서 숨기기', icon: EyeSlash };
   }
 
   return (
@@ -61,24 +58,21 @@ const QuestSection = () => {
           onSelect={(key) => goToQuest(key)}
         />
 
-        {visibilityRow && (
-          <div className="flex items-center gap-[10px] mt-[6px] pt-[10px] pb-[2px] border-t border-[#EDEDED] dark:border-[rgba(255,255,255,.07)]">
-            <span className="flex-1 min-w-0 text-[12px] font-[600] tracking-[-0.02em] text-layout-gray-300">
-              {visibilityRow.desc}
-            </span>
+        {visibilityBtn && (
+          <div className="flex justify-center mt-[4px]">
             <button
               type="button"
               onClick={toggle}
               disabled={busy}
-              className="shrink-0 inline-flex items-center gap-[4px] h-[32px] px-[12px] rounded-[8px] bg-layout-white dark:bg-[#333333] text-[12px] font-[700] text-layout-gray-400 dark:text-layout-gray-200 disabled:opacity-50"
+              className="inline-flex items-center gap-[4px] h-[28px] px-[8px] text-[12px] font-[600] text-layout-gray-300 disabled:opacity-50"
             >
-              <visibilityRow.icon size={14} weight="bold" />
-              {visibilityRow.label}
+              <visibilityBtn.icon size={13} weight="bold" />
+              {visibilityBtn.label}
             </button>
           </div>
         )}
         {!allDone && !questHidden && !requiredDone && (
-          <p className="mt-[6px] pt-[10px] pb-[2px] border-t border-[#EDEDED] dark:border-[rgba(255,255,255,.07)] text-[12px] font-[600] tracking-[-0.02em] text-layout-gray-300 break-keep">
+          <p className="mt-[4px] py-[6px] text-center text-[12px] font-[600] tracking-[-0.02em] text-layout-gray-300 break-keep">
             필수 퀘스트를 모두 끝내면 홈에서 숨길 수 있어요.
           </p>
         )}

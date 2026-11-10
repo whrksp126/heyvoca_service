@@ -25,7 +25,7 @@ import { getGuestTrial, clearGuestTrial, patchGuest } from '../utils/guestStorag
 import {
   loadSession as loadPlacementSession, saveSession as savePlacementSession, clearSession as clearPlacementSession,
   advance as advancePlacement, currentQuestion as currentPlacementQuestion, summarize as summarizePlacement,
-  plannedProgressUnits, filledUnits, gradeVirtualFarm, resultWords as resultWordsPlacement, fieldWords,
+  plannedProgressUnits, progressOf as placementProgressOf, gradeVirtualFarm, resultWords as resultWordsPlacement, fieldWords,
 } from '../utils/onboardingPlacement';
 import { getPendingReplantIds } from '../utils/replantPending';
 import { beginStudySession } from '../utils/studySessionGuard';
@@ -71,8 +71,6 @@ const TakeTest = () => {
   );
   const isPlacement = !!state?.guestMode && !!state?.placement;
   const placementRef = useRef(isPlacement ? (placementSession ?? loadPlacementSession()) : null);
-  // 진입 시점에 이미 채워져 있던 진행바 칸(재진입 복원) — 이후 칸은 화면의 문제들로 계산된다.
-  const [placementOffset] = useState(() => filledUnits(placementRef.current));
   // 다음 문제 공급자 — 방금 끝난 문제의 결과로 θ 를 갱신하고 다음 문제를 만든다(Main.jsx questionSupplier).
   const placementSupplier = (answered) => {
     const s = placementRef.current;
@@ -1544,8 +1542,7 @@ const TakeTest = () => {
           plantAttemptsRef={plantAttemptsRef}
           questionSupplier={isPlacement ? placementSupplier : undefined}
           virtualFarm={isPlacement ? placementVirtualFarm : undefined}
-          progressTotal={isPlacement ? plannedProgressUnits() : undefined}
-          progressOffset={isPlacement ? placementOffset : 0}
+          progressOf={isPlacement ? (q) => placementProgressOf(placementRef.current, q) : undefined}
         />
       </div>
     );

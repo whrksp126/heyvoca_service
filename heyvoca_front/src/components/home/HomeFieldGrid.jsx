@@ -68,6 +68,7 @@ const EXT_TOP = DIA_CY - VIEW_TOP;
 const EXT_BOTTOM = 805 - DIA_CY + 6;
 
 const MAX_ZOOM = 4.5;   // 전체 맞춤 대비 최대 배율
+const MIN_ZOOM = 0.85;  // 전체 맞춤 대비 최소 배율 — 밭 전체가 보이는 창에 들어오는 배율보다 살짝만 작게(이슈 #25 11차)
 const START_FIELDS = 4; // 기준 배율: 밭 4개(2×2)가 창에 맞게 들어오는 크기
 const HOME_ZOOM = 1.5;  // 기본 시점 = 기준 배율 × 1.5 — 밭 하나가 온전히, 주변 밭은 걸쳐 보인다
 const FIT_ALL_MAX = 2;  // 단어장이 이 수 이하면 기본 시점 = 전체 맞춤
@@ -222,6 +223,11 @@ const unrubber = (y, dim) => {
 };
 /** 배율 고무줄 — 범위 밖 비율을 지수로 눌러 살짝만 넘어가게 */
 const SCALE_RESIST = 0.3;
+/*
+  축소 쪽 고무줄은 **끝이 있어야** 한다(이슈 #25 11차 — 지수 저항만으론 계속 오므리면 0 까지 작아졌다).
+  넘어선 정도를 로그 비율로 재고 rubber() 로 감쇠해, 아무리 오므려도 minS 의 e^-SCALE_SHRINK_MAX 배까지만 간다.
+*/
+const SCALE_SHRINK_MAX = 0.22;
 
 const readStatusBar = (el) => {
   try {
@@ -275,7 +281,7 @@ const HomeFieldGrid = ({ rows, onSelect, resetSignal = 0, focusBottom }) => {
 
   /*
     배치(캔버스 px) + 배율 범위(화면 px / 캔버스 px).
-    focus = 헤드라인 아래 ~ CTA 위 창. minS = 전체 맞춤, homeS = 기본 시점 배율.
+    focus = 헤드라인 아래 ~ CTA 위 창. fitS = 전체 맞춤, minS = 축소 한계(fitS × MIN_ZOOM), homeS = 기본 시점 배율.
   */
   const layout = useMemo(() => {
     if (single || placed.length === 0 || box.w <= 0 || box.h <= 0) return null;
@@ -293,15 +299,17 @@ const HomeFieldGrid = ({ rows, onSelect, resetSignal = 0, focusBottom }) => {
     const pan = { x0: focus.x0, x1: focus.x1, y0: focus.y0, y1: focus.y1 };
     const fw = focus.x1 - focus.x0;
     const fh = focus.y1 - focus.y0;
-    const minS = Math.min(fw / (x1 - x0), fh / (y1 - y0));
+    // fitS = 배치된 밭 전체가 보이는 창에 딱 들어오는 배율. 축소 한계 minS 는 그보다 살짝 작게.
+    const fitS = Math.min(fw / (x1 - x0), fh / (y1 - y0));
+    const minS = fitS * MIN_ZOOM;
     // 2×2 묶음의 범위: 가로 (col−row) −1..1, 세로 (col+row) 0..2
     const w4 = 2 * STEP_X + 2 * EXT_LEFT;
     const h4 = 2 * STEP_Y + EXT_TOP + EXT_BOTTOM;
     const fitAll = placed.length <= FIT_ALL_MAX;
-    const baseS = placed.length <= START_FIELDS ? minS : Math.max(minS, Math.min(fw / w4, fh / h4));
+    const baseS = placed.length <= START_FIELDS ? fitS : Math.max(fitS, Math.min(fw / w4, fh / h4));
     // 기본 시점 배율 — 1~2개면 전체 맞춤, 그 밖엔 2×2 맞춤의 1.5배(밭 1개가 온전히 + 주변이 걸침)
-    const homeS = fitAll ? minS : Math.max(minS, baseS * HOME_ZOOM);
-    const maxS = Math.max(minS * MAX_ZOOM, homeS * 2);
+    const homeS = fitAll ? fitS : Math.max(fitS, baseS * HOME_ZOOM);
+    const maxS = Math.max(fitS * MAX_ZOOM, homeS * 2);
     // 기본 시점 중심 — 가운데 칸 밭(돌봄 밭 우선) 한 장의 그림 범위 가운데, 1~2개면 전체 가운데
     const first = placed.find((p) => p.first) || placed[0];
     const center = fitAll
@@ -405,12 +413,18 @@ const HomeFieldGrid = ({ rows, onSelect, resetSignal = 0, focusBottom }) => {
     return shown;
   };
   const rubberScale = (L, raw) => {
-    if (raw < L.minS) return L.minS * (raw / L.minS) ** SCALE_RESIST;
+    if (raw < L.minS) {
+      const over = Math.log(L.minS / Math.max(raw, 1e-6));
+      return L.minS * Math.exp(-rubber(over, SCALE_SHRINK_MAX));
+    }
     if (raw > L.maxS) return L.maxS * (raw / L.maxS) ** SCALE_RESIST;
     return raw;
   };
   const unrubberScale = (L, S) => {
-    if (S < L.minS) return L.minS * (S / L.minS) ** (1 / SCALE_RESIST);
+    if (S < L.minS) {
+      const shown = Math.log(L.minS / S);
+      return L.minS * Math.exp(-unrubber(shown, SCALE_SHRINK_MAX));
+    }
     if (S > L.maxS) return L.maxS * (S / L.maxS) ** (1 / SCALE_RESIST);
     return S;
   };

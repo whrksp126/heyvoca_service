@@ -218,7 +218,7 @@ const buildQuestionForType = (word, type, pool) => {
 
 const NO_FARM = {};
 
-const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex, setPendingUpdateSheetIds, setPendingUpdateWords, testType, studySessionRef, pendingLogPromisesRef, loggedVocaIdsRef, retryCountMapRef, passedVocaIdsRef, totalUniqueVocaCountRef, cardRetryEnqueuedRef, guestMode, plantAttemptsRef, questionSupplier, progressTotal, progressOffset = 0, virtualFarm }) => {
+const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex, setPendingUpdateSheetIds, setPendingUpdateWords, testType, studySessionRef, pendingLogPromisesRef, loggedVocaIdsRef, retryCountMapRef, passedVocaIdsRef, totalUniqueVocaCountRef, cardRetryEnqueuedRef, guestMode, plantAttemptsRef, questionSupplier, progressTotal, progressOffset = 0, progressOf, virtualFarm }) => {
   "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
 
   /*
@@ -1970,12 +1970,16 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
   const studyProgress = computeStudyProgress(testQuestions);
   // 공급자 세션은 큐가 문제마다 자라므로 분모를 progressTotal(계획 칸 수)로 고정하고, 재진입 전에 채운 칸은
   // progressOffset 으로 더한다.
-  const totalWordCount = Math.max(1, progressTotal ?? studyProgress.total);
-  // 공급자 세션(온보딩 수준 맞춤 학습)은 마지막에 남은 칸을 자동으로 채우지 않는다 — 채점 결과 정답으로 채운 칸만
-  // 보인다(이슈 #25 9차 QA). 일반 세션은 완료 연출(isFinishing)에서 100% 로 맞춘다.
-  const displayPassedCount = (isFinishing && !questionSupplier)
-    ? totalWordCount
-    : Math.min(studyProgress.done + (progressTotal ? progressOffset : 0), totalWordCount);
+  // 온보딩 공급자 세션은 progressOf(세션 정본 + 지금 문제 채점 미리보기, utils/onboardingPlacement.js)로
+  // 같은 규칙을 계산한다 — 적응형 출제로 분모가 바뀌어도, 2부에서 1부 오답 단어를 맞혀도 마지막 정답에서 정확히 가득 찬다.
+  const supplierProgress = progressOf ? progressOf(testQuestions[progressIndex]) : null;
+  const totalWordCount = Math.max(1, supplierProgress?.total ?? progressTotal ?? studyProgress.total);
+  // 공급자 세션은 끝에 남은 칸을 몰아서 채우지 않는다(이슈 #25 9·11차 QA). 일반 세션은 완료 연출(isFinishing)에서 100% 로 맞춘다.
+  const displayPassedCount = supplierProgress
+    ? Math.min(supplierProgress.done, totalWordCount)
+    : (isFinishing && !questionSupplier)
+      ? totalWordCount
+      : Math.min(studyProgress.done + (progressTotal ? progressOffset : 0), totalWordCount);
 
   const currentPlugin = getQuestionType(testQuestions[progressIndex]?.questionType);
 

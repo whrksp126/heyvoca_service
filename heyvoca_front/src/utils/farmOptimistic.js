@@ -170,7 +170,14 @@ export const optimisticFarmPayload = ({
   // 오답이면 to===from 이라 xpDelta 가 음수로 나올 수 있다(FSRS 가 stability 를 깎으므로) —
   // floor(현재 단계) 아래로는 xpOf 자체가 이미 안 내려가게 막아 준다.
   const xpFromVal = xpOf(from, fsrsBefore);
-  const xpToVal = xpOf(to, fsrsAfter);
+  let xpToVal = xpOf(to, fsrsAfter);
+  // 정답 바닥 보정(이슈 #25 11차, 서버 farm_v2/xp.py bump_bonus) — 정답인데 안 올랐으면 +1, 다음 단계 문턱 − 1 까지.
+  // 같은 날 두 번째부터는 서버가 보정하지 않으므로 응답이 오면 그 값으로 바로잡힌다.
+  if (wasCorrect && to !== 'UNPLANTED_SEED' && xpToVal <= xpFromVal) {
+    const nxt = xpNextThresholdOf(to);
+    const want = xpFromVal + 1;
+    if (nxt == null || want < nxt) xpToVal = want;
+  }
 
   return {
     crop: STAGE_TO_CROP[to], stage: to,

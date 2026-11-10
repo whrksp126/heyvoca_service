@@ -149,6 +149,10 @@ const Main = () => {
   const { unlock: questUnlock, legacy: questLegacy, missions: questMissions, questCardVisible } = useOnboardingUnlock();
   const plantQuestPending = !questLegacy
     && questMissions.some((m) => m.key === 'plant_seed' && !m.done);
+  // 이슈 #25 11차 — 퀘스트 v2 사용자는 첫 퀘스트(buy_book 서점에서 단어장 구매)를 끝내기 전까지
+  // 홈 주 버튼을 숨긴다. 첫 할 일은 퀘스트 카드의 「바로가기」 하나로 모은다. legacy 는 그대로.
+  const buyQuestPending = !!questUnlock && !questLegacy
+    && questMissions.some((m) => m.key === 'buy_book' && !m.done);
   const ctaInfo = useMemo(() => (
     homeState === HOME_STATES.EMPTY
       ? { label: '농장 돌보기', kind: 'store' }
@@ -476,7 +480,7 @@ const Main = () => {
           카드(TodayTasksCard)가 맡고 있고, 거기에는 누르면 갈 곳이 있다. */}
 
       {/* §7 주 CTA — 히어로 하단에 겹쳐 뜬다. 홈에서 유일한 핑크 */}
-      <FarmCta label={ctaInfo.label} onClick={handleCtaClick} />
+      {!buyQuestPending && <FarmCta label={ctaInfo.label} onClick={handleCtaClick} />}
     </>
   );
 

@@ -629,6 +629,7 @@ def complete_diagnosis(user_id: UUID, user_voca_id: int, was_correct: bool,
     if action == PENDING_REPLANT:
         moved = _reset_fsrs_for_replant(user_voca, now)
         game.visual_stage = VisualStage.PLANTED_SEED
+        game.xp_bonus = 0   # 다시 심으면 XP 도 씨앗부터
         # highest_stage 는 내리지 않는다(5.2). 다시 심어도 "여기까지 키웠다"는 사실은 남는다.
         if VisualStage.rank(game.highest_stage or '') < VisualStage.rank(VisualStage.PLANTED_SEED):
             game.highest_stage = VisualStage.PLANTED_SEED

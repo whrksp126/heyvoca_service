@@ -144,7 +144,7 @@ def _farm_state(game, fsrs, now, farm_answer, farm_growth, farm_health, farm_xp=
         'highest_stage': (game.highest_stage if game else None) or stage,
         'health': h['state'],
         'pct': farm_answer.stage_progress(game, fsrs, now) if game else 0,
-        'xp': farm_xp.xp_of(stage, fsrs),
+        'xp': farm_xp.xp_of(stage, fsrs, farm_xp.game_bonus(game)),
         'xp_next': farm_xp.xp_next(stage),
         'days_to_review': farm_health.ceil_days(due_at - now) if due_at else None,
         'days_to_rot': h['days_to_rot'],

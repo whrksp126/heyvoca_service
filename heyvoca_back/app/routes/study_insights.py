@@ -96,7 +96,7 @@ def word_insights(user_voca_id):
             'state': target_state,
             'threshold_days': threshold,
             'progress': cur_progress,
-            'xp': farm_xp.xp_of(visual_stage, fsrs),
+            'xp': farm_xp.xp_of(visual_stage, fsrs, farm_xp.game_bonus(game)),
             'xp_next': farm_xp.xp_next(visual_stage),
         }
         # 다음 복습에서 맞혔을 때(GOOD) 예측 — 진행률 증가분 / 승급 여부
@@ -126,7 +126,10 @@ def word_insights(user_voca_id):
                 'progress': round(proj_progress, 4),
                 'gain': round(max(0.0, proj_progress - cur_progress), 4),
                 'promotes': _STATE_RANK.get(proj_state, 0) > _STATE_RANK.get(state, 0),
-                'xp_gain': max(0, farm_xp.xp_of(proj_visual_stage, proj) - next_stage['xp']),
+                'xp_gain': max(0, farm_xp.xp_of(
+                    proj_visual_stage, proj,
+                    farm_xp.game_bonus(game) if proj_visual_stage == visual_stage else 0,
+                ) - next_stage['xp']),
             }
         except Exception:
             pass  # 예측 실패는 무시 (프론트가 없으면 미표시)

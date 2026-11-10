@@ -940,6 +940,11 @@ class UserVocaGame(db.Model):
     golden_at      = Column(DateTime, nullable=True)
     golden_check_status = Column(String(12), nullable=True)   # PENDING | PASSED | FAILED
 
+    # ── 정답 XP 바닥 보정(이슈 #25 11차) ─────────────────────────
+    # 정답인데 stability 파생 XP 가 안 올랐으면 +1(같은 단어 같은 날 1회). 단계가 오르면 0 으로 돌린다.
+    xp_bonus       = Column(Integer, nullable=False, default=0, server_default='0')
+    xp_bonus_day   = Column(Date, nullable=True)   # 마지막으로 보정한 현지 학습일
+
     updated_at     = Column(DateTime, nullable=False, default=datetime.utcnow, onupdate=datetime.utcnow)
 
     __table_args__ = (
@@ -963,6 +968,7 @@ class UserVocaGame(db.Model):
         self.health_state = HealthState.FRESH
         self.sprout_rewarded = False
         self.leaf_rewarded = False
+        self.xp_bonus = 0
         self.recovery_count = 0
         self.replant_count = 0
         self.protection_days = 0
