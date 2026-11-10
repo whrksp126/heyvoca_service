@@ -317,6 +317,7 @@ const SentenceTranslateQuestion = ({ question, onComplete, onCardMatched, farmBy
             anchor={lookup.anchor}
             status={lookup.status}
             info={lookup.info}
+            lookupWord={lookup.word} lookupSource="sentenceTranslate"
             speaking={isSpeaking && speakingTarget === 'lookup'}
             onReplay={() => { feel('tap'); speak(lookup.word, 'lookup'); }}
           />

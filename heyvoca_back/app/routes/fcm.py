@@ -230,7 +230,13 @@ def _send_with_token_cleanup(title, body, token, data=None):
 
 def _delete_token(token):
     try:
+        # 앱 삭제 추정(어드민 유저 관리) — 무효 토큰의 주인을 지우기 전에 기록한다
+        owners = [r.user_id for r in UserHasToken.query.filter_by(token=token).all()]
         UserHasToken.query.filter_by(token=token).delete()
+        if owners:
+            from app.routes.admin_user_stats import record_fcm_unregistered
+            for uid in owners:
+                record_fcm_unregistered(uid)
         db.session.commit()
     except Exception:
         db.session.rollback()

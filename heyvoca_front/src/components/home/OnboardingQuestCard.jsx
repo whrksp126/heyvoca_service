@@ -18,18 +18,33 @@
 // 홈에 왔을 때 새로 완료된 단계만 QuestSteps 에 celebrateKeys 로 넘겨 순차 연출한다.
 // 처음 진입(기억 없음)·새로고침에는 지금 상태를 기억만 하고 연출하지 않는다.
 // 보상 시트(pendingMissionRewards)가 남아 있으면 그게 닫힌 뒤 시작한다(시트 뒤에서 몰래 지나가지 않게).
+//
+// 이슈 #25 12차 — 타이밍 버그 수정. 예전엔 '새로 완료' 판정을 첫 렌더 뒤 effect 에서, 그것도 보상 시트가
+// 닫힌 뒤에야 해서 홈에 오면 체크된 모양이 먼저 보였다가 시트가 닫히면 체크가 사라지고 다시 채워졌다.
+// 이제 새로 완료된 단계(완료 목록 − 기억한 목록)는 렌더 중에 바로 계산해 첫 프레임부터 '아직 안 함'
+// 모양으로 그린다(unlock-status 갱신이 늦게 와도 그 렌더에서 바로 미완료 모양). 연출 시작은
+// 홈 탭이 보이고 · 보상 대기열이 비고 · 바텀시트/풀시트/업적 오버레이가 없고 · 보석 비행이 끝난 뒤.
+// 기억(localStorage)은 연출을 시작할 때 갱신한다 — 그 전에 화면을 떠나면 다음에 다시 연출한다.
 
 
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useReducedMotion } from 'framer-motion';
+import { useLocation } from 'react-router-dom';
 import { EyeSlash } from '@phosphor-icons/react';
 import { useOnboardingUnlock } from '../../context/OnboardingUnlockContext';
 import { useUser } from '../../context/UserContext';
 import { useQuestAction } from '../onboarding/useQuestAction';
 import QuestSteps from '../onboarding/QuestSteps';
 import { vibrate, showToast } from '../../utils/osFunction';
+import { useNewBottomSheetContext } from '../../context/NewBottomSheetContext';
+import { useNewFullSheetContext } from '../../context/NewFullSheetContext';
+import { useOverlayState } from '../../context/OverlayContext';
+import { isGemRewardPlaying } from '../../context/GemAnimationContext';
 
 const SEEN_KEY_PREFIX = 'heyvoca_quest_seen_done_';
+// 조건이 갖춰진 뒤 잠깐 기다렸다 시작 — 시트 닫힘 애니메이션·뒤이어 열리는 시트가 자리 잡을 시간
+const START_SETTLE_MS = 500;
+const START_RETRY_MS = 300;
 
 const readSeen = (key) => {
   try {
@@ -56,33 +71,74 @@ const OnboardingQuestCard = ({ className = '' }) => {
   const { goToQuest } = useQuestAction();
   const reduceMotion = useReducedMotion();
   const [hiding, setHiding] = useState(false);
-  const [celebrateKeys, setCelebrateKeys] = useState(null);
+  // 지금 연출 중인 단계(시작 시점 스냅샷) — { keys, doneKeys }
+  const [playing, setPlaying] = useState(null);
+  // 이번 화면에서 확인(연출 완료·첫 진입 기록)한 완료 목록 — { storageKey, keys }
+  const [ack, setAck] = useState(null);
+  const location = useLocation();
+  const { stack: bottomStack } = useNewBottomSheetContext();
+  const { stack: fullStack } = useNewFullSheetContext();
+  const { current: overlayCurrent } = useOverlayState();
 
   const userId = userProfile?.id;
   const doneSig = missions.filter((m) => m.done).map((m) => m.key).join(',');
   const rewardsPending = (pendingMissionRewards?.length ?? 0) > 0;
+  const storageKey = userId ? `${SEEN_KEY_PREFIX}${userId}` : null;
 
-  // 새로 완료된 단계 감지 — 마지막으로 본 완료 목록과 비교
+  // 렌더 중에 '새로 완료'를 계산한다 — 첫 프레임부터 체크된 모양이 보이지 않게
+  const storedSeen = useMemo(() => (storageKey ? readSeen(storageKey) : null), [storageKey]);
+  const seen = ack && ack.storageKey === storageKey ? ack.keys : storedSeen;
+  const doneKeys = doneSig ? doneSig.split(',') : [];
+  const newly = (questCardVisible && seen && !reduceMotion)
+    ? doneKeys.filter((k) => !seen.includes(k))
+    : [];
+  const newlySig = newly.join(',');
+
+  // 처음 진입(기억 없음)·모션 줄이기 — 지금 상태를 기억만 하고 연출하지 않는다
   useEffect(() => {
-    if (!questCardVisible || !userId || missions.length === 0) return;
-    if (celebrateKeys) return; // 연출 중
-    if (rewardsPending) return; // 보상 시트가 먼저
-    const storageKey = `${SEEN_KEY_PREFIX}${userId}`;
-    const doneKeys = doneSig ? doneSig.split(',') : [];
-    const seen = readSeen(storageKey);
-    // 기억을 먼저 갱신한다 — 연출 도중 화면을 떠나도 과거 완료분을 다시 연출하지 않게
-    writeSeen(storageKey, doneKeys);
-    if (!seen) return; // 처음 진입 — 기억만
-    const newly = doneKeys.filter((k) => !seen.includes(k));
-    if (newly.length === 0 || reduceMotion) return;
-    setCelebrateKeys(newly);
+    if (!questCardVisible || !storageKey || missions.length === 0 || playing) return;
+    if (seen && !reduceMotion) return;
+    const keys = doneSig ? doneSig.split(',') : [];
+    writeSeen(storageKey, keys);
+    setAck({ storageKey, keys });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [questCardVisible, userId, doneSig, rewardsPending, missions.length]);
+  }, [questCardVisible, storageKey, doneSig, missions.length, reduceMotion, !!seen, !!playing]);
+
+  // 홈만 보이는 상태가 되면 연출 시작
+  const isHomeTab = location.pathname === '/home';
+  const screenClear = isHomeTab && !rewardsPending && bottomStack.length === 0
+    && fullStack.length === 0 && !overlayCurrent;
+  useEffect(() => {
+    if (playing || !newlySig || !screenClear || !storageKey) return undefined;
+    let t = 0;
+    const tryStart = () => {
+      // 반응형이 아닌 신호는 직접 다시 본다 — 보석 비행, 막 열리려는 시트·오버레이, 백그라운드
+      const busy = isGemRewardPlaying()
+        || (window.newBottomSheetContext?.stack?.length || 0) > 0
+        || !!window.overlayContext?.current
+        || (typeof document !== 'undefined' && document.visibilityState === 'hidden');
+      if (busy) {
+        t = setTimeout(tryStart, START_RETRY_MS);
+        return;
+      }
+      const snapshot = doneSig ? doneSig.split(',') : [];
+      writeSeen(storageKey, snapshot);
+      setPlaying({ keys: newlySig.split(','), doneKeys: snapshot });
+    };
+    t = setTimeout(tryStart, START_SETTLE_MS);
+    return () => clearTimeout(t);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [playing, newlySig, screenClear, storageKey]);
 
   const handleCelebrated = useCallback(() => {
     vibrate({ duration: 8 });
-    setCelebrateKeys(null);
-  }, []);
+    if (playing && storageKey) setAck({ storageKey, keys: playing.doneKeys });
+    setPlaying(null);
+  }, [playing, storageKey]);
+
+  // 연출 중이면 스냅샷, 아니면 '대기 중인 새 완료'(미완료 모양으로 붙잡아 둔다)
+  const celebrateKeys = playing ? playing.keys : (newly.length > 0 ? newly : null);
+  const celebrateHold = !playing;
 
   if (!questCardVisible) return null;
 
@@ -116,6 +172,7 @@ const OnboardingQuestCard = ({ className = '' }) => {
           currentKey={currentMissionInfo?.key}
           onSelect={(key) => goToQuest(key)}
           celebrateKeys={celebrateKeys}
+          celebrateHold={celebrateHold}
           onCelebrated={handleCelebrated}
         />
       </div>

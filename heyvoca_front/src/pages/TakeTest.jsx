@@ -7,6 +7,8 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { useVocabulary } from '../context/VocabularyContext';
 import { getQuestionType, isFillInTheBlankType, isSingleWordPluginType, isSentenceQuestionType, isNoGradeQuestionType, isArrangeQuestionType } from '../plugins/questionTypes';
 import { normalizePhaseNotices } from '../utils/studyProgress';
+import { PRETEST_SPELL, PRETEST_MCQ, KNOWN, filterPlantTail } from '../utils/plantPretest';
+import { canBuildSpelling } from '../plugins/questionTypes/spellingFill/spellingUtils';
 import { mapRecommendItemToWord } from '../utils/studyRecommendMapping';
 import { buildScriptTestQuestions } from '../utils/scriptQuestions';
 import { isListeningSkipActive, mapSkippedQuestionType } from '../utils/listeningSkip';
@@ -601,9 +603,42 @@ const TakeTest = () => {
       .filter(Boolean);
     const sentenceCount = Math.min(sentenceQs.length, 2 + Math.floor(Math.random() * 2));
     if (sentenceCount > 0) {
-      out.push(...markPhaseStart(sentenceQs.slice(0, sentenceCount), 'sentence'));
+      // plantPhase — 사전 테스트 뒤 걸러 내기(utils/plantPretest.js)가 문장 구간 문제를 알아보는 표식
+      out.push(...markPhaseStart(sentenceQs.slice(0, sentenceCount).map((q) => ({ ...q, plantPhase: 'sentence' })), 'sentence'));
     }
     return out;
+  };
+
+  // ─── plant 사전 테스트(이슈 #25 12차, utils/plantPretest.js) ─────────────────────
+  // 단어마다 '뜻 보고 철자 쓰기'(spellingFill) 한 장 — 틀리면 Main.jsx 가 같은 단어 영→한 사지선다
+  // (pretestMcq, 미리 만들어 둔다)를 바로 뒤에 끼운다. 철자를 만들 수 없는 단어는 사지선다로 시작한다.
+  // 첫 문제에 phaseStart 'pretest' — 세션 시작 인터루드("이미 아는 단어는 건너뛸게요").
+  const buildPlantPretestQuestions = (selectedWords, allWords) => {
+    const spellPlugin = getQuestionType('spellingFill');
+    const out = shuffleArray(selectedWords).map((word) => {
+      const mcq = { ...buildPlantMcq(word, allWords, 'multipleChoice'), plantPretest: PRETEST_MCQ };
+      const spell = canBuildSpelling(word) && spellPlugin?.setupQuestions
+        ? (spellPlugin.setupQuestions([word], allWords)[0] ?? null)
+        : null;
+      if (!spell) return mcq;
+      return { ...spell, plantPretest: PRETEST_SPELL, pretestMcq: { ...mcq, pretestFollowup: true } };
+    });
+    return markPhaseStart(out, 'pretest');
+  };
+
+  // 사전 테스트가 끝난 순간 Main.jsx 가 부른다 — 미리 짜 둔 학습 구간을 분류(아는/어느 정도/모르는)에 맞게 걸러 낸다.
+  const QUESTION_ONLY_KEYS = ['questionType', 'isCorrect', 'userResultIndex', 'options', 'resultIndex',
+    'phaseStart', 'plantPhase', 'words', 'shownText', 'blankText', 'blankFill', 'arrange', 'typing'];
+  const filterPlantTailForSession = (tail, classOf) => {
+    let pool = buildAllWordsPool('all');
+    if (pool.length === 0) pool = state?.data?.words ?? [];
+    const type = isListeningSkipActive() ? mapSkippedQuestionType('multipleChoice') : 'multipleChoice';
+    const makeMcq = (w) => {
+      const word = { ...w };
+      QUESTION_ONLY_KEYS.forEach((k) => { delete word[k]; });
+      return buildPlantMcq(word, pool, type);
+    };
+    return filterPlantTail(tail, classOf, makeMcq);
   };
 
   // ─── 일반 학습(AI 추천 등) — 문장 만들기 구간 구성 ─────────────────────────────
@@ -682,7 +717,12 @@ const TakeTest = () => {
       attachStudyHistory(selectedWords, userDictionary);
       let allWords = buildAllWordsPool('all');
       if (allWords.length === 0) allWords = selectedWords;
-      const testQuestions = buildPlantTestQuestions(selectedWords, allWords);
+      // 사전 테스트 → (모든 단어를 모르는 단어로 본) 학습 구간. 학습 구간은 사전 테스트가 끝나면
+      // Main.jsx 가 filterPlantTailForSession 으로 걸러 낸다 — 처음 분모가 가장 크고 줄어들기만 한다.
+      const pretest = buildPlantPretestQuestions(selectedWords, allWords);
+      const learn = buildPlantTestQuestions(selectedWords, allWords);
+      if (learn.length > 0 && !learn[0].phaseStart) learn[0] = { ...learn[0], phaseStart: 'plantLearn' };
+      const testQuestions = [...pretest, ...learn];
       return {
         testQuestions,
         sessionId: state.data.sessionId ?? null,
@@ -1418,6 +1458,8 @@ const TakeTest = () => {
         const seenIds = new Set();
         const resultQuestions = testQuestions.filter(q => {
           if (q.isRetry) return false; // 재출제 문제 제외
+          // 심기 사전 테스트 — 아는 단어로 바로 심은 철자 문제만 남긴다(그 단어의 유일한 문제)
+          if (q.plantPretest && !(q.plantPretest === PRETEST_SPELL && q.pretestClass === KNOWN)) return false;
           if (isNoGradeQuestionType(q.questionType)) return false; // 채점 없는 슬라이드 제외
           // cardMatch 세트는 words 기준 중복 없으면 포함
           if (Array.isArray(q.words)) return true;
@@ -1540,6 +1582,7 @@ const TakeTest = () => {
           cardRetryEnqueuedRef={cardRetryEnqueuedRef}
           guestMode={isGuestMode}
           plantAttemptsRef={plantAttemptsRef}
+          plantTailFilter={state?.testType === 'plant' ? filterPlantTailForSession : undefined}
           questionSupplier={isPlacement ? placementSupplier : undefined}
           virtualFarm={isPlacement ? placementVirtualFarm : undefined}
           progressOf={isPlacement ? (q) => placementProgressOf(placementRef.current, q) : undefined}

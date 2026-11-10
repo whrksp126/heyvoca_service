@@ -1476,6 +1476,63 @@ class ContentReport(db.Model):
     resolved_at   = Column(DateTime, nullable=True)
 
 
+class UserDailyActivity(db.Model):
+    """사용자 일별 접속 기록(이슈 #25 12차, 2026-11) — 어드민 '유저 관리' 통계용.
+
+    인증된 요청이 오면 그날(KST) 첫 요청에 한 행을 만들고 이후엔 last_at·req_cnt 만 올린다
+    (app/utils/activity.py, Redis 로 하루 1~몇 번만 DB 에 쓴다). 이 테이블이 생기기 전 과거는
+    check_in(학습한 날)으로 소급한다. FK 없음 — 탈퇴해도 집계 이력은 남지 않게 탈퇴 시 지운다.
+    """
+    __tablename__ = 'user_daily_activity'
+    __table_args__ = (
+        Index('ix_uda_date', 'activity_date'),
+    )
+
+    user_id       = Column(BinaryUUID, primary_key=True, nullable=False, comment='user.id 참조 (FK 없음)')
+    activity_date = Column(Date, primary_key=True, nullable=False, comment='KST 날짜')
+    platform      = Column(String(16), nullable=True, comment='ios|android|web')
+    app_version   = Column(String(32), nullable=True)
+    first_at      = Column(DateTime, nullable=False, default=datetime.utcnow)
+    last_at       = Column(DateTime, nullable=False, default=datetime.utcnow)
+    req_cnt       = Column(Integer, nullable=False, default=1, server_default='1')
+
+
+class UserLifecycleEvent(db.Model):
+    """계정 생애 이벤트 — 탈퇴(withdraw)·앱 삭제 추정(fcm_unregistered) (이슈 #25 12차).
+
+    탈퇴하면 user 행이 지워지므로 일별 탈퇴 수·가입 후 생존 기간을 여기서만 볼 수 있다.
+    fcm_unregistered 는 FCM 발송이 UnregisteredError/InvalidArgument 로 실패해 토큰을 지운 순간 —
+    그 계정에 토큰이 하나도 안 남으면 '앱 삭제 추정'으로 센다.
+    """
+    __tablename__ = 'user_lifecycle_event'
+    __table_args__ = (
+        Index('ix_ule_event_created', 'event', 'created_at'),
+        Index('ix_ule_user', 'user_id'),
+    )
+
+    id              = Column(BigInteger, primary_key=True, autoincrement=True)
+    user_id         = Column(BinaryUUID, nullable=False, comment='user.id 참조 (FK 없음)')
+    event           = Column(String(32), nullable=False, comment='withdraw|fcm_unregistered')
+    email           = Column(String(128), nullable=True, comment='탈퇴자 관리자 제외 판정용')
+    user_created_at = Column(DateTime, nullable=True, comment='가입 시각(탈퇴 시점 스냅샷)')
+    platform        = Column(String(16), nullable=True)
+    meta            = Column(JSON, nullable=True)
+    created_at      = Column(DateTime, nullable=False, default=datetime.utcnow)
+
+
+class AdminExcludedEmail(db.Model):
+    """통계에서 뺄 관리자·테스트 계정 이메일 (어드민 '유저 관리'에서 등록/삭제)."""
+    __tablename__ = 'admin_excluded_email'
+    __table_args__ = (
+        UniqueConstraint('email', name='uq_admin_excluded_email'),
+    )
+
+    id         = Column(Integer, primary_key=True, autoincrement=True)
+    email      = Column(String(128), nullable=False)
+    memo       = Column(String(255), nullable=True)
+    created_at = Column(DateTime, nullable=False, default=datetime.utcnow)
+
+
 class UserStudyLog(db.Model):
     """단어 1회 응답 로그. SM2 q_score + FSRS rating 병기 (Phase 1.2부터 rating 채움).
 

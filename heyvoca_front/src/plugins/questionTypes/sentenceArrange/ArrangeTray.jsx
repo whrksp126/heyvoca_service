@@ -695,6 +695,7 @@ const ArrangeTray = ({
               anchor={lookup.anchor}
               status={lookup.status}
               info={lookup.info}
+              lookupWord={lookup.word} lookupSource="sentenceArrange"
               speaking={isSpeaking}
               onReplay={() => {
                 feel('tap');

@@ -22,7 +22,8 @@ export const computeStudyProgress = (questions) => {
   (questions ?? []).forEach((q) => {
     if (!q || NO_GRADE.includes(q.questionType)) return;
     const isSet = Array.isArray(q.words);
-    if (q.isRetry) {
+    // 심기 사전 테스트의 이어 묻기 사지선다(utils/plantPretest.js)도 재출제처럼 — 분모 밖, 맞히면 그 단어의 빈 칸을 채운다
+    if (q.isRetry || q.pretestFollowup) {
       if (isSet) {
         q.words.forEach((w) => {
           if (w.isCorrect === true) retryCorrectByWord.set(wordKey(w), (retryCorrectByWord.get(wordKey(w)) ?? 0) + 1);

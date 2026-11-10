@@ -580,6 +580,7 @@ const FillInTheBlankQuestion = ({ question, onComplete, onCardMatched, farmByWor
               anchor={lookup.anchor}
               status={lookup.status}
               info={lookup.info}
+              lookupWord={lookup.word} lookupSource="fillInTheBlank"
               speaking={isSpeaking && speakingTarget === 'lookup'}
               onReplay={() => {
                 feel('tap');

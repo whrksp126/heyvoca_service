@@ -42,6 +42,7 @@ import { getReading, shouldShowReading } from '../../utils/jaWord';
 import ReadingLine from '../common/ReadingLine';
 import ResultMark from '../common/ResultMark';
 import { computeStudyProgress } from '../../utils/studyProgress';
+import { PRETEST_MCQ, KNOWN, UNKNOWN, classifyPretest, pretestWordId, pretestWordIds } from '../../utils/plantPretest';
 import { SLIDE_VARIANTS, SLIDE_TRANSITION, CARD_ENTER_INITIAL, CARD_ENTER_ANIMATE, CARD_ENTER_TRANSITION } from '../../utils/studySlideMotion';
 import SpeakerArt from '../common/SpeakerArt';
 import CardSpeakerButton from '../common/CardSpeakerButton';
@@ -218,7 +219,7 @@ const buildQuestionForType = (word, type, pool) => {
 
 const NO_FARM = {};
 
-const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex, setPendingUpdateSheetIds, setPendingUpdateWords, testType, studySessionRef, pendingLogPromisesRef, loggedVocaIdsRef, retryCountMapRef, passedVocaIdsRef, totalUniqueVocaCountRef, cardRetryEnqueuedRef, guestMode, plantAttemptsRef, questionSupplier, progressTotal, progressOffset = 0, progressOf, virtualFarm }) => {
+const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex, setPendingUpdateSheetIds, setPendingUpdateWords, testType, studySessionRef, pendingLogPromisesRef, loggedVocaIdsRef, retryCountMapRef, passedVocaIdsRef, totalUniqueVocaCountRef, cardRetryEnqueuedRef, guestMode, plantAttemptsRef, plantTailFilter, questionSupplier, progressTotal, progressOffset = 0, progressOf, virtualFarm }) => {
   "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
 
   /*
@@ -357,6 +358,57 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
       setTestQuestions((prev) => [...prev, nextQ]);
     }
     return nextQ;
+  };
+  /*
+    새 씨앗 심기 사전 테스트(이슈 #25 12차, utils/plantPretest.js). 사전 테스트 문제(plantPretest)는
+    채점 로그·FSRS·plantAttemptsRef·재출제를 전혀 타지 않고 분류만 한다. 분류는 그 단어의 첫 사전 테스트
+    문제 객체(pretestClass)에 적어 둔다 — 큐(study_data)와 함께 저장되므로 재마운트에도 남는다.
+    아는 단어(known)만 그 철자 문제가 단어의 유일한 1차 문제가 되어 기존 심기 기록(plantQuestionDone)으로 1회 기록된다.
+    모든 단어가 분류되면 미리 짜 둔 학습 구간을 plantTailFilter 로 걸러 낸다.
+  */
+  const isPlantPretestQ = (q) => isPlantMode && !!q?.plantPretest;
+  const liveQueue = () => (isPlantMode ? (questionsRef.current ?? testQuestions) : testQuestions);
+  const pretestHeadOf = (id, list = liveQueue()) => list.find((qq) => (
+    qq?.plantPretest && !qq.pretestFollowup && String(pretestWordId(qq)) === String(id)
+  )) ?? null;
+  const pretestClassOf = (id) => pretestHeadOf(id)?.pretestClass ?? null;
+  const replaceQueue = (build) => {
+    const next = build(questionsRef.current ?? testQuestions);
+    questionsRef.current = next;
+    setTestQuestions((prev) => build(prev));
+  };
+  const handlePretestGraded = (question, correct, { hinted = false } = {}) => {
+    const id = pretestWordId(question);
+    const head = question.pretestFollowup ? pretestHeadOf(id) : question;
+    if (!head) return null;
+    if (question.pretestGraded) return head.pretestClass ?? null; // 즉시 콜백·완료 콜백 이중 호출
+    question.pretestGraded = true;
+    const res = classifyPretest(question.plantPretest, correct, { hinted });
+    const at = progressIndex;
+    if (res === PRETEST_MCQ) {
+      if (question.pretestMcq) {
+        const mcq = { ...question.pretestMcq };
+        replaceQueue((list) => [...list.slice(0, at + 1), mcq, ...list.slice(at + 1)]);
+        return PRETEST_MCQ;
+      }
+      head.pretestClass = UNKNOWN;
+    } else {
+      head.pretestClass = res;
+    }
+    // 모든 단어가 분류됐으면 학습 구간을 걸러 낸다(이 문제가 사전 테스트의 마지막)
+    const list = questionsRef.current ?? testQuestions;
+    const ids = pretestWordIds(list);
+    const allDone = [...ids].every((wid) => !!pretestHeadOf(wid, list)?.pretestClass);
+    if (allDone && plantTailFilter) {
+      const classes = new Map([...ids].map((wid) => [wid, pretestHeadOf(wid, list).pretestClass]));
+      let lastPre = -1;
+      list.forEach((qq, i) => { if (qq?.plantPretest) lastPre = i; });
+      const cut = Math.max(lastPre, at) + 1;
+      let filtered = null;
+      try { filtered = plantTailFilter(list.slice(cut), (wid) => classes.get(String(wid)) ?? UNKNOWN); } catch (e) { console.error('[plant] 사전 테스트 걸러 내기 실패:', e); }
+      if (Array.isArray(filtered)) replaceQueue((l) => [...l.slice(0, cut), ...filtered]);
+    }
+    return head.pretestClass ?? null;
   };
   const pendingInterludeRef = useRef(null);        // { n, milestone, atIndex }
   const shownMilestonesRef = useRef(new Set());
@@ -805,8 +857,15 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
     done.add(questionIndex);
     plantDoneIdxRef.current.set(vocaId, done);
     const primary = [];
-    testQuestions.forEach((q, i) => {
+    // 사전 테스트 문제는 1차 문제가 아니다 — 아는 단어(known)만 그 철자 문제 하나가 유일한 1차 문제다
+    const knownByPretest = pretestClassOf(vocaId) === KNOWN;
+    liveQueue().forEach((q, i) => {
       if (!q || q.isRetry || isNoGradeQuestionType(q.questionType)) return;
+      if (q.plantPretest) {
+        if (knownByPretest && !q.pretestFollowup && (q.vocaIndexId ?? q.id) === vocaId) primary.push({ q, i });
+        return;
+      }
+      if (knownByPretest) return;
       const has = Array.isArray(q.words) ? q.words.some((w) => w.id === vocaId) : (q.vocaIndexId ?? q.id) === vocaId;
       if (has) primary.push({ q, i });
     });
@@ -1299,6 +1358,15 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
       q = 0;
     }
 
+    // 심기 사전 테스트 — 분류만 하고 기록·재출제는 하지 않는다
+    if (isPlantPretestQ(question)) {
+      handlePretestGraded(question, isCorrectAnswer);
+      lastRetryEnqueuedRef.current = false;
+      setIsStay(true);
+      setIsAnswered(true);
+      return;
+    }
+
     // 낙관적 UI: 답변 직후 즉시 임시 fsrs + 암기상태 변경 알림
     applyOptimisticGrade(progressIndex, isCorrectAnswer);
 
@@ -1363,6 +1431,18 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
       question.isCorrect = false;
       question.userResultIndex = index;
       q = 0;
+    }
+
+    // 심기 사전 테스트(사지선다) — 분류만 하고 기록·재출제·낙관 상태 표시는 하지 않는다
+    if (isPlantPretestQ(question)) {
+      handlePretestGraded(question, isCorrectAnswer);
+      lastRetryEnqueuedRef.current = false;
+      setIsAnswered(true);
+      advanceGate.arm({
+        minDelayMs: getAdvanceDelay(isCorrectAnswer),
+        onAdvance: setUpdateRecentStudyStateAndStatus,
+      });
+      return;
     }
 
     // 낙관적 UI: 답변 직후 즉시 임시 fsrs + 암기상태 변경 알림
@@ -1530,7 +1610,11 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
     const currentPassedCount = passedVocaIdsRef?.current?.size ?? 0;
     const targetCount = totalUniqueVocaCountRef?.current || testQuestions.length;
     const nextIndex = progressIndex + 1;
-    const adjustedQueueLen = testQuestions.length + (lastRetryEnqueuedRef.current ? 1 : 0);
+    // plant — 사전 테스트가 큐를 바꾼다(이어 묻기 삽입·학습 구간 걸러 내기). 이 함수는 채점 시점 클로저로
+    // 불릴 수 있어 최신 큐(questionsRef, 넘기는 시점엔 재렌더로 재출제까지 반영됨)를 본다.
+    const adjustedQueueLen = isPlantMode
+      ? liveQueue().length
+      : testQuestions.length + (lastRetryEnqueuedRef.current ? 1 : 0);
     const supplied = questionSupplier ? supplyNext(question) : null;
     const isQueueExhausted = questionSupplier ? !supplied : nextIndex >= adjustedQueueLen;
     // 구간 안내(문장 만들기·오답 복습)가 있는 세션은 같은 단어가 문장 구간·재출제로 다시 나오므로
@@ -1542,7 +1626,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
         ...recentStudy[testType],
         progress_index: isSessionDone ? null : nextIndex,
         status: isSessionDone ? "end" : "learning",
-        study_data: testQuestions,
+        study_data: liveQueue(),
         updated_at: new Date().toISOString(),
       }
     });
@@ -1645,6 +1729,12 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
   // (카드 즉시 콜백 onCardMatched + 세트 완료 콜백 onComplete 이중 호출) 방지.
   const processCardWord = ({ sheetId, wordId, updateData, isCorrect: wordIsCorrect, timeTakenMs, typo, errorType, hintUsed }, currentQuestion, setWords, questionType) => {
     if (wordId == null) return;
+    // 심기 사전 테스트(철자) — 아는 단어면 아래 일반 심기 기록 경로로 이어서 심고, 아니면 분류만 하고 끝낸다
+    if (isPlantPretestQ(currentQuestion) && !Array.isArray(setWords)) {
+      currentQuestion.isCorrect = !!wordIsCorrect;
+      const cls = handlePretestGraded(currentQuestion, !!wordIsCorrect, { hinted: !!wordIsCorrect && hintUsed > 0 });
+      if (cls !== KNOWN) return;
+    }
     updateWordState(sheetId, wordId, updateData);
     setPendingUpdateSheetIds(prev => new Set(prev.add(sheetId)));
     setPendingUpdateWords(prev => {
@@ -1880,7 +1970,8 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
     //   새로 재출제된 게 있다면(retriesEnqueuedThisCall) 그만큼 큐 길이를 보정해
     //   재출제 슬라이드가 추가되기 전에 세션이 끝나버리지 않도록 한다.
     const supplied = questionSupplier ? supplyNext(currentQuestion) : null;
-    const isQueueExhausted = questionSupplier ? !supplied : nextIndex >= (testQuestions.length + retriesEnqueuedThisCall);
+    const isQueueExhausted = questionSupplier ? !supplied
+      : nextIndex >= ((isPlantMode ? liveQueue().length : testQuestions.length) + retriesEnqueuedThisCall);
     // plant·script는 위 setUpdateRecentStudyStateAndStatus와 같은 이유(isMultiStepMode)로
     // 1차 판정(통과 고유 단어 수)을 쓰지 않는다 — 같은 단어/글자가 여러 단계(같은 vocaId)로
     // 반복 등장해 조기 종료로 이어지기 때문. 큐 소진만으로 판단한다.
@@ -1891,7 +1982,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
         ...recentStudy[testType],
         progress_index: isSessionDone ? null : nextIndex,
         status: isSessionDone ? "end" : "learning",
-        study_data: testQuestions,
+        study_data: liveQueue(),
         updated_at: new Date().toISOString(),
       }
     });
@@ -1918,14 +2009,14 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
   const handleNoGradeNext = () => {
     const nextIndex = progressIndex + 1;
     const supplied = questionSupplier ? supplyNext(testQuestions[progressIndex]) : null;
-    const isSessionDone = questionSupplier ? !supplied : nextIndex >= testQuestions.length;
+    const isSessionDone = questionSupplier ? !supplied : nextIndex >= liveQueue().length;
 
     commitStudyState(isSessionDone, {
       [testType]: {
         ...recentStudy[testType],
         progress_index: isSessionDone ? null : nextIndex,
         status: isSessionDone ? "end" : "learning",
-        study_data: testQuestions,
+        study_data: liveQueue(),
         updated_at: new Date().toISOString(),
       }
     });

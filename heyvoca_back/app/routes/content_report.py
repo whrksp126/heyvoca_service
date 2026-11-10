@@ -2,6 +2,8 @@
 
 클라이언트
   POST /report                     — 신고 1건 생성 (@jwt_required)
+  POST /report/dict-missing        — 사전 없는 단어 '사전 추가 요청' (같은 사용자·같은 단어 1회)
+  GET  /report/dict-missing/status — 내가 이 단어를 이미 요청했는지 {word, lang}
 
 어드민 (admin_bp, X-Admin-API-Key)
   GET   /admin/reports             — 목록 (필터: status/reason/lang/from/to/q, 페이지)
@@ -9,6 +11,12 @@
   GET   /admin/reports/<id>        — 상세(스냅샷 포함)
   PATCH /admin/reports/<id>        — 상태 변경 {status, resolve_note, resolved_by}
   PATCH /admin/reports/bulk        — 여러 건 상태 변경 {ids:[...], status, resolve_note}
+  GET   /admin/reports/dict-missing — 사전 추가 요청을 단어별로 묶어 요청 수 많은 순(+현재 사전 존재 여부)
+  PATCH /admin/reports/dict-missing — 단어 묶음 상태 일괄 변경 {dict_lang, key, status, resolve_note}
+
+사전 추가 요청(이슈 #25 12차)은 reason='dict_missing' 으로 같은 테이블을 쓴다:
+  target_key = 정규화 형태(en 소문자·앞뒤 구두점 제거 / ja NFKC), word = 탭한 원문,
+  dict_lang = en|ja, snapshot = {context, source, normalized}. 스키마 변경 없음.
 
 AI 일괄 처리용 내보내기는 scripts/export_content_reports.py.
 """
@@ -38,7 +46,12 @@ REASONS = {
     'grading': '정답 판정이 틀림',
     'question': '문제가 이상함',
     'other': '기타',
+    # 사전 추가 요청 — /report/dict-missing 전용(일반 신고 POST /report 로는 받지 않는다)
+    'dict_missing': '사전 추가 요청',
 }
+DICT_MISSING = 'dict_missing'
+DICT_MISSING_LANGS = ('en', 'ja')
+CONTEXT_MAX = 500
 STATUSES = ('open', 'resolved', 'rejected')
 DICT_LANGS = ('en', 'ja', 'script', 'custom')
 
@@ -106,7 +119,7 @@ def create_report():
     user_id = UUID(g.user_id)
 
     reason = _s(data.get('reason'), 32)
-    if reason not in REASONS:
+    if reason not in REASONS or reason == DICT_MISSING:
         return jsonify({'code': 400, 'message': '신고 사유가 올바르지 않습니다.'}), 400
 
     memo = _s(data.get('memo'), MEMO_MAX)
@@ -201,6 +214,98 @@ def create_report():
     return jsonify({'code': 200, 'data': {'id': report.id, 'duplicate': False}}), 200
 
 
+def normalize_missing_word(word, lang):
+    """사전 추가 요청 묶음 키. en: 앞뒤 구두점 제거 + 소문자 / ja: NFKC + 앞뒤 공백·구두점 제거."""
+    import unicodedata
+    from app.services.word_resolve import clean_word_token
+    if not word:
+        return ''
+    w = unicodedata.normalize('NFKC', str(word))
+    w = clean_word_token(w)
+    if lang == 'ja':
+        w = w.strip('、。！？「」『』（）・…　 ')
+        return w[:191]
+    return w.lower()[:191]
+
+
+def _missing_args(data):
+    lang = _s(data.get('lang') or data.get('dict_lang'), 8)
+    lang = lang.lower() if lang else 'en'
+    if lang not in DICT_MISSING_LANGS:
+        return None, None, None
+    word = _s(data.get('word'), 255)
+    key = normalize_missing_word(word, lang)
+    return lang, word, key
+
+
+def _missing_existing(user_id, lang, key):
+    return ContentReport.query.filter(
+        ContentReport.user_id == user_id,
+        ContentReport.reason == DICT_MISSING,
+        ContentReport.dict_lang == lang,
+        ContentReport.target_key == key,
+    ).first()
+
+
+@report_bp.route('/dict-missing', methods=['POST'])
+@jwt_required
+def create_dict_missing_request():
+    """사전에 없는 단어 '사전 추가 요청'. 같은 사용자·같은 단어(정규화 키)는 한 번만 저장한다."""
+    data = request.get_json(silent=True) or {}
+    user_id = UUID(g.user_id)
+    lang, word, key = _missing_args(data)
+    if not lang:
+        return jsonify({'code': 400, 'message': '언어가 올바르지 않습니다.'}), 400
+    if not key or len(key) > 100:
+        return jsonify({'code': 400, 'message': '요청할 단어가 올바르지 않습니다.'}), 400
+
+    dup = _missing_existing(user_id, lang, key)
+    if dup is not None:
+        return jsonify({'code': 200, 'data': {'id': dup.id, 'duplicate': True, 'requested': True}}), 200
+
+    now = dt.datetime.utcnow()
+    today_cnt = db.session.query(func.count(ContentReport.id)).filter(
+        ContentReport.user_id == user_id,
+        ContentReport.created_at >= now - dt.timedelta(days=1),
+    ).scalar() or 0
+    if today_cnt >= DAILY_LIMIT:
+        return jsonify({'code': 429, 'message': '오늘은 더 이상 요청할 수 없습니다.'}), 429
+
+    platform = _s(data.get('platform'), 16)
+    if platform not in ('ios', 'android', 'web'):
+        platform = None
+    snapshot = {
+        'normalized': key,
+        'context': _s(data.get('context'), CONTEXT_MAX),
+        'source': _s(data.get('source'), 48),
+    }
+    report = ContentReport(
+        user_id=user_id, voca_id=None, user_voca_id=None, dict_lang=lang,
+        target_key=key, word=word or key, question_type=_s(data.get('source'), 48),
+        test_type=None, reason=DICT_MISSING, memo=None, snapshot=snapshot,
+        app_version=_s(data.get('app_version'), 32), web_version=_s(data.get('web_version'), 64),
+        platform=platform, status='open', created_at=now,
+    )
+    try:
+        db.session.add(report)
+        db.session.commit()
+    except Exception:
+        db.session.rollback()
+        logger.error('사전 추가 요청 저장 오류', exc_info=True)
+        return jsonify({'code': 500, 'message': '서버 오류가 발생했습니다.'}), 500
+    return jsonify({'code': 200, 'data': {'id': report.id, 'duplicate': False, 'requested': True}}), 200
+
+
+@report_bp.route('/dict-missing/status', methods=['GET'])
+@jwt_required
+def dict_missing_status():
+    lang, _word, key = _missing_args(request.args)
+    if not lang or not key:
+        return jsonify({'code': 200, 'data': {'requested': False}}), 200
+    dup = _missing_existing(UUID(g.user_id), lang, key)
+    return jsonify({'code': 200, 'data': {'requested': dup is not None}}), 200
+
+
 # ──────────────────────────────────────────
 # 어드민
 # ──────────────────────────────────────────
@@ -225,6 +330,12 @@ def _filtered_query(skip_status=False):
     reason = request.args.get('reason')
     if reason in REASONS:
         q = q.filter(ContentReport.reason == reason)
+    # kind: content(학습 중 오류 신고) | dict_missing(사전 추가 요청)
+    kind = request.args.get('kind')
+    if kind == 'content':
+        q = q.filter(ContentReport.reason != DICT_MISSING)
+    elif kind == DICT_MISSING:
+        q = q.filter(ContentReport.reason == DICT_MISSING)
     lang = request.args.get('lang')
     if lang in DICT_LANGS:
         q = q.filter(ContentReport.dict_lang == lang)
@@ -255,10 +366,32 @@ def admin_list_reports():
         page, per_page = 1, 50
     q = _filtered_query()
     total = q.count()
-    rows = (q.order_by(ContentReport.created_at.desc(), ContentReport.id.desc())
-             .offset((page - 1) * per_page).limit(per_page).all())
+    # sort=count — 같은 대상(사전 id·식별자·단어) 신고가 많은 순(같은 필터 안에서 센다), 그다음 최신순
+    group_key = func.coalesce(func.cast(ContentReport.voca_id, db.String(32)),
+                              ContentReport.target_key, ContentReport.word)
+    counts = None
+    if request.args.get('sort') == 'count':
+        counts = (_filtered_query().with_entities(ContentReport.dict_lang.label('gl'), group_key.label('gk'),
+                                                  func.count(ContentReport.id).label('gc'))
+                  .group_by(ContentReport.dict_lang, group_key).subquery())
+        q = (q.outerjoin(counts, db.and_(func.coalesce(counts.c.gl, '') == func.coalesce(ContentReport.dict_lang, ''),
+                                         counts.c.gk == group_key))
+              .add_columns(counts.c.gc)
+              .order_by(counts.c.gc.desc(), ContentReport.created_at.desc(), ContentReport.id.desc()))
+    else:
+        q = q.order_by(ContentReport.created_at.desc(), ContentReport.id.desc())
+    fetched = q.offset((page - 1) * per_page).limit(per_page).all()
+    items = []
+    for row in fetched:
+        if counts is not None:
+            r, gc = row
+            d = _serialize(r)
+            d['target_count'] = int(gc or 0)
+        else:
+            d = _serialize(row)
+        items.append(d)
     return jsonify({'code': 200, 'data': {
-        'items': [_serialize(r) for r in rows],
+        'items': items,
         'total': total, 'page': page, 'per_page': per_page,
         'has_more': page * per_page < total,
     }})
@@ -349,6 +482,109 @@ def admin_bulk_update_reports():
     note = _s(data.get('resolve_note'), 1000)
     by = _s(data.get('resolved_by'), 64)
     rows = ContentReport.query.filter(ContentReport.id.in_(ids)).all()
+    for r in rows:
+        _apply_status(r, status, note, by)
+    db.session.commit()
+    return jsonify({'code': 200, 'data': {'updated': len(rows)}})
+
+
+# ──────────────────────────────────────────
+# 어드민 — 사전 추가 요청(단어별 묶음)
+# ──────────────────────────────────────────
+
+def _lookup_dict_words(lang, keys):
+    """정규화 키 → 현재 사전의 voca id (없으면 키 없음). 요청 이후 이미 추가됐는지 보여 주기 위함."""
+    found = {}
+    if not keys:
+        return found
+    try:
+        from app.utils.dict_lang import use_dict_lang
+        from app.models.models import Voca
+        with use_dict_lang(lang):
+            rows = (db.session.query(Voca.id, Voca.word)
+                    .filter(func.lower(Voca.word).in_(list(keys))).all())
+            for vid, w in rows:
+                k = (w or '').lower()
+                if k not in found or vid < found[k]:
+                    found[k] = vid
+        db.session.expunge_all()
+    except Exception:
+        logger.warning('사전 존재 조회 실패', exc_info=True)
+    return found
+
+
+@admin_bp.route('/reports/dict-missing', methods=['GET'])
+@admin_required
+def admin_dict_missing_groups():
+    """사전 추가 요청을 (언어, 정규화 키)로 묶어 요청자 수 많은 순으로."""
+    try:
+        page = max(1, int(request.args.get('page', 1)))
+        per_page = max(1, min(int(request.args.get('per_page', 50)), 200))
+    except (TypeError, ValueError):
+        page, per_page = 1, 50
+    q = _filtered_query().filter(ContentReport.reason == DICT_MISSING)
+    grouped = (q.with_entities(
+                    ContentReport.dict_lang, ContentReport.target_key,
+                    func.count(ContentReport.id).label('cnt'),
+                    func.count(func.distinct(ContentReport.user_id)).label('users'),
+                    func.sum(db.case((ContentReport.status == 'open', 1), else_=0)).label('open_cnt'),
+                    func.max(ContentReport.word).label('word'),
+                    func.min(ContentReport.created_at).label('first_at'),
+                    func.max(ContentReport.created_at).label('last_at'))
+               .group_by(ContentReport.dict_lang, ContentReport.target_key))
+    total = grouped.order_by(None).count()
+    rows = (grouped.order_by(func.count(func.distinct(ContentReport.user_id)).desc(),
+                             func.max(ContentReport.created_at).desc())
+            .offset((page - 1) * per_page).limit(per_page).all())
+
+    # 묶음별 문맥 예시(최근 3개)·출처
+    samples = {}
+    for r in rows:
+        recent = (ContentReport.query.filter(ContentReport.reason == DICT_MISSING,
+                                             ContentReport.dict_lang == r.dict_lang,
+                                             ContentReport.target_key == r.target_key)
+                  .order_by(ContentReport.created_at.desc()).limit(3).all())
+        samples[(r.dict_lang, r.target_key)] = [{
+            'context': (x.snapshot or {}).get('context'),
+            'source': (x.snapshot or {}).get('source'),
+            'word': x.word,
+            'created_at': x.created_at.isoformat() if x.created_at else None,
+        } for x in recent]
+
+    existing = {}
+    for lang in DICT_MISSING_LANGS:
+        keys = {r.target_key for r in rows if r.dict_lang == lang and r.target_key}
+        existing[lang] = _lookup_dict_words(lang, keys)
+
+    return jsonify({'code': 200, 'data': {
+        'items': [{
+            'dict_lang': r.dict_lang, 'key': r.target_key, 'word': r.word,
+            'count': int(r.cnt or 0), 'users': int(r.users or 0), 'open_count': int(r.open_cnt or 0),
+            'first_at': r.first_at.isoformat() if r.first_at else None,
+            'last_at': r.last_at.isoformat() if r.last_at else None,
+            'samples': samples.get((r.dict_lang, r.target_key), []),
+            'existing_voca_id': existing.get(r.dict_lang, {}).get((r.target_key or '').lower()),
+        } for r in rows],
+        'total': total, 'page': page, 'per_page': per_page,
+        'has_more': page * per_page < total,
+    }})
+
+
+@admin_bp.route('/reports/dict-missing', methods=['PATCH'])
+@admin_required
+def admin_dict_missing_update():
+    """단어 묶음의 요청 전부 상태 변경 — 사전에 추가했으면 resolved, 넣지 않을 단어면 rejected."""
+    data = request.get_json(silent=True) or {}
+    status = data.get('status')
+    lang = data.get('dict_lang')
+    key = _s(data.get('key'), 191)
+    if status not in STATUSES or lang not in DICT_MISSING_LANGS or not key:
+        return jsonify({'code': 400, 'message': 'dict_lang, key, status 가 필요합니다.'}), 400
+    rows = ContentReport.query.filter(ContentReport.reason == DICT_MISSING,
+                                      ContentReport.dict_lang == lang,
+                                      ContentReport.target_key == key).all()
+    note = _s(data.get('resolve_note'), 1000)
+    by = _s(data.get('resolved_by'), 64)
     for r in rows:
         _apply_status(r, status, note, by)
     db.session.commit()

@@ -11,6 +11,8 @@
 // 그 줄들을 '아직 안 한' 모양으로 그렸다가 하나씩: 체크가 그려지며 완료(스케일 + 왼→오 clip 드로잉)
 // → 연결선이 다음 단계로 채워짐(scaleY) → 다 끝나면 다음 할 단계가 강조(링 펄스)되며 펼쳐진다.
 // 끝나면 onCelebrated() 를 부른다. transform/opacity(clip-path) 만 움직인다.
+// 12차: celebrateHold=true 면 연출을 시작하지 않고 그 줄들을 '아직 안 한' 모양으로 붙잡아 둔다
+// (홈 위에 보상 시트·업적 연출이 남아 있는 동안). hold 가 풀리면 그때 시작한다.
 
 import React, { useEffect, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
@@ -34,19 +36,24 @@ const CELEBRATE_DELAY = 450;
 const CHECK_MS = 480;
 const LINE_MS = 380;
 
-const QuestSteps = ({ missions = [], currentKey = null, onSelect, celebrateKeys = null, onCelebrated }) => {
+const QuestSteps = ({
+  missions = [], currentKey = null, onSelect, celebrateKeys = null, celebrateHold = false, onCelebrated,
+}) => {
   const [openKey, setOpenKey] = useState(null);
-  // 연출 진행 단계 — key i 의 체크는 step 2i, 연결선은 2i+1, 다 끝나면 2n. -1 = 시작 전
-  const [step, setStep] = useState(-1);
+  // 연출 진행 단계 — key i 의 체크는 step 2i, 연결선은 2i+1, 다 끝나면 2n. -1 = 시작 전.
+  // 어느 연출(sig)의 단계인지 같이 적어 둔다 — 새 연출이 시작되는 첫 렌더에 지난 연출의 단계가 새지 않게.
+  const [stepState, setStepState] = useState({ sig: '', n: -1 });
   const [pulseKey, setPulseKey] = useState(null);
   const celebrateList = Array.isArray(celebrateKeys) ? celebrateKeys : [];
   const celebrateSig = celebrateList.join(',');
   const celebrating = celebrateList.length > 0;
+  const step = (!celebrateHold && stepState.sig === celebrateSig) ? stepState.n : -1;
 
   useEffect(() => {
-    if (!celebrateSig) return undefined;
+    if (!celebrateSig || celebrateHold) return undefined;
     const keys = celebrateSig.split(',');
     const timers = [];
+    const setStep = (n) => setStepState({ sig: celebrateSig, n });
     let t = CELEBRATE_DELAY;
     setStep(-1);
     keys.forEach((_, i) => {
@@ -69,7 +76,7 @@ const QuestSteps = ({ missions = [], currentKey = null, onSelect, celebrateKeys 
     return () => timers.forEach(clearTimeout);
     // missions/onCelebrated 는 연출 시작 시점 값이면 충분하다 — 서명이 바뀔 때만 다시 시작
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [celebrateSig]);
+  }, [celebrateSig, celebrateHold]);
 
   // 화면에 보이는 완료 상태 — 연출 대상은 자기 차례(체크 단계)가 오기 전까지 '아직 안 함'으로 그린다
   const visualDone = (m) => {

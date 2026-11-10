@@ -10,3 +10,24 @@ export const createContentReportApi = async (body) => {
     console.error('createContentReportApi 오류:', error);
   }
 };
+
+// 사전에 없는 단어 '사전 추가 요청'(이슈 #25 12차) — 백엔드 POST /report/dict-missing.
+// 같은 사용자·같은 단어(정규화)는 한 번만 저장되고, 다시 보내면 data.duplicate=true.
+export const requestDictWordApi = async ({ word, lang, context, source, platform, app_version, web_version }) => {
+  try {
+    return await fetchDataAsync(`${backendUrl}/report/dict-missing`, 'POST', {
+      word, lang, context, source, platform, app_version, web_version,
+    });
+  } catch (error) {
+    console.error('requestDictWordApi 오류:', error);
+  }
+};
+
+// 내가 이 단어를 이미 사전 추가 요청했는지 — data.requested
+export const getDictWordRequestStatusApi = async ({ word, lang }) => {
+  try {
+    return await fetchDataAsync(`${backendUrl}/report/dict-missing/status`, 'GET', { word, lang });
+  } catch (error) {
+    console.error('getDictWordRequestStatusApi 오류:', error);
+  }
+};

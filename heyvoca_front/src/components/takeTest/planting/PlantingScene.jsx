@@ -353,6 +353,8 @@ const PlantingScene = ({ rows, metaOfRow, reducedMotion, onDone, skipRef }) => {
                 word={row.word}
                 meaning={row.meaning}
                 meta={metaOfRow(row)}
+                // 사전 테스트에서 철자를 맞혀 소개·반복 없이 바로 심은 단어(이슈 #25 12차)
+                right={metaOfRow(row)?.pretestClass === 'known' ? '이미 아는 단어' : undefined}
               />
             </motion.div>
           ) : null

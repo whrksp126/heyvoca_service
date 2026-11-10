@@ -28,6 +28,9 @@ export const PHASE_COPY = {
   practice: { title: '배운 단어로 실전 연습해요', sub: '같은 단어를 다른 문제로 풀어요' },
   sentence: { title: '실전 문장으로 학습해봐요', sub: '배운 단어를 문장 속에서 써봐요' },
   retry: { title: '틀린 문제를 복습해봐요', sub: '다시 풀면 더 오래 기억해요' },
+  // 새 씨앗 심기 사전 테스트(이슈 #25 12차) — 세션 맨 앞 / 사전 테스트가 끝나고 학습이 시작될 때
+  pretest: { title: '아는 단어인지 먼저 볼게요', sub: '이미 아는 단어는 건너뛸게요' },
+  plantLearn: { title: '새 단어를 익혀봐요', sub: '모르는 단어만 골라 배워요' },
 };
 
 // 완료 컷의 사선 띠 4개 — 완료 효과음 네 음(SFX_NOTE_STARTS_MS.complete) 시작 시각에 하나씩, 좌우 번갈아 들어온다.

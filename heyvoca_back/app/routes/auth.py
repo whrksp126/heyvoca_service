@@ -1255,6 +1255,11 @@ def withdraw():
             # Apple revoke에 필요한 값은 User row 삭제 전에 미리 확보해둔다.
             apple_info = (user.apple_id, user.apple_refresh_token)
 
+            # 0. 탈퇴 이벤트 기록(어드민 유저 관리 — 일별 탈퇴 수). 이메일은 원문 대신 해시만 남긴다
+            #    (통계 제외 목록과 대조용). 일별 접속 기록은 개인 이력이라 함께 지운다.
+            from app.routes.admin_user_stats import record_withdraw_event
+            record_withdraw_event(user)
+
             # 1. UserHasToken 삭제 (FCM 토큰)
             db.session.query(UserHasToken).filter(UserHasToken.user_id == user_id).delete()
 

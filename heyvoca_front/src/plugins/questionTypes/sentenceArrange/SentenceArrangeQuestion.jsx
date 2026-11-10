@@ -442,6 +442,7 @@ const SentenceArrangeQuestion = ({ question, onComplete, onCardMatched, farmByWo
             anchor={answerLookup.anchor}
             status={answerLookup.status}
             info={answerLookup.info}
+            lookupWord={answerLookup.word} lookupSource="sentenceArrangeAnswer"
             speaking={isSpeaking && speakingTarget === 'lookup'}
             onReplay={() => {
               feel('tap');

@@ -686,6 +686,7 @@ const FillInTheBlankTypingQuestion = ({ question, onComplete, onCardMatched, far
               anchor={lookup.anchor}
               status={lookup.status}
               info={lookup.info}
+              lookupWord={lookup.word} lookupSource="fillInTheBlankTyping"
               speaking={isSpeaking && speakingTarget === 'lookup'}
               onReplay={() => {
                 feel('tap');

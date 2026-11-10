@@ -1,8 +1,8 @@
-import { useLayoutEffect, useRef, useState } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { motion } from 'framer-motion';
 import { useLocation } from 'react-router-dom';
-import { PlusCircle } from '@phosphor-icons/react';
+import { PlusCircle, BookOpenText, CheckCircle } from '@phosphor-icons/react';
 
 import { getReading, shouldShowReading } from '../../utils/jaWord';
 import { vibrate } from '../../utils/osFunction';
@@ -14,6 +14,9 @@ import { wordStage, wordHealth } from '../../utils/vocaCrop';
 import { cropLabelDetail } from '../../utils/crop';
 import CropImage from '../farm/CropImage';
 import SpeakerArt from './SpeakerArt';
+import { useUser } from '../../context/UserContext';
+import { requestDictWordApi, getDictWordRequestStatusApi } from '../../api/report';
+import { getNativeEnv } from '../../utils/nativeBridge';
 
 /*
   단어 사전 말풍선 — 예문 속 영어 단어를 탭하면 그 단어 아래(또는 위)에 뜬다(듀오링고 방식).
@@ -54,6 +57,11 @@ import SpeakerArt from './SpeakerArt';
   작물 그림 + 단계 이름(미학습/씨앗/새싹/이파리/당근)을 작게 보여 준다. 판단은 내 사전(userDictionary)
   으로만 한다(추가 네트워크 없음) — 사전 id 우선, 없으면 표기. word-info 의 word 가 이미 기본형이라
   temperatures 를 탭해도 temperature 로 맞춰진다. 찾기 화면의 '내 단어' 칩과 같은 그림·이름이다.
+
+  사전 추가 요청(이슈 #25 12차) — 단일 단어 모드에서 '사전에 없는 단어'면 안내 아래에 '사전 추가 요청'
+  버튼을 둔다. notFound 일 땐 info 가 없어서 호출부가 탭한 단어(lookupWord)·출처(lookupSource)를 넘긴다.
+  문맥 문장은 anchor 위치의 단어 버튼에서 위로 올라가며 읽는다(호출부 변경 최소화). 이미 요청한 단어면
+  '요청함'으로 보여 준다(GET /report/dict-missing/status). 게스트에겐 숨긴다.
 */
 const EDGE_MARGIN_PX = 12;      // 화면 좌우 여백
 const TAIL_SIZE_PX = 10;        // 꼬리 한 변(회전 전 정사각형)
@@ -68,6 +76,7 @@ const clamp = (v, min, max) => Math.min(Math.max(v, min), max);
 const WordInfoBubble = ({
   anchor, status, info, speaking = false, onReplay,
   results = null, notFoundMessage = '사전에 없는 단어예요',
+  lookupWord = '', lookupSource = null,
 }) => {
   const bodyRef = useRef(null);
   const [measuredWidth, setMeasuredWidth] = useState(null);
@@ -75,6 +84,56 @@ const WordInfoBubble = ({
   const { pushNewBottomSheet } = useNewBottomSheetActions();
   const isGuest = !!useLocation()?.state?.guestMode;
   const { userDictionary } = useVocabulary();
+  const { learningLang } = useUser();
+  // 사전 추가 요청 — 'idle' | 'checking' | 'sending' | 'done' | 'error'
+  const [dictRequest, setDictRequest] = useState('idle');
+  const missingWord = String(lookupWord || info?.query || '').trim();
+  const missingLang = info?.language || learningLang || 'en';
+  const canRequestDict = status === 'notFound' && !results && !isGuest && !!missingWord && missingWord.length <= 100;
+
+  useEffect(() => {
+    if (!canRequestDict) return undefined;
+    let alive = true;
+    setDictRequest('checking');
+    getDictWordRequestStatusApi({ word: missingWord, lang: missingLang })
+      .then((res) => { if (alive) setDictRequest(res?.data?.requested ? 'done' : 'idle'); })
+      .catch(() => { if (alive) setDictRequest('idle'); });
+    return () => { alive = false; };
+  }, [canRequestDict, missingWord, missingLang]);
+
+  // 문맥 문장 — 탭한 단어 버튼(anchor 중앙)에서 위로 올라가며 문장처럼 보이는 첫 조상의 글자를 읽는다
+  const readContextSentence = () => {
+    if (typeof document === 'undefined' || !anchor) return null;
+    const el = document.elementFromPoint(
+      (anchor.left ?? 0) + (anchor.width ?? 0) / 2,
+      (anchor.top ?? 0) + (anchor.height ?? 0) / 2,
+    );
+    let node = el?.closest?.('[data-lookup-word]') || el;
+    for (let i = 0; node && i < 4; i += 1) {
+      const text = (node.textContent || '').replace(/\s+/g, ' ').trim();
+      if (text.length > missingWord.length + 3) return text.slice(0, 500);
+      node = node.parentElement;
+    }
+    return null;
+  };
+
+  const handleRequestDict = async (e) => {
+    e.stopPropagation();
+    if (dictRequest === 'sending' || dictRequest === 'done') return;
+    vibrate({ duration: 5 });
+    setDictRequest('sending');
+    const env = getNativeEnv();
+    const res = await requestDictWordApi({
+      word: missingWord,
+      lang: missingLang,
+      context: readContextSentence(),
+      source: lookupSource,
+      platform: env.isApp ? String(env.platform || '').toLowerCase() || null : 'web',
+      app_version: env.version ?? null,
+      web_version: import.meta.env.MODE ?? null,
+    });
+    setDictRequest(res?.code === 200 ? 'done' : 'error');
+  };
 
   useLayoutEffect(() => {
     const el = bodyRef.current;
@@ -212,6 +271,36 @@ const WordInfoBubble = ({
 
         {status === 'notFound' && (
           <p className="text-[13px] font-[500] text-layout-gray-300 whitespace-nowrap">{notFoundMessage}</p>
+        )}
+
+        {canRequestDict && (
+          dictRequest === 'done' ? (
+            <span className="flex items-center gap-[4px] mt-[6px] text-[12px] font-[700] tracking-[-0.02em] text-layout-gray-300">
+              <CheckCircle size={14} weight="bold" />
+              사전 추가 요청함
+            </span>
+          ) : (
+            <div className="flex flex-col gap-[4px] mt-[6px]">
+              <button
+                type="button"
+                disabled={dictRequest === 'checking' || dictRequest === 'sending'}
+                className="
+                  flex items-center gap-[4px] self-start
+                  -ml-[2px] px-[8px] h-[26px] rounded-full
+                  bg-primary-main-100 dark:bg-[#3A3A3A]
+                  text-[12px] font-[700] tracking-[-0.02em] text-primary-main-600
+                  active:opacity-70 disabled:opacity-50
+                "
+                onClick={handleRequestDict}
+              >
+                <BookOpenText size={14} weight="bold" />
+                {dictRequest === 'sending' ? '요청 중…' : '사전 추가 요청'}
+              </button>
+              {dictRequest === 'error' && (
+                <span className="text-[11px] font-[500] text-layout-gray-300">보내지 못했어요. 다시 눌러 주세요</span>
+              )}
+            </div>
+          )
         )}
 
         {status === 'error' && (

@@ -230,6 +230,9 @@ def create_app():
   # 인증 라우트는 jwt_required 가 다시 확정한다(app/utils/dict_lang.py).
   from app.utils.dict_lang import init_request_dict_lang
   app.before_request(init_request_dict_lang)
+  # 일별 접속 기록(어드민 유저 관리 통계) — 사전 언어 훅 뒤에 둬서 그 훅이 푼 user_id 를 재사용한다.
+  from app.utils.activity import record_user_activity
+  app.before_request(record_user_activity)
 
   login_manager.user_loader(load_user)
   login_manager.unauthorized_handler(unauthorized_callback)
@@ -261,6 +264,7 @@ def create_app():
   from app.routes import admin_dashboard  # noqa: F401  (admin_bp에 라우트 등록 — Blueprint 별도 없음. `import app.routes...`는 함수 내 지역변수 app(Flask)을 모듈로 가려 register_blueprint 깨짐)
   from app.routes import dict_admin  # noqa: F401  (사전 동기화 — admin_bp에 /dict/* 라우트 등록)
   from app.routes import admin_daily_report  # noqa: F401  (일별 실사용자 리포트 — admin_bp에 /report/* 라우트 등록)
+  from app.routes import admin_user_stats  # noqa: F401  (admin_bp에 /user-stats/* 등록 — 어드민 유저 관리)
   from app.routes.content_report import report_bp  # 오류 신고 — /report + admin_bp에 /reports/* 등록
 
   app.register_blueprint(health_bp)
