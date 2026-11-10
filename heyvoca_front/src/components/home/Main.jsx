@@ -65,6 +65,9 @@ import { useOnboardingUnlock } from '../../context/OnboardingUnlockContext';
 import StreakCard from './StreakCard';
 import GrewTodayCard from './GrewTodayCard';
 import WordFeedCard from './WordFeedCard';
+
+/** 히어로 높이(FarmHero h-[420px] 와 같은 값) — 밭 지도의 '보이는 창' 아래 끝 = CTA 위 */
+const HERO_HEIGHT = 420;
 import { healthMixFromOverview } from '../../utils/farmField';
 import {
   buildGreetingContext,
@@ -161,19 +164,20 @@ const Main = () => {
   // (StudyPickNewBottomSheet)가 돌보기·산책·심기·단어장 학습을 고르게 한다. 심을 밭이 아예
   // 없는 EMPTY 상태만 서점으로 보낸다.
   //
-  // 입문 퀘스트(이슈 #25 2차) — 이 버튼으로도 퀘스트를 이어 간다.
-  //   단어가 하나도 없으면(가입 직후) '서점에서 단어장 고르기' → 상점.
-  //   퀘스트 진행 중이고 아직 '새 씨앗 심기'를 안 했으면 구매 후 '새 씨앗 심기' → 심기 세션.
-  //   그 밖(기존 사용자 포함)은 예전 그대로 '농사 시작'.
-  const { legacy: questLegacy, missions: questMissions } = useOnboardingUnlock();
+  // 이슈 #25 9차 — 문구는 퀘스트와 무관하게 항상 '농장 돌보기'.
+  //   단어장이 없거나 학습할 단어가 없으면(EMPTY) 예전처럼 서점으로 보낸다.
+  //   그 밖은 학습 고르기 시트. 아직 씨앗을 한 번도 안 심었으면(plant_seed 미완료) 시트에서
+  //   새 씨앗 심기 외 항목을 잠금으로 보인다.
+  const { legacy: questLegacy, missions: questMissions, questCardVisible } = useOnboardingUnlock();
   const plantQuestPending = !questLegacy
-    && questMissions.some((m) => m.key === 'plant_seed' && !m.done)
-    && unplanted > 0;
-  const ctaInfo = useMemo(() => {
-    if (homeState === HOME_STATES.EMPTY) return { label: '서점에서 단어장 고르기', kind: 'store' };
-    if (plantQuestPending) return { label: '새 씨앗 심기', kind: 'plant' };
-    return { label: '농사 시작', kind: 'study' };
-  }, [homeState, plantQuestPending]);
+    && questMissions.some((m) => m.key === 'plant_seed' && !m.done);
+  const ctaInfo = useMemo(() => (
+    homeState === HOME_STATES.EMPTY
+      ? { label: '농장 돌보기', kind: 'store' }
+      : { label: '농장 돌보기', kind: 'study' }
+  ), [homeState]);
+  // 단어장이 0개면 빈 밭 대신 히어로 그 자리에 입문 퀘스트를 놓는다(이슈 #25 9차)
+  const questInHero = bookRows.length === 0 && questCardVisible;
 
   const gemCnt = farmOverview?.gem_cnt ?? userProfile?.gem_cnt ?? 0;
 
@@ -332,13 +336,8 @@ const Main = () => {
       navigate('/book-store');
       return;
     }
-    if (ctaInfo.kind === 'plant') {
-      vibrate({ duration: 5 });
-      startPlantSession({ count: Math.min(5, unplanted || 5) });
-      return;
-    }
     vibrate({ duration: 5 });
-    pushNewBottomSheet(StudyPickNewBottomSheet, {}, { isBackdropClickClosable: true, isDragToCloseEnabled: true });
+    pushNewBottomSheet(StudyPickNewBottomSheet, { seedOnly: plantQuestPending }, { isBackdropClickClosable: true, isDragToCloseEnabled: true });
   };
 
   /*
@@ -412,6 +411,91 @@ const Main = () => {
     .filter((section) => section && section.items.length > 0)
     .slice(0, 2);
 
+  // 히어로 위에 뜨는 것들(보석 칩 · 학습 언어 칩 · 헤드라인 · 주 CTA) — 지도 배경 히어로와
+  // 한 장짜리 FarmHero 가 같은 내용을 쓴다
+  const heroOverlay = (
+    <>
+      {/* 보석 — 히어로 우측 상단에 떠 있는 칩(§6 · §10).
+          히어로 위에 뜬 요소에만 그림자를 쓴다. 본문 카드는 시스템대로 보더 우선(§7) */}
+      <button
+        id="home-gem-chip"
+        type="button"
+        onClick={handleStoreButtonClick}
+        className="
+          absolute top-[max(48px,calc(var(--status-bar-height)+4px))] right-[16px] z-[20]
+          inline-flex items-center gap-[6px]
+          h-[36px] pl-[6px] pr-[12px] rounded-full
+          bg-layout-white/90 dark:bg-layout-gray-dark/90 backdrop-blur-[8px]
+          shadow-[0_2px_8px_rgba(96,80,52,.16)] dark:shadow-[0_2px_8px_rgba(0,0,0,.4)]
+          text-[16px] font-[700] tracking-[-0.02em]
+          text-layout-black dark:text-layout-white
+        "
+      >
+        <img
+          src={gemIcon}
+          alt=""
+          draggable={false}
+          className="block w-[22px] h-[22px] object-contain select-none"
+        />
+        {gemCnt.toLocaleString()}
+      </button>
+
+      {/* 학습 언어 칩 — 보석 칩과 대칭으로 히어로 좌측 상단에 뜬다(같은 칩 규격).
+          탭하면 학습 언어 바텀시트. 실험실 multi_lang 이 켜졌을 때만 노출 */}
+      {showLangChip && (
+        <button
+          type="button"
+          onClick={() => {
+            vibrate({ duration: 5 });
+            pushNewBottomSheet(LearningLangNewBottomSheet, {}, { isBackdropClickClosable: true, isDragToCloseEnabled: true });
+          }}
+          aria-label={`학습 언어: ${LANG_LABEL[learningLang]}`}
+          className="
+            absolute top-[max(48px,calc(var(--status-bar-height)+4px))] left-[16px] z-[20]
+            inline-flex items-center
+            h-[36px] px-[12px] rounded-full
+            bg-layout-white/90 dark:bg-layout-gray-dark/90 backdrop-blur-[8px]
+            shadow-[0_2px_8px_rgba(96,80,52,.16)] dark:shadow-[0_2px_8px_rgba(0,0,0,.4)]
+            text-[14px] font-[700] tracking-[-0.02em]
+            text-layout-black dark:text-layout-white
+            gap-[6px]
+          "
+        >
+          <span className="flex items-center justify-center w-[18px] h-[14px] rounded-[4px] overflow-hidden ring-1 ring-inset ring-black/5 dark:ring-white/10 flex-shrink-0">
+            <LangFlagIcon lang={learningLang} size={18} />
+          </span>
+          {LANG_LABEL[learningLang]}
+        </button>
+      )}
+
+      {/* §4 2줄 헤드라인 — 닉네임 첫머리는 뺐다(이슈 #25 4차).
+          밭 지도(HomeFieldGrid)가 히어로 전체에 배경으로 깔리므로 글자는 포인터를 지도로 통과시킨다.
+          문구 자체는 src/data/homeGreetings.js가 상황별로 고른다(CTA 5상태와 분리) */}
+      <div className="
+        absolute top-[max(92px,calc(var(--status-bar-height)+48px))] left-0 right-0 z-[6]
+        pointer-events-none
+        px-[26px] text-center
+        text-[22px] font-[700] tracking-[-0.02em] leading-[1.4]
+        text-farm-ink dark:text-layout-white
+      ">
+        {greeting.line1}
+        <br />
+        {greeting.line2}
+      </div>
+
+      {/* §12 의 주황 핀("썩기 직전 N")은 내렸다 — QA 2차.
+          밭 그림 위에 경고 핀을 띄우면 헤드라인·CTA·팻말과 네 번째로 같은 말을 하면서
+          가장 눈에 띄는 자리를 겁주는 데 쓴다. 부패 직전 안내는 CTA 바로 아래 "오늘 할 일"
+          카드(TodayTasksCard)가 맡고 있고, 거기에는 누르면 갈 곳이 있다. */}
+
+      {/* §7 주 CTA — 히어로 하단에 겹쳐 뜬다. 홈에서 유일한 핑크 */}
+      <FarmCta label={ctaInfo.label} onClick={handleCtaClick} />
+    </>
+  );
+
+  // 단어장이 하나라도 있으면 밭 지도를 화면 전체 배경으로 깐다(없으면 히어로의 한 장짜리 밭)
+  const hasFieldMap = bookRows.length > 0;
+
   return (
     /* §9 단일 배경 — 화면 배경을 한 번만 깔고 히어로 그라디언트의 끝 색을 같은 값으로 맞춘다 */
     /* isolate — 히어로(z-1)와 본문(z-2)의 겹침 순서는 홈 **안에서만** 유효해야 한다.
@@ -429,101 +513,54 @@ const Main = () => {
       className="isolate flex flex-col h-screen overflow-y-auto bg-farm-canvas dark:bg-layout-black"
     >
 
-      <FarmHero
-        counts={counts}
-        fieldCounts={fieldCounts}
-        healthMix={healthMix}
-        words={heroWords}
-        storedSeeds={unplanted}
-        health={health}
-        state={view.mood}
-        field={bookRows.length > 0 ? (
+      {/* 밭 지도 — 홈 화면 전체(하단 탭 위까지)의 배경 층(이슈 #25 9차).
+          예전엔 히어로(420px) 안에만 깔려 밭을 아래로 끌면 CTA 절반쯤에서 페이드로 사라졌다.
+          지금은 스크롤 영역 맨 앞에 sticky 로 붙어 화면에 고정되고, 히어로 글자·칩·CTA 와
+          아래 카드(글래스)들이 그 위로 흘러간다. 음수 margin 으로 흐름 높이를 0 으로 만들어
+          히어로·본문 배치는 그대로다. 카드 영역(본문 블록)은 포인터를 받아 세로 스크롤이 되고,
+          카드가 없는 곳(히어로 빈 곳·본문 아래)은 지도가 받는다 — 기존 제스처 규칙 그대로. */}
+      {hasFieldMap && (
+        <div
+          className="
+            sticky top-0 z-0 shrink-0 w-full
+            h-[calc(100vh-60px-var(--safe-area-bottom))]
+            -mb-[calc(100vh-60px-var(--safe-area-bottom))]
+            bg-[linear-gradient(180deg,var(--farm-sky-100)_0%,var(--farm-sky-200)_32%,var(--farm-canvas)_100%)]
+          "
+        >
           <HomeFieldGrid
             rows={bookRows}
             resetSignal={mapReset}
+            focusBottom={HERO_HEIGHT - 46}
             onSelect={(id) => {
               vibrate({ duration: 5 });
               pushNewFullSheet(VocabularyWordsNewFullSheet, { id }, { smFull: true, closeOnBackdropClick: true });
             }}
           />
-        ) : null}
-      >
-        {/* 보석 — 히어로 우측 상단에 떠 있는 칩(§6 · §10).
-            히어로 위에 뜬 요소에만 그림자를 쓴다. 본문 카드는 시스템대로 보더 우선(§7) */}
-        <button
-          id="home-gem-chip"
-          type="button"
-          onClick={handleStoreButtonClick}
-          className="
-            absolute top-[max(48px,calc(var(--status-bar-height)+4px))] right-[16px] z-[20]
-            inline-flex items-center gap-[6px]
-            h-[36px] pl-[6px] pr-[12px] rounded-full
-            bg-layout-white/90 dark:bg-layout-gray-dark/90 backdrop-blur-[8px]
-            shadow-[0_2px_8px_rgba(96,80,52,.16)] dark:shadow-[0_2px_8px_rgba(0,0,0,.4)]
-            text-[16px] font-[700] tracking-[-0.02em]
-            text-layout-black dark:text-layout-white
-          "
-        >
-          <img
-            src={gemIcon}
-            alt=""
-            draggable={false}
-            className="block w-[22px] h-[22px] object-contain select-none"
-          />
-          {gemCnt.toLocaleString()}
-        </button>
-
-        {/* 학습 언어 칩 — 보석 칩과 대칭으로 히어로 좌측 상단에 뜬다(같은 칩 규격).
-            탭하면 학습 언어 바텀시트. 실험실 multi_lang 이 켜졌을 때만 노출 */}
-        {showLangChip && (
-          <button
-            type="button"
-            onClick={() => {
-              vibrate({ duration: 5 });
-              pushNewBottomSheet(LearningLangNewBottomSheet, {}, { isBackdropClickClosable: true, isDragToCloseEnabled: true });
-            }}
-            aria-label={`학습 언어: ${LANG_LABEL[learningLang]}`}
-            className="
-              absolute top-[max(48px,calc(var(--status-bar-height)+4px))] left-[16px] z-[20]
-              inline-flex items-center
-              h-[36px] px-[12px] rounded-full
-              bg-layout-white/90 dark:bg-layout-gray-dark/90 backdrop-blur-[8px]
-              shadow-[0_2px_8px_rgba(96,80,52,.16)] dark:shadow-[0_2px_8px_rgba(0,0,0,.4)]
-              text-[14px] font-[700] tracking-[-0.02em]
-              text-layout-black dark:text-layout-white
-              gap-[6px]
-            "
-          >
-            <span className="flex items-center justify-center w-[18px] h-[14px] rounded-[4px] overflow-hidden ring-1 ring-inset ring-black/5 dark:ring-white/10 flex-shrink-0">
-              <LangFlagIcon lang={learningLang} size={18} />
-            </span>
-            {LANG_LABEL[learningLang]}
-          </button>
-        )}
-
-        {/* §4 2줄 헤드라인 — 닉네임 첫머리는 뺐다(이슈 #25 4차).
-            밭 지도(HomeFieldGrid)가 히어로 전체에 배경으로 깔리므로 글자는 포인터를 지도로 통과시킨다.
-            문구 자체는 src/data/homeGreetings.js가 상황별로 고른다(CTA 5상태와 분리) */}
-        <div className="
-          absolute top-[max(92px,calc(var(--status-bar-height)+48px))] left-0 right-0 z-[6]
-          pointer-events-none
-          px-[26px] text-center
-          text-[22px] font-[700] tracking-[-0.02em] leading-[1.4]
-          text-farm-ink dark:text-layout-white
-        ">
-          {greeting.line1}
-          <br />
-          {greeting.line2}
         </div>
+      )}
 
-        {/* §12 의 주황 핀("썩기 직전 N")은 내렸다 — QA 2차.
-            밭 그림 위에 경고 핀을 띄우면 헤드라인·CTA·팻말과 네 번째로 같은 말을 하면서
-            가장 눈에 띄는 자리를 겁주는 데 쓴다. 부패 직전 안내는 CTA 바로 아래 "오늘 할 일"
-            카드(TodayTasksCard)가 맡고 있고, 거기에는 누르면 갈 곳이 있다. */}
-
-        {/* §7 주 CTA — 히어로 하단에 겹쳐 뜬다. 홈에서 유일한 핑크 */}
-        <FarmCta label={ctaInfo.label} onClick={handleCtaClick} />
-      </FarmHero>
+      {hasFieldMap ? (
+        /* 지도가 배경일 때의 히어로 — 하늘·밭은 위 배경 층이 그리므로 투명한 자리만 잡는다.
+           빈 곳은 포인터를 아래 지도로 통과시키고(pointer-events-none), 칩·CTA 만 다시 받는다 */
+        <div className="relative w-full h-[420px] flex-shrink-0 z-[1] pointer-events-none">
+          <div className="pointer-events-auto">
+            {heroOverlay}
+          </div>
+        </div>
+      ) : (
+        <FarmHero
+          counts={counts}
+          fieldCounts={fieldCounts}
+          healthMix={healthMix}
+          words={heroWords}
+          storedSeeds={unplanted}
+          health={health}
+          state={view.mood}
+        >
+          {heroOverlay}
+        </FarmHero>
+      )}
 
       {/* §9 본문 — 배경을 깔지 않는다. 페이드된 지면이 카드 사이로 비친다.
           §7 — CTA 가 흘러나온 만큼 상단 패딩 30px 으로 비켜 준다 */}
@@ -542,7 +579,7 @@ const Main = () => {
             §8 water·amber·seed 스트립은 이 카드로 흡수돼 뺐다(위 변수 선언부 주석 참고). */}
         {/* 가입 직후 '첫 퀘스트'(이슈 #25) — 신규 가입자에게 남은 퀘스트가 있을 때만 그려진다.
             새 사용자에게 지금 할 일은 퀘스트를 하나씩 해 보는 것이라 오늘 할 일보다 위에 둔다. */}
-        <OnboardingQuestCard />
+        {!questInHero && <OnboardingQuestCard />}
 
         <TodayTasksCard />
 

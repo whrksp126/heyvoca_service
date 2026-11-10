@@ -233,8 +233,12 @@ const readStatusBar = (el) => {
  * @param {Array}    rows      buildBookRow 결과(글자 단어장 제외) — 1개 이상
  * @param {function} onSelect  (bookId) => void
  * @param {number}   resetSignal 값이 바뀌면 기본 시점으로 되돌린다(당겨서 새로고침)
+ * @param {number}   focusBottom (선택) '보이는 창' 아래 끝(지도 상자 위쪽 기준 px) — 지도가 히어로보다
+ *                   큰 화면 전체 배경일 때 홈이 CTA 위 높이를 넘긴다. 없으면 상자 아래 − 46px.
+ *                   기본 시점·배율은 이 창으로, **이동 경계는 상자 전체**로 잡는다(이슈 #25 9차 —
+ *                   밭을 아래로 끌어도 카드 뒤까지 계속 보인다).
  */
-const HomeFieldGrid = ({ rows, onSelect, resetSignal = 0 }) => {
+const HomeFieldGrid = ({ rows, onSelect, resetSignal = 0, focusBottom }) => {
   "use memo";
 
   const boxRef = useRef(null);
@@ -281,7 +285,10 @@ const HomeFieldGrid = ({ rows, onSelect, resetSignal = 0 }) => {
       y0 = Math.min(y0, cy - EXT_TOP); y1 = Math.max(y1, cy + EXT_BOTTOM);
     });
     const fTop = Math.min(box.h * 0.5, Math.max(158, box.sb + 114));
-    const focus = { x0: 12, x1: box.w - 12, y0: fTop, y1: Math.max(fTop + 40, box.h - 46) };
+    const fBottom = Number.isFinite(focusBottom) ? Math.min(focusBottom, box.h - 46) : box.h - 46;
+    const focus = { x0: 12, x1: box.w - 12, y0: fTop, y1: Math.max(fTop + 40, fBottom) };
+    // 이동 창 — 보이는 창보다 아래로 상자 끝(하단 탭 위)까지 넓다. 위는 헤드라인 아래 그대로
+    const pan = { x0: focus.x0, x1: focus.x1, y0: focus.y0, y1: Math.max(focus.y1, box.h - 12) };
     const fw = focus.x1 - focus.x0;
     const fh = focus.y1 - focus.y0;
     const minS = Math.min(fw / (x1 - x0), fh / (y1 - y0));
@@ -299,11 +306,11 @@ const HomeFieldGrid = ({ rows, onSelect, resetSignal = 0 }) => {
       ? { x: (x0 + x1) / 2, y: (y0 + y1) / 2 }
       : { x: first.cx, y: first.cy + (EXT_BOTTOM - EXT_TOP) / 2 };
     return {
-      x0, x1, y0, y1, focus, minS, maxS, homeS, center,
+      x0, x1, y0, y1, focus, pan, minS, maxS, homeS, center,
       // 작물 수·이름판 크기는 기본 시점 기준으로 고정한다(다시 그려도 작물이 바뀌지 않게)
       homeTileW: FIELD_CANVAS_W * homeS,
     };
-  }, [placed, single, box.w, box.h, box.sb]);
+  }, [placed, single, box.w, box.h, box.sb, focusBottom]);
 
   /* ── 보기 상태 { S: 배율, tx·ty: 캔버스 x0·y0 이 놓이는 화면 좌표 } — 리렌더 없이 transform 만 ── */
   const view = useRef({ S: 1, tx: 0, ty: 0 });
@@ -366,13 +373,17 @@ const HomeFieldGrid = ({ rows, onSelect, resetSignal = 0 }) => {
     if (!raf.current) raf.current = requestAnimationFrame(apply);
   }, [apply]);
 
-  /** 축 하나의 이동 경계 — 밭 묶음이 창보다 크면 끝 밭이 창 가장자리까지, 작으면 창 가운데 고정 */
+  /**
+   * 축 하나의 이동 경계(이동 창 L.pan 기준) — 밭 묶음이 창보다 크면 끝 밭이 창 가장자리까지,
+   * 작으면 창 안에서 자유롭게(가장자리에 닿을 때까지). 이동 창이 보이는 창을 품으므로
+   * 기본 시점(보이는 창 가운데)은 항상 경계 안이다.
+   */
   const boundsFor = (L, S, axis) => {
     const [lo, hi, f0, f1] = axis === 'x'
-      ? [L.x0, L.x1, L.focus.x0, L.focus.x1]
-      : [L.y0, L.y1, L.focus.y0, L.focus.y1];
+      ? [L.x0, L.x1, L.pan.x0, L.pan.x1]
+      : [L.y0, L.y1, L.pan.y0, L.pan.y1];
     const span = (hi - lo) * S;
-    if (span <= f1 - f0) { const c = f0 + (f1 - f0 - span) / 2; return [c, c]; }
+    if (span <= f1 - f0) return [f0, f1 - span];
     return [f1 - span, f0];
   };
 
@@ -755,6 +766,8 @@ const HomeFieldGrid = ({ rows, onSelect, resetSignal = 0 }) => {
           top-[max(160px,calc(var(--status-bar-height)+116px))] bottom-[46px]
           flex items-center justify-center
         "
+        // 화면 전체 배경일 때도 한 장은 헤드라인 아래 ~ CTA 위 칸에 둔다
+        style={Number.isFinite(focusBottom) ? { bottom: `calc(100% - ${focusBottom}px)` } : undefined}
       >
         {tileW > 0 && <FieldTile row={rows[0]} width={tileW} single onSelect={onSelect} />}
       </div>
@@ -813,7 +826,8 @@ const HomeFieldGrid = ({ rows, onSelect, resetSignal = 0 }) => {
           ))}
         </div>
       )}
-      {/* 가독성 페이드 — 위는 하늘 토큰(헤드라인 뒤), 아래는 화면 배경 토큰(본문과 이음). 포인터는 통과 */}
+      {/* 가독성 페이드 — 위만 하늘 토큰(헤드라인 뒤). 아래 페이드는 뺐다(이슈 #25 9차) — 지도가 화면 전체
+          배경이라 밭이 CTA 아래·카드 뒤로 내려가도 잘리지 않고 글래스 카드 너머로 비쳐야 한다. 포인터는 통과 */}
       <div
         aria-hidden
         className="
@@ -821,13 +835,6 @@ const HomeFieldGrid = ({ rows, onSelect, resetSignal = 0 }) => {
           h-[max(150px,calc(var(--status-bar-height)+108px))]
           bg-[linear-gradient(180deg,var(--farm-sky-100)_0%,var(--farm-sky-100)_40%,transparent_100%)]
           opacity-[.88]
-        "
-      />
-      <div
-        aria-hidden
-        className="
-          absolute inset-x-0 bottom-0 z-[20] pointer-events-none h-[40px]
-          bg-[linear-gradient(180deg,transparent_0%,var(--farm-canvas)_100%)]
         "
       />
     </div>

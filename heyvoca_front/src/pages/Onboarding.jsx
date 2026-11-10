@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { CaretLeft, CaretRight, AppleLogo } from '@phosphor-icons/react';
+import { CaretLeft, AppleLogo } from '@phosphor-icons/react';
 import googleLogo from '../assets/images/google_logo.png';
 import { getPlacementPoolApi, migrateOnboardingApi } from '../api/study';
 import { getGuest, clearGuest, clearGuestTrial, buildMigrateBody } from '../utils/guestStorage';
@@ -18,7 +18,6 @@ import { useUser } from '../context/UserContext';
 import postMessageManager from '../utils/postMessageManager';
 import { useStatusBarStyle } from '../hooks/useStatusBarStyle';
 import FarmStoryStage from '../components/onboarding/FarmStoryStage';
-import { cropAssetByVariant } from '../components/farm/CropImage';
 import AuthSplash from '../components/onboarding/AuthSplash';
 import { nodeEnv } from '../utils/common';
 import { useAppOAuthError } from '../hooks/useAppOAuthError';
@@ -30,9 +29,12 @@ import { useAppOAuthError } from '../hooks/useAppOAuthError';
           게스트 학습 뒤 가입 화면('거의 다 왔어요')을 없앴다. 로그인하면 Index 가 onboarding_ver 로 갈라
           최초 사용자만 여기로 다시 보내고, 로그인된 채 들어오면 hello 를 건너뛰어 소개부터 시작한다.
           마지막 finish → auth 는 로그인 상태라 가입 화면 없이 migrate(v2: theta·answers) 후 홈으로 간다.
-  【흐름】 hello → intro(농사 이야기: 성장 → 시듦 → 체험 밭) → 수준 맞춤 학습(/take-test, 8문제 + 틀린 단어
+  【흐름】 hello → about('헤이보카에 대해 알아볼까요?' — 이 탭에서 효과음 unlock, 9차 QA) → intro(농사 이야기: 성장 → 시듦 → 체험 밭) → 수준 맞춤 학습(/take-test, 8문제 + 틀린 단어
           복습, 매 답마다 체험 밭 가상 작물이 자라고 시든다) → 학습 결과(StudyResult — 실제 학습과 같은 슬라이드,
-          밭 성장 · 보석 20 · 결과 목록) → guide('단어를 학습하면 새 농작물을 심고 키울 수 있어요', 8차 QA) → finish('나만의 밭을 만들러 가볼까요?' 문구 + 버튼) → auth
+          밭 성장 · 보석 20 · 결과 목록) → guide('단어를 학습하면 새 농작물을 심고 키울 수 있어요', 8차 QA — 9차부터 체험 밭의
+          학습 후 모습을 그대로 그린다) → finish('이제 나만의 밭을 만들러 가볼까요?' 문구 + 버튼) → auth
+  (이슈 #25 9차 QA — 성장·시듦 연출을 체험 밭 8단어로 바로 한다. 씨앗을 여러 칸에 심어 일부는 새싹·이파리·당근까지
+   자라고 일부는 시든다 → 그 밭이 그대로 체험 밭이 된다. 그래서 소개에 들어가기 전(about)에 세션을 받아 둔다.)
   (이슈 #25 4차 — 소개를 '하나의 밭이 이어지는 농사 이야기'로. 장면 사이 화면 전환 없이 밭 무대
    (components/onboarding/FarmStoryStage) 위에서 연출이 이어지고 제목만 크로스페이드한다. 연출이 끝나기 전엔
    버튼이 회색으로 잠긴다. 장면엔 큰 제목 한 줄과 버튼만 둔다 — 보조 설명 줄은 없앴다.)
@@ -60,10 +62,9 @@ const SCENE_COPY = {
   wilt: <>복습을 게을리하면<br />작물이 <span className="text-primary-main-600">시들어 죽을 수</span> 있어요</>,
   field: <>농장 체험을 <span className="text-primary-main-600">해볼까요?</span></>,
   guide: <>단어를 학습하면 새 농작물을<br /><span className="text-primary-main-600">심고 키울 수 있어요</span></>,
-  finish: <>나만의 밭을<br /><span className="text-primary-main-600">만들러 가볼까요?</span></>,
+  finish: <>이제 나만의 밭을<br /><span className="text-primary-main-600">만들러 가볼까요?</span></>,
+  about: <><span className="text-primary-main-600">헤이보카</span>에 대해<br />알아볼까요?</>,
 };
-// 안내 장(guide)의 작물 단계 — 씨앗부터 당근까지
-const GUIDE_CROPS = ['seed', 'sprout', 'leaf', 'carrot'];
 
 const SceneCopy = ({ copyKey, className = 'mt-[20px] min-h-[56px]' }) => (
   <div className={`text-center ${className}`}>
@@ -95,7 +96,7 @@ const Onboarding = () => {
   const incomingStep = location.state?.step;
   const [step, setStep] = useState(() => {
     // 로그인된 채 처음 들어오면(로그인 직후 Index 가 보냄) 인사를 건너뛰고 소개부터
-    const s = incomingStep || (isLogin ? 'intro' : 'hello');
+    const s = incomingStep || (isLogin ? 'about' : 'hello');
     // 학습 결과(StudyResult)를 마치고 오면 마무리 앞에 '새 농작물' 안내 한 장을 먼저(이슈 #25 8차 QA)
     if (s === 'finish') return 'guide';
     return LEGACY_STEP[s] || s;
@@ -158,7 +159,7 @@ const Onboarding = () => {
 
   // 뒤로가기가 있는 스텝과, 각 스텝의 이전 자리.
   // 학습은 별도 라우트라 그 뒤(auth)에서 앞으로 이어 붙이지 않는다 — 다시 학습하게 된다.
-  const BACK_TO = { intro: 'hello' };
+  const BACK_TO = { about: 'hello', intro: 'about' };
   // 소개 안의 장면 뒤로 가기 — 이전 장면을 끝 모습으로 다시 세운다(연출을 또 기다리게 하지 않는다)
   const SCENE_BACK = { wilt: 'grow', field: 'wilt' };
 
@@ -241,19 +242,16 @@ const Onboarding = () => {
     sessionPromiseRef.current = p;
     return p;
   };
-  // 소개에 들어오면 바로 받기 시작한다(성장·시듦 연출 동안 받아 둔다)
+  // 소개 앞 장(about)에서부터 받기 시작한다 — 성장 연출부터 체험 밭 단어로 하므로 소개 전에 있어야 한다.
+  // (체험 밭으로 곧장 돌아온 경우엔 단어가 오면 무대가 그 단어로 끝 모습을 다시 세운다 — FarmStoryStage words)
   useEffect(() => {
-    if (step === 'intro') loadTrialSession();
+    if (step === 'about' || step === 'intro') loadTrialSession();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [step]);
-  // 체험 밭으로 곧장 돌아온 경우(학습 중 그만둠) — 세션이 준비되면 그 단어로 밭을 다시 세운다
-  useEffect(() => {
-    if (step === 'intro' && scene === 'field' && trialSession) setSceneRun((r) => ({ key: r.key + 1, instant: true }));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [trialSession]);
 
-  // 시듦 → 체험 밭. 세션이 아직이면 받을 때까지 기다린다(버튼은 '불러오는 중...').
-  const goField = async () => {
+  // 알아보기 — 이 탭(user gesture)의 동기 시점에 효과음을 깨운다. 그래야 첫 장면(심기·자라기)부터 소리가 난다.
+  // 세션이 아직이면 받을 때까지 기다린다(버튼은 '불러오는 중...').
+  const goIntro = async () => {
     vibrate({ duration: 5 });
     primeSfx();
     if (!trialSession) {
@@ -262,7 +260,8 @@ const Onboarding = () => {
       setLoadingTrial(false);
       if (!ses) return;
     }
-    goScene('field');
+    goScene('grow');
+    setStep('intro');
   };
 
   // 체험하기 — 실제 학습 화면(TakeTest)을 게스트 수준 맞춤 학습으로 띄운다.
@@ -416,6 +415,8 @@ const Onboarding = () => {
   );
 
   const stepBody = useMemo(() => `on-${step}`, [step]);
+  // 안내 장(guide)의 밭 — 학습 결과 화면이 넘긴 체험 밭 학습 후 모습
+  const guideWords = Array.isArray(location.state?.field) ? location.state.field : [];
 
   // 로그인 처리 중·이미 로그인된 사용자의 이전(migrate) 중에는 가입 화면 대신 스플래시
   if (authProcessing || (step === 'auth' && (isLogin || finishingOnboarding))) return <AuthSplash />;
@@ -467,7 +468,7 @@ const Onboarding = () => {
               </div>
               {isLogin ? (
                 <div className="px-[24px] pt-[18px] pb-[26px] shrink-0">
-                  <Cta label="시작하기" onClick={() => { vibrate({ duration: 5 }); primeSfx(); goScene('grow'); setStep('intro'); }} />
+                  <Cta label="시작하기" onClick={() => { vibrate({ duration: 5 }); primeSfx(); setStep('about'); }} />
                   <LoginFooter />
                 </div>
               ) : (
@@ -475,6 +476,23 @@ const Onboarding = () => {
                   {AUTH_BUTTONS}
                 </div>
               )}
+            </>
+          )}
+
+          {/* ①-1 알아보기 — 소개 앞 한 장. 이 버튼 탭에서 효과음을 깨운다(첫 장면부터 소리가 나게). */}
+          {step === 'about' && (
+            <>
+              <div className="flex flex-col flex-1 min-h-0 justify-center px-[28px]">
+                <SceneCopy copyKey="about" className="" />
+              </div>
+              <div className="px-[24px] pt-[18px] pb-[26px] shrink-0">
+                {trialError && (
+                  <p className="mb-[10px] text-center text-[12px] font-[600] text-status-error-600">
+                    문제를 불러오지 못했어요. 다시 눌러주세요.
+                  </p>
+                )}
+                <Cta label={loadingTrial ? '불러오는 중...' : '알아보기'} disabled={loadingTrial} onClick={goIntro} />
+              </div>
             </>
           )}
 
@@ -486,7 +504,7 @@ const Onboarding = () => {
                   scene={scene}
                   runKey={sceneRun.key}
                   instant={sceneRun.instant}
-                  words={scene === 'field' && trialSession ? fieldWords(trialSession) : []}
+                  words={trialSession ? fieldWords(trialSession) : []}
                   onSceneDone={(sc) => { if (sc === scene) setSceneDone(true); }}
                 />
                 <SceneCopy copyKey={scene} />
@@ -501,7 +519,7 @@ const Onboarding = () => {
                   <Cta label="확인" disabled={!sceneDone} onClick={() => { vibrate({ duration: 5 }); primeSfx(); goScene('wilt'); }} />
                 )}
                 {scene === 'wilt' && (
-                  <Cta label={loadingTrial ? '불러오는 중...' : '확인'} disabled={!sceneDone || loadingTrial} onClick={goField} />
+                  <Cta label="확인" disabled={!sceneDone} onClick={() => { vibrate({ duration: 5 }); primeSfx(); goScene('field'); }} />
                 )}
                 {scene === 'field' && (
                   trialSession
@@ -513,34 +531,16 @@ const Onboarding = () => {
             </>
           )}
 
-          {/* ③ 안내 — 학습 결과 슬라이드를 다 본 뒤, 마무리 직전 한 장. 씨앗 → 새싹 → 이파리 → 당근이
-              차례로 '뽕' 돋으며(결과 슬라이드 작물 등장과 같은 스프링) 학습할수록 밭이 자란다는 걸 보여 준다. */}
+          {/* ③ 안내 — 학습 결과 슬라이드를 다 본 뒤, 마무리 직전 한 장. 체험 밭(소개에서 심고 키운 그 밭)에
+              학습 결과가 반영된 모습을 그대로 그리고, 작물마다 단어 이름표가 차례로 잠깐 뜬다(9차 QA).
+              밭 모습은 학습 결과 화면(StudyResult)이 state.field 로 넘긴다 — 없으면(예전 화면에서 온 경우) 문구만. */}
           {step === 'guide' && (
             <>
               <div className="flex flex-col flex-1 min-h-0 justify-center px-[20px]">
-                <div className="flex items-end justify-center gap-[2px]" aria-hidden>
-                  {GUIDE_CROPS.map((crop, i) => (
-                    <React.Fragment key={crop}>
-                      {i > 0 && (
-                        <motion.span
-                          initial={{ opacity: 0 }} animate={{ opacity: 1 }}
-                          transition={{ delay: 0.15 + i * 0.28, duration: 0.25 }}
-                          className="mb-[26px] text-layout-gray-200"
-                        >
-                          <CaretRight size={14} weight="bold" />
-                        </motion.span>
-                      )}
-                      <motion.img
-                        src={cropAssetByVariant(crop, 'healthy')}
-                        alt="" draggable={false}
-                        initial={{ opacity: 0, y: -14, scale: 0.3 }} animate={{ opacity: 1, y: 0, scale: 1 }}
-                        transition={{ delay: 0.2 + i * 0.28, type: 'spring', stiffness: 420, damping: 16 }}
-                        className="h-[72px] w-[72px] select-none object-contain max-[360px]:h-[60px] max-[360px]:w-[60px]"
-                      />
-                    </React.Fragment>
-                  ))}
-                </div>
-                <SceneCopy copyKey="guide" className="mt-[28px] min-h-[56px]" />
+                {guideWords.length > 0 && (
+                  <FarmStoryStage scene="result" runKey={0} words={guideWords} />
+                )}
+                <SceneCopy copyKey="guide" className="mt-[20px] min-h-[56px]" />
               </div>
               <div className="px-[24px] pt-[18px] pb-[26px] shrink-0">
                 <Cta label="다음" onClick={() => { vibrate({ duration: 5 }); setStep('finish'); }} />

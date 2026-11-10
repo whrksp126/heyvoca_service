@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect, useLayoutEffect } from 'react';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
-import { Check, X, CheckCircle, XCircle } from '@phosphor-icons/react';
+import { Check, X, CheckCircle, XCircle, Lightbulb } from '@phosphor-icons/react';
 import { FarmResultBar } from '../../../components/farm/FarmStatusBar';
 import StudyTimingTag from '../../../components/farm/StudyTimingTag';
 import LiftAboveBar from '../../../components/common/LiftAboveBar';
@@ -26,6 +26,22 @@ import CardSpeakerButton from '../../../components/common/CardSpeakerButton';
   범주(letter/number)로 단어 조각을 묶는다 — 가나·한자도 그대로 한 토큰으로 잡혀 en/ja 모두
   별도 분기 없이 동작한다. 공백·구두점은 'text'로 그대로 보존해 원문 줄바꿈이 그대로다.
 */
+/*
+  비슷한 뜻 힌트에서 미리 채워 줄 앞 글자 수 — 짧으면 1글자, 길면 몇 글자 더(공백 제외 글자 수 기준).
+*/
+const synonymHintRevealCount = (chars) => {
+  const n = chars.filter((c) => !/\s/.test(c)).length;
+  if (n >= 10) return 3;
+  if (n >= 7) return 2;
+  return 1;
+};
+// 'employed', 'em' → 'em______' 형태 — 공백(구동사)은 그대로 두고 나머지 글자는 밑줄.
+const synonymHintPattern = (answerText, prefix) => {
+  const chars = Array.from(String(answerText ?? '').trim());
+  const shown = Array.from(prefix ?? '').length;
+  return chars.map((c, i) => (/\s/.test(c) ? ' ' : (i < shown ? c : '_'))).join('');
+};
+
 const WORD_RUN_RE = /[\p{L}\p{N}''']+/gu;
 const tokenizeBlankWords = (text) => {
   if (!text) return [];
@@ -62,6 +78,13 @@ const FillInTheBlankTypingQuestion = ({ question, onComplete, onCardMatched, far
   const [isCorrect, setIsCorrect] = useState(null);
   const [isPerfect, setIsPerfect] = useState(false); // 한 번에(오타 없이) 맞힘 → '완벽해요'
   const [gradeInfo, setGradeInfo] = useState(null); // { typo, variant, reason }
+  /*
+    비슷한 뜻 힌트(이슈 #25 9차) — 첫 시도에서 비슷한 뜻의 다른 단어(reason:'synonym')를 쓰면
+    바로 오답 처리하지 않고 정답 앞 글자를 칸에 채워 한 번 더 풀게 한다. 두 번째에 맞히면
+    정답이되 hintUsed:1 로 보내 서버가 FSRS 를 Hard(어렵게 맞힘)로 기록한다(spellingFill 과 같은 경로).
+    두 번째도 틀리면 그때 오답. 이 문제 유형 한정 — 공용 채점(typoTolerance)은 그대로다.
+  */
+  const [synonymHint, setSynonymHint] = useState(null); // { prefix, length, tried } | null
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [speakingTarget, setSpeakingTarget] = useState(null); // 'shown' | 'answer' | 'lookup' | null
   /*
@@ -307,10 +330,22 @@ const FillInTheBlankTypingQuestion = ({ question, onComplete, onCardMatched, far
     koLookup.closeLookup();
 
     const grade = gradeTypingAnswer(value, { answerText, baseForm, blockedTypos, nearSynonyms: Array.isArray(nearSynonyms) ? nearSynonyms : [] });
+
+    // 첫 시도의 비슷한 뜻 오답 → 힌트를 주고 한 번 더(채점·로그 없음).
+    if (!synonymHint && grade.reason === 'synonym') {
+      const answerChars = Array.from(String(answerText ?? '').trim());
+      const prefix = answerChars.slice(0, synonymHintRevealCount(answerChars)).join('');
+      feel('select');
+      setSynonymHint({ prefix, length: answerChars.filter((c) => !/\s/.test(c)).length, tried: value.trim() });
+      setValue(prefix);
+      inputRef.current?.focus();
+      return;
+    }
+    const hintUsed = synonymHint ? 1 : 0;
     const timeTakenMs = Date.now() - startTimeRef.current;
 
-    // 소리·진동·시각(아래 setState)을 같은 틱에. 오타 허용 정답·재출제는 perfect 가 아니다.
-    const perfect = grade.isCorrect && !grade.typo && !question.isRetry;
+    // 소리·진동·시각(아래 setState)을 같은 틱에. 오타 허용·힌트 정답·재출제는 perfect 가 아니다.
+    const perfect = grade.isCorrect && !grade.typo && !hintUsed && !question.isRetry;
     // 다른 유형과 같은 O/X 채점 + 정/오답 소리만 — '완벽해요' 배지·소리는 쓰지 않는다(이슈 #25 7차 QA).
     feel(grade.isCorrect ? 'correct' : 'wrong');
     setIsPerfect(perfect);
@@ -335,6 +370,8 @@ const FillInTheBlankTypingQuestion = ({ question, onComplete, onCardMatched, far
       updateData: { fsrs: question.fsrs, isCorrect: grade.isCorrect, updatedAt: new Date().toISOString() },
       // 계약 4절 — 오타 허용으로 정답 처리했으면 typo:true. processCardWord가 /study/log로 그대로 실어 보낸다.
       typo: !!grade.typo,
+      // 비슷한 뜻 힌트 뒤 정답 — 서버가 정답+hint_used 를 FSRS Hard 로 처리한다(오답이면 Main 이 안 보낸다).
+      ...(hintUsed ? { hintUsed } : {}),
     };
     const processedNow = typeof onCardMatched === 'function';
     if (processedNow) onCardMatched(result);
@@ -380,14 +417,14 @@ const FillInTheBlankTypingQuestion = ({ question, onComplete, onCardMatched, far
         title: '정답이에요',
         tag: null,
         answerLabel: isTypoAccepted ? '정확한 철자' : (isVariantAccepted ? '정확한 표기' : null),
-        note: null,
+        note: synonymHint ? '힌트를 보고 맞혔어요' : null,
       }
       : {
         correct: false,
         title: '틀렸어요',
         tag: null,
         answerLabel: '정답',
-        note: reason === 'synonym'
+        note: (reason === 'synonym' && !synonymHint)
           ? `${value.trim()} 도 비슷한 뜻이지만 이 문장엔 맞지 않아요`
           : reason === 'baseForm'
             ? '낱말은 맞지만 형태가 달라요'
@@ -548,6 +585,29 @@ const FillInTheBlankTypingQuestion = ({ question, onComplete, onCardMatched, far
                 </motion.span>
                 {renderWordTokens(afterTokens, 'a')}
               </p>
+              {!isAnswered && synonymHint && (
+                <motion.div
+                  role="status"
+                  aria-live="polite"
+                  className="mt-[14px] flex flex-col gap-[6px]"
+                  initial={reducedMotion ? { opacity: 0 } : { opacity: 0, y: 6 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={reducedMotion ? { duration: 0.15 } : SPRING.soft}
+                >
+                  <div className="flex items-center gap-[6px]">
+                    <Lightbulb size={20} weight="fill" aria-hidden="true" className="flex-shrink-0 text-primary-main-600" />
+                    <span className="text-[15px] font-[800] text-primary-main-600 break-keep">
+                      뜻은 비슷해요! 이 문장에 맞는 단어를 떠올려 보세요
+                    </span>
+                  </div>
+                  <p className="text-[13px] font-[600] leading-[1.5] break-keep text-layout-gray-400 dark:text-layout-gray-100">
+                    <span lang={jaBlank ? 'ja' : undefined} className="font-[800] tracking-[0.12em] text-layout-black dark:text-layout-white">
+                      {synonymHintPattern(answerText, synonymHint.prefix)}
+                    </span>
+                    {` · ${synonymHint.length}글자`}
+                  </p>
+                </motion.div>
+              )}
               {verdict && (
                 <motion.div
                   role="status"

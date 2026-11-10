@@ -23,7 +23,7 @@ import SheetOptionRow from './SheetOptionRow';
   예전엔 홈 CTA 가 종류를 묻지 않고 곧장 복습을 열고, '오늘 할 일' 카드 안의 '살리기'·'심기'
   버튼이 나머지 진입을 맡았다. 진입을 이 시트 하나로 모으고 카드는 줄(정보)만 남겼다.
 
-  항목(위→아래): 썩은 단어 살리기(있을 때만) / 농장 돌보기 / 농장에 새 씨앗 심기 / 밭 골라 학습.
+  항목(위→아래): 썩은 단어 살리기(있을 때만) / 농장 돌보기 / 새 씨앗 심기 / 밭 골라 돌보기(이슈 #25 9차 이름).
   이름(QA 4차, 2026-10-25): 밭 = 단어장 하나, 농장 = 밭 전체. 예전 이름은 새 씨앗 심기·단어장 골라 학습.
   '농장 산책하기'(반복 듣기)는 이 시트에서 뺐다(이슈 #17 2차, 2026-10-26) — 산책은 밭 골라 학습 등 다른 진입점의
   반복 듣기(StudyMain)로 계속 쓸 수 있다.
@@ -32,7 +32,11 @@ import SheetOptionRow from './SheetOptionRow';
   새 단어가 없으면 서점으로 간다. 단어장 0개만 흐리게 둔다.
 */
 
-export const StudyPickNewBottomSheet = () => {
+/*
+  이슈 #25 9차 — 항목 제목은 '농장 돌보기' / '새 씨앗 심기' / '밭 골라 돌보기', 부제는 학습 설명 한 줄.
+  seedOnly: 아직 씨앗을 한 번도 안 심은 입문 사용자(plant_seed 미완료) — 새 씨앗 심기 외 항목은 잠금 표시.
+*/
+export const StudyPickNewBottomSheet = ({ seedOnly = false } = {}) => {
   "use memo";
 
   const navigate = useNavigate();
@@ -142,20 +146,29 @@ export const StudyPickNewBottomSheet = () => {
     },
     {
       key: 'care', title: '농장 돌보기',
-      desc: careLeft > 0 ? `돌볼 단어 ${careLeft}개` : '다음 차례 단어 미리 돌보기', run: startCare,
+      desc: careLeft > 0 ? `지금 복습하면 좋은 단어 ${careLeft}개를 골라 드려요` : '지금 복습하면 좋은 단어를 골라 드려요',
+      run: startCare,
     },
     {
-      key: 'seed', title: '농장에 새 씨앗 심기',
-      desc: seedCount > 0 ? `새 단어 ${seedCount}개` : '서점에서 씨앗 담아 오기', run: plant,
+      key: 'seed', title: '새 씨앗 심기',
+      desc: seedCount > 0 ? `처음 보는 새 단어 ${seedCount}개를 학습해요` : '처음 보는 새 단어를 학습해요',
+      run: plant,
     },
     {
-      key: 'book', title: '밭 골라 학습',
-      desc: `밭 ${bookCount}개`, count: bookCount, fadeWhenEmpty: true, run: pickBook,
+      key: 'book', title: '밭 골라 돌보기',
+      desc: '단어장을 골라 원하는 방식으로 학습해요', count: bookCount, fadeWhenEmpty: true, run: pickBook,
     },
-  ].filter(Boolean);
+  ].filter(Boolean)
+    // 씨앗을 아직 한 번도 안 심었으면 새 씨앗 심기만 열어 둔다(누르면 안내 토스트)
+    .map((o) => (seedOnly && o.key !== 'seed' ? { ...o, locked: true } : o));
 
   const handleClick = async (option) => {
     if (busy) return;
+    if (option.locked) {
+      vibrate({ duration: 5 });
+      showToast('먼저 새 씨앗을 심어 보세요.');
+      return;
+    }
     primeSfx(); // 효과음 unlock 은 user gesture 동기 시점에만 걸린다(iOS WKWebView)
     vibrate({ duration: 5 });
     setBusy(true);
@@ -178,6 +191,7 @@ export const StudyPickNewBottomSheet = () => {
             desc={option.desc}
             danger={option.key === 'rotten'}
             faded={!!option.fadeWhenEmpty && option.count <= 0}
+            locked={!!option.locked}
             onClick={() => handleClick(option)}
           />
         ))}

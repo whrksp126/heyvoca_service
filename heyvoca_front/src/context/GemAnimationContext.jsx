@@ -18,6 +18,7 @@
 import React, { createContext, useContext, useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import gemImg from '../assets/images/farm/icon-gem.png';
+import { feel } from '../lib/feel';
 
 const FlyingAnimationContext = createContext();
 
@@ -283,8 +284,11 @@ export const FlyingAnimationProvider = ({ children }) => {
       if (cancelled) return;
       job.counting = true;
       const from = Number.isFinite(fromValue) ? fromValue : to;
+      // 손맛 — 카운트업이 끝나는 순간 경쾌한 마무리 소리(bonus · 통통 튀는 4음 + 진동)
+      const cheer = () => { if (!cancelled && job.amount > 0) feel('bonus'); };
       if (to == null || from === to || reduced || !numEl) {
         if (numEl && to != null) numEl.textContent = fmt(to);
+        cheer();
         later(finish, 1100);
         return;
       }
@@ -298,6 +302,7 @@ export const FlyingAnimationProvider = ({ children }) => {
         numEl.textContent = fmt(from + (to - from) * e);
         if (p < 1) raf = requestAnimationFrame(step);
         else {
+          cheer();
           if (canAnimate(numEl)) numEl.animate([{ transform: 'scale(1)' }, { transform: 'scale(1.18)' }, { transform: 'scale(1)' }], { duration: 220, easing: 'ease-out' });
           later(finish, 1000);
         }
@@ -307,6 +312,9 @@ export const FlyingAnimationProvider = ({ children }) => {
 
     const onArrive = () => {
       if (cancelled || reduced) return;
+      // 손맛 — 보석이 칩에 하나 들어올 때마다 작은 나무 톡 + 가벼운 진동(tap).
+      // 입자 간격(stagger 70ms)이 tap 디바운스(35ms)보다 길어 한 알마다 한 번씩 울린다.
+      feel('tap');
       if (canAnimate(iconEl)) iconEl.animate([{ transform: 'scale(1)' }, { transform: 'scale(1.22)' }, { transform: 'scale(1)' }], { duration: 160, easing: 'ease-out' });
       if (canAnimate(glowEl)) glowEl.animate([{ opacity: 0.5, transform: 'scale(.7)' }, { opacity: 0, transform: 'scale(1.35)' }], { duration: 280, easing: 'ease-out' });
     };

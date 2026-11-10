@@ -83,6 +83,7 @@ export const SFX_DURATION_MS = {
   xpUp: 324,
   xpDown: 326,
   evolve: 1072,
+  wilt: 980,
 };
 
 // 겹침 대기(cue.js 의 busyUntil)에 쓰는 '체감상 끝나는 지점' — 감쇠 꼬리가 길어 전체 길이만큼 기다리면 과하다.
@@ -105,6 +106,7 @@ export const SFX_NOTE_STARTS_MS = {
   xpUp: [0, 50, 100],
   xpDown: [0, 70],
   evolve: [0, 60, 120, 180, 240],
+  wilt: [0, 320],
 };
 
 const midiToFreq = (m) => 440 * Math.pow(2, (m - 69) / 12);
@@ -308,6 +310,38 @@ const CUES = {
       note(x, c, t + d, m, { dur, peak: 0.07 + i * 0.01 });
     });
     note(x, c, t + 0.24, N.E6, { dur: 0.75, peak: 0.1, rich: true });
+  },
+  // 시듦 — 오답(wrong)과 다른 '가라앉는' 소리. 낮게 내려가는 글리산도(삼각파 + 한 옥타브 아래 사인)를
+  // 닫혀 가는 lowpass 로 먹먹하게 감싸고, 시작(0)과 320ms 에 둔탁한 저음 '둥'을 깐다. 샘플 파일 없이 합성만.
+  wilt: (x, c, t) => {
+    const lp = x.createBiquadFilter();
+    lp.type = 'lowpass';
+    lp.Q.value = 0.8;
+    lp.frequency.setValueAtTime(900, t);
+    lp.frequency.exponentialRampToValueAtTime(220, t + 0.85);
+    lp.connect(c.input);
+    const glide = (type, f0, f1, peak, cents = 0) => {
+      const osc = x.createOscillator();
+      const g = x.createGain();
+      osc.type = type;
+      if (cents) osc.detune.value = cents;
+      osc.frequency.setValueAtTime(f0, t);
+      osc.frequency.exponentialRampToValueAtTime(f1, t + 0.8);
+      g.gain.setValueAtTime(0, t);
+      g.gain.linearRampToValueAtTime(peak, t + 0.04);
+      g.gain.setValueAtTime(peak, t + 0.18);
+      g.gain.exponentialRampToValueAtTime(0.0001, t + 0.9);
+      g.gain.linearRampToValueAtTime(0, t + 0.92);
+      osc.connect(g).connect(lp);
+      osc.start(t);
+      osc.stop(t + 0.95);
+    };
+    glide('triangle', midiToFreq(55), midiToFreq(43), 0.07, -6); // G3 → G2
+    glide('sine', midiToFreq(43), midiToFreq(31), 0.09, 6); // G2 → G1
+    // 둔탁한 '둥' 두 번 — 두 번째가 더 작고 낮다
+    voice(x, lp, { at: t, freq: 98, slideTo: 62, dur: 0.22, peak: 0.1, attack: 0.008 });
+    voice(x, lp, { at: t + 0.32, freq: 82, slideTo: 52, dur: 0.3, peak: 0.07, attack: 0.01 });
+    knock(x, c, t, 600, 0.02, 0.012);
   },
 };
 

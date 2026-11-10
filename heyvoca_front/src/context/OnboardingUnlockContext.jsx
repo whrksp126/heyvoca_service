@@ -9,7 +9,7 @@
 
 import React, { createContext, useContext, useState, useCallback, useEffect, useRef } from 'react';
 import { useUser } from './UserContext';
-import { getUnlockStatusApi, completeOnboardingMissionApi } from '../api/study';
+import { getUnlockStatusApi, completeOnboardingMissionApi, setQuestHiddenApi } from '../api/study';
 
 /**
  * 입문 퀘스트 체인(이슈 #25 2차) — 화면 문구 정본.
@@ -40,6 +40,9 @@ export const QUEST_META = {
 // 프론트가 완료 신호를 보내는 미션. 나머지(buy_book·plant_seed·care_farm·make_book)는
 // 서버가 학습 저장·단어장 생성·구매 시점에 스스로 감지하므로 refreshUnlock 만 한다.
 export const FRONTEND_SIGNAL_MISSIONS = ['search_word', 'free_test', 'focus_study'];
+
+// 필수 퀘스트(이슈 #25 9차) — 셋 다 끝나야 홈 퀘스트 카드를 숨길 수 있다(서버 required_done 이 정본).
+export const REQUIRED_QUESTS = ['buy_book', 'plant_seed', 'care_farm'];
 
 export const questTitleOf = (mission) =>
   (mission?.title || QUEST_META[mission?.key]?.title || '').trim();
@@ -217,6 +220,18 @@ export const OnboardingUnlockProvider = ({ children }) => {
     }
   }, [unlock, applyUnlockData, queueMissionRewards, setUserProfile, fetchUserProfile]);
 
+  // 홈 퀘스트 카드 숨기기/다시 보이기(이슈 #25 9차) — 계정 단위 서버 저장.
+  // 필수 셋이 남아 있으면 서버가 409 로 거절한다. 성공하면 응답(unlock-status)으로 상태를 갱신한다.
+  const setQuestHidden = useCallback(async (hidden) => {
+    if (!unlock || unlock.legacy) return null;
+    const res = await setQuestHiddenApi(hidden);
+    if (res?.code === 200 && res.data) {
+      applyUnlockData(res.data, { celebrate: false });
+      return res.data;
+    }
+    return null;
+  }, [unlock, applyUnlockData]);
+
   // 기능 잠금은 없앴다(이슈 #25 2차) — 예전 호출부 호환용으로만 남긴다. 항상 열림.
   const isFeatureLocked = useCallback(() => false, []);
 
@@ -229,6 +244,13 @@ export const OnboardingUnlockProvider = ({ children }) => {
   const missionsList = sortMissions(unlock?.missions ?? []);
   // 지금 할 퀘스트 = 미완료 중 첫 번째(순서 무관 완료라 서버 current_mission 보다 이게 정확하다).
   const currentMissionInfo = missionsList.find((m) => !m.done) || null;
+  // 필수 셋 완료 — 서버 값이 없으면(구서버) missions 로 계산한다
+  const requiredDone = unlock?.required_done
+    ?? REQUIRED_QUESTS.every((k) => missionsList.find((m) => m.key === k)?.done ?? true);
+  const questHidden = !!unlock?.quest_hidden;
+  // 홈 퀘스트 카드가 보이는지 — 신규 가입자(legacy=false)·남은 퀘스트 있음·숨기지 않음
+  const questCardVisible = !!unlock && !(unlock?.legacy) && !!currentMissionInfo
+    && missionsList.length > 0 && !questHidden;
 
   const value = {
     unlock,
@@ -241,6 +263,11 @@ export const OnboardingUnlockProvider = ({ children }) => {
     completedSessions: unlock?.completed_sessions ?? 0,
     isFeatureLocked,
     refreshUnlock,
+    // 이슈 #25 9차 — 필수 퀘스트·홈 카드 숨김
+    requiredDone,
+    questHidden,
+    questCardVisible,
+    setQuestHidden,
     completeMission,
     // 보상 받기 연출 대기열 — 실제 자동 노출은 OnboardingMissionRewardWatcher가 처리
     pendingMissionRewards,

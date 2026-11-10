@@ -1154,7 +1154,11 @@ const StudyResult = () => {
     // 소개 화면이 아니라 그다음으로 보낸다 — 학습을 마친 사람을 되돌리면 같은 학습을 다시 하게 된다.
     // 수준 맞춤 학습(체험 밭)은 마지막 '나만의 밭을 만들러 가볼까요?' 장면으로.
     if (isGuest) {
-      navigate('/onboarding', { state: { step: isPlacement ? 'finish' : 'nick' }, replace: true });
+      // 체험 밭 학습 후 모습(placementField.words)을 같이 넘긴다 — 온보딩 안내 장이 그 밭을 그대로 그린다(이슈 #25 9차 QA)
+      navigate('/onboarding', {
+        state: isPlacement ? { step: 'finish', field: placementField?.words ?? null } : { step: 'nick' },
+        replace: true,
+      });
       return;
     }
     // 글자 학습은 학습장 '글자' 탭에서만 들어온다 — 홈이 아니라 그 탭으로 돌려보낸다

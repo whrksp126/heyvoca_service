@@ -14,6 +14,7 @@ import StoreNewFullSheet from '../newfullsheet/StoreNewFullSheet';
 import { AchievementDetailNewBottomSheet } from '../newBottomSheet/AchievementDetailNewBottomSheet';
 import { GemPurchaseNewBottomSheet } from '../newBottomSheet/GemPurchaseNewBottomSheet';
 import AchievementBoard from '../achievement/AchievementBoard';
+import QuestSection from './QuestSection';
 
 import gemIcon from '../../assets/images/farm/icon-gem.png';
 import goldenCarrotIcon from '../../assets/images/farm/icon-golden-carrot.png';
@@ -177,6 +178,9 @@ const Main = ({ registerRefresh } = {}) => {
           </div>
           <CaretRight size={15} className="shrink-0 text-layout-gray-200" />
         </div>
+
+        {/* 입문 퀘스트(이슈 #25 9차) — 남은 퀘스트 진행·실행, 홈 카드 다시 보이기/숨기기. legacy 면 안 그린다 */}
+        <QuestSection />
 
         {/* 나의 업적 — 메달(레벨 게이지) + 다음 목표 한 줄. 표현은 components/achievement 가 맡는다 */}
         <div>

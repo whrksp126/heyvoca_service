@@ -269,6 +269,18 @@ export const completeOnboardingMissionApi = async (key) => {
   }
 };
 
+// 홈 입문 퀘스트 카드 숨기기/다시 보이기 (인증, 이슈 #25 9차) — 계정 단위 서버 저장.
+// 필수 퀘스트(buy_book·plant_seed·care_farm)가 남아 있으면 숨기기는 409.
+// 응답: { code:200, data:{ ...unlock-status 전체 필드(quest_hidden 반영) } }
+export const setQuestHiddenApi = async (hidden) => {
+  const url = `${backendUrl}/onboarding/quest-visibility`;
+  try {
+    return await fetchDataAsync(url, 'POST', { hidden: !!hidden });
+  } catch (error) {
+    console.error('setQuestHiddenApi 오류:', error);
+  }
+};
+
 // ─── 암기 인사이트 API ──────────────────────────────────────────────────────
 
 // 단어별 기억 인사이트 (단어 상세 '나의 기억' 섹션)

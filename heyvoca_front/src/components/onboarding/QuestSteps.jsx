@@ -16,12 +16,12 @@ import gemIcon from '../../assets/images/farm/icon-gem.png';
 // 달성 방법 — 실제 동선 기준(완료 판정: routes/onboarding.py 머리 주석, 프론트 신호는 TakeTest·StudyMain·dictionary/Main).
 export const QUEST_HOW = {
   buy_book: '상점 탭에서 단어장을 골라 담으면 완료돼요.',
-  plant_seed: '홈 「농사 시작」에서 「농장에 새 씨앗 심기」를 골라 끝까지 학습하면 완료돼요.',
-  care_farm: '홈 「농사 시작」에서 「농장 돌보기」를 골라 끝까지 학습하면 완료돼요.',
+  plant_seed: '홈 「농장 돌보기」 버튼에서 「새 씨앗 심기」를 골라 끝까지 학습하면 완료돼요.',
+  care_farm: '홈 「농장 돌보기」 버튼에서 「농장 돌보기」를 골라 끝까지 학습하면 완료돼요.',
   search_word: '찾기 탭에서 단어를 검색하면 완료돼요.',
   make_book: '단어장 탭에서 「단어장 만들기」로 단어장을 만들고, 그 단어장에 단어를 추가하면 완료돼요.',
-  free_test: '홈 「농사 시작」 → 「밭 골라 학습」에서 단어장을 고르고 「자유 설정 테스트」를 끝까지 풀면 완료돼요.',
-  focus_study: '홈 「농사 시작」 → 「밭 골라 학습」에서 단어장을 고르고 「집중 반복 학습」을 끝까지 들으면 완료돼요.',
+  free_test: '홈 「농장 돌보기」 → 「밭 골라 돌보기」에서 단어장을 고르고 「자유 설정 테스트」를 끝까지 풀면 완료돼요.',
+  focus_study: '홈 「농장 돌보기」 → 「밭 골라 돌보기」에서 단어장을 고르고 「집중 반복 학습」을 끝까지 들으면 완료돼요.',
 };
 
 const QuestSteps = ({ missions = [], currentKey = null, onSelect }) => {
@@ -78,6 +78,12 @@ const QuestSteps = ({ missions = [], currentKey = null, onSelect }) => {
                 >
                   {questTitleOf(m)}
                 </span>
+                {/* 필수 퀘스트(이슈 #25 9차) — 셋을 끝내야 홈에서 퀘스트를 숨길 수 있다 */}
+                {m.required && !m.done && (
+                  <span className="shrink-0 inline-flex items-center h-[18px] px-[6px] rounded-full bg-status-success-50 dark:bg-status-success-dark text-[11px] font-[700] text-status-success-600">
+                    필수
+                  </span>
+                )}
                 {expandable && (
                   <CaretDown
                     size={12}

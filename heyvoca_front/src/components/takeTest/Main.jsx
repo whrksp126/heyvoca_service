@@ -1971,7 +1971,11 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
   // 공급자 세션은 큐가 문제마다 자라므로 분모를 progressTotal(계획 칸 수)로 고정하고, 재진입 전에 채운 칸은
   // progressOffset 으로 더한다.
   const totalWordCount = Math.max(1, progressTotal ?? studyProgress.total);
-  const displayPassedCount = isFinishing ? totalWordCount : Math.min(studyProgress.done + (progressTotal ? progressOffset : 0), totalWordCount);
+  // 공급자 세션(온보딩 수준 맞춤 학습)은 마지막에 남은 칸을 자동으로 채우지 않는다 — 채점 결과 정답으로 채운 칸만
+  // 보인다(이슈 #25 9차 QA). 일반 세션은 완료 연출(isFinishing)에서 100% 로 맞춘다.
+  const displayPassedCount = (isFinishing && !questionSupplier)
+    ? totalWordCount
+    : Math.min(studyProgress.done + (progressTotal ? progressOffset : 0), totalWordCount);
 
   const currentPlugin = getQuestionType(testQuestions[progressIndex]?.questionType);
 

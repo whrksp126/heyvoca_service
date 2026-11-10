@@ -76,8 +76,8 @@ const StreakCardView = ({
       ref={rootRef}
       className="
         rounded-[12px] p-[18px]
-        bg-layout-white dark:bg-layout-gray-dark
-        border border-farm-line dark:border-transparent
+        bg-[rgba(255,255,255,.72)] dark:bg-[rgba(36,36,36,.66)] backdrop-blur-[12px] backdrop-saturate-[1.4]
+        border border-white/80 dark:border-white/[.08] shadow-[inset_0_1px_0_rgba(255,255,255,.7),0_4px_14px_rgba(96,80,52,.08)] dark:shadow-[inset_0_1px_0_rgba(255,255,255,.05),0_4px_14px_rgba(0,0,0,.28)]
       "
     >
       {/* 1층 — 불꽃 · 연속 일수(누르면 농장 방문 기록) */}

@@ -11,6 +11,8 @@
        아니면 v1(레벨 단어장 생성 + 맛본 답안 반영 + 보상)
 - GET  /onboarding/unlock-status      (인증) 온보딩 퀘스트(7개) 상태. 기능 잠금은 없다(unlocked 전부 true)
 - POST /onboarding/mission/complete   (인증) 프론트 신호 미션(search_word/free_test/focus_study) 완료 처리
+- POST /onboarding/quest-visibility   (인증) 홈 퀘스트 카드 숨기기/다시 보이기 {hidden: bool} — 이슈 #25 9차.
+       필수 퀘스트(buy_book·plant_seed·care_farm)를 다 끝내야 숨길 수 있다(아니면 409).
 
 온보딩 퀘스트 v3(이슈 #25 2차, ONBOARDING_MISSIONS 참고, 순서 무관):
   buy_book · plant_seed · care_farm · search_word · make_book · free_test · focus_study
@@ -97,6 +99,12 @@ ONBOARDING_MISSION_KEYS = set(ONBOARDING_MISSION_BY_KEY.keys())
 # /onboarding/mission/complete로 프론트가 직접 신호를 보내는 미션(백엔드 자동 감지 대상 제외).
 # buy_book/plant_seed/care_farm/make_book 은 백엔드 훅에서만 완료 처리한다 — API로 임의 완료 방지.
 FRONTEND_SIGNAL_MISSION_KEYS = {'search_word', 'free_test', 'focus_study'}
+# 필수 퀘스트(이슈 #25 9차) — 이 셋을 끝내야 홈 퀘스트 카드를 숨길 수 있다.
+REQUIRED_MISSION_KEYS = ('buy_book', 'plant_seed', 'care_farm')
+# 홈 퀘스트 카드 숨김 표식 — user_onboarding_mission 에 이 key 행이 있으면 숨김(계정 단위, 서버 저장).
+# 스키마 변경 없이 기존 (user_id, mission_key) 유니크 테이블을 쓴다. 미션 목록(ONBOARDING_MISSION_KEYS)에
+# 없어서 완료 수·보상·daily_report 의 전부 완료 판정(MISSION_V3_KEYS 부분집합)에 섞이지 않는다.
+QUEST_HIDDEN_KEY = '_quest_hidden'
 # 구 체인 키. 구 프론트 번들이 보내도 400 대신 200 무시로 응답한다.
 LEGACY_MISSION_KEYS = {'ai_test'}
 
@@ -238,6 +246,8 @@ def _build_unlock_status(user) -> dict:
             # 완료 시 보석 외 추가로 지급되는 아이템(빈 단어장) 여부 — make_book만 True.
             # 실제 지급 로직은 complete_onboarding_mission()에 있고, 이 필드는 프론트 "보상 받기" UI 노출용.
             'reward_book': m['key'] == 'make_book',
+            # 필수 퀘스트(이슈 #25 9차) — 셋 다 끝나야 홈 카드 숨기기가 열린다
+            'required': m['key'] in REQUIRED_MISSION_KEYS,
         })
         if not done and current_mission is None:
             current_mission = m['key']
@@ -245,6 +255,7 @@ def _build_unlock_status(user) -> dict:
     # 기능 잠금 없음 — 구 번들이 잠금 UI 를 띄우지 않도록 전부 true.
     unlocked = {k: True for k in UNLOCK_THRESHOLDS}
     done_count = len(completed_keys & ONBOARDING_MISSION_KEYS)
+    required_done = legacy or all(k in completed_keys for k in REQUIRED_MISSION_KEYS)
 
     return {
         'legacy': legacy,
@@ -255,6 +266,9 @@ def _build_unlock_status(user) -> dict:
         'missions': missions,
         'current_mission': current_mission,
         'gem_cnt': user.gem_cnt,
+        # 이슈 #25 9차 — 필수 셋 완료 여부 / 홈 퀘스트 카드 숨김(계정 단위)
+        'required_done': required_done,
+        'quest_hidden': QUEST_HIDDEN_KEY in completed_keys,
     }
 
 # 레벨 → AdminVocaBook id (auth.level_book_list와 동일 매핑)
@@ -950,3 +964,53 @@ def mission_complete():
             **status,
         },
     }), 200
+
+
+@onboarding_bp.route('/quest-visibility', methods=['POST'])
+@jwt_required
+def quest_visibility():
+    """홈 입문 퀘스트 카드 숨기기/다시 보이기 — 이슈 #25 9차.
+
+    body: { "hidden": true | false }
+    필수 퀘스트(buy_book·plant_seed·care_farm)가 남아 있으면 숨길 수 없다 → 409.
+    숨김은 user_onboarding_mission 의 QUEST_HIDDEN_KEY 행 유무로 저장한다(멱등).
+    응답: unlock-status 와 같은 페이로드(quest_hidden 반영).
+    """
+    from sqlalchemy.exc import IntegrityError
+    from app.models.models import UserOnboardingMission
+
+    body = request.get_json(silent=True) or {}
+    hidden = body.get('hidden')
+    if not isinstance(hidden, bool):
+        return jsonify({'code': 400, 'message': 'hidden 은 true/false 여야 합니다.'}), 400
+
+    user_id = UUID(g.user_id)
+    user = db.session.query(User).filter(User.id == user_id).first()
+    if user is None:
+        return jsonify({'code': 404, 'message': '사용자를 찾을 수 없습니다.'}), 404
+
+    q = db.session.query(UserOnboardingMission).filter(
+        UserOnboardingMission.user_id == user_id,
+        UserOnboardingMission.mission_key == QUEST_HIDDEN_KEY,
+    )
+    try:
+        if hidden:
+            status = _build_unlock_status(user)
+            if status['legacy']:
+                return jsonify({'code': 200, 'data': status}), 200
+            if not status['required_done']:
+                return jsonify({'code': 409, 'message': '필수 퀘스트를 먼저 끝내 주세요.'}), 409
+            if not status['quest_hidden']:
+                db.session.add(UserOnboardingMission(user_id=user_id, mission_key=QUEST_HIDDEN_KEY))
+                db.session.commit()
+        else:
+            q.delete(synchronize_session=False)
+            db.session.commit()
+    except IntegrityError:
+        db.session.rollback()   # 동시 요청으로 이미 숨김 — 멱등
+    except Exception:
+        db.session.rollback()
+        logging.getLogger(__name__).error('퀘스트 숨김 저장 오류', exc_info=True)
+        return jsonify({'code': 500, 'message': '저장에 실패했습니다.'}), 500
+
+    return jsonify({'code': 200, 'data': _build_unlock_status(user)}), 200

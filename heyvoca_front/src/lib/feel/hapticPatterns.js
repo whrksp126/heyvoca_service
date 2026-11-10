@@ -141,6 +141,12 @@ const PATTERNS = {
     android: () => [TICK(0), TICK(60), TICK(120), TICK(180), CLICK(240, 0.8)],
     androidWave: () => [W(0, 0.15, 8), W(60, 0.2, 8), W(120, 0.25, 8), W(180, 0.3, 8), W(240, 0.5, 14)],
   },
+  // 시듦 — 묵직하게 한 번 꺼지고(0) 낮게 웅웅 가라앉다가 320ms 에 한 번 더 둔하게(소리 '둥 … 둥')
+  wilt: {
+    ios: () => [T(0, 0.95, 0.15, 22), C(40, 240, 0.32, 0.1), T(320, 0.5, 0.15, 18)],
+    android: () => [HEAVY(0), CLICK(320, 0.5)],
+    androidWave: () => [W(0, 0.6, 26), W(320, 0.32, 18)],
+  },
 };
 
 export const HAPTIC_NAMES = Object.keys(PATTERNS);
@@ -232,6 +238,7 @@ export const KIND_FALLBACK = {
   xpUp: 'light',
   xpDown: 'light',
   evolve: 'medium',
+  wilt: 'heavy',
 };
 
 /**

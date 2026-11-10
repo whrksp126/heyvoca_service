@@ -100,7 +100,7 @@ export function getFeelTimingSnapshot() {
 const DEBOUNCE_MS = {
   tap: 35, select: 60, correct: 150, wrong: 150, match: 60, combo: 150,
   perfect: 300, progress: 150, bonus: 300, complete: 300,
-  xpUp: 100, xpDown: 100, evolve: 300,
+  xpUp: 100, xpDown: 100, evolve: 300, wilt: 120,
 };
 // 겹치면 뒤로 미룬다(소리가 겹쳐 시끄러워지는 축하류). 미룬 만큼 진동도 같이 밀린다.
 const QUEUEABLE = new Set(['combo', 'perfect', 'bonus', 'complete', 'xpUp', 'xpDown', 'evolve']);
@@ -113,7 +113,7 @@ const nowMs = () => (typeof performance !== 'undefined' ? performance.now() : Da
 
 /**
  * 소리 + 진동을 같은 순간에 발사한다.
- * @param {'tap'|'select'|'correct'|'wrong'|'match'|'combo'|'perfect'|'progress'|'bonus'|'complete'|'xpUp'|'xpDown'|'evolve'} cue
+ * @param {'tap'|'select'|'correct'|'wrong'|'match'|'combo'|'perfect'|'progress'|'bonus'|'complete'|'xpUp'|'xpDown'|'evolve'|'wilt'} cue
  * @param {{n?:number, events?:object[], sound?:boolean, vibe?:boolean, force?:boolean}} opts
  *   n = 콤보 수(combo 전용). 손맛 테스트 편집기용: events = 임시 진동 패턴, sound/vibe = false 로 끔, force = 디바운스·겹침 대기 무시, maxWaitMs = 겹침 대기가 이 값(ms)보다 길어지면 소리·진동을 통째로 생략(경험치 큐처럼 '늘어지면 안 울리는 게 낫다'는 큐용), debounceMs = 이 큐의 디바운스 구간 덮어쓰기(카드 맞추기 연속 짝용)
  * @returns {{fired:boolean, startInMs:number}} startInMs = 호출 시점부터 소리(=진동)가 시작되기까지.

@@ -1,6 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useVocabulary } from '../context/VocabularyContext';
+import { useUser } from '../context/UserContext';
 import { useNewBottomSheetActions } from '../context/NewBottomSheetContext';
 import { ConfirmNewBottomSheet } from '../components/newBottomSheet/ConfirmNewBottomSheet';
 import { getStudyRecommend } from '../api/study';
@@ -18,7 +19,7 @@ import { wordIntroSoundItems } from '../plugins/questionTypes/wordIntro/WordIntr
   "새 씨앗 심기" 줄, 홈 주 CTA가 그 줄과 같은 사실을 말할 때, "아직 심지 않은 씨앗"
   시트의 "심으러 가기"가 그 진입점이다.
 
-  흐름: GET /study/recommend?mode=plant 로 최대 5단어 + session_id 를 한 번만 받아 곧장
+  흐름: GET /study/recommend?mode=plant 로 오늘 남은 새 씨앗 수만큼 + session_id 를 한 번만 받아 곧장
   ② 테스트(TakeTest testType='plant')로 보낸다. ① "만나기"는 더 이상 별도 화면(/study)이
   아니라 TakeTest 안의 슬라이드(wordIntro, 단어마다 그 단어 블록의 맨 앞)다.
   2026-10-02 — 단어마다 만나기 뒤에 영→한/한→영/빈칸 채우기/빈칸 입력 중 임의 2~3개만 내고,
@@ -30,27 +31,44 @@ import { wordIntroSoundItems } from '../plugins/questionTypes/wordIntro/WordIntr
   버그, pages/TakeTest.jsx 주석 참고).
 */
 
-const MAX_PLANT_COUNT = 5;
+/*
+  한 번에 심는 단어 수 = 사용자 설정 '하루 새 단어 수'(daily_new_limit) 기준(이슈 #25 9차).
+  예전엔 여기서 5개로 잘라 설정이 10이어도 항상 5개였다. 이제 요청 count 는 설정값으로 보내고,
+  서버(GET /study/recommend mode=plant)가 '설정값 − 오늘 이미 심은 수'(최소 0)로 줄이며
+  서점 단어가 부족하면 있는 만큼만 준다. 서버 count 상한(50)과 맞춘다.
+  호출부가 넘기던 count(대개 5)는 더 이상 상한으로 쓰지 않는다 — 설정을 무시하게 되므로.
+*/
+const DEFAULT_DAILY_NEW_LIMIT = 20; // User.daily_new_limit 컬럼 기본값과 동일
+const SERVER_MAX_COUNT = 50;        // routes/study.py get_recommend 의 count 상한
+
+const resolvePlantCount = (dailyNewLimit) => {
+  const limit = Number(dailyNewLimit);
+  // 0(무제한)·미설정이면 기본 20개
+  const base = Number.isFinite(limit) && limit > 0 ? limit : DEFAULT_DAILY_NEW_LIMIT;
+  return Math.max(1, Math.min(SERVER_MAX_COUNT, Math.floor(base)));
+};
 
 export const usePlantSession = () => {
   const navigate = useNavigate();
   const { recentStudy } = useVocabulary();
+  const { userProfile } = useUser();
   const { pushAwaitNewBottomSheet } = useNewBottomSheetActions();
 
   /**
    * @param {object} opts
-   * @param {?number} opts.count  이번에 심을 단어 수 상한(예: 오늘 남은 새 씨앗 수).
-   *                              기본은 최대 5개.
-   * @param {?boolean} opts.force 오늘 목표를 이미 채웠어도 더 심기(서버 한도 무시).
+   * @param {?number} opts.count  (무시됨, 하위호환) 예전 5개 상한. 지금은 설정값 기준.
+   * @param {?boolean} opts.force 오늘 목표를 이미 채웠어도 더 심기(서버 한도 무시) —
+   *                              이때도 한 번에 설정값만큼 심는다.
    */
-  const startPlantSession = async ({ count, force = false } = {}) => {
+  // eslint-disable-next-line no-unused-vars
+  const startPlantSession = async ({ count: _ignoredCount, force = false } = {}) => {
     vibrate({ duration: 5 });
     primeSfx();
     unlockTtsAudio(); // 제스처 안에서 AudioContext resume — 첫 카드 자동 재생이 무음이 되지 않게
 
     // 중간에 그만둔 심기 세션은 이어 하지 않고 항상 새로 뽑는다(2026-10-24 이슈 #15) —
     // TakeTest.jsx는 session_id가 다르면 저장분을 버리고 새 세션을 만든다.
-    const n = Math.max(1, Math.min(MAX_PLANT_COUNT, count ?? MAX_PLANT_COUNT));
+    const n = resolvePlantCount(userProfile?.daily_new_limit);
     const res = await getStudyRecommend({ type: 'plant', mode: 'plant', count: n, force });
     const items = res?.code === 200 && Array.isArray(res.data?.items) ? res.data.items : [];
 

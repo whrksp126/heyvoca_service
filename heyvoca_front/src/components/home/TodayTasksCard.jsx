@@ -227,7 +227,7 @@ const TodayTasksCard = () => {
   if (rowDefs.length === 0) return null;
 
   return (
-    <div className="rounded-[12px] pt-[18px] px-[18px] pb-[6px] bg-layout-white dark:bg-layout-gray-dark border border-farm-line dark:border-transparent">
+    <div className="rounded-[12px] pt-[18px] px-[18px] pb-[6px] bg-[rgba(255,255,255,.72)] dark:bg-[rgba(36,36,36,.66)] backdrop-blur-[12px] backdrop-saturate-[1.4] border border-white/80 dark:border-white/[.08] shadow-[inset_0_1px_0_rgba(255,255,255,.7),0_4px_14px_rgba(96,80,52,.08)] dark:shadow-[inset_0_1px_0_rgba(255,255,255,.05),0_4px_14px_rgba(0,0,0,.28)]">
       <b className="block text-[17px] font-[800] text-layout-black dark:text-layout-white">오늘 할 일</b>
       <div className="flex flex-col">
         {rowDefs.map((row, idx) => (
