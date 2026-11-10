@@ -11,17 +11,24 @@
 //   돌봄이 필요한 밭부터 격자 가운데 칸에 놓는다(가운데 → 바깥, 같은 거리면 앞줄 먼저).
 //   뒤에서 앞으로(col+row 오름차순) 그려 앞 밭이 뒤 밭의 옆면을 덮는다.
 //
-// 【제스처】 포인터 이벤트로 직접 처리한다(라이브러리 없음).
-//   처음엔 모든 밭이 영역에 들어오게 맞춘다(fit = 배율 1). 두 손가락 핀치 = 확대·축소(1~4.5배,
-//   손가락 사이 지점 고정), 확대 상태에서 한 손가락 드래그 = 이동. 이동은 밭 묶음이 영역을
-//   벗어나지 않게 클램프한다. 갱신은 transform 한 레이어만 rAF 로 바꾼다(리렌더 없음).
-//   홈은 세로 스크롤 페이지라 fit 상태에선 touch-action: pan-y 로 한 손가락 세로 드래그를
-//   페이지 스크롤에 넘기고, 확대 상태에서만 touch-action: none 으로 지도가 터치를 잡는다.
+// 【레이어】 지도는 홈 히어로 전체(inset-0)에 깔린 **배경**이다. 인사·헤드라인·칩·주 CTA 는
+//   그 위 층에 떠 있고, 빈 곳은 포인터가 지도로 통과한다(헤드라인 pointer-events: none).
+//   '보이는 창'(focus) = 헤드라인 아래 ~ CTA 위. 배율·시작 위치·이동 경계는 이 창을 기준으로
+//   잡지만, 밭은 창 밖(텍스트·버튼 밑)으로도 지나가며 보인다. 위·아래 가장자리엔 하늘·화면
+//   배경 토큰으로 은은한 페이드만 깐다.
+//
+// 【제스처】 포인터 이벤트로 직접 처리한다(라이브러리 없음). 지도 위에선 touch-action: none —
+//   한 손가락 드래그 = 이동, 두 손가락 핀치 = 확대·축소(손가락 사이 지점 고정).
+//   배율 범위: 최소 = 전체 맞춤, 최대 = 전체 맞춤의 4.5배(시작 배율이 더 크면 그 1.5배).
+//   처음 배율은 밭 4개(2×2)가 창에 맞게 들어오는 크기(4개 이하면 전체 맞춤), 시작 위치는
+//   돌봄이 필요한 밭(가운데 칸부터 놓인다)의 중심.
+//   경계 밖으로 끌면 고무줄처럼 저항을 받으며 따라오고, 배율도 범위 밖으로 살짝 넘어간다.
+//   손을 떼면 rAF 물리 루프가 관성(플링)으로 미끄러지다 경계 밖이면 스프링으로 되돌린다.
 //   이동 거리가 작은 한 손가락 터치만 탭 — 화면 좌표를 밭 좌표로 되돌려 마름모 안에 든 밭(앞줄 우선)을
 //   고른다. 당겨서 새로고침은 data-no-ptr 로 끈다.
 //
-// 【성능】 밭마다 작물 표시 상한을 fit 타일 크기에 맞춰 줄인다(확대해도 늘리지 않는다).
-//   작은 타일은 접지 그림자도 끈다.
+// 【성능】 밭은 시작 배율 크기로 한 번 그리고(선명), 이후 변화는 transform 한 레이어만 rAF 로
+//   바꾼다(리렌더 없음). 작물 표시 상한은 시작 배율 타일 크기에 맞춘다.
 //
 // 【상태 요약】 밭이 하나뿐이면 지도 대신 크게 한 장 + 나무 팻말 4개(단계별 수).
 //   여럿이면 밭마다 나무 이름판(단어장 이름) + 단어장 목록 카드와 같은 배지(돌봄 N · 완료).
@@ -49,7 +56,7 @@ const DIA_CX = 600;
 const DIA_CY = 531;
 const DIA_W = 1024;
 const DIA_H = 460;
-const PATH = 22; // 밭 사이 길 폭(캔버스 px, 변에 수직이 아니라 격자 축 방향 근사)
+const PATH = 84; // 밭 사이 길 폭(캔버스 px, 격자 축 방향 근사) — 밭 폭(1024)의 약 8%
 const STEP_X = DIA_W / 2 + PATH;
 const STEP_Y = (DIA_W / 2 + PATH) * (DIA_H / DIA_W);
 /* 밭 하나가 그림으로 차지하는 범위(마름모 중심 기준) — 위는 가장 큰 작물·이름판, 아래는 섬 옆면 */
@@ -57,7 +64,8 @@ const EXT_LEFT = DIA_W / 2 + 8;
 const EXT_TOP = DIA_CY - VIEW_TOP;
 const EXT_BOTTOM = 805 - DIA_CY + 6;
 
-const MAX_ZOOM = 4.5;
+const MAX_ZOOM = 4.5;   // 전체 맞춤 대비 최대 배율
+const START_FIELDS = 4; // 처음 화면에 적당한 크기로 들어오는 밭 수(2×2)
 const TAP_SLOP = 8;
 
 /** 개수 → 격자 c×r (정사각형에 가깝게) */
@@ -191,6 +199,25 @@ const MapField = React.memo(({ row, tileW, budget, left, top }) => {
   );
 });
 
+/** 고무줄 — 경계를 넘은 거리 over 를 화면 크기 dim 기준으로 감쇠(iOS 스크롤뷰 식) */
+const RUBBER_C = 0.55;
+const rubber = (over, dim) => {
+  const a = Math.abs(over);
+  return Math.sign(over) * (1 - 1 / ((a * RUBBER_C) / dim + 1)) * dim;
+};
+const unrubber = (y, dim) => {
+  const a = Math.min(Math.abs(y), dim * 0.999);
+  return Math.sign(y) * (dim / RUBBER_C) * (1 / (1 - a / dim) - 1);
+};
+/** 배율 고무줄 — 범위 밖 비율을 지수로 눌러 살짝만 넘어가게 */
+const SCALE_RESIST = 0.3;
+
+const readStatusBar = (el) => {
+  try {
+    return parseFloat(getComputedStyle(el).getPropertyValue('--status-bar-height')) || 0;
+  } catch { return 0; }
+};
+
 /**
  * @param {Array}    rows      buildBookRow 결과(글자 단어장 제외) — 1개 이상
  * @param {function} onSelect  (bookId) => void
@@ -200,12 +227,12 @@ const HomeFieldGrid = ({ rows, onSelect }) => {
 
   const boxRef = useRef(null);
   const layerRef = useRef(null);
-  const [box, setBox] = useState({ w: 0, h: 0 });
+  const [box, setBox] = useState({ w: 0, h: 0, sb: 0 });
 
   useEffect(() => {
     const el = boxRef.current;
     if (!el) return undefined;
-    const measure = () => setBox({ w: el.clientWidth, h: el.clientHeight });
+    const measure = () => setBox({ w: el.clientWidth, h: el.clientHeight, sb: readStatusBar(el) });
     measure();
     if (typeof ResizeObserver === 'undefined') return undefined;
     const ro = new ResizeObserver(measure);
@@ -224,12 +251,15 @@ const HomeFieldGrid = ({ rows, onSelect }) => {
     return sorted
       .map((row, i) => {
         const { col, row: rr } = cells[i];
-        return { row, cx: (col - rr) * STEP_X, cy: (col + rr) * STEP_Y, depth: col + rr };
+        return { row, cx: (col - rr) * STEP_X, cy: (col + rr) * STEP_Y, depth: col + rr, care: row.care > 0 };
       })
       .sort((a, b) => a.depth - b.depth || a.cx - b.cx);
   }, [rows, single]);
 
-  // fit — 모든 밭이 영역에 들어오는 배율(캔버스 px → 화면 px)
+  /*
+    배치(캔버스 px) + 배율 범위(화면 px / 캔버스 px).
+    focus = 헤드라인 아래 ~ CTA 위 창. minS = 전체 맞춤, startS = 2×2 맞춤, R = 그리는 배율.
+  */
   const layout = useMemo(() => {
     if (single || placed.length === 0 || box.w <= 0 || box.h <= 0) return null;
     let x0 = Infinity; let x1 = -Infinity; let y0 = Infinity; let y1 = -Infinity;
@@ -237,65 +267,191 @@ const HomeFieldGrid = ({ rows, onSelect }) => {
       x0 = Math.min(x0, cx - EXT_LEFT); x1 = Math.max(x1, cx + EXT_LEFT);
       y0 = Math.min(y0, cy - EXT_TOP); y1 = Math.max(y1, cy + EXT_BOTTOM);
     });
-    const s = Math.min(box.w / (x1 - x0), box.h / (y1 - y0));
-    const ox = (box.w - (x1 - x0) * s) / 2 - x0 * s;
-    const oy = (box.h - (y1 - y0) * s) / 2 - y0 * s;
+    const fTop = Math.min(box.h * 0.5, Math.max(158, box.sb + 114));
+    const focus = { x0: 12, x1: box.w - 12, y0: fTop, y1: Math.max(fTop + 40, box.h - 46) };
+    const fw = focus.x1 - focus.x0;
+    const fh = focus.y1 - focus.y0;
+    const minS = Math.min(fw / (x1 - x0), fh / (y1 - y0));
+    // 2×2 묶음의 범위: 가로 (col−row) −1..1, 세로 (col+row) 0..2
+    const w4 = 2 * STEP_X + 2 * EXT_LEFT;
+    const h4 = 2 * STEP_Y + EXT_TOP + EXT_BOTTOM;
+    const startS = placed.length <= START_FIELDS ? minS : Math.max(minS, Math.min(fw / w4, fh / h4));
+    const maxS = Math.max(minS * MAX_ZOOM, startS * 1.5);
+    // 시작 중심 — 돌봄 밭(가운데 칸부터 놓였다)의 중심, 없으면 전체 가운데
+    const careP = placed.filter((p) => p.care);
+    const pick = careP.length > 0 ? careP : placed;
+    const ccx = careP.length > 0 ? pick.reduce((a, p) => a + p.cx, 0) / pick.length : (x0 + x1) / 2;
+    const ccy = careP.length > 0
+      ? pick.reduce((a, p) => a + p.cy, 0) / pick.length + (EXT_BOTTOM - EXT_TOP) / 2
+      : (y0 + y1) / 2;
     return {
-      s,
-      ox,
-      oy,
-      tileW: FIELD_CANVAS_W * s,
-      content: { x0: x0 * s + ox, x1: x1 * s + ox, y0: y0 * s + oy, y1: y1 * s + oy },
+      x0, x1, y0, y1, focus, minS, maxS, startS, R: startS, center: { x: ccx, y: ccy },
+      tileW: FIELD_CANVAS_W * startS,
     };
-  }, [placed, single, box.w, box.h]);
+  }, [placed, single, box.w, box.h, box.sb]);
 
-  /* ── 변환(배율 k, 이동 tx·ty) — 리렌더 없이 레이어 transform 만 바꾼다 ── */
-  const view = useRef({ k: 1, tx: 0, ty: 0 });
+  /* ── 보기 상태 { S: 배율, tx·ty: 캔버스 x0·y0 이 놓이는 화면 좌표 } — 리렌더 없이 transform 만 ── */
+  const view = useRef({ S: 1, tx: 0, ty: 0 });
+  const lay = useRef(null);
+  lay.current = layout;
   const raf = useRef(0);
 
   const apply = useCallback(() => {
     raf.current = 0;
-    const { k, tx, ty } = view.current;
-    if (layerRef.current) layerRef.current.style.transform = `translate3d(${tx}px, ${ty}px, 0) scale(${k})`;
-    // fit 상태에선 한 손가락 세로 드래그를 페이지 스크롤로 넘긴다
-    if (boxRef.current) boxRef.current.style.touchAction = k > 1.001 ? 'none' : 'pan-y';
+    const L = lay.current;
+    if (!L || !layerRef.current) return;
+    const { S, tx, ty } = view.current;
+    layerRef.current.style.transform = `translate3d(${tx}px, ${ty}px, 0) scale(${S / L.R})`;
   }, []);
 
   const schedule = useCallback(() => {
     if (!raf.current) raf.current = requestAnimationFrame(apply);
   }, [apply]);
 
-  useEffect(() => () => { if (raf.current) cancelAnimationFrame(raf.current); }, []);
+  /** 축 하나의 이동 경계 — 밭 묶음이 창보다 크면 끝 밭이 창 가장자리까지, 작으면 창 가운데 고정 */
+  const boundsFor = (L, S, axis) => {
+    const [lo, hi, f0, f1] = axis === 'x'
+      ? [L.x0, L.x1, L.focus.x0, L.focus.x1]
+      : [L.y0, L.y1, L.focus.y0, L.focus.y1];
+    const span = (hi - lo) * S;
+    if (span <= f1 - f0) { const c = f0 + (f1 - f0 - span) / 2; return [c, c]; }
+    return [f1 - span, f0];
+  };
 
-  /** 밭 묶음이 영역 밖으로 지나치게 끌리지 않게 — 영역보다 크면 가장자리까지만, 작으면 가운데 */
-  const clampView = useCallback((v) => {
-    if (!layout) return v;
-    const k = clamp(v.k, 1, MAX_ZOOM);
-    const { x0, x1, y0, y1 } = layout.content;
-    const axis = (t, lo, hi, size) => {
-      const span = (hi - lo) * k;
-      if (span <= size) return (size - (lo + hi) * k) / 2;
-      return clamp(t, size - hi * k, -lo * k);
+  /** 원시 이동값 → 고무줄 적용된 표시값 */
+  const rubberAxis = (L, S, axis, raw) => {
+    const [lo, hi] = boundsFor(L, S, axis);
+    const dim = axis === 'x' ? box.w : box.h;
+    if (raw > hi) return hi + rubber(raw - hi, dim);
+    if (raw < lo) return lo + rubber(raw - lo, dim);
+    return raw;
+  };
+  const unrubberAxis = (L, S, axis, shown) => {
+    const [lo, hi] = boundsFor(L, S, axis);
+    const dim = axis === 'x' ? box.w : box.h;
+    if (shown > hi) return hi + unrubber(shown - hi, dim);
+    if (shown < lo) return lo + unrubber(shown - lo, dim);
+    return shown;
+  };
+  const rubberScale = (L, raw) => {
+    if (raw < L.minS) return L.minS * (raw / L.minS) ** SCALE_RESIST;
+    if (raw > L.maxS) return L.maxS * (raw / L.maxS) ** SCALE_RESIST;
+    return raw;
+  };
+  const unrubberScale = (L, S) => {
+    if (S < L.minS) return L.minS * (S / L.minS) ** (1 / SCALE_RESIST);
+    if (S > L.maxS) return L.maxS * (S / L.maxS) ** (1 / SCALE_RESIST);
+    return S;
+  };
+
+  /** 경계 안으로 딱 맞춘 보기(고무줄 없음) — 휠 확대·배치 변경 때 */
+  const hardClamp = (L, v) => {
+    const S = clamp(v.S, L.minS, L.maxS);
+    const [xl, xh] = boundsFor(L, S, 'x');
+    const [yl, yh] = boundsFor(L, S, 'y');
+    return { S, tx: clamp(v.tx, xl, xh), ty: clamp(v.ty, yl, yh) };
+  };
+
+  /* ── 놓은 뒤 물리 루프(관성 + 경계 스프링 + 배율 복귀) — rAF 한 개 ── */
+  const anim = useRef({ id: 0, vx: 0, vy: 0, focal: null, last: 0 });
+
+  const stopAnim = () => {
+    if (anim.current.id) cancelAnimationFrame(anim.current.id);
+    anim.current.id = 0;
+  };
+
+  const step = (now) => {
+    const a = anim.current;
+    const L = lay.current;
+    if (!L) { a.id = 0; return; }
+    const dt = Math.min(0.032, Math.max(0.001, (now - (a.last || now)) / 1000)) || 0.016;
+    a.last = now;
+    const v = view.current;
+
+    // 배율 — 범위 밖이면 놓은 지점(focal)을 고정한 채 지수 스프링으로 복귀
+    let { S, tx, ty } = v;
+    const St = clamp(S, L.minS, L.maxS);
+    if (Math.abs(St - S) > 1e-6) {
+      let Sn = S + (St - S) * (1 - Math.exp(-dt * 14));
+      if (Math.abs(St - Sn) < St * 1e-3) Sn = St;
+      const f = a.focal || { x: box.w / 2, y: box.h / 2 };
+      tx = f.x - (f.x - tx) * (Sn / S);
+      ty = f.y - (f.y - ty) * (Sn / S);
+      S = Sn;
+    }
+
+    // 이동 — 경계 안: 마찰로 감속 · 경계 밖: 임계 감쇠 스프링으로 경계까지
+    const W = 17;
+    const axisStep = (pos, vel, axis) => {
+      const [lo, hi] = boundsFor(L, S, axis);
+      const out = pos > hi ? pos - hi : pos < lo ? pos - lo : 0;
+      let nv = vel;
+      if (out !== 0) nv += (-W * W * out - 2 * W * vel) * dt;
+      else nv *= Math.exp(-dt * 3.2);
+      let np = pos + nv * dt;
+      // 스프링이 경계를 넘어 반대로 튀지 않게
+      if (out > 0 && np < hi) { np = hi; nv = 0; }
+      if (out < 0 && np > lo) { np = lo; nv = 0; }
+      return [np, nv, lo, hi];
     };
-    return { k, tx: axis(v.tx, x0, x1, box.w), ty: axis(v.ty, y0, y1, box.h) };
-  }, [layout, box.w, box.h]);
+    const [nx, nvx, xl, xh] = axisStep(tx, a.vx, 'x');
+    const [ny, nvy, yl, yh] = axisStep(ty, a.vy, 'y');
+    a.vx = nvx; a.vy = nvy;
+    view.current = { S, tx: nx, ty: ny };
 
-  // 배치·영역이 바뀌면 fit 으로 되돌린다
+    const settled = S === clamp(S, L.minS, L.maxS)
+      && nx >= xl - 0.5 && nx <= xh + 0.5 && ny >= yl - 0.5 && ny <= yh + 0.5
+      && Math.abs(nvx) < 12 && Math.abs(nvy) < 12;
+    if (settled) {
+      view.current = hardClamp(L, view.current);
+      a.id = 0;
+    } else {
+      a.id = requestAnimationFrame(step);
+    }
+    apply();
+  };
+
+  const startAnim = (vx, vy, focal) => {
+    stopAnim();
+    anim.current = { id: 0, vx, vy, focal, last: 0 };
+    anim.current.id = requestAnimationFrame(step);
+  };
+
+  useEffect(() => () => {
+    if (raf.current) cancelAnimationFrame(raf.current);
+    stopAnim();
+  }, []);
+
+  // 처음(또는 밭 수·영역 크기가 바뀌면) 시작 배율 · 돌봄 밭 중심으로
+  const sig = layout ? `${placed.length}|${box.w}|${box.h}|${box.sb}` : '';
+  const lastSig = useRef('');
   useEffect(() => {
-    view.current = { k: 1, tx: 0, ty: 0 };
+    if (!layout) return;
+    stopAnim();
+    if (lastSig.current !== sig) {
+      lastSig.current = sig;
+      const { focus, startS, center, x0, y0 } = layout;
+      const fx = (focus.x0 + focus.x1) / 2;
+      const fy = (focus.y0 + focus.y1) / 2;
+      view.current = hardClamp(layout, { S: startS, tx: fx - (center.x - x0) * startS, ty: fy - (center.y - y0) * startS });
+    } else {
+      view.current = hardClamp(layout, view.current);
+    }
     schedule();
-  }, [layout, schedule]);
+  }, [layout, sig, schedule]);
 
   /* ── 포인터 ── */
   const pointers = useRef(new Map());
   const gesture = useRef(null);
+  const samples = useRef([]);
 
   /** 화면 점(영역 기준) → 그 자리 밭 (마름모 안, 앞줄 우선 · 가까운 것) */
   const hitTest = (px, py) => {
-    if (!layout) return null;
-    const { k, tx, ty } = view.current;
-    const wx = ((px - tx) / k - layout.ox) / layout.s;
-    const wy = ((py - ty) / k - layout.oy) / layout.s;
+    const L = lay.current;
+    if (!L) return null;
+    const { S, tx, ty } = view.current;
+    const wx = (px - tx) / S + L.x0;
+    const wy = (py - ty) / S + L.y0;
     let best = null; let bestD = Infinity;
     for (let i = placed.length - 1; i >= 0; i -= 1) {
       const p = placed[i];
@@ -311,52 +467,81 @@ const HomeFieldGrid = ({ rows, onSelect }) => {
     return { x: e.clientX - rect.left, y: e.clientY - rect.top };
   };
 
+  /** 지금 손가락 상태로 제스처를 새로 시작 — 표시값을 원시값으로 되돌려 고무줄이 끊김 없이 이어지게 */
   const startGesture = () => {
+    const L = lay.current;
     const pts = [...pointers.current.values()];
     const v = { ...view.current };
+    const prevTap = gesture.current ? gesture.current.tap && gesture.current.kind !== 'pinch' : true;
+    if (!L || pts.length === 0) { gesture.current = null; return; }
     if (pts.length >= 2) {
       const [a, b] = pts;
       const mid = { x: (a.x + b.x) / 2, y: (a.y + b.y) / 2 };
-      gesture.current = { kind: 'pinch', dist0: Math.hypot(a.x - b.x, a.y - b.y) || 1, mid0: mid, v0: v, tap: false };
-    } else if (pts.length === 1) {
-      const prevTap = gesture.current?.tap ?? true;
-      gesture.current = { kind: 'pan', start: { ...pts[0] }, v0: v, tap: gesture.current ? prevTap && gesture.current.kind !== 'pinch' : true };
+      gesture.current = {
+        kind: 'pinch',
+        dist0: Math.hypot(a.x - b.x, a.y - b.y) || 1,
+        rawS0: unrubberScale(L, v.S),
+        // 처음 두 손가락 사이에 있던 지도 지점(캔버스 오프셋)
+        wx: (mid.x - v.tx) / v.S,
+        wy: (mid.y - v.ty) / v.S,
+        mid,
+        tap: false,
+      };
     } else {
-      gesture.current = null;
+      gesture.current = {
+        kind: 'pan',
+        start: { ...pts[0] },
+        rawX: unrubberAxis(L, v.S, 'x', v.tx),
+        rawY: unrubberAxis(L, v.S, 'y', v.ty),
+        S: v.S,
+        tap: prevTap,
+      };
     }
   };
 
   const onPointerDown = (e) => {
     if (!layout || (e.pointerType === 'mouse' && e.button !== 0)) return;
+    stopAnim();
     if (pointers.current.size === 0) gesture.current = null;
-    pointers.current.set(e.pointerId, localPoint(e));
+    const pt = localPoint(e);
+    pointers.current.set(e.pointerId, pt);
     try { boxRef.current.setPointerCapture(e.pointerId); } catch { /* 무시 */ }
+    samples.current = [{ t: performance.now(), x: pt.x, y: pt.y }];
     startGesture();
   };
 
   const onPointerMove = (e) => {
     if (!pointers.current.has(e.pointerId)) return;
-    pointers.current.set(e.pointerId, localPoint(e));
+    const pt = localPoint(e);
+    pointers.current.set(e.pointerId, pt);
     const g = gesture.current;
-    if (!g) return;
+    const L = lay.current;
+    if (!g || !L) return;
     const pts = [...pointers.current.values()];
     if (g.kind === 'pinch' && pts.length >= 2) {
       const [a, b] = pts;
       const mid = { x: (a.x + b.x) / 2, y: (a.y + b.y) / 2 };
-      const k = clamp(g.v0.k * (Math.hypot(a.x - b.x, a.y - b.y) / g.dist0), 1, MAX_ZOOM);
-      // 처음 두 손가락 사이에 있던 밭 지점이 지금 손가락 사이에 오게
-      const wx = (g.mid0.x - g.v0.tx) / g.v0.k;
-      const wy = (g.mid0.y - g.v0.ty) / g.v0.k;
-      view.current = clampView({ k, tx: mid.x - wx * k, ty: mid.y - wy * k });
+      g.mid = mid;
+      const S = rubberScale(L, g.rawS0 * (Math.hypot(a.x - b.x, a.y - b.y) / g.dist0));
+      view.current = {
+        S,
+        tx: rubberAxis(L, S, 'x', mid.x - g.wx * S),
+        ty: rubberAxis(L, S, 'y', mid.y - g.wy * S),
+      };
       schedule();
     } else if (g.kind === 'pan' && pts.length === 1) {
       const dx = pts[0].x - g.start.x;
       const dy = pts[0].y - g.start.y;
       if (Math.hypot(dx, dy) > TAP_SLOP) g.tap = false;
-      if (g.v0.k > 1.001) {
-        view.current = clampView({ k: g.v0.k, tx: g.v0.tx + dx, ty: g.v0.ty + dy });
-        schedule();
-      }
+      view.current = {
+        S: g.S,
+        tx: rubberAxis(L, g.S, 'x', g.rawX + dx),
+        ty: rubberAxis(L, g.S, 'y', g.rawY + dy),
+      };
+      const now = performance.now();
+      samples.current.push({ t: now, x: pt.x, y: pt.y });
+      while (samples.current.length > 2 && now - samples.current[0].t > 100) samples.current.shift();
+      schedule();
     }
   };
 
@@ -366,51 +551,71 @@ const HomeFieldGrid = ({ rows, onSelect }) => {
     const last = pointers.current.get(e.pointerId);
     pointers.current.delete(e.pointerId);
     if (pointers.current.size === 0) {
+      gesture.current = null;
       if (!cancelled && g?.kind === 'pan' && g.tap) {
         const hit = hitTest(last.x, last.y);
         if (hit) onSelect(hit.book.id);
       }
-      gesture.current = null;
+      // 관성 — 마지막 ~100ms 이동 속도(경계 밖이면 스프링이 받아 준다)
+      let vx = 0; let vy = 0;
+      if (g?.kind === 'pan' && !g.tap) {
+        const s = samples.current;
+        const first = s[0];
+        const end = s[s.length - 1];
+        const dt = (end.t - first.t) / 1000;
+        if (s.length >= 2 && dt > 0.008 && performance.now() - end.t < 80) {
+          vx = clamp((end.x - first.x) / dt, -4000, 4000);
+          vy = clamp((end.y - first.y) / dt, -4000, 4000);
+        }
+      }
+      startAnim(vx, vy, g?.kind === 'pinch' ? g.mid : last);
       return;
     }
     // 핀치에서 한 손가락만 남으면 이어서 이동(탭은 아님)
     startGesture();
     if (gesture.current) gesture.current.tap = false;
+    samples.current = [];
   };
 
-  // 데스크톱 트랙패드 핀치(ctrl+wheel)
+  // 데스크톱 트랙패드 핀치(ctrl+wheel) · 일반 휠은 이동
   useEffect(() => {
     const el = boxRef.current;
     if (!el || !layout) return undefined;
     const onWheel = (e) => {
-      if (!e.ctrlKey) return;
+      const L = lay.current;
+      if (!L) return;
       e.preventDefault();
-      const rect = el.getBoundingClientRect();
-      const px = e.clientX - rect.left;
-      const py = e.clientY - rect.top;
+      stopAnim();
       const v = view.current;
-      const k = clamp(v.k * Math.exp(-e.deltaY / 100), 1, MAX_ZOOM);
-      const wx = (px - v.tx) / v.k;
-      const wy = (py - v.ty) / v.k;
-      view.current = clampView({ k, tx: px - wx * k, ty: py - wy * k });
+      if (e.ctrlKey) {
+        const rect = el.getBoundingClientRect();
+        const px = e.clientX - rect.left;
+        const py = e.clientY - rect.top;
+        const S = clamp(v.S * Math.exp(-e.deltaY / 100), L.minS, L.maxS);
+        view.current = hardClamp(L, { S, tx: px - ((px - v.tx) / v.S) * S, ty: py - ((py - v.ty) / v.S) * S });
+      } else {
+        view.current = hardClamp(L, { S: v.S, tx: v.tx - e.deltaX, ty: v.ty - e.deltaY });
+      }
       schedule();
     };
     el.addEventListener('wheel', onWheel, { passive: false });
     return () => el.removeEventListener('wheel', onWheel);
-  }, [layout, clampView, schedule]);
+  }, [layout, schedule]);
 
-  const boxClass = `
-    absolute z-[5] left-[12px] right-[12px]
-    top-[max(160px,calc(var(--status-bar-height)+116px))] bottom-[46px]
-  `;
-
-  // 단어장이 하나면 지도 대신 크게 한 장 + 팻말
+  // 단어장이 하나면 지도 대신 크게 한 장 + 팻말 — 헤드라인 아래 ~ CTA 위 칸
   if (single) {
     const byWidth = box.w;
     const byHeight = box.h / VIEW_RATIO;
     const tileW = Math.max(0, Math.floor(Math.min(byWidth, byHeight)));
     return (
-      <div ref={boxRef} className={`${boxClass} flex items-center justify-center`}>
+      <div
+        ref={boxRef}
+        className="
+          absolute z-[5] left-[12px] right-[12px]
+          top-[max(160px,calc(var(--status-bar-height)+116px))] bottom-[46px]
+          flex items-center justify-center
+        "
+      >
         {tileW > 0 && <FieldTile row={rows[0]} width={tileW} single onSelect={onSelect} />}
       </div>
     );
@@ -418,13 +623,15 @@ const HomeFieldGrid = ({ rows, onSelect }) => {
 
   const budget = layout ? spriteBudget(layout.tileW) : null;
   const small = layout ? layout.tileW < 200 : true;
+  const R = layout?.R ?? 1;
 
   return (
+    /* 히어로 전체를 채우는 배경 지도 — 헤드라인·칩·CTA 는 FarmHero 의 children 으로 이 위 층에 뜬다 */
     <div
       ref={boxRef}
       data-no-ptr
       role="group"
-      className={`${boxClass} overflow-hidden select-none touch-pan-y`}
+      className="absolute inset-0 z-[5] overflow-hidden select-none touch-none"
       onPointerDown={onPointerDown}
       onPointerMove={onPointerMove}
       onPointerUp={(e) => endPointer(e, false)}
@@ -433,15 +640,15 @@ const HomeFieldGrid = ({ rows, onSelect }) => {
       onContextMenu={(e) => e.preventDefault()}
     >
       {layout && (
-        <div ref={layerRef} className="absolute left-0 top-0 w-full h-full origin-top-left will-change-transform">
+        <div ref={layerRef} className="absolute left-0 top-0 w-0 h-0 origin-top-left will-change-transform">
           {placed.map((p) => (
             <MapField
               key={p.row.book.id}
               row={p.row}
               tileW={layout.tileW}
               budget={budget}
-              left={layout.ox + (p.cx - DIA_CX) * layout.s}
-              top={layout.oy + (p.cy - DIA_CY) * layout.s}
+              left={(p.cx - DIA_CX - layout.x0) * R}
+              top={(p.cy - DIA_CY - layout.y0) * R}
             />
           ))}
           {/* 이름판·배지 — 밭 그림보다 위 한 층(뒤 밭 작물에 가리지 않게), 마름모 위 꼭짓점에 단다 */}
@@ -451,9 +658,9 @@ const HomeFieldGrid = ({ rows, onSelect }) => {
               aria-label={p.row.book.title}
               className="absolute z-[16] flex items-center gap-[3px] pointer-events-none -translate-x-1/2 -translate-y-1/2"
               style={{
-                left: layout.ox + p.cx * layout.s,
-                top: layout.oy + (p.cy - DIA_H / 2) * layout.s,
-                maxWidth: DIA_W * 0.6 * layout.s,
+                left: (p.cx - layout.x0) * R,
+                top: (p.cy - DIA_H / 2 - layout.y0) * R,
+                maxWidth: DIA_W * 0.6 * R,
               }}
             >
               <span className="flex min-w-0"><NameBoard title={p.row.book.title} small={small} /></span>
@@ -462,6 +669,23 @@ const HomeFieldGrid = ({ rows, onSelect }) => {
           ))}
         </div>
       )}
+      {/* 가독성 페이드 — 위는 하늘 토큰(헤드라인 뒤), 아래는 화면 배경 토큰(본문과 이음). 포인터는 통과 */}
+      <div
+        aria-hidden
+        className="
+          absolute inset-x-0 top-0 z-[20] pointer-events-none
+          h-[max(150px,calc(var(--status-bar-height)+108px))]
+          bg-[linear-gradient(180deg,var(--farm-sky-100)_0%,var(--farm-sky-100)_40%,transparent_100%)]
+          opacity-[.88]
+        "
+      />
+      <div
+        aria-hidden
+        className="
+          absolute inset-x-0 bottom-0 z-[20] pointer-events-none h-[40px]
+          bg-[linear-gradient(180deg,transparent_0%,var(--farm-canvas)_100%)]
+        "
+      />
     </div>
   );
 };

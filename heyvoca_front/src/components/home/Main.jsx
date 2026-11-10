@@ -498,9 +498,11 @@ const Main = () => {
         )}
 
         {/* §4 2줄 헤드라인 — 닉네임 첫머리는 뺐다(이슈 #25 4차).
+            밭 지도(HomeFieldGrid)가 히어로 전체에 배경으로 깔리므로 글자는 포인터를 지도로 통과시킨다.
             문구 자체는 src/data/homeGreetings.js가 상황별로 고른다(CTA 5상태와 분리) */}
         <div className="
           absolute top-[max(92px,calc(var(--status-bar-height)+48px))] left-0 right-0 z-[6]
+          pointer-events-none
           px-[26px] text-center
           text-[22px] font-[700] tracking-[-0.02em] leading-[1.4]
           text-farm-ink dark:text-layout-white

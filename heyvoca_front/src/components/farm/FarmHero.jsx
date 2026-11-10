@@ -136,7 +136,9 @@ export const heroMood = (health) => {
  * @param {object} healthMix   그림 variant 분포 { healthy, drying, wilted, rotten }
  * @param {number} storedSeeds 아직 심지 않은 보유 씨앗 — 밭 **밖** 간판에 적힌다(기획 5.1)
  * @param {node}   field       (선택) 한 장짜리 밭 대신 그릴 것 — 홈은 단어장이 하나라도 있으면
- *                             단어장별 밭 격자(HomeFieldGrid)를 넘긴다(이슈 #25 6차). 없으면 아래 한 장짜리 밭.
+ *                             단어장별 밭 지도(HomeFieldGrid)를 넘긴다(이슈 #25). 지도는 히어로 전체(inset-0)를
+ *                             채우는 배경 층(z-5)이고, children(헤드라인·칩·CTA)이 그 위 층에 뜬다.
+ *                             없으면 아래 한 장짜리 밭.
  * @param {Array}  words       (선택) 실제 단어 목록 {id, stage, health} — 주어지면 FarmField 가
  *                             단어 id 기반 결정적 슬롯(plantFieldByWords)으로 심어 단계가
  *                             섞여서 자연스럽게 배치되고, 자란 뒤에도 같은 자리를 지킨다
