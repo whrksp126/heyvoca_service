@@ -25,7 +25,7 @@
 //   출석체크     → §10 구조에 없다. 달력은 연속 학습 카드의 "N일 연속" 영역을 눌러 들어간다
 //   온보딩 배너  → §10 구조에 없다. 입문 퀘스트는 OnboardingQuestCard 가 맡는다(잠금 없음)
 
-import React, { useCallback, useEffect, useMemo, useRef } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { useUser } from '../../context/UserContext';
@@ -243,7 +243,10 @@ const Main = () => {
   // registerRefresh로 여기 넘겨주면, 그 함수를 ref에 담아뒀다가 당겨서 새로고침 때 같이 부른다.
   const streakRefreshRef = useRef(null);
   const registerStreakRefresh = useCallback((fn) => { streakRefreshRef.current = fn; }, []);
+  // 밭 지도 기본 시점 리셋 신호 — 당겨서 새로고침 때 1 올린다(HomeFieldGrid resetSignal)
+  const [mapReset, setMapReset] = useState(0);
   const handlePullToRefresh = useCallback(async () => {
+    setMapReset((n) => n + 1);
     await Promise.all([
       refreshStats(),
       streakRefreshRef.current ? streakRefreshRef.current() : Promise.resolve(),
@@ -437,6 +440,7 @@ const Main = () => {
         field={bookRows.length > 0 ? (
           <HomeFieldGrid
             rows={bookRows}
+            resetSignal={mapReset}
             onSelect={(id) => {
               vibrate({ duration: 5 });
               pushNewFullSheet(VocabularyWordsNewFullSheet, { id }, { smFull: true, closeOnBackdropClick: true });
