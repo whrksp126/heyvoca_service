@@ -19,21 +19,24 @@
 //
 // 【제스처】 포인터 이벤트로 직접 처리한다(라이브러리 없음). 지도 위에선 touch-action: none —
 //   한 손가락 드래그 = 이동, 두 손가락 핀치 = 확대·축소(손가락 사이 지점 고정).
-//   배율 범위: 최소 = 전체 맞춤, 최대 = 전체 맞춤의 4.5배(시작 배율이 더 크면 그 1.5배).
-//   처음 배율은 밭 4개(2×2)가 창에 맞게 들어오는 크기(4개 이하면 전체 맞춤), 시작 위치는
-//   돌봄이 필요한 밭(가운데 칸부터 놓인다)의 중심.
+//   배율 범위: 최소 = 전체 맞춤, 최대 = 전체 맞춤의 4.5배(기본 배율이 더 크면 그 2배).
+//   기본 시점 = 2×2 맞춤 배율의 1.5배로 가운데 칸 밭(돌봄 밭 우선, 없으면 첫 단어장) 하나가
+//   온전히 보이고 주변 밭이 걸쳐 보이는 정도. 단어장이 1~2개면 전부 보이게 맞춘다.
+//   홈에 들어올 때·다른 화면에서 돌아올 때·당겨서 새로고침 때 항상 기본 시점으로(짧은 애니메이션).
 //   경계 밖으로 끌면 고무줄처럼 저항을 받으며 따라오고, 배율도 범위 밖으로 살짝 넘어간다.
 //   손을 떼면 rAF 물리 루프가 관성(플링)으로 미끄러지다 경계 밖이면 스프링으로 되돌린다.
 //   이동 거리가 작은 한 손가락 터치만 탭 — 화면 좌표를 밭 좌표로 되돌려 마름모 안에 든 밭(앞줄 우선)을
 //   고른다. 당겨서 새로고침은 data-no-ptr 로 끈다.
 //
-// 【성능】 밭은 시작 배율 크기로 한 번 그리고(선명), 이후 변화는 transform 한 레이어만 rAF 로
-//   바꾼다(리렌더 없음). 작물 표시 상한은 시작 배율 타일 크기에 맞춘다.
+// 【성능·선명도】 움직이는 동안엔 transform 한 레이어만 rAF 로 바꾸고(리렌더 없음, will-change),
+//   멈추면 잠시 뒤 현재 배율로 다시 그려 will-change 를 푼다 — 확대해도 흐려지지 않는다.
+//   작물 표시 상한·이름판 크기는 기본 시점 타일 크기에 고정한다.
 //
 // 【상태 요약】 밭이 하나뿐이면 지도 대신 크게 한 장 + 나무 팻말 4개(단계별 수).
 //   여럿이면 밭마다 나무 이름판(단어장 이름) + 단어장 목록 카드와 같은 배지(돌봄 N · 완료).
 
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Check } from '@phosphor-icons/react';
 import FarmField, { bookRimColor } from '../farm/FarmField';
@@ -56,7 +59,7 @@ const DIA_CX = 600;
 const DIA_CY = 531;
 const DIA_W = 1024;
 const DIA_H = 460;
-const PATH = 84; // 밭 사이 길 폭(캔버스 px, 격자 축 방향 근사) — 밭 폭(1024)의 약 8%
+const PATH = 120; // 밭 사이 길 폭(캔버스 px, 격자 축 방향 근사) — 밭 폭(1024)의 약 12%
 const STEP_X = DIA_W / 2 + PATH;
 const STEP_Y = (DIA_W / 2 + PATH) * (DIA_H / DIA_W);
 /* 밭 하나가 그림으로 차지하는 범위(마름모 중심 기준) — 위는 가장 큰 작물·이름판, 아래는 섬 옆면 */
@@ -65,7 +68,12 @@ const EXT_TOP = DIA_CY - VIEW_TOP;
 const EXT_BOTTOM = 805 - DIA_CY + 6;
 
 const MAX_ZOOM = 4.5;   // 전체 맞춤 대비 최대 배율
-const START_FIELDS = 4; // 처음 화면에 적당한 크기로 들어오는 밭 수(2×2)
+const START_FIELDS = 4; // 기준 배율: 밭 4개(2×2)가 창에 맞게 들어오는 크기
+const HOME_ZOOM = 1.5;  // 기본 시점 = 기준 배율 × 1.5 — 밭 하나가 온전히, 주변 밭은 걸쳐 보인다
+const FIT_ALL_MAX = 2;  // 단어장이 이 수 이하면 기본 시점 = 전체 맞춤
+const PLANT_REACH = 0.87; // 지도 밭의 작물 배치 영역 — 흙 마름모 가장자리 살짝 안쪽까지
+const RESET_MS = 380;   // 기본 시점으로 돌아가는 애니메이션 길이
+const COMMIT_DELAY = 140; // 멈춘 뒤 현재 배율로 다시 그리기까지(연속 제스처 사이엔 다시 그리지 않게)
 const TAP_SLOP = 8;
 
 /** 개수 → 격자 c×r (정사각형에 가깝게) */
@@ -194,6 +202,7 @@ const MapField = React.memo(({ row, tileW, budget, left, top }) => {
         shadows={budget.shadows}
         reserveSigns={false}
         rimColor={bookRimColor(book.color)}
+        plantReach={PLANT_REACH}
       />
     </div>
   );
@@ -221,8 +230,9 @@ const readStatusBar = (el) => {
 /**
  * @param {Array}    rows      buildBookRow 결과(글자 단어장 제외) — 1개 이상
  * @param {function} onSelect  (bookId) => void
+ * @param {number}   resetSignal 값이 바뀌면 기본 시점으로 되돌린다(당겨서 새로고침)
  */
-const HomeFieldGrid = ({ rows, onSelect }) => {
+const HomeFieldGrid = ({ rows, onSelect, resetSignal = 0 }) => {
   "use memo";
 
   const boxRef = useRef(null);
@@ -251,14 +261,15 @@ const HomeFieldGrid = ({ rows, onSelect }) => {
     return sorted
       .map((row, i) => {
         const { col, row: rr } = cells[i];
-        return { row, cx: (col - rr) * STEP_X, cy: (col + rr) * STEP_Y, depth: col + rr, care: row.care > 0 };
+        // first = 가운데 칸(돌봄 밭이 있으면 그중 첫째, 없으면 첫 단어장) — 기본 시점의 중심
+        return { row, cx: (col - rr) * STEP_X, cy: (col + rr) * STEP_Y, depth: col + rr, first: i === 0 };
       })
       .sort((a, b) => a.depth - b.depth || a.cx - b.cx);
   }, [rows, single]);
 
   /*
     배치(캔버스 px) + 배율 범위(화면 px / 캔버스 px).
-    focus = 헤드라인 아래 ~ CTA 위 창. minS = 전체 맞춤, startS = 2×2 맞춤, R = 그리는 배율.
+    focus = 헤드라인 아래 ~ CTA 위 창. minS = 전체 맞춤, homeS = 기본 시점 배율.
   */
   const layout = useMemo(() => {
     if (single || placed.length === 0 || box.w <= 0 || box.h <= 0) return null;
@@ -275,18 +286,20 @@ const HomeFieldGrid = ({ rows, onSelect }) => {
     // 2×2 묶음의 범위: 가로 (col−row) −1..1, 세로 (col+row) 0..2
     const w4 = 2 * STEP_X + 2 * EXT_LEFT;
     const h4 = 2 * STEP_Y + EXT_TOP + EXT_BOTTOM;
-    const startS = placed.length <= START_FIELDS ? minS : Math.max(minS, Math.min(fw / w4, fh / h4));
-    const maxS = Math.max(minS * MAX_ZOOM, startS * 1.5);
-    // 시작 중심 — 돌봄 밭(가운데 칸부터 놓였다)의 중심, 없으면 전체 가운데
-    const careP = placed.filter((p) => p.care);
-    const pick = careP.length > 0 ? careP : placed;
-    const ccx = careP.length > 0 ? pick.reduce((a, p) => a + p.cx, 0) / pick.length : (x0 + x1) / 2;
-    const ccy = careP.length > 0
-      ? pick.reduce((a, p) => a + p.cy, 0) / pick.length + (EXT_BOTTOM - EXT_TOP) / 2
-      : (y0 + y1) / 2;
+    const fitAll = placed.length <= FIT_ALL_MAX;
+    const baseS = placed.length <= START_FIELDS ? minS : Math.max(minS, Math.min(fw / w4, fh / h4));
+    // 기본 시점 배율 — 1~2개면 전체 맞춤, 그 밖엔 2×2 맞춤의 1.5배(밭 1개가 온전히 + 주변이 걸침)
+    const homeS = fitAll ? minS : Math.max(minS, baseS * HOME_ZOOM);
+    const maxS = Math.max(minS * MAX_ZOOM, homeS * 2);
+    // 기본 시점 중심 — 가운데 칸 밭(돌봄 밭 우선) 한 장의 그림 범위 가운데, 1~2개면 전체 가운데
+    const first = placed.find((p) => p.first) || placed[0];
+    const center = fitAll
+      ? { x: (x0 + x1) / 2, y: (y0 + y1) / 2 }
+      : { x: first.cx, y: first.cy + (EXT_BOTTOM - EXT_TOP) / 2 };
     return {
-      x0, x1, y0, y1, focus, minS, maxS, startS, R: startS, center: { x: ccx, y: ccy },
-      tileW: FIELD_CANVAS_W * startS,
+      x0, x1, y0, y1, focus, minS, maxS, homeS, center,
+      // 작물 수·이름판 크기는 기본 시점 기준으로 고정한다(다시 그려도 작물이 바뀌지 않게)
+      homeTileW: FIELD_CANVAS_W * homeS,
     };
   }, [placed, single, box.w, box.h, box.sb]);
 
@@ -296,13 +309,56 @@ const HomeFieldGrid = ({ rows, onSelect }) => {
   lay.current = layout;
   const raf = useRef(0);
 
+  /*
+    【선명도】 밭은 '그리는 배율' R 로 DOM 크기를 잡아 그린다. 움직이는 동안엔 transform
+    scale(S/R) 한 레이어만 바꾸고(will-change 켬 — 합성만, 리렌더 없음), 멈추면 잠시 뒤
+    R = S 로 다시 그리고 will-change 를 끈다. 그러면 쉬는 화면은 늘 scale(1) 이라 브라우저가
+    현재 배율·기기 픽셀비로 다시 래스터화한다 — 확대해도 원본(밭 1200px · 작물 512px) 해상도만큼
+    선명하다. 다시 그릴 때 바뀌는 건 상자 크기뿐이라(작물 배치는 % · 표시 수는 고정) 가볍다.
+  */
+  const [renderR, setRenderR] = useState(0);
+  const rRef = useRef(0);
+  const moving = useRef(false);
+  const commitTimer = useRef(0);
+
   const apply = useCallback(() => {
     raf.current = 0;
     const L = lay.current;
-    if (!L || !layerRef.current) return;
+    const el = layerRef.current;
+    if (!L || !el || !rRef.current) return;
     const { S, tx, ty } = view.current;
-    layerRef.current.style.transform = `translate3d(${tx}px, ${ty}px, 0) scale(${S / L.R})`;
+    const k = S / rRef.current;
+    el.style.willChange = moving.current ? 'transform' : 'auto';
+    el.style.transform = moving.current || Math.abs(k - 1) > 1e-4
+      ? `translate3d(${tx}px, ${ty}px, 0) scale(${k})`
+      : `translate(${tx}px, ${ty}px)`;
   }, []);
+
+  /** 움직임 시작 — 다시 그리기 예약을 취소하고 합성 레이어로 */
+  const beginMove = () => {
+    if (commitTimer.current) { clearTimeout(commitTimer.current); commitTimer.current = 0; }
+    moving.current = true;
+  };
+
+  /** 멈춤 — 잠시 뒤 현재 배율로 다시 그리고(R = S) 레이어 승격을 푼다 */
+  const endMove = () => {
+    if (commitTimer.current) clearTimeout(commitTimer.current);
+    commitTimer.current = setTimeout(() => {
+      commitTimer.current = 0;
+      moving.current = false;
+      const S = Math.round(view.current.S * 10000) / 10000;
+      if (Math.abs(S - rRef.current) < 1e-4) apply();
+      else setRenderR(S);
+    }, COMMIT_DELAY);
+  };
+
+  // R 이 바뀐 커밋 직후, 칠하기 전에 transform 을 새 R 에 맞춘다(한 프레임도 크기가 튀지 않게)
+  useLayoutEffect(() => {
+    if (!renderR) return;
+    rRef.current = renderR;
+    if (raf.current) { cancelAnimationFrame(raf.current); raf.current = 0; }
+    apply();
+  }, [renderR, apply]);
 
   const schedule = useCallback(() => {
     if (!raf.current) raf.current = requestAnimationFrame(apply);
@@ -405,6 +461,7 @@ const HomeFieldGrid = ({ rows, onSelect }) => {
     if (settled) {
       view.current = hardClamp(L, view.current);
       a.id = 0;
+      endMove();
     } else {
       a.id = requestAnimationFrame(step);
     }
@@ -413,16 +470,59 @@ const HomeFieldGrid = ({ rows, onSelect }) => {
 
   const startAnim = (vx, vy, focal) => {
     stopAnim();
+    beginMove();
     anim.current = { id: 0, vx, vy, focal, last: 0 };
     anim.current.id = requestAnimationFrame(step);
   };
 
   useEffect(() => () => {
     if (raf.current) cancelAnimationFrame(raf.current);
+    if (commitTimer.current) clearTimeout(commitTimer.current);
     stopAnim();
   }, []);
 
-  // 처음(또는 밭 수·영역 크기가 바뀌면) 시작 배율 · 돌봄 밭 중심으로
+  /** 기본 시점(배율 homeS · 가운데 칸 밭 중심) */
+  const homeView = (L) => {
+    const fx = (L.focus.x0 + L.focus.x1) / 2;
+    const fy = (L.focus.y0 + L.focus.y1) / 2;
+    return hardClamp(L, { S: L.homeS, tx: fx - (L.center.x - L.x0) * L.homeS, ty: fy - (L.center.y - L.y0) * L.homeS });
+  };
+
+  /** 기본 시점으로 — 짧은 ease-out 애니메이션(현재 → 목표 보간) */
+  const resetView = (animated) => {
+    const L = lay.current;
+    if (!L) return;
+    stopAnim();
+    const to = homeView(L);
+    const from = { ...view.current };
+    const same = Math.abs(from.S - to.S) < 1e-4 && Math.abs(from.tx - to.tx) < 0.5 && Math.abs(from.ty - to.ty) < 0.5;
+    if (!animated || same || !rRef.current) {
+      view.current = to;
+      if (rRef.current) { beginMove(); apply(); endMove(); }
+      return;
+    }
+    beginMove();
+    let t0 = 0;
+    const tick = (now) => {
+      if (!t0) t0 = now;
+      const p = Math.min(1, (now - t0) / RESET_MS);
+      const e = 1 - (1 - p) ** 3;
+      // 배율은 로그 공간에서 보간해야 확대·축소 속도가 고르게 보인다
+      const S = from.S * (to.S / from.S) ** e;
+      // 창 가운데에 보이는 지도 지점을 보간 → 그 지점이 가운데 오도록 이동값 계산
+      const fx = (L.focus.x0 + L.focus.x1) / 2;
+      const fy = (L.focus.y0 + L.focus.y1) / 2;
+      const wx0 = (fx - from.tx) / from.S; const wx1 = (fx - to.tx) / to.S;
+      const wy0 = (fy - from.ty) / from.S; const wy1 = (fy - to.ty) / to.S;
+      view.current = { S, tx: fx - (wx0 + (wx1 - wx0) * e) * S, ty: fy - (wy0 + (wy1 - wy0) * e) * S };
+      apply();
+      if (p < 1) anim.current.id = requestAnimationFrame(tick);
+      else { anim.current.id = 0; view.current = to; apply(); endMove(); }
+    };
+    anim.current = { id: requestAnimationFrame(tick), vx: 0, vy: 0, focal: null, last: 0 };
+  };
+
+  // 처음(또는 밭 수·영역 크기가 바뀌면) 기본 시점으로 — 애니메이션 없이, 기본 배율로 그린다
   const sig = layout ? `${placed.length}|${box.w}|${box.h}|${box.sb}` : '';
   const lastSig = useRef('');
   useEffect(() => {
@@ -430,15 +530,33 @@ const HomeFieldGrid = ({ rows, onSelect }) => {
     stopAnim();
     if (lastSig.current !== sig) {
       lastSig.current = sig;
-      const { focus, startS, center, x0, y0 } = layout;
-      const fx = (focus.x0 + focus.x1) / 2;
-      const fy = (focus.y0 + focus.y1) / 2;
-      view.current = hardClamp(layout, { S: startS, tx: fx - (center.x - x0) * startS, ty: fy - (center.y - y0) * startS });
+      view.current = homeView(layout);
+      if (commitTimer.current) { clearTimeout(commitTimer.current); commitTimer.current = 0; }
+      moving.current = false;
+      if (Math.abs(rRef.current - layout.homeS) < 1e-4) schedule();
+      else setRenderR(layout.homeS); // 레이아웃 이펙트가 새 R 로 transform 을 맞춘다
     } else {
       view.current = hardClamp(layout, view.current);
+      schedule();
     }
-    schedule();
   }, [layout, sig, schedule]);
+
+  // 다른 탭·화면에 갔다가 홈으로 돌아오면 기본 시점으로(탭은 마운트된 채 숨겨질 뿐이라 직접 감지)
+  const { pathname } = useLocation();
+  const prevPath = useRef(pathname);
+  useEffect(() => {
+    const was = prevPath.current;
+    prevPath.current = pathname;
+    if (pathname === '/home' && was !== '/home') resetView(true);
+  }, [pathname]);
+
+  // 당겨서 새로고침 → 기본 시점으로
+  const prevReset = useRef(resetSignal);
+  useEffect(() => {
+    if (prevReset.current === resetSignal) return;
+    prevReset.current = resetSignal;
+    resetView(true);
+  }, [resetSignal]);
 
   /* ── 포인터 ── */
   const pointers = useRef(new Map());
@@ -502,6 +620,7 @@ const HomeFieldGrid = ({ rows, onSelect }) => {
   const onPointerDown = (e) => {
     if (!layout || (e.pointerType === 'mouse' && e.button !== 0)) return;
     stopAnim();
+    beginMove();
     if (pointers.current.size === 0) gesture.current = null;
     const pt = localPoint(e);
     pointers.current.set(e.pointerId, pt);
@@ -586,6 +705,7 @@ const HomeFieldGrid = ({ rows, onSelect }) => {
       if (!L) return;
       e.preventDefault();
       stopAnim();
+      beginMove();
       const v = view.current;
       if (e.ctrlKey) {
         const rect = el.getBoundingClientRect();
@@ -597,6 +717,7 @@ const HomeFieldGrid = ({ rows, onSelect }) => {
         view.current = hardClamp(L, { S: v.S, tx: v.tx - e.deltaX, ty: v.ty - e.deltaY });
       }
       schedule();
+      endMove();
     };
     el.addEventListener('wheel', onWheel, { passive: false });
     return () => el.removeEventListener('wheel', onWheel);
@@ -621,9 +742,12 @@ const HomeFieldGrid = ({ rows, onSelect }) => {
     );
   }
 
-  const budget = layout ? spriteBudget(layout.tileW) : null;
-  const small = layout ? layout.tileW < 200 : true;
-  const R = layout?.R ?? 1;
+  const budget = layout ? spriteBudget(layout.homeTileW) : null;
+  const small = layout ? layout.homeTileW < 200 : true;
+  const R = renderR || layout?.homeS || 1;
+  // 이름판은 R 과 함께 커지는 좌표계 안에 있으므로 기본 시점 크기 기준으로 되돌려 둔다
+  // (다시 그려도 이름판 크기가 튀지 않고, 확대하면 밭과 함께 커진다)
+  const labelK = layout ? R / layout.homeS : 1;
 
   return (
     /* 히어로 전체를 채우는 배경 지도 — 헤드라인·칩·CTA 는 FarmHero 의 children 으로 이 위 층에 뜬다 */
@@ -639,13 +763,13 @@ const HomeFieldGrid = ({ rows, onSelect }) => {
       onLostPointerCapture={(e) => endPointer(e, true)}
       onContextMenu={(e) => e.preventDefault()}
     >
-      {layout && (
-        <div ref={layerRef} className="absolute left-0 top-0 w-0 h-0 origin-top-left will-change-transform">
+      {layout && renderR > 0 && (
+        <div ref={layerRef} className="absolute left-0 top-0 w-0 h-0 origin-top-left">
           {placed.map((p) => (
             <MapField
               key={p.row.book.id}
               row={p.row}
-              tileW={layout.tileW}
+              tileW={FIELD_CANVAS_W * R}
               budget={budget}
               left={(p.cx - DIA_CX - layout.x0) * R}
               top={(p.cy - DIA_CY - layout.y0) * R}
@@ -656,11 +780,12 @@ const HomeFieldGrid = ({ rows, onSelect }) => {
             <div
               key={`label-${p.row.book.id}`}
               aria-label={p.row.book.title}
-              className="absolute z-[16] flex items-center gap-[3px] pointer-events-none -translate-x-1/2 -translate-y-1/2"
+              className="absolute z-[16] flex items-center gap-[3px] pointer-events-none"
               style={{
                 left: (p.cx - layout.x0) * R,
                 top: (p.cy - DIA_H / 2 - layout.y0) * R,
-                maxWidth: DIA_W * 0.6 * R,
+                maxWidth: DIA_W * 0.6 * layout.homeS,
+                transform: `translate(-50%, -50%) scale(${labelK})`,
               }}
             >
               <span className="flex min-w-0"><NameBoard title={p.row.book.title} small={small} /></span>

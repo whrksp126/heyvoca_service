@@ -109,7 +109,11 @@ const quadrant = (i, j, G) => {
  * 필드 좌표 (u,v) ∈ [0,1]² 를 마름모에 대응시킨다 — (0,0)=뒤 · (1,0)=오른쪽 · (1,1)=앞 · (0,1)=왼쪽.
  * 화면 y 는 (u+v) 에만 비례하므로 i+j 가 같은 칸끼리 같은 줄에 선다.
  */
-const cells = (G) => {
+const cells = (G, reach = null) => {
+  // reach(선택) — 가장 바깥 칸 중심이 흙 마름모 반경의 몇 배까지 닿을지(0~1).
+  // 주지 않으면 기본(FW·FH, 여백 PLANT_MARGIN + 칸 반 개). 홈 밭 지도만 넓혀 쓴다(이슈 #25).
+  const fw = reach ? SOIL_W * reach * (G / Math.max(1, G - 1)) : FW;
+  const fh = reach ? SOIL_H * reach * (G / Math.max(1, G - 1)) : FH;
   const out = [];
   for (let i = 0; i < G; i += 1) {
     for (let j = 0; j < G; j += 1) {
@@ -122,8 +126,8 @@ const cells = (G) => {
       out.push({
         i,
         j,
-        x: ISL_W / 2 + (u - v) * FW / 2 + jx,
-        y: ISL_H / 2 + (u + v - 1) * FH / 2 + jy,
+        x: ISL_W / 2 + (u - v) * fw / 2 + jx,
+        y: ISL_H / 2 + (u + v - 1) * fh / 2 + jy,
       });
     }
   }
@@ -254,11 +258,12 @@ const mascotItem = (G) => {
  * @param {number}  opts.maxSprites 화면에 올릴 작물 수 상한 (썸네일은 작게)
  * @param {boolean} opts.mascot   마스코트를 밭에 세울지 (홈만 true)
  * @param {boolean} opts.reserveSigns 팻말이 설 칸을 비워 둘지
+ * @param {number}  opts.reach    (선택) 바깥 칸 중심이 흙 반경의 몇 배까지 닿을지 — cells() 참고
  * @returns {{ items: Array, grid: number, planted: number }}
  *          items 은 뒤에서 앞 순서로 정렬돼 있다 — 그 순서대로 그리면 앞 작물이 뒤를 가린다.
  */
 export const plantField = (counts, healthMix = {}, opts = {}) => {
-  const { maxSprites = 96, mascot = false, reserveSigns = true } = opts;
+  const { maxSprites = 96, mascot = false, reserveSigns = true, reach = null } = opts;
 
   const live = FIELD_STAGES.filter((s) => (counts?.[s] ?? 0) > 0);
   const total = live.reduce((a, s) => a + counts[s], 0);
@@ -277,7 +282,7 @@ export const plantField = (counts, healthMix = {}, opts = {}) => {
   while (G < 12 && Math.floor((G * G) / 4) - 2 < maxStage) G += 2;
   const scale = 6 / G;
 
-  const grid = cells(G);
+  const grid = cells(G, reach);
   const signCell = SIGN_UV.map(([u, v]) => [
     clamp(Math.round(u * G - 0.5), 0, G - 1),
     clamp(Math.round(v * G - 0.5), 0, G - 1),
@@ -362,10 +367,10 @@ const hashId = (id) => {
  * "어디에 무엇을 그릴까"만 정하고, "구역별로 몇 개나 있나"는 팻말이 별도로 말한다).
  *
  * @param {Array<{id, stage, health}>} words  실제 심긴 단어만(UNPLANTED_SEED 제외, 호출부 책임).
- * @param {object} opts  maxSprites/mascot/reserveSigns — plantField 와 같다.
+ * @param {object} opts  maxSprites/mascot/reserveSigns/reach — plantField 와 같다.
  */
 export const plantFieldByWords = (words, opts = {}) => {
-  const { maxSprites = 96, mascot = false, reserveSigns = true } = opts;
+  const { maxSprites = 96, mascot = false, reserveSigns = true, reach = null } = opts;
 
   const list = (words || []).filter((w) => w && w.id != null);
   if (list.length === 0) {
@@ -390,7 +395,7 @@ export const plantFieldByWords = (words, opts = {}) => {
   while (G < 12 && (G * G) - 5 < n) G += 2;
   const scale = 6 / G;
 
-  const grid = cells(G);
+  const grid = cells(G, reach);
   const signCell = SIGN_UV.map(([u, v]) => [
     clamp(Math.round(u * G - 0.5), 0, G - 1),
     clamp(Math.round(v * G - 0.5), 0, G - 1),
