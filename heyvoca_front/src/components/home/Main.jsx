@@ -47,7 +47,6 @@ import { NotifPermissionNewBottomSheet } from '../newBottomSheet/NotifPermission
 import { StudyPickNewBottomSheet } from '../newBottomSheet/StudyPickNewBottomSheet';
 import AchievementRewardOverlay from '../overlay/AchievementRewardOverlay';
 
-import FarmHero from '../farm/FarmHero';
 import HomeFieldGrid from './HomeFieldGrid';
 import { buildBookRow, isScriptBook } from '../vocabularySheets/VocaBookCard';
 import VocabularyWordsNewFullSheet from '../newfullsheet/VocabularyWordsNewFullSheet';
@@ -56,7 +55,6 @@ import gemIcon from '../../assets/images/farm/icon-gem.png';
 import WordListSheet from '../farm/WordListSheet';
 import FarmCta, {
   HOME_STATES,
-  HOME_STATE_VIEW,
   resolveHomeState,
 } from './FarmCta';
 import TodayTasksCard from './TodayTasksCard';
@@ -66,9 +64,8 @@ import StreakCard from './StreakCard';
 import GrewTodayCard from './GrewTodayCard';
 import WordFeedCard from './WordFeedCard';
 
-/** 히어로 높이(FarmHero h-[420px] 와 같은 값) — 밭 지도의 '보이는 창' 아래 끝 = CTA 위 */
+/** 히어로 높이(지도 배경 히어로 h-[420px] 와 같은 값) — 밭 지도의 '보이는 창' 아래 끝 = CTA 위 */
 const HERO_HEIGHT = 420;
-import { healthMixFromOverview } from '../../utils/farmField';
 import {
   buildGreetingContext,
   resolveGreetingSituation,
@@ -109,46 +106,28 @@ const Main = () => {
 
   // 통계는 StatsContext(라우터 바깥 캐시)에서 구독 — 탭 전환마다 재조회/스피너 없이 캐시값을 즉시 사용,
   // 학습 세션 완료 시에만 조용히 갱신된다.
-  const { todaySummary, farmOverview, todayChanges, farmFeed, heroPlants, todayKey, refreshStats } = useStats();
+  const { todaySummary, farmOverview, todayChanges, farmFeed, todayKey, refreshStats } = useStats();
   const todayNewWords = todaySummary?.new_words ?? 0;
   const dailyNewLimit = userProfile?.daily_new_limit ?? 0;
 
   // ── §12 상태 판정 ────────────────────────────────────────────────
-  const counts = farmOverview?.counts ?? {};
-  const health = farmOverview?.health ?? {};
   const seedDetail = farmOverview?.seed_detail ?? {};
 
   const unplanted = seedDetail.unplanted ?? 0;
   const newRemaining = Math.max(0, dailyNewLimit - todayNewWords);
 
-  // 밭에 실제로 서는 작물 — **심은 것만** 센다 (기획 5.1).
-  // 한 번도 독립 정답을 맞히지 못한 단어는 심긴 적이 없어 흙 위에 있을 수 없고 썩지도 않는다.
-  // 그 수는 밭 **밖** 우측 상단의 "보유 씨앗" 간판이 따로 말한다.
-  const fieldCounts = useMemo(() => ({
-    ...counts,
-    seed: Math.max(0, (counts.seed ?? 0) - unplanted),
-  }), [counts, unplanted]);
-
-  const healthMix = useMemo(() => healthMixFromOverview(health), [health]);
-
-  /*
-    히어로 밭 배치 — 단어 id 기반 결정적 슬롯(2026-09-27 QA 2·3차 §D).
-    GET /farm/hero-plants 가 이미 미학습 제외 + 최대 96개 안정 표본까지 뽑아 준다 —
-    여기서 다시 자르거나 필터링하지 않는다(백엔드 안내). stage 는 raw visual_stage
-    문자열("PLANTED_SEED" 등)인데 plantFieldByWords 가 내부에서 stageToCrop 으로 그대로
-    받아들인다. FarmField 는 이 목록이 비어 있으면(로딩 전·실패) 기존 집계 기반
-    (plantField)으로 자동 폴백한다.
-  */
-  const heroWords = useMemo(() => (heroPlants ?? [])
-    .map((p) => ({ id: p.id, stage: p.stage, health: p.health })),
-  [heroPlants]);
-
   /*
     단어장별 밭(이슈 #25 6차) — 홈 히어로에 단어장마다 밭 하나씩 격자로 놓는다.
     학습장 단어장 목록(VocaBooksTab)과 같은 행 계산(buildBookRow)·같은 제외(글자 단어장)를 쓴다.
-    단어장이 0개면 빈 배열이라 히어로는 예전 한 장짜리 밭(빈 상태)을 그대로 그린다.
+    단어장이 0개면 밭을 아예 그리지 않는다 — 그 자리는 입문 퀘스트 카드다(아래 questInHero, 이슈 #25 10차).
   */
-  const { vocabularySheets } = useVocabulary();
+  const { vocabularySheets, isVocaBooksLoading } = useVocabulary();
+  // 단어장 목록을 한 번이라도 받았는지 — 받기 전의 빈 배열을 '단어장 0개'로 읽지 않는다.
+  // (재조회 때 isVocaBooksLoading 이 다시 true 가 돼도 이미 아는 사실은 유지한다)
+  const [booksKnown, setBooksKnown] = useState(false);
+  useEffect(() => {
+    if (!isVocaBooksLoading) setBooksKnown(true);
+  }, [isVocaBooksLoading]);
   const bookRows = useMemo(() => (vocabularySheets || [])
     .filter((book) => !isScriptBook(book))
     .map(buildBookRow), [vocabularySheets]);
@@ -158,7 +137,6 @@ const Main = () => {
   const homeState = farmOverview
     ? resolveHomeState(farmOverview, { newRemaining })
     : HOME_STATES.DUE;
-  const view = HOME_STATE_VIEW[homeState];
 
   // §7 주 CTA — 2026-10-25(이슈 #16 §4) '농사 시작' 하나. 누르면 학습 고르기 시트
   // (StudyPickNewBottomSheet)가 돌보기·산책·심기·단어장 학습을 고르게 한다. 심을 밭이 아예
@@ -168,7 +146,7 @@ const Main = () => {
   //   단어장이 없거나 학습할 단어가 없으면(EMPTY) 예전처럼 서점으로 보낸다.
   //   그 밖은 학습 고르기 시트. 아직 씨앗을 한 번도 안 심었으면(plant_seed 미완료) 시트에서
   //   새 씨앗 심기 외 항목을 잠금으로 보인다.
-  const { legacy: questLegacy, missions: questMissions, questCardVisible } = useOnboardingUnlock();
+  const { unlock: questUnlock, legacy: questLegacy, missions: questMissions, questCardVisible } = useOnboardingUnlock();
   const plantQuestPending = !questLegacy
     && questMissions.some((m) => m.key === 'plant_seed' && !m.done);
   const ctaInfo = useMemo(() => (
@@ -176,8 +154,17 @@ const Main = () => {
       ? { label: '농장 돌보기', kind: 'store' }
       : { label: '농장 돌보기', kind: 'study' }
   ), [homeState]);
-  // 단어장이 0개면 빈 밭 대신 히어로 그 자리에 입문 퀘스트를 놓는다(이슈 #25 9차)
-  const questInHero = bookRows.length === 0 && questCardVisible;
+  /*
+    단어장이 0개면 빈 밭 대신 히어로 그 자리에 입문 퀘스트를 놓는다(이슈 #25 9차 의도, 10차 수정).
+    9차 구현은 questInHero 일 때 본문에서 카드를 **빼기만** 하고 히어로에는 넣지 않았다 — 히어로는
+    여전히 FarmHero(한 장짜리 빈 밭)였다. 그래서 가입 직후(단어장 0개 · unlock-status legacy=false ·
+    buy_book 미완료 → questCardVisible=true) 퀘스트는 어디에도 없고 빈 밭만 보였다.
+    지금은 단어장 0개면 밭 그림을 아예 그리지 않고(QuestHero) 그 자리에 카드를 둔다.
+  */
+  const noBooks = bookRows.length === 0;
+  const questInHero = noBooks && questCardVisible;
+  // 퀘스트 상태를 아직 모름(unlock-status 전) — 카드 자리만 스켈레톤으로 잡아 둔다
+  const questPending = noBooks && booksKnown && !questUnlock;
 
   const gemCnt = farmOverview?.gem_cnt ?? userProfile?.gem_cnt ?? 0;
 
@@ -412,7 +399,7 @@ const Main = () => {
     .slice(0, 2);
 
   // 히어로 위에 뜨는 것들(보석 칩 · 학습 언어 칩 · 헤드라인 · 주 CTA) — 지도 배경 히어로와
-  // 한 장짜리 FarmHero 가 같은 내용을 쓴다
+  // 단어장 0개 퀘스트 히어로가 같은 내용을 쓴다
   const heroOverlay = (
     <>
       {/* 보석 — 히어로 우측 상단에 떠 있는 칩(§6 · §10).
@@ -493,8 +480,8 @@ const Main = () => {
     </>
   );
 
-  // 단어장이 하나라도 있으면 밭 지도를 화면 전체 배경으로 깐다(없으면 히어로의 한 장짜리 밭)
-  const hasFieldMap = bookRows.length > 0;
+  // 단어장이 하나라도 있으면 밭 지도를 화면 전체 배경으로 깐다(없으면 밭 없는 퀘스트 히어로)
+  const hasFieldMap = !noBooks;
 
   return (
     /* §9 단일 배경 — 화면 배경을 한 번만 깔고 히어로 그라디언트의 끝 색을 같은 값으로 맞춘다 */
@@ -515,14 +502,15 @@ const Main = () => {
 
       {/* 밭 지도 — 홈 화면 전체(하단 탭 위까지)의 배경 층(이슈 #25 9차).
           예전엔 히어로(420px) 안에만 깔려 밭을 아래로 끌면 CTA 절반쯤에서 페이드로 사라졌다.
-          지금은 스크롤 영역 맨 앞에 sticky 로 붙어 화면에 고정되고, 히어로 글자·칩·CTA 와
-          아래 카드(글래스)들이 그 위로 흘러간다. 음수 margin 으로 흐름 높이를 0 으로 만들어
+          스크롤 영역 맨 앞에 깔려 **페이지와 함께 스크롤된다**(10차 — sticky 로 화면에 고정하니 홈을
+          내려도 지도가 그대로 서 있어 어색했다). 히어로 글자·칩·CTA 와 아래 카드(글래스)들이 그 위에
+          겹친다. 음수 margin 으로 흐름 높이를 0 으로 만들어
           히어로·본문 배치는 그대로다. 카드 영역(본문 블록)은 포인터를 받아 세로 스크롤이 되고,
           카드가 없는 곳(히어로 빈 곳·본문 아래)은 지도가 받는다 — 기존 제스처 규칙 그대로. */}
       {hasFieldMap && (
         <div
           className="
-            sticky top-0 z-0 shrink-0 w-full
+            relative z-0 shrink-0 w-full
             h-[calc(100vh-60px-var(--safe-area-bottom))]
             -mb-[calc(100vh-60px-var(--safe-area-bottom))]
             bg-[linear-gradient(180deg,var(--farm-sky-100)_0%,var(--farm-sky-200)_32%,var(--farm-canvas)_100%)]
@@ -549,17 +537,22 @@ const Main = () => {
           </div>
         </div>
       ) : (
-        <FarmHero
-          counts={counts}
-          fieldCounts={fieldCounts}
-          healthMix={healthMix}
-          words={heroWords}
-          storedSeeds={unplanted}
-          health={health}
-          state={view.mood}
-        >
+        /* 단어장 0개 — 밭 그림 없이 하늘만 깔고, 헤드라인 아래 ~ CTA 위 자리에 입문 퀘스트 카드.
+           카드 높이만큼 히어로가 늘어난다(최소 420px). 단어장 목록을 받기 전·퀘스트 대상이 아니면 빈 자리 */
+        <div className="
+          relative w-full min-h-[420px] flex-shrink-0 z-[1]
+          bg-[linear-gradient(180deg,var(--farm-sky-100)_0%,var(--farm-sky-200)_32%,var(--farm-canvas)_100%)]
+          px-[20px] pt-[max(170px,calc(var(--status-bar-height)+126px))] pb-[64px]
+        ">
+          {questInHero && <OnboardingQuestCard />}
+          {questPending && (
+            <div
+              aria-hidden
+              className="h-[300px] rounded-[12px] bg-[rgba(255,255,255,.55)] dark:bg-[rgba(36,36,36,.5)] border border-white/70 dark:border-white/[.06] animate-pulse"
+            />
+          )}
           {heroOverlay}
-        </FarmHero>
+        </div>
       )}
 
       {/* §9 본문 — 배경을 깔지 않는다. 페이드된 지면이 카드 사이로 비친다.

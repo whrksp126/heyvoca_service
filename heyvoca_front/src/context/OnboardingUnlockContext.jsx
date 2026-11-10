@@ -10,6 +10,7 @@
 import React, { createContext, useContext, useState, useCallback, useEffect, useRef } from 'react';
 import { useUser } from './UserContext';
 import { getUnlockStatusApi, completeOnboardingMissionApi, setQuestHiddenApi } from '../api/study';
+import { ONBOARDING_MIGRATED_EVENT } from '../utils/studyDataEvents';
 
 /**
  * 입문 퀘스트 체인(이슈 #25 2차) — 화면 문구 정본.
@@ -95,6 +96,10 @@ export const OnboardingUnlockProvider = ({ children }) => {
 
   // 직전 missions 스냅샷 — refreshUnlock 시 done false→true 전환 감지(diff)용
   const missionsRef = useRef(null);
+  // 조회 순번 — 늦게 도착한 옛 응답이 새 응답을 덮지 않게(이슈 #25 10차).
+  // 가입 직후엔 로그인 순간(migrate 전, legacy=true)과 migrate 직후(legacy=false) 두 번 조회한다.
+  // 첫 응답이 늦게 오면 legacy=true 로 덮여 홈 입문 퀘스트가 사라졌다.
+  const seqRef = useRef(0);
 
   // 새로 완료된 미션(들)을 보상 연출 대기열에 큐잉(key 기준 중복 방지).
   // 실제 표시는 OnboardingMissionRewardWatcher가 안전한 라우트에서만 자동으로 연다.
@@ -139,9 +144,11 @@ export const OnboardingUnlockProvider = ({ children }) => {
       setUnlock(DISABLED_UNLOCK);
       return DISABLED_UNLOCK;
     }
+    const seq = ++seqRef.current;
     try {
       setLoading(true);
       const res = await getUnlockStatusApi();
+      if (seq !== seqRef.current) return null; // 더 새 조회가 이미 나갔다 — 이 응답은 버린다
       if (res?.code === 200 && res.data) {
         const newlyDone = applyUnlockData(res.data);
         // 서버 감지 미션(plant_seed·make_book·buy_book·care_farm)은 완료 시점에 보석이 이미
@@ -154,7 +161,7 @@ export const OnboardingUnlockProvider = ({ children }) => {
       console.error('refreshUnlock 오류:', error);
       return null;
     } finally {
-      setLoading(false);
+      if (seq === seqRef.current) setLoading(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [applyUnlockData]);
@@ -168,11 +175,22 @@ export const OnboardingUnlockProvider = ({ children }) => {
     if (isLogin && isLoginChecked) {
       refreshUnlock();
     } else if (!isLogin && isLoginChecked) {
+      seqRef.current += 1; // 진행 중 조회 응답 무시
       setUnlock(null);
       missionsRef.current = null;
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLogin, isLoginChecked, userProfile?.id, userProfile?.onboarding_ver]);
+
+  // migrate 완료 신호 — 퀘스트 대상 판정(legacy)은 migrate 가 남기는 placement 세션으로 정해진다.
+  // onboarding_ver 변화만 기다리면 프로필 재조회가 늦거나 값이 이미 '1' 인 경로에서 legacy=true 가
+  // 그대로 남는다. 단어장·통계 Context 와 같은 신호로 직접 다시 받는다(이슈 #25 10차).
+  useEffect(() => {
+    if (!isLogin) return undefined;
+    const onMigrated = () => { refreshUnlock(); };
+    window.addEventListener(ONBOARDING_MIGRATED_EVENT, onMigrated);
+    return () => window.removeEventListener(ONBOARDING_MIGRATED_EVENT, onMigrated);
+  }, [isLogin, refreshUnlock]);
 
   // 프론트 트리거 미션 완료 처리 — key: FRONTEND_SIGNAL_MISSIONS('search_word' | 'focus_study')
   // (plant_seed·make_book·buy_book·care_farm 은 서버 감지 — 여기서 호출하지 않고 refreshUnlock 으로 반영)
@@ -197,6 +215,7 @@ export const OnboardingUnlockProvider = ({ children }) => {
       const { newly_completed, reward_gem, gem_cnt } = res.data;
 
       // diff 기반 큐잉은 스킵하고(celebrate:false), newly_completed 응답을 직접 사용해 큐잉
+      seqRef.current += 1; // 진행 중이던 옛 조회 응답이 이 결과를 덮지 않게
       applyUnlockData(res.data, { celebrate: false });
 
       if (newly_completed) {
@@ -226,6 +245,7 @@ export const OnboardingUnlockProvider = ({ children }) => {
     if (!unlock || unlock.legacy) return null;
     const res = await setQuestHiddenApi(hidden);
     if (res?.code === 200 && res.data) {
+      seqRef.current += 1; // 진행 중이던 옛 조회 응답이 이 결과를 덮지 않게
       applyUnlockData(res.data, { celebrate: false });
       return res.data;
     }

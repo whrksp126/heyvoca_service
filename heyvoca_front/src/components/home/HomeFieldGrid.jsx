@@ -235,8 +235,8 @@ const readStatusBar = (el) => {
  * @param {number}   resetSignal 값이 바뀌면 기본 시점으로 되돌린다(당겨서 새로고침)
  * @param {number}   focusBottom (선택) '보이는 창' 아래 끝(지도 상자 위쪽 기준 px) — 지도가 히어로보다
  *                   큰 화면 전체 배경일 때 홈이 CTA 위 높이를 넘긴다. 없으면 상자 아래 − 46px.
- *                   기본 시점·배율은 이 창으로, **이동 경계는 상자 전체**로 잡는다(이슈 #25 9차 —
- *                   밭을 아래로 끌어도 카드 뒤까지 계속 보인다).
+ *                   기본 시점·배율·이동 경계 모두 이 창으로 잡는다(이슈 #25 10차 — 아래로 끌어 놓으면
+ *                   좌·우·위와 똑같이 고무줄로 돌아온다. 끄는 동안엔 카드 뒤까지 밀려 보인다).
  */
 const HomeFieldGrid = ({ rows, onSelect, resetSignal = 0, focusBottom }) => {
   "use memo";
@@ -287,8 +287,10 @@ const HomeFieldGrid = ({ rows, onSelect, resetSignal = 0, focusBottom }) => {
     const fTop = Math.min(box.h * 0.5, Math.max(158, box.sb + 114));
     const fBottom = Number.isFinite(focusBottom) ? Math.min(focusBottom, box.h - 46) : box.h - 46;
     const focus = { x0: 12, x1: box.w - 12, y0: fTop, y1: Math.max(fTop + 40, fBottom) };
-    // 이동 창 — 보이는 창보다 아래로 상자 끝(하단 탭 위)까지 넓다. 위는 헤드라인 아래 그대로
-    const pan = { x0: focus.x0, x1: focus.x1, y0: focus.y0, y1: Math.max(focus.y1, box.h - 12) };
+    // 이동 창 = 보이는 창(헤드라인 아래 ~ CTA 위). 9차에는 아래 끝을 상자 끝(화면 하단)까지 넓혀 뒀는데,
+    // 그러면 밭을 아래로 끌어 둔 위치가 경계 '안'이라 손을 떼도 돌아오지 않았다(10차 신고).
+    // 이제 네 방향 모두 같은 경계다 — 끄는 동안은 고무줄로 경계 밖(카드 뒤)까지 밀리고, 놓으면 스프링 복귀.
+    const pan = { x0: focus.x0, x1: focus.x1, y0: focus.y0, y1: focus.y1 };
     const fw = focus.x1 - focus.x0;
     const fh = focus.y1 - focus.y0;
     const minS = Math.min(fw / (x1 - x0), fh / (y1 - y0));
