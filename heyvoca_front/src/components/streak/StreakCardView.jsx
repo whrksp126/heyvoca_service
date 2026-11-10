@@ -4,19 +4,15 @@
 // home/StreakCard.jsx(useStreakCard)가, 카드 껍데기 · 달성 연출 순서는 home/TodayTasksCard.jsx 가 맡고
 // 여기는 받은 값을 그리기만 한다(연속 계산 · 보호권 · 보상 로직은 건드리지 않는다).
 //
-// 이슈 #25 13차 — 홈의 '오늘 할 일' 카드와 '연속 학습' 카드를 하나로 합쳤다.
-//   StreakHeaderPill   카드 머리말 오른쪽의 「(불꽃 칩) N일 연속 >」 — 누르면 농장 방문 기록
-//                      예전 카드의 큰 불꽃 + 큰 숫자를 대신한다(오늘 켜졌는지는 아래 1주 줄의 오늘 칩이 말한다)
+// 이슈 #25 14차 — 머리(불꽃 + N일 연속)는 streak/TodayFlameHero.jsx 로 옮겼다(13차의 머리말 알약은 없앴다).
 //   StreakCardBody     카드 아래쪽 — 1주 줄(StreakWeekRow). 멈춤 알림 · 다시 잇기 도전은 예전 규칙 그대로
 //
 // §6 — 홈은 "얼마나 해 왔나"만 말한다. 남은 거리(다음 보상까지 N일) 문구는 두지 않는다.
 import React, { useMemo } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
-import { CaretRight } from '@phosphor-icons/react';
 import { SPRING, TAP } from '../../lib/feel';
 import { CROP_ASSETS } from '../farm/CropImage';
 import StreakWeekRow from './StreakWeekRow';
-import { StreakChip } from './StreakChip';
 
 /** 멈춤 기한까지 남은 시간(시간 단위, 올림) — "41시간 안에 채우면 이어져요" */
 const hoursUntil = (iso) => {
@@ -26,42 +22,6 @@ const hoursUntil = (iso) => {
 };
 
 const EARN_BACK_LABELS = ['오늘', '내일', '모레'];
-
-/**
- * 머리말 오른쪽 연속 일수 — shown 은 호출부가 굴린 표시값(달성 연출 카운트업 포함).
- * bump 가 바뀌면 숫자가 한 번 통 튄다(연속이 막 늘었을 때).
- */
-export const StreakHeaderPill = ({ shown, lit, paused, onOpenRecord, bump = 0 }) => {
-  const reducedMotion = useReducedMotion();
-  return (
-    <motion.button
-      type="button"
-      aria-label={`연속 ${shown}일 — 기록 보기`}
-      onClick={onOpenRecord}
-      whileTap={{ scale: TAP.scale }}
-      transition={SPRING.snappy}
-      className="flex shrink-0 items-center gap-[6px] rounded-full py-[2px] pl-[2px] pr-[4px]"
-    >
-      <StreakChip status={lit && !paused ? 'all' : 'off'} size={26} />
-      <motion.span
-        key={bump}
-        className="flex items-baseline gap-[2px] text-layout-black dark:text-layout-white"
-        initial={bump && !reducedMotion ? { scale: 1.35 } : false}
-        animate={{ scale: 1 }}
-        transition={SPRING.bouncy}
-      >
-        <span className="text-[17px] font-[800] leading-none tracking-[-0.03em] tabular-nums">{shown}</span>
-        <span className="text-[13px] font-[700] tracking-[-0.03em]">일 연속</span>
-      </motion.span>
-      {paused && (
-        <span className="shrink-0 rounded-full bg-primary-main-100 px-[7px] py-[2px] text-[10.5px] font-[800] text-primary-main-600 dark:bg-primary-main-dark dark:text-primary-main-400">
-          멈춤
-        </span>
-      )}
-      <CaretRight size={12} weight="bold" className="shrink-0 text-layout-gray-200 dark:text-layout-gray-400" />
-    </motion.button>
-  );
-};
 
 /** 카드 아래쪽 — 멈춤 알림 · 다시 잇기 · 1주 줄 */
 const StreakCardBody = ({

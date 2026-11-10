@@ -4,9 +4,9 @@
 // 'upcoming'(다가올 날). 칸 배열은 farm/WeekStreakStrip 의 buildHomeWeekCells 가 만든다(이슈 #25).
 // (status: all · part · shield · none · today_empty · upcoming — 정의는 그 파일 주석이 정본).
 //
-// 이슈 #25 13차 — 시각 언어를 streak/StreakChip.jsx 한 벌로 통일했다.
-//   칩        요일마다 같은 크기의 원형 칩(불꽃 채움 · 옅은 불꽃 · 방패 · 옅은 점)
-//   캡슐      이어진 날(all · part · shield)은 칩 뒤 하나의 둥근 캡슐로 묶는다 — 얇은 띠 대신
+// 이슈 #25 14차 — 그림은 streak/StreakChip.jsx 의 기존 자산(큰 불꽃 · 작은 불씨 · 보호권 · 빛바랜 불씨 · 옅은 점).
+//   띠        이어진 날(all · part · shield)은 그림 뒤 한 줄 띠로 묶는다(예전 연속 띠 색)
+//   오늘 칸   카드의 오늘 불꽃 단계와 같이 움직인다 — 할 일을 다 끝내면 큰 불꽃(TodayTasksCard 가 넘긴다)
 //   오늘      테두리 고리 대신 요일 라벨 강조 + 칩 아래 작은 점, 켜졌으면 은은한 빛
 //   점화      `igniteDate` 칸은 처음 켜질 때 작게 → 크게 확 타오르며 불티가 튄다(홈 달성 연출)
 //   탭        칸이 통 튀고(켜진 날은 불티) 아래에 그날 설명이 잠깐 펼쳐진다

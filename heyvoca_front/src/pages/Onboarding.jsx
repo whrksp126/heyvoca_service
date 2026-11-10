@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { CaretLeft, AppleLogo } from '@phosphor-icons/react';
 import googleLogo from '../assets/images/google_logo.png';
 import { getPlacementPoolApi, migrateOnboardingApi } from '../api/study';
+import { updateUserInfoApi } from '../api/auth';
 import { getGuest, clearGuest, clearGuestTrial, buildMigrateBody } from '../utils/guestStorage';
 import { notifyOnboardingMigrated } from '../utils/studyDataEvents';
 import {
@@ -32,13 +33,18 @@ import { useAppOAuthError } from '../hooks/useAppOAuthError';
   【흐름】 hello → about('헤이보카에 대해 알아볼까요?' — 이 탭에서 효과음 unlock, 9차 QA) → intro(농사 이야기: 성장 → 시듦 → 체험 밭) → 수준 맞춤 학습(/take-test, 8문제 + 틀린 단어
           복습, 매 답마다 체험 밭 가상 작물이 자라고 시든다) → 학습 결과(StudyResult — 실제 학습과 같은 슬라이드,
           밭 성장 · 보석 20 · 결과 목록) → guide('단어를 학습하면 새 농작물을 심고 키울 수 있어요', 8차 QA — 9차부터 체험 밭의
-          학습 후 모습을 그대로 그린다) → finish('이제 나만의 밭을 만들러 가볼까요?' 문구 + 버튼) → auth
+          학습 후 모습을 그대로 그린다) → nickname('제가 뭐라고 불러드릴까요?', 14차) → finish('이제 나만의 밭을
+          만들러 가볼까요?' 문구 + 버튼) → auth
   (이슈 #25 9차 QA — 성장·시듦 연출을 체험 밭 8단어로 바로 한다. 씨앗을 여러 칸에 심어 일부는 새싹·이파리·당근까지
    자라고 일부는 시든다 → 그 밭이 그대로 체험 밭이 된다. 그래서 소개에 들어가기 전(about)에 세션을 받아 둔다.)
   (이슈 #25 4차 — 소개를 '하나의 밭이 이어지는 농사 이야기'로. 장면 사이 화면 전환 없이 밭 무대
    (components/onboarding/FarmStoryStage) 위에서 연출이 이어지고 제목만 크로스페이드한다. 연출이 끝나기 전엔
    버튼이 회색으로 잠긴다. 장면엔 큰 제목 한 줄과 버튼만 둔다 — 보조 설명 줄은 없앴다.)
   (이슈 #25 3차 — 닉네임 입력을 뺐다. 이름은 서버가 기본 닉네임으로 넣고 나중에 마이페이지에서 바꾼다.)
+  (이슈 #25 14차 — 닉네임 묻기를 되살렸다. 이제 hello 에서 먼저 로그인하므로 가입 뒤 홈 직전(guide 다음)에
+   묻고, 마이페이지 닉네임 변경과 같은 API(/auth/update_user_info)로 바로 저장한다. 건너뛰면 서버 기본 닉네임
+   ('새내기 농부') 또는 소셜 계정 이름을 그대로 둔다. 단계 이름은 'nickname' — 'nick' 은 예전 화면이 쓰던 값이라
+   LEGACY_STEP 에서 가입(auth)으로 잇는다.)
   (이슈 #25 2차 — 단어장 추천·선택, 유입 경로·학습 목적·하루 심기 수 질문을 뺐다.
    온보딩은 수준(θ) 측정과 학습 체험만 한다. 단어를 심지 않고, 가입 직후엔 단어장이 없다 —
    첫 단어장은 홈 퀘스트에서 받은 보석으로 서점에서 산다. 하루 심기 수는 서버 기본값.)
@@ -63,6 +69,7 @@ const SCENE_COPY = {
   field: <>농장 체험을 <span className="text-primary-main-600">해볼까요?</span></>,
   guide: <>단어를 학습하면 새 농작물을<br /><span className="text-primary-main-600">심고 키울 수 있어요</span></>,
   finish: <>이제 나만의 밭을<br /><span className="text-primary-main-600">만들러 가볼까요?</span></>,
+  nickname: <>제가 뭐라고<br /><span className="text-primary-main-600">불러드릴까요?</span></>,
   about: <><span className="text-primary-main-600">헤이보카</span>에 대해<br />알아볼까요?</>,
 };
 
@@ -78,6 +85,12 @@ const SceneCopy = ({ copyKey, className = 'mt-[20px] min-h-[56px]' }) => (
   </div>
 );
 
+// 닉네임 — 서버 기본값(heyvoca_back app/constants/user.py DEFAULT_USERNAME)과 마이페이지 변경 시트의 길이 제한(8자)
+const DEFAULT_NICKNAME = '새내기 농부';
+const NICKNAME_MAX = 8;
+/** 입력 → 저장할 닉네임. 앞뒤 공백 제거 + 안쪽 연속 공백 하나로. */
+const cleanNickname = (v) => String(v || '').replace(/\s+/g, ' ').trim();
+
 const Onboarding = () => {
   "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
 
@@ -85,7 +98,7 @@ const Onboarding = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { pushAwaitNewBottomSheet } = useNewBottomSheetActions();
-  const { Login, AppleLogin, clickGoogleOauth, clickAppleOauth, isLogin, fetchUserProfile, performLogout, updateUserHistory, DevLogin } = useUser();
+  const { Login, AppleLogin, clickGoogleOauth, clickAppleOauth, isLogin, fetchUserProfile, performLogout, updateUserHistory, DevLogin, userProfile } = useUser();
 
   // 온보딩 내부 로그인/회원가입 스텝(auth)에서만 앱 OAuth 노출 (안드로이드는 애플 숨김)
   const isAndroid = getDevicePlatform() === 'android' || navigator.userAgent.toLowerCase().includes('android');
@@ -275,6 +288,62 @@ const Onboarding = () => {
     clearGuestTrial(); // 구 맛보기 데이터가 남아 있으면 TakeTest 가 그쪽으로 뜨지 않게
     savePlacementSession(trialSession);
     navigate('/take-test', { state: { testType: 'today', guestMode: true, placement: true } });
+  };
+
+  /*
+    닉네임(이슈 #25 14차) — 안내(guide) 다음, 마무리(finish) 앞 한 장.
+    지금 이름이 기본 닉네임이 아니면(소셜 계정 이름 등) 그 이름을 채워 둔다 — 그대로 '다음'이면 바꾸지 않는다.
+    저장은 마이페이지 닉네임 변경과 같은 /auth/update_user_info. 실패하면 알리고 다시 누르거나 건너뛸 수 있다.
+  */
+  const [nickname, setNickname] = useState(() => {
+    const cur = cleanNickname(userProfile?.username);
+    return cur && cur !== DEFAULT_NICKNAME ? cur.slice(0, NICKNAME_MAX) : '';
+  });
+  // 프로필이 늦게 오면(새로고침 직후 등) 아직 손대지 않은 칸에만 한 번 채운다
+  const nickTouchedRef = useRef(false);
+  useEffect(() => {
+    if (nickTouchedRef.current) return;
+    const cur = cleanNickname(userProfile?.username);
+    if (cur && cur !== DEFAULT_NICKNAME) setNickname(cur.slice(0, NICKNAME_MAX));
+  }, [userProfile?.username]);
+  const [nickSaving, setNickSaving] = useState(false);
+  const [nickError, setNickError] = useState(null);
+  const [savedNickname, setSavedNickname] = useState(null);
+  const nickValue = cleanNickname(nickname);
+  const nickValid = nickValue.length >= 1 && nickValue.length <= NICKNAME_MAX;
+
+  const skipNickname = () => {
+    if (nickSaving) return;
+    vibrate({ duration: 5 });
+    setNickError(null);
+    setStep('finish');
+  };
+
+  const saveNickname = async () => {
+    if (nickSaving || !nickValid) return;
+    vibrate({ duration: 5 });
+    const current = cleanNickname(userProfile?.username);
+    // 로그인이 풀린 채 왔거나(저장할 계정 없음) 이름이 그대로면 저장 없이 넘어간다
+    if (!isLogin || nickValue === current) {
+      if (nickValue === current) setSavedNickname(nickValue);
+      setStep('finish');
+      return;
+    }
+    setNickSaving(true);
+    setNickError(null);
+    try {
+      const res = await updateUserInfoApi({ username: nickValue });
+      if (res?.code === 200) {
+        setSavedNickname(nickValue);
+        setStep('finish');
+        return;
+      }
+      setNickError('저장하지 못했어요. 다시 눌러주세요.');
+    } catch (e) {
+      setNickError('저장하지 못했어요. 다시 눌러주세요.');
+    } finally {
+      setNickSaving(false);
+    }
   };
 
   // 로그인 안 된 채 auth 에 닿으면(예전 화면·저장된 state) 가입 화면 대신 첫 화면으로 — 거기서 로그인한다
@@ -543,7 +612,57 @@ const Onboarding = () => {
                 <SceneCopy copyKey="guide" className="mt-[20px] min-h-[56px]" />
               </div>
               <div className="px-[24px] pt-[18px] pb-[26px] shrink-0">
-                <Cta label="다음" onClick={() => { vibrate({ duration: 5 }); setStep('finish'); }} />
+                <Cta label="다음" onClick={() => { vibrate({ duration: 5 }); setStep('nickname'); }} />
+              </div>
+            </>
+          )}
+
+          {/* ③-1 닉네임 — '제가 뭐라고 불러드릴까요?'(이슈 #25 14차 복원). 건너뛰면 지금 이름(기본 '새내기 농부') 그대로. */}
+          {step === 'nickname' && (
+            <>
+              <div className="flex flex-col flex-1 min-h-0 justify-center px-[28px]">
+                <SceneCopy copyKey="nickname" className="" />
+                <div className="mt-[26px]">
+                  <input
+                    value={nickname}
+                    onChange={(e) => { nickTouchedRef.current = true; setNickname(e.target.value.slice(0, NICKNAME_MAX + 4)); setNickError(null); }}
+                    placeholder={DEFAULT_NICKNAME}
+                    maxLength={NICKNAME_MAX + 4}
+                    enterKeyHint="done"
+                    autoComplete="nickname"
+                    /* 키보드의 완료/Enter 로도 넘어간다 */
+                    onKeyDown={(e) => {
+                      if (e.key !== 'Enter') return;
+                      e.preventDefault();
+                      saveNickname();
+                    }}
+                    className="
+                      w-full h-[52px] px-[16px] rounded-[14px] border-[2px]
+                      border-border dark:border-border-dark bg-layout-white dark:bg-layout-black
+                      text-center text-[16px] font-[700] tracking-[-0.03em]
+                      text-layout-black dark:text-layout-white outline-none
+                      focus:border-primary-main-600
+                      placeholder:font-[500] placeholder:text-layout-gray-200
+                    "
+                  />
+                  <div className={`mt-[8px] text-center text-[11.5px] font-[600] ${
+                    nickValue.length > NICKNAME_MAX ? 'text-status-error-600' : 'text-layout-gray-200'}`}
+                  >
+                    {nickValue.length > NICKNAME_MAX
+                      ? `${NICKNAME_MAX}자 이내로 입력해주세요`
+                      : `${nickValue.length} / ${NICKNAME_MAX} · 나중에 마이페이지에서 바꿀 수 있어요`}
+                  </div>
+                  {nickError && (
+                    <p className="mt-[6px] text-center text-[12px] font-[600] text-status-error-600">{nickError}</p>
+                  )}
+                </div>
+              </div>
+              <div className="px-[24px] pt-[18px] pb-[26px] shrink-0">
+                <Cta label={nickSaving ? '저장 중...' : '다음'} disabled={!nickValid || nickSaving} onClick={saveNickname} />
+                <button type="button" onClick={skipNickname} disabled={nickSaving}
+                  className="w-full mt-[14px] text-[13px] font-[500] text-layout-gray-300 dark:text-layout-gray-100 underline disabled:opacity-40">
+                  건너뛰기
+                </button>
               </div>
             </>
           )}
@@ -552,6 +671,11 @@ const Onboarding = () => {
           {step === 'finish' && (
             <>
               <div className="flex flex-col flex-1 min-h-0 justify-center px-[28px]">
+                {savedNickname && (
+                  <p className="mb-[6px] text-center text-[15px] font-[700] tracking-[-0.03em] text-layout-gray-300">
+                    <span className="text-primary-main-600">{savedNickname}</span>님,
+                  </p>
+                )}
                 <SceneCopy copyKey="finish" className="" />
               </div>
               <div className="px-[24px] pt-[18px] pb-[26px] shrink-0">

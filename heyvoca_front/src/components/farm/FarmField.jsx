@@ -19,7 +19,9 @@ import fieldBase from '../../assets/images/farm/field-base.png';
 import rimTopMask from '../../assets/images/farm/field-rim-top.png';
 import rimSideMask from '../../assets/images/farm/field-rim-side.png';
 import { CROP_ASSETS, cropAssetByVariant } from './CropImage';
-import { plantField, plantFieldByWords, CROP_BASELINE } from '../../utils/farmField';
+import {
+  plantField, plantFieldByWords, CROP_BASELINE, FIELD_W, FIELD_H,
+} from '../../utils/farmField';
 
 // 테두리 마스크는 CSS mask-image 라 처음 쓰일 때에야 받아 온다 — 그 사이 밭이 기본 풀색으로
 // 그려졌다가 단어장 색으로 바뀌어 보였다(새 단어장 추가 직후, 이슈 #25 6차). 모듈을 읽는 순간
@@ -88,6 +90,91 @@ export const bookRimColor = (color) => {
   return main;
 };
 
+/*
+  【작물이 실제로 보이는 범위】 planted/ 에셋(512²)의 불투명 바운딩(알파>40) 실측 [x0, y0, x1, y1].
+  단계마다 그림 크기가 크게 다르다(씨앗 ≈ 22×17 · 당근 ≈ 336×366) — 탭 판정·말풍선 자리는
+  512 상자 전체가 아니라 이 범위를 써야 보이는 작물과 맞는다(이슈 #25 14차).
+  에셋을 바꾸면 다시 잴 것: PIL 로 alpha.point(v>40).getbbox().
+*/
+const PLANTED_BOUNDS = {
+  'healthy-seed': [245, 420, 266, 437],
+  'drying-seed': [247, 417, 269, 435],
+  'wilted-seed': [247, 418, 269, 436],
+  'rotten-seed': [243, 419, 267, 436],
+  'healthy-sprout': [174, 282, 339, 436],
+  'drying-sprout': [156, 320, 355, 435],
+  'wilted-sprout': [160, 352, 351, 436],
+  'rotten-sprout': [148, 321, 362, 437],
+  'healthy-leaf': [95, 148, 415, 435],
+  'drying-leaf': [98, 190, 413, 435],
+  'wilted-leaf': [103, 248, 411, 435],
+  'rotten-leaf': [107, 265, 406, 436],
+  'healthy-carrot': [87, 69, 423, 435],
+  'drying-carrot': [90, 147, 422, 436],
+  'wilted-carrot': [66, 204, 447, 436],
+  'rotten-carrot': [91, 234, 421, 436],
+};
+const CROP_ASSET_PX = 512;
+
+/**
+ * FarmField 가 그리는 항목 목록 — **그리기와 탭 판정이 함께 쓰는 단 하나의 배치 함수**.
+ * 인자는 FarmField 의 props 와 같은 이름이다(같은 props 를 넘기면 같은 자리가 나온다).
+ */
+export const layoutFieldItems = ({
+  words, counts, healthMix, maxSprites = 96, mascot = false, reserveSigns = true, plantReach = null,
+}) => (words && words.length > 0
+  ? plantFieldByWords(words, { maxSprites, mascot, reserveSigns, reach: plantReach })
+  : plantField(counts, healthMix, { maxSprites, mascot, reserveSigns, reach: plantReach })
+).items;
+
+/**
+ * 단어 작물 항목 → 화면에 보이는 그림 범위(밭 캔버스 1200×860 px).
+ * FarmField 의 <img> 배치(left/top %, 폭 boxPct, translate(-50%, -CROP_BASELINE))를 그대로 역산한다.
+ * @returns {Array<{ id, key, bx, by, x0, y0, x1, y1 }>}  bx·by = 밑동, x0~y1 = 보이는 바운딩
+ */
+export const fieldCropSpots = (items) => (items || [])
+  .filter((it) => it.kind === 'crop' && String(it.key).startsWith('w-'))
+  .map((it) => {
+    const bx = (it.leftPct / 100) * FIELD_W;
+    const by = (it.topPct / 100) * FIELD_H;
+    const box = (it.boxPct / 100) * FIELD_W;
+    const f = box / CROP_ASSET_PX;
+    const left = bx - box / 2;
+    const top = by - box * CROP_BASELINE;
+    const [a, b, c, d] = PLANTED_BOUNDS[`${it.variant}-${it.stage}`]
+      || PLANTED_BOUNDS[`healthy-${it.stage}`] || PLANTED_BOUNDS['healthy-carrot'];
+    return {
+      id: String(it.key).slice(2), key: it.key, bx, by,
+      x0: left + a * f, y0: top + b * f, x1: left + c * f, y1: top + d * f,
+    };
+  });
+
+const CROP_BOUNCE_MS = 460;
+/**
+ * 탭한 작물 한 그루를 살짝 튕긴다(squash & stretch, 밑동 기준) — transform 만.
+ * root 안에서 FarmField 가 그린 그 작물 <img>(data-crop=key)를 찾아 Web Animations 로 돌린다.
+ */
+export const bounceCrop = (root, key) => {
+  if (!root || !key) return;
+  let el = null;
+  try {
+    const sel = typeof CSS !== 'undefined' && CSS.escape ? CSS.escape(key) : key;
+    el = root.querySelector(`img[data-crop="${sel}"]`);
+  } catch { el = null; }
+  if (!el || typeof el.animate !== 'function') return;
+  const base = `translate(-50%, -${CROP_BASELINE * 100}%)`;
+  try {
+    el.getAnimations?.().forEach((a) => a.cancel());
+    el.animate([
+      { transform: `${base} scale(1, 1)` },
+      { transform: `${base} scale(1.06, 0.9)`, offset: 0.22 },
+      { transform: `${base} scale(0.97, 1.08)`, offset: 0.52 },
+      { transform: `${base} scale(1.01, 0.98)`, offset: 0.78 },
+      { transform: `${base} scale(1, 1)` },
+    ], { duration: CROP_BOUNCE_MS, easing: 'ease-out' });
+  } catch { /* 구형 WebView — 반응 없이 넘어간다 */ }
+};
+
 /**
  * @param {object}  counts     단계별 **심은** 작물 수 { seed, sprout, leaf, carrot }
  * @param {object}  healthMix  그림 variant 분포 { healthy, drying, wilted, rotten }
@@ -141,10 +228,8 @@ const FarmField = ({
   // 색 테두리 마스크를 받기 전엔 밭 전체를 감춘다 — 풀색 밭이 먼저 보였다가 바뀌지 않게.
   const hideUntilMasks = !!rim && !masksReady;
 
-  const { items } = useMemo(
-    () => (words && words.length > 0
-      ? plantFieldByWords(words, { maxSprites, mascot, reserveSigns, reach: plantReach })
-      : plantField(counts, healthMix, { maxSprites, mascot, reserveSigns, reach: plantReach })),
+  const items = useMemo(
+    () => layoutFieldItems({ words, counts, healthMix, maxSprites, mascot, reserveSigns, plantReach }),
     [words, counts, healthMix, maxSprites, mascot, reserveSigns, plantReach],
   );
 
@@ -260,6 +345,7 @@ const FarmField = ({
         return (
           <img
             key={item.key}
+            data-crop={item.key}
             src={cropAssetByVariant(item.stage, item.variant, { solo: soloCrops })}
             alt=""
             draggable={false}
@@ -270,6 +356,8 @@ const FarmField = ({
               width: `${item.boxPct}%`,
               aspectRatio: '1 / 1',
               transform: `translate(-50%, -${CROP_BASELINE * 100}%)`,
+              // 탭 반응(bounceCrop)의 scale 이 밑동을 기준으로 일어나게
+              transformOrigin: `50% ${CROP_BASELINE * 100}%`,
             }}
           />
         );

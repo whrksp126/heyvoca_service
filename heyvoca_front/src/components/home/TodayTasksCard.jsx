@@ -7,8 +7,10 @@
 //
 // 행 4개, 고정 순서. 0인 행은 숨긴다 — 썩은 단어 / 시듦 물주기 / 오늘 돌봄 물주기 / 새 씨앗 심기.
 // 오늘 살린 단어가 있고 남은 부패가 0이면 썩은 단어 행은 다른 행처럼 체크 + 진행 x/y 로 남는다(rotten.done).
-// 이슈 #25 13차 — '연속 학습' 카드를 이 카드에 합쳤다(머리말 오른쪽 연속 일수 · 아래 1주 줄) +
-// 홈에 돌아왔을 때 새로 달성한 줄 · 오늘 불꽃 점화를 연출한다(아래 '달성 연출' 주석).
+// 이슈 #25 13차 — '연속 학습' 카드를 이 카드에 합쳤다.
+// 이슈 #25 14차 — 콘셉트 「할 일이 오늘의 불꽃을 키운다」로 재설계: 머리에 오늘의 불꽃(기존 그림 자산)이
+// 할 일을 끝낸 만큼 불씨 → 작은 불꽃 → 큰 불꽃으로 자라고, 홈에 돌아오면 새로 끝낸 줄에서 불티가 날아가
+// 불꽃을 키운다(아래 '달성 연출' 주석). 1주 줄 오늘 칸도 불꽃 단계와 같이 움직인다.
 // 2026-10-25(이슈 #16 §4) — 줄(정보)만 남긴다. 우측 '살리기'·'심기' 버튼과 카드 아래 넓은
 // '새 씨앗 심기' 버튼은 뺐다 — 학습 진입은 홈 '농사 시작' → 학습 고르기 시트
 // (newBottomSheet/StudyPickNewBottomSheet)가 한 곳에서 맡는다(살리기·심기 동작도 그쪽으로 옮겼다).
@@ -22,7 +24,9 @@ import { useOnboardingUnlock } from '../../context/OnboardingUnlockContext';
 import { vibrate } from '../../utils/osFunction';
 import { feel, SPRING, useCountUp } from '../../lib/feel';
 import { useStreakCard } from './StreakCard';
-import StreakCardBody, { StreakHeaderPill } from '../streak/StreakCardView';
+import StreakCardBody from '../streak/StreakCardView';
+import TodayFlameHero from '../streak/TodayFlameHero';
+import { CHIP_SPARKS } from '../streak/StreakChip';
 import {
   useHomeScreenClear, isHomeScreenBusy, questPendingCount, questCelebrationMs,
   START_SETTLE_MS, START_RETRY_MS,
@@ -150,14 +154,14 @@ const TITLE_TEXT_INDENT = '';
  * 행 한 줄 — [체크박스][제목+단어 목록][우측] · 행 탭(버튼 제외)은 onRowClick.
  * 단어 목록(sub·expand)은 체크박스 칸 밖, 제목과 같은 칼럼 안에서 제목과 같은 시작선에 맞춘다.
  */
-const Row = ({ title, titleClassName, sub, expand, right, last, faded, checked, draw, onRowClick }) => (
+const Row = ({ title, titleClassName, sub, expand, right, last, faded, checked, draw, onRowClick, checkRef }) => (
   <div
     role={onRowClick ? 'button' : undefined}
     tabIndex={onRowClick ? 0 : undefined}
     onClick={onRowClick}
     className={`flex gap-[10px] py-[12px] text-left ${last ? '' : 'border-b border-[#F0F0F0] dark:border-[rgba(255,255,255,.08)]'}`}
   >
-    <CheckCircle checked={checked} draw={draw} />
+    <span ref={checkRef} className="flex shrink-0"><CheckCircle checked={checked} draw={draw} /></span>
     <div className="flex-1 min-w-0 flex flex-col gap-[4px]">
       <div className={`transition-opacity duration-300 ${faded ? 'opacity-45' : ''}`}>
         <b className={`text-[15px] font-[800] ${titleClassName || 'text-layout-black dark:text-layout-white'}`}>
@@ -171,18 +175,22 @@ const Row = ({ title, titleClassName, sub, expand, right, last, faded, checked, 
   </div>
 );
 
-/* ── 달성 연출(이슈 #25 13차) ─────────────────────────────────────────────
-   마지막으로 본 상태(완료한 줄 · 오늘 불꽃 켜짐)를 계정별 localStorage 에 기억했다가, 홈에 왔을 때
-   새로 완료된 줄만 체크가 그려지고(cue 'match'), 오늘 처음 연속이 이어졌으면 오늘 칩이 점화되며
-   (cue 'evolve') 연속 일수가 하나 올라간다(cue 'xpUp').
+/* ── 달성 연출(이슈 #25 14차 — 「할 일이 오늘의 불꽃을 키운다」) ─────────────────────
+   마지막으로 본 상태(완료한 줄 · 오늘 연속 켜짐)를 계정별 localStorage 에 기억했다가, 홈에 왔을 때
+     ① 새로 완료된 줄마다 체크가 그려지고(feel 'match')
+     ② 그 체크에서 불티가 날아올라 머리의 불꽃으로 빨려 들어가고(도착하면 불꽃이 통 튀며 한 뼘 자란다)
+     ③ 불꽃 단계가 오르면(불씨 → 작은 불꽃 → 큰 불꽃) 섬광과 함께 크게 타오르고(feel 'evolve')
+     ④ 오늘 처음 연속이 이어졌으면 연속 일수가 하나 올라가며(feel 'xpUp') 1주 줄 오늘 칸이 점화된다
    - 처음 진입(기억 없음)·모션 줄이기 → 지금 상태를 기억만 하고 연출하지 않는다(새로고침도 같은 기억을 읽어 조용하다)
    - 날짜가 바뀐 기억은 '오늘 아무것도 안 본' 상태로 읽는다
-   - 새로 완료된 줄은 렌더 중에 바로 계산해 첫 프레임부터 '아직 안 함' 모양으로 붙잡아 둔다(퀘스트 카드 12차와 같은 방식)
+   - 새로 완료된 줄은 렌더 중에 바로 계산해 첫 프레임부터 '아직 안 함' 모양으로 붙잡아 둔다(불꽃도 그만큼 작게)
    - 시작 시점은 입문 퀘스트 카드와 같은 대기 조건(homeCelebrationGate) + 카드가 화면에 보일 때.
      퀘스트 카드에 연출할 단계가 남아 있으면 그 연출이 끝난 뒤에 시작한다(퀘스트 먼저)
    - 기억은 연출을 시작할 때 갱신한다 — 그 전에 화면을 떠나면 다음에 다시 연출한다 */
 const SEEN_KEY_PREFIX = 'heyvoca_today_seen_';
-const CHECK_STEP_MS = 420;
+const CHECK_STEP_MS = 640; // 줄 하나의 체크 → 불티 비행 → 도착까지
+const SPARK_DELAY_MS = 170; // 체크가 그려지고 불티가 떠나기까지
+const SPARK_FLY_MS = 480; // 불티 비행 시간
 
 const readSeen = (key) => {
   try {
@@ -200,11 +208,52 @@ const writeSeen = (key, value) => {
 };
 
 /**
- * 홈 '오늘 할 일' + '연속 학습' 통합 카드(이슈 #25 13차).
- *   머리말   「오늘 할 일」 · 오른쪽에 「(불꽃 칩) N일 연속 >」(누르면 농장 방문 기록)
- *   본문     할 일 줄(썩은 단어 · 시듦 · 돌봄 · 새 씨앗)
- *   아래     1주 줄(요일 칩 + 연속 캡슐) — 멈춤 알림 · 다시 잇기 도전은 그 자리를 대신한다
- * 예전 연속 학습 카드의 큰 불꽃 · '오늘 했나' 표시는 1주 줄의 오늘 칩 하나로 합쳤다(중복 제거).
+ * 불티 비행 — from(체크 동그라미) → to(불꽃 상자)로 작은 불티 3개가 포물선을 그리며 날아가 사라진다.
+ * 카드(root, position:relative) 안에 잠깐 붙였다 떼는 DOM 조각이라 리렌더를 일으키지 않는다.
+ */
+const flySparks = (root, from, to) => {
+  if (!root || !from || !to || typeof root.animate !== 'function') return;
+  const rr = root.getBoundingClientRect();
+  const a = from.getBoundingClientRect();
+  const b = to.getBoundingClientRect();
+  const x0 = a.left + a.width / 2 - rr.left;
+  const y0 = a.top + a.height / 2 - rr.top;
+  const dx = b.left + b.width / 2 - rr.left - x0;
+  const dy = b.top + b.height * 0.6 - rr.top - y0;
+  [0, 1, 2].forEach((i) => {
+    const s = 8 - i * 1.5;
+    const el = document.createElement('span');
+    const color = CHIP_SPARKS[i % CHIP_SPARKS.length];
+    Object.assign(el.style, {
+      position: 'absolute', left: `${x0 - s / 2}px`, top: `${y0 - s / 2}px`, width: `${s}px`, height: `${s}px`,
+      borderRadius: '9999px', background: color, boxShadow: `0 0 8px ${color}`, pointerEvents: 'none', zIndex: '5',
+    });
+    root.appendChild(el);
+    const bend = 22 + i * 8;
+    const anim = el.animate([
+      { transform: 'translate(0px, 0px) scale(0.6)', opacity: 0 },
+      { transform: `translate(${dx * 0.15 + (i - 1) * 6}px, ${dy * 0.1 - bend * 0.6}px) scale(1.15)`, opacity: 1, offset: 0.2 },
+      { transform: `translate(${dx * 0.55}px, ${dy * 0.55 - bend}px) scale(1)`, opacity: 1, offset: 0.6 },
+      { transform: `translate(${dx}px, ${dy}px) scale(0.3)`, opacity: 0.3 },
+    ], { duration: SPARK_FLY_MS + i * 50, delay: i * 45, easing: 'cubic-bezier(.45,0,.55,1)', fill: 'forwards' });
+    anim.onfinish = () => el.remove();
+    anim.oncancel = () => el.remove();
+  });
+};
+
+/** 할 일 진행 · 서버 판정 → 불꽃 단계(0 불씨 · 1 작은 불꽃 · 2 큰 불꽃) */
+const flameLevelOf = ({ done, total, serverStatus }) => {
+  const server = serverStatus === 'all' ? 2 : serverStatus === 'part' ? 1 : 0;
+  let task = 0;
+  if (total > 0) task = done >= total ? 2 : done > 0 ? 1 : 0;
+  return Math.max(server, task);
+};
+
+/**
+ * 홈 '오늘 할 일' + '연속 학습' 통합 카드(이슈 #25 14차 재설계).
+ *   머리   오늘의 불꽃(TodayFlameHero) — 할 일을 끝낸 만큼 불씨 → 작은 불꽃 → 큰 불꽃 + 「N일 연속」(누르면 농장 방문 기록)
+ *   본문   「오늘 할 일 d/t」 · 할 일 줄(썩은 단어 · 시듦 · 돌봄 · 새 씨앗) — 불꽃의 연료
+ *   아래   1주 줄(기존 그림 자산, 오늘 칸은 불꽃 단계와 같이 움직인다) — 멈춤 알림 · 다시 잇기 도전은 그 자리를 대신한다
  * registerStreakRefresh — 홈 당겨서 새로고침 때 /farm/streak 도 같이 다시 받게 재조회 함수를 넘긴다.
  */
 // React Compiler("use memo")는 쓰지 않는다 — 퀘스트 대기 판정을 렌더 중 ref 에 적어 두는 자리가 있어서다.
@@ -218,10 +267,19 @@ const TodayTasksCard = ({ registerStreakRefresh } = {}) => {
   } = useStreakCard({ registerRefresh: registerStreakRefresh });
   const reduceMotion = useReducedMotion();
 
-  const rootRef = useRef(null);
+  // 【14차 1주 줄 버그】 카드는 todayTasks · streak 이 오기 전 첫 렌더에서 null 을 돌려준다. 예전처럼
+  // useRef 를 useInView 에 넘기면 framer-motion 의 useInView 효과가 ref.current=null 일 때 한 번 돌고
+  // 끝나(의존성에 요소가 없다) 관찰을 영영 붙이지 못했다 → seenOnce(play)가 늘 false → 1주 줄 칸이
+  // initial(opacity 0)에 묶여 보이지 않았고, inView 도 false 라 달성 연출도 시작되지 않았다.
+  // 요소를 state 로 받아(callback ref) 요소가 붙는 순간 ref 객체가 바뀌게 해서 관찰을 다시 건다.
+  const [rootEl, setRootEl] = useState(null);
+  const rootRef = useMemo(() => ({ current: rootEl }), [rootEl]);
   const seenOnce = useInView(rootRef, { once: true, amount: 0.2 });
   const inView = useInView(rootRef, { amount: 0.35 });
   const play = seenOnce || typeof IntersectionObserver === 'undefined';
+
+  const flameRef = useRef(null);
+  const checkEls = useRef({});
 
   const [expanded, setExpanded] = useState({ rotten: false, wilted: false, care: false });
   const toggle = (key) => setExpanded((prev) => ({ ...prev, [key]: !prev[key] }));
@@ -287,7 +345,8 @@ const TodayTasksCard = ({ registerStreakRefresh } = {}) => {
   const storageKey = userId ? `${SEEN_KEY_PREFIX}${userId}` : null;
   const todayCell = weekCells.find((c) => c.isToday) ?? null;
   const todayDate = todayCell?.date ?? null;
-  const todayLit = todayCell ? (todayCell.status === 'all' || todayCell.status === 'part') : false;
+  const todayStatus = todayCell?.status ?? null;
+  const todayLit = todayStatus === 'all' || todayStatus === 'part';
   // today-tasks 가 오늘 날짜 기준 응답일 때만 판정한다(자정 직후 어제 응답으로 연출하지 않게)
   const ready = !!todayTasks && !!todayDate && !!storageKey;
   const doneSig = rowDefs.filter((r) => r.checked).map((r) => r.key).join(',');
@@ -296,9 +355,12 @@ const TodayTasksCard = ({ registerStreakRefresh } = {}) => {
   const [ack, setAck] = useState(null); // { storageKey, value } — 이번 화면에서 확인한 기억
   const [playing, setPlaying] = useState(null); // { rows, lit, from, to, snapshot }
   const [revealed, setRevealed] = useState(0); // 연출 중 체크가 그려진 줄 수
+  const [fed, setFed] = useState(0); // 연출 중 불티가 불꽃에 도착한 줄 수
   const [ignited, setIgnited] = useState(false);
   const [counted, setCounted] = useState(false);
   const [bump, setBump] = useState(0);
+  const [feedKey, setFeedKey] = useState(0);
+  const [evolveKey, setEvolveKey] = useState(0);
 
   const storedSeen = useMemo(() => (storageKey ? readSeen(storageKey) : null), [storageKey]);
   const seenRaw = ack && ack.storageKey === storageKey ? ack.value : storedSeen;
@@ -332,6 +394,37 @@ const TodayTasksCard = ({ registerStreakRefresh } = {}) => {
 
   const screenClear = useHomeScreenClear({ rewardsPending: (pendingMissionRewards?.length ?? 0) > 0 });
 
+  // ── 보이는 모양 — 연출 대상은 자기 차례 전까지 '아직 안 함' ─────────────
+  const holdRows = playing ? playing.rows : newlyRows;
+  const rowVisual = (row) => {
+    const hi = holdRows.indexOf(row.key);
+    if (hi === -1) return { checked: row.checked, draw: false };
+    const shown = !!playing && revealed > hi;
+    return { checked: row.checked && shown, draw: shown };
+  };
+  // 불꽃은 불티가 도착한 만큼만 자란다(체크보다 반 박자 늦게)
+  const notFed = playing ? Math.max(0, playing.rows.length - fed) : newlyRows.length;
+  const shownDone = Math.max(0, doneKeys.length - notFed);
+  const holdLit = playing ? playing.lit && !ignited : newlyLit;
+  const shownServerStatus = holdLit ? 'today_empty' : todayStatus;
+  const levelOf = (done) => flameLevelOf({ done, total: rowDefs.length, serverStatus: shownServerStatus });
+  const flameLevel = levelOf(shownDone);
+  const fraction = rowDefs.length > 0 ? shownDone / rowDefs.length : 0;
+
+  // 1주 줄 오늘 칸 — 불꽃이 큰 불꽃이면 큰 불꽃, 아니면 서버 판정(연속이 이어졌는가) 그대로.
+  // 일부만 끝냈어도 연속 자격(하루 N개 정답)을 못 채웠으면 띠에 묶지 않는다 — 띠는 '이어진 날'만 뜻한다.
+  // 연속이 막 이어지는 연출 전(holdLit)에는 비워 두었다가 점화 순간에 켠다.
+  const todayCellStatus = holdLit ? 'today_empty' : (flameLevel >= 2 ? 'all' : todayStatus);
+  const shownCells = todayDate && todayCellStatus && todayCellStatus !== todayStatus
+    ? weekCells.map((c) => (c.date === todayDate ? { ...c, status: todayCellStatus } : c))
+    : weekCells;
+  const igniteDate = playing && ignited ? todayDate : null;
+
+  let countTarget = baseCount;
+  if (playing?.lit) countTarget = counted ? playing.to : playing.from;
+  else if (newlyLit) countTarget = Math.max(0, toCount - 1);
+  const shownCount = useCountUp(countTarget, { duration: 0.7 });
+
   // 홈만 보이고 카드가 화면에 있으면 연출 시작
   useEffect(() => {
     if (playing || !pendingSig || !screenClear || !inView || !storageKey) return undefined;
@@ -352,14 +445,26 @@ const TodayTasksCard = ({ registerStreakRefresh } = {}) => {
       }
       questRef.current = { n: 0, at: 0 };
       const [rowsPart, litPart] = pendingSig.split('|');
+      const rows = rowsPart ? rowsPart.split(',') : [];
       const snapshot = { d: todayDate, done: doneKeys, lit: todayLit };
+      // 줄마다 불꽃이 몇 단계인지 미리 계산해 둔다(단계가 오르는 도착에서만 크게 타오른다)
+      const lit = litPart === '1';
+      const startDone = Math.max(0, doneKeys.length - rows.length);
+      const startServer = lit ? 'today_empty' : todayStatus;
+      const levels = [];
+      for (let i = 0; i <= rows.length; i += 1) {
+        levels.push(flameLevelOf({ done: startDone + i, total: rowDefs.length, serverStatus: startServer }));
+      }
       writeSeen(storageKey, snapshot);
       setRevealed(0);
+      setFed(0);
       setIgnited(false);
       setCounted(false);
       setPlaying({
-        rows: rowsPart ? rowsPart.split(',') : [],
-        lit: litPart === '1',
+        rows,
+        lit,
+        levels,
+        finalLevel: flameLevelOf({ done: doneKeys.length, total: rowDefs.length, serverStatus: todayStatus }),
         from: Math.max(0, toCount - 1),
         to: toCount,
         snapshot,
@@ -370,80 +475,86 @@ const TodayTasksCard = ({ registerStreakRefresh } = {}) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [playing, pendingSig, screenClear, inView, storageKey]);
 
-  // 연출 타임라인 — 체크(줄마다) → 오늘 칩 점화 → 연속 일수 카운트업
+  // 연출 타임라인 — (체크 → 불티 비행 → 불꽃 도착/단계 상승) × 줄 → 연속 점화 · 카운트업
   useEffect(() => {
     if (!playing) return undefined;
     const timers = [];
+    const at = (ms, fn) => timers.push(setTimeout(fn, ms));
     let t = 250;
-    playing.rows.forEach((_, i) => {
-      timers.push(setTimeout(() => { setRevealed(i + 1); feel('match'); }, t));
+    playing.rows.forEach((key, i) => {
+      at(t, () => { setRevealed(i + 1); feel('match'); });
+      at(t + SPARK_DELAY_MS, () => flySparks(rootEl, checkEls.current[key], flameRef.current));
+      at(t + SPARK_DELAY_MS + SPARK_FLY_MS, () => {
+        setFed(i + 1);
+        if (playing.levels[i + 1] > playing.levels[i]) {
+          setEvolveKey((k) => k + 1);
+          feel('evolve');
+        } else {
+          setFeedKey((k) => k + 1);
+        }
+      });
       t += CHECK_STEP_MS;
     });
     if (playing.lit) {
-      t += 120;
-      timers.push(setTimeout(() => { setIgnited(true); feel('evolve'); }, t));
-      t += 560;
-      timers.push(setTimeout(() => { setCounted(true); setBump((b) => b + 1); feel('xpUp'); }, t));
+      t += playing.rows.length ? 360 : 0;
+      // 할 일 줄 없이 연속만 막 이어졌으면(정답 N개) 여기서 불꽃 단계가 오른다
+      const lastLevel = playing.levels[playing.levels.length - 1];
+      if (playing.finalLevel > lastLevel) {
+        at(t, () => { setEvolveKey((k) => k + 1); feel('evolve'); });
+        t += 520;
+      }
+      at(t, () => { setIgnited(true); setCounted(true); setBump((b) => b + 1); feel('xpUp'); });
       t += 900;
     }
-    timers.push(setTimeout(() => {
+    at(t + 150, () => {
       if (storageKey) setAck({ storageKey, value: playing.snapshot });
       setPlaying(null);
       setRevealed(0);
+      setFed(0);
       setIgnited(false);
       setCounted(false);
-    }, t + 150));
+    });
     return () => timers.forEach(clearTimeout);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [playing]);
 
-  // ── 보이는 모양 — 연출 대상은 자기 차례 전까지 '아직 안 함' ─────────────
-  const holdRows = playing ? playing.rows : newlyRows;
-  const rowVisual = (row) => {
-    const hi = holdRows.indexOf(row.key);
-    if (hi === -1) return { checked: row.checked, draw: false };
-    const shown = !!playing && revealed > hi;
-    return { checked: row.checked && shown, draw: shown };
-  };
-  const holdLit = playing ? playing.lit && !ignited : newlyLit;
-  const shownCells = holdLit && todayDate
-    ? weekCells.map((c) => (c.date === todayDate ? { ...c, status: 'today_empty' } : c))
-    : weekCells;
-  const igniteDate = playing?.lit && ignited ? todayDate : null;
-
-  let countTarget = baseCount;
-  if (playing?.lit) countTarget = counted ? playing.to : playing.from;
-  else if (newlyLit) countTarget = Math.max(0, toCount - 1);
-  const shownCount = useCountUp(countTarget, { duration: 0.7 });
-  const pillLit = holdLit ? false : todayLit;
-
   if (!todayTasks && !streak) return null;
+
+  const total = rowDefs.length;
 
   return (
     <motion.section
-      ref={rootRef}
+      ref={setRootEl}
       aria-label="오늘 할 일과 연속 학습"
       initial={reduceMotion ? { opacity: 0 } : { opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={reduceMotion ? { duration: 0.15 } : SPRING.soft}
-      className="rounded-[12px] pt-[16px] px-[18px] pb-[16px] bg-[rgba(255,255,255,.72)] dark:bg-[rgba(36,36,36,.66)] backdrop-blur-[12px] backdrop-saturate-[1.4] border border-white/80 dark:border-white/[.08] shadow-[inset_0_1px_0_rgba(255,255,255,.7),0_4px_14px_rgba(96,80,52,.08)] dark:shadow-[inset_0_1px_0_rgba(255,255,255,.05),0_4px_14px_rgba(0,0,0,.28)]"
+      className="relative rounded-[12px] pt-[14px] px-[18px] pb-[16px] bg-[rgba(255,255,255,.72)] dark:bg-[rgba(36,36,36,.66)] backdrop-blur-[12px] backdrop-saturate-[1.4] border border-white/80 dark:border-white/[.08] shadow-[inset_0_1px_0_rgba(255,255,255,.7),0_4px_14px_rgba(96,80,52,.08)] dark:shadow-[inset_0_1px_0_rgba(255,255,255,.05),0_4px_14px_rgba(0,0,0,.28)]"
     >
-      <div className="flex items-center justify-between gap-[8px]">
-        <b className="text-[17px] font-[800] text-layout-black dark:text-layout-white">오늘 할 일</b>
-        {(streak || todayTasks?.streak) && (
-          <StreakHeaderPill
-            shown={shownCount}
-            lit={pillLit}
-            paused={!!streak?.paused}
-            onOpenRecord={onOpenRecord}
-            bump={bump}
-          />
-        )}
-      </div>
+      {/* 머리 — 오늘의 불꽃 + N일 연속 */}
+      <TodayFlameHero
+        ref={flameRef}
+        level={flameLevel}
+        fraction={fraction}
+        count={shownCount}
+        paused={!!streak?.paused}
+        hasTasks={total > 0}
+        onOpenRecord={onOpenRecord}
+        feedKey={feedKey}
+        evolveKey={evolveKey}
+        bump={bump}
+      />
 
-      {todayTasks && (
-        rowDefs.length > 0 ? (
-          <div className="flex flex-col mt-[2px]">
+      {/* 본문 — 할 일(불꽃의 연료) */}
+      {todayTasks && total > 0 && (
+        <div className="mt-[10px] border-t border-[#F0F0F0] dark:border-[rgba(255,255,255,.08)] pt-[10px]">
+          <div className="flex items-baseline justify-between">
+            <b className="text-[13px] font-[800] tracking-[-0.02em] text-layout-gray-400 dark:text-layout-gray-300">오늘 할 일</b>
+            <span className="text-[12px] font-[700] tabular-nums text-layout-gray-300">
+              <b className="font-[800] text-secondary-yellow-600 dark:text-secondary-yellow-400">{shownDone}</b>/{total}
+            </span>
+          </div>
+          <div className="flex flex-col">
             <AnimatePresence initial={false}>
               {rowDefs.map((row, idx) => {
                 const v = rowVisual(row);
@@ -462,20 +573,17 @@ const TodayTasksCard = ({ registerStreakRefresh } = {}) => {
                       draw={v.draw}
                       faded={v.checked}
                       last={idx === rowDefs.length - 1}
+                      checkRef={(el) => { checkEls.current[row.key] = el; }}
                     />
                   </motion.div>
                 );
               })}
             </AnimatePresence>
           </div>
-        ) : (
-          <p className="mt-[8px] text-[13px] font-[600] text-layout-gray-400 dark:text-layout-gray-300">
-            오늘은 돌볼 일이 없어요
-          </p>
-        )
+        </div>
       )}
 
-      {/* 연속 학습 — 할 일 아래 얇은 구분선 뒤에 1주 줄 */}
+      {/* 아래 — 1주 줄(오늘 칸은 불꽃 단계와 같이 움직인다) */}
       <div className="mt-[6px] pt-[14px] border-t border-[#F0F0F0] dark:border-[rgba(255,255,255,.08)]">
         <StreakCardBody
           streak={streak}
