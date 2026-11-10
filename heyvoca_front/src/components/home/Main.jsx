@@ -441,10 +441,6 @@ const Main = () => {
               vibrate({ duration: 5 });
               pushNewFullSheet(VocabularyWordsNewFullSheet, { id }, { smFull: true, closeOnBackdropClick: true });
             }}
-            onMore={() => {
-              vibrate({ duration: 5 });
-              navigate('/vocabulary-sheets');
-            }}
           />
         ) : null}
       >

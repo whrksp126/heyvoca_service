@@ -1,30 +1,37 @@
 // src/components/home/HomeFieldGrid.jsx
 //
-// 홈 히어로의 밭 — 단어장마다 밭 하나(이슈 #25 6차).
+// 홈 히어로의 밭 지도 — 단어장마다 밭 하나(이슈 #25 6차 → 밭 지도).
 //
-// 예전에는 관리 중인 작물 전부를 한 장의 큰 밭(마름모 섬)에 심었다. 지금은 단어장 하나가
-// 밭 하나다. 밭 그림은 단어장 목록·단어장 상세와 **같은 FarmField**(테두리 = 단어장 색)를
-// 그대로 쓰고, 그 타일들을 돌리지 않은 격자로 늘어놓아 모든 밭이 한눈에 보이게 한다.
+// 밭 그림은 단어장 목록·단어장 상세와 **같은 FarmField**(테두리 = 단어장 색)를 그대로 쓴다.
 //
-// 【배치】 개수에 맞춰 열 수를 고른다 — 1개=크게 1 · 2~4개=2열 · 5~9개=3열 · 그 이상 4열.
-//   남는 줄은 가운데로 모은다(3개 = 위 2 + 아래 1 가운데). 타일 크기는 히어로 안 빈 자리
-//   (헤드라인 아래 ~ 주 CTA 위)에 가로·세로 모두 들어가는 값으로 잰다 — 많아질수록 밭과
-//   작물이 같이 작아진다. 히어로 높이는 그대로라 아래 카드들의 자리가 흔들리지 않는다.
-//   4열×4줄(16칸)을 넘으면 마지막 칸이 "+N" 칸이 되어 학습장 단어장 목록으로 보낸다.
+// 【배치】 아이소메트릭 격자. 마름모 밭들이 가는 길만 두고 대각선 변을 맞대 이어진다
+//   (체스판을 45도 돌린 모양). 격자 칸 (col,row) → 화면 x=(col−row)·W/2, y=(col+row)·H/2.
+//   W×H 는 field-base.png 섬 윗면 마름모를 잰 값(1024×460, 중심 캔버스 (600,531)).
+//   격자는 개수에 맞춘 정사각형에 가까운 c×r(c=⌈√n⌉, r=⌈n/c⌉). 빈 칸은 그리지 않는다.
+//   돌봄이 필요한 밭부터 격자 가운데 칸에 놓는다(가운데 → 바깥, 같은 거리면 앞줄 먼저).
+//   뒤에서 앞으로(col+row 오름차순) 그려 앞 밭이 뒤 밭의 옆면을 덮는다.
 //
-// 【성능】 밭마다 작물 표시 상한을 타일 크기에 맞춰 줄인다(대표 작물만 — plantFieldByWords 가
-//   id 순 전 구간에서 고르게 표본을 뽑는다). 작은 타일은 접지 그림자도 끈다.
-//   눌림 연출은 transform(scale)만 쓴다.
+// 【제스처】 포인터 이벤트로 직접 처리한다(라이브러리 없음).
+//   처음엔 모든 밭이 영역에 들어오게 맞춘다(fit = 배율 1). 두 손가락 핀치 = 확대·축소(1~4.5배,
+//   손가락 사이 지점 고정), 확대 상태에서 한 손가락 드래그 = 이동. 이동은 밭 묶음이 영역을
+//   벗어나지 않게 클램프한다. 갱신은 transform 한 레이어만 rAF 로 바꾼다(리렌더 없음).
+//   홈은 세로 스크롤 페이지라 fit 상태에선 touch-action: pan-y 로 한 손가락 세로 드래그를
+//   페이지 스크롤에 넘기고, 확대 상태에서만 touch-action: none 으로 지도가 터치를 잡는다.
+//   이동 거리가 작은 한 손가락 터치만 탭 — 화면 좌표를 밭 좌표로 되돌려 마름모 안에 든 밭(앞줄 우선)을
+//   고른다. 당겨서 새로고침은 data-no-ptr 로 끈다.
 //
-// 【상태 요약】 밭이 하나뿐이면 홈 히어로와 같은 나무 팻말 4개(단계별 수)를 세운다.
-//   여럿이면 칸마다 나무 이름판(단어장 이름) + 단어장 목록 카드와 같은 배지(돌봄 N · 완료)를 단다.
+// 【성능】 밭마다 작물 표시 상한을 fit 타일 크기에 맞춰 줄인다(확대해도 늘리지 않는다).
+//   작은 타일은 접지 그림자도 끈다.
+//
+// 【상태 요약】 밭이 하나뿐이면 지도 대신 크게 한 장 + 나무 팻말 4개(단계별 수).
+//   여럿이면 밭마다 나무 이름판(단어장 이름) + 단어장 목록 카드와 같은 배지(돌봄 N · 완료).
 
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Check } from '@phosphor-icons/react';
 import FarmField, { bookRimColor } from '../farm/FarmField';
 import { FieldSign } from '../farm/FarmHero';
-import { SIGN_ANCHORS } from '../../utils/farmField';
+import { SIGN_ANCHORS, FIELD_W as FIELD_CANVAS_W } from '../../utils/farmField';
 import { IconCare } from '../../assets/svg/icon';
 
 /*
@@ -37,16 +44,39 @@ const VIEW_BOTTOM = 820;
 const VIEW_RATIO = (VIEW_BOTTOM - VIEW_TOP) / 1200; // 타일 높이 / 폭
 const VIEW_OFFSET_PCT = (VIEW_TOP / (VIEW_BOTTOM - VIEW_TOP)) * 100;
 
-const GAP = 6;
-const MAX_TILES = 16;
+/* 섬 윗면 마름모(캔버스 px) — field-base.png 를 재서 잡았다 */
+const DIA_CX = 600;
+const DIA_CY = 531;
+const DIA_W = 1024;
+const DIA_H = 460;
+const PATH = 22; // 밭 사이 길 폭(캔버스 px, 변에 수직이 아니라 격자 축 방향 근사)
+const STEP_X = DIA_W / 2 + PATH;
+const STEP_Y = (DIA_W / 2 + PATH) * (DIA_H / DIA_W);
+/* 밭 하나가 그림으로 차지하는 범위(마름모 중심 기준) — 위는 가장 큰 작물·이름판, 아래는 섬 옆면 */
+const EXT_LEFT = DIA_W / 2 + 8;
+const EXT_TOP = DIA_CY - VIEW_TOP;
+const EXT_BOTTOM = 805 - DIA_CY + 6;
 
-/** 개수 → 열 수 */
-const columnsFor = (n) => {
-  if (n <= 1) return 1;
-  if (n <= 4) return 2;
-  if (n <= 9) return 3;
-  return 4;
+const MAX_ZOOM = 4.5;
+const TAP_SLOP = 8;
+
+/** 개수 → 격자 c×r (정사각형에 가깝게) */
+const gridFor = (n) => {
+  const c = Math.max(1, Math.ceil(Math.sqrt(n)));
+  return { c, r: Math.max(1, Math.ceil(n / c)) };
 };
+
+/** 칸 순서 — 가운데 → 바깥, 같은 거리면 앞줄(col+row 큰 쪽) 먼저 */
+const cellOrder = (c, r) => {
+  const cells = [];
+  for (let col = 0; col < c; col += 1) for (let row = 0; row < r; row += 1) cells.push({ col, row });
+  const mc = (c - 1) / 2;
+  const mr = (r - 1) / 2;
+  const dist = (p) => (p.col - mc) ** 2 + (p.row - mr) ** 2;
+  return cells.sort((a, b) => dist(a) - dist(b) || (b.col + b.row) - (a.col + a.row) || a.col - b.col);
+};
+
+const clamp = (v, lo, hi) => Math.max(lo, Math.min(hi, v));
 
 /** 타일 폭(px) → 작물 표시 상한 · 그림자 */
 const spriteBudget = (w) => {
@@ -143,15 +173,33 @@ const FieldTile = ({ row, width, single, onSelect }) => {
   );
 };
 
+/** 지도 위 밭 한 장 — 터치는 지도가 받는다(이 칸은 그림만) */
+const MapField = React.memo(({ row, tileW, budget, left, top }) => {
+  const { book, field, fieldWords } = row;
+  return (
+    <div className="absolute pointer-events-none" style={{ left, top, width: tileW }}>
+      <FarmField
+        counts={field.counts}
+        healthMix={field.healthMix}
+        words={fieldWords}
+        maxSprites={budget.maxSprites}
+        shadows={budget.shadows}
+        reserveSigns={false}
+        rimColor={bookRimColor(book.color)}
+      />
+    </div>
+  );
+});
+
 /**
  * @param {Array}    rows      buildBookRow 결과(글자 단어장 제외) — 1개 이상
  * @param {function} onSelect  (bookId) => void
- * @param {function} onMore    "+N" 칸 — 칸이 모자랄 때만 쓰인다
  */
-const HomeFieldGrid = ({ rows, onSelect, onMore }) => {
+const HomeFieldGrid = ({ rows, onSelect }) => {
   "use memo";
 
   const boxRef = useRef(null);
+  const layerRef = useRef(null);
   const [box, setBox] = useState({ w: 0, h: 0 });
 
   useEffect(() => {
@@ -165,71 +213,255 @@ const HomeFieldGrid = ({ rows, onSelect, onMore }) => {
     return () => ro.disconnect();
   }, []);
 
-  // 칸이 모자라면 돌봄이 필요한 밭부터 보인다(나머지는 원래 순서)
-  const overflow = rows.length > MAX_TILES;
-  const shown = useMemo(() => {
-    if (!overflow) return rows;
+  const single = rows.length === 1;
+
+  // 격자 칸 배정 — 돌봄이 필요한 밭부터 가운데 칸(그 밖은 원래 순서)
+  const placed = useMemo(() => {
+    if (single) return [];
     const sorted = [...rows].sort((a, b) => (b.care > 0) - (a.care > 0));
-    return sorted.slice(0, MAX_TILES - 1);
-  }, [rows, overflow]);
-  const hidden = rows.length - shown.length;
-  const tileCount = shown.length + (hidden > 0 ? 1 : 0);
+    const { c, r } = gridFor(sorted.length);
+    const cells = cellOrder(c, r);
+    return sorted
+      .map((row, i) => {
+        const { col, row: rr } = cells[i];
+        return { row, cx: (col - rr) * STEP_X, cy: (col + rr) * STEP_Y, depth: col + rr };
+      })
+      .sort((a, b) => a.depth - b.depth || a.cx - b.cx);
+  }, [rows, single]);
 
-  const cols = columnsFor(tileCount);
-  const rowsN = Math.ceil(tileCount / cols);
-  const byWidth = (box.w - (cols - 1) * GAP) / cols;
-  const byHeight = (box.h - (rowsN - 1) * GAP) / rowsN / VIEW_RATIO;
-  const tileW = Math.max(0, Math.floor(Math.min(byWidth, byHeight)));
+  // fit — 모든 밭이 영역에 들어오는 배율(캔버스 px → 화면 px)
+  const layout = useMemo(() => {
+    if (single || placed.length === 0 || box.w <= 0 || box.h <= 0) return null;
+    let x0 = Infinity; let x1 = -Infinity; let y0 = Infinity; let y1 = -Infinity;
+    placed.forEach(({ cx, cy }) => {
+      x0 = Math.min(x0, cx - EXT_LEFT); x1 = Math.max(x1, cx + EXT_LEFT);
+      y0 = Math.min(y0, cy - EXT_TOP); y1 = Math.max(y1, cy + EXT_BOTTOM);
+    });
+    const s = Math.min(box.w / (x1 - x0), box.h / (y1 - y0));
+    const ox = (box.w - (x1 - x0) * s) / 2 - x0 * s;
+    const oy = (box.h - (y1 - y0) * s) / 2 - y0 * s;
+    return {
+      s,
+      ox,
+      oy,
+      tileW: FIELD_CANVAS_W * s,
+      content: { x0: x0 * s + ox, x1: x1 * s + ox, y0: y0 * s + oy, y1: y1 * s + oy },
+    };
+  }, [placed, single, box.w, box.h]);
 
-  const lines = [];
-  for (let r = 0; r < rowsN; r += 1) lines.push(Array.from({ length: cols }, (_, c) => r * cols + c).filter((i) => i < tileCount));
+  /* ── 변환(배율 k, 이동 tx·ty) — 리렌더 없이 레이어 transform 만 바꾼다 ── */
+  const view = useRef({ k: 1, tx: 0, ty: 0 });
+  const raf = useRef(0);
+
+  const apply = useCallback(() => {
+    raf.current = 0;
+    const { k, tx, ty } = view.current;
+    if (layerRef.current) layerRef.current.style.transform = `translate3d(${tx}px, ${ty}px, 0) scale(${k})`;
+    // fit 상태에선 한 손가락 세로 드래그를 페이지 스크롤로 넘긴다
+    if (boxRef.current) boxRef.current.style.touchAction = k > 1.001 ? 'none' : 'pan-y';
+  }, []);
+
+  const schedule = useCallback(() => {
+    if (!raf.current) raf.current = requestAnimationFrame(apply);
+  }, [apply]);
+
+  useEffect(() => () => { if (raf.current) cancelAnimationFrame(raf.current); }, []);
+
+  /** 밭 묶음이 영역 밖으로 지나치게 끌리지 않게 — 영역보다 크면 가장자리까지만, 작으면 가운데 */
+  const clampView = useCallback((v) => {
+    if (!layout) return v;
+    const k = clamp(v.k, 1, MAX_ZOOM);
+    const { x0, x1, y0, y1 } = layout.content;
+    const axis = (t, lo, hi, size) => {
+      const span = (hi - lo) * k;
+      if (span <= size) return (size - (lo + hi) * k) / 2;
+      return clamp(t, size - hi * k, -lo * k);
+    };
+    return { k, tx: axis(v.tx, x0, x1, box.w), ty: axis(v.ty, y0, y1, box.h) };
+  }, [layout, box.w, box.h]);
+
+  // 배치·영역이 바뀌면 fit 으로 되돌린다
+  useEffect(() => {
+    view.current = { k: 1, tx: 0, ty: 0 };
+    schedule();
+  }, [layout, schedule]);
+
+  /* ── 포인터 ── */
+  const pointers = useRef(new Map());
+  const gesture = useRef(null);
+
+  /** 화면 점(영역 기준) → 그 자리 밭 (마름모 안, 앞줄 우선 · 가까운 것) */
+  const hitTest = (px, py) => {
+    if (!layout) return null;
+    const { k, tx, ty } = view.current;
+    const wx = ((px - tx) / k - layout.ox) / layout.s;
+    const wy = ((py - ty) / k - layout.oy) / layout.s;
+    let best = null; let bestD = Infinity;
+    for (let i = placed.length - 1; i >= 0; i -= 1) {
+      const p = placed[i];
+      const d = Math.abs(wx - p.cx) / (DIA_W / 2) + Math.abs(wy - p.cy) / (DIA_H / 2);
+      if (d <= 1) return p.row; // 앞줄부터 훑으므로 처음 맞은 것이 가장 앞
+      if (d < bestD) { bestD = d; best = p.row; }
+    }
+    return bestD < 1.4 ? best : null; // 이름판·작물처럼 마름모 바로 바깥을 누른 경우
+  };
+
+  const localPoint = (e) => {
+    const rect = boxRef.current.getBoundingClientRect();
+    return { x: e.clientX - rect.left, y: e.clientY - rect.top };
+  };
+
+  const startGesture = () => {
+    const pts = [...pointers.current.values()];
+    const v = { ...view.current };
+    if (pts.length >= 2) {
+      const [a, b] = pts;
+      const mid = { x: (a.x + b.x) / 2, y: (a.y + b.y) / 2 };
+      gesture.current = { kind: 'pinch', dist0: Math.hypot(a.x - b.x, a.y - b.y) || 1, mid0: mid, v0: v, tap: false };
+    } else if (pts.length === 1) {
+      const prevTap = gesture.current?.tap ?? true;
+      gesture.current = { kind: 'pan', start: { ...pts[0] }, v0: v, tap: gesture.current ? prevTap && gesture.current.kind !== 'pinch' : true };
+    } else {
+      gesture.current = null;
+    }
+  };
+
+  const onPointerDown = (e) => {
+    if (!layout || (e.pointerType === 'mouse' && e.button !== 0)) return;
+    if (pointers.current.size === 0) gesture.current = null;
+    pointers.current.set(e.pointerId, localPoint(e));
+    try { boxRef.current.setPointerCapture(e.pointerId); } catch { /* 무시 */ }
+    startGesture();
+  };
+
+  const onPointerMove = (e) => {
+    if (!pointers.current.has(e.pointerId)) return;
+    pointers.current.set(e.pointerId, localPoint(e));
+    const g = gesture.current;
+    if (!g) return;
+    const pts = [...pointers.current.values()];
+    if (g.kind === 'pinch' && pts.length >= 2) {
+      const [a, b] = pts;
+      const mid = { x: (a.x + b.x) / 2, y: (a.y + b.y) / 2 };
+      const k = clamp(g.v0.k * (Math.hypot(a.x - b.x, a.y - b.y) / g.dist0), 1, MAX_ZOOM);
+      // 처음 두 손가락 사이에 있던 밭 지점이 지금 손가락 사이에 오게
+      const wx = (g.mid0.x - g.v0.tx) / g.v0.k;
+      const wy = (g.mid0.y - g.v0.ty) / g.v0.k;
+      view.current = clampView({ k, tx: mid.x - wx * k, ty: mid.y - wy * k });
+      schedule();
+    } else if (g.kind === 'pan' && pts.length === 1) {
+      const dx = pts[0].x - g.start.x;
+      const dy = pts[0].y - g.start.y;
+      if (Math.hypot(dx, dy) > TAP_SLOP) g.tap = false;
+      if (g.v0.k > 1.001) {
+        view.current = clampView({ k: g.v0.k, tx: g.v0.tx + dx, ty: g.v0.ty + dy });
+        schedule();
+      }
+    }
+  };
+
+  const endPointer = (e, cancelled) => {
+    if (!pointers.current.has(e.pointerId)) return;
+    const g = gesture.current;
+    const last = pointers.current.get(e.pointerId);
+    pointers.current.delete(e.pointerId);
+    if (pointers.current.size === 0) {
+      if (!cancelled && g?.kind === 'pan' && g.tap) {
+        const hit = hitTest(last.x, last.y);
+        if (hit) onSelect(hit.book.id);
+      }
+      gesture.current = null;
+      return;
+    }
+    // 핀치에서 한 손가락만 남으면 이어서 이동(탭은 아님)
+    startGesture();
+    if (gesture.current) gesture.current.tap = false;
+  };
+
+  // 데스크톱 트랙패드 핀치(ctrl+wheel)
+  useEffect(() => {
+    const el = boxRef.current;
+    if (!el || !layout) return undefined;
+    const onWheel = (e) => {
+      if (!e.ctrlKey) return;
+      e.preventDefault();
+      const rect = el.getBoundingClientRect();
+      const px = e.clientX - rect.left;
+      const py = e.clientY - rect.top;
+      const v = view.current;
+      const k = clamp(v.k * Math.exp(-e.deltaY / 100), 1, MAX_ZOOM);
+      const wx = (px - v.tx) / v.k;
+      const wy = (py - v.ty) / v.k;
+      view.current = clampView({ k, tx: px - wx * k, ty: py - wy * k });
+      schedule();
+    };
+    el.addEventListener('wheel', onWheel, { passive: false });
+    return () => el.removeEventListener('wheel', onWheel);
+  }, [layout, clampView, schedule]);
+
+  const boxClass = `
+    absolute z-[5] left-[12px] right-[12px]
+    top-[max(160px,calc(var(--status-bar-height)+116px))] bottom-[46px]
+  `;
+
+  // 단어장이 하나면 지도 대신 크게 한 장 + 팻말
+  if (single) {
+    const byWidth = box.w;
+    const byHeight = box.h / VIEW_RATIO;
+    const tileW = Math.max(0, Math.floor(Math.min(byWidth, byHeight)));
+    return (
+      <div ref={boxRef} className={`${boxClass} flex items-center justify-center`}>
+        {tileW > 0 && <FieldTile row={rows[0]} width={tileW} single onSelect={onSelect} />}
+      </div>
+    );
+  }
+
+  const budget = layout ? spriteBudget(layout.tileW) : null;
+  const small = layout ? layout.tileW < 200 : true;
 
   return (
     <div
       ref={boxRef}
-      className="
-        absolute z-[5] left-[12px] right-[12px]
-        top-[max(160px,calc(var(--status-bar-height)+116px))] bottom-[46px]
-        flex flex-col items-center justify-center
-      "
-      style={{ gap: GAP }}
+      data-no-ptr
+      role="group"
+      className={`${boxClass} overflow-hidden select-none touch-pan-y`}
+      onPointerDown={onPointerDown}
+      onPointerMove={onPointerMove}
+      onPointerUp={(e) => endPointer(e, false)}
+      onPointerCancel={(e) => endPointer(e, true)}
+      onLostPointerCapture={(e) => endPointer(e, true)}
+      onContextMenu={(e) => e.preventDefault()}
     >
-      {tileW > 0 && lines.map((line) => (
-        <div key={line[0]} className="flex justify-center" style={{ gap: GAP }}>
-          {line.map((i) => {
-            if (i >= shown.length) {
-              return (
-                <motion.button
-                  key="more"
-                  type="button"
-                  onClick={onMore}
-                  whileTap={{ scale: 0.96 }}
-                  className="
-                    flex items-center justify-center shrink-0 rounded-[10px]
-                    border border-farm-line
-                    bg-layout-white/70 dark:bg-layout-gray-dark/70
-                    text-[14px] font-[800] tracking-[-0.02em]
-                    text-farm-ink dark:text-layout-white
-                  "
-                  style={{ width: tileW, height: tileW * VIEW_RATIO }}
-                >
-                  +{hidden}
-                </motion.button>
-              );
-            }
-            const row = shown[i];
-            return (
-              <FieldTile
-                key={row.book.id}
-                row={row}
-                width={tileW}
-                single={tileCount === 1}
-                onSelect={onSelect}
-              />
-            );
-          })}
+      {layout && (
+        <div ref={layerRef} className="absolute left-0 top-0 w-full h-full origin-top-left will-change-transform">
+          {placed.map((p) => (
+            <MapField
+              key={p.row.book.id}
+              row={p.row}
+              tileW={layout.tileW}
+              budget={budget}
+              left={layout.ox + (p.cx - DIA_CX) * layout.s}
+              top={layout.oy + (p.cy - DIA_CY) * layout.s}
+            />
+          ))}
+          {/* 이름판·배지 — 밭 그림보다 위 한 층(뒤 밭 작물에 가리지 않게), 마름모 위 꼭짓점에 단다 */}
+          {placed.map((p) => (
+            <div
+              key={`label-${p.row.book.id}`}
+              aria-label={p.row.book.title}
+              className="absolute z-[16] flex items-center gap-[3px] pointer-events-none -translate-x-1/2 -translate-y-1/2"
+              style={{
+                left: layout.ox + p.cx * layout.s,
+                top: layout.oy + (p.cy - DIA_H / 2) * layout.s,
+                maxWidth: DIA_W * 0.6 * layout.s,
+              }}
+            >
+              <span className="flex min-w-0"><NameBoard title={p.row.book.title} small={small} /></span>
+              <BookBadge badge={p.row.badge} small={small} />
+            </div>
+          ))}
         </div>
-      ))}
+      )}
     </div>
   );
 };
