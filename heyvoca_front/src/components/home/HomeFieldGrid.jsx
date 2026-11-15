@@ -58,6 +58,8 @@ import { SIGN_ANCHORS, FIELD_W as FIELD_CANVAS_W } from '../../utils/farmField';
 import { IconCare } from '../../assets/svg/icon';
 import { feel } from '../../lib/feel';
 import { anim, WORD_LABEL_FRAMES, WORD_LABEL_CLASS } from '../takeTest/rewards/fx';
+import { getTextSound, stripHtmlTags } from '../../utils/common';
+import { wordLang } from '../../utils/lang';
 
 /*
   타일이 보여 주는 창 — 밭 캔버스(1200×860) 중 세로 180~820 만 잘라 보인다.
@@ -165,7 +167,19 @@ const cropHead = (sp) => ({ x: (sp.x0 + sp.x1) / 2, y: sp.y0 - BUBBLE_GAP });
 const cropWordText = (book, id) => {
   const w = (book?.words || []).find((x) => String(x?.vocaIndexId ?? x?.id) === id);
   if (!w || !w.origin) return null;
-  return { word: w.origin };
+  // 발음 언어 — 단어 → 단어장 → 현재 학습 언어 순(단어 상세·학습과 같은 wordLang 규칙)
+  return { word: w.origin, lang: wordLang(w, wordLang(book)) };
+};
+
+/**
+ * 작물 탭 → 그 단어 발음(이슈 #25 16차). 단어 상세·학습과 같은 getTextSound 를 쓴다 —
+ * 새 호출이 이전 재생을 끊고(공유 오디오 선점) 새로 읽는다. 탭 효과음(feel 'tap', 짧은 Web Audio)은
+ * 별도 경로라 함께 울려도 서로 끊지 않는다.
+ */
+const speakCropWord = (text) => {
+  const t = stripHtmlTags(text?.word || '').trim();
+  if (!t) return;
+  getTextSound(t, text.lang || 'en').catch?.(() => { /* 재생 실패는 조용히 */ });
 };
 
 /**
@@ -174,8 +188,12 @@ const cropWordText = (book, id) => {
  */
 const CropWordBubble = ({ x, y, word }) => {
   const ref = useRef(null);
-  useEffect(() => {
-    anim(ref.current, WORD_LABEL_FRAMES, { duration: BUBBLE_MS, easing: 'ease-out' });
+  // 칠하기 전에 애니메이션을 붙이고(fill: both) 첫 프레임부터 키프레임 0(opacity 0)으로 둔다 —
+  // 애니메이션이 늦게 붙거나 합성 레이어가 다시 만들어지는 순간 검은 알약이 맨 모습(left-1/2, 이동 없음)으로
+  // 한 프레임 비치던 여지를 없앤다(이슈 #25 16차 검은 깜빡임)
+  useLayoutEffect(() => {
+    const a = anim(ref.current, WORD_LABEL_FRAMES, { duration: BUBBLE_MS, easing: 'ease-out', fill: 'both' });
+    return () => { try { a?.cancel(); } catch { /* 무시 */ } };
   }, []);
   return (
     <div className="absolute z-[30] w-0 h-0 pointer-events-none" style={{ left: x, top: y }}>
@@ -279,6 +297,7 @@ const FieldTile = ({ row, width, single, onSelect }) => {
     if (!hit) return;
     const text = cropWordText(book, hit.spot.id);
     if (!text) return;
+    speakCropWord(text);
     bounceCrop(e.currentTarget, hit.spot.key);
     const head = cropHead(hit.spot);
     showBubble({ id: hit.spot.id, ...text, x: head.x * k, y: (head.y - VIEW_TOP) * k });
@@ -351,6 +370,7 @@ const MapField = React.memo(({ row, tileW, budget, left, top }) => {
     </div>
   );
 });
+MapField.displayName = 'MapField';
 
 /** 고무줄 — 경계를 넘은 거리 over 를 화면 크기 dim 기준으로 감쇠(iOS 스크롤뷰 식) */
 const RUBBER_C = 0.55;
@@ -480,6 +500,7 @@ const HomeFieldGrid = ({ rows, onSelect, resetSignal = 0, focusBottom }) => {
   const rRef = useRef(0);
   const moving = useRef(false);
   const commitTimer = useRef(0);
+  const gesture = useRef(null); // 진행 중 제스처 — apply 가 탭 판정 중인지 본다
 
   const apply = useCallback(() => {
     raf.current = 0;
@@ -488,9 +509,21 @@ const HomeFieldGrid = ({ rows, onSelect, resetSignal = 0, focusBottom }) => {
     if (!L || !el || !rRef.current) return;
     const { S, tx, ty } = view.current;
     const k = S / rRef.current;
-    el.style.willChange = moving.current ? 'transform' : 'auto';
-    if (moving.current || Math.abs(k - 1) > 1e-4) {
+    /*
+      이슈 #25 16차 — 작물 탭 때 가끔 화면에 검은 것이 깜빡이던 원인.
+      예전엔 탭(손가락을 거의 안 움직임)에도 pointerup → startAnim → apply 가 지도 전체 레이어를
+      will-change + translate3d 로 합성 레이어로 올렸다가 140ms 뒤 endMove 가 다시 내렸다.
+      이 레이어는 밭·작물 수백 장을 품은 큰 레이어라, iOS WebView 가 승격·강등 때 백킹 텍스처를
+      새로 할당하며 아직 칠하지 않은 타일이 검게 한두 프레임 비친다(튕김 애니메이션 중인 작물 레이어·
+      말풍선 레이어가 그 안에서 다시 붙는 것과 겹치면 더 잘 보였다).
+      이제 실제로 끌거나 핀치할 때만 승격한다. 탭 판정 중(gesture.tap)엔 2D transform 으로만 옮긴다.
+    */
+    const promote = moving.current && !gesture.current?.tap;
+    el.style.willChange = promote ? 'transform' : 'auto';
+    if (promote) {
       el.style.transform = `translate3d(${tx}px, ${ty}px, 0) scale(${k})`;
+    } else if (Math.abs(k - 1) > 1e-4) {
+      el.style.transform = `translate(${tx}px, ${ty}px) scale(${k})`;
     } else {
       // 쉬는 화면은 기기 픽셀 격자에 맞춘다 — 소수 px 이동이면 래스터가 반 픽셀 어긋나 흐려 보인다
       const dpr = (typeof window !== 'undefined' && window.devicePixelRatio) || 1;
@@ -734,7 +767,6 @@ const HomeFieldGrid = ({ rows, onSelect, resetSignal = 0, focusBottom }) => {
 
   /* ── 포인터 ── */
   const pointers = useRef(new Map());
-  const gesture = useRef(null);
   const samples = useRef([]);
   const lastEmptyTap = useRef(null); // 직전 빈 땅 탭 { t, x, y } — 두 번 탭 판정용
   const [bubbles, showBubble] = useCropBubbles();
@@ -891,6 +923,7 @@ const HomeFieldGrid = ({ rows, onSelect, resetSignal = 0, focusBottom }) => {
           lastEmptyTap.current = null;
           const fieldEl = [...(layerRef.current?.querySelectorAll('[data-field]') || [])]
             .find((el) => el.getAttribute('data-field') === String(crop.row.book.id));
+          speakCropWord(text);
           bounceCrop(fieldEl, crop.spot.key);
           showBubble({ id: `${crop.row.book.id}:${crop.spot.id}`, ...text, wx: crop.wx, wy: crop.wy });
         } else {
@@ -918,6 +951,18 @@ const HomeFieldGrid = ({ rows, onSelect, resetSignal = 0, focusBottom }) => {
         if (s.length >= 2 && dt > 0.008 && performance.now() - end.t < 80) {
           vx = clamp((end.x - first.x) / dt, -4000, 4000);
           vy = clamp((end.y - first.y) / dt, -4000, 4000);
+        }
+      }
+      // 탭(이동 없음)이고 경계 안이면 물리 루프를 돌리지 않는다 — 레이어 승격·강등(검은 깜빡임 원인)을 피한다
+      if (g?.kind === 'pan' && g.tap) {
+        const L = lay.current;
+        const v = view.current;
+        const c = L ? hardClamp(L, v) : v;
+        if (c.S === v.S && Math.abs(c.tx - v.tx) < 0.5 && Math.abs(c.ty - v.ty) < 0.5) {
+          if (commitTimer.current) { clearTimeout(commitTimer.current); commitTimer.current = 0; }
+          moving.current = false;
+          schedule();
+          return;
         }
       }
       startAnim(vx, vy, g?.kind === 'pinch' ? g.mid : last);

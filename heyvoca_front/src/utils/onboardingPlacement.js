@@ -511,9 +511,10 @@ export function buildQuestion(type, words, pool, rng = Math.random) {
     used      1부에서 이미 쓴 단어 id
     firstById 단어별 1부 결과 {type, correct}
     log       migrate 로 보낼 답 [{voca_id, question_type, correct}] (첫 시도만 — 1·2부)
-    wrong     아직 맞히지 못한 단어 id (3부 대상)
-    retryCount 단어별 재출제 수
-    wrongQ    단어별 '틀린 그 문제'의 출제 직후 사본(3부에서 그대로 다시 낸다)
+    rv        복습 항목 [{key, ids, q}] — 1·2부에서 틀린 **문제마다** 하나(q = 출제 직후 사본, 3부에서 그대로 다시 낸다)
+    wrong     아직 맞히지 못한 단어 id (rv 에서 계산, 표시·호환용)
+    retryCount 복습 항목(key)별 재출제 수
+    wrongQ    (구버전 세션 전용) 단어별 틀린 문제 사본 — reviewOf 가 rv 로 옮긴다
     pendingQ  지금 화면 문제의 출제 직후 사본(플러그인이 문제 객체에 답을 써 넣기 전)
     pending   지금 화면에 낸 문제의 정보 {kind:'p1'|'p2'|'p3', type, ids}
     current   지금 화면의 문제 객체(복원용)
@@ -537,8 +538,8 @@ export function createSession(bands, { theta = START_THETA, rng = Math.random } 
     firstById: {},
     log: [],
     wrong: [],
+    rv: [],
     retryCount: {},
-    wrongQ: {},
     pendingQ: null,
     pending: null,
     current: null,
@@ -689,41 +690,69 @@ const nextPart2 = (s, rng) => {
   return q;
 };
 
-// 3부 — 아직 못 맞힌 단어를 **틀린 그 문제 그대로** 맞힐 때까지 다시(최대 MAX_RETRY). 사본이 없으면(구버전 세션) 뜻 고르기.
-// 카드 맞추기처럼 한 문제에 틀린 단어가 여럿이면 그 문제를 한 번만 내고, 함께 든 틀린 단어도 재출제 1회로 센다.
+// 3부 — 체험 중 틀린 **문제마다** 그 문제를 그대로(같은 유형·같은 문항 데이터) 맞힐 때까지 다시(최대 MAX_RETRY).
+// 사본이 없으면(구버전 세션) 뜻 고르기.
+// 이슈 #25 16차 QA — 예전엔 복습 대상이 '단어'였다. 스펠링에서 틀린 단어가 2부 실전 문장 문제로 다시 나오면
+//   ① 2부에서 맞히면 복습 대상에서 빠져 스펠링 복습이 아예 없었고 ② 2부에서 또 틀리면 복습 사본이 문장 문제로
+//   덮여 스펠링은 다시 나오지 않았다('스펠링을 틀렸는데 복습에서 안 나오고 넘어간다'). 이제 틀린 문제 하나가
+//   복습 항목 하나다(s.rv) — 1부·2부 어디서 틀렸든 그 문제가 그대로 다시 나오고, 다른 문제에서 같은 단어를
+//   맞혀도 지워지지 않는다.
+// 카드 맞추기처럼 한 문제에 틀린 단어가 여럿이면 그 문제를 한 번 내고, 틀렸던 단어를 다 맞혀야 항목이 끝난다.
 const nextPart3 = (s, rng) => {
-  while (s.wrong.length > 0) {
-    const id = s.wrong[0];
-    const count = s.retryCount[id] ?? 0;
-    if (count >= MAX_RETRY || !byId(s, id)) {
-      // 포기한 단어의 빈 칸은 분모에서 뺀다 — 덜 찬 채로 끝나지 않게
-      s.wrong.shift();
-      s.dropped = (s.dropped ?? 0) + (s.unfilled?.[id] ?? 0);
-      if (s.unfilled) s.unfilled[id] = 0;
+  const rv = reviewOf(s);
+  while (rv.length > 0) {
+    const item = rv[0];
+    const count = s.retryCount[item.key] ?? 0;
+    const alive = item.ids.filter((id) => byId(s, id));
+    if (count >= MAX_RETRY || alive.length === 0) {
+      // 포기한 항목의 빈 칸은 분모에서 뺀다 — 덜 찬 채로 끝나지 않게
+      rv.shift();
+      item.ids.forEach((id) => {
+        const k = cellKey(item.key, id);
+        s.dropped = (s.dropped ?? 0) + (s.unfilled?.[k] ?? 0);
+        if (s.unfilled) s.unfilled[k] = 0;
+      });
+      syncWrong(s);
       continue;
     }
-    const p = byId(s, id);
     const first = !s.startedRetry;
     s.startedRetry = true;
-    // 같은 단어를 연달아 두 번 묻지 않게 — 한 단어를 낸 뒤 줄 맨 뒤로 보낸다
-    s.wrong.push(s.wrong.shift());
-    const snap = s.wrongQ?.[id];
+    // 같은 문제를 연달아 두 번 묻지 않게 — 낸 항목은 줄 맨 뒤로 보낸다(항목이 하나뿐이면 바로 다시 나온다)
+    rv.push(rv.shift());
     let q;
-    if (snap) {
-      q = { ...JSON.parse(JSON.stringify(snap)), isCorrect: null, userResultIndex: null, isRetry: true };
+    if (item.q) {
+      q = { ...JSON.parse(JSON.stringify(item.q)), isCorrect: null, userResultIndex: null, isRetry: true };
       delete q.phaseStart;
     } else {
-      q = { ...buildQuestion('multipleChoice', [p], s.pool, rng), isRetry: true };
+      q = { ...buildQuestion('multipleChoice', [byId(s, alive[0])], s.pool, rng), isRetry: true };
     }
-    const ids = Array.isArray(q.words) ? q.words.map((w) => w.vocaIndexId ?? w.id) : [id];
-    if (!ids.includes(id)) ids.push(id);
-    ids.forEach((x) => { if (s.wrong.includes(x)) s.retryCount[x] = (s.retryCount[x] ?? 0) + 1; });
-    s.pending = { kind: 'p3', type: q.questionType, ids };
+    s.retryCount[item.key] = count + 1;
+    s.pending = { kind: 'p3', type: q.questionType, ids: [...item.ids], key: item.key };
     if (first) q.phaseStart = 'retry';
     return q;
   }
   return null;
 };
+
+// 복습 항목 { key, ids(아직 못 맞힌 단어), q(틀린 그 문제의 출제 직후 사본) } — key 는 원래 문제의 일련번호('q'+seq).
+const cellKey = (key, id) => `${key}|${id}`;
+const syncWrong = (s) => { s.wrong = [...new Set((s.rv || []).flatMap((it) => it.ids))]; };
+// 구버전 세션(단어 단위 wrong/wrongQ/unfilled)을 항목 단위로 옮긴다 — 학습 도중 앱이 갱신돼도 이어지게.
+function reviewOf(s) {
+  if (Array.isArray(s.rv)) return s.rv;
+  const unfilled = {};
+  s.rv = (s.wrong || []).map((id) => {
+    const key = `w${id}`;
+    unfilled[cellKey(key, id)] = s.unfilled?.[id] ?? 0;
+    if (s.retryCount?.[id] != null) s.retryCount[key] = s.retryCount[id];
+    return { key, ids: [id], q: s.wrongQ?.[id] ?? null };
+  });
+  if (s.pv) s.unfilled = unfilled;
+  s.retryCount = s.retryCount || {};
+  return s.rv;
+}
+const reviewItemOf = (s, pend) => (s.rv || []).find((it) => it.key === pend.key)
+  ?? (pend.key ? null : (s.rv || []).find((it) => it.ids.some((id) => pend.ids?.includes(id))));
 
 /**
  * 방금 화면에 있던 문제의 결과를 반영하고 다음 문제를 만든다. 더 낼 게 없으면 null(세션 끝).
@@ -737,33 +766,41 @@ export function advance(s, answered, rng = Math.random) {
     const results = Array.isArray(answered.words)
       ? answered.words.map((w) => [w.vocaIndexId ?? w.id, w.isCorrect === true])
       : [[answered.vocaIndexId ?? answered.id, answered.isCorrect === true]];
+    reviewOf(s);
     if (s.pv) {
       const f = applyFill(s, pend, results);
       s.filled = f.filled;
       s.unfilled = f.unfilled;
     }
-    results.forEach(([id, correct]) => {
-      const p = byId(s, id);
-      if (!p) return;
-      if (pend.kind === 'p3') {
-        // 카드 맞추기 재출제엔 이미 맞힌 단어도 같이 들어 있다 — 틀렸던 단어만 센다
-        if (correct && s.wrong.includes(id)) {
-          s.wrong = s.wrong.filter((x) => x !== id);
-          if (!s.pv) s.filled = (s.filled ?? 0) + 1; // 틀렸던 칸을 채운다(진행바, 구세션)
-        }
-        return;
+    if (pend.kind === 'p3') {
+      // 카드 맞추기 재출제엔 이미 맞힌 단어도 같이 들어 있다 — 그 항목에서 틀렸던 단어만 센다
+      const item = reviewItemOf(s, pend);
+      if (item) {
+        results.forEach(([id, correct]) => {
+          if (correct && item.ids.includes(id)) {
+            item.ids = item.ids.filter((x) => x !== id);
+            if (!s.pv) s.filled = (s.filled ?? 0) + 1; // 틀렸던 칸을 채운다(진행바, 구세션)
+          }
+        });
+        if (item.ids.length === 0) s.rv = s.rv.filter((it) => it !== item);
       }
-      if (correct && !s.pv) s.filled = (s.filled ?? 0) + 1;
-      // 2부에서 맞히면 3부(오답 복습) 대상에서 뺀다 — 이미 맞힌 단어를 또 묻지 않는다
-      if (pend.kind === 'p2' && correct) s.wrong = s.wrong.filter((x) => x !== id);
-      updateTheta(s, itemB(p, pend.type), correct);
-      s.log.push({ voca_id: id, question_type: pend.type, correct });
-      if (pend.kind === 'p1') s.firstById[id] = { type: pend.type, correct };
-      if (!correct && pend.kind === 'p1' && !s.wrong.includes(id)) s.wrong.push(id);
-      if (!correct && pend.kind === 'p2' && !s.wrong.includes(id)) s.wrong.push(id);
-      // 3부는 틀린 그 문제를 그대로 다시 낸다 — 마지막으로 틀린 문제(2부가 1부보다 뒤)를 남긴다
-      if (!correct && s.pendingQ) s.wrongQ = { ...(s.wrongQ || {}), [id]: s.pendingQ };
-    });
+    } else {
+      const wrongIds = [];
+      results.forEach(([id, correct]) => {
+        const p = byId(s, id);
+        if (!p) return;
+        if (correct && !s.pv) s.filled = (s.filled ?? 0) + 1;
+        updateTheta(s, itemB(p, pend.type), correct);
+        s.log.push({ voca_id: id, question_type: pend.type, correct });
+        if (pend.kind === 'p1') s.firstById[id] = { type: pend.type, correct };
+        if (!correct) wrongIds.push(id);
+      });
+      // 틀린 문제는 유형과 상관없이 그대로 복습 항목이 된다(다른 문제에서 같은 단어를 맞혀도 지우지 않는다)
+      if (wrongIds.length) {
+        s.rv.push({ key: pend.key ?? `q${s.curSeq ?? s.seq ?? 0}`, ids: wrongIds, q: s.pendingQ ?? null });
+      }
+    }
+    syncWrong(s);
   }
   if (pend && answered && pend.kind !== 'p3') {
     const allRight = Array.isArray(answered.words)
@@ -785,6 +822,8 @@ export function advance(s, answered, rng = Math.random) {
   // 장면이 그 자리를 대신한다. 학습 화면 안 안내가 떠 있는 동안 아직 안 보이는 첫 문제의 TTS 가 먼저 나왔다.
   const q = nextPart1(s, rng) || nextPart2(s, rng) || nextPart3(s, rng);
   if (q) { s.seq = (s.seq ?? 0) + 1; q.placementSeq = s.seq; }
+  // 1·2부 문제의 복습 항목 key = 이 문제의 일련번호(3부는 nextPart3 가 원래 항목 key 를 넣어 둔다)
+  if (q && s.pending && !s.pending.key) s.pending.key = `q${s.seq}`;
   s.curSeq = q ? s.seq : null;
   // 출제 직후 사본 — 플러그인이 문제 객체에 답(isCorrect·userResultIndex 등)을 써 넣기 전 상태
   s.pendingQ = q && s.pending?.kind !== 'p3' ? JSON.parse(JSON.stringify(q)) : null;
@@ -833,28 +872,29 @@ export const filledUnits = (s) => Math.min(s?.filled ?? 0, plannedProgressUnits(
 /*
   진행바 칸 채우기(이슈 #25 11차) — 농장 돌보기(utils/studyProgress.js)와 같은 규칙:
     분모 = 1·2부에서 낸 채점 단위(카드 맞추기는 단어 수) + 아직 안 낸 계획 단위. 재출제는 분모에 없다.
-    분자 = 정답으로 채운 단위. 틀린 단위는 그 단어를 나중에 맞힐 때(3부 재출제, 또는 2부에서 같은 단어를
-           맞혀 복습 대상에서 빠질 때) 채워진다 — 그래서 마지막 문제를 맞히는 순간 정확히 가득 찬다.
+    분자 = 정답으로 채운 단위. 틀린 단위는 그 문제를 3부 복습에서 맞힐 때 채워진다(16차 — 다른 문제에서
+           같은 단어를 맞혀도 채우지 않는다. 틀린 문제는 반드시 복습에 나오므로) — 그래서 마지막 문제를 맞히는 순간 정확히 가득 찬다.
   advance(반영)와 progressOf(채점 직후 미리보기)가 같은 함수를 써서 화면과 세션이 어긋나지 않는다.
 */
 function applyFill(s, pend, results) {
   let filled = s.filled ?? 0;
   const unfilled = { ...(s.unfilled || {}) };
-  const wrong = new Set(s.wrong || []);
+  if (pend.kind === 'p3') {
+    const item = reviewItemOf(s, pend);
+    if (!item) return { filled, unfilled };
+    results.forEach(([id, correct]) => {
+      if (!correct || !item.ids.includes(id)) return;
+      const k = cellKey(item.key, id);
+      filled += unfilled[k] ?? 0;
+      unfilled[k] = 0;
+    });
+    return { filled, unfilled };
+  }
+  const key = pend.key ?? `q${s.curSeq ?? s.seq ?? 0}`;
   results.forEach(([id, correct]) => {
     if (!byId(s, id)) return;
-    if (pend.kind === 'p3') {
-      if (correct && wrong.has(id)) { filled += unfilled[id] ?? 0; unfilled[id] = 0; wrong.delete(id); }
-      return;
-    }
-    if (correct) {
-      filled += 1;
-      // 2부 정답이면 복습 대상에서 빠지므로 앞서 틀린 칸도 함께 채운다
-      if (pend.kind === 'p2' && wrong.has(id)) { filled += unfilled[id] ?? 0; unfilled[id] = 0; wrong.delete(id); }
-    } else {
-      unfilled[id] = (unfilled[id] ?? 0) + 1;
-      wrong.add(id);
-    }
+    if (correct) filled += 1;
+    else unfilled[cellKey(key, id)] = 1; // 이 문제를 3부에서 맞히는 순간 채워진다
   });
   return { filled, unfilled };
 }
@@ -866,6 +906,7 @@ function applyFill(s, pend, results) {
 export function progressOf(s, question) {
   if (!s) return { total: 1, done: 0 };
   if (!s.pv) return { total: plannedProgressUnits(), done: filledUnits(s) };
+  reviewOf(s);
   let remaining = 0;
   if (!s.done) {
     for (let i = s.step; i < PART1_PLAN.length; i += 1) remaining += PART1_PLAN[i] === 'cardMatch' ? CARD_MATCH_SIZE : 1;

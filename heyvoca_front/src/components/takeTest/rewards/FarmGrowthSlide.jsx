@@ -10,7 +10,8 @@
 //            마지막에 황금 당근                          evolve — 강한 음(240ms)이 바뀌는 순간에 오도록 먼저 발사
 //   끝       「자란 단어 보기」 · 「확인」 켜짐            select
 //
-// 밭에는 9칸까지만 올리고 나머지는 숫자로 센다(planField). 단어 목록은 필요할 때만 여는 시트다.
+// 자란 작물은 전부 밭에 올린다 — 9개를 넘으면 격자를 넓히고 칸을 줄인다(planField → fieldSlots, 심기 장면과 같은 함수).
+// 작물이 많으면 등장·자람 간격을 줄여 전체 연출 길이를 비슷하게 유지한다. 단어 목록은 필요할 때만 여는 시트다.
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { CaretUp, Drop } from '@phosphor-icons/react';
@@ -67,13 +68,13 @@ const FarmGrowthSlide = ({ entries, reducedMotion, onReady, skipRef }) => {
   const markGrown = (i) => setGrown((prev) => (prev.includes(i) ? prev : [...prev, i]));
 
   const growFx = (i) => {
-    const { entry, x, y } = crops[i];
+    const { entry, x, y, scale: sc = 1 } = crops[i];
     const field = fieldRef.current;
     const gold = entry.kind === 'gold';
-    burst(field, x, y - 30, gold ? { n: 16, dist: 74, size: 9, colors: FX_GOLDS, dur: 900 } : { n: 8, dist: 34, size: 6 });
-    ring(field, x, y - 26, gold
+    burst(field, x, y - 30 * sc, gold ? { n: 16, dist: 74, size: 9, colors: FX_GOLDS, dur: 900 } : { n: 8, dist: Math.round(34 * sc), size: 6 });
+    ring(field, x, y - 26 * sc, gold
       ? { size: 220, color: '#F2D252', dur: 800 }
-      : { size: 84, color: entry.kind === 'rescue' ? '#74D5FF' : '#6CE9A6', dur: 520 });
+      : { size: Math.round(84 * sc), color: entry.kind === 'rescue' ? '#74D5FF' : '#6CE9A6', dur: 520 });
     showWord(i);
     pulse(numRef.current, 1.35, 260);
     pulse(chipRefs.current[entry.kind], 1.12, 220);
@@ -99,8 +100,10 @@ const FarmGrowthSlide = ({ entries, reducedMotion, onReady, skipRef }) => {
         if (!instant) anim(fieldRef.current, [{ transform: 'translateY(46px) scale(.82)', opacity: 0 }, { transform: 'none', opacity: 1 }], { duration: 520, easing: BACK_OUT });
       },
     });
+    // 작물이 많으면(9개 초과) 간격을 줄여 등장·자람 전체 길이를 9개일 때와 비슷하게 맞춘다
+    const appearGap = Math.min(45, Math.round(720 / Math.max(1, crops.length)));
     crops.forEach((_, i) => steps.push({
-      at: 260 + i * 45,
+      at: 260 + i * appearGap,
       run: (instant) => {
         setAppeared((a) => Math.max(a, i + 1));
         if (!instant) anim(cropRefs.current[i], [{ transform: 'translateY(-16px) scale(.3)', opacity: 0 }, { transform: 'none', opacity: 1 }], { duration: 320, easing: BACK_OUT });
@@ -109,16 +112,17 @@ const FarmGrowthSlide = ({ entries, reducedMotion, onReady, skipRef }) => {
 
     let t = 1050;
     const sprouts = indexOf('sprout');
-    sprouts.forEach((ci, n) => growStep(ci, t + n * 190, n === 0 ? { cue: 'xpUp' } : TICK));
-    if (sprouts.length) t += sprouts.length * 190 + 260;
+    const sproutGap = sprouts.length > 1 ? clamp(Math.round(1710 / sprouts.length), 90, 190) : 190;
+    sprouts.forEach((ci, n) => growStep(ci, t + n * sproutGap, n === 0 ? { cue: 'xpUp' } : TICK));
+    if (sprouts.length) t += sprouts.length * sproutGap + 260;
 
     const grows = indexOf('grow');
-    const growGap = grows.length > 1 ? clamp(Math.round(1560 / grows.length), 190, 520) : 520;
+    const growGap = grows.length > 1 ? clamp(Math.round(1560 / grows.length), 110, 520) : 520;
     grows.forEach((ci, n) => growStep(ci, t + n * growGap, n === 0 || growGap >= 400 ? { cue: 'xpUp' } : TICK));
     t += grows.length * growGap;
 
     const rescues = indexOf('rescue');
-    const rescueGap = rescues.length > 1 ? clamp(Math.round(1600 / rescues.length), 260, 800) : 800;
+    const rescueGap = rescues.length > 1 ? clamp(Math.round(1600 / rescues.length), 160, 800) : 800;
     rescues.forEach((ci, n) => {
       const at = t + n * rescueGap;
       steps.push({
@@ -136,8 +140,9 @@ const FarmGrowthSlide = ({ entries, reducedMotion, onReady, skipRef }) => {
     t += rescues.length * rescueGap;
 
     const golds = indexOf('gold');
+    const goldGap = golds.length > 1 ? clamp(Math.round(2400 / golds.length), 300, 600) : 600;
     golds.forEach((ci, n) => {
-      const at = t + n * 600;
+      const at = t + n * goldGap;
       // 바뀌기 직전 금빛이 차오른다(필터 대신 뒤에 깐 빛 한 장의 opacity·scale 만 움직인다)
       steps.push({
         at,
@@ -152,7 +157,7 @@ const FarmGrowthSlide = ({ entries, reducedMotion, onReady, skipRef }) => {
       steps.push({ at: at + 140, cue: n === 0 ? 'evolve' : 'xpUp' });
       growStep(ci, at + 250, {}, 1.5);
     });
-    if (golds.length) t += (golds.length - 1) * 600 + 1000;
+    if (golds.length) t += (golds.length - 1) * goldGap + 1000;
 
     steps.push({ at: t, run: () => setTail(true) });
     return { steps, readyAt: t };
@@ -169,11 +174,11 @@ const FarmGrowthSlide = ({ entries, reducedMotion, onReady, skipRef }) => {
   const onTapCrop = (i) => (e) => {
     e.stopPropagation();
     if (i >= appeared) return;
-    const { x, y } = crops[i];
+    const { x, y, scale: sc = 1 } = crops[i];
     feel('tap');
     jelly(cropRefs.current[i], 1);
     showWord(i, 1300);
-    burst(fieldRef.current, x, y - 34, { n: 6, dist: 26, size: 5 });
+    burst(fieldRef.current, x, y - 34 * sc, { n: 6, dist: Math.round(26 * sc), size: 5 });
   };
 
   const openSheet = (e) => {
@@ -210,17 +215,25 @@ const FarmGrowthSlide = ({ entries, reducedMotion, onReady, skipRef }) => {
             <RewardGlow on={finale} gold />
             <div ref={fieldRef} className={`absolute inset-0 ${fieldIn ? 'opacity-100' : 'opacity-0'}`}>
               <img src={fieldBase} alt='' draggable={false} className='absolute inset-0 h-full w-full select-none' />
-              {crops.map(({ entry, x, y }, i) => {
+              {crops.map(({ entry, x, y, z, scale }, i) => {
                 const isGrown = grown.includes(i);
                 const gold = entry.kind === 'gold';
                 const rescue = entry.kind === 'rescue';
                 return (
+                  /* 바깥은 자리·크기(scale — 9개 초과 때 칸 축소), 안쪽은 등장·통 튀기 — 애니메이션이 transform 을 덮어써도 크기가 유지된다 */
                   <div
                     key={entry.id}
+                    className='absolute'
+                    style={{
+                      width: CROP_BOX, height: CROP_BOX, left: x - CROP_BOX / 2, top: y - CROP_BOX * CROP_BASELINE, zIndex: z,
+                      transform: scale !== 1 ? `scale(${scale})` : undefined,
+                      transformOrigin: `50% ${CROP_BASELINE * 100}%`,
+                    }}
+                  >
+                  <div
                     ref={(el) => { cropRefs.current[i] = el; }}
                     onClick={onTapCrop(i)}
-                    className={`absolute cursor-pointer origin-[50%_86%] ${i < appeared ? 'opacity-100' : 'opacity-0'}`}
-                    style={{ width: CROP_BOX, height: CROP_BOX, left: x - CROP_BOX / 2, top: y - CROP_BOX * CROP_BASELINE, zIndex: 10 + Math.round(y / 19) }}
+                    className={`absolute inset-0 cursor-pointer origin-[50%_86%] ${i < appeared ? 'opacity-100' : 'opacity-0'}`}
                   >
                     {gold ? (
                       <span
@@ -268,6 +281,7 @@ const FarmGrowthSlide = ({ entries, reducedMotion, onReady, skipRef }) => {
                         <Drop size={18} weight='fill' />
                       </span>
                     ) : null}
+                  </div>
                   </div>
                 );
               })}

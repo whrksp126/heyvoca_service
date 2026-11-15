@@ -49,6 +49,7 @@ export const buildGrowthEntries = ({ grownRows = [], rescuedRows = [], metaOfRow
 
 /*
   밭 위 자리 — 3×3 마름모 격자(i: 오른쪽 아래, j: 왼쪽 아래). 개수마다 모양이 가운데로 모이게 고른다.
+  9개를 넘으면 fieldSlots 가 격자를 넓힌다.
   뒤(위)에서 앞(아래) 순서라, 마지막에 자라는 황금 당근이 맨 앞자리에 선다.
 */
 const SLOTS_BY_COUNT = {
@@ -68,29 +69,47 @@ export const FIELD_H = 244;
 export const CROP_BOX = 88;
 
 /**
- * 밭에 올릴 작물을 고른다. 9칸을 넘으면 종류마다 적어도 하나는 보이게 하고(대표 종류 우선),
- * 못 올린 만큼은 그 종류의 마지막 작물이 숫자로 대신한다(weight).
- * @returns {{ crops: Array<{entry, x, y, weight}>, total: number }}
+ * n 개 자리 — 9개까지는 위 3×3 자리 그대로(scale 1). 그보다 많으면 k×k 마름모 격자(k = ⌈√n⌉)에서
+ * 가운데에 가까운 칸부터 n 칸을 고르고, 3×3 과 같은 밭 범위(x ±88, y ±38)에 맞게 간격을 줄인다.
+ * 칸이 겹치지 않게 그림도 같은 비율(scale)로 줄인다. 뒤(위)에서 앞(아래) 순서.
+ * 밭 성장 슬라이드(planField)와 새 씨앗 심기 장면(PlantingScene)이 같이 쓴다.
+ * @returns {Array<{x:number, y:number, z:number, scale:number}>} z = 앞뒤 겹침 순서(zIndex)
+ */
+export const fieldSlots = (n) => {
+  if (n <= 0) return [];
+  if (n <= FIELD_MAX) {
+    return SLOTS_BY_COUNT[n].map(([i, j]) => ({
+      x: FIELD_W / 2 + (i - j) * 44, y: 150 + (i + j - 2) * 19, z: 10 + i + j, scale: 1,
+    }));
+  }
+  const k = Math.ceil(Math.sqrt(n));
+  const c = (k - 1) / 2;
+  const cells = [];
+  for (let i = 0; i < k; i += 1) for (let j = 0; j < k; j += 1) cells.push([i, j]);
+  const step = 2 / (k - 1); // 3×3 간격(44, 19) 대비
+  const scale = Math.min(1, 2.4 / (k - 1));
+  return cells
+    .sort((a, b) => (Math.hypot(a[0] - c, a[1] - c) - Math.hypot(b[0] - c, b[1] - c)) || (a[0] + a[1] - b[0] - b[1]))
+    .slice(0, n)
+    .sort((a, b) => (a[0] + a[1] - b[0] - b[1]) || (b[0] - a[0]))
+    .map(([i, j]) => ({
+      x: FIELD_W / 2 + (i - j) * 44 * step,
+      y: 150 + (i + j - (k - 1)) * 19 * step,
+      z: 10 + i + j,
+      scale,
+    }));
+};
+
+/**
+ * 밭에 올릴 작물 자리 — **자란 작물은 전부** 밭에 올린다(이슈 #25 16차 QA — '13개 자랐어요'인데 밭엔 9개뿐이었다.
+ * 예전엔 9칸까지만 올리고 나머지는 종류의 마지막 작물이 숫자로 대신했다). 9개를 넘으면 fieldSlots 가 격자를
+ * 넓히고 칸을 줄인다. 자라는 차례(GROWTH_KINDS)대로 뒤에서 앞으로 놓여, 마지막에 자라는 황금 당근이 맨 앞에 선다.
+ * weight 는 늘 1(한 칸 = 한 단어) — 호출부의 합계 계산을 그대로 두려고 남긴다.
+ * @returns {{ crops: Array<{entry, x, y, z, scale, weight}>, total: number }}
  */
 export const planField = (entries) => {
-  const byKind = Object.fromEntries(GROWTH_KINDS.map((k) => [k, entries.filter((e) => e.kind === k)]));
-  const quota = Object.fromEntries(GROWTH_KINDS.map((k) => [k, Math.min(1, byKind[k].length)]));
-  let left = FIELD_MAX - GROWTH_KINDS.reduce((s, k) => s + quota[k], 0);
-  while (left > 0) {
-    let gave = false;
-    for (const k of GROWTH_KINDS) {
-      if (left > 0 && quota[k] < byKind[k].length) { quota[k] += 1; left -= 1; gave = true; }
-    }
-    if (!gave) break;
-  }
-  const picked = GROWTH_KINDS.flatMap((k) => byKind[k].slice(0, quota[k]).map((entry, i) => ({
-    entry,
-    weight: i === quota[k] - 1 ? 1 + (byKind[k].length - quota[k]) : 1,
-  })));
-  const slots = SLOTS_BY_COUNT[picked.length] ?? [];
-  const crops = picked.map((p, n) => {
-    const [i, j] = slots[n];
-    return { ...p, x: FIELD_W / 2 + (i - j) * 44, y: 150 + (i + j - 2) * 19 };
-  });
+  const ordered = GROWTH_KINDS.flatMap((k) => entries.filter((e) => e.kind === k));
+  const slots = fieldSlots(ordered.length);
+  const crops = ordered.map((entry, n) => ({ entry, weight: 1, ...slots[n] }));
   return { crops, total: entries.length };
 };
