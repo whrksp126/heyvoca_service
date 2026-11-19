@@ -18,6 +18,8 @@ import MemoryStateChangeBadge, {
 } from "../common/MemoryStateChangeBadge";
 import { getQuestionType, shouldAutoSpeakOnShow, isSingleWordPluginType, isFillInTheBlankType, isSentenceQuestionType, isNoGradeQuestionType, isArrangeQuestionType } from '../../plugins/questionTypes';
 import { getDisplayMeanings } from '../../utils/displayMeanings';
+import { buildMeaningPosMap } from '../../utils/meaningPos';
+import MeaningWithPos from '../common/MeaningWithPos';
 import { logStudyQuestion, getRequeueEasierApi, exampleSeenApi } from '../../api/study';
 import { mapRecommendItemToWord } from '../../utils/studyRecommendMapping';
 import { getAdvanceDelay } from '../../utils/studyTiming';
@@ -1070,7 +1072,8 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
     }
     return testQuestions[progressIndex].options.map(option => ({
       ...option,
-      displayMeanings: getDisplayMeanings(option.meanings)
+      displayMeanings: getDisplayMeanings(option.meanings),
+      posMap: buildMeaningPosMap(option),
     }));
   }, [progressIndex, testQuestions]);
 
@@ -2341,7 +2344,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
                         "
                       />
                       {isReverseChoice
-                        ? currentQuestionDisplayMeanings.join(', ')
+                        ? <MeaningWithPos meanings={currentQuestionDisplayMeanings} posMap={buildMeaningPosMap(testQuestions[progressIndex])} />
                         : <span lang={isJa(wordLang(testQuestions[progressIndex])) ? 'ja' : undefined}>{testQuestions[progressIndex].origin}</span>}
                       {/* ja: 채점 후에만 읽기(히라가나)를 보여 준다 — 채점 전엔 정답 힌트가 되므로 숨김 */}
                       {!isReverseChoice && isAnswered && isJa(wordLang(testQuestions[progressIndex])) && (() => {
@@ -2484,7 +2487,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
                         `}
                       >
                         <ShineSweep play={isCorrect === true && userSelected === index} />
-                        {isReverseChoice ? option.origin : option.displayMeanings.join(", ")}
+                        {isReverseChoice ? option.origin : <MeaningWithPos meanings={option.displayMeanings} posMap={option.posMap} size="sm" />}
                       </motion.button>
                     )
                   })}

@@ -1,4 +1,6 @@
 import React from 'react';
+import MeaningWithPos from '../common/MeaningWithPos';
+import { buildMeaningPosMap } from '../../utils/meaningPos';
 import CropImage from '../farm/CropImage';
 import {
   wordStage, wordHealth, wordDue, DUE_TONE_CLASS,
@@ -30,7 +32,8 @@ const WordRow = ({ word, onClick, showXp = true, showDue = true }) => {
   const stage = wordStage(word);
   const health = wordHealth(word);
   const due = wordDue(word);
-  const meaning = Array.isArray(word?.meanings) ? word.meanings.join(', ') : '';
+  const meanings = Array.isArray(word?.meanings) ? word.meanings : [];
+  const posMap = buildMeaningPosMap(word);
   const ja = isJa(wordLang(word));
   const showReading = shouldShowReading(word);
 
@@ -68,7 +71,7 @@ const WordRow = ({ word, onClick, showXp = true, showDue = true }) => {
           )}
         </span>
         <span className="block mt-[1px] truncate text-[12px] tracking-[-0.02em] text-layout-gray-400 dark:text-layout-gray-300">
-          {meaning}
+          <MeaningWithPos meanings={meanings} posMap={posMap} size="sm" />
         </span>
         {showXp && !unplanted && (
           <span className="flex items-center gap-[6px] mt-[4px]">

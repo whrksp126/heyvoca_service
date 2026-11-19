@@ -82,7 +82,7 @@ def _build_word_objects(voca_ids):
 
     words = db.session.query(Voca).filter(Voca.id.in_(voca_ids)).all()
 
-    meanings = (db.session.query(VocaMeaningMap.voca_id, VocaMeaning.meaning)
+    meanings = (db.session.query(VocaMeaningMap.voca_id, VocaMeaning.meaning, VocaMeaning.pos)
                 .join(VocaMeaning, VocaMeaningMap.meaning_id == VocaMeaning.id)
                 .filter(VocaMeaningMap.voca_id.in_(voca_ids))
                 .all())
@@ -96,10 +96,13 @@ def _build_word_objects(voca_ids):
     tokens_map = load_ja_example_tokens([e[1] for e in examples])
 
     word_map = {w.id: serialize_voca(w, extras=extras) for w in words}
+    for w in word_map.values():
+        w['meaningPos'] = []   # meanings 와 같은 순서/길이의 품사(UD 태그 또는 null)
 
-    for voca_id, meaning in meanings:
+    for voca_id, meaning, pos in meanings:
         if voca_id in word_map and meaning not in word_map[voca_id]['meanings']:
             word_map[voca_id]['meanings'].append(meaning)
+            word_map[voca_id]['meaningPos'].append(pos if pos and pos != 'X' else None)
 
     for voca_id, example_id, exam_en, exam_ko in examples:
         if voca_id not in word_map:
@@ -240,8 +243,10 @@ def search_word_korean():
     for vid, w in word_map.items():
         matched_meaning = matched_meaning_map.get(vid)
         if matched_meaning and matched_meaning in w['meanings']:
-            w['meanings'].remove(matched_meaning)
-            w['meanings'].insert(0, matched_meaning)
+            i = w['meanings'].index(matched_meaning)
+            w['meanings'].insert(0, w['meanings'].pop(i))
+            if len(w.get('meaningPos') or []) > i:
+                w['meaningPos'].insert(0, w['meaningPos'].pop(i))
 
     # 5. voca_ids 순서(유사도순)대로 최종 데이터 구성
     data = [word_map[vid] for vid in voca_ids if vid in word_map]
@@ -573,6 +578,7 @@ def get_bookstore_detail(bookstoreId):
             "origin": row.origin,
             "pronunciation": row.pronunciation,
             "meanings": texts['meanings'],
+            "meaningPos": texts.get('meaning_pos') or [],
             "examples": texts['examples'],
         }
         extras = ({row.id: {'reading': row.reading, 'romaji': row.romaji, 'jlpt': row.jlpt}}
@@ -650,16 +656,18 @@ _WORD_INFO_CACHE_TTL = 60 * 60 * 24  # 1일
 _WORD_INFO_MAX_MEANINGS = 4
 
 
-def _voca_meanings(voca_id, limit=_WORD_INFO_MAX_MEANINGS):
-    """voca_id의 뜻 목록(저장 순서, 최대 limit개)."""
+def _voca_meanings(voca_id, limit=_WORD_INFO_MAX_MEANINGS, with_pos=False):
+    """voca_id의 뜻 목록(저장 순서, 최대 limit개). with_pos=True 면 (뜻 리스트, 품사 리스트)."""
     rows = (
-        db.session.query(VocaMeaning.meaning)
+        db.session.query(VocaMeaning.meaning, VocaMeaning.pos)
         .join(VocaMeaningMap, VocaMeaningMap.meaning_id == VocaMeaning.id)
         .filter(VocaMeaningMap.voca_id == voca_id)
         .order_by(VocaMeaningMap.meaning_id.asc())
         .limit(limit)
         .all()
     )
+    if with_pos:
+        return [r[0] for r in rows], [(r[1] if r[1] and r[1] != 'X' else None) for r in rows]
     return [r[0] for r in rows]
 
 
@@ -694,11 +702,13 @@ def word_info():
     if not voca:
         return jsonify({'code': 200, 'data': None}), 200
 
+    info_meanings, info_pos = _voca_meanings(voca.id, with_pos=True)
     data = {
         'query': raw_word,
         'word': voca.word,
         'pronunciation': voca.pronunciation,
-        'meanings': _voca_meanings(voca.id),
+        'meanings': info_meanings,
+        'meaningPos': info_pos,
         'voca_id': voca.id,
         'vocaId': voca.id,
         'matched_form': matched_form,

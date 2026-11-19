@@ -284,8 +284,11 @@ def create_voca_book():
             db.session.add(VocaBookMap(voca_id=voca.id, book_id=voca_book.id))
 
             if len(row) > 1 and pd.notna(row[1]):
-                for mt in [m.strip() for m in str(row[1]).split(',') if m.strip()]:
-                    vm = VocaMeaning(meaning=mt)
+                from app.services.meaning_pos import clean_meaning_list
+                # 뜻 앞머리 품사 약어는 떼고 품사로 둔다(app/services/meaning_pos.py)
+                _texts, _pos_of = clean_meaning_list(m.strip() for m in str(row[1]).split(','))
+                for mt in _texts:
+                    vm = VocaMeaning(meaning=mt, pos=_pos_of.get(mt))
                     db.session.add(vm)
                     db.session.flush()
                     db.session.add(VocaMeaningMap(voca_id=voca.id, meaning_id=vm.id))
@@ -620,6 +623,9 @@ def _process_word_into_book(word_text, meanings_list, examples_list, book_id):
     AdminVocaBookMap.voca_examples 저장은 항상 표준 {'origin','meaning'} 형식으로 한다.
     """
     normalized_examples = [_example_en_ko(ex) for ex in examples_list]  # [(en, ko), ...]
+    # 뜻 앞머리 품사 약어는 떼고 품사로 둔다(app/services/meaning_pos.py)
+    from app.services.meaning_pos import clean_meaning_list
+    meanings_list, pos_of = clean_meaning_list(meanings_list)
 
     # 잠금 읽기 — 동시에 같은 새 단어를 만드는 다른 요청을 갭 잠금으로 막는다(add_word_to_voca_book 주석).
     existing_voca = Voca.query.filter_by(word=word_text).with_for_update().first()
@@ -632,7 +638,7 @@ def _process_word_into_book(word_text, meanings_list, examples_list, book_id):
         }
         for mt in meanings_list:
             if mt not in existing_meanings:
-                vm = VocaMeaning(meaning=mt)
+                vm = VocaMeaning(meaning=mt, pos=pos_of.get(mt))
                 db.session.add(vm)
                 db.session.flush()
                 db.session.add(VocaMeaningMap(voca_id=voca_id, meaning_id=vm.id))
@@ -654,7 +660,7 @@ def _process_word_into_book(word_text, meanings_list, examples_list, book_id):
         db.session.flush()
         voca_id = voca.id
         for mt in meanings_list:
-            vm = VocaMeaning(meaning=mt)
+            vm = VocaMeaning(meaning=mt, pos=pos_of.get(mt))
             db.session.add(vm)
             db.session.flush()
             db.session.add(VocaMeaningMap(voca_id=voca_id, meaning_id=vm.id))
@@ -935,7 +941,10 @@ def update_voca(voca_id):
         for mm in VocaMeaningMap.query.filter_by(voca_id=voca_id).all():
             existing_by_text.setdefault(mm.meaning.meaning, []).append(mm.meaning)
 
-        new_meaning_ids = []
+        # 뜻 텍스트에 섞인 품사 약어("환불; v. 환불하다", "[명] 서류")는 뜻을 나누고 품사로 둔다
+        # (app/services/meaning_pos.py). 텍스트에 명시된 약어가 그 조각의 품사다.
+        from app.services.meaning_pos import split_meaning_pos
+        expanded = []
         for md in data['meanings']:
             # 클라이언트가 문자열 배열(레거시) / 객체 배열({meaning, pos}) 둘 다 보낼 수 있음
             if isinstance(md, dict):
@@ -948,7 +957,16 @@ def update_voca(voca_id):
                 mt = (md or '').strip()
                 pos_provided = False
                 pos_val = None
+            for i, (t, p) in enumerate(split_meaning_pos(mt)):
+                if p:
+                    expanded.append((t, True, p))
+                elif i == 0:
+                    expanded.append((t, pos_provided, pos_val))
+                else:
+                    expanded.append((t, False, None))
 
+        new_meaning_ids = []
+        for mt, pos_provided, pos_val in expanded:
             if not mt:
                 continue
 

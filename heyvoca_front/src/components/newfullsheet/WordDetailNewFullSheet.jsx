@@ -5,6 +5,8 @@ import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
 import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 import { getTextSound, stripHtmlTags } from '../../utils/common';
 import SpeakerButton from '../common/SpeakerButton';
+import MeaningWithPos from '../common/MeaningWithPos';
+import { buildMeaningPosMap } from '../../utils/meaningPos';
 import { vibrate } from '../../utils/osFunction';
 import AddWordNewBottomSheet from '../newBottomSheet/AddWordNewBottomSheet';
 
@@ -33,6 +35,8 @@ const normalizeWord = (word) => {
     word: word.word || word.origin || '',
     pronunciation: word.pronunciation || '',
     meanings,
+    // 뜻 텍스트 → 품사(UD) — [동사]/[명사] 라벨(utils/meaningPos.js)
+    posMap: buildMeaningPosMap(word),
     examples,
   };
 };
@@ -131,7 +135,7 @@ const WordDetailNewFullSheet = ({ word }) => {
                   }}
                 >
                   <span className="font-[600] text-[#999] mr-[6px]">{i + 1}.</span>
-                  {meaning}
+                  <MeaningWithPos meanings={[meaning]} posMap={detail.posMap} />
                 </p>
               ))}
             </div>

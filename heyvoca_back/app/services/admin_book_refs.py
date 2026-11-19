@@ -51,20 +51,22 @@ def load_admin_book_texts(map_ids, lang=None):
     lang = lang or get_dict_lang()
 
     map_ids = sorted({mid for mid in map_ids if mid is not None})
-    result = {mid: {'meanings': [], 'examples': []} for mid in map_ids}
+    # meaning_pos: meanings 와 같은 순서/길이의 품사(UD 태그 또는 None) — 화면 [동사]/[명사] 라벨
+    result = {mid: {'meanings': [], 'examples': [], 'meaning_pos': []} for mid in map_ids}
     if not map_ids:
         return result
 
     meaning_rows = (
-        db.session.query(AdminVocaBookMapMeaning.map_id, VocaMeaning.meaning)
+        db.session.query(AdminVocaBookMapMeaning.map_id, VocaMeaning.meaning, VocaMeaning.pos)
         .join(VocaMeaning, VocaMeaning.id == AdminVocaBookMapMeaning.meaning_id)
         .filter(AdminVocaBookMapMeaning.map_id.in_(map_ids))
         .order_by(AdminVocaBookMapMeaning.map_id, AdminVocaBookMapMeaning.ord)
         .all()
     )
     have_meaning_refs = set()
-    for mid, meaning in meaning_rows:
+    for mid, meaning, pos in meaning_rows:
         result[mid]['meanings'].append(meaning)
+        result[mid]['meaning_pos'].append(pos if pos and pos != 'X' else None)
         have_meaning_refs.add(mid)
 
     example_rows = (
@@ -119,6 +121,7 @@ def _fallback_to_raw_json(map_ids, result):
         if meanings or examples:
             filled += 1
         result[mid]['meanings'] = meanings if isinstance(meanings, list) else []
+        result[mid]['meaning_pos'] = [None] * len(result[mid]['meanings'])
         result[mid]['examples'] = examples if isinstance(examples, list) else []
 
     logger.warning(

@@ -51,6 +51,8 @@ class CandidateItem:
     meaning_concepts:  list = field(default_factory=list)
     # 단어 단위 distinct concept_id (오답 제외 판정용)
     concept_ids:       list = field(default_factory=list)
+    # meanings와 순서/길이가 같은 품사(UD 태그 또는 None) — 화면 [동사]/[명사] 라벨(app/services/meaning_pos.py)
+    meaning_pos:       list = field(default_factory=list)
     # 정규화된 뜻 문자열(concept_id가 없을 때 오답 제외 판정 폴백용)
     normalized_meanings: list = field(default_factory=list)
     # 단어 언어('en'|'ja') — UserVoca.dict_lang
@@ -213,12 +215,15 @@ def _load_pool_raw(user_id: UUID, book_ids_filter: Optional[list], lang: str = '
                 word_length=len(word),
                 mastery=mastery,
                 voca_id=uv.voca_id,
+                explicit_pos=uv.meaning_pos,
                 tier_state=tier_state,
             ))
 
     # 유사 뜻(concept) 배치 조회 — voca_id 집합을 한 번에 모아 단일 쿼리로 조회(N+1 방지).
     from app.services.meaning_concept import load_dict_meaning_concepts, attach_concept_ids, normalized_meanings_for_word
     concept_lookup = load_dict_meaning_concepts(r['voca_id'] for r in raw_items)
+    from app.services.meaning_pos import load_dict_meaning_pos, attach_meaning_pos
+    pos_lookup = load_dict_meaning_pos(r['voca_id'] for r in raw_items)
 
     # 예문 조각 조립 문제(voca_example_puzzle) 배치 조회 — en 전용(2026-09 "출제형 문제
     # 1단계" 범위). 후보 풀의 모든 예문 origin 텍스트를 정규화·해시해 한 번에 조회한다.
@@ -390,6 +395,7 @@ def _load_pool_raw(user_id: UUID, book_ids_filter: Optional[list], lang: str = '
             voca_id=r['voca_id'],
             meaning_concepts=meaning_concepts,
             concept_ids=concept_ids,
+            meaning_pos=attach_meaning_pos(r['voca_id'], r['meanings'], pos_lookup, r.get('explicit_pos')),
             normalized_meanings=normalized_meanings_for_word(r['meanings']),
             dict_lang=lang,
             example_puzzles=example_puzzles,

@@ -34,6 +34,8 @@ import {
 } from './rewards';
 // 새 씨앗 심기 결과 — 밭에 씨앗을 하나씩 심는 연출
 import PlantingScene from './planting/PlantingScene';
+import MeaningWithPos from '../common/MeaningWithPos';
+import { buildMeaningPosMap } from '../../utils/meaningPos';
 
 // ─────────────────────────────────────────────────────────────
 // 당근 농장 V2 — 결과 슬라이드 조각
@@ -1323,7 +1325,7 @@ const StudyResult = () => {
                             <SpeakerButton text={item.origin} lang={wordLang(item)} size={15} label="단어 발음 듣기" />
                           </div>
                           <p className="text-[11.5px] font-[400] text-layout-gray-400 dark:text-layout-gray-50 truncate">
-                            {meaningsArr.join(', ')}
+                            <MeaningWithPos meanings={meaningsArr} posMap={buildMeaningPosMap(item)} size="sm" />
                           </p>
                         </div>
 

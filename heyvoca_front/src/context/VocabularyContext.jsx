@@ -446,6 +446,7 @@ export const VocabularyProvider = ({ children }) => {
                 title: newBook.title,
                 color: newBook.color,
                 meanings: voca.meanings,
+                meaningPos: voca.meaningPos,
                 examples: voca.examples
               }]
             };

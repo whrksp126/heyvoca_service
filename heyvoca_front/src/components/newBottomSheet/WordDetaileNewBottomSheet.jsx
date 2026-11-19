@@ -8,6 +8,8 @@ import { useVocabulary } from '../../context/VocabularyContext';
 import { stripHtmlTags } from '../../utils/common';
 import { useWordInsights, WordMemoryHistory } from '../common/WordMemorySection';
 import SpeakerButton from '../common/SpeakerButton';
+import MeaningWithPos from '../common/MeaningWithPos';
+import { buildMeaningPosMap } from '../../utils/meaningPos';
 import DeleteWordNewBottomSheet from './DeleteWordNewBottomSheet';
 import AddWordNewBottomSheet from './AddWordNewBottomSheet';
 import ReplantConfirmNewBottomSheet from './ReplantConfirmNewBottomSheet';
@@ -167,6 +169,7 @@ const WordDetaileNewBottomSheet = ({ vocabularyId, id }) => {
       : null;
 
   const meanings = Array.isArray(word.meanings) ? word.meanings : [];
+  const meaningPosMap = buildMeaningPosMap(word);
   const examples = Array.isArray(word.examples) ? word.examples : [];
 
   const handleEdit = async () => {
@@ -368,7 +371,7 @@ const WordDetaileNewBottomSheet = ({ vocabularyId, id }) => {
                 className="flex gap-[7px] text-[15px] font-[500] tracking-[-0.02em] leading-[1.4] text-layout-black dark:text-layout-white"
               >
                 <span className="shrink-0 font-[700] text-layout-gray-200">{index + 1}</span>
-                <span className="min-w-0 break-words">{meaning}</span>
+                <MeaningWithPos meanings={[meaning]} posMap={meaningPosMap} className="min-w-0 break-words" />
               </div>
             ))}
           </div>

@@ -25,6 +25,9 @@ from app.utils.word_payload import (
     UserWordEnricher, payload_voca_id, validate_dict_voca_ids, check_payload_language,
 )
 from app.routes.voca_indexs import merge_meanings, merge_examples
+from app.services.meaning_pos import (
+    clean_meaning_list, merge_pos_json, load_dict_meaning_pos, attach_meaning_pos,
+)
 from app.routes.user_voca_book import parse_quizlet_pdf
 from app.utils.example_tagging import tag_example_pair, _tag_batch_gpt, STRONG
 from app.services.fsrs.state import (
@@ -397,6 +400,13 @@ def bulk_persist_vocas(user_id, voca_book_id, parsed_items):
     # `begin_user_tx(user_id)` 로 연 트랜잭션 안이어야 한다(동시 업로드가 같은 단어를 두 번 만들지 않게).
     from app.utils.db_lock import require_user_tx
     require_user_tx(user_id)
+    # 뜻 앞머리 품사 약어("n. 환불", "[동] 환불하다")를 텍스트에서 떼고 품사로 따로 둔다 —
+    # 엑셀·CSV·구글시트·Anki·Quizlet·단어 추가가 모두 이 함수를 지난다(app/services/meaning_pos.py).
+    pos_by_origin = {}
+    for item in parsed_items:
+        item['meanings'], pmap = clean_meaning_list(item.get('meanings') or [])
+        if pmap and item.get('origin'):
+            pos_by_origin.setdefault(item['origin'], {}).update(pmap)
     origins = [item['origin'] for item in parsed_items if item.get('origin')]
     existing_vocas = db.session.query(UserVoca).filter(
         UserVoca.user_id == user_id,
@@ -430,6 +440,8 @@ def bulk_persist_vocas(user_id, voca_book_id, parsed_items):
             )
             new_user_vocas.append(uv)
             user_voca_dict[origin] = uv
+        if pos_by_origin.get(origin):
+            uv.meaning_pos = merge_pos_json(uv.meaning_pos, pos_by_origin[origin])
 
     if new_user_vocas:
         db.session.add_all(new_user_vocas)
@@ -496,10 +508,12 @@ def build_vocas_for_book(voca_book_id):
     return _serialize_book_maps(maps)
 
 
-def _serialize_book_maps(maps, enricher=None):
+def _serialize_book_maps(maps, enricher=None, pos_lookup=None):
     """UserVocaBookMap 목록 → 단어 응답 리스트. 공통 필드(language, ja: reading/jlpt/...) 포함."""
     if enricher is None:
         enricher = UserWordEnricher(m.user_voca.voca_id for m in maps if m.user_voca)
+    if pos_lookup is None:
+        pos_lookup = load_dict_meaning_pos(m.user_voca.voca_id for m in maps if m.user_voca)
     vocas = []
     for m in maps:
         user_voca = m.user_voca
@@ -519,6 +533,8 @@ def _serialize_book_maps(maps, enricher=None):
             'origin': user_voca.word,
             'fsrs': fsrs,
             'meanings': meanings,
+            # 뜻과 같은 순서/길이의 품사(UD 태그 또는 null) — 화면의 [동사]/[명사] 라벨
+            'meaningPos': attach_meaning_pos(user_voca.voca_id, meanings, pos_lookup, user_voca.meaning_pos),
             'examples': enricher.examples(user_voca.voca_id, examples),
             'createdAt': (user_voca.created_at).isoformat() + 'Z' if user_voca.created_at else None,
             'updatedAt': (user_voca.updated_at).isoformat() + 'Z' if user_voca.updated_at else None,
@@ -569,11 +585,14 @@ def get_voca_books():
     enricher = UserWordEnricher(
         m.user_voca.voca_id for vb in voca_books for m in vb.voca_maps if m.user_voca
     )
+    pos_lookup = load_dict_meaning_pos(
+        m.user_voca.voca_id for vb in voca_books for m in vb.voca_maps if m.user_voca
+    )
 
     data = []
     for vb in voca_books:
         # 이미 로드된 데이터를 사용하여 속도 향상
-        vocas = _serialize_book_maps(vb.voca_maps, enricher)
+        vocas = _serialize_book_maps(vb.voca_maps, enricher, pos_lookup)
 
         data.append({
             'vocaBookId': str(vb.id),
@@ -679,6 +698,13 @@ def create_voca_book():
         # vocaList가 있으면 벌크 처리로 최적화
         if voca_list:
             # 같은 표기 항목은 하나로 합친다(_collapse_same_word 참고)
+            # 뜻 앞머리 품사 약어는 텍스트에서 떼고 품사로 따로 둔다(app/services/meaning_pos.py)
+            pos_by_origin = {}
+            for item in voca_list:
+                if isinstance(item, dict):
+                    item['meanings'], pmap = clean_meaning_list(item.get('meanings') or [])
+                    if pmap and item.get('origin'):
+                        pos_by_origin.setdefault(item['origin'], {}).update(pmap)
             voca_list = [
                 {'origin': w, 'vocaId': vid, 'meanings': m, 'examples': e}
                 for w, vid, m, e in _collapse_same_word(
@@ -720,6 +746,8 @@ def create_voca_book():
                     uv.voca_examples = merge_examples(uv.voca_examples, examples)
                     if not uv.voca_id and voca_id:
                         uv.voca_id = voca_id
+                    if pos_by_origin.get(origin):
+                        uv.meaning_pos = merge_pos_json(uv.meaning_pos, pos_by_origin[origin])
                     uv.updated_at = datetime.datetime.utcnow()
                     user_vocas_to_update.append(uv)
                 else:
@@ -732,6 +760,8 @@ def create_voca_book():
                         data=None,
                         dict_lang=lang,
                     )
+                    if pos_by_origin.get(origin):
+                        new_uv.meaning_pos = merge_pos_json(None, pos_by_origin[origin])
                     user_vocas_to_add.append(new_uv)
 
             # 새 UserVoca 삽입 및 ID 확보

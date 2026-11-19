@@ -31,6 +31,8 @@ import useFarmPlants from './useFarmPlants';
 import { useOpenWordDetail } from '../../hooks/useOpenWordDetail';
 import PullToRefresh from '../common/PullToRefresh';
 import { IconCamera } from '../../assets/svg/icon';
+import MeaningWithPos from '../common/MeaningWithPos';
+import { buildMeaningPosMap } from '../../utils/meaningPos';
 import bookEmptyImg from '../../assets/images/farm/book-empty.png';
 import gemImg from '../../assets/images/farm/icon-gem.png';
 
@@ -190,6 +192,8 @@ const Main = () => {
 
   const [suggestions, setSuggestions] = useState([]);
   const [selectedWord, setSelectedWord] = useState(null);
+  // 선택한 사전 단어의 뜻 텍스트 → 품사 — 뜻 앞 [동사]/[명사] 라벨
+  const selectedPosMap = buildMeaningPosMap(selectedWord);
   const [noResults, setNoResults] = useState(false);
   const [submittedQuery, setSubmittedQuery] = useState('');
   const [recent, setRecent] = useState(readRecent);
@@ -884,7 +888,7 @@ const Main = () => {
                 <div key={i} className="flex items-start gap-[8px] py-[7px]">
                   <span className="shrink-0 mt-[2px] text-[12px] font-[800] text-layout-gray-200">{i + 1}</span>
                   <span className="flex-1 text-[14.5px] font-[600] leading-[1.5] tracking-[-0.02em] text-layout-black dark:text-layout-white">
-                    {meaning}
+                    <MeaningWithPos meanings={[meaning]} posMap={selectedPosMap} />
                   </span>
                   <SpeakerButton
                     text={stripHtmlTags(meaning)}

@@ -13,6 +13,9 @@ from app.services.fsrs.state import (
     parse_user_voca_data, get_fsrs_state, is_v1, migrate_v1_to_v2, DEFAULT_FSRS_NEW,
 )
 from app.services.meaning_concept import load_dict_meaning_concepts, attach_concept_ids
+from app.services.meaning_pos import (
+    clean_meaning_list, merge_pos_json, load_dict_meaning_pos, attach_meaning_pos,
+)
 from app.utils.dict_lang import get_dict_lang
 from app.utils.word_payload import (
     UserWordEnricher, payload_voca_id, validate_dict_voca_ids, check_payload_language,
@@ -83,6 +86,7 @@ def build_voca_index_response(user_voca):
     # 유사 뜻(concept) 조회 — 사전 연결 단어(voca_id 존재)만 대상. 단건 호출(생성/연결 직후)이라
     # 배치가 필요 없지만 인터페이스를 get_voca_indexs와 통일해 둔다.
     concept_lookup = load_dict_meaning_concepts([user_voca.voca_id]) if user_voca.voca_id else {}
+    pos_lookup = load_dict_meaning_pos([user_voca.voca_id]) if user_voca.voca_id else {}
     # 공통 단어 필드(language, ja: reading/romaji/jlpt/pronunciation) + 예문 후리가나
     # (사전 조회는 현재 요청 언어 사전으로만 간다 — 다른 언어 단어는 이 요청에서 올 일이 없다)
     enricher = UserWordEnricher([user_voca.voca_id])
@@ -97,6 +101,8 @@ def build_voca_index_response(user_voca):
             'meanings': meanings,
             'conceptIds': concept_ids,
             'meaningConcepts': meaning_concepts,
+            # 뜻과 같은 순서/길이의 품사(UD 태그 또는 null) — 화면의 [동사]/[명사] 라벨
+            'meaningPos': attach_meaning_pos(user_voca.voca_id, meanings, pos_lookup, user_voca.meaning_pos),
             'examples': enricher.examples(user_voca.voca_id, examples),
         })
 
@@ -193,6 +199,7 @@ def get_voca_indexs():
 
     # 유사 뜻(concept) 배치 조회 — 사용자 사전 전체의 voca_id를 한 번에 모아 단일 쿼리(N+1 방지).
     concept_lookup = load_dict_meaning_concepts(uv.voca_id for uv in user_vocas)
+    pos_lookup = load_dict_meaning_pos(uv.voca_id for uv in user_vocas)
     # ja: 읽기/JLPT(voca_ja) + 예문 후리가나(voca_example_ja)를 voca_id IN 일괄 조회. en 은 쿼리 0회.
     enricher = UserWordEnricher((uv.voca_id for uv in user_vocas), lang=lang)
 
@@ -214,6 +221,7 @@ def get_voca_indexs():
                 'meanings': meanings,
                 'conceptIds': concept_ids,
                 'meaningConcepts': meaning_concepts,
+                'meaningPos': attach_meaning_pos(uv.voca_id, meanings, pos_lookup, uv.meaning_pos),
                 'examples': enricher.examples(uv.voca_id, examples),
             })
 
@@ -246,7 +254,8 @@ def create_voca_index():
 
     origin = req.get('origin')
     voca_book_id = req.get('vocaBookId')
-    meanings = req.get('meanings', [])
+    # 뜻 앞머리 품사 약어("n. 환불")는 텍스트에서 떼고 품사로 따로 저장한다(app/services/meaning_pos.py)
+    meanings, meaning_pos_map = clean_meaning_list(req.get('meanings') or [])
     examples = req.get('examples', [])
 
     if not origin:
@@ -311,6 +320,7 @@ def create_voca_index():
             user_voca.data = None
             db.session.add(user_voca)
             db.session.flush()  # ID 할당
+        user_voca.meaning_pos = merge_pos_json(user_voca.meaning_pos, meaning_pos_map)
 
         # UserVocaBookMap 생성
         book_map = UserVocaBookMap()
@@ -368,9 +378,11 @@ def update_voca_index_book(vocaIndexId, vocaBookId):
         examples = req.get('examples')
 
         if meanings is not None:
+            meanings, meaning_pos_map = clean_meaning_list(meanings if isinstance(meanings, list) else [])
             book_map.voca_meanings = json.dumps(meanings, ensure_ascii=False)
             # UserVoca에도 누적 반영
             user_voca.voca_meanings = merge_meanings(user_voca.voca_meanings, meanings)
+            user_voca.meaning_pos = merge_pos_json(user_voca.meaning_pos, meaning_pos_map)
 
         if examples is not None:
             book_map.voca_examples = json.dumps(examples, ensure_ascii=False)
@@ -390,6 +402,10 @@ def update_voca_index_book(vocaIndexId, vocaBookId):
             'meanings': response_meanings,
             'conceptIds': concept_ids,
             'meaningConcepts': meaning_concepts,
+            'meaningPos': attach_meaning_pos(
+                user_voca.voca_id, response_meanings,
+                load_dict_meaning_pos([user_voca.voca_id]) if user_voca.voca_id else {},
+                user_voca.meaning_pos),
             'examples': response_examples,
             'createdAt': (book_map.user_voca_book.created_at + datetime.timedelta(hours=9)).strftime('%Y-%m-%d') if book_map.user_voca_book and book_map.user_voca_book.created_at else None,
         }
@@ -495,7 +511,7 @@ def link_voca_index_book(vocaIndexId, vocaBookId):
         return jsonify({'code': 409, 'message': '이미 해당 단어장에 등록된 단어입니다.'}), 409
 
     try:
-        meanings = req.get('meanings', [])
+        meanings, meaning_pos_map = clean_meaning_list(req.get('meanings') or [])
         examples = req.get('examples', [])
 
         # 1. 새 매핑 생성
@@ -509,6 +525,7 @@ def link_voca_index_book(vocaIndexId, vocaBookId):
         # 2. 기존 UserVoca에 데이터 병합 (누적)
         if meanings:
             user_voca.voca_meanings = merge_meanings(user_voca.voca_meanings, meanings)
+            user_voca.meaning_pos = merge_pos_json(user_voca.meaning_pos, meaning_pos_map)
         if examples:
             user_voca.voca_examples = merge_examples(user_voca.voca_examples, examples)
         

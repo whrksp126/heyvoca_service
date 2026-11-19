@@ -1330,6 +1330,9 @@ class UserVoca(db.Model):
     voca_id = Column(Integer, nullable=True)
     word = Column(String(255), nullable=True)
     voca_meanings = Column(TEXT, nullable=True)
+    # 2026-11 뜻 품사: 사용자가 입력한 뜻에서 파싱한 명시 품사 {뜻 텍스트: UD 태그} JSON.
+    # 사전 연결 뜻의 품사는 저장하지 않고 응답 때 사전에서 찾는다(app/services/meaning_pos.py).
+    meaning_pos = Column(TEXT, nullable=True)
     voca_examples = Column(TEXT, nullable=True)
     data = Column(TEXT, nullable=True)
     created_at = Column(DateTime, nullable=False, default=datetime.utcnow)

@@ -8,6 +8,7 @@ import { wordLang, isJa } from '../../utils/lang';
 import { getReading, shouldShowReading } from '../../utils/jaWord';
 import { renderHighlightedText, stripTags } from '../../plugins/questionTypes/highlightMarker';
 import SpeakerArt from '../common/SpeakerArt';
+import { buildMeaningPosMap, posLabelKo } from '../../utils/meaningPos';
 
 /*
   단어 "만나기" 카드 — StudyMain(집중 반복 듣기)과 TakeTest의 ① wordIntro 슬라이드가
@@ -194,6 +195,8 @@ const WordMeetCard = ({
 
   const meanings = word.meanings || [];
   const examples = word.examples || [];
+  // 사용자 뜻(문자열)의 품사 — 서버 meaningPos/meaning_pos(utils/meaningPos.js)
+  const meaningPosMap = buildMeaningPosMap(word);
 
   const isPlayingLine = (itemId, index = null) =>
     playingItemId === itemId && playingItemIndex === index;
@@ -240,13 +243,15 @@ const WordMeetCard = ({
         {dictMode ? null : isVisible('meanings') ? (
           <div className="flex flex-col gap-[4px]">
             {meanings.map((meaningItem, idx) => {
-              const { text: meaningText, pos: meaningPos } = meaningParts(meaningItem);
+              const parts = meaningParts(meaningItem);
+              const meaningText = parts.text;
+              const meaningPos = parts.pos || posLabelKo(meaningPosMap.get(meaningText));
               const isActive = isPlayingLine('meanings', idx);
               return (
                 <div key={idx} className="flex items-center justify-between gap-[8px]">
                   <span className={`text-[13px] font-[400] leading-[16px] flex-1 ${isActive ? 'text-primary-main-600' : 'text-layout-gray-500 dark:text-layout-gray-50'}`}>
                     {meaningPos && (
-                      <span className="text-layout-gray-300 dark:text-layout-gray-400 font-[500] mr-[4px]">
+                      <span className="inline-block align-[1px] mr-[4px] px-[5px] rounded-[4px] leading-[1.5] bg-layout-gray-100 dark:bg-layout-gray-500 text-[11px] font-[600] text-layout-gray-400 dark:text-layout-gray-100">
                         {meaningPos}
                       </span>
                     )}

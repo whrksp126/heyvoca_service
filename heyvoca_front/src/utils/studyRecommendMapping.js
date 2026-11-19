@@ -13,6 +13,8 @@ export const mapRecommendItemToWord = (item, { isDiagnosis = false } = {}) => ({
   vocabularySheetId: item.user_voca_book_id,
   origin: item.word,
   meanings: item.meanings ?? [],
+  // meanings 와 같은 순서/길이의 품사(UD 태그 또는 null) — [동사]/[명사] 라벨(utils/meaningPos.js)
+  meaningPos: item.meaning_pos ?? [],
   examples: item.examples ?? [],
   // 일본어 연동(INTEGRATION_SPEC 4절 단어 공통 필드) — language 가 TTS·표시 언어를 정한다.
   ...(item.language ? { language: item.language } : {}),

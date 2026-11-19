@@ -57,6 +57,7 @@ const SpellingFillQuestion = ({ question, onComplete, onCardMatched, farmByWordI
   const [isAnswered, setIsAnswered] = useState(false);
   const [isCorrect, setIsCorrect] = useState(null);
   const [wrongCells, setWrongCells] = useState(() => new Set());
+  const [gaveUp, setGaveUp] = useState(false); // '모르겠어요'로 채점됐는지 — 빈 칸을 정답 글자(오답색)로 채워 보인다
   const [focused, setFocused] = useState(false);
   const [speakingTarget, setSpeakingTarget] = useState(null); // 'meaning' | 'answer' | null
 
@@ -136,6 +137,7 @@ const SpellingFillQuestion = ({ question, onComplete, onCardMatched, farmByWordI
     question.nextMemoryStateKey = getMemoryStateKeyByStability(g.isCorrect ? 3.13 : 0.5, 'learning');
 
     setWrongCells(g.wrong);
+    if (giveUp) setGaveUp(true);
     setIsCorrect(g.isCorrect);
     setIsAnswered(true);
     inputRef.current?.blur(); // 키보드를 내려 결과와 '다음' 버튼이 보이게
@@ -221,7 +223,10 @@ const SpellingFillQuestion = ({ question, onComplete, onCardMatched, farmByWordI
   const writtenRuns = [];
   if (isAnswered) {
     cells.forEach((c, i) => {
-      const ch = c.kind === 'fixed' ? c.ch : (c.kind === 'given' || hinted.has(i) ? c.ch : (filled[i] ?? ''));
+      // '모르겠어요'(2026-11-19 2차) — 비워 둔 입력 칸도 정답 글자로 채운다. gradeSpelling 이 빈 칸을
+      // 이미 틀린 칸으로 세므로 오답색으로 칠해져, 전부 틀리게 입력해 낸 오답과 같은 모습이 된다.
+      const typed = filled[i] ?? (gaveUp ? c.ch : '');
+      const ch = c.kind === 'fixed' ? c.ch : (c.kind === 'given' || hinted.has(i) ? c.ch : typed);
       if (!ch) return;
       const wrong = wrongCells.has(i);
       const last = writtenRuns[writtenRuns.length - 1];
@@ -369,16 +374,6 @@ const SpellingFillQuestion = ({ question, onComplete, onCardMatched, farmByWordI
                       ))}
                     </span>
                   </button>
-                  {/* 모르겠어요 — 칸을 다 채우지 않아도 바로 오답 처리(2026-11-19 QA). 텍스트 버튼 수준으로만 둔다 */}
-                  <button
-                    type="button"
-                    onPointerDown={(e) => e.preventDefault()}
-                    onMouseDown={(e) => e.preventDefault()}
-                    onClick={handleGiveUp}
-                    className="px-[4px] py-[6px] text-[13px] font-[700] text-layout-gray-400 dark:text-layout-gray-100 underline underline-offset-[3px] decoration-layout-gray-300 dark:decoration-[#555555]"
-                  >
-                    모르겠어요
-                  </button>
                 </div>
               )}
 
@@ -414,6 +409,22 @@ const SpellingFillQuestion = ({ question, onComplete, onCardMatched, farmByWordI
             </div>
           </LiftAboveBar>
         </div>
+
+        {/* 모르겠어요 — 칸을 다 채우지 않아도 바로 오답 처리(2026-11-19 QA). 2차: 힌트 옆 → 카드 안 중앙 하단,
+            과하지 않은 텍스트 버튼. 채점 뒤에는 숨겨 농장 상태 바 자리와 겹치지 않는다 */}
+        {!isAnswered && (
+          <div className="absolute left-0 right-0 bottom-[10px] z-[2] flex justify-center pointer-events-none">
+            <button
+              type="button"
+              onPointerDown={(e) => e.preventDefault()}
+              onMouseDown={(e) => e.preventDefault()}
+              onClick={handleGiveUp}
+              className="pointer-events-auto px-[10px] py-[6px] text-[13px] font-[700] text-layout-gray-400 dark:text-layout-gray-100 underline underline-offset-[3px] decoration-layout-gray-300 dark:decoration-[#555555]"
+            >
+              모르겠어요
+            </button>
+          </div>
+        )}
 
         {/* OS 기본 키보드를 띄우는 숨긴 입력 — 화면에는 칸만 보인다 */}
         <input

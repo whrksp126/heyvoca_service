@@ -232,6 +232,7 @@ def _serialize_recommend_item(item, *, suggested_question_type, tier_target, tie
         'meanings':                item.meanings,
         'concept_ids':             item.concept_ids,
         'meaning_concepts':        item.meaning_concepts,
+        'meaning_pos':             getattr(item, 'meaning_pos', None) or [],
         'examples':                examples_with_tokens(lang, item.voca_id, item.examples, ja_tokens),
         'fsrs': {
             'state':          fsrs.get('state', 'new'),
@@ -1911,6 +1912,7 @@ def get_chat_session():
             'meanings':                item.meanings,
             'concept_ids':             item.concept_ids,
             'meaning_concepts':        item.meaning_concepts,
+            'meaning_pos':             getattr(item, 'meaning_pos', None) or [],
             'examples':                examples_with_tokens(lang, item.voca_id, item.examples, ja_tokens),
             'options':                 options,
             'answer_index':            answer_index,

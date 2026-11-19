@@ -345,7 +345,7 @@ def get_history(user_id: UUID, page: int = 1, per_page: int = 30, include_empty:
     has_more = len(rows) > per_page
     rows = rows[:per_page]
 
-    agg = {}
+    agg, qtypes = {}, {}
     if rows:
         for sid, n, correct, ms, first, last in (
                 db.session.query(UserStudyLog.session_id, func.count(UserStudyLog.id),
@@ -355,6 +355,14 @@ def get_history(user_id: UUID, page: int = 1, per_page: int = 30, include_empty:
                 .filter(UserStudyLog.session_id.in_([s.id for s in rows]))
                 .group_by(UserStudyLog.session_id).all()):
             agg[sid.hex] = (int(n or 0), int(correct or 0), int(ms or 0), first, last)
+        # 문제 유형별 문항 수·정답 수 — 어드민 학습 기록에 앱 문제 유형 그림으로 보여 준다
+        for sid, qtype, n, correct in (
+                db.session.query(UserStudyLog.session_id, UserStudyLog.question_type, func.count(UserStudyLog.id),
+                                 func.sum(case((UserStudyLog.was_correct.is_(True), 1), else_=0)))
+                .filter(UserStudyLog.session_id.in_([s.id for s in rows]))
+                .group_by(UserStudyLog.session_id, UserStudyLog.question_type).all()):
+            qtypes.setdefault(sid.hex, []).append(
+                {'type': qtype, 'count': int(n or 0), 'correct': int(correct or 0)})
 
     items = []
     for s in rows:
@@ -375,6 +383,7 @@ def get_history(user_id: UUID, page: int = 1, per_page: int = 30, include_empty:
             'accuracy': round(cc * 100.0 / qc, 1) if qc else None,
             'duration_sec': dur, 'answer_time_sec': round(ms / 1000) if ms else None,
             'finished': s.finished_at is not None, 'book_cnt': book_cnt,
+            'question_types': sorted(qtypes.get(s.id.hex, []), key=lambda x: -x['count']),
             'started_at': _utc_iso(s.started_at), 'finished_at': _utc_iso(s.finished_at),
             'date_kst': (s.started_at + KST).date().isoformat() if s.started_at else None,
         })
