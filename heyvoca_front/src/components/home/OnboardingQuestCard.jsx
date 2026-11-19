@@ -9,6 +9,8 @@
 // 이슈 #25 9차: 필수 퀘스트(buy_book·plant_seed·care_farm)를 다 끝내면 「숨기기」가 생긴다
 // (11차: 헤더 우측 → 카드 하단 가운데 작은 텍스트 버튼).
 // 누르면 홈에서 카드가 사라지고(계정 단위 서버 저장), 마이페이지 '입문 퀘스트'에서 다시 보이게 할 수 있다.
+// 2026-11-19 QA: 「숨기기」는 항상 카드 하단 가운데에 보인다. 필수가 남았으면 숨기지 않고
+// 토스트로 안내하고, 남은 필수 줄을 흔들어 강조한다(QuestSteps nudge).
 //
 // 보이는 조건: 신규 가입자(legacy=false)이고 아직 남은 퀘스트가 있고 숨기지 않았을 때만(questCardVisible).
 // 카드 모양·여백은 TodayTasksCard·StreakCard 와 같다(rounded-12, 보더 우선, 그림자 없음).
@@ -31,7 +33,7 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useReducedMotion } from 'framer-motion';
 import { useLocation } from 'react-router-dom';
 import { EyeSlash } from '@phosphor-icons/react';
-import { useOnboardingUnlock } from '../../context/OnboardingUnlockContext';
+import { useOnboardingUnlock, REQUIRED_QUESTS } from '../../context/OnboardingUnlockContext';
 import { useUser } from '../../context/UserContext';
 import { useQuestAction } from '../onboarding/useQuestAction';
 import QuestSteps from '../onboarding/QuestSteps';
@@ -71,6 +73,8 @@ const OnboardingQuestCard = ({ className = '' }) => {
   const { goToQuest } = useQuestAction();
   const reduceMotion = useReducedMotion();
   const [hiding, setHiding] = useState(false);
+  // 필수가 남았는데 숨기기를 눌렀을 때 강조할 줄 — { id, keys }
+  const [nudge, setNudge] = useState(null);
   // 지금 연출 중인 단계(시작 시점 스냅샷) — { keys, doneKeys }
   const [playing, setPlaying] = useState(null);
   // 이번 화면에서 확인(연출 완료·첫 진입 기록)한 완료 목록 — { storageKey, keys }
@@ -146,6 +150,15 @@ const OnboardingQuestCard = ({ className = '' }) => {
 
   const handleHide = async () => {
     if (hiding) return;
+    if (!requiredDone) {
+      const remaining = missions
+        .filter((m) => !m.done && (m.required || REQUIRED_QUESTS.includes(m.key)))
+        .map((m) => m.key);
+      vibrate({ duration: 12 });
+      showToast('필수 퀘스트를 모두 마치면 숨길 수 있어요.');
+      setNudge((prev) => ({ id: (prev?.id ?? 0) + 1, keys: remaining }));
+      return;
+    }
     vibrate({ duration: 5 });
     setHiding(true);
     const res = await setQuestHidden(true);
@@ -174,22 +187,21 @@ const OnboardingQuestCard = ({ className = '' }) => {
           celebrateKeys={celebrateKeys}
           celebrateHold={celebrateHold}
           onCelebrated={handleCelebrated}
+          nudge={nudge}
         />
       </div>
 
-      {requiredDone && (
-        <div className="flex justify-center mt-[4px]">
-          <button
-            type="button"
-            onClick={handleHide}
-            disabled={hiding}
-            className="inline-flex items-center gap-[4px] h-[28px] px-[8px] text-[12px] font-[600] text-layout-gray-300 disabled:opacity-50"
-          >
-            <EyeSlash size={13} weight="bold" />
-            퀘스트 숨기기
-          </button>
-        </div>
-      )}
+      <div className="flex justify-center mt-[4px]">
+        <button
+          type="button"
+          onClick={handleHide}
+          disabled={hiding}
+          className={`inline-flex items-center gap-[4px] h-[28px] px-[8px] text-[12px] font-[600] text-layout-gray-300 disabled:opacity-50 ${requiredDone ? '' : 'opacity-70'}`}
+        >
+          <EyeSlash size={13} weight="bold" />
+          숨기기
+        </button>
+      </div>
     </section>
   );
 };

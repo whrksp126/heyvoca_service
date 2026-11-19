@@ -30,7 +30,7 @@ import { useAppOAuthError } from '../hooks/useAppOAuthError';
           게스트 학습 뒤 가입 화면('거의 다 왔어요')을 없앴다. 로그인하면 Index 가 onboarding_ver 로 갈라
           최초 사용자만 여기로 다시 보내고, 로그인된 채 들어오면 hello 를 건너뛰어 소개부터 시작한다.
           마지막 finish → auth 는 로그인 상태라 가입 화면 없이 migrate(v2: theta·answers) 후 홈으로 간다.
-  【흐름】 hello → about('헤이보카에 대해 알아볼까요?' — 이 탭에서 효과음 unlock, 9차 QA) → intro(농사 이야기: 성장 → 시듦 → 체험 밭) → 수준 맞춤 학습(/take-test, 8문제 + 틀린 단어
+  【흐름】 hello → about('헤이보카에 대해 알아볼까요?' — 이 탭에서 효과음 unlock, 9차 QA) → intro(농사 이야기: 성장 → 시듦 → 체험 밭) → 수준 맞춤 학습(/take-test, 8단어 7문제 + 틀린 단어
           복습, 매 답마다 체험 밭 가상 작물이 자라고 시든다) → 학습 결과(StudyResult — 실제 학습과 같은 슬라이드,
           밭 성장 · 보석 20 · 결과 목록) → guide('단어를 학습하면 새 농작물을 심고 키울 수 있어요', 8차 QA — 9차부터 체험 밭의
           학습 후 모습을 그대로 그린다) → nickname('제가 뭐라고 불러드릴까요?', 14차) → finish('이제 나만의 밭을

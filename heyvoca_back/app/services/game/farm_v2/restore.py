@@ -343,35 +343,50 @@ def reserve_replant(user_id: UUID, user_voca_ids, now: Optional[dt.datetime] = N
     확정은 재화가 아니라 **상태**로 한다 — complete_diagnosis 가 REPLANTED 이벤트를 남긴다.
 
     Raises:
-        LookupError     — 농장 정보 없음
-        ValueError      — 부패 상태가 아님 / 이미 다른 처리 예약 중
+        LookupError     — 고른 작물이 하나도 농장에 없음
+        ValueError      — 예약할 작물이 하나도 없음(전부 부패 아님 / 회복 진행 중)
         PermissionError — 삽 부족
+
+    일부만 어긋난 경우는 예외 없이 `skipped` 로 돌려준다.
     """
     now = now or dt.datetime.utcnow()
     ids = _normalize_ids(user_voca_ids)
     begin_user_tx(user_id)   # 첫 문장 = User 잠금 → 이후 일반 SELECT(진단 시작 여부 등)가 최신
     games = _lock_games(user_id, ids)
 
-    missing = [i for i in ids if i not in games]
-    if missing:
-        raise LookupError('농장에 없는 작물이 있어요.')
-
+    # 회복제와 같은 규칙 — 목록과 실제 상태가 어긋난 작물은 묶음 전체를 막지 않고 건너뛴다.
+    already = []   # 이미 예약됨 — 추가 차감 없이 진단을 이어감(7.2)
+    skipped = []
+    fresh_targets = []
+    recover_blocked = False
     for i in ids:
-        game = games[i]
-        if game.pending_action == PENDING_REPLANT:
-            # 이미 예약된 것은 다시 차감하지 않는다 — 7.2 "추가 삽 차감 없이 진단을 이어감"
-            continue
-        if game.pending_action == PENDING_RECOVER:
-            raise ValueError('영양 회복이 진행 중인 작물이 있어요.')
-        if game.health_state != HealthState.ROTTEN:
-            raise ValueError('썩은 작물만 다시 심을 수 있어요.')
+        game = games.get(i)
+        if game is None:
+            skipped.append(i)
+        elif game.pending_action == PENDING_REPLANT:
+            already.append(i)
+        elif game.pending_action == PENDING_RECOVER:
+            recover_blocked = True
+            skipped.append(i)
+        elif game.health_state != HealthState.ROTTEN:
+            skipped.append(i)
+        else:
+            fresh_targets.append(i)
 
-    reserved = []
-    for i in ids:
+    if not fresh_targets and not already:
+        if not games:
+            raise LookupError('농장에 없는 작물이에요.')
+        if recover_blocked:
+            raise ValueError('영양 회복이 진행 중인 작물이에요.')
+        raise ValueError('이미 다시 자라고 있는 작물이에요. 목록을 새로 불러올게요.')
+
+    held = inventory.get_qty(user_id, FarmItem.SHOVEL)
+    if held < len(fresh_targets):
+        raise PermissionError(f'새심기 삽이 {len(fresh_targets) - held}개 부족해요.')
+
+    reserved = list(already)
+    for i in fresh_targets:
         game = games[i]
-        if game.pending_action == PENDING_REPLANT:
-            reserved.append(i)
-            continue
         # 부족하면 PermissionError 가 올라오고 아래 커밋에 닿지 않는다 →
         # 일부만 차감된 채 끝나는 상태가 생기지 않는다.
         inventory.spend(user_id, FarmItem.SHOVEL, 1,
@@ -387,6 +402,7 @@ def reserve_replant(user_id: UUID, user_voca_ids, now: Optional[dt.datetime] = N
 
     return {
         'reserved': reserved,
+        'skipped': skipped,
         'shovel_left': inventory.get_qty(user_id, FarmItem.SHOVEL),
         'cancel_until': localday.iso_utc(now + dt.timedelta(seconds=CANCEL_WINDOW_SECONDS)),
     }
@@ -476,36 +492,56 @@ def recover_with_nutrient(user_id: UUID, user_voca_ids,
     _normalize_ids 가 걸러 같은 작물에 두 개가 나가지 않는다.
 
     Raises:
-        LookupError     — 농장 정보 없음
-        ValueError      — 부패 상태가 아님 / 다시 심기 예약 중
-        PermissionError — 회복제 부족
+        LookupError     — 고른 작물이 하나도 농장에 없음
+        ValueError      — 되살릴 작물이 하나도 없음(전부 부패 아님 / 다시 심기 예약 중 / 황금)
+        PermissionError — 회복제 부족(되살릴 작물 수보다 적음)
+
+    일부만 어긋난 경우는 예외 없이 `skipped` 로 돌려준다.
     """
     now = now or dt.datetime.utcnow()
     ids = _normalize_ids(user_voca_ids)
     begin_user_tx(user_id)   # 첫 문장 = User 잠금 → 이후 일반 SELECT(진단 시작 여부 등)가 최신
     games = _lock_games(user_id, ids)
 
-    missing = [i for i in ids if i not in games]
-    if missing:
-        raise LookupError('농장에 없는 작물이 있어요.')
-
+    # 화면 목록과 실제 상태가 어긋난 작물(이미 회복·다시 심기됨, 사라진 단어)은 **묶음 전체를
+    # 실패시키지 않고 건너뛴다**(2026-11-19 QA). 예전엔 하나만 어긋나도 409/404 로 전부 막혀
+    # 오래 비운 계정이 목록을 다시 받기 전까지 회복을 못 했다. 아이템은 실제로 되살린 작물에만 쓴다.
+    already = []   # 이미 회복 진단 대기 중 — 아이템 없이 성공으로 돌려준다(중복 요청 보호)
+    skipped = []   # 썩은 상태가 아니거나 농장에 없음 — 아무것도 하지 않는다
+    fresh_targets = []
+    replant_blocked = golden_blocked = False
     for i in ids:
-        game = games[i]
-        if game.pending_action == PENDING_RECOVER:
-            continue
-        if game.pending_action == PENDING_REPLANT:
-            raise ValueError('다시 심기가 진행 중인 작물이 있어요.')
-        if game.health_state == HealthState.GOLDEN or game.visual_stage == VisualStage.GOLDEN:
+        game = games.get(i)
+        if game is None:
+            skipped.append(i)
+        elif game.pending_action == PENDING_RECOVER:
+            already.append(i)
+        elif game.pending_action == PENDING_REPLANT:
+            replant_blocked = True
+            skipped.append(i)
+        elif game.health_state == HealthState.GOLDEN or game.visual_stage == VisualStage.GOLDEN:
+            golden_blocked = True
+            skipped.append(i)
+        elif game.health_state != HealthState.ROTTEN:
+            skipped.append(i)
+        else:
+            fresh_targets.append(i)
+
+    if not fresh_targets and not already:
+        if not games:
+            raise LookupError('농장에 없는 작물이에요.')
+        if replant_blocked:
+            raise ValueError('다시 심기가 진행 중인 작물이에요.')
+        if golden_blocked:
             raise ValueError('황금 당근에는 사용할 수 없어요.')
-        if game.health_state != HealthState.ROTTEN:
-            raise ValueError('썩은 작물에만 사용할 수 있어요.')
+        raise ValueError('이미 다시 자라고 있는 작물이에요. 목록을 새로 불러올게요.')
 
     # 보유량을 먼저 확인한다. spend 는 한 개씩 부르므로 중간에 떨어지면 예외가 나고
     # 커밋에 닿지 않지만, 사용자에게는 "몇 개가 부족한지"를 미리 알려 주는 편이 낫다.
     held = inventory.get_qty(user_id, FarmItem.NUTRIENT)
-    fresh_targets = [i for i in ids if games[i].pending_action != PENDING_RECOVER]
     if held < len(fresh_targets):
-        raise PermissionError('영양 회복제가 부족해요.')
+        lack = len(fresh_targets) - held
+        raise PermissionError(f'영양 회복제가 {lack}개 부족해요.')
 
     # 아이템 차감을 먼저 끝내고(전역 순서 … → 아이템 → UserVoca) 단어 행을 잠근다.
     for i in fresh_targets:
@@ -541,7 +577,9 @@ def recover_with_nutrient(user_id: UUID, user_voca_ids,
 
     db.session.commit()
     return {
-        'recovered': recovered + [i for i in ids if i not in fresh_targets],
+        'recovered': recovered + already,
+        # 썩은 상태가 아니어서 건드리지 않은 작물 — 화면은 목록에서 걷어 내기만 한다
+        'skipped': skipped,
         'nutrient_left': inventory.get_qty(user_id, FarmItem.NUTRIENT),
     }
 

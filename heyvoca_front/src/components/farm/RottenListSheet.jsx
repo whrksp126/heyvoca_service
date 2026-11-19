@@ -3,7 +3,7 @@ import { CaretLeft, Check } from '@phosphor-icons/react';
 import { motion } from 'framer-motion';
 import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
 import { useNewBottomSheet } from '../../hooks/useNewBottomSheet';
-import { vibrate } from '../../utils/osFunction';
+import { vibrate, showToast } from '../../utils/osFunction';
 import {
   getRottenPlantsApi,
   getFarmItemsApi,
@@ -75,7 +75,8 @@ const RottenListSheet = ({ onChanged, onOpenShop }) => {
   const [hasMore, setHasMore] = useState(true);
   const [loading, setLoading] = useState(true);
   const [busy, setBusy] = useState(false);
-  const [notice, setNotice] = useState('');
+  // 목록을 못 불러왔을 때 — '불러오는 중'에 멈추지 않고 다시 시도 버튼을 보여 준다
+  const [loadFailed, setLoadFailed] = useState(false);
   const [tool, setTool] = useState('NUTRIENT');
   const [selected, setSelected] = useState(() => new Set());
   // 서버가 내려주는 전체 개수 / 전체 id (구서버는 null → 불러온 개수로 대체)
@@ -113,6 +114,7 @@ const RottenListSheet = ({ onChanged, onOpenShop }) => {
 
     const res = await getRottenPlantsApi({ limit: PAGE_SIZE, cursor: nextCursor });
     if (res?.code === 200) {
+      setLoadFailed(false);
       const data = res?.data || {};
       const list = Array.isArray(data.items) ? data.items : [];
       setItems((prev) => (nextCursor ? [...prev, ...list] : list));
@@ -132,7 +134,8 @@ const RottenListSheet = ({ onChanged, onOpenShop }) => {
       }
     } else {
       setHasMore(false);
-      setNotice(res?.message || '목록을 불러오지 못했어요. 잠시 뒤 다시 시도해 주세요.');
+      if (!nextCursor) setLoadFailed(true);
+      showToast(res?.message || '목록을 불러오지 못했어요. 잠시 뒤 다시 시도해 주세요.');
     }
 
     setLoading(false);
@@ -142,6 +145,19 @@ const RottenListSheet = ({ onChanged, onOpenShop }) => {
   useEffect(() => {
     loadPage(null);
     loadItems();
+  }, [loadPage, loadItems]);
+
+  /** 목록을 처음부터 다시 받는다 — 서버 상태와 어긋났을 때(적용 실패·다시 시도) */
+  const reloadAll = useCallback(async () => {
+    if (loadingRef.current) return;
+    setItems([]);
+    setCursor(null);
+    setHasMore(true);
+    setTotal(null);
+    setAllIds(null);
+    setAllIdsTruncated(false);
+    setSelected(new Set());
+    await Promise.all([loadPage(null), loadItems()]);
   }, [loadPage, loadItems]);
 
   // 센티넬이 뷰포트에 들어오면 다음 페이지 (200px 선반영)
@@ -200,7 +216,7 @@ const RottenListSheet = ({ onChanged, onOpenShop }) => {
     setPickingAll(false);
     loadingRef.current = false;
     if (failed) {
-      setNotice('목록을 끝까지 불러오지 못했어요. 불러온 작물만 선택했어요.');
+      showToast('목록을 끝까지 불러오지 못했어요. 불러온 작물만 선택했어요.');
     }
     setSelected(new Set(all.map((it) => it.user_voca_id)));
   };
@@ -257,7 +273,7 @@ const RottenListSheet = ({ onChanged, onOpenShop }) => {
     if (answer?.action !== 'done') {
       await loadItems();
       if (answer?.purchased) {
-        setNotice(`${toolDef.name}는 구매했지만 아직 사용하지 않았어요. 아래 버튼으로 이어서 사용해 주세요.`);
+        showToast(`${toolDef.name}는 구매했지만 아직 사용하지 않았어요. 아래 버튼으로 이어서 사용해 주세요.`);
       }
     }
   };
@@ -284,15 +300,20 @@ const RottenListSheet = ({ onChanged, onOpenShop }) => {
 
     if (res?.code === 200) {
       const done = res?.data?.recovered || targets;
-      dropDone(done);
+      // skipped = 이미 썩은 상태가 아니었던 작물(다른 기기·경로에서 처리됨) — 목록에서만 걷어 낸다
+      const skipped = Array.isArray(res?.data?.skipped) ? res.data.skipped : [];
+      dropDone([...done, ...skipped]);
       setOwned((prev) => ({ ...prev, NUTRIENT: res?.data?.nutrient_left ?? prev.NUTRIENT }));
-      setNotice(`작물 ${done.length}개가 다시 자라기 시작했어요.`);
-      allAppliedRef.current = done.length >= targets.length;
+      showToast(`작물 ${done.length}개가 다시 자라기 시작했어요.`);
+      allAppliedRef.current = done.length + skipped.length >= targets.length;
       onChanged?.();
       return { ok: true };
     }
     const message = res?.message || '잠시 뒤 다시 시도해 주세요.';
-    setNotice(message);
+    showToast(message);
+    // 목록이 서버 상태와 어긋났을 수 있다(409·404) — 처음부터 다시 받는다. 보유량 부족(400)은 목록 그대로.
+    if (res?.code === 409 || res?.code === 404) reloadAll();
+    else loadItems();
     return { ok: false, message };
   };
 
@@ -349,22 +370,25 @@ const RottenListSheet = ({ onChanged, onOpenShop }) => {
 
     if (res?.code === 200) {
       const done = res?.data?.reserved || targets;
+      const skipped = Array.isArray(res?.data?.skipped) ? res.data.skipped : [];
       const doneSet = new Set(done);
       // 되돌리기용으로 목록에서 걷어낼 행을 먼저 챙겨 둔다
       const removedRows = items.filter((it) => doneSet.has(it.user_voca_id));
-      dropDone(done);
+      dropDone([...done, ...skipped]);
       setOwned((prev) => ({ ...prev, SHOVEL: res?.data?.shovel_left ?? prev.SHOVEL }));
-      setNotice(`작물 ${done.length}개를 다시 심었어요. 오늘 학습에서 진단 문제로 만나요.`);
+      showToast(`작물 ${done.length}개를 다시 심었어요. 오늘 학습에서 진단 문제로 만나요.`);
       // 학습 시안 §6 — 다음 학습에서 이 단어를 "다시 심기 진단"으로 그린다.
       // 서버가 진단 표시를 내려주지 않아 예약 id 를 기기에 적어 둔다(utils/replantPending 참조).
       addPendingReplantIds(done);
       setUndoState({ ids: done, rows: removedRows, until: cancelUntil(res?.data?.cancel_until) });
-      allAppliedRef.current = done.length >= targets.length;
+      allAppliedRef.current = done.length + skipped.length >= targets.length;
       onChanged?.();
       return { ok: true };
     }
     const message = res?.message || '잠시 뒤 다시 시도해 주세요.';
-    setNotice(message);
+    showToast(message);
+    if (res?.code === 409 || res?.code === 404) reloadAll();
+    else loadItems();
     return { ok: false, message };
   };
 
@@ -405,16 +429,16 @@ const RottenListSheet = ({ onChanged, onOpenShop }) => {
       setTotal((prev) => (prev === null ? prev : prev + rows.length));
       removePendingReplantIds(undoState.ids);
       setUndoState(null);
-      setNotice('다시 심기를 되돌렸어요. 삽도 그대로 돌려놓았어요.');
+      showToast('다시 심기를 되돌렸어요. 삽도 그대로 돌려놓았어요.');
       loadItems();
       onChanged?.();
     } else {
       setUndoState(null);
-      setNotice(res?.message || '되돌릴 수 있는 시간이 지났어요.');
+      showToast(res?.message || '되돌릴 수 있는 시간이 지났어요.');
     }
   };
 
-  const empty = !loading && items.length === 0;
+  const empty = !loading && !loadFailed && items.length === 0;
 
   return (
     <div className="flex flex-col h-full w-full bg-layout-white dark:bg-layout-black">
@@ -471,8 +495,11 @@ const RottenListSheet = ({ onChanged, onOpenShop }) => {
           })}
         </div>
 
-        {/* 전체 선택 토글 + 개수 */}
+        {/* 개수(왼쪽) + 전체 선택 토글(오른쪽 — 각 행 체크와 같은 열) */}
         <div className="flex items-center justify-between px-[16px] pb-[10px]">
+          <span className="text-[12.5px] font-[700] text-layout-gray-400 dark:text-layout-gray-200">
+            선택 {selectedCount} / 전체 {displayTotal}
+          </span>
           <motion.button
             type="button"
             onClick={allSelected ? clearPick : pickAll}
@@ -482,18 +509,7 @@ const RottenListSheet = ({ onChanged, onOpenShop }) => {
           >
             {pickingAll ? '불러오는 중' : allSelected ? '선택 해제' : '모두 선택'}
           </motion.button>
-          <span className="text-[12.5px] font-[700] text-layout-gray-400 dark:text-layout-gray-200">
-            선택 {selectedCount} / 전체 {displayTotal}
-          </span>
         </div>
-
-        {notice && (
-          <div className="mx-[16px] mb-[10px] rounded-[10px] bg-layout-gray-50 dark:bg-layout-gray-dark px-[13px] py-[10px]">
-            <p className="text-[12.5px] font-[400] text-layout-gray-400 dark:text-layout-gray-200 leading-[1.55]">
-              {notice}
-            </p>
-          </div>
-        )}
 
         <div className="px-[16px]">
           {items.map((it) => {
@@ -547,6 +563,22 @@ const RottenListSheet = ({ onChanged, onOpenShop }) => {
             <p className="py-[48px] text-center text-[13.5px] font-[400] text-layout-gray-300">
               돌볼 작물이 없어요
             </p>
+          )}
+
+          {!loading && loadFailed && items.length === 0 && (
+            <div className="flex flex-col items-center gap-[12px] py-[44px]">
+              <p className="text-center text-[13.5px] font-[400] text-layout-gray-300">
+                목록을 불러오지 못했어요
+              </p>
+              <motion.button
+                type="button"
+                onClick={() => { vibrate({ duration: 5 }); reloadAll(); }}
+                whileTap={{ scale: 0.96 }}
+                className="h-[34px] px-[14px] rounded-full bg-layout-gray-50 dark:bg-layout-gray-dark text-[13px] font-[700] text-layout-gray-400 dark:text-layout-gray-200"
+              >
+                다시 불러오기
+              </motion.button>
+            </div>
           )}
 
           <div ref={sentinelRef} className="h-[1px]" />

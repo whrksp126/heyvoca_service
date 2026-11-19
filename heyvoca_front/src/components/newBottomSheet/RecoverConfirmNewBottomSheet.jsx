@@ -53,35 +53,29 @@ export const RecoverConfirmNewBottomSheet = ({
         className="w-[64px] h-[64px] object-contain select-none"
       />
 
+      {/* 2026-11-19 회의 QA — 문구를 줄였다: 제목 한 줄 + (부족할 때만) 짧은 설명 */}
       <div className="flex flex-col items-center gap-[6px]">
         <h1 className="text-[18px] font-[800] text-layout-black dark:text-layout-white text-center leading-[1.4]">
-          {enough
-            ? `${count}개 작물에 영양 회복제 ${count}개를 사용할까요?`
-            : `영양 회복제가 ${nutrientCnt}개 남아 있어요`}
+          {enough ? `선택한 ${count}개에 사용할까요?` : `영양 회복제가 ${shortage}개 부족해요`}
         </h1>
-        <p className="text-[13px] font-[400] text-layout-gray-300 text-center leading-[1.55]">
-          {enough
-            ? '지금까지 키운 단계를 그대로 두고 되살려요.'
-            : `${count}개를 골랐으니 ${shortage}개가 더 필요해요. 지금 있는 ${applyCount}개만 먼저 써도 괜찮아요.`}
-        </p>
+        {!enough && (
+          <p className="text-[13px] font-[400] text-layout-gray-300 text-center leading-[1.55]">
+            {canApply ? `있는 ${applyCount}개만 먼저 쓸 수 있어요.` : '상점에서 채운 뒤 사용해 주세요.'}
+          </p>
+        )}
       </div>
 
       <div className="flex flex-col w-full gap-[10px]">
-        <motion.button
-          type="button"
-          onClick={handleConfirm}
-          whileTap={canApply ? { scale: 0.97 } : undefined}
-          disabled={!canApply}
-          className="
-            flex items-center justify-center gap-[6px]
-            w-full py-[14px] rounded-[8px]
-            bg-primary-main-600 text-layout-white text-[16px] font-[700]
-            disabled:opacity-40
-          "
-        >
-          <img src={CROP_ASSETS.nutrient} alt="" className="w-[20px] h-[20px] object-contain" />
-          {enough ? `영양 회복제 ${applyCount}개 사용하기` : `${applyCount}개만 사용하기`}
-        </motion.button>
+        {canApply && (
+          <motion.button
+            type="button"
+            onClick={handleConfirm}
+            whileTap={{ scale: 0.97 }}
+            className="w-full py-[14px] rounded-[8px] bg-primary-main-600 text-layout-white text-[16px] font-[700]"
+          >
+            {enough ? '영양 회복제 사용' : `${applyCount}개만 사용`}
+          </motion.button>
+        )}
 
         {!enough && (
           <motion.button
@@ -90,7 +84,7 @@ export const RecoverConfirmNewBottomSheet = ({
             whileTap={{ scale: 0.97 }}
             className="w-full py-[14px] rounded-[8px] border-[1.5px] border-primary-main-300 text-[15px] font-[700] text-primary-main-600"
           >
-            상점에서 영양 회복제 살펴보기
+            상점에서 채우기
           </motion.button>
         )}
 
@@ -103,9 +97,6 @@ export const RecoverConfirmNewBottomSheet = ({
           다음에 할게요
         </motion.button>
 
-        <p className="text-center text-[12px] font-[400] text-layout-gray-300">
-          보유한 영양 회복제 {nutrientCnt}개
-        </p>
       </div>
     </div>
   );

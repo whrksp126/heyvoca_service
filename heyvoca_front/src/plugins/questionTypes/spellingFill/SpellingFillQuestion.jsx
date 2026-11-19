@@ -120,10 +120,13 @@ const SpellingFillQuestion = ({ question, onComplete, onCardMatched, farmByWordI
 
   useEffect(() => () => { speakGenRef.current += 1; }, []);
 
-  const grade = (nextValue, nextHinted, usedHints) => {
+  // giveUp — '모르겠어요'(2026-11-19 QA). 칸을 다 채우지 않았어도 지금 입력 그대로 오답 채점한다.
+  // 이후 흐름(정답 공개·다음 버튼·오답 재출제·/study/log·사전 테스트 모름 분류)은 일반 오답과 같은 경로다.
+  const grade = (nextValue, nextHinted, usedHints, { giveUp = false } = {}) => {
     if (gradedRef.current) return;
     gradedRef.current = true;
-    const g = gradeSpelling(cells, nextHinted, nextValue);
+    const graded = gradeSpelling(cells, nextHinted, nextValue);
+    const g = giveUp ? { ...graded, isCorrect: false } : graded;
     const timeTakenMs = Date.now() - startTimeRef.current;
     // 다른 단어 유형과 같은 O/X 채점만 쓴다 — '완벽해요' 배지는 띄우지 않는다(이슈 #25 6차 QA).
     feel(g.isCorrect ? 'correct' : 'wrong');
@@ -174,6 +177,13 @@ const SpellingFillQuestion = ({ question, onComplete, onCardMatched, farmByWordI
     if (Array.from(next).length !== Array.from(value).length) feel('tap');
     setValue(next);
     if (Array.from(next).length === cap && cap > 0) grade(next, nextHinted, usedHints);
+  };
+
+  const handleGiveUp = (e) => {
+    e.stopPropagation();
+    if (isAnswered || gradedRef.current) return;
+    composingRef.current = false;
+    grade(value, hinted, hintUsed, { giveUp: true });
   };
 
   const handleHint = (e) => {
@@ -330,34 +340,46 @@ const SpellingFillQuestion = ({ question, onComplete, onCardMatched, farmByWordI
               </motion.div>
 
               {!isAnswered && (
-                <button
-                  type="button"
-                  disabled={hintDisabled}
-                  onPointerDown={(e) => e.preventDefault()}
-                  onMouseDown={(e) => e.preventDefault()}
-                  onClick={handleHint}
-                  aria-label={`힌트, ${hintsLeft}번 남음`}
-                  className={`
-                    inline-flex items-center gap-[6px]
-                    px-[12px] py-[6px] rounded-full
-                    border-[1px] border-layout-gray-200 dark:border-[#444444]
-                    bg-layout-white dark:bg-layout-black
-                    text-[13px] font-[700] text-layout-gray-500 dark:text-layout-gray-100
-                    transition-opacity duration-150
-                    ${hintDisabled ? 'opacity-40' : ''}
-                  `}
-                >
-                  <Lightbulb size={15} weight="bold" aria-hidden="true" />
-                  힌트
-                  <span className="inline-flex gap-[3px] ml-[2px]" aria-hidden="true">
-                    {Array.from({ length: MAX_HINTS }).map((_, k) => (
-                      <span
-                        key={k}
-                        className={`w-[5px] h-[5px] rounded-full ${k < hintsLeft ? 'bg-primary-main-600' : 'bg-layout-gray-300 dark:bg-[#555555]'}`}
-                      />
-                    ))}
-                  </span>
-                </button>
+                <div className="flex items-center gap-[14px]">
+                  <button
+                    type="button"
+                    disabled={hintDisabled}
+                    onPointerDown={(e) => e.preventDefault()}
+                    onMouseDown={(e) => e.preventDefault()}
+                    onClick={handleHint}
+                    aria-label={`힌트, ${hintsLeft}번 남음`}
+                    className={`
+                      inline-flex items-center gap-[6px]
+                      px-[12px] py-[6px] rounded-full
+                      border-[1px] border-layout-gray-200 dark:border-[#444444]
+                      bg-layout-white dark:bg-layout-black
+                      text-[13px] font-[700] text-layout-gray-500 dark:text-layout-gray-100
+                      transition-opacity duration-150
+                      ${hintDisabled ? 'opacity-40' : ''}
+                    `}
+                  >
+                    <Lightbulb size={15} weight="bold" aria-hidden="true" />
+                    힌트
+                    <span className="inline-flex gap-[3px] ml-[2px]" aria-hidden="true">
+                      {Array.from({ length: MAX_HINTS }).map((_, k) => (
+                        <span
+                          key={k}
+                          className={`w-[5px] h-[5px] rounded-full ${k < hintsLeft ? 'bg-primary-main-600' : 'bg-layout-gray-300 dark:bg-[#555555]'}`}
+                        />
+                      ))}
+                    </span>
+                  </button>
+                  {/* 모르겠어요 — 칸을 다 채우지 않아도 바로 오답 처리(2026-11-19 QA). 텍스트 버튼 수준으로만 둔다 */}
+                  <button
+                    type="button"
+                    onPointerDown={(e) => e.preventDefault()}
+                    onMouseDown={(e) => e.preventDefault()}
+                    onClick={handleGiveUp}
+                    className="px-[4px] py-[6px] text-[13px] font-[700] text-layout-gray-400 dark:text-layout-gray-100 underline underline-offset-[3px] decoration-layout-gray-300 dark:decoration-[#555555]"
+                  >
+                    모르겠어요
+                  </button>
+                </div>
               )}
 
               {isAnswered && !isCorrect && (

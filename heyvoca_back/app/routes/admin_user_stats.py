@@ -473,3 +473,65 @@ def admin_excluded_delete(row_id):
     db.session.commit()
     invalidate_cache()
     return jsonify({'code': 200, 'data': {'deleted': row_id}})
+
+
+# ──────────────────────────────────────────
+# 사용자 학습 기록 상세 (2026-11-19 회의 QA) — 읽기 전용. 로직은 app/services/admin_user_detail.py
+#   GET /admin/users/<user_id>/detail?calendar_days=90
+#   GET /admin/users/<user_id>/history?page=1&per_page=30&include_empty=0
+# ──────────────────────────────────────────
+
+def _parse_uid(user_id):
+    try:
+        return UUID(user_id)
+    except (TypeError, ValueError):
+        return None
+
+
+@admin_bp.route('/users/<user_id>/detail', methods=['GET'])
+@admin_required
+def admin_user_detail(user_id):
+    from app.services import admin_user_detail as svc
+    uid = _parse_uid(user_id)
+    if uid is None:
+        return jsonify({'code': 400, 'message': '잘못된 사용자 ID 입니다.'}), 400
+    try:
+        cal_days = int(request.args.get('calendar_days', svc.CALENDAR_DAYS_DEFAULT))
+    except (TypeError, ValueError):
+        cal_days = svc.CALENDAR_DAYS_DEFAULT
+    # 목록과 같은 파생값(실사용자·마지막 사용일·플랫폼·제외 여부)을 쓰기 위해 같은 원본을 본다.
+    listing = next((u for u in _enrich(_load_base()) if u['key'] == uid.hex), None)
+    try:
+        data = svc.get_detail(uid, listing=listing, calendar_days=cal_days)
+    except Exception:
+        db.session.rollback()
+        logger.error('어드민 사용자 상세 조회 실패', exc_info=True)
+        return jsonify({'code': 500, 'message': '사용자 상세를 불러오지 못했습니다.'}), 500
+    finally:
+        # 읽기 전용 — 혹시 남은 변경이 있어도 커밋하지 않는다.
+        db.session.rollback()
+    if data is None:
+        return jsonify({'code': 404, 'message': '사용자를 찾을 수 없습니다.'}), 404
+    return jsonify({'code': 200, 'data': data})
+
+
+@admin_bp.route('/users/<user_id>/history', methods=['GET'])
+@admin_required
+def admin_user_history(user_id):
+    from app.services import admin_user_detail as svc
+    uid = _parse_uid(user_id)
+    if uid is None:
+        return jsonify({'code': 400, 'message': '잘못된 사용자 ID 입니다.'}), 400
+    try:
+        page = max(1, int(request.args.get('page', 1)))
+        per_page = max(1, min(int(request.args.get('per_page', 30)), 100))
+    except (TypeError, ValueError):
+        page, per_page = 1, 30
+    try:
+        data = svc.get_history(uid, page=page, per_page=per_page,
+                               include_empty=request.args.get('include_empty') in ('1', 'true'))
+    except Exception:
+        db.session.rollback()
+        logger.error('어드민 사용자 학습 기록 조회 실패', exc_info=True)
+        return jsonify({'code': 500, 'message': '학습 기록을 불러오지 못했습니다.'}), 500
+    return jsonify({'code': 200, 'data': data})

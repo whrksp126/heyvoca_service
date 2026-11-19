@@ -13,12 +13,15 @@
 // 끝나면 onCelebrated() 를 부른다. transform/opacity(clip-path) 만 움직인다.
 // 12차: celebrateHold=true 면 연출을 시작하지 않고 그 줄들을 '아직 안 한' 모양으로 붙잡아 둔다
 // (홈 위에 보상 시트·업적 연출이 남아 있는 동안). hold 가 풀리면 그때 시작한다.
+// 2026-11-19 QA: nudge={ id, keys } 를 받으면 그 줄들을 한 번 흔들고(공용 shake) 배경을 잠깐 밝힌다
+// (필수 퀘스트가 남았는데 「숨기기」를 눌렀을 때). id 가 바뀔 때마다 다시 재생한다.
 
 import React, { useEffect, useState } from 'react';
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import { Check, CaretDown, CaretRight } from '@phosphor-icons/react';
 import { questTitleOf } from '../../context/OnboardingUnlockContext';
 import gemIcon from '../../assets/images/farm/icon-gem.png';
+import { pickVariant } from '../../lib/feel/motion';
 
 // 달성 방법 — 실제 동선 기준(완료 판정: routes/onboarding.py 머리 주석, 프론트 신호는 TakeTest·StudyMain·dictionary/Main).
 export const QUEST_HOW = {
@@ -38,7 +41,10 @@ const LINE_MS = 380;
 
 const QuestSteps = ({
   missions = [], currentKey = null, onSelect, celebrateKeys = null, celebrateHold = false, onCelebrated,
+  nudge = null,
 }) => {
+  const reduceMotion = useReducedMotion();
+  const shakeVariant = pickVariant('shake', reduceMotion);
   const [openKey, setOpenKey] = useState(null);
   // 연출 진행 단계 — key i 의 체크는 step 2i, 연결선은 2i+1, 다 끝나면 2n. -1 = 시작 전.
   // 어느 연출(sig)의 단계인지 같이 적어 둔다 — 새 연출이 시작되는 첫 렌더에 지난 연출의 단계가 새지 않게.
@@ -105,6 +111,7 @@ const QuestSteps = ({
         const expandable = !m.done;
         const isOpen = expandable && openKey === m.key;
         const how = QUEST_HOW[m.key];
+        const nudged = !!nudge && Array.isArray(nudge.keys) && nudge.keys.includes(m.key) && !m.done;
         return (
           <li key={m.key} className="relative">
             {/* 세로 연결선 — 다음 줄의 점까지 잇는다(펼친 설명 높이만큼 같이 늘어난다) */}
@@ -121,7 +128,20 @@ const QuestSteps = ({
                 />
               </span>
             )}
-            <button
+            {nudged && (
+              <motion.span
+                key={`nudge-bg-${nudge.id}`}
+                aria-hidden="true"
+                className="absolute -left-[6px] -right-[6px] top-0 h-[36px] rounded-[8px] bg-status-success-50 dark:bg-status-success-dark pointer-events-none"
+                initial={{ opacity: 1 }}
+                animate={{ opacity: 0 }}
+                transition={{ duration: 1.4, ease: 'easeIn', delay: 0.3 }}
+              />
+            )}
+            <motion.button
+              key={nudged ? `nudge-${nudge.id}` : 'row'}
+              initial={false}
+              animate={nudged ? shakeVariant.animate : { x: 0 }}
               type="button"
               disabled={!expandable}
               onClick={expandable ? () => setOpenKey(isOpen ? null : m.key) : undefined}
@@ -210,7 +230,7 @@ const QuestSteps = ({
                   {m.reward_gem}
                 </span>
               )}
-            </button>
+            </motion.button>
 
             <AnimatePresence initial={false}>
               {isOpen && (

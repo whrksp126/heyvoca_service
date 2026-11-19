@@ -23,7 +23,7 @@ import SheetOptionRow from './SheetOptionRow';
   예전엔 홈 CTA 가 종류를 묻지 않고 곧장 복습을 열고, '오늘 할 일' 카드 안의 '살리기'·'심기'
   버튼이 나머지 진입을 맡았다. 진입을 이 시트 하나로 모으고 카드는 줄(정보)만 남겼다.
 
-  항목(위→아래): 썩은 단어 살리기(있을 때만) / 농장 돌보기 / 새 씨앗 심기 / 밭 골라 돌보기(이슈 #25 9차 이름).
+  항목(위→아래): 썩은 단어 살리기(항상, 0개면 흐리게 — 2026-11-19) / 농장 돌보기 / 새 씨앗 심기 / 밭 골라 돌보기(이슈 #25 9차 이름).
   이름(QA 4차, 2026-10-25): 밭 = 단어장 하나, 농장 = 밭 전체. 예전 이름은 새 씨앗 심기·단어장 골라 학습.
   '농장 산책하기'(반복 듣기)는 이 시트에서 뺐다(이슈 #17 2차, 2026-10-26) — 산책은 밭 골라 학습 등 다른 진입점의
   반복 듣기(StudyMain)로 계속 쓸 수 있다.
@@ -91,18 +91,28 @@ export const StudyPickNewBottomSheet = ({ seedOnly = false } = {}) => {
     );
     if (answer === 'pick') { openRottenSheet(); return; }
     if (answer !== true) return;
-    // today-tasks 의 words 는 미리보기뿐이라 전체 id 목록은 다시 받는다
-    const list = await getRottenPlantsApi({ limit: rotten.count });
-    const ids = (list?.data?.items ?? []).map((it) => it.user_voca_id);
-    if (ids.length === 0) { openRottenSheet(); return; }
+    // today-tasks 의 words 는 미리보기뿐이라 전체 id 목록은 다시 받는다(첫 페이지의 all_ids = 전체)
+    const list = await getRottenPlantsApi({ limit: 100 });
+    if (list?.code !== 200) {
+      showToast(list?.message || '잠시 뒤 다시 시도해 주세요.');
+      return;
+    }
+    const allIds = Array.isArray(list.data?.all_ids) && !list.data?.all_ids_truncated ? list.data.all_ids : null;
+    const ids = allIds ?? (list.data?.items ?? []).map((it) => it.user_voca_id);
+    if (ids.length === 0) {
+      showToast('지금은 썩은 단어가 없어요.');
+      refreshStats();
+      return;
+    }
     const res = await recoverPlantsApi(ids);
     if (res?.code === 200) {
       const done = res?.data?.recovered ?? ids;
       showToast(`작물 ${done.length}개가 다시 자라기 시작했어요.`);
-      refreshStats();
     } else {
       showToast(res?.message || '잠시 뒤 다시 시도해 주세요.');
     }
+    // 실패해도 개수가 낡았을 수 있어 다시 읽는다(오래 비운 계정은 그 사이 부패 수가 바뀐다)
+    refreshStats();
   };
 
   const openNoSeedSheet = async () => {
@@ -137,9 +147,12 @@ export const StudyPickNewBottomSheet = ({ seedOnly = false } = {}) => {
   };
 
   const OPTIONS = [
-    rotten.count > 0 && {
+    // 2026-11-19 회의 QA — 홈 '오늘 할 일' 카드에서 썩은 단어 줄을 뺀 대신 여기 맨 위에 항상 둔다.
+    // 0개면 흐리게 두되, 홈 개수가 낡았을 수 있으니 누르면 보관소 시트(실시간 목록)를 연다.
+    {
       key: 'rotten', title: '썩은 단어 살리기',
-      desc: `썩은 단어 ${rotten.count}개`, count: rotten.count, run: recoverRotten,
+      desc: `썩은 단어 ${rotten.count ?? 0}개`, count: rotten.count ?? 0, fadeWhenEmpty: true,
+      run: (rotten.count ?? 0) > 0 ? recoverRotten : openRottenSheet,
     },
     {
       key: 'care', title: '농장 돌보기',
@@ -186,7 +199,7 @@ export const StudyPickNewBottomSheet = ({ seedOnly = false } = {}) => {
             first={idx === 0}
             title={option.title}
             desc={option.desc}
-            danger={option.key === 'rotten'}
+            danger={option.key === 'rotten' && option.count > 0}
             faded={!!option.fadeWhenEmpty && option.count <= 0}
             locked={!!option.locked}
             onClick={() => handleClick(option)}

@@ -5,9 +5,10 @@
   **답할 때마다 다음 문제를 한 개씩** 만든다. 미리 다 만들지 않는 이유는 다음 문제의 난이도가
   방금 답으로 갱신된 수준(θ)에 달려 있어서다.
 
-    1부 체험  — **단어 유형만**(PART1_PLAN: 뜻 고르기·듣고 고르기·카드 맞추기·한→영·스펠링, 한 번씩).
-               단어는 세션을 만들 때 미리 뽑은 체험 밭 8단어(drawFieldWords) 안에서 고른다.
-    2부 실전  — 1부 단어 3개를 **예문 유형**(빈칸·문장 조립·문장 뜻, 한 번씩)으로 다시. 가장 쉬운 예문부터.
+    1부 체험  — **단어 유형만**(PART1_PLAN: 뜻 고르기 1·듣고 고르기 1·듣고 카드 맞추기 4단어·단어 쓰기 2 = 8단어,
+               쉬운 것부터). 단어는 세션을 만들 때 미리 뽑은 체험 밭 8단어(drawFieldWords) 안에서 고른다.
+    2부 실전  — 1부 단어 중 예문 있는 단어를 무작위로 골라 **예문 유형**(문장 조립·해석 조립, 한 번씩, 가능하면
+               서로 다른 단어)으로 다시. 낼 예문이 없으면 그 문제는 건너뛴다(2026-11-19 회의 QA).
                예문 유형은 2부에서만 나온다(이슈 #25 3차 QA — 1부 '체험'에 문장 문제가 섞이면 2부
                '실전 문장' 안내와 어긋났다).
     3부 복습  — 틀린 단어를 **틀린 그 문제 그대로**(같은 유형·같은 문항 데이터) 맞힐 때까지 다시(단어당 최대 MAX_RETRY 번 —
@@ -69,22 +70,25 @@ const isClimbing = (s) => !s.leftClimb;
 const clampBand = (b) => Math.max(1, Math.min(MAX_BAND, b));
 
 // ── 출제 계획 ──────────────────────────────────────────────────────────
-// 이슈 #25 4차 — **문제 유형은 한 번씩만**. 1부 단어 유형 5문항(카드 맞추기 4단어 포함 8단어) +
-// 2부 예문 유형 3문항 = 8문제, 그 뒤 틀린 단어 복습(3부).
+// 2026-11-19 회의 QA — 1부 단어 유형 5문항(뜻 고르기 1·듣고 고르기 1·듣고 카드 맞추기 4단어·단어 쓰기 2 = 8단어) +
+// 2부 실전 2문항(문장 조립·해석 조립) = 7문제, 그 뒤 틀린 문제 복습(3부). 순서는 쉬운 것 → 실전.
 // 1부 단어 8개는 세션을 만들 때 미리 뽑아 둔 '체험 밭' 단어(FIELD_BANDS)이고, 계단 규칙은 그 8개 안에서
 // 어느 단어를 어느 유형으로 낼지(순서)만 정한다 — 그래야 학습 전에 밭에 심어 둔 단어가 곧 나올 단어다.
 // 예문 유형(EXAMPLE_TYPES)을 1부에 넣지 말 것 — 2부(실전 문장)에서만 낸다.
 export const PART1_PLAN = [
   'multipleChoice',
   'multipleChoiceListening',
-  'cardMatch',
-  'reverseMultipleChoice',
+  'cardMatchListening',
+  'spellingFill',
   'spellingFill',
 ];
 export const CARD_MATCH_SIZE = 4;
+const CARD_TYPES = new Set(['cardMatch', 'cardMatchListening']);
+const isCardType = (t) => CARD_TYPES.has(t);
+const unitsOf = (t) => (isCardType(t) ? CARD_MATCH_SIZE : 1);
 // 2부 실전 문장 — 예문 유형만(nextPart2), 유형마다 한 번. 낼 예문이 없으면 2부를 그만큼 짧게 끝낸다
 // (단어 유형으로 채우면 '실전 문장' 안내와 어긋난다).
-const PART2_PLAN = ['fillInTheBlank', 'sentenceArrangePartial', 'sentenceTranslate'];
+const PART2_PLAN = ['sentenceArrange', 'sentenceTranslate'];
 export const PART2_COUNT = PART2_PLAN.length;
 // 이슈 #25 8차 QA — 복습에서 또 틀리면 **맞힐 때까지** 다시 낸다(농장 돌보기 TakeTest 와 같은 규칙·같은
 // 상한 10 — components/takeTest/Main.jsx enqueueRetry). 4차에선 1번만 내고 끝나 '틀린 채로 끝난다'는 QA 가 나왔다.
@@ -108,7 +112,7 @@ const EXAMPLE_TYPES = new Set(['fillInTheBlank', 'sentenceTranslate', 'sentenceA
 
 /** 진행바 분모 — 1부 채점 단위 + 2부 문항(재출제는 분모에 넣지 않는다, utils/studyProgress.js 와 같은 규칙). */
 export const plannedProgressUnits = () =>
-  PART1_PLAN.reduce((n, t) => n + (t === 'cardMatch' ? CARD_MATCH_SIZE : 1), 0) + PART2_COUNT;
+  PART1_PLAN.reduce((n, t) => n + unitsOf(t), 0) + PART2_COUNT;
 
 // ── 문자열 유틸 ────────────────────────────────────────────────────────
 const TAG_RE = /<[^>]*>/g;
@@ -257,10 +261,10 @@ function buildChoice(p, pool, questionType, rng) {
   };
 }
 
-function buildCardMatch(words, rng) {
+function buildCardMatch(words, rng, questionType = 'cardMatch') {
   return {
-    questionType: 'cardMatch',
-    id: `onb-cardMatch-${words.map((w) => w.voca_id).join('-')}`,
+    questionType,
+    id: `onb-${questionType}-${words.map((w) => w.voca_id).join('-')}`,
     words: shuffle(words.map(toWord), rng),
     vocabularySheetId: 'guest-trial',
     isCorrect: null,
@@ -325,8 +329,10 @@ function buildArrange(p, pool, rng, questionType = 'sentenceArrangePartial') {
   const n = tokens.length;
   let start = 0;
   let end = n;
-  if (questionType === 'sentenceArrangePartial') {
-    const size = Math.min(n, rng() < 0.5 ? 3 : 4);
+  // 부분 조립은 목표 주변 3~4조각, 전체 조립은 8조각 이하면 전부·넘으면 목표 중심 7조각(서버 mode='full' 과 같다)
+  const windowSize = questionType === 'sentenceArrangePartial' ? (rng() < 0.5 ? 3 : 4) : (n <= 8 ? n : 7);
+  if (windowSize < n) {
+    const size = Math.min(n, windowSize);
     const tStart = Math.min(...targetIdx);
     const tEnd = Math.max(...targetIdx) + 1;
     const extra = Math.max(0, size - (tEnd - tStart));
@@ -491,7 +497,8 @@ function buildTranslate(p, pool, rng) {
 export function buildQuestion(type, words, pool, rng = Math.random) {
   const p = words[0];
   switch (type) {
-    case 'cardMatch': return buildCardMatch(words, rng);
+    case 'cardMatch':
+    case 'cardMatchListening': return buildCardMatch(words, rng, type);
     case 'fillInTheBlank': return buildFill(p, pool, rng);
     case 'spellingFill': return buildSpelling(p);
     case 'sentenceTranslate': return buildTranslate(p, pool, rng);
@@ -630,8 +637,15 @@ const nextPart1 = (s, rng) => {
   while (s.step < PART1_PLAN.length) {
     let type = PART1_PLAN[s.step];
     s.step += 1;
-    const count = type === 'cardMatch' ? CARD_MATCH_SIZE : 1;
-    let words = pickWords(s, type, count, rng, (p) => !!p.example);
+    const count = unitsOf(type);
+    // 뒤에 단어 쓰기가 남아 있으면 철자 문제를 못 내는 단어(띄어쓰기 단어)를 다른 유형에 먼저 쓴다 —
+    // 앞 유형이 철자용 단어를 다 써 버리면 단어 쓰기가 뜻 고르기로 바뀐다. (체험 밭은 보통 전부 철자 가능)
+    const spellLeft = PART1_PLAN.slice(s.step).includes('spellingFill');
+    const keepSpell = type !== 'spellingFill' && spellLeft
+      ? (p) => !canUseType(p, 'spellingFill') : () => true;
+    let words = pickWords(s, type, count, rng, (p) => !!p.example && keepSpell(p));
+    if (words.length === 0) words = pickWords(s, type, count, rng, keepSpell);
+    if (words.length === 0) words = pickWords(s, type, count, rng, (p) => !!p.example);
     if (words.length === 0) words = pickWords(s, type, count, rng);
     if (words.length === 0 && type !== 'multipleChoice') {
       type = 'multipleChoice';
@@ -646,15 +660,13 @@ const nextPart1 = (s, rng) => {
   return null;
 };
 
-// 2부 실전 — 1부 단어 PART2_COUNT 개를 **예문 유형**(PART2_PLAN 순서)으로 다시 묻는다.
-// 예문은 단어마다 풀이 준 가장 쉬운 것 하나뿐이다. 단어는 1부에서 다른 유형으로 만난 것 중
-// 지금 θ 에서 P(정답)이 targetP 에 가까운 것(같으면 예문 score 낮은 것) — 잘하는 사람이 A1 단어를 다시 보지 않게.
-// 계획한 유형을 낼 단어가 없으면 다른 예문 유형으로. 예문 유형을 낼 단어가 없으면 2부를 끝낸다.
+// 2부 실전 — 1부 단어 중 예문 있는 단어를 **무작위로** 골라 예문 유형(PART2_PLAN 순서: 문장 조립 → 해석 조립)으로
+// 다시 묻는다(2026-11-19 회의 QA). 두 문제는 가능하면 서로 다른 단어 — 그 유형을 낼 수 있는 새 단어가 없으면
+// 이미 2부에서 쓴 단어라도 쓴다. 계획한 유형을 낼 단어가 아예 없으면 다른 예문 유형으로, 그것도 없으면 2부를 끝낸다.
 const nextPart2 = (s, rng) => {
   const asked = new Set(s.part2Asked || []);
   if (s.part2Done >= PART2_COUNT || s.part2Ended) return null;
-  const words = Object.keys(s.firstById).map(Number)
-    .filter((id) => !asked.has(id)).map((id) => byId(s, id)).filter(Boolean);
+  const words = Object.keys(s.firstById).map(Number).map((id) => byId(s, id)).filter(Boolean);
   if (words.length === 0) { s.part2Ended = true; return null; }
   // 유형은 한 번씩 — 계획한 유형부터, 그 유형을 낼 단어가 없으면 아직 안 낸 다른 예문 유형으로.
   const doneTypes = new Set(s.part2Types || []);
@@ -662,23 +674,17 @@ const nextPart2 = (s, rng) => {
   const order = [planned, ...PART2_PLAN.filter((t) => t !== planned)].filter((t) => !doneTypes.has(t));
   let pick = null;
   for (const t of order) {
-    const fit = (p) => {
-      const pc = pCorrect(s.theta, itemB(p, t));
-      return pc < TUNE.targetP ? (TUNE.targetP - pc) * 1.5 : pc - TUNE.targetP;
-    };
-    const cands = words
-      .filter((p) => s.firstById[p.voca_id]?.type !== t && canUseType(p, t))
-      .map((p) => ({ p, d: fit(p) }))
-      .sort((x, y) => (x.d - y.d) || ((x.p.example?.score ?? 99) - (y.p.example?.score ?? 99)));
+    const usable = words.filter((p) => canUseType(p, t));
+    const fresh = usable.filter((p) => !asked.has(p.voca_id));
+    const cands = fresh.length ? fresh : usable;
     if (cands.length) {
-      const top = cands.filter((x) => x.d <= cands[0].d + 0.03).slice(0, 2);
-      pick = { p: top[Math.floor(rng() * top.length)].p, t };
+      pick = { p: cands[Math.floor(rng() * cands.length)], t };
       break;
     }
   }
   if (!pick) { s.part2Ended = true; return null; }
   const { p, t: type } = pick;
-  s.part2Asked = [...asked, p.voca_id];
+  s.part2Asked = [...new Set([...asked, p.voca_id])];
   s.part2Done += 1;
   s.units = (s.units ?? 0) + 1;
   s.lastP2Type = type;
@@ -909,7 +915,7 @@ export function progressOf(s, question) {
   reviewOf(s);
   let remaining = 0;
   if (!s.done) {
-    for (let i = s.step; i < PART1_PLAN.length; i += 1) remaining += PART1_PLAN[i] === 'cardMatch' ? CARD_MATCH_SIZE : 1;
+    for (let i = s.step; i < PART1_PLAN.length; i += 1) remaining += unitsOf(PART1_PLAN[i]);
     if (!s.part2Ended) remaining += Math.max(0, PART2_COUNT - (s.part2Done ?? 0));
   }
   const total = Math.max(1, (s.units ?? 0) - (s.dropped ?? 0) + remaining);
@@ -936,13 +942,12 @@ export function passedIds(s) {
   모든 유형을 한 번씩 낼 수 있게 — 띄어쓰기 없는 단어(단어 쓰기)·2부 예문 유형 셋을 다 낼 수 있는 예문을
   가진 단어를 먼저, 서로 뜻이 겹치지 않게(카드 맞추기) 고른다. 모자라면 조건을 하나씩 풀어 채운다.
 */
-const exampleScore = (p) => ['fillInTheBlank', 'sentenceArrangePartial', 'sentenceTranslate']
-  .filter((t) => canUseType(p, t)).length;
+const exampleScore = (p) => PART2_PLAN.filter((t) => canUseType(p, t)).length;
 export function drawFieldWords(pool, rng = Math.random) {
   const picked = [];
   const tiers = [
-    (p) => exampleScore(p) === 3 && canUseType(p, 'spellingFill'),
-    (p) => exampleScore(p) >= 2 && canUseType(p, 'spellingFill'),
+    (p) => exampleScore(p) === PART2_PLAN.length && canUseType(p, 'spellingFill'),
+    (p) => exampleScore(p) >= 1 && canUseType(p, 'spellingFill'),
     (p) => !!p.example && canUseType(p, 'spellingFill'),
     () => true,
   ];

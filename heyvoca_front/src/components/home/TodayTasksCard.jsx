@@ -5,8 +5,11 @@
 // CTA 바로 아래, 기존 "지금 볼 만한 단어"(care·rotten)를 대신한다 — 같은 사실(썩은 단어·
 // 시듦·돌봄)을 개수 카드와 목록 카드 두 곳에서 반복하지 않는다(Main.jsx 정리 참고).
 //
-// 행 4개, 고정 순서. 0인 행은 숨긴다 — 썩은 단어 / 시듦 물주기 / 오늘 돌봄 물주기 / 새 씨앗 심기.
-// 오늘 살린 단어가 있고 남은 부패가 0이면 썩은 단어 행은 다른 행처럼 체크 + 진행 x/y 로 남는다(rotten.done).
+// 행 3개, 고정 순서. 0인 행은 숨긴다 — 시듦 물주기 / 오늘 돌봄 물주기 / 새 씨앗 심기.
+// 2026-11-19 회의 QA — '썩은 단어 살리기' 줄과 그 아래 썩은 단어 칩 목록을 뺐다(단어가 다 보이는 게
+// 거슬린다는 피드백). 살리기 진입은 '농장 돌보기' → 학습 고르기 시트 맨 위 항목이 맡는다.
+// 진행(0/N)·불꽃 단계는 rowDefs 만 세므로 줄을 빼면 함께 맞춰진다. 서버 판정(1주 달력·연속 학습)은
+// 원래 부패를 보지 않는다(query.get_today_tasks 의 mission_done 조건 = 새 씨앗·시듦·돌봄).
 // 이슈 #25 13차 — '연속 학습' 카드를 이 카드에 합쳤다.
 // 이슈 #25 14차 — 콘셉트 「할 일이 오늘의 불꽃을 키운다」로 재설계: 머리에 오늘의 불꽃(기존 그림 자산)이
 // 할 일을 끝낸 만큼 불씨 → 작은 불꽃 → 큰 불꽃으로 자라고, 홈에 돌아오면 새로 끝낸 줄에서 불티가 날아가
@@ -281,33 +284,16 @@ const TodayTasksCard = ({ registerStreakRefresh } = {}) => {
   const flameRef = useRef(null);
   const checkEls = useRef({});
 
-  const [expanded, setExpanded] = useState({ rotten: false, wilted: false, care: false });
+  const [expanded, setExpanded] = useState({ wilted: false, care: false });
   const toggle = (key) => setExpanded((prev) => ({ ...prev, [key]: !prev[key] }));
 
   // ── 행 서술 — 0인 행은 숨긴다 ──────────────────────────────────────
   const rowDefs = [];
   if (todayTasks) {
-    const rotten = todayTasks.rotten ?? { count: 0, done: 0, words: [] };
-    const rottenDone = rotten.done ?? 0;
     const wilted = todayTasks.wilted ?? { total: 0, done: 0, words: [] };
     const care = todayTasks.care ?? { total: 0, done: 0, words: [] };
     const newSeed = todayTasks.new_seed ?? { target: 0, done: 0 };
 
-    // 다 살렸으면(남은 부패 0, 오늘 살린 것 ≥1) 다른 행처럼 체크 + 진행 x/y 로 남는다
-    if (rotten.count > 0 || rottenDone > 0) {
-      const done = rotten.count <= 0;
-      const { compact, expandedBlock } = buildWordListParts(rotten.words, expanded.rotten, () => toggle('rotten'));
-      rowDefs.push({
-        key: 'rotten',
-        title: '썩은 단어 살리기',
-        sub: compact,
-        expand: expandedBlock,
-        checked: done,
-        right: done
-          ? <Progress done={rottenDone} total={rottenDone + rotten.count} />
-          : <b className="shrink-0 text-[17px] font-[800] text-layout-black dark:text-layout-white">{rotten.count}</b>,
-      });
-    }
     if (wilted.total > 0) {
       const { compact, expandedBlock } = buildWordListParts(wilted.words, expanded.wilted, () => toggle('wilted'));
       rowDefs.push({
