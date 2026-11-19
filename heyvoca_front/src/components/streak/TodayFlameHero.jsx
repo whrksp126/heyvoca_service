@@ -120,7 +120,9 @@ const TodayFlameHero = forwardRef(function TodayFlameHero(
             animate={{ width: size, height: size }}
             transition={reducedMotion ? { duration: 0.15 } : SPRING.bouncy}
           >
-            <AnimatePresence initial={false} mode="popLayout">
+            {/* 불씨 → 불꽃 교체는 즉시 바꾼다. 예전에는 AnimatePresence(popLayout) 로 옛 그림이
+                1.3배로 커지며 사라지는 exit 를 줬는데, 통 튄(jelly) 직후 그 옛 그림이 메인 불꽃 뒤에
+                그림자 불꽃(잔상)처럼 잠깐 떴다 사라져 보였다(2026-11-19 QA) — 메인 불꽃 하나만 남긴다. */}
               <motion.img
                 key={isEmber ? 'ember' : 'flame'}
                 src={isEmber ? STREAK_IMG.ember : STREAK_IMG.flame}
@@ -133,7 +135,6 @@ const TodayFlameHero = forwardRef(function TodayFlameHero(
                     ? { opacity: [0.75, 1, 0.75], scale: 1 }
                     : { opacity: 1, scale: 1, scaleY: [1, 1.06, 0.97, 1.04, 1], scaleX: [1, 0.96, 1.03, 0.98, 1], rotate: [0, -2, 1.5, -1, 0] })
                   : { opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: reducedMotion ? 1 : 1.3 }}
                 transition={moving
                   ? {
                     opacity: isEmber ? { duration: 2.2, repeat: Infinity, ease: 'easeInOut' } : { duration: 0.25 },
@@ -144,7 +145,6 @@ const TodayFlameHero = forwardRef(function TodayFlameHero(
                   }
                   : { duration: 0.15 }}
               />
-            </AnimatePresence>
           </motion.span>
         </span>
 

@@ -15,6 +15,7 @@ from statistics import median
 
 from app import db, cache
 from app.services import skill_level as SL
+from app.services import meaning_pos as MP
 
 log = logging.getLogger(__name__)
 
@@ -27,7 +28,7 @@ _WORD_RE = re.compile(r'^[a-z]{3,12}$')    # 단어 1개, 소문자(고유명사
 _TAG_RE = re.compile(r'<[^>]+>')
 _VERIFIED_SOURCES = ('cefrj', 'octanove')  # 빈도 추정(freq-est)은 등급 신뢰도가 낮아 측정에서 뺀다
 
-_POOL_CACHE_KEY = 'onboarding:placement_candidates:v2'
+_POOL_CACHE_KEY = 'onboarding:placement_candidates:v3'   # v3: meaning_pos 추가
 _BOOK_LEVEL_CACHE_KEY = 'onboarding:book_levels:v1'
 _CACHE_TTL = 6 * 3600
 
@@ -126,16 +127,20 @@ def _build_candidates() -> dict:
         if cur is None or key < cur[0]:
             best_example[vid] = (key, {'origin': origin, 'meaning': meaning, 'score': int(score)})
 
+    # 뜻별 품사(UD) — 다른 API(meaning_pos)와 같은 헬퍼로 1회 배치 조회. 뜻과 같은 순서, 모르면 None.
+    pos_lookup = MP.load_dict_meaning_pos(all_ids)
+
     out = {}
     for rank, picked in by_band.items():
         with_ex, without_ex = [], []
         for vid, w in picked:
-            ms = meanings.get(vid) or []
+            ms = (meanings.get(vid) or [])[:3]
             if not ms:
                 continue
             ex = best_example.get(vid)
-            item = {'voca_id': vid, 'origin': w, 'meanings': ms[:3], 'cefr_rank': rank,
-                    'example': ex[1] if ex else None}
+            item = {'voca_id': vid, 'origin': w, 'meanings': ms,
+                    'meaning_pos': MP.attach_meaning_pos(vid, ms, pos_lookup),
+                    'cefr_rank': rank, 'example': ex[1] if ex else None}
             (with_ex if ex else without_ex).append(item)
         out[str(rank)] = (with_ex + without_ex)[:_KEEP_PER_BAND]
     return out
@@ -162,7 +167,11 @@ def build_placement_pool(rng=None) -> dict:
         for it in chosen:
             others = [e for e in example_pool if e['voca_id'] != it['voca_id']]
             picks = rng.sample(others, min(PLACEMENT_DISTRACTORS, len(others))) if it.get('example') else []
-            out.append({**it, 'distractor_sentences': [
+            ms = it.get('meanings') or []
+            mp = it.get('meaning_pos')
+            if not isinstance(mp, list) or len(mp) != len(ms):
+                mp = [None] * len(ms)   # 옛 캐시 등 — 길이 보장
+            out.append({**it, 'meaning_pos': mp, 'distractor_sentences': [
                 {'origin': p['example']['origin'], 'meaning': p['example']['meaning']} for p in picks
             ]})
         bands[band] = out

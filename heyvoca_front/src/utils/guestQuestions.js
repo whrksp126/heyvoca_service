@@ -23,6 +23,11 @@ const toMeaningStrings = (m) => (Array.isArray(m) ? m : [])
   .map((x) => (typeof x === 'string' ? x : (x?.meaning || '')))
   .filter(Boolean);
 
+// 뜻 문자열과 같은 순서의 품사(UD) — {meaning,pos} 객체에서만 얻는다([동사]/[명사] 라벨, utils/meaningPos.js)
+const toMeaningPos = (m) => (Array.isArray(m) ? m : [])
+  .filter((x) => (typeof x === 'string' ? x : x?.meaning))
+  .map((x) => (typeof x === 'string' ? null : (x?.pos ?? null)));
+
 const fsrsStub = () => {
   const now = new Date();
   const next = new Date();
@@ -49,8 +54,8 @@ function buildChoiceQuestion(word, pool, questionType) {
     distractorPool = [...distractorPool, ...fillers];
   }
   const distractors = distractorPool
-    .map((x) => ({ id: x.voca_id, origin: x.origin, meanings: x.meanings }));
-  const correctOption = { id: wid, origin: word.origin, meanings: word.meanings };
+    .map((x) => ({ id: x.voca_id, origin: x.origin, meanings: x.meanings, meaningPos: x.meaningPos }));
+  const correctOption = { id: wid, origin: word.origin, meanings: word.meanings, meaningPos: word.meaningPos };
   const options = shuffle([correctOption, ...distractors]);
   const resultIndex = options.findIndex((o) => o.id === wid);
 
@@ -60,6 +65,7 @@ function buildChoiceQuestion(word, pool, questionType) {
     vocabularySheetId: 'guest-trial',
     origin: word.origin,
     meanings: word.meanings,
+    meaningPos: word.meaningPos,
     examples: word.examples || [],
     fsrs: fsrsStub(),
     priorityBucket: 'new',
@@ -85,6 +91,7 @@ function buildCardMatchQuestion(words, questionType, idx) {
       vocaIndexId: w.voca_id,
       origin: w.origin,
       meanings: w.meanings,
+      meaningPos: w.meaningPos,
       examples: w.examples || [],
       vocabularySheetId: 'guest-trial',
       fsrs: fsrsStub(),
@@ -119,7 +126,7 @@ const MATCH_LISTEN_SIZE = 4;  // 듣고 맞추기 1세트 = 4단어
 export function buildGuestQuestions(words) {
   const valid = (words || [])
     .filter((w) => w?.origin && firstMeaning(w.meanings) && w?.voca_id != null)
-    .map((w) => ({ ...w, meanings: toMeaningStrings(w.meanings) }));
+    .map((w) => ({ ...w, meanings: toMeaningStrings(w.meanings), meaningPos: w.meaningPos ?? w.meaning_pos ?? toMeaningPos(w.meanings) }));
   if (valid.length < 4) return [];
 
   const pool = shuffle(valid);

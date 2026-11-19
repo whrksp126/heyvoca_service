@@ -117,10 +117,13 @@ const SentenceArrangeQuestion = ({ question, onComplete, onCardMatched, farmByWo
     speakShown();
   };
 
-  const handleSubmit = (userTokens) => {
+  // giveUp — '모르겠어요'(2026-11-19 3차 QA). 트레이가 빈 슬롯을 정답 조각으로 채워 넘기지만
+  // 정답 여부와 무관하게 오답이다. 채운 자리(filledPositions)는 "정답 문장"에서도 틀린 자리로 강조한다.
+  const handleSubmit = (userTokens, { giveUp = false, filledPositions = [] } = {}) => {
     if (isAnswered) return;
-    setSubmittedTokens(userTokens);
-    const correct = isAcceptedOrder(userTokens, accepted);
+    const filledSet = new Set(filledPositions);
+    setSubmittedTokens(giveUp ? userTokens.map((t, i) => (filledSet.has(i) ? '' : t)) : userTokens);
+    const correct = !giveUp && isAcceptedOrder(userTokens, accepted);
     const timeTakenMs = Date.now() - startTimeRef.current;
 
     // 소리·진동·시각(아래 setState)을 같은 틱에. 재출제(isRetry)가 아닌 첫 시도 정답이면 perfect.
@@ -424,6 +427,8 @@ const SentenceArrangeQuestion = ({ question, onComplete, onCardMatched, farmByWo
         resumeReplayKey={resumeReplayKey}
         advanceGate={advanceGate}
         onSubmit={handleSubmit}
+        allowGiveUp
+        hideSchedule
         onPiecePlaced={(word) => {
           // 문장 재생(한국어 해석 'shown' 카드/정답 문장 'answer') 중이면 단어 TTS를 건너뛴다 —
           // 문장 재생을 끊지도 않는다. 재생 중이 아닐 때만 방금 놓은 조각을 읽는다.

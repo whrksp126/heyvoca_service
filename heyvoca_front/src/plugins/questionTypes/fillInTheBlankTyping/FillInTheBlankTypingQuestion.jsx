@@ -19,6 +19,7 @@ import { renderHighlightedText } from '../highlightMarker';
 import { gradeTypingAnswer } from './typoTolerance';
 import SpeakerArt from '../../../components/common/SpeakerArt';
 import CardSpeakerButton from '../../../components/common/CardSpeakerButton';
+import { fitTextClass } from '../../../utils/fitText';
 
 /*
   빈칸 예문(before/after) 탭 가능한 단어 토큰화 — en/ja 공통. fillInTheBlank의 tokenizeWords와
@@ -448,7 +449,7 @@ const FillInTheBlankTypingQuestion = ({ question, onComplete, onCardMatched, far
         style={{ willChange: 'transform, opacity' }}
       >
         <div className="relative z-[1] flex items-start gap-[12px]">
-          <p className="flex-1 min-w-0 text-[19px] font-[600] leading-[1.6] text-layout-black dark:text-layout-white break-keep">
+          <p className={`flex-1 min-w-0 ${fitTextClass(ko, 'sentenceKo')} font-[600] leading-[1.6] text-layout-black dark:text-layout-white break-keep`}>
             {renderShownKoreanTokens()}
           </p>
           {/* 스피커 — 텍스트 오른쪽(듣기 문제 주 재생 스피커만 예외, 2026-10-28). 평소엔 회색, 읽는 동안 primary + 음파. */}
@@ -511,7 +512,7 @@ const FillInTheBlankTypingQuestion = ({ question, onComplete, onCardMatched, far
         <div className="relative z-[1] flex items-center flex-1 min-h-0 px-[20px] py-[45px]">
           <LiftAboveBar active={!!farm} topReserve={28} className="w-full">
             <form onSubmit={handleSubmit} className="relative">
-              <p lang={jaBlank ? 'ja' : undefined} className={`w-full text-[22px] font-[700] leading-[1.8] text-layout-black dark:text-layout-white ${jaBlank ? 'break-normal' : 'break-keep'}`}>
+              <p lang={jaBlank ? 'ja' : undefined} className={`w-full ${fitTextClass(blankText, 'sentence')} font-[700] leading-[1.8] text-layout-black dark:text-layout-white ${jaBlank ? 'break-normal' : 'break-keep'}`}>
                 {renderWordTokens(beforeTokens, 'b')}
                 <motion.span
                   // 채점 순간: 정답은 통 튀고 빛줄기가 지나가며, 오답은 좌우로 흔들린다(채점 큐와 같은 틱).

@@ -148,10 +148,16 @@ export const normalizePool = (bands) => {
   const out = [];
   Object.entries(bands || {}).forEach(([band, list]) => {
     (Array.isArray(list) ? list : []).forEach((w) => {
-      const meanings = (Array.isArray(w?.meanings) ? w.meanings : [])
-        .map((x) => (typeof x === 'string' ? x : (x?.meaning || '')))
-        .filter(Boolean)
+      // 뜻 + 품사(UD) 짝 — 서버가 {meaning,pos} 객체나 meaning_pos 병렬 배열을 주면 [동사]/[명사] 라벨용으로 보존
+      const rawPos = Array.isArray(w?.meaning_pos) ? w.meaning_pos : [];
+      const pairs = (Array.isArray(w?.meanings) ? w.meanings : [])
+        .map((x, i) => (typeof x === 'string'
+          ? { text: x, pos: rawPos[i] ?? null }
+          : { text: x?.meaning || '', pos: x?.pos ?? rawPos[i] ?? null }))
+        .filter((x) => x.text)
         .slice(0, 3);
+      const meanings = pairs.map((x) => x.text);
+      const meaningPos = pairs.map((x) => x.pos);
       if (w?.voca_id == null || !w?.origin || meanings.length === 0) return;
       const rank = Number(w.cefr_rank ?? band) || Number(band) || 1;
       let example = null;
@@ -170,6 +176,7 @@ export const normalizePool = (bands) => {
         voca_id: w.voca_id,
         origin: String(w.origin).trim(),
         meanings,
+        meaningPos,
         rank,
         example,
         distractorSentences: (Array.isArray(w.distractor_sentences) ? w.distractor_sentences : [])
@@ -187,6 +194,7 @@ const toWord = (p) => ({
   vocaIndexId: p.voca_id,
   origin: p.origin,
   meanings: p.meanings,
+  meaningPos: p.meaningPos ?? [],
   examples: p.example ? [{ origin: p.example.origin, meaning: p.example.meaning }] : [],
   vocabularySheetId: 'guest-trial',
   fsrs: fsrsStub(),
@@ -247,7 +255,7 @@ const distractorWords = (p, pool, n, rng) => {
 
 function buildChoice(p, pool, questionType, rng) {
   const options = shuffle([p, ...distractorWords(p, pool, 3, rng)], rng)
-    .map((x) => ({ id: x.voca_id, origin: x.origin, meanings: x.meanings }));
+    .map((x) => ({ id: x.voca_id, origin: x.origin, meanings: x.meanings, meaningPos: x.meaningPos ?? [] }));
   return {
     ...toWord(p),
     suggestedQuestionType: questionType,

@@ -5,6 +5,7 @@ import { FarmResultBar } from '../../../components/farm/FarmStatusBar';
 import StudyTimingTag from '../../../components/farm/StudyTimingTag';
 import LiftAboveBar from '../../../components/common/LiftAboveBar';
 import ResultMark from '../../../components/common/ResultMark';
+import GiveUpButton from '../../../components/common/GiveUpButton';
 import SpeakerArt from '../../../components/common/SpeakerArt';
 import CardSpeakerButton from '../../../components/common/CardSpeakerButton';
 import { buildDictMeaningView } from '../../../components/study/WordMeetCard';
@@ -181,8 +182,7 @@ const SpellingFillQuestion = ({ question, onComplete, onCardMatched, farmByWordI
     if (Array.from(next).length === cap && cap > 0) grade(next, nextHinted, usedHints);
   };
 
-  const handleGiveUp = (e) => {
-    e.stopPropagation();
+  const handleGiveUp = () => {
     if (isAnswered || gradedRef.current) return;
     composingRef.current = false;
     grade(value, hinted, hintUsed, { giveUp: true });
@@ -412,19 +412,7 @@ const SpellingFillQuestion = ({ question, onComplete, onCardMatched, farmByWordI
 
         {/* 모르겠어요 — 칸을 다 채우지 않아도 바로 오답 처리(2026-11-19 QA). 2차: 힌트 옆 → 카드 안 중앙 하단,
             과하지 않은 텍스트 버튼. 채점 뒤에는 숨겨 농장 상태 바 자리와 겹치지 않는다 */}
-        {!isAnswered && (
-          <div className="absolute left-0 right-0 bottom-[10px] z-[2] flex justify-center pointer-events-none">
-            <button
-              type="button"
-              onPointerDown={(e) => e.preventDefault()}
-              onMouseDown={(e) => e.preventDefault()}
-              onClick={handleGiveUp}
-              className="pointer-events-auto px-[10px] py-[6px] text-[13px] font-[700] text-layout-gray-400 dark:text-layout-gray-100 underline underline-offset-[3px] decoration-layout-gray-300 dark:decoration-[#555555]"
-            >
-              모르겠어요
-            </button>
-          </div>
-        )}
+        <GiveUpButton visible={!isAnswered} onClick={handleGiveUp} />
 
         {/* OS 기본 키보드를 띄우는 숨긴 입력 — 화면에는 칸만 보인다 */}
         <input

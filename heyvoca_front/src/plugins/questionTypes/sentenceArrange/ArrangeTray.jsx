@@ -6,6 +6,7 @@ import StudyTimingTag from '../../../components/farm/StudyTimingTag';
 import LiftAboveBar from '../../../components/common/LiftAboveBar';
 import WordInfoBubble from '../../../components/common/WordInfoBubble';
 import ResultMark from '../../../components/common/ResultMark';
+import GiveUpButton from '../../../components/common/GiveUpButton';
 import { getWordInfoApi } from '../../../api/search';
 import { getTextSound } from '../../../utils/common';
 import { feel, pickVariant, ShineSweep } from '../../../lib/feel';
@@ -131,6 +132,13 @@ const ArrangeTray = ({
   lookupChips = true,
   // 채점 후 농장 상태 바 오른쪽에 붙일 노드 — 예문 보고 채우는 유형은 완성 문장 스피커를 넘긴다.
   farmTrailing = null,
+  // '모르겠어요'(2026-11-19 3차 QA) — 켜면 채점 전 트레이 카드 중앙 하단에 버튼을 띄운다(단어 쓰기와
+  // 같은 모양·자리). 누르면 남은 빈 슬롯을 정답 조각으로 채워 오답색으로 보이고,
+  // onSubmit(tokens, { giveUp: true, filledPositions }) 으로 호출부에 넘긴다 — 호출부는 정답 여부와
+  // 무관하게 오답으로 채점한다(이후 정답 공개·다음·재출제·FSRS 기록은 일반 오답과 같은 경로).
+  allowGiveUp = false,
+  // 카드 우측 상단 시점·복습 예정일 문구를 숨긴다(재출제 '직전 오답'은 유지) — StudyTimingTag 참고.
+  hideSchedule = false,
 }) => {
   const reducedMotion = useReducedMotion();
   // 채울 슬롯 총 개수 — accepted[0](정답 원소 하나)의 길이를 기준으로 삼는다(계약 §3-1,
@@ -143,6 +151,8 @@ const ArrangeTray = ({
   // slots[pos] = bank 인덱스 | null — 고정 길이(expectedLen) 슬롯 배열. 드래그로 중간 자리만
   // 채운 상태(빈칸 사이 공백)도 그대로 표현된다.
   const [slots, setSlots] = useState(() => Array(expectedLen).fill(null));
+  // '모르겠어요'로 정답 조각을 대신 채운 슬롯 위치 — 채점 후 정답 조각이어도 오답색으로 칠한다.
+  const [gaveUpSlots, setGaveUpSlots] = useState(() => new Set());
 
   // 단어 뜻 말풍선(사전 조회) — prefix/suffix 고정 텍스트만 탭 대상. 한 번에 하나만.
   const [lookup, setLookup] = useState(null);
@@ -425,6 +435,37 @@ const ArrangeTray = ({
     onSubmit(slots.map((i) => bank[i]));
   };
 
+  // 모르겠어요 — 지금까지 놓은 조각은 그대로 두고, 빈 슬롯만 정답 순서(지금 배치와 가장 가까운
+  // 인정 순서)의 조각으로 채운다. 같은 글자의 남은 은행 조각을 쓰고, 없으면 남은 아무 조각으로.
+  const handleGiveUp = () => {
+    if (disabled) return;
+    if (settleTimerRef.current) { clearTimeout(settleTimerRef.current); settleTimerRef.current = null; }
+    settlingRef.current = false;
+    pointerStartRef.current = null;
+    dragRef.current = null;
+    setDragVisual(null);
+    closeLookup();
+
+    const sameTok = (a, b) => String(a ?? '').trim().toLowerCase() === String(b ?? '').trim().toLowerCase();
+    const { ref } = diffAgainstAccepted(userTokens, accepted);
+    const nextSlots = [...slots];
+    const used = [...bankUsed];
+    const filledPositions = [];
+    nextSlots.forEach((s, pos) => {
+      if (s != null) return;
+      let idx = bank.findIndex((t, i) => !used[i] && sameTok(t, ref?.[pos]));
+      if (idx === -1) idx = used.findIndex((u) => !u);
+      if (idx === -1) return;
+      used[idx] = true;
+      nextSlots[pos] = idx;
+      filledPositions.push(pos);
+    });
+    setSlots(nextSlots);
+    setBankUsed(used);
+    setGaveUpSlots(new Set(filledPositions));
+    onSubmit(nextSlots.map((i) => (i != null ? bank[i] : '')), { giveUp: true, filledPositions });
+  };
+
   const closeLookup = () => {
     lookupReqRef.current += 1;
     setLookup((prev) => (prev ? null : prev));
@@ -561,8 +602,10 @@ const ArrangeTray = ({
           farm={farm}
           wasCorrect={isCorrect}
           isRetry={!!question.isRetry}
+          scheduleHidden={hideSchedule}
         />
-        <div className="relative z-[1] flex-1 min-h-0 overflow-y-auto px-[20px] py-[26px] flex items-center">
+        {/* 모르겠어요 버튼이 있으면 아래 여백을 넓혀 문장과 겹치지 않게 한다 */}
+        <div className={`relative z-[1] flex-1 min-h-0 overflow-y-auto px-[20px] pt-[26px] ${allowGiveUp ? 'pb-[46px]' : 'pb-[26px]'} flex items-center`}>
           <LiftAboveBar active={!!farm} topReserve={28} className="w-full">
             {/* 문장 글자 크기(17px)는 칩 글자 크기(16px, CHIP_FONT)와 어울리도록 낮췄다(2026-09-29) —
                 이전 19px는 트레이 칩이 커지면서 고정 단어(prefix/suffix)만 도드라져 보였다. */}
@@ -575,7 +618,7 @@ const ArrangeTray = ({
               )}
               {slots.map((bankIdx, pos) => {
                 const filled = bankIdx != null;
-                const flag = disabled && filled ? correctFlags[pos] : null;
+                const flag = disabled && filled ? (gaveUpSlots.has(pos) ? false : correctFlags[pos]) : null;
                 const isNext = !disabled && pos === nextEmptyIndex;
                 const isDragOver = !!dragVisual && dragVisual.overSlot === pos && dragVisual.fromSlot !== pos;
                 const isDragSource = !!dragVisual && dragVisual.fromSlot === pos;
@@ -707,6 +750,8 @@ const ArrangeTray = ({
 
         {/* O/X — 카드 정중앙. 다른 유형과 같은 공용 ResultMark(2026-09-29) — 정답/오답 모두
             표시하고 약 600ms 후 페이드아웃해 아래 칩 정오답 색·정답 문장이 바로 보인다. */}
+        {allowGiveUp && <GiveUpButton visible={!isAnswered} onClick={handleGiveUp} />}
+
         <ResultMark
           result={isCorrect}
           replayKey={resumeReplayKey}

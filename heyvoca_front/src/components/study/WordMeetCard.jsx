@@ -9,6 +9,7 @@ import { getReading, shouldShowReading } from '../../utils/jaWord';
 import { renderHighlightedText, stripTags } from '../../plugins/questionTypes/highlightMarker';
 import SpeakerArt from '../common/SpeakerArt';
 import { buildMeaningPosMap, posLabelKo } from '../../utils/meaningPos';
+import FitTierText from '../common/FitTierText';
 
 /*
   단어 "만나기" 카드 — StudyMain(집중 반복 듣기)과 TakeTest의 ① wordIntro 슬라이드가
@@ -217,9 +218,14 @@ const WordMeetCard = ({
           {isVisible('word') ? (
             <div className={`flex items-start justify-between gap-[5px] ${playingItemId === 'word' ? 'text-primary-main-600' : ''}`}>
               <div className="flex-1 min-w-0">
-                <span lang={isJa(wordLang(word)) ? 'ja' : undefined} className={`block text-[24px] font-[700] leading-[29px] ${playingItemId === 'word' ? 'text-primary-main-600' : 'text-layout-black dark:text-layout-white'}`}>
-                  {word.origin}
-                </span>
+                {/* 글자 수 단계 크기(utils/fitText) — pay 는 크게, gas station 은 한 단계 작게 */}
+                <FitTierText
+                  text={word.origin}
+                  scale="meetWord"
+                  maxLines={2}
+                  lang={isJa(wordLang(word)) ? 'ja' : undefined}
+                  className={`block font-[700] leading-[1.2] break-keep ${playingItemId === 'word' ? 'text-primary-main-600' : 'text-layout-black dark:text-layout-white'}`}
+                />
                 {isJa(wordLang(word)) ? (
                   shouldShowReading(word) && <ReadingLine reading={getReading(word)} className="block mt-[2px] dark:text-layout-gray-200" />
                 ) : word.pronunciation && (

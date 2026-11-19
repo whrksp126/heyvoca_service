@@ -191,10 +191,14 @@ const SentenceTranslateQuestion = ({ question, onComplete, onCardMatched, farmBy
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const handleSubmit = (userTokens) => {
+  // giveUp — '모르겠어요'(2026-11-19 3차 QA). 트레이가 빈 슬롯을 정답 조각으로 채워 넘기지만
+  // 정답 여부와 무관하게 오답이다. 실수 유형은 사용자가 직접 놓은 조각만으로 판정한다.
+  const handleSubmit = (userTokens, { giveUp = false, filledPositions = [] } = {}) => {
     if (isAnswered) return;
     closeLookup(); // 채점 순간 말풍선은 닫는다
-    const correct = isAccepted(userTokens, accepted);
+    const correct = !giveUp && isAccepted(userTokens, accepted);
+    const filledSet = new Set(filledPositions);
+    const placedTokens = giveUp ? userTokens.filter((_, i) => !filledSet.has(i)) : userTokens;
     const timeTakenMs = Date.now() - startTimeRef.current;
     const perfect = correct && !question.isRetry;
     // 다른 유형과 같은 O/X 채점 + 정/오답 소리만 — '완벽해요' 배지·소리는 쓰지 않는다(이슈 #25 7차 QA).
@@ -205,7 +209,9 @@ const SentenceTranslateQuestion = ({ question, onComplete, onCardMatched, farmBy
     let errorType = null;
     if (!correct) {
       const answerSet = new Set(accepted.flat().map(norm));
-      errorType = userTokens.some((t) => !answerSet.has(norm(t))) ? 'distractor' : 'order';
+      const hasDistractor = placedTokens.some((t) => !answerSet.has(norm(t)));
+      // 모르겠어요인데 방해 조각을 고르지 않았다면 어순 실수가 아니다 — 유형을 비워 둔다.
+      errorType = hasDistractor ? 'distractor' : (giveUp ? null : 'order');
     }
 
     question.isCorrect = correct;
@@ -349,6 +355,8 @@ const SentenceTranslateQuestion = ({ question, onComplete, onCardMatched, farmBy
         onSubmit={handleSubmit}
         onNext={handleNext}
         lookupChips={false}
+        allowGiveUp
+        hideSchedule
       />
     </div>
   );

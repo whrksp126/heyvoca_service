@@ -20,6 +20,8 @@ import { getQuestionType, shouldAutoSpeakOnShow, isSingleWordPluginType, isFillI
 import { getDisplayMeanings } from '../../utils/displayMeanings';
 import { buildMeaningPosMap } from '../../utils/meaningPos';
 import MeaningWithPos from '../common/MeaningWithPos';
+import FitTierText from '../common/FitTierText';
+import { fitTextClass, meaningTierText } from '../../utils/fitText';
 import { logStudyQuestion, getRequeueEasierApi, exampleSeenApi } from '../../api/study';
 import { mapRecommendItemToWord } from '../../utils/studyRecommendMapping';
 import { getAdvanceDelay } from '../../utils/studyTiming';
@@ -2343,9 +2345,30 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
                           translate-x-[-50%] translate-y-[-50%]
                         "
                       />
+                      {/* 글자 수 단계 크기(utils/fitText) — 짧은 단어는 크게, 긴 단어·뜻은 단계적으로 작게 */}
                       {isReverseChoice
-                        ? <MeaningWithPos meanings={currentQuestionDisplayMeanings} posMap={buildMeaningPosMap(testQuestions[progressIndex])} />
-                        : <span lang={isJa(wordLang(testQuestions[progressIndex])) ? 'ja' : undefined}>{testQuestions[progressIndex].origin}</span>}
+                        ? (() => {
+                          const posMap = buildMeaningPosMap(testQuestions[progressIndex]);
+                          return (
+                            <FitTierText
+                              text={meaningTierText(currentQuestionDisplayMeanings, posMap)}
+                              scale="heroMeaning"
+                              maxLines={3}
+                              className="block leading-[1.3] break-keep"
+                            >
+                              <MeaningWithPos meanings={currentQuestionDisplayMeanings} posMap={posMap} />
+                            </FitTierText>
+                          );
+                        })()
+                        : (
+                          <FitTierText
+                            text={testQuestions[progressIndex].origin}
+                            scale="heroWord"
+                            maxLines={2}
+                            lang={isJa(wordLang(testQuestions[progressIndex])) ? 'ja' : undefined}
+                            className="block leading-[1.2] break-keep"
+                          />
+                        )}
                       {/* ja: 채점 후에만 읽기(히라가나)를 보여 준다 — 채점 전엔 정답 힌트가 되므로 숨김 */}
                       {!isReverseChoice && isAnswered && isJa(wordLang(testQuestions[progressIndex])) && (() => {
                         const q = testQuestions[progressIndex];
@@ -2474,7 +2497,8 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
                           w-full h-[50px]
                           px-[20px]
                           border-[1px] rounded-[10px]
-                          text-[14px] font-[700]
+                          ${isReverseChoice ? fitTextClass(option.origin, 'optionWord') : fitTextClass(meaningTierText(option.displayMeanings, option.posMap), 'optionMeaning')}
+                          font-[700]
                           text-center
                           overflow-hidden
                           whitespace-pre-line

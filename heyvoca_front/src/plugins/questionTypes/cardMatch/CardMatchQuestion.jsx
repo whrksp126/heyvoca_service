@@ -14,39 +14,10 @@ import { getAdvanceDelay } from '../../../utils/studyTiming';
 import StudyTimingTag from '../../../components/farm/StudyTimingTag';
 import { useResumeReplayKey } from '../../../hooks/useResumeReplayKey';
 import { wordLang } from '../../../utils/lang';
-
-const FitText = ({ text, maxSize = 20, minSize = 12, className = '' }) => {
-  const spanRef = useRef(null);
-  const [fontSize, setFontSize] = useState(maxSize);
-
-  useEffect(() => {
-    setFontSize(maxSize);
-  }, [text, maxSize]);
-
-  useEffect(() => {
-    const el = spanRef.current;
-    if (!el) return;
-    const parent = el.parentElement;
-    if (!parent) return;
-    let size = maxSize;
-    el.style.fontSize = `${size}px`;
-    while (el.scrollWidth > parent.clientWidth && size > minSize) {
-      size -= 1;
-      el.style.fontSize = `${size}px`;
-    }
-    setFontSize(size);
-  }, [text, maxSize, minSize]);
-
-  return (
-    <span
-      ref={spanRef}
-      className={className}
-      style={{ fontSize: `${fontSize}px` }}
-    >
-      {text}
-    </span>
-  );
-};
+import FitTierText from '../../../components/common/FitTierText';
+import MeaningWithPos from '../../../components/common/MeaningWithPos';
+import { buildMeaningPosMap } from '../../../utils/meaningPos';
+import { meaningTierText } from '../../../utils/fitText';
 
 // 카드 채점 깜빡임(초록/빨강 테두리) 길이 — 그 뒤 매칭 완료/실패 상태로 바뀐다.
 const CARD_FLASH_MS = 800;
@@ -378,11 +349,13 @@ const CardMatchQuestion = ({ question, testType, onComplete, onCardMatched, farm
                 topReserve={20}
                 className="relative z-[1] w-full flex justify-center"
               >
-                <FitText
+                {/* 글자 수 단계 크기(utils/fitText) — 2줄을 넘거나 가로로 넘치면 한 단계 더 줄인다 */}
+                <FitTierText
                   text={word.origin}
-                  maxSize={20}
-                  minSize={12}
-                  className={`relative z-[1] font-[800] w-full text-center ${getLeftTextStyle(index)}`}
+                  scale="cardWord"
+                  maxLines={2}
+                  lang={wordLang(word) === 'ja' ? 'ja' : undefined}
+                  className={`relative z-[1] block font-[800] w-full text-center leading-[1.2] break-keep ${getLeftTextStyle(index)}`}
                 />
               </LiftAboveBar>
               {/* 하단 - 채점 후: 농장 상태 바 좁은 형 — 유형 공통(FarmResultBar compact).
@@ -415,7 +388,9 @@ const CardMatchQuestion = ({ question, testType, onComplete, onCardMatched, farm
         {rightWords.map((word, index) => {
           const isMatchResolved = matchedWordIds.has(word.id);
           const isFlashingWrong = wrongFlashRightWordIds.has(word.id);
-          const displayMeanings = (word.meanings ?? []).slice(0, 2).join(', ');
+          // 뜻 앞 [동사]/[명사] 라벨 — 좁은 카드라 라벨은 작은 칩(size sm), 글자 크기는 글자 수 단계(utils/fitText)
+          const displayMeanings = (word.meanings ?? []).slice(0, 2);
+          const posMap = buildMeaningPosMap(word);
           return (
             <motion.button
               key={word.id}
@@ -432,9 +407,14 @@ const CardMatchQuestion = ({ question, testType, onComplete, onCardMatched, farm
               animate={flashAnim(word.id, wrongFlashRightWordIds)}
               transition={flashTransition(word.id, wrongFlashRightWordIds)}
             >
-              <span className={`text-[14px] font-[600] ${getRightTextStyle(index)} text-center leading-snug break-keep`}>
-                {displayMeanings}
-              </span>
+              <FitTierText
+                text={meaningTierText(displayMeanings, posMap)}
+                scale="cardMeaning"
+                maxLines={3}
+                className={`block w-full font-[600] ${getRightTextStyle(index)} text-center leading-snug break-keep`}
+              >
+                <MeaningWithPos meanings={displayMeanings} posMap={posMap} size="sm" />
+              </FitTierText>
             </motion.button>
           );
         })}

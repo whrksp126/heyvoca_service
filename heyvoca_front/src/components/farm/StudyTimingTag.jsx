@@ -30,6 +30,10 @@ import { lastStudiedLabel, nextReviewLabel, calendarDaysFromToday } from '../../
  * (칸 여백만 다르고 글자 크기·굵기·색은 같다).
  * 채점 전 문구는 FSRS + 농장 단계(`stage`)로 정한다(reviewTiming.js — 단계가 심은 씨앗
  * 이상이면 절대 "첫 학습"이라 하지 않고, 날짜를 모르면 비운다).
+ *
+ * 【scheduleHidden — 2026-11-19 3차 QA】 실전 유형(문장 조립·해석 조립)은 문장을 다루는 문제라
+ * 단어의 'N일 전 학습'·'첫 학습'·채점 후 'N일 뒤 복습'이 맥락에 맞지 않는다. 켜면 시점·예정일
+ * 문구를 전부 비우고, 재출제의 '직전 오답'만 남긴다.
  */
 const StudyTimingTag = ({
   answered = false,
@@ -42,6 +46,7 @@ const StudyTimingTag = ({
   pending: pendingProp,
   compact = false,
   isRetry = false,
+  scheduleHidden = false,
   className,
 }) => {
   const wasCorrect = wasCorrectProp !== undefined ? wasCorrectProp : (farm?.wasCorrect ?? null);
@@ -63,6 +68,8 @@ const StudyTimingTag = ({
     // 버그처럼 보였다(2026-11-19 QA). 오른쪽 자리에 '직전 오답' 하나만 둔다.
     label = '직전 오답';
     tone = 'retry';
+  } else if (scheduleHidden) {
+    label = null;
   } else if (!answered) {
     label = lastStudiedLabel(fsrs, stage, enteredAt);
   } else if (wasCorrect !== false && !pending) {

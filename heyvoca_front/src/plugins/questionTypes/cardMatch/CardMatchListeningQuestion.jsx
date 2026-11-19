@@ -15,43 +15,14 @@ import { getAdvanceDelay } from '../../../utils/studyTiming';
 import StudyTimingTag from '../../../components/farm/StudyTimingTag';
 import { useResumeReplayKey } from '../../../hooks/useResumeReplayKey';
 import { wordLang } from '../../../utils/lang';
+import FitTierText from '../../../components/common/FitTierText';
+import MeaningWithPos from '../../../components/common/MeaningWithPos';
+import { buildMeaningPosMap } from '../../../utils/meaningPos';
+import { meaningTierText } from '../../../utils/fitText';
 import { speakScriptItem } from '../../../utils/scriptData';
 import { optionMainSub } from '../../../utils/scriptQuestions';
 import ScriptNextButton from '../../../components/script/ScriptNextButton';
 import SpeakerArt from '../../../components/common/SpeakerArt';
-
-const FitText = ({ text, maxSize = 20, minSize = 12, className = '' }) => {
-  const spanRef = useRef(null);
-  const [fontSize, setFontSize] = useState(maxSize);
-
-  useEffect(() => {
-    setFontSize(maxSize);
-  }, [text, maxSize]);
-
-  useEffect(() => {
-    const el = spanRef.current;
-    if (!el) return;
-    const parent = el.parentElement;
-    if (!parent) return;
-    let size = maxSize;
-    el.style.fontSize = `${size}px`;
-    while (el.scrollWidth > parent.clientWidth && size > minSize) {
-      size -= 1;
-      el.style.fontSize = `${size}px`;
-    }
-    setFontSize(size);
-  }, [text, maxSize, minSize]);
-
-  return (
-    <span
-      ref={spanRef}
-      className={className}
-      style={{ fontSize: `${fontSize}px` }}
-    >
-      {text}
-    </span>
-  );
-};
 
 // 카드 채점 깜빡임(초록/빨강 테두리) 길이 — 그 뒤 매칭 완료/실패 상태로 바뀐다.
 const CARD_FLASH_MS = 800;
@@ -407,14 +378,14 @@ const CardMatchListeningQuestion = ({ question, testType, onComplete, onCardMatc
                 className="relative z-[1] w-full flex justify-center"
               >
               {showText ? (
-                <FitText
+                <FitTierText
                   // 글자는 정답 후 오른쪽 글자 카드와 같은 글자 대신 발음 표기(사지선다와 같은 한글·로마자)를 보인다
                   text={question.script
                     ? [optionMainSub(question.script, word).main, optionMainSub(question.script, word).sub].filter(Boolean).join(' · ') || word.origin
                     : word.origin}
-                  maxSize={20}
-                  minSize={12}
-                  className={`font-[800] w-full text-center ${getLeftTextStyle(index)}`}
+                  scale="cardWord"
+                  maxLines={2}
+                  className={`block font-[800] w-full text-center leading-[1.2] break-keep ${getLeftTextStyle(index)}`}
                 />
               ) : (
                 <div className="relative flex items-center justify-center">
@@ -455,7 +426,9 @@ const CardMatchListeningQuestion = ({ question, testType, onComplete, onCardMatc
         {rightWords.map((word, index) => {
           const isMatchResolved = matchedWordIds.has(word.id);
           const isFlashingWrong = wrongFlashRightWordIds.has(word.id);
-          const displayMeanings = (word.meanings ?? []).slice(0, 2).join(', ');
+          // 뜻 앞 [동사]/[명사] 라벨 — 좁은 카드라 라벨은 작은 칩(size sm), 글자 크기는 글자 수 단계(utils/fitText)
+          const displayMeanings = (word.meanings ?? []).slice(0, 2);
+          const posMap = buildMeaningPosMap(word);
           return (
             <motion.button
               key={word.id}
@@ -478,9 +451,14 @@ const CardMatchListeningQuestion = ({ question, testType, onComplete, onCardMatc
                   {word.char}
                 </span>
               ) : (
-                <span className={`text-[14px] font-[600] ${getRightTextStyle(index)} text-center leading-snug break-keep`}>
-                  {displayMeanings}
-                </span>
+                <FitTierText
+                  text={meaningTierText(displayMeanings, posMap)}
+                  scale="cardMeaning"
+                  maxLines={3}
+                  className={`block w-full font-[600] ${getRightTextStyle(index)} text-center leading-snug break-keep`}
+                >
+                  <MeaningWithPos meanings={displayMeanings} posMap={posMap} size="sm" />
+                </FitTierText>
               )}
             </motion.button>
           );

@@ -23,6 +23,7 @@ import { tokenizeKoreanParts } from '../../../utils/koreanTokenize';
 import { renderHighlightedText as getHighlightParts } from '../highlightMarker';
 import SpeakerArt from '../../../components/common/SpeakerArt';
 import CardSpeakerButton from '../../../components/common/CardSpeakerButton';
+import { fitTextClass } from '../../../utils/fitText';
 
 /*
   빈칸 채우기(fillInTheBlank) — 한 방향뿐이다.
@@ -474,7 +475,7 @@ const FillInTheBlankQuestion = ({ question, onComplete, onCardMatched, farmByWor
         style={{ willChange: 'transform, opacity' }}
       >
         <div className="relative z-[1] flex items-start gap-[12px]">
-          <p className="flex-1 min-w-0 text-[19px] font-[600] leading-[1.6] text-layout-black dark:text-layout-white break-keep">
+          <p className={`flex-1 min-w-0 ${fitTextClass(shownText, 'sentenceKo')} font-[600] leading-[1.6] text-layout-black dark:text-layout-white break-keep`}>
             {renderShownKoreanTokens()}
           </p>
           {/* 스피커 — 텍스트 오른쪽(듣기 문제 주 재생 스피커만 예외, 2026-10-28). 평소엔 회색, 읽는 동안 primary + 음파. */}
@@ -548,7 +549,7 @@ const FillInTheBlankQuestion = ({ question, onComplete, onCardMatched, farmByWor
           <LiftAboveBar active={!!farm} topReserve={28} className="w-full">
           {/* 빈칸 예문 — pill 은 채점 전후 모두 중립색, 채점 후 활용형이 들어간다.
               아이콘이 없어졌으니 텍스트가 카드 전체 너비를 그대로 쓴다(왼쪽 여백 없음). */}
-          <p lang={jaBlank ? 'ja' : undefined} className={`w-full text-[22px] font-[700] leading-[1.8] text-layout-black dark:text-layout-white ${jaBlank ? 'break-normal' : 'break-keep'}`}>
+          <p lang={jaBlank ? 'ja' : undefined} className={`w-full ${fitTextClass(blankText, 'sentence')} font-[700] leading-[1.8] text-layout-black dark:text-layout-white ${jaBlank ? 'break-normal' : 'break-keep'}`}>
             {renderWordTokens(beforeTokens, 'b')}
             {/* 정렬은 en 과 같다(왼쪽 정렬·카드 세로 가운데). ja 는 띄어쓰기가 없어 빈칸이 앞뒤 글자에
                 딱 붙으므로 좌우 4px 을 띄운다(en 은 문장의 공백이 그 역할).
@@ -641,7 +642,7 @@ const FillInTheBlankQuestion = ({ question, onComplete, onCardMatched, farmByWor
                 w-full h-[50px]
                 px-[20px]
                 border-[1px] rounded-[10px]
-                text-[14px] font-[700]
+                ${fitTextClass(option, 'optionWord')} font-[700]
                 text-center
                 overflow-hidden
                 whitespace-pre-line

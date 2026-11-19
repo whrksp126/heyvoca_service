@@ -25,7 +25,7 @@ import { useTheme } from '../../context/ThemeContext';
 import { resolveVocaBookBackground } from '../../utils/vocaBookColor';
 import { useOnboardingUnlock } from '../../context/OnboardingUnlockContext';
 import CropImage from '../farm/CropImage';
-import { stageDetail, cropLabelDetail } from '../../utils/crop';
+import { stageDetail } from '../../utils/crop';
 import { isCareDue, daysToReview, isUnplanted } from '../../utils/vocaCrop';
 import useFarmPlants from './useFarmPlants';
 import { useOpenWordDetail } from '../../hooks/useOpenWordDetail';
@@ -834,6 +834,19 @@ const Main = () => {
       <div className="flex flex-col px-[16px] pt-[2px] pb-[24px]">
         {/* 사전 상세 */}
         <div className="pt-[14px] pb-[2px]">
+          {/* 헤더 — 내 단어면 단어장 단어 상세(WordDetaileNewBottomSheet)와 같이
+              작물 그림을 단어 왼쪽에 둔다(88px · 가운데 정렬). 단계 이름 텍스트는 두지 않는다. */}
+          <div className="flex items-center gap-[13px]">
+          {myWord && (
+            <CropImage
+              stage={plant?.stage ?? 'UNPLANTED_SEED'}
+              health={plant?.health ?? 'FRESH'}
+              size={88}
+              align="center"
+              className="shrink-0 -my-[10px]"
+            />
+          )}
+          <div className="flex-1 min-w-0">
           <div className="flex items-center gap-[8px]">
             <span lang={isJa(wordLang(selectedWord, learningLang)) ? 'ja' : undefined} className="text-[24px] font-[800] tracking-[-0.04em] text-layout-black dark:text-layout-white break-all">
               {selectedWord.word}
@@ -846,16 +859,7 @@ const Main = () => {
               className="w-[30px] h-[30px] rounded-full bg-layout-gray-50 dark:bg-layout-gray-dark text-layout-gray-400"
             />
             <div className="ml-auto flex items-center gap-[6px] shrink-0">
-              {myWord ? (
-                <span className="flex items-center gap-[5px] h-[28px] pl-[6px] pr-[11px] rounded-full bg-layout-gray-50 dark:bg-layout-gray-dark text-[12px] font-[800] tracking-[-0.02em] text-layout-black dark:text-layout-white">
-                  <CropImage
-                    stage={plant?.stage ?? 'UNPLANTED_SEED'}
-                    health={plant?.health ?? 'FRESH'}
-                    size={36}
-                  />
-                  {cropLabelDetail(plant?.stage ?? 'UNPLANTED_SEED')}
-                </span>
-              ) : (
+              {!myWord && (
                 <button
                   type="button"
                   onClick={handleAddWord}
@@ -881,6 +885,9 @@ const Main = () => {
               <span className="text-[13px] font-[500] text-layout-gray-300">{selectedWord.pronunciation}</span>
             </div>
           )}
+
+          </div>
+          </div>
 
           {selectedWord.meanings?.length > 0 && (
             <div className="mt-[16px]">
@@ -948,41 +955,18 @@ const Main = () => {
         {/* 내 단어장 — 비어도 자리를 남긴다 (시안 find §6) */}
         {books.length > 0 ? (
           <>
-            <GroupHead title="내 단어장" count={books.length} hint="이 단어가 심긴 밭" />
-            {books.map((vb, i) => {
+            <GroupHead title="내 단어장" count={books.length} />
+            {books.map((vb) => {
               const book = vocaBooks.find(v => String(v.vocaBookId) === String(vb.vocaBookId));
               const bg = resolveVocaBookBackground(book?.color?.background || '#FFF0F9', isDark);
-              const stageLabel = cropLabelDetail(plant?.stage ?? 'UNPLANTED_SEED');
-              const badge = dueBadge(plant, myWord);
-              const sub = i === 0
-                ? `${stageLabel} · 다음 복습 ${badge ? badge.text : '예정 없음'}`
-                : `${stageLabel} · 같은 상태를 함께 써요`;
               return (
                 <div
                   key={vb.vocaBookId}
-                  className="flex items-center gap-[10px] rounded-[12px] px-[12px] py-[10px] mb-[7px]"
+                  className="flex items-center gap-[10px] rounded-[12px] px-[14px] py-[13px] mb-[7px]"
                   style={{ backgroundColor: bg }}
                 >
-                  <CropImage
-                    stage={plant?.stage ?? 'UNPLANTED_SEED'}
-                    health={plant?.health ?? 'FRESH'}
-                    size={52}
-                    className="shrink-0"
-                  />
-                  <div className="flex-1 min-w-0">
-                    <div className="truncate text-[13.5px] font-[800] tracking-[-0.03em] text-layout-black dark:text-layout-white">
-                      {book?.title || '단어장'}
-                    </div>
-                    <div className="mt-[2px] flex items-center gap-[4px] text-[11px] font-[600] tracking-[-0.02em] text-layout-gray-300 dark:text-layout-gray-200">
-                      <CropImage
-                        stage={plant?.stage ?? 'UNPLANTED_SEED'}
-                        health={plant?.health ?? 'FRESH'}
-                        size={13}
-                        alt=""
-                        className="shrink-0"
-                      />
-                      <span className="truncate">{sub}</span>
-                    </div>
+                  <div className="flex-1 min-w-0 truncate text-[13.5px] font-[800] tracking-[-0.03em] text-layout-black dark:text-layout-white">
+                    {book?.title || '단어장'}
                   </div>
                   <button
                     type="button"
@@ -1066,6 +1050,31 @@ const Main = () => {
       </div>
     );
   };
+
+  // OS 뒤로가기 — 검색어가 있거나 검색 화면(최근·추천·결과·상세)이 떠 있으면 검색을 지우고
+  // 기본 찾기 화면으로 돌아간다. 바텀시트/풀시트가 열려 있거나 기본 화면이면 원래 처리
+  // (시트 닫기 · '한번 더 누르면 종료')를 그대로 쓴다. 학습 화면(StudyMain)과 같은
+  // window.onBackPressed 감싸기 방식 — 네이티브는 호출 시점에 window.onBackPressed 를 읽는다.
+  const searchActive = view !== 'list' || searchQuery.trim() !== '';
+  const exitSearchRef = useRef(exitSearchMode);
+  exitSearchRef.current = exitSearchMode;
+  useEffect(() => {
+    if (!searchActive) return undefined;
+    const original = window.onBackPressed;
+    const handler = (options = {}) => {
+      const hasSheet =
+        (window.newBottomSheetContext && window.newBottomSheetContext.stack.length > 0) ||
+        (window.newFullSheetContext && window.newFullSheetContext.stack.length > 0);
+      if (hasSheet || options.direction === 'horizontal') {
+        return original?.(options);
+      }
+      exitSearchRef.current();
+    };
+    window.onBackPressed = handler;
+    return () => {
+      if (window.onBackPressed === handler) window.onBackPressed = original;
+    };
+  }, [searchActive]);
 
   return (
     <PullToRefresh
