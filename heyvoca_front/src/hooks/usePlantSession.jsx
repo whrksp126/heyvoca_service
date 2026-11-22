@@ -8,6 +8,7 @@ import { getStudyRecommend } from '../api/study';
 import { mapRecommendItemToWord } from '../utils/studyRecommendMapping';
 import { vibrate } from '../utils/osFunction';
 import { primeSfx } from '../utils/audio';
+import { useJaKeyboardGate } from './useJaKeyboardGate';
 import { unlockTtsAudio, prefetchTtsList } from '../utils/common';
 import { wordIntroSoundItems } from '../plugins/questionTypes/wordIntro/WordIntroQuestion';
 
@@ -53,6 +54,7 @@ export const usePlantSession = () => {
   const { recentStudy } = useVocabulary();
   const { userProfile } = useUser();
   const { pushAwaitNewBottomSheet } = useNewBottomSheetActions();
+  const { ensureJaKeyboard } = useJaKeyboardGate();
 
   /**
    * @param {object} opts
@@ -65,6 +67,9 @@ export const usePlantSession = () => {
     vibrate({ duration: 5 });
     primeSfx();
     unlockTtsAudio(); // 제스처 안에서 AudioContext resume — 첫 카드 자동 재생이 무음이 되지 않게
+
+    // 일본어 학습은 일본어 키보드가 있어야 시작한다(영어는 즉시 통과)
+    if (!(await ensureJaKeyboard())) return false;
 
     // 중간에 그만둔 심기 세션은 이어 하지 않고 항상 새로 뽑는다(2026-10-24 이슈 #15) —
     // TakeTest.jsx는 session_id가 다르면 저장분을 버리고 새 세션을 만든다.

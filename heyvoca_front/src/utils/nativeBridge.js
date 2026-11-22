@@ -69,6 +69,10 @@ export const NATIVE_HANDLER_MIN_VERSION = {
   //  구버전 앱·웹 브라우저는 이 표로 선차단되어 StudyMain 의 기존 웹 재생을 그대로 쓴다.
   listen_session_start: '1.1.4',
   listen_control: '1.1.4',
+  // 1.1.7 — 일본어 키보드 설치 여부 조회 + 키보드 설정 열기(일본어 학습 시작 게이트).
+  //  구버전 앱·웹 브라우저는 이 표로 선차단되고, 게이트는 "입력해서 확인하기" 칸으로 폴백한다.
+  getKeyboardStatus: '1.1.7',
+  openKeyboardSettings: '1.1.7',
 };
 
 /** 요청 실패 사유 — 호출부는 이 코드로 분기해 폴백을 고른다. */

@@ -6,6 +6,7 @@ import { useNewFullSheetActions } from '../context/NewFullSheetContext';
 import { ConfirmNewBottomSheet } from '../components/newBottomSheet/ConfirmNewBottomSheet';
 import { vibrate } from '../utils/osFunction';
 import { primeSfx } from '../utils/audio';
+import { useJaKeyboardGate } from './useJaKeyboardGate';
 import { QUICK_QUESTION_TYPES } from '../plugins/questionTypes';
 import { isWordStudiable } from '../utils/vocaCrop';
 
@@ -41,6 +42,7 @@ export const useQuickReview = () => {
   const navigate = useNavigate();
   const { recentStudy, vocabularySheets, updateRecentStudy } = useVocabulary();
   const { pushAwaitNewBottomSheet } = useNewBottomSheetActions();
+  const { ensureJaKeyboard } = useJaKeyboardGate();
   const { closeNewFullSheet } = useNewFullSheetActions();
 
   const buildState = (count, memoryState = null, taskBucket = null) => ({
@@ -81,6 +83,9 @@ export const useQuickReview = () => {
     // 정답·오답 효과음 unlock 은 **user gesture 의 동기 시점**에 해야 한다.
     // await 뒤로 밀리면 iOS WKWebView 에서 AudioContext 가 열리지 않아 소리가 늦게 난다.
     primeSfx();
+
+    // 일본어 학습은 일본어 키보드가 있어야 시작한다(영어는 즉시 통과)
+    if (!(await ensureJaKeyboard())) return;
 
     // 썩은 단어는 백엔드 추천에서도 빠지므로 여기서도 빼고 센다 —
     // 그러지 않으면 "14문제" 로 들어갔다가 실제로는 몇 문제만 나온다.

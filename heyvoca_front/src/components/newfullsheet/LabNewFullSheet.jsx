@@ -6,6 +6,7 @@ import { vibrate, showToast, checkNotificationPermissionGranted } from '../../ut
 import postMessageManager from '../../utils/postMessageManager';
 import { getLabSettingsApi, setLabFeatureApi, getCachedLabFeatures } from '../../api/lab';
 import { useUser } from '../../context/UserContext';
+import { useJaKeyboardGate } from '../../hooks/useJaKeyboardGate';
 import { DEFAULT_LEARNING_LANG, LANG_LABEL } from '../../utils/lang';
 
 // 실험실 기능 목록 — 새 기능은 이 배열에 한 줄 추가로 노출된다.
@@ -58,6 +59,7 @@ const LabNewFullSheet = () => {
   "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
 
   const { popNewFullSheet } = useNewFullSheetActions();
+  const { ensureJaKeyboard } = useJaKeyboardGate();
   const { learningLang, setLearningLang } = useUser();
   // 앱 시작 시 prefetch된 캐시로 초기화 → 열자마자 올바른 토글 상태(OFF 깜빡임 없음).
   const [features, setFeatures] = useState(() => getCachedLabFeatures() || {});
@@ -127,8 +129,10 @@ const LabNewFullSheet = () => {
     }
   };
 
-  const handleEnterChat = () => {
+  const handleEnterChat = async () => {
     vibrate({ duration: 5 });
+    // 일본어 학습은 일본어 키보드가 있어야 시작한다(영어는 즉시 통과)
+    if (!(await ensureJaKeyboard())) return;
     try { postMessageManager.sendMessageToReactNative('launchChatStudy', {}); } catch (e) { /* noop */ }
   };
 

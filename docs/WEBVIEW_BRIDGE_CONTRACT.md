@@ -132,6 +132,22 @@ HapticEvent = { time: ms, type?: 'transient'|'continuous', duration?: ms, intens
 - iOS 는 Core Haptics(전 기능). 시스템 진동 설정 존중(Android 무음 모드면 무진동).
 - 미지원 기기/예외는 무시. 기존 `vibrate` 는 1.1.1 이하에서 꺼져 있었고(HAPTIC_ENABLED=false), 1.1.2 부터 다시 켜진다.
 
+### 일본어 키보드 게이트 (웹 구현 완료, 앱 1.1.7 에서 지원)
+
+일본어 학습을 시작하기 전에 일본어 키보드 설치 여부를 확인하고, 없으면 설정 안내 시트를 띄워 설정 전에는 시작을 막는다
+(`utils/jaKeyboard.js`, `hooks/useJaKeyboardGate.jsx`, `components/newBottomSheet/JaKeyboardGateNewBottomSheet.jsx`).
+`NATIVE_HANDLER_MIN_VERSION` 에 두 타입을 1.1.7 로 등록했다. 구버전 앱·웹 브라우저는 선차단되고 시트의
+"입력해서 확인하기"(あ 입력) 칸으로 통과한다.
+
+| type | 최소 앱 버전 | 요청 | 응답 |
+|---|---|---|---|
+| `getKeyboardStatus` | 1.1.7 | `{type:'getKeyboardStatus', lang:'ja'}` | `{type:'getKeyboardStatus', lang:'ja', status:'enabled'\|'missing'\|'unknown', platform:'ios'\|'android'}` |
+| `openKeyboardSettings` | 1.1.7 | `{type:'openKeyboardSettings'}` | `{type:'openKeyboardSettings', ok:boolean, target:'keyboard'\|'app'}` — iOS 는 앱 설정 화면까지만 열 수 있어 `target:'app'`, Android 는 키보드 설정 직접 |
+| `appForeground` | 1.1.7 | (앱 → 웹, 요청 없음) | `{type:'appForeground'}` — 앱이 포그라운드로 돌아올 때 앱이 보낸다. 웹은 `postMessageManager.waitFor('appForeground')` 로 받아 재검사한다(window focus·visibilitychange 도 병행) |
+
+웹 판정: 통과 기록(`localStorage['heyvoca:jaKeyboardReady']`)이 있고 네이티브가 `missing` 이라 하지 않으면 통과,
+`enabled` 면 기록 저장 후 통과, `missing`/`unknown`/브릿지 없음이면 시트. 응답이 2.5초 안에 없으면 `unknown` 으로 취급한다.
+
 ## 아직 남은 것
 
 - **백엔드가 클라이언트 버전을 전혀 모른다** — 요청 헤더에도 DB 에도 없다. 그래서 "구버전 앱 사용자가

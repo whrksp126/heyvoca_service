@@ -11,6 +11,7 @@ import { LANG_LABEL, LANG_GLYPH } from '../../utils/lang';
 import { MIN_TEST_VOCABULARY_COUNT } from '../../utils/common';
 import { MEMORY_STAGE_ORDER, wordMemoryStage, memoryStageCounts, isWordStudiable } from '../../utils/vocaCrop';
 import { vibrate } from '../../utils/osFunction';
+import { useJaKeyboardGate } from '../../hooks/useJaKeyboardGate';
 import SetupTile from '../common/SetupTile';
 import MemoryStageSelector from '../common/MemoryStageSelector';
 import { McqGlyph, CardMatchGlyph, BlankGlyph, ArrangeGlyph, TypingGlyph, TranslateGlyph, SpellingGlyph } from '../common/QuestionTypeGlyphs';
@@ -93,6 +94,7 @@ export const TestSetupNewBottomSheet = ({ onCancel, onSet, maxVocabularyCount, v
 
   // Actions만 구독하므로 state 변경 시 리렌더링 안 됨
   const { popNewBottomSheet, clearStack: clearNewBottomSheetStack } = useNewBottomSheetActions();
+  const { ensureJaKeyboard } = useJaKeyboardGate();
   const { clearStack: clearNewFullSheetStack } = useNewFullSheetActions();
   const navigate = useNavigate();
   const { recentStudy, updateRecentStudy, vocabularySheets } = useVocabulary();
@@ -210,6 +212,9 @@ export const TestSetupNewBottomSheet = ({ onCancel, onSet, maxVocabularyCount, v
       setErrorMessage('빈칸 고르기는 예문에 강조 표시가 있는 단어가 필요해요. 다른 유형도 함께 선택해주세요');
       return;
     }
+
+    // 일본어 학습은 일본어 키보드가 있어야 시작한다(영어는 즉시 통과)
+    if (!(await ensureJaKeyboard())) return;
 
     // MEMO : testType : test, exam, today
     await updateRecentStudy(testTypeData, {

@@ -13,6 +13,10 @@
   5) near_synonyms(사전의 비슷한 뜻 기본형)와 같으면(간단한 어미 제거 후보 포함) → 오답이되
      reason:'synonym' — 화면이 빨간 오답 대신 "비슷한 뜻이에요" 교정 톤으로 안내한다.
   6) 그 외 → 오답.
+
+  일본어(answerReading 이 있을 때) — 위 규칙과 별개의 짧은 경로. 입력·읽기(히라가나)를 가타카나→히라가나로
+  접고 공백을 지워 비교한다(한자 표기 answerText 와 같아도 정답). 오타 허용·baseForm·synonym 판정은 끈다
+  (한 글자 빠진 するい 가 정답이 되면 안 된다). 영어 경로는 그대로다.
 */
 
 import { answerKey, isSameSurface } from '../../../utils/answerNormalize';
@@ -91,17 +95,33 @@ const inflectionCandidates = (key) => {
   return out;
 };
 
+// 가타카나 → 히라가나(ァ~ヶ), 모든 공백(전각 포함) 제거. 장음표 ー 는 그대로 둔다.
+export const foldKana = (text) => String(text ?? '')
+  .normalize('NFKC')
+  .replace(/[\u30A1-\u30F6]/g, (c) => String.fromCharCode(c.charCodeAt(0) - 0x60))
+  .replace(/\s+/g, '');
+
 /**
  * fillInTheBlankTyping 한 문항 채점.
  * @returns {{ isCorrect: boolean, typo: boolean, variant: boolean, reason: 'exact'|'typo'|'baseForm'|'synonym'|'wrong' }}
  */
-export const gradeTypingAnswer = (rawInput, { answerText, baseForm, blockedTypos = [], nearSynonyms = [] }) => {
+export const gradeTypingAnswer = (rawInput, { answerText, answerReading = '', baseForm, blockedTypos = [], nearSynonyms = [] }) => {
   const input = answerKey(rawInput);
   const answer = answerKey(answerText);
   const base = answerKey(baseForm);
   const wrong = (reason = 'wrong') => ({ isCorrect: false, typo: false, variant: false, reason });
 
   if (!input) return wrong();
+
+  // 일본어 — 읽기(히라가나)로 채점. 한자 표기와 같아도 정답.
+  const reading = foldKana(answerReading);
+  if (reading) {
+    if (foldKana(rawInput) === reading || input === answer) {
+      return { isCorrect: true, typo: false, reason: 'exact', variant: false };
+    }
+    return wrong();
+  }
+
   if (input === answer) {
     return { isCorrect: true, typo: false, reason: 'exact', variant: !isSameSurface(rawInput, answerText) };
   }

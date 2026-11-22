@@ -10,6 +10,7 @@ import VocabularySheetNewFullSheet from './VocabularySheetNewFullSheet';
 import { vibrate } from '../../utils/osFunction';
 import { useTheme } from '../../context/ThemeContext';
 import { primeSfx } from '../../utils/audio';
+import { useJaKeyboardGate } from '../../hooks/useJaKeyboardGate';
 import { QUICK_QUESTION_TYPES } from '../../plugins/questionTypes';
 import { isWordStudiable } from '../../utils/vocaCrop';
 
@@ -21,8 +22,11 @@ const StudyNewFullSheet = () => {
   const { popNewFullSheet, pushNewFullSheet, closeNewFullSheet } = useNewFullSheetActions();
   const { pushNewBottomSheet, popNewBottomSheet, pushAwaitNewBottomSheet, clearStack: clearNewBottomSheetStack } = useNewBottomSheetActions();
   const { recentStudy, vocabularySheets, updateRecentStudy } = useVocabulary();
+  const { ensureJaKeyboard } = useJaKeyboardGate();
 
   const startFreshQuickReview = async () => {
+    // 일본어 학습은 일본어 키보드가 있어야 시작한다(영어는 즉시 통과)
+    if (!(await ensureJaKeyboard())) return;
     // 썩은 단어는 출제 대상이 아니다 — 문제 수 상한도 되살릴 수 있는 것만 빼고 센다
     const allWords = vocabularySheets.flatMap(sheet => sheet.words || []).filter(isWordStudiable);
     const count = Math.min(14, allWords.length);

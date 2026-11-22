@@ -16,6 +16,7 @@ import { useKoreanWordLookup } from '../../../hooks/useKoreanWordLookup';
 import { tokenizeKoreanParts } from '../../../utils/koreanTokenize';
 import { wordLang, isJa } from '../../../utils/lang';
 import { renderHighlightedText } from '../highlightMarker';
+import { toKana } from 'wanakana';
 import { gradeTypingAnswer } from './typoTolerance';
 import SpeakerArt from '../../../components/common/SpeakerArt';
 import CardSpeakerButton from '../../../components/common/CardSpeakerButton';
@@ -122,6 +123,7 @@ const FillInTheBlankTypingQuestion = ({ question, onComplete, onCardMatched, far
   const {
     blank_text: blankText = '',
     answer_text: answerText = '',
+    answer_reading: answerReading = '',
     base_form: baseForm = '',
     ko = '',
     blocked_typos: blockedTypos = [],
@@ -129,6 +131,11 @@ const FillInTheBlankTypingQuestion = ({ question, onComplete, onCardMatched, far
   } = typing;
   const blankLang = wordLang(question);
   const jaBlank = isJa(blankLang);
+  // 일본어 + 읽기(히라가나)가 내려온 문제 — 히라가나로 쓰게 하고 읽기로 채점한다. 읽기가 없는 구 payload 는 기존 동작.
+  const jaReading = jaBlank && typeof answerReading === 'string' && answerReading.trim().length > 0;
+  // 로마자 → 히라가나 자동 변환 상태: IME 조합 중에는 건드리지 않고, 변환 뒤 커서 위치를 복원한다.
+  const composingRef = useRef(false);
+  const caretRef = useRef(null);
   const { before, after } = splitAtBlankMarker(blankText);
   const beforeTokens = tokenizeBlankWords(before);
   const afterTokens = tokenizeBlankWords(after);
@@ -177,6 +184,17 @@ const FillInTheBlankTypingQuestion = ({ question, onComplete, onCardMatched, far
   useEffect(() => () => {
     speakGenRef.current += 1;
   }, []);
+
+  // 로마자 → 히라가나로 값이 바뀐 직후 커서를 원래 자리(변환 뒤 기준)로 되돌린다.
+  useLayoutEffect(() => {
+    const pos = caretRef.current;
+    if (pos == null) return;
+    caretRef.current = null;
+    const el = inputRef.current;
+    if (el && document.activeElement === el) {
+      try { el.setSelectionRange(pos, pos); } catch (_) { /* noop */ }
+    }
+  }, [value]);
 
   const closeLookup = () => {
     lookupReqRef.current += 1;
@@ -330,10 +348,13 @@ const FillInTheBlankTypingQuestion = ({ question, onComplete, onCardMatched, far
     closeLookup(); // 채점 순간 말풍선은 닫힌다(O/X 와 겹치지 않게, fillInTheBlank와 동일 규칙)
     koLookup.closeLookup();
 
-    const grade = gradeTypingAnswer(value, { answerText, baseForm, blockedTypos, nearSynonyms: Array.isArray(nearSynonyms) ? nearSynonyms : [] });
+    // 일본어는 칸에 남은 로마자(끝의 n 등)를 마저 히라가나로 바꿔 채점한다.
+    const submitted = jaReading ? toKana(value) : value;
+    if (submitted !== value) setValue(submitted);
+    const grade = gradeTypingAnswer(submitted, { answerText, answerReading: jaReading ? answerReading : '', baseForm, blockedTypos, nearSynonyms: Array.isArray(nearSynonyms) ? nearSynonyms : [] });
 
     // 첫 시도의 비슷한 뜻 오답 → 힌트를 주고 한 번 더(채점·로그 없음).
-    if (!synonymHint && grade.reason === 'synonym') {
+    if (!jaReading && !synonymHint && grade.reason === 'synonym') {
       const answerChars = Array.from(String(answerText ?? '').trim());
       const prefix = answerChars.slice(0, synonymHintRevealCount(answerChars)).join('');
       feel('select');
@@ -410,6 +431,7 @@ const FillInTheBlankTypingQuestion = ({ question, onComplete, onCardMatched, far
 
   // 결과 줄 — 제목(정답/오답) + 정답 낱말 + 보조 설명. 오타 허용 정답은 '정답이에요' + 정확한 철자
   // 한 줄만 보인다(이슈 #15 3차 QA — 예전엔 인정했어요·오타 허용 딱지·안내 문장이 같은 말을 반복했다).
+  const submittedText = value.trim();
   const verdict = !isAnswered
     ? null
     : isCorrect
@@ -417,7 +439,9 @@ const FillInTheBlankTypingQuestion = ({ question, onComplete, onCardMatched, far
         correct: true,
         title: '정답이에요',
         tag: null,
-        answerLabel: isTypoAccepted ? '정확한 철자' : (isVariantAccepted ? '정확한 표기' : null),
+        answerLabel: isTypoAccepted
+          ? '정확한 철자'
+          : (isVariantAccepted || (jaReading && submittedText !== answerText) ? '정확한 표기' : null),
         note: synonymHint ? '힌트를 보고 맞혔어요' : null,
       }
       : {
@@ -512,6 +536,11 @@ const FillInTheBlankTypingQuestion = ({ question, onComplete, onCardMatched, far
         <div className="relative z-[1] flex items-center flex-1 min-h-0 px-[20px] py-[45px]">
           <LiftAboveBar active={!!farm} topReserve={28} className="w-full">
             <form onSubmit={handleSubmit} className="relative">
+              {jaReading && !isAnswered && (
+                <p className="mb-[10px] text-[13px] font-[700] text-layout-gray-400 dark:text-layout-gray-100">
+                  히라가나로 써 주세요
+                </p>
+              )}
               <p lang={jaBlank ? 'ja' : undefined} className={`w-full ${fitTextClass(blankText, 'sentence')} font-[700] leading-[1.8] text-layout-black dark:text-layout-white ${jaBlank ? 'break-normal' : 'break-keep'}`}>
                 {renderWordTokens(beforeTokens, 'b')}
                 <motion.span
@@ -569,10 +598,32 @@ const FillInTheBlankTypingQuestion = ({ question, onComplete, onCardMatched, far
                         spellCheck={false}
                         enterKeyHint="done"
                         value={value}
+                        onCompositionStart={() => { composingRef.current = true; }}
+                        onCompositionEnd={(e) => {
+                          composingRef.current = false;
+                          // 조합이 끝난 값 기준으로 한 번 더 변환(일본어 키보드면 이미 가나라 그대로다)
+                          if (!jaReading) return;
+                          const el = e.target;
+                          const converted = toKana(el.value, { IMEMode: true });
+                          if (converted !== el.value) {
+                            caretRef.current = converted.length;
+                            setValue(converted);
+                          }
+                        }}
                         onChange={(e) => {
+                          const raw = e.target.value;
                           // 키 입력 — 글자 수가 달라질 때마다 가벼운 톡(IME 조합 중 같은 길이 갱신은 제외)
-                          if (e.target.value.length !== value.length) feel('tap');
-                          setValue(e.target.value);
+                          if (raw.length !== value.length) feel('tap');
+                          if (jaReading && !composingRef.current && !e.nativeEvent?.isComposing) {
+                            const caret = e.target.selectionStart ?? raw.length;
+                            const converted = toKana(raw, { IMEMode: true });
+                            if (converted !== raw) {
+                              caretRef.current = toKana(raw.slice(0, caret), { IMEMode: true }).length;
+                              setValue(converted);
+                              return;
+                            }
+                          }
+                          setValue(raw);
                         }}
                         style={inputWidth != null ? { width: `${inputWidth}px` } : undefined}
                         className="
@@ -650,7 +701,7 @@ const FillInTheBlankTypingQuestion = ({ question, onComplete, onCardMatched, far
                         type="button"
                         data-lookup-word
                         lang={jaBlank ? 'ja' : undefined}
-                        aria-label={`정답 ${answerText} 뜻 보기`}
+                        aria-label={`정답 ${answerText}${jaReading ? ` (${answerReading})` : ''} 뜻 보기`}
                         aria-expanded={lookup?.key === 'correct'}
                         className="
                           inline-flex items-center gap-[4px]
@@ -665,6 +716,9 @@ const FillInTheBlankTypingQuestion = ({ question, onComplete, onCardMatched, far
                       >
                         <Check size={15} weight="bold" aria-hidden="true" className="flex-shrink-0" />
                         {answerText}
+                        {jaReading && answerReading.trim() !== String(answerText).trim() && (
+                          <span className="text-[14px] font-[700] opacity-80">({answerReading.trim()})</span>
+                        )}
                       </button>
                     </div>
                   )}

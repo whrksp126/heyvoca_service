@@ -42,7 +42,7 @@ from app.services.fsrs.thresholds import (  # noqa: E402
 )
 
 
-def _build_sentence_question_payload(item, qtype: str, ctx=None) -> dict:
+def _build_sentence_question_payload(item, qtype: str, ctx=None, ja_info=None, ja_tokens=None) -> dict:
     """fillInTheBlank/fillInTheBlankTyping/sentenceArrangePartial/sentenceArrange/
     listenArrange 전용 payload. 해당 유형이 아니거나 예문이 없으면 {}.
 
@@ -68,8 +68,12 @@ def _build_sentence_question_payload(item, qtype: str, ctx=None) -> dict:
 
     if item.dict_lang != 'en':
         if qtype == 'fillInTheBlankTyping':
-            from app.services.fill_blank_typing import build_typing_payload
-            payload = build_typing_payload(item.word, item.examples)
+            # 일본어는 히라가나 읽기(answer_reading)로 채점 — reading_tokens/VocaJa.reading 필요.
+            from app.services.fill_blank_typing import build_typing_payload_ja
+            payload = build_typing_payload_ja(
+                item.word, item.examples, ja_tokens, getattr(item, 'voca_id', None),
+                ((ja_info or {}).get(getattr(item, 'voca_id', None)) or {}).get('reading'),
+            )
             return {'typing': payload} if payload else {}
         return {}
 
@@ -219,7 +223,7 @@ def _serialize_recommend_item(item, *, suggested_question_type, tier_target, tie
     두 엔드포인트가 같은 모양(계약: SENTENCE_QUESTIONS_CONTRACT.md)을 내야 어긋나지 않는다.
     """
     fsrs = item.fsrs_state or {}
-    question_payload = _build_sentence_question_payload(item, suggested_question_type, ctx)
+    question_payload = _build_sentence_question_payload(item, suggested_question_type, ctx, ja_info, ja_tokens)
     if suggested_question_type == 'sentenceTranslate' and not question_payload:
         # 고를 예문이 없으면(이번 응답에서 다 썼거나 자격 미달) 보편 유형으로 — 빈 payload 로 내보내지 않는다.
         suggested_question_type = 'multipleChoice'
@@ -1633,7 +1637,7 @@ def get_recommend():
                     qp[t] = arr
                     break
             for t in ('fillInTheBlank', 'fillInTheBlankTyping'):
-                qp[t] = _build_sentence_question_payload(enriched['_item'], t, ctx)
+                qp[t] = _build_sentence_question_payload(enriched['_item'], t, ctx, ja_info, ja_tokens)
             # 문장 뜻 맞추기는 싣지 않는다(QA 3차 2026-10-25, LEVEL_AND_MEANING_CONTRACT.md §5-3).
             resp['question_payloads'] = qp
         detail_map = _load_plant_dict_detail([e['_item'].voca_id for e in enriched_items], lang)
