@@ -239,7 +239,7 @@ const ListenArrangeQuestion = ({ question, onComplete, onCardMatched, farmByWord
         resumeReplayKey={resumeReplayKey}
         advanceGate={advanceGate}
         onSubmit={handleSubmit}
-        allowGiveUp={!!recall?.enabled}
+        allowGiveUp
         recall={recall}
         onPiecePlaced={(word) => {
           // 문장 재생(보통/0.7배속) 중이면 단어 TTS를 건너뛴다 — 문장 재생을 끊지도 않는다.

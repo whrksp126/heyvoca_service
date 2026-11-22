@@ -12,12 +12,12 @@ import { feel } from '../../lib/feel';
 
   variant
     option  사지선다·빈칸 고르기 보기 영역(보기 버튼과 같은 rounded 10)
-    card    카드 맞추기 뜻 카드 한 장(rounded 12, 좁아서 '열기' 만)
+    card    카드 맞추기 뜻 카드 한 장(rounded 12, 좁아서 글자·아이콘을 줄임)
     chip    조각(칩) 은행 영역
 */
 const VARIANTS = {
   option: { radius: 'rounded-[10px]', label: '보기 열기', compact: false },
-  card: { radius: 'rounded-[12px]', label: '열기', compact: true },
+  card: { radius: 'rounded-[12px]', label: '보기 열기', compact: true },
   chip: { radius: 'rounded-[10px]', label: '보기 열기', compact: false },
 };
 
@@ -56,10 +56,10 @@ const RecallCover = ({ covered, onKnow, className = '', variant = 'option', chil
                 bg-layout-white dark:bg-layout-black
                 text-layout-black dark:text-layout-white
                 font-[700] tracking-[-0.03em]
-                ${v.compact ? 'h-[30px] px-[11px] text-[13px]' : 'h-[36px] px-[16px] text-[14px]'}
+                ${v.compact ? 'h-[26px] px-[9px] text-[11px] gap-[3px]' : 'h-[36px] px-[16px] text-[14px]'}
               `}
             >
-              <Eye size={v.compact ? 15 : 17} weight="bold" />
+              <Eye size={v.compact ? 12 : 17} weight="bold" />
               {v.label}
             </motion.span>
           </motion.button>

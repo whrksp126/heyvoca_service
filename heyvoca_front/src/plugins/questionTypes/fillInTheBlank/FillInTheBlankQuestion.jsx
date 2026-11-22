@@ -598,7 +598,7 @@ const FillInTheBlankQuestion = ({ question, onComplete, onCardMatched, farmByWor
           )}
         </AnimatePresence>
 
-        <GiveUpButton visible={!!recall?.covered} onClick={() => { handleOptionClick(null); recall?.reveal?.(); }} />
+        <GiveUpButton visible={!isAnswered} onClick={() => { handleOptionClick(null); recall?.reveal?.(); }} />
 
         {/* O/X — 카드 실제 정중앙(= 예문 중심, padding 대칭). */}
         <ResultMark

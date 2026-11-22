@@ -61,6 +61,7 @@ const ScriptListenWriteQuestion = ({ question, onComplete, onCardMatched }) => {
           entry={entry}
           caseVariant={isAlphabet ? (traceVariant === 'lower' ? 'lower' : 'upper') : null}
           replayKey={`scriptListenWrite-${question.vocaIndexId ?? question.id}-${traceVariant || ''}${question.isRetry ? '-retry' : ''}`}
+          allowGiveUp
           onGraded={handleGraded}
           onDone={handleDone}
         />

@@ -19,6 +19,7 @@ import { renderHighlightedText } from '../highlightMarker';
 import { toKana } from 'wanakana';
 import { gradeTypingAnswer } from './typoTolerance';
 import SpeakerArt from '../../../components/common/SpeakerArt';
+import GiveUpButton from '../../../components/common/GiveUpButton';
 import CardSpeakerButton from '../../../components/common/CardSpeakerButton';
 import { fitTextClass } from '../../../utils/fitText';
 
@@ -341,9 +342,10 @@ const FillInTheBlankTypingQuestion = ({ question, onComplete, onCardMatched, far
     speakShown();
   };
 
-  const handleSubmit = (e) => {
+  // giveUp — '모르겠어요': 입력과 무관하게 즉시 오답(같은 채점 경로) + 정답 공개.
+  const handleSubmit = (e, giveUp = false) => {
     e?.preventDefault?.();
-    if (isAnswered || !value.trim()) return;
+    if (isAnswered || (!giveUp && !value.trim())) return;
 
     closeLookup(); // 채점 순간 말풍선은 닫힌다(O/X 와 겹치지 않게, fillInTheBlank와 동일 규칙)
     koLookup.closeLookup();
@@ -351,10 +353,12 @@ const FillInTheBlankTypingQuestion = ({ question, onComplete, onCardMatched, far
     // 일본어는 칸에 남은 로마자(끝의 n 등)를 마저 히라가나로 바꿔 채점한다.
     const submitted = jaReading ? toKana(value) : value;
     if (submitted !== value) setValue(submitted);
-    const grade = gradeTypingAnswer(submitted, { answerText, answerReading: jaReading ? answerReading : '', baseForm, blockedTypos, nearSynonyms: Array.isArray(nearSynonyms) ? nearSynonyms : [] });
+    const grade = giveUp
+      ? { isCorrect: false, typo: false, variant: null, reason: 'giveUp' }
+      : gradeTypingAnswer(submitted, { answerText, answerReading: jaReading ? answerReading : '', baseForm, blockedTypos, nearSynonyms: Array.isArray(nearSynonyms) ? nearSynonyms : [] });
 
     // 첫 시도의 비슷한 뜻 오답 → 힌트를 주고 한 번 더(채점·로그 없음).
-    if (!jaReading && !synonymHint && grade.reason === 'synonym') {
+    if (!giveUp && !jaReading && !synonymHint && grade.reason === 'synonym') {
       const answerChars = Array.from(String(answerText ?? '').trim());
       const prefix = answerChars.slice(0, synonymHintRevealCount(answerChars)).join('');
       feel('select');
@@ -758,6 +762,8 @@ const FillInTheBlankTypingQuestion = ({ question, onComplete, onCardMatched, far
           replayKey={resumeReplayKey}
           className="absolute inset-0 z-[3] flex items-center justify-center"
         />
+
+        <GiveUpButton visible={!isAnswered} onClick={() => handleSubmit(null, true)} />
 
         <FarmResultBar
           farm={farm}

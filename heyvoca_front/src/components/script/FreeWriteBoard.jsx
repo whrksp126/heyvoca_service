@@ -15,6 +15,7 @@ import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { motion, useAnimationControls } from 'framer-motion';
 import { ArrowCounterClockwise } from '@phosphor-icons/react';
 import ScriptNextButton from './ScriptNextButton';
+import GiveUpButton from '../common/GiveUpButton';
 import { feel } from '../../lib/feel';
 import ResultMark from '../common/ResultMark';
 import { gradeFreeWrite } from '../../utils/scriptWriteGrader';
@@ -43,7 +44,7 @@ const pointsToD = (points) => points.reduce((acc, p, i) => acc + (i === 0 ? `M${
  * onGraded(correct) — 채점 순간(정답/오답) 한 번
  * onDone() — 채점 후 사용자가 "다음"을 눌렀을 때
  */
-const FreeWriteBoard = ({ script, item, entry, caseVariant = null, replayKey, onGraded, onDone }) => {
+const FreeWriteBoard = ({ script, item, entry, caseVariant = null, replayKey, onGraded, onDone, allowGiveUp = false }) => {
   "use memo";
 
   const viewBox = entry?.viewBox || '0 0 109 109';
@@ -252,6 +253,7 @@ const FreeWriteBoard = ({ script, item, entry, caseVariant = null, replayKey, on
               <ArrowCounterClockwise size={18} weight="bold" />
             </motion.button>
           )}
+          {allowGiveUp && <GiveUpButton visible={result === null} onClick={() => finish(false)} />}
           {showAnswer && (
             <span className="absolute bottom-[10px] left-0 right-0 text-center text-[12px] font-[700] text-status-success-600 pointer-events-none">
               정답은 {caseVariant === 'lower' ? (item.lower || item.char) : item.char}

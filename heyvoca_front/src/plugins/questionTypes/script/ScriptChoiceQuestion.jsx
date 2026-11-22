@@ -11,6 +11,7 @@
 
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import ChoiceCard from '../../../components/script/ChoiceCard';
+import { feel } from '../../../lib/feel';
 import ScriptNextButton from '../../../components/script/ScriptNextButton';
 
 const ScriptChoiceQuestion = ({ question, onComplete, onCardMatched }) => {
@@ -95,6 +96,7 @@ const ScriptChoiceQuestion = ({ question, onComplete, onCardMatched }) => {
           selectedIndex={selectedIndex}
           onSelect={handleSelect}
           onSettled={() => setSettled(true)}
+          onGiveUp={() => { feel('wrong'); handleSelect(-1); }}
         />
       </div>
       <ScriptNextButton show={answered && settled} onNext={() => { const go = nextRef.current; nextRef.current = null; go?.(); }} />

@@ -2168,7 +2168,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
     else handleClickExamOption(null, null);
     recallReveal();
   };
-  const recallProp = { enabled: recallEnabled, covered: recallCovered, reveal: recallReveal, giveUpRef: recallGiveUpRef };
+  const recallProp = { enabled: recallEnabled, giveUp: !!currentQ && !isNoGradeQuestionType(currentQType), covered: recallCovered, reveal: recallReveal, giveUpRef: recallGiveUpRef };
   const nextFooter = showNextFooter ? (
     <motion.button
       type="button"
@@ -2475,7 +2475,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
                       </motion.button>
                     )}
                   </div>
-                  <GiveUpButton visible={recallCovered} onClick={handleRecallGiveUp} />
+                  <GiveUpButton visible={!isAnswered} onClick={handleRecallGiveUp} />
                   {!isListeningBeforeAnswer && (
                     <CardSpeakerButton
                       playing={isSpeaking}

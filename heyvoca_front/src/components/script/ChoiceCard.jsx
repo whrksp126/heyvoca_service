@@ -29,13 +29,14 @@ import { optionMainSub } from '../../utils/scriptQuestions';
 import { speakScriptItem, speakScriptText, stopScriptSpeech } from '../../utils/scriptData';
 import { CARD_ENTER_INITIAL, CARD_ENTER_ANIMATE, CARD_ENTER_TRANSITION } from '../../utils/studySlideMotion';
 import SpeakerArt from '../common/SpeakerArt';
+import GiveUpButton from '../common/GiveUpButton';
 
 // 정오답 버튼 규격은 components/takeTest/Main.jsx의 사지선다 옵션 버튼과 동일 클래스를 쓴다
 // (h-50 · border-[1px] rounded-[10px] · text-[14px] font-[700]) — 학습 화면과 다른 화면처럼
 // 보이지 않게 한다(2026-09-29 실기기 QA: "선택지가 얇은 외곽선만 있는 작은 박스"로 보임).
 const ChoiceCard = ({
   step, answered, selectedIndex, onSelect, onSettled,
-  farm = null, onFarmAnimStart, onFarmSettled,
+  farm = null, onFarmAnimStart, onFarmSettled, onGiveUp = null,
 }) => {
   "use memo";
 
@@ -179,6 +180,9 @@ const ChoiceCard = ({
             translate-x-[-50%] translate-y-[-50%]
           "
         />
+
+        {/* '모르겠어요' — 채점 전까지(학습하기 플러그인이 onGiveUp 을 줄 때만) */}
+        {onGiveUp && <GiveUpButton visible={!answered} onClick={onGiveUp} />}
 
         {/* 하단 - 채점 후: 농장 상태 바 — 유형 공통(FarmResultBar). 연출 끝 신호로 전환 게이트를 푼다. */}
         <FarmResultBar

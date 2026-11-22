@@ -403,8 +403,8 @@ const CardMatchQuestion = ({ question, testType, onComplete, onCardMatched, farm
               className="absolute bottom-[9px] right-[8px] z-[3]"
             />
             <GiveUpButton
-              visible={!!recall?.enabled && !isResolved && !isAnimating}
-              label="몰라요"
+              visible={!!recall?.giveUp && !isResolved && !isAnimating}
+              compact
               className="bottom-[5px]"
               onClick={() => handleDontKnow(index)}
             />
@@ -423,7 +423,7 @@ const CardMatchQuestion = ({ question, testType, onComplete, onCardMatched, farm
           const posMap = buildMeaningPosMap(word);
           const rightCovered = !!recall?.enabled && matchedWordIds.size + failedWordIds.size < leftWords.length && !openedRightIds.has(word.id) && !matchedWordIds.has(word.id) && !failedWordIds.has(word.id);
           return (
-            <RecallCover key={word.id} covered={rightCovered} onKnow={() => openRight(word.id)} className="flex flex-col flex-1 min-h-0" variant="card">
+            <RecallCover key={word.id} covered={rightCovered} onKnow={() => { openRight(word.id); handleRightClick(index); }} className="flex flex-col flex-1 min-h-0" variant="card">
             <motion.button
               className={`
                 flex flex-col items-center justify-center

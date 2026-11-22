@@ -1510,15 +1510,13 @@ const StudyResult = () => {
       content = <GemRewardSlide {...currentScreen.data} {...sceneProps} />;
     }
 
-    // 공용 슬라이드 껍데기(rewards/RewardShell) — 고정 헤더 + 진행 점 + 본문 + 확인 버튼.
+    // 공용 슬라이드 껍데기(rewards/RewardShell) — 고정 헤더 + 본문 + 확인 버튼.
     // 새 연출 슬라이드는 연출이 끝나야 「확인」이 켜지고, 그 전에 화면을 탭하면 연출을 건너뛴다.
     if (!content) return null;
 
     return (
       <RewardShell
         slideKey={currentScreenIndex}
-        index={currentScreenIndex}
-        total={screenList.length - 1}
         ready={!isScene || sceneReadyIndex === currentScreenIndex}
         onSkip={() => sceneSkipRef.current?.()}
         onConfirm={() => { haptic('selection'); handleNextScreen(); }}

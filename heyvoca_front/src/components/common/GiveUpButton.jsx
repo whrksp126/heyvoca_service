@@ -6,7 +6,7 @@
   pointerdown/mousedown 기본 동작을 막아 숨긴 입력(키보드)의 포커스를 뺏지 않는다.
   카드는 relative 여야 한다(absolute 로 카드 하단에 붙는다).
 */
-const GiveUpButton = ({ visible = true, onClick, label = '모르겠어요', className = 'bottom-[10px]' }) => {
+const GiveUpButton = ({ visible = true, onClick, label = '모르겠어요', className = 'bottom-[10px]', compact = false }) => {
   if (!visible) return null;
   return (
     <div className={`absolute left-0 right-0 ${className} z-[2] flex justify-center pointer-events-none`}>
@@ -15,7 +15,7 @@ const GiveUpButton = ({ visible = true, onClick, label = '모르겠어요', clas
         onPointerDown={(e) => e.preventDefault()}
         onMouseDown={(e) => e.preventDefault()}
         onClick={(e) => { e.stopPropagation(); onClick?.(e); }}
-        className="pointer-events-auto px-[10px] py-[6px] text-[13px] font-[700] text-layout-gray-400 dark:text-layout-gray-100 underline underline-offset-[3px] decoration-layout-gray-300 dark:decoration-[#555555]"
+        className={`pointer-events-auto font-[700] ${compact ? 'px-[6px] py-[3px] text-[11px]' : 'px-[10px] py-[6px] text-[13px]'} text-layout-gray-400 dark:text-layout-gray-100 underline underline-offset-[3px] decoration-layout-gray-300 dark:decoration-[#555555]`}
       >
         {label}
       </button>

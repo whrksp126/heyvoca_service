@@ -2,7 +2,7 @@
 //
 // 보상 슬라이드 공용 껍데기 — 고정 헤더 + 진행 점 + 옆으로 넘어가는 본문 + 「확인」 버튼.
 //
-//   · 진행 점: 보상이 몇 장 남았는지 보여 준다(최종 결과 화면은 세지 않는다).
+//   · 상단 슬라이드 진행 표시(스토리형 막대)는 2026-11-23 제거했다(슬라이드 넘김은 그대로).
 //   · 「확인」은 연출이 끝나야(ready) 켜진다. 그 전에 화면 아무 곳이나 탭하면 onSkip 으로 연출을 건너뛴다.
 //     (최종 결과 화면의 통계 카드와 같은 규칙.)
 //   · 헤더 제목(title)은 기본 「학습 결과」. 학습 밖 업적 연출(overlay/AchievementRewardOverlay)은 「업적 달성」을 넘긴다.
@@ -15,30 +15,7 @@ import { ResultCta, ResultCtaBar } from './ResultCta';
 const RewardShellContext = createContext({ headerSlot: null });
 export const useRewardShell = () => useContext(RewardShellContext);
 
-const StoryDots = ({ index, total, ready }) => (
-  <div
-    aria-hidden
-    className='absolute left-0 z-20 flex w-full gap-[4px] px-[24px]'
-    style={{ top: 'calc(var(--status-bar-height) + 55px)' }}
-  >
-    {Array.from({ length: total }).map((_, i) => (
-      <span key={i} className='relative h-[3px] flex-1 overflow-hidden rounded-full bg-layout-gray-100 dark:bg-layout-gray-500'>
-        {i < index ? <span className='absolute inset-0 bg-primary-main-600' /> : null}
-        {i === index ? (
-          <motion.span
-            key={`cur-${index}`}
-            className='absolute inset-0 origin-left bg-primary-main-600'
-            initial={{ scaleX: 0 }}
-            animate={{ scaleX: ready ? 1 : 0.85 }}
-            transition={ready ? { duration: 0.2, ease: 'easeOut' } : { duration: 3, ease: 'easeOut' }}
-          />
-        ) : null}
-      </span>
-    ))}
-  </div>
-);
-
-const RewardShell = ({ slideKey, title = '학습 결과', index = 0, total = 0, ready = true, onSkip, onConfirm, children }) => {
+const RewardShell = ({ slideKey, title = '학습 결과', ready = true, onSkip, onConfirm, children }) => {
   const [headerSlot, setHeaderSlot] = useState(null);
   return (
     <div
@@ -64,7 +41,6 @@ const RewardShell = ({ slideKey, title = '학습 결과', index = 0, total = 0, 
         </div>
         <div ref={setHeaderSlot} className='absolute right-[18px] top-1/2 -translate-y-1/2' />
       </div>
-      {total > 1 ? <StoryDots index={index} total={total} ready={ready} /> : null}
       {/* 슬라이드되는 영역 (컨텐츠 + 확인 버튼) */}
       <AnimatePresence mode="wait">
         <motion.div
