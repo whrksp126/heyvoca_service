@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { getTextSound } from '../../../utils/common';
 import { feel } from '../../../lib/feel';
 import RecallCover from '../../../components/takeTest/RecallCover';
-import { useRecallGiveUp } from '../../../hooks/useRecallGate';
+import GiveUpButton from '../../../components/common/GiveUpButton';
 import CardSpeakerButton from '../../../components/common/CardSpeakerButton';
 import LiftAboveBar from '../../../components/common/LiftAboveBar';
 import MemoryStateChangeBadge, {
@@ -36,8 +36,9 @@ const shuffleArray = (array) => {
 const CardMatchQuestion = ({ question, testType, onComplete, onCardMatched, farmByWordId, recall }) => {
   const [leftWords] = useState(() => question.words);
   const [rightWords, setRightWords] = useState(() => shuffleArray(question.words));
-  // '먼저 떠올려 보기'의 '모르겠어요' 후 — 뜻 카드를 정답 짝 순서로 정렬해 보여 준다.
-  const [gaveUp, setGaveUp] = useState(false);
+  // '먼저 떠올려 보기' — 뜻 카드는 한 장씩 가려 둔다. 눌러서 연 카드 id 와, '몰라요'로 짝 실패 처리된 카드 id.
+  const [openedRightIds, setOpenedRightIds] = useState(new Set());
+  const [giveUpRightIds, setGiveUpRightIds] = useState(new Set());
   const [selectedLeft, setSelectedLeft] = useState(null);
   const [selectedRight, setSelectedRight] = useState(null);
   const [matchedWordIds, setMatchedWordIds] = useState(new Set());
@@ -137,10 +138,10 @@ const CardMatchQuestion = ({ question, testType, onComplete, onCardMatched, farm
     }));
   };
 
-  const checkMatch = (leftIdx, rightIdx) => {
+  const checkMatch = (leftIdx, rightIdx, forceWrong = false) => {
     const leftWord = leftWords[leftIdx];
     const rightWord = rightWords[rightIdx];
-    const isMatch = leftWord.id === rightWord.id;
+    const isMatch = !forceWrong && leftWord.id === rightWord.id;
 
     const prev = wordResultsRef.current[leftWord.id] ?? { attempts: 0, isCorrect: false };
     const newAttempts = prev.attempts + 1;
@@ -221,40 +222,22 @@ const CardMatchQuestion = ({ question, testType, onComplete, onCardMatched, farm
     });
   };
 
+  // '먼저 떠올려 보기' — 뜻 카드 한 장 열기(열린 카드는 평소처럼 짝 맞추기에 쓴다).
+  const openRight = (wordId) => setOpenedRightIds(prev => new Set([...prev, wordId]));
+
   /*
-    '먼저 떠올려 보기' 하단 '모르겠어요' — 뜻 카드를 가린 채로는 한 장씩 채점할 수 없으므로 세트 전체를
-    한 번에 오답 처리한다: 모든 카드를 평소 오답과 같은 경로(onCardMatched → Main.processCardWord → 로그·FSRS·
-    사지선다 재출제)로 채점하고, 뜻 카드를 정답 짝 순서로 정렬해 초록으로 보여 준다. 아직 한 장도 풀지 않은
-    가림 상태에서만 호출된다.
+    '몰라요' — 그 단어를 즉시 오답 처리하고, 짝인 뜻 카드를 열면서 짝 실패로 둔다(둘 다 맞추기에서 빠짐).
+    평소 '틀린 짝' 경로(checkMatch → onCardMatched({isCorrect:false}))를 그대로 쓴다.
   */
-  const handleRecallGiveUp = () => {
-    if (gaveUp || gradedCountRef.current > 0) return;
-    setGaveUp(true);
-    setSelectedLeft(null);
-    setSelectedRight(null);
-    feel('wrong');
-    const timeTakenMs = Date.now() - questionStartRef.current;
-    question.words.forEach((word) => {
-      wordResultsRef.current[word.id] = { attempts: 1, isCorrect: false, timeTakenMs };
-      resolveWordState(word, false, 1);
-      onCardMatched?.({
-        wordId: word.id,
-        sheetId: word.vocabularySheetId ?? question.vocabularySheetId,
-        isCorrect: false,
-        timeTakenMs,
-        updateData: { fsrs: word.fsrs, isCorrect: false, updatedAt: new Date().toISOString() },
-      });
-    });
-    gradedCountRef.current = question.words.length;
-    setFailedWordIds(new Set(question.words.map((w) => w.id)));
-    setRightWords(leftWords);
-    advanceGate.arm({
-      minDelayMs: Math.max(CARD_FLASH_MS, getAdvanceDelay(false)),
-      onAdvance: () => onCompleteRef.current?.(buildResults(wordResultsRef.current), { processed: typeof onCardMatched === 'function' }),
-    });
-    syncFarmGate();
+  const handleDontKnow = (leftIdx) => {
+    const word = leftWords[leftIdx];
+    if (matchedWordIds.has(word.id) || failedWordIds.has(word.id) || animatingWordIds.has(word.id)) return;
+    const rightIdx = rightWords.findIndex((w) => w.id === word.id);
+    if (rightIdx < 0) return;
+    openRight(word.id);
+    setGiveUpRightIds(prev => new Set([...prev, word.id]));
+    checkMatch(leftIdx, rightIdx, true);
   };
-  useRecallGiveUp(recall, handleRecallGiveUp);
 
   const handleLeftClick = (index) => {
     const word = leftWords[index];
@@ -269,7 +252,7 @@ const CardMatchQuestion = ({ question, testType, onComplete, onCardMatched, farm
 
   const handleRightClick = (index) => {
     const word = rightWords[index];
-    if (matchedWordIds.has(word.id) || wrongFlashRightWordIds.has(word.id)) return;
+    if (matchedWordIds.has(word.id) || wrongFlashRightWordIds.has(word.id) || giveUpRightIds.has(word.id)) return;
 
     if (selectedLeft !== null) {
       checkMatch(selectedLeft, index);
@@ -301,7 +284,7 @@ const CardMatchQuestion = ({ question, testType, onComplete, onCardMatched, farm
 
   const getRightStyle = (index) => {
     const word = rightWords[index];
-    if (gaveUp) return 'bg-status-success-100 dark:bg-status-success-dark border-status-success-500';
+    if (giveUpRightIds.has(word.id)) return 'bg-status-error-100 dark:bg-status-error-dark border-status-error-500 opacity-60';
     if (matchedWordIds.has(word.id)) return 'opacity-50 bg-status-success-100 dark:bg-status-success-dark border-status-success-500';
     if (correctFlashWordIds.has(word.id)) return 'border-status-success-500 bg-status-success-100 dark:bg-status-success-dark';
     if (wrongFlashRightWordIds.has(word.id)) return 'border-status-error-500 bg-status-error-100 dark:bg-status-error-dark';
@@ -311,7 +294,7 @@ const CardMatchQuestion = ({ question, testType, onComplete, onCardMatched, farm
 
   const getRightTextStyle = (index) => {
     const word = rightWords[index];
-    if (gaveUp) return 'text-status-success-600';
+    if (giveUpRightIds.has(word.id)) return 'text-status-error-600';
     if (matchedWordIds.has(word.id) || correctFlashWordIds.has(word.id)) return 'text-status-success-600';
     if (wrongFlashRightWordIds.has(word.id)) return 'text-status-error-600';
     return 'text-layout-black dark:text-layout-white';
@@ -419,13 +402,18 @@ const CardMatchQuestion = ({ question, testType, onComplete, onCardMatched, farm
               onPress={() => speakWord(word)}
               className="absolute bottom-[9px] right-[8px] z-[3]"
             />
+            <GiveUpButton
+              visible={!!recall?.enabled && !isResolved && !isAnimating}
+              label="몰라요"
+              className="bottom-[5px]"
+              onClick={() => handleDontKnow(index)}
+            />
             </motion.div>
           );
         })}
       </div>
 
       {/* 우측: 의미 */}
-      <RecallCover covered={recall?.covered} onKnow={recall?.reveal} className="flex flex-col" variant="card">
       <div className="flex flex-col gap-[10px] flex-1 min-h-0">
         {rightWords.map((word, index) => {
           const isMatchResolved = matchedWordIds.has(word.id);
@@ -433,9 +421,10 @@ const CardMatchQuestion = ({ question, testType, onComplete, onCardMatched, farm
           // 뜻 앞 [동사]/[명사] 라벨 — 좁은 카드라 라벨은 작은 칩(size sm), 글자 크기는 글자 수 단계(utils/fitText)
           const displayMeanings = (word.meanings ?? []).slice(0, 2);
           const posMap = buildMeaningPosMap(word);
+          const rightCovered = !!recall?.enabled && matchedWordIds.size + failedWordIds.size < leftWords.length && !openedRightIds.has(word.id) && !matchedWordIds.has(word.id) && !failedWordIds.has(word.id);
           return (
+            <RecallCover key={word.id} covered={rightCovered} onKnow={() => openRight(word.id)} className="flex flex-col flex-1 min-h-0" variant="card">
             <motion.button
-              key={word.id}
               className={`
                 flex flex-col items-center justify-center
                 flex-1 min-h-0 rounded-[12px] border-[1px] border-layout-gray-200 p-[10px]
@@ -443,8 +432,7 @@ const CardMatchQuestion = ({ question, testType, onComplete, onCardMatched, farm
                 ${getRightStyle(index)}
               `}
               onClick={() => handleRightClick(index)}
-              disabled={isMatchResolved || isFlashingWrong || gaveUp}
-              layout={gaveUp ? 'position' : false}
+              disabled={isMatchResolved || isFlashingWrong || giveUpRightIds.has(word.id)}
               whileTap={!isMatchResolved && !isFlashingWrong ? { scale: 0.95 } : {}}
               onTapStart={!isMatchResolved && !isFlashingWrong && selectedLeft === null ? () => feel('tap') : undefined}
               animate={flashAnim(word.id, wrongFlashRightWordIds)}
@@ -459,10 +447,10 @@ const CardMatchQuestion = ({ question, testType, onComplete, onCardMatched, farm
                 <MeaningWithPos meanings={displayMeanings} posMap={posMap} size="sm" />
               </FitTierText>
             </motion.button>
+            </RecallCover>
           );
         })}
       </div>
-      </RecallCover>
     </div>
   );
 };

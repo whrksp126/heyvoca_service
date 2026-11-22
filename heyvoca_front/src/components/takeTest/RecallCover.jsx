@@ -1,22 +1,24 @@
 import { AnimatePresence, motion } from 'framer-motion';
+import { Eye } from '@phosphor-icons/react';
 import { feel } from '../../lib/feel';
 
 /*
-  '먼저 떠올려 보기' 가림막 — 보기 영역 전체를 덮는 불투명한 큰 '알아요' 버튼 하나.
-  보기 버튼과 같은 배경·테두리·라운드·글꼴·눌림 효과를 쓴다(variant 로 유형별 모양 선택).
-  - 보기는 레이아웃 그대로 두고 투명하게만 만든다(opacity-0) → 공개 시 점프 없음, 비침 없음.
-  - covered 가 false 가 되면 버튼이 짧게 페이드아웃하며 보기가 나타난다(블러 없음).
+  '먼저 떠올려 보기' 가림막 — 보기 영역 위에 덮는 유리막(frosted glass) 한 장.
+  - 보기는 원래 스타일 그대로 레이아웃에 두고(점프 없음), 그 위에 강한 backdrop-blur + 표면색 틴트를 덮는다.
+  - 안전장치: backdrop-filter 가 안 먹는 WebView 에서도 읽히지 않도록, 가림 중엔 보기 내용 자체에도
+    filter: blur 를 함께 건다(두 겹). 어떤 환경에서도 글자 윤곽이 판독되지 않는다. 공개하면 둘 다 풀린다.
+  - 영역 전체가 탭 대상이고, 가운데에 '보기 열기' 칩 모양 라벨이 있다.
   className 은 바깥 래퍼용 — 보기 영역이 flex/grid 칸을 채워야 하면 'flex flex-col' 등을 넘긴다.
 
   variant
-    option  사지선다·빈칸 고르기 보기 버튼(rounded 10)
-    card    카드 맞추기 뜻 카드(rounded 12)
-    chip    조각(칩) 은행(칩과 같은 rounded 10 + 아래 두꺼운 테두리)
+    option  사지선다·빈칸 고르기 보기 영역(보기 버튼과 같은 rounded 10)
+    card    카드 맞추기 뜻 카드 한 장(rounded 12, 좁아서 '열기' 만)
+    chip    조각(칩) 은행 영역
 */
 const VARIANTS = {
-  option: { radius: 'rounded-[10px]', text: 'text-[17px]' },
-  card: { radius: 'rounded-[12px]', text: 'text-[18px]' },
-  chip: { radius: 'rounded-[10px] border-b-[3px] dark:border-[#3A3A3A]', text: 'text-[16px]' },
+  option: { radius: 'rounded-[10px]', label: '보기 열기', compact: false },
+  card: { radius: 'rounded-[12px]', label: '열기', compact: true },
+  chip: { radius: 'rounded-[10px]', label: '보기 열기', compact: false },
 };
 
 const RecallCover = ({ covered, onKnow, className = '', variant = 'option', children }) => {
@@ -24,9 +26,10 @@ const RecallCover = ({ covered, onKnow, className = '', variant = 'option', chil
   return (
     <div
       className={`
-        relative ${className}
-        [&>*:not([data-recall-cover])]:transition-opacity [&>*:not([data-recall-cover])]:duration-[280ms]
-        ${covered ? '[&>*:not([data-recall-cover])]:opacity-0 [&>*:not([data-recall-cover])]:pointer-events-none' : ''}
+        relative ${v.radius} ${className}
+        ${covered ? 'overflow-hidden' : ''}
+        [&>*:not([data-recall-cover])]:transition-[filter] [&>*:not([data-recall-cover])]:duration-[280ms]
+        ${covered ? '[&>*:not([data-recall-cover])]:blur-[6px] [&>*:not([data-recall-cover])]:pointer-events-none [&>*:not([data-recall-cover])]:select-none' : ''}
       `}
     >
       {children}
@@ -36,20 +39,29 @@ const RecallCover = ({ covered, onKnow, className = '', variant = 'option', chil
             key="recall-cover"
             type="button"
             data-recall-cover=""
-            onClick={() => { feel('tap'); onKnow?.(); }}
+            aria-label={v.label}
+            onClick={(e) => { e.stopPropagation(); feel('tap'); onKnow?.(); }}
             initial={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            whileTap={{ scale: 0.97, transition: { type: 'spring', stiffness: 400, damping: 17 } }}
             transition={{ duration: 0.28, ease: [0.4, 0, 0.2, 1] }}
-            className={`
-              absolute inset-0 z-[5] flex items-center justify-center
-              border-[1px] border-layout-gray-200
-              bg-layout-white dark:bg-layout-black
-              text-layout-black dark:text-layout-white
-              font-[700] tracking-[-0.03em] ${v.text} ${v.radius}
-            `}
+            className={`absolute inset-0 z-[5] flex items-center justify-center ${v.radius} backdrop-blur-[24px] [-webkit-backdrop-filter:blur(24px)]`}
           >
-            알아요
+            {/* 표면색 틴트 — 대비를 눌러 윤곽만 어렴풋이 */}
+            <span aria-hidden="true" className={`absolute inset-0 ${v.radius} bg-layout-white dark:bg-layout-black opacity-[0.5]`} />
+            <motion.span
+              whileTap={{ scale: 0.95, transition: { type: 'spring', stiffness: 400, damping: 17 } }}
+              className={`
+                relative flex items-center gap-[5px] rounded-full
+                border-[1px] border-layout-gray-200 dark:border-[#3A3A3A]
+                bg-layout-white dark:bg-layout-black
+                text-layout-black dark:text-layout-white
+                font-[700] tracking-[-0.03em]
+                ${v.compact ? 'h-[30px] px-[11px] text-[13px]' : 'h-[36px] px-[16px] text-[14px]'}
+              `}
+            >
+              <Eye size={v.compact ? 15 : 17} weight="bold" />
+              {v.label}
+            </motion.span>
           </motion.button>
         )}
       </AnimatePresence>

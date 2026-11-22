@@ -24,6 +24,7 @@ import { renderHighlightedText as getHighlightParts } from '../highlightMarker';
 import SpeakerArt from '../../../components/common/SpeakerArt';
 import CardSpeakerButton from '../../../components/common/CardSpeakerButton';
 import { fitTextClass } from '../../../utils/fitText';
+import GiveUpButton from '../../../components/common/GiveUpButton';
 import RecallCover from '../../../components/takeTest/RecallCover';
 import { useRecallGiveUp } from '../../../hooks/useRecallGate';
 
@@ -596,6 +597,8 @@ const FillInTheBlankQuestion = ({ question, onComplete, onCardMatched, farmByWor
             />
           )}
         </AnimatePresence>
+
+        <GiveUpButton visible={!!recall?.covered} onClick={() => { handleOptionClick(null); recall?.reveal?.(); }} />
 
         {/* O/X — 카드 실제 정중앙(= 예문 중심, padding 대칭). */}
         <ResultMark

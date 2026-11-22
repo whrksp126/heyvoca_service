@@ -51,6 +51,7 @@ import { SLIDE_VARIANTS, SLIDE_TRANSITION, CARD_ENTER_INITIAL, CARD_ENTER_ANIMAT
 import SpeakerArt from '../common/SpeakerArt';
 import CardSpeakerButton from '../common/CardSpeakerButton';
 import RecallCover from './RecallCover';
+import GiveUpButton from '../common/GiveUpButton';
 import useLabFeatures from '../../hooks/useLabFeatures';
 import { RECALL_QUESTION_TYPES } from '../../hooks/useRecallGate';
 
@@ -2168,9 +2169,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
     recallReveal();
   };
   const recallProp = { enabled: recallEnabled, covered: recallCovered, reveal: recallReveal, giveUpRef: recallGiveUpRef };
-  // 문장 뜻 맞추기는 자체 하단 버튼(확인/다음)이 가림 상태 전환을 맡는다(ArrangeTray).
-  const showRecallFooter = recallCovered && !isSentenceQuestionType(currentQType);
-  const nextFooter = (showNextFooter && !showRecallFooter) ? (
+  const nextFooter = showNextFooter ? (
     <motion.button
       type="button"
       disabled={!manualAdvance}
@@ -2186,16 +2185,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
     >
       다음
     </motion.button>
-  ) : (showNextFooter ? (
-    <motion.button
-      type="button"
-      onClick={handleRecallGiveUp}
-      whileTap={{ scale: 0.97 }}
-      className="mt-[14px] flex-shrink-0 h-[50px] rounded-[12px] text-[16px] font-[700] tracking-[-0.03em] bg-layout-gray-100 dark:bg-[#2A2A2A] text-layout-black dark:text-layout-white"
-    >
-      모르겠어요
-    </motion.button>
-  ) : null);
+  ) : null;
 
   // 콤보 마일스톤·구간 안내 인터루드(전체 화면 포털) — 두 렌더 경로 공통.
   // AnimatePresence 로 감싸 걷힐 때 페이드아웃(InterludeShell exit)한다. handleInterludeDone 이 다음 문제로의
@@ -2485,6 +2475,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
                       </motion.button>
                     )}
                   </div>
+                  <GiveUpButton visible={recallCovered} onClick={handleRecallGiveUp} />
                   {!isListeningBeforeAnswer && (
                     <CardSpeakerButton
                       playing={isSpeaking}

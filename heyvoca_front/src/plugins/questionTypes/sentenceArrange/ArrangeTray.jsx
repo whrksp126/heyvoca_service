@@ -755,7 +755,7 @@ const ArrangeTray = ({
 
         {/* O/X — 카드 정중앙. 다른 유형과 같은 공용 ResultMark(2026-09-29) — 정답/오답 모두
             표시하고 약 600ms 후 페이드아웃해 아래 칩 정오답 색·정답 문장이 바로 보인다. */}
-        {allowGiveUp && <GiveUpButton visible={!isAnswered && !recall?.covered} onClick={handleGiveUp} />}
+        {allowGiveUp && <GiveUpButton visible={!isAnswered} onClick={handleGiveUp} />}
 
         <ResultMark
           result={isCorrect}
@@ -809,24 +809,22 @@ const ArrangeTray = ({
         </RecallCover>
         <motion.button
           type="button"
-          disabled={isAnswered || recall?.covered ? false : !allFilled}
+          disabled={isAnswered ? false : !allFilled}
           whileTap={(isAnswered || allFilled) ? { scale: 0.97 } : undefined}
           // 답이 다 채워져 활성으로 바뀌는 순간 색이 켜지며 살짝 튄다(비활성→활성 전환 연출).
           animate={(!isAnswered && allFilled) ? pickVariant('correctPop', reducedMotion).animate : undefined}
           transition={{ type: 'spring', stiffness: 400, damping: 17 }}
-          onClick={isAnswered ? onNext : (recall?.covered ? handleGiveUp : handleConfirm)}
+          onClick={isAnswered ? onNext : handleConfirm}
           className={`
             h-[50px] rounded-[12px]
             text-[16px] font-[700]
             transition-colors duration-150
-            ${(!isAnswered && recall?.covered)
-              ? 'bg-layout-gray-100 dark:bg-[#2A2A2A] text-layout-black dark:text-layout-white'
-              : (!isAnswered && !allFilled)
-                ? 'bg-layout-gray-200 dark:bg-[#2A2A2A] text-layout-gray-400 dark:text-layout-gray-300'
-                : 'bg-primary-main-600 text-layout-white'}
+            ${(!isAnswered && !allFilled)
+              ? 'bg-layout-gray-200 dark:bg-[#2A2A2A] text-layout-gray-400 dark:text-layout-gray-300'
+              : 'bg-primary-main-600 text-layout-white'}
           `}
         >
-          {isAnswered ? '다음' : (recall?.covered ? '모르겠어요' : '확인')}
+          {isAnswered ? '다음' : '확인'}
         </motion.button>
       </div>
 
