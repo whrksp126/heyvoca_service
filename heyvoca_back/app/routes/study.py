@@ -138,10 +138,10 @@ def _demote_arrange_to_general(enriched_items: list) -> list:
 
     모든 단어가 먼저 일반 콘텐츠를 풀고, 문장 만들기는 별도 필드(sentence_arrange)로 추가된다.
     반환: 원래 조립형이던 enriched 목록(sentence_arrange 우선 선정 대상, 원래 유형을 '_was_arrange' 에 기록).
-    대체: listenArrange→multipleChoiceListening, 그 외(티어 3/4 조립형)→
-    fillInTheBlankTyping(티어4 이상) / fillInTheBlank → 모두 못 쓰면 multipleChoice.
+    대체: listenArrange→multipleChoiceListening, 그 외(티어 3/4 조립형)→fillInTheBlank,
+    못 쓰면 multipleChoice. 직접 입력(fillInTheBlankTyping)은 일반 학습에서 내지 않는다(2026-11-23,
+    예문 보고 직접 입력은 실전 유형 전용 — _strip_typing_from_general 참고).
     """
-    import random
     from app.services.recommend.composer import _item_can_use_question_type as can
     former = []
     for e in enriched_items:
@@ -151,16 +151,27 @@ def _demote_arrange_to_general(enriched_items: list) -> list:
         item = e['_item']
         if t == 'listenArrange':
             prefs = ('multipleChoiceListening', 'fillInTheBlank')
-        elif (e.get('tier_shown') or 0) >= 4:
-            prefs = ('fillInTheBlankTyping', 'fillInTheBlank')
         else:
-            # 티어3 조립형 → 빈칸 채우기/빈칸 입력 반반(입력형이 고난도 tier 에만 나와 거의 안 보이던 문제 보완)
-            prefs = (('fillInTheBlank', 'fillInTheBlankTyping') if random.random() < 0.5
-                     else ('fillInTheBlankTyping', 'fillInTheBlank'))
+            prefs = ('fillInTheBlank',)
         e['suggested_question_type'] = next((q for q in prefs if can(item, q)), 'multipleChoice')
         e['_was_arrange'] = t
         former.append(e)
     return former
+
+
+# 일반 학습에서 내지 않는 유형 — 예문을 보고 정답을 직접 쳐 넣는 '실전' 유형(2026-11-23).
+_PRACTICE_ONLY_TYPES = ('fillInTheBlankTyping',)
+
+
+def _strip_typing_from_general(enriched_items: list) -> None:
+    """일반 모드: 어떤 경로(composer tier 사다리·가중치 랜덤)로 배정됐든 fillInTheBlankTyping 을
+    fillInTheBlank → 못 쓰면 multipleChoice 로 바꾼다(제자리). 일본어도 동일(히라가나 채점 직접 입력).
+    tier_shown/tier_target 은 건드리지 않는다 — /study/log 의 tier 진행은 그대로.
+    """
+    from app.services.recommend.composer import _item_can_use_question_type as can
+    for e in enriched_items:
+        if e.get('suggested_question_type') in _PRACTICE_ONLY_TYPES:
+            e['suggested_question_type'] = 'fillInTheBlank' if can(e['_item'], 'fillInTheBlank') else 'multipleChoice'
 
 
 def _select_sentence_arrange(enriched_items: list, former: list, ctx, minimum: int = 3, maximum: int = 4) -> dict:
@@ -1560,6 +1571,7 @@ def get_recommend():
     general_mode = mode != 'plant' and not allowed_types
     if general_mode:
         former_arrange = _demote_arrange_to_general(enriched_items)
+        _strip_typing_from_general(enriched_items)
 
     # ── UserStudySession INSERT ──
     book_ids_for_session = [str(b) for b in book_ids] if book_ids else ['all']
@@ -1693,6 +1705,8 @@ def requeue_easier():
         from_tier = 0
 
     exclude_types = {t.strip() for t in (request.args.get('exclude_types') or '').split(',') if t.strip()}
+    # 직접 입력(fillInTheBlankTyping)은 실전 유형 — 일반 학습의 오답 재출제로는 내지 않는다(2026-11-23).
+    exclude_types |= set(_PRACTICE_ONLY_TYPES)
 
     try:
         pool = build_candidate_pool(user_id, None)

@@ -157,9 +157,16 @@ def _target_level_for_item(item, user_level_id: Optional[int]) -> int:
     return target
 
 
-def _eligible(ex: dict, question_type: str) -> bool:
+def _eligible(ex: dict, question_type: str, headword: Optional[str] = None) -> bool:
     if question_type in _TEXT_TYPES:
-        return example_has_target_tag(ex.get('origin')) and bool((ex.get('meaning') or '').strip())
+        if not (example_has_target_tag(ex.get('origin')) and bool((ex.get('meaning') or '').strip())):
+            return False
+        # 강조 구간이 표제어의 형태(활용형 포함)로만 이뤄진 예문만 — `give a call` 에 `give her old friend
+        # a call` 이 정답이 되는 것 방지(2026-11-23). headword 를 못 받으면(옛 호출) 이 검사는 건너뛴다.
+        if headword:
+            from app.services.example_blank_check import example_blank_ok
+            return example_blank_ok(headword, ex.get('origin'))
+        return True
     if question_type in _ARRANGE_TYPES:
         return puzzle_usable(ex.get('puzzle'))
     if question_type in _MEANING_TYPES:
@@ -332,7 +339,8 @@ def choose_example(item, question_type: str, ctx: SelectionContext) -> Optional[
     않도록 — 같은 단어의 다른 문제 유형뿐 아니라 이번 응답 전체에 적용).
     """
     pool = item.example_pool or []
-    candidates = [ex for ex in pool if _eligible(ex, question_type) and ex.get('hash') not in ctx.used_hashes]
+    candidates = [ex for ex in pool if _eligible(ex, question_type, getattr(item, 'word', None))
+                  and ex.get('hash') not in ctx.used_hashes]
     is_arrange = question_type in _ARRANGE_TYPES
     if ctx.easy and is_arrange:
         # plant 문장 만들기: 신규 단어이므로 사용자 보유 단어장 복사본이 아니라 우리 사전의

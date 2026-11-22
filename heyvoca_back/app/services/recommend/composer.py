@@ -226,6 +226,11 @@ def _item_can_use_question_type(item: CandidateItem, qtype: str) -> bool:
     has_examples = bool(item.examples)
     if qtype in ('multipleChoiceListening', 'cardMatchListening'):
         return has_meanings or has_examples
+    if qtype in ('fillInTheBlank', 'fillInTheBlankTyping') and item.dict_lang == 'en' and item.example_pool:
+        # 영어는 실제 출제 후보(example_pool)에 강조가 표제어 형태뿐인 예문이 있어야 한다
+        # (example_select.choose_example 의 자격과 동일 — 안 맞으면 payload 가 비어 폴백되던 걸 미리 거른다).
+        from app.services.example_select import _eligible
+        return any(_eligible(ex, 'fillInTheBlank', item.word) for ex in item.example_pool)
     if qtype == 'fillInTheBlank':
         # 한→영 빈칸: 영어(origin/legacy en) 예문 중 강조 태그가 있는 게 하나라도 있어야 한다.
         return any(
