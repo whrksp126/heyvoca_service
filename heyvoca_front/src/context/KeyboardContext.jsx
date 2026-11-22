@@ -17,6 +17,18 @@ const isInsideBottomSheet = (target) => {
   return target.closest('[data-bottom-sheet]') !== null;
 };
 
+// 학습 문제 입력(data-keep-chrome)은 키보드가 떠도 헤더·진행바를 숨기지 않는다 — 문제 카드 영역 안에서만 줄어든다.
+const keepsChrome = () => {
+  const el = document.activeElement;
+  return !!(el && typeof el.closest === 'function' && el.closest('[data-keep-chrome]'));
+};
+
+// 키보드가 뜨며 조상 스크롤러(overflow:hidden 포함)가 밀려 올라간 것을 되돌린다.
+const resetScrollers = () => {
+  [document.scrollingElement, document.getElementById('root'), document.querySelector('.scroll-container')]
+    .forEach((el) => { if (el && el.scrollTop !== 0) el.scrollTop = 0; });
+};
+
 export const KeyboardProvider = ({ children }) => {
   const [isKeyboardVisible, setIsKeyboardVisible] = useState(false);
   const [keyboardHeight, setKeyboardHeight] = useState(0);
@@ -26,7 +38,7 @@ export const KeyboardProvider = ({ children }) => {
 
   useEffect(() => {
     const root = document.documentElement;
-    if (isKeyboardVisible) {
+    if (isKeyboardVisible && !keepsChrome()) {
       root.style.setProperty('--current-header-height', '0px');
       root.style.setProperty('--current-bottom-nav-height', '0px');
       root.dataset.keyboardVisible = 'true';
@@ -43,6 +55,10 @@ export const KeyboardProvider = ({ children }) => {
       rnDrivenRef.current = true;
       setKeyboardHeight(height);
       setIsKeyboardVisible(!!visible);
+      if (visible && keepsChrome()) {
+        // adjustResize 로 뷰포트가 줄어드는 사이 네이티브가 밀어 올린 스크롤을 되돌린다
+        [0, 150, 400].forEach((ms) => setTimeout(resetScrollers, ms));
+      }
     };
 
     const handleFocusIn = (e) => {

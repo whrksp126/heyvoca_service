@@ -2140,7 +2140,9 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
     && !isNoGradeQuestionType(currentQType)
     && !isSentenceQuestionType(currentQType)
     && !currentQ?.script
-    && !String(currentQType ?? '').startsWith('script');
+    && !String(currentQType ?? '').startsWith('script')
+    // 단어 쓰기는 채점 전 '확인' 버튼을 자기 안에 그린다 — 채점 뒤(수동 넘기기 대기) 이 공용 '다음' 이 이어받는다.
+    && !(currentQType === 'spellingFill' && !manualAdvance);
   const nextFooter = showNextFooter ? (
     <motion.button
       type="button"

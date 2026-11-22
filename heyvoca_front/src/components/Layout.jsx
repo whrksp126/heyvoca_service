@@ -24,6 +24,11 @@ const Layout = ({ children }) => {
       // 바텀시트는 키보드 등장 시 WebView adjustResize로 자동 축소되어 input이 보인다.
       if (targetElement.closest('[data-bottom-sheet]')) return;
 
+      // 학습 문제 입력(data-no-autoscroll)도 건너뛴다. 학습 화면은 100vh 고정 + overflow-hidden 구조라
+      // scrollIntoView 가 조상 스크롤러(overflow:hidden 도 프로그램 스크롤은 된다)를 밀어 올려, 키보드가
+      // 뜨면 헤더·진행바가 화면 밖으로 사라졌다. adjustResize 로 뷰포트가 이미 줄어 입력은 보인다.
+      if (targetElement.closest('[data-no-autoscroll]')) return;
+
       // 2. 입력창이 키보드 바로 위에 보이게 scrolling 유도
       setTimeout(() => {
         targetElement.scrollIntoView({ behavior: 'smooth', block: 'center' });

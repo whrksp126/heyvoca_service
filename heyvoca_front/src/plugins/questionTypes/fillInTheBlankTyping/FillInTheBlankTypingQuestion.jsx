@@ -597,6 +597,8 @@ const FillInTheBlankTypingQuestion = ({ question, onComplete, onCardMatched, far
                         autoComplete="off"
                         spellCheck={false}
                         enterKeyHint="done"
+                        data-keep-chrome=""
+                        data-no-autoscroll=""
                         value={value}
                         onCompositionStart={() => { composingRef.current = true; }}
                         onCompositionEnd={(e) => {

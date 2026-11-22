@@ -16,6 +16,7 @@ import { getDisplayMeanings } from '../../../utils/displayMeanings';
 import { useStudyAdvanceGate } from '../../../hooks/useStudyAdvanceGate';
 import { getMemoryStateKeyByStability } from '../../../components/common/MemoryStateChangeBadge';
 import { useResumeReplayKey } from '../../../hooks/useResumeReplayKey';
+import { useManualAdvancePending } from '../../../hooks/useStudyAdvanceGate';
 import { wordLang, isJa } from '../../../utils/lang';
 import { getReading } from '../../../utils/jaWord';
 import {
@@ -28,10 +29,11 @@ import {
   위 카드: 품사·뜻 + 뜻 듣기. 아래 카드: 철자 칸(앞 글자 일부 공개) + 힌트 알약 + 농장 상태 바
   (빈칸 고르기와 같은 배치, 2026-10-30).
   키보드는 OS 기본 가상 키보드 — 화면 밖 숨긴 input 하나에 입력받아 칸에 왼쪽부터 채운다.
-  마지막 칸이 채워지는 순간 자동 채점(대소문자 무시, 오타 봐주기 없음) — 엔터·제출 버튼은 없다.
-  Android 키보드는 영어도 조합(composition)으로 넣어서, 조합이 끝나기를 기다리면 칸이 다 찬 뒤
-  다른 버튼(스피커)을 눌러 입력이 blur 될 때에야 채점됐다(2026-10-30 버그). 그래서 조합 중이어도
-  라틴 문자는 바로 채점하고, 일본어는 조합 글자가 전부 가나로 확정된 모양일 때만 채점한다.
+  칸이 다 차도 자동 채점하지 않는다(2026-11-22) — 하단 '확인' 버튼(또는 키보드 엔터/완료)을 눌러야 채점한다
+  (대소문자 무시, 오타 봐주기 없음). 일본어 IME 는 칸이 찼을 때도 아직 조합·변환 중일 수 있어 자동 채점이
+  오답을 만들었다. 입력 state(value)는 IME 가 쓰는 원본을 그대로 두고, 화면·채점은 sanitize() 한 값(정답
+  글자셋 밖 문장부호 제거·가나 정규화·칸 수 자르기)을 쓴다. 확인을 누르는 순간엔 DOM 값을 다시 읽어 조합 중
+  글자까지 반영한다.
   스피커·힌트 버튼은 pointerdown 기본 동작을 막아 입력 포커스를 뺏지 않는다. 등장 시 뜻(한국어)을 자동으로 읽고
   (Main.jsx 공용 자동 재생은 origin 을 읽어 정답이 들리므로 쓰지 않는다 — 빈칸 쓰기처럼 컴포넌트가 직접 재생),
   채점 전에는 단어 소리를 내지 않는다(정답 노출). 진행은 빈칸 채우기와 같다 — 채점 즉시 onCardMatched, 넘기기는 공통 '다음' 버튼(advanceGate).
@@ -52,7 +54,7 @@ const SpellingFillQuestion = ({ question, onComplete, onCardMatched, farmByWordI
   const answer = spellingAnswerOf(question);
   const [cells] = useState(() => buildSpellingCells(answer));
 
-  const [value, setValue] = useState('');
+  const [value, setValue] = useState(''); // IME 원본 — 화면·채점은 sanitize(value)
   const [hinted, setHinted] = useState(() => new Set());
   const [hintUsed, setHintUsed] = useState(0);
   const [isAnswered, setIsAnswered] = useState(false);
@@ -64,7 +66,7 @@ const SpellingFillQuestion = ({ question, onComplete, onCardMatched, farmByWordI
 
   const inputRef = useRef(null);
   const composingRef = useRef(false);
-  const gradedRef = useRef(false); // compositionend 와 change 가 같은 틱에 연달아 와도 한 번만 채점
+  const gradedRef = useRef(false); // 엔터·버튼이 연달아 와도 한 번만 채점
   const startTimeRef = useRef(Date.now());
   const speakGenRef = useRef(0);
   const wordTtsActiveRef = useRef(false);
@@ -73,6 +75,7 @@ const SpellingFillQuestion = ({ question, onComplete, onCardMatched, farmByWordI
   const resumeReplayKey = useResumeReplayKey();
   const reducedMotion = useReducedMotion();
   const advanceGate = useStudyAdvanceGate();
+  const manualAdvance = useManualAdvancePending();
   const prevStateKeyRef = useRef(
     getMemoryStateKeyByStability(question.fsrs?.stability ?? 0, question.fsrs?.state ?? null)
   );
@@ -82,7 +85,18 @@ const SpellingFillQuestion = ({ question, onComplete, onCardMatched, farmByWordI
   const posLabel = posLabelOf(question);
   const farm = isAnswered ? (farmByWordId?.[question.id] ?? null) : null;
 
-  const { slots, filled } = mapInputToCells(cells, hinted, value);
+  // 원본 입력 → 칸에 들어갈 값. 글자·숫자·장음만 남기고(。、 같은 문장부호 제외) 가나/대소문자를 맞춘 뒤 칸 수로 자른다.
+  const sanitize = (raw, nextHinted = hinted) => {
+    let v = Array.from(String(raw ?? '')).filter((ch) => /[\p{L}\p{N}ー]/u.test(ch));
+    v = ja ? v.map(toHiragana) : v.map((ch) => ch.toLowerCase());
+    const cap = mapInputToCells(cells, nextHinted, '').slots.length;
+    return v.slice(0, cap).join('');
+  };
+  const clean = sanitize(value);
+  const capNow = mapInputToCells(cells, hinted, '').slots.length;
+  const canSubmit = !isAnswered && capNow > 0 && Array.from(clean).length >= capNow;
+
+  const { slots, filled } = mapInputToCells(cells, hinted, clean);
   const currentCell = !isAnswered && focused ? slots.find((i) => filled[i] == null) ?? null : null;
   const hintsLeft = MAX_HINTS - hintUsed;
   const hintDisabled = isAnswered || hintsLeft <= 0 || slots.length <= 1;
@@ -124,9 +138,10 @@ const SpellingFillQuestion = ({ question, onComplete, onCardMatched, farmByWordI
 
   // giveUp — '모르겠어요'(2026-11-19 QA). 칸을 다 채우지 않았어도 지금 입력 그대로 오답 채점한다.
   // 이후 흐름(정답 공개·다음 버튼·오답 재출제·/study/log·사전 테스트 모름 분류)은 일반 오답과 같은 경로다.
-  const grade = (nextValue, nextHinted, usedHints, { giveUp = false } = {}) => {
+  const grade = (rawValue, nextHinted, usedHints, { giveUp = false } = {}) => {
     if (gradedRef.current) return;
     gradedRef.current = true;
+    const nextValue = sanitize(rawValue, nextHinted);
     const graded = gradeSpelling(cells, nextHinted, nextValue);
     const g = giveUp ? { ...graded, isCorrect: false } : graded;
     const timeTakenMs = Date.now() - startTimeRef.current;
@@ -162,42 +177,43 @@ const SpellingFillQuestion = ({ question, onComplete, onCardMatched, farmByWordI
     });
   };
 
-  // 입력값 정리 + 칸이 다 차면 채점. 일본어 IME 조합 중에는 가나로 다 확정된 모양이 아니면
-  // 채점·자르기를 하지 않는다(로마자 'n' 처럼 아직 변환 전 글자가 남아 있을 수 있다).
-  const commitValue = (raw, nextHinted = hinted, usedHints = hintUsed) => {
+  // 입력 변경 — 조합(IME) 중에는 원본을 그대로 둔다(값을 고쳐 쓰면 조합이 깨진다). 확정된 값만 정리해 넣는다.
+  // 채점은 하지 않는다 — 확인 버튼/엔터로만.
+  const handleChange = (e) => {
     if (isAnswered || gradedRef.current) return;
-    if (composingRef.current && ja) {
-      const cap = mapInputToCells(cells, nextHinted, '').slots.length;
-      const chars = Array.from(String(raw ?? '')).filter((ch) => /[\p{L}\p{N}ー]/u.test(ch));
-      const allKana = chars.every((ch) => /[\p{Script=Hiragana}\p{Script=Katakana}ー]/u.test(ch));
-      if (!(allKana && chars.length >= cap && cap > 0)) { setValue(raw); return; }
-    }
-    let v = Array.from(String(raw ?? '')).filter((ch) => /[\p{L}\p{N}ー]/u.test(ch));
-    if (ja) v = v.map(toHiragana);
-    else v = v.map((ch) => ch.toLowerCase());
-    const cap = mapInputToCells(cells, nextHinted, '').slots.length;
-    const next = v.slice(0, cap).join('');
-    if (Array.from(next).length !== Array.from(value).length) feel('tap');
+    const raw = e.target.value;
+    const isComp = composingRef.current || !!e.nativeEvent?.isComposing;
+    const next = isComp ? raw : sanitize(raw);
+    if (Array.from(sanitize(raw)).length !== Array.from(clean).length) feel('tap');
     setValue(next);
-    if (Array.from(next).length === cap && cap > 0) grade(next, nextHinted, usedHints);
+  };
+
+  // 확인 — 지금 DOM 값(조합 중 글자 포함)을 기준으로 채점. 칸이 덜 찼으면 무시.
+  const handleSubmit = (e) => {
+    e?.preventDefault?.();
+    if (isAnswered || gradedRef.current) return;
+    const raw = inputRef.current?.value ?? value;
+    if (Array.from(sanitize(raw)).length < capNow || capNow <= 0) return;
+    composingRef.current = false;
+    grade(raw, hinted, hintUsed);
   };
 
   const handleGiveUp = () => {
     if (isAnswered || gradedRef.current) return;
     composingRef.current = false;
-    grade(value, hinted, hintUsed, { giveUp: true });
+    grade(inputRef.current?.value ?? value, hinted, hintUsed, { giveUp: true });
   };
 
   const handleHint = (e) => {
     e.stopPropagation();
     if (hintDisabled) return;
-    const res = applyHint(cells, hinted, value);
+    const res = applyHint(cells, hinted, clean);
     if (!res) return;
     feel('tap');
     const used = hintUsed + 1;
     setHinted(res.hinted);
     setHintUsed(used);
-    commitValue(res.value, res.hinted, used);
+    setValue(res.value);
     inputRef.current?.focus();
   };
 
@@ -305,8 +321,8 @@ const SpellingFillQuestion = ({ question, onComplete, onCardMatched, farmByWordI
           wasCorrect={isCorrect}
           isRetry={!!question.isRetry}
         />
-        <div className="relative z-[1] flex items-center justify-center flex-1 min-h-0 px-[16px] py-[45px]">
-          <LiftAboveBar active={!!farm} topReserve={28} className="w-full">
+        <div className="relative z-[1] flex flex-col flex-1 min-h-0 overflow-y-auto px-[16px] py-[45px]">
+          <LiftAboveBar active={!!farm} topReserve={28} className="w-full my-auto">
             <div className="relative flex flex-col items-center gap-[16px]">
               <motion.div
                 lang={ja ? 'ja' : undefined}
@@ -430,9 +446,20 @@ const SpellingFillQuestion = ({ question, onComplete, onCardMatched, farmByWordI
           value={value}
           onFocus={() => setFocused(true)}
           onBlur={() => setFocused(false)}
+          data-keep-chrome=""
+          data-no-autoscroll=""
           onCompositionStart={() => { composingRef.current = true; }}
-          onCompositionEnd={(e) => { composingRef.current = false; commitValue(e.currentTarget.value); }}
-          onChange={(e) => commitValue(e.target.value)}
+          onCompositionEnd={(e) => {
+            composingRef.current = false;
+            if (!isAnswered && !gradedRef.current) setValue(sanitize(e.currentTarget.value));
+          }}
+          onKeyDown={(e) => {
+            if (e.key !== 'Enter') return;
+            e.preventDefault();
+            if (e.nativeEvent?.isComposing || composingRef.current) return; // 변환 확정용 엔터는 IME 가 처리
+            handleSubmit();
+          }}
+          onChange={handleChange}
           className="absolute left-0 bottom-0 w-[1px] h-[1px] opacity-0 text-[16px] pointer-events-none"
         />
 
@@ -456,6 +483,31 @@ const SpellingFillQuestion = ({ question, onComplete, onCardMatched, farmByWordI
         />
       </motion.div>
 
+      {/* 확인 — 칸이 다 차야 활성(빈칸 입력과 같은 primary CTA). 채점 뒤엔 Main 의 공용 '다음' 버튼이 이어받고,
+          그 버튼이 뜨기 전 짧은 사이엔 같은 자리에 비활성 '다음' 으로 자리를 지켜 레이아웃이 튀지 않게 한다. */}
+      {(!isAnswered || !manualAdvance) && (
+        <motion.button
+          type="button"
+          disabled={isAnswered || !canSubmit}
+          onPointerDown={(e) => e.preventDefault()}
+          onMouseDown={(e) => e.preventDefault()}
+          onClick={handleSubmit}
+          whileTap={canSubmit ? { scale: 0.97 } : undefined}
+          animate={canSubmit ? pickVariant('correctPop', reducedMotion).animate : undefined}
+          transition={{ type: 'spring', stiffness: 400, damping: 17 }}
+          className={`
+            flex-shrink-0 mt-[-1px]
+            h-[50px] rounded-[12px]
+            text-[16px] font-[700] tracking-[-0.03em]
+            transition-colors duration-150
+            ${canSubmit
+              ? 'bg-primary-main-600 text-layout-white'
+              : 'bg-layout-gray-200 dark:bg-[#2A2A2A] text-layout-gray-400 dark:text-layout-gray-300 pointer-events-none'}
+          `}
+        >
+          {isAnswered ? '다음' : '확인'}
+        </motion.button>
+      )}
     </div>
   );
 };
