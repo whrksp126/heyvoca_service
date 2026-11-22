@@ -91,7 +91,7 @@ const tokenizeJa = (parts, readingTokens) => {
 
 const HL_CLASS = 'text-primary-main-600 dark:text-primary-main-400';
 
-const SentenceTranslateQuestion = ({ question, onComplete, onCardMatched, farmByWordId }) => {
+const SentenceTranslateQuestion = ({ question, onComplete, onCardMatched, farmByWordId, recall }) => {
   const [isAnswered, setIsAnswered] = useState(false);
   const [isCorrect, setIsCorrect] = useState(null);
   const [isPerfect, setIsPerfect] = useState(false);
@@ -356,6 +356,7 @@ const SentenceTranslateQuestion = ({ question, onComplete, onCardMatched, farmBy
         onNext={handleNext}
         lookupChips={false}
         allowGiveUp
+        recall={recall}
         hideSchedule
       />
     </div>

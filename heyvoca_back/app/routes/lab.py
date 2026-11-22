@@ -12,15 +12,16 @@ lab_bp = Blueprint('lab', __name__, url_prefix='/lab')
 # 실험실에서 토글 가능한 기능 키 → User 컬럼 매핑.
 # 새 실험 기능을 추가할 때 여기에 한 줄만 늘리면 GET/PUT이 자동 확장된다.
 _FEATURE_COLUMNS = {
-    'chat_study': 'chat_study_enabled',
+    'chat_study': 'chat_study_enabled',   # 제거된 기능 — GET 은 항상 false, 켜기는 무시(아래 PUT)
     'multi_lang': 'multi_lang_enabled',   # 다른 언어 학습하기(베타) — 기본 off
+    'recall_first': 'recall_first_enabled',   # 먼저 떠올려 보기 — 기본 off
 }
 
 
 def _features_dict(user: User) -> dict:
     """User → {feature_key: bool} 형태의 실험실 기능 상태."""
     return {
-        key: bool(getattr(user, col, False))
+        key: (False if key == 'chat_study' else bool(getattr(user, col, False)))
         for key, col in _FEATURE_COLUMNS.items()
     }
 
@@ -59,6 +60,10 @@ def update_lab_settings():
     user = User.query.filter_by(id=user_id).first()
     if not user:
         return jsonify({'code': 404, 'message': '사용자를 찾을 수 없습니다.'}), 404
+
+    # '채팅으로 학습'은 제거됨 — 구버전 클라이언트가 깨지지 않게 400 대신 false 로 저장하고 200 응답.
+    if feature == 'chat_study':
+        enabled = False
 
     setattr(user, _FEATURE_COLUMNS[feature], bool(enabled))
     # 다른 언어 학습을 끄면 전환 UI 가 사라지므로 영어로 되돌린다(갇힘 방지).

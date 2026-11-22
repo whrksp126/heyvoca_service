@@ -1,22 +1,19 @@
 import React, { useEffect, useState } from 'react';
-import { CaretLeft, CaretRight, ChatCircleDots, Translate } from '@phosphor-icons/react';
+import { CaretLeft, Lightbulb, Translate } from '@phosphor-icons/react';
 import { motion } from 'framer-motion';
 import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
-import { vibrate, showToast, checkNotificationPermissionGranted } from '../../utils/osFunction';
-import postMessageManager from '../../utils/postMessageManager';
+import { vibrate, showToast } from '../../utils/osFunction';
 import { getLabSettingsApi, setLabFeatureApi, getCachedLabFeatures } from '../../api/lab';
 import { useUser } from '../../context/UserContext';
-import { useJaKeyboardGate } from '../../hooks/useJaKeyboardGate';
 import { DEFAULT_LEARNING_LANG, LANG_LABEL } from '../../utils/lang';
 
 // 실험실 기능 목록 — 새 기능은 이 배열에 한 줄 추가로 노출된다.
 const LAB_FEATURES = [
   {
-    key: 'chat_study',
-    icon: ChatCircleDots,
-    name: '채팅으로 학습',
-    desc: '알림으로 오늘의 단어를 받고 바로 풀어요',
-    hasChatEntry: true, // 켜졌을 때 아래 "채팅방 입장" 행 노출
+    key: 'recall_first',
+    icon: Lightbulb,
+    name: '먼저 떠올려 보기',
+    desc: '보기를 보기 전에 답을 먼저 떠올려 봐요',
   },
   {
     key: 'multi_lang',
@@ -25,8 +22,6 @@ const LAB_FEATURES = [
     desc: '홈 왼쪽 위에서 학습 언어를 바꿀 수 있어요',
   },
 ];
-
-const isRNWebView = typeof window !== 'undefined' && !!window.ReactNativeWebView;
 
 // 응답 payload가 {data:{features}} / {features} 둘 중 어떤 형태로 와도 안전하게 추출
 const extractFeatures = (result) => result?.data?.features || result?.features || null;
@@ -59,7 +54,6 @@ const LabNewFullSheet = () => {
   "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
 
   const { popNewFullSheet } = useNewFullSheetActions();
-  const { ensureJaKeyboard } = useJaKeyboardGate();
   const { learningLang, setLearningLang } = useUser();
   // 앱 시작 시 prefetch된 캐시로 초기화 → 열자마자 올바른 토글 상태(OFF 깜빡임 없음).
   const [features, setFeatures] = useState(() => getCachedLabFeatures() || {});
@@ -79,34 +73,12 @@ const LabNewFullSheet = () => {
     return () => { mounted = false; };
   }, []);
 
-  // 알림 권한 확인 후 미허용이면 요청 유도. 응답을 기다리지 않는 best-effort 처리 —
-  // 채팅 학습 기능 자체는 권한 여부와 무관하게 켜지고, 알림만 별도로 유도한다.
-  const ensureNotificationPermissionBestEffort = () => {
-    (async () => {
-      try {
-        const granted = await checkNotificationPermissionGranted();
-        if (granted === false) {
-          if (isRNWebView) {
-            try { postMessageManager.sendMessageToReactNative('requestNotificationPermission', {}); } catch (e) { /* noop */ }
-          }
-          showToast('채팅으로 오늘의 단어를 받으려면 알림 권한을 허용해주세요.');
-        }
-      } catch (error) {
-        // best-effort: 권한 확인/요청이 실패해도 토글 자체는 유지
-      }
-    })();
-  };
-
   const handleToggle = async (key) => {
     vibrate({ duration: 5 });
     const next = !features[key];
 
     // 낙관적 업데이트
     setFeatures((prev) => ({ ...prev, [key]: next }));
-
-    if (next && key === 'chat_study') {
-      ensureNotificationPermissionBestEffort();
-    }
 
     try {
       const result = await setLabFeatureApi(key, next);
@@ -127,13 +99,6 @@ const LabNewFullSheet = () => {
         ? `${LANG_LABEL[DEFAULT_LEARNING_LANG]} 학습으로 돌아왔어요`
         : '학습 언어를 되돌리지 못했어요. 다시 시도해주세요.');
     }
-  };
-
-  const handleEnterChat = async () => {
-    vibrate({ duration: 5 });
-    // 일본어 학습은 일본어 키보드가 있어야 시작한다(영어는 즉시 통과)
-    if (!(await ensureJaKeyboard())) return;
-    try { postMessageManager.sendMessageToReactNative('launchChatStudy', {}); } catch (e) { /* noop */ }
   };
 
   return (
@@ -187,18 +152,6 @@ const LabNewFullSheet = () => {
                   </div>
                   <ToggleSwitch checked={enabled} onChange={() => handleToggle(feature.key)} />
                 </div>
-
-                {enabled && feature.hasChatEntry && (
-                  <div
-                    onClick={handleEnterChat}
-                    className="flex items-center justify-between px-[20px] py-[15px] border-b border-[#ddd] dark:border-border-dark bg-layout-gray-50 dark:bg-layout-gray-dark"
-                  >
-                    <span className="text-[15px] font-[600] text-layout-black dark:text-layout-white">
-                      채팅방 입장
-                    </span>
-                    <CaretRight className="text-[18px] text-layout-black dark:text-layout-white" />
-                  </div>
-                )}
               </li>
             );
           })}

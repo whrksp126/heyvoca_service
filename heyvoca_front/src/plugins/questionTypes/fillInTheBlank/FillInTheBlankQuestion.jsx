@@ -24,6 +24,8 @@ import { renderHighlightedText as getHighlightParts } from '../highlightMarker';
 import SpeakerArt from '../../../components/common/SpeakerArt';
 import CardSpeakerButton from '../../../components/common/CardSpeakerButton';
 import { fitTextClass } from '../../../utils/fitText';
+import RecallCover from '../../../components/takeTest/RecallCover';
+import { useRecallGiveUp } from '../../../hooks/useRecallGate';
 
 /*
   빈칸 채우기(fillInTheBlank) — 한 방향뿐이다.
@@ -120,7 +122,7 @@ const tokenizeJa = (readingTokens, plain, segStart, segEnd) => {
 };
 
 // Main.jsx 는 testType 도 넘기지만 이 화면은 모드에 따라 달라지는 것이 없어 받지 않는다.
-const FillInTheBlankQuestion = ({ question, onComplete, onCardMatched, farmByWordId }) => {
+const FillInTheBlankQuestion = ({ question, onComplete, onCardMatched, farmByWordId, recall }) => {
   const [selectedIndex, setSelectedIndex] = useState(null);
   const [isAnswered, setIsAnswered] = useState(false);
   const [isCorrect, setIsCorrect] = useState(null);
@@ -357,6 +359,7 @@ const FillInTheBlankQuestion = ({ question, onComplete, onCardMatched, farmByWor
   const handleOptionClick = (index) => {
     if (isAnswered) return;
     closeLookup(); // 채점 순간 말풍선은 닫힌다(O/X 와 겹치지 않게)
+    // index === null — '먼저 떠올려 보기'의 '모르겠어요': 고른 보기 없이 오답으로 채점하고 정답 보기를 보여 준다.
     setSelectedIndex(index);
 
     const correct = index === resultIndex;
@@ -401,7 +404,7 @@ const FillInTheBlankQuestion = ({ question, onComplete, onCardMatched, farmByWor
       선택지 색으로 보인다). 영어 단어를 읽는다.
       채점 효과음이 시작된 직후 같은 타이밍에 재생한다.
     */
-    const tapped = stripHtmlTags(options[index]);
+    const tapped = stripHtmlTags(options[index ?? resultIndex]);
     if (tapped) {
       speak(tapped, blankLang, 'word');
     }
@@ -411,6 +414,9 @@ const FillInTheBlankQuestion = ({ question, onComplete, onCardMatched, farmByWor
       onAdvance: () => onCompleteRef.current?.([result], { processed: processedNow }),
     });
   };
+
+  // '먼저 떠올려 보기' 하단 '모르겠어요' — 평소 오답과 같은 채점 경로(handleOptionClick)를 탄다.
+  useRecallGiveUp(recall, () => handleOptionClick(null));
 
   useEffect(() => () => {
     speakGenRef.current += 1; // 언마운트 뒤 늦게 끝나는 재생이 상태를 건드리지 않게(게이트는 훅이 스스로 정리)
@@ -614,7 +620,7 @@ const FillInTheBlankQuestion = ({ question, onComplete, onCardMatched, farmByWor
       </motion.div>
 
       {/* 선택지 4개 — 사지선다 버튼과 동일 */}
-      <div className="flex flex-col gap-[10px]">
+      <RecallCover covered={recall?.covered} onKnow={recall?.reveal} className="flex flex-col gap-[10px]" rounded="rounded-[10px]">
         {options.map((option, index) => {
           let btnStyle = 'border-layout-gray-200 text-layout-black dark:text-layout-white';
           const isWrongSelected = isCorrect === false && selectedIndex === index;
@@ -666,7 +672,7 @@ const FillInTheBlankQuestion = ({ question, onComplete, onCardMatched, farmByWor
             </motion.button>
           );
         })}
-      </div>
+      </RecallCover>
     </div>
   );
 };

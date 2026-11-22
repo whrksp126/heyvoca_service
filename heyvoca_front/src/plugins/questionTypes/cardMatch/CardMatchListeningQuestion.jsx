@@ -3,6 +3,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 import { getTextSound } from '../../../utils/common';
 import { feel } from '../../../lib/feel';
+import RecallCover from '../../../components/takeTest/RecallCover';
+import { useRecallGiveUp } from '../../../hooks/useRecallGate';
 import CardSpeakerButton from '../../../components/common/CardSpeakerButton';
 import LiftAboveBar from '../../../components/common/LiftAboveBar';
 import MemoryStateChangeBadge, {
@@ -36,9 +38,11 @@ const shuffleArray = (array) => {
   return shuffled;
 };
 
-const CardMatchListeningQuestion = ({ question, testType, onComplete, onCardMatched, farmByWordId }) => {
+const CardMatchListeningQuestion = ({ question, testType, onComplete, onCardMatched, farmByWordId, recall }) => {
   const [leftWords] = useState(() => question.words);
-  const [rightWords] = useState(() => shuffleArray(question.words));
+  const [rightWords, setRightWords] = useState(() => shuffleArray(question.words));
+  // '먼저 떠올려 보기'의 '모르겠어요' 후 — 뜻 카드를 정답 짝 순서로 정렬해 보여 준다.
+  const [gaveUp, setGaveUp] = useState(false);
   const [selectedLeft, setSelectedLeft] = useState(null);
   const [selectedRight, setSelectedRight] = useState(null);
   const [matchedWordIds, setMatchedWordIds] = useState(new Set());
@@ -232,6 +236,41 @@ const CardMatchListeningQuestion = ({ question, testType, onComplete, onCardMatc
     });
   };
 
+  /*
+    '먼저 떠올려 보기' 하단 '모르겠어요' — 뜻 카드를 가린 채로는 한 장씩 채점할 수 없으므로 세트 전체를
+    한 번에 오답 처리한다: 모든 카드를 평소 오답과 같은 경로(onCardMatched → Main.processCardWord → 로그·FSRS·
+    사지선다 재출제)로 채점하고, 뜻 카드를 정답 짝 순서로 정렬해 초록으로 보여 준다. 아직 한 장도 풀지 않은
+    가림 상태에서만 호출된다.
+  */
+  const handleRecallGiveUp = () => {
+    if (gaveUp || gradedCountRef.current > 0) return;
+    setGaveUp(true);
+    setSelectedLeft(null);
+    setSelectedRight(null);
+    feel('wrong');
+    const timeTakenMs = Date.now() - questionStartRef.current;
+    question.words.forEach((word) => {
+      wordResultsRef.current[word.id] = { attempts: 1, isCorrect: false, timeTakenMs };
+      resolveWordState(word, false, 1);
+      onCardMatched?.({
+        wordId: word.id,
+        sheetId: word.vocabularySheetId ?? question.vocabularySheetId,
+        isCorrect: false,
+        timeTakenMs,
+        updateData: { fsrs: word.fsrs, isCorrect: false, updatedAt: new Date().toISOString() },
+      });
+    });
+    gradedCountRef.current = question.words.length;
+    setFailedWordIds(new Set(question.words.map((w) => w.id)));
+    setRightWords(leftWords);
+    advanceGate.arm({
+      minDelayMs: Math.max(CARD_FLASH_MS, getAdvanceDelay(false)),
+      onAdvance: () => onCompleteRef.current?.(buildResults(wordResultsRef.current), { processed: typeof onCardMatched === 'function' }),
+    });
+    syncFarmGate();
+  };
+  useRecallGiveUp(recall, handleRecallGiveUp);
+
   const handleLeftClick = (index) => {
     const word = leftWords[index];
     if (matchedWordIds.has(word.id) || failedWordIds.has(word.id) || animatingWordIds.has(word.id)) return;
@@ -287,6 +326,7 @@ const CardMatchListeningQuestion = ({ question, testType, onComplete, onCardMatc
 
   const getRightStyle = (index) => {
     const word = rightWords[index];
+    if (gaveUp) return 'bg-status-success-100 dark:bg-status-success-dark border-status-success-500';
     if (matchedWordIds.has(word.id)) return 'opacity-50 bg-status-success-100 dark:bg-status-success-dark border-status-success-500';
     if (correctFlashWordIds.has(word.id)) return 'border-status-success-500 bg-status-success-100 dark:bg-status-success-dark';
     if (wrongFlashRightWordIds.has(word.id)) return 'border-status-error-500 bg-status-error-100 dark:bg-status-error-dark';
@@ -296,6 +336,7 @@ const CardMatchListeningQuestion = ({ question, testType, onComplete, onCardMatc
 
   const getRightTextStyle = (index) => {
     const word = rightWords[index];
+    if (gaveUp) return 'text-status-success-600';
     if (matchedWordIds.has(word.id) || correctFlashWordIds.has(word.id)) return 'text-status-success-600';
     if (wrongFlashRightWordIds.has(word.id)) return 'text-status-error-600';
     return 'text-layout-black dark:text-layout-white';
@@ -422,7 +463,8 @@ const CardMatchListeningQuestion = ({ question, testType, onComplete, onCardMatc
       </div>
 
       {/* 우측: 의미 */}
-      <div className="flex flex-col gap-[10px]">
+      <RecallCover covered={recall?.covered} onKnow={recall?.reveal} className="flex flex-col">
+      <div className="flex flex-col gap-[10px] flex-1 min-h-0">
         {rightWords.map((word, index) => {
           const isMatchResolved = matchedWordIds.has(word.id);
           const isFlashingWrong = wrongFlashRightWordIds.has(word.id);
@@ -439,7 +481,8 @@ const CardMatchListeningQuestion = ({ question, testType, onComplete, onCardMatc
                 ${getRightStyle(index)}
               `}
               onClick={() => handleRightClick(index)}
-              disabled={isMatchResolved || isFlashingWrong}
+              disabled={isMatchResolved || isFlashingWrong || gaveUp}
+              layout={gaveUp ? 'position' : false}
               whileTap={!isMatchResolved && !isFlashingWrong ? { scale: 0.95 } : {}}
               onTapStart={!isMatchResolved && !isFlashingWrong && selectedLeft === null ? () => feel('tap') : undefined}
               animate={flashAnim(word.id, wrongFlashRightWordIds)}
@@ -464,6 +507,7 @@ const CardMatchListeningQuestion = ({ question, testType, onComplete, onCardMatc
           );
         })}
       </div>
+      </RecallCover>
     </div>
     {question.script && (
       <ScriptNextButton show={!!scriptNext} onNext={() => { const go = scriptNext; setScriptNext(null); go?.(); }} />

@@ -365,6 +365,8 @@ def run_chat_reminder(app, time_slot: str, test_mode: bool = False):
     짧은 TTL(예: 60초)로 캐싱하고, GET /study/chat-session이 캐시 우선 반환하도록
     개선 — 알림 탭 → 앱 진입 사이 클릭율/체감 속도 개선용. 이번 구현에서는 생략.
     """
+    # 실험실 '채팅으로 학습' 제거 — 호출돼도 아무것도 보내지 않는다(스케줄 미등록, 이중 안전장치).
+    return
     with app.app_context():
         try:
             user_data = query_message_allowed_users(require_chat_study_enabled=True)
@@ -439,24 +441,7 @@ def create_scheduler(app):
     scheduler.add_job(lambda: run_reminder(app, '11pm', urgent_only=True),
                       CronTrigger(hour=23, minute=0, timezone=KST), id='reminder_11pm')
 
-    # '채팅으로 학습' 딥링크 알림 — 아침/오전/오후/저녁/밤 5슬롯 분산.
-    # 슬롯당 발송은 대상자별로 하루 최대 5회 상한 + 당일 학습 시 중단 로직이
-    # run_chat_reminder 내부에 있으므로, 슬롯 5개 자체가 상한과 정확히 맞물린다.
-    # 기존 일반 리마인더(1pm/9pm/4pm/11pm)와 겹치지 않게 :30분에 실행.
-    _CHAT_SLOT_HOURS = {
-        'morning':      9,
-        'late_morning': 12,
-        'afternoon':    15,
-        'evening':      18,
-        'night':        21,
-    }
-    for _slot, _hour in _CHAT_SLOT_HOURS.items():
-        scheduler.add_job(
-            lambda slot=_slot: run_chat_reminder(app, slot),
-            CronTrigger(hour=_hour, minute=30, timezone=KST),
-            id=f'chat_reminder_{_slot}',
-        )
-
+    # '채팅으로 학습' 정기 알림은 실험실에서 제거되어 스케줄을 등록하지 않는다(2026-11).
 
     # Phase 2.1 — 문제 유형별 정답률 30일 집계 (매일 04:00 KST)
     def _refresh_qstat():

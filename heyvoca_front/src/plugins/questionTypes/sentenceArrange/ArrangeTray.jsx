@@ -11,6 +11,7 @@ import { getWordInfoApi } from '../../../api/search';
 import { getTextSound } from '../../../utils/common';
 import { feel, pickVariant, ShineSweep } from '../../../lib/feel';
 import { diffAgainstAccepted, tokenizeWords, stripTags } from './arrangeUtils';
+import RecallCover from '../../../components/takeTest/RecallCover';
 
 /*
   구두점 복원(2026-09-29) — bank/prefix/suffix는 서버가 "문장 중간 표기"로 정규화해서
@@ -139,6 +140,9 @@ const ArrangeTray = ({
   allowGiveUp = false,
   // 카드 우측 상단 시점·복습 예정일 문구를 숨긴다(재출제 '직전 오답'은 유지) — StudyTimingTag 참고.
   hideSchedule = false,
+  // '먼저 떠올려 보기'(실험실 recall_first, 문장 뜻 맞추기만) — { covered, reveal }. 가려진 동안 조각 은행을 가림막으로
+  // 덮고, 하단 '확인' 자리는 활성 '모르겠어요'(= 트레이의 giveUp)가 된다. 걷히면 평소와 같다.
+  recall = null,
 }) => {
   const reducedMotion = useReducedMotion();
   // 채울 슬롯 총 개수 — accepted[0](정답 원소 하나)의 길이를 기준으로 삼는다(계약 §3-1,
@@ -464,6 +468,7 @@ const ArrangeTray = ({
     setBankUsed(used);
     setGaveUpSlots(new Set(filledPositions));
     onSubmit(nextSlots.map((i) => (i != null ? bank[i] : '')), { giveUp: true, filledPositions });
+    recall?.reveal?.();
   };
 
   const closeLookup = () => {
@@ -770,6 +775,7 @@ const ArrangeTray = ({
       {/* 조각 은행 + 확인/다음 */}
       <div className="flex-shrink-0 flex flex-col gap-[10px]">
         {/* data-arrange-bank — 채워진 칩을 이 구역으로 끌어오면 슬롯에서 빼서 은행으로 되돌린다. */}
+        <RecallCover covered={recall?.covered} onKnow={recall?.reveal}>
         <div ref={bankWrapRef} data-arrange-bank="" className="flex flex-wrap justify-center gap-[8px]">
           {bank.map((token, i) => (
             <motion.button
@@ -800,24 +806,27 @@ const ArrangeTray = ({
             </motion.button>
           ))}
         </div>
+        </RecallCover>
         <motion.button
           type="button"
-          disabled={isAnswered ? false : !allFilled}
+          disabled={isAnswered || recall?.covered ? false : !allFilled}
           whileTap={(isAnswered || allFilled) ? { scale: 0.97 } : undefined}
           // 답이 다 채워져 활성으로 바뀌는 순간 색이 켜지며 살짝 튄다(비활성→활성 전환 연출).
           animate={(!isAnswered && allFilled) ? pickVariant('correctPop', reducedMotion).animate : undefined}
           transition={{ type: 'spring', stiffness: 400, damping: 17 }}
-          onClick={isAnswered ? onNext : handleConfirm}
+          onClick={isAnswered ? onNext : (recall?.covered ? handleGiveUp : handleConfirm)}
           className={`
             h-[50px] rounded-[12px]
             text-[16px] font-[700]
             transition-colors duration-150
-            ${(!isAnswered && !allFilled)
-              ? 'bg-layout-gray-200 dark:bg-[#2A2A2A] text-layout-gray-400 dark:text-layout-gray-300'
-              : 'bg-primary-main-600 text-layout-white'}
+            ${(!isAnswered && recall?.covered)
+              ? 'bg-layout-gray-100 dark:bg-[#2A2A2A] text-layout-black dark:text-layout-white'
+              : (!isAnswered && !allFilled)
+                ? 'bg-layout-gray-200 dark:bg-[#2A2A2A] text-layout-gray-400 dark:text-layout-gray-300'
+                : 'bg-primary-main-600 text-layout-white'}
           `}
         >
-          {isAnswered ? '다음' : '확인'}
+          {isAnswered ? '다음' : (recall?.covered ? '모르겠어요' : '확인')}
         </motion.button>
       </div>
 

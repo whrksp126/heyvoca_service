@@ -50,6 +50,9 @@ import { KNOWN, UNKNOWN, classifyPretest, pretestWordId, pretestWordIds, compute
 import { SLIDE_VARIANTS, SLIDE_TRANSITION, CARD_ENTER_INITIAL, CARD_ENTER_ANIMATE, CARD_ENTER_TRANSITION } from '../../utils/studySlideMotion';
 import SpeakerArt from '../common/SpeakerArt';
 import CardSpeakerButton from '../common/CardSpeakerButton';
+import RecallCover from './RecallCover';
+import useLabFeatures from '../../hooks/useLabFeatures';
+import { RECALL_QUESTION_TYPES } from '../../hooks/useRecallGate';
 
 
 // 백엔드 memory state 키(short/medium/long) → 프론트 키(leaf/plant/carrot) 정규화
@@ -267,6 +270,10 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
   const [isCorrect, setIsCorrect] = useState(null);
   const [isFinishing, setIsFinishing] = useState(false); // 마지막 슬라이드 후 진행바 100% 연출 중
   const [userSelected, setUserSelected] = useState(null);
+  // '먼저 떠올려 보기'(실험실 recall_first) — '알아요'/'모르겠어요'로 가림막을 걷은 문제의 인덱스.
+  const labFeatures = useLabFeatures();
+  const [recallRevealedIdx, setRecallRevealedIdx] = useState(-1);
+  const recallGiveUpRef = useRef(null); // 플러그인 유형이 useRecallGiveUp 으로 자기 채점 함수를 등록
   // 백그라운드→포그라운드 복귀 시 1씩 증가 — 정답 링/성장 게이지가 framer-motion의
   // "경과 실시간 기반 애니메이션 스냅" 버그로 최종 상태에 정적으로 멈춰 보이는 것을 막기 위해
   // 복귀 시점에 해당 엘리먼트를 강제로 재마운트(key 변경)해 연출을 다시 재생시킨다.
@@ -2143,7 +2150,25 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
     && !String(currentQType ?? '').startsWith('script')
     // 단어 쓰기는 채점 전 '확인' 버튼을 자기 안에 그린다 — 채점 뒤(수동 넘기기 대기) 이 공용 '다음' 이 이어받는다.
     && !(currentQType === 'spellingFill' && !manualAdvance);
-  const nextFooter = showNextFooter ? (
+  // '먼저 떠올려 보기' — 켠 사용자에게만, 보기가 있는 유형만. 온보딩·게스트 체험(공급자 세션)은 제외.
+  const recallCovered = !!labFeatures?.recall_first
+    && !guestMode && !questionSupplier
+    && !!currentQ && !currentQ.script
+    && RECALL_QUESTION_TYPES.includes(currentQType)
+    && recallRevealedIdx !== progressIndex
+    && !isAnswered;
+  const recallReveal = () => setRecallRevealedIdx(progressIndex);
+  // '모르겠어요' — 즉시 오답(평소 오답과 같은 채점 경로) + 정답 공개. 사지선다는 Main 이, 그 밖은 각 유형이 처리한다.
+  const handleRecallGiveUp = () => {
+    feel('tap');
+    if (currentPlugin?.component) recallGiveUpRef.current?.();
+    else handleClickExamOption(null, null);
+    recallReveal();
+  };
+  const recallProp = { covered: recallCovered, reveal: recallReveal, giveUpRef: recallGiveUpRef };
+  // 문장 뜻 맞추기는 자체 하단 버튼(확인/다음)이 가림 상태 전환을 맡는다(ArrangeTray).
+  const showRecallFooter = recallCovered && currentQType !== 'sentenceTranslate';
+  const nextFooter = (showNextFooter && !showRecallFooter) ? (
     <motion.button
       type="button"
       disabled={!manualAdvance}
@@ -2159,7 +2184,16 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
     >
       다음
     </motion.button>
-  ) : null;
+  ) : (showNextFooter ? (
+    <motion.button
+      type="button"
+      onClick={handleRecallGiveUp}
+      whileTap={{ scale: 0.97 }}
+      className="mt-[14px] flex-shrink-0 h-[50px] rounded-[12px] text-[16px] font-[700] tracking-[-0.03em] bg-layout-gray-100 dark:bg-[#2A2A2A] text-layout-black dark:text-layout-white"
+    >
+      모르겠어요
+    </motion.button>
+  ) : null);
 
   // 콤보 마일스톤·구간 안내 인터루드(전체 화면 포털) — 두 렌더 경로 공통.
   // AnimatePresence 로 감싸 걷힐 때 페이드아웃(InterludeShell exit)한다. handleInterludeDone 이 다음 문제로의
@@ -2228,6 +2262,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
                 testType={testType}
                 onComplete={pluginOnComplete}
                 onCardMatched={handleCardMatched}
+                recall={recallProp}
                 farmByWordId={questionSupplier && !virtualFarm ? NO_FARM : cardFarmByWordId}
               />
             </motion.div>
@@ -2457,9 +2492,12 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
                   )}
 
                 </motion.div>
-                <div className="
-                  flex flex-col gap-[10px]
-                ">
+                <RecallCover
+                  covered={recallCovered}
+                  onKnow={recallReveal}
+                  className="flex flex-col gap-[10px]"
+                  rounded="rounded-[10px]"
+                >
                   {optionsWithDisplayMeanings.map((option, index) => {
                     let btnStyle = "";
                     const isWrongSelected = isCorrect === false && userSelected === index;
@@ -2518,7 +2556,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
                     )
                   })}
 
-                </div>
+                </RecallCover>
               </>
             )}
           </motion.div>

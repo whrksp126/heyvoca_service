@@ -2,7 +2,7 @@ import { backendUrl, fetchDataAsync } from '../utils/common';
 
 // 실험실 기능 상태 모듈 캐시 — 앱 시작 시 prefetch로 채워두면
 // 실험실 화면을 열 때 네트워크 대기 없이 즉시 올바른 토글 상태를 보여준다.
-let _labFeaturesCache = null; // { chat_study: bool, multi_lang: bool, ... } | null
+let _labFeaturesCache = null; // { recall_first: bool, multi_lang: bool, ... } | null
 
 // 캐시 변경 구독자 — 홈 헤더 언어 칩처럼 실험실 화면 밖에서 토글 상태에 반응해야 하는 곳용.
 const _listeners = new Set();
@@ -25,7 +25,7 @@ export const subscribeLabFeatures = (listener) => {
   return () => { _listeners.delete(listener); };
 };
 
-// 실험실 기능 설정 조회 (features: { chat_study: bool, multi_lang: bool, ... })
+// 실험실 기능 설정 조회 (features: { recall_first: bool, multi_lang: bool, ... })
 export const getLabSettingsApi = async () => {
   const url = `${backendUrl}/lab/settings`;
   try {
