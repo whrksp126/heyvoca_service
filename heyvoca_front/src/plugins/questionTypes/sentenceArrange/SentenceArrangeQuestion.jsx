@@ -25,7 +25,7 @@ import CardSpeakerButton from '../../../components/common/CardSpeakerButton';
   - 아래 = ArrangeTray(트레이 카드 + 조각 은행 + 확인 버튼) — 두 유형(부분/전체 조립)이 페이로드
     모양이 완전히 같아 이 컴포넌트 하나로 함께 처리한다(questionType 문자열만 다르다).
 */
-const SentenceArrangeQuestion = ({ question, onComplete, onCardMatched, farmByWordId }) => {
+const SentenceArrangeQuestion = ({ question, onComplete, onCardMatched, farmByWordId, recall }) => {
   const [isAnswered, setIsAnswered] = useState(false);
   const [isCorrect, setIsCorrect] = useState(null);
   const [isPerfect, setIsPerfect] = useState(false); // 한 번에 맞힘 → '완벽해요'
@@ -429,6 +429,7 @@ const SentenceArrangeQuestion = ({ question, onComplete, onCardMatched, farmByWo
         onSubmit={handleSubmit}
         allowGiveUp
         hideSchedule
+        recall={recall}
         onPiecePlaced={(word) => {
           // 문장 재생(한국어 해석 'shown' 카드/정답 문장 'answer') 중이면 단어 TTS를 건너뛴다 —
           // 문장 재생을 끊지도 않는다. 재생 중이 아닐 때만 방금 놓은 조각을 읽는다.

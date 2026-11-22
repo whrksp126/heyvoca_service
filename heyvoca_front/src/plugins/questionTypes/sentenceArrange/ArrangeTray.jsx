@@ -140,7 +140,7 @@ const ArrangeTray = ({
   allowGiveUp = false,
   // 카드 우측 상단 시점·복습 예정일 문구를 숨긴다(재출제 '직전 오답'은 유지) — StudyTimingTag 참고.
   hideSchedule = false,
-  // '먼저 떠올려 보기'(실험실 recall_first, 문장 뜻 맞추기만) — { covered, reveal }. 가려진 동안 조각 은행을 가림막으로
+  // '먼저 떠올려 보기'(실험실 recall_first) — { covered, reveal, enabled }. 가려진 동안 조각 은행을 가림막으로
   // 덮고, 하단 '확인' 자리는 활성 '모르겠어요'(= 트레이의 giveUp)가 된다. 걷히면 평소와 같다.
   recall = null,
 }) => {
@@ -755,7 +755,7 @@ const ArrangeTray = ({
 
         {/* O/X — 카드 정중앙. 다른 유형과 같은 공용 ResultMark(2026-09-29) — 정답/오답 모두
             표시하고 약 600ms 후 페이드아웃해 아래 칩 정오답 색·정답 문장이 바로 보인다. */}
-        {allowGiveUp && <GiveUpButton visible={!isAnswered} onClick={handleGiveUp} />}
+        {allowGiveUp && <GiveUpButton visible={!isAnswered && !recall?.covered} onClick={handleGiveUp} />}
 
         <ResultMark
           result={isCorrect}
@@ -775,7 +775,7 @@ const ArrangeTray = ({
       {/* 조각 은행 + 확인/다음 */}
       <div className="flex-shrink-0 flex flex-col gap-[10px]">
         {/* data-arrange-bank — 채워진 칩을 이 구역으로 끌어오면 슬롯에서 빼서 은행으로 되돌린다. */}
-        <RecallCover covered={recall?.covered} onKnow={recall?.reveal}>
+        <RecallCover covered={recall?.covered} onKnow={recall?.reveal} variant="chip">
         <div ref={bankWrapRef} data-arrange-bank="" className="flex flex-wrap justify-center gap-[8px]">
           {bank.map((token, i) => (
             <motion.button

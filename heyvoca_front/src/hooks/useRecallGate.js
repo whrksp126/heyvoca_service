@@ -31,6 +31,9 @@ export const RECALL_QUESTION_TYPES = [
   'reverseMultipleChoice',
   'fillInTheBlank',
   'sentenceTranslate',
+  'sentenceArrangePartial',
+  'sentenceArrange',
+  'listenArrange',
   'cardMatch',
   'cardMatchListening',
 ];

@@ -23,7 +23,7 @@ import SpeakerArt from '../../../components/common/SpeakerArt';
   등장 시 보통 속도로 1회 자동 재생. 안내 문구 없음.
   아래 = ArrangeTray, 채점 후 정오답과 무관하게 한국어 해석을 보여준다(원문은 이미 들었다).
 */
-const ListenArrangeQuestion = ({ question, onComplete, onCardMatched, farmByWordId }) => {
+const ListenArrangeQuestion = ({ question, onComplete, onCardMatched, farmByWordId, recall }) => {
   const [isAnswered, setIsAnswered] = useState(false);
   const [isCorrect, setIsCorrect] = useState(null);
   const [isPerfect, setIsPerfect] = useState(false); // 한 번에 맞힘 → '완벽해요'
@@ -130,9 +130,9 @@ const ListenArrangeQuestion = ({ question, onComplete, onCardMatched, farmByWord
     else speak(plainAnswer, answerLang, 'slow', 0.7);
   };
 
-  const handleSubmit = (userTokens) => {
+  const handleSubmit = (userTokens, { giveUp = false } = {}) => {
     if (isAnswered) return;
-    const correct = isAcceptedOrder(userTokens, accepted);
+    const correct = !giveUp && isAcceptedOrder(userTokens, accepted);
     const timeTakenMs = Date.now() - startTimeRef.current;
 
     // 소리·진동·시각(아래 setState)을 같은 틱에. 재출제(isRetry)가 아닌 첫 시도 정답이면 perfect.
@@ -239,6 +239,8 @@ const ListenArrangeQuestion = ({ question, onComplete, onCardMatched, farmByWord
         resumeReplayKey={resumeReplayKey}
         advanceGate={advanceGate}
         onSubmit={handleSubmit}
+        allowGiveUp={!!recall?.enabled}
+        recall={recall}
         onPiecePlaced={(word) => {
           // 문장 재생(보통/0.7배속) 중이면 단어 TTS를 건너뛴다 — 문장 재생을 끊지도 않는다.
           // 재생 중이 아닐 때만 방금 놓은 조각을 읽는다.

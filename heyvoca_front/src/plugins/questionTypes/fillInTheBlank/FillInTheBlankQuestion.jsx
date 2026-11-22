@@ -620,7 +620,7 @@ const FillInTheBlankQuestion = ({ question, onComplete, onCardMatched, farmByWor
       </motion.div>
 
       {/* 선택지 4개 — 사지선다 버튼과 동일 */}
-      <RecallCover covered={recall?.covered} onKnow={recall?.reveal} className="flex flex-col gap-[10px]" rounded="rounded-[10px]">
+      <RecallCover covered={recall?.covered} onKnow={recall?.reveal} className="flex flex-col gap-[10px]">
         {options.map((option, index) => {
           let btnStyle = 'border-layout-gray-200 text-layout-black dark:text-layout-white';
           const isWrongSelected = isCorrect === false && selectedIndex === index;

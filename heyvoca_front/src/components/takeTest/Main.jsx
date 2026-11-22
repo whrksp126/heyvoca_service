@@ -2151,10 +2151,11 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
     // 단어 쓰기는 채점 전 '확인' 버튼을 자기 안에 그린다 — 채점 뒤(수동 넘기기 대기) 이 공용 '다음' 이 이어받는다.
     && !(currentQType === 'spellingFill' && !manualAdvance);
   // '먼저 떠올려 보기' — 켠 사용자에게만, 보기가 있는 유형만. 온보딩·게스트 체험(공급자 세션)은 제외.
-  const recallCovered = !!labFeatures?.recall_first
+  const recallEnabled = !!labFeatures?.recall_first
     && !guestMode && !questionSupplier
     && !!currentQ && !currentQ.script
-    && RECALL_QUESTION_TYPES.includes(currentQType)
+    && RECALL_QUESTION_TYPES.includes(currentQType);
+  const recallCovered = recallEnabled
     && recallRevealedIdx !== progressIndex
     && !isAnswered;
   const recallReveal = () => setRecallRevealedIdx(progressIndex);
@@ -2165,9 +2166,9 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
     else handleClickExamOption(null, null);
     recallReveal();
   };
-  const recallProp = { covered: recallCovered, reveal: recallReveal, giveUpRef: recallGiveUpRef };
+  const recallProp = { enabled: recallEnabled, covered: recallCovered, reveal: recallReveal, giveUpRef: recallGiveUpRef };
   // 문장 뜻 맞추기는 자체 하단 버튼(확인/다음)이 가림 상태 전환을 맡는다(ArrangeTray).
-  const showRecallFooter = recallCovered && currentQType !== 'sentenceTranslate';
+  const showRecallFooter = recallCovered && !isSentenceQuestionType(currentQType);
   const nextFooter = (showNextFooter && !showRecallFooter) ? (
     <motion.button
       type="button"
@@ -2496,7 +2497,6 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
                   covered={recallCovered}
                   onKnow={recallReveal}
                   className="flex flex-col gap-[10px]"
-                  rounded="rounded-[10px]"
                 >
                   {optionsWithDisplayMeanings.map((option, index) => {
                     let btnStyle = "";

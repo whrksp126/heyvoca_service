@@ -2,39 +2,59 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { feel } from '../../lib/feel';
 
 /*
-  '먼저 떠올려 보기' 가림막 — 보기 영역을 그대로 두고 그 위에 얹는다(레이아웃·크기 불변).
-  covered 가 false 가 되면 블러가 풀리며 걷힌다. 가림 중에는 아래 보기가 눌리지 않는다.
+  '먼저 떠올려 보기' 가림막 — 보기 영역 전체를 덮는 불투명한 큰 '알아요' 버튼 하나.
+  보기 버튼과 같은 배경·테두리·라운드·글꼴·눌림 효과를 쓴다(variant 로 유형별 모양 선택).
+  - 보기는 레이아웃 그대로 두고 투명하게만 만든다(opacity-0) → 공개 시 점프 없음, 비침 없음.
+  - covered 가 false 가 되면 버튼이 짧게 페이드아웃하며 보기가 나타난다(블러 없음).
   className 은 바깥 래퍼용 — 보기 영역이 flex/grid 칸을 채워야 하면 'flex flex-col' 등을 넘긴다.
+
+  variant
+    option  사지선다·빈칸 고르기 보기 버튼(rounded 10)
+    card    카드 맞추기 뜻 카드(rounded 12)
+    chip    조각(칩) 은행(칩과 같은 rounded 10 + 아래 두꺼운 테두리)
 */
-const RecallCover = ({ covered, onKnow, className = '', rounded = 'rounded-[12px]', children }) => (
-  <div className={`relative ${className}`}>
-    {children}
-    <AnimatePresence>
-      {covered && (
-        <motion.div
-          key="recall-cover"
-          initial={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.28, ease: [0.4, 0, 0.2, 1] }}
-          className={`
-            absolute inset-0 z-[5] flex items-center justify-center ${rounded}
-            bg-[color-mix(in_srgb,var(--layout-gray-50)_82%,transparent)]
-            backdrop-blur-xl
-          `}
-        >
+const VARIANTS = {
+  option: { radius: 'rounded-[10px]', text: 'text-[17px]' },
+  card: { radius: 'rounded-[12px]', text: 'text-[18px]' },
+  chip: { radius: 'rounded-[10px] border-b-[3px] dark:border-[#3A3A3A]', text: 'text-[16px]' },
+};
+
+const RecallCover = ({ covered, onKnow, className = '', variant = 'option', children }) => {
+  const v = VARIANTS[variant] ?? VARIANTS.option;
+  return (
+    <div
+      className={`
+        relative ${className}
+        [&>*:not([data-recall-cover])]:transition-opacity [&>*:not([data-recall-cover])]:duration-[280ms]
+        ${covered ? '[&>*:not([data-recall-cover])]:opacity-0 [&>*:not([data-recall-cover])]:pointer-events-none' : ''}
+      `}
+    >
+      {children}
+      <AnimatePresence>
+        {covered && (
           <motion.button
+            key="recall-cover"
             type="button"
+            data-recall-cover=""
             onClick={() => { feel('tap'); onKnow?.(); }}
-            whileTap={{ scale: 0.95 }}
-            transition={{ type: 'spring', stiffness: 400, damping: 17 }}
-            className="h-[44px] px-[28px] rounded-[22px] bg-primary-main-600 text-layout-white text-[16px] font-[700] tracking-[-0.03em] shadow-[0_2px_8px_rgba(0,0,0,0.12)]"
+            initial={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            whileTap={{ scale: 0.97, transition: { type: 'spring', stiffness: 400, damping: 17 } }}
+            transition={{ duration: 0.28, ease: [0.4, 0, 0.2, 1] }}
+            className={`
+              absolute inset-0 z-[5] flex items-center justify-center
+              border-[1px] border-layout-gray-200
+              bg-layout-white dark:bg-layout-black
+              text-layout-black dark:text-layout-white
+              font-[700] tracking-[-0.03em] ${v.text} ${v.radius}
+            `}
           >
             알아요
           </motion.button>
-        </motion.div>
-      )}
-    </AnimatePresence>
-  </div>
-);
+        )}
+      </AnimatePresence>
+    </div>
+  );
+};
 
 export default RecallCover;

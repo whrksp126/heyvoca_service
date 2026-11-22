@@ -463,7 +463,7 @@ const CardMatchListeningQuestion = ({ question, testType, onComplete, onCardMatc
       </div>
 
       {/* 우측: 의미 */}
-      <RecallCover covered={recall?.covered} onKnow={recall?.reveal} className="flex flex-col">
+      <RecallCover covered={recall?.covered} onKnow={recall?.reveal} className="flex flex-col" variant="card">
       <div className="flex flex-col gap-[10px] flex-1 min-h-0">
         {rightWords.map((word, index) => {
           const isMatchResolved = matchedWordIds.has(word.id);
