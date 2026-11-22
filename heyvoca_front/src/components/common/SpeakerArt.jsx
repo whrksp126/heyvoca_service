@@ -7,7 +7,7 @@ import { motion, useReducedMotion } from 'framer-motion';
  * Phosphor SpeakerHigh 자리를 그대로 대체하려고 weight·color 같은 옛 props 는 받아서 버린다.
  *
  * @param {number|string} size  크기(px). 생략하면 1em(부모 글자 크기를 따른다)
- * @param {boolean} muted       true 면 음파를 숨기고 나팔 오른쪽에 빗금을 그려 '소리 꺼짐'을 나타낸다
+ * @param {boolean} muted       true 면 음파 자리에 둥근 끝 X 를 그려 '소리 꺼짐'을 나타낸다
  * @param {boolean} playing     재생 중이면 음파 두 줄이 번갈아 출렁인다
  */
 const WAVE_IDLE = [0.5, 0.3];
@@ -50,8 +50,10 @@ const SpeakerArt = ({ size = '1em', playing = false, muted = false, className = 
       <path d="M22.5 14.5L26 11.6" stroke="#fff" strokeOpacity="0.6" strokeWidth="2.2" strokeLinecap="round" />
       {muted ? (
         <>
-          <path d="M34 15L44 33" stroke="#D9584C" strokeWidth="5.6" strokeLinecap="round" />
-          <path d="M34 15L44 33" stroke="#FFF4DC" strokeWidth="2.6" strokeLinecap="round" />
+          <path d="M34.5 18L44.5 30" stroke="#E2604F" strokeWidth="3.6" strokeLinecap="round" />
+          <path d="M44.5 18L34.5 30" stroke="#E2604F" strokeWidth="3.6" strokeLinecap="round" />
+          <path d="M35.9 19.9L37.5 21.8" stroke="#fff" strokeOpacity="0.55" strokeWidth="1.3" strokeLinecap="round" />
+          <path d="M43.1 19.9L41.5 21.8" stroke="#fff" strokeOpacity="0.55" strokeWidth="1.3" strokeLinecap="round" />
         </>
       ) : (
         <>

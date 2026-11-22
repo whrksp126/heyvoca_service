@@ -21,7 +21,7 @@ import { wordLang, isJa } from '../../../utils/lang';
 import { getReading } from '../../../utils/jaWord';
 import {
   MAX_HINTS, toHiragana, buildSpellingCells, spellingAnswerOf,
-  mapInputToCells, applyHint, gradeSpelling, splitInput,
+  mapInputToCells, applyHint, gradeSpelling, splitInput, normChar,
 } from './spellingUtils';
 
 /*
@@ -180,19 +180,65 @@ const SpellingFillQuestion = ({ question, onComplete, onCardMatched, farmByWordI
     });
   };
 
-  // 입력 변경 — 조합(IME) 중에는 원본을 그대로 둔다(값을 고쳐 쓰면 조합이 깨진다). 확정된 값만 정리해 넣는다.
-  // 채점은 하지 않는다 — 확인 버튼/엔터로만.
+  // 입력 변경 — 어느 순간에도 input 의 실제 값이 (앞 공개 글자 + 칸 수) 이하이고 허용 글자만이도록 즉시 바로잡는다.
+  // 조합(IME) 중이라도 허용되지 않는 글자(영어의 숫자·기호, 일본어의 가나 아닌 글자)와 상한 초과분은 즉시 잘라 DOM 에 다시 쓰고
+  // 조합을 끝낸다(삼성 키보드는 영어도 예측 때문에 조합 중 입력하므로 '조합 끝나면 자른다'를 기다리면 영영 안 온다).
+  // 조합 중 정상 값(가나 조합 중, 로마자 중간 상태)은 건드리지 않는다. 채점은 하지 않는다 — 확인 버튼/엔터로만.
+  const endCompositionSoon = (el) => {
+    // 값을 다시 쓰면 대부분 조합이 풀린다. 그래도 조합 상태로 남아 있으면 재포커스로 끝낸다.
+    requestAnimationFrame(() => {
+      if (!composingRef.current || !el.isConnected) return;
+      composingRef.current = false;
+      el.blur();
+      el.focus();
+      forceEnd(el);
+    });
+  };
   const handleChange = (e) => {
     if (isAnswered || gradedRef.current) return;
     const el = e.target;
     const raw = el.value;
     const isComp = composingRef.current || !!e.nativeEvent?.isComposing;
-    if (isComp) { setValue(raw); return; } // 조합 중엔 건드리지 않는다 — 끝나면 compositionend 에서 상한으로 자른다
+    if (isComp) {
+      const fit = splitInput(cells, hinted, raw, ja, true).full;
+      if (fit !== raw) {
+        el.value = fit;
+        forceEnd(el);
+        setValue(fit);
+        feel('tap');
+        endCompositionSoon(el);
+        return;
+      }
+      setValue(raw);
+      return;
+    }
     const full = fullOf(raw);
     if (Array.from(sanitize(raw)).length !== Array.from(clean).length) feel('tap');
     if (el.value !== full) el.value = full;
     forceEnd(el);
     setValue(full);
+  };
+
+  // 글자가 들어오기 직전 — 취소할 수 있으면(대부분의 직접 입력) 허용되지 않는 글자·상한 초과를 여기서 막는다.
+  // Android WebView 의 조합 중 beforeinput 은 취소가 안 되는 경우가 있어, 그때는 handleChange 가 잘라 쓴다.
+  const handleBeforeInput = (e) => {
+    const ne = e.nativeEvent;
+    const data = ne?.data;
+    if (!data || !ne.cancelable || isAnswered || gradedRef.current) return;
+    if (ne.inputType !== 'insertText' && ne.inputType !== 'insertCompositionText' && ne.inputType !== 'insertFromPaste') return;
+    const el = e.currentTarget;
+    const hasSel = el.selectionStart !== el.selectionEnd;
+    const next = hasSel
+      ? el.value.slice(0, el.selectionStart) + data + el.value.slice(el.selectionEnd)
+      : el.value.slice(0, el.selectionStart ?? el.value.length) + data + el.value.slice(el.selectionEnd ?? el.value.length);
+    const isComp = ne.inputType === 'insertCompositionText';
+    // 일본어 조합 중 로마자 중간 상태는 허용 — 조합 입력은 handleChange 에서만 판정한다
+    if (isComp && ja) return;
+    const fit = splitInput(cells, hinted, next, ja, isComp).full;
+    if (Array.from(fit).length < Array.from(next).length || (!isComp && normChar(fit) !== normChar(next))) {
+      e.preventDefault();
+      feel('tap');
+    }
   };
 
   // 확인 — 지금 DOM 값(조합 중 글자 포함)을 기준으로 채점. 칸이 덜 찼으면 무시.
@@ -443,7 +489,7 @@ const SpellingFillQuestion = ({ question, onComplete, onCardMatched, farmByWordI
           type="text"
           lang={ja ? 'ja' : 'en'}
           inputMode="text"
-          autoCapitalize="off"
+          autoCapitalize="none"
           autoCorrect="off"
           autoComplete="off"
           spellCheck={false}
@@ -455,6 +501,7 @@ const SpellingFillQuestion = ({ question, onComplete, onCardMatched, farmByWordI
           onBlur={() => setFocused(false)}
           data-keep-chrome=""
           data-no-autoscroll=""
+          onBeforeInput={handleBeforeInput}
           onCompositionStart={() => { composingRef.current = true; }}
           onCompositionEnd={(e) => {
             composingRef.current = false;

@@ -107,9 +107,19 @@ export const gradeSpelling = (cells, hinted, value) => {
   prefix 는 맨 앞에서부터 이어지는 공개(given)·힌트 글자만(중간의 공개 글자는 칸 매핑에서 건너뛴다).
 */
 const INPUT_CHAR_RE = /[\p{L}\p{N}ー]/u;
+const LATIN_RE = /\p{Script=Latin}/u;
+const KANA_RE = /[ぁ-ゖァ-ヺーｦ-ﾟ]/u;
 
-export const normalizeInputChars = (raw, ja) => Array.from(String(raw ?? ''))
-  .filter((ch) => INPUT_CHAR_RE.test(ch))
+/*
+  정답 문자 체계에 맞는 글자만 받는다(2026-11-22) — 영어(라틴) 정답은 영문자만, 일본어 정답은 가나(+장음)만.
+  정답 자체에 들어 있는 글자(예: 'mp3' 의 3)는 항상 허용. 숫자·기호는 거부.
+*/
+const answerCharSet = (cells) => new Set(cells.filter((c) => INPUT_CHAR_RE.test(c.ch)).map((c) => normChar(c.ch)));
+const isAllowedChar = (ch, ja, extra) => (ja ? KANA_RE.test(ch) : LATIN_RE.test(ch)) || extra.has(normChar(ch));
+
+// 정답에 있는 글자(prefix 용)는 문자 체계 검사 없이 글자·숫자만 거른다.
+export const normalizeInputChars = (raw, ja, extra = null) => Array.from(String(raw ?? ''))
+  .filter((ch) => (extra ? isAllowedChar(ch, ja, extra) : INPUT_CHAR_RE.test(ch)))
   .map((ch) => (ja ? toHiragana(ch) : ch.toLowerCase()));
 
 export const leadingPrefix = (cells, hinted, ja) => {
@@ -123,15 +133,46 @@ export const leadingPrefix = (cells, hinted, ja) => {
   return out;
 };
 
-// raw(input 원본) → { prefix, typed(입력 칸 글자, 상한 적용), full(prefix+typed — input 에 되돌려 쓸 값) }
-export const splitInput = (cells, hinted, raw, ja) => {
+/*
+  raw(input 원본) → { prefix, typed(입력 칸 글자), full(prefix+typed — input 에 되돌려 쓸 값), cap }
+  composing=false(확정 값): 허용 글자만, 대소문자·가타카나 정규화, 칸 수 상한.
+  composing=true(IME 조합 중): 글자를 바꿔 쓰면 조합이 깨지므로 원문 글자를 유지한 채 허용 글자만 남기고 상한만 건다.
+    일본어는 로마자 입력 중간 상태(k, ky 등)를 조합 끝쪽에서 최대 2글자까지만 허용하고,
+    확정(가나) 글자가 이미 상한이면 새로 들어오는 조합 글자는 버린다.
+*/
+export const splitInput = (cells, hinted, raw, ja, composing = false) => {
   const prefix = leadingPrefix(cells, hinted, ja);
   const cap = inputCellIndexes(cells, hinted).length;
-  const chars = normalizeInputChars(raw, ja);
-  let typed;
-  if (prefix.every((ch, k) => chars[k] === ch)) typed = chars.slice(prefix.length);
-  else if (chars.every((ch, k) => prefix[k] === ch)) typed = []; // prefix 안쪽까지 지움 → 복원
-  else typed = chars; // 전체 선택 후 덮어쓰기 등
-  typed = typed.slice(0, cap);
-  return { prefix: prefix.join(''), typed: typed.join(''), full: prefix.join('') + typed.join(''), cap };
+  const extra = answerCharSet(cells);
+  const total = prefix.length + cap;
+  const orig = Array.from(String(raw ?? ''));
+  const kept = [];
+  let solid = 0;
+  let pendingLatin = 0;
+  orig.forEach((ch) => {
+    if (isAllowedChar(ch, ja, extra)) {
+      if (pendingLatin > 0 || solid >= total) return; // 로마자 뒤의 가나는 비정상 — 버린다
+      kept.push(ch); solid += 1;
+    } else if (composing && ja && /[A-Za-z]/.test(ch)) {
+      if (solid >= total || pendingLatin >= 2) return;
+      kept.push(ch); pendingLatin += 1;
+    }
+  });
+  if (!composing) {
+    const chars = kept.map((ch) => (ja ? toHiragana(ch) : ch.toLowerCase()));
+    let typed;
+    if (prefix.every((ch, k) => chars[k] === ch)) typed = chars.slice(prefix.length);
+    else if (chars.every((ch, k) => prefix[k] === ch)) typed = []; // prefix 안쪽까지 지움 → 복원
+    else typed = chars; // 전체 선택 후 덮어쓰기 등
+    typed = typed.slice(0, cap);
+    return { prefix: prefix.join(''), typed: typed.join(''), full: prefix.join('') + typed.join(''), cap };
+  }
+  const normKept = kept.map(normChar);
+  const hasPrefix = prefix.every((ch, k) => normKept[k] === ch);
+  if (hasPrefix) {
+    const typed = kept.slice(prefix.length);
+    return { prefix: prefix.join(''), typed: typed.join(''), full: kept.join(''), cap };
+  }
+  if (normKept.every((ch, k) => prefix[k] === ch)) return { prefix: prefix.join(''), typed: '', full: prefix.join(''), cap };
+  return { prefix: prefix.join(''), typed: kept.join(''), full: kept.join(''), cap };
 };
