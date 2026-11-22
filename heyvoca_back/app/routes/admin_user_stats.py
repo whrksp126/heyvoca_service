@@ -219,6 +219,34 @@ def _pct(n, d):
     return round(n * 100.0 / d, 1) if d else None
 
 
+def day_user_counts(day):
+    """자정 실적(app/services/ops_daily_report.py)용 — overview 와 같은 정의로 하루(KST) 사용자 수.
+
+    반환: {'signups', 'withdrawals', 'active', 'real_new', 'real_total', 'excluded_keys'}
+      signups     가입(그날 가입 후 탈퇴한 계정 포함), 관리자 제외 계정 빼고
+      withdrawals 탈퇴(관리자 제외 계정 빼고)
+      active      접속한 계정(user_daily_activity ∪ 학습한 날)
+      real_new    그날 실사용자로 판정된 계정(가입 7일 안 2일째 사용한 날 = 그날)
+      real_total  지금까지 실사용자 누계
+      excluded_keys 관리자 제외 계정의 user.id.hex 집합(학습량 집계에서 빼는 데 쓴다)
+    """
+    base = _load_base()
+    rows = [u for u in _enrich(base) if not u['excluded']]
+    excluded_keys = {k for k, u in base['users'].items() if u['excluded']}
+    withdrawn_excluded = {w[3] for w in base['withdrawals'] if w[2]}
+    skip = excluded_keys | withdrawn_excluded
+    active = sum(1 for k, ds in base['days'].items() if k not in skip and day in ds)
+    return {
+        'signups': sum(1 for u in rows if u['signup'] == day)
+        + sum(1 for w in base['withdrawals'] if not w[2] and w[1] == day),
+        'withdrawals': sum(1 for w in base['withdrawals'] if not w[2] and w[0] == day),
+        'active': active,
+        'real_new': sum(1 for u in rows if u['real_at'] == day),
+        'real_total': sum(1 for u in rows if u['real_at'] and u['real_at'] <= day),
+        'excluded_keys': skip,
+    }
+
+
 # ──────────────────────────────────────────
 # 라우트
 # ──────────────────────────────────────────

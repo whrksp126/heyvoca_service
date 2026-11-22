@@ -71,3 +71,19 @@ Flask 앱 팩토리 패턴. `run.py` → `app/__init__.py`의 `create_app()`으�
 - Firebase 서비스 계정 키
 - ObjectStore(MinIO): `MINIO_ENDPOINT`, `MINIO_BUCKET`(=`heyvoca`), `MINIO_DICT_RO_KEY/SECRET`(사전 dump 읽기), `MINIO_DICT_RW_KEY/SECRET`(TTS put/presigned·사전 publish — **모든 환경 필요**)
 - TTS: `ELEVENLABS_API_KEY`, `TTS_VOICE_EN`(ElevenLabs voice_id), `TTS_VOICE_KO`(미사용 시 edge 기본 ko-KR-SunHiNeural), 선택 `TTS_PROVIDER_EN/KO`, `TTS_MODEL`, `TTS_GENERATE_REQUIRE_DICT`, `TTS_RATE_LIMIT`, `TTS_PRESIGN_TTL`
+
+## 운영 알림(CodingPT)
+
+prod 서버가 CodingPT 알림 채널(웹훅)로 장애·실적을 보낸다. 코드: `app/services/codingpt_notify.py`(전송·카운터), `app/services/ops_daily_report.py`(자정 실적).
+
+- **환경변수** `CODINGPT_WEBHOOK_URL` — prod `.env` 에만 둔다(URL 자체가 비밀, git·로그 금지). **dev·local 엔 넣지 않는다** → 없으면 전송 코드가 전부 no-op. 넣거나 바꾸면 수동 scp + `--force-recreate`.
+- **보내는 것**
+  | 언제 | level | dedupeKey |
+  |---|---|---|
+  | 처리 안 된 예외(500, `got_request_exception`) — HTTPException(4xx) 제외. 스택 끝 40줄·route·user_id | error | `api:<ExcType>:<url_rule>` |
+  | 스케줄러 작업 실패(`EVENT_JOB_ERROR`, fcm.create_scheduler) | error | `scheduler:<job_id>` |
+  | 매일 00:00 KST 전날 실적(`daily_report` 작업) — 가입·탈퇴·접속·학습자·실사용자, 세션·문제·정답률·새 씨앗, 5xx·신고·TTS 대체, 전날 대비 | info | `report:daily:<날짜>` |
+  | 컨테이너 기동 실패(`docker-entrypoint.sh` db upgrade·verify_schema 등) — 단계 이름·마지막 로그 40줄 | critical | `boot:<단계>` |
+- **Redis 카운터**(KST 날짜, 3일 보관): `heyvoca:ops:5xx|exc|tts_fallback:<YYYYMMDD>` — 5xx 응답 수(after_request), 처리 안 된 예외 수, TTS 대체 음성 생성 수.
+- **수동 실행**: `docker exec heyvoca_back_prod python3 -m jobs.daily_report --dry-run [--date YYYY-MM-DD]` (출력만) / `--send`(전송).
+- 본문에 이메일·토큰·비밀값을 넣지 않는다. 사용자는 내부 id 만.

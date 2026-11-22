@@ -224,6 +224,9 @@ def create_app():
   login_manager.init_app(app)
   cache.init_app(app)
   limiter.init_app(app)
+  # 운영 알림(CodingPT) — 처리 안 된 예외 알림 + 일별 5xx 카운터. CODINGPT_WEBHOOK_URL 없으면 전송 생략.
+  from app.services.codingpt_notify import init_app as _init_codingpt_notify
+  _init_codingpt_notify(app)
   # login_manager.login_view = "main_login.html"
 
   # 사전 언어 기본값 — 비인증은 ?lang= / X-Dict-Lang, Bearer 가 유효하면 user.learning_lang.

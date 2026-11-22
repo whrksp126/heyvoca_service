@@ -430,14 +430,14 @@ def create_scheduler(app):
     KST = 'Asia/Seoul'
     # 고정 발송: 오후 1시 / 저녁 9시 — 사용자 상태에 맞춰 카테고리 분기
     scheduler.add_job(lambda: run_reminder(app, '1pm'),
-                      CronTrigger(hour=13, minute=0, timezone=KST))
+                      CronTrigger(hour=13, minute=0, timezone=KST), id='reminder_1pm')
     scheduler.add_job(lambda: run_reminder(app, '9pm'),
-                      CronTrigger(hour=21, minute=0, timezone=KST))
+                      CronTrigger(hour=21, minute=0, timezone=KST), id='reminder_9pm')
     # 긴급 추가 발송: 16시(복습 20개↑) / 23시(streak 끊김 임박) — 해당 사용자에게만
     scheduler.add_job(lambda: run_reminder(app, '4pm', urgent_only=True),
-                      CronTrigger(hour=16, minute=0, timezone=KST))
+                      CronTrigger(hour=16, minute=0, timezone=KST), id='reminder_4pm')
     scheduler.add_job(lambda: run_reminder(app, '11pm', urgent_only=True),
-                      CronTrigger(hour=23, minute=0, timezone=KST))
+                      CronTrigger(hour=23, minute=0, timezone=KST), id='reminder_11pm')
 
     # '채팅으로 학습' 딥링크 알림 — 아침/오전/오후/저녁/밤 5슬롯 분산.
     # 슬롯당 발송은 대상자별로 하루 최대 5회 상한 + 당일 학습 시 중단 로직이
@@ -469,6 +469,25 @@ def create_scheduler(app):
         CronTrigger(hour=4, minute=0, timezone='Asia/Seoul'),
         id='refresh_qstat',
     )
+
+    # 매일 자정 실적 → CodingPT 알림 채널 (CODINGPT_WEBHOOK_URL 없는 dev·local 은 집계만 하고 전송 생략)
+    def _daily_report():
+        from app.services.codingpt_notify import webhook_url
+        if not webhook_url():
+            return
+        from app.services.ops_daily_report import run as _run_report
+        with app.app_context():
+            _run_report()
+
+    scheduler.add_job(
+        _daily_report,
+        CronTrigger(hour=0, minute=0, timezone='Asia/Seoul'),
+        id='daily_report', misfire_grace_time=1800, coalesce=True,
+    )
+
+    # 작업 실패 → CodingPT error 알림
+    from app.services.codingpt_notify import attach_scheduler_listener
+    attach_scheduler_listener(scheduler)
 
     scheduler.start()
 

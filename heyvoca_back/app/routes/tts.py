@@ -357,6 +357,12 @@ def _record_gen_stats(language, fallback):
     if fallback:
         _bump(f'tts:fallback:{day}')
         _bump(f'tts:fallback:{language}:{day}')
+        # 자정 실적(app/services/ops_daily_report.py)용 KST 날짜 카운터 — 위 키는 UTC 날짜라 하루 경계가 다르다.
+        try:
+            from app.services.codingpt_notify import bump_ops_counter
+            bump_ops_counter('tts_fallback')
+        except Exception:
+            pass
 
 
 def _daily_gen_count(user_id):
