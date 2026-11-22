@@ -7,14 +7,15 @@ import { motion, useReducedMotion } from 'framer-motion';
  * Phosphor SpeakerHigh 자리를 그대로 대체하려고 weight·color 같은 옛 props 는 받아서 버린다.
  *
  * @param {number|string} size  크기(px). 생략하면 1em(부모 글자 크기를 따른다)
+ * @param {boolean} muted       true 면 음파를 숨기고 나팔 오른쪽에 빗금을 그려 '소리 꺼짐'을 나타낸다
  * @param {boolean} playing     재생 중이면 음파 두 줄이 번갈아 출렁인다
  */
 const WAVE_IDLE = [0.5, 0.3];
 
-const SpeakerArt = ({ size = '1em', playing = false, className = '' }) => {
+const SpeakerArt = ({ size = '1em', playing = false, muted = false, className = '' }) => {
   const uid = useId().replace(/:/g, '');
   const reduced = useReducedMotion();
-  const animateWaves = playing && !reduced;
+  const animateWaves = playing && !reduced && !muted;
 
   const wave = (i) => ({
     initial: false,
@@ -47,8 +48,17 @@ const SpeakerArt = ({ size = '1em', playing = false, className = '' }) => {
       <rect x="5" y="14.5" width="14" height="19" rx="5" fill={`url(#spBox${uid})`} stroke="#D9A77A" strokeWidth="1.5" />
       <path d="M9 19V25" stroke="#fff" strokeOpacity="0.85" strokeWidth="2.4" strokeLinecap="round" />
       <path d="M22.5 14.5L26 11.6" stroke="#fff" strokeOpacity="0.6" strokeWidth="2.2" strokeLinecap="round" />
+      {muted ? (
+        <>
+          <path d="M34 15L44 33" stroke="#D9584C" strokeWidth="5.6" strokeLinecap="round" />
+          <path d="M34 15L44 33" stroke="#FFF4DC" strokeWidth="2.6" strokeLinecap="round" />
+        </>
+      ) : (
+        <>
       <motion.path d="M35 18.5Q38 24 35 29.5" stroke="#F6B93B" strokeWidth="3.4" strokeLinecap="round" {...wave(0)} />
       <motion.path d="M39.5 13.5Q45.5 24 39.5 34.5" stroke="#F6B93B" strokeWidth="3.4" strokeLinecap="round" {...wave(1)} />
+        </>
+      )}
     </svg>
   );
 };

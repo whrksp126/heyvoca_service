@@ -21,7 +21,7 @@ import { wordLang, isJa } from '../../../utils/lang';
 import { getReading } from '../../../utils/jaWord';
 import {
   MAX_HINTS, toHiragana, buildSpellingCells, spellingAnswerOf,
-  mapInputToCells, applyHint, gradeSpelling,
+  mapInputToCells, applyHint, gradeSpelling, splitInput,
 } from './spellingUtils';
 
 /*
@@ -54,7 +54,7 @@ const SpellingFillQuestion = ({ question, onComplete, onCardMatched, farmByWordI
   const answer = spellingAnswerOf(question);
   const [cells] = useState(() => buildSpellingCells(answer));
 
-  const [value, setValue] = useState(''); // IME 원본 — 화면·채점은 sanitize(value)
+  const [value, setValue] = useState(() => splitInput(cells, new Set(), '', ja).full); // IME 원본 — 화면·채점은 sanitize(value)
   const [hinted, setHinted] = useState(() => new Set());
   const [hintUsed, setHintUsed] = useState(0);
   const [isAnswered, setIsAnswered] = useState(false);
@@ -85,12 +85,15 @@ const SpellingFillQuestion = ({ question, onComplete, onCardMatched, farmByWordI
   const posLabel = posLabelOf(question);
   const farm = isAnswered ? (farmByWordId?.[question.id] ?? null) : null;
 
-  // 원본 입력 → 칸에 들어갈 값. 글자·숫자·장음만 남기고(。、 같은 문장부호 제외) 가나/대소문자를 맞춘 뒤 칸 수로 자른다.
-  const sanitize = (raw, nextHinted = hinted) => {
-    let v = Array.from(String(raw ?? '')).filter((ch) => /[\p{L}\p{N}ー]/u.test(ch));
-    v = ja ? v.map(toHiragana) : v.map((ch) => ch.toLowerCase());
-    const cap = mapInputToCells(cells, nextHinted, '').slots.length;
-    return v.slice(0, cap).join('');
+  // 원본 입력 → 칸에 들어갈 값(앞쪽 공개 글자 prefix 는 빼고, 글자·숫자·장음만, 칸 수 상한).
+  const sanitize = (raw, nextHinted = hinted) => splitInput(cells, nextHinted, raw, ja).typed;
+  // 숨은 input 에 실제로 넣을 값 = prefix + 입력 칸 글자(상한 적용)
+  const fullOf = (raw, nextHinted = hinted) => splitInput(cells, nextHinted, raw, ja).full;
+  const inputCap = splitInput(cells, hinted, '', ja).prefix.length + mapInputToCells(cells, hinted, '').slots.length;
+  const forceEnd = (el) => {
+    if (!el) return;
+    const n = el.value.length;
+    try { el.setSelectionRange(n, n); } catch { /* 일부 브라우저는 무시 */ }
   };
   const clean = sanitize(value);
   const capNow = mapInputToCells(cells, hinted, '').slots.length;
@@ -181,11 +184,15 @@ const SpellingFillQuestion = ({ question, onComplete, onCardMatched, farmByWordI
   // 채점은 하지 않는다 — 확인 버튼/엔터로만.
   const handleChange = (e) => {
     if (isAnswered || gradedRef.current) return;
-    const raw = e.target.value;
+    const el = e.target;
+    const raw = el.value;
     const isComp = composingRef.current || !!e.nativeEvent?.isComposing;
-    const next = isComp ? raw : sanitize(raw);
+    if (isComp) { setValue(raw); return; } // 조합 중엔 건드리지 않는다 — 끝나면 compositionend 에서 상한으로 자른다
+    const full = fullOf(raw);
     if (Array.from(sanitize(raw)).length !== Array.from(clean).length) feel('tap');
-    setValue(next);
+    if (el.value !== full) el.value = full;
+    forceEnd(el);
+    setValue(full);
   };
 
   // 확인 — 지금 DOM 값(조합 중 글자 포함)을 기준으로 채점. 칸이 덜 찼으면 무시.
@@ -213,7 +220,7 @@ const SpellingFillQuestion = ({ question, onComplete, onCardMatched, farmByWordI
     const used = hintUsed + 1;
     setHinted(res.hinted);
     setHintUsed(used);
-    setValue(res.value);
+    setValue(fullOf(res.value, res.hinted));
     inputRef.current?.focus();
   };
 
@@ -451,8 +458,19 @@ const SpellingFillQuestion = ({ question, onComplete, onCardMatched, farmByWordI
           onCompositionStart={() => { composingRef.current = true; }}
           onCompositionEnd={(e) => {
             composingRef.current = false;
-            if (!isAnswered && !gradedRef.current) setValue(sanitize(e.currentTarget.value));
+            if (isAnswered || gradedRef.current) return;
+            const el = e.currentTarget;
+            const full = fullOf(el.value);
+            if (el.value !== full) el.value = full; // DOM 값도 상한으로 되돌린다
+            forceEnd(el);
+            setValue(full);
           }}
+          onSelect={(e) => {
+            const el = e.currentTarget;
+            if (composingRef.current || el.selectionStart === el.value.length && el.selectionEnd === el.value.length) return;
+            forceEnd(el); // 커서는 항상 끝
+          }}
+          maxLength={ja ? undefined : inputCap}
           onKeyDown={(e) => {
             if (e.key !== 'Enter') return;
             e.preventDefault();

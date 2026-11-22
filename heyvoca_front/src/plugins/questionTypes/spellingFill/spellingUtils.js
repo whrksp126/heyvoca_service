@@ -100,3 +100,38 @@ export const gradeSpelling = (cells, hinted, value) => {
   const wrong = new Set(slots.filter((i) => normChar(filled[i]) !== normChar(cells[i].ch)));
   return { isCorrect: wrong.size === 0, wrong };
 };
+
+/*
+  하나의 입력(2026-11-22) — 숨은 input 의 값 = 앞쪽에 미리 공개된 글자(prefix) + 사용자가 채우는 칸 글자.
+  전체 길이는 prefix + 입력 칸 수가 상한이라 화면에 보이는 것과 input 실제 값이 항상 같다.
+  prefix 는 맨 앞에서부터 이어지는 공개(given)·힌트 글자만(중간의 공개 글자는 칸 매핑에서 건너뛴다).
+*/
+const INPUT_CHAR_RE = /[\p{L}\p{N}ー]/u;
+
+export const normalizeInputChars = (raw, ja) => Array.from(String(raw ?? ''))
+  .filter((ch) => INPUT_CHAR_RE.test(ch))
+  .map((ch) => (ja ? toHiragana(ch) : ch.toLowerCase()));
+
+export const leadingPrefix = (cells, hinted, ja) => {
+  const out = [];
+  for (let i = 0; i < cells.length; i += 1) {
+    const c = cells[i];
+    if (c.kind === 'fixed') continue;
+    if (c.kind === 'open' && !hinted.has(i)) break;
+    out.push(...normalizeInputChars(c.ch, ja));
+  }
+  return out;
+};
+
+// raw(input 원본) → { prefix, typed(입력 칸 글자, 상한 적용), full(prefix+typed — input 에 되돌려 쓸 값) }
+export const splitInput = (cells, hinted, raw, ja) => {
+  const prefix = leadingPrefix(cells, hinted, ja);
+  const cap = inputCellIndexes(cells, hinted).length;
+  const chars = normalizeInputChars(raw, ja);
+  let typed;
+  if (prefix.every((ch, k) => chars[k] === ch)) typed = chars.slice(prefix.length);
+  else if (chars.every((ch, k) => prefix[k] === ch)) typed = []; // prefix 안쪽까지 지움 → 복원
+  else typed = chars; // 전체 선택 후 덮어쓰기 등
+  typed = typed.slice(0, cap);
+  return { prefix: prefix.join(''), typed: typed.join(''), full: prefix.join('') + typed.join(''), cap };
+};

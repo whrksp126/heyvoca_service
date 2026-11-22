@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { SpeakerSlash } from '@phosphor-icons/react';
+import SpeakerArt from '../common/SpeakerArt';
 import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
 import { vibrate } from '../../utils/osFunction';
 import { LISTENING_SKIP_DURATION_MIN } from '../../utils/listeningSkip';
@@ -28,7 +28,7 @@ const SkipListeningNewBottomSheet = () => {
           w-[56px] h-[56px] rounded-full
           bg-primary-main-100 dark:bg-primary-main-dark text-primary-main-600
         ">
-          <SpeakerSlash size={30} weight="fill" />
+          <SpeakerArt size={32} muted />
         </div>
         <h3 className="text-layout-black dark:text-layout-white text-[18px] font-[700]">듣기 일시 중단</h3>
         <p className="text-layout-gray-400 dark:text-layout-gray-50 text-[14px] font-[400] text-center leading-[1.6]">
