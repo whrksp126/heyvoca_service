@@ -659,7 +659,9 @@ const TakeTest = () => {
       const sa = word?.sentenceArrange;
       const type = sa?.question_type;
       const payload = sa?.question_payload;
-      if (!type || !isArrangeQuestionType(type) || !payload?.arrange) continue;
+      // 조립형(payload.arrange) + 예문 직접 입력(fillInTheBlankTyping, payload.typing) 모두 실전 구간 문제다.
+      const isTyping = type === 'fillInTheBlankTyping';
+      if (!type || !(isTyping ? payload?.typing : (isArrangeQuestionType(type) && payload?.arrange))) continue;
       const plugin = getQuestionType(type);
       if (!plugin?.setupQuestions) continue;
       const stepWord = { ...word, suggestedQuestionType: type, questionPayload: payload };

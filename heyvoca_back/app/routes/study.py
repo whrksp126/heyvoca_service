@@ -174,11 +174,18 @@ def _strip_typing_from_general(enriched_items: list) -> None:
             e['suggested_question_type'] = 'fillInTheBlank' if can(e['_item'], 'fillInTheBlank') else 'multipleChoice'
 
 
-def _select_sentence_arrange(enriched_items: list, former: list, ctx, minimum: int = 3, maximum: int = 4) -> dict:
+def _select_sentence_arrange(enriched_items: list, former: list, ctx, minimum: int = 3, maximum: int = 4,
+                             ja_info=None, ja_tokens=None, typing_count: int = 1) -> dict:
     """문장 만들기를 붙일 단어 선정 + payload 생성. 반환: {user_voca_id: {question_type, question_payload}}.
 
     예전에 조립형으로 배정되던 단어(former) 우선, 부족하면 조각이 usable 한 단어를 무작위로 채워
     최소 minimum 개를 보장(payload 가 실제로 만들어진 것만 센다). 최대 maximum 개.
+
+    실전 구간에는 예문 직접 입력(fillInTheBlankTyping)이 typing_count 개(기본 1) 섞인다 — arrange 하나를
+    대체(전체 개수 유지). 티어 4 이상 단어 우선, 예문 적격 판정 통과분만(choose_example 이 거른다).
+    typing 은 arrange 보다 먼저 뽑아 예문을 확보한다(ctx.used_hashes 공유 → 서로 다른 문장).
+    항목 모양: {question_type:'fillInTheBlankTyping', question_payload:{typing:{..}, example_hash}}.
+    일본어는 조립형이 없어 typing 1개만 나온다(히라가나 채점, example_hash 없음).
     """
     import random
     from app.services.recommend.composer import _item_can_use_question_type as can
@@ -191,6 +198,19 @@ def _select_sentence_arrange(enriched_items: list, former: list, ctx, minimum: i
     random.shuffle(rest)
     target = min(maximum, max(minimum, len(first)))
     out = {}
+    # ── 직접 입력 선정: 티어 4+ 우선, 그 안/밖 모두 무작위 ──
+    if typing_count > 0:
+        cands = list(enriched_items)
+        random.shuffle(cands)
+        cands.sort(key=lambda e: 0 if (e.get('tier_shown') or 0) >= 4 else 1)
+        for e in cands:
+            if len(out) >= min(typing_count, target):
+                break
+            pl = _build_sentence_question_payload(e['_item'], 'fillInTheBlankTyping', ctx, ja_info, ja_tokens)
+            if pl and pl.get('typing'):
+                out[e['_item'].user_voca_id] = {'question_type': 'fillInTheBlankTyping', 'question_payload': pl}
+    first = [e for e in first if e['_item'].user_voca_id not in out]
+    rest = [e for e in rest if e['_item'].user_voca_id not in out]
     for e in first + rest:
         if len(out) >= target:
             break
@@ -1629,7 +1649,7 @@ def get_recommend():
         for enriched in enriched_items
     ]
     if general_mode:
-        sa_map = _select_sentence_arrange(enriched_items, former_arrange, ctx)
+        sa_map = _select_sentence_arrange(enriched_items, former_arrange, ctx, ja_info=ja_info, ja_tokens=ja_tokens)
         for resp in items_response:
             sa = sa_map.get(resp['user_voca_id'])
             if sa:

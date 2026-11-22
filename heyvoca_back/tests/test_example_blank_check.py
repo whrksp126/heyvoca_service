@@ -98,3 +98,27 @@ def test_general_mode_has_no_typing():
         assert all(e['suggested_question_type'] != 'fillInTheBlankTyping' for e in items)
     assert items[0]['suggested_question_type'] == 'fillInTheBlank'
     assert items[3]['suggested_question_type'] == 'multipleChoice'
+
+
+def test_practice_section_includes_typing(monkeypatch):
+    """실전 구간(sentence_arrange)에 직접 입력이 1개 섞이고, 문장이 겹치지 않으며, 개수는 유지."""
+    from app.routes.study import _select_sentence_arrange
+    from app.services import typing_guard
+    monkeypatch.setattr(typing_guard, '_load_word_set', lambda: set())
+    words = ['alpha', 'bravo', 'charlie', 'delta', 'echo']
+    items = []
+    for i, w in enumerate(words):
+        it = _item(w, [_ex('h%d' % i, 'I <strong class="target-word">%s</strong> now.' % w),
+                       _ex('s%d' % i, 'We <strong class="target-word">%s</strong> too.' % w)])
+        it.user_voca_id = i + 1
+        items.append({'_item': it, 'suggested_question_type': 'multipleChoice', 'tier_shown': 4 if i == 3 else 2})
+    for seed in range(20):
+        ctx = SelectionContext(now=NOW, rng=random.Random(seed))
+        out = _select_sentence_arrange(items, [], ctx)
+        typ = [v for v in out.values() if v['question_type'] == 'fillInTheBlankTyping']
+        assert len(typ) == 1
+        pl = typ[0]['question_payload']
+        assert pl['typing'] and pl['example_hash'] in ctx.used_hashes
+        assert out[4]['question_type'] == 'fillInTheBlankTyping'  # 티어 4+ 우선
+        hashes = [v['question_payload'].get('example_hash') for v in out.values()]
+        assert len(hashes) == len(set(hashes))

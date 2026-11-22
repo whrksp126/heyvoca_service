@@ -1782,7 +1782,8 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
       첫 기록으로 인정한다. plant 는 세션 일괄 기록(plantAttemptsRef)에서 이 유형을 아예 뺀다.
     */
     const isArrangeQ = isArrangeQuestionType(questionType);
-    const skipGrading = isArrangeQ && !wordIsCorrect;
+    // 실전 구간 별도 문제(isSentenceExtra — 예문 직접 입력 포함)도 오답 무페널티: 그 단어는 일반 구간에서 이미 기록됐다.
+    const skipGrading = (isArrangeQ || !!currentQuestion?.isSentenceExtra) && !wordIsCorrect;
     // 일반 학습 — 조립형은 오답이면 /study/log 를 안 보내므로(skipGrading) 본 예문 기록이 빠진다.
     // 정답·오답 모두 가벼운 노출 기록(FSRS 무영향)을 보낸다. plant 는 단어 완료 시 plantQuestionDone 이 배치 전송한다.
     if (isArrangeQ && !isMultiStepMode && !currentQuestion?.isRetry) {
