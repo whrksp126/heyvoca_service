@@ -57,6 +57,8 @@ import FarmCta, {
   resolveHomeState,
 } from './FarmCta';
 import TodayTasksCard from './TodayTasksCard';
+import { useStreakCard } from './StreakCard';
+import HomeFlameChip from '../streak/HomeFlameChip';
 import OnboardingQuestCard from './OnboardingQuestCard';
 import { useOnboardingUnlock } from '../../context/OnboardingUnlockContext';
 import GrewTodayCard from './GrewTodayCard';
@@ -231,6 +233,18 @@ const Main = () => {
   // registerRefresh로 여기 넘겨주면, 그 함수를 ref에 담아뒀다가 당겨서 새로고침 때 같이 부른다.
   const streakRefreshRef = useRef(null);
   const registerStreakRefresh = useCallback((fn) => { streakRefreshRef.current = fn; }, []);
+  // 연속 학습 데이터 — 상단 불꽃 칩과 오늘 할 일 카드가 같이 쓴다. 카드는 달성 연출 상태(flameState)를 올려 준다
+  const streakCard = useStreakCard({ registerRefresh: registerStreakRefresh });
+  const flameChipRef = useRef(null);
+  const [flameState, setFlameState] = useState(null);
+  const baseTodayStatus = (streakCard.weekCells.find((c) => c.isToday) ?? {}).status;
+  const chipState = flameState ?? {
+    level: baseTodayStatus === 'all' ? 2 : baseTodayStatus === 'part' ? 1 : 0,
+    shield: baseTodayStatus === 'shield',
+    paused: !!streakCard.streak?.paused,
+    count: streakCard.streak?.current ?? 0,
+    feedKey: 0, evolveKey: 0, bump: 0,
+  };
   // 밭 지도 기본 시점 리셋 신호 — 당겨서 새로고침 때 1 올린다(HomeFieldGrid resetSignal)
   const [mapReset, setMapReset] = useState(0);
   const handlePullToRefresh = useCallback(async () => {
@@ -354,12 +368,13 @@ const Main = () => {
     <>
       {/* 보석 — 히어로 우측 상단에 떠 있는 칩(§6 · §10).
           히어로 위에 뜬 요소에만 그림자를 쓴다. 본문 카드는 시스템대로 보더 우선(§7) */}
+      <div className="absolute top-[max(48px,calc(var(--status-bar-height)+4px))] right-[16px] z-[20] flex items-center gap-[8px]">
+      <HomeFlameChip ref={flameChipRef} {...chipState} onClick={streakCard.onOpenRecord} />
       <button
         id="home-gem-chip"
         type="button"
         onClick={handleStoreButtonClick}
         className="
-          absolute top-[max(48px,calc(var(--status-bar-height)+4px))] right-[16px] z-[20]
           inline-flex items-center gap-[6px]
           h-[36px] pl-[6px] pr-[12px] rounded-full
           bg-layout-white/90 dark:bg-layout-gray-dark/90 backdrop-blur-[8px]
@@ -376,6 +391,7 @@ const Main = () => {
         />
         {gemCnt.toLocaleString()}
       </button>
+      </div>
 
       {/* 학습 언어 칩 — 보석 칩과 대칭으로 히어로 좌측 상단에 뜬다(같은 칩 규격).
           탭하면 학습 언어 바텀시트. 실험실 multi_lang 이 켜졌을 때만 노출 */}
@@ -530,7 +546,7 @@ const Main = () => {
 
         {/* 오늘 할 일 + 연속 학습(이슈 #25 13차 — 두 카드를 하나로 합쳤다). 연속 일수는 머리말 오른쪽,
             1주 불꽃 줄은 카드 아래. 홈에 돌아왔을 때 새로 달성한 줄 · 오늘 불꽃 점화를 연출한다 */}
-        <TodayTasksCard registerStreakRefresh={registerStreakRefresh} />
+        <TodayTasksCard streakCard={streakCard} flameRef={flameChipRef} onFlameState={setFlameState} />
 
         {/* 오늘 자란 단어 — 조건부다(§10). 오늘 자란 것이 없으면 카드를 아예 띄우지 않는다.
             "황금 당근" 카드는 내렸다 — 개수 하나만 적혀 있어 대부분의 날에 "0개"만 말했고,

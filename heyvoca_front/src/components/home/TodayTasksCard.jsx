@@ -26,9 +26,7 @@ import { useUser } from '../../context/UserContext';
 import { useOnboardingUnlock } from '../../context/OnboardingUnlockContext';
 import { vibrate } from '../../utils/osFunction';
 import { feel, SPRING, useCountUp } from '../../lib/feel';
-import { useStreakCard } from './StreakCard';
 import StreakCardBody from '../streak/StreakCardView';
-import TodayFlameHero from '../streak/TodayFlameHero';
 import { CHIP_SPARKS } from '../streak/StreakChip';
 import {
   useHomeScreenClear, isHomeScreenBusy, questPendingCount, questCelebrationMs,
@@ -214,24 +212,23 @@ const writeSeen = (key, value) => {
  * 불티 비행 — from(체크 동그라미) → to(불꽃 상자)로 작은 불티 3개가 포물선을 그리며 날아가 사라진다.
  * 카드(root, position:relative) 안에 잠깐 붙였다 떼는 DOM 조각이라 리렌더를 일으키지 않는다.
  */
-const flySparks = (root, from, to) => {
-  if (!root || !from || !to || typeof root.animate !== 'function') return;
-  const rr = root.getBoundingClientRect();
+const flySparks = (from, to) => {
+  if (!from || !to || typeof document === 'undefined' || typeof from.animate !== 'function') return;
   const a = from.getBoundingClientRect();
   const b = to.getBoundingClientRect();
-  const x0 = a.left + a.width / 2 - rr.left;
-  const y0 = a.top + a.height / 2 - rr.top;
-  const dx = b.left + b.width / 2 - rr.left - x0;
-  const dy = b.top + b.height * 0.6 - rr.top - y0;
+  const x0 = a.left + a.width / 2;
+  const y0 = a.top + a.height / 2;
+  const dx = b.left + b.width / 2 - x0;
+  const dy = b.top + b.height / 2 - y0;
   [0, 1, 2].forEach((i) => {
     const s = 8 - i * 1.5;
     const el = document.createElement('span');
     const color = CHIP_SPARKS[i % CHIP_SPARKS.length];
     Object.assign(el.style, {
-      position: 'absolute', left: `${x0 - s / 2}px`, top: `${y0 - s / 2}px`, width: `${s}px`, height: `${s}px`,
-      borderRadius: '9999px', background: color, boxShadow: `0 0 8px ${color}`, pointerEvents: 'none', zIndex: '5',
+      position: 'fixed', left: `${x0 - s / 2}px`, top: `${y0 - s / 2}px`, width: `${s}px`, height: `${s}px`,
+      borderRadius: '9999px', background: color, boxShadow: `0 0 8px ${color}`, pointerEvents: 'none', zIndex: '90',
     });
-    root.appendChild(el);
+    document.body.appendChild(el);
     const bend = 22 + i * 8;
     const anim = el.animate([
       { transform: 'translate(0px, 0px) scale(0.6)', opacity: 0 },
@@ -260,14 +257,14 @@ const flameLevelOf = ({ done, total, serverStatus }) => {
  * registerStreakRefresh — 홈 당겨서 새로고침 때 /farm/streak 도 같이 다시 받게 재조회 함수를 넘긴다.
  */
 // React Compiler("use memo")는 쓰지 않는다 — 퀘스트 대기 판정을 렌더 중 ref 에 적어 두는 자리가 있어서다.
-const TodayTasksCard = ({ registerStreakRefresh } = {}) => {
+const TodayTasksCard = ({ streakCard, flameRef, onFlameState } = {}) => {
 
   const { todayTasks } = useStats();
   const { userProfile } = useUser();
   const { missions, questCardVisible, pendingMissionRewards } = useOnboardingUnlock();
   const {
     streak, weekCells, onOpenRecord, onOpenPaused, onStartEarnBack, startingEarnBack,
-  } = useStreakCard({ registerRefresh: registerStreakRefresh });
+  } = streakCard;
   const reduceMotion = useReducedMotion();
 
   // 【14차 1주 줄 버그】 카드는 todayTasks · streak 이 오기 전 첫 렌더에서 null 을 돌려준다. 예전처럼
@@ -281,7 +278,6 @@ const TodayTasksCard = ({ registerStreakRefresh } = {}) => {
   const inView = useInView(rootRef, { amount: 0.35 });
   const play = seenOnce || typeof IntersectionObserver === 'undefined';
 
-  const flameRef = useRef(null);
   const checkEls = useRef({});
 
   const [expanded, setExpanded] = useState({ wilted: false, care: false });
@@ -395,16 +391,6 @@ const TodayTasksCard = ({ registerStreakRefresh } = {}) => {
   const shownServerStatus = holdLit ? 'today_empty' : todayStatus;
   const levelOf = (done) => flameLevelOf({ done, total: rowDefs.length, serverStatus: shownServerStatus });
   const flameLevel = levelOf(shownDone);
-  const fraction = rowDefs.length > 0 ? shownDone / rowDefs.length : 0;
-
-  // 1주 줄 오늘 칸 — 불꽃이 큰 불꽃이면 큰 불꽃, 아니면 서버 판정(연속이 이어졌는가) 그대로.
-  // 일부만 끝냈어도 연속 자격(하루 N개 정답)을 못 채웠으면 띠에 묶지 않는다 — 띠는 '이어진 날'만 뜻한다.
-  // 연속이 막 이어지는 연출 전(holdLit)에는 비워 두었다가 점화 순간에 켠다.
-  const todayCellStatus = holdLit ? 'today_empty' : (flameLevel >= 2 ? 'all' : todayStatus);
-  const shownCells = todayDate && todayCellStatus && todayCellStatus !== todayStatus
-    ? weekCells.map((c) => (c.date === todayDate ? { ...c, status: todayCellStatus } : c))
-    : weekCells;
-  const igniteDate = playing && ignited ? todayDate : null;
 
   let countTarget = baseCount;
   if (playing?.lit) countTarget = counted ? playing.to : playing.from;
@@ -425,7 +411,10 @@ const TodayTasksCard = ({ registerStreakRefresh } = {}) => {
       }
       const q = questRef.current;
       const questUntil = q.n > 0 ? q.at + START_SETTLE_MS + questCelebrationMs(q.n) : 0;
-      if (Date.now() < questUntil || isHomeScreenBusy()) {
+      // 불티가 날아갈 상단 불꽃 칩이 화면 안에 있어야 시작한다(스크롤을 내려 칩이 안 보이면 올라올 때까지 기다린다)
+      const chipRect = flameRef?.current?.getBoundingClientRect?.();
+      const chipVisible = !!chipRect && chipRect.bottom > 24 && chipRect.top < window.innerHeight - 24;
+      if (Date.now() < questUntil || isHomeScreenBusy() || !chipVisible) {
         t = setTimeout(tryStart, START_RETRY_MS);
         return;
       }
@@ -469,7 +458,7 @@ const TodayTasksCard = ({ registerStreakRefresh } = {}) => {
     let t = 250;
     playing.rows.forEach((key, i) => {
       at(t, () => { setRevealed(i + 1); feel('match'); });
-      at(t + SPARK_DELAY_MS, () => flySparks(rootEl, checkEls.current[key], flameRef.current));
+      at(t + SPARK_DELAY_MS, () => flySparks(checkEls.current[key], flameRef?.current));
       at(t + SPARK_DELAY_MS + SPARK_FLY_MS, () => {
         setFed(i + 1);
         if (playing.levels[i + 1] > playing.levels[i]) {
@@ -504,6 +493,14 @@ const TodayTasksCard = ({ registerStreakRefresh } = {}) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [playing]);
 
+  // 상단 바 불꽃 칩(Main)에 지금 보여 줄 상태와 연출 신호를 올린다
+  const chipShield = shownServerStatus === 'shield' && flameLevel === 0;
+  const chipPaused = !!streak?.paused;
+  useEffect(() => {
+    if (typeof onFlameState !== 'function') return;
+    onFlameState({ level: flameLevel, shield: chipShield, paused: chipPaused, count: shownCount, feedKey, evolveKey, bump });
+  }, [onFlameState, flameLevel, chipShield, chipPaused, shownCount, feedKey, evolveKey, bump]);
+
   if (!todayTasks && !streak) return null;
 
   const total = rowDefs.length;
@@ -511,29 +508,15 @@ const TodayTasksCard = ({ registerStreakRefresh } = {}) => {
   return (
     <motion.section
       ref={setRootEl}
-      aria-label="오늘 할 일과 연속 학습"
+      aria-label="오늘 할 일"
       initial={reduceMotion ? { opacity: 0 } : { opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={reduceMotion ? { duration: 0.15 } : SPRING.soft}
       className="relative rounded-[12px] pt-[14px] px-[18px] pb-[16px] bg-[rgba(255,255,255,.72)] dark:bg-[rgba(36,36,36,.66)] backdrop-blur-[12px] backdrop-saturate-[1.4] border border-white/80 dark:border-white/[.08] shadow-[inset_0_1px_0_rgba(255,255,255,.7),0_4px_14px_rgba(96,80,52,.08)] dark:shadow-[inset_0_1px_0_rgba(255,255,255,.05),0_4px_14px_rgba(0,0,0,.28)]"
     >
-      {/* 머리 — 오늘의 불꽃 + N일 연속 */}
-      <TodayFlameHero
-        ref={flameRef}
-        level={flameLevel}
-        fraction={fraction}
-        count={shownCount}
-        paused={!!streak?.paused}
-        hasTasks={total > 0}
-        onOpenRecord={onOpenRecord}
-        feedKey={feedKey}
-        evolveKey={evolveKey}
-        bump={bump}
-      />
-
       {/* 본문 — 할 일(불꽃의 연료) */}
       {todayTasks && total > 0 && (
-        <div className="mt-[10px] border-t border-[#F0F0F0] dark:border-[rgba(255,255,255,.08)] pt-[10px]">
+        <div>
           <div className="flex items-baseline justify-between">
             <b className="text-[13px] font-[800] tracking-[-0.02em] text-layout-gray-400 dark:text-layout-gray-300">오늘 할 일</b>
             <span className="text-[12px] font-[700] tabular-nums text-layout-gray-300">
@@ -569,18 +552,24 @@ const TodayTasksCard = ({ registerStreakRefresh } = {}) => {
         </div>
       )}
 
-      {/* 아래 — 1주 줄(오늘 칸은 불꽃 단계와 같이 움직인다) */}
-      <div className="mt-[6px] pt-[14px] border-t border-[#F0F0F0] dark:border-[rgba(255,255,255,.08)]">
-        <StreakCardBody
-          streak={streak}
-          weekCells={shownCells}
-          play={play}
-          igniteDate={igniteDate}
-          onOpenPaused={onOpenPaused}
-          onStartEarnBack={onStartEarnBack}
-          startingEarnBack={startingEarnBack}
-        />
-      </div>
+      {todayTasks && total === 0 && (
+        <p className="py-[6px] text-[13px] font-[600] text-layout-gray-400 dark:text-layout-gray-300">오늘은 돌볼 일이 없어요</p>
+      )}
+
+      {/* 멈춤 알림 · 다시 잇기 도전 — 있을 때만(1주 줄은 상단 불꽃 칩 도입으로 뺐다) */}
+      {(streak?.paused || streak?.earn_back?.status === 'active' || streak?.earn_back?.status === 'offered') && (
+        <div className="mt-[10px] border-t border-[#F0F0F0] dark:border-[rgba(255,255,255,.08)] pt-[12px]">
+          <StreakCardBody
+            streak={streak}
+            weekCells={[]}
+            hideWeek
+            play={play}
+            onOpenPaused={onOpenPaused}
+            onStartEarnBack={onStartEarnBack}
+            startingEarnBack={startingEarnBack}
+          />
+        </div>
+      )}
     </motion.section>
   );
 };

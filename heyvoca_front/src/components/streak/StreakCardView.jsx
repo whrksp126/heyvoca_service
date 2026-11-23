@@ -29,6 +29,7 @@ const StreakCardBody = ({
   weekCells = [],
   play = true,
   igniteDate = null,
+  hideWeek = false,
   onOpenPaused,
   onStartEarnBack,
   startingEarnBack = false,
@@ -137,7 +138,7 @@ const StreakCardBody = ({
             </>
           )}
         </div>
-      ) : weekCells.length === 7 ? (
+      ) : hideWeek ? null : weekCells.length === 7 ? (
         <StreakWeekRow cells={weekCells} play={play} igniteDate={igniteDate} />
       ) : (
         // week 응답이 아직 없을 때(로딩·구버전 백엔드) — 칩 자리만 스켈레톤으로 둔다
