@@ -545,6 +545,11 @@ def _serialize_book_maps(maps, enricher=None, pos_lookup=None):
     return vocas
 
 
+def _iso_z(dt_value):
+    """naive UTC datetime -> ISO8601 + 'Z' (None 이면 None)."""
+    return dt_value.isoformat() + 'Z' if dt_value else None
+
+
 def build_voca_book_response(voca_book):
     """UserVocaBook 객체를 API 응답 형식으로 변환"""
     vocas = build_vocas_for_book(voca_book.id)
@@ -556,6 +561,8 @@ def build_voca_book_response(voca_book):
         'color': json.loads(voca_book.color) if voca_book.color else None,
         'language': voca_book.language or 'en',
         'vocaCount': len(vocas),
+        'createdAt': _iso_z(voca_book.created_at),
+        'updatedAt': _iso_z(voca_book.updated_at),
         'vocas': vocas,
     }
 
@@ -601,6 +608,8 @@ def get_voca_books():
             'color': json.loads(vb.color) if vb.color else None,
             'language': vb.language or 'en',
             'vocaCount': len(vocas),
+            'createdAt': _iso_z(vb.created_at),
+            'updatedAt': _iso_z(vb.updated_at),
             'vocas': vocas,
         })
 

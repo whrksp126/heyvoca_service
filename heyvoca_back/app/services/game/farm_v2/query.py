@@ -328,6 +328,33 @@ def studied_today_ids(user_id: UUID, now: Optional[dt.datetime] = None,
     return {r[0] for r in rows}
 
 
+def _studied_today_existing_crop_ids(user_id, now, lang, script_ids) -> set:
+    """오늘 학습했고, 오늘 새로 심은 것(state_before new/없음)이 아닌 일반 단어 id 집합."""
+    import json
+    from app.services.study_day import logical_day_start_utc
+    rows = (
+        db.session.query(UserStudyLog.user_voca_id, UserStudyLog.state_before)
+        .filter(UserStudyLog.user_id == user_id,
+                UserStudyLog.dict_lang == _lang(lang),
+                UserStudyLog.created_at >= logical_day_start_utc(now),
+                ~UserStudyLog.user_voca_id.in_(script_ids))
+        .all()
+    )
+    studied, new_ids = set(), set()
+    for vid, before in rows:
+        studied.add(vid)
+        is_new = not before
+        if before:
+            try:
+                st = json.loads(before)
+                is_new = (not st) or st.get('state') in ('new', None)
+            except Exception:
+                is_new = False
+        if is_new:
+            new_ids.add(vid)
+    return studied - new_ids
+
+
 def split_care_progress(live_ids, studied_ids, snapshot_ids, wilted_ids, rotten_ids) -> tuple:
     """돌봄 줄의 (remaining, done) 판정부 — DB 없이 검증할 수 있게 뺐다.
 
@@ -758,6 +785,15 @@ def get_today_tasks(user_id: UUID, now: Optional[dt.datetime] = None,
     _, care_done_ids = split_care_progress(
         care_live_ids, studied_ids, care_snapshot, wilted_remaining_ids, rotten_ids)
 
+    # ── 3-1) care.studied_today — 목표(total)를 넘어 보일 수 있는 '실제 돌본 수' ──
+    # 정의: 오늘(logical day) 학습 로그가 있는 기존 작물 단어 수. 아래는 제외해 다른 줄과 중복 집계하지 않는다.
+    #  - 글자 밭(script) 단어, 오늘 새로 심은 단어(new_seed 줄이 센다: 로그 state_before 가 new/없음),
+    #  - 시듦·부패 줄에 속한 단어(남은 것·끝낸 것·오늘 살린 것).
+    care_studied_today = len(
+        _studied_today_existing_crop_ids(user_id, now, lang, script_ids)
+        - wilted_remaining_ids - wilted_done_ids - rotten_ids
+        - {r[0] for r in rescued_rows})
+
     # ── 4) word/stage — wilted remaining·care remaining·양쪽 done 을 한 번에 조회 ──
     extra_ids = (wilted_remaining_ids | care_remaining_ids | wilted_done_ids | care_done_ids)
     extra_map = {}
@@ -870,7 +906,8 @@ def get_today_tasks(user_id: UUID, now: Optional[dt.datetime] = None,
         'wilted': {'total': len(wilted_remaining_ids) + len(wilted_done_ids),
                   'done': len(wilted_done_ids), 'words': wilted_words},
         'care': {'total': len(care_remaining_ids) + len(care_done_ids),
-                'done': len(care_done_ids), 'words': care_words},
+                'done': len(care_done_ids), 'studied_today': care_studied_today,
+                'words': care_words},
         'new_seed': {'target': new_seed_target, 'done': int(new_done)},
         'seeds_left': seeds_left,
         'show_buy': (seeds_left < daily_new_limit) or buy_done,

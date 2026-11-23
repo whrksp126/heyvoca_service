@@ -1,5 +1,5 @@
-import React, { useCallback, useMemo, useState } from 'react';
-import { Plus } from '@phosphor-icons/react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { Plus, CaretDown, Check } from '@phosphor-icons/react';
 import { motion } from 'framer-motion';
 import { useVocabulary } from '../../context/VocabularyContext';
 import PullToRefresh from '../common/PullToRefresh';
@@ -18,6 +18,47 @@ import { vibrate } from '../../utils/osFunction';
  * 예전에는 이 화면 전체가 components/vocabularySheets/Main.jsx였다. 상단에 "단어장|글자"
  * 탭이 생기면서(2026-09-29) Main은 탭 껍데기만 맡고, 이 파일이 "단어장" 탭 콘텐츠를 맡는다.
  */
+// 정렬 — 선택값은 localStorage 에 기억한다. 'default' 는 서버가 내려준 순서(기존 동작) 그대로.
+// 수정순 = 단어장 updatedAt(있으면) 아니면 안의 단어가 마지막으로 바뀐 시각, 등록순 = 단어장 createdAt
+// (GET /vocaBooks 가 아직 안 내려주면 등록순 옵션은 숨긴다).
+const SORT_KEY = 'heyvoca_vocabooks_sort';
+const SORT_OPTIONS = [
+  { key: 'default', label: '기본순' },
+  { key: 'updated_desc', label: '최근 수정순' },
+  { key: 'updated_asc', label: '오래된 수정순' },
+  { key: 'created_desc', label: '최근 등록순', needsCreated: true },
+  { key: 'created_asc', label: '오래된 등록순', needsCreated: true },
+  { key: 'name_asc', label: '이름순 (가나다·ABC)' },
+  { key: 'name_desc', label: '이름 역순' },
+];
+const readSort = () => {
+  try {
+    const v = localStorage.getItem(SORT_KEY);
+    return SORT_OPTIONS.some((o) => o.key === v) ? v : 'default';
+  } catch (e) {
+    return 'default';
+  }
+};
+const timeOf = (v) => {
+  const t = v ? new Date(v).getTime() : 0;
+  return Number.isNaN(t) ? 0 : t;
+};
+const sortRows = (rows, sort) => {
+  if (sort === 'default') return rows;
+  const updated = (r) => Math.max(timeOf(r.book.updatedAt), r.touchedAt || 0);
+  const created = (r) => timeOf(r.book.createdAt);
+  const name = (a, b) => String(a.book.title || '').localeCompare(String(b.book.title || ''), 'ko', { numeric: true });
+  const cmp = {
+    updated_desc: (a, b) => updated(b) - updated(a),
+    updated_asc: (a, b) => updated(a) - updated(b),
+    created_desc: (a, b) => created(b) - created(a),
+    created_asc: (a, b) => created(a) - created(b),
+    name_asc: name,
+    name_desc: (a, b) => name(b, a),
+  }[sort];
+  return cmp ? [...rows].sort(cmp) : rows;
+};
+
 const VocaBooksTab = () => {
   "use memo";
 
@@ -26,6 +67,25 @@ const VocaBooksTab = () => {
   const { showVocabularyManageNewBottomSheet } = useVocabularyManageNewBottomSheet();
 
   const [filter, setFilter] = useState('all'); // all | care | recent
+  const [sort, setSort] = useState(readSort);
+  const [sortOpen, setSortOpen] = useState(false);
+  const sortWrapRef = useRef(null);
+
+  useEffect(() => {
+    if (!sortOpen) return undefined;
+    const close = (e) => {
+      if (sortWrapRef.current && !sortWrapRef.current.contains(e.target)) setSortOpen(false);
+    };
+    document.addEventListener('pointerdown', close);
+    return () => document.removeEventListener('pointerdown', close);
+  }, [sortOpen]);
+
+  const handlePickSort = (key) => {
+    vibrate({ duration: 5 });
+    setSort(key);
+    setSortOpen(false);
+    try { localStorage.setItem(SORT_KEY, key); } catch (e) { /* 기억만 못 할 뿐 */ }
+  };
 
   // 당겨서 새로고침 — 단어장 목록(+단어 사전)과 최근 학습 기록을 함께 최신화한다
   const handlePullToRefresh = useCallback(async () => {
@@ -44,11 +104,18 @@ const VocaBooksTab = () => {
 
   const careCount = books.filter((row) => row.care > 0).length;
 
+  const hasCreated = books.some((row) => !!row.book.createdAt);
+  const sortOptions = SORT_OPTIONS.filter((o) => !o.needsCreated || hasCreated);
+  const activeSort = sortOptions.find((o) => o.key === sort) || SORT_OPTIONS[0];
+
   const visible = useMemo(() => {
-    if (filter === 'care') return books.filter((row) => row.care > 0);
-    if (filter === 'recent') return [...books].sort((a, b) => b.touchedAt - a.touchedAt);
-    return books;
-  }, [books, filter]);
+    let rows = books;
+    if (filter === 'care') rows = books.filter((row) => row.care > 0);
+    else if (filter === 'recent') rows = [...books].sort((a, b) => b.touchedAt - a.touchedAt);
+    const effective = sortOptions.some((o) => o.key === sort) ? sort : 'default';
+    return sortRows(rows, effective);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [books, filter, sort, hasCreated]);
 
   const handleCardClick = (id) => {
     vibrate({ duration: 5 });
@@ -79,7 +146,8 @@ const VocaBooksTab = () => {
       exit={{ opacity: 0, y: -20, transition: { duration: 0.2 } }}
     >
       {/* 필터 칩 — 읽기만 하는 숫자 대신 눌러서 걸러지는 숫자를 둔다 (시안 §4) */}
-      <div className="flex gap-[6px] shrink-0 px-[16px] pb-[10px] overflow-x-auto">
+      <div className="relative flex items-center gap-[8px] px-[16px] pb-[10px]">
+      <div className="flex flex-1 min-w-0 gap-[6px] overflow-x-auto">
         {chips.map((chip) => {
           const on = filter === chip.key;
           return (
@@ -104,6 +172,59 @@ const VocaBooksTab = () => {
             </button>
           );
         })}
+      </div>
+
+        <div ref={sortWrapRef} className="shrink-0">
+          <button
+            type="button"
+            aria-haspopup="listbox"
+            aria-expanded={sortOpen}
+            onClick={() => { vibrate({ duration: 5 }); setSortOpen((o) => !o); }}
+            className={`
+              flex items-center gap-[3px] h-[30px] pl-[11px] pr-[8px] rounded-full
+              text-[12.5px] font-[700] tracking-[-0.02em] whitespace-nowrap
+              ${sort !== 'default'
+                ? 'bg-primary-main-100 dark:bg-primary-main-dark text-primary-main-600'
+                : 'bg-layout-gray-50 dark:bg-layout-gray-dark text-layout-gray-400 dark:text-layout-gray-200'}
+            `}
+          >
+            {activeSort.key === 'default' ? '정렬' : activeSort.label.split(' (')[0]}
+            <CaretDown size={12} weight="bold" className={`transition-transform ${sortOpen ? 'rotate-180' : ''}`} />
+          </button>
+          {sortOpen && (
+            <ul
+              role="listbox"
+              className="
+                absolute right-[16px] top-[34px] z-30 min-w-[168px] py-[4px]
+                rounded-[12px] border border-layout-gray-100 dark:border-white/[.08]
+                bg-layout-white dark:bg-layout-black
+                shadow-[0_4px_16px_rgba(0,0,0,0.12)]
+              "
+            >
+              {sortOptions.map((opt) => {
+                const active = opt.key === activeSort.key;
+                return (
+                  <li key={opt.key} role="option" aria-selected={active}>
+                    <button
+                      type="button"
+                      onClick={() => handlePickSort(opt.key)}
+                      className={`
+                        w-full flex items-center justify-between gap-[8px] px-[14px] py-[10px] text-left
+                        text-[13.5px] tracking-[-0.02em]
+                        ${active
+                          ? 'font-[800] text-primary-main-600 bg-primary-main-100 dark:bg-layout-gray-dark'
+                          : 'font-[600] text-layout-black dark:text-layout-white'}
+                      `}
+                    >
+                      {opt.label}
+                      {active && <Check size={13} weight="bold" className="shrink-0" />}
+                    </button>
+                  </li>
+                );
+              })}
+            </ul>
+          )}
+        </div>
       </div>
 
       <div className="flex flex-col gap-[10px] px-[16px] pb-[20px]">

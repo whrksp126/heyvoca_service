@@ -2155,7 +2155,7 @@ const Main = ({ testQuestions, setTestQuestions, progressIndex, setProgressIndex
   // '먼저 떠올려 보기' — 켠 사용자에게만, 보기가 있는 유형만. 온보딩·게스트 체험(공급자 세션)은 제외.
   const recallEnabled = !!labFeatures?.recall_first
     && !guestMode && !questionSupplier
-    && !!currentQ && !currentQ.script
+    && !!currentQ && !currentQ.script && !currentQ.isSentenceExtra
     && RECALL_QUESTION_TYPES.includes(currentQType);
   const recallCovered = recallEnabled
     && recallRevealedIdx !== progressIndex

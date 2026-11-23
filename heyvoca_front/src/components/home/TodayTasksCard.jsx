@@ -302,14 +302,11 @@ const TodayTasksCard = ({ streakCard, flameRef, onFlameState } = {}) => {
       });
     }
     if (care.total > 0) {
-      const { compact, expandedBlock } = buildWordListParts(care.words, expanded.care, () => toggle('care'));
       rowDefs.push({
         key: 'care',
         title: '오늘 돌봄 물주기',
-        sub: compact,
-        expand: expandedBlock,
         checked: care.done >= care.total,
-        right: <Progress done={care.done} total={care.total} />,
+        right: <Progress done={Math.max(care.done, care.studied_today ?? 0)} total={care.total} />,
       });
     }
     if (newSeed.target > 0) {

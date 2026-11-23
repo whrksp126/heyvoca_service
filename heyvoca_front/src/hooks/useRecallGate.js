@@ -24,16 +24,13 @@ export function useRecallGiveUp(recall, giveUp) {
   }, []);
 }
 
-// '먼저 떠올려 보기'를 적용하는 문제 유형 — 보기가 있는 유형만(철자 채우기·빈칸 입력·문장 만들기류 제외).
+// '먼저 떠올려 보기'를 적용하는 문제 유형 — 보기가 있는 유형만.
+// 실전 유형(문장 뜻 맞추기·문장 만들기·듣고 만들기·예문 직접 입력 등 실전 문장 구간)은 가리지 않는다.
 export const RECALL_QUESTION_TYPES = [
   'multipleChoice',
   'multipleChoiceListening',
   'reverseMultipleChoice',
   'fillInTheBlank',
-  'sentenceTranslate',
-  'sentenceArrangePartial',
-  'sentenceArrange',
-  'listenArrange',
   'cardMatch',
   'cardMatchListening',
 ];

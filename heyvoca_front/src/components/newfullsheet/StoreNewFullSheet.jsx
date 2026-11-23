@@ -48,15 +48,15 @@ const TABS = [
   { key: 'gems', label: '보석' },
 ];
 
-const ITEM_ORDER = ['SHOVEL', 'NUTRIENT', 'SHIELD'];
 // 서점 단어장 맨 앞 탭 — 서버가 사용자 수준(θ)으로 고른 recommendRank 가 있는 단어장(이슈 #25 8차).
 const RECOMMEND_CATEGORY = '추천';
 const EMPTY_BOOK_PRICE = 3;
 
 /** 섹션 머리 (시안 .sechead) */
-const SecHead = ({ title, sub, right }) => (
+const SecHead = ({ title, sub, right, afterTitle }) => (
   <div className="flex items-baseline gap-[8px] mb-[7px]">
     <h4 className="text-[15px] font-[800] tracking-[-0.03em] text-layout-black dark:text-layout-white">{title}</h4>
+    {afterTitle}
     {sub && (
       <span className="flex-1 min-w-0 truncate text-[11.5px] font-[500] tracking-[-0.02em] text-layout-gray-300">
         {sub}
@@ -468,39 +468,29 @@ const StoreNewFullSheet = ({ initialTab = 'books', onInventoryChanged, onGoRotte
 
             {toolsStatus === 'ready' && (
               <>
-                {/* 보유량이 맨 위 — 산 도구가 여기로 날아온다 */}
-                <div>
-                  <div className="flex gap-[8px]">
-                    {ITEM_ORDER.map((type) => {
-                      const count = itemCounts?.[type] ?? 0;
-                      return (
-                        <div
-                          key={type}
-                          id={`farm-item-hold-${type}`}
-                          aria-label={`${ITEM_SHORT[type]} ${count}개 보유`}
-                          className="flex-1 flex items-center justify-center gap-[5px] px-[6px] py-[8px] rounded-[12px] bg-layout-gray-50 dark:bg-layout-gray-dark"
-                        >
-                          <img
-                            src={FARM_ITEM_ASSETS[type]}
-                            alt={ITEM_SHORT[type]}
-                            draggable={false}
-                            className="w-[22px] h-[22px] object-contain select-none"
-                          />
-                          <span className={`text-[16px] font-[800] tracking-[-0.02em] ${count > 0 ? 'text-layout-black dark:text-layout-white' : 'text-layout-gray-200'}`}>
-                            {count}
-                          </span>
-                        </div>
-                      );
-                    })}
-                  </div>
-                </div>
-
                 {packGroups.map((group) => {
                   const best = bestSku(group);
                   return (
                     <div key={group.itemType}>
                       <SecHead
                         title={ITEM_NAME[group.itemType]}
+                        afterTitle={(
+                          <span
+                            id={`farm-item-hold-${group.itemType}`}
+                            aria-label={`${ITEM_SHORT[group.itemType]} ${itemCounts?.[group.itemType] ?? 0}개 보유`}
+                            className="shrink-0 flex items-center gap-[3px]"
+                          >
+                            <img
+                              src={FARM_ITEM_ASSETS[group.itemType]}
+                              alt=""
+                              draggable={false}
+                              className="w-[18px] h-[18px] object-contain select-none"
+                            />
+                            <span className={`text-[14px] font-[800] tracking-[-0.02em] ${(itemCounts?.[group.itemType] ?? 0) > 0 ? 'text-layout-black dark:text-layout-white' : 'text-layout-gray-200'}`}>
+                              {itemCounts?.[group.itemType] ?? 0}
+                            </span>
+                          </span>
+                        )}
                         sub={ITEM_TAG[group.itemType]}
                       />
 
