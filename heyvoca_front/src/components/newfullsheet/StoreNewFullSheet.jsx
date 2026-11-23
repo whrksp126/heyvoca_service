@@ -54,7 +54,7 @@ const EMPTY_BOOK_PRICE = 3;
 
 /** 섹션 머리 (시안 .sechead) */
 const SecHead = ({ title, sub, right, afterTitle }) => (
-  <div className="flex items-baseline gap-[8px] mb-[7px]">
+  <div className="flex items-baseline justify-between gap-[8px] mb-[7px]">
     <h4 className="text-[15px] font-[800] tracking-[-0.03em] text-layout-black dark:text-layout-white">{title}</h4>
     {afterTitle}
     {sub && (
@@ -474,11 +474,11 @@ const StoreNewFullSheet = ({ initialTab = 'books', onInventoryChanged, onGoRotte
                     <div key={group.itemType}>
                       <SecHead
                         title={ITEM_NAME[group.itemType]}
-                        afterTitle={(
+                        right={(
                           <span
                             id={`farm-item-hold-${group.itemType}`}
                             aria-label={`${ITEM_SHORT[group.itemType]} ${itemCounts?.[group.itemType] ?? 0}개 보유`}
-                            className="shrink-0 flex items-center gap-[3px]"
+                            className="shrink-0 ml-auto self-center flex items-center gap-[3px]"
                           >
                             <img
                               src={FARM_ITEM_ASSETS[group.itemType]}

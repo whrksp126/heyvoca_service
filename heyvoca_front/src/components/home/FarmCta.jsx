@@ -116,11 +116,11 @@ export const HOME_STATE_VIEW = {
   },
 };
 
-const FarmCta = ({ label, onClick }) => {
+const FarmCta = ({ label, onClick, floating = false }) => {
   "use memo";
 
   return (
-    <div className="absolute left-[20px] right-[20px] bottom-[-16px] z-[24]">
+    <div className={floating ? 'relative w-full' : 'absolute left-[20px] right-[20px] bottom-[-16px] z-[24]'}>
       <motion.button
         type="button"
         onClick={onClick}

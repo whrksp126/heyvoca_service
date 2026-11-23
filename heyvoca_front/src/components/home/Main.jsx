@@ -51,7 +51,6 @@ import { buildBookRow, isScriptBook } from '../vocabularySheets/VocaBookCard';
 import VocabularyWordsNewFullSheet from '../newfullsheet/VocabularyWordsNewFullSheet';
 import { useVocabulary } from '../../context/VocabularyContext';
 import gemIcon from '../../assets/images/farm/icon-gem.png';
-import WordListSheet from '../farm/WordListSheet';
 import FarmCta, {
   HOME_STATES,
   resolveHomeState,
@@ -61,7 +60,6 @@ import { useStreakCard } from './StreakCard';
 import HomeFlameChip from '../streak/HomeFlameChip';
 import OnboardingQuestCard from './OnboardingQuestCard';
 import { useOnboardingUnlock } from '../../context/OnboardingUnlockContext';
-import GrewTodayCard from './GrewTodayCard';
 
 /** 히어로 높이(지도 배경 히어로 h-[420px] 와 같은 값) — 밭 지도의 '보이는 창' 아래 끝 = CTA 위 */
 const HERO_HEIGHT = 420;
@@ -165,6 +163,8 @@ const Main = () => {
   const questInHero = noBooks && questCardVisible;
   // 퀘스트 상태를 아직 모름(unlock-status 전) — 카드 자리만 스켈레톤으로 잡아 둔다
   const questPending = noBooks && booksKnown && !questUnlock;
+  // 단어장이 하나라도 있으면 밭 지도를 화면 전체 배경으로 깐다(없으면 밭 없는 퀘스트 히어로)
+  const hasFieldMap = !noBooks;
 
   const gemCnt = farmOverview?.gem_cnt ?? userProfile?.gem_cnt ?? 0;
 
@@ -245,6 +245,32 @@ const Main = () => {
     count: streakCard.streak?.current ?? 0,
     feedKey: 0, evolveKey: 0, bump: 0,
   };
+  /*
+    하단에 떠 있는 묶음(퀘스트 · 농장 돌보기 · 오늘 할 일)의 윗변을 재서, 밭 지도의 기본 시점이 그 위에
+    들어오게 한다(focusBottom). 이동 창은 지도 아래 끝까지 열어 두어 카드에 가려진 밭도 끌어서 볼 수 있다.
+  */
+  const mapBoxRef = useRef(null);
+  const floatRef = useRef(null);
+  const [mapBounds, setMapBounds] = useState({ h: 0, focusBottom: HERO_HEIGHT - 46 });
+  useEffect(() => {
+    const mapEl = mapBoxRef.current;
+    const floatEl = floatRef.current;
+    if (!mapEl || !floatEl) return undefined;
+    const measure = () => {
+      const m = mapEl.getBoundingClientRect();
+      const f = floatEl.getBoundingClientRect();
+      if (m.height <= 0) return;
+      const fb = Math.round(Math.max(200, f.top - m.top + 6));
+      setMapBounds((prev) => (prev.h === m.height && prev.focusBottom === fb ? prev : { h: m.height, focusBottom: fb }));
+    };
+    measure();
+    if (typeof ResizeObserver === 'undefined') return undefined;
+    const ro = new ResizeObserver(measure);
+    ro.observe(mapEl);
+    ro.observe(floatEl);
+    return () => ro.disconnect();
+  }, [hasFieldMap]);
+
   // 밭 지도 기본 시점 리셋 신호 — 당겨서 새로고침 때 1 올린다(HomeFieldGrid resetSignal)
   const [mapReset, setMapReset] = useState(0);
   const handlePullToRefresh = useCallback(async () => {
@@ -348,15 +374,6 @@ const Main = () => {
   /*
     ⑤ "지금 볼 만한 단어" 카드들의 "+n개 더"·헤더 숫자가 여는 전체 목록 시트.
   */
-  // 오늘 자란 단어 — todayChanges(promoted+new)를 이미 클라이언트가 다 갖고 있어 API 호출이 없다.
-  const openGrownSheet = () => {
-    vibrate({ duration: 5 });
-    pushNewFullSheet(WordListSheet, {
-      title: '오늘 자란 단어',
-      items: grewItems,
-    }, { smFull: true, closeOnBackdropClick: true });
-  };
-
   /*
     "지금 볼 만한 단어"의 마지막 묶음이던 "아직 심지 않은 씨앗"(WordFeedCard)은 이슈 #25 13차에서 뺐다.
     새 씨앗 심기는 오늘 할 일 카드의 '농장에 새 씨앗 심기' 줄과 홈 주 버튼(학습 고르기 시트)이 맡는다.
@@ -441,13 +458,12 @@ const Main = () => {
           가장 눈에 띄는 자리를 겁주는 데 쓴다. 부패 직전 안내는 CTA 바로 아래 "오늘 할 일"
           카드(TodayTasksCard)가 맡고 있고, 거기에는 누르면 갈 곳이 있다. */}
 
-      {/* §7 주 CTA — 히어로 하단에 겹쳐 뜬다. 홈에서 유일한 핑크 */}
-      {!buyQuestPending && <FarmCta label={ctaInfo.label} onClick={handleCtaClick} />}
+      {/* §7 주 CTA — 단어장 0개 히어로에서는 히어로 하단에 겹쳐 뜬다. 밭 지도가 있을 때는
+          화면 하단 떠 있는 묶음(아래 floatingStack)으로 옮겨 '오늘 할 일' 카드 바로 위에 선다. */}
+      {!hasFieldMap && !buyQuestPending && <FarmCta label={ctaInfo.label} onClick={handleCtaClick} />}
     </>
   );
 
-  // 단어장이 하나라도 있으면 밭 지도를 화면 전체 배경으로 깐다(없으면 밭 없는 퀘스트 히어로)
-  const hasFieldMap = !noBooks;
 
   return (
     /* §9 단일 배경 — 화면 배경을 한 번만 깔고 히어로 그라디언트의 끝 색을 같은 값으로 맞춘다 */
@@ -461,9 +477,10 @@ const Main = () => {
       화면의 절반을 차지하는 그림이 스크롤에 반응하지 않는 건 "고정된 헤더"가 아니라
       **고장 난 화면**으로 읽힌다.
     */
+    <div className="relative isolate h-screen bg-farm-canvas dark:bg-layout-black">
     <PullToRefresh
       onRefresh={handlePullToRefresh}
-      className="isolate flex flex-col h-screen overflow-y-auto bg-farm-canvas dark:bg-layout-black"
+      className="flex flex-col h-full overflow-y-auto"
     >
 
       {/* 밭 지도 — 홈 화면 전체(하단 탭 위까지)의 배경 층(이슈 #25 9차).
@@ -475,6 +492,7 @@ const Main = () => {
           카드가 없는 곳(히어로 빈 곳·본문 아래)은 지도가 받는다 — 기존 제스처 규칙 그대로. */}
       {hasFieldMap && (
         <div
+          ref={mapBoxRef}
           className="
             relative z-0 shrink-0 w-full
             h-[calc(100vh-60px-var(--safe-area-bottom))]
@@ -485,7 +503,8 @@ const Main = () => {
           <HomeFieldGrid
             rows={bookRows}
             resetSignal={mapReset}
-            focusBottom={HERO_HEIGHT - 46}
+            focusBottom={mapBounds.focusBottom}
+            panBottomExtra={Math.max(0, mapBounds.h - 12 - mapBounds.focusBottom)}
             onSelect={(id) => {
               vibrate({ duration: 5 });
               pushNewFullSheet(VocabularyWordsNewFullSheet, { id }, { smFull: true, closeOnBackdropClick: true });
@@ -524,37 +543,49 @@ const Main = () => {
         </div>
       )}
 
-      {/* §9 본문 — 배경을 깔지 않는다. 페이드된 지면이 카드 사이로 비친다.
-          §7 — CTA 가 흘러나온 만큼 상단 패딩 30px 으로 비켜 준다 */}
-      <motion.div
-        initial={{ opacity: 0, y: 12 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.2 }}
-        /* 주 버튼이 없으면(buyQuestPending) 흘러나온 버튼을 비켜 줄 30px 도 필요 없다 */
-        className={`
-          relative z-[2] shrink-0
-          flex flex-col gap-[12px]
-          px-[20px] ${buyQuestPending ? 'pt-[12px]' : 'pt-[30px]'}
-          pb-[calc(84px+var(--safe-area-bottom))]
-        `}
-      >
-        {/* CTA 바로 아래 "오늘 할 일" 카드 — 썩은 단어·시듦·돌봄·새 씨앗을 한 곳에서 말한다.
-            §8 water·amber·seed 스트립은 이 카드로 흡수돼 뺐다(위 변수 선언부 주석 참고). */}
-        {/* 가입 직후 '첫 퀘스트'(이슈 #25) — 신규 가입자에게 남은 퀘스트가 있을 때만 그려진다.
-            새 사용자에게 지금 할 일은 퀘스트를 하나씩 해 보는 것이라 오늘 할 일보다 위에 둔다. */}
-        {!questInHero && <OnboardingQuestCard />}
-
-        {/* 오늘 할 일 + 연속 학습(이슈 #25 13차 — 두 카드를 하나로 합쳤다). 연속 일수는 머리말 오른쪽,
-            1주 불꽃 줄은 카드 아래. 홈에 돌아왔을 때 새로 달성한 줄 · 오늘 불꽃 점화를 연출한다 */}
-        <TodayTasksCard streakCard={streakCard} flameRef={flameChipRef} onFlameState={setFlameState} />
-
-        {/* 오늘 자란 단어 — 조건부다(§10). 오늘 자란 것이 없으면 카드를 아예 띄우지 않는다.
-            "황금 당근" 카드는 내렸다 — 개수 하나만 적혀 있어 대부분의 날에 "0개"만 말했고,
-            황금 당근은 마이페이지 온실에 그대로 있다. */}
-        <GrewTodayCard items={grewItems} onViewAll={openGrownSheet} />
-
-      </motion.div>
+      {/* 단어장 0개 — 예전 배치 그대로(히어로 안 퀘스트 카드 + 아래 본문). 밭이 없어 떠 있는 묶음을 쓰지 않는다. */}
+      {!hasFieldMap && (
+        <motion.div
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.2 }}
+          className={`
+            relative z-[2] shrink-0
+            flex flex-col gap-[12px]
+            px-[20px] ${buyQuestPending ? 'pt-[12px]' : 'pt-[30px]'}
+            pb-[calc(84px+var(--safe-area-bottom))]
+          `}
+        >
+          <TodayTasksCard streakCard={streakCard} flameRef={flameChipRef} onFlameState={setFlameState} />
+        </motion.div>
+      )}
     </PullToRefresh>
+
+    {/* 밭 지도가 있을 때 — 하단(탭 바 바로 위)에 떠 있는 묶음: [퀘스트] · 농장 돌보기 · 오늘 할 일.
+        지도는 이 뒤에서 그대로 끌어 볼 수 있다(빈 곳은 pointer-events-none 으로 지도에 통과). */}
+    {hasFieldMap && (
+      <div
+        ref={floatRef}
+        className="
+          absolute left-0 right-0 z-[8] px-[20px]
+          bottom-[calc(60px+var(--safe-area-bottom)+10px)]
+          flex flex-col gap-[10px] pointer-events-none
+        "
+      >
+        <div className="pointer-events-auto empty:hidden max-h-[40vh] overflow-y-auto">
+          <OnboardingQuestCard />
+        </div>
+        {!buyQuestPending && (
+          <div className="pointer-events-auto">
+            <FarmCta floating label={ctaInfo.label} onClick={handleCtaClick} />
+          </div>
+        )}
+        <div className="pointer-events-auto empty:hidden">
+          <TodayTasksCard streakCard={streakCard} flameRef={flameChipRef} onFlameState={setFlameState} />
+        </div>
+      </div>
+    )}
+    </div>
   );
 };
 

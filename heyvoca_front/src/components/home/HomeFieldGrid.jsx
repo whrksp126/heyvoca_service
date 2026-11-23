@@ -400,12 +400,13 @@ const readStatusBar = (el) => {
  * @param {Array}    rows      buildBookRow 결과(글자 단어장 제외) — 1개 이상
  * @param {function} onSelect  (bookId) => void
  * @param {number}   resetSignal 값이 바뀌면 기본 시점으로 되돌린다(당겨서 새로고침)
+ * @param {number}   panBottomExtra (선택) 이동 창만 아래로 더 넓힌다 — 기본 시점은 focusBottom 까지로 맞추되, 그 아래(떠 있는 카드에 가려진 밭)도 끌어서 볼 수 있게.
  * @param {number}   focusBottom (선택) '보이는 창' 아래 끝(지도 상자 위쪽 기준 px) — 지도가 히어로보다
  *                   큰 화면 전체 배경일 때 홈이 CTA 위 높이를 넘긴다. 없으면 상자 아래 − 46px.
  *                   기본 시점·배율·이동 경계 모두 이 창으로 잡는다(이슈 #25 10차 — 아래로 끌어 놓으면
  *                   좌·우·위와 똑같이 고무줄로 돌아온다. 끄는 동안엔 카드 뒤까지 밀려 보인다).
  */
-const HomeFieldGrid = ({ rows, onSelect, resetSignal = 0, focusBottom }) => {
+const HomeFieldGrid = ({ rows, onSelect, resetSignal = 0, focusBottom, panBottomExtra = 0 }) => {
   "use memo";
 
   const boxRef = useRef(null);
@@ -457,7 +458,7 @@ const HomeFieldGrid = ({ rows, onSelect, resetSignal = 0, focusBottom }) => {
     // 이동 창 = 보이는 창(헤드라인 아래 ~ CTA 위). 9차에는 아래 끝을 상자 끝(화면 하단)까지 넓혀 뒀는데,
     // 그러면 밭을 아래로 끌어 둔 위치가 경계 '안'이라 손을 떼도 돌아오지 않았다(10차 신고).
     // 이제 네 방향 모두 같은 경계다 — 끄는 동안은 고무줄로 경계 밖(카드 뒤)까지 밀리고, 놓으면 스프링 복귀.
-    const pan = { x0: focus.x0, x1: focus.x1, y0: focus.y0, y1: focus.y1 };
+    const pan = { x0: focus.x0, x1: focus.x1, y0: focus.y0, y1: focus.y1 + Math.max(0, panBottomExtra) };
     const fw = focus.x1 - focus.x0;
     const fh = focus.y1 - focus.y0;
     // fitS = 배치된 밭 전체가 보이는 창에 딱 들어오는 배율. 축소 한계 minS 는 그보다 살짝 작게.
@@ -481,7 +482,7 @@ const HomeFieldGrid = ({ rows, onSelect, resetSignal = 0, focusBottom }) => {
       // 작물 수·이름판 크기는 기본 시점 기준으로 고정한다(다시 그려도 작물이 바뀌지 않게)
       homeTileW: FIELD_CANVAS_W * homeS,
     };
-  }, [placed, single, box.w, box.h, box.sb, focusBottom]);
+  }, [placed, single, box.w, box.h, box.sb, focusBottom, panBottomExtra]);
 
   /* ── 보기 상태 { S: 배율, tx·ty: 캔버스 x0·y0 이 놓이는 화면 좌표 } — 리렌더 없이 transform 만 ── */
   const view = useRef({ S: 1, tx: 0, ty: 0 });

@@ -20,11 +20,14 @@
 
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { AnimatePresence, motion, useInView, useReducedMotion } from 'framer-motion';
-import { Check } from '@phosphor-icons/react';
+import { Check, CaretRight } from '@phosphor-icons/react';
 import { useStats } from '../../context/StatsContext';
 import { useUser } from '../../context/UserContext';
 import { useOnboardingUnlock } from '../../context/OnboardingUnlockContext';
 import { vibrate } from '../../utils/osFunction';
+import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
+import WordListSheet from '../farm/WordListSheet';
+import { HEALTH_STATES } from '../../utils/crop';
 import { feel, SPRING, useCountUp } from '../../lib/feel';
 import StreakCardBody from '../streak/StreakCardView';
 import { CHIP_SPARKS } from '../streak/StreakChip';
@@ -122,7 +125,7 @@ const buildWordListParts = (words = [], expanded, onToggle) => {
  */
 const CheckCircle = ({ checked, draw = false }) => (
   <span className="relative shrink-0 mt-[1px] w-[22px] h-[22px]">
-    <span className="absolute inset-0 rounded-full border-[1.5px] border-layout-gray-200 dark:border-layout-gray-500" />
+    <span className="absolute inset-0 rounded-full border-[2px] border-layout-gray-300 dark:border-layout-gray-200" />
     {checked && (
       <motion.span
         className="absolute inset-0 rounded-full bg-status-success-600 flex items-center justify-center"
@@ -155,7 +158,7 @@ const TITLE_TEXT_INDENT = '';
  * 행 한 줄 — [체크박스][제목+단어 목록][우측] · 행 탭(버튼 제외)은 onRowClick.
  * 단어 목록(sub·expand)은 체크박스 칸 밖, 제목과 같은 칼럼 안에서 제목과 같은 시작선에 맞춘다.
  */
-const Row = ({ title, titleClassName, sub, expand, right, last, faded, checked, draw, onRowClick, checkRef }) => (
+const Row = ({ title, titleClassName, sub, expand, right, last, faded, checked, draw, onRowClick, onTitleClick, checkRef }) => (
   <div
     role={onRowClick ? 'button' : undefined}
     tabIndex={onRowClick ? 0 : undefined}
@@ -165,9 +168,23 @@ const Row = ({ title, titleClassName, sub, expand, right, last, faded, checked, 
     <span ref={checkRef} className="flex shrink-0"><CheckCircle checked={checked} draw={draw} /></span>
     <div className="flex-1 min-w-0 flex flex-col gap-[4px]">
       <div className={`transition-opacity duration-300 ${faded ? 'opacity-45' : ''}`}>
-        <b className={`text-[15px] font-[800] ${titleClassName || 'text-layout-black dark:text-layout-white'}`}>
-          {title}
-        </b>
+        {onTitleClick ? (
+          <button
+            type="button"
+            onClick={(e) => { e.stopPropagation(); vibrate({ duration: 5 }); onTitleClick(); }}
+            aria-label={`${title} 목록 보기`}
+            className="inline-flex items-center gap-[2px] text-left"
+          >
+            <b className={`text-[15px] font-[800] ${titleClassName || 'text-layout-black dark:text-layout-white'}`}>
+              {title}
+            </b>
+            <CaretRight size={13} weight="bold" className="text-layout-gray-300 dark:text-layout-gray-400 opacity-80" />
+          </button>
+        ) : (
+          <b className={`text-[15px] font-[800] ${titleClassName || 'text-layout-black dark:text-layout-white'}`}>
+            {title}
+          </b>
+        )}
       </div>
       {sub && <div className={`${TITLE_TEXT_INDENT} transition-opacity duration-300 ${faded ? 'opacity-45' : ''}`}>{sub}</div>}
       {expand && <div className={TITLE_TEXT_INDENT}>{expand}</div>}
@@ -259,7 +276,8 @@ const flameLevelOf = ({ done, total, serverStatus }) => {
 // React Compiler("use memo")는 쓰지 않는다 — 퀘스트 대기 판정을 렌더 중 ref 에 적어 두는 자리가 있어서다.
 const TodayTasksCard = ({ streakCard, flameRef, onFlameState } = {}) => {
 
-  const { todayTasks } = useStats();
+  const { todayTasks, todayChanges } = useStats();
+  const { pushNewFullSheet } = useNewFullSheetActions();
   const { userProfile } = useUser();
   const { missions, questCardVisible, pendingMissionRewards } = useOnboardingUnlock();
   const {
@@ -283,6 +301,24 @@ const TodayTasksCard = ({ streakCard, flameRef, onFlameState } = {}) => {
   const [expanded, setExpanded] = useState({ wilted: false, care: false });
   const toggle = (key) => setExpanded((prev) => ({ ...prev, [key]: !prev[key] }));
 
+  // ── 행 제목을 누르면 열리는 목록 풀시트 — 예전 홈 목록 카드(오늘 자란 단어 등)가 보여 주던 정보 ──
+  const openRowSheet = (title, items, emptyText) => {
+    pushNewFullSheet(WordListSheet, { title, items, emptyText }, { smFull: true, closeOnBackdropClick: true });
+  };
+  const fromTasks = (words = [], health) => words.map((w) => ({
+    user_voca_id: w.id,
+    word: w.word,
+    stage: w.stage,
+    health: w.done ? HEALTH_STATES.FRESH : health,
+  }));
+  // /insights/today-changes 항목 → 시트 행 (seed 는 방금 심은 것이라 항상 심긴 씨앗 그림)
+  const fromChanges = (list = []) => list.map((e) => ({
+    user_voca_id: e.user_voca_id,
+    word: e.word,
+    stage: e.stage ?? ({ short: 'sprout', medium: 'leaf', long: 'carrot' }[e.to] ?? 'PLANTED_SEED'),
+    meaning: e.meaning,
+  }));
+
   // ── 행 서술 — 0인 행은 숨긴다 ──────────────────────────────────────
   const rowDefs = [];
   if (todayTasks) {
@@ -297,6 +333,7 @@ const TodayTasksCard = ({ streakCard, flameRef, onFlameState } = {}) => {
         title: '시듦 물주기',
         sub: compact,
         expand: expandedBlock,
+        onTitleClick: () => openRowSheet('시듦 물주기', fromTasks(wilted.words, HEALTH_STATES.WILTED), '시든 단어가 없어요'),
         checked: wilted.done >= wilted.total,
         right: <Progress done={wilted.done} total={wilted.total} />,
       });
@@ -305,6 +342,12 @@ const TodayTasksCard = ({ streakCard, flameRef, onFlameState } = {}) => {
       rowDefs.push({
         key: 'care',
         title: '오늘 돌봄 물주기',
+        onTitleClick: () => {
+          const base = fromTasks(care.words, HEALTH_STATES.THIRSTY);
+          const have = new Set(base.map((b) => b.user_voca_id));
+          const grown = fromChanges(todayChanges?.promoted).filter((g) => !have.has(g.user_voca_id));
+          openRowSheet('오늘 돌본 단어', [...base, ...grown], '오늘 돌본 단어가 없어요');
+        },
         checked: care.done >= care.total,
         right: <Progress done={Math.max(care.done, care.studied_today ?? 0)} total={care.total} />,
       });
@@ -313,6 +356,7 @@ const TodayTasksCard = ({ streakCard, flameRef, onFlameState } = {}) => {
       rowDefs.push({
         key: 'new_seed',
         title: '농장에 새 씨앗 심기',
+        onTitleClick: () => openRowSheet('오늘 심은 단어', fromChanges(todayChanges?.new), '오늘 심은 단어가 없어요'),
         checked: newSeed.done >= newSeed.target,
         right: <Progress done={newSeed.done} total={newSeed.target} />,
       });
