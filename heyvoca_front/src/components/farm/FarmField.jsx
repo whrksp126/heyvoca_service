@@ -22,6 +22,7 @@ import { CROP_ASSETS, cropAssetByVariant } from './CropImage';
 import {
   plantField, plantFieldByWords, CROP_BASELINE, FIELD_W, FIELD_H,
 } from '../../utils/farmField';
+import { plantBookField } from '../../utils/fieldLayout';
 
 // 테두리 마스크는 CSS mask-image 라 처음 쓰일 때에야 받아 온다 — 그 사이 밭이 기본 풀색으로
 // 그려졌다가 단어장 색으로 바뀌어 보였다(새 단어장 추가 직후, 이슈 #25 6차). 모듈을 읽는 순간
@@ -121,8 +122,10 @@ const CROP_ASSET_PX = 512;
  * 인자는 FarmField 의 props 와 같은 이름이다(같은 props 를 넘기면 같은 자리가 나온다).
  */
 export const layoutFieldItems = ({
-  words, counts, healthMix, maxSprites = 96, mascot = false, reserveSigns = true, plantReach = null,
-}) => (words && words.length > 0
+  words, counts, healthMix, maxSprites = 96, mascot = false, reserveSigns = true, plantReach = null, fieldKey = null,
+}) => (words && words.length > 0 && fieldKey != null
+  ? plantBookField(words, { fieldKey })
+  : words && words.length > 0
   ? plantFieldByWords(words, { maxSprites, mascot, reserveSigns, reach: plantReach })
   : plantField(counts, healthMix, { maxSprites, mascot, reserveSigns, reach: plantReach })
 ).items;
@@ -182,6 +185,8 @@ export const bounceCrop = (root, key) => {
  *                             대신 이걸로 심는다(plantFieldByWords, 단어 id 기반 결정적 슬롯 —
  *                             2026-09-27 QA 2차 §D). 홈 히어로만 쓴다. 비어 있으면 기존
  *                             집계 기반(plantField)으로 자동 폴백한다(로딩 중·구버전 등).
+ * @param {string|number} fieldKey (선택) 단어장 키 — words 와 함께 주면 utils/fieldLayout.js 의 고정 칸 배치를 쓴다
+ *                             (홈 지도·목록·상세가 같은 배치). maxSprites·plantReach·reserveSigns 는 이때 무시된다.
  * @param {boolean} shadows    작물 접지 그림자 (썸네일에서는 꺼서 그리는 값을 줄인다)
  * @param {boolean} soloCrops  작물을 unplanted 판으로 그린다.
  *                             원래는 planted 에 흙 원판이 딸려 있어 밭 바닥에 얼룩처럼 보이던 것을
@@ -213,6 +218,7 @@ const FarmField = ({
   storedSeeds = 0,
   rimColor = null,
   plantReach = null,
+  fieldKey = null,
   children,
 }) => {
   "use memo";
@@ -229,8 +235,8 @@ const FarmField = ({
   const hideUntilMasks = !!rim && !masksReady;
 
   const items = useMemo(
-    () => layoutFieldItems({ words, counts, healthMix, maxSprites, mascot, reserveSigns, plantReach }),
-    [words, counts, healthMix, maxSprites, mascot, reserveSigns, plantReach],
+    () => layoutFieldItems({ words, counts, healthMix, maxSprites, mascot, reserveSigns, plantReach, fieldKey }),
+    [words, counts, healthMix, maxSprites, mascot, reserveSigns, plantReach, fieldKey],
   );
 
   return (

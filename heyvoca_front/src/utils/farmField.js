@@ -37,9 +37,9 @@ export const FIELD_W = 1200;
 export const FIELD_H = 860;
 
 const ISL_W = 1160;
-const ISL_H = 520;
-const ISL_X0 = 20;    // ISL_CX(600) - ISL_W/2
-const ISL_Y0 = 270;   // ISL_CY(530) - ISL_H/2
+export const ISL_H = 520;
+export const ISL_X0 = 20;    // ISL_CX(600) - ISL_W/2
+export const ISL_Y0 = 270;   // ISL_CY(530) - ISL_H/2
 
 /*
   심는 마름모 — **field-base.png 의 흙을 직접 재서** 잡는다.
@@ -69,13 +69,13 @@ export const FIELD_STAGES = ['seed', 'sprout', 'leaf', 'carrot'];
  * 215 는 V3 시절 흙 원판(폭 61.7%)이 옆 칸과 닿지 않도록 잡은 값이다. V5 는 원판이
  * 없어져 여유가 더 생겼지만, 값을 키우면 작물 자체가 커져 밭이 빽빽해지므로 그대로 둔다.
  */
-const CROP_BOX = 215;
+export const CROP_BOX = 215;
 
 /** 그림의 바닥 기준선 — 이 지점이 심는 자리에 오도록 세운다 (에셋 규격 y=440/512) */
 export const CROP_BASELINE = 440 / 512;
 
 // 구역별 팻말 자리 — 뒤 · 왼 · 오 · 앞 (읽는 순서가 곧 성장 순서)
-const SIGN_UV = [[0.25, 0.25], [0.25, 0.75], [0.75, 0.25], [0.75, 0.75]];
+export const SIGN_UV = [[0.25, 0.25], [0.25, 0.75], [0.75, 0.25], [0.75, 0.75]];
 
 /** 팻말 판이 땅 지점보다 위에 붙는 높이 — 판이 땅에 박히면 말뚝이 안 보인다 */
 const SIGN_LIFT = 130;
@@ -109,7 +109,7 @@ const quadrant = (i, j, G) => {
  * 필드 좌표 (u,v) ∈ [0,1]² 를 마름모에 대응시킨다 — (0,0)=뒤 · (1,0)=오른쪽 · (1,1)=앞 · (0,1)=왼쪽.
  * 화면 y 는 (u+v) 에만 비례하므로 i+j 가 같은 칸끼리 같은 줄에 선다.
  */
-const cells = (G, reach = null) => {
+export const cells = (G, reach = null) => {
   // reach(선택) — 가장 바깥 칸 중심이 흙 마름모 반경의 몇 배까지 닿을지(0~1).
   // 주지 않으면 기본(FW·FH, 여백 PLANT_MARGIN + 칸 반 개). 홈 밭 지도만 넓혀 쓴다(이슈 #25).
   const fw = reach ? SOIL_W * reach * (G / Math.max(1, G - 1)) : FW;
@@ -149,7 +149,7 @@ const cells = (G, reach = null) => {
  * 간격을 지키는 칸이 모자라면 남은 칸 중 가장 먼 것부터 채운다(빽빽한 밭).
  * 해시는 i·j 로만 정해져 난수가 아니다 — 리렌더해도 밭이 들썩이지 않는다.
  */
-const Y_WEIGHT = 0.62;      // 세로 1px 을 가로 0.62px 로 친다(아이소메트릭 원근)
+export const Y_WEIGHT = 0.62;      // 세로 1px 을 가로 0.62px 로 친다(아이소메트릭 원근)
 const MIN_GAP = 108;        // 칸 사이 최소 간격(캔버스 px, 격자 6 기준). 스프라이트 폭의 약 0.75배
 
 const dist2 = (a, b) => {

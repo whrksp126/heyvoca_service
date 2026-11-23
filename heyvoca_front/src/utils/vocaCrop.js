@@ -382,6 +382,7 @@ export const bookFieldWords = (words, now = new Date()) =>
     .filter((word) => !isUnplanted(word))
     .map((word) => ({
       id: word?.vocaIndexId ?? word?.id,
+      at: word?.createdAt,
       stage: wordCropStage(word),
       health: wordHealth(word, now),
     }));

@@ -30,7 +30,7 @@ const SIGN_STAGE = { seed: 'PLANTED_SEED', sprout: 'SPROUT', leaf: 'LEAF', carro
 /**
  * @param {string} rimColor  (선택) 밭 테두리 색 — 단어장 color.main(FarmField 의 bookRimColor 로 꺼낸다)
  */
-const BookFieldHero = ({ counts, fieldCounts, healthMix, words, storedSeeds = 0, rimColor = null, children }) => {
+const BookFieldHero = ({ counts, fieldCounts, healthMix, words, fieldKey = null, storedSeeds = 0, rimColor = null, children }) => {
   "use memo";
 
   return (
@@ -47,6 +47,7 @@ const BookFieldHero = ({ counts, fieldCounts, healthMix, words, storedSeeds = 0,
           counts={fieldCounts || counts}
           healthMix={healthMix}
           words={words}
+          fieldKey={fieldKey}
           maxSprites={72}
           storedSeeds={storedSeeds}
           rimColor={rimColor}

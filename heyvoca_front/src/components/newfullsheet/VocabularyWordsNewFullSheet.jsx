@@ -601,7 +601,7 @@ const VocabularyWordsNewFullSheet = ({ id, manageOnly = false }) => {
       >
         {/* 이 단어장만의 밭 + 겹쳐 뜬 주 CTA — 단어 관리 중엔 목록에 집중하게 숨긴다 */}
         {!manageMode && (
-        <BookFieldHero counts={counts} fieldCounts={field.counts} healthMix={field.healthMix} words={fieldWords} storedSeeds={storedSeeds} rimColor={bookRimColor(vocabularySheet.color)}>
+        <BookFieldHero counts={counts} fieldCounts={field.counts} healthMix={field.healthMix} words={fieldWords} fieldKey={vocabularySheet.id} storedSeeds={storedSeeds} rimColor={bookRimColor(vocabularySheet.color)}>
           <motion.button
             type="button"
             onClick={handleStudyClick}

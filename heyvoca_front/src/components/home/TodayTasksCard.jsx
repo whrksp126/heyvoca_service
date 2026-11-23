@@ -306,10 +306,11 @@ const TodayTasksCard = ({ streakCard, flameRef, onFlameState } = {}) => {
     pushNewFullSheet(WordListSheet, { title, items, emptyText, groups }, { smFull: true, closeOnBackdropClick: true });
   };
   const fromTasks = (words = [], health) => words.map((w) => ({
-    user_voca_id: w.id,
+    user_voca_id: w.user_voca_id ?? w.id,
     word: w.word,
-    stage: w.stage,
-    health: w.done ? HEALTH_STATES.FRESH : health,
+    stage: w.visual_stage || w.stage,
+    meaning: w.meaning,
+    health: w.done ? HEALTH_STATES.FRESH : (w.health_state || health),
   }));
   // /insights/today-changes 항목 → 시트 행 (seed 는 방금 심은 것이라 항상 심긴 씨앗 그림)
   const fromChanges = (list = []) => list.map((e) => ({
@@ -335,7 +336,7 @@ const TodayTasksCard = ({ streakCard, flameRef, onFlameState } = {}) => {
         expand: expandedBlock,
         onTitleClick: () => {
           const all = fromTasks(wilted.words, HEALTH_STATES.WILTED);
-          const doneIds = new Set((wilted.words ?? []).filter((w) => w.done).map((w) => w.id));
+          const doneIds = new Set((wilted.words ?? []).filter((w) => w.done).map((w) => w.user_voca_id ?? w.id));
           openRowSheet('시듦 물주기', null, null, [
             { label: '살린 단어', items: all.filter((w) => doneIds.has(w.user_voca_id)), emptyText: '아직 살린 단어가 없어요' },
             { label: '남은 단어', items: all.filter((w) => !doneIds.has(w.user_voca_id)), emptyText: '남은 단어가 없어요' },
@@ -351,11 +352,29 @@ const TodayTasksCard = ({ streakCard, flameRef, onFlameState } = {}) => {
         title: '오늘 돌봄 물주기',
         onTitleClick: () => {
           const base = fromTasks(care.words, HEALTH_STATES.THIRSTY);
-          const doneIds = new Set((care.words ?? []).filter((w) => w.done).map((w) => w.id));
-          const have = new Set(base.map((b) => b.user_voca_id));
-          const grown = fromChanges(todayChanges?.promoted).filter((g) => !have.has(g.user_voca_id));
+          const idOf = (w) => w.user_voca_id ?? w.id;
+          const doneIds = new Set((care.words ?? []).filter((w) => w.done).map(idOf));
+          // 돌본 단어 = studied_words(오늘 돌본 기존 작물 전부) ∪ care.words 중 done ∪ 오늘 자란 단어
+          const studied = Array.isArray(care.studied_words)
+            ? fromTasks(care.studied_words, HEALTH_STATES.FRESH).map((w) => ({ ...w, health: HEALTH_STATES.FRESH }))
+            : [];
+          const seen = new Set();
+          const careDone = [];
+          [...studied, ...base.filter((w) => doneIds.has(w.user_voca_id)), ...fromChanges(todayChanges?.promoted)].forEach((w) => {
+            if (seen.has(w.user_voca_id)) return;
+            seen.add(w.user_voca_id);
+            careDone.push(w);
+          });
+          const extra = care.studied_words_truncated
+            ? Math.max(0, Math.max(care.done, care.studied_today ?? 0) - careDone.length)
+            : 0;
           openRowSheet('오늘 돌봄', null, null, [
-            { label: '돌본 단어', items: [...base.filter((w) => doneIds.has(w.user_voca_id)), ...grown], emptyText: '아직 돌본 단어가 없어요' },
+            {
+              label: '돌본 단어',
+              items: careDone,
+              emptyText: '아직 돌본 단어가 없어요',
+              moreText: care.studied_words_truncated ? (extra > 0 ? `외 ${extra}개` : '외 더 많은 단어를 돌봤어요') : null,
+            },
             { label: '남은 단어', items: base.filter((w) => !doneIds.has(w.user_voca_id)), emptyText: '남은 단어가 없어요' },
           ]);
         },

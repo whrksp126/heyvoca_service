@@ -25,7 +25,8 @@ import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
 import { vibrate } from '../../utils/osFunction';
 import { getFarmPlantsApi } from '../../api/farm';
 import CropImage from './CropImage';
-import { HEALTH_STATES } from '../../utils/crop';
+import { HEALTH_STATES, stageToCrop } from '../../utils/crop';
+import { useVocabulary } from '../../context/VocabularyContext';
 import { useOpenWordDetail } from '../../hooks/useOpenWordDetail';
 
 const PAGE_SIZE = 20;
@@ -39,7 +40,8 @@ const PAGE_SIZE = 20;
  * @param {string}   [ctaLabel]  하단 고정 버튼 글자(있을 때만 버튼을 그린다)
  * @param {function} [onCta]     하단 버튼을 눌렀을 때 — 시트를 먼저 닫고 나서 호출한다
  */
-const WordListSheet = ({ title, items, groups, paged = false, emptyText = '목록이 비어 있어요', ctaLabel, onCta }) => {
+const WordListSheet = ({ title, items, groups, paged = false, emptyText = '목록이 비어 있어요', ctaLabel, onCta, moreText }) => {
+  const { userDictionary } = useVocabulary();
   const { popNewFullSheet } = useNewFullSheetActions();
   const openWordDetail = useOpenWordDetail();
 
@@ -87,6 +89,23 @@ const WordListSheet = ({ title, items, groups, paged = false, emptyText = '목�
     return () => io.disconnect();
   }, [paged, hasMore, cursor, loadPage]);
 
+  // 뜻 — 응답에 없으면 단어장 데이터(userDictionary)에서 찾아 채운다
+  const meaningOf = (it) => {
+    if (it.meaning) return it.meaning;
+    const ms = userDictionary?.[it.user_voca_id]?.meanings;
+    return Array.isArray(ms) && ms.length > 0 ? ms.slice(0, 2).join(', ') : '';
+  };
+  // 그림 단계 — 포장된 씨앗(UNPLANTED_SEED)은 아직 심기 전 단어만. 학습을 시작한 단어는
+  // 단계 값이 없거나 모호한 'seed'여도 심은 씨앗(PLANTED_SEED)으로 그린다. 페이지드(심기 전) 목록은 그대로.
+  const stageOf = (it) => {
+    const raw = it.stage || it.crop || it.to;
+    if (paged) return raw;
+    if (!raw) return 'PLANTED_SEED';
+    const up = String(raw).toUpperCase();
+    if (up === 'UNPLANTED_SEED') return raw;
+    return stageToCrop(raw) === 'seed' ? 'PLANTED_SEED' : raw;
+  };
+
   const renderRow = (it, idx) => (
             <button
       key={it.user_voca_id ?? `${it.word}-${idx}`}
@@ -99,7 +118,7 @@ const WordListSheet = ({ title, items, groups, paged = false, emptyText = '목�
           MEMORY_TO_CROP 로 미리 매핑해 둔 crop 키라 이름이 다르다. 이걸 빼먹으면
           stage 가 항상 undefined 로 떨어져 전부 씨앗 봉지로 보인다(버그 참고). */}
       <CropImage
-        stage={it.stage || it.crop || it.to}
+        stage={stageOf(it)}
         health={it.health || HEALTH_STATES.FRESH}
         size={40}
         align="center"
@@ -109,9 +128,9 @@ const WordListSheet = ({ title, items, groups, paged = false, emptyText = '목�
         <div className="text-[15px] font-[700] text-layout-black dark:text-layout-white truncate">
           {it.word}
         </div>
-        {it.meaning ? (
+        {meaningOf(it) ? (
           <div className="text-[12px] text-layout-gray-400 dark:text-layout-gray-300 truncate mt-[1px]">
-            {it.meaning}
+            {meaningOf(it)}
           </div>
         ) : null}
       </div>
@@ -156,6 +175,9 @@ const WordListSheet = ({ title, items, groups, paged = false, emptyText = '목�
                   {g.emptyText}
                 </p>
               ) : g.items.map(renderRow)}
+              {g.moreText ? (
+                <p className="py-[12px] text-center text-[12.5px] font-[400] text-layout-gray-300">{g.moreText}</p>
+              ) : null}
             </section>
           )) : rows.map(renderRow)}
 

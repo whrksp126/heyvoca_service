@@ -713,6 +713,9 @@ def get_task_bucket_ids(user_id: UUID, bucket: str, now: Optional[dt.datetime] =
     return sorted(remaining)
 
 
+STUDIED_WORDS_LIMIT = 300
+
+
 def get_today_tasks(user_id: UUID, now: Optional[dt.datetime] = None,
                     refresh: bool = True, lang: Optional[str] = None) -> dict:
     """홈 '오늘 할 일' 카드 + 1주 불꽃 달력 (계약 GET /farm/today-tasks).
@@ -789,46 +792,51 @@ def get_today_tasks(user_id: UUID, now: Optional[dt.datetime] = None,
     # 정의: 오늘(logical day) 학습 로그가 있는 기존 작물 단어 수. 아래는 제외해 다른 줄과 중복 집계하지 않는다.
     #  - 글자 밭(script) 단어, 오늘 새로 심은 단어(new_seed 줄이 센다: 로그 state_before 가 new/없음),
     #  - 시듦·부패 줄에 속한 단어(남은 것·끝낸 것·오늘 살린 것).
-    care_studied_today = len(
+    care_studied_ids = (
         _studied_today_existing_crop_ids(user_id, now, lang, script_ids)
         - wilted_remaining_ids - wilted_done_ids - rotten_ids
         - {r[0] for r in rescued_rows})
+    care_studied_today = len(care_studied_ids)
+    # 응답 크기 상한 — 잘리면 studied_words_truncated. 정렬은 id 오름차순(안정적).
+    studied_sorted = sorted(care_studied_ids)
+    studied_truncated = len(studied_sorted) > STUDIED_WORDS_LIMIT
+    studied_sorted = studied_sorted[:STUDIED_WORDS_LIMIT]
 
-    # ── 4) word/stage — wilted remaining·care remaining·양쪽 done 을 한 번에 조회 ──
-    extra_ids = (wilted_remaining_ids | care_remaining_ids | wilted_done_ids | care_done_ids)
+    # ── 4) word/meaning/stage/health — 모든 목록을 한 번에 배치 조회(N+1 없음) ──
+    extra_ids = (wilted_remaining_ids | care_remaining_ids | wilted_done_ids | care_done_ids
+                 | set(studied_sorted))
     extra_map = {}
     if extra_ids:
         extra_rows = (
-            db.session.query(UserVoca.id, UserVoca.word, UserVocaGame.visual_stage)
+            db.session.query(UserVoca.id, UserVoca.word, UserVoca.voca_meanings,
+                             UserVocaGame.visual_stage, effective_health_expr(now))
             .join(UserVocaGame, UserVocaGame.user_voca_id == UserVoca.id)
             .filter(UserVoca.id.in_(extra_ids))
             .all()
         )
-        extra_map = {uv_id: (word, stage) for uv_id, word, stage in extra_rows}
+        extra_map = {r[0]: r[1:] for r in extra_rows}
 
     def _crop(stage):
         return answer.CROP_KEY.get(stage, 'seed')
+
+    def _item(uv_id, done):
+        word, meanings, stage, health = extra_map.get(uv_id, ('', None, None, None))
+        return {'id': uv_id, 'user_voca_id': uv_id, 'word': word or '',
+                'meaning': _first_meaning(meanings), 'done': done,
+                'stage': _crop(stage), 'visual_stage': stage,
+                'health_state': health}
 
     rotten_rows = sorted(rotten_rows, key=lambda r: r[2] or dt.datetime.min, reverse=True)
     rotten_words = [{'id': uv_id, 'word': word or '', 'done': False} for uv_id, word, _rotten_at in rotten_rows]
     rotten_words += [{'id': uv_id, 'word': word or '', 'done': True} for uv_id, word in rescued_rows]
 
     # wilted_ids_ordered 는 이미 rot_due_at 오름차순(공유 헬퍼가 정렬) — 그대로 쓴다.
-    wilted_words = []
-    for uv_id in wilted_ids_ordered:
-        word, stage = extra_map.get(uv_id, ('', None))
-        wilted_words.append({'id': uv_id, 'word': word or '', 'done': False, 'stage': _crop(stage)})
-    for uv_id in wilted_done_ids:
-        word, stage = extra_map.get(uv_id, ('', None))
-        wilted_words.append({'id': uv_id, 'word': word or '', 'done': True, 'stage': _crop(stage)})
+    wilted_words = [_item(i, False) for i in wilted_ids_ordered]
+    wilted_words += [_item(i, True) for i in wilted_done_ids]
 
-    care_words = []
-    for uv_id in sorted(care_remaining_ids):
-        word, stage = extra_map.get(uv_id, ('', None))
-        care_words.append({'id': uv_id, 'word': word or '', 'done': False, 'stage': _crop(stage)})
-    for uv_id in care_done_ids:
-        word, stage = extra_map.get(uv_id, ('', None))
-        care_words.append({'id': uv_id, 'word': word or '', 'done': True, 'stage': _crop(stage)})
+    care_words = [_item(i, False) for i in sorted(care_remaining_ids)]
+    care_words += [_item(i, True) for i in care_done_ids]
+    studied_words = [_item(i, True) for i in studied_sorted]
 
     # ── 5) 새 씨앗 — 공유 헬퍼(get_today_new_done)로 done, User.daily_new_limit 로 target ──
     from app.services.daily_progress import get_today_new_done
@@ -907,7 +915,9 @@ def get_today_tasks(user_id: UUID, now: Optional[dt.datetime] = None,
                   'done': len(wilted_done_ids), 'words': wilted_words},
         'care': {'total': len(care_remaining_ids) + len(care_done_ids),
                 'done': len(care_done_ids), 'studied_today': care_studied_today,
-                'words': care_words},
+                'words': care_words,
+                'studied_words': studied_words,
+                'studied_words_truncated': studied_truncated},
         'new_seed': {'target': new_seed_target, 'done': int(new_done)},
         'seeds_left': seeds_left,
         'show_buy': (seeds_left < daily_new_limit) or buy_done,

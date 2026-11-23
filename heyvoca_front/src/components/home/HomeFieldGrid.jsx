@@ -89,7 +89,6 @@ const MIN_ZOOM = 0.85;  // 전체 맞춤 대비 최소 배율 — 밭 전체가 
 const START_FIELDS = 4; // 기준 배율: 밭 4개(2×2)가 창에 맞게 들어오는 크기
 const HOME_ZOOM = 1.5;  // 기본 시점 = 기준 배율 × 1.5 — 밭 하나가 온전히, 주변 밭은 걸쳐 보인다
 const FIT_ALL_MAX = 2;  // 단어장이 이 수 이하면 기본 시점 = 전체 맞춤
-const PLANT_REACH = 0.87; // 지도 밭의 작물 배치 영역 — 흙 마름모 가장자리 살짝 안쪽까지
 const RESET_MS = 380;   // 기본 시점으로 돌아가는 애니메이션 길이
 const COMMIT_DELAY = 140; // 멈춘 뒤 현재 배율로 다시 그리기까지(연속 제스처 사이엔 다시 그리지 않게)
 const TAP_SLOP = 8;
@@ -280,13 +279,14 @@ const FieldTile = ({ row, width, single, onSelect }) => {
     counts: field.counts,
     healthMix: field.healthMix,
     words: fieldWords,
+    fieldKey: book.id,
     maxSprites,
     reserveSigns: single,
   };
   // 단어장 상세는 이름판(간판)을 눌렀을 때만 연다 — 밭 흙·작물 탭은 작물 말풍선(이슈 #25 13차)
   const spots = useMemo(
     () => cropSpots(fieldProps),
-    [fieldWords, field.counts, field.healthMix, maxSprites, single],
+    [fieldWords, field.counts, field.healthMix, maxSprites, single, book.id],
   );
   const k = width / FIELD_CANVAS_W; // 캔버스 px → 화면 px
   const onTileTap = (e) => {
@@ -352,9 +352,9 @@ const mapFieldProps = (row, maxSprites) => ({
   counts: row.field.counts,
   healthMix: row.field.healthMix,
   words: row.fieldWords,
+  fieldKey: row.book.id,
   maxSprites,
   reserveSigns: false,
-  plantReach: PLANT_REACH,
 });
 
 /** 지도 위 밭 한 장 — 터치는 지도가 받는다(이 칸은 그림만) */

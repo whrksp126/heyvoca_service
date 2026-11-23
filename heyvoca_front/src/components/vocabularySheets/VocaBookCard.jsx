@@ -97,6 +97,7 @@ const VocaBookCard = ({ row, onClick, selected = null, dimmed = false }) => {
           counts={field.counts}
           healthMix={field.healthMix}
           words={fieldWords}
+          fieldKey={book.id}
           maxSprites={18}
           shadows={false}
           reserveSigns={false}
