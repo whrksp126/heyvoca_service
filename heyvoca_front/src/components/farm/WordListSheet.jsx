@@ -33,12 +33,13 @@ const PAGE_SIZE = 20;
 /**
  * @param {string}   title       헤더 타이틀
  * @param {array}    [items]     정적 모드 — 전체 목록(이미 다 갖고 있을 때)
+ * @param {array}    [groups]    묶음 모드 — [{ label, items, emptyText }] 묶음별 소제목 + 개수로 나눠 보여 준다
  * @param {boolean}  [paged]     페이지드 모드 — true면 /farm/plants?group=unplanted 를 커서로 이어 부른다
  * @param {string}   [emptyText] 빈 목록일 때 문구
  * @param {string}   [ctaLabel]  하단 고정 버튼 글자(있을 때만 버튼을 그린다)
  * @param {function} [onCta]     하단 버튼을 눌렀을 때 — 시트를 먼저 닫고 나서 호출한다
  */
-const WordListSheet = ({ title, items, paged = false, emptyText = '목록이 비어 있어요', ctaLabel, onCta }) => {
+const WordListSheet = ({ title, items, groups, paged = false, emptyText = '목록이 비어 있어요', ctaLabel, onCta }) => {
   const { popNewFullSheet } = useNewFullSheetActions();
   const openWordDetail = useOpenWordDetail();
 
@@ -86,8 +87,39 @@ const WordListSheet = ({ title, items, paged = false, emptyText = '목록이 비
     return () => io.disconnect();
   }, [paged, hasMore, cursor, loadPage]);
 
+  const renderRow = (it, idx) => (
+            <button
+      key={it.user_voca_id ?? `${it.word}-${idx}`}
+      type="button"
+      onClick={() => { vibrate({ duration: 5 }); openWordDetail(it.user_voca_id); }}
+      className="flex items-center gap-[11px] w-full h-[58px] text-left border-b border-[#F4F4F4] dark:border-border-dark active:bg-layout-gray-50 dark:active:bg-layout-gray-dark"
+    >
+      {/* it.stage/it.crop — /farm/home-feed·/farm/plants 응답(visual_stage).
+          it.to — "오늘 자란 단어"(Main.jsx grewItems)는 API 필드가 아니라 클라이언트가
+          MEMORY_TO_CROP 로 미리 매핑해 둔 crop 키라 이름이 다르다. 이걸 빼먹으면
+          stage 가 항상 undefined 로 떨어져 전부 씨앗 봉지로 보인다(버그 참고). */}
+      <CropImage
+        stage={it.stage || it.crop || it.to}
+        health={it.health || HEALTH_STATES.FRESH}
+        size={40}
+        align="center"
+        className="flex-shrink-0"
+      />
+      <div className="flex-1 min-w-0">
+        <div className="text-[15px] font-[700] text-layout-black dark:text-layout-white truncate">
+          {it.word}
+        </div>
+        {it.meaning ? (
+          <div className="text-[12px] text-layout-gray-400 dark:text-layout-gray-300 truncate mt-[1px]">
+            {it.meaning}
+          </div>
+        ) : null}
+      </div>
+    </button>
+  );
+
   const rows = paged ? pagedItems : (items || []);
-  const empty = !loading && rows.length === 0;
+  const empty = !groups && !loading && rows.length === 0;
 
   return (
     <div className="flex flex-col h-full w-full bg-layout-white dark:bg-layout-black">
@@ -114,36 +146,18 @@ const WordListSheet = ({ title, items, paged = false, emptyText = '목록이 비
 
       <div className="flex-1 overflow-y-auto">
         <div className="px-[16px]">
-          {rows.map((it, idx) => (
-            <button
-              key={it.user_voca_id ?? `${it.word}-${idx}`}
-              type="button"
-              onClick={() => { vibrate({ duration: 5 }); openWordDetail(it.user_voca_id); }}
-              className="flex items-center gap-[11px] w-full h-[58px] text-left border-b border-[#F4F4F4] dark:border-border-dark active:bg-layout-gray-50 dark:active:bg-layout-gray-dark"
-            >
-              {/* it.stage/it.crop — /farm/home-feed·/farm/plants 응답(visual_stage).
-                  it.to — "오늘 자란 단어"(Main.jsx grewItems)는 API 필드가 아니라 클라이언트가
-                  MEMORY_TO_CROP 로 미리 매핑해 둔 crop 키라 이름이 다르다. 이걸 빼먹으면
-                  stage 가 항상 undefined 로 떨어져 전부 씨앗 봉지로 보인다(버그 참고). */}
-              <CropImage
-                stage={it.stage || it.crop || it.to}
-                health={it.health || HEALTH_STATES.FRESH}
-                size={40}
-                align="center"
-                className="flex-shrink-0"
-              />
-              <div className="flex-1 min-w-0">
-                <div className="text-[15px] font-[700] text-layout-black dark:text-layout-white truncate">
-                  {it.word}
-                </div>
-                {it.meaning ? (
-                  <div className="text-[12px] text-layout-gray-400 dark:text-layout-gray-300 truncate mt-[1px]">
-                    {it.meaning}
-                  </div>
-                ) : null}
-              </div>
-            </button>
-          ))}
+          {groups ? groups.map((g) => (
+            <section key={g.label} className="pt-[16px]">
+              <h2 className="text-[13px] font-[700] text-layout-gray-400 dark:text-layout-gray-300">
+                {g.label} ({g.items.length})
+              </h2>
+              {g.items.length === 0 ? (
+                <p className="py-[20px] text-center text-[13px] font-[400] text-layout-gray-300">
+                  {g.emptyText}
+                </p>
+              ) : g.items.map(renderRow)}
+            </section>
+          )) : rows.map(renderRow)}
 
           {loading && (
             <div className="py-[18px] text-center text-[12.5px] font-[400] text-layout-gray-300">

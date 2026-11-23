@@ -302,8 +302,8 @@ const TodayTasksCard = ({ streakCard, flameRef, onFlameState } = {}) => {
   const toggle = (key) => setExpanded((prev) => ({ ...prev, [key]: !prev[key] }));
 
   // ── 행 제목을 누르면 열리는 목록 풀시트 — 예전 홈 목록 카드(오늘 자란 단어 등)가 보여 주던 정보 ──
-  const openRowSheet = (title, items, emptyText) => {
-    pushNewFullSheet(WordListSheet, { title, items, emptyText }, { smFull: true, closeOnBackdropClick: true });
+  const openRowSheet = (title, items, emptyText, groups) => {
+    pushNewFullSheet(WordListSheet, { title, items, emptyText, groups }, { smFull: true, closeOnBackdropClick: true });
   };
   const fromTasks = (words = [], health) => words.map((w) => ({
     user_voca_id: w.id,
@@ -333,7 +333,14 @@ const TodayTasksCard = ({ streakCard, flameRef, onFlameState } = {}) => {
         title: '시듦 물주기',
         sub: compact,
         expand: expandedBlock,
-        onTitleClick: () => openRowSheet('시듦 물주기', fromTasks(wilted.words, HEALTH_STATES.WILTED), '시든 단어가 없어요'),
+        onTitleClick: () => {
+          const all = fromTasks(wilted.words, HEALTH_STATES.WILTED);
+          const doneIds = new Set((wilted.words ?? []).filter((w) => w.done).map((w) => w.id));
+          openRowSheet('시듦 물주기', null, null, [
+            { label: '살린 단어', items: all.filter((w) => doneIds.has(w.user_voca_id)), emptyText: '아직 살린 단어가 없어요' },
+            { label: '남은 단어', items: all.filter((w) => !doneIds.has(w.user_voca_id)), emptyText: '남은 단어가 없어요' },
+          ]);
+        },
         checked: wilted.done >= wilted.total,
         right: <Progress done={wilted.done} total={wilted.total} />,
       });
@@ -344,9 +351,13 @@ const TodayTasksCard = ({ streakCard, flameRef, onFlameState } = {}) => {
         title: '오늘 돌봄 물주기',
         onTitleClick: () => {
           const base = fromTasks(care.words, HEALTH_STATES.THIRSTY);
+          const doneIds = new Set((care.words ?? []).filter((w) => w.done).map((w) => w.id));
           const have = new Set(base.map((b) => b.user_voca_id));
           const grown = fromChanges(todayChanges?.promoted).filter((g) => !have.has(g.user_voca_id));
-          openRowSheet('오늘 돌본 단어', [...base, ...grown], '오늘 돌본 단어가 없어요');
+          openRowSheet('오늘 돌봄', null, null, [
+            { label: '돌본 단어', items: [...base.filter((w) => doneIds.has(w.user_voca_id)), ...grown], emptyText: '아직 돌본 단어가 없어요' },
+            { label: '남은 단어', items: base.filter((w) => !doneIds.has(w.user_voca_id)), emptyText: '남은 단어가 없어요' },
+          ]);
         },
         checked: care.done >= care.total,
         right: <Progress done={Math.max(care.done, care.studied_today ?? 0)} total={care.total} />,
