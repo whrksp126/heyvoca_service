@@ -320,6 +320,23 @@ let appExitTimeout = null;
 // 안드로이드 하드웨어 백 / iOS 스와이프 백에서 호출되는 함수
 // options.direction === 'horizontal' 이면 등장 방향이 가로인 요소(풀시트/페이지)만 처리하고
 // 하단에서 등장하는 바텀시트는 건너뛴다(바텀시트는 아래로 드래그로 닫음).
+function confirmExitApp() {
+  if (!appExitPressed) {
+    appExitPressed = true;
+    showToast('한번 더 뒤로가기를 누르면 앱이 종료됩니다.');
+    appExitTimeout = setTimeout(() => {
+      appExitPressed = false;
+    }, 3000);
+  } else {
+    appExitPressed = false;
+    if (appExitTimeout) {
+      clearTimeout(appExitTimeout);
+      appExitTimeout = null;
+    }
+    closeApp();
+  }
+}
+
 export function onBackPressed(options = {}) {
   const horizontal = options.direction === 'horizontal';
   const currentPath = AppHistory.getCurrentPath();
@@ -352,24 +369,7 @@ export function onBackPressed(options = {}) {
       return;
     }
     // 앱 종료가 필요한 상황에서는 더블탭 방식
-    if (!appExitPressed) {
-      // 첫 번째 뒤로가기: 토스트 표시
-      appExitPressed = true;
-      showToast('한번 더 뒤로가기를 누르면 앱이 종료됩니다.');
-
-      // 3초 후 초기화
-      appExitTimeout = setTimeout(() => {
-        appExitPressed = false;
-      }, 3000);
-    } else {
-      // 두 번째 뒤로가기: 실제 앱 종료
-      appExitPressed = false;
-      if (appExitTimeout) {
-        clearTimeout(appExitTimeout);
-        appExitTimeout = null;
-      }
-      closeApp();
-    }
+    confirmExitApp();
   } else {
     // 6. 일반 페이지에서는 바로 뒤로가기
     if (AppHistory.canGoBack()) {
@@ -384,8 +384,8 @@ export function onBackPressed(options = {}) {
         }
       }
     } else if (!horizontal) {
-      // 히스토리가 없으면 앱 종료 요청 (가로 스와이프는 앱을 종료하지 않음)
-      closeApp();
+      // 히스토리가 없으면 더블탭 종료 (가로 스와이프는 앱을 종료하지 않음)
+      confirmExitApp();
     }
   }
 }
