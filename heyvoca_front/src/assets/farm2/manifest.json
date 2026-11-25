@@ -1,5 +1,5 @@
 {
-  "_doc": "src 가 있으면 PNG(farm2/ 폴더 기준, 'images/...' 로 시작하면 assets/ 기준), 없으면 코드로 그린 도형 폴백. PNG 만 넣고 이 파일만 고치면 교체된다.",
+  "_doc": "v4 작은 행성. src 가 있으면 PNG(farm2/ 기준, images/ 로 시작하면 assets/ 기준), 없으면 3D 저폴리 도형 폴백. scale 은 (픽셀*scale/64) 격자칸 높이.",
   "tile": {
     "w": 64,
     "h": 48
@@ -98,5 +98,52 @@
     "src": "grass_tile.png",
     "scale": 1,
     "tint": 13818018
+  },
+  "animals": {
+    "chicken": {
+      "frames": [
+        "chicken_f0.png",
+        "chicken_f1.png",
+        "chicken_f2.png",
+        "chicken_f3.png",
+        "chicken_f4.png",
+        "chicken_f5.png",
+        "chicken_f6.png",
+        "chicken_f7.png"
+      ],
+      "anchor": [
+        0.5,
+        0.835
+      ],
+      "scale": 0.17,
+      "states": {
+        "walk": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "idle": [
+          4
+        ],
+        "peck": [
+          5
+        ],
+        "happy": [
+          6
+        ],
+        "sad": [
+          7
+        ]
+      },
+      "fps": 8
+    }
+  },
+  "grid": {
+    "w": 64,
+    "h": 32
+  },
+  "planet": {
+    "radius": 10
   }
 }

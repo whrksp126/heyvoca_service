@@ -1,394 +1,334 @@
-// 농장 Pixi 씬 — 동적 import 로만 불러온다(초기 번들 제외). React 와는 콜백/메서드로만 통신한다.
-import { Application, Container, Graphics } from 'pixi.js';
+// 농장 v4 작은 행성 씬(three.js) — 동적 import 로만 불러온다(초기 번들 제외). React 와는 콜백/메서드로만 통신한다.
+import * as THREE from 'three';
 import {
-  GRID_W, GRID_H, TILE_W, TILE_H, MAP_W, MAP_H, toScreen, fromScreen,
-  loadArt, destroyArt, createItemArt, createCropArt, cropStageCount,
-  createGround, createFieldArt, fieldDims, cellStages,
+  R, GRID_W, GRID_H, loadArt, createDisposer, surfaceFrame, normalToGrid, wrapX, LAT_MAX,
 } from './farmArt';
+import FieldEntity from './entities/FieldEntity';
+import DecorEntity from './entities/DecorEntity';
+import FenceEntity from './entities/FenceEntity';
+import AnimalEntity from './entities/AnimalEntity';
 
-const ZOOM_MIN = 0.8;
-const ZOOM_MAX = 1.8;
+const PAD_TOP = 120;
 const TAP_SLOP = 8;
-const PAD_TOP = 120; // 상단 칩·꾸미기 버튼 높이(화면 px)
-const PAD_BOTTOM = 200; // 하단 농장 돌보기 버튼 + 오늘 할 일(화면 px)
+const ZOOM_MIN = 0.7;
+const ZOOM_MAX = 1.8;
+const FOV = 40;
 const WALKABLE_GROUND = new Set(['path_tile']);
-
 const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
 
-const mulberry32 = (seed) => {
-  let a = seed >>> 0;
-  return () => {
-    a += 0x6d2b79f5;
-    let t = a;
-    t = Math.imul(t ^ (t >>> 15), t | 1);
-    t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
-    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
-  };
-};
-const hashStr = (s) => {
-  let h = 2166136261;
-  const str = String(s);
-  for (let i = 0; i < str.length; i += 1) { h ^= str.charCodeAt(i); h = Math.imul(h, 16777619); }
-  return h >>> 0;
+const cssColor = (name, fb) => {
+  try {
+    const v = getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+    return new THREE.Color(v || fb);
+  } catch (e) { return new THREE.Color(fb); }
 };
 
 export const createFarmScene = async (host, callbacks = {}) => {
-  const app = new Application();
-  await app.init({
-    width: host.clientWidth || 360,
-    height: host.clientHeight || 480,
-    backgroundAlpha: 0,
-    antialias: true,
-    autoDensity: true,
-    resolution: Math.min(window.devicePixelRatio || 1, 2),
-    powerPreference: 'low-power',
-  });
-  const art = await loadArt();
-  const canvas = app.canvas;
+  const disposer = createDisposer();
+  const art = await loadArt(disposer);
+  art.disposer = disposer;
+
+  let viewW = host.clientWidth || 360;
+  let viewH = host.clientHeight || 480;
+  const renderer = new THREE.WebGLRenderer({ antialias: true, powerPreference: 'low-power' });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+  renderer.setSize(viewW, viewH);
+  const canvas = renderer.domElement;
   canvas.className = 'block w-full h-full';
   host.appendChild(canvas);
 
-  const world = new Container();
-  const groundG = new Container();
-  const groundItems = new Container();
-  const gridG = new Graphics();
-  const footprintG = new Graphics();
-  const objects = new Container();
-  objects.sortableChildren = true;
-  const cloudLayer = new Container();
-  const fxLayer = new Container();
-  world.addChild(groundG, groundItems, gridG, footprintG, objects, cloudLayer, fxLayer);
-  app.stage.addChild(world);
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(FOV, viewW / viewH, 0.5, 200);
 
-  // 지면 — 잔디 바닥(TilingSprite / 도형 폴백)
-  groundG.addChild(createGround(art));
-
-  const drawGrid = () => {
-    gridG.clear();
-    for (let i = 0; i <= GRID_W; i += 1) gridG.moveTo(i * TILE_W, 0).lineTo(i * TILE_W, MAP_H);
-    for (let j = 0; j <= GRID_H; j += 1) gridG.moveTo(0, j * TILE_H).lineTo(MAP_W, j * TILE_H);
-    gridG.stroke({ width: 1, color: 0xffffff, alpha: 0.28 });
-  };
-  gridG.visible = false;
-
-  // 구름 그림자
-  const clouds = [];
-  const crnd = mulberry32(21);
-  for (let i = 0; i < 4; i += 1) {
-    const g = new Graphics();
-    const rx = 90 + crnd() * 90;
-    g.ellipse(0, 0, rx, rx * 0.45).fill({ color: 0x2c4a2c, alpha: 0.07 });
-    g.ellipse(rx * 0.5, rx * 0.1, rx * 0.6, rx * 0.3).fill({ color: 0x2c4a2c, alpha: 0.06 });
-    g.position.set(crnd() * MAP_W, 100 + crnd() * 1400);
-    cloudLayer.addChild(g);
-    clouds.push({ g, speed: 10 + crnd() * 10 });
+  // 하늘 그라데이션 배경
+  {
+    const c = document.createElement('canvas'); c.width = 4; c.height = 256;
+    const g = c.getContext('2d');
+    const grad = g.createLinearGradient(0, 0, 0, 256);
+    grad.addColorStop(0, `#${cssColor('--farm-sky-200', '#bfe3f4').getHexString()}`);
+    grad.addColorStop(1, `#${cssColor('--farm-sky-100', '#eef8ee').getHexString()}`);
+    g.fillStyle = grad; g.fillRect(0, 0, 4, 256);
+    const tex = new THREE.CanvasTexture(c); tex.colorSpace = THREE.SRGBColorSpace;
+    disposer.track(tex);
+    scene.background = tex;
   }
+  scene.add(new THREE.HemisphereLight(0xffffff, 0xb8c9a0, 1.5));
+  const sun = new THREE.DirectionalLight(0xfff4dc, 1.6);
+  sun.position.set(6, 9, 12);
+  scene.add(sun);
+
+  // 행성
+  const root = new THREE.Group();
+  scene.add(root);
+  const grass = art.textures['grass_tile.png'];
+  if (grass) { grass.wrapS = THREE.RepeatWrapping; grass.wrapT = THREE.RepeatWrapping; grass.repeat.set(16, 8); }
+  const planetGeo = disposer.track(new THREE.SphereGeometry(R, 64, 48));
+  const planetMat = disposer.track(new THREE.MeshLambertMaterial({ map: grass || null, color: grass ? 0xd2d8a2 : 0xaad97f }));
+  root.add(new THREE.Mesh(planetGeo, planetMat));
+  // 대기 림 글로우
+  const glowGeo = disposer.track(new THREE.SphereGeometry(R * 1.1, 32, 24));
+  const glowMat = disposer.track(new THREE.ShaderMaterial({
+    vertexShader: 'varying vec3 vN; void main(){ vN = normalize(normalMatrix * normal); gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0); }',
+    fragmentShader: 'varying vec3 vN; void main(){ float i = pow(max(0.0, 0.62 - dot(vN, vec3(0.,0.,1.))), 3.0); gl_FragColor = vec4(0.78, 0.93, 0.85, 1.0) * i; }',
+    side: THREE.BackSide, blending: THREE.AdditiveBlending, transparent: true, depthWrite: false,
+  }));
+  scene.add(new THREE.Mesh(glowGeo, glowMat));
 
   // ── 상태 ────────────────────────────────────────────────────
-  let catalog = new Map();
-  let books = new Map();
-  const entries = new Map(); // uid -> entry
+  const ctx = {
+    root, art, disposer, catalog: new Map(), books: new Map(), gw: GRID_W, gh: GRID_H,
+    uniforms: { uCam: { value: new THREE.Vector3() }, uTime: { value: 0 } },
+    camLocal: new THREE.Vector3(0, 0, 30), camRight: new THREE.Vector3(1, 0, 0),
+    isBlocked: null,
+  };
+  const entities = new Map();
   let editMode = false;
   let selectedUid = null;
   let bottomInset = 0;
-  let timeSec = 0;
+  let zoom = 1;
+  let yaw = 0; let pitch = 0.45;
+  let vYaw = 0; let vPitch = 0;
   let destroyed = false;
+  let raf = 0;
+  let last = 0;
+  let timeSec = 0;
   const timers = new Set();
-  const particles = [];
-  let cam = { x: MAP_W / 2, y: 0, s: 1 };
-  let viewW = host.clientWidth || 360;
-  let viewH = host.clientHeight || 480;
+  const qX = new THREE.Quaternion(); const qY = new THREE.Quaternion();
+  const AX = new THREE.Vector3(1, 0, 0); const AY = new THREE.Vector3(0, 1, 0);
+  const raycaster = new THREE.Raycaster();
+  const ndc = new THREE.Vector2();
 
-  const catOf = (itemId) => catalog.get(itemId) || { id: itemId, category: 'deco', w: 1, h: 1 };
-  const sizeOf = (e) => {
-    const c = catOf(e.data.item_id);
-    if (c.category === 'field') {
-      const d = fieldDims(books.get(e.data.book_id), c.w || 2, c.h || 2);
-      return { w: d.fw, h: d.fh };
-    }
-    return { w: c.w || 1, h: c.h || 1 };
+  const catOf = (id) => ctx.catalog.get(id)?.category || 'deco';
+  const entCat = (e) => catOf(e.itemId);
+
+  const applyRotation = () => {
+    pitch = clamp(pitch, -1.2, 1.2);
+    root.quaternion.copy(qX.setFromAxisAngle(AX, pitch)).multiply(qY.setFromAxisAngle(AY, yaw));
   };
 
-  // 확대 1.0 = 맵 너비가 화면 너비. 월드 스케일 = 기준(화면/맵) × 확대
-  const baseScale = () => viewW / MAP_W;
   const applyCamera = () => {
-    cam.s = clamp(cam.s, ZOOM_MIN, ZOOM_MAX);
-    const sc = baseScale() * cam.s;
-    const halfW = viewW / 2 / sc;
-    const halfH = Math.max(40, (viewH - bottomInset) / 2) / sc;
-    cam.x = halfW >= MAP_W / 2 ? MAP_W / 2 : clamp(cam.x, halfW, MAP_W - halfW);
-    cam.y = clamp(cam.y, halfH - PAD_TOP / sc, MAP_H - halfH + PAD_BOTTOM / sc);
-    world.scale.set(sc);
-    world.position.set(viewW / 2 - cam.x * sc, (viewH - bottomInset) / 2 - cam.y * sc);
-  };
-  const toWorld = (clientX, clientY) => {
-    const r = canvas.getBoundingClientRect();
-    return { x: (clientX - r.left - world.x) / world.scale.x, y: (clientY - r.top - world.y) / world.scale.y };
+    camera.aspect = viewW / viewH;
+    const tanH = Math.tan((FOV * Math.PI) / 360);
+    let rpx = Math.min(viewW * 0.46, viewH * 0.4) * zoom;
+    const usable = viewH - bottomInset;
+    if (editMode) rpx = Math.min(rpx, (usable - PAD_TOP) / 2.1);
+    const D = R / Math.sin(Math.atan((rpx * tanH) / (viewH / 2)));
+    camera.position.set(0, 0, D);
+    camera.lookAt(0, 0, 0);
+    const yc = editMode ? (PAD_TOP + usable) / 2 : Math.min(viewH * 0.6, viewH - rpx * 0.4 - 190 + rpx * 0.4);
+    camera.setViewOffset(viewW, viewH, 0, -(yc - viewH / 2), viewW, viewH);
+    camera.updateProjectionMatrix();
   };
 
   // ── 점유/유효성 ─────────────────────────────────────────────
-  const rectOf = (e) => { const { w, h } = sizeOf(e); return { x: e.data.x, y: e.data.y, w, h }; };
   const overlap = (a, b) => a.x < b.x + b.w && b.x < a.x + a.w && a.y < b.y + b.h && b.y < a.y + a.h;
   const validAt = (e, x, y) => {
-    const { w, h } = sizeOf(e);
-    if (x < 0 || y < 0 || x + w > GRID_W || y + h > GRID_H) return false;
-    const me = { x, y, w, h };
-    for (const o of entries.values()) {
-      if (o === e) continue;
-      if (overlap(me, rectOf(o))) return false;
+    const fp = e.footprint();
+    const me = { x, y, w: fp.w, h: fp.h };
+    if (x < 0 || y < 0 || x + fp.w > ctx.gw || y + fp.h > ctx.gh) return false;
+    for (const o of entities.values()) {
+      if (o !== e && overlap(me, o.footprint())) return false;
     }
     return true;
   };
-  const isBlockedForAnimal = (cx, cy, self) => {
-    if (cx < 0 || cy < 0 || cx >= GRID_W || cy >= GRID_H) return true;
+  ctx.isBlocked = (cx, cy, self) => {
+    if (cx < 0 || cy < 0 || cx >= ctx.gw || cy >= ctx.gh) return true;
     const me = { x: cx, y: cy, w: 1, h: 1 };
-    for (const o of entries.values()) {
+    for (const o of entities.values()) {
       if (o === self) continue;
-      const c = catOf(o.data.item_id).category;
+      const c = entCat(o);
       if (c === 'animal') { if (Math.abs(o.fx - 0.5 - cx) < 1 && Math.abs(o.fy - 0.5 - cy) < 1) return true; continue; }
-      if (c === 'ground' && WALKABLE_GROUND.has(o.data.item_id)) continue;
-      if (overlap(me, rectOf(o))) return true;
+      if (c === 'ground' && WALKABLE_GROUND.has(o.itemId)) continue;
+      if (overlap(me, o.footprint())) return true;
     }
     return false;
   };
   const nearestValid = (e, gx, gy) => {
-    for (let r = 0; r < 12; r += 1) {
+    for (let r = 0; r < 14; r += 1) {
       for (let dx = -r; dx <= r; dx += 1) {
         for (let dy = -r; dy <= r; dy += 1) {
-          if (Math.max(Math.abs(dx), Math.abs(dy)) !== r) continue;
-          if (validAt(e, gx + dx, gy + dy)) return { x: gx + dx, y: gy + dy };
+          if (Math.max(Math.abs(dx), Math.abs(dy)) === r && validAt(e, gx + dx, gy + dy)) return { x: gx + dx, y: gy + dy };
         }
       }
     }
     return null;
   };
 
-  // ── 표시 갱신 ───────────────────────────────────────────────
+  // ── 엔티티 ──────────────────────────────────────────────────
+  const refreshFences = () => {
+    const fences = [...entities.values()].filter((e) => e instanceof FenceEntity);
+    fences.forEach((f) => {
+      const ax = f.axisX();
+      const find = (dx, dy) => fences.some((o) => o !== f && o.axisX() === ax && o.x === wrapX(f.x + dx, ctx.gw) && o.y === f.y + dy);
+      f.setNeighbors(ax ? find(-1, 0) : find(0, -1), ax ? find(1, 0) : find(0, 1));
+    });
+  };
+
+  const getLayout = () => [...entities.values()].map((e) => ({
+    uid: e.uid, item_id: e.itemId, x: e.x, y: e.y, rot: e.rot, flip: e.rot !== 0, book_id: e.bookId ?? null,
+  }));
   const emitLayout = () => callbacks.onLayoutChange?.(getLayout());
   const emitSelect = () => {
-    const e = entries.get(selectedUid);
-    callbacks.onSelect?.(e ? { uid: e.data.uid, item_id: e.data.item_id, book_id: e.data.book_id, category: catOf(e.data.item_id).category, valid: e.valid !== false } : null);
+    const e = entities.get(selectedUid);
+    callbacks.onSelect?.(e ? { uid: e.uid, item_id: e.itemId, book_id: e.bookId, category: entCat(e), valid: e.valid !== false } : null);
   };
 
-  const placeNode = (e) => {
-    const { w, h } = sizeOf(e);
-    const cat = catOf(e.data.item_id).category;
-    if (cat === 'animal') {
-      const p = toScreen(e.fx, e.fy);
-      e.node.position.set(p.x, p.y + 8);
-      e.node.zIndex = p.y + 8;
-    } else if (cat === 'field') {
-      const p = toScreen(e.data.x, e.data.y);
-      e.node.position.set(p.x, p.y);
-      e.node.zIndex = p.y + h * TILE_H;
-    } else if (cat === 'ground') {
-      const p = toScreen(e.data.x + w / 2, e.data.y + h / 2);
-      e.node.position.set(p.x, p.y);
-    } else {
-      const p = toScreen(e.data.x + w / 2, e.data.y + h);
-      e.node.position.set(p.x, p.y - 4);
-      e.node.zIndex = p.y - 4;
+  // 발판 칸 표시 — 초록/빨강
+  let fpMesh = null;
+  const fpMats = {
+    ok: disposer.track(new THREE.MeshBasicMaterial({ color: 0x4cc26a, transparent: true, opacity: 0.5, depthWrite: false, polygonOffset: true, polygonOffsetFactor: -4, polygonOffsetUnits: -4 })),
+    bad: disposer.track(new THREE.MeshBasicMaterial({ color: 0xe0533d, transparent: true, opacity: 0.55, depthWrite: false, polygonOffset: true, polygonOffsetFactor: -4, polygonOffsetUnits: -4 })),
+  };
+  const drawFootprint = () => {
+    if (fpMesh) { root.remove(fpMesh); fpMesh.geometry.dispose(); fpMesh = null; }
+    const e = entities.get(selectedUid);
+    if (!e || !editMode) return;
+    const fp = e.footprint();
+    const pos = []; const idx = [];
+    const P = (gx, gy) => surfaceFrame(gx, gy, ctx.gw, ctx.gh, R + 0.07).pos;
+    for (let i = 0; i < fp.w; i += 1) {
+      for (let j = 0; j < fp.h; j += 1) {
+        const x0 = fp.x + i; const y0 = fp.y + j;
+        const b = pos.length / 3;
+        [P(x0 + 0.04, y0 + 0.04), P(x0 + 0.96, y0 + 0.04), P(x0 + 0.96, y0 + 0.96), P(x0 + 0.04, y0 + 0.96)].forEach((v) => pos.push(v.x, v.y, v.z));
+        idx.push(b, b + 2, b + 1, b, b + 3, b + 2);
+      }
     }
+    const g = new THREE.BufferGeometry();
+    g.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3));
+    g.setIndex(idx);
+    fpMesh = new THREE.Mesh(g, e.valid === false ? fpMats.bad : fpMats.ok);
+    fpMesh.frustumCulled = false;
+    root.add(fpMesh);
   };
 
-  // 밭 — 칸마다 흙 + 단어 순서대로 단계 작물 1개(칸 중앙)
-  const buildField = (e) => {
-    if (e.art) { e.flipC.removeChild(e.art); e.art.destroy({ children: true }); }
-    e.plants = null; e.sway = [];
-    const book = books.get(e.data.book_id);
-    const dims = fieldDims(book, 2, 2);
-    const fa = createFieldArt(art, dims, book?.name);
-    e.art = fa.root;
-    e.flipC.addChild(fa.root);
-    const stages = cellStages(book);
-    if (!stages.length) return;
-    const crop = book?.crop_type || 'carrot';
-    const n = cropStageCount(art, crop);
-    const plants = new Container();
-    plants.sortableChildren = true;
-    plants.zIndex = 1;
-    const rnd = mulberry32(hashStr(e.data.book_id));
-    const count = Math.min(stages.length, fa.cells.length);
-    for (let i = 0; i < count; i += 1) {
-      const c = createCropArt(art, crop, stages[i], n);
-      c.position.set(fa.cells[i].cx, fa.cells[i].cy + fa.ch * 0.38);
-      c.zIndex = fa.cells[i].cy;
-      plants.addChild(c);
-      e.sway.push({ node: c, phase: rnd() * 6.28 });
-    }
-    fa.root.addChild(plants);
-    e.plants = plants;
-  };
+  const setValidity = (e) => { e.valid = validAt(e, e.x, e.y); };
 
-  const buildEntry = (data) => {
+  const makeEntity = (data) => {
     const cat = catOf(data.item_id);
-    const { w, h } = { w: cat.w || 1, h: cat.h || 1 };
-    const node = new Container();
-    const flipC = new Container();
-    const isField = cat.category === 'field';
-    const itemArt = isField ? new Container() : createItemArt(art, data.item_id, cat.category, w, h);
-    flipC.addChild(itemArt);
-    flipC.scale.x = data.flip && !isField ? -1 : 1;
-    node.addChild(flipC);
-    const e = {
-      data, node, flipC, art: itemArt, plants: null, sway: [], valid: true,
-      fx: data.x + 0.5, fy: data.y + 0.5, tx: null, ty: null, wait: Math.random() * 3,
-      jump: 0, shake: 0, phase: Math.random() * 6.28, last: { x: data.x, y: data.y },
-    };
-    (cat.category === 'ground' ? groundItems : objects).addChild(node);
-    entries.set(data.uid, e);
-    if (isField) buildField(e);
-    placeNode(e);
+    if (cat === 'field') return new FieldEntity(ctx, data);
+    if (cat === 'fence') return new FenceEntity(ctx, data);
+    if (cat === 'animal') return new AnimalEntity(ctx, data);
+    return new DecorEntity(ctx, data);
+  };
+  const buildEntry = (data) => {
+    const e = makeEntity(data);
+    entities.set(data.uid, e);
+    e.render();
     return e;
   };
-
   const removeEntry = (uid) => {
-    const e = entries.get(uid);
+    const e = entities.get(uid);
     if (!e) return;
-    e.node.destroy({ children: true });
-    entries.delete(uid);
+    e.destroy();
+    entities.delete(uid);
     if (selectedUid === uid) selectedUid = null;
+    refreshFences();
   };
-
-  const drawFootprint = () => {
-    footprintG.clear();
-    const e = entries.get(selectedUid);
-    if (!e || !editMode) return;
-    const { w, h } = sizeOf(e);
-    const a = toScreen(e.data.x, e.data.y);
-    const color = e.valid === false ? 0xe0533d : 0x4cc26a;
-    footprintG.roundRect(a.x, a.y, w * TILE_W, h * TILE_H, 4).fill({ color, alpha: 0.4 }).stroke({ width: 2, color, alpha: 0.9 });
-  };
-
-  const setValidity = (e) => { e.valid = validAt(e, e.data.x, e.data.y); };
-
-  function getLayout() {
-    return [...entries.values()].map((e) => ({
-      uid: e.data.uid, item_id: e.data.item_id, x: e.data.x, y: e.data.y,
-      flip: !!e.data.flip, book_id: e.data.book_id ?? null,
-    }));
-  }
-
-  const clearEntries = () => {
-    [...entries.keys()].forEach(removeEntry);
-    selectedUid = null;
-  };
+  const clearEntries = () => { [...entities.keys()].forEach(removeEntry); selectedUid = null; };
 
   const setLayout = (layout) => {
     clearEntries();
     (layout || []).forEach((it) => {
-      if (!catalog.has(it.item_id)) return;
-      buildEntry({ uid: it.uid, item_id: it.item_id, x: it.x, y: it.y, flip: !!it.flip, book_id: it.book_id ?? null });
+      if (!ctx.catalog.has(it.item_id)) return;
+      buildEntry({ uid: it.uid, item_id: it.item_id, x: it.x, y: it.y, rot: it.rot ?? (it.flip ? 90 : 0), book_id: it.book_id ?? null });
     });
-    drawFootprint();
-    emitSelect();
-    emitLayout();
+    refreshFences();
+    drawFootprint(); emitSelect(); emitLayout();
+  };
+
+  // ── 레이캐스트 ──────────────────────────────────────────────
+  const setRay = (clientX, clientY) => {
+    const r = canvas.getBoundingClientRect();
+    ndc.set(((clientX - r.left) / r.width) * 2 - 1, -((clientY - r.top) / r.height) * 2 + 1);
+    root.updateMatrixWorld(true);
+    camera.updateMatrixWorld(true);
+    raycaster.setFromCamera(ndc, camera);
+  };
+  const cellAt = (clientX, clientY) => {
+    setRay(clientX, clientY);
+    const inv = root.quaternion.clone().invert();
+    const o = raycaster.ray.origin.clone().applyQuaternion(inv);
+    const d = raycaster.ray.direction.clone().applyQuaternion(inv);
+    const b = o.dot(d); const c = o.dot(o) - R * R; const disc = b * b - c;
+    if (disc < 0) return null;
+    const p = o.addScaledVector(d, -b - Math.sqrt(disc));
+    const g = normalToGrid(p.normalize(), ctx.gw, ctx.gh);
+    return g ? { ...g, x: Math.floor(g.gx), y: Math.floor(g.gy) } : null;
+  };
+  const pick = (clientX, clientY) => {
+    const cell = cellAt(clientX, clientY); // setRay 포함
+    let best = null; let bd = Infinity;
+    for (const e of entities.values()) {
+      if (!e.facing) continue;
+      const d = e.hitTest(raycaster, cell);
+      if (d != null && d < bd) { best = e; bd = d; }
+    }
+    return { hit: best, cell };
   };
 
   // ── 입력 ────────────────────────────────────────────────────
-  const hitTest = (wp) => {
-    const list = [...entries.values()].sort((a, b) => b.node.zIndex - a.node.zIndex);
-    const find = (px, py, onlyStanding) => {
-      const { gx, gy } = fromScreen(px, py);
-      const cx = Math.floor(gx); const cy = Math.floor(gy);
-      return list.find((e) => {
-        const cat = catOf(e.data.item_id).category;
-        if (onlyStanding && (cat === 'ground' || cat === 'field')) return false;
-        if (cat === 'animal' && !editMode) return Math.floor(e.fx) === cx && Math.floor(e.fy) === cy;
-        return overlap({ x: cx, y: cy, w: 1, h: 1 }, rectOf(e));
-      });
-    };
-    return find(wp.x, wp.y + 30, true) || find(wp.x, wp.y, false);
-  };
-
-  const spawnSparkles = (wx, wy, n = 8) => {
-    const colors = [0xffe08a, 0xffffff, 0xffd166, 0xcdeeb2];
-    for (let i = 0; i < n; i += 1) {
-      const g = new Graphics();
-      const r = 1.5 + Math.random() * 2;
-      g.star(0, 0, 4, r * 1.6, r * 0.6).fill(colors[i % colors.length]);
-      g.position.set(wx, wy);
-      fxLayer.addChild(g);
-      const a = -Math.PI / 2 + (Math.random() - 0.5) * 2.4;
-      const sp = 40 + Math.random() * 60;
-      particles.push({ g, vx: Math.cos(a) * sp, vy: Math.sin(a) * sp, life: 0, max: 0.7 + Math.random() * 0.4 });
-    }
-  };
-
   const pointers = new Map();
-  let mode = 'none'; // pan | pinch | drag | ext
+  let mode = 'none'; // rotate | pinch | drag | ext
   let moved = false;
   let dragEntry = null;
   let grab = { dx: 0, dy: 0 };
   let pinch = null;
 
-  const cellAt = (clientX, clientY) => {
-    const wp = toWorld(clientX, clientY);
-    const { gx, gy } = fromScreen(wp.x, wp.y);
-    return { x: Math.floor(gx), y: Math.floor(gy), wp };
-  };
-
   const moveDragTo = (clientX, clientY) => {
     if (!dragEntry) return;
     const c = cellAt(clientX, clientY);
-    const { w, h } = sizeOf(dragEntry);
-    // 큰 물건은 중심이 포인터 아래 오도록, 잡은 위치 오프셋 유지
-    const nx = c.x - grab.dx; const ny = c.y - grab.dy;
-    dragEntry.data.x = clamp(nx, -2, GRID_W - w + 2);
-    dragEntry.data.y = clamp(ny, -2, GRID_H - h + 2);
+    if (!c) return;
+    const fp = dragEntry.footprint();
+    dragEntry.x = clamp(c.x - grab.dx, -2, ctx.gw - fp.w + 2);
+    dragEntry.y = clamp(c.y - grab.dy, -2, ctx.gh - fp.h + 2);
     setValidity(dragEntry);
-    placeNode(dragEntry);
-    drawFootprint();
+    dragEntry.render();
+    refreshFences();
+    drawFootprint(); emitSelect();
   };
 
   const revertLater = (e) => {
     const t = setTimeout(() => {
       timers.delete(t);
-      if (destroyed || !entries.has(e.data.uid)) return;
-      e.data.x = e.last.x; e.data.y = e.last.y;
-      setValidity(e); placeNode(e); drawFootprint(); emitSelect(); emitLayout();
+      if (destroyed || !entities.has(e.uid)) return;
+      e.x = e.last.x; e.y = e.last.y;
+      setValidity(e); e.render(); refreshFences(); drawFootprint(); emitSelect(); emitLayout();
     }, 380);
     timers.add(t);
   };
 
-  const finishDrag = (isExternalOutside = false) => {
+  const finishDrag = (outside = false) => {
     const e = dragEntry;
     dragEntry = null;
     if (!e) return;
-    e.art.alpha = 1; e.flipC.y = 0;
-    if (isExternalOutside && e.isNew) { removeEntry(e.data.uid); drawFootprint(); emitSelect(); emitLayout(); return; }
+    if (outside && e.isNew) { removeEntry(e.uid); drawFootprint(); emitSelect(); emitLayout(); return; }
     setValidity(e);
-    if (e.valid) { e.last = { x: e.data.x, y: e.data.y }; e.isNew = false; } else if (e.isNew) {
-      const nv = nearestValid(e, clamp(e.data.x, 0, GRID_W - 1), clamp(e.data.y, 0, GRID_H - 1));
-      if (nv) { e.data.x = nv.x; e.data.y = nv.y; setValidity(e); placeNode(e); e.last = nv; e.isNew = false; } else { removeEntry(e.data.uid); }
-    } else { revertLater(e); }
-    e.fx = e.data.x + 0.5; e.fy = e.data.y + 0.5;
-    drawFootprint(); emitSelect(); emitLayout();
+    if (e.valid) { e.last = { x: e.x, y: e.y }; e.isNew = false; } else if (e.isNew) {
+      const nv = nearestValid(e, clamp(e.x, 0, ctx.gw - 1), clamp(e.y, 0, ctx.gh - 1));
+      if (nv) { e.x = nv.x; e.y = nv.y; setValidity(e); e.render(); e.last = nv; e.isNew = false; } else removeEntry(e.uid);
+    } else revertLater(e);
+    refreshFences(); drawFootprint(); emitSelect(); emitLayout();
   };
 
   const onDown = (ev) => {
     canvas.setPointerCapture?.(ev.pointerId);
     pointers.set(ev.pointerId, { x: ev.clientX, y: ev.clientY, sx: ev.clientX, sy: ev.clientY });
+    vYaw = 0; vPitch = 0;
     if (pointers.size === 2) {
-      if (dragEntry) { // 핀치로 넘어가면 드래그는 취소
-        dragEntry.data.x = dragEntry.last.x; dragEntry.data.y = dragEntry.last.y;
-        const de = dragEntry; finishDrag(true); if (!entries.has(de.data.uid)) selectedUid = null;
-      }
+      if (dragEntry) { dragEntry.x = dragEntry.last.x; dragEntry.y = dragEntry.last.y; dragEntry.render(); finishDrag(true); }
       const [a, b] = [...pointers.values()];
-      pinch = { d: Math.hypot(a.x - b.x, a.y - b.y) || 1, s: cam.s };
+      pinch = { d: Math.hypot(a.x - b.x, a.y - b.y) || 1, z: zoom };
       mode = 'pinch'; moved = true;
       return;
     }
-    moved = false;
-    mode = 'pan';
+    moved = false; mode = 'rotate';
     if (editMode) {
-      const c = cellAt(ev.clientX, ev.clientY);
-      const hit = hitTest(c.wp);
+      const { hit, cell } = pick(ev.clientX, ev.clientY);
       if (hit) {
-        selectedUid = hit.data.uid;
-        dragEntry = hit; hit.isNew = false;
-        hit.last = { x: hit.data.x, y: hit.data.y };
-        grab = { dx: c.x - hit.data.x, dy: c.y - hit.data.y };
+        selectedUid = hit.uid; dragEntry = hit; hit.isNew = false;
+        hit.last = { x: hit.x, y: hit.y };
+        grab = cell ? { dx: cell.x - hit.x, dy: cell.y - hit.y } : { dx: 0, dy: 0 };
         mode = 'drag';
         drawFootprint(); emitSelect();
       }
@@ -403,64 +343,45 @@ export const createFarmScene = async (host, callbacks = {}) => {
     if (!moved && Math.hypot(ev.clientX - p.sx, ev.clientY - p.sy) > TAP_SLOP) moved = true;
     if (mode === 'pinch' && pointers.size >= 2) {
       const [a, b] = [...pointers.values()];
-      const d = Math.hypot(a.x - b.x, a.y - b.y) || 1;
-      const mx = (a.x + b.x) / 2; const my = (a.y + b.y) / 2;
-      const before = toWorld(mx, my);
-      cam.s = clamp(pinch.s * (d / pinch.d), ZOOM_MIN, ZOOM_MAX);
-      applyCamera();
-      const after = toWorld(mx, my);
-      cam.x += before.x - after.x; cam.y += before.y - after.y;
+      zoom = clamp(pinch.z * ((Math.hypot(a.x - b.x, a.y - b.y) || 1) / pinch.d), ZOOM_MIN, ZOOM_MAX);
       applyCamera();
       return;
     }
     if (!moved) return;
-    if (mode === 'drag' && dragEntry) {
-      dragEntry.art.alpha = 0.9; dragEntry.flipC.y = -6;
-      moveDragTo(ev.clientX, ev.clientY);
-    } else if (mode === 'pan') {
-      const sc = baseScale() * cam.s; cam.x -= dx / sc; cam.y -= dy / sc;
-      applyCamera();
+    if (mode === 'drag' && dragEntry) moveDragTo(ev.clientX, ev.clientY);
+    else if (mode === 'rotate') {
+      const k = 0.0075 / zoom;
+      yaw += dx * k; pitch += dy * k;
+      vYaw = dx * k * 60; vPitch = dy * k * 60;
+      applyRotation();
     }
   };
 
   const onUp = (ev) => {
-    const had = pointers.delete(ev.pointerId);
-    if (!had) return;
+    if (!pointers.delete(ev.pointerId)) return;
     canvas.releasePointerCapture?.(ev.pointerId);
     if (mode === 'pinch') { if (pointers.size < 2) { mode = 'none'; pinch = null; pointers.clear(); } return; }
     const wasMoved = moved;
     if (mode === 'drag') {
-      if (wasMoved) finishDrag(false);
-      else { dragEntry = null; emitSelect(); }
+      if (wasMoved) finishDrag(false); else { dragEntry = null; emitSelect(); }
     } else if (!wasMoved) {
-      const c = cellAt(ev.clientX, ev.clientY);
-      if (editMode) {
-        selectedUid = null; drawFootprint(); emitSelect();
-      } else {
-        const hit = hitTest(c.wp);
-        spawnSparkles(c.wp.x, c.wp.y);
+      if (editMode) { selectedUid = null; drawFootprint(); emitSelect(); } else {
+        const { hit } = pick(ev.clientX, ev.clientY);
         if (hit) {
-          const cat = catOf(hit.data.item_id).category;
-          if (cat === 'field') callbacks.onTapField?.(hit.data.book_id);
-          else if (cat === 'animal') hit.jump = 0.001;
-          else hit.shake = 1;
+          if (entCat(hit) === 'field') callbacks.onTapField?.(hit.bookId);
+          else hit.tap?.();
         }
       }
-    }
+    } else if (mode === 'rotate') { /* 관성은 틱에서 */ } 
     mode = 'none';
   };
 
   const onWheel = (ev) => {
     ev.preventDefault();
-    const before = toWorld(ev.clientX, ev.clientY);
-    cam.s = clamp(cam.s * (ev.deltaY < 0 ? 1.1 : 0.9), ZOOM_MIN, ZOOM_MAX);
-    applyCamera();
-    const after = toWorld(ev.clientX, ev.clientY);
-    cam.x += before.x - after.x; cam.y += before.y - after.y;
+    zoom = clamp(zoom * (ev.deltaY < 0 ? 1.08 : 0.92), ZOOM_MIN, ZOOM_MAX);
     applyCamera();
   };
   const onCtx = (ev) => ev.preventDefault();
-
   canvas.addEventListener('pointerdown', onDown);
   canvas.addEventListener('pointermove', onMove);
   canvas.addEventListener('pointerup', onUp);
@@ -468,144 +389,107 @@ export const createFarmScene = async (host, callbacks = {}) => {
   canvas.addEventListener('wheel', onWheel, { passive: false });
   canvas.addEventListener('contextmenu', onCtx);
 
-  // ── 틱 ──────────────────────────────────────────────────────
-  const tick = (ticker) => {
-    const dt = Math.min(ticker.deltaMS, 64) / 1000;
+  // ── 루프 ────────────────────────────────────────────────────
+  const camDir = new THREE.Vector3();
+  const inv = new THREE.Quaternion();
+  const frame = (now) => {
+    if (destroyed) return;
+    raf = requestAnimationFrame(frame);
+    const dt = Math.min((now - last) / 1000 || 0.016, 0.064);
+    last = now;
     timeSec += dt;
-    clouds.forEach((c) => {
-      c.g.x += c.speed * dt; c.g.y += c.speed * 0.5 * dt;
-      if (c.g.x > MAP_W + 200 || c.g.y > MAP_H) { c.g.x = -200; c.g.y = Math.random() * 1500; }
-    });
-    for (const e of entries.values()) {
-      const cat = catOf(e.data.item_id).category;
-      if (cat === 'animal') {
-        let bounce = 0;
-        if (!editMode) {
-          if (e.tx === null) {
-            e.wait -= dt;
-            if (e.wait <= 0) {
-              for (let tries = 0; tries < 6; tries += 1) {
-                const cx = Math.floor(e.fx) + Math.round((Math.random() - 0.5) * 6);
-                const cy = Math.floor(e.fy) + Math.round((Math.random() - 0.5) * 6);
-                if (!isBlockedForAnimal(cx, cy, e) && Math.abs(cx - e.data.x) <= 4 && Math.abs(cy - e.data.y) <= 4) { e.tx = cx + 0.5; e.ty = cy + 0.5; break; }
-              }
-              e.wait = 1.5 + Math.random() * 3;
-            }
-          } else {
-            const ddx = e.tx - e.fx; const ddy = e.ty - e.fy;
-            const dist = Math.hypot(ddx, ddy);
-            const step = 0.7 * dt;
-            if (dist <= step) { e.fx = e.tx; e.fy = e.ty; e.tx = null; } else {
-              const nfx = e.fx + (ddx / dist) * step; const nfy = e.fy + (ddy / dist) * step;
-              if (isBlockedForAnimal(Math.floor(nfx), Math.floor(nfy), e)) e.tx = null; else { e.fx = nfx; e.fy = nfy; }
-              const sdx = ddx;
-              if (Math.abs(sdx) > 0.01) e.flipC.scale.x = (sdx > 0 ? 1 : -1) * (e.data.flip ? -1 : 1);
-              bounce = Math.abs(Math.sin(timeSec * 9 + e.phase)) * 3;
-            }
-          }
-          placeNode(e);
-        }
-        let jumpY = 0;
-        if (e.jump > 0) { e.jump += dt / 0.5; if (e.jump >= 1) e.jump = 0; else jumpY = Math.sin(Math.PI * e.jump) * 16; }
-        if (!dragEntry || dragEntry !== e) e.flipC.y = -(bounce + jumpY);
-      } else if (cat === 'tree' || e.data.item_id === 'scarecrow' || e.data.item_id === 'flower_bed') {
-        if (e.shake > 0) e.shake = Math.max(0, e.shake - dt * 1.4);
-        e.flipC.rotation = Math.sin(timeSec * 1.4 + e.phase) * 0.025 + Math.sin(timeSec * 30) * 0.05 * e.shake * e.shake;
-      }
-      if (e.sway) e.sway.forEach((s) => { s.node.rotation = Math.sin(timeSec * 1.8 + s.phase) * 0.07; });
-      if (e.art.spin) e.art.spin.rotation += dt * 1.2;
+    if (mode !== 'rotate' && (Math.abs(vYaw) > 0.001 || Math.abs(vPitch) > 0.001)) {
+      yaw += vYaw * dt; pitch += vPitch * dt;
+      const f = Math.exp(-dt * 3.2); vYaw *= f; vPitch *= f;
+      applyRotation();
     }
-    for (let i = particles.length - 1; i >= 0; i -= 1) {
-      const p = particles[i];
-      p.life += dt;
-      p.g.x += p.vx * dt; p.g.y += p.vy * dt; p.vy += 90 * dt;
-      p.g.alpha = Math.max(0, 1 - p.life / p.max);
-      p.g.rotation += dt * 4;
-      if (p.life >= p.max) { p.g.destroy(); particles.splice(i, 1); }
+    root.updateMatrixWorld(true);
+    inv.copy(root.quaternion).invert();
+    ctx.camLocal.copy(camera.position).applyQuaternion(inv);
+    ctx.camRight.set(1, 0, 0).applyQuaternion(inv);
+    ctx.uniforms.uCam.value.copy(ctx.camLocal);
+    ctx.uniforms.uTime.value = timeSec;
+    camDir.copy(ctx.camLocal).normalize();
+    for (const e of entities.values()) {
+      e.facing = !e.frame || e.frame.n.dot(camDir) > -0.2; // 반대편 반구는 update 생략
+      e.group.visible = e.facing;
+      if (e.facing) e.update(dt, timeSec, editMode);
     }
+    renderer.render(scene, camera);
   };
-  app.ticker.add(tick);
-
-  // 백그라운드 탭이면 ticker 정지
-  const onVis = () => { if (document.hidden) app.ticker.stop(); else app.ticker.start(); };
+  const start = () => { if (!raf && !destroyed) { last = performance.now(); raf = requestAnimationFrame(frame); } };
+  const stop = () => { if (raf) { cancelAnimationFrame(raf); raf = 0; } };
+  const onVis = () => { if (document.hidden) stop(); else start(); };
   document.addEventListener('visibilitychange', onVis);
 
   const ro = typeof ResizeObserver !== 'undefined' ? new ResizeObserver(() => {
     const w = host.clientWidth; const h = host.clientHeight;
     if (!w || !h || destroyed) return;
     viewW = w; viewH = h;
-    app.renderer.resize(w, h);
+    renderer.setSize(w, h);
     applyCamera();
   }) : null;
   ro?.observe(host);
 
-  applyCamera();
+  applyRotation(); applyCamera(); start();
 
   // ── 공개 API ────────────────────────────────────────────────
   const centerOnFields = () => {
-    const fields = [...entries.values()].filter((e) => catOf(e.data.item_id).category === 'field');
-    cam.x = MAP_W / 2;
-    if (fields.length) {
-      const top = Math.min(...fields.map((e) => e.data.y));
-      const sc = baseScale() * cam.s;
-      cam.y = top * TILE_H + ((viewH - bottomInset) / 2) / sc - (PAD_TOP + 16) / sc;
-    } else { cam.y = 0; }
-    applyCamera();
+    const fs = [...entities.values()].filter((e) => e instanceof FieldEntity);
+    if (!fs.length) return;
+    let sx = 0; let sz = 0; let ly = 0;
+    fs.forEach((f) => { const fr = f.frame; sx += fr.n.x; sz += fr.n.z; ly += fr.lat; });
+    yaw = -Math.atan2(sx, sz);
+    pitch = clamp(ly / fs.length, -LAT_MAX, LAT_MAX);
+    applyRotation();
   };
 
   const startNew = (itemId, bookId) => {
     const uid = `n${Date.now().toString(36)}${Math.floor(Math.random() * 1e4)}`;
-    const e = buildEntry({ uid, item_id: itemId, x: 0, y: 0, flip: false, book_id: bookId ?? null });
+    const e = buildEntry({ uid, item_id: itemId, x: 0, y: 0, rot: 0, book_id: bookId ?? null });
     e.isNew = true; e.last = { x: 0, y: 0 };
     selectedUid = uid;
     return e;
   };
 
   return {
-    setData({ catalog: cat, layout, books: bs }) {
-      catalog = new Map((cat || []).map((c) => [c.id, c]));
-      books = new Map((bs || []).map((b) => [b.id, b]));
+    setData({ catalog, layout, books, grid }) {
+      ctx.catalog = new Map((catalog || []).map((c) => [c.id, c]));
+      ctx.books = new Map((books || []).map((b) => [b.id, b]));
+      if (grid?.w && grid?.h) { ctx.gw = grid.w; ctx.gh = grid.h; }
       setLayout(layout);
       centerOnFields();
     },
     resetLayout(layout) { setLayout(layout); },
     setBooks(bs) {
-      books = new Map((bs || []).map((b) => [b.id, b]));
-      entries.forEach((e) => { if (e.data.book_id) { buildField(e); setValidity(e); placeNode(e); } });
+      ctx.books = new Map((bs || []).map((b) => [b.id, b]));
+      entities.forEach((e) => { if (e.bookId) { setValidity(e); e.render(); } });
       drawFootprint(); emitSelect();
     },
     setBookCrop(bookId, crop) {
-      const b = books.get(bookId);
+      const b = ctx.books.get(bookId);
       if (b) b.crop_type = crop;
-      entries.forEach((e) => { if (e.data.book_id === bookId) buildField(e); });
+      entities.forEach((e) => { if (e.bookId === bookId) e.render(); });
     },
     setEditMode(on) {
       editMode = !!on;
-      gridG.visible = editMode;
-      if (editMode) {
-        drawGrid();
-        entries.forEach((e) => { e.fx = e.data.x + 0.5; e.fy = e.data.y + 0.5; e.tx = null; e.flipC.y = 0; placeNode(e); });
-      } else { selectedUid = null; emitSelect(); }
-      drawFootprint();
+      if (editMode) entities.forEach((e) => e.render()); else { selectedUid = null; emitSelect(); }
+      applyCamera(); drawFootprint();
     },
     setBottomInset(px) { bottomInset = px; applyCamera(); },
-    /** 서랍 칩을 눌렀을 때 — 화면 중앙 근처 빈 칸에 놓고 선택한다. 실패하면 false */
     addAtCenter(itemId, bookId) {
       const e = startNew(itemId, bookId);
-      const { gx, gy } = fromScreen(cam.x, cam.y);
-      const { w, h } = sizeOf(e);
-      const nv = nearestValid(e, clamp(Math.floor(gx - w / 2), 0, GRID_W - w), clamp(Math.floor(gy - h / 2), 0, GRID_H - h));
-      if (!nv) { removeEntry(e.data.uid); return false; }
-      e.data.x = nv.x; e.data.y = nv.y; e.last = nv; e.isNew = false;
-      e.fx = nv.x + 0.5; e.fy = nv.y + 0.5;
-      setValidity(e); placeNode(e); drawFootprint(); emitSelect(); emitLayout();
+      const c = cellAt(viewW / 2, viewH * 0.5) || { x: Math.floor(ctx.gw / 2), y: Math.floor(ctx.gh / 2) };
+      const fp = e.footprint();
+      const nv = nearestValid(e, clamp(c.x - Math.floor(fp.w / 2), 0, ctx.gw - fp.w), clamp(c.y - Math.floor(fp.h / 2), 0, ctx.gh - fp.h));
+      if (!nv) { removeEntry(e.uid); return false; }
+      e.x = nv.x; e.y = nv.y; e.last = nv; e.isNew = false;
+      setValidity(e); e.render(); refreshFences(); drawFootprint(); emitSelect(); emitLayout();
       return true;
     },
-    /** 서랍에서 끌어 올 때 */
     beginExternalDrag(itemId, bookId, clientX, clientY) {
       const e = startNew(itemId, bookId);
       dragEntry = e; mode = 'ext'; grab = { dx: 0, dy: 0 };
-      e.art.alpha = 0.9;
       moveDragTo(clientX, clientY);
       emitSelect();
     },
@@ -614,27 +498,26 @@ export const createFarmScene = async (host, callbacks = {}) => {
       if (mode !== 'ext') return;
       mode = 'none';
       const r = canvas.getBoundingClientRect();
-      const outside = clientY > r.bottom - bottomInset || clientY < r.top || clientX < r.left || clientX > r.right;
-      finishDrag(outside);
+      finishDrag(clientY > r.bottom - bottomInset || clientY < r.top || clientX < r.left || clientX > r.right);
     },
-    flipSelected() {
-      const e = entries.get(selectedUid);
-      if (!e) return;
-      e.data.flip = !e.data.flip;
-      if (catOf(e.data.item_id).category !== 'field') e.flipC.scale.x = e.data.flip ? -1 : 1;
-      emitLayout();
+    rotateSelected() {
+      const e = entities.get(selectedUid);
+      if (!e || e instanceof FieldEntity) return;
+      e.rot = (e.rot + 90) % 360;
+      setValidity(e); e.render(); refreshFences(); drawFootprint(); emitSelect(); emitLayout();
     },
+    flipSelected() { this.rotateSelected(); },
     storeSelected() {
       if (!selectedUid) return;
       removeEntry(selectedUid);
       drawFootprint(); emitSelect(); emitLayout();
     },
     getLayout,
-    hasInvalid() { return [...entries.values()].some((e) => e.valid === false); },
+    hasInvalid() { return [...entities.values()].some((e) => e.valid === false); },
     destroy() {
       destroyed = true;
-      timers.forEach((t) => clearTimeout(t));
-      timers.clear();
+      stop();
+      timers.forEach((t) => clearTimeout(t)); timers.clear();
       document.removeEventListener('visibilitychange', onVis);
       ro?.disconnect();
       canvas.removeEventListener('pointerdown', onDown);
@@ -643,9 +526,18 @@ export const createFarmScene = async (host, callbacks = {}) => {
       canvas.removeEventListener('pointercancel', onUp);
       canvas.removeEventListener('wheel', onWheel);
       canvas.removeEventListener('contextmenu', onCtx);
-      app.ticker.remove(tick);
-      app.destroy({ removeView: true }, { children: true, texture: false });
-      destroyArt(art);
+      clearEntries();
+      if (fpMesh) { fpMesh.geometry.dispose(); fpMesh = null; }
+      scene.traverse((o) => {
+        o.geometry?.dispose?.();
+        if (o.isInstancedMesh) o.dispose();
+        const m = o.material;
+        (Array.isArray(m) ? m : m ? [m] : []).forEach((x) => { x.map?.dispose?.(); x.dispose(); });
+      });
+      disposer.disposeAll();
+      renderer.dispose();
+      renderer.forceContextLoss?.();
+      canvas.remove();
     },
   };
 };

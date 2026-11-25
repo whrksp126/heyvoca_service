@@ -1,7 +1,7 @@
-// 실험실 '내 농장 꾸미기' — 홈 본문. Pixi 씬(farmScene)은 동적 import 로 이 컴포넌트가 마운트될 때만 불러온다.
+// 실험실 '내 농장 꾸미기' — 홈 본문. three.js 행성 씬(farmScene)은 동적 import 로 이 컴포넌트가 마운트될 때만 불러온다.
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
-  PencilSimple, X, Check, ArrowsLeftRight, Package, Lock, Warning, ArrowsClockwise,
+  PencilSimple, X, Check, ArrowClockwise, Package, Lock, Warning, ArrowsClockwise,
   Plant, Tree, Columns, Flower, MapTrifold, PawPrint, Storefront,
 } from '@phosphor-icons/react';
 import { getFarmStateApi, saveFarmLayoutApi, buyFarmItemApi, setBookCropApi, unwrap } from '../../api/farmLab';
@@ -94,7 +94,7 @@ const FarmHome = ({ onTapField, onEditChange, onGemChange, className = '' }) => 
         if (cancelled) { scene.destroy(); scene = null; return; }
         sceneRef.current = scene;
         applyState(data);
-        scene.setData({ catalog: data.catalog, layout: data.layout, books: data.books });
+        scene.setData({ catalog: data.catalog, layout: data.layout, books: data.books, grid: data.grid });
         setPhase('ready');
       } catch (e) {
         console.error('농장 로드 실패:', e);
@@ -141,7 +141,7 @@ const FarmHome = ({ onTapField, onEditChange, onGemChange, className = '' }) => 
     if (res?.code !== 200) { showToast(res?.message || '불러오지 못했어요'); return; }
     const data = unwrap(res);
     applyState(data);
-    sceneRef.current?.setData({ catalog: data.catalog, layout: data.layout, books: data.books });
+    sceneRef.current?.setData({ catalog: data.catalog, layout: data.layout, books: data.books, grid: data.grid });
     setConflict(false);
   };
 
@@ -321,7 +321,7 @@ const FarmHome = ({ onTapField, onEditChange, onGemChange, className = '' }) => 
                     <Warning weight="fill" size={14} />여기엔 놓을 수 없어요
                   </span>
                 )}
-                <IconBtn onClick={() => sceneRef.current?.flipSelected()} label="뒤집기"><ArrowsLeftRight weight="bold" size={16} />뒤집기</IconBtn>
+                <IconBtn onClick={() => sceneRef.current?.rotateSelected()} label="회전"><ArrowClockwise weight="bold" size={16} />회전</IconBtn>
                 <IconBtn onClick={() => sceneRef.current?.storeSelected()} label="보관"><Package weight="bold" size={16} />보관</IconBtn>
               </div>
             </div>

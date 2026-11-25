@@ -8,16 +8,16 @@ const MODEL = process.env.IMG_MODEL || 'gpt-image-2.6-sunburst';
 const OUT = path.join(here, '../../heyvoca_front/src/assets/farm2');
 const jobs = JSON.parse(fs.readFileSync(path.join(here, 'jobs.json'), 'utf8'));
 const STYLE = 'Mobile casual 2.5D game asset in EXACTLY the same art style, colors, outline weight and soft shading as the reference images ' +
-  '(warm earthy browns, fresh yellow-green, soft top-left light, gentle highlight, small soft shadow). Front-facing 3/4 top-down view (camera in front, looking down about 40 degrees, no rotation, objects face the viewer). ' +
+  '(warm earthy browns, fresh yellow-green, soft top-left light, gentle highlight, small soft shadow). Isometric 2:1 game view (classic cozy farm game), soft volume and depth, chunky rounded cute shapes. ' +
   'Single object only, centered, fully visible, transparent background, no text, no ground plane except a tiny contact shadow. Not pixel art.';
 const args = process.argv.slice(2); const force = args.includes('--force');
 const [kind, ...ids] = args.filter(a => !a.startsWith('--'));
 
-async function edit(prompt, size, bg = 'transparent') {
+async function edit(prompt, size, bg = 'transparent', extraRefs = []) {
   const fd = new FormData();
   fd.append('model', MODEL); fd.append('prompt', prompt); fd.append('size', size);
   fd.append('background', bg); fd.append('quality', process.env.IMG_QUALITY || 'medium');
-  for (const r of jobs.refs) fd.append('image[]', new Blob([fs.readFileSync(path.join(here, r))], { type: 'image/png' }), path.basename(r));
+  for (const r of [...jobs.refs, ...extraRefs]) fd.append('image[]', new Blob([fs.readFileSync(path.join(here, r))], { type: 'image/png' }), path.basename(r));
   const res = await fetch('https://api.openai.com/v1/images/edits', { method: 'POST', headers: { Authorization: `Bearer ${KEY}` }, body: fd });
   const j = await res.json(); if (!res.ok) throw new Error(j.error?.message || res.status); if (j.usage) fs.appendFileSync(path.join(here, "usage.log"), JSON.stringify({ model: MODEL, size, usage: j.usage }) + "\n");
   return Buffer.from(j.data[0].b64_json, 'base64');
@@ -60,8 +60,9 @@ async function item(id, desc) {
 // 밭 재료: 다듬기 없이 그대로 축소(타일·9분할용)
 async function tile(id, t) {
   const file = path.join(OUT, `${id}.png`); if (!force && fs.existsSync(file)) return console.log('skip', id);
-  const buf = await edit(`${STYLE.replace('Single object only, centered, fully visible, transparent background, no text, no ground plane except a tiny contact shadow.', '')} ${t.prompt}`, '1024x1024', t.bg || 'transparent');
+  const buf = await edit(t.raw ? t.prompt : `${STYLE.replace('Single object only, centered, fully visible, transparent background, no text, no ground plane except a tiny contact shadow.', '')} ${t.prompt}`, t.size || '1024x1024', t.bg || 'transparent', (t.refs || []).map(r => '../../heyvoca_front/src/assets/farm2/' + r));
   fs.writeFileSync(path.join(OUT, `_sheet_${id}.png`), buf);
+  if (t.sheet) return console.log('ok sheet', id);
   await sharp(buf).resize(t.max, t.max).png().toFile(file); console.log('ok', id);
 }
 if (!KEY) throw new Error('OPENAI_API_KEY 없음');

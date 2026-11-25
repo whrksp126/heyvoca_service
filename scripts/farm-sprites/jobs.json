@@ -38,19 +38,24 @@
     "cow": "cute spotted cow"
   },
   "tiles": {
-    "grass_tile": {
-      "bg": "opaque",
+    "plot_soil": {
       "max": 256,
-      "prompt": "A seamless tileable square texture of short lush farm grass seen from above, soft light even lighting, small subtle tufts, no objects, no borders, edges must tile seamlessly, fills the whole image."
+      "prompt": "Cute cozy mobile farm game asset, same art style, colors and soft shading as the reference images, NOT pixel art, transparent background, no text. ONE single raised farm plot seen in isometric 2:1 view: a puffy rounded soft-edged mound of tilled warm brown soil on a diamond footprint, with visible thickness/side wall giving depth, a few gentle furrow lines on top, tiny grass tufts at the base corners. Centered, only this one plot."
     },
-    "soil_cell": {
-      "bg": "opaque",
-      "max": 128,
-      "prompt": "A seamless tileable square texture of natural matte dark brown tilled farm soil seen from slightly above. Exactly ONE straight horizontal planting ridge runs across the full width through the middle, with a shallow darker furrow at the top and bottom edges, crumbly soil grains and a few tiny pebbles, muted earthy color, not glossy, not orange. No grass, no border, edges tile seamlessly so copies form long continuous rows."
+    "fence_wood_iso": {
+      "max": 256,
+      "prompt": "Cute cozy mobile farm game asset, same art style, colors and soft shading as the reference images, NOT pixel art, transparent background, no text. ONE short rustic wooden fence segment seen in isometric 2:1 view, running diagonally from lower-left to upper-right along the isometric axis, two horizontal rails between two posts, chunky cute shapes with soft volume. Centered, only this segment.",
+      "refs": [
+        "fence_wood.png"
+      ]
     },
-    "field_frame": {
-      "max": 512,
-      "prompt": "A rectangular farm field border frame made of rustic light wooden planks with small posts at the four corners and a few grass tufts on the outside edge, seen from 3/4 top-down front view, the frame is thin (about 8% of the width) and the entire inside area is EMPTY and fully transparent, the frame fills the whole image edge to edge, suitable for nine-slice scaling with uniform straight sides."
+    "chicken_sheet": {
+      "sheet": true,
+      "size": "1536x1024",
+      "prompt": "Cute cozy mobile farm game asset, same art style, colors and soft shading as the reference images, NOT pixel art, transparent background, no text. Animation sprite sheet of THE SAME white chicken character as the last reference image, in isometric 3/4 view facing lower-left, identical design in every frame. 2 rows x 4 columns grid, evenly spaced, equal size, each frame clearly separated on transparent background. Row 1: walk cycle 4 frames (legs alternating, body bobbing, head slightly forward/back). Row 2: idle blink, pecking the ground, happy (eyes closed smiling, little hop), sad (droopy, teary eyes).",
+      "refs": [
+        "chicken.png"
+      ]
     }
   }
 }

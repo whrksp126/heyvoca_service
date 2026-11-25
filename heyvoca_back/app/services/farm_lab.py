@@ -41,11 +41,11 @@ def _even_up(n):
 
 
 def field_dims(n):
-    """단어 수 n -> 밭 칸 수(cols, rows)와 타일 발판(fw, fh). 계약서 v2."""
+    """단어 수 n -> 밭 칸 수(cols, rows)와 타일 발판(fw, fh). 계약서 v3: 칸=타일 1개."""
     n = max(0, int(n))
     cols = min(16, max(4, _even_up(math.ceil(math.sqrt(n)))))
     rows = max(4, _even_up(math.ceil(n / cols)))
-    return cols, rows, cols // 2, rows // 2
+    return cols, rows, cols, rows
 
 
 class FarmError(Exception):
@@ -83,14 +83,32 @@ def _unlocked(item, stats):
     return int(stats.get(u['type'], 0)) >= int(u['value'])
 
 
+ROTS = (0, 90, 180, 270)
+
+
+def _rot(e):
+    """항목의 회전각. rot 없으면 기존 flip=true 를 90 으로 읽는다."""
+    r = e.get('rot')
+    if r in ROTS and not isinstance(r, bool):
+        return r
+    return 90 if e.get('flip') else 0
+
+
+def _swap(w, h, rot):
+    return (h, w) if rot in (90, 270) else (w, h)
+
+
 def _size(e, fp):
-    """배치 항목의 발판(w, h). 밭은 단어장별 발판, 나머지는 카탈로그."""
+    """배치 항목의 회전 반영 발판(w, h). 밭은 단어장별 발판, 나머지는 카탈로그."""
+    w, h = None, None
     if e['item_id'] == 'field':
         d = fp.get(e.get('book_id'))
         if d:
-            return d
-    it = ITEMS[e['item_id']]
-    return it['w'], it['h']
+            w, h = d
+    if w is None:
+        it = ITEMS[e['item_id']]
+        w, h = it['w'], it['h']
+    return _swap(w, h, _rot(e))
 
 
 def _spots(x, y, w, h):
@@ -106,10 +124,10 @@ def _occupied(layout, fp):
 
 
 def _find_free(cells, w, h):
-    """위에서부터, 가로 GRID_W 안에서 처음 비는 자리."""
+    """위에서부터, 격자 안에서 처음 비는 자리. 다른 물체와 1칸 띄운다(계약서 v3)."""
     for y in range(GRID_H - h + 1):
         for x in range(GRID_W - w + 1):
-            if all((x + dx, y + dy) not in cells for dx in range(w) for dy in range(h)):
+            if all((x + dx, y + dy) not in cells for dx in range(-1, w + 1) for dy in range(-1, h + 1)):
                 return x, y
     return None
 
@@ -186,7 +204,7 @@ def _ensure(user_id):
     for e in layout:
         if e['item_id'] != 'field':
             continue
-        w, h = fp[e['book_id']]
+        w, h = _size(e, fp)
         sp = _spots(e['x'], e['y'], w, h) if _in_range(e.get('x'), e.get('y'), w, h) else None
         if sp is None or (sp & cells) or e['book_id'] in seen:
             pending.append(e)
@@ -198,7 +216,7 @@ def _ensure(user_id):
         if e['book_id'] in seen:
             changed = True
             continue
-        w, h = fp[e['book_id']]
+        w, h = _size(e, fp)
         pos = _find_free(cells, w, h)
         if pos is None:
             continue
@@ -215,7 +233,7 @@ def _ensure(user_id):
         if pos is None:
             break
         new_layout.append({'uid': uuid4().hex[:12], 'item_id': 'field', 'x': pos[0], 'y': pos[1],
-                           'flip': False, 'book_id': str(b.id)})
+                           'flip': False, 'rot': 0, 'book_id': str(b.id)})
         cells |= _spots(pos[0], pos[1], w, h)
         changed = True
     if changed:
@@ -298,7 +316,13 @@ def save_layout(user_id, layout, version):
         if any(not isinstance(v, int) or isinstance(v, bool) for v in (x, y)):
             raise FarmError(400, '좌표가 올바르지 않습니다.')
         bid = e.get('book_id')
+        rot = e.get('rot')
+        if rot is None:
+            rot = 90 if e.get('flip') else 0
+        if rot not in ROTS or isinstance(rot, bool):
+            raise FarmError(400, '회전값이 올바르지 않습니다.')
         w, h = fp[bid] if (it['id'] == 'field' and bid in fp) else (it['w'], it['h'])
+        w, h = _swap(w, h, rot)
         if x < 0 or y < 0 or x + w > GRID_W or y + h > GRID_H:
             raise FarmError(400, '격자 범위를 벗어났습니다.')
         spots = _spots(x, y, w, h)
@@ -317,7 +341,7 @@ def save_layout(user_id, layout, version):
         uids.add(uid)
         cells |= spots
         clean.append({'uid': uid, 'item_id': it['id'], 'x': x, 'y': y,
-                      'flip': bool(e.get('flip', False)), 'book_id': bid})
+                      'flip': rot in (90, 270), 'rot': rot, 'book_id': bid})
     row.layout = clean
     row.version = version + 1
     db.session.commit()
