@@ -9,6 +9,8 @@ import {
 const ZOOM_MIN = 0.8;
 const ZOOM_MAX = 1.8;
 const TAP_SLOP = 8;
+const PAD_TOP = 120; // 상단 칩·꾸미기 버튼 높이(화면 px)
+const PAD_BOTTOM = 200; // 하단 농장 돌보기 버튼 + 오늘 할 일(화면 px)
 const WALKABLE_GROUND = new Set(['path_tile']);
 
 const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
@@ -115,7 +117,7 @@ export const createFarmScene = async (host, callbacks = {}) => {
     const halfW = viewW / 2 / sc;
     const halfH = Math.max(40, (viewH - bottomInset) / 2) / sc;
     cam.x = halfW >= MAP_W / 2 ? MAP_W / 2 : clamp(cam.x, halfW, MAP_W - halfW);
-    cam.y = halfH >= MAP_H / 2 ? MAP_H / 2 : clamp(cam.y, halfH, MAP_H - halfH);
+    cam.y = clamp(cam.y, halfH - PAD_TOP / sc, MAP_H - halfH + PAD_BOTTOM / sc);
     world.scale.set(sc);
     world.position.set(viewW / 2 - cam.x * sc, (viewH - bottomInset) / 2 - cam.y * sc);
   };
@@ -546,7 +548,7 @@ export const createFarmScene = async (host, callbacks = {}) => {
     if (fields.length) {
       const top = Math.min(...fields.map((e) => e.data.y));
       const sc = baseScale() * cam.s;
-      cam.y = top * TILE_H + ((viewH - bottomInset) / 2) / sc - 40;
+      cam.y = top * TILE_H + ((viewH - bottomInset) / 2) / sc - (PAD_TOP + 16) / sc;
     } else { cam.y = 0; }
     applyCamera();
   };

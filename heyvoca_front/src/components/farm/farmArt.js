@@ -343,6 +343,7 @@ export const createGround = (art) => {
     try { tex.source.style.addressMode = 'repeat'; } catch (e) { /* noop */ }
     const t = new TilingSprite({ texture: tex, width: MAP_W, height: MAP_H });
     t.tileScale.set(art.manifest.grass_tile.scale || 1);
+    if (art.manifest.grass_tile.tint != null) t.tint = art.manifest.grass_tile.tint;
     root.addChild(t);
     return root;
   }
