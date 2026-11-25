@@ -4,6 +4,7 @@
 실패는 FarmError(code, message, extra)로 알린다.
 """
 import json
+import math
 import os
 from uuid import UUID, uuid4
 
@@ -33,6 +34,18 @@ _STAGE_OF = {
     VisualStage.SPROUT: 'sprout', VisualStage.LEAF: 'leaf',
     VisualStage.CARROT: 'carrot', VisualStage.GOLDEN: 'golden',
 }
+
+
+def _even_up(n):
+    return n + (n % 2)
+
+
+def field_dims(n):
+    """단어 수 n -> 밭 칸 수(cols, rows)와 타일 발판(fw, fh). 계약서 v2."""
+    n = max(0, int(n))
+    cols = min(16, max(4, _even_up(math.ceil(math.sqrt(n)))))
+    rows = max(4, _even_up(math.ceil(n / cols)))
+    return cols, rows, cols // 2, rows // 2
 
 
 class FarmError(Exception):
@@ -70,24 +83,58 @@ def _unlocked(item, stats):
     return int(stats.get(u['type'], 0)) >= int(u['value'])
 
 
-def _occupied(layout, skip_uid=None):
+def _size(e, fp):
+    """배치 항목의 발판(w, h). 밭은 단어장별 발판, 나머지는 카탈로그."""
+    if e['item_id'] == 'field':
+        d = fp.get(e.get('book_id'))
+        if d:
+            return d
+    it = ITEMS[e['item_id']]
+    return it['w'], it['h']
+
+
+def _spots(x, y, w, h):
+    return {(x + dx, y + dy) for dx in range(w) for dy in range(h)}
+
+
+def _occupied(layout, fp):
     cells = set()
     for e in layout:
-        it = ITEMS[e['item_id']]
-        for dx in range(it['w']):
-            for dy in range(it['h']):
-                cells.add((e['x'] + dx, e['y'] + dy))
+        w, h = _size(e, fp)
+        cells |= _spots(e['x'], e['y'], w, h)
     return cells
 
 
 def _find_free(cells, w, h):
-    cands = [(x, y) for x in range(GRID_W - w + 1) for y in range(GRID_H - h + 1)]
-    cx, cy = (GRID_W - w) / 2, (GRID_H - h) / 2
-    cands.sort(key=lambda p: ((p[0] - cx) ** 2 + (p[1] - cy) ** 2, p[1], p[0]))
-    for x, y in cands:
-        if all((x + dx, y + dy) not in cells for dx in range(w) for dy in range(h)):
-            return x, y
+    """위에서부터, 가로 GRID_W 안에서 처음 비는 자리."""
+    for y in range(GRID_H - h + 1):
+        for x in range(GRID_W - w + 1):
+            if all((x + dx, y + dy) not in cells for dx in range(w) for dy in range(h)):
+                return x, y
     return None
+
+
+def _in_range(x, y, w, h):
+    return (isinstance(x, int) and isinstance(y, int)
+            and x >= 0 and y >= 0 and x + w <= GRID_W and y + h <= GRID_H)
+
+
+def _book_cells(books):
+    """book_id -> 단어장 내 순서(map.id)의 단어별 단계 문자열 리스트."""
+    out = {str(b.id): [] for b in books}
+    if not books:
+        return out
+    rows = (db.session.query(UserVocaBookMap.user_voca_book_id, UserVocaGame.visual_stage)
+            .outerjoin(UserVocaGame, UserVocaGame.user_voca_id == UserVocaBookMap.user_voca_id)
+            .filter(UserVocaBookMap.user_voca_book_id.in_([b.id for b in books]))
+            .order_by(UserVocaBookMap.id.asc()).all())
+    for bid, stage in rows:
+        out[str(UUID(bytes=bid) if isinstance(bid, bytes) else bid)].append(_STAGE_OF.get(stage, 'seed'))
+    return out
+
+
+def _footprints(book_cells):
+    return {bid: field_dims(len(c))[2:] for bid, c in book_cells.items()}
 
 
 def _inv_map(user_id):
@@ -125,22 +172,57 @@ def _ensure(user_id):
     changed = False
     books = _user_books(user_id)
     book_ids = {str(b.id) for b in books}
+    bcells = _book_cells(books)
+    fp = _footprints(bcells)
     kept = [e for e in layout if not (e['item_id'] == 'field' and e.get('book_id') not in book_ids)]
     if len(kept) != len(layout):
         layout, changed = kept, True
-    have = {e.get('book_id') for e in layout if e['item_id'] == 'field'}
-    cells = _occupied(layout)
-    f = ITEMS['field']
-    for b in books:
-        if str(b.id) in have:
+    # 밭이 아닌 항목이 차지한 칸은 그대로 두고, 밭만 검증해 범위 밖/겹침이면 재배치(멱등)
+    others = [e for e in layout if e['item_id'] != 'field']
+    cells = _occupied(others, fp)
+    new_layout = list(others)
+    pending = []
+    seen = set()
+    for e in layout:
+        if e['item_id'] != 'field':
             continue
-        pos = _find_free(cells, f['w'], f['h'])
+        w, h = fp[e['book_id']]
+        sp = _spots(e['x'], e['y'], w, h) if _in_range(e.get('x'), e.get('y'), w, h) else None
+        if sp is None or (sp & cells) or e['book_id'] in seen:
+            pending.append(e)
+            continue
+        cells |= sp
+        seen.add(e['book_id'])
+        new_layout.append(e)
+    for e in pending:
+        if e['book_id'] in seen:
+            changed = True
+            continue
+        w, h = fp[e['book_id']]
+        pos = _find_free(cells, w, h)
+        if pos is None:
+            continue
+        e = dict(e, x=pos[0], y=pos[1])
+        cells |= _spots(pos[0], pos[1], w, h)
+        seen.add(e['book_id'])
+        new_layout.append(e)
+        changed = True
+    for b in books:
+        if str(b.id) in seen:
+            continue
+        w, h = fp[str(b.id)]
+        pos = _find_free(cells, w, h)
         if pos is None:
             break
-        layout.append({'uid': uuid4().hex[:12], 'item_id': 'field', 'x': pos[0], 'y': pos[1],
-                       'flip': False, 'book_id': str(b.id)})
-        cells |= _occupied([layout[-1]])
+        new_layout.append({'uid': uuid4().hex[:12], 'item_id': 'field', 'x': pos[0], 'y': pos[1],
+                           'flip': False, 'book_id': str(b.id)})
+        cells |= _spots(pos[0], pos[1], w, h)
         changed = True
+    if changed:
+        # 원래 순서 유지(uid 기준), 새로 생긴 건 뒤에
+        order = {e['uid']: n for n, e in enumerate(row.layout or [])}
+        new_layout.sort(key=lambda e: order.get(e['uid'], 10 ** 9))
+        layout = new_layout
     if changed:
         row.layout = layout
         row.version = int(row.version or 0) + 1
@@ -167,15 +249,21 @@ def get_state(user_id):
     inv = _inv_map(user_id)
     inv['field'] = len(books)
     stages = _book_stages(user_id, books)
+    bcells = _book_cells(books)
+
+    def _book(b):
+        c = bcells[str(b.id)]
+        cols, rows, fw, fh = field_dims(len(c))
+        return {'id': str(b.id), 'name': b.name, 'crop_type': b.crop_type or DEFAULT_CROP,
+                'word_count': sum(stages[str(b.id)].values()), 'stages': stages[str(b.id)],
+                'cols': cols, 'rows': rows, 'fw': fw, 'fh': fh, 'cells': c}
     return {
         'catalog': CATALOG,
         'grid': {'w': GRID_W, 'h': GRID_H},
         'inventory': inv,
         'layout': row.layout or [],
         'version': int(row.version or 0),
-        'books': [{'id': str(b.id), 'name': b.name, 'crop_type': b.crop_type or DEFAULT_CROP,
-                   'word_count': sum(stages[str(b.id)].values()), 'stages': stages[str(b.id)]}
-                  for b in books],
+        'books': [_book(b) for b in books],
         'gem': int(user.gem_cnt or 0),
         'stats': stats,
     }
@@ -194,6 +282,7 @@ def save_layout(user_id, layout, version):
         db.session.commit()
         raise FarmError(409, '다른 기기에서 농장이 바뀌었어요. 새로고침해 주세요.', {'version': int(row.version or 0)})
 
+    fp = _footprints(_book_cells(books))
     inv = _inv_map(user_id)
     own_books = {str(b.id) for b in books}
     clean, cells, uids, counts, used_books = [], set(), set(), {}, set()
@@ -208,12 +297,13 @@ def save_layout(user_id, layout, version):
             raise FarmError(400, '배치 uid 가 올바르지 않습니다.')
         if any(not isinstance(v, int) or isinstance(v, bool) for v in (x, y)):
             raise FarmError(400, '좌표가 올바르지 않습니다.')
-        if x < 0 or y < 0 or x + it['w'] > GRID_W or y + it['h'] > GRID_H:
+        bid = e.get('book_id')
+        w, h = fp[bid] if (it['id'] == 'field' and bid in fp) else (it['w'], it['h'])
+        if x < 0 or y < 0 or x + w > GRID_W or y + h > GRID_H:
             raise FarmError(400, '격자 범위를 벗어났습니다.')
-        spots = {(x + dx, y + dy) for dx in range(it['w']) for dy in range(it['h'])}
+        spots = _spots(x, y, w, h)
         if spots & cells:
             raise FarmError(400, '다른 아이템과 겹칩니다.')
-        bid = e.get('book_id')
         if it['id'] == 'field':
             if bid not in own_books or bid in used_books:
                 raise FarmError(400, '밭에 연결된 단어장이 올바르지 않습니다.')

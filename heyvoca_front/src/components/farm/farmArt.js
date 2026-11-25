@@ -1,19 +1,45 @@
 // 농장 2.5D 자산 — manifest.json 의 src 가 있으면 PNG, 없으면 Pixi Graphics 도형 폴백.
 // 나중에 AI 스프라이트 PNG 를 assets/farm2/ 에 넣고 manifest 의 src 만 채우면 코드 수정 없이 교체된다.
-import { Assets, Container, Graphics, Sprite } from 'pixi.js';
+import { Assets, Container, Graphics, NineSliceSprite, Sprite, Text, TilingSprite } from 'pixi.js';
 import manifest from '../../assets/farm2/manifest.json';
 
 export const TILE_W = manifest.tile?.w || 64;
-export const TILE_H = manifest.tile?.h || 32;
-export const GRID = 24;
+export const TILE_H = manifest.tile?.h || 48;
+export const CELL_W = TILE_W / 2;
+export const CELL_H = TILE_H / 2;
+export const GRID_W = 10;
+export const GRID_H = 60;
+export const MAP_W = GRID_W * TILE_W;
+export const MAP_H = GRID_H * TILE_H;
 
-/** 격자 좌표(타일 윗꼭짓점) → 월드 좌표 */
-export const toScreen = (gx, gy) => ({ x: (gx - gy) * (TILE_W / 2), y: (gx + gy) * (TILE_H / 2) });
+/** 격자 좌표 → 월드 좌표 (정면 3/4 탑다운, 회전 없음) */
+export const toScreen = (gx, gy) => ({ x: gx * TILE_W, y: gy * TILE_H });
 /** 월드 좌표 → 격자 실수 좌표 */
-export const fromScreen = (sx, sy) => ({
-  gx: (sx / (TILE_W / 2) + sy / (TILE_H / 2)) / 2,
-  gy: (sy / (TILE_H / 2) - sx / (TILE_W / 2)) / 2,
-});
+export const fromScreen = (sx, sy) => ({ gx: sx / TILE_W, gy: sy / TILE_H });
+
+const STAGE_KEYS = ['seed', 'sprout', 'leaf', 'carrot', 'golden'];
+const evenUp = (n) => (n % 2 === 0 ? n : n + 1);
+
+/** 밭 크기 — 백엔드가 cols/rows/fw/fh 를 주면 그대로, 없으면 word_count 로 같은 공식 계산 */
+export const fieldDims = (book, fallbackW = 2, fallbackH = 2) => {
+  if (!book) return { cols: fallbackW * 2, rows: fallbackH * 2, fw: fallbackW, fh: fallbackH, n: 0 };
+  const stageSum = STAGE_KEYS.reduce((a, k) => a + Math.max(0, Number(book.stages?.[k]) || 0), 0);
+  const n = Array.isArray(book.cells) ? book.cells.length : Math.max(0, Number(book.word_count ?? stageSum) || 0);
+  const cols = Number(book.cols) || Math.min(16, Math.max(4, evenUp(Math.ceil(Math.sqrt(n)))));
+  const rows = Number(book.rows) || Math.max(4, evenUp(Math.ceil(n / cols)));
+  const fw = Number(book.fw) || Math.min(8, Math.max(2, Math.ceil(cols / 2)));
+  const fh = Number(book.fh) || Math.max(2, Math.ceil(rows / 2));
+  return { cols, rows, fw, fh, n };
+};
+
+/** 칸별 단계 인덱스(단어 순서). cells 가 없으면 단계 분포로 순서대로 채운다. */
+export const cellStages = (book) => {
+  if (!book) return [];
+  if (Array.isArray(book.cells)) return book.cells.map((c) => Math.max(0, STAGE_KEYS.indexOf(c)));
+  const list = [];
+  STAGE_KEYS.forEach((k, i) => { for (let n = 0; n < (Number(book.stages?.[k]) || 0); n += 1) list.push(i); });
+  return list;
+};
 
 // 헤이보카 색감 — 따뜻한 흙 · 연두
 export const COLORS = {
@@ -48,6 +74,7 @@ export const loadArt = async () => {
   const srcs = new Set();
   Object.values(manifest.items || {}).forEach((it) => { if (it.src) srcs.add(it.src); });
   Object.values(manifest.crops || {}).forEach((c) => (c.stages || []).forEach((s) => s && srcs.add(s)));
+  [manifest.field_frame, manifest.soil_cell, manifest.grass_tile].forEach((d) => { if (d?.src) srcs.add(d.src); });
   const textures = {};
   const urls = [];
   await Promise.all([...srcs].map(async (src) => {
@@ -182,16 +209,17 @@ const drawers = {
     g.circle(0, 0, 4).fill(COLORS.wood);
   },
   path_tile: (g) => {
-    diamond(g, 0, 0, 31, 15.5, COLORS.soilMid);
-    diamond(g, 0, -1, 28, 14, 0xe6cfa6);
-    [[-8, 2], [6, -3], [10, 4], [-2, -6]].forEach(([x, y]) => g.ellipse(x, y, 3, 1.5).fill({ color: 0xffffff, alpha: 0.35 }));
+    g.roundRect(-31, -23, 62, 46, 8).fill(COLORS.soilMid);
+    g.roundRect(-28, -20, 56, 40, 7).fill(0xe6cfa6);
+    [[-8, 2], [6, -3], [10, 6], [-2, -10]].forEach(([x, y]) => g.ellipse(x, y, 4, 2.5).fill({ color: 0xffffff, alpha: 0.35 }));
   },
-  pond: (g) => {
-    diamond(g, 0, 0, 62, 31, COLORS.stoneDark);
-    diamond(g, 0, -1, 58, 29, COLORS.stone);
-    diamond(g, 0, -1, 52, 26, COLORS.water);
-    diamond(g, -6, -4, 28, 13, COLORS.waterLight, 0.5);
-    g.ellipse(14, 6, 7, 3).fill({ color: 0xffffff, alpha: 0.5 });
+  pond: (g, w, h) => {
+    const hw = ((w || 2) * TILE_W) / 2 - 2; const hh = ((h || 2) * TILE_H) / 2 - 2;
+    g.roundRect(-hw, -hh, hw * 2, hh * 2, 22).fill(COLORS.stoneDark);
+    g.roundRect(-hw + 4, -hh + 3, hw * 2 - 8, hh * 2 - 8, 20).fill(COLORS.stone);
+    g.roundRect(-hw + 10, -hh + 9, hw * 2 - 20, hh * 2 - 20, 16).fill(COLORS.water);
+    g.ellipse(-hw * 0.3, -hh * 0.3, hw * 0.4, hh * 0.22).fill({ color: COLORS.waterLight, alpha: 0.55 });
+    g.ellipse(hw * 0.35, hh * 0.3, 9, 4).fill({ color: 0xffffff, alpha: 0.5 });
   },
   // 동물 — 공통 몸통
   chicken: (g) => {
@@ -241,23 +269,9 @@ const drawers = {
 
 const fallbackByCategory = (g, category, w, h) => {
   const hw = (Math.max(w, h) * TILE_W) / 4;
+  if (category === 'ground') { g.roundRect(-w * 32, -h * 24, w * 64, h * 48, 8).fill(COLORS.soilMid); return; }
   shadow(g, hw + 4, hw / 2);
   isoBox(g, 0, 0, hw, 14, COLORS.woodLight, COLORS.wood, shade(COLORS.wood, 0.8));
-};
-
-const fieldFallback = (g, w, h) => {
-  const hw = ((w + h) * TILE_W) / 4;
-  const hh = hw / 2;
-  g.ellipse(0, hh + 4, hw * 0.95, hh * 0.55).fill({ color: 0x3a2e22, alpha: 0.12 });
-  g.poly([-hw, 6, 0, hh + 6, 0, hh + 14, -hw, 14]).fill(COLORS.grassDark);
-  g.poly([0, hh + 6, hw, 6, hw, 14, 0, hh + 14]).fill(shade(COLORS.grassDark, 0.9));
-  diamond(g, 0, 0, hw, hh, COLORS.grassLight);
-  diamond(g, 0, 1, hw - 8, hh - 4, COLORS.soilDark);
-  diamond(g, 0, 2, hw - 12, hh - 6, COLORS.soil);
-  [-1, 0, 1].forEach((k) => {
-    const ox = k * 32, oy = -k * 16 + 2;
-    g.moveTo(ox - 40, oy - 20).lineTo(ox + 40, oy + 20).stroke({ width: 1, color: COLORS.soilDark, alpha: 0.35 });
-  });
 };
 
 const spriteFrom = (tex, def) => {
@@ -277,8 +291,7 @@ export const createItemArt = (art, itemId, category, w = 1, h = 1) => {
     return root;
   }
   const g = new Graphics();
-  if (itemId === 'field' || category === 'field') fieldFallback(g, w, h);
-  else if (drawers[itemId]) drawers[itemId](g, w, h);
+  if (drawers[itemId]) drawers[itemId](g, w, h);
   else fallbackByCategory(g, category, w, h);
   root.addChild(g);
   if (itemId === 'windmill') {
@@ -318,3 +331,110 @@ export const createCropArt = (art, cropType, stageIdx, stageCount = 5) => {
 };
 
 export const cropStageCount = (art, cropType) => art.manifest.crops?.[cropType]?.stages?.length || 5;
+
+// ── v2 밭 / 바닥 / 팻말 ─────────────────────────────────────────
+const texOf = (art, def) => (def?.src && art.textures[def.src]) || null;
+
+/** 잔디 바닥(맵 전체). grass_tile.png 가 있으면 TilingSprite, 없으면 도형 폴백. */
+export const createGround = (art) => {
+  const root = new Container();
+  const tex = texOf(art, art.manifest.grass_tile);
+  if (tex) {
+    try { tex.source.style.addressMode = 'repeat'; } catch (e) { /* noop */ }
+    const t = new TilingSprite({ texture: tex, width: MAP_W, height: MAP_H });
+    t.tileScale.set(art.manifest.grass_tile.scale || 1);
+    root.addChild(t);
+    return root;
+  }
+  const g = new Graphics();
+  g.rect(0, 0, MAP_W, MAP_H).fill(COLORS.grass);
+  for (let y = 0; y < GRID_H; y += 1) {
+    if (y % 2) g.rect(0, y * TILE_H, MAP_W, TILE_H).fill({ color: COLORS.grassDark, alpha: 0.18 });
+  }
+  let seed = 7;
+  const rnd = () => { seed = (seed * 1664525 + 1013904223) >>> 0; return seed / 4294967296; };
+  for (let i = 0; i < 520; i += 1) {
+    const x = rnd() * MAP_W; const y = rnd() * MAP_H;
+    g.moveTo(x, y).lineTo(x - 2, y - 5).moveTo(x, y).lineTo(x + 2, y - 5).stroke({ width: 1, color: COLORS.leafDark, alpha: 0.45 });
+  }
+  g.rect(0, 0, MAP_W, MAP_H).stroke({ width: 4, color: COLORS.leafDark, alpha: 0.5 });
+  root.addChild(g);
+  return root;
+};
+
+const trunc = (str, n) => { const a = Array.from(String(str || '')); return a.length > n ? `${a.slice(0, n - 1).join('')}…` : a.join(''); };
+
+/** 단어장 이름 팻말 — 원점 = 팻말 아래 가운데 */
+const createSign = (name) => {
+  const c = new Container();
+  const t = new Text({ text: trunc(name, 12), style: { fontFamily: 'Pretendard, sans-serif', fontSize: 11, fontWeight: '700', fill: COLORS.ink }, resolution: 2 });
+  t.anchor.set(0.5, 0.5);
+  const w = Math.max(44, t.width + 18);
+  const g = new Graphics();
+  g.roundRect(-w / 2 + 1, -17, w, 20, 5).fill({ color: 0x3a2e22, alpha: 0.2 });
+  g.roundRect(-w / 2, -20, w, 20, 5).fill(COLORS.cream).stroke({ width: 2, color: COLORS.wood });
+  g.rect(-w / 2 + 6, 0, 3, 5).fill(COLORS.wood); g.rect(w / 2 - 9, 0, 3, 5).fill(COLORS.wood);
+  t.position.set(0, -10);
+  c.addChild(g, t);
+  return c;
+};
+
+/**
+ * 밭 그림 — 원점 = 밭 발판 왼쪽 위. 자식: base(zIndex 0) · plants 자리(1) · sign(2).
+ * 반환 { root, cellRects:[{cx,cy}], cw, ch, W, H }
+ */
+export const createFieldArt = (art, dims, name) => {
+  const root = new Container();
+  root.sortableChildren = true;
+  const W = dims.fw * TILE_W; const H = dims.fh * TILE_H;
+  const frameDef = art.manifest.field_frame;
+  const frameTex = texOf(art, frameDef);
+  const soilTex = texOf(art, art.manifest.soil_cell);
+  const slice = frameDef?.slice || [16, 16, 16, 16];
+  const FRAME_PX = 12; // 테두리 두께(월드 px) — 512 원본은 이 두께로 축소해 쓴다
+  const k = frameTex ? FRAME_PX / Math.max(1, slice[0]) : 1;
+  const b = frameTex ? FRAME_PX : 8;
+  const cw = (W - b * 2) / dims.cols; const ch = (H - b * 2) / dims.rows;
+  const base = new Container();
+  base.zIndex = 0;
+  // 바닥 그림자 + 흙 바탕
+  const bg = new Graphics();
+  bg.roundRect(2, 4, W, H, 8).fill({ color: 0x3a2e22, alpha: 0.16 });
+  bg.roundRect(0, 0, W, H, 8).fill(COLORS.soilDark);
+  base.addChild(bg);
+  const cells = [];
+  const cg = soilTex ? null : new Graphics();
+  for (let r = 0; r < dims.rows; r += 1) {
+    for (let c = 0; c < dims.cols; c += 1) {
+      const x = b + c * cw; const y = b + r * ch;
+      if (soilTex) {
+        const sp = new Sprite(soilTex);
+        sp.position.set(x, y); sp.width = cw; sp.height = ch;
+        base.addChild(sp);
+      } else {
+        cg.roundRect(x + 1, y + 1, cw - 2, ch - 2, 4).fill(COLORS.soil);
+        cg.roundRect(x + 2, y + 2, cw - 4, ch * 0.45, 3).fill({ color: 0xffffff, alpha: 0.14 });
+        cg.roundRect(x + 2, y + ch * 0.62, cw - 4, ch * 0.34, 3).fill({ color: COLORS.soilDark, alpha: 0.35 });
+      }
+      cells.push({ cx: x + cw / 2, cy: y + ch / 2 });
+    }
+  }
+  if (cg) base.addChild(cg);
+  if (frameTex) {
+    const f = new NineSliceSprite({ texture: frameTex, leftWidth: slice[0], topHeight: slice[1], rightWidth: slice[2], bottomHeight: slice[3] });
+    f.width = W / k; f.height = H / k;
+    f.scale.set(k);
+    base.addChild(f);
+  } else {
+    const fg = new Graphics();
+    fg.roundRect(0, 0, W, H, 8).stroke({ width: b, color: COLORS.wood, alignment: 1 });
+    fg.roundRect(b / 2, b / 2, W - b, H - b, 5).stroke({ width: 2, color: COLORS.woodLight, alpha: 0.8 });
+    [[0, 0], [W, 0], [0, H], [W, H]].forEach(([x, y]) => fg.circle(x, y, 4).fill(COLORS.woodLight));
+    base.addChild(fg);
+  }
+  const sign = createSign(name);
+  sign.position.set(W / 2, 4);
+  sign.zIndex = 2;
+  root.addChild(base, sign);
+  return { root, cells, cw, ch, W, H };
+};

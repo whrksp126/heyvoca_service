@@ -1,22 +1,56 @@
 {
-  "refs": ["../../heyvoca_front/src/assets/images/farm/crops/planted/healthy-seed.png",
-           "../../heyvoca_front/src/assets/images/farm/crops/planted/healthy-sprout.png",
-           "../../heyvoca_front/src/assets/images/farm/crops/planted/healthy-leaf.png",
-           "../../heyvoca_front/src/assets/images/farm/crops/planted/healthy-carrot.png",
-           "../../heyvoca_front/src/assets/images/farm/field-base.png"],
+  "refs": [
+    "../../heyvoca_front/src/assets/images/farm/crops/planted/healthy-seed.png",
+    "../../heyvoca_front/src/assets/images/farm/crops/planted/healthy-sprout.png",
+    "../../heyvoca_front/src/assets/images/farm/crops/planted/healthy-leaf.png",
+    "../../heyvoca_front/src/assets/images/farm/crops/planted/healthy-carrot.png",
+    "../../heyvoca_front/src/assets/images/farm/field-base.png"
+  ],
   "crops": {
-    "corn": "corn stalk with ears of corn", "rice": "rice paddy plant with golden grain heads",
-    "cucumber": "cucumber vine with green cucumbers", "tomato": "tomato plant with red tomatoes",
-    "pumpkin": "pumpkin vine with an orange pumpkin", "radish": "white daikon radish with leaves",
+    "corn": "corn stalk with ears of corn",
+    "rice": "rice paddy plant with golden grain heads",
+    "cucumber": "cucumber vine with green cucumbers",
+    "tomato": "tomato plant with red tomatoes",
+    "pumpkin": "pumpkin vine with an orange pumpkin",
+    "radish": "white daikon radish with leaves",
     "strawberry": "strawberry bush with red strawberries"
   },
   "items": {
-    "tree_round": "round leafy deciduous tree", "tree_pine": "small pine tree", "tree_apple": "apple tree with red apples",
-    "fence_wood": "single short wooden fence segment", "fence_stone": "single low stone wall segment",
-    "scarecrow": "friendly scarecrow with straw hat", "mailbox": "wooden farm mailbox on a post", "bench": "small wooden bench",
-    "well": "stone water well with wooden roof", "flower_bed": "small flower bed with colorful flowers", "lamp": "garden lamp post",
-    "signboard": "small wooden signboard", "windmill": "small farm windmill (2x2 tiles footprint)",
-    "path_tile": "flat cobblestone path tile (isometric diamond)", "pond": "small round pond with lily pads (2x2 tiles footprint)",
-    "chicken": "cute white chicken", "sheep": "fluffy cute sheep", "cat": "cute orange cat sitting", "dog": "cute shiba-like dog sitting", "cow": "cute spotted cow"
+    "tree_round": "round leafy deciduous tree",
+    "tree_pine": "small pine tree",
+    "tree_apple": "apple tree with red apples",
+    "fence_wood": "single short wooden fence segment",
+    "fence_stone": "single low stone wall segment",
+    "scarecrow": "friendly scarecrow with straw hat",
+    "mailbox": "wooden farm mailbox on a post",
+    "bench": "small wooden bench",
+    "well": "stone water well with wooden roof",
+    "flower_bed": "small flower bed with colorful flowers",
+    "lamp": "garden lamp post",
+    "signboard": "small wooden signboard",
+    "windmill": "small farm windmill (2x2 tiles footprint)",
+    "path_tile": "flat cobblestone path tile (isometric diamond)",
+    "pond": "small round pond with lily pads (2x2 tiles footprint)",
+    "chicken": "cute white chicken",
+    "sheep": "fluffy cute sheep",
+    "cat": "cute orange cat sitting",
+    "dog": "cute shiba-like dog sitting",
+    "cow": "cute spotted cow"
+  },
+  "tiles": {
+    "grass_tile": {
+      "bg": "opaque",
+      "max": 256,
+      "prompt": "A seamless tileable square texture of short lush farm grass seen from above, soft light even lighting, small subtle tufts, no objects, no borders, edges must tile seamlessly, fills the whole image."
+    },
+    "soil_cell": {
+      "bg": "opaque",
+      "max": 128,
+      "prompt": "A seamless tileable square texture of natural matte dark brown tilled farm soil seen from slightly above. Exactly ONE straight horizontal planting ridge runs across the full width through the middle, with a shallow darker furrow at the top and bottom edges, crumbly soil grains and a few tiny pebbles, muted earthy color, not glossy, not orange. No grass, no border, edges tile seamlessly so copies form long continuous rows."
+    },
+    "field_frame": {
+      "max": 512,
+      "prompt": "A rectangular farm field border frame made of rustic light wooden planks with small posts at the four corners and a few grass tufts on the outside edge, seen from 3/4 top-down front view, the frame is thin (about 8% of the width) and the entire inside area is EMPTY and fully transparent, the frame fills the whole image edge to edge, suitable for nine-slice scaling with uniform straight sides."
+    }
   }
 }

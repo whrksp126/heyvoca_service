@@ -1,14 +1,14 @@
 // 농장 Pixi 씬 — 동적 import 로만 불러온다(초기 번들 제외). React 와는 콜백/메서드로만 통신한다.
 import { Application, Container, Graphics } from 'pixi.js';
 import {
-  GRID, TILE_W, TILE_H, COLORS, toScreen, fromScreen,
+  GRID_W, GRID_H, TILE_W, TILE_H, MAP_W, MAP_H, toScreen, fromScreen,
   loadArt, destroyArt, createItemArt, createCropArt, cropStageCount,
+  createGround, createFieldArt, fieldDims, cellStages,
 } from './farmArt';
 
-const ZOOM_MIN = 0.6;
-const ZOOM_MAX = 2.0;
+const ZOOM_MIN = 0.8;
+const ZOOM_MAX = 1.8;
 const TAP_SLOP = 8;
-const STAGE_KEYS = ['seed', 'sprout', 'leaf', 'carrot', 'golden'];
 const WALKABLE_GROUND = new Set(['path_tile']);
 
 const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
@@ -30,34 +30,6 @@ const hashStr = (s) => {
   return h >>> 0;
 };
 
-/** stages 분포대로 9칸(3×3)에 작물 단계 인덱스를 나눈다. 단어가 없으면 빈 밭. */
-export const stageSlots = (stages, bookId) => {
-  const counts = STAGE_KEYS.map((k) => Math.max(0, Number(stages?.[k]) || 0));
-  const total = counts.reduce((a, b) => a + b, 0);
-  if (total <= 0) return [];
-  const raw = counts.map((c) => (c * 9) / total);
-  const quota = raw.map((r) => Math.floor(r));
-  let left = 9 - quota.reduce((a, b) => a + b, 0);
-  raw.map((r, i) => [r - Math.floor(r), i]).sort((a, b) => b[0] - a[0]).forEach(([, i]) => {
-    if (left > 0) { quota[i] += 1; left -= 1; }
-  });
-  // 단어가 있는 단계는 최소 1칸
-  counts.forEach((c, i) => {
-    if (c > 0 && quota[i] === 0) {
-      const big = quota.indexOf(Math.max(...quota));
-      if (quota[big] > 1) { quota[big] -= 1; quota[i] += 1; }
-    }
-  });
-  const list = [];
-  quota.forEach((q, i) => { for (let n = 0; n < q; n += 1) list.push(i); });
-  const rnd = mulberry32(hashStr(bookId));
-  for (let i = list.length - 1; i > 0; i -= 1) {
-    const j = Math.floor(rnd() * (i + 1));
-    [list[i], list[j]] = [list[j], list[i]];
-  }
-  return list;
-};
-
 export const createFarmScene = async (host, callbacks = {}) => {
   const app = new Application();
   await app.init({
@@ -75,7 +47,7 @@ export const createFarmScene = async (host, callbacks = {}) => {
   host.appendChild(canvas);
 
   const world = new Container();
-  const groundG = new Graphics();
+  const groundG = new Container();
   const groundItems = new Container();
   const gridG = new Graphics();
   const footprintG = new Graphics();
@@ -86,36 +58,13 @@ export const createFarmScene = async (host, callbacks = {}) => {
   world.addChild(groundG, groundItems, gridG, footprintG, objects, cloudLayer, fxLayer);
   app.stage.addChild(world);
 
-  // 지면 — 체커 타일 + 옆면 + 잔디 포인트
-  const drawGround = () => {
-    const g = groundG;
-    const edge = (GRID * TILE_W) / 2;
-    const bottom = GRID * TILE_H;
-    g.poly([-edge, edge / 2 * 0 + bottom / 2, 0, bottom, 0, bottom + 18, -edge, bottom / 2 + 18]).fill(COLORS.soilMid);
-    g.poly([0, bottom, edge, bottom / 2, edge, bottom / 2 + 18, 0, bottom + 18]).fill(COLORS.soilDark);
-    for (let x = 0; x < GRID; x += 1) {
-      for (let y = 0; y < GRID; y += 1) {
-        const p = toScreen(x, y);
-        const c = (x + y) % 2 ? COLORS.grass : 0xa3d379;
-        g.poly([p.x, p.y, p.x + TILE_W / 2, p.y + TILE_H / 2, p.x, p.y + TILE_H, p.x - TILE_W / 2, p.y + TILE_H / 2]).fill(c);
-      }
-    }
-    const rnd = mulberry32(7);
-    for (let i = 0; i < 90; i += 1) {
-      const p = toScreen(rnd() * GRID, rnd() * GRID);
-      g.moveTo(p.x, p.y).lineTo(p.x - 2, p.y - 5).moveTo(p.x, p.y).lineTo(p.x + 2, p.y - 5).stroke({ width: 1, color: COLORS.leafDark, alpha: 0.5 });
-    }
-  };
-  drawGround();
+  // 지면 — 잔디 바닥(TilingSprite / 도형 폴백)
+  groundG.addChild(createGround(art));
 
   const drawGrid = () => {
     gridG.clear();
-    for (let i = 0; i <= GRID; i += 1) {
-      const a = toScreen(i, 0); const b = toScreen(i, GRID);
-      gridG.moveTo(a.x, a.y).lineTo(b.x, b.y);
-      const c = toScreen(0, i); const d = toScreen(GRID, i);
-      gridG.moveTo(c.x, c.y).lineTo(d.x, d.y);
-    }
+    for (let i = 0; i <= GRID_W; i += 1) gridG.moveTo(i * TILE_W, 0).lineTo(i * TILE_W, MAP_H);
+    for (let j = 0; j <= GRID_H; j += 1) gridG.moveTo(0, j * TILE_H).lineTo(MAP_W, j * TILE_H);
     gridG.stroke({ width: 1, color: 0xffffff, alpha: 0.28 });
   };
   gridG.visible = false;
@@ -128,7 +77,7 @@ export const createFarmScene = async (host, callbacks = {}) => {
     const rx = 90 + crnd() * 90;
     g.ellipse(0, 0, rx, rx * 0.45).fill({ color: 0x2c4a2c, alpha: 0.07 });
     g.ellipse(rx * 0.5, rx * 0.1, rx * 0.6, rx * 0.3).fill({ color: 0x2c4a2c, alpha: 0.06 });
-    g.position.set(-700 + crnd() * 1400, 80 + crnd() * 600);
+    g.position.set(crnd() * MAP_W, 100 + crnd() * 1400);
     cloudLayer.addChild(g);
     clouds.push({ g, speed: 10 + crnd() * 10 });
   }
@@ -144,20 +93,31 @@ export const createFarmScene = async (host, callbacks = {}) => {
   let destroyed = false;
   const timers = new Set();
   const particles = [];
-  let cam = { x: 0, y: GRID * TILE_H / 2, s: 1 };
+  let cam = { x: MAP_W / 2, y: 0, s: 1 };
   let viewW = host.clientWidth || 360;
   let viewH = host.clientHeight || 480;
 
   const catOf = (itemId) => catalog.get(itemId) || { id: itemId, category: 'deco', w: 1, h: 1 };
-  const sizeOf = (e) => { const c = catOf(e.data.item_id); return { w: c.w || 1, h: c.h || 1 }; };
+  const sizeOf = (e) => {
+    const c = catOf(e.data.item_id);
+    if (c.category === 'field') {
+      const d = fieldDims(books.get(e.data.book_id), c.w || 2, c.h || 2);
+      return { w: d.fw, h: d.fh };
+    }
+    return { w: c.w || 1, h: c.h || 1 };
+  };
 
+  // 확대 1.0 = 맵 너비가 화면 너비. 월드 스케일 = 기준(화면/맵) × 확대
+  const baseScale = () => viewW / MAP_W;
   const applyCamera = () => {
-    const bx = (GRID * TILE_W) / 2;
     cam.s = clamp(cam.s, ZOOM_MIN, ZOOM_MAX);
-    cam.x = clamp(cam.x, -bx, bx);
-    cam.y = clamp(cam.y, 0, GRID * TILE_H);
-    world.scale.set(cam.s);
-    world.position.set(viewW / 2 - cam.x * cam.s, (viewH - bottomInset) / 2 - cam.y * cam.s);
+    const sc = baseScale() * cam.s;
+    const halfW = viewW / 2 / sc;
+    const halfH = Math.max(40, (viewH - bottomInset) / 2) / sc;
+    cam.x = halfW >= MAP_W / 2 ? MAP_W / 2 : clamp(cam.x, halfW, MAP_W - halfW);
+    cam.y = halfH >= MAP_H / 2 ? MAP_H / 2 : clamp(cam.y, halfH, MAP_H - halfH);
+    world.scale.set(sc);
+    world.position.set(viewW / 2 - cam.x * sc, (viewH - bottomInset) / 2 - cam.y * sc);
   };
   const toWorld = (clientX, clientY) => {
     const r = canvas.getBoundingClientRect();
@@ -169,7 +129,7 @@ export const createFarmScene = async (host, callbacks = {}) => {
   const overlap = (a, b) => a.x < b.x + b.w && b.x < a.x + a.w && a.y < b.y + b.h && b.y < a.y + a.h;
   const validAt = (e, x, y) => {
     const { w, h } = sizeOf(e);
-    if (x < 0 || y < 0 || x + w > GRID || y + h > GRID) return false;
+    if (x < 0 || y < 0 || x + w > GRID_W || y + h > GRID_H) return false;
     const me = { x, y, w, h };
     for (const o of entries.values()) {
       if (o === e) continue;
@@ -178,7 +138,7 @@ export const createFarmScene = async (host, callbacks = {}) => {
     return true;
   };
   const isBlockedForAnimal = (cx, cy, self) => {
-    if (cx < 0 || cy < 0 || cx >= GRID || cy >= GRID) return true;
+    if (cx < 0 || cy < 0 || cx >= GRID_W || cy >= GRID_H) return true;
     const me = { x: cx, y: cy, w: 1, h: 1 };
     for (const o of entries.values()) {
       if (o === self) continue;
@@ -213,39 +173,48 @@ export const createFarmScene = async (host, callbacks = {}) => {
     const cat = catOf(e.data.item_id).category;
     if (cat === 'animal') {
       const p = toScreen(e.fx, e.fy);
-      e.node.position.set(p.x, p.y + 4);
-      e.node.zIndex = e.fx + e.fy;
-    } else {
+      e.node.position.set(p.x, p.y + 8);
+      e.node.zIndex = p.y + 8;
+    } else if (cat === 'field') {
+      const p = toScreen(e.data.x, e.data.y);
+      e.node.position.set(p.x, p.y);
+      e.node.zIndex = p.y + h * TILE_H;
+    } else if (cat === 'ground') {
       const p = toScreen(e.data.x + w / 2, e.data.y + h / 2);
-      e.node.position.set(p.x, p.y + (cat === 'ground' || cat === 'field' ? 0 : 6));
-      e.node.zIndex = e.data.x + e.data.y + w + h;
+      e.node.position.set(p.x, p.y);
+    } else {
+      const p = toScreen(e.data.x + w / 2, e.data.y + h);
+      e.node.position.set(p.x, p.y - 4);
+      e.node.zIndex = p.y - 4;
     }
   };
 
-  const buildPlants = (e) => {
-    if (e.plants) { e.plants.destroy({ children: true }); e.plants = null; }
+  // 밭 — 칸마다 흙 + 단어 순서대로 단계 작물 1개(칸 중앙)
+  const buildField = (e) => {
+    if (e.art) { e.flipC.removeChild(e.art); e.art.destroy({ children: true }); }
+    e.plants = null; e.sway = [];
     const book = books.get(e.data.book_id);
-    if (!book) return;
-    const slots = stageSlots(book.stages, e.data.book_id);
-    if (!slots.length) return;
-    const crop = book.crop_type || 'carrot';
+    const dims = fieldDims(book, 2, 2);
+    const fa = createFieldArt(art, dims, book?.name);
+    e.art = fa.root;
+    e.flipC.addChild(fa.root);
+    const stages = cellStages(book);
+    if (!stages.length) return;
+    const crop = book?.crop_type || 'carrot';
     const n = cropStageCount(art, crop);
     const plants = new Container();
     plants.sortableChildren = true;
-    const cells = [];
-    for (let i = 0; i < 3; i += 1) for (let j = 0; j < 3; j += 1) cells.push([i, j]);
-    const rnd = mulberry32(hashStr(e.data.book_id) ^ 0x9e3779b9);
-    for (let i = cells.length - 1; i > 0; i -= 1) { const j = Math.floor(rnd() * (i + 1)); [cells[i], cells[j]] = [cells[j], cells[i]]; }
-    e.sway = [];
-    slots.forEach((stage, idx) => {
-      const [ci, cj] = cells[idx];
-      const c = createCropArt(art, crop, stage, n);
-      c.position.set((ci - cj) * 32, (ci + cj - 2) * 16 + 4);
-      c.zIndex = ci + cj;
+    plants.zIndex = 1;
+    const rnd = mulberry32(hashStr(e.data.book_id));
+    const count = Math.min(stages.length, fa.cells.length);
+    for (let i = 0; i < count; i += 1) {
+      const c = createCropArt(art, crop, stages[i], n);
+      c.position.set(fa.cells[i].cx, fa.cells[i].cy + fa.ch * 0.38);
+      c.zIndex = fa.cells[i].cy;
       plants.addChild(c);
       e.sway.push({ node: c, phase: rnd() * 6.28 });
-    });
-    e.node.addChild(plants);
+    }
+    fa.root.addChild(plants);
     e.plants = plants;
   };
 
@@ -254,9 +223,10 @@ export const createFarmScene = async (host, callbacks = {}) => {
     const { w, h } = { w: cat.w || 1, h: cat.h || 1 };
     const node = new Container();
     const flipC = new Container();
-    const itemArt = createItemArt(art, data.item_id, cat.category, w, h);
+    const isField = cat.category === 'field';
+    const itemArt = isField ? new Container() : createItemArt(art, data.item_id, cat.category, w, h);
     flipC.addChild(itemArt);
-    flipC.scale.x = data.flip ? -1 : 1;
+    flipC.scale.x = data.flip && !isField ? -1 : 1;
     node.addChild(flipC);
     const e = {
       data, node, flipC, art: itemArt, plants: null, sway: [], valid: true,
@@ -265,7 +235,7 @@ export const createFarmScene = async (host, callbacks = {}) => {
     };
     (cat.category === 'ground' ? groundItems : objects).addChild(node);
     entries.set(data.uid, e);
-    if (cat.category === 'field') buildPlants(e);
+    if (isField) buildField(e);
     placeNode(e);
     return e;
   };
@@ -284,11 +254,8 @@ export const createFarmScene = async (host, callbacks = {}) => {
     if (!e || !editMode) return;
     const { w, h } = sizeOf(e);
     const a = toScreen(e.data.x, e.data.y);
-    const b = toScreen(e.data.x + w, e.data.y);
-    const c = toScreen(e.data.x + w, e.data.y + h);
-    const d = toScreen(e.data.x, e.data.y + h);
     const color = e.valid === false ? 0xe0533d : 0x4cc26a;
-    footprintG.poly([a.x, a.y, b.x, b.y, c.x, c.y, d.x, d.y]).fill({ color, alpha: 0.5 }).stroke({ width: 2, color, alpha: 0.9 });
+    footprintG.roundRect(a.x, a.y, w * TILE_W, h * TILE_H, 4).fill({ color, alpha: 0.4 }).stroke({ width: 2, color, alpha: 0.9 });
   };
 
   const setValidity = (e) => { e.valid = validAt(e, e.data.x, e.data.y); };
@@ -329,7 +296,7 @@ export const createFarmScene = async (host, callbacks = {}) => {
         return overlap({ x: cx, y: cy, w: 1, h: 1 }, rectOf(e));
       });
     };
-    return find(wp.x, wp.y + 26, true) || find(wp.x, wp.y, false);
+    return find(wp.x, wp.y + 30, true) || find(wp.x, wp.y, false);
   };
 
   const spawnSparkles = (wx, wy, n = 8) => {
@@ -365,8 +332,8 @@ export const createFarmScene = async (host, callbacks = {}) => {
     const { w, h } = sizeOf(dragEntry);
     // 큰 물건은 중심이 포인터 아래 오도록, 잡은 위치 오프셋 유지
     const nx = c.x - grab.dx; const ny = c.y - grab.dy;
-    dragEntry.data.x = clamp(nx, -2, GRID + 1 - w + 1);
-    dragEntry.data.y = clamp(ny, -2, GRID + 1 - h + 1);
+    dragEntry.data.x = clamp(nx, -2, GRID_W - w + 2);
+    dragEntry.data.y = clamp(ny, -2, GRID_H - h + 2);
     setValidity(dragEntry);
     placeNode(dragEntry);
     drawFootprint();
@@ -390,7 +357,7 @@ export const createFarmScene = async (host, callbacks = {}) => {
     if (isExternalOutside && e.isNew) { removeEntry(e.data.uid); drawFootprint(); emitSelect(); emitLayout(); return; }
     setValidity(e);
     if (e.valid) { e.last = { x: e.data.x, y: e.data.y }; e.isNew = false; } else if (e.isNew) {
-      const nv = nearestValid(e, clamp(e.data.x, 0, GRID - 1), clamp(e.data.y, 0, GRID - 1));
+      const nv = nearestValid(e, clamp(e.data.x, 0, GRID_W - 1), clamp(e.data.y, 0, GRID_H - 1));
       if (nv) { e.data.x = nv.x; e.data.y = nv.y; setValidity(e); placeNode(e); e.last = nv; e.isNew = false; } else { removeEntry(e.data.uid); }
     } else { revertLater(e); }
     e.fx = e.data.x + 0.5; e.fy = e.data.y + 0.5;
@@ -449,7 +416,7 @@ export const createFarmScene = async (host, callbacks = {}) => {
       dragEntry.art.alpha = 0.9; dragEntry.flipC.y = -6;
       moveDragTo(ev.clientX, ev.clientY);
     } else if (mode === 'pan') {
-      cam.x -= dx / cam.s; cam.y -= dy / cam.s;
+      const sc = baseScale() * cam.s; cam.x -= dx / sc; cam.y -= dy / sc;
       applyCamera();
     }
   };
@@ -505,7 +472,7 @@ export const createFarmScene = async (host, callbacks = {}) => {
     timeSec += dt;
     clouds.forEach((c) => {
       c.g.x += c.speed * dt; c.g.y += c.speed * 0.5 * dt;
-      if (c.g.x > 1000 || c.g.y > 900) { c.g.x = -1000; c.g.y = -50 + Math.random() * 500; }
+      if (c.g.x > MAP_W + 200 || c.g.y > MAP_H) { c.g.x = -200; c.g.y = Math.random() * 1500; }
     });
     for (const e of entries.values()) {
       const cat = catOf(e.data.item_id).category;
@@ -529,7 +496,7 @@ export const createFarmScene = async (host, callbacks = {}) => {
             if (dist <= step) { e.fx = e.tx; e.fy = e.ty; e.tx = null; } else {
               const nfx = e.fx + (ddx / dist) * step; const nfy = e.fy + (ddy / dist) * step;
               if (isBlockedForAnimal(Math.floor(nfx), Math.floor(nfy), e)) e.tx = null; else { e.fx = nfx; e.fy = nfy; }
-              const sdx = (ddx - ddy);
+              const sdx = ddx;
               if (Math.abs(sdx) > 0.01) e.flipC.scale.x = (sdx > 0 ? 1 : -1) * (e.data.flip ? -1 : 1);
               bounce = Math.abs(Math.sin(timeSec * 9 + e.phase)) * 3;
             }
@@ -575,10 +542,12 @@ export const createFarmScene = async (host, callbacks = {}) => {
   // ── 공개 API ────────────────────────────────────────────────
   const centerOnFields = () => {
     const fields = [...entries.values()].filter((e) => catOf(e.data.item_id).category === 'field');
+    cam.x = MAP_W / 2;
     if (fields.length) {
-      const sum = fields.reduce((a, e) => { const p = toScreen(e.data.x + 1.5, e.data.y + 1.5); return { x: a.x + p.x, y: a.y + p.y }; }, { x: 0, y: 0 });
-      cam.x = sum.x / fields.length; cam.y = sum.y / fields.length;
-    } else { cam.x = 0; cam.y = GRID * TILE_H / 2; }
+      const top = Math.min(...fields.map((e) => e.data.y));
+      const sc = baseScale() * cam.s;
+      cam.y = top * TILE_H + ((viewH - bottomInset) / 2) / sc - 40;
+    } else { cam.y = 0; }
     applyCamera();
   };
 
@@ -600,12 +569,13 @@ export const createFarmScene = async (host, callbacks = {}) => {
     resetLayout(layout) { setLayout(layout); },
     setBooks(bs) {
       books = new Map((bs || []).map((b) => [b.id, b]));
-      entries.forEach((e) => { if (e.data.book_id) buildPlants(e); });
+      entries.forEach((e) => { if (e.data.book_id) { buildField(e); setValidity(e); placeNode(e); } });
+      drawFootprint(); emitSelect();
     },
     setBookCrop(bookId, crop) {
       const b = books.get(bookId);
       if (b) b.crop_type = crop;
-      entries.forEach((e) => { if (e.data.book_id === bookId) buildPlants(e); });
+      entries.forEach((e) => { if (e.data.book_id === bookId) buildField(e); });
     },
     setEditMode(on) {
       editMode = !!on;
@@ -622,7 +592,7 @@ export const createFarmScene = async (host, callbacks = {}) => {
       const e = startNew(itemId, bookId);
       const { gx, gy } = fromScreen(cam.x, cam.y);
       const { w, h } = sizeOf(e);
-      const nv = nearestValid(e, clamp(Math.floor(gx - w / 2), 0, GRID - w), clamp(Math.floor(gy - h / 2), 0, GRID - h));
+      const nv = nearestValid(e, clamp(Math.floor(gx - w / 2), 0, GRID_W - w), clamp(Math.floor(gy - h / 2), 0, GRID_H - h));
       if (!nv) { removeEntry(e.data.uid); return false; }
       e.data.x = nv.x; e.data.y = nv.y; e.last = nv; e.isNew = false;
       e.fx = nv.x + 0.5; e.fy = nv.y + 0.5;
@@ -649,7 +619,7 @@ export const createFarmScene = async (host, callbacks = {}) => {
       const e = entries.get(selectedUid);
       if (!e) return;
       e.data.flip = !e.data.flip;
-      e.flipC.scale.x = e.data.flip ? -1 : 1;
+      if (catOf(e.data.item_id).category !== 'field') e.flipC.scale.x = e.data.flip ? -1 : 1;
       emitLayout();
     },
     storeSelected() {

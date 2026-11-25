@@ -2,24 +2,16 @@
   "_doc": "src 가 있으면 PNG(farm2/ 폴더 기준, 'images/...' 로 시작하면 assets/ 기준), 없으면 코드로 그린 도형 폴백. PNG 만 넣고 이 파일만 고치면 교체된다.",
   "tile": {
     "w": 64,
-    "h": 32
+    "h": 48
   },
   "items": {
-    "field": {
-      "src": "images/farm/field-base.png",
-      "anchor": [
-        0.5,
-        0.645
-      ],
-      "scale": 0.1875
-    },
     "tree_round": {
       "src": "tree_round.png",
       "anchor": [
         0.5,
         0.97
       ],
-      "scale": 0.43
+      "scale": 0.4
     },
     "tree_pine": {
       "anchor": [
@@ -41,7 +33,7 @@
         0.5,
         0.97
       ],
-      "scale": 0.22
+      "scale": 0.28
     },
     "scarecrow": {
       "src": "scarecrow.png",
@@ -49,7 +41,7 @@
         0.5,
         0.97
       ],
-      "scale": 0.29
+      "scale": 0.27
     },
     "chicken": {
       "src": "chicken.png",
@@ -57,7 +49,7 @@
         0.5,
         0.97
       ],
-      "scale": 0.15
+      "scale": 0.14
     }
   },
   "crops": {
@@ -66,7 +58,7 @@
         0.5,
         1
       ],
-      "scale": 0.085,
+      "scale": 0.055,
       "stages": [
         "images/farm/crops/planted/healthy-seed.png",
         "images/farm/crops/planted/healthy-sprout.png",
@@ -80,7 +72,7 @@
         0.5,
         0.97
       ],
-      "scale": 0.29,
+      "scale": 0.15,
       "stages": [
         "corn_0.png",
         "corn_1.png",
@@ -89,5 +81,21 @@
         "corn_3.png"
       ]
     }
+  },
+  "field_frame": {
+    "src": "field_frame.png",
+    "slice": [
+      40,
+      40,
+      40,
+      40
+    ]
+  },
+  "soil_cell": {
+    "src": "soil_cell.png"
+  },
+  "grass_tile": {
+    "src": "grass_tile.png",
+    "scale": 1
   }
 }
