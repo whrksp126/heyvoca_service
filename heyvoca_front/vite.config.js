@@ -81,6 +81,8 @@ export default defineConfig({
   resolve: {
     alias: { '@': path.resolve(__dirname, './src') },
   },
+  // 농장 씬(동적 import)의 three 를 처음부터 함께 사전 번들 → 첫 진입 때 재최적화로 React 두 벌 로딩되는 문제 방지
+  optimizeDeps: { include: ['three'] },
   base: '/',
   server: {
     host: '0.0.0.0',
