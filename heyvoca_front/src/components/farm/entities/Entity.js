@@ -1,19 +1,12 @@
 // 농장 엔티티 기본 클래스 — 격자 위치(x,y)·회전(rot)·발판(footprint)과 구면 배치 공통 처리.
 import * as THREE from 'three';
-import { surfaceFrame, normalToGrid, R } from '../farmArt';
+import { surfaceFrame } from '../farmArt';
 
 const _m = new THREE.Matrix4();
-const _t = new THREE.Vector3();
-export const UNIT = 0.85; // 격자 1칸 ≈ 월드 길이(그림 크기 환산)
+export const UNIT = Math.SQRT2; // 타일 한 칸 화면 폭(마름모 대각) = 월드 √2
 
-/** 법선축으로만 카메라를 향하는 원통형 빌보드 자세 */
-export const orientBillboard = (obj, n, camLocal, fallback) => {
-  _t.copy(camLocal).addScaledVector(n, -camLocal.dot(n));
-  if (_t.lengthSq() < 1e-4) _t.copy(fallback);
-  _t.normalize();
-  const right = new THREE.Vector3().crossVectors(n, _t);
-  obj.quaternion.setFromRotationMatrix(_m.makeBasis(right, n, _t));
-};
+/** 카메라를 향한 세운 스프라이트 자세 */
+export const orientBillboard = (obj, camQuat) => { obj.quaternion.copy(camQuat); };
 
 /** 표면 기준 자세(동·법선·남) 후 법선축 회전 */
 export const orientFlat = (obj, frame, rotDeg) => {
@@ -74,5 +67,3 @@ export default class Entity {
     this.group.traverse((o) => { if (o.isInstancedMesh) o.dispose(); });
   }
 }
-
-export { normalToGrid, R };

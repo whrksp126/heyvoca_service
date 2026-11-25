@@ -2,10 +2,8 @@
 import * as THREE from 'three';
 import manifest from '../../assets/farm2/manifest.json';
 
-export const R = manifest.planet?.radius || 10;
 export const GRID_W = manifest.grid?.w || 64;
-export const GRID_H = manifest.grid?.h || 32;
-export const LAT_MAX = (60 * Math.PI) / 180;
+export const GRID_H = manifest.grid?.h || 64;
 const STAGE_KEYS = ['seed', 'sprout', 'leaf', 'carrot', 'golden'];
 const evenUp = (n) => (n % 2 === 0 ? n : n + 1);
 
@@ -38,36 +36,16 @@ export const cellStages = (book) => {
   return list;
 };
 
-// ── 구면 격자 ──────────────────────────────────────────────────
-// gx → 경도(360/w), gy → 위도(+60° → -60°, 아래 방향 = 남쪽). 칸 중심 = (x+0.5, y+0.5)
-export const gridToLonLat = (gx, gy, gw = GRID_W, gh = GRID_H) => ({
-  lon: (gx / gw) * Math.PI * 2,
-  lat: LAT_MAX - (gy / gh) * 2 * LAT_MAX,
+// ── 평면 격자 (v5) ─────────────────────────────────────────────
+// 칸 1 = 월드 1, 맵 중심이 원점. x → +동(오른쪽), y → +남(앞쪽)
+export const surfaceFrame = (gx, gy, gw = GRID_W, gh = GRID_H) => ({
+  n: new THREE.Vector3(0, 1, 0),
+  east: new THREE.Vector3(1, 0, 0),
+  south: new THREE.Vector3(0, 0, 1),
+  pos: new THREE.Vector3(gx - gw / 2, 0, gy - gh / 2),
 });
-export const surfaceFrame = (gx, gy, gw = GRID_W, gh = GRID_H, radius = R) => {
-  const { lon, lat } = gridToLonLat(gx, gy, gw, gh);
-  const n = new THREE.Vector3(Math.cos(lat) * Math.sin(lon), Math.sin(lat), Math.cos(lat) * Math.cos(lon));
-  const east = new THREE.Vector3(Math.cos(lon), 0, -Math.sin(lon));
-  const south = new THREE.Vector3().crossVectors(east, n).normalize();
-  return { n, east, south, pos: n.clone().multiplyScalar(radius), lat, lon };
-};
-/** 칸 한 변의 실제 길이(동서, 남북) */
-export const cellSize = (gy, gw = GRID_W, gh = GRID_H, radius = R) => ({
-  cw: (2 * Math.PI * radius * Math.cos(LAT_MAX - (gy / gh) * 2 * LAT_MAX)) / gw,
-  ch: (radius * 2 * LAT_MAX) / gh,
-});
-export const wrapX = (x, gw = GRID_W) => ((x % gw) + gw) % gw;
-/** 위도 가장자리·경도 이음 반영 격자 좌표 → 법선 단위벡터 */
-export const normalAt = (gx, gy) => surfaceFrame(gx, gy).n;
-/** 법선 → 격자 실수 좌표 (-1 이면 극지방) */
-export const normalToGrid = (n, gw = GRID_W, gh = GRID_H) => {
-  const lat = Math.asin(Math.max(-1, Math.min(1, n.y)));
-  let lon = Math.atan2(n.x, n.z);
-  if (lon < 0) lon += Math.PI * 2;
-  const gy = ((LAT_MAX - lat) / (2 * LAT_MAX)) * gh;
-  if (gy < 0 || gy >= gh) return null;
-  return { gx: (lon / (Math.PI * 2)) * gw, gy };
-};
+export const cellSize = () => ({ cw: 1, ch: 1 });
+export const wrapX = (x) => x;
 
 // ── 리소스 추적(언마운트 시 dispose) ───────────────────────────
 export const createDisposer = () => {

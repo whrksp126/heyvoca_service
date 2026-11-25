@@ -1,5 +1,5 @@
 {
-  "_doc": "v4 작은 행성. src 가 있으면 PNG(farm2/ 기준, images/ 로 시작하면 assets/ 기준), 없으면 3D 저폴리 도형 폴백. scale 은 (픽셀*scale/64) 격자칸 높이.",
+  "_doc": "v4 \uc791\uc740 \ud589\uc131. src \uac00 \uc788\uc73c\uba74 PNG(farm2/ \uae30\uc900, images/ \ub85c \uc2dc\uc791\ud558\uba74 assets/ \uae30\uc900), \uc5c6\uc73c\uba74 3D \uc800\ud3f4\ub9ac \ub3c4\ud615 \ud3f4\ubc31. scale \uc740 (\ud53d\uc140*scale/64) \uaca9\uc790\uce78 \ub192\uc774.",
   "tile": {
     "w": 64,
     "h": 48
@@ -141,9 +141,6 @@
   },
   "grid": {
     "w": 64,
-    "h": 32
-  },
-  "planet": {
-    "radius": 10
+    "h": 64
   }
 }

@@ -2,7 +2,7 @@
 import * as THREE from 'three';
 import Entity, { orientBillboard, orientFlat, UNIT } from './Entity';
 import {
-  billboardGeo, spriteSize, buildFallback, planeGeo, COLORS, R,
+  billboardGeo, spriteSize, buildFallback, planeGeo, COLORS,
 } from '../farmArt';
 
 export default class DecorEntity extends Entity {
@@ -21,7 +21,7 @@ export default class DecorEntity extends Entity {
       const g = planeGeo(art).clone(); g.rotateX(-Math.PI / 2); disposer.track(g);
       const mat = disposer.track(new THREE.MeshLambertMaterial({ color: this.itemId.includes('path') ? 0xd9c08f : COLORS.leafLight, polygonOffset: true, polygonOffsetFactor: -1, polygonOffsetUnits: -1 }));
       const m = new THREE.Mesh(g, mat);
-      const fp = this.footprint(); m.scale.set(fp.w * 0.9, 1, fp.h * 0.65);
+      const fp = this.footprint(); m.scale.set(fp.w, 1, fp.h);
       this.mesh = m; this.group.add(m); this.mode = 'flat';
       return;
     }
@@ -42,12 +42,12 @@ export default class DecorEntity extends Entity {
 
   render() {
     this.place();
-    if (this.flat) { const fp = this.footprint(); this.mesh.scale.set(fp.w * 0.9, 1, fp.h * 0.65); this.group.position.setLength(R + 0.03); }
+    if (this.flat) { const fp = this.footprint(); this.mesh.scale.set(fp.w, 1, fp.h); this.group.position.y = 0.02; }
     this.pose();
   }
 
   pose() {
-    if (this.mode === 'bill') orientBillboard(this.group, this.frame.n, this.ctx.camLocal, this.frame.south);
+    if (this.mode === 'bill') orientBillboard(this.group, this.ctx.camera.quaternion);
     else orientFlat(this.group, this.frame, this.rot);
   }
 

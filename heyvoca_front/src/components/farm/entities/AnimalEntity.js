@@ -46,10 +46,7 @@ export default class AnimalEntity extends Entity {
         if (dist <= step) { this.fx = this.tx; this.fy = this.ty; this.setState('idle'); this.wait = 1.5 + Math.random() * 3; } else {
           const nx = this.fx + (dx / dist) * step; const ny = this.fy + (dy / dist) * step;
           if (ctx.isBlocked(Math.floor(nx), Math.floor(ny), this)) this.setState('idle'); else { this.fx = nx; this.fy = ny; }
-          if (Math.abs(dx) > 0.01) {
-            const e = this.frame?.east; const cr = ctx.camRight;
-            this.flip = (dx > 0 ? 1 : -1) * (e && cr && e.dot(cr) < 0 ? -1 : 1);
-          }
+          const sx = dx - dy; if (Math.abs(sx) > 0.01) this.flip = sx > 0 ? 1 : -1;
         }
       } else if (this.state === 'idle') {
         this.wait -= dt;
@@ -83,6 +80,6 @@ export default class AnimalEntity extends Entity {
     if (this.state === 'walk') hop = Math.abs(Math.sin(t * 9)) * 0.08;
     if (this.state === 'happy') hop = Math.abs(Math.sin(this.stateT * 8)) * 0.25;
     this.mesh.position.y = hop;
-    orientBillboard(this.group, this.frame.n, ctx.camLocal, this.frame.south);
+    orientBillboard(this.group, ctx.camera.quaternion);
   }
 }
