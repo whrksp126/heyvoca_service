@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { trackEvent } from '../utils/analytics';
 import Main from '../components/takeTest/Main';
 import { CompleteCut, COMPLETE_CUT_MS } from '../components/takeTest/StudyInterlude';
 import { prefetchSessionFarmSummary } from '../utils/sessionSummaryPrefetch';
@@ -72,6 +73,10 @@ const TakeTest = () => {
         : rawState
   );
   const isPlacement = !!state?.guestMode && !!state?.placement;
+  useEffect(() => {
+    trackEvent('study_start', { test_type: state?.testType || 'unknown', is_guest: !!state?.guestMode, is_placement: isPlacement });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   const placementRef = useRef(isPlacement ? (placementSession ?? loadPlacementSession()) : null);
   // 다음 문제 공급자 — 방금 끝난 문제의 결과로 θ 를 갱신하고 다음 문제를 만든다(Main.jsx questionSupplier).
   const placementSupplier = (answered) => {

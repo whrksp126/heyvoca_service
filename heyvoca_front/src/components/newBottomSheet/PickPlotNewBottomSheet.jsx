@@ -153,7 +153,7 @@ const PickPlotNewBottomSheet = ({
         ...(dictionaryId != null ? { vocaId: dictionaryId, dictionaryId } : {}),
         ...(wordReading ? { reading: wordReading } : {}),
         ...(language ? { language } : {}),
-      });
+      }, 'pick_plot');
       if (!result) {
         // 이미 그 단어장에 있는 단어 — Context 가 안내 토스트를 이미 띄웠다
         setSubmitting(false);

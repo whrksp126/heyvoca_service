@@ -35,13 +35,14 @@ export function initAnalytics() {
   window.gtag('set', 'user_properties', { platform: getPlatform() });
 }
 
-export function trackPageView(path) {
+export function trackPageView(path, { title, params } = {}) {
   if (!isEnabled()) return;
   initAnalytics();
   window.gtag('event', 'page_view', {
     page_path: path,
-    page_title: document.title,
-    page_location: window.location.href,
+    page_title: title || document.title,
+    page_location: window.location.origin + path,
+    ...(params || {}),
   });
 }
 

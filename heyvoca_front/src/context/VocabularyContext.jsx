@@ -24,6 +24,7 @@ import { showToast } from '../utils/osFunction';
 import { notifyStudyDataChanged, ONBOARDING_MIGRATED_EVENT } from '../utils/studyDataEvents';
 import { toLocalDateString, STABILITY_LEAF_DAYS, STABILITY_CARROT_DAYS } from '../utils/common';
 import { getUserRecentStudyDataApi, updateUserRecentStudyDataApi } from '../api/study';
+import { trackEvent } from '../utils/analytics';
 import AchievementRewardOverlay from '../components/overlay/AchievementRewardOverlay';
 import { openGemRewardSheet } from '../components/rewards/openRewardSheet';
 
@@ -422,6 +423,8 @@ export const VocabularyProvider = ({ children }) => {
       const newBook = result.data;
 
       setVocaBooks(prev => [...prev, newBook]);
+      if (newVocabulary?.bookstoreId != null) trackEvent('bookstore_add', { book_id: String(newVocabulary.bookstoreId) });
+      else trackEvent('vocabook_create');
 
       // [NEW] 서버에서 반환된 단어들을 userDictionary에 즉시 반영
       //
@@ -592,9 +595,10 @@ export const VocabularyProvider = ({ children }) => {
   }, [vocabularySheets]);
 
   // [UPDATED] 단어 추가
-  const addWord = useCallback(async (sheetId, word) => {
+  const addWord = useCallback(async (sheetId, word, source = 'direct') => {
     try {
       const result = await addUserDictionaryWord(sheetId, word);
+      if (result && source !== 'move') trackEvent('word_add', { source });
 
       // 온보딩 미션(단어 추가 관련) 자동 완료 갱신 — 백엔드 훅 처리 후 최신화.
       // 이 Context는 Provider 트리 상 OnboardingUnlockProvider보다 바깥이라 훅 대신 전역 참조 사용

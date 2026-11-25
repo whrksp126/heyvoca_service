@@ -158,7 +158,7 @@ const AddWordNewBottomSheet = ({
     try {
       const originalWord = originWordRef.current;
       if (originalWord && vocabularyId !== currentStateRef.current.vocabularyId) {
-        await addWord(currentStateRef.current.vocabularyId, originalWord);
+        await addWord(currentStateRef.current.vocabularyId, originalWord, 'move');
         await deleteWord(vocabularyId, currentStateRef.current.id);
       } else {
         const updates = {

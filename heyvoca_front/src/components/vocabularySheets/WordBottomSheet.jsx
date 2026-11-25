@@ -41,7 +41,7 @@ export const useWordSetBottomSheet = () => {
         meanings: data.meanings,
         examples: data.examples
       };
-      await addWord(data.vocabularyId, newWord);
+      await addWord(data.vocabularyId, newWord, 'word_sheet');
       handleClose();
     } catch (error) {
       console.error('단어 추가 실패:', error);
@@ -53,7 +53,7 @@ export const useWordSetBottomSheet = () => {
 
       if (currentStateRef.current.vocabularyId !== data.vocabularyId) {
         const word = getWord(currentStateRef.current.vocabularyId, data.id);
-        await addWord(data.vocabularyId, word);
+        await addWord(data.vocabularyId, word, 'move');
         await deleteWord(currentStateRef.current.vocabularyId, data.id);
       } else {
         const updates = {
