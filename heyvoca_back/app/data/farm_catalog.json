@@ -1,0 +1,307 @@
+{
+ "grid": {
+  "w": 24,
+  "h": 24
+ },
+ "items": [
+  {
+   "id": "carrot",
+   "category": "crop",
+   "name": "당근",
+   "w": 1,
+   "h": 1,
+   "price_gem": 0,
+   "unlock": null,
+   "starter_qty": 0
+  },
+  {
+   "id": "corn",
+   "category": "crop",
+   "name": "옥수수",
+   "w": 1,
+   "h": 1,
+   "price_gem": 0,
+   "unlock": null,
+   "starter_qty": 0
+  },
+  {
+   "id": "rice",
+   "category": "crop",
+   "name": "벼",
+   "w": 1,
+   "h": 1,
+   "price_gem": 0,
+   "unlock": null,
+   "starter_qty": 0
+  },
+  {
+   "id": "cucumber",
+   "category": "crop",
+   "name": "오이",
+   "w": 1,
+   "h": 1,
+   "price_gem": 0,
+   "unlock": null,
+   "starter_qty": 0
+  },
+  {
+   "id": "tomato",
+   "category": "crop",
+   "name": "토마토",
+   "w": 1,
+   "h": 1,
+   "price_gem": 0,
+   "unlock": null,
+   "starter_qty": 0
+  },
+  {
+   "id": "pumpkin",
+   "category": "crop",
+   "name": "호박",
+   "w": 1,
+   "h": 1,
+   "price_gem": 0,
+   "unlock": null,
+   "starter_qty": 0
+  },
+  {
+   "id": "radish",
+   "category": "crop",
+   "name": "무",
+   "w": 1,
+   "h": 1,
+   "price_gem": 0,
+   "unlock": null,
+   "starter_qty": 0
+  },
+  {
+   "id": "strawberry",
+   "category": "crop",
+   "name": "딸기",
+   "w": 1,
+   "h": 1,
+   "price_gem": 0,
+   "unlock": null,
+   "starter_qty": 0
+  },
+  {
+   "id": "field",
+   "category": "field",
+   "name": "단어장 밭",
+   "w": 3,
+   "h": 3,
+   "price_gem": 0,
+   "unlock": null,
+   "starter_qty": 0
+  },
+  {
+   "id": "tree_round",
+   "category": "tree",
+   "name": "둥근 나무",
+   "w": 1,
+   "h": 1,
+   "price_gem": 5,
+   "unlock": null,
+   "starter_qty": 2
+  },
+  {
+   "id": "tree_pine",
+   "category": "tree",
+   "name": "소나무",
+   "w": 1,
+   "h": 1,
+   "price_gem": 5,
+   "unlock": null,
+   "starter_qty": 0
+  },
+  {
+   "id": "tree_apple",
+   "category": "tree",
+   "name": "사과나무",
+   "w": 1,
+   "h": 1,
+   "price_gem": 12,
+   "unlock": null,
+   "starter_qty": 0
+  },
+  {
+   "id": "fence_wood",
+   "category": "fence",
+   "name": "나무 울타리",
+   "w": 1,
+   "h": 1,
+   "price_gem": 1,
+   "unlock": null,
+   "starter_qty": 8
+  },
+  {
+   "id": "fence_stone",
+   "category": "fence",
+   "name": "돌 울타리",
+   "w": 1,
+   "h": 1,
+   "price_gem": 2,
+   "unlock": null,
+   "starter_qty": 0
+  },
+  {
+   "id": "scarecrow",
+   "category": "deco",
+   "name": "허수아비",
+   "w": 1,
+   "h": 1,
+   "price_gem": 8,
+   "unlock": null,
+   "starter_qty": 1
+  },
+  {
+   "id": "mailbox",
+   "category": "deco",
+   "name": "우체통",
+   "w": 1,
+   "h": 1,
+   "price_gem": 6,
+   "unlock": null,
+   "starter_qty": 1
+  },
+  {
+   "id": "bench",
+   "category": "deco",
+   "name": "벤치",
+   "w": 1,
+   "h": 1,
+   "price_gem": 6,
+   "unlock": null,
+   "starter_qty": 0
+  },
+  {
+   "id": "well",
+   "category": "deco",
+   "name": "우물",
+   "w": 1,
+   "h": 1,
+   "price_gem": 15,
+   "unlock": null,
+   "starter_qty": 0
+  },
+  {
+   "id": "flower_bed",
+   "category": "deco",
+   "name": "꽃밭",
+   "w": 1,
+   "h": 1,
+   "price_gem": 4,
+   "unlock": null,
+   "starter_qty": 0
+  },
+  {
+   "id": "lamp",
+   "category": "deco",
+   "name": "가로등",
+   "w": 1,
+   "h": 1,
+   "price_gem": 6,
+   "unlock": null,
+   "starter_qty": 0
+  },
+  {
+   "id": "signboard",
+   "category": "deco",
+   "name": "푯말",
+   "w": 1,
+   "h": 1,
+   "price_gem": 5,
+   "unlock": null,
+   "starter_qty": 0
+  },
+  {
+   "id": "windmill",
+   "category": "deco",
+   "name": "풍차",
+   "w": 2,
+   "h": 2,
+   "price_gem": 40,
+   "unlock": {
+    "type": "words_learned",
+    "value": 500
+   },
+   "starter_qty": 0
+  },
+  {
+   "id": "path_tile",
+   "category": "ground",
+   "name": "길 타일",
+   "w": 1,
+   "h": 1,
+   "price_gem": 1,
+   "unlock": null,
+   "starter_qty": 0
+  },
+  {
+   "id": "pond",
+   "category": "ground",
+   "name": "연못",
+   "w": 2,
+   "h": 2,
+   "price_gem": 20,
+   "unlock": null,
+   "starter_qty": 0
+  },
+  {
+   "id": "chicken",
+   "category": "animal",
+   "name": "닭",
+   "w": 1,
+   "h": 1,
+   "price_gem": 0,
+   "unlock": null,
+   "starter_qty": 1
+  },
+  {
+   "id": "sheep",
+   "category": "animal",
+   "name": "양",
+   "w": 1,
+   "h": 1,
+   "price_gem": 25,
+   "unlock": null,
+   "starter_qty": 0
+  },
+  {
+   "id": "cat",
+   "category": "animal",
+   "name": "고양이",
+   "w": 1,
+   "h": 1,
+   "price_gem": 20,
+   "unlock": null,
+   "starter_qty": 0
+  },
+  {
+   "id": "dog",
+   "category": "animal",
+   "name": "강아지",
+   "w": 1,
+   "h": 1,
+   "price_gem": 0,
+   "unlock": {
+    "type": "streak",
+    "value": 7
+   },
+   "starter_qty": 0
+  },
+  {
+   "id": "cow",
+   "category": "animal",
+   "name": "소",
+   "w": 1,
+   "h": 1,
+   "price_gem": 0,
+   "unlock": {
+    "type": "streak",
+    "value": 30
+   },
+   "starter_qty": 0
+  }
+ ]
+}

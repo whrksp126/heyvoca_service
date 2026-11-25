@@ -25,7 +25,7 @@ const withTimeout = (promise) => new Promise((resolve, reject) => {
 });
 
 /** fetchDataAsync 결과를 `{ code, message, data? }` 로 맞춘다(실패해도 throw 하지 않는다). */
-const call = async (url, method, fetchData, label) => {
+export const call = async (url, method, fetchData, label) => {
   let res;
   try {
     const pending = fetchDataAsync(url, method, fetchData);

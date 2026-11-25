@@ -1,0 +1,54 @@
+{
+  "_doc": "src 가 있으면 PNG(farm2/ 폴더 기준, 'images/...' 로 시작하면 assets/ 기준), 없으면 코드로 그린 도형 폴백. PNG 만 넣고 이 파일만 고치면 교체된다.",
+  "tile": {
+    "w": 64,
+    "h": 32
+  },
+  "items": {
+    "field": {
+      "src": "images/farm/field-base.png",
+      "anchor": [
+        0.5,
+        0.645
+      ],
+      "scale": 0.1875
+    },
+    "tree_round": {
+      "anchor": [
+        0.5,
+        1
+      ],
+      "scale": 1
+    },
+    "tree_pine": {
+      "anchor": [
+        0.5,
+        1
+      ],
+      "scale": 1
+    },
+    "tree_apple": {
+      "anchor": [
+        0.5,
+        1
+      ],
+      "scale": 1
+    }
+  },
+  "crops": {
+    "carrot": {
+      "anchor": [
+        0.5,
+        1
+      ],
+      "scale": 0.085,
+      "stages": [
+        "images/farm/crops/planted/healthy-seed.png",
+        "images/farm/crops/planted/healthy-sprout.png",
+        "images/farm/crops/planted/healthy-leaf.png",
+        "images/farm/crops/planted/healthy-carrot.png",
+        "images/farm/crops/planted/healthy-carrot.png"
+      ]
+    }
+  }
+}

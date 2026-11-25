@@ -27,3 +27,6 @@ docs/voca_*.md
 db/batches/
 db/__batches_sub/
 heyvoca_back/__batches/
+
+scripts/farm-sprites/node_modules/
+heyvoca_front/src/assets/farm2/_sheet_*

@@ -107,6 +107,7 @@ def _bookstore_to_dict(bs):
         'gem': bs.gem,
         'hide': bs.hide,
         'level_id': bs.level_id,
+        'crop_type': bs.crop_type,
         'admin_voca_book_id': bs.admin_voca_book_id,
         'created_at': bs.created_at.isoformat() if bs.created_at else None,
         'updated_at': bs.updated_at.isoformat() if bs.updated_at else None,
@@ -510,6 +511,9 @@ def toggle_bookstore(book_id):
         bs.gem = gem
         bs.hide = 'N'
         bs.level_id = level_id
+        from app.services.farm_lab import CROP_IDS
+        _crop = str(payload.get('crop_type') or '').strip()
+        bs.crop_type = _crop if _crop in CROP_IDS else None
         bs.book_id = None
         bs.admin_voca_book_id = book_id
         bs.created_at = now
@@ -543,7 +547,7 @@ def toggle_bookstore(book_id):
 
 _EDITABLE_BOOKSTORE_FIELDS = {
     'name', 'downloads', 'category', 'category_id', 'color',
-    'gem', 'level_id',
+    'gem', 'level_id', 'crop_type',
 }
 
 
@@ -570,6 +574,11 @@ def patch_bookstore(book_id):
                 v = int(v)
             except (TypeError, ValueError):
                 return jsonify({'code': 400, 'message': f"'{k}' 은(는) 정수여야 합니다."}), 400
+        if k == 'crop_type':
+            from app.services.farm_lab import CROP_IDS
+            v = (str(v).strip() if v not in (None, '') else None)
+            if v is not None and v not in CROP_IDS:
+                return jsonify({'code': 400, 'message': '알 수 없는 작물 종류입니다.'}), 400
         if k == 'name' and (v is None or str(v).strip() == ''):
             return jsonify({'code': 400, 'message': "'name' 은(는) 비울 수 없습니다."}), 400
         if k == 'category' and (v is None or str(v).strip() == ''):

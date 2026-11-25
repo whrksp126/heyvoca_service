@@ -25,7 +25,8 @@
 //   출석체크     → §10 구조에 없다. 달력은 연속 학습 카드의 "N일 연속" 영역을 눌러 들어간다
 //   온보딩 배너  → §10 구조에 없다. 입문 퀘스트는 OnboardingQuestCard 가 맡는다(잠금 없음)
 
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import React, { lazy, Suspense, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { CaretDown, CaretUp } from '@phosphor-icons/react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { useUser } from '../../context/UserContext';
@@ -60,6 +61,9 @@ import { useStreakCard } from './StreakCard';
 import HomeFlameChip from '../streak/HomeFlameChip';
 import OnboardingQuestCard from './OnboardingQuestCard';
 import { useOnboardingUnlock } from '../../context/OnboardingUnlockContext';
+
+// 실험실 farm_home — 농장 화면(Pixi 는 그 안에서 또 동적 import)은 켠 사람만 내려받는다
+const FarmHome = lazy(() => import('../farm/FarmHome'));
 
 /** 히어로 높이(지도 배경 히어로 h-[420px] 와 같은 값) — 밭 지도의 '보이는 창' 아래 끝 = CTA 위 */
 const HERO_HEIGHT = 420;
@@ -99,6 +103,8 @@ const Main = () => {
   // 실험실 "다른 언어 학습하기(베타)" — 켜져 있을 때만 왼쪽 위 언어 칩을 띄운다.
   // 이미 영어가 아닌 언어로 학습 중이면(플래그 조회 실패 등) 되돌아갈 길이 없어지지 않도록 항상 띄운다.
   const labFeatures = useLabFeatures();
+  const [farmEditing, setFarmEditing] = useState(false);
+  const [tasksOpen, setTasksOpen] = useState(false);
   const showLangChip = !!labFeatures.multi_lang || learningLang !== DEFAULT_LEARNING_LANG;
 
   // 통계는 StatsContext(라우터 바깥 캐시)에서 구독 — 탭 전환마다 재조회/스피너 없이 캐시값을 즉시 사용,
@@ -381,7 +387,7 @@ const Main = () => {
 
   // 히어로 위에 뜨는 것들(보석 칩 · 학습 언어 칩 · 헤드라인 · 주 CTA) — 지도 배경 히어로와
   // 단어장 0개 퀘스트 히어로가 같은 내용을 쓴다
-  const heroOverlay = (
+  const topChips = (
     <>
       {/* 보석 — 히어로 우측 상단에 떠 있는 칩(§6 · §10).
           히어로 위에 뜬 요소에만 그림자를 쓴다. 본문 카드는 시스템대로 보더 우선(§7) */}
@@ -438,6 +444,13 @@ const Main = () => {
         </button>
       )}
 
+    </>
+  );
+
+  const heroOverlay = (
+    <>
+      {topChips}
+
       {/* §4 2줄 헤드라인 — 닉네임 첫머리는 뺐다(이슈 #25 4차).
           밭 지도(HomeFieldGrid)가 히어로 전체에 배경으로 깔리므로 글자는 포인터를 지도로 통과시킨다.
           문구 자체는 src/data/homeGreetings.js가 상황별로 고른다(CTA 5상태와 분리) */}
@@ -464,6 +477,50 @@ const Main = () => {
     </>
   );
 
+
+  // 실험실 '내 농장 꾸미기' — 켜져 있고 밭이 있을 때만 본문을 농장으로 바꾼다(꺼져 있으면 아래 기존 화면 그대로)
+  if (labFeatures.farm_home && hasFieldMap) {
+    return (
+      <div className="relative isolate h-screen bg-[linear-gradient(180deg,var(--farm-sky-100)_0%,var(--farm-sky-200)_32%,var(--farm-canvas)_100%)] dark:bg-layout-black">
+        <Suspense fallback={null}>
+          <FarmHome
+            className="absolute inset-0"
+            onEditChange={setFarmEditing}
+            onGemChange={refreshStats}
+            onTapField={(id) => {
+              vibrate({ duration: 5 });
+              pushNewFullSheet(VocabularyWordsNewFullSheet, { id }, { smFull: true, closeOnBackdropClick: true });
+            }}
+          />
+        </Suspense>
+        {!farmEditing && topChips}
+        {!farmEditing && (
+          <div className="absolute left-0 right-0 z-[8] px-[20px] bottom-[calc(60px+var(--safe-area-bottom)+10px)] flex flex-col gap-[10px] pointer-events-none">
+            {!buyQuestPending && (
+              <div className="pointer-events-auto">
+                <FarmCta floating label={ctaInfo.label} onClick={handleCtaClick} />
+              </div>
+            )}
+            <div className="pointer-events-auto rounded-[12px] bg-layout-white/90 dark:bg-layout-gray-dark/90 backdrop-blur-[8px]">
+              <button
+                type="button"
+                onClick={() => { vibrate({ duration: 5 }); setTasksOpen((v) => !v); }}
+                aria-expanded={tasksOpen}
+                className="w-full h-[40px] px-[14px] flex items-center justify-between text-[14px] font-[700] text-layout-black dark:text-layout-white"
+              >
+                오늘 할 일
+                {tasksOpen ? <CaretDown weight="bold" size={16} /> : <CaretUp weight="bold" size={16} />}
+              </button>
+              {/* 접어도 마운트는 유지 — 불꽃 칩 상태를 이 카드가 올려 준다 */}
+              <div className={`${tasksOpen ? 'block' : 'hidden'} max-h-[40vh] overflow-y-auto px-[8px] pb-[8px]`}>
+                <TodayTasksCard streakCard={streakCard} flameRef={flameChipRef} onFlameState={setFlameState} />
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+    );
+  }
 
   return (
     /* §9 단일 배경 — 화면 배경을 한 번만 깔고 히어로 그라디언트의 끝 색을 같은 값으로 맞춘다 */

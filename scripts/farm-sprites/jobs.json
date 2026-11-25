@@ -1,0 +1,22 @@
+{
+  "refs": ["../../heyvoca_front/src/assets/images/farm/crops/planted/healthy-seed.png",
+           "../../heyvoca_front/src/assets/images/farm/crops/planted/healthy-sprout.png",
+           "../../heyvoca_front/src/assets/images/farm/crops/planted/healthy-leaf.png",
+           "../../heyvoca_front/src/assets/images/farm/crops/planted/healthy-carrot.png",
+           "../../heyvoca_front/src/assets/images/farm/field-base.png"],
+  "crops": {
+    "corn": "corn stalk with ears of corn", "rice": "rice paddy plant with golden grain heads",
+    "cucumber": "cucumber vine with green cucumbers", "tomato": "tomato plant with red tomatoes",
+    "pumpkin": "pumpkin vine with an orange pumpkin", "radish": "white daikon radish with leaves",
+    "strawberry": "strawberry bush with red strawberries"
+  },
+  "items": {
+    "tree_round": "round leafy deciduous tree", "tree_pine": "small pine tree", "tree_apple": "apple tree with red apples",
+    "fence_wood": "single short wooden fence segment", "fence_stone": "single low stone wall segment",
+    "scarecrow": "friendly scarecrow with straw hat", "mailbox": "wooden farm mailbox on a post", "bench": "small wooden bench",
+    "well": "stone water well with wooden roof", "flower_bed": "small flower bed with colorful flowers", "lamp": "garden lamp post",
+    "signboard": "small wooden signboard", "windmill": "small farm windmill (2x2 tiles footprint)",
+    "path_tile": "flat cobblestone path tile (isometric diamond)", "pond": "small round pond with lily pads (2x2 tiles footprint)",
+    "chicken": "cute white chicken", "sheep": "fluffy cute sheep", "cat": "cute orange cat sitting", "dog": "cute shiba-like dog sitting", "cow": "cute spotted cow"
+  }
+}

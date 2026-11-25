@@ -1,0 +1,49 @@
+// 농장 스프라이트 생성: node gen.mjs [crop|item] [id...]  (기본: 전부, 이미 있으면 건너뜀. --force 로 재생성)
+// 키는 heyvoca_admin/.env 의 OPENAI_API_KEY 를 파일에서 읽는다(출력하지 않음).
+import fs from 'node:fs'; import path from 'node:path'; import sharp from 'sharp';
+const here = path.dirname(new URL(import.meta.url).pathname);
+const env = fs.readFileSync(path.join(here, '../../../heyvoca_admin/.env'), 'utf8');
+const KEY = (env.match(/^OPENAI_API_KEY=(.*)$/m) || [])[1]?.replace(/["']/g, '').trim();
+const MODEL = process.env.IMG_MODEL || 'gpt-image-1-mini';
+const OUT = path.join(here, '../../heyvoca_front/src/assets/farm2');
+const jobs = JSON.parse(fs.readFileSync(path.join(here, 'jobs.json'), 'utf8'));
+const STYLE = 'Mobile casual 2.5D game asset in EXACTLY the same art style, colors, outline weight and soft shading as the reference images ' +
+  '(warm earthy browns, fresh yellow-green, soft top-left light, gentle highlight, small soft shadow). Isometric 2:1 view from about 30 degrees above. ' +
+  'Single object only, centered, fully visible, transparent background, no text, no ground plane except a tiny contact shadow. Not pixel art.';
+const args = process.argv.slice(2); const force = args.includes('--force');
+const [kind, ...ids] = args.filter(a => !a.startsWith('--'));
+
+async function edit(prompt, size) {
+  const fd = new FormData();
+  fd.append('model', MODEL); fd.append('prompt', prompt); fd.append('size', size);
+  fd.append('background', 'transparent'); fd.append('quality', process.env.IMG_QUALITY || 'medium');
+  for (const r of jobs.refs) fd.append('image[]', new Blob([fs.readFileSync(path.join(here, r))], { type: 'image/png' }), path.basename(r));
+  const res = await fetch('https://api.openai.com/v1/images/edits', { method: 'POST', headers: { Authorization: `Bearer ${KEY}` }, body: fd });
+  const j = await res.json(); if (!res.ok) throw new Error(j.error?.message || res.status);
+  return Buffer.from(j.data[0].b64_json, 'base64');
+}
+// 투명 여백 잘라내고 긴 변 기준 축소 → 바닥 중앙 앵커가 이미지 하단 중앙이 되게
+const finish = (buf, file, max = 256) => sharp(buf).trim().resize(max, max, { fit: 'inside', withoutEnlargement: true }).png().toFile(file);
+
+async function crop(id, desc) {
+  const files = [0, 1, 2, 3].map(i => path.join(OUT, `${id}_${i}.png`));
+  if (!force && files.every(f => fs.existsSync(f))) return console.log('skip', id);
+  const sheet = await edit(`${STYLE} A horizontal sprite sheet of 4 equally spaced growth stages of a ${desc}, left to right: ` +
+    '1) seed mound with tiny seed, 2) small sprout, 3) leafy young plant, 4) fully grown with harvest. Match the carrot stage references in size progression.', '1536x1024');
+  fs.writeFileSync(path.join(OUT, `_sheet_${id}.png`), sheet);
+  const w = 384; for (let i = 0; i < 4; i++) await finish(await sharp(sheet).extract({ left: i * w, top: 0, width: w, height: 1024 }).toBuffer(), files[i], 192);
+  console.log('ok', id);
+}
+async function item(id, desc) {
+  const file = path.join(OUT, `${id}.png`); if (!force && fs.existsSync(file)) return console.log('skip', id);
+  const big = /2x2/.test(desc);
+  await finish(await edit(`${STYLE} The object: ${desc}.`, '1024x1024'), file, big ? 384 : 224); console.log('ok', id);
+}
+if (!KEY) throw new Error('OPENAI_API_KEY 없음');
+fs.mkdirSync(OUT, { recursive: true });
+for (const [k, map, fn] of [['crop', jobs.crops, crop], ['item', jobs.items, item]]) {
+  if (kind && kind !== k) continue;
+  for (const [id, desc] of Object.entries(map)) if (!ids.length || ids.includes(id)) {
+    try { await fn(id, desc); } catch (e) { console.error('FAIL', id, e.message); }
+  }
+}

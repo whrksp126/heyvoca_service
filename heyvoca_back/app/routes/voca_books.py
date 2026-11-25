@@ -174,6 +174,7 @@ def create_bookstore_book_for_user(user_id, bookstore, lang, *, color=None, titl
         voca_list=None,
         updated_at=None,
         language=lang,
+        crop_type=bookstore.crop_type,
     )
     db.session.add(voca_book)
     db.session.flush()
@@ -701,6 +702,10 @@ def create_voca_book():
             updated_at=None,
             language=lang,
         )
+        if bookstore_id:
+            _bs = charge_book or db.session.query(Bookstore).filter(Bookstore.id == bookstore_id).first()
+            if _bs is not None:
+                voca_book.crop_type = _bs.crop_type
         db.session.add(voca_book)
         db.session.flush()
 

@@ -104,6 +104,8 @@ class User(db.Model):
     multi_lang_enabled = Column(Boolean, nullable=False, default=False, server_default='0')
     # 실험실 — '먼저 떠올려 보기'(문제 보기 전 정답을 먼저 떠올리는 단계) 노출 게이트.
     recall_first_enabled = Column(Boolean, nullable=False, default=False, server_default='0')
+    # 실험실 '내 농장 꾸미기' — 홈을 꾸밀 수 있는 농장으로 교체. 기본 off.
+    farm_home_enabled = Column(Boolean, nullable=False, default=False, server_default='0')
     # refresh 토큰 폐기(강제 로그아웃) 버전. 로그아웃 시 +1. refresh 토큰의 'tv' 클레임과
     # 대조해 불일치면 401 — 로그아웃 뒤에도 옛 refresh 토큰으로 계속 갱신되는 것을 막는다.
     # tv 클레임이 없는 옛 토큰(이 컬럼 도입 이전 발급분)은 0으로 간주해 강제 로그아웃되지 않게 한다.
@@ -459,6 +461,8 @@ class Bookstore(db.Model):
     color = Column(String(255), nullable=True)
     gem = Column(Integer, nullable=False, default=10)
     hide = Column(String(1), nullable=False)
+    # 실험실 농장 — 이 서점 단어장을 담으면 밭에 심기는 작물 종류. NULL 이면 carrot.
+    crop_type = Column(String(20), nullable=True)
     # 기존 단계별 서점 추천은 폐기됐다. 새 기준 확정 전까지 NULL로 유지한다.
     level_id = Column(Integer, nullable=True)
     book_id = Column(Integer, ForeignKey('voca_book.id'), nullable=True)
@@ -555,12 +559,15 @@ class UserVocaBook(db.Model):
     book_kind = Column(String(16), nullable=False, default='normal', server_default='normal', index=True)
     # book_kind='script' 일 때만 값이 있다 — 'hiragana'|'katakana'|'alphabet'.
     script_key = Column(String(16), nullable=True)
+    # 실험실 농장 — 밭에 심는 작물 종류(farm_catalog.json crop 카테고리). NULL 이면 carrot.
+    crop_type = Column(String(20), nullable=True)
 
     voca_maps = relationship("UserVocaBookMap", back_populates="user_voca_book", cascade="all, delete-orphan")
 
 
     def __init__(self, user_id, bookstore_id, color, name, total_word_cnt, memorized_word_cnt, voca_list, updated_at,
-                 language=None, book_kind=None, script_key=None):
+                 language=None, book_kind=None, script_key=None, crop_type=None):
+        self.crop_type = crop_type
         if language is not None:
             self.language = language
         if book_kind is not None:
@@ -574,6 +581,23 @@ class UserVocaBook(db.Model):
         self.memorized_word_cnt = memorized_word_cnt
         self.voca_list = voca_list
         self.updated_at = updated_at
+
+
+class UserFarmLayout(db.Model):
+    """실험실 농장 배치. layout = [{uid,item_id,x,y,flip,book_id}] (격자 24x24)."""
+    __tablename__ = 'user_farm_layout'
+    user_id = Column(BinaryUUID, ForeignKey('user.id'), primary_key=True, nullable=False)
+    layout = Column(JSON, nullable=False)
+    version = Column(Integer, nullable=False, default=0, server_default='0')
+    updated_at = Column(DateTime, nullable=True, default=datetime.utcnow, onupdate=datetime.utcnow)
+
+
+class UserFarmInventory(db.Model):
+    """실험실 농장 보유 아이템 수량(배치 수 <= qty)."""
+    __tablename__ = 'user_farm_inventory'
+    user_id = Column(BinaryUUID, ForeignKey('user.id'), primary_key=True, nullable=False)
+    item_id = Column(String(40), primary_key=True, nullable=False)
+    qty = Column(Integer, nullable=False, default=0, server_default='0')
 
 
 class CheckIn(db.Model):

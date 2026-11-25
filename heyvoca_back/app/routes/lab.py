@@ -15,6 +15,7 @@ _FEATURE_COLUMNS = {
     'chat_study': 'chat_study_enabled',   # 제거된 기능 — GET 은 항상 false, 켜기는 무시(아래 PUT)
     'multi_lang': 'multi_lang_enabled',   # 다른 언어 학습하기(베타) — 기본 off
     'recall_first': 'recall_first_enabled',   # 먼저 떠올려 보기 — 기본 off
+    'farm_home': 'farm_home_enabled',         # 내 농장 꾸미기 — 기본 off
 }
 
 

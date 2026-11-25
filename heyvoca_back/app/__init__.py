@@ -261,6 +261,7 @@ def create_app():
   from app.routes.onboarding import onboarding_bp
   from app.routes.game import game_bp
   from app.routes.farm import farm_bp
+  from app.routes.farm_lab import farm_lab_bp
   from app.routes.script import script_bp
   from app.routes.admin import admin_bp
   from app.routes.admin_voca_books import admin_voca_books_bp
@@ -289,6 +290,7 @@ def create_app():
   app.register_blueprint(onboarding_bp)
   app.register_blueprint(game_bp)
   app.register_blueprint(farm_bp)
+  app.register_blueprint(farm_lab_bp)
   app.register_blueprint(script_bp)
   app.register_blueprint(report_bp)
   app.register_blueprint(admin_bp)

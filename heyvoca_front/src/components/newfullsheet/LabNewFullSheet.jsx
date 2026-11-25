@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { CaretLeft, Lightbulb, Translate } from '@phosphor-icons/react';
+import { CaretLeft, Lightbulb, Translate, Plant } from '@phosphor-icons/react';
 import { motion } from 'framer-motion';
 import { useNewFullSheetActions } from '../../context/NewFullSheetContext';
 import { vibrate, showToast } from '../../utils/osFunction';
@@ -14,6 +14,12 @@ const LAB_FEATURES = [
     icon: Lightbulb,
     name: '먼저 떠올려 보기',
     desc: '보기를 보기 전에 답을 먼저 떠올려 봐요',
+  },
+  {
+    key: 'farm_home',
+    icon: Plant,
+    name: '내 농장 꾸미기',
+    desc: '홈을 꾸밀 수 있는 농장으로 바꿔요',
   },
   {
     key: 'multi_lang',
