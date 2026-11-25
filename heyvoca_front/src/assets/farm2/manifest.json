@@ -14,11 +14,12 @@
       "scale": 0.1875
     },
     "tree_round": {
+      "src": "tree_round.png",
       "anchor": [
         0.5,
-        1
+        0.97
       ],
-      "scale": 1
+      "scale": 0.43
     },
     "tree_pine": {
       "anchor": [
@@ -33,6 +34,30 @@
         1
       ],
       "scale": 1
+    },
+    "fence_wood": {
+      "src": "fence_wood.png",
+      "anchor": [
+        0.5,
+        0.97
+      ],
+      "scale": 0.22
+    },
+    "scarecrow": {
+      "src": "scarecrow.png",
+      "anchor": [
+        0.5,
+        0.97
+      ],
+      "scale": 0.29
+    },
+    "chicken": {
+      "src": "chicken.png",
+      "anchor": [
+        0.5,
+        0.97
+      ],
+      "scale": 0.15
     }
   },
   "crops": {
@@ -48,6 +73,20 @@
         "images/farm/crops/planted/healthy-leaf.png",
         "images/farm/crops/planted/healthy-carrot.png",
         "images/farm/crops/planted/healthy-carrot.png"
+      ]
+    },
+    "corn": {
+      "anchor": [
+        0.5,
+        0.97
+      ],
+      "scale": 0.29,
+      "stages": [
+        "corn_0.png",
+        "corn_1.png",
+        "corn_2.png",
+        "corn_3.png",
+        "corn_3.png"
       ]
     }
   }
