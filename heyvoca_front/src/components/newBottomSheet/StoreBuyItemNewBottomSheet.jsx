@@ -31,6 +31,8 @@ const ACK_TIMEOUT_MS = 15 * 1000;
 //  있으므로 넉넉히 잡고, **결제를 취소하는 게 아니라 화면만 열어 준다**(지급은 서버 검증으로 진행된다).
 const RESULT_TIMEOUT_MS = 5 * 60 * 1000;
 
+import { trackEvent } from '../../utils/analytics';
+
 export const StoreBuyItemNewBottomSheet = ({ options }) => {
   "use memo"; // React Compiler가 이 컴포넌트를 자동으로 최적화
 
@@ -55,6 +57,12 @@ export const StoreBuyItemNewBottomSheet = ({ options }) => {
 
       setStalled(null); // 늦게라도 결과가 왔으면 지연 안내는 걷는다
       if (serverData) {
+        trackEvent('purchase', {
+          transaction_id: serverData?.purchase_id ? String(serverData.purchase_id) : undefined,
+          value: Number(options?.price) || 0,
+          currency: 'KRW',
+          items: [{ item_id: String(options?.productId) }],
+        });
         setPurchaseResult(serverData);
         setIsLoading(false);
       } else {

@@ -1,3 +1,4 @@
+import { trackEvent } from '../utils/analytics';
 import React, { createContext, useContext, useState, useEffect, useCallback, useRef } from 'react';
 import { backendUrl, setCookie, getCookie, fetchDataAsync } from '../utils/common';
 import { getDevicePlatform, isAppVersionAtLeast } from '../utils/osFunction';
@@ -502,6 +503,7 @@ export const UserProvider = ({ children }) => {
       setIsLogin(true);
       setIsLoginChecked(true);
       setLoginProvider('google');
+      trackEvent('login', { method: 'google' });
 
       // 서버에서 실제 사용자 프로필 정보 가져오기
 
@@ -560,6 +562,7 @@ export const UserProvider = ({ children }) => {
       setIsLogin(true);
       setIsLoginChecked(true);
       setLoginProvider('apple');
+      trackEvent('login', { method: 'apple' });
 
       const userProfileResult = await fetchUserProfile();
       if (userProfileResult.success) {

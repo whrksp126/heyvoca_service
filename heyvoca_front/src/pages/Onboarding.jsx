@@ -16,6 +16,7 @@ import { primeSfx } from '../utils/audio';
 import { SwitchAccountNewBottomSheet } from '../components/newBottomSheet/SwitchAccountNewBottomSheet';
 import { useNewBottomSheetActions } from '../context/NewBottomSheetContext';
 import { useUser } from '../context/UserContext';
+import { trackEvent, getLoginMethod } from '../utils/analytics';
 import postMessageManager from '../utils/postMessageManager';
 import { useStatusBarStyle } from '../hooks/useStatusBarStyle';
 import FarmStoryStage from '../components/onboarding/FarmStoryStage';
@@ -97,6 +98,7 @@ const Onboarding = () => {
   useStatusBarStyle('dark-content');
   const navigate = useNavigate();
   const location = useLocation();
+  useEffect(() => { trackEvent('onboarding_start'); }, []);
   const { pushAwaitNewBottomSheet } = useNewBottomSheetActions();
   const { Login, AppleLogin, clickGoogleOauth, clickAppleOauth, isLogin, fetchUserProfile, performLogout, updateUserHistory, DevLogin, userProfile } = useUser();
 
@@ -371,6 +373,8 @@ const Onboarding = () => {
       // v2 { flow, theta, answers } / 구 v1(레벨만 있는 예전 게스트 데이터) — utils/guestStorage buildMigrateBody
       const res = await migrateOnboardingApi(buildMigrateBody(getGuest()));
       if (res?.code === 200) {
+        trackEvent('sign_up', { method: getLoginMethod() });
+        trackEvent('onboarding_complete');
         // 온보딩 학습을 오늘의 기록으로 집계한다(XP · 출석 · 데일리 미션 · 연속 학습 1일).
         // 게스트 구간에서는 로그인이 없어 못 불렀다. migrate 가 학습 로그를 막 심어 놨으므로
         // 지금 부르면 온보딩에서 한 학습이 그대로 오늘의 기록으로 잡힌다.

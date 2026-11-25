@@ -34,6 +34,7 @@ import {
 } from './rewards';
 // 새 씨앗 심기 결과 — 밭에 씨앗을 하나씩 심는 연출
 import PlantingScene from './planting/PlantingScene';
+import { trackEvent } from '../../utils/analytics';
 import MeaningWithPos from '../common/MeaningWithPos';
 import { buildMeaningPosMap } from '../../utils/meaningPos';
 
@@ -587,6 +588,7 @@ const StudyResult = () => {
         })
 
         if (!result) return;
+        trackEvent('study_complete', { correct_cnt: correctCnt, incorrect_cnt: incorrectCnt });
 
         // 학습으로 SM2 nextReview가 갱신됐으니 단어장 다시 불러와 memoryStats(메인 멘트의 dueToday) 갱신
         fetchVocabularySheets();

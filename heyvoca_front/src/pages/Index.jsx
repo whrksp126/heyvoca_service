@@ -3,6 +3,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useUser } from '../context/UserContext';
+import { trackEvent, getLoginMethod } from '../utils/analytics';
 import { migrateOnboardingApi } from '../api/study';
 import { pendingGuestMigration, clearGuest, buildMigrateBody } from '../utils/guestStorage';
 import { notifyOnboardingMigrated } from '../utils/studyDataEvents';
@@ -154,6 +155,8 @@ const Index = () => {
     migratedRef.current = true;
     migrateOnboardingApi(buildMigrateBody(pending)).then(async (res) => {
       if (res?.code === 200) {
+        trackEvent('sign_up', { method: getLoginMethod() });
+        trackEvent('onboarding_complete');
         // 온보딩 학습을 **정규 세션과 똑같이** 집계한다.
         // /mainpage/user_study_history 가 XP · 출석 · 출석왕 · 노력왕 · 데일리 미션 · 끈기왕을
         // 한 번에 처리하는 허브인데, 게스트 구간에서는 로그인이 없어 못 불렀다.

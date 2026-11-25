@@ -33,6 +33,7 @@ export const GemPurchaseNewBottomSheet = ({ notice }) => {
       {
         options: {
           productId: id,
+          price: gemItems.find((g) => g.product_id === id)?.price,
           image_url: gemPackArt(gemItems.find((g) => g.product_id === id) || { product_id: id }),
         },
       },
