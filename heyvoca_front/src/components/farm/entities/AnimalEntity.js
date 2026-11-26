@@ -46,7 +46,7 @@ export default class AnimalEntity extends Entity {
         if (dist <= step) { this.fx = this.tx; this.fy = this.ty; this.setState('idle'); this.wait = 1.5 + Math.random() * 3; } else {
           const nx = this.fx + (dx / dist) * step; const ny = this.fy + (dy / dist) * step;
           if (ctx.isBlocked(Math.floor(nx), Math.floor(ny), this)) this.setState('idle'); else { this.fx = nx; this.fy = ny; }
-          const sx = dx - dy; if (Math.abs(sx) > 0.01) this.flip = sx > 0 ? 1 : -1;
+          const sx = dx - dy; if (Math.abs(sx) > 0.01) this.flip = sx > 0 ? -1 : 1; // 원본은 왼쪽 아래를 봄
         }
       } else if (this.state === 'idle') {
         this.wait -= dt;

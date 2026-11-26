@@ -132,6 +132,18 @@ def _find_free(cells, w, h):
     return None
 
 
+def _find_near(cells, w, h, cx, cy):
+    """집 중심(cx, cy)에 가장 가까운, 1칸 띄운 빈자리."""
+    best = None
+    for y in range(GRID_H - h + 1):
+        for x in range(GRID_W - w + 1):
+            if all((x + dx, y + dy) not in cells for dx in range(-1, w + 1) for dy in range(-1, h + 1)):
+                d = (x + w / 2 - cx) ** 2 + (y + h / 2 - cy) ** 2
+                if best is None or d < best[0]:
+                    best = (d, x, y)
+    return (best[1], best[2]) if best else None
+
+
 def _in_range(x, y, w, h):
     return (isinstance(x, int) and isinstance(y, int)
             and x >= 0 and y >= 0 and x + w <= GRID_W and y + h <= GRID_H)
@@ -197,6 +209,23 @@ def _ensure(user_id):
         layout, changed = kept, True
     # 밭이 아닌 항목이 차지한 칸은 그대로 두고, 밭만 검증해 범위 밖/겹침이면 재배치(멱등)
     others = [e for e in layout if e['item_id'] != 'field']
+    # 집이 없거나 범위 밖이면 영역 중앙 근처에 자동 배치(멱등). 새로 놓이면 밭도 전부 재배치
+    relocate_fields = False
+    hw, hh = ITEMS['house']['w'], ITEMS['house']['h']
+    houses = [e for e in others if e['item_id'] == 'house']
+    if not houses or not _in_range(houses[0].get('x'), houses[0].get('y'), hw, hh):
+        others = [e for e in others if e['item_id'] != 'house']
+        occ = _occupied(others, fp)
+        pos = _find_near(occ, hw, hh, GRID_W / 2, GRID_H / 2)
+        if pos is not None:
+            others.append({'uid': uuid4().hex[:12], 'item_id': 'house', 'x': pos[0], 'y': pos[1],
+                           'flip': False, 'rot': 0})
+            relocate_fields = True
+            changed = True
+        houses = [e for e in others if e['item_id'] == 'house']
+    hc = ((houses[0]['x'] + hw / 2, houses[0]['y'] + hh / 2) if houses else (GRID_W / 2, GRID_H / 2))
+    if houses and 'house' not in inv:
+        _add_inv(user_id, 'house', 1)
     cells = _occupied(others, fp)
     new_layout = list(others)
     pending = []
@@ -206,7 +235,7 @@ def _ensure(user_id):
             continue
         w, h = _size(e, fp)
         sp = _spots(e['x'], e['y'], w, h) if _in_range(e.get('x'), e.get('y'), w, h) else None
-        if sp is None or (sp & cells) or e['book_id'] in seen:
+        if relocate_fields or sp is None or (sp & cells) or e['book_id'] in seen:
             pending.append(e)
             continue
         cells |= sp
@@ -217,7 +246,7 @@ def _ensure(user_id):
             changed = True
             continue
         w, h = _size(e, fp)
-        pos = _find_free(cells, w, h)
+        pos = _find_near(cells, w, h, *hc)
         if pos is None:
             continue
         e = dict(e, x=pos[0], y=pos[1])
@@ -229,7 +258,7 @@ def _ensure(user_id):
         if str(b.id) in seen:
             continue
         w, h = fp[str(b.id)]
-        pos = _find_free(cells, w, h)
+        pos = _find_near(cells, w, h, *hc)
         if pos is None:
             break
         new_layout.append({'uid': uuid4().hex[:12], 'item_id': 'field', 'x': pos[0], 'y': pos[1],

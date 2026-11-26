@@ -2,7 +2,7 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
   PencilSimple, X, Check, ArrowClockwise, Package, Lock, Warning, ArrowsClockwise,
-  Plant, Tree, Columns, Flower, MapTrifold, PawPrint, Storefront,
+  Plant, Tree, House, Columns, Flower, MapTrifold, PawPrint, Storefront,
 } from '@phosphor-icons/react';
 import { getFarmStateApi, saveFarmLayoutApi, buyFarmItemApi, setBookCropApi, unwrap } from '../../api/farmLab';
 import { showToast, vibrate } from '../../utils/osFunction';
@@ -10,6 +10,7 @@ import gemIcon from '../../assets/images/farm/icon-gem.png';
 
 const TABS = [
   { key: 'field', label: '밭', icon: Plant },
+  { key: 'building', label: '건물', icon: House },
   { key: 'tree', label: '나무', icon: Tree },
   { key: 'fence', label: '울타리', icon: Columns },
   { key: 'deco', label: '장식', icon: Flower },

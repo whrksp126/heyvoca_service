@@ -1,9 +1,36 @@
-// 밭 — 단어 1개 = 둔덕(plot_soil 데칼) 1개를 InstancedMesh 로, 작물은 CropLayer 로.
+// 밭 — 칸 구분 없는 이어진 흙밭 1덩어리(둥근 모서리로 살짝 솟은 박스 + 도톰한 테두리 띠) 위에 단어마다 작물 1개.
 import * as THREE from 'three';
 import Entity from './Entity';
 import CropLayer from './CropLayer';
-import { fieldDims, cellStages, surfaceFrame } from '../farmArt';
+import { fieldDims, cellStages, surfaceFrame, part, COLORS } from '../farmArt';
 
+const roundedRect = (w, h, r0) => {
+  const r = Math.min(r0, w / 2, h / 2);
+  const x = -w / 2; const y = -h / 2;
+  const s = new THREE.Shape();
+  s.moveTo(x + r, y); s.lineTo(x + w - r, y); s.quadraticCurveTo(x + w, y, x + w, y + r);
+  s.lineTo(x + w, y + h - r); s.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+  s.lineTo(x + r, y + h); s.quadraticCurveTo(x, y + h, x, y + h - r);
+  s.lineTo(x, y + r); s.quadraticCurveTo(x, y, x + r, y);
+  return s;
+};
+
+const hashStr = (str) => {
+  let h = 2166136261;
+  const t = String(str);
+  for (let i = 0; i < t.length; i += 1) { h ^= t.charCodeAt(i); h = Math.imul(h, 16777619); }
+  return h >>> 0;
+};
+const rng = (seed) => {
+  let a = seed >>> 0;
+  return () => {
+    a += 0x6d2b79f5; let t = a;
+    t = Math.imul(t ^ (t >>> 15), t | 1); t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+};
+
+const BASE_H = 0.3;
 
 const labelSprite = (ctx, text) => {
   const c = document.createElement('canvas');
@@ -12,8 +39,7 @@ const labelSprite = (ctx, text) => {
   g.fillStyle = 'rgba(255,248,230,0.94)';
   g.beginPath(); g.roundRect(4, 8, 248, 48, 24); g.fill();
   g.fillStyle = '#5a4630'; g.font = '700 26px sans-serif'; g.textAlign = 'center'; g.textBaseline = 'middle';
-  const t = Array.from(text || '').slice(0, 9).join('');
-  g.fillText(t, 128, 33);
+  g.fillText(Array.from(text || '').slice(0, 9).join(''), 128, 33);
   const tex = new THREE.CanvasTexture(c);
   tex.colorSpace = THREE.SRGBColorSpace;
   ctx.disposer.track(tex);
@@ -30,6 +56,8 @@ export default class FieldEntity extends Entity {
     this.flat = true;
     this.rot = 0;
     this.crops = new CropLayer(ctx, ctx.root);
+    this.block = null;
+    this.geos = [];
     this.label = null;
   }
 
@@ -42,58 +70,80 @@ export default class FieldEntity extends Entity {
 
   setCrop() { this.render(); }
 
-  render() {
-    this.place();
-    const { ctx } = this;
-    const d = this.dims();
-    const book = ctx.books.get(this.bookId);
-    const stages = cellStages(book);
-    const n = Math.min(Math.max(stages.length, 0), d.cols * d.rows);
-    const sx = d.fw / d.cols; const sy = d.fh / d.rows;
-    const avg = (sx + sy) / 2;
-    const back = ctx.camDir; // 카메라 쪽 방향(단위벡터)
-    const cells = []; const moundItems = [];
-    for (let i = 0; i < n; i += 1) {
-      const col = i % d.cols; const row = Math.floor(i / d.cols);
-      const f = surfaceFrame(this.x + (col + 0.5) * sx, this.y + (row + 0.5) * sy, ctx.gw, ctx.gh);
-      // 둔덕 스프라이트는 칸 중심, 작물은 같은 칸 둔덕보다 약간 카메라 쪽(깊이 우선)
-      const mp = f.pos.clone(); mp.y = 0.02;
-      moundItems.push({ pos: mp, w: avg * Math.SQRT2 * 1.04, h: avg * Math.SQRT2 * 1.04, phase: 0, sway: 0 });
-      cells.push({ pos: mp.clone().addScaledVector(back, 0.15), size: avg });
-    }
-    // 둔덕은 뒤(멀리)에서 앞 순서로 정렬해 겹침이 자연스럽게
-    const sorted = moundItems.map((it, i) => ({ it, k: it.pos.x + it.pos.z, i })).sort((p, q) => p.k - q.k);
-    this.crops.clear();
-    const tex = ctx.art.textures['plot_soil.png'] || this.fallbackSoil();
-    this.crops.batch(tex, [0.5, 0.5], sorted.map((o) => o.it));
-    this.crops.buildCrops(cells, stages, book?.crop_type || 'carrot');
-    // 이름 팻말 — 밭 위에 떠 있는 라벨
-    if (this.label) { this.group.remove(this.label); this.label.material.dispose(); }
-    this.label = labelSprite(ctx, book?.name || '');
-    const fp = this.footprint();
-    const lf = surfaceFrame(fp.x + fp.w / 2, fp.y - 0.2, ctx.gw, ctx.gh);
-    this.label.position.copy(lf.pos).setY(1.6);
-    this.group.add(this.label);
-  }
-
   place(gx, gy) {
     super.place(gx, gy);
     this.group.position.set(0, 0, 0);
   }
 
-  fallbackSoil() {
-    if (!this.ctx.art.soilFb) {
-      const c = document.createElement('canvas'); c.width = 64; c.height = 64;
-      const g = c.getContext('2d'); g.fillStyle = '#a8764a';
-      g.beginPath(); g.moveTo(32, 6); g.lineTo(62, 32); g.lineTo(32, 58); g.lineTo(2, 32); g.closePath(); g.fill();
-      const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace;
-      this.ctx.disposer.track(t);
-      this.ctx.art.soilFb = t;
-    }
-    return this.ctx.art.soilFb;
+  clearBlock() {
+    if (this.block) this.group.remove(this.block);
+    this.geos.forEach((g) => g.dispose());
+    this.geos = [];
+    this.block = null;
   }
 
-  update() {}
+  mats() {
+    const a = this.ctx.art;
+    if (!a.fieldMats) {
+      const soil = a.textures['soil_cell.png'];
+      if (soil) { soil.wrapS = THREE.RepeatWrapping; soil.wrapT = THREE.RepeatWrapping; soil.repeat.set(0.5, 0.5); }
+      a.fieldMats = {
+        rim: this.ctx.disposer.track(new THREE.MeshLambertMaterial({ color: 0x8a5e3a })),
+        top: this.ctx.disposer.track(new THREE.MeshLambertMaterial({ map: soil || null, color: soil ? 0xffffff : 0xa8764a })),
+      };
+    }
+    return a.fieldMats;
+  }
+
+  render() {
+    this.place();
+    const { ctx } = this;
+    const d = this.dims();
+    const fp = this.footprint();
+    const book = ctx.books.get(this.bookId);
+    const stages = cellStages(book);
+    const center = surfaceFrame(fp.x + fp.w / 2, fp.y + fp.h / 2, ctx.gw, ctx.gh).pos;
+    const m = this.mats();
+    this.clearBlock();
+    const block = new THREE.Group();
+    block.position.copy(center);
+    const baseG = new THREE.ExtrudeGeometry(roundedRect(fp.w, fp.h, 0.6), { depth: BASE_H, bevelEnabled: false, curveSegments: 6 });
+    baseG.rotateX(-Math.PI / 2);
+    const topG = new THREE.ShapeGeometry(roundedRect(fp.w - 0.7, fp.h - 0.7, 0.35), 6);
+    topG.rotateX(-Math.PI / 2);
+    topG.translate(0, BASE_H + 0.01, 0);
+    this.geos.push(baseG, topG);
+    block.add(new THREE.Mesh(baseG, m.rim), new THREE.Mesh(topG, m.top));
+    // 모서리 풀 포기
+    [[-1, -1], [1, -1], [-1, 1], [1, 1]].forEach(([sx, sz]) => {
+      block.add(part(ctx.art, 'cone', COLORS.leaf, [0.09, 0.28, 0.09], [sx * (fp.w / 2 - 0.2), BASE_H + 0.1, sz * (fp.h / 2 - 0.2)]));
+      block.add(part(ctx.art, 'cone', COLORS.leafLight, [0.07, 0.2, 0.07], [sx * (fp.w / 2 - 0.3), BASE_H + 0.07, sz * (fp.h / 2 - 0.15)]));
+    });
+    this.block = block;
+    this.group.add(block);
+
+    // 작물 — 단어마다 1개, 안쪽 영역에 고르게 + 약간 무작위
+    const n = Math.min(stages.length, d.cols * d.rows);
+    const iw = Math.max(0.5, fp.w - 0.9); const ih = Math.max(0.5, fp.h - 0.9);
+    const cols = Math.max(1, Math.ceil(Math.sqrt((n * iw) / ih)));
+    const rows = Math.max(1, Math.ceil(n / cols));
+    const sx = iw / cols; const sz = ih / rows;
+    const rnd = rng(hashStr(this.bookId || this.uid));
+    const cells = [];
+    for (let i = 0; i < n; i += 1) {
+      const c = i % cols; const r = Math.floor(i / cols);
+      const px = center.x - iw / 2 + (c + 0.5) * sx + (rnd() - 0.5) * sx * 0.5;
+      const pz = center.z - ih / 2 + (r + 0.5) * sz + (rnd() - 0.5) * sz * 0.5;
+      cells.push({ pos: new THREE.Vector3(px, BASE_H + 0.02, pz).addScaledVector(ctx.camDir, 0.1), size: Math.min(Math.max((sx + sz) / 2, 0.5), 0.9) });
+    }
+    this.crops.clear();
+    this.crops.buildCrops(cells, stages, book?.crop_type || 'carrot');
+
+    if (this.label) { this.group.remove(this.label); this.label.material.dispose(); }
+    this.label = labelSprite(ctx, book?.name || '');
+    this.label.position.set(center.x, 1.8, center.z - fp.h / 2);
+    this.group.add(this.label);
+  }
 
   hitTest(raycaster, cell) {
     if (!cell) return null;
@@ -103,6 +153,7 @@ export default class FieldEntity extends Entity {
 
   destroy() {
     this.crops.destroy();
+    this.clearBlock();
     this.label?.material.dispose();
     super.destroy();
   }

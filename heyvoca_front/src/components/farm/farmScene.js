@@ -1,6 +1,6 @@
 // 농장 v5 아이소메트릭 평면 대지(three.js, OrthographicCamera) — 동적 import 로만 불러온다. React 와는 콜백/메서드로만 통신한다.
 import * as THREE from 'three';
-import { GRID_W, GRID_H, loadArt, createDisposer, surfaceFrame, COLORS } from './farmArt';
+import { GRID_W, GRID_H, loadArt, createDisposer, surfaceFrame } from './farmArt';
 import FieldEntity from './entities/FieldEntity';
 import DecorEntity from './entities/DecorEntity';
 import FenceEntity from './entities/FenceEntity';
@@ -62,46 +62,6 @@ export const createFarmScene = async (host, callbacks = {}) => {
   const root = new THREE.Group();
   scene.add(root);
 
-  // 대지 — 화면 어디에도 끝이 안 보이게 아주 넓게. 은은한 명암 얼룩은 정점 색으로
-  {
-    const grass = art.textures['grass_tile.png'];
-    const SIZE = 500; const SEG = 50;
-    if (grass) { grass.wrapS = THREE.RepeatWrapping; grass.wrapT = THREE.RepeatWrapping; grass.repeat.set(SIZE / 8, SIZE / 8); }
-    const g = disposer.track(new THREE.PlaneGeometry(SIZE, SIZE, SEG, SEG));
-    g.rotateX(-Math.PI / 2);
-    const pos = g.attributes.position; const col = new Float32Array(pos.count * 3);
-    for (let i = 0; i < pos.count; i += 1) {
-      const x = pos.getX(i); const z = pos.getZ(i);
-      const v = 0.93 + 0.07 * (Math.sin(x * 0.11) * Math.cos(z * 0.09) + Math.sin((x + z) * 0.23) * 0.5);
-      col.set([v, v, v], i * 3);
-    }
-    g.setAttribute('color', new THREE.BufferAttribute(col, 3));
-    const m = disposer.track(new THREE.MeshBasicMaterial({ map: grass || null, color: grass ? 0xe6f2c8 : COLORS.grass, vertexColors: true, depthWrite: false }));
-    const ground = new THREE.Mesh(g, m);
-    ground.renderOrder = -1;
-    scene.add(ground);
-  }
-  // 먼 숲 — 맵 바깥 고리(안개로 페이드)
-  {
-    let seed = 7;
-    const rnd = () => { seed = (seed * 16807) % 2147483647; return seed / 2147483647; };
-    const N = 320;
-    const cone = new THREE.InstancedMesh(disposer.track(new THREE.ConeGeometry(1, 2.2, 8)), disposer.track(new THREE.MeshLambertMaterial({ color: COLORS.leafDark })), N);
-    const ball = new THREE.InstancedMesh(disposer.track(new THREE.SphereGeometry(1, 10, 8)), disposer.track(new THREE.MeshLambertMaterial({ color: COLORS.leaf })), N);
-    const m4 = new THREE.Matrix4(); const q = new THREE.Quaternion(); const sc = new THREE.Vector3();
-    let k = 0;
-    while (k < N) {
-      const x = (rnd() - 0.5) * 120; const z = (rnd() - 0.5) * 120;
-      if (Math.abs(x) < GRID_W / 2 + 5 && Math.abs(z) < GRID_H / 2 + 5) continue;
-      const s = 1.2 + rnd() * 1.4;
-      m4.compose(new THREE.Vector3(x, 1.1 * s, z), q, sc.set(s, s, s)); cone.setMatrixAt(k, m4);
-      m4.compose(new THREE.Vector3(x + 1.8, 0.9 * s, z + 1.2), q, sc.set(s * 0.9, s * 0.8, s * 0.9)); ball.setMatrixAt(k, m4);
-      k += 1;
-    }
-    cone.frustumCulled = false; ball.frustumCulled = false;
-    scene.add(cone, ball);
-  }
-
   const ctx = {
     root, art, disposer, camera, catalog: new Map(), books: new Map(), gw: GRID_W, gh: GRID_H,
     uniforms: { uRight: { value: new THREE.Vector3(1, 0, 0) }, uUp: { value: new THREE.Vector3(0, 1, 0) }, uTime: { value: 0 } },
@@ -124,6 +84,90 @@ export const createFarmScene = async (host, callbacks = {}) => {
   ctx.camDir.copy(camBack);
   const RIGHT = new THREE.Vector3(Math.SQRT1_2, 0, -Math.SQRT1_2);
   const FWD = new THREE.Vector3(-Math.SQRT1_2, 0, -Math.SQRT1_2);
+
+  // ── 대지 — 흙 마당(조작 영역) + 돌·풀 경계 띠 + 채도 낮은 들판·듬성한 나무·먼 숲 ──
+  let area = null;
+  let gridLines = null;
+  const buildArea = () => {
+    if (area) { area.traverse((o) => { o.geometry?.dispose?.(); if (o.isInstancedMesh) o.dispose(); }); scene.remove(area); }
+    area = new THREE.Group();
+    scene.add(area);
+    const { gw, gh } = ctx;
+    const mk = (p) => disposer.track(new THREE.MeshBasicMaterial(p));
+    // 영역 밖 들판 — 바랜 연두(형광 금지) + 정점색 얼룩
+    const SIZE = 500; const SEG = 50;
+    const og = new THREE.PlaneGeometry(SIZE, SIZE, SEG, SEG);
+    og.rotateX(-Math.PI / 2);
+    const pos = og.attributes.position; const col = new Float32Array(pos.count * 3);
+    for (let i = 0; i < pos.count; i += 1) {
+      const x = pos.getX(i); const z = pos.getZ(i);
+      const v = 0.92 + 0.08 * (Math.sin(x * 0.11) * Math.cos(z * 0.09) + Math.sin((x + z) * 0.23) * 0.5);
+      col.set([v, v, v], i * 3);
+    }
+    og.setAttribute('color', new THREE.BufferAttribute(col, 3));
+    const outside = new THREE.Mesh(og, mk({ color: 0xa9b78c, vertexColors: true, depthWrite: false }));
+    outside.renderOrder = -2;
+    area.add(outside);
+    // 흙 마당
+    const dirt = art.textures['dirt_tile.png'];
+    if (dirt) { dirt.wrapS = THREE.RepeatWrapping; dirt.wrapT = THREE.RepeatWrapping; dirt.repeat.set(gw / 4, gh / 4); }
+    const dg = new THREE.PlaneGeometry(gw, gh);
+    dg.rotateX(-Math.PI / 2);
+    const yard = new THREE.Mesh(dg, mk({ map: dirt || null, color: dirt ? 0xfff0e0 : 0xc9a27a, depthWrite: false }));
+    yard.position.y = 0.01; yard.renderOrder = -1;
+    area.add(yard);
+
+    let seed = 11;
+    const rnd = () => { seed = (seed * 16807) % 2147483647; return seed / 2147483647; };
+    const m4 = new THREE.Matrix4(); const q = new THREE.Quaternion(); const sc = new THREE.Vector3(); const v3 = new THREE.Vector3();
+    // 경계 돌·풀 띠
+    const per = 2 * (gw + gh);
+    const NS = Math.floor(per / 0.75);
+    const stones = new THREE.InstancedMesh(new THREE.SphereGeometry(1, 8, 6), disposer.track(new THREE.MeshLambertMaterial({ color: 0xbdb7aa })), NS);
+    const tufts = new THREE.InstancedMesh(new THREE.ConeGeometry(1, 1, 6), disposer.track(new THREE.MeshLambertMaterial({ color: 0x7fa064 })), NS);
+    for (let i = 0; i < NS; i += 1) {
+      let t = (i / NS) * per; let x; let z;
+      if (t < gw) { x = t; z = 0; } else if (t < gw + gh) { x = gw; z = t - gw; } else if (t < 2 * gw + gh) { x = gw - (t - gw - gh); z = gh; } else { x = 0; z = gh - (t - 2 * gw - gh); }
+      t = rnd();
+      const ox = x - gw / 2 + (rnd() - 0.5) * 0.3; const oz = z - gh / 2 + (rnd() - 0.5) * 0.3;
+      const r = 0.2 + rnd() * 0.15;
+      m4.compose(v3.set(ox, 0.08, oz), q, sc.set(r * 1.3, r * 0.7, r * 1.3)); stones.setMatrixAt(i, m4);
+      const h = 0.25 + rnd() * 0.3;
+      m4.compose(v3.set(ox + (rnd() - 0.5) * 0.5, h / 2, oz + (rnd() - 0.5) * 0.5), q, sc.set(0.1, h, 0.1)); tufts.setMatrixAt(i, m4);
+    }
+    stones.frustumCulled = false; tufts.frustumCulled = false;
+    area.add(stones, tufts);
+    // 듬성한 나무(가까이) + 먼 숲
+    const trunkMat = disposer.track(new THREE.MeshLambertMaterial({ color: 0x6b8a52 }));
+    const ballMat = disposer.track(new THREE.MeshLambertMaterial({ color: 0x7c9a62 }));
+    const N = 260;
+    const cone = new THREE.InstancedMesh(new THREE.ConeGeometry(1, 2.2, 8), trunkMat, N);
+    const ball = new THREE.InstancedMesh(new THREE.SphereGeometry(1, 10, 8), ballMat, N);
+    let k = 0;
+    while (k < N) {
+      const x = (rnd() - 0.5) * 140; const z = (rnd() - 0.5) * 140;
+      const dx = Math.abs(x) - gw / 2; const dz = Math.abs(z) - gh / 2;
+      const d = Math.max(dx, dz);
+      if (d < 2.5) continue;
+      if (d < 16 && rnd() > 0.06) continue; // 가까운 곳은 듬성하게
+      const s = d < 16 ? 0.9 + rnd() * 0.5 : 1.3 + rnd() * 1.5;
+      m4.compose(v3.set(x, 1.1 * s, z), q, sc.set(s, s, s)); cone.setMatrixAt(k, m4);
+      m4.compose(v3.set(x + 1.8, 0.9 * s, z + 1.2), q, sc.set(s * 0.9, s * 0.8, s * 0.9)); ball.setMatrixAt(k, m4);
+      k += 1;
+    }
+    cone.frustumCulled = false; ball.frustumCulled = false;
+    area.add(cone, ball);
+    // 꾸미기 모드 격자선
+    const lp = [];
+    for (let i = 0; i <= gw; i += 1) lp.push(i - gw / 2, 0.05, -gh / 2, i - gw / 2, 0.05, gh / 2);
+    for (let j = 0; j <= gh; j += 1) lp.push(-gw / 2, 0.05, j - gh / 2, gw / 2, 0.05, j - gh / 2);
+    const lg = new THREE.BufferGeometry();
+    lg.setAttribute('position', new THREE.Float32BufferAttribute(lp, 3));
+    gridLines = new THREE.LineSegments(lg, disposer.track(new THREE.LineBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.4, depthTest: false })));
+    gridLines.renderOrder = 3; gridLines.frustumCulled = false; gridLines.visible = editMode;
+    area.add(gridLines);
+  };
+  buildArea();
 
   const catOf = (id) => ctx.catalog.get(id)?.category || 'deco';
   const entCat = (e) => catOf(e.itemId);
@@ -181,9 +225,8 @@ export const createFarmScene = async (host, callbacks = {}) => {
   const refreshFences = () => {
     const fences = [...entities.values()].filter((e) => e instanceof FenceEntity);
     fences.forEach((f) => {
-      const ax = f.axisX();
-      const find = (dx, dy) => fences.some((o) => o !== f && o.axisX() === ax && o.x === f.x + dx && o.y === f.y + dy);
-      f.setNeighbors(ax ? find(-1, 0) : find(0, -1), ax ? find(1, 0) : find(0, 1));
+      const has = (dx, dy) => fences.some((o) => o !== f && o.x === f.x + dx && o.y === f.y + dy);
+      f.setNeighbors(has(0, -1), has(0, 1), has(-1, 0), has(1, 0));
     });
   };
   const getLayout = () => [...entities.values()].map((e) => ({
@@ -196,31 +239,41 @@ export const createFarmScene = async (host, callbacks = {}) => {
   };
 
   let fpMesh = null;
+  let occMesh = null;
   const fpBase = { transparent: true, depthWrite: false, depthTest: false };
   const fpMats = {
     ok: disposer.track(new THREE.MeshBasicMaterial({ ...fpBase, color: 0x4cc26a, opacity: 0.5 })),
     bad: disposer.track(new THREE.MeshBasicMaterial({ ...fpBase, color: 0xe0533d, opacity: 0.55 })),
+    occ: disposer.track(new THREE.MeshBasicMaterial({ ...fpBase, color: 0x8c8c8c, opacity: 0.35 })),
   };
-  const drawFootprint = () => {
-    if (fpMesh) { root.remove(fpMesh); fpMesh.geometry.dispose(); fpMesh = null; }
-    const e = entities.get(selectedUid);
-    if (!e || !editMode) return;
-    const fp = e.footprint();
+  const quadMesh = (rects, mat, order) => {
     const pos = []; const idx = [];
     const P = (gx, gy) => { const v = surfaceFrame(gx, gy, ctx.gw, ctx.gh).pos; return [v.x, 0.06, v.z]; };
-    for (let i = 0; i < fp.w; i += 1) {
-      for (let j = 0; j < fp.h; j += 1) {
-        const x0 = fp.x + i; const y0 = fp.y + j; const b = pos.length / 3;
-        [P(x0 + 0.04, y0 + 0.04), P(x0 + 0.96, y0 + 0.04), P(x0 + 0.96, y0 + 0.96), P(x0 + 0.04, y0 + 0.96)].forEach((v) => pos.push(...v));
-        idx.push(b, b + 2, b + 1, b, b + 3, b + 2);
+    rects.forEach((fp) => {
+      for (let i = 0; i < fp.w; i += 1) {
+        for (let j = 0; j < fp.h; j += 1) {
+          const x0 = fp.x + i; const y0 = fp.y + j; const b = pos.length / 3;
+          [P(x0 + 0.04, y0 + 0.04), P(x0 + 0.96, y0 + 0.04), P(x0 + 0.96, y0 + 0.96), P(x0 + 0.04, y0 + 0.96)].forEach((v) => pos.push(...v));
+          idx.push(b, b + 2, b + 1, b, b + 3, b + 2);
+        }
       }
-    }
+    });
     const g = new THREE.BufferGeometry();
     g.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3));
     g.setIndex(idx);
-    fpMesh = new THREE.Mesh(g, e.valid === false ? fpMats.bad : fpMats.ok);
-    fpMesh.frustumCulled = false; fpMesh.renderOrder = 10;
-    root.add(fpMesh);
+    const m = new THREE.Mesh(g, mat);
+    m.frustumCulled = false; m.renderOrder = order;
+    root.add(m);
+    return m;
+  };
+  const drawFootprint = () => {
+    [fpMesh, occMesh].forEach((m) => { if (m) { root.remove(m); m.geometry.dispose(); } });
+    fpMesh = null; occMesh = null;
+    if (!editMode) return;
+    const e = entities.get(selectedUid);
+    const occ = [...entities.values()].filter((o) => o !== e && entCat(o) !== 'animal').map((o) => o.footprint());
+    if (occ.length) occMesh = quadMesh(occ, fpMats.occ, 4);
+    if (e) fpMesh = quadMesh([e.footprint()], e.valid === false ? fpMats.bad : fpMats.ok, 5);
   };
   const setValidity = (e) => { e.valid = validAt(e, e.x, e.y); };
 
@@ -444,7 +497,7 @@ export const createFarmScene = async (host, callbacks = {}) => {
     setData({ catalog, layout, books, grid }) {
       ctx.catalog = new Map((catalog || []).map((c) => [c.id, c]));
       ctx.books = new Map((books || []).map((b) => [b.id, b]));
-      if (grid?.w && grid?.h) { ctx.gw = grid.w; ctx.gh = grid.h; }
+      if (grid?.w && grid?.h && (grid.w !== ctx.gw || grid.h !== ctx.gh)) { ctx.gw = grid.w; ctx.gh = grid.h; buildArea(); }
       setLayout(layout);
       centerOnFields();
     },
@@ -461,6 +514,7 @@ export const createFarmScene = async (host, callbacks = {}) => {
     },
     setEditMode(on) {
       editMode = !!on;
+      if (gridLines) gridLines.visible = editMode;
       if (!editMode) { selectedUid = null; emitSelect(); }
       applyCamera(); drawFootprint();
     },
@@ -514,7 +568,6 @@ export const createFarmScene = async (host, callbacks = {}) => {
       canvas.removeEventListener('wheel', onWheel);
       canvas.removeEventListener('contextmenu', onCtx);
       clearEntries();
-      if (fpMesh) { fpMesh.geometry.dispose(); fpMesh = null; }
       scene.traverse((o) => {
         o.geometry?.dispose?.();
         if (o.isInstancedMesh) o.dispose();

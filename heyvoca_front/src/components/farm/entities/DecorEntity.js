@@ -2,7 +2,7 @@
 import * as THREE from 'three';
 import Entity, { orientBillboard, orientFlat, UNIT } from './Entity';
 import {
-  billboardGeo, spriteSize, buildFallback, planeGeo, COLORS,
+  billboardGeo, spriteSize, buildFallback, planeGeo,
 } from '../farmArt';
 
 export default class DecorEntity extends Entity {
@@ -19,7 +19,9 @@ export default class DecorEntity extends Entity {
     const { art, disposer } = this.ctx;
     if (this.flat) {
       const g = planeGeo(art).clone(); g.rotateX(-Math.PI / 2); disposer.track(g);
-      const mat = disposer.track(new THREE.MeshLambertMaterial({ color: this.itemId.includes('path') ? 0xd9c08f : COLORS.leafLight, polygonOffset: true, polygonOffsetFactor: -1, polygonOffsetUnits: -1 }));
+      const pathTex = this.itemId === 'path_tile' && art.textures['path_tile.png'];
+      if (pathTex) { this.pathTex = pathTex.clone(); this.pathTex.wrapS = THREE.RepeatWrapping; this.pathTex.wrapT = THREE.RepeatWrapping; this.pathTex.needsUpdate = true; disposer.track(this.pathTex); }
+      const mat = disposer.track(new THREE.MeshBasicMaterial({ map: this.pathTex || null, color: this.pathTex ? 0xffffff : 0xd9c08f, polygonOffset: true, polygonOffsetFactor: -1, polygonOffsetUnits: -1 }));
       const m = new THREE.Mesh(g, mat);
       const fp = this.footprint(); m.scale.set(fp.w, 1, fp.h);
       this.mesh = m; this.group.add(m); this.mode = 'flat';
@@ -42,7 +44,7 @@ export default class DecorEntity extends Entity {
 
   render() {
     this.place();
-    if (this.flat) { const fp = this.footprint(); this.mesh.scale.set(fp.w, 1, fp.h); this.group.position.y = 0.02; }
+    if (this.flat) { const fp = this.footprint(); this.mesh.scale.set(fp.w, 1, fp.h); if (this.pathTex) { this.pathTex.repeat.set(fp.w / 2, fp.h / 2); this.pathTex.offset.set(fp.x / 2, -(fp.y + fp.h) / 2); } this.group.position.y = 0.02; }
     this.pose();
   }
 

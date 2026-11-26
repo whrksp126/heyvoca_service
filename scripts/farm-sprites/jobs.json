@@ -38,24 +38,19 @@
     "cow": "cute spotted cow"
   },
   "tiles": {
-    "plot_soil": {
+    "dirt_tile": {
+      "bg": "opaque",
       "max": 256,
-      "prompt": "Cute cozy mobile farm game asset, same art style, colors and soft shading as the reference images, NOT pixel art, transparent background, no text. ONE single raised farm plot seen in isometric 2:1 view: a puffy rounded soft-edged mound of tilled warm brown soil on a diamond footprint, with visible thickness/side wall giving depth, a few gentle furrow lines on top, tiny grass tufts at the base corners. Centered, only this one plot."
+      "prompt": "Cute cozy mobile farm game asset, same art style, colors and soft shading as the reference images, NOT pixel art, no text. A seamless tileable square texture of warm light-brown packed earth village ground seen from above, soft natural variation, a few tiny pebbles and faint footprints, very subtle tiny grass sprouts, matte, low contrast so it tiles without visible repetition, fills the whole image edge to edge."
     },
-    "fence_wood_iso": {
+    "path_tile": {
+      "bg": "opaque",
       "max": 256,
-      "prompt": "Cute cozy mobile farm game asset, same art style, colors and soft shading as the reference images, NOT pixel art, transparent background, no text. ONE short rustic wooden fence segment seen in isometric 2:1 view, running diagonally from lower-left to upper-right along the isometric axis, two horizontal rails between two posts, chunky cute shapes with soft volume. Centered, only this segment.",
-      "refs": [
-        "fence_wood.png"
-      ]
+      "prompt": "Cute cozy mobile farm game asset, same art style, colors and soft shading as the reference images, NOT pixel art, no text. A seamless tileable square texture of a cute rounded cobblestone village path seen from above, warm beige and light grey stones with soft shading and thin dirt gaps, fills the whole image edge to edge, tiles seamlessly."
     },
-    "chicken_sheet": {
-      "sheet": true,
-      "size": "1536x1024",
-      "prompt": "Cute cozy mobile farm game asset, same art style, colors and soft shading as the reference images, NOT pixel art, transparent background, no text. Animation sprite sheet of THE SAME white chicken character as the last reference image, in isometric 3/4 view facing lower-left, identical design in every frame. 2 rows x 4 columns grid, evenly spaced, equal size, each frame clearly separated on transparent background. Row 1: walk cycle 4 frames (legs alternating, body bobbing, head slightly forward/back). Row 2: idle blink, pecking the ground, happy (eyes closed smiling, little hop), sad (droopy, teary eyes).",
-      "refs": [
-        "chicken.png"
-      ]
+    "farmhouse": {
+      "max": 448,
+      "prompt": "Cute cozy mobile farm game asset, same art style, colors and soft shading as the reference images, NOT pixel art, no text. One cute cozy farmhouse in isometric 2:1 view (3x3 tiles footprint), red-orange roof, warm cream walls, wooden door, round window, small chimney, flower box, soft volume. Transparent background, centered, only the house."
     }
   }
 }

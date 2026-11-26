@@ -2,8 +2,8 @@
 import * as THREE from 'three';
 import manifest from '../../assets/farm2/manifest.json';
 
-export const GRID_W = manifest.grid?.w || 64;
-export const GRID_H = manifest.grid?.h || 64;
+export const GRID_W = manifest.grid?.w || 40;
+export const GRID_H = manifest.grid?.h || 40;
 const STAGE_KEYS = ['seed', 'sprout', 'leaf', 'carrot', 'golden'];
 const evenUp = (n) => (n % 2 === 0 ? n : n + 1);
 
@@ -64,7 +64,7 @@ const urlLoaders = import.meta.glob(
 const resolveKey = (src) => (src.startsWith('images/') ? `../../assets/${src}` : `../../assets/farm2/${src}`);
 
 export const loadArt = async (disposer) => {
-  const srcs = new Set(['grass_tile.png', 'plot_soil.png']);
+  const srcs = new Set(['dirt_tile.png', 'soil_cell.png', 'path_tile.png']);
   Object.values(manifest.items || {}).forEach((it) => { if (it.src) srcs.add(it.src); });
   Object.values(manifest.crops || {}).forEach((c) => (c.stages || []).forEach((s) => s && srcs.add(s)));
   Object.values(manifest.animals || {}).forEach((a) => (a.frames || []).forEach((s) => srcs.add(s)));
