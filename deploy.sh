@@ -43,13 +43,23 @@ ssh -i "$SSH_KEY" -p "$SSH_PORT" "${SSH_USER}@${SSH_HOST}" "
     cd ${REMOTE_DIR}
     echo '>>> git pull...'
     git pull
+    echo '>>> 메모리 사전 검사(dev 워커 크기로 prod 필요량 예측)...'
+    FORCE_MEM_GATE=${FORCE_MEM_GATE:-0} bash scripts/ops/mem_gate.sh pre ${ENV} || exit 3
+    echo '>>> 직전 이미지 보관(:${ENV}-prev, 되돌리기용)...'
+    for img in heyvoca_back heyvoca_front; do
+        docker image inspect \$img:${ENV} >/dev/null 2>&1 && docker tag \$img:${ENV} \$img:${ENV}-prev || true
+    done
     echo '>>> docker build & up...'
     docker compose -p ${PROJECT_NAME} -f ${COMPOSE_FILE} up --build -d front back
     echo '>>> nginx reload (IP 캐시 갱신)...'
     docker exec nginx_proxy nginx -s reload
 "
 
-if [ $? -ne 0 ]; then
+DEPLOY_RC=$?
+if [ $DEPLOY_RC -eq 3 ]; then
+    echo ">>> [중단] 메모리 사전 검사 실패 — 아무것도 빌드/교체하지 않았습니다. 위 [MEM GATE] 내용을 확인하세요."
+    exit 3
+elif [ $DEPLOY_RC -ne 0 ]; then
     echo ">>> [에러] 배포 실패. SSH 접속 및 서버 상태를 확인하세요."
     exit 1
 fi
@@ -82,5 +92,10 @@ elif echo "$HEALTH_OUTPUT" | grep -q '\[SCHEMA DRIFT\]'; then
 else
     echo ">>> [$ENV] 스키마 검증 통과."
 fi
+
+# ─── 배포 후 메모리 검사 ───
+# 기동 직후 워커 크기를 기록하고, 직전 배포보다 크게 늘었거나 한도에 가까우면 경고(+prod 알림, 되돌리기 명령 안내).
+ssh -i "$SSH_KEY" -p "$SSH_PORT" "${SSH_USER}@${SSH_HOST}" "cd ${REMOTE_DIR} && bash scripts/ops/mem_gate.sh post ${ENV}" \
+    || echo ">>> [경고] 배포 후 메모리 검사 경고. 위 [MEM CHECK] 내용을 확인하세요."
 
 echo ">>> [$ENV] 배포 완료!"
