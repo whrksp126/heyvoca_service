@@ -37,7 +37,7 @@ export const OutageRewardSheet = ({ onConfirm }) => {
         </p>
       </div>
 
-      <div className="flex items-center justify-center py-[28px]">
+      <div className="flex items-center justify-center pt-[28px] pb-[32px]">
         <div className="relative flex items-center justify-center w-[160px] h-[160px]">
           <motion.div
             className="absolute inset-0 rounded-full bg-primary-main-100 dark:bg-primary-main-dark"
@@ -66,8 +66,6 @@ export const OutageRewardSheet = ({ onConfirm }) => {
           </motion.div>
         </div>
       </div>
-
-      <p className="text-center text-[16px] font-[700] text-primary-main-600 mb-[20px]">보호권 +1</p>
 
       <button
         type="button"
