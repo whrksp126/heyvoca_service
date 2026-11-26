@@ -21,4 +21,6 @@ ENTRYPOINT ["docker-entrypoint.sh"]
 # gthread: TTS/Drive/FCM 등 블로킹 I/O 호출이 워커를 통째로 점유하지 않도록 스레드 동시성 확보.
 # (sync 단일이면 cold-TTS 몇 건만 겹쳐도 전 워커 고갈) gevent는 monkeypatch 리스크로 미채택.
 # 스케줄러는 socket lock(fcm.create_scheduler)으로 단일 프로세스만 실행 → 워커 증설해도 중복 푸시 없음.
-CMD ["gunicorn", "-w", "4", "--threads", "4", "--worker-class", "gthread", "--timeout", "60", "-b", "0.0.0.0:5000", "run:app"]
+# --max-requests: 워커를 요청 2000(±200)건마다 새로 띄워 메모리 누적 증가를 끊는다(2026-11-26 OOM 대응).
+#   지터로 4개가 동시에 교체되지 않음. 스케줄러 소켓 잠금은 교체된 새 워커가 이어받는다.
+CMD ["gunicorn", "-w", "4", "--threads", "4", "--worker-class", "gthread", "--timeout", "60", "--max-requests", "2000", "--max-requests-jitter", "200", "-b", "0.0.0.0:5000", "run:app"]

@@ -68,5 +68,53 @@ $containers" "health:$name:down"
   fi
 }
 
+# 메모리 감시 (2026-11-26 추가) — 응답은 살아 있어도 워커가 OOM 으로 죽고 있으면 /health 로는 안 보인다.
+# cgroup v2 의 memory.events(oom_kill 누적)와 memory.current/max 를 직접 읽는다(빠르고 sudo 불필요).
+#   - oom_kill 이 늘면 즉시 warning (컨테이너 ID 별로 기록 → 재생성 시 0 부터 다시 셈)
+#   - 사용량이 한도의 MEM_WARN_PCT% 이상인 상태가 MEM_WARN_MINUTES 분 이어지면 warning 1회,
+#     MEM_CLEAR_PCT% 아래로 내려가면 해제
+MEM_WARN_PCT=90
+MEM_CLEAR_PCT=80
+MEM_WARN_MINUTES=5
+check_mem() {
+  local name="$1" id cg max cur kills pct
+  id="$(docker inspect -f '{{.Id}}' "$name" 2>/dev/null)" || return
+  cg="/sys/fs/cgroup/system.slice/docker-$id.scope"
+  [ -r "$cg/memory.events" ] || return
+  max="$(cat "$cg/memory.max")"; cur="$(cat "$cg/memory.current")"
+  kills="$(awk '$1=="oom_kill"{print $2}' "$cg/memory.events")"
+
+  local kill_file="$STATE_DIR/$name.oom"
+  local prev_id prev_kills
+  read -r prev_id prev_kills < "$kill_file" 2>/dev/null || true
+  [ "${prev_id:-}" = "$id" ] || prev_kills=0
+  if [ "${kills:-0}" -gt "${prev_kills:-0}" ]; then
+    send warning "$name 메모리 부족 강제 종료(OOM)" "$name 에서 프로세스가 메모리 한도 초과로 강제 종료됐어요.
+새로 $(( kills - prev_kills ))건 (이 컨테이너 누적 ${kills}건)
+현재 사용량: $(( cur / 1048576 ))MiB / 한도 $( [ "$max" = max ] && echo 무제한 || echo "$(( max / 1048576 ))MiB")
+확인: docker logs --since 10m $name | grep 'signal 9'" "mem:$name:oom:$id:$kills"
+  fi
+  echo "$id ${kills:-0}" > "$kill_file"
+
+  [ "$max" = max ] && return
+  pct=$(( cur * 100 / max ))
+  local hi_file="$STATE_DIR/$name.memhigh" hi_alerted="$STATE_DIR/$name.memhigh.alerted"
+  if [ "$pct" -ge "$MEM_WARN_PCT" ]; then
+    local n; n=$(( $(cat "$hi_file" 2>/dev/null || echo 0) + 1 ))
+    echo "$n" > "$hi_file"
+    if [ "$n" -ge "$MEM_WARN_MINUTES" ] && [ ! -f "$hi_alerted" ]; then
+      date '+%F %T' > "$hi_alerted"
+      send warning "$name 메모리 ${pct}% (${n}분째)" "$name 사용량 $(( cur / 1048576 ))MiB / 한도 $(( max / 1048576 ))MiB.
+곧 OOM 강제 종료가 날 수 있어요. 한도 상향(docker update --memory) 또는 워커 수 조정을 검토하세요." "mem:$name:high"
+    fi
+  elif [ "$pct" -lt "$MEM_CLEAR_PCT" ]; then
+    echo 0 > "$hi_file"
+    rm -f "$hi_alerted"
+  fi
+}
+
 check back "https://heyvoca-back.ghmate.com/health" '"status":"ok"'
 check front "https://heyvoca-front.ghmate.com/" ""
+for c in heyvoca_back_prod heyvoca_mysql_prod heyvoca_redis_prod heyvoca_front_prod; do
+  check_mem "$c"
+done

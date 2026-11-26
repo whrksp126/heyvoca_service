@@ -25,7 +25,8 @@ services:
     deploy:
       resources:
         limits:
-          memory: 1g
+          # 2026-11-26: three.js 추가 후 Vite 사전 번들(esbuild)이 ~800MB 써서 1g 에서 OOM → 2g
+          memory: 2g
           cpus: "1.0"
 
   back:
