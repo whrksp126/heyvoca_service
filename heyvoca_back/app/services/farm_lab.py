@@ -24,6 +24,8 @@ with open(_CATALOG_PATH, encoding='utf-8') as _f:
 GRID_W = _RAW['grid']['w']
 GRID_H = _RAW['grid']['h']
 CATALOG = _RAW['items']
+VILLAGE_SLOTS = _RAW['village_slots']
+SLOT_BY_ID = {v['id']: v for v in VILLAGE_SLOTS}
 ITEMS = {i['id']: i for i in CATALOG}
 CROP_IDS = {i['id'] for i in CATALOG if i['category'] == 'crop'}
 DEFAULT_CROP = 'carrot'
@@ -148,6 +150,30 @@ def cells_needed(word_count):
     return max(4, math.ceil(max(0, int(word_count)) / 4))
 
 
+def open_slot_count(book_count):
+    return min(len(VILLAGE_SLOTS), max(3, int(book_count) + 1))
+
+
+def _open_slot_ids(book_count):
+    k = open_slot_count(book_count)
+    return {v['id'] for v in VILLAGE_SLOTS if v['order'] <= k}
+
+
+def _slot_size(word_count):
+    return 'S' if word_count <= 40 else ('M' if word_count <= 150 else 'L')
+
+
+def _pick_slot(free_ids, word_count):
+    """크기 맞는 빈 열린 터(order 순), 없으면 아무 빈 열린 터(order 순)."""
+    cand = [SLOT_BY_ID[i] for i in free_ids]
+    cand.sort(key=lambda v: v['order'])
+    want = _slot_size(word_count)
+    for v in cand:
+        if v['size'] == want:
+            return v['id']
+    return cand[0]['id'] if cand else None
+
+
 def _rect_cells(n):
     """n 칸짜리 가장 정사각형에 가까운 직사각형(마지막 줄만 덜 참) 상대 좌표."""
     w = math.ceil(math.sqrt(n))
@@ -264,38 +290,30 @@ def _ensure(user_id):
     book_ids = {str(b.id) for b in books}
     bcells = _book_cells(books)
     layout = [e for e in layout if not (e['item_id'] == 'field' and e.get('book_id') not in book_ids)]
-    # v8: 밭 = 칸 집합(cells). 칸 수 N 불일치/없음이면 직사각형 재생성, 범위 밖·겹침이면 빈 곳 탐색(멱등)
-    # 밭이 아닌 항목(집·나무·울타리 등)은 layout 에서 제거(인벤토리 유지)
+    # v9: 밭 = 정해진 터(slot). 밭이 아닌 항목은 layout 에서 제거(인벤토리 유지). 멱등
     old = list(row.layout or [])
-    taken, new_layout, seen, pending = set(), [], set(), []
+    open_ids = _open_slot_ids(len(books))
+    used, new_layout, seen, pending = set(), [], set(), []
     for e in layout:
         if e['item_id'] != 'field' or e.get('book_id') in seen:
             continue
-        n = cells_needed(len(bcells[e['book_id']]))
-        cs = e.get('cells')
-        if not _shape_ok(cs, n):
-            cs = _rect_cells(n)
-        x, y = e.get('x'), e.get('y')
-        ab = (_abs_cells(x, y, cs) if isinstance(x, int) and isinstance(y, int)
-              and not isinstance(x, bool) and not isinstance(y, bool) else None)
         seen.add(e['book_id'])
-        ne = {'uid': e['uid'], 'item_id': 'field', 'book_id': e['book_id'],
-              'x': x, 'y': y, 'cells': [list(c) for c in cs]}
-        if ab is None or not _cells_in_grid(ab) or ab & taken:
-            pending.append(ne)
-        else:
-            taken |= ab
+        sl = e.get('slot')
+        ne = {'uid': e['uid'], 'item_id': 'field', 'book_id': e['book_id'], 'slot': sl}
+        if isinstance(sl, str) and sl in open_ids and sl not in used:
+            used.add(sl)
             new_layout.append(ne)
+        else:
+            pending.append(ne)
     for b in books:
         if str(b.id) not in seen:
-            pending.append({'uid': uuid4().hex[:12], 'item_id': 'field', 'book_id': str(b.id), 'x': None, 'y': None,
-                            'cells': _rect_cells(cells_needed(len(bcells[str(b.id)])))})
+            pending.append({'uid': uuid4().hex[:12], 'item_id': 'field', 'book_id': str(b.id), 'slot': None})
     for ne in pending:
-        pos = _find_spot(taken, ne['cells'], GRID_W / 2, GRID_H / 2)
-        if pos is None:
+        sid = _pick_slot(open_ids - used, len(bcells[ne['book_id']]))
+        if sid is None:
             continue
-        ne['x'], ne['y'] = pos
-        taken |= _abs_cells(pos[0], pos[1], ne['cells'])
+        ne['slot'] = sid
+        used.add(sid)
         new_layout.append(ne)
     order = {e['uid']: n for n, e in enumerate(old)}
     new_layout.sort(key=lambda e: order.get(e['uid'], 10 ** 9))
@@ -339,6 +357,8 @@ def get_state(user_id):
     return {
         'catalog': CATALOG,
         'grid': {'w': GRID_W, 'h': GRID_H},
+        'village_slots': VILLAGE_SLOTS,
+        'open_slot_count': open_slot_count(len(books)),
         'inventory': inv,
         'layout': row.layout or [],
         'version': int(row.version or 0),
@@ -364,6 +384,8 @@ def save_layout(user_id, layout, version):
     wc = {k: len(v) for k, v in _book_cells(books).items()}
     inv = _inv_map(user_id)
     own_books = {str(b.id) for b in books}
+    open_ids = _open_slot_ids(len(books))
+    used_slots = set()
     clean, cells, uids, counts, used_books = [], set(), set(), {}, set()
     for e in layout:
         if not isinstance(e, dict):
@@ -374,9 +396,24 @@ def save_layout(user_id, layout, version):
             raise FarmError(400, '배치할 수 없는 아이템입니다.')
         if not isinstance(uid, str) or not uid or len(uid) > 40 or uid in uids:
             raise FarmError(400, '배치 uid 가 올바르지 않습니다.')
+        bid = e.get('book_id')
+        if it['id'] == 'field':
+            sl = e.get('slot')
+            if bid not in own_books or bid in used_books:
+                raise FarmError(400, '밭에 연결된 단어장이 올바르지 않습니다.')
+            if not isinstance(sl, str) or sl not in SLOT_BY_ID:
+                raise FarmError(400, '밭 터가 올바르지 않습니다.')
+            if sl not in open_ids:
+                raise FarmError(400, '아직 열리지 않은 터입니다.', {'reason': 'slot_locked'})
+            if sl in used_slots:
+                raise FarmError(400, '이미 다른 밭이 쓰는 터입니다.')
+            used_books.add(bid)
+            used_slots.add(sl)
+            uids.add(uid)
+            clean.append({'uid': uid, 'item_id': 'field', 'book_id': bid, 'slot': sl})
+            continue
         if any(not isinstance(v, int) or isinstance(v, bool) for v in (x, y)):
             raise FarmError(400, '좌표가 올바르지 않습니다.')
-        bid = e.get('book_id')
         rot = e.get('rot')
         if rot is None:
             rot = 90 if e.get('flip') else 0

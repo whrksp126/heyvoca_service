@@ -47,6 +47,7 @@ import { StudyPickNewBottomSheet } from '../newBottomSheet/StudyPickNewBottomShe
 import AchievementRewardOverlay from '../overlay/AchievementRewardOverlay';
 
 import HomeFieldGrid from './HomeFieldGrid';
+import FarmHome from '../farm/FarmHome';
 import useLabFarm from './useLabFarm';
 import { buildBookRow, isScriptBook } from '../vocabularySheets/VocaBookCard';
 import VocabularyWordsNewFullSheet from '../newfullsheet/VocabularyWordsNewFullSheet';
@@ -512,6 +513,15 @@ const Main = () => {
             bg-[linear-gradient(180deg,var(--farm-sky-100)_0%,var(--farm-sky-200)_32%,var(--farm-canvas)_100%)]
           "
         >
+          {labFeatures.farm_home ? (
+            <FarmHome
+              onTapField={(id) => {
+                vibrate({ duration: 5 });
+                pushNewFullSheet(VocabularyWordsNewFullSheet, { id }, { smFull: true, closeOnBackdropClick: true });
+              }}
+              onAddBook={() => { vibrate({ duration: 5 }); navigate('/book-store'); }}
+            />
+          ) : (
           <HomeFieldGrid
             rows={bookRows}
             lab={labFeatures.farm_home && labFarm.ready ? labFarm : null}
@@ -523,6 +533,7 @@ const Main = () => {
               pushNewFullSheet(VocabularyWordsNewFullSheet, { id }, { smFull: true, closeOnBackdropClick: true });
             }}
           />
+          )}
         </div>
       )}
 

@@ -313,5 +313,67 @@
    "unlock": null,
    "starter_qty": 1
   }
+ ],
+ "village_slots": [
+  {
+   "id": "p1",
+   "size": "M",
+   "order": 1
+  },
+  {
+   "id": "p2",
+   "size": "S",
+   "order": 2
+  },
+  {
+   "id": "p3",
+   "size": "S",
+   "order": 3
+  },
+  {
+   "id": "p4",
+   "size": "L",
+   "order": 4
+  },
+  {
+   "id": "p5",
+   "size": "M",
+   "order": 5
+  },
+  {
+   "id": "p6",
+   "size": "S",
+   "order": 6
+  },
+  {
+   "id": "p7",
+   "size": "M",
+   "order": 7
+  },
+  {
+   "id": "p8",
+   "size": "L",
+   "order": 8
+  },
+  {
+   "id": "p9",
+   "size": "S",
+   "order": 9
+  },
+  {
+   "id": "p10",
+   "size": "M",
+   "order": 10
+  },
+  {
+   "id": "p11",
+   "size": "S",
+   "order": 11
+  },
+  {
+   "id": "p12",
+   "size": "L",
+   "order": 12
+  }
  ]
 }

@@ -38,10 +38,17 @@
     "cow": "cute spotted cow"
   },
   "tiles": {
-    "field_v2": {
-      "max": 640,
-      "prompt": "Cute cozy mobile farm game asset in EXACTLY the same art style and colors as the reference images (especially the last one, the existing field). ONE raised farm field plot in isometric 2:1 view (diamond footprint), richer detail: neat tilled soil furrow rows running along the diamond, thick layered soil side walls with visible depth, a soft grassy rim with tiny tufts and small pebbles at the edges, warm brown soil with gentle highlights. EMPTY of crops. Transparent background, centered, only this one field.",
-      "refs": []
+    "village_ground": {
+      "bg": "opaque",
+      "size": "1024x1536",
+      "max": 1536,
+      "sheet": true,
+      "raw": true,
+      "refs": [
+        "dirt_tile.png",
+        "grass_tile.png"
+      ],
+      "prompt": "Stylized cozy mobile game terrain texture, seen STRAIGHT DOWN from directly above (orthographic top-down, no perspective, no horizon). A village meadow area: soft varied green grass with gentle color patches, scattered tiny flowers and small stones, a winding light-blue river with soft sandy banks running across the TOP edge, light grey-beige rocky cliff rims along the LEFT and RIGHT edges, dense dark-green forest canopy along the BOTTOM edge. The large central area is open meadow with NO paths, NO buildings, NO fields, NO characters, NO text. Bright, warm, soft lighting, matches the reference textures' painted style."
     }
   }
 }
