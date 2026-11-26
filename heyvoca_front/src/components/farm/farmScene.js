@@ -14,8 +14,8 @@ const TAP_SLOP = 8;
 const LONG_MS = 550;
 const FOV = 45;
 const ELEV = (50 * Math.PI) / 180;
-const DMIN = 7;
-const DMAX = 24;
+const DMIN = 15; // 가장 가까이(이전 첫 화면 정도)
+const DMAX = 64;
 const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
 
 export const createFarmScene = async (host, callbacks = {}) => {
@@ -196,6 +196,7 @@ export const createFarmScene = async (host, callbacks = {}) => {
 
   // ── 카메라 ──────────────────────────────────────────────────
   const target = new THREE.Vector3(0, 0, 0);
+  // 첫 시점 — 지도 가로 폭 전체가 화면 너비에 들어오게
   let dist = 15;
   let vx = 0; let vz = 0;
   let yc = viewH / 2;
@@ -363,6 +364,7 @@ export const createFarmScene = async (host, callbacks = {}) => {
     applyCamera();
   }) : null;
   ro?.observe(host);
+  dist = (WORLD / 2 / (Math.tan((FOV * Math.PI) / 360) * (viewW / viewH))) * 1.02;
   applyCamera(); start();
 
   return {

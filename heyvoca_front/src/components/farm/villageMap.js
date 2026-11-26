@@ -13,7 +13,7 @@ export const SLOT_SIZES = {
   L: { w: 6.8, d: 4.3, max: 40 },
 };
 
-export const HALL = { ...fromWorld(0, -0.3), size: 6.4 };
+export const HALL = { ...fromWorld(0, -0.3), size: 5.0 };
 
 const mk = (order, size, wx, wz) => ({ id: `p${order}`, order, size, rot: 0, ...fromWorld(wx, wz) });
 // order = 열리는 순서(번호 순). 길가를 따라 회관 둘레에 배치

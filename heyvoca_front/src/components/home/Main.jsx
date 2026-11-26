@@ -48,6 +48,7 @@ import AchievementRewardOverlay from '../overlay/AchievementRewardOverlay';
 
 import HomeFieldGrid from './HomeFieldGrid';
 import FarmHome from '../farm/FarmHome';
+import { CaretUp, CaretDown } from '@phosphor-icons/react';
 import useLabFarm from './useLabFarm';
 import { buildBookRow, isScriptBook } from '../vocabularySheets/VocaBookCard';
 import VocabularyWordsNewFullSheet from '../newfullsheet/VocabularyWordsNewFullSheet';
@@ -278,6 +279,8 @@ const Main = () => {
 
   // 밭 지도 기본 시점 리셋 신호 — 당겨서 새로고침 때 1 올린다(HomeFieldGrid resetSignal)
   const [mapReset, setMapReset] = useState(0);
+  // farm_home(마을 지도)에서는 '오늘 할 일' 카드가 기본 접힘 — 지도를 가리지 않게
+  const [todayOpen, setTodayOpen] = useState(false);
   const handlePullToRefresh = useCallback(async () => {
     setMapReset((n) => n + 1);
     await Promise.all([
@@ -604,7 +607,18 @@ const Main = () => {
             <FarmCta floating label={ctaInfo.label} onClick={handleCtaClick} />
           </div>
         )}
-        <div className="pointer-events-auto empty:hidden">
+        {labFeatures.farm_home && (
+          <button
+            type="button"
+            onClick={() => setTodayOpen((v) => !v)}
+            aria-expanded={todayOpen}
+            className="pointer-events-auto self-center inline-flex items-center gap-[6px] h-[32px] px-[14px] rounded-full bg-layout-white/90 dark:bg-layout-gray-dark/90 backdrop-blur-[8px] shadow-[0_2px_8px_rgba(96,80,52,.16)] text-[13px] font-[700] tracking-[-0.02em] text-layout-black dark:text-layout-white"
+          >
+            오늘 할 일
+            {todayOpen ? <CaretDown weight="bold" size={14} /> : <CaretUp weight="bold" size={14} />}
+          </button>
+        )}
+        <div className={`pointer-events-auto empty:hidden ${labFeatures.farm_home && !todayOpen ? 'max-h-0 overflow-hidden opacity-0 pointer-events-none' : ''}`}>
           <TodayTasksCard streakCard={streakCard} flameRef={flameChipRef} onFlameState={setFlameState} />
         </div>
       </div>
