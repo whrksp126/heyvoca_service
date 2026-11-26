@@ -609,3 +609,57 @@ def migration_seen():
         return jsonify({'code': 200, 'data': query.mark_migration_seen(user_id)}), 200
     except Exception:
         return _fail('전환 안내 확인 표시')
+
+
+# ──────────────────────────────────────────────────────────────
+# 2026-11-26 서비스 장애 사과 보상 (보호권 1개, 1인 1회)
+# ──────────────────────────────────────────────────────────────
+
+# KST 2026-11-26 19:00 ~ 2026-11-27 00:00 = UTC 10:00 ~ 15:00 (컨테이너 TZ 와 무관하게 UTC 로 비교)
+_OUTAGE_REWARD_START_UTC = dt.datetime(2026, 11, 26, 10, 0, 0)
+_OUTAGE_REWARD_END_UTC = dt.datetime(2026, 11, 26, 15, 0, 0)
+# 1인 1회 마커이자 사용자 화면용 원장 문구
+_OUTAGE_REWARD_DESC = '서비스 장애 보상 (11/26)'
+
+
+@farm_bp.route('/event/outage-reward', methods=['POST'])
+@jwt_required
+def outage_reward():
+    """장애 사과 보상 보호권 1개를 1회 지급한다. 실패해도 홈을 막지 않도록 200 으로 답한다."""
+    from app import db
+    from app.models.models import FarmItem, FarmItemReason, UserFarmItemLog
+    from app.services.game.farm_v2 import inventory
+    from app.utils.db_lock import lock_user
+
+    def _no(reason):
+        return jsonify({'code': 200, 'data': {'granted': False, 'reason': reason}}), 200
+
+    try:
+        now = dt.datetime.utcnow()
+        if not (_OUTAGE_REWARD_START_UTC <= now < _OUTAGE_REWARD_END_UTC):
+            return _no('closed')
+
+        user_id = UUID(g.user_id)
+        if not lock_user(user_id):
+            db.session.rollback()
+            return _no('error')
+
+        done = (db.session.query(UserFarmItemLog.id)
+                .filter(UserFarmItemLog.user_id == user_id,
+                        UserFarmItemLog.reason == FarmItemReason.EVENT,
+                        UserFarmItemLog.description == _OUTAGE_REWARD_DESC)
+                .first())
+        if done:
+            db.session.rollback()
+            return _no('already')
+
+        qty_after = inventory.grant(user_id, FarmItem.SHIELD, 1, FarmItemReason.EVENT,
+                                    description=_OUTAGE_REWARD_DESC)
+        db.session.commit()
+        return jsonify({'code': 200, 'data': {
+            'granted': True, 'item': 'SHIELD', 'amount': 1, 'qty_after': qty_after,
+        }}), 200
+    except Exception:
+        db.session.rollback()
+        _log.error('장애 보상 지급 오류', exc_info=True)
+        return _no('error')

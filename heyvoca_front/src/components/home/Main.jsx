@@ -59,6 +59,7 @@ import TodayTasksCard from './TodayTasksCard';
 import { useStreakCard } from './StreakCard';
 import HomeFlameChip from '../streak/HomeFlameChip';
 import OnboardingQuestCard from './OnboardingQuestCard';
+import OutageRewardWatcher from '../rewards/OutageRewardWatcher'; // 2026-11-26 장애 사과 보상(오늘만)
 import { useOnboardingUnlock } from '../../context/OnboardingUnlockContext';
 
 /** 히어로 높이(지도 배경 히어로 h-[420px] 와 같은 값) — 밭 지도의 '보이는 창' 아래 끝 = CTA 위 */
@@ -478,6 +479,7 @@ const Main = () => {
       **고장 난 화면**으로 읽힌다.
     */
     <div className="relative isolate h-screen bg-farm-canvas dark:bg-layout-black">
+    <OutageRewardWatcher />
     <PullToRefresh
       onRefresh={handlePullToRefresh}
       className="flex flex-col h-full overflow-y-auto"
