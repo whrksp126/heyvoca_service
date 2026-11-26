@@ -19,6 +19,9 @@ const getUserVoices = () => {
 // 학습/테스트 시작 전 TTS 사전 캐싱(워밍).
 // 백엔드는 캐시에 없는 음성만 생성하므로, 학습 중 첫 재생 지연이 사라진다.
 // fire-and-forget 으로 호출 — 실패해도 학습 흐름엔 영향 없음.
+// 같은 세션에서 이미 요청했거나 진행 중인 항목은 다시 보내지 않는다(실패 시 해제).
+const prewarmedKeys = new Set();
+
 export const prewarmTts = async (items) => {
   if (!Array.isArray(items) || items.length === 0) return;
   const voices = getUserVoices();
@@ -28,17 +31,22 @@ export const prewarmTts = async (items) => {
     const text = (it?.text ?? '').trim();
     const language = it?.language;
     if (!text || !SUPPORTED_TTS_LANGS.includes(language)) continue;
-    const key = `${language}::${text}`;
-    if (seen.has(key)) continue;
+    const key = `${language}::${voices[language] || ''}::${text}`;
+    if (seen.has(key) || prewarmedKeys.has(key)) continue;
     seen.add(key);
     const entry = { text, language };
     if (voices[language]) entry.voice = voices[language];
     payloadItems.push(entry);
   }
   if (payloadItems.length === 0) return;
+  const sentKeys = [...seen];
+  sentKeys.forEach((k) => prewarmedKeys.add(k));
   try {
-    return await fetchDataAsync(`${backendUrl}/tts/prewarm`, 'POST', { items: payloadItems });
+    const res = await fetchDataAsync(`${backendUrl}/tts/prewarm`, 'POST', { items: payloadItems });
+    if (!res) sentKeys.forEach((k) => prewarmedKeys.delete(k));
+    return res;
   } catch (e) {
+    sentKeys.forEach((k) => prewarmedKeys.delete(k));
     console.warn('[TTS] prewarm 실패:', e);
   }
 };
