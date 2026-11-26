@@ -4,7 +4,6 @@
 // 좌표는 모두 '지도 px'(HomeFieldGrid 레이어 좌표)이고, 밭 한 장 안에서는 밭 중심 기준 상대값이다.
 import { Sparkle } from '@phosphor-icons/react';
 import { stageToCrop } from '../../utils/crop';
-import fieldV2 from '../../assets/farm2/field_v2.png';
 import carrotSeed from '../../assets/images/farm/crops/planted/healthy-seed.png';
 import carrotSprout from '../../assets/images/farm/crops/planted/healthy-sprout.png';
 import carrotLeaf from '../../assets/images/farm/crops/planted/healthy-leaf.png';
@@ -27,14 +26,6 @@ const spriteSrc = (crop, idx) => {
   return FARM2[`../../assets/farm2/${crop}_${idx}.png`] || CARROT[idx];
 };
 
-// field_v2.png(640×640) 안의 좌표 — 테두리 마름모 꼭짓점과 흙 윗면
-const IMG = 640;
-const RIM_T = [320, 165];
-const RIM_R = [610, 300];
-const RIM_L = [30, 300];
-const SOIL_CLIP = 'polygon(80px 305px, 330px 198px, 562px 305px, 315px 412px)';
-const RIM_HUE = 78; // 기본 풀색 테두리 색상각
-
 const hash = (s) => {
   let h = 2166136261;
   const str = String(s);
@@ -42,38 +33,24 @@ const hash = (s) => {
   return (h >>> 0) / 4294967295;
 };
 
-/** '#RRGGBB' → { h(0~360), s(0~1) } */
-const hueSat = (hex) => {
+const BASE_COLOR = '#7FB93A'; // 기본(풀색) 테두리
+const SOIL = '#B4703C';
+const BORDER_W = 9; // 테두리 두께(지도 px) — 밭 크기와 무관하게 같다
+const LIP = 5;      // 테두리 높이(아래로 비치는 면)
+
+const shade = (hex, f) => {
   const m = /^#?([0-9a-f]{6})$/i.exec(String(hex || '').trim());
-  if (!m) return null;
+  if (!m) return '#4F6B22';
   const n = parseInt(m[1], 16);
-  const r = ((n >> 16) & 255) / 255; const g = ((n >> 8) & 255) / 255; const b = (n & 255) / 255;
-  const mx = Math.max(r, g, b); const mn = Math.min(r, g, b); const d = mx - mn;
-  if (d === 0) return { h: 0, s: 0 };
-  let h;
-  if (mx === r) h = ((g - b) / d) % 6; else if (mx === g) h = (b - r) / d + 2; else h = (r - g) / d + 4;
-  return { h: (h * 60 + 360) % 360, s: mx === 0 ? 0 : d / mx };
+  const c = (v) => Math.max(0, Math.min(255, Math.round(v * f))).toString(16).padStart(2, '0');
+  return `#${c((n >> 16) & 255)}${c((n >> 8) & 255)}${c(n & 255)}`;
 };
 
-/** 밭 그림 → 발판(w×h 칸) 아핀 행렬(밭 중심 기준, 지도 px) */
-const fieldMatrix = (w, h) => {
-  const e1 = [RIM_R[0] - RIM_T[0], RIM_R[1] - RIM_T[1]];
-  const e2 = [RIM_L[0] - RIM_T[0], RIM_L[1] - RIM_T[1]];
-  const d1 = [w * LAB_TW / 2, w * LAB_TH / 2];
-  const d2 = [-h * LAB_TW / 2, h * LAB_TH / 2];
-  const det = e1[0] * e2[1] - e2[0] * e1[1];
-  // M = D · E⁻¹, E = [e1 e2] (열 벡터)
-  const a = (d1[0] * e2[1] - d2[0] * e1[1]) / det;
-  const c = (-d1[0] * e2[0] + d2[0] * e1[0]) / det;
-  const b = (d1[1] * e2[1] - d2[1] * e1[1]) / det;
-  const d = (-d1[1] * e2[0] + d2[1] * e1[0]) / det;
-  const top = gridPt(-w / 2, -h / 2);
-  return { a, b, c, d, e: top.x - (a * RIM_T[0] + c * RIM_T[1]), f: top.y - (b * RIM_T[0] + d * RIM_T[1]) };
-};
+const SUB = [[0.3, 0.3], [0.7, 0.3], [0.3, 0.7], [0.7, 0.7]];
 
-/** 밭 한 장의 작물 — 이랑(격자 y 방향)을 따라 촘촘히. 단어 수에 가깝게 심는다 */
+/** 밭 한 장의 작물 — 칸당 최대 4개(2×2), 단어 수만큼. 좌표는 밭 bbox 중심 기준 */
 export const labPlants = (row, item) => {
-  const { w, h } = item;
+  const { w, h, cells } = item;
   let list = (row.fieldWords || []).map((x) => ({ id: String(x.id), stage: stageToCrop(x.stage) }));
   if (list.length === 0) {
     const c = row.field?.counts || {};
@@ -81,24 +58,18 @@ export const labPlants = (row, item) => {
       for (let i = 0; i < (c[st] || 0); i += 1) list.push({ id: `${st}${i}`, stage: st });
     });
   }
-  if (list.length > MAX_PLANTS) {
-    const step = list.length / MAX_PLANTS;
-    list = Array.from({ length: MAX_PLANTS }, (_, i) => list[Math.floor(i * step)]);
+  const cap = Math.min(MAX_PLANTS, cells.length * 4);
+  if (list.length > cap) {
+    const step = list.length / cap;
+    list = Array.from({ length: cap }, (_, i) => list[Math.floor(i * step)]);
   }
   list.sort((p, q) => hash(`${row.book.id}${p.id}`) - hash(`${row.book.id}${q.id}`));
-  const n = list.length;
-  const rowsN = Math.max(1, Math.min(n, Math.round(w * 0.8)));
-  const per = Math.max(1, Math.ceil(n / rowsN));
-  const mul = Math.max(0.6, Math.min(1.2, Math.sqrt((w * h * 0.9) / Math.max(n, 1))));
   const plants = list.map((it, i) => {
-    const r = Math.floor(i / per);
-    const j = i % per;
-    const inRow = Math.min(per, n - r * per);
-    const gx = 0.7 + (w - 1.4) * ((r + 0.5) / rowsN);
-    const gy = 0.7 + (h - 1.4) * ((j + 0.5) / inRow);
-    const p = gridPt(gx - w / 2, gy - h / 2);
+    const [dx, dy] = cells[i % cells.length];
+    const [ox, oy] = SUB[Math.floor(i / cells.length)] || SUB[0];
+    const p = gridPt(dx + ox - w / 2, dy + oy - h / 2);
     const idx = STAGE_INDEX[it.stage] ?? 0;
-    return { ...it, key: `${row.book.id}:${it.id}`, idx, bx: p.x, by: p.y, hh: [0.55, 1, 1.5, 2.1][idx] * LAB_TW * mul };
+    return { ...it, key: `${row.book.id}:${it.id}`, idx, bx: p.x, by: p.y, hh: [0.4, 0.7, 1, 1.35][idx] * LAB_TW };
   });
   plants.sort((p, q) => p.by - q.by);
   return plants;
@@ -117,41 +88,62 @@ export const labSpots = (row, item, crop) => labPlants(row, item).map((p) => {
   return { id: p.id, key: p.key, bx: p.bx, by: p.by, x0: p.bx - w / 2, x1: p.bx + w / 2, y0: p.by - h, y1: p.by };
 });
 
-/** 밭 한 장 — 부모(밭 중심에 놓인 0 크기 div) 기준으로 그린다. R = 그리는 배율 */
-const LabField = ({ row, item, crop, color, R }) => {
+/** 칸 집합의 바깥 둘레 변 — [[ax,ay,bx,by]] (칸 좌표) */
+const boundaryEdges = (cells) => {
+  const set = new Set(cells.map(([x, y]) => `${x},${y}`));
+  const out = [];
+  cells.forEach(([x, y]) => {
+    if (!set.has(`${x},${y - 1}`)) out.push([x, y, x + 1, y]);
+    if (!set.has(`${x + 1},${y}`)) out.push([x + 1, y, x + 1, y + 1]);
+    if (!set.has(`${x},${y + 1}`)) out.push([x, y + 1, x + 1, y + 1]);
+    if (!set.has(`${x - 1},${y}`)) out.push([x, y, x, y + 1]);
+  });
+  return out;
+};
+
+/** 밭 한 장 — 부모(밭 bbox 중심에 놓인 0 크기 div) 기준. 칸마다 같은 높이의 평평한 이랑 + 둘레 테두리, 옆면 없음 */
+const LabField = ({ row, item, crop, color, R, tint = null }) => {
+  const { w, h, cells } = item;
   const plants = labPlants(row, item);
-  const m = fieldMatrix(item.w, item.h);
-  const hs = color ? hueSat(color) : null;
-  const tf = `matrix(${m.a * R}, ${m.b * R}, ${m.c * R}, ${m.d * R}, ${m.e * R}, ${m.f * R})`;
-  const filter = hs ? `hue-rotate(${Math.round(hs.h - RIM_HUE)}deg) saturate(${(0.35 + hs.s * 0.9).toFixed(2)})` : undefined;
+  const pt = (dx, dy) => { const q = gridPt(dx - w / 2, dy - h / 2); return [q.x * R, q.y * R]; };
+  const L = (x1, y1, x2, y2, oy = 0) => { const a = pt(x1, y1); const b = pt(x2, y2); return `M${a[0]} ${a[1] + oy}L${b[0]} ${b[1] + oy}`; };
+  const base = color || BASE_COLOR;
+  const edges = boundaryEdges(cells);
+  const edgePath = (oy) => edges.map(([x1, y1, x2, y2]) => L(x1, y1, x2, y2, oy)).join('');
+  const dark = cells.map(([x, y]) => [0.2, 0.5, 0.8].map((o) => L(x + o, y, x + o, y + 1)).join('')).join('');
+  const light = cells.map(([x, y]) => [0.35, 0.65].map((o) => L(x + o, y, x + o, y + 1)).join('')).join('');
   return (
     <>
-      <img
-        src={fieldV2}
-        alt=""
-        draggable={false}
-        decoding="async"
-        className="absolute left-0 top-0 max-w-none origin-top-left select-none"
-        style={{ width: IMG, height: IMG, transform: tf, filter }}
-      />
-      {hs && (
-        // 흙은 원래 색 그대로 — 테두리·받침만 단어장 색으로 물들인 뒤 윗면만 원본을 덮는다
-        <img
-          src={fieldV2}
-          alt=""
-          draggable={false}
-          decoding="async"
-          className="absolute left-0 top-0 max-w-none origin-top-left select-none"
-          style={{ width: IMG, height: IMG, transform: tf, clipPath: SOIL_CLIP }}
-        />
-      )}
+      <svg aria-hidden className="absolute left-0 top-0 overflow-visible" width="1" height="1">
+        {cells.map(([x, y]) => (
+          <polygon
+            key={`${x},${y}`}
+            points={[pt(x, y), pt(x + 1, y), pt(x + 1, y + 1), pt(x, y + 1)].map((q) => q.join(',')).join(' ')}
+            fill={SOIL}
+            stroke={SOIL}
+            strokeWidth="0.6"
+          />
+        ))}
+        <path d={dark} stroke="#8A4F24" strokeOpacity="0.45" strokeWidth={3 * R} fill="none" />
+        <path d={light} stroke="#D49A60" strokeOpacity="0.4" strokeWidth={3 * R} fill="none" />
+        {tint && cells.map(([x, y]) => (
+          <polygon
+            key={`t${x},${y}`}
+            points={[pt(x, y), pt(x + 1, y), pt(x + 1, y + 1), pt(x, y + 1)].map((q) => q.join(',')).join(' ')}
+            fill={tint}
+            fillOpacity="0.45"
+          />
+        ))}
+        <path d={edgePath(LIP * R)} stroke={shade(base, 0.62)} strokeWidth={BORDER_W * R} strokeLinecap="round" fill="none" />
+        <path d={edgePath(0)} stroke={base} strokeWidth={BORDER_W * R} strokeLinecap="round" fill="none" />
+      </svg>
       {plants.map((p) => {
-        const { w, h } = boxOf(p, crop);
+        const { w: bw, h: bh } = boxOf(p, crop);
         return (
           <div
             key={p.key}
             className="absolute"
-            style={{ left: (p.bx - w / 2) * R, top: (p.by - h) * R, width: w * R, height: h * R }}
+            style={{ left: (p.bx - bw / 2) * R, top: (p.by - bh) * R, width: bw * R, height: bh * R }}
           >
             <img
               src={spriteSrc(crop, p.idx)}
@@ -163,7 +155,7 @@ const LabField = ({ row, item, crop, color, R }) => {
             {p.stage === 'golden' && (
               <Sparkle
                 weight="fill"
-                size={Math.max(8, h * R * 0.28)}
+                size={Math.max(8, bh * R * 0.28)}
                 className="absolute -top-[6%] right-[6%] text-[#FFC53D] animate-pulse"
               />
             )}

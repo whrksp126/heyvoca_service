@@ -144,6 +144,66 @@ def _find_near(cells, w, h, cx, cy):
     return (best[1], best[2]) if best else None
 
 
+def cells_needed(word_count):
+    return max(4, math.ceil(max(0, int(word_count)) / 4))
+
+
+def _rect_cells(n):
+    """n 칸짜리 가장 정사각형에 가까운 직사각형(마지막 줄만 덜 참) 상대 좌표."""
+    w = math.ceil(math.sqrt(n))
+    return [[i % w, i // w] for i in range(n)]
+
+
+def _connected(cs):
+    cs = {tuple(c) for c in cs}
+    if not cs:
+        return False
+    start = next(iter(cs))
+    seen, stack = {start}, [start]
+    while stack:
+        x, y = stack.pop()
+        for nb in ((x + 1, y), (x - 1, y), (x, y + 1), (x, y - 1)):
+            if nb in cs and nb not in seen:
+                seen.add(nb)
+                stack.append(nb)
+    return len(seen) == len(cs)
+
+
+def _shape_ok(cs, n):
+    """cells 형식·칸 수(==n)·중복 없음·4방향 연결 검사."""
+    if not isinstance(cs, list) or len(cs) != n:
+        return False
+    pts = set()
+    for c in cs:
+        if (not isinstance(c, (list, tuple)) or len(c) != 2
+                or any(not isinstance(v, int) or isinstance(v, bool) or abs(v) > 200 for v in c)):
+            return False
+        pts.add((c[0], c[1]))
+    return len(pts) == n and _connected(pts)
+
+
+def _abs_cells(x, y, cs):
+    return {(x + c[0], y + c[1]) for c in cs}
+
+
+def _cells_in_grid(cells):
+    return all(0 <= cx < GRID_W and 0 <= cy < GRID_H for cx, cy in cells)
+
+
+def _find_spot(taken, cs, cx, cy):
+    """cs 모양을 겹치지 않게 둘 수 있는 (x, y) 중 격자 중앙에 가장 가까운 곳."""
+    best = None
+    for y in range(GRID_H):
+        for x in range(GRID_W):
+            ab = _abs_cells(x, y, cs)
+            if not _cells_in_grid(ab) or ab & taken:
+                continue
+            d = (x - cx) ** 2 + (y - cy) ** 2
+            if best is None or d < best[0]:
+                best = (d, x, y)
+    return (best[1], best[2]) if best else None
+
+
 def _in_range(x, y, w, h):
     return (isinstance(x, int) and isinstance(y, int)
             and x >= 0 and y >= 0 and x + w <= GRID_W and y + h <= GRID_H)
@@ -203,61 +263,44 @@ def _ensure(user_id):
     books = _user_books(user_id)
     book_ids = {str(b.id) for b in books}
     bcells = _book_cells(books)
-    fp = _footprints(bcells)
-    kept = [e for e in layout if not (e['item_id'] == 'field' and e.get('book_id') not in book_ids)]
-    if len(kept) != len(layout):
-        layout, changed = kept, True
-    # 밭이 아닌 항목이 차지한 칸은 그대로 두고, 밭만 검증해 범위 밖/겹침이면 재배치(멱등)
-    # v7: 홈은 밭만. field 가 아닌 항목(집·나무·울타리 등)은 layout 에서 제거(인벤토리 유지, 멱등)
-    others = []
-    relocate_fields = False
-    if any(e['item_id'] != 'field' for e in layout):
-        changed = True
-    hc = (GRID_W / 2, GRID_H / 2)
-    cells = _occupied(others, fp)
-    new_layout = list(others)
-    pending = []
-    seen = set()
+    layout = [e for e in layout if not (e['item_id'] == 'field' and e.get('book_id') not in book_ids)]
+    # v8: 밭 = 칸 집합(cells). 칸 수 N 불일치/없음이면 직사각형 재생성, 범위 밖·겹침이면 빈 곳 탐색(멱등)
+    # 밭이 아닌 항목(집·나무·울타리 등)은 layout 에서 제거(인벤토리 유지)
+    old = list(row.layout or [])
+    taken, new_layout, seen, pending = set(), [], set(), []
     for e in layout:
-        if e['item_id'] != 'field':
+        if e['item_id'] != 'field' or e.get('book_id') in seen:
             continue
-        w, h = _size(e, fp)
-        sp = _spots(e['x'], e['y'], w, h) if _in_range(e.get('x'), e.get('y'), w, h) else None
-        if relocate_fields or sp is None or (sp & cells) or e['book_id'] in seen:
-            pending.append(e)
-            continue
-        cells |= sp
+        n = cells_needed(len(bcells[e['book_id']]))
+        cs = e.get('cells')
+        if not _shape_ok(cs, n):
+            cs = _rect_cells(n)
+        x, y = e.get('x'), e.get('y')
+        ab = (_abs_cells(x, y, cs) if isinstance(x, int) and isinstance(y, int)
+              and not isinstance(x, bool) and not isinstance(y, bool) else None)
         seen.add(e['book_id'])
-        new_layout.append(e)
-    for e in pending:
-        if e['book_id'] in seen:
-            changed = True
-            continue
-        w, h = _size(e, fp)
-        pos = _find_near(cells, w, h, *hc)
-        if pos is None:
-            continue
-        e = dict(e, x=pos[0], y=pos[1])
-        cells |= _spots(pos[0], pos[1], w, h)
-        seen.add(e['book_id'])
-        new_layout.append(e)
-        changed = True
+        ne = {'uid': e['uid'], 'item_id': 'field', 'book_id': e['book_id'],
+              'x': x, 'y': y, 'cells': [list(c) for c in cs]}
+        if ab is None or not _cells_in_grid(ab) or ab & taken:
+            pending.append(ne)
+        else:
+            taken |= ab
+            new_layout.append(ne)
     for b in books:
-        if str(b.id) in seen:
-            continue
-        w, h = fp[str(b.id)]
-        pos = _find_near(cells, w, h, *hc)
+        if str(b.id) not in seen:
+            pending.append({'uid': uuid4().hex[:12], 'item_id': 'field', 'book_id': str(b.id), 'x': None, 'y': None,
+                            'cells': _rect_cells(cells_needed(len(bcells[str(b.id)])))})
+    for ne in pending:
+        pos = _find_spot(taken, ne['cells'], GRID_W / 2, GRID_H / 2)
         if pos is None:
-            break
-        new_layout.append({'uid': uuid4().hex[:12], 'item_id': 'field', 'x': pos[0], 'y': pos[1],
-                           'flip': False, 'rot': 0, 'book_id': str(b.id)})
-        cells |= _spots(pos[0], pos[1], w, h)
-        changed = True
-    if changed:
-        # 원래 순서 유지(uid 기준), 새로 생긴 건 뒤에
-        order = {e['uid']: n for n, e in enumerate(row.layout or [])}
-        new_layout.sort(key=lambda e: order.get(e['uid'], 10 ** 9))
-        layout = new_layout
+            continue
+        ne['x'], ne['y'] = pos
+        taken |= _abs_cells(pos[0], pos[1], ne['cells'])
+        new_layout.append(ne)
+    order = {e['uid']: n for n, e in enumerate(old)}
+    new_layout.sort(key=lambda e: order.get(e['uid'], 10 ** 9))
+    if new_layout != old:
+        layout, changed = new_layout, True
     if changed:
         row.layout = layout
         row.version = int(row.version or 0) + 1
@@ -291,7 +334,8 @@ def get_state(user_id):
         cols, rows, fw, fh = field_dims(len(c))
         return {'id': str(b.id), 'name': b.name, 'crop_type': b.crop_type or DEFAULT_CROP,
                 'word_count': sum(stages[str(b.id)].values()), 'stages': stages[str(b.id)],
-                'cols': cols, 'rows': rows, 'fw': fw, 'fh': fh, 'cells': c}
+                'cols': cols, 'rows': rows, 'fw': fw, 'fh': fh, 'cells': c,
+                'cells_needed': cells_needed(len(c))}
     return {
         'catalog': CATALOG,
         'grid': {'w': GRID_W, 'h': GRID_H},
@@ -317,7 +361,7 @@ def save_layout(user_id, layout, version):
         db.session.commit()
         raise FarmError(409, '다른 기기에서 농장이 바뀌었어요. 새로고침해 주세요.', {'version': int(row.version or 0)})
 
-    fp = _footprints(_book_cells(books))
+    wc = {k: len(v) for k, v in _book_cells(books).items()}
     inv = _inv_map(user_id)
     own_books = {str(b.id) for b in books}
     clean, cells, uids, counts, used_books = [], set(), set(), {}, set()
@@ -338,21 +382,28 @@ def save_layout(user_id, layout, version):
             rot = 90 if e.get('flip') else 0
         if rot not in ROTS or isinstance(rot, bool):
             raise FarmError(400, '회전값이 올바르지 않습니다.')
-        w, h = fp[bid] if (it['id'] == 'field' and bid in fp) else (it['w'], it['h'])
-        w, h = _swap(w, h, rot)
-        slot = e.get('slot')
-        has_slot = it['id'] == 'field' and isinstance(slot, int) and not isinstance(slot, bool) and 0 <= slot < 10000
-        if has_slot:
-            spots = set()  # 홈 밭 지도 슬롯 좌표 — 발판 겹침·범위 검사 제외
-        else:
-            if x < 0 or y < 0 or x + w > GRID_W or y + h > GRID_H:
-                raise FarmError(400, '격자 범위를 벗어났습니다.')
-            spots = _spots(x, y, w, h)
-            if spots & cells:
-                raise FarmError(400, '다른 아이템과 겹칩니다.')
+        fcells = None
         if it['id'] == 'field':
             if bid not in own_books or bid in used_books:
                 raise FarmError(400, '밭에 연결된 단어장이 올바르지 않습니다.')
+            n = cells_needed(wc[bid])
+            fcells = e.get('cells')
+            if not isinstance(fcells, list) or len(fcells) != n:
+                raise FarmError(400, f'밭 칸 수가 맞지 않습니다. {n}칸이어야 해요.', {'cells_needed': n})
+            if not _shape_ok(fcells, n):
+                raise FarmError(400, '밭 칸이 모두 이어져야 해요.')
+            fcells = [[c[0], c[1]] for c in fcells]
+            spots = _abs_cells(x, y, fcells)
+            if not _cells_in_grid(spots):
+                raise FarmError(400, '격자 범위를 벗어났습니다.')
+        else:
+            w, h = _swap(it['w'], it['h'], rot)
+            if x < 0 or y < 0 or x + w > GRID_W or y + h > GRID_H:
+                raise FarmError(400, '격자 범위를 벗어났습니다.')
+            spots = _spots(x, y, w, h)
+        if spots & cells:
+            raise FarmError(400, '다른 아이템과 겹칩니다.')
+        if it['id'] == 'field':
             used_books.add(bid)
         elif bid is not None:
             raise FarmError(400, '밭이 아닌 아이템에는 book_id 를 쓸 수 없습니다.')
@@ -364,7 +415,7 @@ def save_layout(user_id, layout, version):
         cells |= spots
         clean.append({'uid': uid, 'item_id': it['id'], 'x': x, 'y': y,
                       'flip': rot in (90, 270), 'rot': rot, 'book_id': bid,
-                      **({'slot': slot} if has_slot else {})})
+                      **({'cells': fcells} if fcells is not None else {})})
     row.layout = clean
     row.version = version + 1
     db.session.commit()

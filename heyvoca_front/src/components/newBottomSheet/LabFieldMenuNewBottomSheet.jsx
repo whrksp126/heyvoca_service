@@ -5,7 +5,7 @@ import SheetOptionRow from './SheetOptionRow';
 import { LAB_CROPS } from '../home/labCrops';
 
 /* 실험실 농장 — 밭 길게 누르기 메뉴: 밭 옮기기 / 작물 바꾸기 */
-export const LabFieldMenuNewBottomSheet = ({ title, crop, onMove, onCrop }) => {
+export const LabFieldMenuNewBottomSheet = ({ title, crop, onMove, onShape, onCrop }) => {
   "use memo";
 
   const { clearStack } = useNewBottomSheetActions();
@@ -23,6 +23,11 @@ export const LabFieldMenuNewBottomSheet = ({ title, crop, onMove, onCrop }) => {
             title="밭 옮기기"
             desc="끌어서 원하는 자리에 놓아요"
             onClick={() => { clearStack(); onMove(); }}
+          />
+          <SheetOptionRow
+            title="모양 바꾸기"
+            desc="칸을 더하고 빼서 밭 모양을 만들어요"
+            onClick={() => { clearStack(); onShape(); }}
           />
           <SheetOptionRow
             title="작물 바꾸기"

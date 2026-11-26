@@ -18,7 +18,7 @@ const useLabFarm = (enabled) => {
     const dims = {};
     (d.books || []).forEach((b) => {
       crops[String(b.id)] = b.crop_type || 'carrot';
-      dims[String(b.id)] = [b.fw || 4, b.fh || 4];
+      dims[String(b.id)] = b.cells_needed || Math.max(4, Math.ceil((b.word_count || 0) / 4));
     });
     const items = {};
     const obstacles = [];
@@ -29,8 +29,19 @@ const useLabFarm = (enabled) => {
       if (e.item_id === 'field') {
         const id = String(e.book_id);
         if (!dims[id]) return;
-        const [w, h] = swapRot(dims[id][0], dims[id][1], rot);
-        items[id] = { x: e.x, y: e.y, w, h };
+        const N = dims[id];
+        let cells = Array.isArray(e.cells) && e.cells.length ? e.cells.map(([a, b]) => [a, b]) : null;
+        if (!cells) { // 서버가 아직 안 채웠으면 같은 규칙(가장 정사각형에 가까운 직사각형)으로 폴백
+          const cols = Math.ceil(Math.sqrt(N));
+          cells = Array.from({ length: N }, (_, i) => [i % cols, Math.floor(i / cols)]);
+        }
+        const mx = Math.min(...cells.map((c) => c[0]));
+        const my = Math.min(...cells.map((c) => c[1]));
+        cells = cells.map(([a, b]) => [a - mx, b - my]);
+        items[id] = {
+          x: e.x + mx, y: e.y + my, N, cells,
+          w: Math.max(...cells.map((c) => c[0])) + 1, h: Math.max(...cells.map((c) => c[1])) + 1,
+        };
       } else if (catalog[e.item_id]) {
         const [w, h] = swapRot(catalog[e.item_id].w || 1, catalog[e.item_id].h || 1, rot);
         obstacles.push({ x: e.x, y: e.y, w, h });
@@ -45,12 +56,14 @@ const useLabFarm = (enabled) => {
 
   useEffect(() => { if (enabled) load(); }, [enabled, load]);
 
-  /** posMap: Map<bookId, {x,y}> — 성공 true. 실패(400/409)는 최신 상태를 다시 불러온다 */
+  /** posMap: Map<bookId, {x,y,cells?}> — 성공 true. 실패(400/409)는 최신 상태를 다시 불러온다 */
   const savePositions = useCallback(async (posMap) => {
     const { layout, version } = ref.current;
     const next = layout.map((e) => {
       const p = e.item_id === 'field' ? posMap.get(String(e.book_id)) : null;
-      return p ? { ...e, x: p.x, y: p.y } : e;
+      if (!p) return e;
+      const it = ref.current.items[String(e.book_id)];
+      return { ...e, x: p.x, y: p.y, cells: p.cells || it?.cells, flip: false, rot: 0 };
     });
     const d = unwrap(await saveFarmLayoutApi({ layout: next, version }));
     const ok = !!(d && Array.isArray(d.layout));
