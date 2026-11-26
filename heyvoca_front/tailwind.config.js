@@ -170,12 +170,17 @@ module.exports = {
         ],
       },
       keyframes: {
+        cropSway: {
+          '0%, 100%': { transform: 'rotate(-2.5deg)' },
+          '50%': { transform: 'rotate(2.5deg)' }
+        },
         modalShow: {
           '0%': { transform: 'translateY(100%)' },
           '100%': { transform: 'translateY(0)' }
         }
       },
       animation: {
+        'crop-sway': 'cropSway 3.4s ease-in-out infinite',
         'modal-show': 'modalShow 0.3s ease-out forwards'
       }
     },

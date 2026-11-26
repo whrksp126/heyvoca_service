@@ -38,19 +38,10 @@
     "cow": "cute spotted cow"
   },
   "tiles": {
-    "dirt_tile": {
-      "bg": "opaque",
-      "max": 256,
-      "prompt": "Cute cozy mobile farm game asset, same art style, colors and soft shading as the reference images, NOT pixel art, no text. A seamless tileable square texture of warm light-brown packed earth village ground seen from above, soft natural variation, a few tiny pebbles and faint footprints, very subtle tiny grass sprouts, matte, low contrast so it tiles without visible repetition, fills the whole image edge to edge."
-    },
-    "path_tile": {
-      "bg": "opaque",
-      "max": 256,
-      "prompt": "Cute cozy mobile farm game asset, same art style, colors and soft shading as the reference images, NOT pixel art, no text. A seamless tileable square texture of a cute rounded cobblestone village path seen from above, warm beige and light grey stones with soft shading and thin dirt gaps, fills the whole image edge to edge, tiles seamlessly."
-    },
-    "farmhouse": {
-      "max": 448,
-      "prompt": "Cute cozy mobile farm game asset, same art style, colors and soft shading as the reference images, NOT pixel art, no text. One cute cozy farmhouse in isometric 2:1 view (3x3 tiles footprint), red-orange roof, warm cream walls, wooden door, round window, small chimney, flower box, soft volume. Transparent background, centered, only the house."
+    "field_v2": {
+      "max": 640,
+      "prompt": "Cute cozy mobile farm game asset in EXACTLY the same art style and colors as the reference images (especially the last one, the existing field). ONE raised farm field plot in isometric 2:1 view (diamond footprint), richer detail: neat tilled soil furrow rows running along the diamond, thick layered soil side walls with visible depth, a soft grassy rim with tiny tufts and small pebbles at the edges, warm brown soil with gentle highlights. EMPTY of crops. Transparent background, centered, only this one field.",
+      "refs": []
     }
   }
 }

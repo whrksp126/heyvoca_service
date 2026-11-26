@@ -193,3 +193,16 @@ category: `field`(단어장 밭) · `crop`(작물 종류, 배치 아님) · `tre
 
 ## 동물 방향
 - 화면상 이동 벡터의 x 부호로 좌우를 정한다. chicken 프레임 원본은 **왼쪽 아래를 바라봄** → 오른쪽으로 갈 때 scale.x=-1. (현재 반대로 되어 있음)
+
+---
+
+# v7 변경 (2026-11-26) — 게임 월드 폐기. **기존 홈 밭 지도 유지 + 밭·작물 표현 업그레이드 + 밭 옮기기**. 최우선
+
+사용자: 대지·건물 등 게임 월드는 헤이보카 방향과 너무 달라 과함. 기존 홈 그대로, 밭 표현과 작물 표현만 업그레이드, 사용자가 밭 배치를 직접 수정.
+
+- 실험실 `farm_home` ON 일 때만: 기존 홈 밭 지도(components/home 의 field-base.png 밭 지도, fieldSlots 등)를 **그대로 쓰되** 아래만 바꾼다. OFF 면 완전히 기존 그대로.
+  - three.js 농장 씬(FarmHome·farmScene·entities)은 홈에서 쓰지 않는다(코드는 남겨 둠, import 제거로 번들 영향 0).
+  - 꾸미기 서랍·상점·나무·울타리·동물 UI 노출 안 함.
+- **밭 표현**: field-base.png 대신 `assets/farm2/field_v2.png`(이랑이 있는 입체 아이소 밭). 단어 수에 따라 밭 크기 3단계(예: ≤30 작게, ≤120 보통, 그 이상 크게) — 기존 지도 레이아웃이 깨지지 않는 범위에서.
+- **작물 표현**: 단어장 `crop_type`(GET /farm/state books[].crop_type, 기본 carrot)에 맞는 작물 스프라이트. 단계 0~3 = `{crop}_0..3.png`(farm2/, carrot 은 기존 images/farm/crops/planted/healthy-*.png), golden 은 3단계 + 반짝임. 밭 이랑을 따라 작물을 촘촘히 배치(기존 개수 규칙 유지 또는 단계 분포 반영), 바닥 기준 부드러운 흔들림(CSS transform-origin bottom, 작물마다 위상 다르게). 작물 종류 바꾸기는 밭 길게 누르기 메뉴에서(PATCH /farm/books/<id>/crop).
+- **밭 옮기기**: 밭 길게 누르기 → 편집 모드(지도 위 빈 자리 표시) → 끌어서 다른 자리로 이동/서로 자리 바꾸기 → 완료 시 저장. 저장은 GET /farm/state layout 의 field 항목 x,y 를 갱신해 PUT /farm/layout(version 포함, 409면 다시 불러오기). 기존 지도의 슬롯 좌표계를 x,y 로 매핑(밭 항목 외 house 등은 그대로 보존해 함께 보냄).

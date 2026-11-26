@@ -352,11 +352,16 @@ def save_layout(user_id, layout, version):
             raise FarmError(400, '회전값이 올바르지 않습니다.')
         w, h = fp[bid] if (it['id'] == 'field' and bid in fp) else (it['w'], it['h'])
         w, h = _swap(w, h, rot)
-        if x < 0 or y < 0 or x + w > GRID_W or y + h > GRID_H:
-            raise FarmError(400, '격자 범위를 벗어났습니다.')
-        spots = _spots(x, y, w, h)
-        if spots & cells:
-            raise FarmError(400, '다른 아이템과 겹칩니다.')
+        slot = e.get('slot')
+        has_slot = it['id'] == 'field' and isinstance(slot, int) and not isinstance(slot, bool) and 0 <= slot < 10000
+        if has_slot:
+            spots = set()  # 홈 밭 지도 슬롯 좌표 — 발판 겹침·범위 검사 제외
+        else:
+            if x < 0 or y < 0 or x + w > GRID_W or y + h > GRID_H:
+                raise FarmError(400, '격자 범위를 벗어났습니다.')
+            spots = _spots(x, y, w, h)
+            if spots & cells:
+                raise FarmError(400, '다른 아이템과 겹칩니다.')
         if it['id'] == 'field':
             if bid not in own_books or bid in used_books:
                 raise FarmError(400, '밭에 연결된 단어장이 올바르지 않습니다.')
@@ -370,7 +375,8 @@ def save_layout(user_id, layout, version):
         uids.add(uid)
         cells |= spots
         clean.append({'uid': uid, 'item_id': it['id'], 'x': x, 'y': y,
-                      'flip': rot in (90, 270), 'rot': rot, 'book_id': bid})
+                      'flip': rot in (90, 270), 'rot': rot, 'book_id': bid,
+                      **({'slot': slot} if has_slot else {})})
     row.layout = clean
     row.version = version + 1
     db.session.commit()
