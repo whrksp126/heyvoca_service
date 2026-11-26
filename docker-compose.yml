@@ -56,10 +56,12 @@ services:
       timeout: 10s
       retries: 3
       start_period: 60s
+    # 2026-11-26: 워커 1개가 평소 ~280MB → -w 4 가 1g 한도를 넘어 자정 무렵 OOM 으로 워커가 반복 강제 종료됐다.
+    #             2g 로 상향 + Dockerfile CMD 의 --max-requests 로 워커를 주기적으로 교체해 누적 증가를 막는다.
     deploy:
       resources:
         limits:
-          memory: 1g
+          memory: 2g
           cpus: "1.5"
 
   mysql:
@@ -87,7 +89,8 @@ services:
     deploy:
       resources:
         limits:
-          memory: 1g
+          # 2026-11-26: 평소 사용량이 1g 한도의 87% → 1.5g 로 상향
+          memory: 1536m
           cpus: "1.0"
 
   redis:
