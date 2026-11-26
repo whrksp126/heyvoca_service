@@ -136,7 +136,7 @@ heal_back() {
   local now last; now=$(date +%s); last="$(tail -1 "$log_file" 2>/dev/null | awk '{print $1}')"
   [ -n "$last" ] && [ $(( now - last )) -lt $(( HEAL_COOLDOWN_MIN * 60 )) ] && return
 
-  local top; top="$(docker exec "$c" ps -o ppid=,pid=,rss= -e 2>/dev/null | awk '$1==1{print $3, $2}' | sort -rn | head -1)"
+  local top; top="$(docker exec "$c" ps -o ppid=,pid=,rss= -e 2>/dev/null | awk '$1==1 && $3>0{print $3, $2}' | sort -rn | head -1)"
   [ -z "$top" ] && return
   local rss=${top% *} pid=${top#* }
   docker exec "$c" kill -TERM "$pid" 2>/dev/null || return
