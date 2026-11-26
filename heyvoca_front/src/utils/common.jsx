@@ -309,15 +309,39 @@ export const resolveTtsUrl = async (text, lang) => {
 // 이미 받아 둔 presigned URL(없으면 null). 네트워크를 타지 않는다.
 export const peekTtsUrl = (text, lang) => ttsUrlCache.get(ttsCacheKey((text ?? '').trim(), lang)) || null;
 
+// 전역 동시성 상한 — resolve→mp3 다운로드→blob 생성을 앱 전체에서 최대 N개만 동시에 진행.
+// 사용자가 직접 누른 재생(priority)은 상한·대기열을 건너뛰어 즉시 시작한다.
+const TTS_PREFETCH_MAX_CONCURRENT = 4;
+let ttsActive = 0;
+const ttsWaiting = [];            // { key, start } 대기열(FIFO)
+const ttsWaitingByKey = new Map(); // key -> 대기 항목(우선순위 승격용)
+
+const pumpTtsQueue = () => {
+  while (ttsActive < TTS_PREFETCH_MAX_CONCURRENT && ttsWaiting.length > 0) {
+    const item = ttsWaiting.shift();
+    if (item.started) continue; // 승격되어 이미 시작됨
+    ttsWaitingByKey.delete(item.key);
+    item.start();
+  }
+};
+
 // 단일 텍스트의 mp3를 미리 받아 objectURL 캐시에 저장. 반환: objectURL | null
-export const prefetchTextSound = (text, lang) => {
+// opts.priority=true(클릭 재생 등): 동시성 상한을 무시하고 즉시 실행(대기 중이던 동일 키는 승격).
+export const prefetchTextSound = (text, lang, opts) => {
   const t = (text ?? '').trim();
   if (!t || !SUPPORTED_TTS_LANGS.includes(lang)) return Promise.resolve(null);
   const key = ttsCacheKey(t, lang);
   if (ttsBlobCache.has(key)) return Promise.resolve(ttsBlobCache.get(key));
-  if (ttsInflight.has(key)) return ttsInflight.get(key);
+  const priority = !!(opts && opts.priority);
+  if (ttsInflight.has(key)) {
+    if (priority) {
+      const w = ttsWaitingByKey.get(key);
+      if (w && !w.started) { ttsWaitingByKey.delete(key); w.start(); }
+    }
+    return ttsInflight.get(key);
+  }
 
-  const p = (async () => {
+  const run = async () => {
     try {
       const url = await resolveTtsUrl(t, lang);
       if (!url) return null;
@@ -336,10 +360,28 @@ export const prefetchTextSound = (text, lang) => {
       return objectUrl;
     } catch (e) {
       return null; // 실패 시 폴백(직접 재생)에 맡김
-    } finally {
-      ttsInflight.delete(key);
     }
-  })();
+  };
+
+  const p = new Promise((resolve) => {
+    const item = { key, started: false };
+    item.start = () => {
+      if (item.started) return;
+      item.started = true;
+      ttsActive += 1;
+      run().then(resolve).finally(() => {
+        ttsActive -= 1;
+        ttsInflight.delete(key);
+        pumpTtsQueue();
+      });
+    };
+    if (priority || ttsActive < TTS_PREFETCH_MAX_CONCURRENT) {
+      item.start();
+    } else {
+      ttsWaiting.push(item);
+      ttsWaitingByKey.set(key, item);
+    }
+  });
   ttsInflight.set(key, p);
   return p;
 };
@@ -547,7 +589,7 @@ export const getTextSound = async (text, lang, onMeta, rate = 1, opts = {}) => {
     //    날 수 있으므로(캐시 미스 첫 클릭 무음 원인), blob을 받아 재생한다(느리지만 확실).
     //    prefetchTextSound가 resolve→fetch→objectURL 후 캐시까지 채운다(inflight 재사용).
     if (!audioUrl) {
-      audioUrl = await prefetchTextSound(text, lang);
+      audioUrl = await prefetchTextSound(text, lang, { priority: true });
       // 받아오는 사이 더 새 요청이 왔으면 무효화
       if (requestId !== currentRequestId) {
         return;
