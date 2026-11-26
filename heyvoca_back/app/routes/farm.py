@@ -620,14 +620,17 @@ _OUTAGE_REWARD_START_UTC = dt.datetime(2026, 11, 26, 10, 0, 0)
 _OUTAGE_REWARD_END_UTC = dt.datetime(2026, 11, 26, 15, 0, 0)
 # 1인 1회 마커이자 사용자 화면용 원장 문구
 _OUTAGE_REWARD_DESC = '서비스 장애 보상 (11/26)'
+# 전체 공개 스위치(값 '1' 이면 공개). 꺼져 있으면 아래 테스트 계정만 지급.
+_OUTAGE_REWARD_OPEN_KEY = 'heyvoca:event:outage_20261126:open'
+_OUTAGE_REWARD_TEST_EMAILS = {'whrksp126@gmail.com'}
 
 
 @farm_bp.route('/event/outage-reward', methods=['POST'])
 @jwt_required
 def outage_reward():
     """장애 사과 보상 보호권 1개를 1회 지급한다. 실패해도 홈을 막지 않도록 200 으로 답한다."""
-    from app import db
-    from app.models.models import FarmItem, FarmItemReason, UserFarmItemLog
+    from app import cache, db
+    from app.models.models import FarmItem, FarmItemReason, User, UserFarmItemLog
     from app.services.game.farm_v2 import inventory
     from app.utils.db_lock import lock_user
 
@@ -640,6 +643,18 @@ def outage_reward():
             return _no('closed')
 
         user_id = UUID(g.user_id)
+
+        try:
+            is_open = str(cache.get(_OUTAGE_REWARD_OPEN_KEY)) == '1'
+        except Exception:
+            _log.warning('장애 보상 스위치 조회 실패 - 닫힘으로 간주', exc_info=True)
+            is_open = False
+        if not is_open:
+            email = db.session.query(User.email).filter(User.id == user_id).scalar()
+            if (email or '').strip().lower() not in _OUTAGE_REWARD_TEST_EMAILS:
+                db.session.rollback()
+                return _no('pending')
+
         if not lock_user(user_id):
             db.session.rollback()
             return _no('error')
