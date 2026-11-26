@@ -33,10 +33,10 @@ const hash = (s) => {
   return (h >>> 0) / 4294967295;
 };
 
-const BASE_COLOR = '#7FB93A'; // 기본(풀색) 테두리
+const BASE_COLOR = '#B8B27A'; // 은은한 진흙/풀 톤 테두리(단어장 색은 쓰지 않는다)
 const SOIL = '#B4703C';
-const BORDER_W = 9; // 테두리 두께(지도 px) — 밭 크기와 무관하게 같다
-const LIP = 5;      // 테두리 높이(아래로 비치는 면)
+const BORDER_W = 4; // 테두리 두께(지도 px) — 밭 크기와 무관하게 같다
+const LIP = 2;      // 테두리 높이(아래로 비치는 면)
 
 const shade = (hex, f) => {
   const m = /^#?([0-9a-f]{6})$/i.exec(String(hex || '').trim());
@@ -69,17 +69,19 @@ export const labPlants = (row, item) => {
     const [ox, oy] = SUB[Math.floor(i / cells.length)] || SUB[0];
     const p = gridPt(dx + ox - w / 2, dy + oy - h / 2);
     const idx = STAGE_INDEX[it.stage] ?? 0;
-    return { ...it, key: `${row.book.id}:${it.id}`, idx, bx: p.x, by: p.y, hh: [0.4, 0.7, 1, 1.35][idx] * LAB_TW };
+    return { ...it, key: `${row.book.id}:${it.id}`, idx, bx: p.x, by: p.y, hh: [0.3, 0.5, 0.72, 0.95][idx] * LAB_TW };
   });
   plants.sort((p, q) => p.by - q.by);
   return plants;
 };
 
+const MAX_SPRITE_W = LAB_TW * 0.5; // 슬롯 하나(칸의 절반 폭)를 넘지 않게
 const boxOf = (p, crop) => {
   const sq = crop === 'carrot' || !crop;
-  return sq
-    ? { w: p.hh * 1.25, h: p.hh * 1.25 }
-    : { w: p.hh * [1.5, 0.82, 0.71, 0.57][p.idx], h: p.hh };
+  let w = sq ? p.hh * 1.25 : p.hh * [1.5, 0.82, 0.71, 0.57][p.idx];
+  let h = sq ? p.hh * 1.25 : p.hh;
+  if (w > MAX_SPRITE_W) { h *= MAX_SPRITE_W / w; w = MAX_SPRITE_W; }
+  return { w, h };
 };
 
 /** 탭 판정용 자리(밭 중심 기준 상대 지도 px) */
@@ -107,7 +109,7 @@ const LabField = ({ row, item, crop, color, R, tint = null }) => {
   const plants = labPlants(row, item);
   const pt = (dx, dy) => { const q = gridPt(dx - w / 2, dy - h / 2); return [q.x * R, q.y * R]; };
   const L = (x1, y1, x2, y2, oy = 0) => { const a = pt(x1, y1); const b = pt(x2, y2); return `M${a[0]} ${a[1] + oy}L${b[0]} ${b[1] + oy}`; };
-  const base = color || BASE_COLOR;
+  const base = BASE_COLOR; // color 는 이름 팻말에만 쓴다
   const edges = boundaryEdges(cells);
   const edgePath = (oy) => edges.map(([x1, y1, x2, y2]) => L(x1, y1, x2, y2, oy)).join('');
   const dark = cells.map(([x, y]) => [0.2, 0.5, 0.8].map((o) => L(x + o, y, x + o, y + 1)).join('')).join('');
@@ -134,7 +136,7 @@ const LabField = ({ row, item, crop, color, R, tint = null }) => {
             fillOpacity="0.45"
           />
         ))}
-        <path d={edgePath(LIP * R)} stroke={shade(base, 0.62)} strokeWidth={BORDER_W * R} strokeLinecap="round" fill="none" />
+        <path d={edgePath(LIP * R)} stroke={shade(base, 0.7)} strokeWidth={BORDER_W * R} strokeLinecap="round" fill="none" />
         <path d={edgePath(0)} stroke={base} strokeWidth={BORDER_W * R} strokeLinecap="round" fill="none" />
       </svg>
       {plants.map((p) => {
