@@ -157,6 +157,9 @@ heal_back() {
 # 수 초씩 멈추는 현상을 잡는다. /health 가 결국 200 이면 위 check 로는 안 보인다.
 # 매분 LAT_SAMPLES 번 호출, 최근 LAT_WINDOW 분 표본 중 LAT_SLOW_SEC 초 이상/실패 비율이 LAT_WARN_PCT% 이상이면 warning.
 # 같은 시각 서버 nginx 직통 응답도 재서 함께 보낸다 → 서버 문제인지 경로(Cloudflare·회선) 문제인지 바로 구분.
+# 경로 표시: cf-ray 가 있으면 Cloudflare 지점(HKG 등), 없고 200 이면 '직통'(2026-11-26 DNS only 전환 후 정상값), 실패면 '실패'.
+# ⚠️ 이 검사는 서버 안에서 공개 도메인을 부르므로 직통 전환 후엔 공유기 hairpin 경로를 잰다
+#    → 서버·nginx·공유기 문제는 잡지만, 외부 회선(ISP) 인입 문제는 여기서 보이지 않는다.
 LAT_SAMPLES=3
 LAT_WINDOW=15
 LAT_SLOW_SEC=2
@@ -169,7 +172,8 @@ check_latency() {
     out="$(curl -s -D - -o /dev/null --max-time 8 -w 'TOTAL %{http_code} %{time_total}' "$url" 2>/dev/null)"
     t="$(printf '%s' "$out" | awk '/^TOTAL/{print ($2=="200") ? $3 : 99}')"
     colo="$(printf '%s' "$out" | awk -F- 'tolower($0) ~ /^cf-ray:/{gsub(/\r/,"",$NF); print $NF}')"
-    echo "$now ${t:-99} ${colo:--}" >> "$f"
+    if [ -z "$colo" ]; then [ "${t:-99}" = 99 ] && colo="실패" || colo="직통"; fi
+    echo "$now ${t:-99} $colo" >> "$f"
   done
   awk -v c=$(( now - LAT_WINDOW * 60 )) '$1>=c' "$f" > "$f.tmp" 2>/dev/null && mv "$f.tmp" "$f"
   local total slow pct
@@ -183,9 +187,9 @@ check_latency() {
     direct="$(curl -sk -o /dev/null --max-time 5 -w '%{http_code} %{time_total}s' --resolve heyvoca-back.ghmate.com:443:127.0.0.1 "$url" 2>/dev/null)"
     colos="$(awk '{print $3}' "$f" | sort | uniq -c | sort -rn | awk '{printf "%s %s회 ", $2, $1}')"
     send warning "백엔드 공개 주소 느림 (최근 ${LAT_WINDOW}분 ${pct}%)" "최근 ${LAT_WINDOW}분 표본 ${total}개 중 ${slow}개가 ${LAT_SLOW_SEC}초 이상 걸리거나 실패했어요.
-Cloudflare 지점: ${colos}
+경로: ${colos}(HKG·KIX 등 = Cloudflare 지점 경유, 직통 = DNS only)
 같은 시각 서버 nginx 직통: ${direct}
-→ 직통이 빠르면 서버는 정상이고 Cloudflare·회선 경로 문제예요." "latency:back:$(date +%F_%H)"
+→ nginx 직통이 빠른데 공개 주소만 느리면 서버는 정상이고 경로(Cloudflare·공유기·회선) 문제예요." "latency:back:$(date +%F_%H)"
   elif [ "$pct" -le "$LAT_CLEAR_PCT" ] && [ -f "$alerted" ]; then
     send success "백엔드 공개 주소 응답 정상화" "최근 ${LAT_WINDOW}분 지연 비율 ${pct}%. 시작 $(cat "$alerted"), 정상화 $(date '+%F %T')" "latency:back:recovered"
     rm -f "$alerted"
