@@ -514,7 +514,7 @@ const Main = () => {
         >
           <HomeFieldGrid
             rows={bookRows}
-            lab={labFeatures.farm_home ? labFarm : null}
+            lab={labFeatures.farm_home && labFarm.ready ? labFarm : null}
             resetSignal={mapReset}
             focusBottom={mapBounds.focusBottom}
             panBottomExtra={Math.max(0, mapBounds.h - 12 - mapBounds.focusBottom)}

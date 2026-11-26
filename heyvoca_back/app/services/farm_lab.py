@@ -208,24 +208,12 @@ def _ensure(user_id):
     if len(kept) != len(layout):
         layout, changed = kept, True
     # 밭이 아닌 항목이 차지한 칸은 그대로 두고, 밭만 검증해 범위 밖/겹침이면 재배치(멱등)
-    others = [e for e in layout if e['item_id'] != 'field']
-    # 집이 없거나 범위 밖이면 영역 중앙 근처에 자동 배치(멱등). 새로 놓이면 밭도 전부 재배치
+    # v7: 홈은 밭만. field 가 아닌 항목(집·나무·울타리 등)은 layout 에서 제거(인벤토리 유지, 멱등)
+    others = []
     relocate_fields = False
-    hw, hh = ITEMS['house']['w'], ITEMS['house']['h']
-    houses = [e for e in others if e['item_id'] == 'house']
-    if not houses or not _in_range(houses[0].get('x'), houses[0].get('y'), hw, hh):
-        others = [e for e in others if e['item_id'] != 'house']
-        occ = _occupied(others, fp)
-        pos = _find_near(occ, hw, hh, GRID_W / 2, GRID_H / 2)
-        if pos is not None:
-            others.append({'uid': uuid4().hex[:12], 'item_id': 'house', 'x': pos[0], 'y': pos[1],
-                           'flip': False, 'rot': 0})
-            relocate_fields = True
-            changed = True
-        houses = [e for e in others if e['item_id'] == 'house']
-    hc = ((houses[0]['x'] + hw / 2, houses[0]['y'] + hh / 2) if houses else (GRID_W / 2, GRID_H / 2))
-    if houses and 'house' not in inv:
-        _add_inv(user_id, 'house', 1)
+    if any(e['item_id'] != 'field' for e in layout):
+        changed = True
+    hc = (GRID_W / 2, GRID_H / 2)
     cells = _occupied(others, fp)
     new_layout = list(others)
     pending = []

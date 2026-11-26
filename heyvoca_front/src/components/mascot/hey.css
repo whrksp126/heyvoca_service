@@ -1,0 +1,276 @@
+/* src/components/mascot/hey.css
+ *
+ * 헤이의 움직임. 자세는 Hey.jsx 가 SVG transform 으로 잡고, 여기서는 그 위에
+ * rotate/translate/scale 만 얹는다(관절이 각 그룹의 원점이라 transform-origin 이 필요 없다).
+ *
+ * Tailwind 만 쓴다는 프론트 규칙의 예외다 — 포즈마다 다른 @keyframes 20여 개를
+ * tailwind.config.js 에 넣으면 공용 설정이 마스코트 전용 값으로 덮인다. 전부 .hey 아래로
+ * 가둬 두었으니 다른 화면에 새지 않는다.
+ *
+ * 성능: transform·opacity 만 움직인다. 화면 밖(data-paused)이면 전부 멈춘다.
+ */
+
+.hey {
+  display: block;
+  overflow: visible;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+.hey-tappable { cursor: pointer; outline: none; }
+.hey-tappable:focus-visible { outline: 2px solid var(--primary-main-500); outline-offset: 2px; border-radius: 12px; }
+
+.hey[data-paused='true'] * { animation-play-state: paused !important; }
+
+/* 테마를 타는 색 — 캐릭터 본체는 고정, 주변 효과만 바뀐다 */
+.hey-shadow { fill: rgba(96, 62, 34, 0.16); }
+.hey-pom { fill: var(--primary-main-400); stroke: var(--primary-main-600); stroke-width: 2.4; stroke-dasharray: 3 4; stroke-linecap: round; }
+.hey-zzz { stroke: #8FA3C8; }
+.hey-think-dot { fill: #FFFFFF; stroke: #D9CDBD; stroke-width: 1.4; }
+.hey-think-ink { fill: #8A7B6A; stroke: none; }
+.dark .hey-shadow { fill: rgba(0, 0, 0, 0.36); }
+.dark .hey-zzz { stroke: #B9C8E6; }
+.dark .hey-think-dot { fill: #3A3A3A; stroke: #555555; }
+.dark .hey-think-ink { fill: #E6E6E6; }
+
+/* ── 공통: 숨쉬기 · 눈 깜빡임 · 귀 까딱 ───────────────────────── */
+.hey-torso { animation: hey-breathe 3.4s ease-in-out infinite; }
+.hey-head { animation: hey-headbob 3.4s ease-in-out infinite; }
+.hey-blink { animation: hey-blink 4.6s linear infinite; }
+.hey-ear-r { animation: hey-ear-twitch 5.8s ease-in-out infinite; }
+.hey-ear-l { animation: hey-ear-twitch-l 7.4s ease-in-out infinite 1.2s; }
+
+@keyframes hey-breathe {
+  0%, 100% { transform: scale(1, 1); }
+  50% { transform: scale(1.012, 1.028); }
+}
+@keyframes hey-headbob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-1.6px); }
+}
+@keyframes hey-blink {
+  0%, 44%, 48%, 92%, 96%, 100% { transform: scaleY(1); }
+  46%, 94% { transform: scaleY(0.08); }
+}
+@keyframes hey-ear-twitch {
+  0%, 78%, 100% { transform: rotate(0deg); }
+  83% { transform: rotate(-11deg); }
+  88% { transform: rotate(3deg); }
+  93% { transform: rotate(-6deg); }
+}
+@keyframes hey-ear-twitch-l {
+  0%, 86%, 100% { transform: rotate(0deg); }
+  91% { transform: rotate(8deg); }
+  96% { transform: rotate(-2deg); }
+}
+
+/* ── 인사 ─────────────────────────────────────────────────────── */
+.hey[data-pose='wave'] .hey-arm-r { animation: hey-wave 0.52s ease-in-out infinite alternate; }
+.hey[data-pose='wave'] .hey-head { animation: hey-tilt 2.1s ease-in-out infinite alternate; }
+@keyframes hey-wave {
+  from { transform: rotate(-16deg); }
+  to { transform: rotate(20deg); }
+}
+@keyframes hey-tilt {
+  from { transform: rotate(-2deg); }
+  to { transform: rotate(3deg); }
+}
+
+/* ── 물 주기 ──────────────────────────────────────────────────── */
+.hey[data-pose='water'] .hey-can { animation: hey-pour 2.8s ease-in-out infinite; }
+.hey[data-pose='water'] .hey-arm-l,
+.hey[data-pose='water'] .hey-arm-r { animation: hey-pour-arm 2.8s ease-in-out infinite; }
+.hey[data-pose='water'] .hey-drop { animation: hey-drop 2.8s ease-in infinite; }
+.hey[data-pose='water'] .hey-drop-2 { animation-delay: 0.16s; }
+.hey[data-pose='water'] .hey-drop-3 { animation-delay: 0.32s; }
+@keyframes hey-pour {
+  0%, 12%, 88%, 100% { transform: rotate(-8deg); }
+  30%, 70% { transform: rotate(16deg); }
+}
+@keyframes hey-pour-arm {
+  0%, 12%, 88%, 100% { transform: rotate(3deg); }
+  30%, 70% { transform: rotate(-4deg); }
+}
+@keyframes hey-drop {
+  0%, 30% { transform: translate(0, 0); opacity: 0; }
+  36% { transform: translate(2px, 4px); opacity: 1; }
+  58% { transform: translate(8px, 52px); opacity: 0; }
+  100% { transform: translate(8px, 52px); opacity: 0; }
+}
+
+/* ── 씨앗 심기 ────────────────────────────────────────────────── */
+.hey[data-pose='plant'] .hey-arm-r { animation: hey-plant-arm 3.6s ease-in-out infinite; }
+.hey[data-pose='plant'] .hey-seed { animation: hey-seed 3.6s ease-in infinite; }
+.hey[data-pose='plant'] .hey-sprout { animation: hey-sprout 3.6s ease-out infinite; }
+.hey[data-pose='plant'] .hey-head { animation: hey-nod 3.6s ease-in-out infinite; }
+@keyframes hey-plant-arm {
+  0%, 10%, 46%, 100% { transform: rotate(0deg); }
+  22% { transform: rotate(-14deg); }
+  30% { transform: rotate(-6deg); }
+}
+@keyframes hey-seed {
+  0%, 22% { transform: translate(0, 0); opacity: 1; }
+  38% { transform: translate(-8px, 22px); opacity: 1; }
+  40%, 92% { transform: translate(-8px, 22px); opacity: 0; }
+  100% { transform: translate(0, 0); opacity: 1; }
+}
+@keyframes hey-sprout {
+  0%, 44% { transform: scale(0); opacity: 1; }
+  54% { transform: scale(1.18); opacity: 1; }
+  60%, 88% { transform: scale(1); opacity: 1; }
+  98%, 100% { transform: scale(1); opacity: 0; }
+}
+@keyframes hey-nod {
+  0%, 40%, 70%, 100% { transform: rotate(0deg); }
+  50%, 60% { transform: rotate(4deg); }
+}
+
+/* ── 기뻐하기 ─────────────────────────────────────────────────── */
+.hey[data-pose='joy'] .hey-all { animation: hey-jump 1.7s cubic-bezier(0.3, 0, 0.3, 1) infinite; }
+.hey[data-pose='joy'] .hey-shadow { animation: hey-jump-shadow 1.7s cubic-bezier(0.3, 0, 0.3, 1) infinite; }
+.hey[data-pose='joy'] .hey-arm-l { animation: hey-flap-l 0.42s ease-in-out infinite alternate; }
+.hey[data-pose='joy'] .hey-arm-r { animation: hey-flap-r 0.42s ease-in-out infinite alternate; }
+.hey[data-pose='joy'] .hey-ear-l,
+.hey[data-pose='joy'] .hey-ear-r { animation: hey-ear-flop 1.7s ease-in-out infinite; }
+.hey-spark { animation: hey-spark 1.7s ease-out infinite; }
+.hey-spark-2 { animation-delay: 0.25s; }
+.hey-spark-3 { animation-delay: 0.5s; }
+.hey-spark-4 { animation-delay: 0.75s; }
+@keyframes hey-jump {
+  0%, 42%, 100% { transform: translateY(0) scale(1, 1); }
+  8% { transform: translateY(0) scale(1.06, 0.92); }
+  22% { transform: translateY(-24px) scale(0.97, 1.04); }
+  34% { transform: translateY(0) scale(1.05, 0.94); }
+}
+@keyframes hey-jump-shadow {
+  0%, 42%, 100% { transform: scale(1); opacity: 1; }
+  22% { transform: scale(0.72); opacity: 0.6; }
+  34% { transform: scale(1.04); opacity: 1; }
+}
+@keyframes hey-flap-l {
+  from { transform: rotate(-8deg); }
+  to { transform: rotate(10deg); }
+}
+@keyframes hey-flap-r {
+  from { transform: rotate(8deg); }
+  to { transform: rotate(-10deg); }
+}
+@keyframes hey-ear-flop {
+  0%, 42%, 100% { transform: rotate(0deg) scaleY(1); }
+  22% { transform: rotate(0deg) scaleY(1.07); }
+  34% { transform: rotate(0deg) scaleY(0.9); }
+}
+@keyframes hey-spark {
+  0% { transform: scale(0) rotate(0deg); opacity: 0; }
+  30% { transform: scale(1) rotate(30deg); opacity: 1; }
+  60%, 100% { transform: scale(0.2) rotate(70deg); opacity: 0; }
+}
+
+/* ── 응원 ─────────────────────────────────────────────────────── */
+.hey[data-pose='cheer'] .hey-all { animation: hey-bounce 0.84s ease-in-out infinite; }
+.hey[data-pose='cheer'] .hey-arm-l { animation: hey-pump-l 0.42s ease-in-out infinite alternate; }
+.hey[data-pose='cheer'] .hey-arm-r { animation: hey-pump-r 0.42s ease-in-out infinite alternate; }
+@keyframes hey-bounce {
+  0%, 100% { transform: translateY(0) scale(1, 1); }
+  50% { transform: translateY(-5px) scale(0.99, 1.02); }
+}
+@keyframes hey-pump-l {
+  from { transform: rotate(-30deg); }
+  to { transform: rotate(14deg); }
+}
+@keyframes hey-pump-r {
+  from { transform: rotate(-14deg); }
+  to { transform: rotate(30deg); }
+}
+
+/* ── 시무룩 · 걱정 ────────────────────────────────────────────── */
+.hey[data-pose='worry'] .hey-head { animation: hey-fret 2.6s ease-in-out infinite; }
+.hey[data-pose='worry'] .hey-ear-l,
+.hey[data-pose='worry'] .hey-ear-r { animation: none; }
+.hey[data-pose='worry'] .hey-arm-l { animation: hey-fidget-l 1.3s ease-in-out infinite alternate; }
+.hey[data-pose='worry'] .hey-arm-r { animation: hey-fidget-r 1.3s ease-in-out infinite alternate; }
+.hey[data-pose='worry'] .hey-sweat { animation: hey-sweat 2.6s ease-in infinite; }
+@keyframes hey-fret {
+  0%, 100% { transform: rotate(-2.5deg) translateY(1px); }
+  50% { transform: rotate(2.5deg) translateY(2px); }
+}
+@keyframes hey-fidget-l {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(-5deg); }
+}
+@keyframes hey-fidget-r {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(5deg); }
+}
+@keyframes hey-sweat {
+  0%, 20% { transform: translateY(-4px) scale(0.6); opacity: 0; }
+  35% { transform: translateY(0) scale(1); opacity: 1; }
+  80% { transform: translateY(14px) scale(1); opacity: 1; }
+  100% { transform: translateY(20px) scale(0.8); opacity: 0; }
+}
+
+/* ── 졸림 ─────────────────────────────────────────────────────── */
+.hey[data-pose='sleepy'] .hey-torso { animation-duration: 5.2s; }
+.hey[data-pose='sleepy'] .hey-head { animation: hey-doze 5.2s ease-in-out infinite; }
+.hey[data-pose='sleepy'] .hey-ear-l,
+.hey[data-pose='sleepy'] .hey-ear-r { animation: none; }
+.hey[data-pose='sleepy'] .hey-zzz { animation: hey-zzz 3.9s ease-out infinite; }
+.hey[data-pose='sleepy'] .hey-zzz-2 { animation-delay: 1.3s; }
+.hey[data-pose='sleepy'] .hey-zzz-3 { animation-delay: 2.6s; }
+@keyframes hey-doze {
+  0%, 100% { transform: rotate(0deg) translateY(0); }
+  45% { transform: rotate(7deg) translateY(3px); }
+  52% { transform: rotate(7.5deg) translateY(3px); }
+  58% { transform: rotate(1deg) translateY(0); }
+}
+@keyframes hey-zzz {
+  0% { transform: translate(-8px, 10px) scale(0.5); opacity: 0; }
+  25% { transform: translate(0, 0) scale(1); opacity: 1; }
+  70% { transform: translate(6px, -8px) scale(1.05); opacity: 0.9; }
+  100% { transform: translate(10px, -16px) scale(1.1); opacity: 0; }
+}
+
+/* ── 생각 중 ──────────────────────────────────────────────────── */
+.hey[data-pose='think'] .hey-head { animation: hey-ponder 3.2s ease-in-out infinite; }
+.hey[data-pose='think'] .hey-think-dot { animation: hey-think-pop 3.2s ease-in-out infinite; }
+.hey[data-pose='think'] .hey-think-2 { animation-delay: 0.22s; }
+.hey[data-pose='think'] .hey-think-3 { animation-delay: 0.44s; }
+.hey[data-pose='think'] .hey-think-ink circle { animation: hey-ink 1.2s ease-in-out infinite; }
+.hey[data-pose='think'] .hey-think-ink circle:nth-child(2) { animation-delay: 0.2s; }
+.hey[data-pose='think'] .hey-think-ink circle:nth-child(3) { animation-delay: 0.4s; }
+@keyframes hey-ponder {
+  0%, 100% { transform: rotate(-2deg); }
+  50% { transform: rotate(3deg); }
+}
+@keyframes hey-think-pop {
+  0% { opacity: 0; }
+  14%, 86% { opacity: 1; }
+  100% { opacity: 0; }
+}
+@keyframes hey-ink {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 1; }
+}
+
+/* ── 탭 반응 — 어떤 포즈에서든 폴짝 한 번 ─────────────────────── */
+.hey[data-react='true'] .hey-all { animation: hey-hop 0.6s cubic-bezier(0.3, 0, 0.3, 1) 1; }
+.hey[data-react='true'] .hey-ear-l,
+.hey[data-react='true'] .hey-ear-r { animation: hey-ear-perk 0.6s ease-out 1; }
+.hey[data-react='true'] .hey-spark { animation: hey-spark 0.8s ease-out 1 both; }
+.hey[data-react='true'] .hey-spark-2 { animation-delay: 0.06s; }
+.hey[data-react='true'] .hey-spark-3 { animation-delay: 0.12s; }
+.hey[data-react='true'] .hey-spark-4 { animation-delay: 0.18s; }
+@keyframes hey-hop {
+  0%, 100% { transform: translateY(0) scale(1, 1); }
+  14% { transform: translateY(0) scale(1.07, 0.9); }
+  46% { transform: translateY(-20px) scale(0.96, 1.05); }
+  82% { transform: translateY(0) scale(1.05, 0.94); }
+}
+@keyframes hey-ear-perk {
+  0%, 100% { transform: scaleY(1); }
+  46% { transform: scaleY(1.12); }
+}
+
+/* 모션을 끈 기기 — 자세·표정·소품은 그대로 남고 움직임만 멈춘다 */
+@media (prefers-reduced-motion: reduce) {
+  .hey *, .hey-spark { animation: none !important; }
+}

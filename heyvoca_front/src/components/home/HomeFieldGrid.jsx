@@ -51,7 +51,9 @@ import { createPortal } from 'react-dom';
 import { useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Check } from '@phosphor-icons/react';
-import LabField, { LAB_CROPS, labSpots } from './LabField';
+import LabField, { labSpots, gridPt, LAB_TW, LAB_TH } from './LabField';
+import { useNewBottomSheetActions } from '../../context/NewBottomSheetContext';
+import { LabFieldMenuNewBottomSheet } from '../newBottomSheet/LabFieldMenuNewBottomSheet';
 import FarmField, {
   bookRimColor, layoutFieldItems, fieldCropSpots, bounceCrop,
 } from '../farm/FarmField';
@@ -119,36 +121,23 @@ const cellOrder = (c, r) => {
   return cells.sort((a, b) => dist(a) - dist(b) || (b.col + b.row) - (a.col + a.row) || a.col - b.col);
 };
 
-/** 실험실 — 밭 슬롯(정수 col*100+row) 배정. 저장된 자리가 유효·유일하면 그대로, 나머지는 빈 칸을 가운데부터 */
-const assignSlots = (rows, getSlot, { c, r }) => {
-  const out = new Map();
-  const used = new Set();
-  rows.forEach((row) => {
-    const s = getSlot(String(row.book.id));
-    if (!Number.isInteger(s)) return;
-    const col = Math.floor(s / 100);
-    const rr = s % 100;
-    if (col < c && rr < r && !used.has(s)) { used.add(s); out.set(String(row.book.id), { col, row: rr }); }
-  });
-  const free = cellOrder(c, r).filter((cell) => !used.has(cell.col * 100 + cell.row));
-  let i = 0;
-  [...rows].sort((a, b) => (b.care > 0) - (a.care > 0)).forEach((row) => {
-    if (!out.has(String(row.book.id))) { out.set(String(row.book.id), free[i]); i += 1; }
-  });
-  return out;
-};
-
-/** 실험실 — 지도 위 밭 한 장(field_v2 + 작물) */
-const LabMapField = React.memo(({ row, crop, budget, R, left, top, lifted }) => (
+/** 실험실 — 지도 위 밭 한 장(밭 중심에 놓인 0 크기 div 안에 그림·작물). 위치는 지도 px × R */
+const LabMapField = React.memo(({ row, item, crop, color, R, left, top, lifted, dim, pop }) => (
   <div
-    className={`absolute pointer-events-none ${lifted ? 'z-[18] opacity-90' : ''}`}
+    className={`absolute w-0 h-0 pointer-events-none transition-opacity duration-150 ${lifted ? 'z-[18] opacity-85' : ''} ${dim ? 'opacity-60' : ''} ${pop ? 'animate-drop-pop' : ''}`}
     data-field={row.book.id}
-    style={{ left, top, width: FIELD_CANVAS_W * R }}
+    style={{ left, top }}
   >
-    <LabField row={row} crop={crop} maxSprites={budget.maxSprites} R={R} />
+    <LabField row={row} item={item} crop={crop} color={color} R={R} />
   </div>
 ));
 LabMapField.displayName = 'LabMapField';
+
+/** 실험실 — 겹침·범위 검사(서버와 같은 규칙, 칸 단위 사각형) */
+const labRectOk = (r, gridW, gridH, others) => {
+  if (r.x < 0 || r.y < 0 || r.x + r.w > gridW || r.y + r.h > gridH) return false;
+  return !others.some((o) => r.x < o.x + o.w && o.x < r.x + r.w && r.y < o.y + o.h && o.y < r.y + r.h);
+};
 
 const clamp = (v, lo, hi) => Math.max(lo, Math.min(hi, v));
 
@@ -266,14 +255,14 @@ const BADGE_CLASS = {
 };
 
 /** 단어장 이름판 — 홈 밭 팻말과 같은 나무 판(판만, 말뚝 없음) */
-const NameBoard = ({ title, small }) => (
+const NameBoard = ({ title, small, color = null }) => (
   <span
+    style={color ? { backgroundColor: color } : undefined}
     className={`
       relative block max-w-full truncate
-      rounded-[5px] border-[1.4px] border-[#96683E]
-      bg-[linear-gradient(180deg,#D8AC74_0%,#BE8F58_100%)]
+      rounded-[5px] border-[1.4px] ${color ? 'border-black/25 text-layout-white' : 'border-[#96683E] bg-[linear-gradient(180deg,#D8AC74_0%,#BE8F58_100%)] text-[#4A2E17]'}
       shadow-[0_1px_4px_rgba(92,58,30,0.26)]
-      font-[800] text-[#4A2E17] tracking-[-0.04em] leading-[1.25]
+      font-[800] tracking-[-0.04em] leading-[1.25]
       ${small ? 'px-[4px] py-[1px] text-[9px]' : 'px-[6px] py-[2px] text-[11px]'}
     `}
   >
@@ -463,28 +452,37 @@ const HomeFieldGrid = ({ rows, onSelect, resetSignal = 0, focusBottom, panBottom
 
   const single = rows.length === 1 && !lab;
 
-  // 실험실: 슬롯 배정 · 옮기기 편집(work = 편집 중 슬롯 Map) · 길게 누르기 메뉴 · 끌기
-  const labGrid = lab ? gridFor(rows.length + 2) : null;
+  // 실험실: 옮기기 편집(work = 편집 중 위치 Map<bookId,{x,y}>) · 끌기 · 저장
   const [work, setWork] = useState(null);
-  const [menu, setMenu] = useState(null);
-  const [drag, setDrag] = useState(null);
+  const [drag, setDrag] = useState(null); // { id, wx, wy, x, y, ok } — 밭 중심 지도 좌표 + 스냅 칸
   const [saving, setSaving] = useState(false);
+  const [saveErr, setSaveErr] = useState('');
+  const [popId, setPopId] = useState(null);
   const dragRef = useRef(null);
   const pressTimer = useRef(0);
-  const labSlots = lab?.slots;
-  const assigned = useMemo(
-    () => (labGrid ? assignSlots(rows, work ? (id) => work.get(id) : (id) => labSlots?.[id], labGrid) : null),
-    [rows, work, labSlots, labGrid?.c, labGrid?.r],
-  );
+  const edgeTimer = useRef(0);
+  const { pushNewBottomSheet } = useNewBottomSheetActions();
+  const labItems = lab?.items;
+  const gridW = lab?.gridW || 40;
+  const gridH = lab?.gridH || 40;
+  const itemOf = (id) => (work?.get(id) ? { ...labItems?.[id], ...work.get(id) } : labItems?.[id]);
 
-  // 격자 칸 배정 — 돌봄이 필요한 밭부터 가운데 칸(그 밖은 원래 순서)
+  // 격자 칸 → 지도 좌표 범위(작물이 위로 솟고 받침이 아래로 나오는 여유 포함)
+  const labBox = useMemo(() => {
+    if (!lab) return null;
+    const half = (gridW + gridH) * (LAB_TW / 4);
+    return { x0: -gridH * (LAB_TW / 2) - LAB_TW, x1: gridW * (LAB_TW / 2) + LAB_TW, y0: -LAB_TW * 3, y1: (gridW + gridH) * (LAB_TH / 2) + LAB_TW, half };
+  }, [!!lab, gridW, gridH]);
+
   const placed = useMemo(() => {
-    if (assigned) {
-      const firstRow = rows.find((r) => r.care > 0) || rows[0];
+    if (lab) {
+      const firstRow = rows.find((r) => r.care > 0 && labItems?.[String(r.book.id)]) || rows.find((r) => labItems?.[String(r.book.id)]);
       return rows
+        .filter((row) => labItems?.[String(row.book.id)])
         .map((row) => {
-          const { col, row: rr } = assigned.get(String(row.book.id));
-          return { row, col, rr, cx: (col - rr) * STEP_X, cy: (col + rr) * STEP_Y, depth: col + rr, first: row === firstRow };
+          const it = itemOf(String(row.book.id));
+          const c = gridPt(it.x + it.w / 2, it.y + it.h / 2);
+          return { row, item: it, cx: c.x, cy: c.y, depth: it.x + it.y + it.w + it.h, first: row === firstRow };
         })
         .sort((a, b) => a.depth - b.depth || a.cx - b.cx);
     }
@@ -499,7 +497,7 @@ const HomeFieldGrid = ({ rows, onSelect, resetSignal = 0, focusBottom, panBottom
         return { row, cx: (col - rr) * STEP_X, cy: (col + rr) * STEP_Y, depth: col + rr, first: i === 0 };
       })
       .sort((a, b) => a.depth - b.depth || a.cx - b.cx);
-  }, [rows, single, assigned]);
+  }, [rows, single, !!lab, labItems, work]);
 
   /*
     배치(캔버스 px) + 배율 범위(화면 px / 캔버스 px).
@@ -507,18 +505,38 @@ const HomeFieldGrid = ({ rows, onSelect, resetSignal = 0, focusBottom, panBottom
   */
   const layout = useMemo(() => {
     if (single || placed.length === 0 || box.w <= 0 || box.h <= 0) return null;
+    if (lab && labBox) {
+      // 격자 전체(40×40)가 지도 범위. 기본 시점 = 밭들이 한눈에 들어오는 배율, 맞춤 = 격자 전체
+      let fx0 = Infinity; let fx1 = -Infinity; let fy0 = Infinity; let fy1 = -Infinity;
+      placed.forEach(({ item }) => {
+        [[item.x, item.y], [item.x + item.w, item.y], [item.x, item.y + item.h], [item.x + item.w, item.y + item.h]].forEach(([gx, gy]) => {
+          const q = gridPt(gx, gy);
+          fx0 = Math.min(fx0, q.x); fx1 = Math.max(fx1, q.x); fy0 = Math.min(fy0, q.y); fy1 = Math.max(fy1, q.y);
+        });
+      });
+      fx0 -= LAB_TW; fx1 += LAB_TW; fy0 -= LAB_TW * 2.6; fy1 += LAB_TW * 0.8; // 작물·받침 여유
+      const fTopL = Math.min(box.h * 0.5, Math.max(158, box.sb + 114));
+      const fBottomL = Number.isFinite(focusBottom) ? Math.min(focusBottom, box.h - 46) : box.h - 46;
+      const focusL = { x0: 12, x1: box.w - 12, y0: fTopL, y1: Math.max(fTopL + 40, fBottomL) };
+      const panL = {
+        x0: focusL.x0, x1: focusL.x1,
+        y0: focusL.y0 - HOME_LIFT, y1: focusL.y1 + Math.max(0, panBottomExtra) - HOME_LIFT,
+      };
+      const fwL = focusL.x1 - focusL.x0;
+      const fhL = focusL.y1 - focusL.y0;
+      const homeSL = Math.min(fwL / (fx1 - fx0), fhL / (fy1 - fy0), 3);
+      const fitGrid = Math.min(fwL / (labBox.x1 - labBox.x0), fhL / (labBox.y1 - labBox.y0));
+      return {
+        x0: labBox.x0, x1: labBox.x1, y0: labBox.y0, y1: labBox.y1, focus: focusL, pan: panL,
+        minS: Math.min(fitGrid, homeSL) * 0.9, maxS: Math.max(homeSL * 5, fitGrid * 4), homeS: homeSL,
+        center: { x: (fx0 + fx1) / 2, y: (fy0 + fy1) / 2 }, homeTileW: FIELD_CANVAS_W * homeSL,
+      };
+    }
     let x0 = Infinity; let x1 = -Infinity; let y0 = Infinity; let y1 = -Infinity;
     placed.forEach(({ cx, cy }) => {
       x0 = Math.min(x0, cx - EXT_LEFT); x1 = Math.max(x1, cx + EXT_LEFT);
       y0 = Math.min(y0, cy - EXT_TOP); y1 = Math.max(y1, cy + EXT_BOTTOM);
     });
-    if (labGrid && work) { // 옮기는 동안엔 빈 칸까지 보이게 범위를 넓힌다
-      cellOrder(labGrid.c, labGrid.r).forEach(({ col, row: rr }) => {
-        const cx = (col - rr) * STEP_X; const cy = (col + rr) * STEP_Y;
-        x0 = Math.min(x0, cx - EXT_LEFT); x1 = Math.max(x1, cx + EXT_LEFT);
-        y0 = Math.min(y0, cy - EXT_TOP); y1 = Math.max(y1, cy + EXT_BOTTOM);
-      });
-    }
     const fTop = Math.min(box.h * 0.5, Math.max(158, box.sb + 114));
     const fBottom = Number.isFinite(focusBottom) ? Math.min(focusBottom, box.h - 46) : box.h - 46;
     const focus = { x0: 12, x1: box.w - 12, y0: fTop, y1: Math.max(fTop + 40, fBottom) };
@@ -550,7 +568,7 @@ const HomeFieldGrid = ({ rows, onSelect, resetSignal = 0, focusBottom, panBottom
       // 작물 수·이름판 크기는 기본 시점 기준으로 고정한다(다시 그려도 작물이 바뀌지 않게)
       homeTileW: FIELD_CANVAS_W * homeS,
     };
-  }, [placed, single, box.w, box.h, box.sb, focusBottom, panBottomExtra, !!work]);
+  }, [placed, single, box.w, box.h, box.sb, focusBottom, panBottomExtra, !!lab, labBox]);
 
   /* ── 보기 상태 { S: 배율, tx·ty: 캔버스 x0·y0 이 놓이는 화면 좌표 } — 리렌더 없이 transform 만 ── */
   const view = useRef({ S: 1, tx: 0, ty: 0 });
@@ -847,7 +865,7 @@ const HomeFieldGrid = ({ rows, onSelect, resetSignal = 0, focusBottom, panBottom
       ? placed.map((p) => ({
         p,
         spots: lab
-          ? labSpots(p.row, lab.crops?.[String(p.row.book.id)] || 'carrot', mapBudgetSprites)
+          ? labSpots(p.row, p.item, lab.crops?.[String(p.row.book.id)] || 'carrot')
           : cropSpots(mapFieldProps(p.row, mapBudgetSprites)),
       }))
       : []),
@@ -882,8 +900,8 @@ const HomeFieldGrid = ({ rows, onSelect, resetSignal = 0, focusBottom, panBottom
     const wy = (py - ty) / S + L.y0;
     let best = null;
     cropMap.forEach(({ p, spots }) => {
-      const ox = p.cx - DIA_CX;
-      const oy = p.cy - DIA_CY;
+      const ox = lab ? p.cx : p.cx - DIA_CX;
+      const oy = lab ? p.cy : p.cy - DIA_CY;
       const hit = pickCrop(spots, wx - ox, wy - oy, CROP_HIT_MIN / S);
       // 밭끼리도 같은 규칙 — 보이는 바운딩 안(d=0)이 우선, 둘 다면 앞(화면 아래)에 선 것
       if (hit && (!best || hit.d < best.d - 0.05 || (Math.abs(hit.d - best.d) <= 0.05 && hit.spot.by + oy > best.by))) {
@@ -900,12 +918,57 @@ const HomeFieldGrid = ({ rows, onSelect, resetSignal = 0, focusBottom, panBottom
     return { x: (pt.x - tx) / S + lay.current.x0, y: (pt.y - ty) / S + lay.current.y0 };
   };
   /** 지도 좌표 → 그 자리 밭(마름모 안, 앞줄 우선) */
+  const toGrid = (w) => ({ gx: (w.x / (LAB_TW / 2) + w.y / (LAB_TH / 2)) / 2, gy: (w.y / (LAB_TH / 2) - w.x / (LAB_TW / 2)) / 2 });
   const hitField = (w) => {
+    const { gx, gy } = toGrid(w);
     for (let i = placed.length - 1; i >= 0; i -= 1) {
-      const p = placed[i];
-      if (Math.abs(w.x - p.cx) / (DIA_W / 2) + Math.abs(w.y - p.cy) / (DIA_H / 2) <= 1) return p;
+      const it = placed[i].item;
+      if (gx >= it.x && gx < it.x + it.w && gy >= it.y && gy < it.y + it.h) return placed[i];
     }
     return null;
+  };
+  /** 끄는 중 — 손가락 위치로 밭 위치·스냅 칸·놓을 수 있는지 갱신 */
+  const updateDrag = (d) => {
+    const w = toWorld(d.pt);
+    d.wx = w.x - d.ox; d.wy = w.y - d.oy;
+    const { gx, gy } = toGrid({ x: d.wx, y: d.wy });
+    d.x = Math.round(gx - d.w / 2); d.y = Math.round(gy - d.h / 2);
+    const others = [...(lab?.obstacles || [])];
+    work.forEach((v, id) => { if (id !== d.id) others.push({ x: v.x, y: v.y, w: labItems[id].w, h: labItems[id].h }); });
+    d.ok = labRectOk({ x: d.x, y: d.y, w: d.w, h: d.h }, gridW, gridH, others);
+    setDrag({ id: d.id, wx: d.wx, wy: d.wy, x: d.x, y: d.y, w: d.w, h: d.h, ok: d.ok });
+  };
+  const stopEdge = () => { if (edgeTimer.current) { clearInterval(edgeTimer.current); edgeTimer.current = 0; } };
+  const startEdge = () => {
+    stopEdge();
+    edgeTimer.current = setInterval(() => {
+      const d = dragRef.current;
+      const L = lay.current;
+      if (!d || !L) return;
+      const ZONE = 56; const TOP = 120; const SPEED = 9;
+      let dx = 0; let dy = 0;
+      if (d.pt.x < ZONE) dx = SPEED; else if (d.pt.x > box.w - ZONE) dx = -SPEED;
+      if (d.pt.y < TOP) dy = SPEED; else if (d.pt.y > box.h - ZONE * 1.6) dy = -SPEED;
+      if (!dx && !dy) return;
+      const v = view.current;
+      view.current = hardClamp(L, { S: v.S, tx: v.tx + dx, ty: v.ty + dy });
+      schedule();
+      updateDrag(d);
+    }, 16);
+  };
+  const startEdit = () => {
+    const m = new Map();
+    Object.entries(labItems || {}).forEach(([id, it]) => m.set(id, { x: it.x, y: it.y }));
+    setSaveErr('');
+    setWork(m);
+  };
+  const openFieldMenu = (hit) => {
+    const id = String(hit.row.book.id);
+    pushNewBottomSheet(
+      LabFieldMenuNewBottomSheet,
+      { title: hit.row.book.title, crop: lab.crops?.[id] || 'carrot', onMove: startEdit, onCrop: (c) => lab.setCrop(id, c) },
+      { isBackdropClickClosable: true, isDragToCloseEnabled: true },
+    );
   };
   const clearPress = () => { if (pressTimer.current) { clearTimeout(pressTimer.current); pressTimer.current = 0; } };
 
@@ -949,15 +1012,19 @@ const HomeFieldGrid = ({ rows, onSelect, resetSignal = 0, focusBottom, panBottom
   const onPointerDown = (e) => {
     if (!layout || (e.pointerType === 'mouse' && e.button !== 0)) return;
     stopAnim();
-    setMenu(null);
     if (lab && work && lay.current && pointers.current.size === 0) {
-      const hit = hitField(toWorld(localPoint(e)));
+      const pt0 = localPoint(e);
+      const w = toWorld(pt0);
+      const hit = hitField(w);
       if (hit) {
-        const w = toWorld(localPoint(e));
-        pointers.current.set(e.pointerId, localPoint(e));
+        pointers.current.set(e.pointerId, pt0);
         try { boxRef.current.setPointerCapture(e.pointerId); } catch { /* 무시 */ }
-        dragRef.current = { id: String(hit.row.book.id), pid: e.pointerId, ox: w.x - hit.cx, oy: w.y - hit.cy, wx: hit.cx, wy: hit.cy };
-        setDrag({ id: dragRef.current.id, wx: hit.cx, wy: hit.cy });
+        const id = String(hit.row.book.id);
+        dragRef.current = { id, pid: e.pointerId, ox: w.x - hit.cx, oy: w.y - hit.cy, pt: pt0, w: hit.item.w, h: hit.item.h };
+        beginMove();
+        vibrate({ duration: 5 });
+        updateDrag(dragRef.current);
+        startEdge();
         return;
       }
     }
@@ -970,7 +1037,6 @@ const HomeFieldGrid = ({ rows, onSelect, resetSignal = 0, focusBottom, panBottom
     startGesture();
     clearPress();
     if (lab && !work && pointers.current.size === 1) {
-      const cx0 = e.clientX; const cy0 = e.clientY;
       pressTimer.current = setTimeout(() => {
         pressTimer.current = 0;
         const g = gesture.current;
@@ -979,7 +1045,7 @@ const HomeFieldGrid = ({ rows, onSelect, resetSignal = 0, focusBottom, panBottom
         if (!hit) return;
         g.tap = false;
         vibrate({ duration: 10 });
-        setMenu({ id: String(hit.row.book.id), x: cx0, y: cy0, sub: false });
+        openFieldMenu(hit);
       }, 520);
     }
   };
@@ -988,9 +1054,8 @@ const HomeFieldGrid = ({ rows, onSelect, resetSignal = 0, focusBottom, panBottom
     if (!pointers.current.has(e.pointerId)) return;
     if (dragRef.current && dragRef.current.pid === e.pointerId) {
       const d = dragRef.current;
-      const w = toWorld(localPoint(e));
-      d.wx = w.x - d.ox; d.wy = w.y - d.oy;
-      setDrag({ id: d.id, wx: d.wx, wy: d.wy });
+      d.pt = localPoint(e);
+      updateDrag(d);
       return;
     }
     const pt = localPoint(e);
@@ -1032,19 +1097,17 @@ const HomeFieldGrid = ({ rows, onSelect, resetSignal = 0, focusBottom, panBottom
     if (dragRef.current && dragRef.current.pid === e.pointerId) {
       const d = dragRef.current;
       dragRef.current = null;
+      stopEdge();
       pointers.current.delete(e.pointerId);
       setDrag(null);
-      if (!cancelled && work && labGrid) {
-        const a = d.wx / STEP_X; const b = d.wy / STEP_Y;
-        const col = Math.round((a + b) / 2); const rr = Math.round((b - a) / 2);
-        if (col >= 0 && rr >= 0 && col < labGrid.c && rr < labGrid.r) {
-          const target = col * 100 + rr;
-          const mine = work.get(d.id);
-          const next = new Map(work);
-          rows.forEach((r) => { const id = String(r.book.id); if (id !== d.id && next.get(id) === target) next.set(id, mine); });
-          next.set(d.id, target);
-          setWork(next);
-        }
+      endMove();
+      if (!cancelled && work && d.ok) {
+        const next = new Map(work);
+        next.set(d.id, { x: d.x, y: d.y });
+        setWork(next);
+        setPopId(d.id);
+        vibrate({ duration: 8 });
+        setTimeout(() => setPopId(null), 450);
       }
       return;
     }
@@ -1187,21 +1250,41 @@ const HomeFieldGrid = ({ rows, onSelect, resetSignal = 0, focusBottom, panBottom
     >
       {layout && renderR > 0 && (
         <div ref={layerRef} className="absolute left-0 top-0 w-0 h-0 origin-top-left">
-          {lab && work && labGrid && cellOrder(labGrid.c, labGrid.r).map(({ col, row: rr }) => {
-            const slot = col * 100 + rr;
-            const cx = (col - rr) * STEP_X; const cy = (col + rr) * STEP_Y;
-            return (
-              <div
-                key={`slot-${slot}`}
-                aria-hidden
-                className="absolute pointer-events-none bg-layout-white/35 [clip-path:polygon(50%_0%,100%_50%,50%_100%,0%_50%)]"
-                style={{
-                  left: (cx - DIA_W / 2 - layout.x0) * R, top: (cy - DIA_H / 2 - layout.y0) * R,
-                  width: DIA_W * R, height: DIA_H * R,
-                }}
+          {lab && work && (
+            <svg
+              aria-hidden
+              className="absolute left-0 top-0 pointer-events-none overflow-visible"
+              width={(layout.x1 - layout.x0) * R}
+              height={(layout.y1 - layout.y0) * R}
+            >
+              <path
+                className="stroke-layout-white"
+                strokeOpacity="0.55"
+                strokeWidth="1"
+                fill="none"
+                d={Array.from({ length: gridW + 1 }, (_, i) => {
+                  const q0 = gridPt(i, 0); const q1 = gridPt(i, gridH);
+                  return `M${(q0.x - layout.x0) * R} ${(q0.y - layout.y0) * R}L${(q1.x - layout.x0) * R} ${(q1.y - layout.y0) * R}`;
+                }).join('') + Array.from({ length: gridH + 1 }, (_, j) => {
+                  const q0 = gridPt(0, j); const q1 = gridPt(gridW, j);
+                  return `M${(q0.x - layout.x0) * R} ${(q0.y - layout.y0) * R}L${(q1.x - layout.x0) * R} ${(q1.y - layout.y0) * R}`;
+                }).join('')}
               />
-            );
-          })}
+              {drag && (() => {
+                const pts = [[drag.x, drag.y], [drag.x + drag.w, drag.y], [drag.x + drag.w, drag.y + drag.h], [drag.x, drag.y + drag.h]]
+                  .map(([gx, gy]) => { const q = gridPt(gx, gy); return `${(q.x - layout.x0) * R},${(q.y - layout.y0) * R}`; })
+                  .join(' ');
+                return (
+                  <polygon
+                    points={pts}
+                    strokeWidth="2"
+                    className={drag.ok ? 'fill-status-success-600 stroke-status-success-600' : 'fill-status-error-600 stroke-status-error-600'}
+                    fillOpacity="0.4"
+                  />
+                );
+              })()}
+            </svg>
+          )}
           {placed.map((p) => {
             const id = String(p.row.book.id);
             const dg = drag && drag.id === id ? drag : null;
@@ -1212,12 +1295,15 @@ const HomeFieldGrid = ({ rows, onSelect, resetSignal = 0, focusBottom, panBottom
                 <LabMapField
                   key={id}
                   row={p.row}
+                  item={p.item}
                   crop={lab.crops?.[id] || 'carrot'}
-                  budget={budget}
+                  color={bookRimColor(p.row.book.color)}
                   R={R}
                   lifted={!!dg}
-                  left={(cx - DIA_CX - layout.x0) * R}
-                  top={(cy - DIA_CY - layout.y0) * R}
+                  dim={!!drag && !dg}
+                  pop={popId === id}
+                  left={(cx - layout.x0) * R}
+                  top={(cy - layout.y0) * R}
                 />
               );
             }
@@ -1233,23 +1319,32 @@ const HomeFieldGrid = ({ rows, onSelect, resetSignal = 0, focusBottom, panBottom
             );
           })}
           {/* 이름판·배지 — 밭 그림보다 위 한 층(뒤 밭 작물에 가리지 않게), 마름모 위 꼭짓점에 단다 */}
-          {placed.map((p) => (
-            <div
-              key={`label-${p.row.book.id}`}
-              ref={(el) => { if (el) labelRefs.current.set(p.row.book.id, el); else labelRefs.current.delete(p.row.book.id); }}
-              aria-label={p.row.book.title}
-              className="absolute z-[16] flex items-center gap-[3px] pointer-events-none"
-              style={{
-                left: (p.cx - layout.x0) * R,
-                top: (p.cy - DIA_H / 2 - layout.y0) * R,
-                maxWidth: DIA_W * 0.6 * layout.homeS,
-                transform: `translate(-50%, -50%) scale(${labelK})`,
-              }}
-            >
-              <span className="flex min-w-0"><NameBoard title={p.row.book.title} small={small} /></span>
-              <BookBadge badge={p.row.badge} small={small} />
-            </div>
-          ))}
+          {placed.map((p) => {
+            const id = String(p.row.book.id);
+            const dg = lab && drag && drag.id === id ? drag : null;
+            const top = lab ? gridPt(-p.item.w / 2, -p.item.h / 2) : { x: 0, y: -DIA_H / 2 };
+            const lx = (dg ? dg.wx : p.cx) + top.x;
+            const ly = (dg ? dg.wy : p.cy) + top.y;
+            return (
+              <div
+                key={`label-${id}`}
+                ref={(el) => { if (el) labelRefs.current.set(p.row.book.id, el); else labelRefs.current.delete(p.row.book.id); }}
+                aria-label={p.row.book.title}
+                className="absolute z-[16] flex items-center gap-[3px] pointer-events-none"
+                style={{
+                  left: (lx - layout.x0) * R,
+                  top: (ly - layout.y0) * R,
+                  maxWidth: DIA_W * 0.6 * layout.homeS,
+                  transform: `translate(-50%, -50%) scale(${labelK})`,
+                }}
+              >
+                <span className="flex min-w-0">
+                  <NameBoard title={p.row.book.title} small={small} color={lab ? bookRimColor(p.row.book.color) : null} />
+                </span>
+                <BookBadge badge={p.row.badge} small={small} />
+              </div>
+            );
+          })}
           {/* 작물 말풍선 — 지도 좌표에 달려 이동·확대를 따라간다(쉬는 화면에선 화면 px 크기 그대로) */}
           {bubbles.map((b) => (
             <CropWordBubble
@@ -1261,84 +1356,35 @@ const HomeFieldGrid = ({ rows, onSelect, resetSignal = 0, focusBottom, panBottom
           ))}
         </div>
       )}
-      {menu && createPortal(
-        <div className="fixed inset-0 z-[60]" onPointerDown={() => setMenu(null)}>
-          <div
-            className="absolute w-[200px] rounded-[12px] bg-layout-white dark:bg-layout-gray-dark shadow-lg p-[6px] flex flex-col"
-            style={{ left: clamp(menu.x - 100, 8, window.innerWidth - 208), top: clamp(menu.y - 20, 60, window.innerHeight - 320) }}
-            onPointerDown={(e) => e.stopPropagation()}
-          >
-            {!menu.sub ? (
-              <>
-                <button
-                  type="button"
-                  className="h-[44px] px-[12px] text-left text-[15px] font-[700] text-layout-black dark:text-layout-white"
-                  onClick={() => {
-                    const m = new Map();
-                    placed.forEach((p) => m.set(String(p.row.book.id), p.col * 100 + p.rr));
-                    setWork(m);
-                    setMenu(null);
-                  }}
-                >
-                  밭 옮기기
-                </button>
-                <button
-                  type="button"
-                  className="h-[44px] px-[12px] text-left text-[15px] font-[700] text-layout-black dark:text-layout-white"
-                  onClick={() => setMenu({ ...menu, sub: true })}
-                >
-                  작물 바꾸기
-                </button>
-              </>
-            ) : (
-              <div className="grid grid-cols-2 gap-[4px]">
-                {LAB_CROPS.map((c) => (
-                  <button
-                    key={c.id}
-                    type="button"
-                    className={`h-[40px] rounded-[8px] text-[14px] font-[700] flex items-center justify-center gap-[4px] ${
-                      (lab?.crops?.[menu.id] || 'carrot') === c.id
-                        ? 'bg-secondary-blue-100 text-[#175CD3]'
-                        : 'text-layout-black dark:text-layout-white'
-                    }`}
-                    onClick={() => { lab.setCrop(menu.id, c.id); setMenu(null); }}
-                  >
-                    {(lab?.crops?.[menu.id] || 'carrot') === c.id && <Check size={12} weight="bold" />}
-                    {c.name}
-                  </button>
-                ))}
-              </div>
-            )}
-          </div>
-        </div>,
-        document.body,
-      )}
       {work && createPortal(
-        <div className="fixed left-0 right-0 z-[60] top-[calc(var(--status-bar-height)+64px)] flex justify-center px-[16px] pointer-events-none">
-          <div className="pointer-events-auto flex items-center gap-[10px] rounded-full bg-layout-white dark:bg-layout-gray-dark shadow-lg pl-[16px] pr-[6px] py-[6px]">
-            <span className="text-[13px] font-[700] text-layout-black dark:text-layout-white">밭을 끌어서 옮겨요</span>
-            <button
-              type="button"
-              disabled={saving}
-              className="h-[34px] px-[12px] rounded-full text-[13px] font-[700] text-layout-black dark:text-layout-white"
-              onClick={() => setWork(null)}
-            >
-              취소
-            </button>
-            <button
-              type="button"
-              disabled={saving}
-              className="h-[34px] px-[14px] rounded-full bg-primary-main-600 text-[13px] font-[800] text-layout-white"
-              onClick={async () => {
-                setSaving(true);
-                await lab.saveSlots(work);
-                setSaving(false);
-                setWork(null);
-              }}
-            >
-              완료
-            </button>
+        <div className="fixed left-0 right-0 z-[60] top-0 pt-[calc(var(--status-bar-height)+8px)] px-[16px] pb-[12px] bg-layout-white/95 dark:bg-layout-black/95 backdrop-blur-[8px] shadow-md flex items-center gap-[12px]">
+          <div className="flex-1 min-w-0">
+            <h2 className="text-[16px] font-[800] tracking-[-0.03em] text-layout-black dark:text-layout-white">밭 배치</h2>
+            <p className={`mt-[2px] text-[12px] font-[600] tracking-[-0.02em] leading-[1.4] ${saveErr ? 'text-status-error-600' : 'text-layout-gray-300'}`}>
+              {saveErr || '밭을 끌어서 칸에 맞춰 놓으세요. 초록은 놓을 수 있는 자리예요.'}
+            </p>
           </div>
+          <button
+            type="button"
+            disabled={saving}
+            className="h-[36px] px-[14px] rounded-full bg-layout-gray-50 dark:bg-layout-gray-dark text-[13px] font-[700] text-layout-black dark:text-layout-white"
+            onClick={() => { setWork(null); setSaveErr(''); }}
+          >
+            취소
+          </button>
+          <button
+            type="button"
+            disabled={saving}
+            className="h-[36px] px-[16px] rounded-full bg-primary-main-600 text-[13px] font-[800] text-layout-white disabled:opacity-60"
+            onClick={async () => {
+              setSaving(true);
+              const ok = await lab.savePositions(work);
+              setSaving(false);
+              if (ok) { setWork(null); setSaveErr(''); } else setSaveErr('저장하지 못했어요. 배치를 확인하고 다시 눌러 주세요.');
+            }}
+          >
+            완료
+          </button>
         </div>,
         document.body,
       )}

@@ -1,8 +1,7 @@
 // src/components/home/LabField.jsx
 //
-// 실험실 farm_home — 홈 밭 지도의 밭 한 장(field_v2 + 단어장 작물 종류별 스프라이트).
-// 좌표는 HomeFieldGrid 의 '밭 캔버스'(마름모 중심 = (DIA_CX, DIA_CY)) px 이다.
-import React from 'react';
+// 실험실 farm_home — 홈 밭 지도의 밭 한 장. 서버 발판(w×h 칸)을 그대로 아이소 격자 위에 그린다.
+// 좌표는 모두 '지도 px'(HomeFieldGrid 레이어 좌표)이고, 밭 한 장 안에서는 밭 중심 기준 상대값이다.
 import { Sparkle } from '@phosphor-icons/react';
 import { stageToCrop } from '../../utils/crop';
 import fieldV2 from '../../assets/farm2/field_v2.png';
@@ -14,38 +13,27 @@ import carrotCarrot from '../../assets/images/farm/crops/planted/healthy-carrot.
 const FARM2 = import.meta.glob('../../assets/farm2/*_[0-3].png', { eager: true, import: 'default' });
 const CARROT = [carrotSeed, carrotSprout, carrotLeaf, carrotCarrot];
 
-export const LAB_CROPS = [
-  { id: 'carrot', name: '당근' },
-  { id: 'corn', name: '옥수수' },
-  { id: 'cucumber', name: '오이' },
-  { id: 'pumpkin', name: '호박' },
-  { id: 'radish', name: '무' },
-  { id: 'rice', name: '벼' },
-  { id: 'strawberry', name: '딸기' },
-  { id: 'tomato', name: '토마토' },
-];
+export const LAB_TW = 64; // 격자 한 칸의 마름모 폭(지도 px)
+export const LAB_TH = 32; // 마름모 높이
+
+/** 격자 좌표 → 지도 px */
+export const gridPt = (gx, gy) => ({ x: (gx - gy) * (LAB_TW / 2), y: (gx + gy) * (LAB_TH / 2) });
 
 const STAGE_INDEX = { seed: 0, sprout: 1, leaf: 2, carrot: 3, golden: 3 };
+const MAX_PLANTS = 360;
 
 const spriteSrc = (crop, idx) => {
   if (crop === 'carrot' || !crop) return CARROT[idx];
   return FARM2[`../../assets/farm2/${crop}_${idx}.png`] || CARROT[idx];
 };
 
-/** 밭 크기 3단계 — 단어 수 */
-export const sizeFactor = (n) => (n <= 30 ? 0.78 : n <= 120 ? 0.92 : 1);
-
-// field_v2.png(640×640) 안의 좌표
+// field_v2.png(640×640) 안의 좌표 — 테두리 마름모 꼭짓점과 흙 윗면
 const IMG = 640;
-const IMG_CX = 320;
-const IMG_CY = 300;
-const IMG_W_AT_1 = 1130; // factor 1 일 때 그림 폭(캔버스 px) — 테두리 마름모 폭이 DIA_W(1024)가 되도록
-const SOIL_L = [70, 305];
-const SOIL_U = [260, -115]; // L → T (이랑 방향)
-const SOIL_V = [245, 115]; // L → B
-
-const CX = 600;
-const CY = 531;
+const RIM_T = [320, 165];
+const RIM_R = [610, 300];
+const RIM_L = [30, 300];
+const SOIL_CLIP = 'polygon(80px 305px, 330px 198px, 562px 305px, 315px 412px)';
+const RIM_HUE = 78; // 기본 풀색 테두리 색상각
 
 const hash = (s) => {
   let h = 2166136261;
@@ -54,79 +42,111 @@ const hash = (s) => {
   return (h >>> 0) / 4294967295;
 };
 
-/** 밭 한 장의 작물 배치 — 이랑을 따라 촘촘히. 그리기와 탭 판정이 같이 쓴다 */
-export const labPlants = (row, maxSprites) => {
-  const words = row.fieldWords || [];
-  let list = words.map((w) => ({ id: String(w.id), stage: stageToCrop(w.stage) }));
+/** '#RRGGBB' → { h(0~360), s(0~1) } */
+const hueSat = (hex) => {
+  const m = /^#?([0-9a-f]{6})$/i.exec(String(hex || '').trim());
+  if (!m) return null;
+  const n = parseInt(m[1], 16);
+  const r = ((n >> 16) & 255) / 255; const g = ((n >> 8) & 255) / 255; const b = (n & 255) / 255;
+  const mx = Math.max(r, g, b); const mn = Math.min(r, g, b); const d = mx - mn;
+  if (d === 0) return { h: 0, s: 0 };
+  let h;
+  if (mx === r) h = ((g - b) / d) % 6; else if (mx === g) h = (b - r) / d + 2; else h = (r - g) / d + 4;
+  return { h: (h * 60 + 360) % 360, s: mx === 0 ? 0 : d / mx };
+};
+
+/** 밭 그림 → 발판(w×h 칸) 아핀 행렬(밭 중심 기준, 지도 px) */
+const fieldMatrix = (w, h) => {
+  const e1 = [RIM_R[0] - RIM_T[0], RIM_R[1] - RIM_T[1]];
+  const e2 = [RIM_L[0] - RIM_T[0], RIM_L[1] - RIM_T[1]];
+  const d1 = [w * LAB_TW / 2, w * LAB_TH / 2];
+  const d2 = [-h * LAB_TW / 2, h * LAB_TH / 2];
+  const det = e1[0] * e2[1] - e2[0] * e1[1];
+  // M = D · E⁻¹, E = [e1 e2] (열 벡터)
+  const a = (d1[0] * e2[1] - d2[0] * e1[1]) / det;
+  const c = (-d1[0] * e2[0] + d2[0] * e1[0]) / det;
+  const b = (d1[1] * e2[1] - d2[1] * e1[1]) / det;
+  const d = (-d1[1] * e2[0] + d2[1] * e1[0]) / det;
+  const top = gridPt(-w / 2, -h / 2);
+  return { a, b, c, d, e: top.x - (a * RIM_T[0] + c * RIM_T[1]), f: top.y - (b * RIM_T[0] + d * RIM_T[1]) };
+};
+
+/** 밭 한 장의 작물 — 이랑(격자 y 방향)을 따라 촘촘히. 단어 수에 가깝게 심는다 */
+export const labPlants = (row, item) => {
+  const { w, h } = item;
+  let list = (row.fieldWords || []).map((x) => ({ id: String(x.id), stage: stageToCrop(x.stage) }));
   if (list.length === 0) {
     const c = row.field?.counts || {};
     ['seed', 'sprout', 'leaf', 'carrot', 'golden'].forEach((st) => {
       for (let i = 0; i < (c[st] || 0); i += 1) list.push({ id: `${st}${i}`, stage: st });
     });
   }
-  const total = list.length;
-  const factor = sizeFactor(total);
-  const imgW = IMG_W_AT_1 * factor;
-  const sc = imgW / IMG;
-  if (total > maxSprites) {
-    const step = total / maxSprites;
-    list = Array.from({ length: maxSprites }, (_, i) => list[Math.floor(i * step)]);
+  if (list.length > MAX_PLANTS) {
+    const step = list.length / MAX_PLANTS;
+    list = Array.from({ length: MAX_PLANTS }, (_, i) => list[Math.floor(i * step)]);
   }
-  list.sort((a, b) => hash(`${row.book.id}${a.id}`) - hash(`${row.book.id}${b.id}`));
+  list.sort((p, q) => hash(`${row.book.id}${p.id}`) - hash(`${row.book.id}${q.id}`));
   const n = list.length;
-  const rowsN = Math.min(6, Math.max(1, Math.round(Math.sqrt(n / 1.7))));
+  const rowsN = Math.max(1, Math.min(n, Math.round(w * 0.8)));
   const per = Math.max(1, Math.ceil(n / rowsN));
-  const mul = Math.max(0.55, Math.min(1, 1.1 * Math.sqrt(24 / Math.max(n, 1))));
+  const mul = Math.max(0.6, Math.min(1.2, Math.sqrt((w * h * 0.9) / Math.max(n, 1))));
   const plants = list.map((it, i) => {
     const r = Math.floor(i / per);
     const j = i % per;
     const inRow = Math.min(per, n - r * per);
-    const u = 0.1 + 0.8 * ((j + 0.5) / inRow);
-    const v = 0.14 + 0.72 * ((r + 0.5) / rowsN);
-    const ix = SOIL_L[0] + u * SOIL_U[0] + v * SOIL_V[0];
-    const iy = SOIL_L[1] + u * SOIL_U[1] + v * SOIL_V[1];
-    const bx = CX + (ix - IMG_CX) * sc;
-    const by = CY + (iy - IMG_CY) * sc;
+    const gx = 0.7 + (w - 1.4) * ((r + 0.5) / rowsN);
+    const gy = 0.7 + (h - 1.4) * ((j + 0.5) / inRow);
+    const p = gridPt(gx - w / 2, gy - h / 2);
     const idx = STAGE_INDEX[it.stage] ?? 0;
-    const hFrac = [0.035, 0.075, 0.12, 0.18][idx] * imgW * mul;
-    return { ...it, key: `${row.book.id}:${it.id}`, idx, bx, by, h: hFrac };
+    return { ...it, key: `${row.book.id}:${it.id}`, idx, bx: p.x, by: p.y, hh: [0.55, 1, 1.5, 2.1][idx] * LAB_TW * mul };
   });
-  plants.sort((a, b) => a.by - b.by);
-  return { plants, imgW, sc };
+  plants.sort((p, q) => p.by - q.by);
+  return plants;
 };
 
-/** 단어장 하나의 크기·스프라이트 비율을 적용한 화면 박스(캔버스 px) */
 const boxOf = (p, crop) => {
   const sq = crop === 'carrot' || !crop;
-  const w = sq ? p.h * 1.25 : p.h * [1.5, 0.82, 0.71, 0.57][p.idx];
-  const h = sq ? p.h * 1.25 : p.h;
-  return { w, h };
+  return sq
+    ? { w: p.hh * 1.25, h: p.hh * 1.25 }
+    : { w: p.hh * [1.5, 0.82, 0.71, 0.57][p.idx], h: p.hh };
 };
 
-export const labSpots = (row, crop, maxSprites) => labPlants(row, maxSprites).plants.map((p) => {
+/** 탭 판정용 자리(밭 중심 기준 상대 지도 px) */
+export const labSpots = (row, item, crop) => labPlants(row, item).map((p) => {
   const { w, h } = boxOf(p, crop);
   return { id: p.id, key: p.key, bx: p.bx, by: p.by, x0: p.bx - w / 2, x1: p.bx + w / 2, y0: p.by - h, y1: p.by };
 });
 
-/** 밭 한 장 — 부모(MapField 자리 div)의 좌상단이 캔버스 (0,0), R = 그리는 배율 */
-const LabField = ({ row, crop, maxSprites, R }) => {
-  const { plants, imgW, sc } = labPlants(row, maxSprites);
+/** 밭 한 장 — 부모(밭 중심에 놓인 0 크기 div) 기준으로 그린다. R = 그리는 배율 */
+const LabField = ({ row, item, crop, color, R }) => {
+  const plants = labPlants(row, item);
+  const m = fieldMatrix(item.w, item.h);
+  const hs = color ? hueSat(color) : null;
+  const tf = `matrix(${m.a * R}, ${m.b * R}, ${m.c * R}, ${m.d * R}, ${m.e * R}, ${m.f * R})`;
+  const filter = hs ? `hue-rotate(${Math.round(hs.h - RIM_HUE)}deg) saturate(${(0.35 + hs.s * 0.9).toFixed(2)})` : undefined;
   return (
     <>
       <img
         src={fieldV2}
         alt=""
         draggable={false}
-        className="absolute max-w-none select-none"
-        loading="lazy"
         decoding="async"
-        width={imgW * R}
-        height={imgW * R}
-        style={{ left: (CX - IMG_CX * sc) * R, top: (CY - IMG_CY * sc) * R, width: imgW * R, height: imgW * R }}
+        className="absolute left-0 top-0 max-w-none origin-top-left select-none"
+        style={{ width: IMG, height: IMG, transform: tf, filter }}
       />
+      {hs && (
+        // 흙은 원래 색 그대로 — 테두리·받침만 단어장 색으로 물들인 뒤 윗면만 원본을 덮는다
+        <img
+          src={fieldV2}
+          alt=""
+          draggable={false}
+          decoding="async"
+          className="absolute left-0 top-0 max-w-none origin-top-left select-none"
+          style={{ width: IMG, height: IMG, transform: tf, clipPath: SOIL_CLIP }}
+        />
+      )}
       {plants.map((p) => {
         const { w, h } = boxOf(p, crop);
-        const golden = p.stage === 'golden';
         return (
           <div
             key={p.key}
@@ -140,7 +160,7 @@ const LabField = ({ row, crop, maxSprites, R }) => {
               className="block w-full h-full object-contain origin-bottom animate-crop-sway select-none"
               style={{ animationDelay: `-${(hash(p.key) * 3.4).toFixed(2)}s` }}
             />
-            {golden && (
+            {p.stage === 'golden' && (
               <Sparkle
                 weight="fill"
                 size={Math.max(8, h * R * 0.28)}
