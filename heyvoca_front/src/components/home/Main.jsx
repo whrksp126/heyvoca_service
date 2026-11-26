@@ -60,6 +60,7 @@ import TodayTasksCard from './TodayTasksCard';
 import { useStreakCard } from './StreakCard';
 import HomeFlameChip from '../streak/HomeFlameChip';
 import OnboardingQuestCard from './OnboardingQuestCard';
+import OutageRewardWatcher from '../rewards/OutageRewardWatcher'; // 2026-11-26 장애 사과 보상(오늘만)
 import { useOnboardingUnlock } from '../../context/OnboardingUnlockContext';
 
 // 실험실 farm_home — 농장 화면(Pixi 는 그 안에서 또 동적 import)은 켠 사람만 내려받는다
@@ -535,6 +536,7 @@ const Main = () => {
       **고장 난 화면**으로 읽힌다.
     */
     <div className="relative isolate h-screen bg-farm-canvas dark:bg-layout-black">
+    <OutageRewardWatcher />
     <PullToRefresh
       onRefresh={handlePullToRefresh}
       className="flex flex-col h-full overflow-y-auto"
