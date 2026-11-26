@@ -64,7 +64,8 @@ const urlLoaders = import.meta.glob(
 const resolveKey = (src) => (src.startsWith('images/') ? `../../assets/${src}` : `../../assets/farm2/${src}`);
 
 export const loadArt = async (disposer) => {
-  const srcs = new Set(['dirt_tile.png', 'soil_cell.png', 'path_tile.png', 'village_ground.png']);
+  const srcs = new Set(['dirt_tile.png', 'soil_cell.png', 'path_tile.png', 'village_ground.png', 'grass_tile.png']);
+  ['healthy', 'drying', 'wilted', 'rotten'].forEach((h) => ['seed', 'sprout', 'leaf', 'carrot'].forEach((st) => srcs.add(`images/farm/crops/planted/${h}-${st}.png`)));
   Object.values(manifest.items || {}).forEach((it) => { if (it.src) srcs.add(it.src); });
   Object.values(manifest.crops || {}).forEach((c) => (c.stages || []).forEach((s) => s && srcs.add(s)));
   Object.values(manifest.animals || {}).forEach((a) => (a.frames || []).forEach((s) => srcs.add(s)));

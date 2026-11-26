@@ -22,6 +22,9 @@ void main(){
   #include <colorspace_fragment>
 }`;
 
+const HEALTH_FILES = new Set(['healthy', 'drying', 'wilted', 'rotten']);
+const CARROT_STAGE = ['seed', 'sprout', 'leaf', 'carrot'];
+
 export const spriteMat = (ctx, tex) => {
   const a = ctx.art;
   a.spriteMats = a.spriteMats || new Map();
@@ -62,23 +65,29 @@ export default class CropLayer {
     this.meshes.push(mesh);
   }
 
-  /** cells: [{pos, size}], stages: 단계 인덱스(셀 순서) */
-  buildCrops(cells, stages, crop) {
+  /** cells: [{pos, size, phase}], stages: 단계 인덱스(셀 순서), healths: 당근 상태(선택) */
+  buildCrops(cells, stages, crop, healths = null) {
     const art = this.ctx.art;
     const nStage = cropStageCount(art, crop);
     const by = new Map();
     const count = Math.min(cells.length, stages.length);
     for (let i = 0; i < count; i += 1) {
       const s = Math.min(stages[i], nStage - 1);
-      if (!by.has(s)) by.set(s, []);
-      by.get(s).push(i);
+      const h = crop === 'carrot' && healths ? (HEALTH_FILES.has(healths[i]) ? healths[i] : 'healthy') : 'healthy';
+      const key = `${s}|${h}`;
+      if (!by.has(key)) by.set(key, { s, h, idxs: [] });
+      by.get(key).idxs.push(i);
     }
-    by.forEach((idxs, s) => {
-      const { tex, def } = getCropTex(art, crop, s);
+    by.forEach(({ s, h, idxs }) => {
+      let { tex, def } = getCropTex(art, crop, s);
+      if (crop === 'carrot' && h !== 'healthy') {
+        const t = art.textures[`images/farm/crops/planted/${h}-${CARROT_STAGE[Math.min(s, 3)]}.png`];
+        if (t) tex = t;
+      }
       const items = idxs.map((ci) => {
         const c = cells[ci];
         const sz = def._fb ? { w: c.size * 1.1, h: c.size * 1.1 } : spriteSize(tex, def, c.size, 32);
-        return { pos: c.pos, w: sz.w, h: sz.h, phase: (ci * 2.399) % 6.28, sway: 1 };
+        return { pos: c.pos, w: sz.w, h: sz.h, phase: c.phase ?? (ci * 2.399) % 6.28, sway: 1 };
       });
       this.batch(tex, def.anchor || [0.5, 1], items);
     });

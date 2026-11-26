@@ -2,8 +2,8 @@
 import * as THREE from 'three';
 import Entity from './Entity';
 import CropLayer from './CropLayer';
-import { cellStages, part, COLORS } from '../farmArt';
-import { SLOT_SIZES, toWorld } from '../villageMap';
+import { cellStages } from '../farmArt';
+import { SLOT_SIZES } from '../villageMap';
 
 const BASE_H = 0.3;
 
@@ -66,10 +66,9 @@ export const textSprite = (ctx, text, { lock = false, dot = null, dark = false }
 
 export default class SlotFieldEntity extends Entity {
   constructor(ctx, slot) {
-    super(ctx, { uid: `slot_${slot.id}`, item_id: 'field', x: 0, y: 0 });
+    super(ctx, { uid: `slot_${slot.idx}`, item_id: 'field', x: 0, y: 0 });
     this.slot = slot;
-    const w = toWorld(slot.x, slot.y);
-    this.cx = w.x; this.cz = w.z;
+    this.cx = slot.cx; this.cz = slot.cz;
     this.dim = SLOT_SIZES[slot.size];
     this.crops = new CropLayer(ctx, ctx.root);
     this.content = null;
@@ -91,7 +90,6 @@ export default class SlotFieldEntity extends Entity {
       a.slotMats = {
         rim: d.track(new THREE.MeshLambertMaterial({ color: 0x8a5e3a })),
         top: d.track(new THREE.MeshLambertMaterial({ map: soil || null, color: soil ? 0xffffff : 0xa8764a })),
-        cloud: d.track(new THREE.MeshLambertMaterial({ color: 0xffffff, emissive: 0xdfe9f2, emissiveIntensity: 0.55 })),
       };
     }
     return a.slotMats;
@@ -117,25 +115,6 @@ export default class SlotFieldEntity extends Entity {
     const content = new THREE.Group();
     this.content = content;
     this.group.add(content);
-    if (state.locked) {
-      const rnd = rng(hashStr(this.slot.id));
-      const n = this.slot.size === 'L' ? 11 : this.slot.size === 'M' ? 8 : 5;
-      const sg = new THREE.SphereGeometry(1, 10, 8);
-      this.geos.push(sg);
-      for (let i = 0; i < n; i += 1) {
-        const s = new THREE.Mesh(sg, m.cloud);
-        const r = 0.9 + rnd() * 0.7;
-        s.scale.set(r * 1.2, r * 0.8, r);
-        s.position.set(cx + (rnd() - 0.5) * w * 0.85, 0.9 + rnd() * 0.5, cz + (rnd() - 0.5) * d * 0.85);
-        content.add(s);
-        this.bobs.push({ o: s, base: s.position.y, ph: rnd() * 6.28, amp: 0.12 });
-      }
-      const b = textSprite(ctx, '잠겨 있어요', { lock: true });
-      b.position.set(cx, 2.1, cz);
-      content.add(b);
-      this.bobs.push({ o: b, base: 2.1, ph: 0, amp: 0.08 });
-      return;
-    }
     const baseG = new THREE.ExtrudeGeometry(roundedRect(w, d, 0.6), { depth: BASE_H, bevelEnabled: false, curveSegments: 6 });
     baseG.rotateX(-Math.PI / 2);
     const topG = new THREE.ShapeGeometry(roundedRect(w - 0.7, d - 0.7, 0.35), 6);
@@ -145,36 +124,30 @@ export default class SlotFieldEntity extends Entity {
     const block = new THREE.Group();
     block.position.set(cx, 0.02, cz);
     block.add(new THREE.Mesh(baseG, m.rim), new THREE.Mesh(topG, m.top));
-    [[-1, -1], [1, -1], [-1, 1], [1, 1]].forEach(([sx, sz]) => {
-      block.add(part(ctx.art, 'cone', COLORS.leaf, [0.09, 0.28, 0.09], [sx * (w / 2 - 0.2), BASE_H + 0.1, sz * (d / 2 - 0.2)]));
-    });
     content.add(block);
     const book = state.book;
-    if (!book) {
-      const b = textSprite(ctx, '단어장 추가');
-      b.position.set(cx, 1.3, cz);
-      content.add(b);
-      this.bobs.push({ o: b, base: 1.3, ph: 0, amp: 0.1 });
-      return;
-    }
-    // 작물 — 단어마다 1개(터 최대 개수까지 비율대로 표본), 고르게 + 약간 무작위
+    if (!book) return;
+    // 작물 — 이랑 줄을 따라 촘촘하게(단어마다 1개, 최대 개수까지 비율대로 표본)
     const all = cellStages(book);
     const max = this.dim.max;
-    const stages = all.length <= max ? all : Array.from({ length: max }, (_, i) => all[Math.floor((i * all.length) / max)]);
+    const idxs = all.length <= max ? all.map((_, i) => i) : Array.from({ length: max }, (_, i) => Math.floor((i * all.length) / max));
+    const stages = idxs.map((i) => all[i]);
+    const healths = Array.isArray(book.cell_health) ? idxs.map((i) => book.cell_health[i] || 'healthy') : null;
     const n = stages.length;
-    const iw = w - 0.9; const ih = d - 0.9;
-    const cols = Math.max(1, Math.ceil(Math.sqrt((n * iw) / ih)));
-    const rows = Math.max(1, Math.ceil(n / cols));
+    const iw = w - 0.8; const ih = d - 0.8;
+    const rows = Math.max(1, Math.min(this.dim.rows, n));
+    const cols = Math.max(1, Math.ceil(n / rows));
     const sx = iw / cols; const sz = ih / rows;
     const rnd = rng(hashStr(book.id));
     const cells = [];
     for (let i = 0; i < n; i += 1) {
-      const c = i % cols; const r = Math.floor(i / cols);
-      const px = cx - iw / 2 + (c + 0.5) * sx + (rnd() - 0.5) * sx * 0.5;
-      const pz = cz - ih / 2 + (r + 0.5) * sz + (rnd() - 0.5) * sz * 0.5;
-      cells.push({ pos: new THREE.Vector3(px, BASE_H + 0.04, pz).addScaledVector(ctx.camDir, 0.1), size: Math.min(Math.max((sx + sz) / 2, 0.5), 0.9) });
+      const r = Math.floor(i / cols); const c = i % cols;
+      const stagger = (r % 2) * sx * 0.25;
+      const px = cx - iw / 2 + (c + 0.5) * sx + stagger + (rnd() - 0.5) * sx * 0.15;
+      const pz = cz - ih / 2 + (r + 0.5) * sz + (rnd() - 0.5) * sz * 0.1;
+      cells.push({ pos: new THREE.Vector3(px, BASE_H + 0.04, pz).addScaledVector(ctx.camDir, 0.1), size: Math.min(Math.max(sx * 1.35, 0.8), 1.4), phase: rnd() * 6.28 });
     }
-    this.crops.buildCrops(cells, stages, book.crop_type || 'carrot');
+    this.crops.buildCrops(cells, stages, book.crop_type || 'carrot', healths);
     const color = /^#[0-9a-f]{3,8}$/i.test(book.color || '') ? book.color : '#6fba5a';
     const lab = textSprite(ctx, book.name || '', { dot: color });
     lab.position.set(cx, 1.5, cz - d / 2 + 0.2);

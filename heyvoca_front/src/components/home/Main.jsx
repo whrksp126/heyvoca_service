@@ -48,7 +48,9 @@ import AchievementRewardOverlay from '../overlay/AchievementRewardOverlay';
 
 import HomeFieldGrid from './HomeFieldGrid';
 import FarmHome from '../farm/FarmHome';
-import { CaretUp, CaretDown } from '@phosphor-icons/react';
+import { Scroll } from '@phosphor-icons/react';
+import QuestNewFullSheet from '../newfullsheet/QuestNewFullSheet';
+import { getQuestItems, questRemaining } from '../farm/questItems';
 import useLabFarm from './useLabFarm';
 import { buildBookRow, isScriptBook } from '../vocabularySheets/VocaBookCard';
 import VocabularyWordsNewFullSheet from '../newfullsheet/VocabularyWordsNewFullSheet';
@@ -109,7 +111,7 @@ const Main = () => {
 
   // 통계는 StatsContext(라우터 바깥 캐시)에서 구독 — 탭 전환마다 재조회/스피너 없이 캐시값을 즉시 사용,
   // 학습 세션 완료 시에만 조용히 갱신된다.
-  const { todaySummary, farmOverview, todayChanges, todayKey, refreshStats } = useStats();
+  const { todaySummary, farmOverview, todayChanges, todayKey, refreshStats, todayTasks } = useStats();
   const todayNewWords = todaySummary?.new_words ?? 0;
   const dailyNewLimit = userProfile?.daily_new_limit ?? 0;
 
@@ -280,7 +282,6 @@ const Main = () => {
   // 밭 지도 기본 시점 리셋 신호 — 당겨서 새로고침 때 1 올린다(HomeFieldGrid resetSignal)
   const [mapReset, setMapReset] = useState(0);
   // farm_home(마을 지도)에서는 '오늘 할 일' 카드가 기본 접힘 — 지도를 가리지 않게
-  const [todayOpen, setTodayOpen] = useState(false);
   const handlePullToRefresh = useCallback(async () => {
     setMapReset((n) => n + 1);
     await Promise.all([
@@ -456,6 +457,7 @@ const Main = () => {
       {/* §4 2줄 헤드라인 — 닉네임 첫머리는 뺐다(이슈 #25 4차).
           밭 지도(HomeFieldGrid)가 히어로 전체에 배경으로 깔리므로 글자는 포인터를 지도로 통과시킨다.
           문구 자체는 src/data/homeGreetings.js가 상황별로 고른다(CTA 5상태와 분리) */}
+      {!labFeatures.farm_home && (
       <div className="
         absolute top-[max(92px,calc(var(--status-bar-height)+48px))] left-0 right-0 z-[6]
         pointer-events-none
@@ -467,6 +469,7 @@ const Main = () => {
         <br />
         {greeting.line2}
       </div>
+      )}
 
       {/* §12 의 주황 핀("썩기 직전 N")은 내렸다 — QA 2차.
           밭 그림 위에 경고 핀을 띄우면 헤드라인·CTA·팻말과 네 번째로 같은 말을 하면서
@@ -590,6 +593,28 @@ const Main = () => {
 
     {/* 밭 지도가 있을 때 — 하단(탭 바 바로 위)에 떠 있는 묶음: [퀘스트] · 농장 돌보기 · 오늘 할 일.
         지도는 이 뒤에서 그대로 끌어 볼 수 있다(빈 곳은 pointer-events-none 으로 지도에 통과). */}
+    {hasFieldMap && labFeatures.farm_home && (() => {
+      const remain = questRemaining(getQuestItems(todayTasks));
+      return (
+        <button
+          type="button"
+          aria-label={`오늘의 퀘스트 ${remain}개 남음`}
+          onClick={() => {
+            vibrate({ duration: 5 });
+            pushNewFullSheet(QuestNewFullSheet, { onGo: handleCtaClick }, { smFull: true, closeOnBackdropClick: true });
+          }}
+          className="absolute left-[14px] top-[max(150px,calc(var(--status-bar-height)+106px))] z-[9] w-[52px] h-[52px] rounded-full bg-primary-main-500 border-[3px] border-layout-white shadow-[0_3px_0_rgba(0,0,0,.2),0_4px_10px_rgba(96,80,52,.25)] flex items-center justify-center text-layout-white active:translate-y-[1px]"
+        >
+          <Scroll weight="fill" size={26} />
+          {remain > 0 && (
+            <span className="absolute -top-[4px] -right-[4px] min-w-[20px] h-[20px] px-[5px] rounded-full bg-[#e5382f] border-2 border-layout-white text-[11px] font-[800] leading-[16px] text-center text-layout-white">
+              {remain}
+            </span>
+          )}
+        </button>
+      );
+    })()}
+
     {hasFieldMap && (
       <div
         ref={floatRef}
@@ -607,18 +632,8 @@ const Main = () => {
             <FarmCta floating label={ctaInfo.label} onClick={handleCtaClick} />
           </div>
         )}
-        {labFeatures.farm_home && (
-          <button
-            type="button"
-            onClick={() => setTodayOpen((v) => !v)}
-            aria-expanded={todayOpen}
-            className="pointer-events-auto self-center inline-flex items-center gap-[6px] h-[32px] px-[14px] rounded-full bg-layout-white/90 dark:bg-layout-gray-dark/90 backdrop-blur-[8px] shadow-[0_2px_8px_rgba(96,80,52,.16)] text-[13px] font-[700] tracking-[-0.02em] text-layout-black dark:text-layout-white"
-          >
-            오늘 할 일
-            {todayOpen ? <CaretDown weight="bold" size={14} /> : <CaretUp weight="bold" size={14} />}
-          </button>
-        )}
-        <div className={`pointer-events-auto empty:hidden ${labFeatures.farm_home && !todayOpen ? 'max-h-0 overflow-hidden opacity-0 pointer-events-none' : ''}`}>
+        {/* farm_home 에서는 카드를 화면에 내보이지 않되 불꽃 칩 연출 상태 갱신을 위해 마운트는 유지한다 */}
+        <div className={`empty:hidden ${labFeatures.farm_home ? 'max-h-0 overflow-hidden opacity-0 pointer-events-none' : 'pointer-events-auto'}`}>
           <TodayTasksCard streakCard={streakCard} flameRef={flameChipRef} onFlameState={setFlameState} />
         </div>
       </div>

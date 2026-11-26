@@ -1,11 +1,11 @@
 // 농장 v9 마을 지도 씬(three.js, PerspectiveCamera 약 50° 비스듬히) — 동적 import 로만 불러온다.
 // React 와는 콜백/메서드로만 통신한다. 밭은 정해진 터(villageMap.js)에만 놓인다.
 import * as THREE from 'three';
-import { loadArt, createDisposer, cellStages } from './farmArt';
+import { loadArt, createDisposer, cellStages, billboardGeo, spriteSize } from './farmArt';
 import CropLayer from './entities/CropLayer';
 import SlotFieldEntity from './entities/SlotFieldEntity';
 import {
-  VILLAGE_SLOTS, ROADS, TREES, HALL, WORLD, MAP_H, toWorld, slotSizeFor,
+  planVillage, slotIndexOf, slotSizeFor, ROAD_W,
 } from './villageMap';
 
 const PAD_TOP = 120;
@@ -16,6 +16,9 @@ const FOV = 45;
 const ELEV = (50 * Math.PI) / 180;
 const DMIN = 15; // 가장 가까이(이전 첫 화면 정도)
 const DMAX = 64;
+const WORLD_PATCH_W = 17.8;
+const WORLD_PATCH_D = 18;
+const GROUND = 900; // 지면은 카메라 한도 밖까지 항상 화면을 덮는다
 const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
 
 export const createFarmScene = async (host, callbacks = {}) => {
@@ -33,8 +36,8 @@ export const createFarmScene = async (host, callbacks = {}) => {
   host.appendChild(canvas);
 
   const scene = new THREE.Scene();
-  scene.background = new THREE.Color(0x5f9a52);
-  const camera = new THREE.PerspectiveCamera(FOV, viewW / viewH, 0.5, 150);
+  scene.background = new THREE.Color(0x86b82e);
+  const camera = new THREE.PerspectiveCamera(FOV, viewW / viewH, 0.5, 260);
   scene.add(new THREE.HemisphereLight(0xffffff, 0xcfe6b0, 1.9));
   const sun = new THREE.DirectionalLight(0xfff4dc, 1.2);
   sun.position.set(-6, 12, 8);
@@ -49,93 +52,117 @@ export const createFarmScene = async (host, callbacks = {}) => {
     camDir: camBack.clone(),
   };
 
-  // ── 지면 · 흙길 · 회관 · 나무 ───────────────────────────────
+  // ── 지면: 끝없는 들판(grass_tile + 색 얼룩 + 꽃·돌) + 중앙 village_ground 패치 ──
   {
-    const tex = art.textures['village_ground.png'];
-    if (tex) tex.anisotropy = 4;
-    const g = disposer.track(new THREE.PlaneGeometry(WORLD, WORLD * MAP_H));
-    g.rotateX(-Math.PI / 2);
-    const ground = new THREE.Mesh(g, disposer.track(new THREE.MeshBasicMaterial({ map: tex || null, color: tex ? 0xffffff : 0x8fc060, depthWrite: false })));
-    ground.renderOrder = -3;
-    scene.add(ground);
+    const SIZE = 1024; const PERIOD = 48;
+    const cv = document.createElement('canvas'); cv.width = SIZE; cv.height = SIZE;
+    const g = cv.getContext('2d');
+    g.fillStyle = '#86b82e'; g.fillRect(0, 0, SIZE, SIZE);
+    const gt = art.textures['grass_tile.png']?.image;
+    if (gt) {
+      const ts = 256;
+      for (let y = 0; y < SIZE; y += ts) for (let x = 0; x < SIZE; x += ts) g.drawImage(gt, x, y, ts, ts);
+    }
+    let seed = 20261127;
+    const rnd = () => { seed = (seed * 16807) % 2147483647; return seed / 2147483647; };
+    const wrap = (fn, x, y, r) => {
+      for (const ox of [-SIZE, 0, SIZE]) for (const oy of [-SIZE, 0, SIZE]) {
+        if (x + ox > -r && x + ox < SIZE + r && y + oy > -r && y + oy < SIZE + r) fn(x + ox, y + oy);
+      }
+    };
+    for (let i = 0; i < 46; i += 1) {
+      const x = rnd() * SIZE; const y = rnd() * SIZE; const r = 70 + rnd() * 110;
+      const col = rnd() < 0.5 ? '156,203,58' : '116,164,38';
+      wrap((px, py) => {
+        const gr = g.createRadialGradient(px, py, 0, px, py, r);
+        gr.addColorStop(0, `rgba(${col},0.26)`); gr.addColorStop(1, `rgba(${col},0)`);
+        g.fillStyle = gr; g.beginPath(); g.arc(px, py, r, 0, Math.PI * 2); g.fill();
+      }, x, y, r);
+    }
+    const flowers = ['#fff6e0', '#f7b6c8', '#f7d44c', '#ffffff'];
+    for (let i = 0; i < 70; i += 1) {
+      const x = rnd() * SIZE; const y = rnd() * SIZE; const c = flowers[i % 4];
+      wrap((px, py) => {
+        g.fillStyle = c; g.beginPath(); g.arc(px, py, 3.2, 0, Math.PI * 2); g.fill();
+        g.fillStyle = '#e8a93a'; g.beginPath(); g.arc(px, py, 1.1, 0, Math.PI * 2); g.fill();
+      }, x, y, 6);
+    }
+    for (let i = 0; i < 16; i += 1) {
+      const x = rnd() * SIZE; const y = rnd() * SIZE; const rr = 6 + rnd() * 6;
+      wrap((px, py) => {
+        g.fillStyle = 'rgba(70,60,40,0.25)'; g.beginPath(); g.ellipse(px + 2, py + 3, rr, rr * 0.6, 0, 0, Math.PI * 2); g.fill();
+        g.fillStyle = '#b9b4aa'; g.beginPath(); g.ellipse(px, py, rr, rr * 0.65, 0, 0, Math.PI * 2); g.fill();
+        g.fillStyle = '#d6d1c6'; g.beginPath(); g.ellipse(px - rr * 0.2, py - rr * 0.2, rr * 0.5, rr * 0.3, 0, 0, Math.PI * 2); g.fill();
+      }, x, y, 14);
+    }
+    const gtex = new THREE.CanvasTexture(cv);
+    gtex.colorSpace = THREE.SRGBColorSpace;
+    gtex.wrapS = THREE.RepeatWrapping; gtex.wrapT = THREE.RepeatWrapping;
+    gtex.repeat.set(GROUND / PERIOD, GROUND / PERIOD);
+    gtex.anisotropy = 4;
+    disposer.track(gtex);
+    const gg = disposer.track(new THREE.PlaneGeometry(GROUND, GROUND));
+    gg.rotateX(-Math.PI / 2);
+    const field = new THREE.Mesh(gg, disposer.track(new THREE.MeshBasicMaterial({ map: gtex, depthWrite: false })));
+    field.renderOrder = -5; field.frustumCulled = false;
+    scene.add(field);
+
+    // 중앙 패치 — village_ground.png 의 들판 가운데만, 가장자리는 부드럽게 섞는다
+    const vt = art.textures['village_ground.png'];
+    if (vt) {
+      const t2 = vt.clone(); t2.needsUpdate = true;
+      t2.repeat.set(0.74, 0.5); t2.offset.set(0.13, 0.3);
+      disposer.track(t2);
+      const ac = document.createElement('canvas'); ac.width = 128; ac.height = 128;
+      const ag = ac.getContext('2d');
+      const gr = ag.createRadialGradient(64, 64, 22, 64, 64, 64);
+      gr.addColorStop(0, '#fff'); gr.addColorStop(1, '#000');
+      ag.fillStyle = gr; ag.fillRect(0, 0, 128, 128);
+      const am = new THREE.CanvasTexture(ac); disposer.track(am);
+      const pg = disposer.track(new THREE.PlaneGeometry(WORLD_PATCH_W, WORLD_PATCH_D));
+      pg.rotateX(-Math.PI / 2);
+      const patch = new THREE.Mesh(pg, disposer.track(new THREE.MeshBasicMaterial({ map: t2, alphaMap: am, transparent: true, depthWrite: false })));
+      patch.position.y = 0.005; patch.renderOrder = -4; patch.frustumCulled = false;
+      scene.add(patch);
+    }
   }
-  const ribbon = (road, widthAdd, mat, order, y) => {
-    const pts = road.points; const w = (road.width + widthAdd) / 2;
-    const pos = []; const uv = []; const idx = [];
-    let along = 0;
-    pts.forEach((p, i) => {
-      const a = pts[Math.max(0, i - 1)]; const b = pts[Math.min(pts.length - 1, i + 1)];
-      let tx = b[0] - a[0]; let tz = b[1] - a[1];
-      const l = Math.hypot(tx, tz) || 1; tx /= l; tz /= l;
-      if (i > 0) along += Math.hypot(p[0] - pts[i - 1][0], p[1] - pts[i - 1][1]);
-      pos.push(p[0] - tz * w, y, p[1] + tx * w, p[0] + tz * w, y, p[1] - tx * w);
-      uv.push(along / 4, -w / 4, along / 4, w / 4);
-      if (i > 0) { const k = i * 2; idx.push(k - 2, k - 1, k, k - 1, k + 1, k); }
+  const dirt = art.textures['dirt_tile.png'];
+  if (dirt) { dirt.wrapS = THREE.RepeatWrapping; dirt.wrapT = THREE.RepeatWrapping; }
+  const roadMats = {
+    edge: disposer.track(new THREE.MeshBasicMaterial({ color: 0xa9884f, transparent: true, opacity: 0.45, depthWrite: false, side: THREE.DoubleSide })),
+    main: disposer.track(new THREE.MeshBasicMaterial({ map: dirt || null, color: dirt ? 0xfff0e0 : 0xc9a27a, depthWrite: false, side: THREE.DoubleSide })),
+  };
+  // 길 — 모든 선분을 지오메트리 하나로 합친다(축 정렬 선분이라 uv = 월드 좌표/4)
+  const roadMesh = (edges, width, mat, order, y) => {
+    const h = width / 2; const pos = []; const uv = []; const idx = [];
+    edges.forEach(([x0, z0, x1, z1]) => {
+      const xa = Math.min(x0, x1) - h; const xb = Math.max(x0, x1) + h;
+      const za = Math.min(z0, z1) - h; const zb = Math.max(z0, z1) + h;
+      const k = pos.length / 3;
+      pos.push(xa, y, za, xb, y, za, xb, y, zb, xa, y, zb);
+      uv.push(xa / 4, za / 4, xb / 4, za / 4, xb / 4, zb / 4, xa / 4, zb / 4);
+      idx.push(k, k + 2, k + 1, k, k + 3, k + 2);
     });
     const g = new THREE.BufferGeometry();
     g.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3));
     g.setAttribute('uv', new THREE.Float32BufferAttribute(uv, 2));
     g.setIndex(idx);
-    disposer.track(g);
     const m = new THREE.Mesh(g, mat);
     m.renderOrder = order; m.frustumCulled = false;
-    scene.add(m);
+    return m;
   };
-  {
-    const dirt = art.textures['dirt_tile.png'];
-    if (dirt) { dirt.wrapS = THREE.RepeatWrapping; dirt.wrapT = THREE.RepeatWrapping; }
-    const edge = disposer.track(new THREE.MeshBasicMaterial({ color: 0xa9884f, transparent: true, opacity: 0.45, depthWrite: false, side: THREE.DoubleSide }));
-    const main = disposer.track(new THREE.MeshBasicMaterial({ map: dirt || null, color: dirt ? 0xfff0e0 : 0xc9a27a, depthWrite: false, side: THREE.DoubleSide }));
-    ROADS.forEach((r) => { ribbon(r, 0.5, edge, -2, 0.02); ribbon(r, 0, main, -1, 0.03); });
-  }
-  const decor = new CropLayer(ctx, root);
-  {
-    const sh = disposer.track(new THREE.CircleGeometry(1, 16));
-    sh.rotateX(-Math.PI / 2);
-    const shm = disposer.track(new THREE.MeshBasicMaterial({ color: 0x1f3a14, transparent: true, opacity: 0.22, depthWrite: false }));
-    const items = art.manifest.items || {};
-    const treeTex = art.textures['tree_round.png'];
-    const hallTex = art.textures['farmhouse.png'];
-    const hw = toWorld(HALL.x, HALL.y);
-    const shadows = new THREE.InstancedMesh(sh, shm, TREES.length + 1);
-    const m4 = new THREE.Matrix4(); const q = new THREE.Quaternion();
-    TREES.forEach((t, i) => { m4.compose(new THREE.Vector3(t.x, 0.04, t.z), q, new THREE.Vector3(t.h * 0.42, 1, t.h * 0.3)); shadows.setMatrixAt(i, m4); });
-    m4.compose(new THREE.Vector3(hw.x, 0.04, hw.z), q, new THREE.Vector3(HALL.size * 0.4, 1, HALL.size * 0.25));
-    shadows.setMatrixAt(TREES.length, m4);
-    shadows.frustumCulled = false; shadows.renderOrder = 0;
-    root.add(shadows);
-    if (treeTex) {
-      const def = items.tree_round || { anchor: [0.5, 0.97] };
-      const ar = treeTex.image.width / treeTex.image.height;
-      decor.batch(treeTex, def.anchor, TREES.map((t, i) => ({ pos: new THREE.Vector3(t.x, 0, t.z), w: t.h * ar, h: t.h, phase: i * 1.7, sway: 0.4 })));
-    }
-    if (hallTex) {
-      const def = items.house || { anchor: [0.5, 0.8] };
-      const ar = hallTex.image.width / hallTex.image.height;
-      decor.batch(hallTex, def.anchor, [{ pos: new THREE.Vector3(hw.x, 0, hw.z), w: HALL.size, h: HALL.size / ar, phase: 0, sway: 0 }]);
-    }
-  }
 
-  // ── 터 상태 ─────────────────────────────────────────────────
-  const slotEnt = new Map(VILLAGE_SLOTS.map((s) => [s.id, new SlotFieldEntity(ctx, s)]));
-  let assign = new Map(); // slotId -> bookId
-  let openCount = 3;
-  let others = []; // 밭이 아닌 layout 항목(보존)
+  // ── 월드(터 수에 따라 다시 짓는다) ───────────────────────────
+  let world = null; // {group, plan, ents, decor, hl, chickens}
+  let worldSig = '';
+  let assign = new Map(); // 터 인덱스 -> bookId
+  const others = []; // 밭이 아닌 layout 항목(보존)
   const meta = new Map(); // bookId -> {uid, x, y}
   let savedAssign = null;
   let moveSel = null;
   let destroyed = false;
+  let lim = { minX: -8, maxX: 8, minZ: -8, maxZ: 8 };
 
-  const isOpen = (s) => s.order <= openCount || assign.has(s.id);
-  const refreshSlot = (id) => {
-    const s = VILLAGE_SLOTS.find((v) => v.id === id);
-    const bid = assign.get(id);
-    slotEnt.get(id).setState({ locked: !isOpen(s), book: bid != null ? ctx.books.get(String(bid)) || null : null });
-  };
-  const refreshAll = () => VILLAGE_SLOTS.forEach((s) => refreshSlot(s.id));
-
-  // 이동 모드 하이라이트 — 선택 터는 초록, 바꿀 수 있는 열린 터는 흰색
-  const hl = new Map();
   const hlBase = { transparent: true, depthWrite: false, depthTest: false };
   const hlMats = {
     sel: disposer.track(new THREE.MeshBasicMaterial({ ...hlBase, color: 0x4cc26a, opacity: 0.5 })),
@@ -143,20 +170,100 @@ export const createFarmScene = async (host, callbacks = {}) => {
   };
   const hlGeo = disposer.track(new THREE.PlaneGeometry(1, 1));
   hlGeo.rotateX(-Math.PI / 2);
-  VILLAGE_SLOTS.forEach((s) => {
-    const e = slotEnt.get(s.id);
-    const m = new THREE.Mesh(hlGeo, hlMats.cand);
-    m.scale.set(e.dim.w + 0.4, 1, e.dim.d + 0.4);
-    m.position.set(e.cx, 0.45, e.cz);
-    m.renderOrder = 15; m.visible = false;
-    root.add(m);
-    hl.set(s.id, m);
-  });
+  const shGeo = disposer.track(new THREE.CircleGeometry(1, 16));
+  shGeo.rotateX(-Math.PI / 2);
+  const shMat = disposer.track(new THREE.MeshBasicMaterial({ color: 0x1f3a14, transparent: true, opacity: 0.22, depthWrite: false }));
+
+  const destroyWorld = () => {
+    if (!world) return;
+    world.ents.forEach((e) => e.destroy());
+    world.decor.destroy();
+    world.chickens.forEach((c) => c.mat.dispose());
+    scene.remove(world.group);
+    world.group.traverse((o) => { if (o.isInstancedMesh) o.dispose(); if (o.geometry && !o.userData.shared) o.geometry.dispose(); });
+    world = null;
+  };
+
+  const buildWorld = (sizes) => {
+    destroyWorld();
+    const plan = planVillage(sizes);
+    const group = new THREE.Group();
+    scene.add(group);
+    ctx.root = group;
+    const decor = new CropLayer(ctx, group);
+    group.add(roadMesh(plan.edges, ROAD_W + 0.5, roadMats.edge, -2, 0.02));
+    group.add(roadMesh(plan.edges, ROAD_W, roadMats.main, -1, 0.03));
+    const items = art.manifest.items || {};
+    const treeTex = art.textures['tree_round.png'];
+    const hallTex = art.textures['farmhouse.png'];
+    const { hall, trees } = plan;
+    const shadows = new THREE.InstancedMesh(shGeo, shMat, trees.length + 1);
+    shadows.userData.shared = true;
+    const m4 = new THREE.Matrix4(); const q = new THREE.Quaternion();
+    trees.forEach((t, i) => { m4.compose(new THREE.Vector3(t.x, 0.04, t.z), q, new THREE.Vector3(t.h * 0.42, 1, t.h * 0.3)); shadows.setMatrixAt(i, m4); });
+    m4.compose(new THREE.Vector3(hall.x, 0.04, hall.z), q, new THREE.Vector3(hall.size * 0.4, 1, hall.size * 0.25));
+    shadows.setMatrixAt(trees.length, m4);
+    shadows.frustumCulled = false; shadows.renderOrder = 0;
+    group.add(shadows);
+    if (treeTex && trees.length) {
+      const def = items.tree_round || { anchor: [0.5, 0.97] };
+      const ar = treeTex.image.width / treeTex.image.height;
+      decor.batch(treeTex, def.anchor, trees.map((t, i) => ({ pos: new THREE.Vector3(t.x, 0, t.z), w: t.h * ar, h: t.h, phase: i * 1.7, sway: 0.4 })));
+    }
+    if (hallTex) {
+      const def = items.house || { anchor: [0.5, 0.8] };
+      const ar = hallTex.image.width / hallTex.image.height;
+      decor.batch(hallTex, def.anchor, [{ pos: new THREE.Vector3(hall.x, 0, hall.z), w: hall.size, h: hall.size / ar, phase: 0, sway: 0 }]);
+    }
+    const ents = new Map();
+    const hl = new Map();
+    plan.slots.forEach((s) => {
+      const e = new SlotFieldEntity(ctx, s);
+      ents.set(s.idx, e);
+      const m = new THREE.Mesh(hlGeo, hlMats.cand);
+      m.userData.shared = true;
+      m.scale.set(e.dim.w + 0.4, 1, e.dim.d + 0.4);
+      m.position.set(e.cx, 0.45, e.cz);
+      m.renderOrder = 15; m.visible = false;
+      group.add(m);
+      hl.set(s.idx, m);
+    });
+    // 닭 — 길 위를 걷는다
+    const chickens = [];
+    const def = art.manifest.animals?.chicken;
+    const frames = (def?.frames || []).map((f) => art.textures[f]);
+    if (def && frames.length && frames.every(Boolean) && plan.adj.size) {
+      const nodes = [...plan.adj.entries()].sort((a, b) => Math.hypot(a[1].x, a[1].z) - Math.hypot(b[1].x, b[1].z)).slice(0, 40);
+      const cnt = Math.min(6, 2 + Math.floor(plan.slots.length / 6));
+      const sz = spriteSize(frames[0], def, 1, 64);
+      const geo = billboardGeo(art, sz.ax, sz.ay);
+      for (let i = 0; i < cnt; i += 1) {
+        const [key, nd] = nodes[(i * 7) % nodes.length];
+        const mat = disposer.track(new THREE.MeshBasicMaterial({ map: frames[0], transparent: true, alphaTest: 0.4, side: THREE.DoubleSide }));
+        const mesh = new THREE.Mesh(geo, mat);
+        mesh.scale.set(sz.w, sz.h, 1);
+        mesh.userData.shared = true;
+        group.add(mesh);
+        chickens.push({ mesh, mat, sz, from: nd, fromKey: key, to: null, prevKey: null, t: 0, len: 1, flip: 1, fi: i, ft: 0, speed: 0.9 + (i % 3) * 0.25, ox: (i % 2 ? 0.25 : -0.25) });
+      }
+    }
+    world = { group, plan, ents, decor, hl, chickens, frames, def };
+    const b = plan.bounds;
+    lim = { minX: Math.min(b.minX, -8), maxX: Math.max(b.maxX, 8), minZ: Math.min(b.minZ, -8), maxZ: Math.max(b.maxZ, 8) };
+  };
+
+  const isOpen = (idx) => !!world?.ents.has(idx);
+  const refreshSlot = (idx) => {
+    const e = world?.ents.get(idx);
+    if (!e) return;
+    const bid = assign.get(idx);
+    e.setState({ book: bid != null ? ctx.books.get(String(bid)) || null : null });
+  };
+  const refreshAll = () => world?.ents.forEach((_, idx) => refreshSlot(idx));
   const drawHl = () => {
-    VILLAGE_SLOTS.forEach((s) => {
-      const m = hl.get(s.id);
-      m.visible = moveSel != null && isOpen(s);
-      m.material = s.id === moveSel ? hlMats.sel : hlMats.cand;
+    world?.hl.forEach((m, idx) => {
+      m.visible = moveSel != null;
+      m.material = idx === moveSel ? hlMats.sel : hlMats.cand;
     });
   };
 
@@ -170,27 +277,35 @@ export const createFarmScene = async (host, callbacks = {}) => {
   };
   const emitLayout = () => callbacks.onLayoutChange?.(getLayout());
 
-  const applyData = ({ layout, books, open_slot_count: osc }) => {
+  const applyData = ({ layout, books }) => {
     ctx.books = new Map((books || []).map((b) => [String(b.id), b]));
     const idOf = new Map((books || []).map((b) => [String(b.id), b.id]));
-    assign = new Map(); meta.clear(); others = [];
+    assign = new Map(); meta.clear(); others.length = 0;
     const placed = new Set();
     (layout || []).forEach((it) => {
       if (it.item_id !== 'field') { others.push(it); return; }
       const key = String(it.book_id);
       if (!ctx.books.has(key)) return;
       meta.set(idOf.get(key), { uid: it.uid, x: it.x ?? 0, y: it.y ?? 0 });
-      if (it.slot && slotEnt.has(it.slot) && !assign.has(it.slot)) { assign.set(it.slot, idOf.get(key)); placed.add(key); }
+      const si = slotIndexOf(it.slot);
+      if (si != null && !assign.has(si) && !placed.has(key)) { assign.set(si, idOf.get(key)); placed.add(key); }
     });
-    openCount = Number.isFinite(osc) ? osc : clamp(Math.max(3, ctx.books.size + 1), 3, 12);
-    // 슬롯 없는 단어장은 크기에 맞는 빈 열린 터(order 순)에 자동 배정, 없으면 아무 빈 열린 터
+    // 슬롯 없는 단어장은 비어 있는 가장 작은 인덱스에 배정
+    let next = 0;
     (books || []).forEach((b) => {
       if (placed.has(String(b.id))) return;
-      const need = slotSizeFor(b.word_count ?? cellStages(b).length);
-      const free = VILLAGE_SLOTS.filter((s) => s.order <= Math.max(openCount, assign.size + 1) && !assign.has(s.id));
-      const pick = free.find((s) => s.size === need) || free[0];
-      if (pick) { assign.set(pick.id, b.id); if (!meta.has(b.id)) meta.set(b.id, { uid: `b${b.id}`, x: 0, y: 0 }); }
+      while (assign.has(next)) next += 1;
+      assign.set(next, b.id);
+      if (!meta.has(b.id)) meta.set(b.id, { uid: `b${b.id}`, x: 0, y: 0 });
     });
+    const sizes = [];
+    assign.forEach((bid, idx) => {
+      const b = ctx.books.get(String(bid));
+      sizes[idx] = slotSizeFor(b?.word_count ?? cellStages(b).length);
+    });
+    for (let i = 0; i < sizes.length; i += 1) if (!sizes[i]) sizes[i] = undefined;
+    const sig = Array.from(sizes, (v) => v || '-').join('');
+    if (sig !== worldSig || !world) { buildWorld(sizes); worldSig = sig; }
     refreshAll();
   };
 
@@ -203,12 +318,8 @@ export const createFarmScene = async (host, callbacks = {}) => {
   const applyCamera = () => {
     dist = clamp(dist, DMIN, DMAX);
     const aspect = viewW / viewH;
-    const hwid = dist * Math.tan((FOV * Math.PI) / 360) * aspect;
-    const hdep = (dist * Math.tan((FOV * Math.PI) / 360)) / Math.sin(ELEV);
-    const xl = Math.max(0, 11 - hwid);
-    target.x = clamp(target.x, -xl, xl);
-    const zl = Math.max(0, 13 - hdep * 0.8);
-    target.z = clamp(target.z, -zl, zl);
+    target.x = clamp(target.x, lim.minX, lim.maxX);
+    target.z = clamp(target.z, lim.minZ, lim.maxZ);
     yc = (PAD_TOP + viewH - PAD_BOTTOM) / 2 + 10;
     camera.aspect = aspect;
     camera.position.copy(target).addScaledVector(camBack, dist);
@@ -234,9 +345,10 @@ export const createFarmScene = async (host, callbacks = {}) => {
   const slotAt = (clientX, clientY) => {
     const p = groundAt(clientX, clientY);
     if (!p) return null;
-    for (const e of slotEnt.values()) if (e.contains(p.x, p.z, 0.3)) return e.slot;
-    // 말풍선·구름이 터 위로 솟아 있으니 위쪽 여유를 조금 더 준다
-    for (const e of slotEnt.values()) if (e.contains(p.x, p.z + 1.2, 0.2)) return e.slot;
+    if (!world) return null;
+    for (const e of world.ents.values()) if (e.contains(p.x, p.z, 0.3)) return e.slot.idx;
+    // 이름 팻말이 터 위로 솟아 있으니 위쪽 여유를 조금 더 준다
+    for (const e of world.ents.values()) if (e.contains(p.x, p.z + 1.2, 0.2)) return e.slot.idx;
     return null;
   };
 
@@ -255,8 +367,7 @@ export const createFarmScene = async (host, callbacks = {}) => {
     callbacks.onMoveStart?.({ book_id: assign.get(slotId) });
   };
   const trySwap = (targetId) => {
-    const t = VILLAGE_SLOTS.find((s) => s.id === targetId);
-    if (!t || !isOpen(t) || targetId === moveSel) return;
+    if (!isOpen(targetId) || targetId === moveSel) return;
     const a = assign.get(moveSel); const b = assign.get(targetId);
     assign.set(targetId, a);
     if (b !== undefined) assign.set(moveSel, b); else assign.delete(moveSel);
@@ -285,7 +396,7 @@ export const createFarmScene = async (host, callbacks = {}) => {
         longTimer = 0;
         if (moved || destroyed) return;
         const s = slotAt(sx, sy);
-        if (s && assign.has(s.id)) { moved = true; startMove(s.id); }
+        if (s != null && assign.has(s)) { moved = true; startMove(s); }
       }, LONG_MS);
     }
   };
@@ -315,11 +426,9 @@ export const createFarmScene = async (host, callbacks = {}) => {
     if (mode === 'pinch') { if (pointers.size < 2) { mode = 'none'; pinch = null; pointers.clear(); } return; }
     if (!moved) {
       const s = slotAt(ev.clientX, ev.clientY);
-      if (s) {
-        if (moveSel != null) trySwap(s.id);
-        else if (!isOpen(s)) callbacks.onLockedTap?.();
-        else if (assign.has(s.id)) callbacks.onTapField?.(assign.get(s.id));
-        else callbacks.onAddBook?.();
+      if (s != null) {
+        if (moveSel != null) trySwap(s);
+        else if (assign.has(s)) callbacks.onTapField?.(assign.get(s));
       }
     }
     mode = 'none';
@@ -346,11 +455,46 @@ export const createFarmScene = async (host, callbacks = {}) => {
       applyCamera();
     }
     ctx.uniforms.uTime.value = timeSec;
-    for (const e of slotEnt.values()) {
-      // 화면에서 멀리 벗어난 터는 update 생략
-      if (Math.hypot(e.cx - target.x, e.cz - target.z) < dist * 1.4 + 6) e.update(dt, timeSec);
+    if (world) {
+      const reach = dist * 1.5 + 8;
+      world.ents.forEach((e) => {
+        // 화면에서 멀리 벗어난 터는 그리기·update 모두 생략
+        const near = Math.hypot(e.cx - target.x, e.cz - target.z) < reach;
+        e.group.visible = near; e.crops.group.visible = near;
+        if (near) e.update(dt, timeSec);
+      });
+      world.chickens.forEach((c) => stepChicken(c, dt, timeSec));
     }
     renderer.render(scene, camera);
+  };
+  const stepChicken = (c, dt) => {
+    const adj = world.plan.adj;
+    if (!c.to) {
+      const nd = adj.get(c.fromKey);
+      const opts = nd.to.filter((k) => k !== c.prevKey);
+      const pick = (opts.length ? opts : nd.to);
+      const k = pick[Math.floor(Math.random() * pick.length)];
+      const t = adj.get(k);
+      c.to = { key: k, x: t.x, z: t.z };
+      c.len = Math.hypot(t.x - c.from.x, t.z - c.from.z) || 1; c.t = 0;
+      const dx = t.x - c.from.x;
+      if (Math.abs(dx) > 0.01) c.flip = dx > 0 ? -1 : 1; // 원본은 왼쪽 아래를 봄
+    }
+    c.t += (c.speed * dt) / c.len;
+    if (c.t >= 1) { c.prevKey = c.fromKey; c.fromKey = c.to.key; c.from = adj.get(c.to.key); c.to = null; }
+    const k = c.to ? c.t : 0; const a = c.from; const b = c.to || a;
+    const x = a.x + (b.x - a.x) * k; const z = a.z + (b.z - a.z) * k;
+    // 길 폭 안에서 닭마다 조금 비켜 걷는다
+    const horiz = c.to ? Math.abs(b.x - a.x) > Math.abs(b.z - a.z) : true;
+    const near = Math.hypot(x - target.x, z - target.z) < dist * 1.5 + 8;
+    c.mesh.visible = near;
+    if (!near) return;
+    c.mesh.position.set(x + (horiz ? 0 : c.ox), 0.05, z + (horiz ? c.ox : 0));
+    c.mesh.quaternion.copy(camera.quaternion);
+    c.ft += dt;
+    if (c.ft > 1 / (world.def.fps || 8)) { c.ft = 0; c.fi = (c.fi + 1) % 4; }
+    c.mat.map = world.frames[(world.def.states?.walk || [0, 1, 2, 3])[c.fi % 4]] || world.frames[0];
+    c.mesh.scale.x = c.sz.w * c.flip;
   };
   const start = () => { if (!raf && !destroyed) { last = performance.now(); raf = requestAnimationFrame(frame); } };
   const stop = () => { if (raf) { cancelAnimationFrame(raf); raf = 0; } };
@@ -364,7 +508,7 @@ export const createFarmScene = async (host, callbacks = {}) => {
     applyCamera();
   }) : null;
   ro?.observe(host);
-  dist = (WORLD / 2 / (Math.tan((FOV * Math.PI) / 360) * (viewW / viewH))) * 1.02;
+  dist = (11 / (Math.tan((FOV * Math.PI) / 360) * (viewW / viewH))) * 1.02;
   applyCamera(); start();
 
   return {
@@ -399,8 +543,7 @@ export const createFarmScene = async (host, callbacks = {}) => {
       canvas.removeEventListener('pointercancel', onUp);
       canvas.removeEventListener('wheel', onWheel);
       canvas.removeEventListener('contextmenu', onCtx);
-      slotEnt.forEach((e) => e.destroy());
-      decor.destroy();
+      destroyWorld();
       scene.traverse((o) => {
         o.geometry?.dispose?.();
         if (o.isInstancedMesh) o.dispose();

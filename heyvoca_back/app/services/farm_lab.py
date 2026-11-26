@@ -4,6 +4,7 @@
 실패는 FarmError(code, message, extra)로 알린다.
 """
 import json
+import re
 import math
 import os
 from uuid import UUID, uuid4
@@ -24,8 +25,7 @@ with open(_CATALOG_PATH, encoding='utf-8') as _f:
 GRID_W = _RAW['grid']['w']
 GRID_H = _RAW['grid']['h']
 CATALOG = _RAW['items']
-VILLAGE_SLOTS = _RAW['village_slots']
-SLOT_BY_ID = {v['id']: v for v in VILLAGE_SLOTS}
+MAX_SLOT = 10000
 ITEMS = {i['id']: i for i in CATALOG}
 CROP_IDS = {i['id'] for i in CATALOG if i['category'] == 'crop'}
 DEFAULT_CROP = 'carrot'
@@ -150,28 +150,20 @@ def cells_needed(word_count):
     return max(4, math.ceil(max(0, int(word_count)) / 4))
 
 
-def open_slot_count(book_count):
-    return min(len(VILLAGE_SLOTS), max(3, int(book_count) + 1))
+def _norm_slot(sl):
+    """정수 인덱스(0부터)로 정규화. 옛 문자열 'p3' 은 2 로 변환. 올바르지 않으면 None."""
+    if isinstance(sl, str) and re.fullmatch(r'p[1-9][0-9]{0,3}', sl):
+        return int(sl[1:]) - 1
+    if isinstance(sl, int) and not isinstance(sl, bool) and 0 <= sl < MAX_SLOT:
+        return sl
+    return None
 
 
-def _open_slot_ids(book_count):
-    k = open_slot_count(book_count)
-    return {v['id'] for v in VILLAGE_SLOTS if v['order'] <= k}
-
-
-def _slot_size(word_count):
-    return 'S' if word_count <= 40 else ('M' if word_count <= 150 else 'L')
-
-
-def _pick_slot(free_ids, word_count):
-    """크기 맞는 빈 열린 터(order 순), 없으면 아무 빈 열린 터(order 순)."""
-    cand = [SLOT_BY_ID[i] for i in free_ids]
-    cand.sort(key=lambda v: v['order'])
-    want = _slot_size(word_count)
-    for v in cand:
-        if v['size'] == want:
-            return v['id']
-    return cand[0]['id'] if cand else None
+def _smallest_free(used):
+    i = 0
+    while i in used:
+        i += 1
+    return i
 
 
 def _rect_cells(n):
@@ -292,15 +284,14 @@ def _ensure(user_id):
     layout = [e for e in layout if not (e['item_id'] == 'field' and e.get('book_id') not in book_ids)]
     # v9: 밭 = 정해진 터(slot). 밭이 아닌 항목은 layout 에서 제거(인벤토리 유지). 멱등
     old = list(row.layout or [])
-    open_ids = _open_slot_ids(len(books))
     used, new_layout, seen, pending = set(), [], set(), []
     for e in layout:
         if e['item_id'] != 'field' or e.get('book_id') in seen:
             continue
         seen.add(e['book_id'])
-        sl = e.get('slot')
+        sl = _norm_slot(e.get('slot'))
         ne = {'uid': e['uid'], 'item_id': 'field', 'book_id': e['book_id'], 'slot': sl}
-        if isinstance(sl, str) and sl in open_ids and sl not in used:
+        if sl is not None and sl not in used:
             used.add(sl)
             new_layout.append(ne)
         else:
@@ -309,9 +300,7 @@ def _ensure(user_id):
         if str(b.id) not in seen:
             pending.append({'uid': uuid4().hex[:12], 'item_id': 'field', 'book_id': str(b.id), 'slot': None})
     for ne in pending:
-        sid = _pick_slot(open_ids - used, len(bcells[ne['book_id']]))
-        if sid is None:
-            continue
+        sid = _smallest_free(used)
         ne['slot'] = sid
         used.add(sid)
         new_layout.append(ne)
@@ -357,8 +346,7 @@ def get_state(user_id):
     return {
         'catalog': CATALOG,
         'grid': {'w': GRID_W, 'h': GRID_H},
-        'village_slots': VILLAGE_SLOTS,
-        'open_slot_count': open_slot_count(len(books)),
+        'open_slot_count': len(books),
         'inventory': inv,
         'layout': row.layout or [],
         'version': int(row.version or 0),
@@ -384,7 +372,6 @@ def save_layout(user_id, layout, version):
     wc = {k: len(v) for k, v in _book_cells(books).items()}
     inv = _inv_map(user_id)
     own_books = {str(b.id) for b in books}
-    open_ids = _open_slot_ids(len(books))
     used_slots = set()
     clean, cells, uids, counts, used_books = [], set(), set(), {}, set()
     for e in layout:
@@ -401,10 +388,9 @@ def save_layout(user_id, layout, version):
             sl = e.get('slot')
             if bid not in own_books or bid in used_books:
                 raise FarmError(400, '밭에 연결된 단어장이 올바르지 않습니다.')
-            if not isinstance(sl, str) or sl not in SLOT_BY_ID:
+            sl = _norm_slot(sl)
+            if sl is None:
                 raise FarmError(400, '밭 터가 올바르지 않습니다.')
-            if sl not in open_ids:
-                raise FarmError(400, '아직 열리지 않은 터입니다.', {'reason': 'slot_locked'})
             if sl in used_slots:
                 raise FarmError(400, '이미 다른 밭이 쓰는 터입니다.')
             used_books.add(bid)
