@@ -32,7 +32,7 @@ compose_limit_kb() {
 import sys; v=sys.stdin.read().strip().lower(); u={"k":1,"m":1024,"g":1024**2}
 print(int(float(v[:-1])*u[v[-1]]) if v and v[-1] in u else 0)'
 }
-prod_workers() { grep -o '"-w", "[0-9]*"' "$ROOT/heyvoca_back/Dockerfile" | grep -o '[0-9]*$' || echo 4; }
+prod_workers() { local n; n="$(grep -o '"-w", "[0-9][0-9]*"' "$ROOT/heyvoca_back/Dockerfile" | grep -o '[0-9][0-9]*' | head -1)"; echo "${n:-4}"; }
 
 send() {  # level title text dedupe — prod .env 의 웹훅으로(없으면 조용히 생략)
   local hook; hook="$(grep -m1 '^CODINGPT_WEBHOOK_URL=' "$ROOT/heyvoca_back/.env" 2>/dev/null | cut -d= -f2- | tr -d '"'"'"'\r')"
