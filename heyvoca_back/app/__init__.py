@@ -197,7 +197,7 @@ def create_app():
           f".env에 해당 키를 설정하세요."
       )
 
-  app.wsgi_app = ProxyFix(app.wsgi_app, x_proto=1, x_host=1)
+  app.wsgi_app = ProxyFix(app.wsgi_app, x_for=1, x_proto=1, x_host=1)
 
   app.config['JSON_AS_ASCII'] = False
 
