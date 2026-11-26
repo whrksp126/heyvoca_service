@@ -113,8 +113,49 @@ check_mem() {
   fi
 }
 
+# 자동 정리 (2026-11-26 추가) — 백엔드 메모리가 HEAL_PCT% 이상으로 HEAL_MINUTES 분 이어지면
+# 가장 큰 gunicorn 워커 '하나'에 TERM(정상 종료)을 보낸다. 처리 중 요청은 마치고 내려가고,
+# 나머지 워커가 계속 응답하며, gunicorn 마스터가 즉시 새 워커를 띄운다 → 무중단.
+# (HUP 전체 리로드는 새 워커를 먼저 띄워 스케줄러 소켓 잠금을 놓치므로 쓰지 않는다)
+# 쿨다운 HEAL_COOLDOWN_MIN 분. 1시간에 HEAL_REPEAT_WARN 번 이상이면 '원인 확인 필요' 경고.
+HEAL_PCT=${HEAL_PCT:-85}
+HEAL_MINUTES=${HEAL_MINUTES:-3}
+HEAL_COOLDOWN_MIN=10
+HEAL_REPEAT_WARN=3
+heal_back() {
+  local c=heyvoca_back_prod id cg max cur pct
+  id="$(docker inspect -f '{{.Id}}' "$c" 2>/dev/null)" || return
+  cg="/sys/fs/cgroup/system.slice/docker-$id.scope"
+  max="$(cat "$cg/memory.max" 2>/dev/null)"; cur="$(cat "$cg/memory.current" 2>/dev/null)"
+  [ -z "$cur" ] || [ "$max" = max ] && return
+  pct=$(( cur * 100 / max ))
+  local cnt_file="$STATE_DIR/heal.count" log_file="$STATE_DIR/heal.log"
+  if [ "$pct" -lt "$HEAL_PCT" ]; then echo 0 > "$cnt_file"; return; fi
+  local n; n=$(( $(cat "$cnt_file" 2>/dev/null || echo 0) + 1 )); echo "$n" > "$cnt_file"
+  [ "$n" -ge "$HEAL_MINUTES" ] || return
+  local now last; now=$(date +%s); last="$(tail -1 "$log_file" 2>/dev/null | awk '{print $1}')"
+  [ -n "$last" ] && [ $(( now - last )) -lt $(( HEAL_COOLDOWN_MIN * 60 )) ] && return
+
+  local top; top="$(docker exec "$c" ps -o ppid=,pid=,rss= -e 2>/dev/null | awk '$1==1{print $3, $2}' | sort -rn | head -1)"
+  [ -z "$top" ] && return
+  local rss=${top% *} pid=${top#* }
+  docker exec "$c" kill -TERM "$pid" 2>/dev/null || return
+  echo "$now $pid $rss $pct" >> "$log_file"
+  echo 0 > "$cnt_file"
+  local recent; recent="$(awk -v t=$(( now - 3600 )) '$1>=t' "$log_file" | wc -l | tr -d ' ')"
+  if [ "$recent" -ge "$HEAL_REPEAT_WARN" ]; then
+    send warning "백엔드 메모리 자동 정리 반복(1시간 ${recent}회)" "자동 정리로도 금방 다시 차요. 메모리 누수나 무거운 요청이 의심됩니다.
+현재 $(( cur / 1048576 ))MiB / 한도 $(( max / 1048576 ))MiB (${pct}%)
+기록: ~/.heyvoca_health/heal.log
+확인: docker logs --since 1h $c" "heal:repeat:$(date +%F_%H)"
+  else
+    send info "백엔드 메모리 자동 정리" "메모리 ${pct}% 상태가 ${HEAL_MINUTES}분 이어져 가장 큰 워커(pid $pid, $(( rss / 1024 ))MiB)를 정상 종료하고 새로 띄웠어요. 서비스 중단 없음." "heal:$now"
+  fi
+}
+
 check back "https://heyvoca-back.ghmate.com/health" '"status":"ok"'
 check front "https://heyvoca-front.ghmate.com/" ""
 for c in heyvoca_back_prod heyvoca_mysql_prod heyvoca_redis_prod heyvoca_front_prod; do
   check_mem "$c"
 done
+heal_back
