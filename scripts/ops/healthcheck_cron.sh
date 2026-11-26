@@ -153,9 +153,49 @@ heal_back() {
   fi
 }
 
+# 공개 경로 지연 감시 (2026-11-26 추가) — Cloudflare 가 한국 요청을 HKG/KIX 로 돌리며 간헐적으로
+# 수 초씩 멈추는 현상을 잡는다. /health 가 결국 200 이면 위 check 로는 안 보인다.
+# 매분 LAT_SAMPLES 번 호출, 최근 LAT_WINDOW 분 표본 중 LAT_SLOW_SEC 초 이상/실패 비율이 LAT_WARN_PCT% 이상이면 warning.
+# 같은 시각 서버 nginx 직통 응답도 재서 함께 보낸다 → 서버 문제인지 경로(Cloudflare·회선) 문제인지 바로 구분.
+LAT_SAMPLES=3
+LAT_WINDOW=15
+LAT_SLOW_SEC=2
+LAT_WARN_PCT=20
+LAT_CLEAR_PCT=5
+check_latency() {
+  local url="https://heyvoca-back.ghmate.com/health" f="$STATE_DIR/latency.log" alerted="$STATE_DIR/latency.alerted"
+  local now i out t colo; now=$(date +%s)
+  for i in $(seq 1 "$LAT_SAMPLES"); do
+    out="$(curl -s -D - -o /dev/null --max-time 8 -w 'TOTAL %{http_code} %{time_total}' "$url" 2>/dev/null)"
+    t="$(printf '%s' "$out" | awk '/^TOTAL/{print ($2=="200") ? $3 : 99}')"
+    colo="$(printf '%s' "$out" | awk -F- 'tolower($0) ~ /^cf-ray:/{gsub(/\r/,"",$NF); print $NF}')"
+    echo "$now ${t:-99} ${colo:--}" >> "$f"
+  done
+  awk -v c=$(( now - LAT_WINDOW * 60 )) '$1>=c' "$f" > "$f.tmp" 2>/dev/null && mv "$f.tmp" "$f"
+  local total slow pct
+  total=$(wc -l < "$f" | tr -d ' ')
+  slow=$(awk -v s="$LAT_SLOW_SEC" '$2>=s' "$f" | wc -l | tr -d ' ')
+  [ "$total" -ge $(( LAT_WINDOW * LAT_SAMPLES / 2 )) ] || return   # 표본이 쌓인 뒤에만 판정
+  pct=$(( slow * 100 / total ))
+  if [ "$pct" -ge "$LAT_WARN_PCT" ] && [ ! -f "$alerted" ]; then
+    date '+%F %T' > "$alerted"
+    local direct colos
+    direct="$(curl -sk -o /dev/null --max-time 5 -w '%{http_code} %{time_total}s' --resolve heyvoca-back.ghmate.com:443:127.0.0.1 "$url" 2>/dev/null)"
+    colos="$(awk '{print $3}' "$f" | sort | uniq -c | sort -rn | awk '{printf "%s %s회 ", $2, $1}')"
+    send warning "백엔드 공개 주소 느림 (최근 ${LAT_WINDOW}분 ${pct}%)" "최근 ${LAT_WINDOW}분 표본 ${total}개 중 ${slow}개가 ${LAT_SLOW_SEC}초 이상 걸리거나 실패했어요.
+Cloudflare 지점: ${colos}
+같은 시각 서버 nginx 직통: ${direct}
+→ 직통이 빠르면 서버는 정상이고 Cloudflare·회선 경로 문제예요." "latency:back:$(date +%F_%H)"
+  elif [ "$pct" -le "$LAT_CLEAR_PCT" ] && [ -f "$alerted" ]; then
+    send success "백엔드 공개 주소 응답 정상화" "최근 ${LAT_WINDOW}분 지연 비율 ${pct}%. 시작 $(cat "$alerted"), 정상화 $(date '+%F %T')" "latency:back:recovered"
+    rm -f "$alerted"
+  fi
+}
+
 check back "https://heyvoca-back.ghmate.com/health" '"status":"ok"'
 check front "https://heyvoca-front.ghmate.com/" ""
 for c in heyvoca_back_prod heyvoca_mysql_prod heyvoca_redis_prod heyvoca_front_prod; do
   check_mem "$c"
 done
 heal_back
+check_latency
