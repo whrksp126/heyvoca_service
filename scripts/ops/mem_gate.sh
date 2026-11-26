@@ -21,7 +21,8 @@ GROWTH_WARN_PCT=130  # 워커 평균이 직전 배포 대비 이 % 이상이면 
 mib() { echo $(( $1 / 1024 )); }  # KB → MiB
 
 # 컨테이너의 gunicorn 워커(PID 1 의 자식) RSS(KB) 목록
-worker_rss() { docker exec "$1" ps -o ppid=,rss= -e 2>/dev/null | awk '$1==1{print $2}'; }
+# 엔트리포인트 셸이 좀비(<defunct>, RSS 0)로 PID 1 밑에 남으므로 RSS>0 만 워커로 센다.
+worker_rss() { docker exec "$1" ps -o ppid=,rss= -e 2>/dev/null | awk '$1==1 && $2>0{print $2}'; }
 cg_dir() { echo "/sys/fs/cgroup/system.slice/docker-$(docker inspect -f '{{.Id}}' "$1" 2>/dev/null).scope"; }
 oom_kills() { awk '$1=="oom_kill"{print $2}' "$(cg_dir "$1")/memory.events" 2>/dev/null || echo 0; }
 limit_kb() { local m; m="$(docker inspect -f '{{.HostConfig.Memory}}' "$1" 2>/dev/null)"; echo $(( ${m:-0} / 1024 )); }
